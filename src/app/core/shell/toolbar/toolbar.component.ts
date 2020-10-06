@@ -81,10 +81,10 @@ export class ToolbarComponent implements OnInit {
   }
 
   /**
-   * Opens Mifos JIRA Wiki page.
+   * Opens Midas JIRA Wiki page.
    */
   help() {
-    window.open('https://mifosforge.jira.com/wiki/spaces/docs/pages/52035622/User+Manual', '_blank');
+    window.open('https://drive.google.com/drive/folders/1-J4JQyaaxBz2QSfZMzC4bPrPwWlksFWw?usp=sharing', '_blank');
   }
 
 }

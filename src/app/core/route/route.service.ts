@@ -19,7 +19,7 @@ export class Route {
    */
   static withShell(routes: Routes): ngRoute {
     return {
-      path: './',
+      path: '',
       component: ShellComponent,
       children: routes,
       canActivate: [AuthenticationGuard],

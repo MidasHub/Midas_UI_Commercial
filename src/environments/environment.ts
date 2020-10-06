@@ -15,7 +15,7 @@ export const environment = {
   apiVersion: '/v1',
   serverUrl: '',
   oauth: {
-    enabled: true,  // For connecting to Mifos X using OAuth2 Authentication change the value to true
+    enabled: true,  // For connecting to Midas using OAuth2 Authentication change the value to true
     serverUrl: ''
   },
   defaultLanguage: 'en-US',
