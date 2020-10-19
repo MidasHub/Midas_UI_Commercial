@@ -1,6 +1,7 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { TranslateService } from '@ngx-translate/core';
 
 /** rxjs Imports */
 import { finalize } from 'rxjs/operators';
@@ -33,7 +34,8 @@ export class ResetPasswordComponent implements OnInit {
    * @param {AuthenticationService} authenticationService Authentication Service.
    */
   constructor(private formBuilder: FormBuilder,
-              private authenticationService: AuthenticationService) {  }
+              private authenticationService: AuthenticationService,
+              private translate:TranslateService) {  }
 
   /**
    * Creates reset password form.

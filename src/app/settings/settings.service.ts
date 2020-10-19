@@ -16,7 +16,7 @@ export class SettingsService {
    * @param {string} dateFormat Date Format
    */
   setDateFormat(dateFormat: string) {
-    localStorage.setItem('mifosXDateFormat', JSON.stringify(dateFormat));
+    localStorage.setItem('midasDateFormat', JSON.stringify(dateFormat));
   }
 
   /**
@@ -24,21 +24,22 @@ export class SettingsService {
    * @param {any} language Language.
    */
   setLanguage(language: { name: string, code: string }) {
-    localStorage.setItem('mifosXLanguage', JSON.stringify(language));
+    localStorage.setItem('midasLanguageCode',language.code)
+    localStorage.setItem('midasLanguageName',language.name) //JSON.stringify(language.code).code);
   }
 
   /**
    * Returns date format setting.
    */
   get dateFormat() {
-    return JSON.parse(localStorage.getItem('mifosXDateFormat'));
+    return JSON.parse(localStorage.getItem('midasDateFormat'));
   }
 
   /**
    * Returns language setting
    */
   get language() {
-    return JSON.parse(localStorage.getItem('mifosXLanguage'));
+    return JSON.parse(localStorage.getItem('midasLanguageCode'));
   }
 
 }

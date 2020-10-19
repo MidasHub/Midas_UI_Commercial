@@ -1,0 +1,69 @@
+{
+	"----End Footer component----": "----End Footer component----",
+	"----End Login component----": "---- End Login component----",
+	"----End Login page----": "",
+	"----Footer component----": "----Login component----",
+	"----Login component----": "----Login component----",
+	"----Login page----": "",
+	"APP_NAME": "Midas - En",
+	"Client_Component": {
+		"Account": "CIF #",
+		"ClientStepper": {
+			"AddressStep": {
+				"Add": "Add",
+				"Address": "Address",
+				"AddressLine1": "AddressLine1",
+				"AddressLine2": "AddressLine2",
+				"AddressLine3": "AddressLine3",
+				"City": "City",
+				"Country": "Country",
+				"Next": "Next",
+				"PostalCode": "PostalCode",
+				"Previous": "Previous",
+				"StateProvince": "StateProvince",
+				"Street": "Street",
+				"TownVilage": "TownVilage",
+				"isActive": "isActive"
+			}
+		},
+		"Create_Client": "Create Client",
+		"ExternalID": "Citizen ID",
+		"Gender": "Gender",
+		"Import_Client": "Import Client",
+		"Mobile_Number": "Mobile Number",
+		"Name": "Name",
+		"OfficeName": "OfficeName",
+		"StaffName": "StaffName",
+		"Status": "Status"
+	},
+	"Footer_component": {
+		"Midas is up to date": "Midas is up to date",
+		"Version": "Version"
+	},
+	"Login_Component": {
+		"APP_SLOGAN": "This is a Single Page Web that can help your Business grow",
+		"About": "About",
+		"Home": "Home",
+		"Logged in as": "Logged in as",
+		"Logout": "Logout",
+		"loginForm": {
+			"Forgot Password": "Forgot Password",
+			"Login": "Login",
+			"Password": "Password",
+			"Password is required": "Password is required",
+			"Remember me": "Remember me",
+			"Username": "Username",
+			"Username is required": "Username is required",
+			"Username or password incorrect.": "Username or password incorrect"
+		},
+		"resetPassword": {
+			"Confirm Password": "Confirm Password",
+			"Confirm Password is required": "Confirm Password is required",
+			"Passwords do not match": "Passwords do not match",
+			"Reset Password": "Reset Password"
+		}
+	},
+	"Home_Component":"Home_Component"{
+		"welcome":"Welcome, {{ username }}"
+	}
+}

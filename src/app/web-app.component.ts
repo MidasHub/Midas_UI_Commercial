@@ -109,15 +109,15 @@ export class WebAppComponent implements OnInit {
 
     // Stores top 100 user activites as local storage object.
     let activities: string[] = [];
-    if (localStorage.getItem('mifosXLocation')) {
-      const activitiesArray: string[] = JSON.parse(localStorage.getItem('mifosXLocation'));
+    if (localStorage.getItem('midasXLocation')) {
+      const activitiesArray: string[] = JSON.parse(localStorage.getItem('midasXLocation'));
       const length = activitiesArray.length;
       activities = length > 100 ? activitiesArray.slice(length - 100) : activitiesArray;
     }
     // Store route URLs array in local storage on navigation end.
     onNavigationEnd.subscribe(() => {
       activities.push(this.router.url);
-      localStorage.setItem('mifosXLocation', JSON.stringify(activities));
+      localStorage.setItem('midasXLocation', JSON.stringify(activities));
     });
 
     // Setup theme
@@ -137,14 +137,18 @@ export class WebAppComponent implements OnInit {
     this.buttonConfig = new KeyboardShortcutsConfiguration();
 
     // initialize language and date format if they are null.
-    if (!localStorage.getItem('mifosXLanguage')) {
+    if (!localStorage.getItem('midasLanguageCode')) {
+      let langCode = environment.defaultLanguage.split('-')[0];
+      console.log('LangCode:',langCode,' - name:',environment.languagesName[langCode]);
+
       this.settingsService.setLanguage({
-        name: 'English',
-        code: 'en'
+        name: environment.languagesName[langCode],
+        code: langCode
       });
     }
-    if (!localStorage.getItem('mifosXDateFormat')) {
-      this.settingsService.setDateFormat('dd MMMM yyyy');
+    if (!localStorage.getItem('midasDateFormat')) {
+      //this.settingsService.setDateFormat('dd MMMM yyyy');
+      this.settingsService.setDateFormat('dd/MM/yyyy');
     }
   }
 
@@ -154,7 +158,8 @@ export class WebAppComponent implements OnInit {
   }
 
   help() {
-    window.open('https://mifosforge.jira.com/wiki/spaces/docs/pages/52035622/User+Manual', '_blank');
+    window.open('https://drive.google.com/drive/folders/1-J4JQyaaxBz2QSfZMzC4bPrPwWlksFWw?usp=sharing','_blank')
+    //window.open('https://mifosforge.jira.com/wiki/spaces/docs/pages/52035622/User+Manual', '_blank');
   }
 
   // Monitor all keyboard events and excute keyboard shortcuts

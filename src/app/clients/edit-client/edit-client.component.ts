@@ -151,8 +151,8 @@ export class EditClientComponent implements OnInit {
    * Submits the edit client form.
    */
   submit() {
-    const locale = 'en';
-    const dateFormat = 'dd MMMM yyyy';
+    const locale = localStorage.getItem('midasLanguageCode').split('-')[0];//Jean fixed to get locale from localStorage: 'en';
+    const dateFormat = localStorage.getItem('midasDateFormat');//Jean fixed to get dateFormat from localStorage :'dd MMMM yyyy';
     // TODO: Update once language and date settings are setup
     const editClientFormValue: any = this.editClientForm.getRawValue();
     const clientData = {

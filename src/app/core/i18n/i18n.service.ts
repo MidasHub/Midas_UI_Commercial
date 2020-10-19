@@ -1,5 +1,6 @@
 /** Angular Imports */
 import { Injectable } from '@angular/core';
+import { Subject } from 'rxjs';
 
 /** Translation Imports */
 import { TranslateService, LangChangeEvent } from '@ngx-translate/core';
@@ -9,8 +10,9 @@ import { Logger } from '../logger/logger.service';
 
 /** Other Imports */
 import { includes } from 'lodash';
-import * as enUS from '../../../translations/en-US.json';
-import * as frFR from '../../../translations/fr-FR.json';
+// import * as enUS from '../../../translations/en-US.json';
+// import * as frFR from '../../../translations/fr-FR.json';
+// import * as viVN from '../../../translations/vi-VN.json';
 
 /** Initialize Logger */
 const log = new Logger('I18nService');
@@ -29,15 +31,19 @@ export function extract(s: string) {
 export class I18nService {
 
   /** Key to store current language of application in local storage. */
-  private languageStorageKey = 'mifosXLanguage';
+  private languageStorageKey = 'midasLanguageCode';
 
   defaultLanguage: string;
   supportedLanguages: string[];
 
-  constructor(private translateService: TranslateService) {
-    // Embed languages to avoid extra HTTP requests
-    translateService.setTranslation('en-US', enUS);
-    translateService.setTranslation('fr-FR', frFR);
+  constructor(private translate: TranslateService) {
+    /**  Embed languages to avoid extra HTTP requests - Jean: rem due to error when using this method
+    *  Jean change to use the default http loader of ngx-translate which is configged in the app.module.ts file
+    *  
+    */
+    // translate.setTranslation('en-US', enUS);
+    // translate.setTranslation('fr-FR', frFR);
+    // translate.setTranslation('vi-VN', viVN);
   }
 
   /**
@@ -51,7 +57,7 @@ export class I18nService {
     this.supportedLanguages = supportedLanguages;
     this.language = '';
 
-    this.translateService.onLangChange
+    this.translate.onLangChange
       .subscribe((event: LangChangeEvent) => { localStorage.setItem(this.languageStorageKey, event.lang); });
   }
 
@@ -62,9 +68,10 @@ export class I18nService {
    * @param {string} language The IETF language code to set.
    */
   set language(language: string) {
-    language = language || localStorage.getItem(this.languageStorageKey) || this.translateService.getBrowserCultureLang();
+    language = language || localStorage.getItem(this.languageStorageKey) || this.translate.getBrowserCultureLang();
     let isSupportedLanguage = includes(this.supportedLanguages, language);
-
+    console.log('start:',language);
+    console.log('start supported Lang:',isSupportedLanguage);
     // If no exact match is found, search without the region
     if (language && !isSupportedLanguage) {
       language = language.split('-')[0];
@@ -76,9 +83,8 @@ export class I18nService {
     if (!isSupportedLanguage) {
       language = this.defaultLanguage;
     }
-
-    log.debug(`Language set to ${language}`);
-    this.translateService.use(language);
+    log.debug(`Language set to ${language} and language code is ${language.split('-')[0]}`);
+    this.translate.use(language);
   }
 
   /**
@@ -86,7 +92,7 @@ export class I18nService {
    * @return {string} The current language code.
    */
   get language(): string {
-    return this.translateService.currentLang;
+    return this.translate.currentLang;
   }
 
 }

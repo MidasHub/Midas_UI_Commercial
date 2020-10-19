@@ -28,7 +28,8 @@
               "src/favicon.ico",
               "src/robots.txt",
               "src/manifest.json",
-              "src/assets"
+              "src/assets",
+              "src/assets/i8n"
             ],
             "styles": [
               "src/main.scss",

@@ -10,6 +10,9 @@ import { Alert } from '../core/alert/alert.model';
 
 /** Custom Services */
 import { AlertService } from '../core/alert/alert.service';
+import { TranslateService } from '@ngx-translate/core';
+// import { I18nService } from '../core/i18n/i18n.service';
+// //import {environment} from '../../environments/environment'
 
 /**
  * Login component.
@@ -33,7 +36,13 @@ export class LoginComponent implements OnInit, OnDestroy {
    * @param {Router} router Router for navigation.
    */
   constructor(private alertService: AlertService,
-              private router: Router) { }
+              private router: Router,
+              //private i18nService: I18nService,
+              private translate:TranslateService
+              ) {
+                //console.log('Lang: ..',localStorage.getItem('midasLanguageName'),' - ',localStorage.getItem('midasLanguageCode'))
+               // translate.use(localStorage.getItem('midasLanguageCode'));
+               }
 
   /**
    * Subscribes to alert event of alert service.
@@ -53,6 +62,7 @@ export class LoginComponent implements OnInit, OnDestroy {
         this.router.navigate(['/'], { replaceUrl: true });
       }
     });
+
   }
 
   /**

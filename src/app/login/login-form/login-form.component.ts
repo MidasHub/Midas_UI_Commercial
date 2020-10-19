@@ -1,12 +1,14 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import {MatDialog} from '@angular/material/dialog'
 
 /** rxjs Imports */
 import { finalize } from 'rxjs/operators';
 
 /** Custom Services */
 import { AuthenticationService } from '../../core/authentication/authentication.service';
+import { TranslateService } from '@ngx-translate/core';
 
 /**
  * Login form component.
@@ -30,7 +32,12 @@ export class LoginFormComponent implements OnInit {
    * @param {AuthenticationService} authenticationService Authentication Service.
    */
   constructor(private formBuilder: FormBuilder,
-              private authenticationService: AuthenticationService) {  }
+              private authenticationService: AuthenticationService,
+              private translate: TranslateService
+              ) {  
+                // translate.setDefaultLang('vi');
+               // translate.use(localStorage.getItem('midasLanguageCode'));
+              }
 
   /**
    * Creates login form.
@@ -63,6 +70,7 @@ export class LoginFormComponent implements OnInit {
    */
   forgotPassword() {
     console.log('Forgot Password feature currently unavailable.');
+    alert ('Forgot Password feature currently unavailable.')
   }
 
   /**
@@ -76,4 +84,5 @@ export class LoginFormComponent implements OnInit {
     });
   }
 
+  
 }

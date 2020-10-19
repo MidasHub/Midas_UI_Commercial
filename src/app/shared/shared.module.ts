@@ -25,6 +25,13 @@ import { KeyboardShortcutsDialogComponent } from './keyboard-shortcuts-dialog/ke
 import { IconsModule } from './icons.module';
 import { MaterialModule } from './material.module';
 
+/** Jean: language */
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { HttpClient } from '@angular/common/http';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+export function homeHttpLoaderFactory(http: HttpClient) {
+  return new TranslateHttpLoader(http, './assets/i18n/', '.json');
+}
 /**
  * Shared Module
  *
@@ -35,7 +42,14 @@ import { MaterialModule } from './material.module';
     CommonModule,
     IconsModule,
     MaterialModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    TranslateModule.forChild({ //Jean
+      loader: {
+        provide: TranslateLoader,
+        useFactory: homeHttpLoaderFactory,
+        deps: [HttpClient]
+      }
+    })
   ],
   declarations: [
     FormfieldComponent,
@@ -68,6 +82,7 @@ import { MaterialModule } from './material.module';
     MaterialModule,
     FormsModule,
     ReactiveFormsModule,
+    TranslateModule //Jean
   ]
 })
 export class SharedModule { }

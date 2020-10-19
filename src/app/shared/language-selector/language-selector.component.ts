@@ -26,17 +26,21 @@ export class LanguageSelectorComponent implements OnInit {
    * @param {I18nService} i18nService Internationalization Service.
    */
   constructor(private i18nService: I18nService) {
-    this.languageSelector.setValue(this.currentLanguage);
+    this.languageSelector.setValue(this.currentLanguage);//
   }
+
+  
 
   ngOnInit() {
   }
 
+  selectedlang:string;
   /**
    * Sets a new language to be used by the application.
    * @param {string} language New language.
    */
   setLanguage(language: string) {
+    console.log('lang:',language)
     this.i18nService.language = language;
   }
 
@@ -56,4 +60,8 @@ export class LanguageSelectorComponent implements OnInit {
     return this.i18nService.supportedLanguages;
   }
 
+  // changeLocale(locale: string) {
+  //   console.log(locale)
+  //   this.i18nService.changeLocale(locale);   
+  // }
 }

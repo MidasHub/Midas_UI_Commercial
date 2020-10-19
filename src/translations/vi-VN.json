@@ -1,0 +1,33 @@
+{
+  "----Footer component----": "----Login component----",
+  "Footer_component: Version": "Phiên bản",
+  "Footer_component: Midas is up to date": "Midas đã cập nhật phiên bản mới nhất",
+  "----End Footer component----": "----End Footer component----",
+  "----Login page----": "----Login page----",
+  "Login_Component": {
+    "APP_NAME": "Midas - VN",
+    "APP_SLOGAN": "Phần mềm quản lý hiệu quả",
+    "loginForm": {
+      "About": "Về Chúng Tôi",
+      "Home": "Trang chủ",
+      "Logged in as": "Đã đang nhập là",
+      "Login": "Đăng nhập",
+      "Logout": "Đăng xuất",
+      "Password": "Mật khẩu",
+      "Password is required": "Mật khẩu là bắt buộc",
+      "Confirm Password": "Xác nhận mật khẩu",
+      "Confirm Password is required": "Xác nhận mật khẩu là bắt buộc",
+      "Username": "Tên người dùng",
+      "Username is required": "Tên người dùng là bắt buộc",
+      "Username or password incorrect.": "Tên người dùng hoặc Mật khẩu không dúng",
+      "Passwords do not match": "Các mật khẩu không khớp",
+      "Reset Password": "Reset lại mật khẩu",
+      "Remember me": "Ghi nhớ thông tin đăng nhập",
+      "Forgot Password": "Quên mật khẩu"
+    }
+  },
+  "----End Login page----": "---- End Login page----",
+  "Client_Component":{
+    "Import_Client":"Nhập Khách hàng"
+  }
+}

@@ -67,7 +67,7 @@ export class AddressTabComponent {
           const addressData = response.data.value;
           addressData.addressId = res.resourceId;
           addressData.addressType = this.getSelectedValue('addressTypeIdOptions', addressData.addressType).name;
-          addressData.isActive = false;
+          addressData.isActive = true;//Jean
           this.clientAddressData.push(addressData);
         });
 
@@ -121,7 +121,7 @@ export class AddressTabComponent {
    * @param {any} fieldName Field Name
    */
   isFieldEnabled(fieldName: any) {
-    return (this.clientAddressFieldConfig.find((fieldObj: any) => fieldObj.field === fieldName)).is_enabled;
+    return (this.clientAddressFieldConfig.find((fieldObj: any) => fieldObj.field === fieldName)).isEnabled//Jean fixed from is_enabled;
   }
 
   /**

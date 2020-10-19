@@ -2,11 +2,15 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule, HammerModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HttpClient } from '@angular/common/http'; //Jean
 import { ServiceWorkerModule } from '@angular/service-worker';
 
 /** Tanslation Imports */
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule,TranslateLoader } from '@ngx-translate/core';
+import {TranslateHttpLoader} from '@ngx-translate/http-loader'
+export function HttpLoaderFactory(http: HttpClient) {
+  return new TranslateHttpLoader(http, './assets/i18n/', '.json');
+}
 
 /** Environment Configuration */
 import { environment } from 'environments/environment';
@@ -55,7 +59,14 @@ import { AppRoutingModule } from './app-routing.module';
     HammerModule,
     HttpClientModule,
     ServiceWorkerModule.register('./ngsw-worker.js', { enabled: environment.production }),
-    TranslateModule.forRoot(),
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: HttpLoaderFactory,
+        deps: [HttpClient]
+      },
+      isolate: true,
+    }),
     CoreModule,
     HomeModule,
     LoginModule,

@@ -46,7 +46,7 @@ export class ClientAddressStepComponent {
     addAddressDialogRef.afterClosed().subscribe((response: any) => {
       if (response.data) {
         const addressData = response.data.value;
-        addressData.isActive = false;
+        addressData.isActive = true; //Jean
         for (const key in addressData) {
           if (addressData[key] === '' || addressData[key] === undefined) {
             delete addressData[key];
@@ -111,7 +111,7 @@ export class ClientAddressStepComponent {
    * @param {any} address Address
    */
   isFieldEnabled(fieldName: any) {
-    return (this.clientAddressFieldConfig.find((fieldObj: any) => fieldObj.field === fieldName)).is_enabled;
+    return (this.clientAddressFieldConfig.find((fieldObj: any) => fieldObj.field === fieldName)).isEnabled//Jean fixed:from  is_enabled;
   }
 
   /**
@@ -120,7 +120,7 @@ export class ClientAddressStepComponent {
    * @param {any} address Address
    */
   getSelectedValue(fieldName: any, fieldId: any) {
-    return (this.clientTemplate.address[fieldName].find((fieldObj: any) => fieldObj.id === fieldId));
+    return (this.clientTemplate.address[0][fieldName].find((fieldObj: any) => fieldObj.id === fieldId));
   }
 
   /**
@@ -133,7 +133,7 @@ export class ClientAddressStepComponent {
       controlName: 'addressTypeId',
       label: 'Address Type',
       value: address ? address.addressTypeId : '',
-      options: { label: 'name', value: 'id', data: this.clientTemplate.address.addressTypeIdOptions },
+      options: { label: 'name', value: 'id', data: this.clientTemplate.address[0].addressTypeIdOptions },
       order: 1,
       required: true
     }) : null);
@@ -184,7 +184,7 @@ export class ClientAddressStepComponent {
       controlName: 'stateProvinceId',
       label: 'State / Province',
       value: address ? address.stateProvinceId : '',
-      options: { label: 'name', value: 'id', data: this.clientTemplate.address.stateProvinceIdOptions },
+      options: { label: 'name', value: 'id', data: this.clientTemplate.address[0].stateProvinceIdOptions },
       order: 8
     }) : null);
     formfields.push(this.isFieldEnabled('countyDistrict') ? new InputBase({
@@ -198,7 +198,7 @@ export class ClientAddressStepComponent {
       controlName: 'countryId',
       label: 'Country',
       value: address ? address.countryId : '',
-      options: { label: 'name', value: 'id', data: this.clientTemplate.address.countryIdOptions },
+      options: { label: 'name', value: 'id', data: this.clientTemplate.address[0].countryIdOptions },
       order: 10
     }) : null);
     formfields.push(this.isFieldEnabled('postalCode') ? new InputBase({
