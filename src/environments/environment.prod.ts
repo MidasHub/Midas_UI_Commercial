@@ -4,20 +4,26 @@ import env from './.env';
 export const environment = {
   production: true,
   version: env.npm_package_version,
-  fineractPlatformTenantId: 'hanoi',  // For connecting to server running elsewhere update the tenant identifier
-  baseApiUrl: 'https://app2.midascore.net:8443',  // For connecting to server running elsewhere update the base API URL
+  fineractPlatformTenantId: 'default',  // For connecting to server running elsewhere update the tenant identifier
+  //baseApiUrl: 'https://app2.midascore.net:8443',  // For connecting to server running elsewhere update the base API URL
+  baseApiUrl: 'https://metabase.tekcompay.com',
   apiProvider: '/fineract-provider/api',
   apiVersion: '/v1',
   serverUrl: '',
   oauth: {
-    enabled: true,  // For connecting to Midas using OAuth2 Authentication change the value to true
+    enabled: false,  // For connecting to Midas using OAuth2 Authentication change the value to true
     serverUrl: ''
   },
-  defaultLanguage: 'en-US',
+  defaultLanguage: 'vi-VN',
   supportedLanguages: [
     'en-US',
-    'fr-FR'
-  ]
+    //'fr-FR',
+    'vi-VN'
+  ],
+  languagesName:{
+   en:"English",
+   vi:"Vietnamese",
+  }
 };
 
 // Server URL

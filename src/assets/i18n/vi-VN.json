@@ -63,7 +63,7 @@
 			"Reset Password": "Reset lại mật khẩu"
 		}
 	},
-	"Home_Component":"Home_Component"{
+	"Home_Component":{
 		"welcome":"Xin chào, {{ username }}"
 	}
 }

@@ -1,10 +1,10 @@
 <div class="mat-typography">
 
-  <h3>{{'Client_Component.ClientStepper.AddressStep.Address' | translate}}</h3>
+  <h3>Address</h3>
 
   <div fxLayout="row" fxLayoutAlign="flex-end" class="m-b-20">
     <button mat-raised-button color="primary" (click)="addAddress()">
-      <fa-icon icon="plus"></fa-icon>&nbsp;&nbsp;{{'Client_Component.ClientStepper.AddressStep.Add' | translate}}
+      <fa-icon icon="plus"></fa-icon>&nbsp;&nbsp;Add
     </button>
   </div>
 
@@ -37,18 +37,18 @@
       </div>
 
       <p>
-        <span *ngIf="isFieldEnabled('street')">{{'Client_Component.ClientStepper.AddressStep.Streer' | translate}} : {{address.street}}<br /></span>
-        <span *ngIf="isFieldEnabled('addressLine1')">{{'Client_Component.ClientStepper.AddressStep.AddressLine1' | translate}} : {{address.addressLine1}}<br /></span>
-        <span *ngIf="isFieldEnabled('addressLine2')">{{'Client_Component.ClientStepper.AddressStep.AddressLine2' | translate}} : {{address.addressLine2}}<br /></span>
-        <span *ngIf="isFieldEnabled('addressLine3')">{{'Client_Component.ClientStepper.AddressStep.AddressLine3' | translate}} : {{address.addressLine3}}<br /></span>
-        <span *ngIf="isFieldEnabled('townVillage')">{{'Client_Component.ClientStepper.AddressStep.TownVilage' | translate}} : {{address.townVillage}}<br /></span>
-        <span *ngIf="isFieldEnabled('city')">{{'Client_Component.ClientStepper.AddressStep.City' | translate}} : {{address.city}}<br /></span>
-        <span *ngIf="isFieldEnabled('stateProvinceId')">{{'Client_Component.ClientStepper.AddressStep.StateProvince' | translate}} :
+        <span *ngIf="isFieldEnabled('street')">Street : {{address.street}}<br /></span>
+        <span *ngIf="isFieldEnabled('addressLine1')">Address Line 1 : {{address.addressLine1}}<br /></span>
+        <span *ngIf="isFieldEnabled('addressLine2')">Address Line 2 : {{address.addressLine2}}<br /></span>
+        <span *ngIf="isFieldEnabled('addressLine3')">Address Line 3 : {{address.addressLine3}}<br /></span>
+        <span *ngIf="isFieldEnabled('townVillage')">Town / Village : {{address.townVillage}}<br /></span>
+        <span *ngIf="isFieldEnabled('city')">City : {{address.city}}<br /></span>
+        <span *ngIf="isFieldEnabled('stateProvinceId')">State / Province :
           {{getSelectedValue('stateProvinceIdOptions',address.stateProvinceId)?.name}}<br /></span>
-        <span *ngIf="isFieldEnabled('countryId')">{{'Client_Component.ClientStepper.AddressStep.Country' | translate}} :
+        <span *ngIf="isFieldEnabled('countryId')">Country :
           {{getSelectedValue('countryIdOptions',address.countryId)?.name}}<br /></span>
-        <span *ngIf="isFieldEnabled('postalCode')">{{'Client_Component.ClientStepper.AddressStep.PostalCode' | translate}} : {{address.postalCode}}<br /></span>
-        <span *ngIf="isFieldEnabled('isActive')">{{'Client_Component.ClientStepper.AddressStep.isActive'| translate }} : {{address.isActive}}<br /></span>
+        <span *ngIf="isFieldEnabled('postalCode')">Postal Code : {{address.postalCode}}<br /></span>
+        <span *ngIf="isFieldEnabled('isActive')">Active Status : {{address.isActive}}<br /></span>
       </p>
 
     </mat-expansion-panel>
@@ -58,10 +58,10 @@
   <div fxLayout="row" class="margin-t" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="2%">
     <button mat-raised-button matStepperPrevious>
       <fa-icon icon="arrow-left"></fa-icon>&nbsp;&nbsp;
-      {{'Client_Component.ClientStepper.AddressStep.Previous'| translate }}
+      Previous
     </button>
     <button mat-raised-button matStepperNext>
-      {{'Client_Component.ClientStepper.AddressStep.Next'| translate }}&nbsp;&nbsp;
+      Next&nbsp;&nbsp;
       <fa-icon icon="arrow-right"></fa-icon>
     </button>
   </div>

@@ -63,7 +63,7 @@
 			"Reset Password": "Reset Password"
 		}
 	},
-	"Home_Component":"Home_Component"{
-		"welcome":"Welcome, {{ username }}"
+	"Home_Component":{
+		"welcome":"Hello, {{ username }}"
 	}
 }
