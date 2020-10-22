@@ -53,7 +53,6 @@ export class ClientAddressStepComponent {
             delete addressData[key];
           }
         }
-        console.log('lala address:',addressData);
         this.clientAddressData.push(addressData);
       }
     });
@@ -122,7 +121,8 @@ export class ClientAddressStepComponent {
    * @param {any} address Address
    */
   getSelectedValue(fieldName: any, fieldId: any) {
-    return (this.clientTemplate.address[fieldName].find((fieldObj: any) => fieldObj.id === fieldId));
+    console.log('this client Template:', this.clientTemplate)
+    return (this.clientTemplate.address[0][fieldName].find((fieldObj: any) => fieldObj.id === fieldId));
   }
 
   /**

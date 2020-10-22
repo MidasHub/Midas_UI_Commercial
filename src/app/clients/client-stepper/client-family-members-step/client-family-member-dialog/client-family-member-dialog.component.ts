@@ -81,7 +81,7 @@ export class ClientFamilyMemberDialogComponent implements OnInit {
    */
   get familyMember() {
     
-    const locale = this.settingsService.language;
+    const locale = this.settingsService.language.code;
     const dateFormat = this.settingsService.dateFormat;
     
     // TODO: Update once language and date settings are setup

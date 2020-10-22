@@ -37,7 +37,7 @@
     "Uptodate": "Midas đã được cập nhật"
   },
   "Home_Component": {
-    "welcome": "Xin chào, ",
+    "welcome": "Xin chào,  {username}",
     "searchActivity": "Tìm kiếm các hành động"
   },
   "Login_Component": {
