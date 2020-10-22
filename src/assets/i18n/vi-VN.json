@@ -1,69 +1,139 @@
 {
-	"----End Footer component----": "----End Footer component----",
-	"----End Login component----": "",
-	"----End Login page----": "---- End Login page----",
-	"----Footer component----": "----Login component----",
-	"----Login component----": "",
-	"----Login page----": "----Login page----",
-	"APP_NAME": "Midas - VN",
-	"Client_Component": {
-		"Account": "Mã CIF",
-		"ClientStepper": {
-			"AddressStep": {
-				"Add": "Thêm địa chỉ mới",
-				"Address": "Loại địa chỉ",
-				"AddressLine1": "Số nhà",
-				"AddressLine2": "Số Lô/Block",
-				"AddressLine3": "Chung cư",
-				"City": "Thành phố thuộc Tỉnh",
-				"Country": "Quốc Gia",
-				"Next": "Kế tiếp",
-				"PostalCode": "Mã bưu điện",
-				"Previous": "Quay lại",
-				"StateProvince": "Tỉnh/Thành phố thuộc TW",
-				"Street": "Tên đường",
-				"TownVilage": "Phường/Xã",
-				"isActive": "đã kích hoạt?"
-			}
-		},
-		"Create_Client": "Tạo khách hàng mới",
-		"ExternalID": "CMND/CCCD",
-		"Gender": "Giới tính",
-		"Import_Client": "Nhập list khách hàng",
-		"Mobile_Number": "Di động",
-		"Name": "Tên",
-		"OfficeName": "Chi nhánh",
-		"StaffName": "Nhân viên phụ trách",
-		"Status": "Trạng thái"
-	},
-	"Footer_component": {
-		"Midas is up to date": "Midas đã được cập nhật",
-		"Version": "Phiên bản"
-	},
-	"Login_Component": {
-		"APP_SLOGAN": "Phần mềm quản lý hiệu quả",
-		"About": "Về Chúng Tôi",
-		"Home": "Trang chủ",
-		"Logged in as": "Đã đăng nhập là",
-		"Logout": "Đăng xuất",
-		"loginForm": {
-			"Forgot Password": "Quên mật khẩu",
-			"Login": "Đăng nhập",
-			"Password": "Mật khẩu",
-			"Password is required": "Mật khẩu là bắt buộc",
-			"Remember me": "Ghi nhớ thông tin đăng nhập",
-			"Username": "Tên người dùng",
-			"Username is required": "Tên người dùng là bắt buộc",
-			"Username or password incorrect.": "Tên người dùng hoặc Mật khẩu không dúng"
-		},
-		"resetPassword": {
-			"Confirm Password": "Xác nhận mật khẩu",
-			"Confirm Password is required": "Xác nhận mật khẩu là bắt buộc",
-			"Passwords do not match": "Các mật khẩu không khớp",
-			"Reset Password": "Reset lại mật khẩu"
-		}
-	},
-	"Home_Component":{
-		"welcome":"Xin chào, {{ username }}"
-	}
+  "APP_NAME": "Midas - VN",
+  "Client_Component": {
+    "ClientStepper": {
+      "AddressStep": {
+        "Add": "Thêm địa chỉ mới",
+        "Address": "Loại địa chỉ",
+        "AddressLine1": "Số nhà",
+        "AddressLine2": "Số Lô/Block",
+        "AddressLine3": "Chung cư",
+        "City": "Thành phố thuộc Tỉnh",
+        "Country": "Quốc Gia",
+        "Next": "Kế tiếp",
+        "PostalCode": "Mã bưu điện",
+        "Previous": "Quay lại",
+        "StateProvince": "Tỉnh/Thành phố thuộc TW",
+        "Street": "Tên đường",
+        "TownVilage": "Phường/Xã",
+        "isActive": "đã kích hoạt?"
+      }
+    },
+    "buttonImportClient": "Nhập list khách hàng",
+    "buttonCreateClient": "Tạo khách hàng mới",
+    "checkBoxShowClosedAccount": "Hiện các CIF đã đóng",
+    "tblColGender": "Giới tính",
+    "tblColExternalID": "CMND/CCCD",
+    "tblColAccount": "Mã CIF",
+    "tblColName": "Tên",
+    "tblColOfficeName": "Chi nhánh",
+    "tblColStaffName": "Nhân viên phụ trách",
+    "tblColStatus": "Trạng thái",
+    "tblColMobileNumber": "Di động",
+    "inputPlaceholderClosedCIF": "Tìm bằng tên khách hàng"
+  },
+  "Footer_Component": {
+    "Version": "Phiên bản",
+    "Uptodate": "Midas đã được cập nhật"
+  },
+  "Home_Component": {
+    "welcome": "Xin chào, ",
+    "searchActivity": "Tìm kiếm các hành động"
+  },
+  "Login_Component": {
+    "APP_SLOGAN": "Phần mềm quản lý hiệu quả",
+    "About": "Về Chúng Tôi",
+    "Home": "Trang chủ",
+    "Logged in as": "Đã đăng nhập là",
+    "Logout": "Đăng xuất",
+    "loginForm": {
+      "Forgot Password": "Quên mật khẩu",
+      "Login": "Đăng nhập",
+      "Password": "Mật khẩu",
+      "Password is required": "Mật khẩu là bắt buộc",
+      "Remember me": "Ghi nhớ thông tin đăng nhập",
+      "Username": "Tên người dùng",
+      "Username is required": "Tên người dùng là bắt buộc",
+      "Username or password incorrect.": "Tên người dùng hoặc Mật khẩu không dúng"
+    },
+    "resetPassword": {
+      "Confirm Password": "Xác nhận mật khẩu",
+      "Confirm Password is required": "Xác nhận mật khẩu là bắt buộc",
+      "Passwords do not match": "Các mật khẩu không khớp",
+      "Reset Password": "Reset lại mật khẩu"
+    }
+  },
+  "Product_Component": {
+    "loanProduct": "Sản phẩm vay",
+    "loanProductLabel": "Thêm sản phẩm vay mới hoặc chỉnh sửa hoặc bỏ kích hoạt sản phẩm vay",
+    "savingProduct": "Sản phẩm huy động không kỳ hạn",
+    "savingProductLabel": "Thêm sản phẩm huy động mới hoặc chỉnh sửa hoặc bỏ kích hoạt sản phẩm huy động",
+    "shareProduct": "Sản phẩm đầu tư",
+    "shareProductLabel": "Thêm sản phẩm đầu tư mới hoặc chỉnh sửa hoặc bỏ kích hoạt sản phẩm đầu tư",
+    "charge": "Phí và phí phạt",
+    "chargeLabel": "Khai báo phí/ phí phạt cho sản phẩm vay, sản phẩm trài khoản và huy động",
+    "productMixLabel": "Khái báo các quy định cho sản phẩm tổng hợp",
+    "fixedDepositProduct": "Sản phẩm Huy động có kỳ hạn",
+    "fixedDepositProductLabel": "Thêm, chỉnh sửa và huy kích hoạt các sản phảm huy động có kỳ hạn",
+    "recurringDepositProduct": "Sản phẩm huy động có kỳ hạn tái tục",
+    "recurringDepositProductLabel": "Thêm, sửa và bỏ kích hoạt các sản phẩm huy động có kỳ hạn tái tục",
+    "manageTaxConfigurationLabel": "Khái báo các nhóm và thành phần về Thuế",
+    "floatingRate": "Lãi suất thả nổi",
+    "floatingRateLabel": "Khai báo lãi suất thả nổi cho các khoản vay",
+    "manageTaxConfiguration": "Các thiết lập về Thuế",
+    "productMix": "Sản phẩm tổng hợp",
+    "savingProductComponent": {
+      "createSavingButton": "Tạo sản phẩm mới",
+      "filterLabel": "Tìm sản phẩm",
+      "nameColLabel": "Tên sản phẩm",
+      "shortNameColLabel": "Mã sản phẩm",
+      "createEditSavingProductComp": {
+        "detailStepLabel": "Thông tin chi tiết",
+        "currencyStepLabel": "Loại tiền",
+        "termStepLabel": "Cách tính lãi",
+        "settingStepLabel": "Thông số sản phẩm",
+        "chargeStepLabel": "Phí và Phí Phạt",
+        "accountingStepLabel": "Kế toán",
+        "previewStepLabel": "Tóm tắt về sản phẩm"
+      },
+      "savingProductStepper": {
+        "accountingStep": {
+          "savingReference": "Tài khoản Tài sản",
+          "savingReferenceLabel": "<strong> Yêu cầu: </strong> nhập thông tin tài khoản Tài sản",
+          "overdraftPortfolio": "Thấu chi",
+          "overdraftPortfolioLabel": "<strong>Yêu cầu: <strong> nhập thông tin thấu chi",
+          "savingControl": "Tài khoản Nguồn vốn",
+          "savingControlLabel": "<strong> Yêu cầu: </strong> nhập thông tin tài khoản Nguồn vốn",
+          "savingEscheat": "Tài khoản cho nghiệp vụ tịch thu",
+          "savingEscheatLabel": "<strong> Yêu cầu: </strong>  nhập thông tin tài khoản Escheat",
+          "savingInterest": "Lãi suất huy động không kì hạn",
+          "savingInterestLabel": "<strong> Yêu cầu: </strong> nhập lãi suất huy động không kỳ hạn.",
+          "savingWriteOff": "Write-off.",
+          "savingWriteOffLabel": "<strong> Yêu cầu: </strong> nhập tài khoản write-off",
+          "savingIncomePenanty": "Thu nhập từ phí phạt",
+          "savingIncomeFee": "Thu nhập từ phí",
+          "savingIncomeFeeLabel": "<strong> Yêu cầu: </strong> nhập tài khoản Thu nhập từ phí",
+          "savingIncomePenantyLabel": "<strong> Yêu cầu: </strong> nhập tài khoản Thu nhập từ phí phạt",
+          "savingIncomeOverdraft": "Thu nhập từ Lãi thấu chi",
+          "savingIncomeOverdraftLabel": "<strong> Yêu cầu: </strong> nhập tài khoản lãi thấu chi",
+          "titleAdvanceAccounting": "Quy định kế toán nâng cao",
+          "titleAsset": "Tài sản",
+          "titleExpense": "Chi phí",
+          "titleIncome": "Thu nhập",
+          "titleLiability": "Nguồn vốn",
+          "titleAdvanceAccountingPayment": "Thiết lập tài khoản nguồn cho các kênh thanh toán",
+          "titleAdvanceAccountingPaymentType": "Loại thanh toán",
+          "titleAdvanceAccountingPaymentFundSource": "Tài khoản nguồn",
+          "titleAdvanceAccountingPaymentAction": "Hành động",
+          "titleAdvanceAccountingFeeToIncome": "Liên kết Phí đến tài khoản Thu nhập xác định",
+          "titleAdvanceAccountingPenantyToIncome": "Liên kết Phí Phạt đến tài khoản Thu nhập xác định",
+          "savingSuspense": "Tài khoản suspense cho Nghiệp vụ chuyển khoản",
+          "savingSuspenseLabel": "<strong> Yêu cầu: </strong> nhập thông tin tài khoản suspense cho Nghiệp vụ chuyển khoản",
+          "titleAdvanceAccountingAddButton": "Thêm",
+          "PreviousButton": "Trước",
+          "NextButton": "Kế tiếp"
+        }
+      }
+    }
+  }
 }

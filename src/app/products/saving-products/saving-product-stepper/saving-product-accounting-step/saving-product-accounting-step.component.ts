@@ -8,6 +8,9 @@ import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.co
 import { FormfieldBase } from 'app/shared/form-dialog/formfield/model/formfield-base';
 import { SelectBase } from 'app/shared/form-dialog/formfield/model/select-base';
 
+/* add translate language */
+import { TranslateService } from '@ngx-translate/core';
+
 @Component({
   selector: 'mifosx-saving-product-accounting-step',
   templateUrl: './saving-product-accounting-step.component.html',
@@ -35,6 +38,7 @@ export class SavingProductAccountingStepComponent implements OnInit {
   feesPenaltyIncomeDisplayedColumns: string[] = ['chargeId', 'incomeAccountId', 'actions'];
 
   constructor(private formBuilder: FormBuilder,
+              private translate:TranslateService,
               public dialog: MatDialog) {
     this.createsavingProductAccountingForm();
     this.setConditionalControls();

@@ -9,6 +9,8 @@ import { SavingProductChargesStepComponent } from '../saving-product-stepper/sav
 import { SavingProductAccountingStepComponent } from '../saving-product-stepper/saving-product-accounting-step/saving-product-accounting-step.component';
 
 import { ProductsService } from 'app/products/products.service';
+// import translate Service
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'mifosx-create-saving-product',
@@ -29,6 +31,7 @@ export class CreateSavingProductComponent implements OnInit {
 
   constructor(private route: ActivatedRoute,
               private productsService: ProductsService,
+              private translate: TranslateService,
               private router: Router) {
     this.route.data.subscribe((data: { savingProductsTemplate: any }) => {
       this.savingProductsTemplate = data.savingProductsTemplate;

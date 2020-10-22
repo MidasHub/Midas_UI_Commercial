@@ -12,175 +12,162 @@
 
     <div *ngIf="savingProductAccountingForm.value.accountingRule === 2" fxFlexFill fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
 
-      <h4 fxFlex="98%" class="mat-h4">Assets</h4>
+      <h4 fxFlex="98%" class="mat-h4" innerHTML="{{'Product_Component.savingProductComponent.savingProductStepper.accountingStep.titleAsset'| translate}}"></h4>
 
       <mat-form-field fxFlex="48%">
-        <mat-label>Saving reference</mat-label>
+        <mat-label>{{'Product_Component.savingProductComponent.savingProductStepper.accountingStep.savingReference'| translate}}</mat-label>
         <mat-select formControlName="savingsReferenceAccountId" required>
           <mat-option *ngFor="let assetAccount of assetAccountData" [value]="assetAccount.id">
             {{ assetAccount.name }}
           </mat-option>
         </mat-select>
-        <mat-error>
-          Saving reference is <strong>required</strong>
+        <mat-error [innerHTML]="'Product_Component.savingProductComponent.savingProductStepper.accountingStep.savingReferenceLabel'| translate">
+          
         </mat-error>
       </mat-form-field>
 
       <mat-form-field fxFlex="48%">
-        <mat-label>Overdraft portfolio</mat-label>
+        <mat-label>{{'Product_Component.savingProductComponent.savingProductStepper.accountingStep.overdraftPortfolio'| translate}}</mat-label>
         <mat-select formControlName="overdraftPortfolioControlId" required>
           <mat-option *ngFor="let assetAccount of assetAccountData" [value]="assetAccount.id">
             {{ assetAccount.name }}
           </mat-option>
         </mat-select>
-        <mat-error>
-          Overdraft portfolio is <strong>required</strong>
+        <mat-error [innerHTML]="'Product_Component.savingProductComponent.savingProductStepper.accountingStep.overdraftPortfolioLabel'| translate" >
         </mat-error>
       </mat-form-field>
 
       <mat-divider fxFlex="98%"></mat-divider>
 
-      <h4 fxFlex="98%" class="mat-h4">Liabilities</h4>
+      <h4 fxFlex="98%" class="mat-h4">{{'Product_Component.savingProductComponent.savingProductStepper.accountingStep.titleLiability'| translate}}</h4>
 
       <mat-form-field fxFlex="48%">
-        <mat-label>Saving control</mat-label>
+        <mat-label>{{'Product_Component.savingProductComponent.savingProductStepper.accountingStep.savingControl'| translate}}</mat-label>
         <mat-select formControlName="savingsControlAccountId" required>
           <mat-option *ngFor="let liabilityAccount of liabilityAccountData" [value]="liabilityAccount.id">
             {{ liabilityAccount.name }}
           </mat-option>
         </mat-select>
-        <mat-error>
-          Saving control is <strong>required</strong>
+        <mat-error [innerHTML]="'Product_Component.savingProductComponent.savingProductStepper.accountingStep.savingControlLabel'| translate">t
+    
         </mat-error>
       </mat-form-field>
 
       <mat-form-field fxFlex="48%">
-        <mat-label>Savings transfers in suspense</mat-label>
+        <mat-label [innerHTML]="'Product_Component.savingProductComponent.savingProductStepper.accountingStep.savingSuspense'| translate"></mat-label>
         <mat-select formControlName="transfersInSuspenseAccountId" required>
           <mat-option *ngFor="let liabilityAccount of liabilityAccountData" [value]="liabilityAccount.id">
             {{ liabilityAccount.name }}
           </mat-option>
         </mat-select>
-        <mat-error>
-          Savings transfers in suspense is <strong>required</strong>
+        <mat-error [innerHTML]="'Product_Component.savingProductComponent.savingProductStepper.accountingStep.savingSuspenseLabel'| translate">
         </mat-error>
       </mat-form-field>
 
       <mat-form-field fxFlex="48%" *ngIf="isDormancyTrackingActive.value">
-        <mat-label>Escheat liability</mat-label>
+        <mat-label [innerHTML]="'Product_Component.savingProductComponent.savingProductStepper.accountingStep.savingEscheat'| translate"></mat-label>
         <mat-select formControlName="escheatLiabilityId" required>
           <mat-option *ngFor="let liabilityAccount of liabilityAccountData" [value]="liabilityAccount.id">
             {{ liabilityAccount.name }}
           </mat-option>
         </mat-select>
-        <mat-error>
-          Escheat liability is <strong>required</strong>
+        <mat-error [innerHTML]="'Product_Component.savingProductComponent.savingProductStepper.accountingStep.savingEscheatLabel'| translate">
         </mat-error>
       </mat-form-field>
 
       <mat-divider fxFlex="98%"></mat-divider>
 
-      <h4 fxFlex="98%" class="mat-h4">Expenses</h4>
+      <h4 fxFlex="98%" class="mat-h4">{{'Product_Component.savingProductComponent.savingProductStepper.accountingStep.titleExpense'| translate}}</h4>
 
       <mat-form-field fxFlex="48%">
-        <mat-label>Interest on savings</mat-label>
+        <mat-label [innerHTML]="'Product_Component.savingProductComponent.savingProductStepper.accountingStep.savingInterest'| translate"></mat-label>
         <mat-select formControlName="interestOnSavingsAccountId" required>
           <mat-option *ngFor="let expenseAccount of expenseAccountData" [value]="expenseAccount.id">
             {{ expenseAccount.name }}
           </mat-option>
         </mat-select>
-        <mat-error>
-          Interest on savings is <strong>required</strong>
-        </mat-error>
+        <mat-error [innerHTML]="'Product_Component.savingProductComponent.savingProductStepper.accountingStep.savingInterestLabel'| translate"></mat-error>
       </mat-form-field>
 
       <mat-form-field fxFlex="48%">
-        <mat-label>Write-off</mat-label>
+        <mat-label [innerHTML]="'Product_Component.savingProductComponent.savingProductStepper.accountingStep.savingWriteOff'| translate"></mat-label>
         <mat-select formControlName="writeOffAccountId" required>
           <mat-option *ngFor="let expenseAccount of expenseAccountData" [value]="expenseAccount.id">
             {{ expenseAccount.name }}
           </mat-option>
         </mat-select>
-        <mat-error>
-          Write-off is <strong>required</strong>
-        </mat-error>
+        <mat-error [innerHTML]="'Product_Component.savingProductComponent.savingProductStepper.accountingStep.savingWriteOffLabel'| translate"></mat-error>
       </mat-form-field>
 
       <mat-divider fxFlex="98%"></mat-divider>
 
-      <h4 fxFlex="98%" class="mat-h4">Income</h4>
+      <h4 fxFlex="98%" class="mat-h4">{{'Product_Component.savingProductComponent.savingProductStepper.accountingStep.titleIncome'| translate}}</h4>
 
       <mat-form-field fxFlex="48%">
-        <mat-label>Income from fees</mat-label>
+        <mat-label [innerHTML]="'Product_Component.savingProductComponent.savingProductStepper.accountingStep.savingIncomeFee'| translate"></mat-label>
         <mat-select formControlName="incomeFromFeeAccountId" required>
           <mat-option *ngFor="let incomeAccount of incomeAccountData" [value]="incomeAccount.id">
             {{ incomeAccount.name }}
           </mat-option>
         </mat-select>
-        <mat-error>
-          Income from fees Repayments is <strong>required</strong>
-        </mat-error>
+        <mat-error [innerHTML]="'Product_Component.savingProductComponent.savingProductStepper.accountingStep.savingIncomeFeeLabel'| translate"></mat-error>
       </mat-form-field>
 
       <mat-form-field fxFlex="48%">
-        <mat-label>Income from penalties</mat-label>
+        <mat-label [innerHTML]="'Product_Component.savingProductComponent.savingProductStepper.accountingStep.savingIncomePenanty'| translate"></mat-label>
         <mat-select formControlName="incomeFromPenaltyAccountId" required>
           <mat-option *ngFor="let incomeAccount of incomeAccountData" [value]="incomeAccount.id">
             {{ incomeAccount.name }}
           </mat-option>
         </mat-select>
-        <mat-error>
-          Income from penalties is <strong>required</strong>
-        </mat-error>
+        <mat-error [innerHTML]="'Product_Component.savingProductComponent.savingProductStepper.accountingStep.savingIncomePenantyLabel'| translate"></mat-error>
       </mat-form-field>
 
       <mat-form-field fxFlex="48%">
-        <mat-label>Overdraft Interest Income</mat-label>
+        <mat-label [innerHTML]="'Product_Component.savingProductComponent.savingProductStepper.accountingStep.savingIncomeOverdraft'| translate"></mat-label>
         <mat-select formControlName="incomeFromInterestId" required>
           <mat-option *ngFor="let incomeAccount of incomeAccountData" [value]="incomeAccount.id">
             {{ incomeAccount.name }}
           </mat-option>
         </mat-select>
-        <mat-error>
-          Overdraft Interest Income is <strong>required</strong>
-        </mat-error>
+        <mat-error [innerHTML]="'Product_Component.savingProductComponent.savingProductStepper.accountingStep.savingIncomeOverdraftLabel'| translate"></mat-error>
       </mat-form-field>
 
       <mat-divider fxFlex="98%"></mat-divider>
 
-      <h3 fxFlex="23%" class="mat-h3">Advanced Accounting Rules</h3>
+      <h3 fxFlex="23%" class="mat-h3" [innerHTML]="'Product_Component.savingProductComponent.savingProductStepper.accountingStep.titleAdvanceAccounting'| translate"></h3>
 
       <mat-checkbox fxFlex="73%" formControlName="advancedAccountingRules"></mat-checkbox>
 
       <div *ngIf="savingProductAccountingForm.value.advancedAccountingRules" fxFlexFill fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
 
-        <h4 fxFlex="33%" class="mat-h4">Configure Fund Sources for Payment Channels</h4>
+        <h4 fxFlex="33%" class="mat-h4"[innerHTML]="'Product_Component.savingProductComponent.savingProductStepper.accountingStep.titleAdvanceAccountingPaymentFundSource'| translate"></h4>
 
         <div fxFlex="63%">
           <button type="button" mat-raised-button color="primary" (click)="add('PaymentFundSource', paymentChannelToFundSourceMappings)">
             <fa-icon icon="plus"></fa-icon>&nbsp;&nbsp;
-            Add
+            {{'Product_Component.savingProductComponent.savingProductStepper.accountingStep.titleAdvanceAccountingAddButton'| translate}}
           </button>
         </div>
 
         <table fxFlex="98%" class="mat-elevation-z1" mat-table [dataSource]="paymentChannelToFundSourceMappings.value" *ngIf="paymentChannelToFundSourceMappings.value.length !== 0">
 
           <ng-container matColumnDef="paymentTypeId">
-            <th mat-header-cell *matHeaderCellDef> Payment Type </th>
+            <th mat-header-cell *matHeaderCellDef [innerHTML]="'Product_Component.savingProductComponent.savingProductStepper.accountingStep.titleAdvanceAccountingPaymentType'| translate"> </th>
             <td mat-cell *matCellDef="let paymentFundSource">
               {{ paymentFundSource.paymentTypeId | find:paymentTypeData:'id':'name' }}
             </td>
           </ng-container>
 
           <ng-container matColumnDef="fundSourceAccountId">
-            <th mat-header-cell *matHeaderCellDef> Fund Source </th>
+            <th mat-header-cell *matHeaderCellDef [innerHTML]="'Product_Component.savingProductComponent.savingProductStepper.accountingStep.titleAdvanceAccountingFundSource'| translate"> </th>
             <td mat-cell *matCellDef="let paymentFundSource">
               {{ paymentFundSource.fundSourceAccountId | find:assetAccountData:'id':'name' }}
             </td>
           </ng-container>
 
           <ng-container matColumnDef="actions">
-            <th mat-header-cell *matHeaderCellDef> Actions </th>
+            <th mat-header-cell *matHeaderCellDef [innerHTML]="'Product_Component.savingProductComponent.savingProductStepper.accountingStep.titleAdvanceAccountingAction'| translate"></th>
             <td mat-cell *matCellDef="let paymentFundSource; let i = index">
               <button mat-icon-button color="primary" (click)="edit('PaymentFundSource', paymentChannelToFundSourceMappings, i)">
                 <fa-icon icon="edit"></fa-icon>
@@ -196,12 +183,12 @@
 
         </table>
 
-        <h4 fxFlex="33%" class="mat-h4">Map Fees to Specific Income Accounts</h4>
+        <h4 fxFlex="33%" class="mat-h4"[innerHTML]="'Product_Component.savingProductComponent.savingProductStepper.accountingStep.titleAdvanceAccountingFeeToIncome'| translate"></h4>
 
         <div fxFlex="63%">
           <button type="button" mat-raised-button color="primary" (click)="add('FeesIncome', feeToIncomeAccountMappings)">
             <fa-icon icon="plus"></fa-icon>&nbsp;&nbsp;
-            Add
+            {{'Product_Component.savingProductComponent.savingProductStepper.accountingStep.titleAdvanceAccountingAddButton'| translate}}
           </button>
         </div>
 
@@ -238,12 +225,12 @@
 
         </table>
 
-        <h4 fxFlex="33%" class="mat-h4">Map Penalties to Specific Income Accounts</h4>
+        <h4 fxFlex="33%" class="mat-h4"[innerHTML]="'Product_Component.savingProductComponent.savingProductStepper.accountingStep.titleAdvanceAccountingPenantyToIncome'| translate"></h4>
 
         <div fxFlex="63%">
           <button type="button" mat-raised-button color="primary" (click)="add('PenaltyIncome', penaltyToIncomeAccountMappings)">
             <fa-icon icon="plus"></fa-icon>&nbsp;&nbsp;
-            Add
+            {{'Product_Component.savingProductComponent.savingProductStepper.accountingStep.titleAdvanceAccountingAddButton'| translate}}
           </button>
         </div>
 
@@ -290,10 +277,10 @@
   <div fxLayout="row" class="margin-t" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="2%">
     <button mat-raised-button matStepperPrevious>
       <fa-icon icon="arrow-left"></fa-icon>&nbsp;&nbsp;
-      Previous
+      {{'Product_Component.savingProductComponent.savingProductStepper.accountingStep.PreviousButton'| translate}}
     </button>
     <button mat-raised-button matStepperNext [disabled]="!savingProductFormValid">
-      Next&nbsp;&nbsp;
+      {{'Product_Component.savingProductComponent.savingProductStepper.accountingStep.NextButton'| translate}}&nbsp;&nbsp;
       <fa-icon icon="arrow-right"></fa-icon>
     </button>
   </div>

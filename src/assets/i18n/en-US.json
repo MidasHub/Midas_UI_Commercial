@@ -1,69 +1,139 @@
 {
-	"----End Footer component----": "----End Footer component----",
-	"----End Login component----": "---- End Login component----",
-	"----End Login page----": "",
-	"----Footer component----": "----Login component----",
-	"----Login component----": "----Login component----",
-	"----Login page----": "",
-	"APP_NAME": "Midas - En",
-	"Client_Component": {
-		"Account": "CIF #",
-		"ClientStepper": {
-			"AddressStep": {
-				"Add": "Add",
-				"Address": "Address",
-				"AddressLine1": "AddressLine1",
-				"AddressLine2": "AddressLine2",
-				"AddressLine3": "AddressLine3",
-				"City": "City",
-				"Country": "Country",
-				"Next": "Next",
-				"PostalCode": "PostalCode",
-				"Previous": "Previous",
-				"StateProvince": "StateProvince",
-				"Street": "Street",
-				"TownVilage": "TownVilage",
-				"isActive": "isActive"
-			}
-		},
-		"Create_Client": "Create Client",
-		"ExternalID": "Citizen ID",
-		"Gender": "Gender",
-		"Import_Client": "Import Client",
-		"Mobile_Number": "Mobile Number",
-		"Name": "Name",
-		"OfficeName": "OfficeName",
-		"StaffName": "StaffName",
-		"Status": "Status"
-	},
-	"Footer_component": {
-		"Midas is up to date": "Midas is up to date",
-		"Version": "Version"
-	},
-	"Login_Component": {
-		"APP_SLOGAN": "This is a Single Page Web that can help your Business grow",
-		"About": "About",
-		"Home": "Home",
-		"Logged in as": "Logged in as",
-		"Logout": "Logout",
-		"loginForm": {
-			"Forgot Password": "Forgot Password",
-			"Login": "Login",
-			"Password": "Password",
-			"Password is required": "Password is required",
-			"Remember me": "Remember me",
-			"Username": "Username",
-			"Username is required": "Username is required",
-			"Username or password incorrect.": "Username or password incorrect"
-		},
-		"resetPassword": {
-			"Confirm Password": "Confirm Password",
-			"Confirm Password is required": "Confirm Password is required",
-			"Passwords do not match": "Passwords do not match",
-			"Reset Password": "Reset Password"
-		}
-	},
-	"Home_Component":{
-		"welcome":"Hello, {{ username }}"
-	}
+  "APP_NAME": "Midas - En",
+  "Client_Component": {
+    "ClientStepper": {
+      "AddressStep": {
+        "Add": "Add",
+        "Address": "Address",
+        "AddressLine1": "AddressLine1",
+        "AddressLine2": "AddressLine2",
+        "AddressLine3": "AddressLine3",
+        "City": "City",
+        "Country": "Country",
+        "Next": "Next",
+        "PostalCode": "PostalCode",
+        "Previous": "Previous",
+        "StateProvince": "StateProvince",
+        "Street": "Street",
+        "TownVilage": "TownVilage",
+        "isActive": "isActive"
+      }
+    },
+    "buttonImportClient": "Import Client",
+    "buttonCreateClient": "Create Client",
+    "checkBoxShowClosedAccount": "Show Closed Accounts",
+    "tblColGender": "Gender",
+    "tblColExternalID": "Citizen ID",
+    "tblColAccount": "CIF #",
+    "tblColName": "Name",
+    "tblColOfficeName": "OfficeName",
+    "tblColStaffName": "StaffName",
+    "tblColStatus": "Status",
+    "tblColMobileNumber": "Mobile Number",
+    "inputPlaceholderClosedCIF": "Search by client name"
+  },
+  "Footer_Component": {
+    "Version": "Version",
+    "Uptodate": "Midas is up to date"
+  },
+  "Home_Component": {
+    "welcome": "Hello, ",
+    "searchActivity": "Search Activity"
+  },
+  "Login_Component": {
+    "APP_SLOGAN": "This is a Single Page Web that can help your Business grow",
+    "About": "About",
+    "Home": "Home",
+    "Logged in as": "Logged in as",
+    "Logout": "Logout",
+    "loginForm": {
+      "Forgot Password": "Forgot Password",
+      "Login": "Login",
+      "Password": "Password",
+      "Password is required": "Password is required",
+      "Remember me": "Remember me",
+      "Username": "Username",
+      "Username is required": "Username is required",
+      "Username or password incorrect.": "Username or password incorrect"
+    },
+    "resetPassword": {
+      "Confirm Password": "Confirm Password",
+      "Confirm Password is required": "Confirm Password is required",
+      "Passwords do not match": "Passwords do not match",
+      "Reset Password": "Reset Password"
+    }
+  },
+  "Product_Component": {
+    "loanProduct": "Loan Product",
+    "loanProductLabel": "Add new loan product or modify or inactivate loan product",
+    "savingProduct": "Savings Products",
+    "savingProductLabel": "Add new savings product or modify or inactivate savings product",
+    "shareProduct": "Share Products",
+    "shareProductLabel": "Add new share product or modify or inactivate share product",
+    "charge": "Charges",
+    "chargeLabel": "Define charges/penalties for loan products, savings and deposit products",
+    "productMixLabel": "Defines rules for taking multiple rules",
+    "fixedDepositProduct": "Fixed Deposit Products",
+    "fixedDepositProductLabel": "Add, modify or inactivate a Fixed deposit product",
+    "recurringDepositProduct": "Recurring Deposit Products",
+    "recurringDepositProductLabel": "Add, modify or inactivate a Recurring Deposit product",
+    "manageTaxConfigurationLabel": "Define Tax components and Tax groups",
+    "floatingRate": "Floating Rates",
+    "floatingRateLabel": "Define floating rates for loan products",
+    "manageTaxConfiguration": "Manage Tax Configurations",
+    "productMix": "Products Mix",
+    "savingProductComponent": {
+      "createSavingButton": "Create Saving Product",
+      "filterLabel": "Filter",
+      "nameColLabel": "Name",
+      "shortNameColLabel": "Short Name",
+      "createEditSavingProductComp": {
+        "detailStepLabel": "Detail",
+        "currencyStepLabel": "Currenc",
+        "termStepLabel": "Terms",
+        "settingStepLabel": "Settings",
+        "chargeStepLabel": "Charges",
+        "accountingStepLabel": "Accounting",
+        "previewStepLabel": "Preview"
+      },
+      "savingProductStepper": {
+        "accountingStep": {
+          "savingReference": "Saving reference",
+          "savingReferenceLabel": "Saving reference is <strong>required</strong>",
+          "overdraftPortfolio": "Overdraft portfolio",
+          "overdraftPortfolioLabel": "Overdraft portfolio is <strong>required</strong>",
+          "savingControl": "Saving control",
+          "savingControlLabel": "Saving control is <strong>required</strong>",
+          "savingEscheat": "Escheat liability",
+          "savingEscheatLabel": "Escheat liability is <strong>required</strong>",
+          "savingInterest": "Interest on savings",
+          "savingInterestLabel": "Interest on savings is <strong>required</strong>",
+          "savingWriteOff": "Write-off",
+          "savingWriteOffLabel": "Write-off is <strong>required</strong>",
+          "savingIncomePenanty": "Income from penalties",
+          "savingIncomeFee": "Income from fees",
+          "savingIncomeFeeLabel": "Income from fees Repayments is <strong>required</strong>",
+          "savingIncomePenantyLabel": "Income from penalties is <strong>required</strong>",
+          "savingIncomeOverdraft": "Overdraft Interest Income",
+          "savingIncomeOverdraftLabel": "Overdraft Interest Income is <strong>required</strong>",
+          "titleAdvanceAccounting": "Advanced Accounting Rules",
+          "titleAsset": "Assets",
+          "titleExpense": "Expense",
+          "titleIncome": "Income",
+          "titleLiability": "Liabilities",
+          "titleAdvanceAccountingPayment": "Configure Fund Sources for Payment Channels",
+          "titleAdvanceAccountingPaymentType": "Payment Type",
+          "titleAdvanceAccountingPaymentFundSource": "Fund Source",
+          "titleAdvanceAccountingPaymentAction": "Action",
+          "titleAdvanceAccountingFeeToIncome": "Map Fees to Specific Income Accounts",
+          "titleAdvanceAccountingPenantyToIncome": "Map Penalties to Specific Income Accounts",
+          "savingSuspense": "Savings transfers in suspense",
+          "savingSuspenseLabel": "Savings transfers in suspense is <strong>required</strong>",
+          "titleAdvanceAccountingAddButton": "Add",
+          "PreviousButton": "Previous",
+          "NextButton": "Nex"
+        }
+      }
+    }
+  }
 }

@@ -11,6 +11,7 @@ import { tap } from 'rxjs/operators';
 
 /** Custom Services */
 import { ClientsService } from './clients.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'mifosx-clients',
@@ -29,7 +30,7 @@ export class ClientsComponent implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
-  constructor(private clientsService: ClientsService) {
+  constructor(private clientsService: ClientsService, private translate:TranslateService) {
 
   }
 

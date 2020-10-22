@@ -20,6 +20,10 @@ export class SettingsComponent implements OnInit {
     {
       name: 'English',
       code: 'en'
+    },
+    {
+      name: 'Vietnamese',
+      code: 'vi'
     }
   ];
   /** Date formats. */
