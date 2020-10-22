@@ -31,9 +31,9 @@ export class SettingsService {
 
   /**
    * Returns date format setting.
+   * TẠM THÒI HARDCODE PHẦN DATEFORMAT = 'dd MMMM yyyy' VÀ LOCALE = 'en' DO CÓ LỖI KHI GỌI API
    */
   get dateFormat() {
-    //console.log('Date Format:',localStorage.getItem('midasDateFormat'))
     return 'dd MMMM yyyy';//JSON.parse( localStorage.getItem('midasDateFormat'));
   }
 
@@ -41,9 +41,7 @@ export class SettingsService {
    * Returns language setting
    */
   get language() {
-    // console.log('langcode:',JSON.parse(localStorage.getItem('midasLanguageCode')))
-    //return localStorage.getItem('midasLocale');
-    return { name: localStorage.getItem('midasLanguageCode'), code: localStorage.getItem('midasLocale') }
+    return { name: localStorage.getItem('midasLanguageCode'), code:'en'}; //localStorage.getItem('midasLocale') }
   }
 
 }
