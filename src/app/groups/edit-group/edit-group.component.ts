@@ -71,7 +71,7 @@ export class EditGroupComponent implements OnInit {
    */
   createEditGroupForm() {
     this.editGroupForm = this.formBuilder.group({
-      'name': ['', [Validators.required, Validators.pattern('(^[A-z]).*')]],
+      'name': ['', [Validators.required, Validators.pattern('^([^!@#$%^&*()_+=<>,.?\/\-]*)$')]],
       'submittedOnDate': ['', Validators.required],
       'staffId': [''],
       'externalId': ['']

@@ -131,14 +131,15 @@ export class EditClientComponent implements OnInit {
       if (legalFormId === 1) {
         this.editClientForm.removeControl('fullname');
         this.editClientForm.removeControl('clientNonPersonDetails');
-        this.editClientForm.addControl('firstname', new FormControl(this.clientDataAndTemplate.firstname, Validators.required));
-        this.editClientForm.addControl('middlename', new FormControl(this.clientDataAndTemplate.middlename));
-        this.editClientForm.addControl('lastname', new FormControl(this.clientDataAndTemplate.lastname, Validators.required));
+        //Jean changed from "Validators.required" to "[Validators.required, Validators.pattern('^([^!@#$%^&*()_+=<>,.?\/\-]*)$')]"
+        this.editClientForm.addControl('firstname', new FormControl(this.clientDataAndTemplate.firstname,[Validators.required, Validators.pattern('^([^!@#$%^&*()_+=<>,.?\/\-]*)$')] ));
+        this.editClientForm.addControl('middlename', new FormControl(this.clientDataAndTemplate.middlename, Validators.pattern('^([^!@#$%^&*()_+=<>,.?\/\-]*)$')));
+        this.editClientForm.addControl('lastname', new FormControl(this.clientDataAndTemplate.lastname, [Validators.required, Validators.pattern('^([^!@#$%^&*()_+=<>,.?\/\-]*)$')]));
       } else {
         this.editClientForm.removeControl('firstname');
         this.editClientForm.removeControl('middlename');
         this.editClientForm.removeControl('lastname');
-        this.editClientForm.addControl('fullname', new FormControl(this.clientDataAndTemplate.fullname, Validators.required));
+        this.editClientForm.addControl('fullname', new FormControl(this.clientDataAndTemplate.fullname, [Validators.required, Validators.pattern('^([^!@#$%^&*()_+=<>,.?\/\-]*)$')]));
         this.editClientForm.addControl('clientNonPersonDetails', this.formBuilder.group({
           'constitutionId': [this.clientDataAndTemplate.clientNonPersonDetails.constitution && this.clientDataAndTemplate.clientNonPersonDetails.constitution.id],
           'incorpValidityTillDate': [this.clientDataAndTemplate.clientNonPersonDetails.incorpValidityTillDate && new Date(this.clientDataAndTemplate.clientNonPersonDetails.incorpValidityTillDate)],

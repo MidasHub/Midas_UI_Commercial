@@ -106,14 +106,15 @@ export class ClientGeneralStepComponent implements OnInit {
       if (legalFormId === 1) {
         this.createClientForm.removeControl('fullname');
         this.createClientForm.removeControl('clientNonPersonDetails');
-        this.createClientForm.addControl('firstname', new FormControl('', [Validators.required, Validators.pattern('(^[A-z]).*')]));
-        this.createClientForm.addControl('middlename', new FormControl('', Validators.pattern('(^[A-z]).*')));
-        this.createClientForm.addControl('lastname', new FormControl('', [Validators.required, Validators.pattern('(^[A-z]).*')]));
+        // Jean: change from '(^[A-z]).*' to  '^([^!@#$%^&*()_+=<>,.?\/\-]*)$'
+        this.createClientForm.addControl('firstname', new FormControl('', [Validators.required, Validators.pattern('^([^!@#$%^&*()_+=<>,.?\/\-]*)$')]));
+        this.createClientForm.addControl('middlename', new FormControl('', Validators.pattern('^([^!@#$%^&*()_+=<>,.?\/\-]*)$')));
+        this.createClientForm.addControl('lastname', new FormControl('', [Validators.required, Validators.pattern('^([^!@#$%^&*()_+=<>,.?\/\-]*)$')]));
       } else {
         this.createClientForm.removeControl('firstname');
         this.createClientForm.removeControl('middlename');
         this.createClientForm.removeControl('lastname');
-        this.createClientForm.addControl('fullname', new FormControl('', [Validators.required, Validators.pattern('(^[A-z]).*')]));
+        this.createClientForm.addControl('fullname', new FormControl('', [Validators.required, Validators.pattern('^([^!@#$%^&*()_+=<>,.?\/\-]*)$')]));
         this.createClientForm.addControl('clientNonPersonDetails', this.formBuilder.group({
           'constitutionId': [''],
           'incorpValidityTillDate': [''],

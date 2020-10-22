@@ -67,7 +67,7 @@ export class CreateCenterComponent implements OnInit {
    */
   createCenterForm() {
     this.centerForm = this.formBuilder.group({
-      'name': ['', [Validators.required, Validators.pattern('(^[A-z]).*')]],
+      'name': ['', [Validators.required, Validators.pattern('^([^!@#$%^&*()_+=<>,.?\/\-]*)$')]],
       'officeId': ['', Validators.required],
       'submittedOnDate': ['', Validators.required],
       'staffId': [''],

@@ -73,7 +73,7 @@ export class EditTellerComponent implements OnInit {
   createEditTellerForm() {
     this.tellerForm = this.formBuilder.group({
       'officeId': [{value: this.tellerData.officeId, disabled: true}],
-      'name': [this.tellerData.name, [Validators.required, Validators.pattern('(^[A-z]).*')]],
+      'name': [this.tellerData.name, [Validators.required, Validators.pattern('^([^!@#$%^&*()_+=<>,.?\/\-]*)$')]],
       'description': [this.tellerData.description],
       'startDate': [this.tellerData.startDate && new Date(this.tellerData.startDate), Validators.required],
       'endDate': [this.tellerData.endDate && new Date(this.tellerData.endDate)],

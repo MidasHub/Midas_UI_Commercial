@@ -84,7 +84,7 @@ export class CreateGroupComponent implements OnInit, AfterViewInit {
    */
   createGroupForm() {
     this.groupForm = this.formBuilder.group({
-      'name': ['', [Validators.required, Validators.pattern('(^[A-z]).*')]],
+      'name': ['', [Validators.required, Validators.pattern('^([^!@#$%^&*()_+=<>,.?\/\-]*)$')]],
       'officeId': ['', Validators.required],
       'submittedOnDate': ['', Validators.required],
       'staffId': [''],
