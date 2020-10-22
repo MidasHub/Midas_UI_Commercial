@@ -24,7 +24,8 @@ export class SettingsService {
    * @param {any} language Language.
    */
   setLanguage(language: { name: string, code: string }) {
-    localStorage.setItem('midasLanguageCode',language.code)
+    localStorage.setItem('midasLanguageCode',language.code);
+    localStorage.setItem('midasLocale',language.code.split('-')[0]);
     localStorage.setItem('midasLanguageName',language.name) //JSON.stringify(language.code).code);
   }
 
@@ -32,14 +33,15 @@ export class SettingsService {
    * Returns date format setting.
    */
   get dateFormat() {
-    return JSON.parse(localStorage.getItem('midasDateFormat'));
+    return localStorage.getItem('midasDateFormat');
   }
 
   /**
    * Returns language setting
    */
   get language() {
-    return JSON.parse(localStorage.getItem('midasLanguageCode'));
+    // console.log('langcode:',JSON.parse(localStorage.getItem('midasLanguageCode')))
+    return localStorage.getItem('midasLocale');
   }
 
 }

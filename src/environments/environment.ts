@@ -22,7 +22,6 @@ export const environment = {
   defaultLanguage: 'vi-VN',
   supportedLanguages: [
     'en-US',
-    //'fr-FR',
     'vi-VN'
   ],
   languagesName:{

@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs';
+// import { Subject } from 'rxjs';
 
 /** Translation Imports */
 import { TranslateService, LangChangeEvent } from '@ngx-translate/core';
@@ -10,6 +10,7 @@ import { Logger } from '../logger/logger.service';
 
 /** Other Imports */
 import { includes } from 'lodash';
+import { environment } from 'environments/environment';
 // import * as enUS from '../../../translations/en-US.json';
 // import * as frFR from '../../../translations/fr-FR.json';
 // import * as viVN from '../../../translations/vi-VN.json';
@@ -32,6 +33,12 @@ export class I18nService {
 
   /** Key to store current language of application in local storage. */
   private languageStorageKey = 'midasLanguageCode';
+  private localeStorageKey = 'midasLocale';
+  private languagesNameStoragekey='midasLanguageName';
+  languagesNameObj:{
+    en:"English",
+    vi:"Vietnamese"
+   }
 
   defaultLanguage: string;
   supportedLanguages: string[];
@@ -58,7 +65,12 @@ export class I18nService {
     this.language = '';
 
     this.translate.onLangChange
-      .subscribe((event: LangChangeEvent) => { localStorage.setItem(this.languageStorageKey, event.lang); });
+      .subscribe((event: LangChangeEvent) => { 
+        
+        localStorage.setItem(this.languageStorageKey, event.lang); 
+        localStorage.setItem(this.localeStorageKey, event.lang.split('-')[0]); 
+        localStorage.setItem(this.languagesNameStoragekey,environment.languagesName[event.lang.split('-')[0]]); 
+      });
   }
 
   /**

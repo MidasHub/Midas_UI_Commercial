@@ -46,12 +46,14 @@ export class ClientAddressStepComponent {
     addAddressDialogRef.afterClosed().subscribe((response: any) => {
       if (response.data) {
         const addressData = response.data.value;
+        
         addressData.isActive = false;
         for (const key in addressData) {
           if (addressData[key] === '' || addressData[key] === undefined) {
             delete addressData[key];
           }
         }
+        console.log('lala address:',addressData);
         this.clientAddressData.push(addressData);
       }
     });
@@ -133,7 +135,7 @@ export class ClientAddressStepComponent {
       controlName: 'addressTypeId',
       label: 'Address Type',
       value: address ? address.addressTypeId : '',
-      options: { label: 'name', value: 'id', data: this.clientTemplate.address.addressTypeIdOptions },
+      options: { label: 'name', value: 'id', data: this.clientTemplate.address[0].addressTypeIdOptions },
       order: 1,
       required: true
     }) : null);
@@ -184,7 +186,7 @@ export class ClientAddressStepComponent {
       controlName: 'stateProvinceId',
       label: 'State / Province',
       value: address ? address.stateProvinceId : '',
-      options: { label: 'name', value: 'id', data: this.clientTemplate.address.stateProvinceIdOptions },
+      options: { label: 'name', value: 'id', data: this.clientTemplate.address[0].stateProvinceIdOptions },
       order: 8
     }) : null);
     formfields.push(this.isFieldEnabled('countyDistrict') ? new InputBase({
@@ -198,7 +200,7 @@ export class ClientAddressStepComponent {
       controlName: 'countryId',
       label: 'Country',
       value: address ? address.countryId : '',
-      options: { label: 'name', value: 'id', data: this.clientTemplate.address.countryIdOptions },
+      options: { label: 'name', value: 'id', data: this.clientTemplate.address[0].countryIdOptions },
       order: 10
     }) : null);
     formfields.push(this.isFieldEnabled('postalCode') ? new InputBase({

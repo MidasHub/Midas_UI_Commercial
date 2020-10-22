@@ -139,7 +139,7 @@ export class WebAppComponent implements OnInit {
     // initialize language and date format if they are null.
     if (!localStorage.getItem('midasLanguageCode')) {
       let langCode = environment.defaultLanguage.split('-')[0];
-      console.log('LangCode:',langCode,' - name:',environment.languagesName[langCode]);
+      console.log('[WEB-APP]LangCode:',langCode,' - name:',environment.languagesName[langCode]);
 
       this.settingsService.setLanguage({
         name: environment.languagesName[langCode],
