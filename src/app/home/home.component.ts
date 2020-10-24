@@ -9,7 +9,6 @@ import { activities } from './activities';
 
 /** Custom Services */
 import { AuthenticationService } from '../core/authentication/authentication.service';
-import { TranslateService } from '@ngx-translate/core';
 
 /**
  * Home component.
@@ -36,8 +35,7 @@ export class HomeComponent implements OnInit {
    * @param {AuthenticationService} authenticationService Authentication Service.
    * @param {FormBuilder} formBuilder Form Builder.
    */
-  constructor(private authenticationService: AuthenticationService,
-              private translate:TranslateService) { }
+  constructor(private authenticationService: AuthenticationService) { }
 
   /**
    * Sets the username of the authenticated user.

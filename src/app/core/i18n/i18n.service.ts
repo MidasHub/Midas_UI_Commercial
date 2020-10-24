@@ -107,4 +107,13 @@ export class I18nService {
     return this.translate.currentLang;
   }
 
+  /** Translate in javascript code */
+  getTranslate(field:any):string{
+    let lbl='';
+    this.translate.get(field).subscribe((res: string) => {
+      console.log('title', res);
+      lbl = res
+    })
+    return lbl
+  }
 }
