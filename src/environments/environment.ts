@@ -13,9 +13,12 @@ export const environment = {
   //baseApiUrl: 'https://app2.midascore.net:8443',  // For connecting to server running elsewhere update the base API URL
   // baseApiUrl: 'https://metabase.tekcompay.com',
   baseApiUrl: 'https://119.82.135.172:8443',
+  GatewayApiUrl: 'http://localhost:8286',
+  GatewayApiUrlPrefix: '/billPos',
   apiProvider: '/fineract-provider/api',
   apiVersion: '/v1',
   serverUrl: '',
+  gatewayServerUrl: '',
   oauth: {
     enabled: false,  // For connecting to Midas using OAuth2 Authentication change the value to true
     serverUrl: ''
@@ -34,3 +37,4 @@ export const environment = {
 // Server URL
 environment.serverUrl = `${environment.baseApiUrl}${environment.apiProvider}${environment.apiVersion}`;
 environment.oauth.serverUrl = `${environment.baseApiUrl}${environment.apiProvider}`;
+environment.gatewayServerUrl = `${environment.GatewayApiUrl}`;
