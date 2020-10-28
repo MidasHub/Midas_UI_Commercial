@@ -1,10 +1,10 @@
 /** Angular Imports */
 import { Component, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-
+import { HttpClient, HttpParams } from '@angular/common/http';
 /** Custom Services */
 import { ClientsService } from '../clients.service';
-
+import { map } from 'rxjs/operators';
 /** Custom Components */
 import { ClientGeneralStepComponent } from '../client-stepper/client-general-step/client-general-step.component';
 import { ClientFamilyMembersStepComponent } from '../client-stepper/client-family-members-step/client-family-members-step.component';
@@ -46,7 +46,9 @@ export class CreateClientComponent {
   constructor(private route: ActivatedRoute,
               private router: Router,
               private clientsService: ClientsService,
-              private settingsService: SettingsService) {
+              private settingsService: SettingsService,
+              private http: HttpClient,
+              ) {
     this.route.data.subscribe((data: { clientTemplate: any, clientAddressFieldConfig: any }) => {
       this.clientTemplate = data.clientTemplate;
       this.clientAddressFieldConfig = data.clientAddressFieldConfig;
@@ -57,13 +59,21 @@ export class CreateClientComponent {
    * Retrieves general information about client.
    */
   get clientGeneralForm() {
+
     return this.clientGeneralStep.createClientForm;
   }
+
+  ngOnInit() {
+    this.clientsService.getClientTest(5, 50000000).subscribe( (data: any) => {
+      console.log(data);
+  })
+}
 
   /**
    * Retrieves the client object
    */
   get client() {
+
     return {
       ...this.clientGeneralStep.clientGeneralDetails,
       ...this.clientFamilyMembersStep.familyMembers,
