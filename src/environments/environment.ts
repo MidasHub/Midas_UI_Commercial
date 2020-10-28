@@ -9,9 +9,10 @@ import env from './.env';
 export const environment = {
   production: false,
   version: env.npm_package_version + '-dev',
-  fineractPlatformTenantId: 'default',  // For connecting to server running elsewhere update the tenant identifier
+  fineractPlatformTenantId: 'midas',  // For connecting to server running elsewhere update the tenant identifier
   //baseApiUrl: 'https://app2.midascore.net:8443',  // For connecting to server running elsewhere update the base API URL
-  baseApiUrl: 'https://metabase.tekcompay.com',
+  // baseApiUrl: 'https://metabase.tekcompay.com',
+  baseApiUrl: 'https://119.82.135.172:8443',
   apiProvider: '/fineract-provider/api',
   apiVersion: '/v1',
   serverUrl: '',

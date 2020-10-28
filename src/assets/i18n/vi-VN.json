@@ -61,6 +61,29 @@
         "labelCorpConstitution": "Loại hình tổ chức",
         "labelCorpDate": "Ngày thành lập",
         "labelTaxNo": "Mã số thuế"
+      },
+      "RelativeStep": {
+        "lblRelativeMember": "Người có liên quan",
+        "btnAddRelative": "Thêm người liên quan",
+        "lblFirstName": "Họ",
+        "lblLastName": "Tên",
+        "lblQualification": "Bằng cấ[",
+        "lblMidName": "Tên Lót",
+        "lblRelationship": "Quan hệ",
+        "lblAge": "Tuổi",
+        "lblMaritalStatus": "Tình trạng hôn nhân",
+        "lblDependent": "Là người phụ thuộc?",
+        "lblGender": "Giới tính",
+        "lblProfession": "Học vấn",
+        "lblDOB": "Ngày sinh",
+        "lblFirstNameMsg": "<strong> Yêu cầu: </strong> nhập Họ khách hàng",
+        "lblLastNameMsg": "<strong> Yêu cầu: </strong> nhập Tên khách hàng",
+        "lblAgeMsg": "<strong< Yêu cầu: </strong> nhập Tuổi của khách hàng",
+        "lblRelationshipMsg": "<strong> Yêu cầu: </strong> nhập Mối quan hệ với khách hàng",
+        "lblGenderMsg": "<strong> Yêu cầu: </strong> nhập Giới tính của người liên quan",
+        "lblDOBMsg": "<strong> Yêu cầu: </strong> nhập Ngày sinh của người liên quan",
+        "btnCancel": "Hủy",
+        "btnConfirm": "Xác nhận"
       }
     },
     "buttonImportClient": "Nhập list khách hàng",
@@ -178,6 +201,12 @@
           "NextButton": "Kế tiếp"
         }
       }
+    }
+  },
+  "Shared_Component": {
+    "FormDialog": {
+      "btnCancel": "Hủy",
+      "btnAdd": "Thêm"
     }
   }
 }

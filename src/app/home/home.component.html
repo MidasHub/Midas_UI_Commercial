@@ -1,9 +1,9 @@
 <div fxLayput="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column" class="container m-b-20">
 
-  <button mat-raised-button color="primary" [routerLink]="['/dashboard']">
-    <fa-icon icon="tachometer-alt"></fa-icon>&nbsp;&nbsp;
-    Dashboard
-  </button>
+<!--  <button mat-raised-button color="primary" [routerLink]="['/dashboard']">-->
+<!--    <fa-icon icon="tachometer-alt"></fa-icon>&nbsp;&nbsp;-->
+<!--    Dashboard-->
+<!--  </button>-->
 
 </div>
 
@@ -18,10 +18,10 @@
     </mat-card-header>
 
     <mat-card-content>
-        
+
       <div fxLayout="column">
         <mat-form-field>
-          <mat-label>{{'Home_Component.searchActiviy'| translate }}</mat-label>
+          <mat-label>{{'Home_Component.searchActivity'| translate }}</mat-label>
           <input matInput [matAutocomplete]="activitySearch" [formControl]="searchText">
         </mat-form-field>
       </div>

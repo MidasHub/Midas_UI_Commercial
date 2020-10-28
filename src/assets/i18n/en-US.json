@@ -61,6 +61,29 @@
         "labelCorpConstitution": "Constitution",
         "labelCorpDate": "Incorporation Date",
         "labelTaxNo": "Tax Number"
+      },
+      "RelativeStep": {
+        "lblRelativeMember": "Relative Member",
+        "btnAddRelative": "Add Relative",
+        "lblFirstName": "First",
+        "lblLastName": "Last Name",
+        "lblQualification": "Qualification",
+        "lblMidName": "Middle",
+        "lblRelationship": "Relationship",
+        "lblAge": "Age",
+        "lblMaritalStatus": "Marital Status",
+        "lblDependent": "Is Dependent ?",
+        "lblGender": "Gender",
+        "lblProfession": "Profession",
+        "lblDOB": "Date of Birth",
+        "lblFirstNameMsg": "First Name is <strong>required</strong>",
+        "lblLastNameMsg": "Last Name is <strong>required</strong>",
+        "lblAgeMsg": "Age is <strong>required</strong>",
+        "lblRelationshipMsg": "Relationship is <strong>required</strong>",
+        "lblGenderMsg": "Gender is <strong>required</strong>",
+        "lblDOBMsg": "Date of birth is <strong>required</strong>",
+        "btnCancel": "Cancel",
+        "btnConfirm": "Confirm"
       }
     },
     "buttonImportClient": "Import Client",
@@ -178,6 +201,12 @@
           "NextButton": "Nex"
         }
       }
+    }
+  },
+  "Shared_Component": {
+    "FormDialog": {
+      "btnCancel": "Cancel",
+      "btnAdd": "Add"
     }
   }
 }
