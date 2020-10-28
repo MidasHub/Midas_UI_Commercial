@@ -84,7 +84,9 @@
         "lblDOBMsg": "Date of birth is <strong>required</strong>",
         "btnCancel": "Cancel",
         "btnConfirm": "Confirm"
-      }
+      },
+      "buttonCancel": "Cancel",
+      "buttonSubmit": "Submit"
     },
     "buttonImportClient": "Import Client",
     "buttonCreateClient": "Create Client",

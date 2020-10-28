@@ -84,7 +84,9 @@
         "lblDOBMsg": "<strong> Yêu cầu: </strong> nhập Ngày sinh của người liên quan",
         "btnCancel": "Hủy",
         "btnConfirm": "Xác nhận"
-      }
+      },
+      "buttonCancel": "Hủy bỏ",
+      "buttonSubmit": "Chấp nhận"
     },
     "buttonImportClient": "Nhập list khách hàng",
     "buttonCreateClient": "Tạo khách hàng mới",

@@ -1,84 +1,84 @@
 <div fxLayout="row wrap" fxLayout.lt-md="column">
 
-  <h3 class="mat-h3" fxFlexFill>General</h3>
+  <h3 class="mat-h3" fxFlexFill>{{'Client_component.ClientStepper.labelGeneral'|translate}}</h3>
 
   <mat-divider fxFlexFill></mat-divider>
 
   <div fxFlexFill>
-    <span fxFlex="40%">Name</span>
+    <span fxFlex="40%">{{'Client_component.ClientStepper.GeneralStep.labelFullName'|translate}}</span>
     <span fxFlex="60%" *ngIf="client.legalFormId === 2">{{ client.fullname }}</span>
     <span fxFlex="60%" *ngIf="client.legalFormId === 1">{{ client.firstname }} {{ client.middlename ? client.middlename + ' ' + client.lastname : client.lastname }}</span>
   </div>
 
   <div fxFlexFill>
-    <span fxFlex="40%">Office</span>
+    <span fxFlex="40%">{{'Client_component.ClientStepper.GeneralStep.labelOffice'|translate}}</span>
     <span fxFlex="60%">{{ client.officeId | find:clientTemplate.officeOptions:'id':'name' }}</span>
   </div>
 
   <div fxFlexFill>
-    <span fxFlex="40%">Legal Form</span>
+    <span fxFlex="40%">{{'Client_Component.ClientStepper.GeneralStep.labelLegalForm' |translate}}</span>
     <span fxFlex="60%">{{ client.legalFormId | find:clientTemplate.clientLegalFormOptions:'id':'value' }}</span>
   </div>
 
   <div fxFlexFill *ngIf="client.staffId">
-    <span fxFlex="40%">Staff</span>
+    <span fxFlex="40%">{{'Client_Component.ClientStepper.GeneralStep.labelStaff' |translate}}</span>
     <span fxFlex="60%">{{ client.staffId | find:clientTemplate.staffOptions:'id':'displayName' }}</span>
   </div>
 
   <div fxFlexFill *ngIf="client.dateOfBirth">
-    <span fxFlex="40%">{{ client.legalFormId === 1 ? 'Date of Birth' : 'Incorporation Date' }}</span>
+    <span fxFlex="40%">{{ client.legalFormId === 1 ? ('Client_Component.ClientStepper.GeneralStep.labelDOB' |translate ): ('Client_Component.ClientStepper.GeneralStep.labelCorpDate' |translate) }}</span>
     <span fxFlex="60%">{{ client.dateOfBirth | date }}</span>
   </div>
 
   <div fxFlexFill *ngIf="client.externalId">
-    <span fxFlex="40%">External Id</span>
+    <span fxFlex="40%">{{ client.legalFormId === 1 ?('Client_Component.ClientStepper.GeneralStep.labelExternalID' |translate):('Client_Component.ClientStepper.GeneralStep.labelTaxNo' |translate)}}</span>
     <span fxFlex="60%">{{ client.externalId }}</span>
   </div>
 
   <div fxFlexFill *ngIf="client.mobileNo">
-    <span fxFlex="40%">Mobile No</span>
+    <span fxFlex="40%">{{'Client_Component.ClientStepper.GeneralStep.labelMobile' |translate}}</span>
     <span fxFlex="60%">{{ client.mobileNo }}</span>
   </div>
 
   <div fxFlexFill *ngIf="client.clientTypeId">
-    <span fxFlex="40%">Client Type</span>
+    <span fxFlex="40%">{{'Client_Component.ClientStepper.GeneralStep.labelClientType' |translate}}</span>
     <span fxFlex="60%">{{ client.clientTypeId | find:clientTemplate.clientTypeOptions:'id':'name' }}</span>
   </div>
 
   <div fxFlexFill *ngIf="client.clientClassificationId">
-    <span fxFlex="40%">Client Classification</span>
+    <span fxFlex="40%">{{'Client_Component.ClientStepper.GeneralStep.labelClientClass' |translate}}</span>
     <span fxFlex="60%">{{ client.clientClassificationId | find:clientTemplate.clientClassificationOptions:'id':'name' }}</span>
   </div>
 
   <div fxFlexFill *ngIf="client.savingsProductId">
-    <span fxFlex="40%">Savings Product</span>
+    <span fxFlex="40%">{{'Client_Component.ClientStepper.GeneralStep.labelSavingProduct' |translate}}</span>
     <span fxFlex="60%">{{ client.savingsProductId | find:clientTemplate.savingProductOptions:'id':'name' }}</span>
   </div>
 
   <div fxFlexFill *ngIf="client.submittedOnDate">
-    <span fxFlex="40%">Submitted On Date</span>
+    <span fxFlex="40%">{{'Client_Component.ClientStepper.GeneralStep.labelClientSubmittedDate' |translate}}</span>
     <span fxFlex="60%">{{ client.submittedOnDate | date }}</span>
   </div>
 
   <div fxFlexFill>
-    <span fxFlex="40%">Active?</span>
+    <span fxFlex="40%"> {{'Client_Component.ClientStepper.GeneralStep.checkboxIsActivate' |translate}}</span>
     <span fxFlex="60%">{{ client.active ? 'Yes' : 'No' }}</span>
   </div>
 
   <div fxFlexFill *ngIf="client.activationDate">
-    <span fxFlex="40%">Activation Date</span>
+    <span fxFlex="40%">{{'Client_Component.ClientStepper.GeneralStep.labelClientActivatedDate' |translate}}</span>
     <span fxFlex="60%">{{ client.activationDate | date }}</span>
   </div>
 
   <ng-container *ngIf="client.legalFormId === 1">
 
     <div fxFlexFill *ngIf="client.genderId">
-      <span fxFlex="40%">Gender</span>
+      <span fxFlex="40%">{{'Client_Component.ClientStepper.GeneralStep.labelGender' |translate}}</span>
       <span fxFlex="60%">{{ client.genderId | find:clientTemplate.genderOptions:'id':'name' }}</span>
     </div>
   
     <div fxFlexFill>
-      <span fxFlex="40%">Is Staff?</span>
+      <span fxFlex="40%">{{'Client_Component.ClientStepper.GeneralStep.checkboxIsStaff' |translate}}</span>
       <span fxFlex="60%">{{ client.isStaff ? 'Yes' : 'No' }}</span>
     </div>
 
@@ -207,7 +207,7 @@
 <div fxLayout="row" class="margin-t" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="2%">
   <button mat-raised-button matStepperPrevious>
     <fa-icon icon="arrow-left"></fa-icon>&nbsp;&nbsp;
-    Previous
+    {{'Client_component.ClientStepper.buttonPrevious'|translate}}
   </button>
   <button mat-raised-button [routerLink]="['../']">
     Cancel
