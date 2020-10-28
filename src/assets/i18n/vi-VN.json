@@ -60,7 +60,10 @@
         "labelCorpRemark": "Ghi chú",
         "labelCorpConstitution": "Loại hình tổ chức",
         "labelCorpDate": "Ngày thành lập",
-        "labelTaxNo": "Mã số thuế"
+        "labelTaxNo": "Mã số thuế",
+        "labelSelectExternalId": "ID bên ngoài",
+        "labelSelectStaffCode": "Id Nhân viên ",
+        "labelSelectAccountForPayment": "Tài khoản thanh toán"
       }
     },
     "buttonImportClient": "Nhập list khách hàng",

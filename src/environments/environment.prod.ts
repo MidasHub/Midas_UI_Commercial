@@ -4,8 +4,8 @@ import env from './.env';
 export const environment = {
   production: true,
   version: env.npm_package_version,
-  fineractPlatformTenantId: 'default',  // For connecting to server running elsewhere update the tenant identifier
-  //baseApiUrl: 'https://app2.midascore.net:8443',  // For connecting to server running elsewhere update the base API URL
+  fineractPlatformTenantId: 'midas',  // For connecting to server running elsewhere update the tenant identifier
+  // baseApiUrl: 'https://app2.midascore.net:8443',  // For connecting to server running elsewhere update the base API URL
   baseApiUrl: 'https://metabase.tekcompay.com',
   apiProvider: '/fineract-provider/api',
   apiVersion: '/v1',
@@ -17,12 +17,12 @@ export const environment = {
   defaultLanguage: 'vi-VN',
   supportedLanguages: [
     'en-US',
-    //'fr-FR',
+    // 'fr-FR',
     'vi-VN'
   ],
-  languagesName:{
-   en:"English",
-   vi:"Vietnamese",
+  languagesName: {
+   en: 'English',
+   vi: 'Vietnamese',
   }
 };
 

@@ -1,7 +1,7 @@
 <form [formGroup]="createClientForm">
 
   <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
-
+    <h4 fxFlex="98%">Thông tin đại lý:</h4>
     <mat-form-field fxFlex="48%">
       <mat-label>{{'Client_Component.ClientStepper.GeneralStep.labelOffice' |translate}}</mat-label>
       <mat-select required formControlName="officeId">
@@ -36,66 +36,75 @@
       formControlName="isStaff" class="margin-v">
       {{'Client_Component.ClientStepper.GeneralStep.checkboxIsStaff' |translate}}
     </mat-checkbox>
+    <h4><span class="material-icons">
+perm_contact_calendar
+</span>&nbsp;&nbsp;&nbsp;Thông tin cơ bản: </h4>
+    <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column" fxFlex="96%">
+      <mat-form-field *ngIf="createClientForm.contains('fullname')" fxFlex="48%">
+        <mat-label>{{'Client_Component.ClientStepper.GeneralStep.labelFullName' |translate}}</mat-label>
+        <input matInput required formControlName="fullname">
+        <mat-error *ngIf="createClientForm.controls.fullname.hasError('required')"
+                   [innerHTML]="'Client_Component.ClientStepper.GeneralStep.labelFullNameMsg' |translate"></mat-error>
+        <mat-error *ngIf="createClientForm.controls.fullname.hasError('pattern')"
+                   [innerHTML]="'Client_Component.ClientStepper.GeneralStep.labelFullNameMsgSpecialChar' |translate"></mat-error>
+      </mat-form-field>
 
-    <mat-form-field *ngIf="createClientForm.contains('fullname')" fxFlex="96%">
-      <mat-label>{{'Client_Component.ClientStepper.GeneralStep.labelFullName' |translate}}</mat-label>
-      <input matInput required formControlName="fullname">
-      <mat-error *ngIf="createClientForm.controls.fullname.hasError('required')"
-        [innerHTML]="'Client_Component.ClientStepper.GeneralStep.labelFullNameMsg' |translate"></mat-error>
-      <mat-error *ngIf="createClientForm.controls.fullname.hasError('pattern')"
-        [innerHTML]="'Client_Component.ClientStepper.GeneralStep.labelFullNameMsgSpecialChar' |translate"></mat-error>
-    </mat-form-field>
+      <mat-form-field *ngIf="createClientForm.contains('firstname')" fxFlex="48%">
+        <mat-label>{{'Client_Component.ClientStepper.GeneralStep.labelFirstName' |translate}}</mat-label>
+        <input matInput required formControlName="firstname">
+        <mat-error *ngIf="createClientForm.controls.firstname.hasError('required')"
+                   [innerHTML]="'Client_Component.ClientStepper.GeneralStep.labelFirstNameMsg' |translate"></mat-error>
+        <mat-error *ngIf="createClientForm.controls.firstname.hasError('pattern')"
+                   [innerHTML]="'Client_Component.ClientStepper.GeneralStep.labelFullNameMsgSpecialChar' |translate"></mat-error>
+      </mat-form-field>
 
-    <mat-form-field *ngIf="createClientForm.contains('firstname')" fxFlex="32%">
-      <mat-label>{{'Client_Component.ClientStepper.GeneralStep.labelFirstName' |translate}}</mat-label>
-      <input matInput required formControlName="firstname">
-      <mat-error *ngIf="createClientForm.controls.firstname.hasError('required')"
-        [innerHTML]="'Client_Component.ClientStepper.GeneralStep.labelFirstNameMsg' |translate"></mat-error>
-      <mat-error *ngIf="createClientForm.controls.firstname.hasError('pattern')"
-      [innerHTML]="'Client_Component.ClientStepper.GeneralStep.labelFullNameMsgSpecialChar' |translate"></mat-error>
-    </mat-form-field>
+      <mat-form-field *ngIf="createClientForm.contains('middlename')" fxFlex="48%">
+        <mat-label>{{'Client_Component.ClientStepper.GeneralStep.labelMidName' |translate}}</mat-label>
+        <input matInput formControlName="middlename">
+        <mat-error *ngIf="createClientForm.controls.middlename.hasError('pattern')"
+                   [innerHTML]="'Client_Component.ClientStepper.GeneralStep.labelMidNameMsgSpecialChar' |translate"></mat-error>
+      </mat-form-field>
 
-    <mat-form-field *ngIf="createClientForm.contains('middlename')" fxFlex="34%">
-      <mat-label>{{'Client_Component.ClientStepper.GeneralStep.labelMidName' |translate}}</mat-label>
-      <input matInput formControlName="middlename">
-      <mat-error *ngIf="createClientForm.controls.middlename.hasError('pattern')"
-      [innerHTML]="'Client_Component.ClientStepper.GeneralStep.labelMidNameMsgSpecialChar' |translate"></mat-error>
-    </mat-form-field>
+      <mat-form-field *ngIf="createClientForm.contains('lastname')" fxFlex="48%">
+        <mat-label>{{'Client_Component.ClientStepper.GeneralStep.labelLastName' |translate}}</mat-label>
+        <input matInput required formControlName="lastname">
+        <mat-error *ngIf="createClientForm.controls.lastname.hasError('required')"
+                   [innerHTML]="'Client_Component.ClientStepper.GeneralStep.labelLastNameMsg' |translate"></mat-error>
+        <mat-error *ngIf="createClientForm.controls.lastname.hasError('pattern')"
+                   [innerHTML]="'Client_Component.ClientStepper.GeneralStep.labelLastNameMsgSpecialChar' |translate"></mat-error>
+      </mat-form-field>
 
-    <mat-form-field *ngIf="createClientForm.contains('lastname')" fxFlex="34%">
-      <mat-label>{{'Client_Component.ClientStepper.GeneralStep.labelLastName' |translate}}</mat-label>
-      <input matInput required formControlName="lastname">
-      <mat-error *ngIf="createClientForm.controls.lastname.hasError('required')"
-      [innerHTML]="'Client_Component.ClientStepper.GeneralStep.labelLastNameMsg' |translate"></mat-error>
-      <mat-error *ngIf="createClientForm.controls.lastname.hasError('pattern')"
-      [innerHTML]="'Client_Component.ClientStepper.GeneralStep.labelLastNameMsgSpecialChar' |translate"></mat-error>
-    </mat-form-field>
+      <mat-form-field fxFlex="48%">
+        <mat-label>{{ createClientForm.value.legalFormId === 1 ? ('Client_Component.ClientStepper.GeneralStep.labelDOB' |translate ): ('Client_Component.ClientStepper.GeneralStep.labelCorpDate' |translate)}}</mat-label>
+        <input matInput [max]="maxDate" [matDatepicker]="dateOfBirthDatePicker" formControlName="dateOfBirth">
+        <mat-datepicker-toggle matSuffix [for]="dateOfBirthDatePicker"></mat-datepicker-toggle>
+        <mat-datepicker #dateOfBirthDatePicker></mat-datepicker>
+      </mat-form-field>
 
-    <mat-form-field fxFlex="48%">
-      <mat-label>{{ createClientForm.value.legalFormId === 1 ? ('Client_Component.ClientStepper.GeneralStep.labelDOB' |translate ): ('Client_Component.ClientStepper.GeneralStep.labelCorpDate' |translate)}}</mat-label>
-      <input matInput [max]="maxDate" [matDatepicker]="dateOfBirthDatePicker" formControlName="dateOfBirth">
-      <mat-datepicker-toggle matSuffix [for]="dateOfBirthDatePicker"></mat-datepicker-toggle>
-      <mat-datepicker #dateOfBirthDatePicker></mat-datepicker>
-    </mat-form-field>
 
-    <mat-form-field fxFlex="48%">
-      <mat-label>{{createClientForm.value.legalFormId === 1 ?('Client_Component.ClientStepper.GeneralStep.labelExternalID' |translate):('Client_Component.ClientStepper.GeneralStep.labelTaxNo' |translate)}}</mat-label>
-      <input matInput formControlName="externalId">
-    </mat-form-field>
+      <mat-form-field fxFlex="48%">
+        <mat-label>{{createClientForm.value.legalFormId === 1 ?('Client_Component.ClientStepper.GeneralStep.labelExternalID' |translate):('Client_Component.ClientStepper.GeneralStep.labelTaxNo' |translate)}}</mat-label>
+        <input matInput formControlName="externalId">
+      </mat-form-field>
 
-    <mat-form-field fxFlex="48%">
-      <mat-label>{{'Client_Component.ClientStepper.GeneralStep.labelMobile' |translate}}</mat-label>
-      <input matInput type="number" formControlName="mobileNo">
-    </mat-form-field>
+      <mat-form-field fxFlex="48%">
+        <mat-label>{{'Client_Component.ClientStepper.GeneralStep.labelMobile' |translate}}</mat-label>
+        <input matInput type="number" formControlName="mobileNo">
+      </mat-form-field>
 
-    <mat-form-field *ngIf="createClientForm.value.legalFormId === 1" fxFlex="48%">
-      <mat-label>{{'Client_Component.ClientStepper.GeneralStep.labelGender' |translate}}</mat-label>
-      <mat-select formControlName="genderId">
-        <mat-option *ngFor="let gender of genderOptions" [value]="gender.id">
-          {{ gender.name }}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
+      <mat-form-field *ngIf="createClientForm.value.legalFormId === 1" fxFlex="48%">
+        <mat-label>{{'Client_Component.ClientStepper.GeneralStep.labelGender' |translate}}</mat-label>
+        <mat-select formControlName="genderId">
+          <mat-option *ngFor="let gender of genderOptions" [value]="gender.id">
+            {{ gender.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+    </div>
+
+    <h4 fxFlex="98%">Thông tin khác:</h4>
+
 
 
     <mat-form-field fxFlex="48%">
@@ -125,6 +134,19 @@
       <mat-datepicker #submittedOnDatePicker></mat-datepicker>
     </mat-form-field>
 
+    <mat-form-field *ngIf="createClientForm.contains('account_payment')" fxFlex="48%">
+      <mat-label>{{'Client_Component.ClientStepper.GeneralStep.labelSelectAccountForPayment' |translate}}</mat-label>
+      <mat-select formControlName="account_payment">
+        <mat-option *ngFor="let account of accountPayments"
+                    [value]="account.id">
+          {{ account.name }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+  <div>
+
+  </div>
     <mat-checkbox fxFlex="48%" labelPosition="before" formControlName="active" class="margin-v">
       {{'Client_Component.ClientStepper.GeneralStep.checkboxIsActivate' |translate}}
     </mat-checkbox>
@@ -138,7 +160,7 @@
       <mat-error *ngIf="createClientForm.controls.activationDate.hasError('required')"
       [innerHTML]="'Client_Component.ClientStepper.GeneralStep.labelClientActivatedDateMsg' |translate"></mat-error>
     </mat-form-field>
-
+    <br/>
     <mat-checkbox fxFlex="48%" labelPosition="before" formControlName="addSavings" class="margin-v">
       {{'Client_Component.ClientStepper.GeneralStep.checkboxOpenAccount' |translate}}
     </mat-checkbox>
@@ -170,6 +192,8 @@
         <input matInput formControlName="incorpNumber">
       </mat-form-field>
 
+
+
       <mat-form-field fxFlex="48%">
         <mat-label>{{'Client_Component.ClientStepper.GeneralStep.labelCorpMainBiz' |translate}}</mat-label>
         <mat-select formControlName="mainBusinessLineId">
@@ -194,7 +218,6 @@
       </mat-form-field>
 
     </div>
-
   </div>
 
   <div fxLayout="row" class="margin-t" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="2%">

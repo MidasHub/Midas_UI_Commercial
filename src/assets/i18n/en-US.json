@@ -60,7 +60,10 @@
         "labelCorpRemark": "Remark",
         "labelCorpConstitution": "Constitution",
         "labelCorpDate": "Incorporation Date",
-        "labelTaxNo": "Tax Number"
+        "labelTaxNo": "Tax Number",
+        "labelSelectExternalId": "External Id",
+        "labelSelectStaffCode": "Staff code",
+        "labelSelectAccountForPayment": "Account Payment "
       }
     },
     "buttonImportClient": "Import Client",

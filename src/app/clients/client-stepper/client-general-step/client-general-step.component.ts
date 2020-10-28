@@ -44,7 +44,8 @@ export class ClientGeneralStepComponent implements OnInit {
   genderOptions: any;
   /** Saving Product Options */
   savingProductOptions: any;
-
+  /** Account Payment Options */
+  accountPayments: any;
   /**
    * @param {FormBuilder} formBuilder Form Builder
    * @param {DatePipe} datePipe Date Pipe
@@ -79,7 +80,8 @@ export class ClientGeneralStepComponent implements OnInit {
       'dateOfBirth': [''],
       'clientTypeId': [''],
       'clientClassificationId': [''],
-      'submittedOnDate': ['']
+      'submittedOnDate': [''],
+      'staff_code': [''],
     });
   }
 
