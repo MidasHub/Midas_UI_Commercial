@@ -1,14 +1,13 @@
 {
-  "name": "mifosx-web-app",
+  "name": "midas-web-app",
   "version": "0.0.0",
-  "description": "MifosX Web App is the default web application built on top of the Fineract platform and Angular framework.",
+  "description": "Midas Web App is the default web application built on top of the Fineract platform and Angular framework.",
   "keywords": [
-    "mifos",
-    "openmf",
+    "midas",
     "fineract",
     "angular"
   ],
-  "homepage": "https://github.com/openMF/web-app",
+  "homepage": "https://github.com/MidasHub/Midas_UI_Commercial",
   "license": "MPL-2.0",
   "scripts": {
     "ng": "ng",
@@ -87,10 +86,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/openMF/web-app.git"
+    "url": "https://github.com/MidasHub/Midas_UI_Commercial.git"
   },
   "bugs": {
-    "url": "https://github.com/openMF/web-app/issues"
+    "url": "https://github.com/MidasHub/Midas_UI_Commercial/issues"
   },
   "engines": {
     "node": ">= 8.9.0",
