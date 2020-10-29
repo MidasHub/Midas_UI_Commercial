@@ -48,11 +48,11 @@ import { ClientActionsResolver } from './common-resolvers/client-actions.resolve
 import { ClientChargeViewResolver } from './common-resolvers/client-charge-view.resolver';
 import { ClientTransactionPayResolver } from './common-resolvers/client-transaction-pay.resolver';
 import { ClientDataAndTemplateResolver } from './common-resolvers/client-and-template.resolver';
-
+import { UsersResolver } from 'app/users/users.resolver';
 const routes: Routes = [
   Route.withShell([{
     path: 'clients',
-    data: { title: extract('Clients'), breadcrumb: 'Clients', routeParamBreadcrumb: false },
+    data: { title: extract('Client_Component.Breadcrumb.labelClient'), breadcrumb: 'Client_Component.Breadcrumb.labelClient', routeParamBreadcrumb: false },
     children: [
       {
         path: '',
@@ -60,11 +60,12 @@ const routes: Routes = [
       },
       {
         path: 'create',
-        data: { title: extract('Create Client'), breadcrumb: 'Create Client', routeParamBreadcrumb: false },
+        data: { title: extract('Client_Component.Breadcrumb.labelCreateClient'), breadcrumb: extract('Client_Component.Breadcrumb.labelCreateClient'), routeParamBreadcrumb: false },
         component: CreateClientComponent,
         resolve: {
           clientAddressFieldConfig: ClientAddressFieldConfigurationResolver,
-          clientTemplate: ClientTemplateResolver
+          clientTemplate: ClientTemplateResolver,
+          clientIdentifierTemplate: ClientIdentifierTemplateResolver,
         }
       },
       {

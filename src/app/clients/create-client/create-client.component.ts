@@ -12,6 +12,7 @@ import { ClientAddressStepComponent } from '../client-stepper/client-address-ste
 
 /** Custom Services */
 import { SettingsService } from 'app/settings/settings.service';
+import * as _ from 'lodash';
 
 
 /**
@@ -35,7 +36,7 @@ export class CreateClientComponent {
   clientTemplate: any;
   /** Client Address Field Config */
   clientAddressFieldConfig: any;
-
+  clientIdentifierTemplate: any;
   /**
    * Fetches client and address template from `resolve`
    * @param {ActivatedRoute} route Activated Route
@@ -47,9 +48,10 @@ export class CreateClientComponent {
               private router: Router,
               private clientsService: ClientsService,
               private settingsService: SettingsService) {
-    this.route.data.subscribe((data: { clientTemplate: any, clientAddressFieldConfig: any }) => {
+    this.route.data.subscribe((data: { clientTemplate: any, clientAddressFieldConfig: any , clientIdentifierTemplate: any, currentUser: any}) => {
       this.clientTemplate = data.clientTemplate;
       this.clientAddressFieldConfig = data.clientAddressFieldConfig;
+      this.clientIdentifierTemplate = data.clientIdentifierTemplate;
     });
   }
 
@@ -67,6 +69,7 @@ export class CreateClientComponent {
     return {
       ...this.clientGeneralStep.clientGeneralDetails,
       ...this.clientFamilyMembersStep.familyMembers,
+      ...this.clientGeneralStep.files,
       ...this.clientAddressStep.address
     };
   }
@@ -77,13 +80,33 @@ export class CreateClientComponent {
     const locale = this.settingsService.language.code;
     const dateFormat = this.settingsService.dateFormat;
     // TODO: Update once language and date settings are setup
+    const data = this.client;
+    delete data.documentTypeId;
+    delete data.files;
+    if (_.isEmpty(data.address)) {
+      alert('Vui lòng nhập ít nhất một địa chỉ');
+      return;
+    }
     const clientData = {
-      ...this.client,
+      ...data,
       dateFormat,
       locale
     };
     this.clientsService.createClient(clientData).subscribe((response: any) => {
-      this.router.navigate(['../', response.resourceId], { relativeTo: this.route });
+      console.log('response', response);
+      if ( response && response.clientId) {
+        for (const file of this.client.files) {
+          const formData: FormData = new FormData;
+          formData.append('name', file.name);
+          formData.append('file', file);
+          formData.append('description', file.name);
+          const upload_respoense = this.clientsService.uploadClientDocument(response.clientId, formData).subscribe((res: any) => {
+            console.log('document Uploaded', res);
+          });
+          console.log(upload_respoense);
+        }
+        this.router.navigate(['../', response.resourceId], { relativeTo: this.route });
+      }
     });
   }
 

@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, Output, EventEmitter, Input } from '@angular/core';
+import {Component, Output, EventEmitter, Input} from '@angular/core';
 
 /**
  * Client Preview Step Component
@@ -17,11 +17,19 @@ export class ClientPreviewStepComponent {
   @Input() clientTemplate: any;
   /** Client Object */
   @Input() client: any;
-
+  @Input() documents: any;
   /** Form submission event */
   @Output() submit = new EventEmitter();
 
-  constructor() { }
+  constructor() {
+    this.submit.subscribe(function (e: any) {
+      console.log(e);
+    }, function (error: any) {
+      console.log('error', error);
+    }, function (success: any) {
+      console.log('success', success);
+    });
+  }
 
   /**
    * Utilized in address preview.
@@ -38,7 +46,16 @@ export class ClientPreviewStepComponent {
    * @param {any} fieldName Field Name
    */
   isFieldEnabled(fieldName: any) {
-    return (this.clientAddressFieldConfig.find((fieldObj: any) => fieldObj.field === fieldName)).isEnabled;
+    return (this.clientAddressFieldConfig.find((fieldObj: any) => fieldObj.field === fieldName))?.isEnabled;
   }
 
+  onSubmit(event: any) {
+    console.log(this.client);
+    const data = {...this.client};
+    // delete data.documentTypeId;
+    delete data.files;
+    console.log('data', data);
+    this.submit.emit();
+    return;
+  }
 }

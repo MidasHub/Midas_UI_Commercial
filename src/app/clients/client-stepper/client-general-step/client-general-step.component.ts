@@ -1,10 +1,12 @@
 /** Angular Imports */
-import { Component, OnInit, Input } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
-import { DatePipe } from '@angular/common';
+import {Component, OnInit, Input} from '@angular/core';
+import {FormBuilder, FormGroup, Validators, FormControl} from '@angular/forms';
+import {DatePipe} from '@angular/common';
 
 /** Custom Services */
-import { SettingsService } from 'app/settings/settings.service';
+import {SettingsService} from 'app/settings/settings.service';
+import {AuthenticationService} from '../../../core/authentication/authentication.service';
+
 
 /**
  * Create Client Component
@@ -23,6 +25,9 @@ export class ClientGeneralStepComponent implements OnInit {
 
   /** Client Template */
   @Input() clientTemplate: any;
+  /** Identifier Template */
+  @Input() clientIdentifierTemplate: any;
+  currentUser: any;
   /** Create Client Form */
   createClientForm: FormGroup;
 
@@ -46,6 +51,14 @@ export class ClientGeneralStepComponent implements OnInit {
   savingProductOptions: any;
   /** Account Payment Options */
   accountPayments: any;
+  /** review images */
+  reviewFiles: any;
+  /** Documents type */
+  documentTypes: any;
+
+  clientFilesData: any[] = [];
+
+  isTeller = true;
   /**
    * @param {FormBuilder} formBuilder Form Builder
    * @param {DatePipe} datePipe Date Pipe
@@ -53,7 +66,8 @@ export class ClientGeneralStepComponent implements OnInit {
    */
   constructor(private formBuilder: FormBuilder,
               private datePipe: DatePipe,
-              private settingsService: SettingsService) {
+              private settingsService: SettingsService,
+              private authenticationService: AuthenticationService) {
     this.setClientForm();
   }
 
@@ -78,10 +92,11 @@ export class ClientGeneralStepComponent implements OnInit {
       'genderId': [''],
       'mobileNo': [''],
       'dateOfBirth': [''],
-      'clientTypeId': [''],
+      'clientTypeId': [21],
       'clientClassificationId': [''],
       'submittedOnDate': [''],
       'staff_code': [''],
+      'documentTypeId': [''],
     });
   }
 
@@ -98,6 +113,19 @@ export class ClientGeneralStepComponent implements OnInit {
     this.constitutionOptions = this.clientTemplate.clientNonPersonConstitutionOptions;
     this.genderOptions = this.clientTemplate.genderOptions;
     this.savingProductOptions = this.clientTemplate.savingProductOptions;
+    this.documentTypes = [];
+    this.clientIdentifierTemplate.allowedDocumentTypes?.map((type: any) => {
+      if (type.name === 'Passport' || type.name === 'CMND' || type.name === 'CCCD') {
+        this.documentTypes.push(type);
+      }
+    });
+    this.currentUser = this.authenticationService.getCredentials();
+    const {roles} = this.currentUser;
+    roles.map( (role: any) => {
+      if (role.id !== 3) {
+        this.isTeller = false;
+      }
+    });
   }
 
   /**
@@ -127,6 +155,14 @@ export class ClientGeneralStepComponent implements OnInit {
       }
     });
     this.createClientForm.get('legalFormId').patchValue(1);
+    // this.createClientForm.get('files').valueChanges.subscribe((files: any) => {
+    //   this.reviewFiles = files;
+    //   console.log(files);
+    //   // if(files.length>2)
+    //   // {
+    //   //
+    //   // }
+    // });
     this.createClientForm.get('active').valueChanges.subscribe((active: boolean) => {
       if (active) {
         this.createClientForm.addControl('activationDate', new FormControl('', Validators.required));
@@ -143,6 +179,25 @@ export class ClientGeneralStepComponent implements OnInit {
     });
   }
 
+  fileChange(event: any): Promise<any> {
+    return new Promise<any>(async resolve => {
+        const files = [];
+        for (const file of event.target.files) {
+          file.path = await this.readURL(file);
+          files.push(file);
+        }
+      this.clientFilesData = files;
+    });
+  }
+  readURL(file: any): Promise<any> {
+    return new Promise<any>(resolve => {
+      const reader = new FileReader();
+      reader.onload = function (e: any) {
+        resolve( e.target.result);
+      };
+      reader.readAsDataURL(file);
+    });
+  }
   /**
    * Client General Details
    */
@@ -176,5 +231,7 @@ export class ClientGeneralStepComponent implements OnInit {
     }
     return generalDetails;
   }
-
+  get files() {
+    return {files: this.clientFilesData};
+  }
 }

@@ -26,7 +26,7 @@
 
       <ng-template matStepLabel>{{'Client_Component.ClientStepper.labelGeneral'| translate}}</ng-template>
 
-      <mifosx-client-general-step [clientTemplate]="clientTemplate"></mifosx-client-general-step>
+      <mifosx-client-general-step [clientTemplate]="clientTemplate"  [clientIdentifierTemplate]="clientIdentifierTemplate"></mifosx-client-general-step>
 
     </mat-step>
 
@@ -34,7 +34,7 @@
 
       <ng-template matStepLabel>{{'Client_Component.ClientStepper.labelAddress'| translate}}</ng-template>
 
-      <mifosx-client-address-step 
+      <mifosx-client-address-step
         [clientTemplate]="clientTemplate"
         [clientAddressFieldConfig]="clientAddressFieldConfig"
       >
@@ -50,7 +50,7 @@
 
     </mat-step>
 
-    
+
 
     <mat-step *ngIf="clientGeneralForm.valid" completed>
 
