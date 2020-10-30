@@ -6,6 +6,8 @@ import { FormfieldBase } from './formfield/model/formfield-base';
 
 import { FormGroupService } from './form-group.service';
 
+import {I18nService} from 'app/core/i18n/i18n.service'
+
 const layoutGap = 2;
 
 @Component({
@@ -26,8 +28,8 @@ export class FormDialogComponent implements OnInit {
     columns: 1,
     columnWidth: 400,
     flex: 100,
-    cancelButtonText: 'Cancel',
-    addButtonText: 'Add'
+    cancelButtonText:this.i18n.getTranslate('Shared_Component.FormDialog.btnCancel') , //'Cancel',
+    addButtonText:this.i18n.getTranslate('Shared_Component.FormDialog.btnAdd')// 'Add'
   };
 
   form: FormGroup;
@@ -36,7 +38,8 @@ export class FormDialogComponent implements OnInit {
 
   constructor(public dialogRef: MatDialogRef<FormDialogComponent>,
               @Inject(MAT_DIALOG_DATA) public data: any,
-              private formGroupService: FormGroupService) {
+              private formGroupService: FormGroupService,
+              private i18n: I18nService) {
     this.dialogRef.disableClose = data.disableClose !== undefined ? data.disableClose : true;
     this.formfields = data.formfields.sort((formfieldA: FormfieldBase, formfieldB: FormfieldBase) => formfieldA.order - formfieldB.order);
     this.pristine = data.pristine !== undefined ? data.pristine : true;

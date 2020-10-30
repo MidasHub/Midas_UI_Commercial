@@ -1,14 +1,13 @@
 {
-  "name": "mifosx-web-app",
+  "name": "midas-web-app",
   "version": "0.0.0",
-  "description": "MifosX Web App is the default web application built on top of the Fineract platform and Angular framework.",
+  "description": "Midas Web App is the default web application built on top of the Fineract platform and Angular framework.",
   "keywords": [
-    "mifos",
-    "openmf",
+    "midas",
     "fineract",
     "angular"
   ],
-  "homepage": "https://github.com/openMF/web-app",
+  "homepage": "https://github.com/MidasHub/Midas_UI_Commercial",
   "license": "MPL-2.0",
   "scripts": {
     "ng": "ng",
@@ -42,7 +41,7 @@
     "@ckeditor/ckeditor5-angular": "1.2.3",
     "@ckeditor/ckeditor5-build-classic": "21.0.0",
     "@fortawesome/angular-fontawesome": "0.6.1",
-    "@fortawesome/fontawesome-svg-core": "1.2.18",
+    "@fortawesome/fontawesome-svg-core": "1.2.27",
     "@fortawesome/free-solid-svg-icons": "5.8.2",
     "@ngx-translate/core": "^12.0.0",
     "@ngx-translate/http-loader": "^5.0.0",
@@ -51,7 +50,7 @@
     "lodash": "4.17.19",
     "rxjs": "6.6.2",
     "tslib": "1.10.0",
-    "zone.js": "0.10.2"
+    "zone.js": "0.10.3"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "0.901.12",
@@ -87,10 +86,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/openMF/web-app.git"
+    "url": "https://github.com/MidasHub/Midas_UI_Commercial.git"
   },
   "bugs": {
-    "url": "https://github.com/openMF/web-app/issues"
+    "url": "https://github.com/MidasHub/Midas_UI_Commercial/issues"
   },
   "engines": {
     "node": ">= 8.9.0",

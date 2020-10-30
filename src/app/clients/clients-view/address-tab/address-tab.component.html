@@ -1,6 +1,6 @@
 <div class="tab-container mat-typography">
 
-  <h3>Address</h3>
+  <h3>{{'Client_Component.ClientStepper.AddressStep.titleAddress' |translate}}</h3>
 
   <div fxLayout="row" fxLayoutAlign="flex-end">
     <button mat-raised-button color="primary" (click)="addAddress()">
@@ -31,18 +31,20 @@
       </div>
 
       <p>
-        <span *ngIf="isFieldEnabled('street')">Street : {{address.street}}<br /></span>
-        <span *ngIf="isFieldEnabled('addressLine1')">Address Line 1 : {{address.addressLine1}}<br /></span>
-        <span *ngIf="isFieldEnabled('addressLine2')">Address Line 2 : {{address.addressLine2}}<br /></span>
-        <span *ngIf="isFieldEnabled('addressLine3')">Address Line 3 : {{address.addressLine3}}<br /></span>
-        <span *ngIf="isFieldEnabled('townVillage')">Town / Village : {{address.townVillage}}<br /></span>
-        <span *ngIf="isFieldEnabled('city')">City : {{address.city}}<br /></span>
-        <span *ngIf="isFieldEnabled('stateProvinceId')">State / Province :
+        
+        <span *ngIf="isFieldEnabled('addressLine1')">{{'Client_Component.ClientStepper.AddressStep.labelAddressLine1' |translate}} : {{address.addressLine1}}<br /></span>
+        <span *ngIf="isFieldEnabled('addressLine2')">{{'Client_Component.ClientStepper.AddressStep.labelAddressLine2' |translate}} : {{address.addressLine2}}<br /></span>
+        <span *ngIf="isFieldEnabled('addressLine3')">{{'Client_Component.ClientStepper.AddressStep.labelAddressLine3' |translate}} : {{address.addressLine3}}<br /></span>
+        <span *ngIf="isFieldEnabled('street')">{{'Client_Component.ClientStepper.AddressStep.labelStreet' |translate}} : {{address.street}}<br /></span>
+        <span *ngIf="isFieldEnabled('townVillage')">{{'Client_Component.ClientStepper.AddressStep.labelTownVillage' |translate}} : {{address.townVillage}}<br /></span>
+        <span *ngIf="isFieldEnabled('countyDistrict')">{{'Client_Component.ClientStepper.AddressStep.labelDistrict' |translate}} : {{address.countyDistrict}}<br /></span>
+        <span *ngIf="isFieldEnabled('city')">{{'Client_Component.ClientStepper.AddressStep.labelCity' |translate}} : {{address.city}} : {{address.city}}<br /></span>
+        <span *ngIf="isFieldEnabled('stateProvinceId')">{{'Client_Component.ClientStepper.AddressStep.labelStateProvince' |translate}} :
           {{getSelectedValue('stateProvinceIdOptions',address.stateProvinceId)?.name}}<br /></span>
-        <span *ngIf="isFieldEnabled('countryId')">Country :
+        <span *ngIf="isFieldEnabled('countryId')">{{'Client_Component.ClientStepper.AddressStep.labelCountry' |translate}} :
           {{getSelectedValue('countryIdOptions',address.countryId)?.name}}<br /></span>
-        <span *ngIf="isFieldEnabled('postalCode')">Postal Code : {{address.postalCode}}<br /></span>
-        <span *ngIf="isFieldEnabled('isActive')">Active Status : {{address.isActive}}<br /></span>
+        <span *ngIf="isFieldEnabled('postalCode')">{{'Client_Component.ClientStepper.AddressStep.labelPostalCode' |translate}} : {{address.postalCode}}<br /></span>
+        <span *ngIf="isFieldEnabled('isActive')">{{'Client_Component.ClientStepper.AddressStep.checkboxIsActive' |translate}} : {{address.isActive}}<br /></span>
       </p>
 
     </mat-expansion-panel>

@@ -12,8 +12,9 @@ const proxyConfig = [
   {
     context: '/api',
     pathRewrite: { '^/api': '' },
-    //target: 'https://api.chucknorris.io',
-    target: 'https://app2.midascore.net:8443',
+    // target: 'https://api.chucknorris.io',
+    // target: 'https://metabase.tekcompay.com',
+    target: 'https://119.82.135.172:8443',
     changeOrigin: true,
     secure: false
   }

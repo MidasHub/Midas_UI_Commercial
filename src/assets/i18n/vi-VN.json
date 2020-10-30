@@ -65,7 +65,8 @@
         "labelSelectStaffCode": "Id Nhân viên ",
         "labelSelectAccountForPayment": "Tài khoản thanh toán",
         "labelSelectDocumentTypes": "Loại giấy tờ",
-        "labelInputFileDocument": "Hình ảnh"
+        "labelInputFileDocument": "Hình ảnh",
+        "labelAccountNo": "Mã CIF"
       },
       "FamilyMember": {
         "Dialog": {
@@ -107,6 +108,33 @@
         "buttonPrevious": "Quay lại",
         "buttonNext": "Tiếp theo"
       },
+      "RelativeStep": {
+        "lblRelativeMember": "Người có liên quan",
+        "btnAddRelative": "Thêm người liên quan",
+        "lblFirstName": "Họ",
+        "lblLastName": "Tên",
+        "lblQualification": "Bằng cấ[",
+        "lblMidName": "Tên Lót",
+        "lblRelationship": "Quan hệ",
+        "lblAge": "Tuổi",
+        "lblMaritalStatus": "Tình trạng hôn nhân",
+        "lblDependent": "Là người phụ thuộc?",
+        "lblGender": "Giới tính",
+        "lblProfession": "Học vấn",
+        "lblDOB": "Ngày sinh",
+        "lblFirstNameMsg": "<strong> Yêu cầu: </strong> nhập Họ khách hàng",
+        "lblLastNameMsg": "<strong> Yêu cầu: </strong> nhập Tên khách hàng",
+        "lblAgeMsg": "<strong< Yêu cầu: </strong> nhập Tuổi của khách hàng",
+        "lblRelationshipMsg": "<strong> Yêu cầu: </strong> nhập Mối quan hệ với khách hàng",
+        "lblGenderMsg": "<strong> Yêu cầu: </strong> nhập Giới tính của người liên quan",
+        "lblDOBMsg": "<strong> Yêu cầu: </strong> nhập Ngày sinh của người liên quan",
+        "btnCancel": "Hủy",
+        "btnConfirm": "Xác nhận"
+      },
+      "buttonCancel": "Hủy bỏ",
+      "buttonSubmit": "Chấp nhận",
+      "lblCustomerCreated": "Tạo khách hàng thành công ID: ",
+      "lblClose": "Đóng",
       "Preview": {
         "labelGeneral": "Thông tin cơ bản",
         "labelGeneralName": "Tên",
@@ -168,6 +196,59 @@
     "tblColStatus": "Trạng thái",
     "tblColMobileNumber": "Di động",
     "inputPlaceholderClosedCIF": "Tìm bằng tên khách hàng",
+    "ViewClient": {
+      "lblViewSignature": "Xem chữ kí",
+      "lblClientName": "Tên khách hàng",
+      "lblExternalID": "CMND/CCCD",
+      "lblStaff": "Nhân viên",
+      "lblActivationDate": "Ngày kích hoạt",
+      "lblMemberOf": "Là thành viên của Đại lý",
+      "lblUnassigned": "Chưa có nhân viên phụ trách",
+      "btnEdit": "Sửa thông tin",
+      "btnAction": "Hành động",
+      "btnClose": "Đóng mã CIF",
+      "btnTransferClient": "Chuyển khách hàng",
+      "btnActivate": "Kích hoạt khách hàng",
+      "btnWithdraw": "Rút tiền",
+      "btnReject": "Từ chối mở CIF",
+      "btnDelete": "Xóa CIF",
+      "btnUndoRejection": "Hoàn từ chối CIF",
+      "btnUndoTransfer": "Hoàn chuyển khách hàng",
+      "btnAcceptTransfer": "Nhận khách hàng chuyển đến",
+      "btnRejectTransfer": "Từ chối nhận khách hàng",
+      "btnAssignStaff": "Thêm Nhân viên phụ trách",
+      "btnUnAssignStaff": "Bỏ nhân viên phụ trách",
+      "btnMoreAction": "Hành động khác",
+      "btnAddCharge": "Áp dụng phí cho khách hàng",
+      "btnSurvey": "Gửi khảo sát",
+      "btnUpdateDefaultSaving": "Cập nhật tài khoản mặc định",
+      "btnUploadSignature": "Cập nhật chữ kí mẫu",
+      "btnDeleteSignature": "Xóa chữ ký mẫu",
+      "btnClientReport": "Xem báo cáo khách hàng",
+      "btnCreateStandingIns": "Tạo Chỉ định thu",
+      "btnViewStandingIns": "Quản lý chỉ định thu",
+      "btnCreateSelfService": "Tạo User dùng app mobile",
+      "lblAddress": "Địa chỉ",
+      "lblGeneral": "Thông tin chung",
+      "lblFamilyMember": "Người liên quan",
+      "lblDocument": "Hồ sơ khách hàng",
+      "lblNote": "Ghi chú",
+      "lblIdentity": "Thông tin thẻ/CMND/CCCD",
+      "lblNotActivated": "Chưa kích hoạt",
+      "btnNewLoan": "Mở khoản vay",
+      "btnNewShareAccount": "Mở tài khoản chứng khoán",
+      "btnNewFixedDeposit": "Mở tiết kiệm cố định",
+      "btnNewRecurringDeposit": "Mở Tiết kiệm Tái tục",
+      "btnNewSaving": "Mở Tài khoản",
+      "btnReactivate": "Tái kích hoạt khách hàng",
+      "lblCifNo": "Mã CIF",
+      "btnApplication": "Mở tài khoản",
+      "lblExtendInfo": "Thông tin bổ sung",
+      "tipUploadImage": "Tải hình lên",
+      "tipCaptureImage": "Chụp hình ",
+      "tipDeleteImage": "Xóa hình"
+    },
+    "inputPlaceholderClosedCIF": "Tìm bằng tên khách hàng",
     "Breadcrumb": {
       "labelClient": "Khách hàng",
       "labelCreateClient": "Tạo khách hàng"
@@ -180,6 +261,10 @@
   "Home_Component": {
     "welcome": "Xin chào,  ",
     "searchActivity": "Tìm kiếm các hành động",
+    "btnDashboard": "Dashboard ",
+    "labelIncompleteRollterm": "Món ĐHT chưa hoàn thành",
+    "btnNewCustomer": "Tạo mới khách hàng",
+    "btnNewGroup": "Tạo mới đại lý",
     "Breadcrumb": {
       "labelHome": "Trang chủ"
     }
@@ -289,6 +374,10 @@
       "buttonConfirm": "Xác nhận",
       "buttonCancel": "Hủy",
       "labelTitle": "Xóa"
+    },
+    "FormDialog": {
+      "btnCancel": "Hủy",
+      "btnAdd": "Thêm"
     }
   }
 }

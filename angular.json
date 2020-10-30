@@ -3,11 +3,11 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "mifosx-web-app": {
+    "midas-web-app": {
       "root": "",
       "sourceRoot": "src",
       "projectType": "application",
-      "prefix": "mifosx",
+      "prefix": "midas",
       "schematics": {
         "@schematics/angular:component": {
           "style": "scss"
@@ -90,18 +90,19 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "mifosx-web-app:build"
+            "browserTarget": "midas-web-app:build",
+            "aot": false
           },
           "configurations": {
             "production": {
-              "browserTarget": "mifosx-web-app:build:production"
+              "browserTarget": "midas-web-app:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "mifosx-web-app:build"
+            "browserTarget": "midas-web-app:build"
           }
         },
         "test": {
@@ -161,7 +162,7 @@
         }
       }
     },
-    "mifosx-web-app-e2e": {
+    "midas-web-app-e2e": {
       "root": "e2e",
       "projectType": "application",
       "architect": {
@@ -169,11 +170,11 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "mifosx-web-app:serve"
+            "devServerTarget": "midas-web-app:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "mifosx-web-app:serve:production"
+              "devServerTarget": "midas-web-app:serve:production"
             }
           }
         },
@@ -191,5 +192,5 @@
       }
     }
   },
-  "defaultProject": "mifosx-web-app"
+  "defaultProject": "midas-web-app"
 }

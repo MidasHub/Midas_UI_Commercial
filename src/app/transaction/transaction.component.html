@@ -1,0 +1,179 @@
+<div class="container m-b-5" fxLayout="row" fxLayout.lt-md="column" fxLayoutAlign="end" fxLayoutGap="1%">
+  <div fxFlex="100%" align="center" class="header">
+    <h2 class="m-5">MÀN HÌNH GIAO DỊCH - THÔNG TIN GIAO DỊCH Rút tiền mặt</h2>
+  </div>
+</div>
+<div class="container" fxLayout="column" fxLayoutGap="2%">
+  <mat-card >
+    <div fxLayout="row wrap">
+      <div fxFlex="50%" fxLayout="row wrap" class="content">
+        <div fxFlex="100%" style="color: green; font-weight: bold">Loại giao dịch : Rút tiền mặt</div>
+        <div fxFlex="100%">Thông tin chi tiết</div>
+        <div fxFlex="100%" fxLayout="row wrap">
+          <div fxFlex="30%">Thẻ thực hiện giao dịch</div>
+          <div fxFlex="70%">XXXXXX-X-XXXX</div>
+        </div>
+        <div fxFlex="100%" fxLayout="row wrap" class="content">
+          <div fxFlex="10%">Loại thẻ</div>
+          <div fxFlex="15%">VISA</div>
+          <div fxFlex="20%">Của ngân hàng</div>
+          <div fxFlex="55%">Ngân hàng Techcombank</div>
+        </div>
+        <div fxFlex="100%" fxLayout="row wrap">
+          <div fxFlex="30%">
+            <mat-form-field appearance="fill">
+              <mat-label>Tài khoản nhận tiền</mat-label>
+              <select matNativeControl>
+                <option value="vvrv1" selected>vrvrv1</option>
+                <option value="vvrv2">vrvrv2</option>
+                <option value="vvrv3">vrvrv3</option>
+              </select>
+            </mat-form-field>
+          </div>
+          <div fxFlex="30%">
+            <mat-form-field appearance="fill">
+              <mat-label>Chọn loại giao dịch </mat-label>
+              <select matNativeControl>
+                <option value="CA01">RTM thông thường</option>
+                <option value="TEST">Test thẻ</option>
+                <option value="CA02">Lô lẻ</option>
+              </select>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div fxFlex="100%" fxLayout="row wrap">
+          <div fxLayoutAlign=" center" fxFlex="20%">Thông tin giao dịch</div>
+          <div fxFlex="30%">
+            <mat-form-field>
+              <mat-label>Nhập số tiền giao dịch</mat-label>
+              <input
+              type="text"
+              matInput
+              #amountTransaction
+              (change)="this.getTerminalListEnoughBalance(amountTransaction.value)"
+              (keyup)="amountTransaction.value = this.formatCurrency(amountTransaction.value)" />
+            </mat-form-field>
+          </div>
+          <div fxFlex="10%">
+            <mat-form-field>
+              <mat-label>Nhập phí (%/giá trị giao dịch)</mat-label>
+              <input matInput />
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+      <div fxFlex="50%" fxLayout="row wrap">
+        <div fxFlex="100%" fxLayout="row wrap" class="content">
+          <div fxFlex="40%">Tên khách hàng</div>
+          <div fxFlex="60%" align="left">TAI TẮT SÁNG</div>
+        </div>
+        <div fxFlex="100%" fxLayout="row wrap" class="content">
+          <div fxFlex="40%">Thuộc đại lý</div>
+          <div fxFlex="60%" align="left">(Chưa có)</div>
+        </div>
+        <div fxFlex="100%" fxLayout="row wrap" class="content">
+          <div fxFlex="40%">Chi nhánh</div>
+          <div fxFlex="60%" align="left">62BPNT</div>
+        </div>
+        <div fxFlex="100%" fxLayout="row wrap">
+          <div fxFlex="100%" fxLayout="row wrap" class="content">
+            <div fxFlex="100%" style="color: green; font-weight: bold">Thông tin về thu chi giao dịch</div>
+          </div>
+
+          <div fxFlex="100%" fxLayout="row wrap" class="content m-l-20">
+            <div fxFlex="40%">Giá trị giao dịch</div>
+            <div fxFlex="20%"></div>
+            <div fxFlex="20%">Tỉ lệ</div>
+          </div>
+          <div fxFlex="100%" style="color: red; font-weight: bold" fxLayout="row wrap" class="content m-l-20">
+            Thu/chi bằng tiền mặt
+          </div>
+          <div class="m-l-10" fxFlex="100%" fxLayout="row wrap" class="m-l-20 content">
+            <div fxFlex="40%">Thực cho khách hàng</div>
+            <div fxFlex="20%">23,000,000</div>
+            <div fxFlex="20%"></div>
+          </div>
+          <div class="m-l-10" fxFlex="100%" fxLayout="row wrap" class="m-l-20 content">
+            <div fxFlex="40%">Phí thu khách hàng</div>
+            <div fxFlex="20%">120,000</div>
+            <div fxFlex="20%">2.0%</div>
+          </div>
+          <div fxFlex="100%" fxLayout="row wrap" class="content m-l-20">
+            <div style="color: red; font-weight: bold" fxFlex="40%">Thu/chi bằng cách cấn trừ</div>
+            <div fxFlex="20%">32,000</div>
+            <div fxFlex="20%"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </mat-card>
+  <mat-card fxLayout="row wrap" class="m-0">
+    <div fxFlex="100%"  >
+      <h3  align="center" style="color: blue;font-weight: bold;">Chọn máy POS để sử dụng giao dịch</h3>
+    </div>
+    <div fxFlex="100%" >
+      <div fxFlex="30%" fxLayout="row wrap" class="content">
+        <div fxFlex="100%">
+          <mat-form-field style="width: 80%;" appearance="fill">
+            <mat-label>Chọn máy POS làm giao dịch</mat-label>
+            <select  matNativeControl>
+              <option *ngFor="let terminal of listTerminal" [value]="terminal.terminalId">{{terminal.terminalName}}</option>
+            </select>
+          </mat-form-field>
+
+        </div>
+      </div>
+      <div fxFlex="16%" fxLayout="row wrap" class="content">
+        <div fxFlex="100%">
+          <mat-form-field>
+            <mat-label>Số tiền cần quẹt(VNĐ)</mat-label>
+            <input matInput />
+          </mat-form-field>
+        </div>
+      </div>
+      <div fxFlex="16%" fxLayout="row wrap" class="content">
+        <div fxFlex="100%">
+          <mat-form-field>
+            <mat-label>Số tiền trên bill do POS in ra</mat-label>
+            <input matInput />
+          </mat-form-field>
+        </div>
+      </div>
+      <div fxFlex="14%" fxLayout="row wrap" class="content">
+        <div fxFlex="80%">
+          <mat-form-field>
+            <mat-label> Số batch</mat-label>
+            <input matInput />
+          </mat-form-field>
+        </div>
+      </div>
+      <div fxFlex="14%" fxLayout="row wrap" class="content">
+        <div fxFlex="80%">
+          <mat-form-field>
+            <mat-label> Số trace</mat-label>
+            <input matInput />
+          </mat-form-field>
+        </div>
+      </div>
+      <div fxFlex="10%" fxLayout="row wrap" class="content">
+        <div fxFlex="100%"></div>
+        <div fxFlex="100%">
+          <section align="center">
+            <mat-checkbox name="checkUseCM">Áp dụng C/M</mat-checkbox>
+          </section>
+        </div>
+      </div>
+    </div>
+    <div fxLayoutAlign="center center" fxFlex="100%"  >
+      <button mat-raised-button color="primary" [routerLink]="['/system', 'roles-and-permissions']">
+        <fa-icon icon="check"></fa-icon>&nbsp;&nbsp;
+        Hoàn tất giao dịch
+      </button>
+      <button mat-raised-button color="primary" (click)="changeUserPassword()">
+        <fa-icon icon="check"></fa-icon>&nbsp;&nbsp;
+        Khởi tạo giao dịch
+      </button>
+    </div>
+  </mat-card>
+</div>
