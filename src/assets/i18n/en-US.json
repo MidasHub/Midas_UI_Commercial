@@ -2,22 +2,6 @@
   "APP_NAME": "Midas - En",
   "Client_Component": {
     "ClientStepper": {
-      "AddressStep": {
-        "buttonAdd": "Add new address",
-        "titleAddress": "Address",
-        "labelAddressLine1": "Address Number",
-        "labelAddressLine2": "Block Number",
-        "labelAddressLine3": "Residential/ Apartment Name",
-        "labelCity": "City",
-        "labelCountry": "Country",
-        "checkboxIsActive": "Activate ?",
-        "labelPostalCode": "Postal Code",
-        "labelStateProvince": "State/Province",
-        "labelStreet": "Street",
-        "labelAddressType": "Address Type",
-        "labelDistrict": "District",
-        "labelTownVillage": "Town/Vilage"
-      },
       "labelGeneral": "General",
       "labelAddress": "Address",
       "labelRelative": "Relative",
@@ -200,7 +184,6 @@
       "labelClient": "Clients",
       "labelCreateClient": "Create Client"
     },
-    "inputPlaceholderClosedCIF": "Search by client name",
     "ViewClient": {
       "lblViewSignature": "View Signature",
       "lblClientName": "Client Name",
@@ -264,7 +247,6 @@
     "Breadcrumb": {
       "labelHome": "Home"
     },
-    "searchActivity": "Search Activity",
     "btnDashboard": "Dashboard",
     "labelIncompleteRollterm": "Incomplete Refinance Card",
     "btnNewCustomer": "New Client",

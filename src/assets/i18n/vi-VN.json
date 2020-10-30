@@ -2,22 +2,6 @@
   "APP_NAME": "Midas - VN",
   "Client_Component": {
     "ClientStepper": {
-      "AddressStep": {
-        "buttonAdd": "Thêm địa chỉ mới",
-        "titleAddress": "ĐỊA CHỈ",
-        "labelAddressLine1": "Số nhà",
-        "labelAddressLine2": "Số Lô/Block",
-        "labelAddressLine3": "Khu dân cư/ Chung cư",
-        "labelCity": "Thành phố thuộc Tỉnh",
-        "labelCountry": "Quốc Gia",
-        "checkboxIsActive": "Kích hoạt ?",
-        "labelPostalCode": "Mã bưu điện",
-        "labelStateProvince": "Tỉnh/Thành phố thuộc TW",
-        "labelStreet": "Tên đường",
-        "labelAddressType": "Loại địa chỉ",
-        "labelDistrict": "Quận",
-        "labelTownVillage": "Phường/Xã"
-      },
       "labelGeneral": "Thông tin chung",
       "labelAddress": "Địa chỉ",
       "labelRelative": "Người liên quan",
@@ -248,7 +232,6 @@
       "tipCaptureImage": "Chụp hình ",
       "tipDeleteImage": "Xóa hình"
     },
-    "inputPlaceholderClosedCIF": "Tìm bằng tên khách hàng",
     "Breadcrumb": {
       "labelClient": "Khách hàng",
       "labelCreateClient": "Tạo khách hàng"
