@@ -46,6 +46,7 @@ import { TasksModule } from './tasks/tasks.module';
 
 /** Main Routing Module */
 import { AppRoutingModule } from './app-routing.module';
+import { TransactionModule } from './transaction/transaction.module';
 
 /**
  * App Module
@@ -71,6 +72,7 @@ import { AppRoutingModule } from './app-routing.module';
     HomeModule,
     LoginModule,
     ProfileModule,
+    TransactionModule,
     SettingsModule,
     NavigationModule,
     ClientsModule,

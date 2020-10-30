@@ -11,8 +11,8 @@ export const environment = {
   version: env.npm_package_version + '-dev',
   fineractPlatformTenantId: 'midas',  // For connecting to server running elsewhere update the tenant identifier
   //baseApiUrl: 'https://app2.midascore.net:8443',  // For connecting to server running elsewhere update the base API URL
-  // baseApiUrl: 'https://metabase.tekcompay.com',
-  baseApiUrl: 'https://119.82.135.172:8443',
+  baseApiUrl: 'https://metabase.tekcompay.com',
+  //baseApiUrl: 'https://119.82.135.172:8443',
   GatewayApiUrl: 'http://localhost:8286',
   GatewayApiUrlPrefix: '/billPos',
   apiProvider: '/fineract-provider/api',
