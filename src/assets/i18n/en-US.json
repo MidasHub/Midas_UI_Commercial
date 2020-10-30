@@ -87,7 +87,9 @@
         "btnConfirm": "Confirm"
       },
       "buttonCancel": "Cancel",
-      "buttonSubmit": "Submit"
+      "buttonSubmit": "Submit",
+      "lblCustomerCreated": "Create customer successfully, ID: ",
+      "lblClose": "Close"
     },
     "buttonImportClient": "Import Client",
     "buttonCreateClient": "Create Client",
@@ -160,7 +162,11 @@
   },
   "Home_Component": {
     "welcome": "Hello, ",
-    "searchActivity": "Search Activity"
+    "searchActivity": "Search Activity",
+    "btnDashboard": "Dashboard",
+    "labelIncompleteRollterm": "Incomplete Refinance Card",
+    "btnNewCustomer": "New Client",
+    "btnNewGroup": "New Group"
   },
   "Login_Component": {
     "APP_SLOGAN": "This is a Single Page Web that can help your Business grow",

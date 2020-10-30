@@ -41,25 +41,25 @@ $mat-yellow-green: (
 // Define the palettes for your theme using the Material Design palettes available in palette.scss
 // (imported above). For each palette, you can optionally specify a default, lighter, and darker
 // hue. Available color palettes: https://material.io/design/color/
-$mifosx-app-primary: mat-palette($mat-denim);
-$mifosx-app-accent:  mat-palette($mat-yellow-green);
+$midas-app-primary: mat-palette($mat-denim);
+$midas-app-accent:  mat-palette($mat-yellow-green);
 
 // The warn palette is optional (defaults to red).
-$mifosx-app-warn:    mat-palette($mat-red);
+$midas-app-warn:    mat-palette($mat-red);
 
 // Create the theme object (a Sass map containing all of the palettes).
-$mifosx-app-theme: mat-light-theme($mifosx-app-primary, $mifosx-app-accent, $mifosx-app-warn);
+$midas-app-theme: mat-light-theme($midas-app-primary, $midas-app-accent, $midas-app-warn);
 
 // Include theme styles for core and each component used in your app.
 // Alternatively, you can import and @include the theme mixins for each component
 // that you are using.
-@include angular-material-theme($mifosx-app-theme);
-@include clients-view-component-theme($mifosx-app-theme);
-@include groups-view-component-theme($mifosx-app-theme);
-@include centers-view-component-theme($mifosx-app-theme);
-@include dashboard-component-theme($mifosx-app-theme);
-@include loans-view-component-theme($mifosx-app-theme);
-@include savings-account-view-component-theme($mifosx-app-theme);
-@include shares-account-view-component-theme($mifosx-app-theme);
-@include fixed-deposits-account-view-component-theme($mifosx-app-theme);
-@include recurring-deposits-account-view-component-theme($mifosx-app-theme);
+@include angular-material-theme($midas-app-theme);
+@include clients-view-component-theme($midas-app-theme);
+@include groups-view-component-theme($midas-app-theme);
+@include centers-view-component-theme($midas-app-theme);
+@include dashboard-component-theme($midas-app-theme);
+@include loans-view-component-theme($midas-app-theme);
+@include savings-account-view-component-theme($midas-app-theme);
+@include shares-account-view-component-theme($midas-app-theme);
+@include fixed-deposits-account-view-component-theme($midas-app-theme);
+@include recurring-deposits-account-view-component-theme($midas-app-theme);
