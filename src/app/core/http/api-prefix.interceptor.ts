@@ -24,9 +24,15 @@ export class ApiPrefixInterceptor implements HttpInterceptor {
       request = request.clone({ url:request.url });
   // else add prefix for calling API to fineract backend
     }else{
-      request = request.clone({ url: environment.serverUrl + request.url });
+
+      if (request.url.startsWith(environment.GatewayApiUrlPrefix)){
+
+        request = request.clone({ url: environment.gatewayServerUrl + request.url });
+      }else{
+        request = request.clone({ url: environment.serverUrl + request.url });
+      }
     }
-    
+
     return next.handle(request);
   }
 

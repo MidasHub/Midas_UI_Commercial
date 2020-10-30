@@ -5,11 +5,13 @@ export const environment = {
   production: true,
   version: env.npm_package_version,
   fineractPlatformTenantId: 'midas',  // For connecting to server running elsewhere update the tenant identifier
-  // baseApiUrl: 'https://app2.midascore.net:8443',  // For connecting to server running elsewhere update the base API URL
+  GatewayApiUrl: 'http://localhost:8286',
+  GatewayApiUrlPrefix: '/billPos',
   baseApiUrl: 'https://metabase.tekcompay.com',
   apiProvider: '/fineract-provider/api',
   apiVersion: '/v1',
   serverUrl: '',
+  gatewayServerUrl: '',
   oauth: {
     enabled: false,  // For connecting to Midas using OAuth2 Authentication change the value to true
     serverUrl: ''
@@ -17,15 +19,16 @@ export const environment = {
   defaultLanguage: 'vi-VN',
   supportedLanguages: [
     'en-US',
-    // 'fr-FR',
+    //'fr-FR',
     'vi-VN'
   ],
-  languagesName: {
-   en: 'English',
-   vi: 'Vietnamese',
+  languagesName:{
+   en:"English",
+   vi:"Vietnamese",
   }
 };
 
 // Server URL
 environment.serverUrl = `${environment.baseApiUrl}${environment.apiProvider}${environment.apiVersion}`;
 environment.oauth.serverUrl = `${environment.baseApiUrl}${environment.apiProvider}`;
+environment.gatewayServerUrl = `${environment.GatewayApiUrl}`;

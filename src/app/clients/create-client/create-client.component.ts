@@ -1,10 +1,10 @@
 /** Angular Imports */
 import { Component, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-
+import { HttpClient, HttpParams } from '@angular/common/http';
 /** Custom Services */
 import { ClientsService } from '../clients.service';
-
+// import { map } from 'rxjs/operators';
 /** Custom Components */
 import { ClientGeneralStepComponent } from '../client-stepper/client-general-step/client-general-step.component';
 import { ClientFamilyMembersStepComponent } from '../client-stepper/client-family-members-step/client-family-members-step.component';
@@ -12,6 +12,8 @@ import { ClientAddressStepComponent } from '../client-stepper/client-address-ste
 
 /** Custom Services */
 import { SettingsService } from 'app/settings/settings.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { I18nService } from 'app/core/i18n/i18n.service';
 
 
 /**
@@ -46,7 +48,11 @@ export class CreateClientComponent {
   constructor(private route: ActivatedRoute,
               private router: Router,
               private clientsService: ClientsService,
-              private settingsService: SettingsService) {
+              private settingsService: SettingsService,
+              private http: HttpClient,
+              private snackbar: MatSnackBar,
+              private i18n: I18nService
+              ) {
     this.route.data.subscribe((data: { clientTemplate: any, clientAddressFieldConfig: any }) => {
       this.clientTemplate = data.clientTemplate;
       this.clientAddressFieldConfig = data.clientAddressFieldConfig;
@@ -57,13 +63,21 @@ export class CreateClientComponent {
    * Retrieves general information about client.
    */
   get clientGeneralForm() {
+
     return this.clientGeneralStep.createClientForm;
   }
+
+  ngOnInit() {
+    this.clientsService.getClientTest(5, 50000000).subscribe( (data: any) => {
+      console.log(data);
+  })
+}
 
   /**
    * Retrieves the client object
    */
   get client() {
+
     return {
       ...this.clientGeneralStep.clientGeneralDetails,
       ...this.clientFamilyMembersStep.familyMembers,
@@ -83,7 +97,19 @@ export class CreateClientComponent {
       locale
     };
     this.clientsService.createClient(clientData).subscribe((response: any) => {
-      this.router.navigate(['../', response.resourceId], { relativeTo: this.route });
+      //Jean customized here
+      if (this.router.url.indexOf('client')>=0) {
+        this.router.navigate(['../', response.resourceId], { relativeTo: this.route });
+      }else{
+        
+        this.snackbar.open( this.i18n.getTranslate('Client_Component.ClientStepper.lblCustomerCreated')+ response.resourceId  + "!",this.i18n.getTranslate('Client_Component.ClientStepper.lblClose'), {
+          duration: 3000,
+          horizontalPosition: 'right',
+          verticalPosition: 'top'
+        });
+        this.router.navigate(['/home']);
+      }
+      
     });
   }
 

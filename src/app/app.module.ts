@@ -47,6 +47,9 @@ import { TasksModule } from './tasks/tasks.module';
 /** Main Routing Module */
 import { AppRoutingModule } from './app-routing.module';
 
+/** Billpos Module */
+import { TransactionModule } from './transaction/transaction.module';
+
 /**
  * App Module
  *
@@ -70,7 +73,7 @@ import { AppRoutingModule } from './app-routing.module';
     CoreModule,
     HomeModule,
     LoginModule,
-    ProfileModule,
+    ProfileModule,    
     SettingsModule,
     NavigationModule,
     ClientsModule,
@@ -89,6 +92,8 @@ import { AppRoutingModule } from './app-routing.module';
     CollectionsModule,
     TasksModule,
     AppRoutingModule,
+    // Billpos Module
+    TransactionModule,
   ],
   declarations: [WebAppComponent, NotFoundComponent],
   providers: [],

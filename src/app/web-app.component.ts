@@ -33,7 +33,7 @@ const log = new Logger('MifosX');
  * Main web app component.
  */
 @Component({
-  selector: 'mifosx-web-app',
+  selector: 'midas-web-app',
   templateUrl: './web-app.component.html',
   styleUrls: ['./web-app.component.scss']
 })

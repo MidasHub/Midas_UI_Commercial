@@ -61,10 +61,35 @@
         "labelCorpConstitution": "Constitution",
         "labelCorpDate": "Incorporation Date",
         "labelTaxNo": "Tax Number",
-        "labelSelectExternalId": "External Id",
-        "labelSelectStaffCode": "Staff code",
-        "labelSelectAccountForPayment": "Account Payment "
-      }
+        "labelAccountNo": "CIF No"
+      },
+      "RelativeStep": {
+        "lblRelativeMember": "Relative Member",
+        "btnAddRelative": "Add Relative",
+        "lblFirstName": "First",
+        "lblLastName": "Last Name",
+        "lblQualification": "Qualification",
+        "lblMidName": "Middle",
+        "lblRelationship": "Relationship",
+        "lblAge": "Age",
+        "lblMaritalStatus": "Marital Status",
+        "lblDependent": "Is Dependent ?",
+        "lblGender": "Gender",
+        "lblProfession": "Profession",
+        "lblDOB": "Date of Birth",
+        "lblFirstNameMsg": "First Name is <strong>required</strong>",
+        "lblLastNameMsg": "Last Name is <strong>required</strong>",
+        "lblAgeMsg": "Age is <strong>required</strong>",
+        "lblRelationshipMsg": "Relationship is <strong>required</strong>",
+        "lblGenderMsg": "Gender is <strong>required</strong>",
+        "lblDOBMsg": "Date of birth is <strong>required</strong>",
+        "btnCancel": "Cancel",
+        "btnConfirm": "Confirm"
+      },
+      "buttonCancel": "Cancel",
+      "buttonSubmit": "Submit",
+      "lblCustomerCreated": "Create customer successfully, ID: ",
+      "lblClose": "Close"
     },
     "buttonImportClient": "Import Client",
     "buttonCreateClient": "Create Client",
@@ -77,7 +102,59 @@
     "tblColStaffName": "StaffName",
     "tblColStatus": "Status",
     "tblColMobileNumber": "Mobile Number",
-    "inputPlaceholderClosedCIF": "Search by client name"
+    "inputPlaceholderClosedCIF": "Search by client name",
+    "ViewClient": {
+      "lblViewSignature": "View Signature",
+      "lblClientName": "Client Name",
+      "lblExternalID": "Citizen ID",
+      "lblStaff": "Sta",
+      "lblActivationDate": "Activation Date",
+      "lblMemberOf": "Member of",
+      "lblUnassigned": "Unassigned",
+      "btnEdit": "Edit",
+      "btnAction": "Actions",
+      "btnClose": "Close",
+      "btnTransferClient": "Transfer Client",
+      "btnActivate": "Activate",
+      "btnWithdraw": "Withdraw",
+      "btnReject": "Reject",
+      "btnDelete": "Delêt",
+      "btnUndoRejection": "Undo Rejection",
+      "btnUndoTransfer": "Undo Client Transfer",
+      "btnAcceptTransfer": "Accept Transfer",
+      "btnRejectTransfer": "Reject Transfer",
+      "btnAssignStaff": "Assign Staff",
+      "btnUnAssignStaff": "Unassign Staff",
+      "btnMoreAction": "More Actions",
+      "btnAddCharge": "Add Charges",
+      "btnSurvey": "Survey",
+      "btnUpdateDefaultSaving": "Update Default Saving",
+      "btnUploadSignature": "Upload Signature",
+      "btnDeleteSignature": "Delete Signature",
+      "btnClientReport": "Client Screen Report",
+      "btnCreateStandingIns": "Create Standing Instruction",
+      "btnViewStandingIns": "View Standing Instruction",
+      "btnCreateSelfService": "Create Self Service User",
+      "lblAddress": "Address",
+      "lblGeneral": "General",
+      "lblFamilyMember": "Relative",
+      "lblDocument": "Documents",
+      "lblNote": "Note",
+      "lblIdentity": "Indentities",
+      "lblNotActivated": "Not Activated",
+      "btnNewLoan": "New Loan Account",
+      "btnNewShareAccount": "New Share Account",
+      "btnNewFixedDeposit": "New Fixed Deposit Account",
+      "btnNewRecurringDeposit": "New Recurring Deposit Account",
+      "btnNewSaving": "New Saving Account",
+      "btnReactivate": "Reactivate",
+      "lblCifNo": "CIF #",
+      "btnApplication": "Applications",
+      "lblExtendInfo": "Additional informations",
+      "tipUploadImage": "Upload Image",
+      "tipCaptureImage": "Capture Image",
+      "tipDeleteImage": "Delete Image"
+    }
   },
   "Footer_Component": {
     "Version": "Version",
@@ -85,7 +162,11 @@
   },
   "Home_Component": {
     "welcome": "Hello, ",
-    "searchActivity": "Search Activity"
+    "searchActivity": "Search Activity",
+    "btnDashboard": "Dashboard",
+    "labelIncompleteRollterm": "Incomplete Refinance Card",
+    "btnNewCustomer": "New Client",
+    "btnNewGroup": "New Group"
   },
   "Login_Component": {
     "APP_SLOGAN": "This is a Single Page Web that can help your Business grow",
@@ -181,6 +262,12 @@
           "NextButton": "Nex"
         }
       }
+    }
+  },
+  "Shared_Component": {
+    "FormDialog": {
+      "btnCancel": "Cancel",
+      "btnAdd": "Add"
     }
   }
 }
