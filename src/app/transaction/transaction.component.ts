@@ -70,4 +70,7 @@ export class TransactionComponent implements OnInit {
     return parseInt(value);
 }
 
+changeUserPassword(){
+  window.alert('~~~  Để tạm cho qua từ từ làm tiếp ~~~')
+}
 }

@@ -87,7 +87,9 @@
         "btnConfirm": "Xác nhận"
       },
       "buttonCancel": "Hủy bỏ",
-      "buttonSubmit": "Chấp nhận"
+      "buttonSubmit": "Chấp nhận",
+      "lblCustomerCreated": "Tạo khách hàng thành công ID: ",
+      "lblClose": "Đóng"
     },
     "buttonImportClient": "Nhập list khách hàng",
     "buttonCreateClient": "Tạo khách hàng mới",
@@ -160,7 +162,11 @@
   },
   "Home_Component": {
     "welcome": "Xin chào,  ",
-    "searchActivity": "Tìm kiếm các hành động"
+    "searchActivity": "Tìm kiếm các hành động",
+    "btnDashboard": "Dashboard ",
+    "labelIncompleteRollterm": "Món ĐHT chưa hoàn thành",
+    "btnNewCustomer": "Tạo mới khách hàng",
+    "btnNewGroup": "Tạo mới đại lý"
   },
   "Login_Component": {
     "APP_SLOGAN": "Phần mềm quản lý hiệu quả",

@@ -1,17 +1,17 @@
 <div fxLayout="row wrap" fxLayout.lt-md="column">
 
-  <h3 class="mat-h3" fxFlexFill>{{'Client_component.ClientStepper.labelGeneral'|translate}}</h3>
+  <h3 class="mat-h3" fxFlexFill>{{'Client_Component.ClientStepper.labelGeneral'|translate}}</h3>
 
   <mat-divider fxFlexFill></mat-divider>
 
   <div fxFlexFill>
-    <span fxFlex="40%">{{'Client_component.ClientStepper.GeneralStep.labelFullName'|translate}}</span>
+    <span fxFlex="40%">{{'Client_Component.ClientStepper.GeneralStep.labelFullName'|translate}}</span>
     <span fxFlex="60%" *ngIf="client.legalFormId === 2">{{ client.fullname }}</span>
     <span fxFlex="60%" *ngIf="client.legalFormId === 1">{{ client.firstname }} {{ client.middlename ? client.middlename + ' ' + client.lastname : client.lastname }}</span>
   </div>
 
   <div fxFlexFill>
-    <span fxFlex="40%">{{'Client_component.ClientStepper.GeneralStep.labelOffice'|translate}}</span>
+    <span fxFlex="40%">{{'Client_Component.ClientStepper.GeneralStep.labelOffice'|translate}}</span>
     <span fxFlex="60%">{{ client.officeId | find:clientTemplate.officeOptions:'id':'name' }}</span>
   </div>
 
@@ -209,12 +209,12 @@
 <div fxLayout="row" class="margin-t" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="2%">
   <button mat-raised-button matStepperPrevious>
     <fa-icon icon="arrow-left"></fa-icon>&nbsp;&nbsp;
-    {{'Client_component.ClientStepper.buttonPrevious'|translate}}
+    {{'Client_Component.ClientStepper.buttonPrevious'|translate}}
   </button>
   <button mat-raised-button [routerLink]="['../']">
-    {{'Client_component.ClientStepper.buttonCancel'|translate}}
+    {{'Client_Component.ClientStepper.buttonCancel'|translate}}
   </button>
   <button mat-raised-button color="primary" (click)="submit.emit()">
-    {{'Client_component.ClientStepper.buttonSubmit'|translate}}
+    {{'Client_Component.ClientStepper.buttonSubmit'|translate}}
   </button>
 </div>

@@ -15,6 +15,13 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 /** Custom Resolvers */
 import { OfficesResolver } from '../accounting/common-resolvers/offices.resolver';
 
+/** Create customer */
+import {CreateClientComponent} from '../clients/create-client/create-client.component';
+import { ClientAddressFieldConfigurationResolver } from '../clients/common-resolvers/client-address-fieldconfiguration.resolver';
+import { ClientTemplateResolver } from '../clients/common-resolvers/client-template.resolver';
+
+
+
 /** Home and Dashboard Routes */
 const routes: Routes = [
   Route.withShell([
@@ -35,7 +42,16 @@ const routes: Routes = [
       resolve: {
         offices: OfficesResolver
       }
-    }
+    },
+    {
+      path: 'create',
+      data: { title: extract('Create Client'), breadcrumb: 'Create Client', routeParamBreadcrumb: false },
+      component: CreateClientComponent,
+      resolve: {
+        clientAddressFieldConfig: ClientAddressFieldConfigurationResolver,
+        clientTemplate: ClientTemplateResolver
+      }
+    },
   ])
 ];
 
@@ -47,6 +63,6 @@ const routes: Routes = [
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
-  providers: [OfficesResolver]
+  providers: [OfficesResolver,ClientTemplateResolver,ClientAddressFieldConfigurationResolver]
 })
 export class HomeRoutingModule { }
