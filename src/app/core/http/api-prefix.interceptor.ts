@@ -27,7 +27,7 @@ export class ApiPrefixInterceptor implements HttpInterceptor {
 
       if (request.url.startsWith(environment.GatewayApiUrlPrefix)){
 
-        request = request.clone({ url: environment.gatewayServerUrl + request.url });
+        request = request.clone({ url: environment.GatewayServerUrl + request.url });
       }else{
         request = request.clone({ url: environment.serverUrl + request.url });
       }
