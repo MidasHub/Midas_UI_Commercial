@@ -9,15 +9,15 @@ import env from './.env';
 export const environment = {
   production: false,
   version: env.npm_package_version + '-dev',
-  fineractPlatformTenantId: 'midas',  // For connecting to server running elsewhere update the tenant identifier
-  // baseApiUrl: 'https://uat.tekcompay.com:9443',
-  baseApiUrl: 'https://metabase.tekcompay.com',
-  GatewayApiUrl: 'http://localhost:8286',
-  GatewayApiUrlPrefix: '/billPos',
+  fineractPlatformTenantId: 'default',  // For connecting to server running elsewhere update the tenant identifier
+  baseApiUrl: 'https://uat.tekcompay.com:9443',
   apiProvider: '/fineract-provider/api',
   apiVersion: '/v1',
   serverUrl: '',
-  gatewayServerUrl: '',
+  GatewayApiUrl: 'http://203.205.21.236:8287',
+  GatewayApiUrlPrefix: '/billPos',
+  GatewayServerUrl: '',
+  GatewayTenantId: 'default',
   oauth: {
     enabled: false,  // For connecting to Midas using OAuth2 Authentication change the value to true
     serverUrl: ''
@@ -36,4 +36,4 @@ export const environment = {
 // Server URL
 environment.serverUrl = `${environment.baseApiUrl}${environment.apiProvider}${environment.apiVersion}`;
 environment.oauth.serverUrl = `${environment.baseApiUrl}${environment.apiProvider}`;
-environment.gatewayServerUrl = `${environment.GatewayApiUrl}`;
+environment.GatewayServerUrl = `${environment.GatewayApiUrl}`;
