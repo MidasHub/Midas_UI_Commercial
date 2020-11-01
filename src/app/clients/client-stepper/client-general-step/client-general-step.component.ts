@@ -85,8 +85,8 @@ export class ClientGeneralStepComponent implements OnInit {
       'staffId': [''],
       'legalFormId': [''],
       'isStaff': [false],
-      'active': [false],
-      'addSavings': [false],
+      'active': [true],
+      'addSavings': [true],
       'accountNo': [''],
       'externalId': [''],
       'genderId': [''],
@@ -94,9 +94,11 @@ export class ClientGeneralStepComponent implements OnInit {
       'dateOfBirth': [''],
       'clientTypeId': [21],
       'clientClassificationId': [''],
-      'submittedOnDate': [''],
+      'submittedOnDate': [{value: '', disabled: true}],
       'staff_code': [''],
       'documentTypeId': [''],
+      'activationDate': [{value: '', disabled: true}],
+      'savingsProductId': [2]
     });
   }
 
@@ -120,7 +122,10 @@ export class ClientGeneralStepComponent implements OnInit {
       }
     });
     this.currentUser = this.authenticationService.getCredentials();
-    const {roles} = this.currentUser;
+    const {roles, staffId} = this.currentUser;
+    this.createClientForm.get('staffId').setValue(staffId);
+    this.createClientForm.get('submittedOnDate').setValue(new Date());
+    this.createClientForm.get('activationDate').setValue(new Date());
     roles.map( (role: any) => {
       if (role.id !== 3) {
         this.isTeller = false;
@@ -163,20 +168,20 @@ export class ClientGeneralStepComponent implements OnInit {
     //   //
     //   // }
     // });
-    this.createClientForm.get('active').valueChanges.subscribe((active: boolean) => {
-      if (active) {
-        this.createClientForm.addControl('activationDate', new FormControl('', Validators.required));
-      } else {
-        this.createClientForm.removeControl('activationDate');
-      }
-    });
-    this.createClientForm.get('addSavings').valueChanges.subscribe((active: boolean) => {
-      if (active) {
-        this.createClientForm.addControl('savingsProductId', new FormControl('', Validators.required));
-      } else {
-        this.createClientForm.removeControl('savingsProductId');
-      }
-    });
+    // this.createClientForm.get('active').valueChanges.subscribe((active: boolean) => {
+    //   if (active) {
+    //     this.createClientForm.addControl('activationDate', new FormControl('', Validators.required));
+    //   } else {
+    //     this.createClientForm.removeControl('activationDate');
+    //   }
+    // });
+    // this.createClientForm.get('addSavings').valueChanges.subscribe((active: boolean) => {
+    //   if (active) {
+    //     this.createClientForm.addControl('savingsProductId', new FormControl('', Validators.required));
+    //   } else {
+    //     this.createClientForm.removeControl('savingsProductId');
+    //   }
+    // });
   }
 
   fileChange(event: any): Promise<any> {

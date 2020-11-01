@@ -1,17 +1,17 @@
 /** Angular Imports */
-import { Component, ViewChild } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import {Component, ViewChild} from '@angular/core';
+import {Router, ActivatedRoute} from '@angular/router';
 
 /** Custom Services */
-import { ClientsService } from '../clients.service';
+import {ClientsService} from '../clients.service';
 
 /** Custom Components */
-import { ClientGeneralStepComponent } from '../client-stepper/client-general-step/client-general-step.component';
-import { ClientFamilyMembersStepComponent } from '../client-stepper/client-family-members-step/client-family-members-step.component';
-import { ClientAddressStepComponent } from '../client-stepper/client-address-step/client-address-step.component';
+import {ClientGeneralStepComponent} from '../client-stepper/client-general-step/client-general-step.component';
+import {ClientFamilyMembersStepComponent} from '../client-stepper/client-family-members-step/client-family-members-step.component';
+import {ClientAddressStepComponent} from '../client-stepper/client-address-step/client-address-step.component';
 
 /** Custom Services */
-import { SettingsService } from 'app/settings/settings.service';
+import {SettingsService} from 'app/settings/settings.service';
 import * as _ from 'lodash';
 
 
@@ -26,17 +26,18 @@ import * as _ from 'lodash';
 export class CreateClientComponent {
 
   /** Client General Step */
-  @ViewChild(ClientGeneralStepComponent, { static: true }) clientGeneralStep: ClientGeneralStepComponent;
+  @ViewChild(ClientGeneralStepComponent, {static: true}) clientGeneralStep: ClientGeneralStepComponent;
   /** Client Family Members Step */
-  @ViewChild(ClientFamilyMembersStepComponent, { static: true }) clientFamilyMembersStep: ClientFamilyMembersStepComponent;
+  @ViewChild(ClientFamilyMembersStepComponent, {static: true}) clientFamilyMembersStep: ClientFamilyMembersStepComponent;
   /** Client Address Step */
-  @ViewChild(ClientAddressStepComponent, { static: true }) clientAddressStep: ClientAddressStepComponent;
+  @ViewChild(ClientAddressStepComponent, {static: true}) clientAddressStep: ClientAddressStepComponent;
 
   /** Client Template */
   clientTemplate: any;
   /** Client Address Field Config */
   clientAddressFieldConfig: any;
   clientIdentifierTemplate: any;
+
   /**
    * Fetches client and address template from `resolve`
    * @param {ActivatedRoute} route Activated Route
@@ -48,7 +49,7 @@ export class CreateClientComponent {
               private router: Router,
               private clientsService: ClientsService,
               private settingsService: SettingsService) {
-    this.route.data.subscribe((data: { clientTemplate: any, clientAddressFieldConfig: any , clientIdentifierTemplate: any, currentUser: any}) => {
+    this.route.data.subscribe((data: { clientTemplate: any, clientAddressFieldConfig: any, clientIdentifierTemplate: any, currentUser: any }) => {
       this.clientTemplate = data.clientTemplate;
       this.clientAddressFieldConfig = data.clientAddressFieldConfig;
       this.clientIdentifierTemplate = data.clientIdentifierTemplate;
@@ -73,6 +74,47 @@ export class CreateClientComponent {
       ...this.clientAddressStep.address
     };
   }
+
+
+  resizeImage(file: File, maxWidth: number, maxHeight: number): Promise<File> {
+    return new Promise((resolve, reject) => {
+      const image = new Image();
+      image.src = URL.createObjectURL(file);
+      image.onload = () => {
+        const width = image.width;
+        const height = image.height;
+
+        if (width <= maxWidth && height <= maxHeight) {
+          resolve(file);
+        }
+
+        let newWidth;
+        let newHeight;
+
+        if (width > height) {
+          newHeight = height * (maxWidth / width);
+          newWidth = maxWidth;
+        } else {
+          newWidth = width * (maxHeight / height);
+          newHeight = maxHeight;
+        }
+
+        const canvas = document.createElement('canvas');
+        canvas.width = newWidth;
+        canvas.height = newHeight;
+
+        const context = canvas.getContext('2d');
+
+        context.drawImage(image, 0, 0, newWidth, newHeight);
+
+        canvas.toBlob((b => {
+          return resolve(<File>b);
+        }), file.type);
+      };
+      image.onerror = reject;
+    });
+  }
+
   /**
    * Submits the create client form.
    */
@@ -92,20 +134,20 @@ export class CreateClientComponent {
       dateFormat,
       locale
     };
-    this.clientsService.createClient(clientData).subscribe((response: any) => {
-      console.log('response', response);
-      if ( response && response.clientId) {
+    this.clientsService.createClient(clientData).subscribe(async (response: any) => {
+      if (response && response.clientId) {
         for (const file of this.client.files) {
+          const item = await this.resizeImage(file, 500, 600);
           const formData: FormData = new FormData;
           formData.append('name', file.name);
-          formData.append('file', file);
+          formData.append('file', item);
+          formData.append('fileName', file.name);
           formData.append('description', file.name);
-          const upload_respoense = this.clientsService.uploadClientDocument(response.clientId, formData).subscribe((res: any) => {
+          this.clientsService.uploadClientDocument(response.clientId, formData).subscribe((res: any) => {
             console.log('document Uploaded', res);
           });
-          console.log(upload_respoense);
         }
-        this.router.navigate(['../', response.resourceId], { relativeTo: this.route });
+        this.router.navigate(['../', response.resourceId], {relativeTo: this.route});
       }
     });
   }

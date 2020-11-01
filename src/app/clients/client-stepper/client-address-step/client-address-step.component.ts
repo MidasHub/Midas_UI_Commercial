@@ -28,7 +28,17 @@ export class ClientAddressStepComponent {
   @Input() clientTemplate: any;
 
   /** Client Address Data */
-  clientAddressData: any[] = [];
+  clientAddressData: any[] = [{
+    addressLine1: '0',
+    addressLine2: '0',
+    addressLine3: '0',
+    addressTypeId: 15,
+    city: '0',
+    countryId: 27,
+    isActive: false,
+    postalCode: '0',
+    stateProvinceId: 122
+  }];
 
   /**
    * @param {MatDialog} dialog Mat Dialog
