@@ -70,10 +70,11 @@ import { TransactionModule } from './transaction/transaction.module';
       },
       isolate: true,
     }),
+
     CoreModule,
     HomeModule,
     LoginModule,
-    ProfileModule,    
+    ProfileModule,
     SettingsModule,
     NavigationModule,
     ClientsModule,
@@ -91,9 +92,15 @@ import { TransactionModule } from './transaction/transaction.module';
     SearchModule,
     CollectionsModule,
     TasksModule,
-    AppRoutingModule,
-    // Billpos Module
+
+    //billpos mudule
+
     TransactionModule,
+
+    //billpos mudule
+
+    // last component - fix position
+    AppRoutingModule,
   ],
   declarations: [WebAppComponent, NotFoundComponent],
   providers: [],
