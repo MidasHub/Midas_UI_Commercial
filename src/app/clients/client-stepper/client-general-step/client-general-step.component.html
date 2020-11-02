@@ -105,7 +105,7 @@
             </mat-select>
           </mat-form-field>
 
-          <mat-form-field *ngIf="createClientForm.value.legalFormId === 1" fxFlex="48%">
+          <mat-form-field  fxFlex="48%">
             <mat-label>{{('Client_Component.ClientStepper.GeneralStep.labelSelectDocumentTypes' |translate) }}</mat-label>
             <mat-select formControlName="documentTypeId">
               <mat-option *ngFor="let document of documentTypes" [value]="document.id">
@@ -115,11 +115,11 @@
           </mat-form-field>
 
           <mat-form-field fxFlex="48%">
-            <mat-label>{{createClientForm.value.legalFormId === 1 ? ('Client_Component.ClientStepper.GeneralStep.labelExternalID' |translate) : ('Client_Component.ClientStepper.GeneralStep.labelTaxNo' |translate)}}</mat-label>
+            <mat-label>{{ ('Client_Component.ClientStepper.GeneralStep.labelExternalID' |translate) }}</mat-label>
             <input matInput formControlName="externalId">
           </mat-form-field>
 
-          <div fxFlex="48%" *ngIf="createClientForm.value.legalFormId === 1" class="custom-files-input">
+          <div fxFlex="48%" class="custom-files-input">
             <mat-label for="file">{{('Client_Component.ClientStepper.GeneralStep.labelInputFileDocument'|translate)}}</mat-label>
             <input
               placeholder="CMND hai mat"
@@ -188,11 +188,10 @@
           <mat-form-field  fxFlex="48%">
             <mat-label>{{'Client_Component.ClientStepper.GeneralStep.labelClientActivatedDate' |translate}}</mat-label>
             <input matInput [matDatepicker]="activatedOnDatePicker"
-                   formControlName="activationDate">
+                   formControlName="activationDate" disabled>
             <mat-datepicker-toggle matSuffix [for]="activatedOnDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #activatedOnDatePicker></mat-datepicker>
-            <mat-error *ngIf="createClientForm.controls.activationDate.hasError('required')"
-                       [innerHTML]="'Client_Component.ClientStepper.GeneralStep.labelClientActivatedDateMsg' |translate"></mat-error>
+            <mat-error [innerHTML]="'Client_Component.ClientStepper.GeneralStep.labelClientActivatedDateMsg' |translate"></mat-error>
           </mat-form-field>
           <mat-checkbox disabled fxFlex="48%" labelPosition="before" formControlName="addSavings" class="margin-v">
             {{'Client_Component.ClientStepper.GeneralStep.checkboxOpenAccount' |translate}}

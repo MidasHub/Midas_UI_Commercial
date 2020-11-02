@@ -59,6 +59,7 @@ export class ClientGeneralStepComponent implements OnInit {
   clientFilesData: any[] = [];
 
   isTeller = true;
+
   /**
    * @param {FormBuilder} formBuilder Form Builder
    * @param {DatePipe} datePipe Date Pipe
@@ -83,7 +84,6 @@ export class ClientGeneralStepComponent implements OnInit {
     this.createClientForm = this.formBuilder.group({
       'officeId': ['', Validators.required],
       'staffId': [''],
-      'legalFormId': [''],
       'isStaff': [false],
       'active': [true],
       'addSavings': [true],
@@ -94,12 +94,18 @@ export class ClientGeneralStepComponent implements OnInit {
       'dateOfBirth': [''],
       'clientTypeId': [21],
       'clientClassificationId': [''],
-      'submittedOnDate': [{value: '', disabled: true}],
+      // 'submittedOnDate': [{value: '', disabled: true}],
       'staff_code': [''],
       'documentTypeId': [''],
-      'activationDate': [{value: '', disabled: true}],
-      'savingsProductId': [2]
+      // 'activationDate': [{value: '', disabled: true}],
+      'savingsProductId': [2],
+      'firstname': [''],
+      'middlename': [''],
+      'lastname': [''],
+      'legalFormId': [1]
     });
+    this.createClientForm.addControl('activationDate', new FormControl(new Date()));
+    this.createClientForm.addControl('submittedOnDate', new FormControl(new Date()));
   }
 
   /**
@@ -124,9 +130,7 @@ export class ClientGeneralStepComponent implements OnInit {
     this.currentUser = this.authenticationService.getCredentials();
     const {roles, staffId} = this.currentUser;
     this.createClientForm.get('staffId').setValue(staffId);
-    this.createClientForm.get('submittedOnDate').setValue(new Date());
-    this.createClientForm.get('activationDate').setValue(new Date());
-    roles.map( (role: any) => {
+    roles.map((role: any) => {
       if (role.id !== 3) {
         this.isTeller = false;
       }
@@ -137,72 +141,52 @@ export class ClientGeneralStepComponent implements OnInit {
    * Adds controls conditionally.
    */
   buildDependencies() {
-    this.createClientForm.get('legalFormId').valueChanges.subscribe((legalFormId: any) => {
-      if (legalFormId === 1) {
-        this.createClientForm.removeControl('fullname');
-        this.createClientForm.removeControl('clientNonPersonDetails');
-        // Jean: change from '(^[A-z]).*' to  '^([^!@#$%^&*()_+=<>,.?\/\-]*)$'
-        this.createClientForm.addControl('firstname', new FormControl('', [Validators.required, Validators.pattern('^([^!@#$%^&*()_+=<>,.?\/\-]*)$')]));
-        this.createClientForm.addControl('middlename', new FormControl('', Validators.pattern('^([^!@#$%^&*()_+=<>,.?\/\-]*)$')));
-        this.createClientForm.addControl('lastname', new FormControl('', [Validators.required, Validators.pattern('^([^!@#$%^&*()_+=<>,.?\/\-]*)$')]));
-      } else {
-        this.createClientForm.removeControl('firstname');
-        this.createClientForm.removeControl('middlename');
-        this.createClientForm.removeControl('lastname');
-        this.createClientForm.addControl('fullname', new FormControl('', [Validators.required, Validators.pattern('^([^!@#$%^&*()_+=<>,.?\/\-]*)$')]));
-        this.createClientForm.addControl('clientNonPersonDetails', this.formBuilder.group({
-          'constitutionId': [''],
-          'incorpValidityTillDate': [''],
-          'incorpNumber': [''],
-          'mainBusinessLineId': [''],
-          'remarks': ['']
-        }));
-      }
-    });
-    this.createClientForm.get('legalFormId').patchValue(1);
-    // this.createClientForm.get('files').valueChanges.subscribe((files: any) => {
-    //   this.reviewFiles = files;
-    //   console.log(files);
-    //   // if(files.length>2)
-    //   // {
-    //   //
-    //   // }
-    // });
-    // this.createClientForm.get('active').valueChanges.subscribe((active: boolean) => {
-    //   if (active) {
-    //     this.createClientForm.addControl('activationDate', new FormControl('', Validators.required));
+    // this.createClientForm.get('legalFormId').valueChanges.subscribe((legalFormId: any) => {
+    //   if (legalFormId === 1) {
+    //     this.createClientForm.removeControl('fullname');
+    //     this.createClientForm.removeControl('clientNonPersonDetails');
+    //     // Jean: change from '(^[A-z]).*' to  '^([^!@#$%^&*()_+=<>,.?\/\-]*)$'
+    //     this.createClientForm.addControl('firstname', new FormControl('', [Validators.required, Validators.pattern('^([^!@#$%^&*()_+=<>,.?\/\-]*)$')]));
+    //     this.createClientForm.addControl('middlename', new FormControl('', Validators.pattern('^([^!@#$%^&*()_+=<>,.?\/\-]*)$')));
+    //     this.createClientForm.addControl('lastname', new FormControl('', [Validators.required, Validators.pattern('^([^!@#$%^&*()_+=<>,.?\/\-]*)$')]));
     //   } else {
-    //     this.createClientForm.removeControl('activationDate');
+    //     this.createClientForm.removeControl('firstname');
+    //     this.createClientForm.removeControl('middlename');
+    //     this.createClientForm.removeControl('lastname');
+    //     this.createClientForm.addControl('fullname', new FormControl('', [Validators.required, Validators.pattern('^([^!@#$%^&*()_+=<>,.?\/\-]*)$')]));
+    //     this.createClientForm.addControl('clientNonPersonDetails', this.formBuilder.group({
+    //       'constitutionId': [''],
+    //       'incorpValidityTillDate': [''],
+    //       'incorpNumber': [''],
+    //       'mainBusinessLineId': [''],
+    //       'remarks': ['']
+    //     }));
     //   }
     // });
-    // this.createClientForm.get('addSavings').valueChanges.subscribe((active: boolean) => {
-    //   if (active) {
-    //     this.createClientForm.addControl('savingsProductId', new FormControl('', Validators.required));
-    //   } else {
-    //     this.createClientForm.removeControl('savingsProductId');
-    //   }
-    // });
+    // this.createClientForm.get('legalFormId').patchValue(1);
   }
 
   fileChange(event: any): Promise<any> {
     return new Promise<any>(async resolve => {
-        const files = [];
-        for (const file of event.target.files) {
-          file.path = await this.readURL(file);
-          files.push(file);
-        }
+      const files = [];
+      for (const file of event.target.files) {
+        file.path = await this.readURL(file);
+        files.push(file);
+      }
       this.clientFilesData = files;
     });
   }
+
   readURL(file: any): Promise<any> {
     return new Promise<any>(resolve => {
       const reader = new FileReader();
       reader.onload = function (e: any) {
-        resolve( e.target.result);
+        resolve(e.target.result);
       };
       reader.readAsDataURL(file);
     });
   }
+
   /**
    * Client General Details
    */
@@ -225,17 +209,19 @@ export class ClientGeneralStepComponent implements OnInit {
     if (generalDetails.dateOfBirth) {
       generalDetails.dateOfBirth = this.datePipe.transform(generalDetails.dateOfBirth, dateFormat);
     }
-
-    if (generalDetails.clientNonPersonDetails && generalDetails.clientNonPersonDetails.incorpValidityTillDate) {
-      generalDetails.clientNonPersonDetails = {
-        ...generalDetails.clientNonPersonDetails,
-        incorpValidityTillDate: this.datePipe.transform(generalDetails.dateOfBirth, dateFormat),
-        dateFormat,
-        locale
-      };
-    }
+    //
+    // if (generalDetails.clientNonPersonDetails && generalDetails.clientNonPersonDetails.incorpValidityTillDate) {
+    //   generalDetails.clientNonPersonDetails = {
+    //     ...generalDetails.clientNonPersonDetails,
+    //     incorpValidityTillDate: this.datePipe.transform(generalDetails.dateOfBirth, dateFormat),
+    //     dateFormat,
+    //     locale
+    //   };
+    // }
+    console.log({generalDetails});
     return generalDetails;
   }
+
   get files() {
     return {files: this.clientFilesData};
   }
