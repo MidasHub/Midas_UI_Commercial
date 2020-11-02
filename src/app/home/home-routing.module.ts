@@ -19,6 +19,7 @@ import { OfficesResolver } from '../accounting/common-resolvers/offices.resolver
 import {CreateClientComponent} from '../clients/create-client/create-client.component';
 import { ClientAddressFieldConfigurationResolver } from '../clients/common-resolvers/client-address-fieldconfiguration.resolver';
 import { ClientTemplateResolver } from '../clients/common-resolvers/client-template.resolver';
+import {ClientIdentifierTemplateResolver} from '../clients/common-resolvers/client-identifier-template.resolver';
 
 
 
@@ -49,7 +50,8 @@ const routes: Routes = [
       component: CreateClientComponent,
       resolve: {
         clientAddressFieldConfig: ClientAddressFieldConfigurationResolver,
-        clientTemplate: ClientTemplateResolver
+        clientTemplate: ClientTemplateResolver,
+        clientIdentifierTemplate: ClientIdentifierTemplateResolver,
       }
     },
   ])

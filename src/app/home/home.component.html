@@ -4,7 +4,7 @@
     <fa-icon icon="tachometer-alt"></fa-icon>&nbsp;&nbsp;
     {{'Home_Component.btnDashboard'| translate}}
   </button>
-    <button mat-raised-button color="primary" [routerLink]="['/clients/create']" >
+    <button mat-raised-button color="primary" [routerLink]="['/clients/create']" [queryParams]="{go_back:'home'}" >
     <fa-icon icon="user-plus"></fa-icon> &nbsp;&nbsp;
     {{'Home_Component.btnNewCustomer'| translate}}
   </button>
