@@ -246,7 +246,14 @@
       "lblExtendInfo": "Thông tin bổ sung",
       "tipUploadImage": "Tải hình lên",
       "tipCaptureImage": "Chụp hình ",
-      "tipDeleteImage": "Xóa hình"
+      "tipDeleteImage": "Xóa hình",
+      "TabIdentities": {
+        "selectDocumentType": "Kiểu tài liệu",
+        "inputDocumentCardBank": "Mã nhận diện",
+        "inputStatus": "Trạng thái",
+        "inputDescription": "Mô tả",
+        "inputUniqueId": "Id"
+      }
     },
     "Breadcrumb": {
       "labelClient": "Khách hàng",

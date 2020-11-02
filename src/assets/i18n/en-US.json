@@ -250,7 +250,14 @@
       "lblExtendInfo": "Additional informations",
       "tipUploadImage": "Upload Image",
       "tipCaptureImage": "Capture Image",
-      "tipDeleteImage": "Delete Image"
+      "tipDeleteImage": "Delete Image",
+      "TabIdentities": {
+        "selectDocumentType": "Document type",
+        "inputDocumentCardBank": "Document Card Bank",
+        "inputStatus": "Status",
+        "inputDescription": "Description",
+        "inputUniqueId": "Unique Id"
+      }
     }
   },
   "Footer_Component": {
