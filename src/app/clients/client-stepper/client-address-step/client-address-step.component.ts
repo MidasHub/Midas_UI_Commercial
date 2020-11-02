@@ -36,7 +36,6 @@ export class ClientAddressStepComponent {
     city: '0',
     countryId: 27,
     isActive: false,
-    postalCode: '0',
     stateProvinceId: 122
   }];
 

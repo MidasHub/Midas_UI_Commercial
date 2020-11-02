@@ -60,6 +60,7 @@ import { CaptureImageDialogComponent } from './clients-view/custom-dialogs/captu
 import { CreateSelfServiceUserComponent } from './clients-view/client-actions/create-self-service-user/create-self-service-user.component';
 import {ReactiveFormsModule} from '@angular/forms';
 import {MoneyPipe} from '../pipes/money.pipe';
+import { AddIdentitiesComponent } from './clients-view/identities-tab/add-identities/add-identities.component';
 
 
 /**
@@ -125,7 +126,8 @@ import {MoneyPipe} from '../pipes/money.pipe';
         ClientFamilyMemberDialogComponent,
         CaptureImageDialogComponent,
         CreateSelfServiceUserComponent,
-        MoneyPipe
+        MoneyPipe,
+        AddIdentitiesComponent
     ],
   providers: [DatePipe]
 
