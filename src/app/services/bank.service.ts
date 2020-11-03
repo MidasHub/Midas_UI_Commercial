@@ -21,7 +21,7 @@ export class BankService {
 
   getListBank(): Observable<any> {
     console.log(environment.baseApiUrl);
-    return this.http.post<any>(`${this.GatewayApiUrlPrefix}/get_list_bank`, {
+    return this.http.post<any>(`${this.GatewayApiUrlPrefix}/common/get_list_bank`, {
       'accessToken': this.accessToken.base64EncodedAuthenticationKey,
     });
   }
