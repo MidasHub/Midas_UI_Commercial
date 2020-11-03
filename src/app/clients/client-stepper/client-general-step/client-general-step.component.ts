@@ -126,6 +126,9 @@ export class ClientGeneralStepComponent implements OnInit {
       if (type.name === 'Passport' || type.name === 'CMND' || type.name === 'CCCD') {
         this.documentTypes.push(type);
       }
+      if (type.name === 'CMND') {
+        this.createClientForm.get('documentTypeId').setValue(type.id);
+      }
     });
     this.currentUser = this.authenticationService.getCredentials();
     const {roles, staffId} = this.currentUser;
@@ -218,6 +221,7 @@ export class ClientGeneralStepComponent implements OnInit {
     //     locale
     //   };
     // }
+    // generalDetails.addSavings = true;
     console.log({generalDetails});
     return generalDetails;
   }

@@ -27,7 +27,7 @@
             </mat-select>
           </mat-form-field>
 
-          <mat-form-field *ngIf="!isTeller" fxFlex="48%">
+          <mat-form-field  *ngIf="!isTeller" fxFlex="48%">
             <mat-label>{{'Client_Component.ClientStepper.GeneralStep.labelLegalForm' |translate}}</mat-label>
             <mat-select disabled formControlName="legalFormId">
               <mat-option *ngFor="let legalForm of legalFormOptions" [value]="legalForm.id">
@@ -116,7 +116,7 @@
 
           <mat-form-field fxFlex="48%">
             <mat-label>{{ ('Client_Component.ClientStepper.GeneralStep.labelExternalID' |translate) }}</mat-label>
-            <input matInput formControlName="externalId">
+            <input matInput required formControlName="externalId">
           </mat-form-field>
 
           <div fxFlex="48%" class="custom-files-input">
@@ -125,6 +125,7 @@
               placeholder="CMND hai mat"
               type="file"
               multiple
+              required
               accept="image/*"
               (change)="fileChange($event)"
             >
@@ -170,13 +171,13 @@
           <mat-form-field fxFlex="96%">
             <mat-label>{{'Client_Component.ClientStepper.GeneralStep.labelClientSubmittedDate' |translate}}</mat-label>
             <input matInput  [matDatepicker]="submittedOnDatePicker"
-                   formControlName="submittedOnDate" disabled>
+                   formControlName="submittedOnDate" readonly>
             <mat-datepicker-toggle matSuffix [for]="submittedOnDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #submittedOnDatePicker></mat-datepicker>
           </mat-form-field>
           <mat-form-field *ngIf="createClientForm.contains('account_payment')" fxFlex="48%">
             <mat-label>{{'Client_Component.ClientStepper.GeneralStep.labelSelectAccountForPayment' |translate}}</mat-label>
-            <mat-select disabled formControlName="account_payment">
+            <mat-select readonly formControlName="account_payment">
               <mat-option *ngFor="let account of accountPayments"
                           [value]="account.id">
                 {{ account.name }}
@@ -189,7 +190,7 @@
           <mat-form-field  fxFlex="48%">
             <mat-label>{{'Client_Component.ClientStepper.GeneralStep.labelClientActivatedDate' |translate}}</mat-label>
             <input matInput [matDatepicker]="activatedOnDatePicker"
-                   formControlName="activationDate" disabled>
+                   formControlName="activationDate" readonly>
             <mat-datepicker-toggle matSuffix [for]="activatedOnDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #activatedOnDatePicker></mat-datepicker>
             <mat-error [innerHTML]="'Client_Component.ClientStepper.GeneralStep.labelClientActivatedDateMsg' |translate"></mat-error>
@@ -199,7 +200,7 @@
           </mat-checkbox>
           <mat-form-field *ngIf="createClientForm.contains('savingsProductId')" fxFlex="48%">
             <mat-label>{{'Client_Component.ClientStepper.GeneralStep.labelSavingProduct' |translate}}</mat-label>
-            <mat-select disabled required formControlName="savingsProductId">
+            <mat-select disabled formControlName="savingsProductId">
               <mat-option *ngFor="let product of savingProductOptions" [value]="product.id">
                 {{ product.name }}
               </mat-option>
@@ -211,7 +212,7 @@
                formGroupName="clientNonPersonDetails" *ngIf="createClientForm.contains('clientNonPersonDetails')">
             <mat-form-field fxFlex="48%">
               <mat-label>{{'Client_Component.ClientStepper.GeneralStep.labelCorpValidDate' |translate}}</mat-label>
-              <input  disabled matInput [min]="minDate" [max]="maxDate" [matDatepicker]="incorpValidityTillDateDatePicker"
+              <input  readonly matInput [min]="minDate" [max]="maxDate" [matDatepicker]="incorpValidityTillDateDatePicker"
                      formControlName="incorpValidityTillDate">
               <mat-datepicker-toggle matSuffix [for]="incorpValidityTillDateDatePicker"></mat-datepicker-toggle>
               <mat-datepicker #incorpValidityTillDateDatePicker></mat-datepicker>
@@ -219,7 +220,7 @@
 
             <mat-form-field fxFlex="48%">
               <mat-label>{{'Client_Component.ClientStepper.GeneralStep.labelCorpID' |translate}}</mat-label>
-              <input disabled matInput formControlName="incorpNumber">
+              <input readonly matInput formControlName="incorpNumber">
             </mat-form-field>
 
 
@@ -251,7 +252,7 @@
     </mat-card>
   </div>
   <div fxLayout="row" class="margin-t" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="2%">
-    <button mat-raised-button matStepperPrevious disabled>
+    <button mat-raised-button matStepperPrevious readonly>
       <fa-icon icon="arrow-left"></fa-icon>&nbsp;&nbsp;
       {{'Client_Component.ClientStepper.buttonPrevious' |translate}}
     </button>
