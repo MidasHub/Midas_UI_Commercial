@@ -46,6 +46,7 @@ export class CreateGroupComponent implements OnInit, AfterViewInit {
     {value: '1', viewValue: 'Group sỉ'},
     {value: '0', viewValue: 'Group lẻ, MGM'}
   ];
+  groupTypeId : number;
   displayedColumns: string[] = ['cardDescription', 'minValue', 'maxValue'];
   dataSource = new MatTableDataSource<any>();
   cards : PeriodicElement[] = [];
@@ -107,14 +108,16 @@ export class CreateGroupComponent implements OnInit, AfterViewInit {
    * Creates the group form.
    */
   createGroupForm() {
+    this.groupTypeId = 0;
     this.groupForm = this.formBuilder.group({
       'name': ['', [Validators.required, Validators.pattern('^([^!@#$%^&*()_+=<>,.?\/\-]*)$')]],
       'officeId': ['', Validators.required],
-      'submittedOnDate': ['', Validators.required],
+      'submittedOnDate': [new Date(), Validators.required],
       'staffId': [''],
       'externalId': [''],
-      'active': [false],
-      'groupType': this.groupType
+      'active': [true],
+      'activationDate': [new Date(), Validators.required],
+      'groupTypeId': this.groupTypeId
     });
     this.buildDependencies();
   }
@@ -133,13 +136,13 @@ export class CreateGroupComponent implements OnInit, AfterViewInit {
         }
       });
     });
-    this.groupForm.get('active').valueChanges.subscribe((bool: boolean) => {
-      if (bool) {
-        this.groupForm.addControl('activationDate', new FormControl('', Validators.required));
-      } else {
-        this.groupForm.removeControl('activationDate');
-      }
-    });
+    // this.groupForm.get('active').valueChanges.subscribe((bool: boolean) => {
+    //   if (bool) {
+    //     this.groupForm.addControl('activationDate', new FormControl('', Validators.required));
+    //   } else {
+    //     this.groupForm.removeControl('activationDate');
+    //   }
+    // });
   }
 
   /**
@@ -187,14 +190,14 @@ export class CreateGroupComponent implements OnInit, AfterViewInit {
     group.clientMembers = [];
     this.clientMembers.forEach((client: any) => group.clientMembers.push(client.id));
     
-    if (group.groupType == 1) {
+    if (group.groupTypeId == 1) {
       let name = String(group.name).trim().replace('(C)', '');
       group.name = "(C) " + name;
     } else {
       let name = String(group.name).trim().replace('(I)', '');
       group.name = "(I) " + name;
     }
-
+    delete group.groupTypeId;
     this.groupService.createGroup(group).subscribe((response: any) => {
       console.log('response', response);
       this.createFeeGroup(response); 

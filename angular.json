@@ -204,5 +204,8 @@
       }
     }
   },
-  "defaultProject": "midas-web-app"
+  "defaultProject": "midas-web-app",
+  "cli": {
+    "analytics": "743dfdb3-5081-4bbe-9932-de450f46c4d5"
+  }
 }

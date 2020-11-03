@@ -89,7 +89,7 @@ export class EditGroupComponent implements OnInit {
       'submittedOnDate': this.submittedOnDate,
       'staffId': this.groupData.staffId,
       'externalId': this.groupData.externalId,
-      'groupTypeId':this.groupType[this.groupTypeId]
+      'groupTypeId':this.groupTypeId
     });
 
     this.groupService.getCartTypesByGroupId(this.groupData.id).subscribe( (data: any) => {
