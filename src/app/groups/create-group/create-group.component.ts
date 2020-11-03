@@ -8,10 +8,16 @@ import { DatePipe } from '@angular/common';
 import { GroupsService } from '../groups.service';
 import { ClientsService } from '../../clients/clients.service';
 import { SettingsService } from 'app/settings/settings.service';
-
+import { MatTableDataSource } from '@angular/material/table';
 /**
  * Create Group component.
  */
+export interface PeriodicElement {
+  cardType: string;
+  cardDescription: string;
+  minValue: number;
+  maxValue: number;
+}
 @Component({
   selector: 'mifosx-create-group',
   templateUrl: './create-group.component.html',
@@ -35,7 +41,14 @@ export class CreateGroupComponent implements OnInit, AfterViewInit {
   clientMembers: any[] = [];
   /** ClientChoice. */
   clientChoice = new FormControl('');
-
+  
+  groupType: any[] = [
+    {value: '1', viewValue: 'Group sỉ'},
+    {value: '0', viewValue: 'Group lẻ, MGM'}
+  ];
+  displayedColumns: string[] = ['cardDescription', 'minValue', 'maxValue'];
+  dataSource = new MatTableDataSource<any>();
+  cards : PeriodicElement[] = [];
   /**
    * Retrieves the offices data from `resolve`.
    * @param {FormBuilder} formBuilder Form Builder.
@@ -63,8 +76,19 @@ export class CreateGroupComponent implements OnInit, AfterViewInit {
    */
   ngOnInit() {
     this.createGroupForm();
+    this.groupService.getCartTypes().subscribe( (data: any) => {
+           data.result.listCardType.forEach((cardType: any) =>{
+              let fee = {
+                  cardType: cardType.code , 
+                  cardDescription: cardType.description ,
+                  minValue: 2.0 , 
+                  maxValue: 2.0 ,
+              }
+              this.cards.push(fee);
+          });
+          this.dataSource.data = this.cards;
+    });
   }
-
   /**
    * Subscribes to Clients search filter:
    */
@@ -90,10 +114,10 @@ export class CreateGroupComponent implements OnInit, AfterViewInit {
       'staffId': [''],
       'externalId': [''],
       'active': [false],
+      'groupType': this.groupType
     });
     this.buildDependencies();
   }
-
   /**
    * Sets the staff and clients data each time the user selects a new office.
    * Adds form control Activation Date if active.
@@ -162,9 +186,43 @@ export class CreateGroupComponent implements OnInit, AfterViewInit {
     group.dateFormat = dateFormat;
     group.clientMembers = [];
     this.clientMembers.forEach((client: any) => group.clientMembers.push(client.id));
+    
+    if (group.groupType == 1) {
+      let name = String(group.name).trim().replace('(C)', '');
+      group.name = "(C) " + name;
+    } else {
+      let name = String(group.name).trim().replace('(I)', '');
+      group.name = "(I) " + name;
+    }
+
     this.groupService.createGroup(group).subscribe((response: any) => {
-      this.router.navigate(['../groups']);
+      console.log('response', response);
+      this.createFeeGroup(response); 
     });
   }
 
+  createFeeGroup(groupObj:any){
+    this.groupService.createFeeGroup(groupObj.groupId,this.cards).subscribe((response: any) => {
+        this.router.navigate(['../groups']);
+    });
+  }
+
+  onKey(event: any, index:any) {
+    const charCode = (event.which) ? event.which : event.keyCode;
+    if (charCode > 31 && ((charCode < 45 ||  charCode == 47) || charCode > 57)) {
+      return false;
+    }
+    let name_input = event.target.id;
+    let value_input = event.target.value;
+    this.cards.forEach((item: any) =>{
+      if(item.cardType == index.cardType){ 
+        Object.keys(item).forEach(function (key){
+          console.log(item[key]);
+          if(name_input.split("_")[1] == key){
+            item[key] = Number(value_input);
+          }
+        });
+      } 
+    }); 
+  }
 }

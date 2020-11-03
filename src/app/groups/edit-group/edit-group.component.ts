@@ -7,10 +7,20 @@ import { DatePipe } from '@angular/common';
 /** Custom Services */
 import { GroupsService } from '../groups.service';
 import { SettingsService } from 'app/settings/settings.service';
-
+import { MatTableDataSource } from '@angular/material/table';
 /**
  * Edit Group component.
  */
+export interface PeriodicElements {
+  cardType: string;
+  cardDescription: string;
+  minValue: number;
+  maxValue: number;
+}
+export interface groupT {
+  key: number;
+  value: string;
+}
 @Component({
   selector: 'mifosx-edit-group',
   templateUrl: './edit-group.component.html',
@@ -30,7 +40,15 @@ export class EditGroupComponent implements OnInit {
   groupData: any;
   /** Submitted On Date */
   submittedOnDate: any;
+  groupType: groupT[] = [
+    {key: 0, value: 'Group lẻ, MGM'},
+    {key: 1, value: 'Group sỉ'}
+  ];
 
+  groupTypeId : number;
+  displayedColumns: string[] = ['cardDescription', 'minValue', 'maxValue'];
+  dataSource = new MatTableDataSource<any>();
+  cards : PeriodicElements[] = [];
   /**
    * Retrieves the offices data from `resolve`.
    * @param {FormBuilder} formBuilder Form Builder.
@@ -57,12 +75,34 @@ export class EditGroupComponent implements OnInit {
    * Creates and sets the edit group form.
    */
   ngOnInit() {
+    let name = String(this.groupData.name).trim().replace('(C)', ''); 
+    name = String(name).trim().replace('(I)', '');
+    if(this.groupData.name.search("(C)") > 0){
+      this.groupTypeId = 1;
+    }else{
+      this.groupTypeId = 0;
+    }
+    let s =  {key: 1, value: 'Group sỉ'};
     this.createEditGroupForm();
     this.editGroupForm.patchValue({
-      'name': this.groupData.name,
+      'name': name,
       'submittedOnDate': this.submittedOnDate,
       'staffId': this.groupData.staffId,
-      'externalId': this.groupData.externalId
+      'externalId': this.groupData.externalId,
+      'groupTypeId':this.groupType[this.groupTypeId]
+    });
+
+    this.groupService.getCartTypesByGroupId(this.groupData.id).subscribe( (data: any) => {
+      data.result.listFeeGroup.forEach((item: any) =>{
+         let fee = {
+             cardType: item.cardType , 
+             cardDescription: item.description ,
+             minValue: item.minValue , 
+             maxValue: item.maxValue ,
+         };
+         this.cards.push(fee);
+      }); 
+      this.dataSource.data = this.cards;
     });
   }
 
@@ -74,7 +114,8 @@ export class EditGroupComponent implements OnInit {
       'name': ['', [Validators.required, Validators.pattern('^([^!@#$%^&*()_+=<>,.?\/\-]*)$')]],
       'submittedOnDate': ['', Validators.required],
       'staffId': [''],
-      'externalId': ['']
+      'externalId': [''],
+      'groupTypeId':['']
     });
     this.buildDependencies();
   }
@@ -105,11 +146,49 @@ export class EditGroupComponent implements OnInit {
       activationDate: activationDate && this.datePipe.transform(activationDate, dateFormat)
     });
     const group = this.editGroupForm.value;
+
+    if (group.groupTypeId == 1) {
+      let name = String(group.name).trim().replace('(C)', '');
+      group.name = "(C) " + name;
+    } else {
+      let name = String(group.name).trim().replace('(I)', '');
+      group.name = "(I) " + name;
+    }
+    
+    delete group.groupTypeId;
+
     group.locale = this.settingsService.language.code;
     group.dateFormat = dateFormat;
+ 
     this.groupService.updateGroup(group, this.groupData.id).subscribe((response: any) => {
-      this.router.navigate(['../'], { relativeTo: this.route });
+      //this.router.navigate(['../'], { relativeTo: this.route });
+      this.updateFeeGroup(response);
+    });
+  }
+  updateFeeGroup(groupObj:any){
+    this.groupService.updateFeeGroup(groupObj.groupId,this.cards).subscribe((response: any) => {
+       
+      this.router.navigate(['../general'], { relativeTo: this.route });
     });
   }
 
+  onKey(event: any, index:any) {
+    
+    const charCode = (event.which) ? event.which : event.keyCode;
+    if (charCode > 31 && ((charCode < 45 ||  charCode == 47) || charCode > 57)) {
+      return false;
+    }
+    let name_input = event.target.id;
+    let value_input = event.target.value;
+    this.cards.forEach((item: any) =>{
+      if(item.cardType == index.cardType){ 
+        Object.keys(item).forEach(function (key){
+          console.log(item[key]);
+          if(name_input.split("_")[1] == key){
+            item[key] = Number(value_input);
+          }
+        });
+      } 
+    }); 
+  }
 }

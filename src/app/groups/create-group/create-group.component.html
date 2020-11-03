@@ -39,10 +39,43 @@
               </mat-option>
             </mat-select>
           </mat-form-field>
+          <mat-form-field>
+            <mat-label>Type</mat-label>
+            <mat-select formControlName="groupType">
+              <mat-option *ngFor="let type of groupType" [value]="type.value"> 
+              {{ type.viewValue }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
 
           <mat-checkbox labelPosition="before" formControlName="active">
             Active
           </mat-checkbox>
+
+          <table mat-table [dataSource]="dataSource" class="mat-elevation" style="width: 100%;">
+            <ng-container matColumnDef="cardDescription">
+              <th mat-header-cell *matHeaderCellDef> Loại thẻ </th>
+              <td mat-cell *matCellDef="let element">
+                <input matInput  readonly value="{{element.cardDescription}}"/>
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="minValue">
+              <th mat-header-cell *matHeaderCellDef> Phí rút </th>
+              <td mat-cell *matCellDef="let element, let index"> 
+                  <input matInput  (keypress)="onKey($event, index)" id="{{element.cardType}}_minValue" value="{{element.minValue}}"> 
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="maxValue">
+              <th mat-header-cell *matHeaderCellDef> Phí đáo hạn </th>
+              <td mat-cell *matCellDef="let element, let index"> 
+                  <input matInput (keypress)="onKey($event,index)" id="{{element.cardType}}_maxValue" value="{{element.maxValue}}"> 
+              </td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          </table>
 
           <mat-form-field *ngIf="this.groupForm.controls.active.value">
             <mat-label>Activation Date</mat-label>
