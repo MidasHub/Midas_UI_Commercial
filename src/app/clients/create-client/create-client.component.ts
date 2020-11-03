@@ -142,6 +142,10 @@ export class CreateClientComponent {
       alert('Vui lòng nhập ít nhất một địa chỉ');
       return;
     }
+    if (_.isEmpty(this.client.files) || this.client.files.length !== 2) {
+      alert('Vui lòng chọn hình ảnh trước khi upload, không quá 2 hình');
+      return;
+    }
     const clientData = {
       ...data,
       dateFormat,
@@ -149,28 +153,37 @@ export class CreateClientComponent {
     };
     this.clientsService.createClient(clientData).subscribe(async (response: any) => {
       if (response && response.clientId) {
-        for (const file of this.client.files) {
-          const item = await this.resizeImage(file, 500, 600);
-          const formData: FormData = new FormData;
-          formData.append('name', file.name);
-          formData.append('file', item);
-          formData.append('fileName', file.name);
-          formData.append('description', file.name);
-          this.clientsService.uploadClientDocument(response.clientId, formData).subscribe((res: any) => {
-            console.log('document Uploaded', res);
-          });
-        }
+        const identities_value = {
+          'documentTypeId': this.client.documentTypeId,
+          'documentKey': this.client.externalId,
+          'description': this.client.documentTypeId,
+          status: 'Active'
+        };
+        this.clientsService.addClientIdentifier(response.clientId, identities_value).subscribe(async (res: any) => {
+          const {resourceId} = res;
+          for (const file of this.client.files) {
+            const item = await this.resizeImage(file, 500, 600);
+            const formData: FormData = new FormData;
+            formData.append('name', file.name);
+            formData.append('file', item);
+            formData.append('fileName', file.name);
+            this.clientsService.uploadClientIdentifierDocument(resourceId, formData).subscribe((ssss: any) => {
+              console.log('document Uploaded', ssss);
+            });
+          }
+          if (this.go_back === 'home') {
+            this.snackbar.open(this.i18n.getTranslate('Client_Component.ClientStepper.lblCustomerCreated') + response.resourceId + '!', this.i18n.getTranslate('Client_Component.ClientStepper.lblClose'), {
+              duration: 3000,
+              horizontalPosition: 'right',
+              verticalPosition: 'top'
+            });
+            this.router.navigate(['/home']);
+          } else {
+            this.router.navigate(['../', response.resourceId], {relativeTo: this.route});
+          }
+        });
 
-        if (this.go_back === 'home') {
-          this.snackbar.open(this.i18n.getTranslate('Client_Component.ClientStepper.lblCustomerCreated') + response.resourceId + '!', this.i18n.getTranslate('Client_Component.ClientStepper.lblClose'), {
-            duration: 3000,
-            horizontalPosition: 'right',
-            verticalPosition: 'top'
-          });
-          this.router.navigate(['/home']);
-        } else {
-          this.router.navigate(['../', response.resourceId], {relativeTo: this.route});
-        }
+
       }
     });
   }

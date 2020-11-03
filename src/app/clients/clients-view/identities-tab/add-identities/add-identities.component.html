@@ -1,14 +1,41 @@
-<!--<h1 mat-dialog-title>Add Client Identifier</h1>-->
+<h1 mat-dialog-title>Add Client Identifier</h1>
 
-<!--<div mat-dialog-content [formGroup]="form" [fxLayout]="layout.columns > 1 ? 'row wrap' : 'column'" fxLayout.lt-md="column" [fxLayoutGap]="(layout.columns > 1 ? layout.gap : 0) + '%'" fxLayoutGap.lt-md="0%">-->
+<div mat-dialog-content [formGroup]="form" [fxLayout]="'column'" fxLayout.lt-md="column" [fxLayoutGap]="'1%'" fxLayoutGap.lt-md="0%">
+  <mat-form-field fxFlex="96%">
+    <mat-label>{{'Client_Component.ViewClient.TabIdentities.selectDocumentType' |translate}}</mat-label>
+    <mat-select formControlName="documentTypeId">
+      <mat-option *ngFor="let documentType of documentTypes" [value]="documentType.id">
+        {{ documentType.name }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
 
-<!--  <div *ngFor="let formfield of formfields" [fxFlex]="layout.flex + '%'" fxFlex.lt-md="100%">-->
-<!--    <mifosx-formfield [formfield]="formfield" [form]="form" fxFlexFill></mifosx-formfield>-->
-<!--  </div>-->
+  <mat-form-field fxFlex="96%">
+    <mat-label>{{'Client_Component.ViewClient.TabIdentities.inputDocumentCardBank' |translate}}</mat-label>
+    <input matInput formControlName="documentTypeId">
+  </mat-form-field>
 
-<!--</div>-->
+  <mat-form-field fxFlex="96%">
+    <mat-label>{{'Client_Component.ViewClient.TabIdentities.inputStatus' |translate}}</mat-label>
+    <mat-select formControlName="status">
+      <mat-option *ngFor="let sa of statusOptions" [value]="sa.value">
+        {{ sa.value }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
 
-<!--<mat-dialog-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="2%">-->
-<!--  <button mat-raised-button mat-dialog-close>{{ layout.cancelButtonText }}</button>-->
-<!--  <button mat-raised-button color="primary" [mat-dialog-close]="{ data: form }" [disabled]="!form.valid || form.pristine">{{ layout.addButtonText }}</button>-->
-<!--</mat-dialog-actions>-->
+  <mat-form-field fxFlex="96%">
+    <mat-label>{{'Client_Component.ViewClient.TabIdentities.inputUniqueId' |translate}}</mat-label>
+    <input matInput formControlName="documentKey">
+  </mat-form-field>
+
+  <mat-form-field fxFlex="96%">
+    <mat-label>{{'Client_Component.ViewClient.TabIdentities.inputDescription' |translate}}</mat-label>
+    <input matInput formControlName="description">
+  </mat-form-field>
+</div>
+
+<mat-dialog-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="2%">
+  <button mat-raised-button mat-dialog-close>{{ 'Shared_Component.FormDialog.btnCancel' | translate }}</button>
+  <button mat-raised-button color="primary" [mat-dialog-close]="{ data: form }" [disabled]="!form.valid || form.pristine">{{ 'Shared_Component.FormDialog.btnAdd' |translate }}</button>
+</mat-dialog-actions>

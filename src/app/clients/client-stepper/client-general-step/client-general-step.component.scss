@@ -34,3 +34,11 @@
 .card-custom {
   margin-top: 8px;
 }
+
+.readonly-wrapper {
+  cursor: not-allowed;
+}
+
+.readonly-wrapper .readonly-block {
+  pointer-events: none;
+}
