@@ -61,7 +61,52 @@
         "labelCorpConstitution": "Loại hình tổ chức",
         "labelCorpDate": "Ngày thành lập",
         "labelTaxNo": "Mã số thuế",
+        "labelSelectExternalId": "ID bên ngoài",
+        "labelSelectStaffCode": "Id Nhân viên ",
+        "labelSelectAccountForPayment": "Tài khoản thanh toán",
+        "labelSelectDocumentTypes": "Loại giấy tờ",
+        "labelInputFileDocument": "Hình ảnh",
         "labelAccountNo": "Mã CIF"
+      },
+      "FamilyMember": {
+        "Dialog": {
+          "labelInputFirstName": "Tên ",
+          "labelInputFirstNameMsg": "<strong>Yêu cầu: </strong> nhập tên.",
+          "labelMiddleName": "Tên đệm",
+          "labelLastName": "Họ",
+          "labelLastNameMsg": "<strong>Yêu cầu:</strong> nhập họ",
+          "labelQualification": "Trình độ",
+          "labelAge": "Tuổi ",
+          "labelAgeMsg": "<strong>Yêu cầu:</strong> nhập tuổi.",
+          "labelSelectRelationship": "Mối quan hệ",
+          "labelSelectRelationshipMsg": "<strong>Yêu cầu:</strong> chọn mối quan hệ",
+          "labelSelectGender": "Giới tính",
+          "labelSelectGenderMsg": "<strong>Yêu cầu:</strong> nhập tuổi ",
+          "labelSelectProfession": "Nghề nghiệp",
+          "labelSelectMaritalStatus": "Tình trạng hôn nhân",
+          "labelDateOfBirth": "Ngày sinh",
+          "labelDateOfBirthMsg": "<strong>Yêu cầu:</strong> nhập ngày sinh",
+          "buttonCancel": "Hủy",
+          "buttonConfirm": "Xác nhận",
+          "checkBoxDependent": "Người bảo hộ",
+          "labelMobileNumber": "Số điện thoại"
+        },
+        "labelFirstName": "Tên",
+        "labelMiddleName": "Tên đệm",
+        "labelLastName": "Họ",
+        "labelQualification": "Trình độ",
+        "labelRelationship": "Mối quan hệ",
+        "labelAge": "Tuổi",
+        "labelDependent": "Người phụ thuộc",
+        "labelMaritalStatus": "Tình trạng hôn nhân",
+        "labelGender": "Giới tính",
+        "labelProfession": "Nghề nghiệp",
+        "labelDateOfBirth": "Ngày sinh",
+        "labelDeleteFamilyMember": "thành viên có tên",
+        "labelTitle": "Thành viên trong gia đình",
+        "buttonAdd": "Thêm",
+        "buttonPrevious": "Quay lại",
+        "buttonNext": "Tiếp theo"
       },
       "RelativeStep": {
         "lblRelativeMember": "Người có liên quan",
@@ -87,7 +132,57 @@
         "btnConfirm": "Xác nhận"
       },
       "buttonCancel": "Hủy bỏ",
-      "buttonSubmit": "Chấp nhận"
+      "buttonSubmit": "Chấp nhận",
+      "lblCustomerCreated": "Tạo khách hàng thành công ID: ",
+      "lblClose": "Đóng",
+      "Preview": {
+        "labelGeneral": "Thông tin cơ bản",
+        "labelGeneralName": "Tên",
+        "labelGeneralOffice": "Chi nhánh",
+        "labelLegalForm": "Loại hình tổ chức",
+        "labelStaff": "Nhân viên quản lý",
+        "labelDateOfBirth": "Ngày sinh",
+        "labelIncorporationDate": "Ngày thành lập",
+        "labelExternalId": "CMND/CCCD",
+        "labelMobileNo": "Số điện thoại",
+        "labelClientType": "Loại hình khách hàng",
+        "labelClassification": "Loại khách hàng",
+        "labelSavingsProduct": "Sản phẩm tiết kiệm",
+        "labelSubmittedOnDate": "Ngày mở thông tin",
+        "labelActive": "Kích hoạt",
+        "labelActivationDate": "Ngày kích hoạt",
+        "labelGender": "Giới tính",
+        "labelIsStaff": "Là nhân viên",
+        "labelIncorporationValidityTillDate": "Hiệu lực cho đến ngày",
+        "labelIncorporationNumber": "Mã số doanh nghiệp",
+        "labelMainBusinessLine": "Ngành nghề kinh doanh chính",
+        "labelConstitution": "Loại hình tổ chức",
+        "labelRemark": "Ghi chú",
+        "labelFamilyTitle": "Thành viên gia đình",
+        "labelFamilyFirstName": "Tên",
+        "labelFamilyMiddleName": "Tên đệm",
+        "labelFamilyLastName": "Họ",
+        "labelFamilyQualification": "Trình độ",
+        "labelFamilyRelationship": "Quan hệ",
+        "labelFamilyAge": "Tuổi",
+        "labelFamilyIsDependent": "Người phụ thuộc",
+        "labelFamilyMaritalStatus": "Tình trạng hôn nhân",
+        "labelFamilyGender": "Giới tính",
+        "labelFamilyProfession": "Nghề nghiệp",
+        "labelFamilyDateOfBirth": "Ngày sinh",
+        "labelAddressTitle": "Địa chỉ",
+        "labelAddressStreet": "Đường",
+        "labelAddressAddressLine": "Địa chỉ",
+        "labelAddressTownVillage": "Làng / thị trấn",
+        "labelAddressCity": "Thành phố",
+        "labelAddressCountry": "Nước",
+        "labelAddressPostalCode": "Mã bưu điện",
+        "labelAddressActiveStatus": "Hoạt động",
+        "buttonPrevious": "Quay lại",
+        "buttonCancel": "Hủy",
+        "buttonSubmit": "Lưu",
+        "labelAddressStateProvince": "Tỉnh"
+      }
     },
     "buttonImportClient": "Nhập list khách hàng",
     "buttonCreateClient": "Tạo khách hàng mới",
@@ -152,6 +247,10 @@
       "tipUploadImage": "Tải hình lên",
       "tipCaptureImage": "Chụp hình ",
       "tipDeleteImage": "Xóa hình"
+    },
+    "Breadcrumb": {
+      "labelClient": "Khách hàng",
+      "labelCreateClient": "Tạo khách hàng"
     }
   },
   "Footer_Component": {
@@ -160,7 +259,14 @@
   },
   "Home_Component": {
     "welcome": "Xin chào,  ",
-    "searchActivity": "Tìm kiếm các hành động"
+    "searchActivity": "Tìm kiếm các hành động",
+    "btnDashboard": "Dashboard ",
+    "labelIncompleteRollterm": "Món ĐHT chưa hoàn thành",
+    "btnNewCustomer": "Tạo mới khách hàng",
+    "btnNewGroup": "Tạo mới đại lý",
+    "Breadcrumb": {
+      "labelHome": "Trang chủ"
+    }
   },
   "Login_Component": {
     "APP_SLOGAN": "Phần mềm quản lý hiệu quả",
@@ -258,7 +364,16 @@
       }
     }
   },
+  "Toolbar_Component": {
+    "labelInstitution": "Khách hàng"
+  },
   "Shared_Component": {
+    "DeleteDialog": {
+      "labelContext": "Bạn có chắc chắn muốn xóa ",
+      "buttonConfirm": "Xác nhận",
+      "buttonCancel": "Hủy",
+      "labelTitle": "Xóa"
+    },
     "FormDialog": {
       "btnCancel": "Hủy",
       "btnAdd": "Thêm"

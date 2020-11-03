@@ -1,21 +1,21 @@
 /** Angular Imports */
-import { Component, ViewChild } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { MatTable } from '@angular/material/table';
-import { MatDialog } from '@angular/material/dialog';
+import {Component, ViewChild} from '@angular/core';
+import {ActivatedRoute} from '@angular/router';
+import {MatTable} from '@angular/material/table';
+import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
 
 /** Custom Models */
-import { FormfieldBase } from 'app/shared/form-dialog/formfield/model/formfield-base';
-import { InputBase } from 'app/shared/form-dialog/formfield/model/input-base';
-import { SelectBase } from 'app/shared/form-dialog/formfield/model/select-base';
+import {FormfieldBase} from 'app/shared/form-dialog/formfield/model/formfield-base';
+import {InputBase} from 'app/shared/form-dialog/formfield/model/input-base';
+import {SelectBase} from 'app/shared/form-dialog/formfield/model/select-base';
 
 /** Custom Components */
-import { UploadDocumentDialogComponent } from '../custom-dialogs/upload-document-dialog/upload-document-dialog.component';
-import { DeleteDialogComponent } from '../../../shared/delete-dialog/delete-dialog.component';
-import { FormDialogComponent } from 'app/shared/form-dialog/form-dialog.component';
+import {UploadDocumentDialogComponent} from '../custom-dialogs/upload-document-dialog/upload-document-dialog.component';
+import {DeleteDialogComponent} from '../../../shared/delete-dialog/delete-dialog.component';
+import {FormDialogComponent} from 'app/shared/form-dialog/form-dialog.component';
 
 /** Custom Services */
-import { ClientsService } from '../../clients.service';
+import {ClientsService} from '../../clients.service';
 
 /**
  * Identities Tab Component
@@ -37,8 +37,9 @@ export class IdentitiesTabComponent {
   identitiesColumns: string[] = ['id', 'description', 'type', 'documents', 'status', 'actions'];
 
   /** Identifiers Table */
-  @ViewChild('identifiersTable', { static: true }) identifiersTable: MatTable<Element>;
+  @ViewChild('identifiersTable', {static: true}) identifiersTable: MatTable<Element>;
 
+  // @ViewChild('')
   /**
    * @param {ActivatedRoute} route Activated Route
    * @param {MatDialog} dialog Mat Dialog
@@ -75,17 +76,24 @@ export class IdentitiesTabComponent {
         controlName: 'documentTypeId',
         label: 'Document Type',
         value: '',
-        options: { label: 'name', value: 'id', data: this.clientIdentifierTemplate.allowedDocumentTypes },
+        options: {label: 'name', value: 'id', data: this.clientIdentifierTemplate.allowedDocumentTypes},
         required: true,
         order: 1
+      }),
+      new InputBase({
+        controlName: 'documentCardBank',
+        label: 'Chọn bank account',
+        value: '',
+        type: 'text',
+        order: 2
       }),
       new SelectBase({
         controlName: 'status',
         label: 'Status',
         value: '2',
-        options: { label: 'value', value: 'value', data: [{ value: 'Active' }, { value: 'Inactive' }] },
+        options: {label: 'value', value: 'value', data: [{value: 'Active'}, {value: 'Inactive'}]},
         required: true,
-        order: 2
+        order: 3
       }),
       new InputBase({
         controlName: 'documentKey',
@@ -93,21 +101,24 @@ export class IdentitiesTabComponent {
         value: '',
         type: 'text',
         required: true,
-        order: 3
+        order: 4
       }),
       new InputBase({
         controlName: 'description',
         label: 'Description',
         value: '',
         type: 'text',
-        order: 4
+        order: 5
       })
     ];
-    const data = {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.data = {
       title: 'Add Client Identifier',
       formfields: formfields
     };
-    const addIdentifierDialogRef = this.dialog.open(FormDialogComponent, { data });
+    console.log(dialogConfig);
+    console.log(formfields);
+    const addIdentifierDialogRef = this.dialog.open(FormDialogComponent, dialogConfig);
     addIdentifierDialogRef.afterClosed().subscribe((response: any) => {
       if (response.data) {
         this.clientService.addClientIdentifier(this.clientId, response.data.value).subscribe((res: any) => {
@@ -134,7 +145,7 @@ export class IdentitiesTabComponent {
    */
   deleteIdentifier(clientId: string, identifierId: string, index: number) {
     const deleteIdentifierDialogRef = this.dialog.open(DeleteDialogComponent, {
-      data: { deleteContext: `identifier id:${identifierId}` }
+      data: {deleteContext: `identifier id:${identifierId}`}
     });
     deleteIdentifierDialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {
@@ -153,7 +164,7 @@ export class IdentitiesTabComponent {
    */
   uploadDocument(index: number, identifierId: string) {
     const uploadDocumentDialogRef = this.dialog.open(UploadDocumentDialogComponent, {
-      data: { documentIdentifier: true }
+      data: {documentIdentifier: true}
     });
     uploadDocumentDialogRef.afterClosed().subscribe((dialogResponse: any) => {
       if (dialogResponse) {

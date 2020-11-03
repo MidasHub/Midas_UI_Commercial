@@ -1,84 +1,92 @@
 <div fxLayout="row wrap" fxLayout.lt-md="column">
 
-  <h3 class="mat-h3" fxFlexFill>{{'Client_component.ClientStepper.labelGeneral'|translate}}</h3>
+  <h3 class="mat-h3" fxFlexFill>{{'Client_Component.ClientStepper.Preview.labelGeneral'|translate}}</h3>
 
   <mat-divider fxFlexFill></mat-divider>
 
   <div fxFlexFill>
-    <span fxFlex="40%">{{'Client_component.ClientStepper.GeneralStep.labelFullName'|translate}}</span>
+    <span fxFlex="40%">{{'Client_Component.ClientStepper.Preview.labelGeneralName'|translate}}</span>
     <span fxFlex="60%" *ngIf="client.legalFormId === 2">{{ client.fullname }}</span>
     <span fxFlex="60%" *ngIf="client.legalFormId === 1">{{ client.firstname }} {{ client.middlename ? client.middlename + ' ' + client.lastname : client.lastname }}</span>
   </div>
 
   <div fxFlexFill>
-    <span fxFlex="40%">{{'Client_component.ClientStepper.GeneralStep.labelOffice'|translate}}</span>
+    <span fxFlex="40%">{{'Client_Component.ClientStepper.Preview.labelGeneralOffice'|translate}}</span>
     <span fxFlex="60%">{{ client.officeId | find:clientTemplate.officeOptions:'id':'name' }}</span>
   </div>
 
   <div fxFlexFill>
-    <span fxFlex="40%">{{'Client_Component.ClientStepper.GeneralStep.labelLegalForm' |translate}}</span>
+    <span fxFlex="40%">{{'Client_Component.ClientStepper.Preview.labelLegalForm'|translate}}</span>
     <span fxFlex="60%">{{ client.legalFormId | find:clientTemplate.clientLegalFormOptions:'id':'value' }}</span>
   </div>
 
   <div fxFlexFill *ngIf="client.staffId">
-    <span fxFlex="40%">{{'Client_Component.ClientStepper.GeneralStep.labelStaff' |translate}}</span>
+    <span fxFlex="40%">{{'Client_Component.ClientStepper.Preview.labelStaff'|translate}}</span>
     <span fxFlex="60%">{{ client.staffId | find:clientTemplate.staffOptions:'id':'displayName' }}</span>
   </div>
 
   <div fxFlexFill *ngIf="client.dateOfBirth">
-    <span fxFlex="40%">{{ client.legalFormId === 1 ? ('Client_Component.ClientStepper.GeneralStep.labelDOB' |translate ): ('Client_Component.ClientStepper.GeneralStep.labelCorpDate' |translate) }}</span>
+    <span fxFlex="40%">{{ client.legalFormId === 1 ? ('Client_Component.ClientStepper.Preview.labelDateOfBirth'|translate)  : ('Client_Component.ClientStepper.Preview.labelIncorporationDate'|translate) }}</span>
     <span fxFlex="60%">{{ client.dateOfBirth | date }}</span>
   </div>
 
   <div fxFlexFill *ngIf="client.externalId">
-    <span fxFlex="40%">{{ client.legalFormId === 1 ?('Client_Component.ClientStepper.GeneralStep.labelExternalID' |translate):('Client_Component.ClientStepper.GeneralStep.labelTaxNo' |translate)}}</span>
+    <span fxFlex="40%">{{'Client_Component.ClientStepper.Preview.labelExternalId'|translate}}</span>
     <span fxFlex="60%">{{ client.externalId }}</span>
   </div>
 
+  <div fxFlexFill *ngIf="client.files">
+    <div fxLayout="row wrap">
+      <div fxFlex="48%" *ngFor="let file of client.files">
+        <img src="{{file?.path}}" width="95%" height="300"/>
+      </div>
+    </div>
+  </div>
+
   <div fxFlexFill *ngIf="client.mobileNo">
-    <span fxFlex="40%">{{'Client_Component.ClientStepper.GeneralStep.labelMobile' |translate}}</span>
+    <span fxFlex="40%">{{'Client_Component.ClientStepper.Preview.labelMobileNo'|translate}}</span>
     <span fxFlex="60%">{{ client.mobileNo }}</span>
   </div>
 
   <div fxFlexFill *ngIf="client.clientTypeId">
-    <span fxFlex="40%">{{'Client_Component.ClientStepper.GeneralStep.labelClientType' |translate}}</span>
+    <span fxFlex="40%">{{'Client_Component.ClientStepper.Preview.labelClientType'|translate}}</span>
     <span fxFlex="60%">{{ client.clientTypeId | find:clientTemplate.clientTypeOptions:'id':'name' }}</span>
   </div>
 
   <div fxFlexFill *ngIf="client.clientClassificationId">
-    <span fxFlex="40%">{{'Client_Component.ClientStepper.GeneralStep.labelClientClass' |translate}}</span>
+    <span fxFlex="40%">{{'Client_Component.ClientStepper.Preview.labelClassification'|translate}}</span>
     <span fxFlex="60%">{{ client.clientClassificationId | find:clientTemplate.clientClassificationOptions:'id':'name' }}</span>
   </div>
 
   <div fxFlexFill *ngIf="client.savingsProductId">
-    <span fxFlex="40%">{{'Client_Component.ClientStepper.GeneralStep.labelSavingProduct' |translate}}</span>
+    <span fxFlex="40%">{{'Client_Component.ClientStepper.Preview.labelSavingsProduct'|translate}}</span>
     <span fxFlex="60%">{{ client.savingsProductId | find:clientTemplate.savingProductOptions:'id':'name' }}</span>
   </div>
 
   <div fxFlexFill *ngIf="client.submittedOnDate">
-    <span fxFlex="40%">{{'Client_Component.ClientStepper.GeneralStep.labelClientSubmittedDate' |translate}}</span>
+    <span fxFlex="40%">{{'Client_Component.ClientStepper.Preview.labelSubmittedOnDate'|translate}}</span>
     <span fxFlex="60%">{{ client.submittedOnDate | date }}</span>
   </div>
 
   <div fxFlexFill>
-    <span fxFlex="40%"> {{'Client_Component.ClientStepper.GeneralStep.checkboxIsActivate' |translate}}</span>
+    <span fxFlex="40%">{{'Client_Component.ClientStepper.Preview.labelActive'|translate}}?</span>
     <span fxFlex="60%">{{ client.active ? 'Yes' : 'No' }}</span>
   </div>
 
   <div fxFlexFill *ngIf="client.activationDate">
-    <span fxFlex="40%">{{'Client_Component.ClientStepper.GeneralStep.labelClientActivatedDate' |translate}}</span>
+    <span fxFlex="40%">{{'Client_Component.ClientStepper.Preview.labelActivationDate'|translate}}</span>
     <span fxFlex="60%">{{ client.activationDate | date }}</span>
   </div>
 
   <ng-container *ngIf="client.legalFormId === 1">
 
     <div fxFlexFill *ngIf="client.genderId">
-      <span fxFlex="40%">{{'Client_Component.ClientStepper.GeneralStep.labelGender' |translate}}</span>
+      <span fxFlex="40%">{{'Client_Component.ClientStepper.Preview.labelGender'|translate}}</span>
       <span fxFlex="60%">{{ client.genderId | find:clientTemplate.genderOptions:'id':'name' }}</span>
     </div>
-  
+
     <div fxFlexFill>
-      <span fxFlex="40%">{{'Client_Component.ClientStepper.GeneralStep.checkboxIsStaff' |translate}}</span>
+      <span fxFlex="40%">{{'Client_Component.ClientStepper.Preview.labelIsStaff'|translate}}?</span>
       <span fxFlex="60%">{{ client.isStaff ? 'Yes' : 'No' }}</span>
     </div>
 
@@ -87,27 +95,27 @@
   <ng-container *ngIf="client.legalFormId === 2">
 
     <div fxFlexFill *ngIf="client.clientNonPersonDetails.incorpValidityTillDate">
-      <span fxFlex="40%">{{'Client_Component.ClientStepper.GeneralStep.labelCorpValidDate' |translate}}</span>
+      <span fxFlex="40%">{{'Client_Component.ClientStepper.Preview.labelIncorporationValidityTillDate'|translate}}</span>
       <span fxFlex="60%">{{ client.clientNonPersonDetails.incorpValidityTillDate | date }}</span>
     </div>
-  
+
     <div fxFlexFill>
-      <span fxFlex="40%">{{'Client_Component.ClientStepper.GeneralStep.labelCorpID' |translate}}</span>
+      <span fxFlex="40%">{{'Client_Component.ClientStepper.Preview.labelIncorporationNumber'|translate}}</span>
       <span fxFlex="60%">{{ client.clientNonPersonDetails.incorpNumber || 'Not Provided' }}</span>
     </div>
-  
+
     <div fxFlexFill *ngIf="client.clientNonPersonDetails.mainBusinessLineId">
-      <span fxFlex="40%">{{'Client_Component.ClientStepper.GeneralStep.labelCorpMainBiz' |translate}}</span>
+      <span fxFlex="40%">{{'Client_Component.ClientStepper.Preview.labelMainBusinessLine'|translate}}</span>
       <span fxFlex="60%">{{ client.clientNonPersonDetails.mainBusinessLineId | find:clientTemplate.clientNonPersonMainBusinessLineOptions:'id':'name' }}</span>
     </div>
-  
+
     <div fxFlexFill *ngIf="client.clientNonPersonDetails.constitutionId">
-      <span fxFlex="40%">{{'Client_Component.ClientStepper.GeneralStep.labelCorpConstitution'|translate}}</span>
+      <span fxFlex="40%">{{'Client_Component.ClientStepper.Preview.labelConstitution'|translate}}</span>
       <span fxFlex="60%">{{ client.clientNonPersonDetails.constitutionId | find:clientTemplate.clientNonPersonConstitutionOptions:'id':'name'}}</span>
     </div>
-  
+
     <div fxFlexFill>
-      <span fxFlex="40%">{{'Client_Component.ClientStepper.GeneralStep.labelCorpRemark' |translate}}</span>
+      <span fxFlex="40%">{{'Client_Component.ClientStepper.Preview.labelRemark'|translate}}</span>
       <span fxFlex="60%">{{ client.clientNonPersonDetails.remarks || 'N/A' }}</span>
     </div>
 
@@ -115,7 +123,7 @@
 
   <div fxFlexFill *ngIf="client.familyMembers.length" fxLayout="row wrap" fxLayout.lt-md="column" class="m-b-20">
 
-    <h3 class="mat-h3" fxFlexFill>{{'Client_Component.ClientStepper.RelativeStep.lblRelativeMember'|translate}}</h3>
+    <h3 class="mat-h3" fxFlexFill>{{'Client_Component.ClientStepper.Preview.labelFamilyTitle'|translate}}</h3>
 
     <mat-divider fxFlexFill></mat-divider>
 
@@ -138,68 +146,66 @@
         <mat-divider></mat-divider>
 
         <p>
-          {{'Client_Component.ClientStepper.RelativeStep.lblFirstName'|translate}} : {{ member.firstName }}<br />
-          {{'Client_Component.ClientStepper.RelativeStep.lblMidName'|translate}} : {{ member.middleName }}<br />
-          {{'Client_Component.ClientStepper.RelativeStep.lblLastName'|translate}} : {{ member.lastName }}<br />
-          {{'Client_Component.ClientStepper.RelativeStep.lblQualification'|translate}} : {{ member.qualification }}<br />
-          {{'Client_Component.ClientStepper.RelativeStep.lblRelationship'|translate}} : {{ member.relationshipId | find:clientTemplate.familyMemberOptions.relationshipIdOptions:'id':'name' }}<br />
-          {{'Client_Component.ClientStepper.RelativeStep.lblAge'|translate}} : {{ member.age }}<br />
-          {{'Client_Component.ClientStepper.RelativeStep.lblDependent'|translate}} : {{ member.isDependent ? 'Yes' : 'No' }}<br />
-          {{'Client_Component.ClientStepper.RelativeStep.lblMaritalStatus'|translate}} : {{ member.maritalStatusId | find:clientTemplate.familyMemberOptions.maritalStatusIdOptions:'id':'name' }}<br />
-          {{'Client_Component.ClientStepper.RelativeStep.lblGender'|translate}} : {{ member.genderId | find:clientTemplate.familyMemberOptions.genderIdOptions:'id':'name' }}<br />
-          {{'Client_Component.ClientStepper.RelativeStep.lblProfession'|translate}} : {{ member.professionId | find:clientTemplate.familyMemberOptions.professionIdOptions:'id':'name' }}<br />
-          {{'Client_Component.ClientStepper.RelativeStep.lblDOB'|translate}} : {{ member.dateOfBirth | date }}<br />
+          {{'Client_Component.ClientStepper.Preview.labelFamilyFirstName'|translate}} : {{ member.firstName }}<br />
+          {{'Client_Component.ClientStepper.Preview.labelFamilyMiddleName'|translate}}: {{ member.middleName }}<br />
+          {{'Client_Component.ClientStepper.Preview.labelFamilyLastName'|translate}}: {{ member.lastName }}<br />
+          {{'Client_Component.ClientStepper.Preview.labelFamilyQualification'|translate}} : {{ member.qualification }}<br />
+          {{'Client_Component.ClientStepper.Preview.labelFamilyRelationship'|translate}} : {{ member.relationshipId | find:clientTemplate.familyMemberOptions.relationshipIdOptions:'id':'name' }}<br />
+          {{'Client_Component.ClientStepper.Preview.labelFamilyAge'|translate}} : {{ member.age }}<br />
+          {{'Client_Component.ClientStepper.Preview.labelFamilyIsDependent'|translate}} : {{ member.isDependent ? 'Yes' : 'No' }}<br />
+          {{'Client_Component.ClientStepper.Preview.labelFamilyMaritalStatus'|translate}} : {{ member.maritalStatusId | find:clientTemplate.familyMemberOptions.maritalStatusIdOptions:'id':'name' }}<br />
+          {{'Client_Component.ClientStepper.Preview.labelFamilyGender'|translate}} : {{ member.genderId | find:clientTemplate.familyMemberOptions.genderIdOptions:'id':'name' }}<br />
+          {{'Client_Component.ClientStepper.Preview.labelFamilyProfession'|translate}} : {{ member.professionId | find:clientTemplate.familyMemberOptions.professionIdOptions:'id':'name' }}<br />
+          {{'Client_Component.ClientStepper.Preview.labelFamilyDateOfBirth'|translate}} : {{ member.dateOfBirth | date }}<br />
         </p>
 
       </mat-expansion-panel>
 
-    </mat-accordion>    
+    </mat-accordion>
 
   </div>
 
   <div fxFlexFill *ngIf="client.address.length" fxLayout="row wrap" fxLayout.lt-md="column">
 
-    <h3 class="mat-h3" fxFlexFill>{{'Client_Component.ClientStepper.AddressStep.titleAddress' |translate}}</h3>
+    <h3 class="mat-h3" fxFlexFill>{{'Client_Component.ClientStepper.Preview.labelAddressTitle'|translate}}</h3>
 
     <mat-divider fxFlexFill></mat-divider>
 
     <mat-accordion fxFlexFill class="m-t-5">
 
       <mat-expansion-panel *ngFor="let address of client.address" class="address">
-  
+
         <mat-expansion-panel-header>
-  
+
           <mat-panel-title>
             {{ getSelectedValue('addressTypeIdOptions',address.addressTypeId)?.name }}
           </mat-panel-title>
-  
+
           <mat-panel-description>
             {{address.relationship}}
           </mat-panel-description>
-  
+
         </mat-expansion-panel-header>
-  
+
         <mat-divider></mat-divider>
-  
+
         <p>
-          
-          <span *ngIf="isFieldEnabled('addressLine1')">{{'Client_Component.ClientStepper.AddressStep.labelAddressLine1' |translate}} : {{address.addressLine1}}<br /></span>
-          <span *ngIf="isFieldEnabled('addressLine2')">{{'Client_Component.ClientStepper.AddressStep.labelAddressLine2' |translate}} : {{address.addressLine2}}<br /></span>
-          <span *ngIf="isFieldEnabled('addressLine3')">{{'Client_Component.ClientStepper.AddressStep.labelAddressLine3' |translate}} : {{address.addressLine3}}<br /></span>
-          <span *ngIf="isFieldEnabled('street')">{{'Client_Component.ClientStepper.AddressStep.labelStreet' |translate}} : {{address.street}}<br /></span>
-          <span *ngIf="isFieldEnabled('townVillage')">{{'Client_Component.ClientStepper.AddressStep.labelTownVillage' |translate}} : {{address.townVillage}}<br /></span>
-          <span *ngIf="isFieldEnabled('countyDistrict')">{{'Client_Component.ClientStepper.AddressStep.labelDistrict' |translate}} : {{address.countyDistrict}}<br /></span>
-          <span *ngIf="isFieldEnabled('city')">{{'Client_Component.ClientStepper.AddressStep.labelCity' |translate}} : {{address.city}}<br /></span>
-          <span *ngIf="isFieldEnabled('stateProvinceId')">{{'Client_Component.ClientStepper.AddressStep.labelStateProvince' |translate}} :
+          <span *ngIf="isFieldEnabled('street')">{{'Client_Component.ClientStepper.Preview.labelAddressStreet'|translate}} : {{address.street}}<br /></span>
+          <span *ngIf="isFieldEnabled('addressLine1')">{{'Client_Component.ClientStepper.Preview.labelAddressAddressLine'|translate}} 1 : {{address.addressLine1}}<br /></span>
+          <span *ngIf="isFieldEnabled('addressLine2')">{{'Client_Component.ClientStepper.Preview.labelAddressAddressLine'|translate}} 2 : {{address.addressLine2}}<br /></span>
+          <span *ngIf="isFieldEnabled('addressLine3')">{{'Client_Component.ClientStepper.Preview.labelAddressAddressLine'|translate}} 3 : {{address.addressLine3}}<br /></span>
+          <span *ngIf="isFieldEnabled('townVillage')">{{'Client_Component.ClientStepper.Preview.labelAddressTownVillage'|translate}}: {{address.townVillage}}<br /></span>
+          <span *ngIf="isFieldEnabled('city')">{{'Client_Component.ClientStepper.Preview.labelAddressCity'|translate}}: {{address.city}}<br /></span>
+          <span *ngIf="isFieldEnabled('stateProvinceId')">{{'Client_Component.ClientStepper.Preview.labelAddressStateProvince'|translate}}:
             {{getSelectedValue('stateProvinceIdOptions',address.stateProvinceId)?.name}}<br /></span>
-          <span *ngIf="isFieldEnabled('countryId')">{{'Client_Component.ClientStepper.AddressStep.labelCountry' |translate}} :
+          <span *ngIf="isFieldEnabled('countryId')">{{'Client_Component.ClientStepper.Preview.labelAddressCountry'|translate}}:
             {{getSelectedValue('countryIdOptions',address.countryId)?.name}}<br /></span>
-          <span *ngIf="isFieldEnabled('postalCode')">{{'Client_Component.ClientStepper.AddressStep.labelPostalCode' |translate}} : {{address.postalCode}}<br /></span>
-          <span *ngIf="isFieldEnabled('isActive')">{{'Client_Component.ClientStepper.AddressStep.checkboxIsActive' |translate}} : {{address.isActive}}<br /></span>
+          <span *ngIf="isFieldEnabled('postalCode')">{{'Client_Component.ClientStepper.Preview.labelAddressPostalCode'|translate}}: {{address.postalCode}}<br /></span>
+          <span *ngIf="isFieldEnabled('isActive')">{{'Client_Component.ClientStepper.Preview.labelAddressActiveStatus'|translate}}: {{address.isActive}}<br /></span>
         </p>
-  
+
       </mat-expansion-panel>
-  
+
     </mat-accordion>
 
   </div>
@@ -209,12 +215,12 @@
 <div fxLayout="row" class="margin-t" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="2%">
   <button mat-raised-button matStepperPrevious>
     <fa-icon icon="arrow-left"></fa-icon>&nbsp;&nbsp;
-    {{'Client_component.ClientStepper.buttonPrevious'|translate}}
+    {{'Client_Component.ClientStepper.Preview.buttonPrevious'|translate}}
   </button>
   <button mat-raised-button [routerLink]="['../']">
-    {{'Client_component.ClientStepper.buttonCancel'|translate}}
+    {{'Client_Component.ClientStepper.Preview.buttonCancel'|translate}}
   </button>
   <button mat-raised-button color="primary" (click)="submit.emit()">
-    {{'Client_component.ClientStepper.buttonSubmit'|translate}}
+    {{'Client_Component.ClientStepper.Preview.buttonSubmit'|translate}}
   </button>
 </div>

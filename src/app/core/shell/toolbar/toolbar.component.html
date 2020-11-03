@@ -13,7 +13,7 @@
 
     <a mat-tab-link class="tab-link" [matMenuTriggerFor]="institutionMenu" #institutionMenuTrigger="matMenuTrigger">
       <fa-icon class="mr-05" icon="university" size="lg"></fa-icon>
-      Institution
+      {{'Toolbar_Component.labelInstitution'|translate}}
     </a>
 
     <span fxHide.lt-lg="true">
@@ -56,7 +56,7 @@
 </mat-toolbar>
 
 <mat-menu #institutionMenu="matMenu" [overlapTrigger]="false">
-  <button mat-menu-item routerLink="/clients">Clients</button>
+  <button mat-menu-item routerLink="/clients">{{'Toolbar_Component.labelInstitution'|translate}}</button>
   <button mat-menu-item routerLink="/groups">Groups</button>
   <button mat-menu-item routerLink="/centers">Centers</button>
   <span fxHide.lg>

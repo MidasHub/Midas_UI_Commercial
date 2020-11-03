@@ -1,10 +1,12 @@
 /** Angular Imports */
-import { Component, OnInit, Input } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
-import { DatePipe } from '@angular/common';
+import {Component, OnInit, Input} from '@angular/core';
+import {FormBuilder, FormGroup, Validators, FormControl} from '@angular/forms';
+import {DatePipe} from '@angular/common';
 
 /** Custom Services */
-import { SettingsService } from 'app/settings/settings.service';
+import {SettingsService} from 'app/settings/settings.service';
+import {AuthenticationService} from '../../../core/authentication/authentication.service';
+
 
 /**
  * Create Client Component
@@ -23,6 +25,9 @@ export class ClientGeneralStepComponent implements OnInit {
 
   /** Client Template */
   @Input() clientTemplate: any;
+  /** Identifier Template */
+  @Input() clientIdentifierTemplate: any;
+  currentUser: any;
   /** Create Client Form */
   createClientForm: FormGroup;
 
@@ -44,6 +49,16 @@ export class ClientGeneralStepComponent implements OnInit {
   genderOptions: any;
   /** Saving Product Options */
   savingProductOptions: any;
+  /** Account Payment Options */
+  accountPayments: any;
+  /** review images */
+  reviewFiles: any;
+  /** Documents type */
+  documentTypes: any;
+
+  clientFilesData: any[] = [];
+
+  isTeller = true;
 
   /**
    * @param {FormBuilder} formBuilder Form Builder
@@ -52,7 +67,8 @@ export class ClientGeneralStepComponent implements OnInit {
    */
   constructor(private formBuilder: FormBuilder,
               private datePipe: DatePipe,
-              private settingsService: SettingsService) {
+              private settingsService: SettingsService,
+              private authenticationService: AuthenticationService) {
     this.setClientForm();
   }
 
@@ -68,19 +84,28 @@ export class ClientGeneralStepComponent implements OnInit {
     this.createClientForm = this.formBuilder.group({
       'officeId': ['', Validators.required],
       'staffId': [''],
-      'legalFormId': [''],
       'isStaff': [false],
-      'active': [false],
-      'addSavings': [false],
+      'active': [true],
+      'addSavings': [true],
       'accountNo': [''],
       'externalId': [''],
       'genderId': [''],
       'mobileNo': [''],
       'dateOfBirth': [''],
-      'clientTypeId': [''],
+      'clientTypeId': [21],
       'clientClassificationId': [''],
-      'submittedOnDate': ['']
+      // 'submittedOnDate': [{value: '', disabled: true}],
+      'staff_code': [''],
+      'documentTypeId': [''],
+      // 'activationDate': [{value: '', disabled: true}],
+      'savingsProductId': [2],
+      'firstname': [''],
+      'middlename': [''],
+      'lastname': [''],
+      'legalFormId': [1]
     });
+    this.createClientForm.addControl('activationDate', new FormControl(new Date()));
+    this.createClientForm.addControl('submittedOnDate', new FormControl(new Date()));
   }
 
   /**
@@ -96,48 +121,69 @@ export class ClientGeneralStepComponent implements OnInit {
     this.constitutionOptions = this.clientTemplate.clientNonPersonConstitutionOptions;
     this.genderOptions = this.clientTemplate.genderOptions;
     this.savingProductOptions = this.clientTemplate.savingProductOptions;
+    this.documentTypes = [];
+    this.clientIdentifierTemplate.allowedDocumentTypes?.map((type: any) => {
+      if (type.name === 'Passport' || type.name === 'CMND' || type.name === 'CCCD') {
+        this.documentTypes.push(type);
+      }
+    });
+    this.currentUser = this.authenticationService.getCredentials();
+    const {roles, staffId} = this.currentUser;
+    this.createClientForm.get('staffId').setValue(staffId);
+    roles.map((role: any) => {
+      if (role.id !== 3) {
+        this.isTeller = false;
+      }
+    });
   }
 
   /**
    * Adds controls conditionally.
    */
   buildDependencies() {
-    this.createClientForm.get('legalFormId').valueChanges.subscribe((legalFormId: any) => {
-      if (legalFormId === 1) {
-        this.createClientForm.removeControl('fullname');
-        this.createClientForm.removeControl('clientNonPersonDetails');
-        // Jean: change from '(^[A-z]).*' to  '^([^!@#$%^&*()_+=<>,.?\/\-]*)$'
-        this.createClientForm.addControl('firstname', new FormControl('', [Validators.required, Validators.pattern('^([^!@#$%^&*()_+=<>,.?\/\-]*)$')]));
-        this.createClientForm.addControl('middlename', new FormControl('', Validators.pattern('^([^!@#$%^&*()_+=<>,.?\/\-]*)$')));
-        this.createClientForm.addControl('lastname', new FormControl('', [Validators.required, Validators.pattern('^([^!@#$%^&*()_+=<>,.?\/\-]*)$')]));
-      } else {
-        this.createClientForm.removeControl('firstname');
-        this.createClientForm.removeControl('middlename');
-        this.createClientForm.removeControl('lastname');
-        this.createClientForm.addControl('fullname', new FormControl('', [Validators.required, Validators.pattern('^([^!@#$%^&*()_+=<>,.?\/\-]*)$')]));
-        this.createClientForm.addControl('clientNonPersonDetails', this.formBuilder.group({
-          'constitutionId': [''],
-          'incorpValidityTillDate': [''],
-          'incorpNumber': [''],
-          'mainBusinessLineId': [''],
-          'remarks': ['']
-        }));
+    // this.createClientForm.get('legalFormId').valueChanges.subscribe((legalFormId: any) => {
+    //   if (legalFormId === 1) {
+    //     this.createClientForm.removeControl('fullname');
+    //     this.createClientForm.removeControl('clientNonPersonDetails');
+    //     // Jean: change from '(^[A-z]).*' to  '^([^!@#$%^&*()_+=<>,.?\/\-]*)$'
+    //     this.createClientForm.addControl('firstname', new FormControl('', [Validators.required, Validators.pattern('^([^!@#$%^&*()_+=<>,.?\/\-]*)$')]));
+    //     this.createClientForm.addControl('middlename', new FormControl('', Validators.pattern('^([^!@#$%^&*()_+=<>,.?\/\-]*)$')));
+    //     this.createClientForm.addControl('lastname', new FormControl('', [Validators.required, Validators.pattern('^([^!@#$%^&*()_+=<>,.?\/\-]*)$')]));
+    //   } else {
+    //     this.createClientForm.removeControl('firstname');
+    //     this.createClientForm.removeControl('middlename');
+    //     this.createClientForm.removeControl('lastname');
+    //     this.createClientForm.addControl('fullname', new FormControl('', [Validators.required, Validators.pattern('^([^!@#$%^&*()_+=<>,.?\/\-]*)$')]));
+    //     this.createClientForm.addControl('clientNonPersonDetails', this.formBuilder.group({
+    //       'constitutionId': [''],
+    //       'incorpValidityTillDate': [''],
+    //       'incorpNumber': [''],
+    //       'mainBusinessLineId': [''],
+    //       'remarks': ['']
+    //     }));
+    //   }
+    // });
+    // this.createClientForm.get('legalFormId').patchValue(1);
+  }
+
+  fileChange(event: any): Promise<any> {
+    return new Promise<any>(async resolve => {
+      const files = [];
+      for (const file of event.target.files) {
+        file.path = await this.readURL(file);
+        files.push(file);
       }
+      this.clientFilesData = files;
     });
-    this.createClientForm.get('legalFormId').patchValue(1);
-    this.createClientForm.get('active').valueChanges.subscribe((active: boolean) => {
-      if (active) {
-        this.createClientForm.addControl('activationDate', new FormControl('', Validators.required));
-      } else {
-        this.createClientForm.removeControl('activationDate');
-      }
-    });
-    this.createClientForm.get('addSavings').valueChanges.subscribe((active: boolean) => {
-      if (active) {
-        this.createClientForm.addControl('savingsProductId', new FormControl('', Validators.required));
-      } else {
-        this.createClientForm.removeControl('savingsProductId');
-      }
+  }
+
+  readURL(file: any): Promise<any> {
+    return new Promise<any>(resolve => {
+      const reader = new FileReader();
+      reader.onload = function (e: any) {
+        resolve(e.target.result);
+      };
+      reader.readAsDataURL(file);
     });
   }
 
@@ -163,16 +209,20 @@ export class ClientGeneralStepComponent implements OnInit {
     if (generalDetails.dateOfBirth) {
       generalDetails.dateOfBirth = this.datePipe.transform(generalDetails.dateOfBirth, dateFormat);
     }
-
-    if (generalDetails.clientNonPersonDetails && generalDetails.clientNonPersonDetails.incorpValidityTillDate) {
-      generalDetails.clientNonPersonDetails = {
-        ...generalDetails.clientNonPersonDetails,
-        incorpValidityTillDate: this.datePipe.transform(generalDetails.dateOfBirth, dateFormat),
-        dateFormat,
-        locale
-      };
-    }
+    //
+    // if (generalDetails.clientNonPersonDetails && generalDetails.clientNonPersonDetails.incorpValidityTillDate) {
+    //   generalDetails.clientNonPersonDetails = {
+    //     ...generalDetails.clientNonPersonDetails,
+    //     incorpValidityTillDate: this.datePipe.transform(generalDetails.dateOfBirth, dateFormat),
+    //     dateFormat,
+    //     locale
+    //   };
+    // }
+    console.log({generalDetails});
     return generalDetails;
   }
 
+  get files() {
+    return {files: this.clientFilesData};
+  }
 }

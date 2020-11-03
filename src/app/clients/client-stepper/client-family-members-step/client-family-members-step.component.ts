@@ -6,6 +6,7 @@ import { MatDialog } from '@angular/material/dialog';
 /** Custom Components */
 import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.component';
 import { ClientFamilyMemberDialogComponent } from './client-family-member-dialog/client-family-member-dialog.component';
+import {I18nService} from '../../../core/i18n/i18n.service';
 
 /**
  * Client Family Members Step
@@ -25,7 +26,7 @@ export class ClientFamilyMembersStepComponent {
   /**
    * @param {MatDialog} dialog Mat Dialog
    */
-  constructor(public dialog: MatDialog) { }
+  constructor(public dialog: MatDialog, private i18n: I18nService) { }
 
   /**
    * Adds a family member.
@@ -71,7 +72,7 @@ export class ClientFamilyMembersStepComponent {
    */
   deleteFamilyMember(name: string, index: number) {
     const deleteFamilyMemberDialogRef = this.dialog.open(DeleteDialogComponent, {
-      data: { deleteContext: `Family member name : ${name} ${index}` }
+      data: { deleteContext: `${this.i18n.getTranslate('Client_Component.ClientStepper.FamilyMember.labelDeleteFamilyMember')} : ${name} ${index}` }
     });
     deleteFamilyMemberDialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {

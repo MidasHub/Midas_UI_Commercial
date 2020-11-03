@@ -61,6 +61,11 @@
         "labelCorpConstitution": "Constitution",
         "labelCorpDate": "Incorporation Date",
         "labelTaxNo": "Tax Number",
+        "labelSelectExternalId": "External Id",
+        "labelSelectStaffCode": "Staff code",
+        "labelSelectAccountForPayment": "Account Payment ",
+        "labelSelectDocumentTypes": "Document Type",
+        "labelInputFileDocument": "Images",
         "labelAccountNo": "CIF No"
       },
       "RelativeStep": {
@@ -87,7 +92,97 @@
         "btnConfirm": "Confirm"
       },
       "buttonCancel": "Cancel",
-      "buttonSubmit": "Submit"
+      "buttonSubmit": "Submit",
+      "lblCustomerCreated": "Create customer successfully, ID: ",
+      "lblClose": "Close",
+      "FamilyMember": {
+        "Dialog": {
+          "labelInputFirstName": "First Name",
+          "labelInputFirstNameMsg": "First Name is <strong>required</strong>",
+          "labelMiddleName": "Middle Name",
+          "labelLastName": "Last Name",
+          "labelLastNameMsg": " Last Name is <strong>required</strong>",
+          "labelQualification": "Qualification",
+          "labelAge": "Age",
+          "labelAgeMsg": " Age is <strong>required</strong>",
+          "labelSelectRelationship": "Relationship",
+          "labelSelectRelationshipMsg": "Relationship is <strong>required</strong>",
+          "labelSelectGender": "Gender",
+          "labelSelectGenderMsg": "Gender is <strong>required</strong>",
+          "labelSelectProfession": "Profession",
+          "labelSelectMaritalStatus": "Marital Status",
+          "labelDateOfBirth": "Date Of Birth",
+          "labelDateOfBirthMsg": "Date of birth is <strong>required</strong>",
+          "buttonCancel": "Cancel",
+          "buttonConfirm": "Confirm",
+          "checkBoxDependent": "Is Dependent",
+          "labelMobileNumber": "Mobile Number"
+        },
+        "labelFirstName": "First Name",
+        "labelMiddleName": "Middle Name",
+        "labelLastName": "Last Name",
+        "labelQualification": "Qualification",
+        "labelRelationship": "Relationship",
+        "labelAge": "Age",
+        "labelDependent": "Dependent",
+        "labelMaritalStatus": "Marital Status",
+        "labelGender": "Gender",
+        "labelProfession": "Profession",
+        "labelDateOfBirth": "Date Of Birth ",
+        "labelDeleteFamilyMember": "Family member name",
+        "labelTitle": "Family Members",
+        "buttonAdd": "Add ",
+        "buttonPrevious": "Previous",
+        "buttonNext": "Next"
+      },
+      "Preview": {
+        "labelGeneral": "General",
+        "labelGeneralName": "Name",
+        "labelGeneralOffice": "Office ",
+        "labelLegalForm": "Legal Form",
+        "labelStaff": "Staff",
+        "labelDateOfBirth": "Date of Birth",
+        "labelIncorporationDate": "Incorporation date ",
+        "labelExternalId": "External Id",
+        "labelMobileNo": "Mobile No",
+        "labelClientType": "Client Type ",
+        "labelClassification": "Client Classification",
+        "labelSavingsProduct": "Savings Product",
+        "labelSubmittedOnDate": "Submitted On Date",
+        "labelActive": "Active",
+        "labelActivationDate": "Activation Date",
+        "labelGender": "Gender",
+        "labelIsStaff": "Is Staff",
+        "labelIncorporationValidityTillDate": "Incorporation Validity Till Date",
+        "labelIncorporationNumber": "Incorporation Number",
+        "labelMainBusinessLine": "Main Business Line",
+        "labelConstitution": "Constitution",
+        "labelRemark": "Remark",
+        "labelFamilyTitle": "Family Members",
+        "labelFamilyFirstName": "First Name",
+        "labelFamilyMiddleName": "Middle Name",
+        "labelFamilyLastName": "Last Name ",
+        "labelFamilyQualification": "Qualification",
+        "labelFamilyRelationship": "Relationship",
+        "labelFamilyAge": "Age",
+        "labelFamilyIsDependent": "Is Dependent",
+        "labelFamilyMaritalStatus": "Marital Status",
+        "labelFamilyGender": "Gender",
+        "labelFamilyProfession": "Profession",
+        "labelFamilyDateOfBirth": "Date Of Birth",
+        "labelAddressTitle": "Address",
+        "labelAddressStreet": "Street",
+        "labelAddressAddressLine": "Address Line",
+        "labelAddressTownVillage": "Town / Village",
+        "labelAddressCity": "City",
+        "labelAddressCountry": "Country",
+        "labelAddressPostalCode": "Postal Code",
+        "labelAddressActiveStatus": "Active Status",
+        "buttonPrevious": "Previous",
+        "buttonCancel": "Cancel",
+        "buttonSubmit": "Submit",
+        "labelAddressStateProvince": "State / Province "
+      }
     },
     "buttonImportClient": "Import Client",
     "buttonCreateClient": "Create Client",
@@ -101,6 +196,10 @@
     "tblColStatus": "Status",
     "tblColMobileNumber": "Mobile Number",
     "inputPlaceholderClosedCIF": "Search by client name",
+    "Breadcrumb": {
+      "labelClient": "Clients",
+      "labelCreateClient": "Create Client"
+    },
     "ViewClient": {
       "lblViewSignature": "View Signature",
       "lblClientName": "Client Name",
@@ -160,7 +259,14 @@
   },
   "Home_Component": {
     "welcome": "Hello, ",
-    "searchActivity": "Search Activity"
+    "searchActivity": "Search Activity",
+    "Breadcrumb": {
+      "labelHome": "Home"
+    },
+    "btnDashboard": "Dashboard",
+    "labelIncompleteRollterm": "Incomplete Refinance Card",
+    "btnNewCustomer": "New Client",
+    "btnNewGroup": "New Group"
   },
   "Login_Component": {
     "APP_SLOGAN": "This is a Single Page Web that can help your Business grow",
@@ -258,7 +364,16 @@
       }
     }
   },
+  "Toolbar_Component": {
+    "labelInstitution": "Institution"
+  },
   "Shared_Component": {
+    "DeleteDialog": {
+      "labelContext": "Are you sure you want to delete",
+      "buttonConfirm": "Confirm",
+      "buttonCancel": "Cancel",
+      "labelTitle": "Delete"
+    },
     "FormDialog": {
       "btnCancel": "Cancel",
       "btnAdd": "Add"

@@ -4,6 +4,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 
 /** Custom Services. */
 import { ClientsService } from 'app/clients/clients.service';
+import {AuthenticationService} from '../../../core/authentication/authentication.service';
 
 /**
  * General Tab component.
@@ -56,7 +57,7 @@ export class GeneralTabComponent {
 
   /** Client Id */
   clientid: any;
-
+  isTeller = true;
   /**
    * @param {ActivatedRoute} route Activated Route
    * @param {ClientsService} clientService Clients Service
@@ -65,7 +66,8 @@ export class GeneralTabComponent {
   constructor(
     private route: ActivatedRoute,
     private clientService: ClientsService,
-    private router: Router
+    private router: Router,
+    private authenticationService: AuthenticationService
   ) {
     this.route.data.subscribe((data: { clientAccountsData: any, clientChargesData: any, clientSummary: any }) => {
       this.clientAccountData = data.clientAccountsData;
@@ -76,6 +78,13 @@ export class GeneralTabComponent {
       this.clientSummary = data.clientSummary[0];
       this.clientid = this.route.parent.snapshot.params['clientId'];
   });
+    const currentUser = this.authenticationService.getCredentials();
+    const {roles, staffId} = currentUser;
+    roles.map( (role: any) => {
+      if (role.id !== 3) {
+        this.isTeller = false;
+      }
+    });
   }
 
   /**

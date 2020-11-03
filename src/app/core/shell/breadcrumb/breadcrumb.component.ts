@@ -91,7 +91,7 @@ export class BreadcrumbComponent implements OnInit {
           currentUrl += `/${routeURL}`;
 
           if (currentUrl === '/') {
-            breadcrumbLabel = 'Home';
+            breadcrumbLabel = 'Home_Component.Breadcrumb.labelHome';
           }
 
           const hasData = (route.routeConfig && route.routeConfig.data);

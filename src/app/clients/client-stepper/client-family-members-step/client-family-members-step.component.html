@@ -1,10 +1,10 @@
 <div class="mat-typography">
 
-    <h3>{{'Client_Component.ClientStepper.RelativeStep.lblRelativeMember'|translate}}</h3>
+    <h3>{{'Client_Component.ClientStepper.FamilyMember.labelTitle'|translate}}</h3>
 
     <div fxLayout="row" fxLayoutAlign="flex-end" class="m-b-20">
       <button mat-raised-button color="primary" (click)="addFamilyMember()">
-        <fa-icon icon="plus"></fa-icon>&nbsp;&nbsp;{{'Client_Component.ClientStepper.RelativeStep.btnAddRelative'|translate}}
+        <fa-icon icon="plus"></fa-icon>&nbsp;&nbsp;{{'Client_Component.ClientStepper.FamilyMember.buttonAdd'|translate}}
       </button>
     </div>
 
@@ -34,19 +34,19 @@
             <fa-icon icon="trash"></fa-icon>
           </button>
         </div>
-        
+
         <p>
-          {{'Client_Component.ClientStepper.RelativeStep.lblFirstName'|translate}} : {{ member.firstName }}<br />
-          {{'Client_Component.ClientStepper.RelativeStep.lblMidName'|translate}} : {{ member.middleName }}<br />
-          {{'Client_Component.ClientStepper.RelativeStep.lblLastName'|translate}} : {{ member.lastName }}<br />
-          {{'Client_Component.ClientStepper.RelativeStep.lblQualification'|translate}} : {{ member.qualification }}<br />
-          {{'Client_Component.ClientStepper.RelativeStep.lblRelationship'|translate}} : {{ member.relationshipId | find:clientTemplate.familyMemberOptions.relationshipIdOptions:'id':'name' }}<br />
-          {{'Client_Component.ClientStepper.RelativeStep.lblAge'|translate}} : {{ member.age }}<br />
-          {{'Client_Component.ClientStepper.RelativeStep.lblDependent'|translate}} : {{ member.isDependent ? 'Yes' : 'No' }}<br />
-          {{'Client_Component.ClientStepper.RelativeStep.lblMaritalStatus'|translate}} : {{ member.maritalStatusId | find:clientTemplate.familyMemberOptions.maritalStatusIdOptions:'id':'name' }}<br />
-          {{'Client_Component.ClientStepper.RelativeStep.lblGender'|translate}} : {{ member.genderId | find:clientTemplate.familyMemberOptions.genderIdOptions:'id':'name' }}<br />
-          {{'Client_Component.ClientStepper.RelativeStep.lblProfession'|translate}} : {{member.professionId | find:clientTemplate.familyMemberOptions.professionIdOptions:'id':'name' }}<br />
-          {{'Client_Component.ClientStepper.RelativeStep.lblDOB'|translate}} : {{member.dateOfBirth | date}}<br />
+          {{'Client_Component.ClientStepper.FamilyMember.labelFirstName'|translate}} : {{ member.firstName }}<br />
+          {{'Client_Component.ClientStepper.FamilyMember.labelMiddleName'|translate}} : {{ member.middleName }}<br />
+          {{'Client_Component.ClientStepper.FamilyMember.labelLastName'|translate}} : {{ member.lastName }}<br />
+          {{'Client_Component.ClientStepper.FamilyMember.labelQualification'|translate}} : {{ member.qualification }}<br />
+          {{'Client_Component.ClientStepper.FamilyMember.labelRelationship'|translate}} : {{ member.relationshipId | find:clientTemplate.familyMemberOptions.relationshipIdOptions:'id':'name' }}<br />
+          {{'Client_Component.ClientStepper.FamilyMember.labelAge'|translate}} : {{ member.age }}<br />
+          {{'Client_Component.ClientStepper.FamilyMember.labelDependent'|translate}} : {{ member.isDependent ? 'Yes' : 'No' }}<br />
+          {{'Client_Component.ClientStepper.FamilyMember.labelMaritalStatus'|translate}} : {{ member.maritalStatusId | find:clientTemplate.familyMemberOptions.maritalStatusIdOptions:'id':'name' }}<br />
+          {{'Client_Component.ClientStepper.FamilyMember.labelGender'|translate}} : {{ member.genderId | find:clientTemplate.familyMemberOptions.genderIdOptions:'id':'name' }}<br />
+          {{'Client_Component.ClientStepper.FamilyMember.labelProfession'|translate}} : {{member.professionId | find:clientTemplate.familyMemberOptions.professionIdOptions:'id':'name' }}<br />
+          {{'Client_Component.ClientStepper.FamilyMember.labelDateOfBirth'|translate}}: {{member.dateOfBirth | date}}<br />
         </p>
 
       </mat-expansion-panel>
@@ -56,10 +56,10 @@
     <div fxLayout="row" class="margin-t" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="2%">
       <button mat-raised-button matStepperPrevious>
         <fa-icon icon="arrow-left"></fa-icon>&nbsp;&nbsp;
-        {{'Client_Component.ClientStepper.buttonPrevious'|translate}}
+        {{'Client_Component.ClientStepper.FamilyMember.buttonPrevious'|translate}}
       </button>
       <button mat-raised-button matStepperNext>
-        {{'Client_Component.ClientStepper.buttonNext'|translate}}&nbsp;&nbsp;
+        {{'Client_Component.ClientStepper.FamilyMember.buttonNext'|translate}}&nbsp;&nbsp;
         <fa-icon icon="arrow-right"></fa-icon>
       </button>
     </div>

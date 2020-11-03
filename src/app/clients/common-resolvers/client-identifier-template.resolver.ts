@@ -23,7 +23,10 @@ export class ClientIdentifierTemplateResolver implements Resolve<Object> {
      * @returns {Observable<any>}
      */
     resolve(route: ActivatedRouteSnapshot): Observable<any> {
-        const clientId = route.parent.paramMap.get('clientId');
+        let clientId = route.parent.paramMap.get('clientId');
+        if (!clientId) {
+          clientId = '1';
+        }
         return this.clientsService.getClientIdentifierTemplate(clientId);
     }
 }

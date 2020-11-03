@@ -1,16 +1,23 @@
-<div fxLayput="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column" class="container m-b-20">
+<div fxLayout="row" fxLayout.lt-md="column" fxLayoutAlign="start" fxLayoutGap="1%"  class="fluidcontainer m-b-10 p-l-10" >
 
-<!--  <button mat-raised-button color="primary" [routerLink]="['/dashboard']">-->
-<!--    <fa-icon icon="tachometer-alt"></fa-icon>&nbsp;&nbsp;-->
-<!--    Dashboard-->
-<!--  </button>-->
-
+  <button mat-raised-button color="primary" [routerLink]="['/dashboard']" >
+    <fa-icon icon="tachometer-alt"></fa-icon>&nbsp;&nbsp;
+    {{'Home_Component.btnDashboard'| translate}}
+  </button>
+    <button mat-raised-button color="primary" [routerLink]="['/clients/create']" [queryParams]="{go_back:'home'}" >
+    <fa-icon icon="user-plus"></fa-icon> &nbsp;&nbsp;
+    {{'Home_Component.btnNewCustomer'| translate}}
+  </button>
+  <button mat-raised-button color="primary">
+    <i class="fab fa-google-plus-g"></i> &nbsp;&nbsp;
+    {{'Home_Component.btnNewGroup'| translate}}
+  </button>
 </div>
 
-<div class="container">
+<div fxLayout="row" fxLayout.lt-md="column" fxFill fxLayoutAlign="space-around start"
+  class="container m-b-20">
 
-  <mat-card>
-
+  <mat-card fxFlex.gt-md="70" fxFlexOrder.gt-xs="2" fxFlexOrder.gt-md="1">
     <mat-card-header>
       <mat-card-title class="title">
         {{'Home_Component.welcome'| translate}} <strong>{{username}}</strong>!
@@ -34,8 +41,23 @@
 
     </mat-card-content>
 
-    <img mat-card-image src="assets/images/midas_lg-logo.jpg" alt="MIDAS">
+    <img mat-card-image src="assets/images/midas_lg-logo.jpg" alt="MIDAS" >
 
   </mat-card>
+  <mat-card fxFlex.gt-md="23" fxFlexOrder.gt-xs="1" fxFlexOrder.gt-md="2">
+    <mat-card-header fxLayout="column" fxLayoutAlign="center none">
+        <mat-card-title class="title text-center ">
 
+            <h1>5</h1>
+            <span> {{'Home_Component.labelIncompleteRollterm'| translate}}</span>
+
+        </mat-card-title>
+
+    </mat-card-header>
+
+    <mat-card-content>
+  <midas-rollterm-list></midas-rollterm-list>
+</mat-card-content>
+
+</mat-card>
 </div>
