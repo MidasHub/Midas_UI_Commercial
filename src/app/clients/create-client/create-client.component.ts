@@ -142,6 +142,10 @@ export class CreateClientComponent {
       alert('Vui lòng nhập ít nhất một địa chỉ');
       return;
     }
+    if (_.isEmpty(this.client.files) || this.client.files.length !== 2) {
+      alert('Vui lòng chọn hình ảnh trước khi upload, không quá 2 hình');
+      return;
+    }
     const clientData = {
       ...data,
       dateFormat,
@@ -155,8 +159,7 @@ export class CreateClientComponent {
           formData.append('name', file.name);
           formData.append('file', item);
           formData.append('fileName', file.name);
-          formData.append('description', file.name);
-          this.clientsService.uploadClientDocument(response.clientId, formData).subscribe((res: any) => {
+          this.clientsService.uploadClientIdentifierDocument(response.clientId, formData).subscribe((res: any) => {
             console.log('document Uploaded', res);
           });
         }
