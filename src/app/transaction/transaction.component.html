@@ -8,32 +8,29 @@
     <div fxLayout="row wrap">
       <div fxFlex="50%" fxLayout="row wrap" class="content">
         <div fxFlex="100%" style="color: green; font-weight: bold">Loại giao dịch : Rút tiền mặt</div>
-        <div fxFlex="100%">Thông tin chi tiết</div>
         <div fxFlex="100%" fxLayout="row wrap">
           <div fxFlex="30%">Thẻ thực hiện giao dịch</div>
-          <div fxFlex="70%">XXXXXX-X-XXXX</div>
+          <div fxFlex="70%" style="color: blue; font-weight: bold">{{transactionInfo.identifyClientDto.accountNumber}}</div>
         </div>
         <div fxFlex="100%" fxLayout="row wrap" class="content">
           <div fxFlex="10%">Loại thẻ</div>
-          <div fxFlex="15%">VISA</div>
+          <div fxFlex="15%" style="color: blue; font-weight: bold">{{transactionInfo.identifyClientDto.accountType}}</div>
           <div fxFlex="20%">Của ngân hàng</div>
-          <div fxFlex="55%">Ngân hàng Techcombank</div>
+          <div fxFlex="55%" style="color: blue; font-weight: bold">{{transactionInfo.identifyClientDto.accountBank}}</div>
         </div>
         <div fxFlex="100%" fxLayout="row wrap">
           <div fxFlex="30%">
             <mat-form-field appearance="fill">
               <mat-label>Tài khoản nhận tiền</mat-label>
-              <select matNativeControl>
-                <option value="vvrv1" selected>vrvrv1</option>
-                <option value="vvrv2">vrvrv2</option>
-                <option value="vvrv3">vrvrv3</option>
+              <select matNativeControl [(ngModel)] = "transactionInfo.accountCash">
+                <option *ngFor="let account of transactionInfo.listAccAccount" [value]="account.documentKey">{{account.documentKey}}</option>
               </select>
             </mat-form-field>
           </div>
           <div fxFlex="30%">
             <mat-form-field appearance="fill">
               <mat-label>Chọn loại giao dịch </mat-label>
-              <select matNativeControl>
+              <select matNativeControl [(ngModel)] = "transactionInfo.productId">
                 <option value="CA01">RTM thông thường</option>
                 <option value="TEST">Test thẻ</option>
                 <option value="CA02">Lô lẻ</option>
@@ -49,32 +46,38 @@
               <mat-label>Nhập số tiền giao dịch</mat-label>
               <input
               type="text"
+              class="center"
               matInput
+              [(ngModel)] = "transactionInfo.requestAmount"
               #amountTransaction
-              (change)="this.getTerminalListEnoughBalance(amountTransaction.value)"
+              (change)="this.changeAmountTransaction()"
               (keyup)="amountTransaction.value = this.formatCurrency(amountTransaction.value)" />
             </mat-form-field>
           </div>
           <div fxFlex="10%">
             <mat-form-field>
               <mat-label>Nhập phí (%/giá trị giao dịch)</mat-label>
-              <input matInput />
+              <input
+              class="center"
+              matInput [(ngModel)]="transactionInfo.rate"
+              (change)="this.calculateFeeTransaction()"
+              />
             </mat-form-field>
           </div>
         </div>
       </div>
       <div fxFlex="50%" fxLayout="row wrap">
         <div fxFlex="100%" fxLayout="row wrap" class="content">
-          <div fxFlex="40%">Tên khách hàng</div>
-          <div fxFlex="60%" align="left">TAI TẮT SÁNG</div>
+          <div fxFlex="30%">Tên khách hàng</div>
+          <div fxFlex="60%" class="left">{{transactionInfo.clientDto.displayName | uppercase}}</div>
         </div>
         <div fxFlex="100%" fxLayout="row wrap" class="content">
-          <div fxFlex="40%">Thuộc đại lý</div>
-          <div fxFlex="60%" align="left">(Chưa có)</div>
+          <div fxFlex="30%">Thuộc đại lý</div>
+          <div fxFlex="60%" class="left">{{transactionInfo.clientDto.groupName | uppercase}}</div>
         </div>
         <div fxFlex="100%" fxLayout="row wrap" class="content">
-          <div fxFlex="40%">Chi nhánh</div>
-          <div fxFlex="60%" align="left">62BPNT</div>
+          <div fxFlex="30%">Chi nhánh</div>
+          <div fxFlex="60%" class="left">{{transactionInfo.clientDto.officeName | uppercase}}</div>
         </div>
         <div fxFlex="100%" fxLayout="row wrap">
           <div fxFlex="100%" fxLayout="row wrap" class="content">
@@ -83,7 +86,7 @@
 
           <div fxFlex="100%" fxLayout="row wrap" class="content m-l-20">
             <div fxFlex="40%">Giá trị giao dịch</div>
-            <div fxFlex="20%"></div>
+            <div fxFlex="20%">{{formatCurrency(transactionInfo.txnAmount)}}</div>
             <div fxFlex="20%">Tỉ lệ</div>
           </div>
           <div fxFlex="100%" style="color: red; font-weight: bold" fxLayout="row wrap" class="content m-l-20">
@@ -91,17 +94,17 @@
           </div>
           <div class="m-l-10" fxFlex="100%" fxLayout="row wrap" class="m-l-20 content">
             <div fxFlex="40%">Thực cho khách hàng</div>
-            <div fxFlex="20%">23,000,000</div>
+            <div fxFlex="20%">{{formatCurrency(transactionInfo.txnAmount)}}</div>
             <div fxFlex="20%"></div>
           </div>
           <div class="m-l-10" fxFlex="100%" fxLayout="row wrap" class="m-l-20 content">
             <div fxFlex="40%">Phí thu khách hàng</div>
-            <div fxFlex="20%">120,000</div>
-            <div fxFlex="20%">2.0%</div>
+            <div fxFlex="20%">{{formatCurrency(transactionInfo.feeAmount)}}</div>
+            <div fxFlex="20%">{{transactionInfo.rate}}%</div>
           </div>
           <div fxFlex="100%" fxLayout="row wrap" class="content m-l-20">
             <div style="color: red; font-weight: bold" fxFlex="40%">Thu/chi bằng cách cấn trừ</div>
-            <div fxFlex="20%">32,000</div>
+            <div fxFlex="20%">{{formatCurrency(transactionInfo.txnAmountAfterFee)}}</div>
             <div fxFlex="20%"></div>
           </div>
         </div>
@@ -117,8 +120,8 @@
         <div fxFlex="100%">
           <mat-form-field style="width: 80%;" appearance="fill">
             <mat-label>Chọn máy POS làm giao dịch</mat-label>
-            <select  matNativeControl>
-              <option *ngFor="let terminal of listTerminal" [value]="terminal.terminalId">{{terminal.terminalName}}</option>
+            <select (change)="this.getFeeByTerminal()" [(ngModel)]="transactionInfo.terminalId" matNativeControl>
+              <option *ngFor="let terminal of transactionInfo.listTerminal" [value]="terminal.terminalId">{{terminal.terminalName}}</option>
             </select>
           </mat-form-field>
 
@@ -128,7 +131,7 @@
         <div fxFlex="100%">
           <mat-form-field>
             <mat-label>Số tiền cần quẹt(VNĐ)</mat-label>
-            <input matInput />
+            <input [(ngModel)]="transactionInfo.txnAmount" readonly matInput />
           </mat-form-field>
         </div>
       </div>
@@ -136,44 +139,49 @@
         <div fxFlex="100%">
           <mat-form-field>
             <mat-label>Số tiền trên bill do POS in ra</mat-label>
-            <input matInput />
+            <input matInput
+            [(ngModel)]="transactionInfo.terminalAmount"
+            #amountPosBill
+            (change)="this.calculateFeeTransaction()"
+            (keyup)="amountPosBill.value = this.formatCurrency(amountPosBill.value)" />
+
           </mat-form-field>
         </div>
       </div>
-      <div fxFlex="14%" fxLayout="row wrap" class="content">
+      <div fxFlex="19%" fxLayout="row wrap" class="content">
         <div fxFlex="80%">
           <mat-form-field>
             <mat-label> Số batch</mat-label>
-            <input matInput />
+            <input matInput [(ngModel)]="transactionInfo.batchNo" />
           </mat-form-field>
         </div>
       </div>
-      <div fxFlex="14%" fxLayout="row wrap" class="content">
+      <div fxFlex="19%" fxLayout="row wrap" class="content">
         <div fxFlex="80%">
           <mat-form-field>
             <mat-label> Số trace</mat-label>
-            <input matInput />
+            <input matInput [(ngModel)]="transactionInfo.traceNo" />
           </mat-form-field>
         </div>
       </div>
-      <div fxFlex="10%" fxLayout="row wrap" class="content">
+      <!-- <div fxFlex="10%" fxLayout="row wrap" class="content">
         <div fxFlex="100%"></div>
         <div fxFlex="100%">
           <section align="center">
             <mat-checkbox name="checkUseCM">Áp dụng C/M</mat-checkbox>
           </section>
         </div>
-      </div>
+      </div> -->
     </div>
     <div fxLayoutAlign="center center" fxFlex="100%"  >
-      <button mat-raised-button color="primary" [routerLink]="['/system', 'roles-and-permissions']">
+      <button (click)="this.submitTransaction()" mat-raised-button color="primary" >
         <fa-icon icon="check"></fa-icon>&nbsp;&nbsp;
         Hoàn tất giao dịch
       </button>
-      <button mat-raised-button color="primary" (click)="changeUserPassword()">
+      <!-- <button mat-raised-button color="primary">
         <fa-icon icon="check"></fa-icon>&nbsp;&nbsp;
         Khởi tạo giao dịch
-      </button>
+      </button> -->
     </div>
   </mat-card>
 </div>
