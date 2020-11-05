@@ -54,7 +54,8 @@ export class ManageGroupMembersComponent implements AfterViewInit {
   ngAfterViewInit() {
     this.clientChoice.valueChanges.subscribe( (value: string) => {
       if (value.length >= 2) {
-        this.clientsService.getFilteredClients('displayName', 'ASC', true, value, this.groupData.officeId)
+        //this.clientsService.getFilteredClients('displayName', 'ASC', true, value, this.groupData.officeId)
+        this.clientsService.getFilteredClients('displayName', 'ASC', true, value,'')
           .subscribe((data: any) => {
             this.clientsData = data.pageItems;
           });
