@@ -15,3 +15,27 @@
 // 3rd party libraries
 $fa-font-path: "../node_modules/font-awesome/fonts";
 @import "../node_modules/font-awesome/scss/font-awesome.scss";
+
+.snackBarSuccess{
+    color: #fff;
+    font-weight: 500;
+    background-color: #4caf50;
+}
+
+.snackBarInfo{
+    color: #fff;
+    font-weight: 500;
+    background-color: #2196f3;
+}
+
+.snackBarWarning{
+    color: #fff;
+    font-weight: 500;
+    background-color: #ff9800;
+}
+
+.snackBarDanger{
+    color: #fff;
+    font-weight: 500;
+    background-color: #f44336;
+}

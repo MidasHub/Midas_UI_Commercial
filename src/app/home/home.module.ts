@@ -14,6 +14,8 @@ import { AmountCollectedPieComponent } from './dashboard/amount-collected-pie/am
 import { AmountDisbursedPieComponent } from './dashboard/amount-disbursed-pie/amount-disbursed-pie.component';
 import { ClientTrendsBarComponent } from './dashboard/client-trends-bar/client-trends-bar.component';
 import { RolltermListComponent } from './rollterm-list/rollterm-list.component';
+import { OndueCardComponent } from './ondue-card/ondue-card.component';
+import { MainboardComponent } from './mainboard/mainboard.component';
 
 /**
  * Home Component
@@ -32,7 +34,9 @@ import { RolltermListComponent } from './rollterm-list/rollterm-list.component';
     AmountCollectedPieComponent,
     AmountDisbursedPieComponent,
     ClientTrendsBarComponent,
-    RolltermListComponent
+    RolltermListComponent,
+    OndueCardComponent,
+    MainboardComponent
   ],
   providers: [
     DatePipe
