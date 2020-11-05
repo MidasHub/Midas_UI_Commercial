@@ -18,6 +18,7 @@ export class AddIdentitiesComponent implements OnInit {
   documentCardTypes: any[];
   currentUser: any;
   isTeller = true;
+  existBin = false;
 
   constructor(private formBuilder: FormBuilder,
               @Inject(MAT_DIALOG_DATA) public data: any,
@@ -38,8 +39,7 @@ export class AddIdentitiesComponent implements OnInit {
     });
     this.form = this.formBuilder.group({
       'documentTypeId': [''],
-      'documentCardBank': [''],
-      'status': [''],
+      'status': ['Active'],
       'documentKey': [''],
       'description': ['']
     });
@@ -57,11 +57,11 @@ export class AddIdentitiesComponent implements OnInit {
     this.form.get('documentTypeId').valueChanges.subscribe((value: any) => {
       console.log(value);
       const type = this.documentTypes.find(v => v.id === value);
-      if (type && type.name.indexOf('CC') !== -1) {
+      if (type && ((type.name.indexOf('CC') !== -1 && type.name !== 'CCCD') || type.name === 'Credit Card')) {
         this.form.addControl('documentCardBank', new FormControl());
         this.form.addControl('documentCardType', new FormControl());
-        this.form.addControl('dueDay', new FormControl());
-        this.form.addControl('expiredDate', new FormControl());
+        this.form.addControl('dueDay', new FormControl('', [Validators.max(31), Validators.min(0)]));
+        this.form.addControl('expiredDate', new FormControl(''));
       } else {
         this.form.removeControl('documentCardBank');
         this.form.removeControl('documentCardType');
@@ -73,14 +73,16 @@ export class AddIdentitiesComponent implements OnInit {
       if (value.length === 16) {
         const typeDocument = this.form.get('documentTypeId').value;
         const type = this.documentTypes.find(v => v.id === typeDocument);
-        if (type && type.name.indexOf('CC') !== -1 && type.name.indexOf('CCC') === -1) {
+        if (type && ((type.name.indexOf('CC') !== -1 && type.name !== 'CCCD') || type.name === 'Credit Card')) {
           this.bankService.getInfoBinCode(value).subscribe((res: any) => {
             if (res.status === '200') {
               const {bankCode, cardType} = res?.result?.bankBinCode;
               if (res?.result?.existBin) {
+                this.existBin = res?.result?.existBin;
                 this.form.get('documentCardBank').setValue(bankCode);
                 this.form.get('documentCardType').setValue(cardType);
               } else {
+                this.existBin = false;
                 alert('Đầu thẻ chưa tồn tại trong hệ thống, vui lòng chọn ngân hàng bên cạnh!');
               }
             }

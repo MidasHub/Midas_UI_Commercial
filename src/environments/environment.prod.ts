@@ -19,12 +19,11 @@ export const environment = {
   defaultLanguage: 'vi-VN',
   supportedLanguages: [
     'en-US',
-    //'fr-FR',
     'vi-VN'
   ],
-  languagesName:{
-   en:"English",
-   vi:"Vietnamese",
+  languagesName: {
+    en: 'English',
+    vi: 'Vietnamese',
   }
 };
 

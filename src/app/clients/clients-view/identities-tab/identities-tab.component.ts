@@ -16,6 +16,7 @@ import {FormDialogComponent} from 'app/shared/form-dialog/form-dialog.component'
 import {AddIdentitiesComponent} from './add-identities/add-identities.component';
 /** Custom Services */
 import {ClientsService} from '../../clients.service';
+import {BankService} from '../../../services/bank.service';
 
 /**
  * Identities Tab Component
@@ -47,7 +48,8 @@ export class IdentitiesTabComponent {
    */
   constructor(private route: ActivatedRoute,
               public dialog: MatDialog,
-              private clientService: ClientsService) {
+              private clientService: ClientsService,
+              private bankService: BankService,) {
     this.clientId = this.route.parent.snapshot.paramMap.get('clientId');
     this.route.data.subscribe((data: { clientIdentities: any, clientIdentifierTemplate: any }) => {
       this.clientIdentities = data.clientIdentities;
@@ -119,18 +121,57 @@ export class IdentitiesTabComponent {
     dialogConfig.minWidth = 400;
     const addIdentifierDialogRef = this.dialog.open(AddIdentitiesComponent, dialogConfig);
     addIdentifierDialogRef.afterClosed().subscribe((response: any) => {
+      console.log(response);
       if (response.data) {
-        this.clientService.addClientIdentifier(this.clientId, response.data.value).subscribe((res: any) => {
-          this.clientIdentities.push({
-            id: res.resourceId,
-            description: response.data.value.description,
-            documentType: this.clientIdentifierTemplate.allowedDocumentTypes.filter((doc: any) => (doc.id === response.data.value.documentTypeId))[0],
-            documentKey: response.data.value.documentKey,
-            documents: [],
-            clientId: this.clientId,
-            status: (response.data.value.status === 'Active' ? 'clientIdentifierStatusType.active' : 'clientIdentifierStatusType.inactive')
-          });
-          this.identifiersTable.renderRows();
+        let {description} = response.data.value;
+        const {documentCardBank, documentCardType, documentKey, documentTypeId, dueDay, expiredDate, status} = response.data.value;
+        const documentTypes = response.documentTypes;
+        const document = documentTypes.find((v: any) => v.id === documentTypeId);
+        if (document && ((document.name.indexOf('CC') !== -1 && document.name !== 'CCCD') || document.name === 'Credit Card')) {
+          if (!response.existBin) {
+            // this.bankService.storeInfoBinCode({
+            //   cardType: documentCardType,
+            //   bankCode: documentCardBank,
+            //   binCode: documentKey
+            // });
+          }
+          description = `${documentCardBank}-${documentCardType}-${description}`;
+        }
+        this.clientService.addClientIdentifier(this.clientId, {
+          documentKey,
+          documentTypeId,
+          status,
+          description
+        }).subscribe((res: any) => {
+          const call_return = () => {
+            this.clientIdentities.push({
+              id: res.resourceId,
+              description: response.data.value.description,
+              documentType: this.clientIdentifierTemplate.allowedDocumentTypes.filter((doc: any) => (doc.id === response.data.value.documentTypeId))[0],
+              documentKey: response.data.value.documentKey,
+              documents: [],
+              clientId: this.clientId,
+              status: (response.data.value.status === 'Active' ? 'clientIdentifierStatusType.active' : 'clientIdentifierStatusType.inactive')
+            });
+            this.identifiersTable.renderRows();
+          };
+          if (document && ((document.name.indexOf('CC') !== -1 && document.name !== 'CCCD') || document.name === 'Credit Card')) {
+            this.clientService.getClientData(this.clientId).subscribe((client: any) => {
+              this.bankService.storeExtraCardInfo({
+                'userId': this.clientId,
+                'userIdentifyId': res.resourceId,
+                'clientName': client.displayName,
+                'cardNumber': `${documentKey.slice(0, 6)}-XXX-XXX-${documentKey.slice(12, 16)}`,
+                'mobileNo': client.mobileNo,
+                'dueDay': dueDay,
+                'expireDate': expiredDate,
+              }).subscribe((res2: any) => {
+                return call_return();
+              });
+            });
+          } else {
+            return call_return();
+          }
         });
       }
     });
