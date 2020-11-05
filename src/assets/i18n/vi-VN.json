@@ -252,7 +252,9 @@
         "inputDocumentCardBank": "Mã nhận diện",
         "inputStatus": "Trạng thái",
         "inputDescription": "Mô tả",
-        "inputUniqueId": "Id"
+        "inputUniqueId": "Mã nhận dạng",
+        "selectBank": "Chọn ngân hàng",
+        "selectCardType": "Chọn loại thẻ"
       }
     },
     "Breadcrumb": {
@@ -420,6 +422,6 @@
       "labelSelectedClients":"Chọn thành viên",
       "btnCancel":"Hủy",
       "btnSubmit":"Hoàn tất"
-    } 
+    }
   }
 }

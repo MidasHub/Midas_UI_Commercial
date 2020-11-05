@@ -256,7 +256,9 @@
         "inputDocumentCardBank": "Document Card Bank",
         "inputStatus": "Status",
         "inputDescription": "Description",
-        "inputUniqueId": "Unique Id"
+        "inputUniqueId": "Unique Id",
+        "selectBank": "Select bank",
+        "selectCardType": "Select card type"
       }
     }
   },

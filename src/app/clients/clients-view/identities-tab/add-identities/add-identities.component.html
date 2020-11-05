@@ -11,22 +11,36 @@
   </mat-form-field>
 
   <mat-form-field fxFlex="96%">
-    <mat-label>{{'Client_Component.ViewClient.TabIdentities.inputDocumentCardBank' |translate}}</mat-label>
-    <input matInput formControlName="documentTypeId">
+    <mat-label>{{'Client_Component.ViewClient.TabIdentities.inputUniqueId' |translate}}</mat-label>
+    <input matInput formControlName="documentKey">
   </mat-form-field>
 
-  <mat-form-field fxFlex="96%">
-    <mat-label>{{'Client_Component.ViewClient.TabIdentities.inputStatus' |translate}}</mat-label>
-    <mat-select formControlName="status">
-      <mat-option *ngFor="let sa of statusOptions" [value]="sa.value">
-        {{ sa.value }}
+  <mat-form-field fxFlex="96%" *ngIf="form.contains('documentCardBank')">
+    <mat-label>{{'Client_Component.ViewClient.TabIdentities.selectBank' |translate}}</mat-label>
+    <mat-select [disabled]="isTeller" formControlName="documentCardBank">
+      <mat-option *ngFor="let sa of documentCardBanks" [value]="sa.bankCode">
+        {{ sa.bankName }}
       </mat-option>
     </mat-select>
   </mat-form-field>
 
-  <mat-form-field fxFlex="96%">
-    <mat-label>{{'Client_Component.ViewClient.TabIdentities.inputUniqueId' |translate}}</mat-label>
-    <input matInput formControlName="documentKey">
+  <mat-form-field *ngIf="form.contains('documentCardType')" fxFlex="96%">
+    <mat-label>{{'Client_Component.ViewClient.TabIdentities.selectCardType' |translate}}</mat-label>
+    <mat-select [disabled]="isTeller" formControlName="documentCardType" >
+      <mat-option *ngFor="let sa of documentCardTypes" [value]="sa.code">
+        {{ sa.description }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field *ngIf="form.contains('dueDay')"  fxFlex="48%">
+    <mat-label>Ngày đáo hạn thẻ:</mat-label>
+    <input matInput  type="number" [max]="31" [min]="0" formControlName="dueDay">
+  </mat-form-field>
+
+  <mat-form-field *ngIf="form.contains('expiredDate')"  fxFlex="48%">
+    <mat-label>Ngày hết hạn thẻ:</mat-label>
+    <input matInput formControlName="expiredDate">
   </mat-form-field>
 
   <mat-form-field fxFlex="96%">

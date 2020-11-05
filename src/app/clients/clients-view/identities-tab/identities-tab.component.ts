@@ -116,8 +116,7 @@ export class IdentitiesTabComponent {
       title: 'Add Client Identifier',
       clientIdentifierTemplate: this.clientIdentifierTemplate
     };
-    console.log(dialogConfig);
-    // console.log(formfields);
+    dialogConfig.minWidth = 400;
     const addIdentifierDialogRef = this.dialog.open(AddIdentitiesComponent, dialogConfig);
     addIdentifierDialogRef.afterClosed().subscribe((response: any) => {
       if (response.data) {
