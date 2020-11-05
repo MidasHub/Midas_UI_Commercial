@@ -64,6 +64,6 @@ export class BankService {
       .set('expireDate', body.expireDate)
       .set('createdBy', this.accessToken.userId)
       .set('accessToken', this.accessToken.base64EncodedAuthenticationKey);
-    return this.http.post(`${this.GatewayApiUrlPrefix}/common/store_extra_card_info`, httpParams);
+    return this.http.post(`${this.GatewayApiUrlPrefix}/card/store_extra_card_info`, httpParams);
   }
 }
