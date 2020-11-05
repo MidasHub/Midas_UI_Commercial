@@ -44,16 +44,7 @@ const routes: Routes = [
         offices: OfficesResolver
       }
     },
-    {
-      path: 'create',
-      data: { title: extract('Create Client'), breadcrumb: 'Create Client', routeParamBreadcrumb: false },
-      component: CreateClientComponent,
-      resolve: {
-        clientAddressFieldConfig: ClientAddressFieldConfigurationResolver,
-        clientTemplate: ClientTemplateResolver,
-        clientIdentifierTemplate: ClientIdentifierTemplateResolver,
-      }
-    },
+
   ])
 ];
 

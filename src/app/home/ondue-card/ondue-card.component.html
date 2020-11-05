@@ -1,0 +1,17 @@
+<mat-card fxLayout="column" class="m-b-20">
+    <mat-card-header fxLayout="column" fxLayoutAlign="center none">
+      <mat-card-title class="title text-center ">
+
+        <h1>25 {{'Home_Component.lblCards'| translate}}</h1>
+        <span> {{'Home_Component.lblOnDueCard'| translate}}</span>
+
+      </mat-card-title>
+
+    </mat-card-header>
+
+    <button mat-raised-button color="primary" (click)="onClickAlert()" >
+        <i class="fas fa-book-reader"></i>&nbsp;&nbsp;
+        {{'Home_Component.btnViewOnDueCard'| translate}}
+      </button>
+
+  </mat-card>

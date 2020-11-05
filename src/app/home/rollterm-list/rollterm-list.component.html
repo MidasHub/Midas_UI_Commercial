@@ -1,39 +1,54 @@
 
+<mat-card fxLayout="column" class="m-b-20" >
+    <mat-card-header  fxLayoutAlign="center none">
+      <mat-card-title class="title text-center ">
 
-        <mat-accordion>
-            <mat-expansion-panel>
-                <mat-expansion-panel-header>
-                    <mat-panel-title>
-                        Xem chi tiết
-                    </mat-panel-title>
-                    <mat-panel-description>
-                        Cần thực hiện đáo hạn
-                    </mat-panel-description>
-                </mat-expansion-panel-header>
-                <div *ngFor="let item of data;" >
-                    <mat-expansion-panel >
-                        <mat-expansion-panel-header>
-                            <mat-panel-title>
-                                {{item.cardNO}}
-                            </mat-panel-title>
-                            <mat-panel-description>
-                                12.000.000đ
-                            </mat-panel-description>
-                        </mat-expansion-panel-header>
-                        <p fxLayoutAlign="space-around "><span fxFlex="60">Số tiền đáo hạn: (a)</span><span fxFlex="40"
-                                class="text-right">50.000.000đ</span></p>
-                        <p fxLayoutAlign="space-around "><span fxFlex="60">Đã chi qua bank: (b)</span><span fxFlex="40"
-                                class="text-right">38.000.000đ</span></p>
-                        <p fxLayoutAlign="space-around "><span fxFlex="60">Còn phải chi thêm: <br />(c) = (a) -
-                                (b)</span><span fxFlex="40" class="text-right">12.000.000đ</span></p>
-                        <p fxLayoutAlign="space-around "><span fxFlex="60">Đã thu hồi: (d)</span><span fxFlex="40"
-                                class="text-right">38.000.000đ</span></p>
-                        <p fxLayoutAlign="space-around "><span fxFlex="60">Cần thu hồi: <br />(e) = (b)-(d)</span><span
-                                fxFlex="40" class="text-right">0đ</span></p>
-                    </mat-expansion-panel>
-                </div>
-                
+        <h1>5</h1>
+        <span> {{'Home_Component.labelIncompleteRollterm'| translate}}</span>
 
-            </mat-expansion-panel>
+      </mat-card-title>
 
-        </mat-accordion>
+    </mat-card-header>
+
+    <mat-card-content >
+      
+      <mat-accordion>
+        <mat-expansion-panel>
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    Xem chi tiết
+                </mat-panel-title>
+                <mat-panel-description>
+                    Cần thực hiện đáo hạn
+                </mat-panel-description>
+            </mat-expansion-panel-header>
+            <div *ngFor="let item of data;" >
+                <mat-expansion-panel >
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            {{item.cardNO}}
+                        </mat-panel-title>
+                        <mat-panel-description>
+                            12.000.000đ
+                        </mat-panel-description>
+                    </mat-expansion-panel-header>
+                    <p fxLayoutAlign="space-around "><span fxFlex="60">Số tiền đáo hạn: (a)</span><span fxFlex="40"
+                            class="text-right">50.000.000đ</span></p>
+                    <p fxLayoutAlign="space-around "><span fxFlex="60">Đã chi qua bank: (b)</span><span fxFlex="40"
+                            class="text-right">38.000.000đ</span></p>
+                    <p fxLayoutAlign="space-around "><span fxFlex="60">Còn phải chi thêm: <br />(c) = (a) -
+                            (b)</span><span fxFlex="40" class="text-right">12.000.000đ</span></p>
+                    <p fxLayoutAlign="space-around "><span fxFlex="60">Đã thu hồi: (d)</span><span fxFlex="40"
+                            class="text-right">38.000.000đ</span></p>
+                    <p fxLayoutAlign="space-around "><span fxFlex="60">Cần thu hồi: <br />(e) = (b)-(d)</span><span
+                            fxFlex="40" class="text-right">0đ</span></p>
+                </mat-expansion-panel>
+            </div>
+            
+
+        </mat-expansion-panel>
+
+    </mat-accordion>
+    </mat-card-content>
+
+  </mat-card>

@@ -273,7 +273,10 @@
     "btnNewGroup": "Tạo mới đại lý",
     "Breadcrumb": {
       "labelHome": "Trang chủ"
-    }
+    },
+    "lblOnDueCard": "Sẽ đến hạn trong vòng 15 ngày tới",
+    "lblCards": "Thẻ",
+    "btnViewOnDueCard": "Xem chi tiết"
   },
   "Login_Component": {
     "APP_SLOGAN": "Phần mềm quản lý hiệu quả",
@@ -387,39 +390,40 @@
     }
   },
   "Group_Component": {
-    "placeholderSearchByName":"Tìm theo tên Đại lý",
-    "labelShowClosedGroups":"Hiển thị Đại lý đã đóng",
-    "btnBulkImport":"Tải lên danh sách Đại lý",
-    "btnCreate":"Tạo Đại lý",
-    "tableColName":"Tên",
-    "tableColAccountNo":"Số tài khoản",
-    "tableColExternalId":"Mã định danh",
-    "tableColStatus":"Trạng thái",
-    "tableColOfficeName":"Tên chi nhánh",
-    "Create_Group_Component":{
-      "labelName":"Tên",
-      "labelGroupNameMsgRequired":"<strong>Yêu cầu:</strong>nhập tên Đại lý",
-      "labelGroupNameMsgPattern":"Tên Đại lý <strong>KHÔNG</strong> bắt đầu bằng ký tự đặc biệt(!@#$%^&*()_+=<>,.?]*) hoặc số",
-      "labelOffice":"Chi Nhánh",
-      "labelGroupOfficeMsgRequired":"<strong>Yêu cầu:</strong> chọn Chi nhánh",
-      "labelStaff":"Nhân viên",
-      "labelType":"Loại Đại lý",
-      "CheckboxActive":"Kích hoạt",
-      "tableColCartType":"Loại thẻ",
-      "tableColFeeWithDraw":"Phí rút",
-      "tableColFeeRollTerm":"Phí đáo hạn",
-      "labelActivationDate":"Ngày kích hoạt",
-      "labelGroupActivationDateMsgRequired":"<strong>Yêu cầu:</strong> Chọn ngày kích hoạt",
-      "labelExternal":"Mã định danh Đại lý",
-      "labelSubmittedOn":"Ngày tạo",
-      "labelGroupSubmittedOnMsgRequired":"<strong>Yêu cầu:</strong> chọn ngày tạo",
-      "labelAddClients":"Thêm thành viên",
-      "tableColName":"Tên",
-      "tableColId":"Mã định danh thành viên",
-      "tableColOfficeName":"Tên chi nhánh",
-      "labelSelectedClients":"Chọn thành viên",
-      "btnCancel":"Hủy",
-      "btnSubmit":"Hoàn tất"
-    } 
+    "placeholderSearchByName": "Tìm theo tên Đại lý",
+    "labelShowClosedGroups": "Hiển thị Đại lý đã đóng",
+    "btnBulkImport": "Tải lên danh sách Đại lý",
+    "btnCreate": "Tạo Đại lý",
+    "tableColName": "Tên",
+    "tableColAccountNo": "Số tài khoản",
+    "tableColExternalId": "Mã định danh",
+    "tableColStatus": "Trạng thái",
+    "tableColOfficeName": "Tên chi nhánh",
+    "Create_Group_Component": {
+      "labelName": "Tên",
+      "labelGroupNameMsgRequired": "<strong>Yêu cầu:</strong>nhập tên Đại lý",
+      "labelGroupNameMsgPattern": "Tên Đại lý <strong>KHÔNG</strong> bắt đầu bằng ký tự đặc biệt(!@#$%^&*()_+=<>,.?]*) hoặc số",
+      "labelOffice": "Chi Nhánh",
+      "labelGroupOfficeMsgRequired": "<strong>Yêu cầu:</strong> chọn Chi nhánh",
+      "labelStaff": "Nhân viên",
+      "labelType": "Loại Đại lý",
+      "CheckboxActive": "Kích hoạt",
+      "tableColCartType": "Loại thẻ",
+      "tableColFeeWithDraw": "Phí rút",
+      "tableColFeeRollTerm": "Phí đáo hạn",
+      "labelActivationDate": "Ngày kích hoạt",
+      "labelGroupActivationDateMsgRequired": "<strong>Yêu cầu:</strong> Chọn ngày kích hoạt",
+      "labelExternal": "Mã định danh Đại lý",
+      "labelSubmittedOn": "Ngày tạo",
+      "labelGroupSubmittedOnMsgRequired": "<strong>Yêu cầu:</strong> chọn ngày tạo",
+      "labelAddClients": "Thêm thành viên",
+      "tableColName": "Tên",
+      "tableColId": "Mã định danh thành viên",
+      "tableColOfficeName": "Tên chi nhánh",
+      "labelSelectedClients": "Chọn thành viên",
+      "btnCancel": "Hủy",
+      "btnSubmit": "Hoàn tất",
+      "msgCreatedGroup": "Đã tạo thành công Đại lý"
+    }
   }
 }

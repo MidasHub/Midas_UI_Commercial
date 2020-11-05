@@ -9,7 +9,7 @@
   "description": "MIDAS Web App is the default web application built on top of the Fineract platform and Angular framework.",
   "icons": [
     {
-      "src": "assets/images/Midas_logo.png",
+      "src": "assets/images/Midas-Logo-01.png",
       "sizes": "182x184",
       "type": "image/png"
     }

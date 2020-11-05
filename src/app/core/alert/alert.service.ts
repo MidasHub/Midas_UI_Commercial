@@ -1,5 +1,6 @@
 /** Angular Imports */
 import { Injectable, EventEmitter } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 /** Custom Model */
 import { Alert } from './alert.model';
@@ -18,7 +19,7 @@ export class AlertService {
   /**
    * Initializes alert event.
    */
-  constructor() {
+  constructor(private snackBar: MatSnackBar) {
     this.alertEvent = new EventEmitter();
   }
 
@@ -28,6 +29,16 @@ export class AlertService {
    */
   alert(alertEvent: Alert) {
     this.alertEvent.emit(alertEvent);
+  }
+
+  alertMsg(alertMsg: string, lblClose?:'Đóng',extraClass?:string){
+    this.snackBar.open(alertMsg, lblClose, {
+      duration: 3000,
+      horizontalPosition: 'center',
+      verticalPosition: 'bottom',
+      panelClass:[extraClass],
+      
+    });
   }
 
 }
