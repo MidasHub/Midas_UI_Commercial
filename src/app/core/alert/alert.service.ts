@@ -1,9 +1,9 @@
 /** Angular Imports */
-import { Injectable, EventEmitter } from '@angular/core';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import {Injectable, EventEmitter} from '@angular/core';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 /** Custom Model */
-import { Alert } from './alert.model';
+import {Alert} from './alert.model';
 
 /**
  * Alert service.
@@ -31,13 +31,13 @@ export class AlertService {
     this.alertEvent.emit(alertEvent);
   }
 
-  alertMsg(alertMsg: string, lblClose?:'Đóng',extraClass?:string){
+  alertMsg(alertMsg: string, lblClose: string = 'Đóng', extraClass?: string) {
     this.snackBar.open(alertMsg, lblClose, {
       duration: 3000,
       horizontalPosition: 'center',
       verticalPosition: 'bottom',
-      panelClass:[extraClass],
-      
+      panelClass: [extraClass],
+
     });
   }
 
