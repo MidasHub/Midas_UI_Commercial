@@ -30,7 +30,9 @@
           <div fxFlex="30%">
             <mat-form-field appearance="fill">
               <mat-label>Chọn loại giao dịch </mat-label>
-              <select matNativeControl [(ngModel)] = "transactionInfo.productId">
+              <select matNativeControl
+              [(ngModel)] = "transactionInfo.productId"
+              (change) = "this.calculateFeeTransaction()">
                 <option value="CA01">RTM thông thường</option>
                 <option value="TEST">Test thẻ</option>
                 <option value="CA02">Lô lẻ</option>
@@ -60,7 +62,7 @@
               <input
               class="center"
               matInput [(ngModel)]="transactionInfo.rate"
-              (change)="this.calculateFeeTransaction()"
+              (change)="this.onchangeRateAndCheckValidRate()"
               />
             </mat-form-field>
           </div>
@@ -106,6 +108,16 @@
             <div style="color: red; font-weight: bold" fxFlex="40%">Thu/chi bằng cách cấn trừ</div>
             <div fxFlex="20%">{{formatCurrency(transactionInfo.txnAmountAfterFee)}}</div>
             <div fxFlex="20%"></div>
+          </div>
+          <div fxFlex="100%" fxLayout="row wrap" class="content m-l-20" *ngIf="transactionInfo.transactionId" >
+            <button (click)="this.downloadVoucherTransaction()" mat-raised-button color="primary" >
+              <fa-icon icon="download"></fa-icon>&nbsp;&nbsp;
+              Tải hóa đơn
+            </button>
+            <!-- <button (click)="this.uploadPic()" mat-raised-button color="primary" >
+              <fa-icon icon="check"></fa-icon>&nbsp;&nbsp;
+              Hoàn tất giao dịch
+            </button> -->
           </div>
         </div>
       </div>

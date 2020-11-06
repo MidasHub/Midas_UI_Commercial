@@ -16,6 +16,7 @@ export class TransactionService {
   private credentialsStorageKey = 'mifosXCredentials';
   private accessToken: any;
   private GatewayApiUrlPrefix: any;
+  private environment: any;
   /**
    * @param {HttpClient} http Http Client to send requests.
    */
@@ -26,6 +27,7 @@ export class TransactionService {
       || localStorage.getItem(this.credentialsStorageKey)
     );
     this.GatewayApiUrlPrefix = environment.GatewayApiUrlPrefix ;
+    this.environment = environment ;
    }
 
    submitTransaction(
@@ -111,8 +113,8 @@ export class TransactionService {
     .set('identifyId', identifierId)
     .set('clientId', clientId)
     .set('officeId', this.accessToken.officeId)
-      .set('createdBy', this.accessToken.userId)
-      .set('accessToken', this.accessToken.base64EncodedAuthenticationKey);
+    .set('createdBy', this.accessToken.userId)
+    .set('accessToken', this.accessToken.base64EncodedAuthenticationKey);
 
     return this.http.post<any>(`${this.GatewayApiUrlPrefix}/transaction/get_retail_transaction_template`, httpParams);
   }
@@ -123,5 +125,28 @@ export class TransactionService {
     value = value.replace(/[^0-9]+/g, "");
     if(neg) value = '-'.concat(value);
     return parseInt(value);
-}
+  }
+
+  downloadVoucher(transactionId: string){
+    var url = `${this.environment.GatewayApiUrl}${this.GatewayApiUrlPrefix}/export/download_voucher?id=${transactionId}&accessToken=${this.accessToken.base64EncodedAuthenticationKey}&createdBy=${this.accessToken.userId}`;
+    var xhr = new XMLHttpRequest();
+    xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function () {
+        var a;
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            a = document.createElement('a');
+            a.href = window.URL.createObjectURL(xhr.response);
+            a.download = `V_${transactionId}`;
+            a.style.display = 'none';
+            document.body.appendChild(a);
+            a.click();
+        }
+    };
+
+    xhr.open("GET", url);
+    xhr.setRequestHeader('Gateway-TenantId', this.environment.GatewayTenantId);
+    xhr.responseType = 'blob';
+    xhr.send();
+
+  }
 }

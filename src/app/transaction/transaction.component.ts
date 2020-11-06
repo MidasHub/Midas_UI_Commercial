@@ -51,9 +51,11 @@ export class TransactionComponent implements OnInit {
      this.transactionInfo.type = 'cash';
      this.transactionInfo.clientId = '148';
      this.transactionInfo.identifierId = '249';
+     this.transactionInfo.isDone = false;
      this.transactionInfo.accountCash = data.result.listAccAccount[0].documentKey;
      });
   }
+
   clearInfoTransaction(){
     this.transactionInfo.listTerminal = [];
     this.transactionInfo.txnAmount = "";
@@ -108,6 +110,27 @@ export class TransactionComponent implements OnInit {
       this.transactionInfo.terminalId
        )
        .subscribe((data: any) =>{
+        if (data.status != 200) {
+
+          if (data.statusCode == 401) {
+              if (data.error == 'Unauthorize with Midas') {
+                this.alertService.alertMsg( "Phiên làm việc hết hạn vui lòng đăng nhập lại để tiếp tục" , null ,'snackBarDanger');
+              }
+          }
+
+          if (data.statusCode == 666) {
+              if (typeof data.error !== 'undefined' && data.error !== "") {
+
+                this.alertService.alertMsg(`Chú Ý: Giao dịch không vượt hạn mức : ${this.formatCurrency(data.error)} VNĐ` , null ,'snackBarDanger');
+              }
+          } else {
+            this.alertService.alertMsg(`Lỗi xảy ra : Vui lòng liên hệ ITSupport. ERROR: ${data}` , null ,'snackBarDanger');
+          }
+          return;
+      }
+      if (typeof data.result.caution !== 'undefined' && data.result.caution !== "NaN") {
+        this.alertService.alertMsg(data.result.caution, null,  'snackBarDanger');
+      }
       this.transactionInfo.invoiceMapping = data.result;
       this.transactionInfo.txnAmount = this.formatCurrency(data.result.amountTransaction);
       this.transactionInfo.terminalAmount = this.formatCurrency(data.result.amountTransaction);
@@ -115,24 +138,42 @@ export class TransactionComponent implements OnInit {
     });
   }
 
-  getFeeByTerminal(){
+  onchangeRateAndCheckValidRate (){
+    if (this.transactionInfo.rate == null || String(this.transactionInfo.rate).length == 0) {
+      return;
+    }
+
+  if (parseFloat(this.transactionInfo.rate) < parseFloat(this.terminalFee.minRate) ||
+       parseFloat(this.transactionInfo.rate) > parseFloat(this.terminalFee.maxRate)) {
+        this.transactionInfo.rate = this.terminalFee.maxRate;
+        this.calculateFeeTransaction();
+        this.alertService.alertMsg(`Tỉ lệ phí không được thấp hơn ${this.terminalFee.maxRate} và cao hơn ${this.terminalFee.minRate} !`, null ,'snackBarDanger' );
+      } else {
+
+        this.calculateFeeTransaction();
+  }
+  }
+
+  getFeeByTerminal(): any{
     this.transactionService.getFeeByTerminal(this.transactionInfo.identifyClientDto.accountTypeId, this.transactionInfo.terminalId).subscribe((data: any) =>{
       this.terminalFee = data.result.feeTerminalDto;
+      this.onchangeRateAndCheckValidRate();
       // call mapping bill for this transaction
       this.mappingBillForTransaction();
 
     });
   }
 
+  downloadVoucherTransaction(){
+    this.transactionService.downloadVoucher(this.transactionInfo.transactionId);
+  }
+
   submitTransaction(){
     this.transactionService.submitTransaction(this.transactionInfo).subscribe((data: any) =>{
       this.transactionInfo.transactionId = data.result.id;
       this.transactionInfo.transactionRefNo = data.result.tranRefNo;
-      if (this.transactionInfo.type != "rollTerm") {
-        // $("#downloadVoucher").css("display", "inline");
-        // $("#uploadBill").css("display", "inline");
-      }
-      this.alertService.alert({ type: 'Create Transaction Success', message: `Tạo giao dịch ${this.transactionInfo.transactionRefNo} thành công!` });
+      this.transactionInfo.isDone = true;
+      this.alertService.alertMsg(`Tạo giao dịch ${this.transactionInfo.transactionRefNo} thành công!`, null, 'snackBarSuccess');
       this.transactionInfo.requestAmount = "";
       this.transactionInfo.batchNo = "";
       this.transactionInfo.traceNo = "";
