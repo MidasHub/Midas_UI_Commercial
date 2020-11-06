@@ -49,7 +49,7 @@
     "core-js": "2.5.0",
     "lodash": "4.17.19",
     "ngx-currency": "^2.5.1",
-    "ngx-mask": "^10.0.4",
+    "ngx-mask": "9.1.4",
     "ngx-mat-select-search": "^3.1.2",
     "rxjs": "6.6.2",
     "tslib": "1.10.0",

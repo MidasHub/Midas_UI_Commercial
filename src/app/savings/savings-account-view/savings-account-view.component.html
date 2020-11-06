@@ -40,7 +40,7 @@
     <mat-card-actions class="account-actions">
 
       <ng-container *ngFor="let button of buttonConfig?.singleButtons">
-        <button mat-raised-button *mifosxHasPermission="button.taskPermissionName" (click)="doAction(button.action)">
+        <button mat-raised-button *midasHasPermission="button.taskPermissionName" (click)="doAction(button.action)">
           <i class="{{button.icon}}"></i> {{button.name | translate}}</button>
       </ng-container>
 
@@ -49,7 +49,7 @@
                 [matMenuTriggerFor]="More">{{ 'Saving_Account_Component.ViewSavingAccount.buttonMore'| translate}}</button>
         <mat-menu #More="matMenu">
         <span *ngFor="let option of buttonConfig.options">
-          <button mat-menu-item *mifosxHasPermission="option.taskPermissionName"
+          <button mat-menu-item *midasHasPermission="option.taskPermissionName"
                   (click)="doAction(option.action)">{{option.name | translate}}</button>
         </span>
         </mat-menu>
@@ -171,7 +171,7 @@
 <!--          </tr>-->
 <!--          <tr *ngIf="savingsAccountData.onHoldFunds">-->
 <!--            <td>On Hold Funds</td>-->
-<!--            <td><a *mifosxHasPermission="'READ_SAVINGSACCOUNT'">{{savingsAccountData.onHoldFunds}}</a></td>-->
+<!--            <td><a *midasHasPermission="'READ_SAVINGSACCOUNT'">{{savingsAccountData.onHoldFunds}}</a></td>-->
 <!--          </tr>-->
 <!--          <tr *ngIf="savingsAccountData.withHoldTax">-->
 <!--            <td>Withhold Tax Group</td>-->
@@ -285,14 +285,14 @@
       <!--      [active]="charges.isActive">-->
       <!--        Charges-->
       <!--      </a>-->
-      <!--      <ng-container *mifosxHasPermission="'READ_SAVINGSACCOUNTCHARGE'">-->
+      <!--      <ng-container *midasHasPermission="'READ_SAVINGSACCOUNTCHARGE'">-->
       <!--        <a mat-tab-link [routerLink]="['./standing-instructions']" routerLinkActive #standingInstructions="routerLinkActive"-->
       <!--          [active]="standingInstructions.isActive" *ngIf="savingsAccountData.clientId">-->
       <!--          Standing Instructions-->
       <!--        </a>-->
       <!--      </ng-container>-->
       <ng-container *ngFor="let savingsDatatable of savingsDatatables">
-        <a mat-tab-link *mifosxHasPermission="'READ_' + savingsDatatable.registeredTableName"
+        <a mat-tab-link *midasHasPermission="'READ_' + savingsDatatable.registeredTableName"
            [routerLink]="['./datatables',savingsDatatable.registeredTableName]"
            routerLinkActive #datatable="routerLinkActive" [active]="datatable.isActive">
           {{savingsDatatable.registeredTableName}}

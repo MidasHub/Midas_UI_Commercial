@@ -8,17 +8,17 @@
 
     <div fxLayout="column" fxFlex="50%">
       <div fxLayout="row" fxLayoutAlign="flex-end">
-        <span *mifosxHasPermission="'CREATE_' + datatableName">
+        <span *midasHasPermission="'CREATE_' + datatableName">
           <button mat-raised-button color="primary" (click)="add()" *ngIf="!dataObject.data[0]">
             <fa-icon icon="plus"></fa-icon>&nbsp;&nbsp;Add
           </button>
         </span>
-        <span *mifosxHasPermission="'UPDATE_' + datatableName">
+        <span *midasHasPermission="'UPDATE_' + datatableName">
           <button mat-raised-button color="primary" (click)="edit()" *ngIf="dataObject.data[0]">
             <fa-icon icon="edit"></fa-icon>&nbsp;&nbsp;Edit
           </button>
         </span>
-        <span *mifosxHasPermission="'DELETE_' + datatableName" class="delete-button">
+        <span *midasHasPermission="'DELETE_' + datatableName" class="delete-button">
           <button mat-raised-button color="warn" (click)="delete()" *ngIf="dataObject.data[0]">
             <fa-icon icon="trash"></fa-icon>&nbsp;&nbsp;Delete
           </button>

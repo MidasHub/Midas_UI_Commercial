@@ -3,31 +3,31 @@
   <div fxLayout="row" fxLayoutGap="1%" fxLayoutAlign="flex-end" class="action-buttons m-b-20">
 
     <span *ngIf="smsCampaignData.campaignStatus.value !== 'active'">
-      <button mat-raised-button color="primary" *mifosxHasPermission="'UPDATE_SMSCAMPAIGN'" [routerLink]="['edit']">
+      <button mat-raised-button color="primary" *midasHasPermission="'UPDATE_SMSCAMPAIGN'" [routerLink]="['edit']">
         <fa-icon icon="edit"></fa-icon>&nbsp;&nbsp;Edit
       </button>
     </span>
 
     <span *ngIf="smsCampaignData.campaignStatus.value === 'Pending'">
-      <button mat-raised-button color="accent" *mifosxHasPermission="'ACTIVATE_SMSCAMPAIGN'" (click)="activateCampaign()">
+      <button mat-raised-button color="accent" *midasHasPermission="'ACTIVATE_SMSCAMPAIGN'" (click)="activateCampaign()">
         <fa-icon icon="lock-open"></fa-icon>&nbsp;&nbsp;Activate
       </button>
     </span>
 
     <span *ngIf="smsCampaignData.campaignStatus.value !== 'closed'">
-      <button mat-raised-button color="warn" *mifosxHasPermission="'CLOSE_SMSCAMPAIGN'" (click)="closeCampaign()">
+      <button mat-raised-button color="warn" *midasHasPermission="'CLOSE_SMSCAMPAIGN'" (click)="closeCampaign()">
         <fa-icon icon="times"></fa-icon>&nbsp;&nbsp;Close
       </button>
     </span>
 
     <span *ngIf="smsCampaignData.campaignStatus.value !== 'Pending' && smsCampaignData.campaignStatus.value !== 'active'">
-      <button mat-raised-button color="accent" *mifosxHasPermission="'REACTIVATE_SMSCAMPAIGN'" (click)="reactivateCampaign()">
+      <button mat-raised-button color="accent" *midasHasPermission="'REACTIVATE_SMSCAMPAIGN'" (click)="reactivateCampaign()">
         <fa-icon icon="undo"></fa-icon>&nbsp;&nbsp;Reactivate
       </button>
     </span>
 
     <span *ngIf="smsCampaignData.campaignStatus.value === 'closed'">
-      <button mat-raised-button color="warn" *mifosxHasPermission="'DELETE_SMSCAMPAIGN'" (click)="deleteCampaign()">
+      <button mat-raised-button color="warn" *midasHasPermission="'DELETE_SMSCAMPAIGN'" (click)="deleteCampaign()">
         <fa-icon icon="trash"></fa-icon>&nbsp;&nbsp;Delete
       </button>
     </span>

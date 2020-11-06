@@ -7079,12 +7079,12 @@ ngx-currency@^2.5.1:
   dependencies:
     tslib "^2.0.0"
 
-ngx-mask@^10.0.4:
-  version "10.0.4"
-  resolved "https://registry.yarnpkg.com/ngx-mask/-/ngx-mask-10.0.4.tgz#47592d52eefaa874582015eaf1bb6615ce09ce4f"
-  integrity sha512-CooFh9lhbDdsYBOdMNhg3yiWxiW9FbXysXeU/uJSgbVUwKv8VrUuvif5umzc4DrHco2l/rMfheOv0rxSe1IxFQ==
+ngx-mask@9.1.4:
+  version "9.1.4"
+  resolved "https://registry.yarnpkg.com/ngx-mask/-/ngx-mask-9.1.4.tgz#51367a5011bb16404f9bc1b2818895ef25fb4a5f"
+  integrity sha512-CaegSUqdH6ajSapKD55uBLo6cRroMYNrCFk7rQCVRv8XPNLHsddG1CBV/9MWFrWOdnQ5eSBZ6zJQG+eimKzifw==
   dependencies:
-    tslib "^2.0.0"
+    tslib "^1.10.0"
 
 ngx-mat-select-search@^3.1.2:
   version "3.1.2"
