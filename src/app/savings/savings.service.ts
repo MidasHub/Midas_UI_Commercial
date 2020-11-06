@@ -94,6 +94,20 @@ export class SavingsService {
       .set('accessToken', this.accessToken.base64EncodedAuthenticationKey);
     return this.http.post<any>(`${this.GatewayApiUrlPrefix}/savingTransaction/deposit_partner_advance_cash_transaction`, httpParams);
   }
+  getSearchTransactionCustom(payload: any) {
+    const httpParams = new HttpParams()
+      .set('fromDate', payload.fromDate)
+      .set('toDate', payload.toDate)
+      .set('accountId', payload.accountId)
+      .set('note', payload.note)
+      .set('txnCode', payload.txnCode)
+      .set('paymentDetail', payload.paymentDetail)
+
+      .set('createdBy', this.accessToken.userId)
+      .set('accessToken', this.accessToken.base64EncodedAuthenticationKey);
+    return this.http.post<any>(`${this.GatewayApiUrlPrefix}/savingTransaction/get_list_transaction_detail_of_account`, httpParams);
+
+  }
   /**
    * @param {string} chargeId Charge ID of charge.
    * @returns {Observable<any>} Charge.
