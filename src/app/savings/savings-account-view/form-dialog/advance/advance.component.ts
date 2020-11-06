@@ -1,8 +1,11 @@
-import {Component, Inject, OnInit} from '@angular/core';
+import {Component, Inject, OnInit, ViewChild} from '@angular/core';
 import {ClientsService} from '../../../../clients/clients.service';
 import {FormBuilder, FormControl, FormGroup} from '@angular/forms';
 import {MAT_DIALOG_DATA} from '@angular/material/dialog';
-import {ReplaySubject} from 'rxjs';
+import {Observable, ReplaySubject, Subject} from 'rxjs';
+import {map, startWith, switchMap, take, takeUntil} from 'rxjs/operators';
+import {MatSelect} from '@angular/material/select';
+import {ClientsDataSource} from '../../../../clients/clients.datasource';
 
 @Component({
   // tslint:disable-next-line:component-selector
@@ -11,12 +14,15 @@ import {ReplaySubject} from 'rxjs';
   styleUrls: ['./advance.component.scss']
 })
 export class AdvanceComponent implements OnInit {
+  currentUser: any;
+
   constructor(private serviceClient: ClientsService,
               @Inject(MAT_DIALOG_DATA) public data: any,
               private formBuilder: FormBuilder) {
+    this.currentUser = data.currentUser;
+    console.log(this.currentUser)
   }
 
-  clients: any;
   typeAdvanceCashes: any[] = [{
     id: '19',
     value: 'Ứng tiền phí'
@@ -30,9 +36,8 @@ export class AdvanceComponent implements OnInit {
       value: 'Chi hộ'
     }];
   form: FormGroup;
-  public clientCtrl: FormControl = new FormControl();
-  public clientFilterCtrl: FormControl = new FormControl();
-  public filteredBanks: ReplaySubject<any[]> = new ReplaySubject<any[]>(1);
+  clients: any;
+  filteredClient: any[];
 
   ngOnInit(): void {
     this.form = this.formBuilder.group({
@@ -41,28 +46,30 @@ export class AdvanceComponent implements OnInit {
       'amountAdvance': [''],
       'noteAdvance': ['']
     });
-    this.serviceClient.getClients('', '', 0, 20).subscribe((da: any) => {
-      console.log(da);
-      this.clients = da.pageItems;
+    this.serviceClient.getClients('', '', 0, -1).subscribe((cl: any) => {
+      this.clients = cl.pageItems?.filter((v: any) => v?.accountNo?.startsWith('C') && v?.staffId ===  this.currentUser?.staffId );
+      this.filteredClient = this.filterClient(null).slice(0, 30);
+      this.client.valueChanges.subscribe(value => {
+        this.filteredClient = this.filterClient(value).slice(0, 30);
+      });
     });
   }
 
-  protected filterClients() {
-    if (!this.clients) {
-      return;
-    }
-    // get the search keyword
-    let search = this.clientFilterCtrl.value;
-    console.log({search})
-    if (!search) {
-      this.filteredBanks.next(this.clients.slice());
-      return;
+  get client() {
+    return this.form.get('clientAdvanceCash');
+  }
+
+  displayFn(client?: any): string | undefined {
+    return client ? client.displayName : undefined;
+  }
+
+  private filterClient(value: string | any) {
+    let filterValue = '';
+    if (value) {
+      filterValue = typeof value === 'string' ? value.toLowerCase() : value.displayName.toLowerCase();
+      return this.clients.filter((client: any) => client.displayName.toLowerCase().includes(filterValue));
     } else {
-      search = search.toLowerCase();
+      return this.clients;
     }
-    // filter the banks
-    this.filteredBanks.next(
-      this.clients.filter((cl: any) => cl.name.toLowerCase().indexOf(search) > -1)
-    );
   }
 }

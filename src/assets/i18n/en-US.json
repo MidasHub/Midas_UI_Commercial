@@ -439,14 +439,45 @@
       "buttonTransferFunds": "Transfer Funds",
       "buttonWithdraw": "Withdraw",
       "buttonDeposit": "Deposit",
-      "buttonMore": "More"
+      "buttonMore": "More",
+      "labelTotalDeposits": "Total Deposits",
+      "labelTotalWithdrawls": "Total Withdrawls",
+      "labelPerformanceHistory": "Performance History",
+      "labelInterestEarnedNotPosted": "Interest Earned Not Posted",
+      "labelNominalInterestRate": "Nominal Interest Rate",
+      "labelInterestCompoundingPeriod": "Interest Compounding Period",
+      "labelInterestPostingPeriod": "Interest Posting Period",
+      "labelInterestCalculatedUsing": "Interest Calculated Using",
+      "labelDaysinYear": "Days in Year",
+      "labelLastActiveTransactionDate": "Last Active Transaction Date",
+      "labelSavingsDetails": "Savings Details",
+      "labelActivatedOn": "Activated On",
+      "labelFieldOfficer": "Field Officer",
+      "labelExternalId": "External Id",
+      "labelCurrency": "Currency"
     },
     "Breadcrumb": {
       "labelTransactions": "Transactions",
       "labelSavingsAccountTransactions": "Savings Account Transactions"
     },
     "tabTransactions": {
-      "labelBalance": "Balance"
+      "labelBalance": "Balance",
+      "labelTransactionDateFrom": "Transaction Date From",
+      "labelTransactionDateTo": "Transaction Date To"
+    },
+    "clientAdvanceCash": {
+      "titleClientAdvanceCash": "Advance Cash",
+      "labelClientCash": "Client",
+      "labelTypes": "Type",
+      "labelAmountAdvance": "Amount Advance",
+      "labelNoteAdvance": "Note"
+    },
+    "PartnerAdvanceCash": {
+      "partnerTitle": "Advance Cash",
+      "labelTypes": "Ty",
+      "labelAmountAdvance": "Amount",
+      "labelOfficeReciver": "Office",
+      "labelAccountReciver": "Account"
     }
   }
 }

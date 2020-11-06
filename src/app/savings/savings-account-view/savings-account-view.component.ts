@@ -1,7 +1,7 @@
 /** Angular Imports */
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {MatDialog} from '@angular/material/dialog';
+import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
 
 /** Custom Dialogs */
 import {DeleteDialogComponent} from 'app/shared/delete-dialog/delete-dialog.component';
@@ -19,6 +19,8 @@ import {FormfieldBase} from '../../shared/form-dialog/formfield/model/formfield-
 import {SelectBase} from '../../shared/form-dialog/formfield/model/select-base';
 import {ClientsService} from '../../clients/clients.service';
 import {AdvanceComponent} from './form-dialog/advance/advance.component';
+import {PartnerAdvanceCashComponent} from './form-dialog/partner-advance-cash/partner-advance-cash.component';
+import {AlertService} from '../../core/alert/alert.service';
 
 /**
  * Savings Account View Component
@@ -57,7 +59,8 @@ export class SavingsAccountViewComponent implements OnInit {
               public dialog: MatDialog,
               private authenticationService: AuthenticationService,
               private i18n: I18nService,
-              private productsService: ProductsService) {
+              private productsService: ProductsService,
+              private alertService: AlertService) {
     this.route.data.subscribe((data: { savingsAccountData: any, savingsDatatables: any }) => {
       this.savingsAccountData = data.savingsAccountData;
       this.savingsDatatables = data.savingsDatatables;
@@ -77,20 +80,20 @@ export class SavingsAccountViewComponent implements OnInit {
     const {roles} = this.currentUser;
     const {savingsProductId} = this.savingsAccountData;
     this.productsService.getSavingProduct(savingsProductId).subscribe((data: any) => {
-      console.log(data);
+      // console.log(data);
       this.savingProduct = data;
       if (['CCA0', 'ACA0'].indexOf(this.savingProduct.shortName) === -1) {
         this.buttonConfig.addButton({
           name: 'Quản lý vốn đối tác',
-          icon: 'fa fa-arrow-right',
+          icon: 'fa fa-handshake-o',
           taskPermissionName: 'POSTINTEREST_SAVINGSACCOUNT',
-          action: 'Post Interest As On'
+          action: 'advanceCashPartnerTransaction'
         });
       }
       if (['FCA0', 'SCA0'].indexOf(this.savingProduct.shortName) === -1) {
         this.buttonConfig.addButton({
           name: 'Công nợ khách hàng',
-          icon: 'fa fa-arrow-right',
+          icon: 'fa fa-recycle',
           taskPermissionName: 'POSTINTEREST_SAVINGSACCOUNT',
           action: 'advanceCash'
         });
@@ -105,12 +108,53 @@ export class SavingsAccountViewComponent implements OnInit {
   }
 
   advanceCash() {
-    const data = {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.data = {
       title: 'Ứng tiền cho khách hàng',
+      currentUser: this.currentUser
     };
-    const refDialog = this.dialog.open(AdvanceComponent, {data});
+    dialogConfig.minWidth = 400;
+    const refDialog = this.dialog.open(AdvanceComponent, dialogConfig);
     refDialog.afterClosed().subscribe((response: any) => {
       console.log(response);
+      const {clientAdvanceCash, noteAdvance, amountAdvance, typeAdvanceCash} = response?.data?.value;
+      const {savingsAccountId} = clientAdvanceCash;
+      this.savingsService.advanceCashTransaction({
+        buSavingAccount: this.savingProduct.id,
+        clientSavingAccount: savingsAccountId,
+        noteAdvance: noteAdvance,
+        amountAdvanceCash: amountAdvance,
+        typeAdvanceCash: typeAdvanceCash
+      }).subscribe((result: any) => {
+        console.log(result);
+        const message = `Ứng tiền thành công cho khách hàng: ${clientAdvanceCash.displayName} với số tiền ${String(amountAdvance).replace(/\\B(?=(\\d{3})+(?!\\d))/g, ',') + ' đ'}`;
+        this.alertService.alertMsgTop({alertMsg: message});
+      });
+    });
+  }
+
+  advanceCashPartnerTransaction() {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.data = {
+      title: 'Điều chuyển tiền từ đối tác',
+      currentUser: this.currentUser
+    };
+    dialogConfig.minWidth = 500;
+    const refDialog = this.dialog.open(PartnerAdvanceCashComponent, dialogConfig);
+    refDialog.afterClosed().subscribe((response: any) => {
+      console.log(response);
+      const {partnerPaymentType, partnerAdvanceCash, partnerClientVaultAdvanceCash, amountPartnerAdvance, notePartnerAdvance} = response?.data?.value;
+      this.savingsService.advanceCashPartnerTransaction({
+        buSavingAccount: this.savingProduct.id,
+        paymentTypeId: partnerPaymentType,
+        amountAdvanceCash: amountPartnerAdvance,
+        notePartnerAdvance: notePartnerAdvance,
+        partnerAdvanceCash: partnerAdvanceCash?.code,
+        partnerClientVaultAdvanceCash: partnerClientVaultAdvanceCash
+      }).subscribe(res => {
+        const message = `Điều chuyển tiền từ đối tác: ${partnerAdvanceCash.desc} với số tiền ${String(amountPartnerAdvance).replace(/\\B(?=(\\d{3})+(?!\\d))/g, ',') + ' đ'}`;
+        this.alertService.alertMsgTop({alertMsg: message});
+      });
     });
   }
 
@@ -196,6 +240,9 @@ export class SavingsAccountViewComponent implements OnInit {
       case 'Withdraw By Client':
       case 'Apply Annual Fees':
         this.router.navigate([`actions/${name}`], {relativeTo: this.route});
+        break;
+      case 'advanceCashPartnerTransaction':
+        this.advanceCashPartnerTransaction();
         break;
       case 'Withdraw':
         this.router.navigate([`actions/Withdrawal`], {relativeTo: this.route});

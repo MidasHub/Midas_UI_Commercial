@@ -439,14 +439,45 @@
       "buttonTransferFunds": "Chuyển tiền quỹ",
       "buttonWithdraw": "Rút tiền",
       "buttonDeposit": "Chuyển tiền mặt",
-      "buttonMore": "Khác"
+      "buttonMore": "Khác",
+      "labelTotalDeposits": "Tổng số tiền gửi",
+      "labelTotalWithdrawls": "Tổng số tiền rút",
+      "labelPerformanceHistory": "Lịch sử hiệu suất",
+      "labelInterestEarnedNotPosted": "Lãi xuất dự chi",
+      "labelNominalInterestRate": "Lãi suất danh nghĩa",
+      "labelInterestCompoundingPeriod": "Thời gian tính lãi nhập gốc",
+      "labelInterestPostingPeriod": "Giai đoạn nhập gốc lãi xuất",
+      "labelInterestCalculatedUsing": "Tính lãi sử dụng",
+      "labelDaysinYear": "Ngày trong năm",
+      "labelLastActiveTransactionDate": "Ngày giao dịch cuối",
+      "labelSavingsDetails": "Chi tiết tài khoản thanh toán",
+      "labelActivatedOn": "Ngày kích hoạt",
+      "labelFieldOfficer": "Nhân viên phụ trách",
+      "labelExternalId": "External Id",
+      "labelCurrency": "Loại tiền"
     },
     "Breadcrumb": {
       "labelTransactions": "Giao dịch",
       "labelSavingsAccountTransactions": "Giao dịch tài khoản tiết kiệm"
     },
     "tabTransactions": {
-      "labelBalance": "Số dư"
+      "labelBalance": "Số dư",
+      "labelTransactionDateFrom": "Giao dịch từ ngày",
+      "labelTransactionDateTo": "Đến ngày"
+    },
+    "clientAdvanceCash": {
+      "titleClientAdvanceCash": "Ứng tiền cho khác",
+      "labelClientCash": "Khách hàng ứng tiền",
+      "labelTypes": "Loại",
+      "labelAmountAdvance": "Số tiền ứng",
+      "labelNoteAdvance": "Ghi chú"
+    },
+    "PartnerAdvanceCash": {
+      "partnerTitle": "Điều chuyển tiền từ đối tác",
+      "labelTypes": "Loại",
+      "labelAmountAdvance": "Số tiền",
+      "labelOfficeReciver": "Chi nhánh",
+      "labelAccountReciver": "Tài khoản nhận"
     }
   }
 }
