@@ -37,8 +37,15 @@ export class AlertService {
       horizontalPosition: 'center',
       verticalPosition: 'bottom',
       panelClass: [extraClass],
-
     });
   }
 
+  alertMsgTop(payload: { alertMsg: string, extraClass?: string }) {
+    this.snackBar.open(payload.alertMsg, 'Đóng', {
+      duration: 3000,
+      horizontalPosition: 'center',
+      verticalPosition: 'top',
+      panelClass: [payload.extraClass],
+    });
+  }
 }

@@ -439,7 +439,10 @@
       "buttonTransferFunds": "Transfer Funds",
       "buttonWithdraw": "Withdraw",
       "buttonDeposit": "Deposit",
-      "buttonMore": "More"
+      "buttonMore": "More",
+      "labelTotalDeposits": "Total Deposits",
+      "labelTotalWithdrawls": "Total Withdrawls",
+      "labelPerformanceHistory": "Performance History"
     },
     "Breadcrumb": {
       "labelTransactions": "Transactions",
@@ -447,6 +450,20 @@
     },
     "tabTransactions": {
       "labelBalance": "Balance"
+    },
+    "clientAdvanceCash": {
+      "titleClientAdvanceCash": "Advance Cash",
+      "labelClientCash": "Client",
+      "labelTypes": "Type",
+      "labelAmountAdvance": "Amount Advance",
+      "labelNoteAdvance": "Note"
+    },
+    "PartnerAdvanceCash": {
+      "partnerTitle": "Advance Cash",
+      "labelTypes": "Ty",
+      "labelAmountAdvance": "Amount",
+      "labelOfficeReciver": "Office",
+      "labelAccountReciver": "Account"
     }
   }
 }

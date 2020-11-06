@@ -49,6 +49,7 @@ import {ApplyAnnualFeesSavingsAccountComponent} from './saving-account-actions/a
 import {ClientsModule} from '../clients/clients.module';
 import {TranslatePipe} from '@ngx-translate/core';
 import { AdvanceComponent } from './savings-account-view/form-dialog/advance/advance.component';
+import { PartnerAdvanceCashComponent } from './savings-account-view/form-dialog/partner-advance-cash/partner-advance-cash.component';
 
 
 /**
@@ -103,7 +104,8 @@ import { AdvanceComponent } from './savings-account-view/form-dialog/advance/adv
     ExportTransactionsComponent,
     EditTransactionComponent,
     ApplyAnnualFeesSavingsAccountComponent,
-    AdvanceComponent
+    AdvanceComponent,
+    PartnerAdvanceCashComponent
   ],
   providers: [DatePipe]
 })

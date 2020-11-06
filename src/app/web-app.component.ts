@@ -1,30 +1,30 @@
 /** Angular Imports */
-import { Component, OnInit, HostListener } from '@angular/core';
-import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
-import { Title } from '@angular/platform-browser';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import {Component, OnInit, HostListener} from '@angular/core';
+import {Router, NavigationEnd, ActivatedRoute} from '@angular/router';
+import {Title} from '@angular/platform-browser';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 /** rxjs Imports */
-import { merge } from 'rxjs';
-import { filter, map, mergeMap } from 'rxjs/operators';
+import {merge} from 'rxjs';
+import {filter, map, mergeMap} from 'rxjs/operators';
 
 /** Translation Imports */
-import { TranslateService } from '@ngx-translate/core';
+import {TranslateService} from '@ngx-translate/core';
 
 /** Environment Configuration */
-import { environment } from 'environments/environment';
+import {environment} from 'environments/environment';
 
 /** Custom Services */
-import { Logger } from './core/logger/logger.service';
-import { I18nService } from './core/i18n/i18n.service';
-import { ThemeStorageService } from './shared/theme-picker/theme-storage.service';
-import { AlertService } from './core/alert/alert.service';
-import { AuthenticationService } from './core/authentication/authentication.service';
-import { SettingsService } from './settings/settings.service';
+import {Logger} from './core/logger/logger.service';
+import {I18nService} from './core/i18n/i18n.service';
+import {ThemeStorageService} from './shared/theme-picker/theme-storage.service';
+import {AlertService} from './core/alert/alert.service';
+import {AuthenticationService} from './core/authentication/authentication.service';
+import {SettingsService} from './settings/settings.service';
 
 /** Custom Items */
-import { Alert } from './core/alert/alert.model';
-import { KeyboardShortcutsConfiguration } from './keyboards-shortcut-config';
+import {Alert} from './core/alert/alert.model';
+import {KeyboardShortcutsConfiguration} from './keyboards-shortcut-config';
 
 /** Initialize Logger */
 const log = new Logger('MifosX');
@@ -33,6 +33,7 @@ const log = new Logger('MifosX');
  * Main web app component.
  */
 @Component({
+  // tslint:disable-next-line:component-selector
   selector: 'midas-web-app',
   templateUrl: './web-app.component.html',
   styleUrls: ['./web-app.component.scss']
@@ -61,7 +62,8 @@ export class WebAppComponent implements OnInit {
               public snackBar: MatSnackBar,
               private alertService: AlertService,
               private settingsService: SettingsService,
-              private authenticationService: AuthenticationService) { }
+              private authenticationService: AuthenticationService) {
+  }
 
   /**
    * Initial Setup:
@@ -138,8 +140,8 @@ export class WebAppComponent implements OnInit {
 
     // initialize language and date format if they are null.
     if (!localStorage.getItem('midasLanguageCode')) {
-      let langCode = environment.defaultLanguage.split('-')[0];
-      console.log('[WEB-APP]LangCode:',langCode,' - name:',environment.languagesName[langCode]);
+      const langCode = environment.defaultLanguage.split('-')[0];
+      console.log('[WEB-APP]LangCode:', langCode, ' - name:', environment.languagesName[langCode]);
 
       this.settingsService.setLanguage({
         name: environment.languagesName[langCode],
@@ -147,19 +149,19 @@ export class WebAppComponent implements OnInit {
       });
     }
     if (!localStorage.getItem('midasDateFormat')) {
-      //this.settingsService.setDateFormat('dd MMMM yyyy');
+      // this.settingsService.setDateFormat('dd MMMM yyyy');
       this.settingsService.setDateFormat('dd/MM/yyyy');
     }
   }
 
   logout() {
     this.authenticationService.logout()
-      .subscribe(() => this.router.navigate(['/login'], { replaceUrl: true }));
+      .subscribe(() => this.router.navigate(['/login'], {replaceUrl: true}));
   }
 
   help() {
-    window.open('https://drive.google.com/drive/folders/1-J4JQyaaxBz2QSfZMzC4bPrPwWlksFWw?usp=sharing','_blank')
-    //window.open('https://mifosforge.jira.com/wiki/spaces/docs/pages/52035622/User+Manual', '_blank');
+    window.open('https://drive.google.com/drive/folders/1-J4JQyaaxBz2QSfZMzC4bPrPwWlksFWw?usp=sharing', '_blank');
+    // window.open('https://mifosforge.jira.com/wiki/spaces/docs/pages/52035622/User+Manual', '_blank');
   }
 
   // Monitor all keyboard events and excute keyboard shortcuts
@@ -196,7 +198,7 @@ export class WebAppComponent implements OnInit {
           }
           break;
         default:
-          this.router.navigate([routeD.route], { relativeTo: this.activatedRoute });
+          this.router.navigate([routeD.route], {relativeTo: this.activatedRoute});
       }
     }
   }

@@ -61,11 +61,6 @@ import { CreateSelfServiceUserComponent } from './clients-view/client-actions/cr
 import {ReactiveFormsModule} from '@angular/forms';
 import {MoneyPipe} from '../pipes/money.pipe';
 import { AddIdentitiesComponent } from './clients-view/identities-tab/add-identities/add-identities.component';
-import { NgxMaskModule, IConfig } from 'ngx-mask'
-
-const maskConfig: Partial<IConfig> = {
-  validation: false,
-};
 
 /**
  * Clients Module
@@ -79,7 +74,6 @@ const maskConfig: Partial<IConfig> = {
     PipesModule,
     DirectivesModule,
     ReactiveFormsModule,
-    NgxMaskModule.forRoot(maskConfig),
   ],
   declarations: [
     ClientsComponent,

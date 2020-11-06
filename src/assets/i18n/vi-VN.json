@@ -439,7 +439,10 @@
       "buttonTransferFunds": "Chuyển tiền quỹ",
       "buttonWithdraw": "Rút tiền",
       "buttonDeposit": "Chuyển tiền mặt",
-      "buttonMore": "Khác"
+      "buttonMore": "Khác",
+      "labelTotalDeposits": "Tổng số tiền gửi",
+      "labelTotalWithdrawls": "Tổng số tiền rút",
+      "labelPerformanceHistory": "Lịch sử hiệu suất"
     },
     "Breadcrumb": {
       "labelTransactions": "Giao dịch",
@@ -447,6 +450,20 @@
     },
     "tabTransactions": {
       "labelBalance": "Số dư"
+    },
+    "clientAdvanceCash": {
+      "titleClientAdvanceCash": "Ứng tiền cho khác",
+      "labelClientCash": "Khách hàng ứng tiền",
+      "labelTypes": "Loại",
+      "labelAmountAdvance": "Số tiền ứng",
+      "labelNoteAdvance": "Ghi chú"
+    },
+    "PartnerAdvanceCash": {
+      "partnerTitle": "Điều chuyển tiền từ đối tác",
+      "labelTypes": "Loại",
+      "labelAmountAdvance": "Số tiền",
+      "labelOfficeReciver": "Chi nhánh",
+      "labelAccountReciver": "Tài khoản nhận"
     }
   }
 }
