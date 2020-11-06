@@ -53,7 +53,7 @@ export class CreateClientComponent {
     private clientsService: ClientsService,
     private settingsService: SettingsService,
     private snackbar: MatSnackBar,
-    private i18n: I18nService,) {
+    private i18n: I18nService) {
     this.route.data.subscribe((data: { clientTemplate: any, clientAddressFieldConfig: any, clientIdentifierTemplate: any, currentUser: any }) => {
       this.clientTemplate = data.clientTemplate;
       this.clientAddressFieldConfig = data.clientAddressFieldConfig;
@@ -62,7 +62,7 @@ export class CreateClientComponent {
 
     this.route.queryParams.subscribe(params => {
       console.log(params); // { order: "popular" }
-      let { go_back } = params;
+      const { go_back } = params;
       if (go_back) {
         this.go_back = go_back;
       }

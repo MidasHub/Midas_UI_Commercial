@@ -34,9 +34,9 @@ export class ClientsDataSource implements DataSource<any> {
    */
   getClients(orderBy: string = '', sortOrder: string = '', pageIndex: number = 0, limit: number = 10, clientActive: boolean = true) {
     this.clientsSubject.next([]);
-    this.clientsService.getClients(orderBy, sortOrder, pageIndex * limit, pageIndex === 0 ? limit + 8 : limit)
+    this.clientsService.getClients(orderBy, sortOrder, pageIndex * limit, limit)
       .subscribe((clients: any) => {
-        clients.pageItems = (clientActive) ? (clients.pageItems.filter((client: any) => client.active)) : (clients.pageItems.filter((client: any) => !client.active));
+        // clients.pageItems = (clientActive) ? (clients.pageItems.filter((client: any) => client.active)) : (clients.pageItems.filter((client: any) => !client.active));
         this.recordsSubject.next(clients.totalFilteredRecords);
         this.clientsSubject.next(clients.pageItems);
       });

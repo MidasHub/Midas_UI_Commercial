@@ -60,7 +60,7 @@ const routes: Routes = [
             children: [
               {
                 path: 'transactions',
-                data: { title: extract('Savings Account Transactions'), breadcrumb: 'Transactions', routeParamBreadcrumb: false },
+                data: { title: extract('Saving_Account_Component.Breadcrumb.labelSavingsAccountTransactions'), breadcrumb: 'Saving_Account_Component.Breadcrumb.labelTransactions', routeParamBreadcrumb: false },
                 children: [
                   {
                     path: '',

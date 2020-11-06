@@ -1,0 +1,54 @@
+<h1 mat-dialog-title>Ứng tiền cho khách</h1>
+
+<div mat-dialog-content [formGroup]="form" [fxLayout]="'column'" fxLayout.lt-md="column" [fxLayoutGap]="'1%'"
+     fxLayoutGap.lt-md="0%">
+  <mat-form-field fxFlex="96%">
+    <mat-label>{{'Client_Component.ViewClient.TabIdentities.selectDocumentType' |translate}}</mat-label>
+    <mat-select formControlName="clientAdvanceCash">
+      <mat-option *ngFor="let client of clients" [value]="client.id">
+        {{ client.name }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-select [formControl]="clientCtrl" placeholder="Chọn " #singleSelect>
+      <mat-option>
+        <ngx-mat-select-search [formControl]="clientFilterCtrl"></ngx-mat-select-search>
+      </mat-option>
+      <mat-option *ngFor="let client of clients | async" [value]="client">
+        {{client.name}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field fxFlex="96%" *ngIf="form.contains('documentCardBank')">
+    <mat-label>{{'Client_Component.ViewClient.TabIdentities.selectBank' |translate}}</mat-label>
+    <mat-select formControlName="typeAdvanceCash">
+      <mat-option *ngFor="let type of typeAdvanceCashes" [value]="type.id">
+        {{ type.value }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field fxFlex="96%">
+    <mat-label>{{'Client_Component.ViewClient.TabIdentities.inputUniqueId' |translate}}</mat-label>
+    <input matInput formControlName="amountAdvance">
+  </mat-form-field>
+
+
+
+  <mat-form-field *ngIf="form.contains('dueDay')" fxFlex="48%">
+    <mat-label>Ngày đáo hạn thẻ:</mat-label>
+    <input type="text" aria-multiline="true" matInput formControlName="noteAdvance">
+  </mat-form-field>
+
+
+</div>
+
+<mat-dialog-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="2%">
+  <button mat-raised-button mat-dialog-close>{{ 'Shared_Component.FormDialog.btnCancel' | translate }}</button>
+  <button mat-raised-button color="primary"
+          [mat-dialog-close]="{ data: form  }"
+          [disabled]="!form.valid || form.pristine">{{ 'Shared_Component.FormDialog.btnAdd' |translate }}</button>
+</mat-dialog-actions>

@@ -43,13 +43,7 @@ export function homeHttpLoaderFactory(http: HttpClient) {
     IconsModule,
     MaterialModule,
     ReactiveFormsModule,
-    TranslateModule.forChild({ //Jean
-      loader: {
-        provide: TranslateLoader,
-        useFactory: homeHttpLoaderFactory,
-        deps: [HttpClient]
-      }
-    })
+    TranslateModule,
   ],
   declarations: [
     FormfieldComponent,
@@ -82,7 +76,7 @@ export function homeHttpLoaderFactory(http: HttpClient) {
     MaterialModule,
     FormsModule,
     ReactiveFormsModule,
-    TranslateModule //Jean
+    TranslateModule,
   ]
 })
 export class SharedModule { }

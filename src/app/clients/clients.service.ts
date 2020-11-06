@@ -29,7 +29,7 @@ export class ClientsService {
    }
 
   getClientTest(officeId: number , amount: number): Observable<any> {
-    let httpParams = new HttpParams()
+    const httpParams = new HttpParams()
       .set('id', officeId.toString())
       .set('amountTransaction', amount.toString())
       .set('createdBy', this.accessToken.userId)
