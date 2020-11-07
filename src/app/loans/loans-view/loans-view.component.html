@@ -41,7 +41,7 @@
 	<mat-card-actions class="loan-actions">
 
 	  <ng-container *ngFor="let item of buttonConfig.singleButtons" class="loan-span">
-		<button mat-raised-button *mifosxHasPermission="item.taskPermissionName" (click)="loanAction(item.name)">
+		<button mat-raised-button *midasHasPermission="item.taskPermissionName" (click)="loanAction(item.name)">
 		  <i class="{{item.icon}}"></i> {{item.name}} </button>
 	  </ng-container>
 
@@ -49,7 +49,7 @@
 		<button mat-raised-button [matMenuTriggerFor]="More">More</button>
 		  <mat-menu #More="matMenu">
 			<span *ngFor="let item of buttonConfig.options">
-			  <button mat-menu-item *mifosxHasPermission="item.taskPermissionName" (click)="loanAction(item.name)">{{item.name}}</button>
+			  <button mat-menu-item *midasHasPermission="item.taskPermissionName" (click)="loanAction(item.name)">{{item.name}}</button>
 			</span>
 		  </mat-menu>
 	  </ng-container>
@@ -108,7 +108,7 @@
 		<a mat-tab-link [routerLink]="['./loan-documents']" routerLinkActive #loanDocuments="routerLinkActive" [active]="loanDocuments.isActive">
 			Loan Documents
 		</a>
-	  <a mat-tab-link *mifosxHasPermission="'READ_LOANNOTE'" [routerLink]="['./notes']" routerLinkActive #notes="routerLinkActive" [active]="notes.isActive">
+	  <a mat-tab-link *midasHasPermission="'READ_LOANNOTE'" [routerLink]="['./notes']" routerLinkActive #notes="routerLinkActive" [active]="notes.isActive">
 		Notes
 	  </a>
 	<ng-container *ngIf="loanDetailsData.clientId">
@@ -118,7 +118,7 @@
 		</a>
 	</ng-container>
 	  <ng-container *ngFor="let loanDatatable of loanDatatables">
-        <a mat-tab-link *mifosxHasPermission="'READ_' + loanDatatable.registeredTableName" [routerLink]="['./datatables',loanDatatable.registeredTableName]"
+        <a mat-tab-link *midasHasPermission="'READ_' + loanDatatable.registeredTableName" [routerLink]="['./datatables',loanDatatable.registeredTableName]"
           routerLinkActive #datatable="routerLinkActive" [active]="datatable.isActive">
           {{loanDatatable.registeredTableName}}
         </a>

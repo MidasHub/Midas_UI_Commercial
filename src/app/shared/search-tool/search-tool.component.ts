@@ -4,6 +4,10 @@ import { style, animate, transition, trigger } from '@angular/animations';
 import { Router } from '@angular/router';
 import { FormControl } from '@angular/forms';
 
+
+/** Custome service */
+import {I18nService} from '../../core/i18n/i18n.service'
+
 /**
  * Search Tool Component
  */
@@ -35,27 +39,27 @@ export class SearchToolComponent {
   /** Resource Options */
   resourceOptions: any[] = [
     {
-      name: 'All',
+      name: this.i18nService.getTranslate('Toolbar_Component.lblAll'),
       value: 'clients,clientIdentifiers,groups,savings,shares,loans'
     },
     {
-      name: 'Clients',
+      name: this.i18nService.getTranslate('Toolbar_Component.lblClient'),
       value: 'clients,clientIdentifiers'
     },
     {
-      name: 'Groups',
+      name: this.i18nService.getTranslate('Toolbar_Component.lblGroup'),
       value: 'groups'
     },
     {
-      name: 'Savings',
+      name: this.i18nService.getTranslate('Toolbar_Component.lblSaving'),
       value: 'savings'
     },
     {
-      name: 'Shares',
+      name: this.i18nService.getTranslate('Toolbar_Component.lblShare'),
       value: 'shares'
     },
     {
-      name: 'Loans',
+      name: this.i18nService.getTranslate('Toolbar_Component.lblLoan'),
       value: 'loans'
     },
   ];
@@ -63,7 +67,8 @@ export class SearchToolComponent {
   /**
    * @param {Router} router Router
    */
-  constructor(private router: Router) {
+  constructor(private router: Router,
+              private i18nService:I18nService) {
     this.resource.patchValue('clients,clientIdentifiers,groups,savings,shares,loans');
   }
 

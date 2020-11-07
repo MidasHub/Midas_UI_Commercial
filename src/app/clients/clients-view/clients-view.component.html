@@ -10,13 +10,13 @@
             [src]="(clientImage)?clientImage:'assets/images/user_placeholder.png'">
         </div>
         <div fxLayoutAlign="center center" class="m-b-5">
-          <button class="client-image-button" mat-raised-button (click)="doAction('Upload Image')" [matTooltip]="'Client_Component.ViewClient.tipUploadImage'|translate" *mifosxHasPermission="'CREATE_CLIENTIMAGE'">
+          <button class="client-image-button" mat-raised-button (click)="doAction('Upload Image')" [matTooltip]="'Client_Component.ViewClient.tipUploadImage'|translate" *midasHasPermission="'CREATE_CLIENTIMAGE'">
             <i class="fa fa-upload"></i>
           </button>
-          <button class="client-image-button" mat-raised-button (click)="doAction('Capture Image')" [matTooltip]="'Client_Component.ViewClient.tipCaptureImage'|translate" *mifosxHasPermission="'CREATE_CLIENTIMAGE'">
+          <button class="client-image-button" mat-raised-button (click)="doAction('Capture Image')" [matTooltip]="'Client_Component.ViewClient.tipCaptureImage'|translate" *midasHasPermission="'CREATE_CLIENTIMAGE'">
             <i class="fa fa-camera"></i>
           </button>
-          <button class="client-image-button" mat-raised-button (click)="doAction('Delete Image')" [matTooltip]="'Client_Component.ViewClient.tipDeleteImage'|translate" *mifosxHasPermission="'DELETE_CLIENTIMAGE'">
+          <button class="client-image-button" mat-raised-button (click)="doAction('Delete Image')" [matTooltip]="'Client_Component.ViewClient.tipDeleteImage'|translate" *midasHasPermission="'DELETE_CLIENTIMAGE'">
             <i class="fa fa-trash"></i>
           </button>
           <br>
@@ -53,7 +53,7 @@
 
     <mat-card-actions class="client-actions">
 
-      <span *mifosxHasPermission="'UPDATE_CLIENT'">
+      <span *midasHasPermission="'UPDATE_CLIENT'">
         <button mat-raised-button [routerLink]="['edit']">
           <i class="fa fa-edit"></i>{{'Client_Component.ViewClient.btnEdit'|translate}}</button>
       </span>
@@ -63,9 +63,9 @@
       <mat-menu #Applications="matMenu">
         <button mat-menu-item [routerLink]="['loans-accounts', 'create']">{{'Client_Component.ViewClient.btnNewLoan'|translate}}</button>
         <button mat-menu-item [routerLink]="['savings-accounts', 'create']">{{'Client_Component.ViewClient.btnNewSaving'|translate}}</button>
-        <button mat-menu-item *mifosxHasPermission="'CREATE_SHAREACCOUNT'" [routerLink]="['shares-accounts', 'create']">{{'Client_Component.ViewClient.btnNewShareAccount'|translate}}</button>
-        <button mat-menu-item *mifosxHasPermission="'CREATE_RECURRINGDEPOSITACCOUNT'" [routerLink]="['recurringdeposits', 'create-recurring-deposits-account']">{{'Client_Component.ViewClient.btnNewRecurringDeposit'|translate}}</button>
-        <button mat-menu-item *mifosxHasPermission="'CREATE_FIXEDDEPOSITACCOUNT'" [routerLink]="['fixed-deposits-accounts', 'create']">{{'Client_Component.ViewClient.btnNewFixedDeposit'|translate}}</button>
+        <button mat-menu-item *midasHasPermission="'CREATE_SHAREACCOUNT'" [routerLink]="['shares-accounts', 'create']">{{'Client_Component.ViewClient.btnNewShareAccount'|translate}}</button>
+        <button mat-menu-item *midasHasPermission="'CREATE_RECURRINGDEPOSITACCOUNT'" [routerLink]="['recurringdeposits', 'create-recurring-deposits-account']">{{'Client_Component.ViewClient.btnNewRecurringDeposit'|translate}}</button>
+        <button mat-menu-item *midasHasPermission="'CREATE_FIXEDDEPOSITACCOUNT'" [routerLink]="['fixed-deposits-accounts', 'create']">{{'Client_Component.ViewClient.btnNewFixedDeposit'|translate}}</button>
       </mat-menu>
 
       <button mat-raised-button [matMenuTriggerFor]="Actions">
@@ -76,7 +76,7 @@
         <span *ngIf="clientViewData.status.value === 'Pending'"><button mat-menu-item (click)="doAction('Activate')">{{'Client_Component.ViewClient.btnActivate'|translate}}</button></span>
         <span *ngIf="clientViewData.status.value === 'Pending'"><button mat-menu-item (click)="doAction('Withdraw')">{{'Client_Component.ViewClient.btnWithdraw'|translate}}</button></span>
         <span *ngIf="clientViewData.status.value === 'Pending'"><button mat-menu-item (click)="doAction('Reject')">{{'Client_Component.ViewClient.btnReject'|translate}}</button></span>
-        <span *ngIf="clientViewData.status.value === 'Pending'"><button mat-menu-item *mifosxHasPermission="'DELETE_CLIENT'" (click)="doAction('Delete')">{{'Client_Component.ViewClient.btnDelete'|translate}}</button></span>
+        <span *ngIf="clientViewData.status.value === 'Pending'"><button mat-menu-item *midasHasPermission="'DELETE_CLIENT'" (click)="doAction('Delete')">{{'Client_Component.ViewClient.btnDelete'|translate}}</button></span>
         <span *ngIf="clientViewData.status.value === 'Closed'"><button mat-menu-item (click)="doAction('Reactivate')">{{'Client_Component.ViewClient.btnReactivate'|translate}}</button></span>
         <span *ngIf="clientViewData.status.value === 'Rejected'"><button mat-menu-item (click)="doAction('Undo Rejection')">{{'Client_Component.ViewClient.btnUndoReject'|translate}}</button></span>
         <span *ngIf="clientViewData.status.value === 'Transfer in progress'"><button mat-menu-item (click)="doAction('Undo Transfer')">{{'Client_Component.ViewClient.btnUndoTransfer'|translate}}r</button></span>
@@ -89,21 +89,21 @@
           <i class="fa fa-user"></i>{{'Client_Component.ViewClient.btnAssignStaff'|translate}}</button>
       </span>
       <span *ngIf="clientViewData.staffId">
-        <button mat-raised-button *mifosxHasPermission="'UNASSIGNSTAFF_CLIENT'" (click)="doAction('Unassign Staff')">
+        <button mat-raised-button *midasHasPermission="'UNASSIGNSTAFF_CLIENT'" (click)="doAction('Unassign Staff')">
           <i class="fa fa-user"></i>{{'Client_Component.ViewClient.btnUnAssignStaff'|translate}}</button>
       </span>
 
       <button mat-raised-button [matMenuTriggerFor]="More">{{'Client_Component.ViewClient.btnMoreAction'|translate}}</button>
       <mat-menu #More="matMenu">
-        <button mat-menu-item (click)="doAction('Add Charge')" *mifosxHasPermission="'CREATE_CLIENTCHARGE'"> {{'Client_Component.ViewClient.btnAddCharge'|translate}} </button>
+        <button mat-menu-item (click)="doAction('Add Charge')" *midasHasPermission="'CREATE_CLIENTCHARGE'"> {{'Client_Component.ViewClient.btnAddCharge'|translate}} </button>
         <button mat-menu-item (click)="doAction('Survey')">Survey</button>
-        <button mat-menu-item (click)="doAction('Update Default Savings')" *mifosxHasPermission="'UPDATESAVINGSACCOUNT_CLIENT'"> {{'Client_Component.ViewClient.btnUpdateDefaultSaving'|translate}} </button>
-        <button mat-menu-item (click)="doAction('Upload Signature')" *mifosxHasPermission="'CREATE_CLIENTIMAGE'"> {{'Client_Component.ViewClient.btnUploadSignature'|translate}} </button>
-        <button mat-menu-item (click)="doAction('Delete Signature')" *mifosxHasPermission="'DELETE_CLIENTIMAGE'"> {{'Client_Component.ViewClient.btnDeleteSignature'|translate}} </button>
+        <button mat-menu-item (click)="doAction('Update Default Savings')" *midasHasPermission="'UPDATESAVINGSACCOUNT_CLIENT'"> {{'Client_Component.ViewClient.btnUpdateDefaultSaving'|translate}} </button>
+        <button mat-menu-item (click)="doAction('Upload Signature')" *midasHasPermission="'CREATE_CLIENTIMAGE'"> {{'Client_Component.ViewClient.btnUploadSignature'|translate}} </button>
+        <button mat-menu-item (click)="doAction('Delete Signature')" *midasHasPermission="'DELETE_CLIENTIMAGE'"> {{'Client_Component.ViewClient.btnDeleteSignature'|translate}} </button>
         <button mat-menu-item (click)="doAction('Client Screen Reports')"> {{'Client_Component.ViewClient.btnClientReport'|translate}}  </button>
-        <button mat-menu-item (click)="doAction('Create Standing Instructions')" *mifosxHasPermission="'READ_STANDINGINSTRUCTION'">{{'Client_Component.ViewClient.btnCreateStandingIns'|translate}}</button>
+        <button mat-menu-item (click)="doAction('Create Standing Instructions')" *midasHasPermission="'READ_STANDINGINSTRUCTION'">{{'Client_Component.ViewClient.btnCreateStandingIns'|translate}}</button>
         <span *ngIf="clientViewData.status.value!='Transfer on hold'">
-          <button mat-menu-item (click)="doAction('View Standing Instructions')" *mifosxHasPermission="'CREATE_STANDINGINSTRUCTION'">{{'Client_Component.ViewClient.btnViewStandingIns'|translate}}</button>
+          <button mat-menu-item (click)="doAction('View Standing Instructions')" *midasHasPermission="'CREATE_STANDINGINSTRUCTION'">{{'Client_Component.ViewClient.btnViewStandingIns'|translate}}</button>
         </span>
         <button mat-menu-item (click)="doAction('Create Self Service User')">{{'Client_Component.ViewClient.btnCreateSelfService'|translate}}</button>
       </mat-menu>
@@ -127,21 +127,21 @@
         {{'Client_Component.ViewClient.lblFamilyMember'|translate}}
       </a>
       <a mat-tab-link [routerLink]="['./identities']" routerLinkActive #identities="routerLinkActive"
-        [active]="identities.isActive" *mifosxHasPermission="'READ_CLIENTIDENTIFIER'">
+        [active]="identities.isActive" *midasHasPermission="'READ_CLIENTIDENTIFIER'">
         {{'Client_Component.ViewClient.lblIdentity'|translate}}
       </a>
       <a mat-tab-link [routerLink]="['./documents']" routerLinkActive #documents="routerLinkActive"
-        [active]="documents.isActive" *mifosxHasPermission="'READ_DOCUMENT'">
+        [active]="documents.isActive" *midasHasPermission="'READ_DOCUMENT'">
         {{'Client_Component.ViewClient.lblDocument'|translate}}
       </a>      
       <ng-container *ngFor="let clientDatatable of clientDatatables">
         <a mat-tab-link [routerLink]="['./datatables',clientDatatable.registeredTableName]"
-          routerLinkActive #datatable="routerLinkActive" [active]="datatable.isActive" *mifosxHasPermission="'READ_' + clientDatatable.registeredTableName">
+          routerLinkActive #datatable="routerLinkActive" [active]="datatable.isActive" *midasHasPermission="'READ_' + clientDatatable.registeredTableName">
           {{(clientDatatable.registeredTableName.indexOf('Ext')>=0) ?  ('Client_Component.ViewClient.lblExtendInfo'|translate): (clientDatatable.registeredTableName)}}
         </a>
       </ng-container>
       <a mat-tab-link [routerLink]="['./notes']" routerLinkActive #notes="routerLinkActive"
-        [active]="notes.isActive" *mifosxHasPermission="'READ_CLIENTNOTE'">
+        [active]="notes.isActive" *midasHasPermission="'READ_CLIENTNOTE'">
         {{'Client_Component.ViewClient.lblNote'|translate}}
       </a>
     </nav>

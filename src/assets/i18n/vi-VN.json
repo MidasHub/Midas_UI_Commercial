@@ -378,7 +378,37 @@
     }
   },
   "Toolbar_Component": {
-    "labelInstitution": "Khách hàng"
+    "labelInstitution": "Danh sách",
+    "lblAccounting": "Kế toán",
+    "lblReport": "Báo cáo",
+    "lblAdmin": "Quản trị",
+    "lblSelfService": "Cài đặt AppUser",
+    "lblClient": "Khách hàng",
+    "lblGroup": "Đại lý",
+    "lblCenter": "Chi nhánh",
+    "lblAll": "Tất cả",
+    "lblLoan": "Khoản vay",
+    "lblSaving": "Tài khoản",
+    "lblFund": "Nguồn vốn",
+    "lblXBRL": "Báo cáo XBRL",
+    "lblUser": "Người dùng",
+    "lblOrg": "Tổ chức",
+    "lblSys": "Hệ thống",
+    "lblProduct": "Sản phẩm",
+    "lblTemplate": "Mẫu báo cáo",
+    "lblUserManagement": "Quản trị người dùng",
+    "lblAppConfig": "Thiết lập thống số App",
+    "lblTaskManagement": "Quản trị nhiệm vụ",
+    "lblHelp": "Hỗ trợ",
+    "lblProfile": "Hồ sơ cá nhân",
+    "lblSetting": "Thiết lập",
+    "lblSignOut": "Đăng xuất",
+    "SearchTool_Component": {
+      "lblSearch": "Điều kiện tìm kiếm",
+      "lblSource": "Đối tượng tìm",
+      "lblSeachPlaceholder": "Nhập CMND/ số thẻ/ Tên khách và bấm Enter để tìm"
+    },
+    "lblShare": "TK Chứng khoán"
   },
   "Shared_Component": {
     "DeleteDialog": {
@@ -453,7 +483,7 @@
       "labelSavingsDetails": "Chi tiết tài khoản thanh toán",
       "labelActivatedOn": "Ngày kích hoạt",
       "labelFieldOfficer": "Nhân viên phụ trách",
-      "labelExternalId": "External Id",
+      "labelExternalId": "Mã tài khoản",
       "labelCurrency": "Loại tiền"
     },
     "Breadcrumb": {

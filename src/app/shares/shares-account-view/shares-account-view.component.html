@@ -34,7 +34,7 @@
     <mat-card-actions class="account-actions">
 
       <ng-container *ngFor="let button of buttonConfig.singleButtons">
-        <button mat-raised-button *mifosxHasPermission="button.taskPermissionName" (click)="doAction(button.name)">
+        <button mat-raised-button *midasHasPermission="button.taskPermissionName" (click)="doAction(button.name)">
           <i class="{{button.icon}}"></i> {{button.name}}</button>
       </ng-container>
   
@@ -42,7 +42,7 @@
         <button mat-raised-button [matMenuTriggerFor]="More">More</button>
         <mat-menu #More="matMenu">
         <span *ngFor="let option of buttonConfig.options">
-          <button mat-menu-item *mifosxHasPermission="option.taskPermissionName" (click)="doAction(option.name)">{{option.name}}</button>
+          <button mat-menu-item *midasHasPermission="option.taskPermissionName" (click)="doAction(option.name)">{{option.name}}</button>
         </span>
         </mat-menu>
       </ng-container>
@@ -99,15 +99,15 @@
 
     <nav mat-tab-nav-bar class="navigation-tabs">
       <a mat-tab-link [routerLink]="['./transactions']" routerLinkActive #transactions="routerLinkActive"
-      [active]="transactions.isActive" *mifosxHasPermission="'READ_SHAREACCOUNTPURCHASE'">
+      [active]="transactions.isActive" *midasHasPermission="'READ_SHAREACCOUNTPURCHASE'">
         Transactions
       </a>
       <a mat-tab-link [routerLink]="['./charges']" routerLinkActive #charges="routerLinkActive"
-      [active]="charges.isActive" *mifosxHasPermission="'READ_SHAREACCOUNTCHARGE'">
+      [active]="charges.isActive" *midasHasPermission="'READ_SHAREACCOUNTCHARGE'">
         Charges
       </a>
       <a mat-tab-link [routerLink]="['./dividends']" routerLinkActive #dividends="routerLinkActive"
-      [active]="dividends.isActive" *mifosxHasPermission="'READ_SHAREACCOUNTDIVIDENDS'">
+      [active]="dividends.isActive" *midasHasPermission="'READ_SHAREACCOUNTDIVIDENDS'">
         Dividends
       </a>
     </nav>

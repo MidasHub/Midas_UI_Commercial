@@ -8,7 +8,7 @@ import { AuthenticationService } from '../../core/authentication/authentication.
  * Has Permission Directive
  */
 @Directive({
-  selector: '[mifosxHasPermission]'
+  selector: '[midasHasPermission]'
 })
 export class HasPermissionDirective {
 
@@ -32,7 +32,7 @@ export class HasPermissionDirective {
    * Evaluates the condition to show template.
    */
   @Input()
-  set mifosxHasPermission(permission: any) {
+  set midasHasPermission(permission: any) {
     if (typeof permission !== 'string') {
       throw new Error('hasPermission value must be a string');
     }

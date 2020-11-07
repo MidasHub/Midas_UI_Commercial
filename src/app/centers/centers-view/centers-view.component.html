@@ -40,7 +40,7 @@
           <p>
              Next Meeting on: {{centerViewData.collectionMeetingCalendar?.nextTenRecurringDates[0] | date}}
              <span *ngIf="editMeeting">
-              <i class="fa fa-edit" (click)="doAction('Edit Meeting')" *mifosxHasPermission="'UPDATE_MEETING'"></i><br />
+              <i class="fa fa-edit" (click)="doAction('Edit Meeting')" *midasHasPermission="'UPDATE_MEETING'"></i><br />
              </span>
              Meeting Frequency: {{centerViewData.collectionMeetingCalendar?.frequency.value | lowercase}}
           </p>
@@ -59,35 +59,35 @@
     </mat-card-title-group>
     <mat-card-actions class="center-actions" *ngIf="!(centerViewData.status.value==='Closed')">
       <span *ngIf="!(centerViewData.status.value=='Active')">
-        <button mat-raised-button *mifosxHasPermission="'ACTIVATE_CENTER'" (click)="doAction('Activate')"><i class="fa fa-check-sign"></i> Activate </button>
+        <button mat-raised-button *midasHasPermission="'ACTIVATE_CENTER'" (click)="doAction('Activate')"><i class="fa fa-check-sign"></i> Activate </button>
       </span>
-      <button mat-raised-button *mifosxHasPermission="'UPDATE_CENTER'" (click)="doAction('Edit')"><i class="fa fa-edit"></i> Edit </button>
-      <button mat-raised-button *mifosxHasPermission="'CREATE_GROUP'"><i class="fa fa-plus"></i> Add Group </button>
-      <button mat-raised-button *mifosxHasPermission="'ASSOCIATEGROUPS_CENTER'" (click)="doAction('Manage Groups')"> <i class="fa fa-edit"></i> Manage Groups </button>
+      <button mat-raised-button *midasHasPermission="'UPDATE_CENTER'" (click)="doAction('Edit')"><i class="fa fa-edit"></i> Edit </button>
+      <button mat-raised-button *midasHasPermission="'CREATE_GROUP'"><i class="fa fa-plus"></i> Add Group </button>
+      <button mat-raised-button *midasHasPermission="'ASSOCIATEGROUPS_CENTER'" (click)="doAction('Manage Groups')"> <i class="fa fa-edit"></i> Manage Groups </button>
       <span  *ngIf="centerViewData.active">
-      <button mat-raised-button *mifosxHasPermission="'CREATE_SAVINGSACCOUNT'" [routerLink]="['savings-accounts', 'create']">
+      <button mat-raised-button *midasHasPermission="'CREATE_SAVINGSACCOUNT'" [routerLink]="['savings-accounts', 'create']">
         <i class="fa fa-file"></i> Centers Saving Application
       </button>
       </span>
       <button mat-raised-button [matMenuTriggerFor]="More"> More </button>
       <mat-menu #More="matMenu">
         <span *ngIf="centerViewData.collectionMeetingCalendar">
-          <button mat-menu-item *mifosxHasPermission="'SAVEORUPDATEATTENDANCE_MEETING'" (click)="doAction('Attendance')"> Attendance </button>
+          <button mat-menu-item *midasHasPermission="'SAVEORUPDATEATTENDANCE_MEETING'" (click)="doAction('Attendance')"> Attendance </button>
         </span>
         <span *ngIf="!(centerViewData.staffId)">
-          <button mat-menu-item *mifosxHasPermission="'ASSIGNSTAFF_GROUP'" (click)="doAction('Assign Staff')"> Assign Staff </button>
+          <button mat-menu-item *midasHasPermission="'ASSIGNSTAFF_GROUP'" (click)="doAction('Assign Staff')"> Assign Staff </button>
         </span>
         <span *ngIf="centerViewData.staffId">
-          <button mat-menu-item *mifosxHasPermission="'UNASSIGNSTAFF_GROUP'" (click)="doAction('Unassign Staff')"> Unassign Staff </button>
+          <button mat-menu-item *midasHasPermission="'UNASSIGNSTAFF_GROUP'" (click)="doAction('Unassign Staff')"> Unassign Staff </button>
         </span>
         <span *ngIf="centerViewData.status.value==='Active'">
-          <button mat-menu-item *mifosxHasPermission="'DELETE_CENTER'" (click)="doAction('Delete')"> Delete </button>
+          <button mat-menu-item *midasHasPermission="'DELETE_CENTER'" (click)="doAction('Delete')"> Delete </button>
         </span>
-        <button mat-menu-item *mifosxHasPermission="'CLOSE_CENTER'" (click)="doAction('Close')"> Close </button>
+        <button mat-menu-item *midasHasPermission="'CLOSE_CENTER'" (click)="doAction('Close')"> Close </button>
         <span *ngIf="centerViewData.status.value==='Active' && !(centerViewData.collectionMeetingCalendar)">
-          <button mat-menu-item *mifosxHasPermission="'CREATE_MEETING'" (click)="doAction('Attach Meeting')"> Attach Meeting </button>
+          <button mat-menu-item *midasHasPermission="'CREATE_MEETING'" (click)="doAction('Attach Meeting')"> Attach Meeting </button>
         </span>
-        <button mat-menu-item *mifosxHasPermission="'READ_Staff Assignment History'" (click)="doAction('Staff Assignment History')"> Staff Assignment History </button>
+        <button mat-menu-item *midasHasPermission="'READ_Staff Assignment History'" (click)="doAction('Staff Assignment History')"> Staff Assignment History </button>
       </mat-menu>
     </mat-card-actions>
   </mat-card-header>
@@ -97,12 +97,12 @@
         [active]="general.isActive">
         General
       </a>
-      <a mat-tab-link *mifosxHasPermission="'READ_GROUPNOTE'" [routerLink]="['./notes']" routerLinkActive #notes="routerLinkActive"
+      <a mat-tab-link *midasHasPermission="'READ_GROUPNOTE'" [routerLink]="['./notes']" routerLinkActive #notes="routerLinkActive"
         [active]="notes.isActive">
         Notes
       </a>
       <span *ngFor="let centerDatatable of centerDatatables">
-        <a mat-tab-link *mifosxHasPermission="'READ_' + centerDatatable.registeredTableName" [routerLink]="['./datatables',centerDatatable.registeredTableName]"
+        <a mat-tab-link *midasHasPermission="'READ_' + centerDatatable.registeredTableName" [routerLink]="['./datatables',centerDatatable.registeredTableName]"
           routerLinkActive #datatable="routerLinkActive" [active]="datatable.isActive">
           {{centerDatatable.registeredTableName}}
         </a>
