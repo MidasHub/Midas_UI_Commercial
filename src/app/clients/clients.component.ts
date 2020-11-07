@@ -36,7 +36,6 @@ export class ClientsComponent implements OnInit, AfterViewInit {
   ngOnInit() {
     // @ts-ignore
     const {value} = this.route.queryParams;
-    console.log(value);
     if (value) {
       const {i, s} = value;
       if (i && s) {

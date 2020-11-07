@@ -1,7 +1,7 @@
 /** Angular Imports */
 import {Component, OnInit} from '@angular/core';
 import {MatTableDataSource} from '@angular/material/table';
-import {ActivatedRoute, Router} from '@angular/router';
+import {ActivatedRoute, Params, Router} from '@angular/router';
 import {FormBuilder, FormControl, FormGroup} from '@angular/forms';
 import {SavingsService} from '../../savings.service';
 import {SettingsService} from '../../../settings/settings.service';
@@ -57,15 +57,8 @@ export class TransactionsTabComponent implements OnInit {
   ) {
     this.route.parent.parent.data.subscribe((data: { savingsAccountData: any }) => {
       this.savingsAccountData = data.savingsAccountData; // .transactions?.filter((transaction: any) => !transaction.reversed);
-      console.log(this.savingsAccountData);
       this.status = data.savingsAccountData.status.value;
     });
-    this.form = this.formBuilder.group({
-      'note': [''],
-      'txnCode': [''],
-      'paymentDetail': [''],
-    });
-    this.getData();
   }
 
   getData() {
@@ -80,13 +73,28 @@ export class TransactionsTabComponent implements OnInit {
     }
     this.totalDeposit = 0;
     this.totalWithdraw = 0;
+    const note = this.form.get('note').value;
+    const txnCode = this.form.get('txnCode').value;
+    const paymentDetail = this.form.get('paymentDetail').value;
+    const queryParams: Params = {
+      fromDate: fromDate,
+      toDate: toDate,
+      note: note,
+      txnCode: txnCode,
+      paymentDetail: paymentDetail
+    };
+    this.router.navigate([],
+      {
+        queryParams: queryParams,
+        queryParamsHandling: 'merge', // remove to replace all query params by provided
+      });
     this.savingsService.getSearchTransactionCustom({
       fromDate: fromDate,
       toDate: toDate,
       accountId: this.savingsAccountData.id,
-      note: this.form.get('note').value,
-      txnCode: this.form.get('txnCode').value,
-      paymentDetail: this.form.get('paymentDetail').value
+      note: note,
+      txnCode: txnCode,
+      paymentDetail: paymentDetail
     }).subscribe(result => {
       this.transactionsData = result?.result?.listDetailTransaction;
       this.transactionsData.forEach((item: any) => {
@@ -114,6 +122,32 @@ export class TransactionsTabComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.form = this.formBuilder.group({
+      'note': [''],
+      'txnCode': [''],
+      'paymentDetail': [''],
+    });
+    // @ts-ignore
+    const {value} = this.route.queryParams;
+    if (value) {
+      const {txnCode, paymentDetail, note, fromDate, toDate} = value;
+      if (txnCode) {
+        this.form.get('txnCode').setValue(txnCode);
+      }
+      if (paymentDetail) {
+        this.form.get('paymentDetail').setValue(paymentDetail);
+      }
+      if (note) {
+        this.form.get('note').setValue(note);
+      }
+      if (fromDate) {
+        this.transactionDateFrom.setValue(new Date(fromDate));
+      }
+      if (toDate) {
+        this.transactionDateTo.setValue(new Date(toDate));
+      }
+    }
+    this.getData();
     this.dataSource = new MatTableDataSource(this.transactionsData);
   }
 
