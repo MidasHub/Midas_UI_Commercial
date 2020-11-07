@@ -43,11 +43,6 @@ export class SavingsButtonsConfiguration {
             taskPermissionName: 'WITHDRAW_SAVINGSACCOUNT',
             action: 'Withdraw'
           },
-          // {
-          //   name: 'Calculate Interest',
-          //   icon: 'fa fa-table',
-          //   taskPermissionName: 'CALCULATEINTEREST_SAVINGSACCOUNT'
-          // }
         ];
         break;
       // case 'Submitted and pending approval':

@@ -521,5 +521,30 @@
       "labelOfficeReciver": "Chi nhánh",
       "labelAccountReciver": "Tài khoản nhận"
     }
+  },
+  "Account_Transfer_Component": {
+    "MakeAccountTransfer": {
+      "lblApplicant": "Người nộp đơn",
+      "lblOffice": "Chi nhánh",
+      "lblFromAccount": "Từ tài khoản",
+      "lblFromAccountType": "Từ loại tài khoản",
+      "lblCurrency": "Loại tiền",
+      "lblTransferringTo": "Chuyển đến",
+      "msgOffice": "<strong>Yêu cầu:</strong> chọn chi nhánh",
+      "lblClient": "Khách hàng",
+      "msgClient": "<strong>Yêu cầu:</strong> chọn khách hàng",
+      "lblAccountType": "Loại tài khoản",
+      "msgAccountType": "<strong>Yêu cầu: </strong> loại tài khoản",
+      "lblAccount": "Tài khoản",
+      "msgAccount": "<strong>Yêu cầu: </strong> chọn tài khoản",
+      "lblAmount": "Số tiền",
+      "msgAmount": "<strong>Yêu cầu: </strong> nhập số tiền",
+      "lblTransactionDate": "Ngày Giao dịch",
+      "msgTransactionDate": "<strong>Yêu cầu: </strong> chọn ngày giao dịch",
+      "lblDescription": "Mô tả",
+      "msgDescription": "<strong>Yêu cầu: </strong> nhập mô tả giao dịch",
+      "btnCancel": "Hủy",
+      "btnSubmit": "Xác nhận"
+    }
   }
 }

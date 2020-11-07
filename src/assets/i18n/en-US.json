@@ -521,5 +521,30 @@
       "labelOfficeReciver": "Office",
       "labelAccountReciver": "Account"
     }
+  },
+  "Account_Transfer_Component": {
+    "MakeAccountTransfer": {
+      "lblApplicant": "Applicant",
+      "lblOffice": "Office",
+      "lblFromAccount": "From Account",
+      "lblFromAccountType": "From Account Type",
+      "lblCurrency": "Currency",
+      "lblTransferringTo": "Transferring To",
+      "msgOffice": "Office is <strong>required</strong>",
+      "lblClient": "Client",
+      "msgClient": "Client is <strong>required</strong>",
+      "lblAccountType": "Account type",
+      "msgAccountType": "Account Type is <strong>required</strong>",
+      "lblAccount": "Account",
+      "msgAccount": "Account is <strong>required</strong>",
+      "lblAmount": "Amount",
+      "msgAmount": "Amount is <strong>required</strong>",
+      "lblTransactionDate": "Transaction Date",
+      "msgTransactionDate": "Transactions Date is <strong>required</strong>",
+      "lblDescription": "Description",
+      "msgDescription": "Transfer Description is <strong>required</strong>",
+      "btnCancel": "Cancel",
+      "btnSubmit": "Submit"
+    }
   }
 }

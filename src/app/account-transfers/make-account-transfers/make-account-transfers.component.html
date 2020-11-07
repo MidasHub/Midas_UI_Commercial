@@ -11,34 +11,34 @@
         <mat-divider [inset]="true"></mat-divider>
 
         <div fxFlexFill>
-          <span fxFlex="40%">Applicant</span>
+          <span fxFlex="40%">{{'Account_Transfer_Component.MakeAccountTransfer.lblApplicant'|translate}}</span>
           <span fxFlex="60%">{{ accountTransferTemplateData.fromClient.displayName }}</span>
         </div>
 
         <div fxFlexFill>
-          <span fxFlex="40%">Office</span>
+          <span fxFlex="40%">{{'Account_Transfer_Component.MakeAccountTransfer.lblOffice'|translate}}</span>
           <span fxFlex="60%">{{ accountTransferTemplateData.fromOffice.name }}</span>
         </div>
 
         <div fxFlexFill>
-          <span fxFlex="40%">From Account</span>
+          <span fxFlex="40%">{{'Account_Transfer_Component.MakeAccountTransfer.lblFromAccount'|translate}}</span>
           <span
             fxFlex="60%">{{ accountTransferTemplateData.fromAccount.productName}}&nbsp;-&nbsp;#{{ accountTransferTemplateData.fromAccount.accountNo }}</span>
         </div>
 
         <div fxFlexFill>
-          <span fxFlex="40%">From Account Type</span>
+          <span fxFlex="40%">{{'Account_Transfer_Component.MakeAccountTransfer.lblFromAccountType'|translate}}</span>
           <span fxFlex="60%">{{ accountTransferTemplateData.fromAccountType.value }}</span>
         </div>
 
         <div fxFlexFill>
-          <span fxFlex="40%">Currency</span>
+          <span fxFlex="40%">{{'Account_Transfer_Component.MakeAccountTransfer.lblCurrency'|translate}}</span>
           <span fxFlex="60%">{{ accountTransferTemplateData.currency.name }}</span>
         </div>
 
       </div>
 
-      <h3 class="mat-h3" fxFlexFill>Transferring To</h3>
+      <h3 class="mat-h3" fxFlexFill>{{'Account_Transfer_Component.MakeAccountTransfer.lblTransferringTo'|translate}}</h3>
 
       <mat-divider [inset]="true"></mat-divider>
 
@@ -47,22 +47,21 @@
         <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
 
           <mat-form-field fxFlex="98%">
-            <mat-label>Office</mat-label>
+            <mat-label>{{'Account_Transfer_Component.MakeAccountTransfer.lblOffice'|translate}}</mat-label>
             <mat-select required formControlName="toOfficeId" (selectionChange)="changeEvent()">
               <mat-option *ngFor="let toOfficeType of toOfficeTypeData" [value]="toOfficeType.id">
                 {{ toOfficeType.name }}
               </mat-option>
             </mat-select>
-            <mat-error *ngIf="makeAccountTransferForm.controls.toOfficeId.hasError('required')">
-              Office is <strong>required</strong>
+            <mat-error *ngIf="makeAccountTransferForm.controls.toOfficeId.hasError('required')" [innerHTML]="'Account_Transfer_Component.MakeAccountTransfer.msgOffice'|translate">
             </mat-error>
           </mat-form-field>
 
           <mat-form-field fxFlex="98%">
-            <mat-label>Client</mat-label>
+            <mat-label>{{'Account_Transfer_Component.MakeAccountTransfer.lblClient'|translate}}</mat-label>
             <input matInput formControlName="toClientId" [matAutocomplete]="clientsAutocomplete">
-            <mat-error *ngIf="makeAccountTransferForm.controls.toClientId.hasError('required')">
-              Client is <strong>required</strong>
+            <mat-error *ngIf="makeAccountTransferForm.controls.toClientId.hasError('required')"
+                       [innerHTML]="'Account_Transfer_Component.MakeAccountTransfer.msgClient'|translate">
             </mat-error>
           </mat-form-field>
 
@@ -73,53 +72,60 @@
           </mat-autocomplete>
 
           <mat-form-field fxFlex="98%">
-            <mat-label>Account Type</mat-label>
+            <mat-label>{{'Account_Transfer_Component.MakeAccountTransfer.lblAccountType'|translate}}</mat-label>
             <mat-select required formControlName="toAccountType" (selectionChange)="changeEvent()">
               <mat-option *ngFor="let toAccountType of toAccountTypeData" [value]="toAccountType.id">
                 {{ toAccountType.value }}
               </mat-option>
             </mat-select>
-            <mat-error *ngIf="makeAccountTransferForm.controls.toAccountType.hasError('required')">
-              Account Type is <strong>required</strong>
+            <mat-error *ngIf="makeAccountTransferForm.controls.toAccountType.hasError('required')"
+            [innerHTML]="'Account_Transfer_Component.MakeAccountTransfer.msgAccountType'|translate"
+            >
             </mat-error>
           </mat-form-field>
 
           <mat-form-field fxFlex="98%">
-            <mat-label>Account</mat-label>
+            <mat-label>{{'Account_Transfer_Component.MakeAccountTransfer.lblAccount'|translate}}</mat-label>
             <mat-select required formControlName="toAccountId" (selectionChange)="changeEvent()">
               <mat-option *ngFor="let toAccount of toAccountData" [value]="toAccount.id">
                 {{ toAccount.productName }} - {{ toAccount.accountNo }}
               </mat-option>
             </mat-select>
-            <mat-error *ngIf="makeAccountTransferForm.controls.toAccountId.hasError('required')">
-              Account is <strong>required</strong>
+            <mat-error *ngIf="makeAccountTransferForm.controls.toAccountId.hasError('required')"
+            [innerHTML]="'Account_Transfer_Component.MakeAccountTransfer.msgAccount'|translate">
+
             </mat-error>
           </mat-form-field>
 
           <mat-form-field fxFlex="98%">
-            <mat-label>Amount</mat-label>
+            <mat-label>{{'Account_Transfer_Component.MakeAccountTransfer.lblAmount'|translate}}</mat-label>
             <input type="number" matInput required formControlName="transferAmount">
-            <mat-error *ngIf="makeAccountTransferForm.controls.transferAmount.hasError('required')">
-              Amount is <strong>required</strong>
+            <mat-error *ngIf="makeAccountTransferForm.controls.transferAmount.hasError('required')"
+            [innerHTML]="'Account_Transfer_Component.MakeAccountTransfer.msgAmount'|translate"
+            >
             </mat-error>
           </mat-form-field>
 
           <mat-form-field fxFlex="98%">
-            <mat-label>Transaction Date</mat-label>
+            <mat-label>{{'Account_Transfer_Component.MakeAccountTransfer.lblTransactionDate'|translate}}</mat-label>
             <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="transferDatePicker" required
               formControlName="transferDate">
             <mat-datepicker-toggle matSuffix [for]="transferDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #transferDatePicker></mat-datepicker>
-            <mat-error *ngIf="makeAccountTransferForm.controls.transferDate.hasError('required')">
-              Transactions Date is <strong>required</strong>
+            <mat-error *ngIf="makeAccountTransferForm.controls.transferDate.hasError('required')"
+            [innerHTML]="'Account_Transfer_Component.MakeAccountTransfer.msgTransactionDate'|translate"
+            >
+
             </mat-error>
           </mat-form-field>
 
           <mat-form-field fxFlex="98%">
-            <mat-label>Description</mat-label>
+            <mat-label>{{'Account_Transfer_Component.MakeAccountTransfer.lblDescription'|translate}}</mat-label>
             <textarea matInput formControlName="transferDescription"></textarea>
-            <mat-error *ngIf="makeAccountTransferForm.controls.transferDescription.hasError('required')">
-              Transfer Description is <strong>required</strong>
+            <mat-error *ngIf="makeAccountTransferForm.controls.transferDescription.hasError('required')"
+            [innerHTML]="'Account_Transfer_Component.MakeAccountTransfer.msgDescription'|translate"
+            >
+
             </mat-error>
 
           </mat-form-field>
@@ -131,9 +137,9 @@
     </mat-card-content>
 
     <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
-      <button type="button" mat-raised-button [routerLink]="['../../general']">Cancel</button>
+      <button type="button" mat-raised-button [routerLink]="['../../general']">{{'Account_Transfer_Component.MakeAccountTransfer.btnCancel'|translate}}</button>
       <button mat-raised-button color="primary" [disabled]="!makeAccountTransferForm.valid" *midasHasPermission="'CREATE_ACCOUNTTRANSFER'"
-        (click)="submit()">Submit</button>
+        (click)="submit()">{{'Account_Transfer_Component.MakeAccountTransfer.btnSubmit'|translate}}</button>
     </mat-card-actions>
 
   </mat-card>
