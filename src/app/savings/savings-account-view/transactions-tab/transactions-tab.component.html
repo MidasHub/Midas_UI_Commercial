@@ -30,7 +30,7 @@
           <mat-datepicker-toggle matSuffix [for]="transactionDateToPicker"></mat-datepicker-toggle>
           <mat-datepicker #transactionDateToPicker></mat-datepicker>
         </mat-form-field>
-        <div class="action-button" fxFlex="31%" fxLayoutAlign="end" style="height: 50px" fxLayout="row"
+        <div class="action-button" fxFlex="31%" fxLayoutAlign="end" style="height: 50px;" fxLayout="row"
              fxLayoutGap="20px">
           <button mat-raised-button (click)="getData()" color="primary">{{'Saving_Account_Component.tabTransactions.btnSearch' | translate}}</button>
           <button mat-raised-button color="primary" (click)="downloadReport()">{{'Saving_Account_Component.tabTransactions.btnExport' | translate}}</button>
@@ -100,8 +100,9 @@
 
       <ng-container matColumnDef="note">
         <th mat-header-cell *matHeaderCellDef>{{'Saving_Account_Component.tabTransactions.lblNote' | translate}}</th>
-        <td mat-cell
-            *matCellDef="let transaction"> {{ (transaction.note)}} </td>
+        <td mat-cell  style="max-width: 200px;"
+            *matCellDef="let transaction">
+          <span aria-multiline="true" >{{ (transaction.note)}}</span> </td>
       </ng-container>
       <!--      <ng-container matColumnDef="balance">-->
       <!--        <th mat-header-cell-->

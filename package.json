@@ -48,6 +48,7 @@
     "chart.js": "3.0.0-alpha",
     "core-js": "2.5.0",
     "lodash": "4.17.19",
+    "moment": "^2.29.1",
     "ngx-currency": "^2.5.1",
     "ngx-mask": "9.1.4",
     "ngx-mat-select-search": "^3.1.2",

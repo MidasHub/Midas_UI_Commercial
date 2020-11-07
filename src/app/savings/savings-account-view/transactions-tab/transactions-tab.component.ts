@@ -6,6 +6,7 @@ import {FormBuilder, FormControl, FormGroup} from '@angular/forms';
 import {SavingsService} from '../../savings.service';
 import {SettingsService} from '../../../settings/settings.service';
 import {DatePipe} from '@angular/common';
+import * as moment from 'moment';
 
 /**
  * Transactions Tab Component.
@@ -141,10 +142,10 @@ export class TransactionsTabComponent implements OnInit {
         this.form.get('note').setValue(note);
       }
       if (fromDate) {
-        this.transactionDateFrom.setValue(new Date(fromDate));
+        this.transactionDateFrom.setValue(moment(fromDate, 'DD/MM/YYYY').toDate());
       }
       if (toDate) {
-        this.transactionDateTo.setValue(new Date(toDate));
+        this.transactionDateTo.setValue(moment(toDate, 'DD/MM/YYYY').toDate());
       }
     }
     this.getData();
