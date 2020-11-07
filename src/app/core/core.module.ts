@@ -29,6 +29,7 @@ import { RouteReusableStrategy } from './route/route-reusable-strategy';
 import { SharedModule } from '../shared/shared.module';
 import { NotificationsModule } from '../notifications/notifications.module';
 import { SearchModule } from 'app/search/search.module';
+import { DirectivesModule } from '../directives/directives.module';
 
 /** Custom Components */
 import { ShellComponent } from './shell/shell.component';
@@ -45,6 +46,7 @@ import { ContentComponent } from './shell/content/content.component';
 @NgModule({
   imports: [
     SharedModule,
+    DirectivesModule,
     HttpClientModule,
     RouterModule
   ],

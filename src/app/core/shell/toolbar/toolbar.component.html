@@ -16,23 +16,23 @@
       {{'Toolbar_Component.labelInstitution'|translate}}
     </a>
 
-    <span fxHide.lt-lg="true">
+    <span *midasHasPermission="'ALL_FUNCTIONS'" fxHide.lt-lg="true">
 
-      <a mat-tab-link class="tab-link" [routerLink]="['/accounting']">
+      <a mat-tab-link class="tab-link" [routerLink]="['/accounting']" >
         <fa-icon class="mr-05" icon="money-bill-alt" size="lg"></fa-icon>
-        Accounting
+        {{'Toolbar_Component.lblAccounting'|translate}}
       </a>
       <a mat-tab-link class="tab-link" [matMenuTriggerFor]="reportsMenu" #reportsMenuTrigger="matMenuTrigger" >
         <fa-icon class="mr-05" icon="chart-bar" size="lg"></fa-icon>
-        Reports
+        {{'Toolbar_Component.lblReport'|translate}}
       </a>
       <a mat-tab-link class="tab-link" [matMenuTriggerFor]="adminMenu" #adminMenuTrigger="matMenuTrigger">
         <fa-icon class="mr-05" icon="shield-alt" size="lg"></fa-icon>
-        Admin
+        {{'Toolbar_Component.lblAdmin'|translate}}
       </a>
       <a mat-tab-link class="tab-link" [matMenuTriggerFor]="selfServiceMenu" #selfServiceMenuTrigger="matMenuTrigger">
         <fa-icon class="mr-05" icon="users" size="lg"></fa-icon>
-        Self Service
+        {{'Toolbar_Component.lblSelfService'|translate}}
       </a>
 
     </span>
@@ -56,40 +56,40 @@
 </mat-toolbar>
 
 <mat-menu #institutionMenu="matMenu" [overlapTrigger]="false">
-  <button mat-menu-item routerLink="/clients">{{'Toolbar_Component.labelInstitution'|translate}}</button>
-  <button mat-menu-item routerLink="/groups">Groups</button>
-  <button mat-menu-item routerLink="/centers">Centers</button>
+  <button mat-menu-item routerLink="/clients">{{'Toolbar_Component.lblClient'|translate}}</button>
+  <button mat-menu-item routerLink="/groups">{{'Toolbar_Component.lblGroup'|translate}}</button>
+  <button mat-menu-item routerLink="/centers">{{'Toolbar_Component.lblCenter'|translate}}</button>
   <span fxHide.lg>
-    <button mat-menu-item [routerLink]="['/accounting']">Accounting</button>
-    <button mat-menu-item [matMenuTriggerFor]="reportsMenu">Reports</button>
-    <button mat-menu-item [matMenuTriggerFor]="adminMenu">Admin</button>
-    <button mat-menu-item [matMenuTriggerFor]="selfServiceMenu">Self Service</button>
+    <button mat-menu-item [routerLink]="['/accounting']">{{'Toolbar_Component.lblAccounting'|translate}}</button>
+    <button mat-menu-item [matMenuTriggerFor]="reportsMenu">{{'Toolbar_Component.lblReport'|translate}}</button>
+    <button mat-menu-item [matMenuTriggerFor]="adminMenu">{{'Toolbar_Component.lblAdmin'|translate}}</button>
+    <button mat-menu-item [matMenuTriggerFor]="selfServiceMenu">{{'Toolbar_Component.lblSelfService'|translate}}</button>
   </span>
 </mat-menu>
 
 <!-- Toolbar Menus -->
 <mat-menu #reportsMenu="matMenu" [overlapTrigger]="false">
-  <button mat-menu-item [routerLink]="['/reports']">All</button>
-  <button mat-menu-item [routerLink]="['/reports', 'Client']">Clients</button>
-  <button mat-menu-item [routerLink]="['/reports', 'Loan']">Loans</button>
-  <button mat-menu-item [routerLink]="['/reports', 'Savings']">Savings</button>
-  <button mat-menu-item [routerLink]="['/reports', 'Fund']">Funds</button>
-  <button mat-menu-item [routerLink]="['/reports', 'Accounting']">Accounting</button>
-  <button mat-menu-item [routerLink]="['/xbrl']">XBRL</button>
+  <button mat-menu-item [routerLink]="['/reports']">{{'Toolbar_Component.lblAll'|translate}}</button>
+  <button mat-menu-item [routerLink]="['/reports', 'Client']">{{'Toolbar_Component.lblClient'|translate}}</button>
+  <button mat-menu-item [routerLink]="['/reports', 'Loan']">{{'Toolbar_Component.lblLoan'|translate}}</button>
+  <button mat-menu-item [routerLink]="['/reports', 'Savings']">{{'Toolbar_Component.lblSaving'|translate}}</button>
+  <button mat-menu-item [routerLink]="['/reports', 'Fund']">{{'Toolbar_Component.lblFund'|translate}}</button>
+  <button mat-menu-item [routerLink]="['/reports', 'Accounting']">{{'Toolbar_Component.lblAccounting'|translate}}</button>
+  <button mat-menu-item [routerLink]="['/xbrl']">{{'Toolbar_Component.lblXBRL'|translate}}</button>
 </mat-menu>
 
 <mat-menu #adminMenu="matMenu" [overlapTrigger]="false">
-  <button mat-menu-item [routerLink]="['/users']">Users</button>
-  <button mat-menu-item [routerLink]="['/organization']">Organization</button>
-  <button mat-menu-item [routerLink]="['/system']">System</button>
-  <button mat-menu-item [routerLink]="['/products']">Products</button>
-  <button mat-menu-item [routerLink]="['/templates']">Templates</button>
+  <button mat-menu-item [routerLink]="['/users']">{{'Toolbar_Component.lblUser'|translate}}</button>
+  <button mat-menu-item [routerLink]="['/organization']">{{'Toolbar_Component.lblOrg'|translate}}</button>
+  <button mat-menu-item [routerLink]="['/system']">{{'Toolbar_Component.lblSys'|translate}}</button>
+  <button mat-menu-item [routerLink]="['/products']">{{'Toolbar_Component.lblProduct'|translate}}</button>
+  <button mat-menu-item [routerLink]="['/templates']">{{'Toolbar_Component.lblTemplate'|translate}}</button>
 </mat-menu>
 
 <mat-menu #selfServiceMenu="matMenu" [overlapTrigger]="false">
-  <button mat-menu-item [routerLink]="['/self-service/users']">User Management</button>
-  <button mat-menu-item [routerLink]="['/self-service/app-configuration']">App Configuration</button>
-  <button mat-menu-item [routerLink]="['/self-service/task-management']">Task Management</button>
+  <button mat-menu-item [routerLink]="['/self-service/users']">{{'Toolbar_Component.lblUserManagement'|translate}}</button>
+  <button mat-menu-item [routerLink]="['/self-service/app-configuration']">{{'Toolbar_Component.lblAppConfig'|translate}}</button>
+  <button mat-menu-item [routerLink]="['/self-service/task-management']">{{'Toolbar_Component.lblTaskManagement'|translate}}</button>
 </mat-menu>
 
 <!-- Application User Help Menu -->
@@ -98,24 +98,24 @@
     <mat-icon matListIcon>
       <fa-icon icon="question-circle" size="sm"></fa-icon>
     </mat-icon>
-    <span>Help</span>
+    <span>{{'Toolbar_Component.lblHelp'|translate}}</span>
   </button>
   <button mat-menu-item [routerLink]="['/profile']">
     <mat-icon>
       <fa-icon icon="user" size="sm"></fa-icon>
     </mat-icon>
-    <span>Profile</span>
+    <span>{{'Toolbar_Component.lblProfile'|translate}}</span>
   </button>
   <button mat-menu-item [routerLink]="['/settings']">
     <mat-icon>
       <fa-icon icon="cog" size="sm"></fa-icon>
     </mat-icon>
-    <span>Settings</span>
+    <span>{{'Toolbar_Component.lblSetting'|translate}}</span>
   </button>
   <button mat-menu-item (click)="logout()" id="logout">
     <mat-icon>
       <fa-icon icon="sign-out-alt" size="sm"></fa-icon>
     </mat-icon>
-    <span>Sign Out</span>
+    <span>{{'Toolbar_Component.lblSignOut'|translate}}</span>
   </button>
 </mat-menu>

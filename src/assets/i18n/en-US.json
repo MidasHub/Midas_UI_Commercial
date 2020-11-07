@@ -378,7 +378,37 @@
     }
   },
   "Toolbar_Component": {
-    "labelInstitution": "Institution"
+    "labelInstitution": "Institution",
+    "lblAccounting": "Accounting",
+    "lblReport": "Report",
+    "lblAdmin": "Admin",
+    "lblSelfService": "Self Service",
+    "lblClient": "Client",
+    "lblGroup": "Group",
+    "lblCenter": "Center",
+    "lblAll": "All",
+    "lblLoan": "Loan",
+    "lblSaving": "Saving",
+    "lblFund": "Fund",
+    "lblXBRL": "XBRL",
+    "lblUser": "Users",
+    "lblOrg": "Organization",
+    "lblSys": "System",
+    "lblProduct": "Product",
+    "lblTemplate": "Template",
+    "lblUserManagement": "User Management",
+    "lblAppConfig": "App Configuration",
+    "lblTaskManagement": "Task Management",
+    "lblHelp": "Help",
+    "lblProfile": "Profile",
+    "lblSetting": "Setting",
+    "lblSignOut": "Sign Out",
+    "SearchTool_Component": {
+      "lblSearch": "Search",
+      "lblSource": "Source",
+      "lblSeachPlaceholder": "Please input params and press Enter to Search"
+    },
+    "lblShare": "Share"
   },
   "Shared_Component": {
     "DeleteDialog": {
