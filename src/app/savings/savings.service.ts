@@ -108,6 +108,10 @@ export class SavingsService {
     return this.http.post<any>(`${this.GatewayApiUrlPrefix}/savingTransaction/get_list_transaction_detail_of_account`, httpParams);
 
   }
+  downloadReport(transactions: string) {
+    return window.open(
+      `${environment.GatewayApiUrl}${this.GatewayApiUrlPrefix}/report/download_export_transaction_saving?&createdBy=${this.accessToken.userId}&&accessToken=${this.accessToken.base64EncodedAuthenticationKey}&transactionList=${transactions}`);
+  }
   /**
    * @param {string} chargeId Charge ID of charge.
    * @returns {Observable<any>} Charge.

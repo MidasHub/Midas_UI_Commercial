@@ -22,7 +22,7 @@ export class TransactionsTabComponent implements OnInit {
   /** Transactions Data */
   transactionsData: any;
   /** Columns to be displayed in transactions table. */
-  displayedColumns: string[] = ['id', 'transactionDate', 'transactionType', 'debit', 'credit'];
+  displayedColumns: string[] = ['id', 'transactionDate', 'transactionType', 'debit', 'credit', 'type', 'note'];
   /** Data source for transactions table. */
   dataSource: MatTableDataSource<any>;
   transactionDateFrom = new FormControl(new Date(new Date().setMonth(new Date().getMonth() - 1)));
@@ -31,6 +31,8 @@ export class TransactionsTabComponent implements OnInit {
   form: FormGroup;
   transactions: any[];
   savingsAccountData: any;
+  totalDeposit = 0;
+  totalWithdraw = 0;
 
   /**
    * Retrieves savings account data from `resolve`.
@@ -45,7 +47,7 @@ export class TransactionsTabComponent implements OnInit {
   ) {
     this.route.parent.parent.data.subscribe((data: { savingsAccountData: any }) => {
       this.savingsAccountData = data.savingsAccountData; // .transactions?.filter((transaction: any) => !transaction.reversed);
-      console.log(this.savingsAccountData)
+      console.log(this.savingsAccountData);
       this.status = data.savingsAccountData.status.value;
     });
     this.form = this.formBuilder.group({
@@ -66,6 +68,8 @@ export class TransactionsTabComponent implements OnInit {
     if (toDate) {
       toDate = this.datePipe.transform(toDate, dateFormat);
     }
+    this.totalDeposit = 0;
+    this.totalWithdraw = 0;
     this.savingsService.getSearchTransactionCustom({
       fromDate: fromDate,
       toDate: toDate,
@@ -74,9 +78,29 @@ export class TransactionsTabComponent implements OnInit {
       txnCode: this.form.get('txnCode').value,
       paymentDetail: this.form.get('paymentDetail').value
     }).subscribe(result => {
-      console.log(result);
       this.transactionsData = result?.result?.listDetailTransaction;
+      this.transactionsData.forEach((item: any) => {
+        if (item.txnCode === 'D') {
+          this.totalDeposit += Number(item.amount);
+        }
+        if (item.txnCode === 'W') {
+          this.totalWithdraw += Number(item.amount);
+        }
+      });
+      this.dataSource = new MatTableDataSource(this.transactionsData);
     });
+  }
+
+  downloadReport() {
+    let transactions = '';
+    this.transactionsData.map((item: any) => {
+      if (!transactions) {
+        transactions = item.txnId;
+      } else {
+        transactions += '-' + item.txnId;
+      }
+    });
+    return this.savingsService.downloadReport(transactions);
   }
 
   ngOnInit() {
@@ -108,10 +132,12 @@ export class TransactionsTabComponent implements OnInit {
    * @param transactionsData Transactions Data
    */
   showTransactions(transactionsData: any) {
-    if (transactionsData.transfer) {
-      this.router.navigate([`account-transfers/account-transfers/${transactionsData.transfer.id}`], {relativeTo: this.route});
+    console.log(transactionsData);
+    if (transactionsData.transferId) {
+      this.router.navigate([`account-transfers/account-transfers/${transactionsData.transferId}`], {relativeTo: this.route});
     } else {
-      this.router.navigate([transactionsData.id], {relativeTo: this.route});
+      // location.path('/viewsavingtrxn/' + savingsAccountId + '/trxnId/' + transactionId);
+      this.router.navigate([transactionsData.txnId], {relativeTo: this.route});
     }
   }
 

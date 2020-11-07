@@ -40,8 +40,8 @@ export class ClientsComponent implements OnInit, AfterViewInit {
     if (value) {
       const {i, s} = value;
       if (i && s) {
-        this.paginator.pageSize = Number(i);
-        this.paginator.pageIndex = Number(s);
+        this.paginator.pageSize = Number(s);
+        this.paginator.pageIndex = Number(i);
       }
     }
     //   .subscribe(params => {
