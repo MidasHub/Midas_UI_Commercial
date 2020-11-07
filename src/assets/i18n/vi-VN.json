@@ -493,7 +493,19 @@
     "tabTransactions": {
       "labelBalance": "Số dư",
       "labelTransactionDateFrom": "Giao dịch từ ngày",
-      "labelTransactionDateTo": "Đến ngày"
+      "labelTransactionDateTo": "Đến ngày",
+      "msgIncrease": "Tăng",
+      "msgDecrease": "Giảm",
+      "lblTransactionType": "Kiểu giao dịch",
+      "lblTransactionType2": "Loại giao dịch",
+      "lblNote": "Ghi chú",
+      "lblTransactionDate": "Ngày giao dịch",
+      "lblDeposit": "Gửi tiền",
+      "lblWithdraw": "Rút tiền",
+      "lblAmount": "Số tiền",
+      "lblProportional": "Cân đối",
+      "btnSearch": "Tìm kiếm",
+      "btnExport": "Xuất báo cáo"
     },
     "clientAdvanceCash": {
       "titleClientAdvanceCash": "Ứng tiền cho khác",

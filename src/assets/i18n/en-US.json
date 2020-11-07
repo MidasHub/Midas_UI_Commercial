@@ -493,7 +493,19 @@
     "tabTransactions": {
       "labelBalance": "Balance",
       "labelTransactionDateFrom": "Transaction Date From",
-      "labelTransactionDateTo": "Transaction Date To"
+      "labelTransactionDateTo": "Transaction Date To",
+      "msgIncrease": "Increase",
+      "msgDecrease": "Decrease",
+      "lblTransactionType": "Transaction type",
+      "lblTransactionType2": "transaction type",
+      "lblNote": "Note",
+      "lblTransactionDate": "Transaction date",
+      "lblDeposit": "Deposit",
+      "lblWithdraw": "Withdraw",
+      "lblAmount": "Amount",
+      "lblProportional": "Proportional",
+      "btnSearch": "Search",
+      "btnExport": "Export"
     },
     "clientAdvanceCash": {
       "titleClientAdvanceCash": "Advance Cash",

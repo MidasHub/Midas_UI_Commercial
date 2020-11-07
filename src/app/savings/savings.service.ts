@@ -75,12 +75,14 @@ export class SavingsService {
       .set('accessToken', this.accessToken.base64EncodedAuthenticationKey);
     return this.http.post<any>(`${this.GatewayApiUrlPrefix}/savingTransaction/get_list_client_saving_vault_by_office`, httpParams);
   }
+
   getListOfficeCommon() {
     const httpParams = new HttpParams()
       .set('createdBy', this.accessToken.userId)
       .set('accessToken', this.accessToken.base64EncodedAuthenticationKey);
     return this.http.post<any>(`${this.GatewayApiUrlPrefix}/common/get_list_office`, httpParams);
   }
+
   advanceCashPartnerTransaction(payload: any) {
     const httpParams = new HttpParams()
       .set('buSavingAccount', payload.buSavingAccount)
@@ -94,6 +96,7 @@ export class SavingsService {
       .set('accessToken', this.accessToken.base64EncodedAuthenticationKey);
     return this.http.post<any>(`${this.GatewayApiUrlPrefix}/savingTransaction/deposit_partner_advance_cash_transaction`, httpParams);
   }
+
   getSearchTransactionCustom(payload: any) {
     const httpParams = new HttpParams()
       .set('fromDate', payload.fromDate)
@@ -108,10 +111,30 @@ export class SavingsService {
     return this.http.post<any>(`${this.GatewayApiUrlPrefix}/savingTransaction/get_list_transaction_detail_of_account`, httpParams);
 
   }
+
   downloadReport(transactions: string) {
-    return window.open(
-      `${environment.GatewayApiUrl}${this.GatewayApiUrlPrefix}/report/download_export_transaction_saving?&createdBy=${this.accessToken.userId}&&accessToken=${this.accessToken.base64EncodedAuthenticationKey}&transactionList=${transactions}`);
+
+    const url = `${environment.GatewayApiUrl}${this.GatewayApiUrlPrefix}/export/download_export_transaction_saving?accessToken=${this.accessToken.base64EncodedAuthenticationKey}&transactionList=${transactions}`;
+    let xhr = new XMLHttpRequest();
+    xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function () {
+      let a;
+      if (xhr.readyState === 4 && xhr.status === 200) {
+        a = document.createElement('a');
+        a.href = window.URL.createObjectURL(xhr.response);
+        a.download = `export_transaction_${new Date().getTime()}`;
+        a.style.display = 'none';
+        document.body.appendChild(a);
+        a.click();
+      }
+    };
+
+    xhr.open('GET', url);
+    xhr.setRequestHeader('Gateway-TenantId', environment.GatewayTenantId);
+    xhr.responseType = 'blob';
+    return xhr.send();
   }
+
   /**
    * @param {string} chargeId Charge ID of charge.
    * @returns {Observable<any>} Charge.

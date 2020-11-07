@@ -33,6 +33,16 @@ export class TransactionsTabComponent implements OnInit {
   savingsAccountData: any;
   totalDeposit = 0;
   totalWithdraw = 0;
+  transactionType: any[] = [{
+    id: '',
+    name: 'All'
+  }, {
+    id: 'D',
+    name: 'Saving_Account_Component.tabTransactions.lblDeposit'
+  }, {
+    id: 'W',
+    name: 'Saving_Account_Component.tabTransactions.lblWithdraw'
+  }];
 
   /**
    * Retrieves savings account data from `resolve`.
