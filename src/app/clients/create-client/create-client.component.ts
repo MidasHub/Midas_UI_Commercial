@@ -12,9 +12,11 @@ import { ClientAddressStepComponent } from '../client-stepper/client-address-ste
 
 /** Custom Services */
 import { SettingsService } from 'app/settings/settings.service';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { AlertService } from 'app/core/alert/alert.service';
 import { I18nService } from 'app/core/i18n/i18n.service';
 import * as _ from 'lodash';
+import { faBackspace } from '@fortawesome/free-solid-svg-icons';
+
 
 
 /**
@@ -34,6 +36,7 @@ export class CreateClientComponent {
   /** Client Address Step */
   @ViewChild(ClientAddressStepComponent, { static: true }) clientAddressStep: ClientAddressStepComponent;
 
+  /** Historical page from URL */
   go_back: any;
   /** Client Template */
   clientTemplate: any;
@@ -52,7 +55,7 @@ export class CreateClientComponent {
     private router: Router,
     private clientsService: ClientsService,
     private settingsService: SettingsService,
-    private snackbar: MatSnackBar,
+    private alertService: AlertService,
     private i18n: I18nService) {
     this.route.data.subscribe((data: { clientTemplate: any, clientAddressFieldConfig: any, clientIdentifierTemplate: any, currentUser: any }) => {
       this.clientTemplate = data.clientTemplate;
@@ -173,11 +176,7 @@ export class CreateClientComponent {
             });
           }
           if (this.go_back === 'home') {
-            this.snackbar.open(this.i18n.getTranslate('Client_Component.ClientStepper.lblCustomerCreated') + response.resourceId + '!', this.i18n.getTranslate('Client_Component.ClientStepper.lblClose'), {
-              duration: 3000,
-              horizontalPosition: 'right',
-              verticalPosition: 'top'
-            });
+            this.alertService.alert({message:this.i18n.getTranslate('Client_Component.ClientStepper.lblCustomerCreated') + response.resourceId + '!',msgClass:'cssSuccess'} )
             this.router.navigate(['/home']);
           } else {
             this.router.navigate(['../', response.resourceId], { relativeTo: this.route });
@@ -189,4 +188,16 @@ export class CreateClientComponent {
     });
   }
 
+
+  /** do Cancel */
+  doCancel() {
+    this.alertService.alert({message:'Bạn vừa hủy tạo khách hàng.',msgClass:'cssInfo'});
+    
+    if (this.go_back === 'home') {      
+      this.router.navigate(['/home']);
+    }else{
+      this.router.navigate(['..'],{ relativeTo: this.route });
+    }
+    
+  }
 }

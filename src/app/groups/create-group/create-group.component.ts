@@ -226,7 +226,7 @@ export class CreateGroupComponent implements OnInit, AfterViewInit {
     this.groupService.createFeeGroup(groupObj.groupId, this.cards).subscribe((response: any) => {
       /** Check if go_back is exist, then go back to home page */
       if( this.go_back ==='home') {
-        this.alertservice.alertMsg(this.i18n.getTranslate('Group_Component.Create_Group_Component.msgCreatedGroup'))
+        this.alertservice.alert({message: this.i18n.getTranslate('Group_Component.Create_Group_Component.msgCreatedGroup'),msgClass:'cssSuccess'})
         this.router.navigate(['/home']);
       }else{
       console.log('GroupOBJ: ..',groupObj)
