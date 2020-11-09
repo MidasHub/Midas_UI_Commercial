@@ -54,7 +54,7 @@
         <ng-container matColumnDef="actions">
           <th mat-header-cell *matHeaderCellDef> Actions </th>
           <td mat-cell *matCellDef="let identity; let i = index">
-            <button class="identity-action-button" mat-raised-button color="primary" [routerLink]="['/transaction']"  [queryParams]="{ identifierId: identity.id, clientId: identity.clientId, type: 'cash'}"  *midasHasPermission="'CREATE_DOCUMENT'">
+            <button class="identity-action-button" mat-raised-button color="primary" [routerLink]="['/transaction/create']"  [queryParams]="{ identifierId: identity.id, clientId: identity.clientId, type: 'cash'}"  *midasHasPermission="'CREATE_DOCUMENT'">
               Rút TM
             </button>
             ||
