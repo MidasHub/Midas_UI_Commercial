@@ -18,6 +18,10 @@ export class ClientPreviewStepComponent {
   /** Client Object */
   @Input() client: any;
   @Input() documents: any;
+
+  /** Historical page from URL */
+  @Input() go_back: any;
+
   /** Form submission event */
   @Output() submit = new EventEmitter();
 
@@ -57,5 +61,9 @@ export class ClientPreviewStepComponent {
     console.log('data', data);
     this.submit.emit();
     return;
+  }
+
+  clickCancel(){
+    console.log (this.go_back)
   }
 }

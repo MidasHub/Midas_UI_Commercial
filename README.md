@@ -78,3 +78,14 @@ Name:
       - label đặt tên là lbl+[tên biến]
       - button đặt tên là btn+[tên biến]
       - message đặt lên là msg+[Tên biến]
+
+### Alert standard
+Use "Alert Interface" for popup Alert Msg
+  Alert {
+    type?: string; 
+    message: string;
+    msgClass?: string; --> user for string value: cssSuccess, cssInfo, cssDanger, cssWarning
+    msgDuration?: number --> default: 3000ms
+    hPosition?: any ; --> default: left
+    vPosition?: any;--> default: top
+    }

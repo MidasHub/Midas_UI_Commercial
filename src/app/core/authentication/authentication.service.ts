@@ -187,7 +187,7 @@ export class AuthenticationService {
         this.alertService.alert({ type: 'Password Expired', message: 'Your password has expired, please reset your password!' });
       } else {
         this.setCredentials(credentials);
-        this.alertService.alert({ type: 'Authentication Success', message: `${credentials.username} successfully logged in!` });
+        this.alertService.alert({ type: 'Authentication Success', message: `${credentials.username} successfully logged in!`, msgClass:'cssSuccess' });
         delete this.credentials;
       }
     }

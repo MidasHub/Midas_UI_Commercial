@@ -19,6 +19,6 @@ export class OndueCardComponent implements OnInit {
   }
 
   onClickAlert() {
-    this.alertService.alertMsg('Tính năng này đang phát triển, Vui lòng thử lại sau !', this.i18n.getTranslate('Client_Component.ClientStepper.lblClose'), 'snackBarInfo');
+    this.alertService.alert({message:'Tính năng này đang phát triển, Vui lòng thử lại sau !',msgClass: 'cssInfo'});
   }
 }

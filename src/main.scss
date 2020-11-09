@@ -16,26 +16,38 @@
 $fa-font-path: "../node_modules/font-awesome/fonts";
 @import "../node_modules/font-awesome/scss/font-awesome.scss";
 
-.snackBarSuccess{
+.cssSuccess{
     color: #fff;
     font-weight: 500;
     background-color: #4caf50;
+    .mat-button-wrapper{
+        color: #fff
+    }
 }
 
-.snackBarInfo{
+.cssInfo{
     color: #fff;
     font-weight: 500;
     background-color: #2196f3;
+    .mat-button-wrapper{
+        color: #fff
+    }
 }
 
-.snackBarWarning{
+.cssWarning{
     color: #fff;
     font-weight: 500;
     background-color: #ff9800;
+    .mat-button-wrapper{
+        color: #fff
+    }
 }
 
-.snackBarDanger{
+.cssDanger{
     color: #fff;
     font-weight: 500;
     background-color: #f44336;
+    .mat-button-wrapper{
+        color: #fff
+    }
 }

@@ -128,7 +128,8 @@ export class SavingsAccountViewComponent implements OnInit {
       }).subscribe((result: any) => {
         console.log(result);
         const message = `Ứng tiền thành công cho khách hàng: ${clientAdvanceCash.displayName} với số tiền ${String(amountAdvance).replace(/\\B(?=(\\d{3})+(?!\\d))/g, ',') + ' đ'}`;
-        this.alertService.alertMsgTop({alertMsg: message});
+        // this.alertService.alertMsgTop({alertMsg: message});
+        this.alertService.alert({message:message,msgClass:'cssInfo'})
       });
     });
   }
@@ -153,7 +154,8 @@ export class SavingsAccountViewComponent implements OnInit {
         partnerClientVaultAdvanceCash: partnerClientVaultAdvanceCash
       }).subscribe(res => {
         const message = `Điều chuyển tiền từ đối tác: ${partnerAdvanceCash.desc} với số tiền ${String(amountPartnerAdvance).replace(/\\B(?=(\\d{3})+(?!\\d))/g, ',') + ' đ'}`;
-        this.alertService.alertMsgTop({alertMsg: message});
+        // this.alertService.alertMsgTop({alertMsg: message});
+        this.alertService.alert({message:message,msgClass:'cssInfo'})
       });
     });
   }
