@@ -1,0 +1,36 @@
+// customed by Midas team
+.cssSuccess{
+    color: #fff;
+    font-weight: 500;
+    background-color: $msg-success;
+    .mat-button-wrapper{
+        color: #fff
+    }
+}
+
+.cssInfo{
+    color: #fff;
+    font-weight: 500;
+    background-color: $msg-info;
+    .mat-button-wrapper{
+        color: #fff
+    }
+}
+
+.cssWarning{
+    color: #fff;
+    font-weight: 500;
+    background-color: $msg-warning;
+    .mat-button-wrapper{
+        color: #fff
+    }
+}
+
+.cssDanger{
+    color: #fff;
+    font-weight: 500;
+    background-color: $msg-danger;
+    .mat-button-wrapper{
+        color: #fff
+    }
+}

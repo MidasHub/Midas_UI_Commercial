@@ -62,7 +62,7 @@ export class I18nService {
   init(defaultLanguage: string, supportedLanguages: string[]) {
     this.defaultLanguage = defaultLanguage;
     this.supportedLanguages = supportedLanguages;
-    this.language = '';
+    this.language = defaultLanguage;
 
     this.translate.onLangChange
       .subscribe((event: LangChangeEvent) => {
