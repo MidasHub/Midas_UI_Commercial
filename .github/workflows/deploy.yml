@@ -1,4 +1,3 @@
-name: website deployment
 on: [push]
 
 name: self-hosted-example
