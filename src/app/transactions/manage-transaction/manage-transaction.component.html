@@ -1,0 +1,123 @@
+<mat-card class="mat-elevation-z20 container-custom">
+  <mat-card-content>
+    <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column" [formGroup]="formDate">
+      <mat-form-field fxFlex="31%">
+        <mat-label>Transaction Date From</mat-label>
+        <input matInput [matDatepicker]="transactionDateFromPicker" formControlName="fromDate">
+        <mat-datepicker-toggle matSuffix [for]="transactionDateFromPicker"></mat-datepicker-toggle>
+        <mat-datepicker #transactionDateFromPicker></mat-datepicker>
+      </mat-form-field>
+
+      <mat-form-field fxFlex="31%">
+        <mat-label>Transaction Date To</mat-label>
+        <input matInput [matDatepicker]="transactionDateToPicker" formControlName="toDate">
+        <mat-datepicker-toggle matSuffix [for]="transactionDateToPicker"></mat-datepicker-toggle>
+        <mat-datepicker #transactionDateToPicker></mat-datepicker>
+      </mat-form-field>
+      <div fxFlex="31%">
+        <button *ngIf="fromDateAndToDate" style="align-self: center;" color="primary" mat-raised-button>
+          Tìm kiếm &nbsp;<i class="fa fa-search" aria-hidden="true"></i>
+        </button>
+        <h3 *ngIf="!fromDateAndToDate">Vui lòng chọn thời gian &nbsp; <i class="fa fa-calendar"
+                                                                         style="align-self: center;"
+                                                                         aria-hidden="true"></i></h3>
+      </div>
+    </div>
+    <div class="container" fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
+
+    </div>
+  </mat-card-content>
+  <mat-card-content>
+    <table mat-table [dataSource]="dataSource" matSort>
+
+      <ng-container matColumnDef="productId">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Loại giao dịch</th>
+        <td mat-cell *matCellDef="let transaction"> {{ displayProductId(transaction.productId) }} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="txnDate">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Ngày giao dịch</th>
+        <td mat-cell *matCellDef="let journalEntry"> {{ journalEntry.txnDate | date:'dd-MM-yyyy HH:mm:ss'}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="trnRefNo">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Số giao dịch</th>
+        <td mat-cell *matCellDef="let journalEntry"> {{ journalEntry.trnRefNo }} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="status">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Trạng thái</th>
+        <td mat-cell *matCellDef="let journalEntry"> {{ journalEntry.status }} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="officeName">
+        <th mat-header-cell *matHeaderCellDef> Chi nhánh</th>
+        <td mat-cell *matCellDef="let journalEntry"> {{ journalEntry.officeName }} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="agencyName">
+        <th mat-header-cell *matHeaderCellDef> Đại lý</th>
+        <td mat-cell *matCellDef="let journalEntry"> {{ journalEntry.agencyName }} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="panHolderName">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Khách hàng</th>
+        <td mat-cell *matCellDef="let journalEntry"> {{ journalEntry.panHolderName }} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="terminalAmount">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Số tiền giao dịch</th>
+        <td mat-cell *matCellDef="let journalEntry"> {{ journalEntry.terminalAmount | money}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="feeAmount">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Phí thu được</th>
+        <td mat-cell *matCellDef="let journalEntry"> {{ journalEntry.feeAmount | money}} </td>
+      </ng-container>
+
+
+      <ng-container matColumnDef="cogsAmount">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> SP vốn</th>
+        <td mat-cell *matCellDef="let journalEntry"> {{ journalEntry.cogsAmount | money}} </td>
+      </ng-container>
+
+
+      <ng-container matColumnDef="pnlAmount">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> PNL</th>
+        <td mat-cell *matCellDef="let journalEntry"> {{ journalEntry.pnlAmount | money}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="actions" style="width: 25px;">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
+        <td mat-cell *matCellDef="let transaction"><span style="float: right; width: 15px;"
+                                                          [matMenuTriggerData]="transaction"
+                                                          [matMenuTriggerFor]="transactionMenu"
+                                                         (menuOpened)="menuOpened()" (menuClosed)="menuClosed()"
+        ><i
+          class="fa fa-ellipsis-v" aria-hidden="true"></i></span></td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row
+          *matRowDef="let row; columns: displayedColumns;"
+          class="select-row"></tr>
+      <!--[routerLink]="['transactions/view', row.transactionId]"-->
+    </table>
+  </mat-card-content>
+
+  <mat-menu  #transactionMenu="matMenu" [overlapTrigger]="false" style="width: 50px;">
+    <ng-template matMenuContent let-custId="custId" style="width: 50px;">
+      <button mat-menu-item ><i class="fa fa-eye" aria-hidden="true"></i>&nbsp;Chi tiết</button>
+      <button mat-menu-item ><img src="assets/images/icons/add.svg" />&nbsp;Thêm thông tin POS</button>
+      <button mat-menu-item ><img src="assets/images/icons/order.svg" />&nbsp; Tải xuống hóa đơn </button>
+      <button mat-menu-item ><img src="assets/images/icons/bill.svg" />&nbsp; Tải xuống bill </button>
+      <button mat-menu-item ><img src="assets/images/icons/upload_bill.svg" />&nbsp; Upload bill</button>
+      <hr/>
+      <button mat-menu-item ><i class="fa fa-undo" aria-hidden="true"></i> &nbsp;Hoàn tác giao dịch</button>
+      <button mat-menu-item ><i class="fa fa-ban" aria-hidden="true"></i> &nbsp;Hủy giao dịch</button>
+    </ng-template>
+  </mat-menu>
+  <mat-paginator paginator [length]="transactionsData?.length" [pageSize]="10" [pageSizeOptions]="[10, 25, 50, 100]"
+                 showFirstLastButtons></mat-paginator>
+
+</mat-card>

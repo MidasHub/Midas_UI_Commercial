@@ -30,6 +30,7 @@ export class TransactionService {
     );
     this.GatewayApiUrlPrefix = environment.GatewayApiUrlPrefix;
     this.environment = environment;
+    console.log('accessToken', this.accessToken);
   }
 
   submitTransaction(
@@ -84,6 +85,19 @@ export class TransactionService {
       .set('accessToken', this.accessToken.base64EncodedAuthenticationKey);
 
     return this.http.post<any>(`${this.GatewayApiUrlPrefix}/transaction/mapping_invoice_transaction`, httpParams);
+  }
+
+  getTransaction(payload: { fromDate: string, toDate: string }): Observable<any> {
+    const {permissions, officeId} = this.accessToken;
+    const permit = permissions.includes('TXN_CREATE');
+    const httpParams = new HttpParams()
+      .set('officeId', officeId)
+      .set('permission', String(!permit))
+      .set('fromDate', payload.fromDate)
+      .set('toDate', payload.toDate)
+      .set('createdBy', this.accessToken.userId)
+      .set('accessToken', this.accessToken.base64EncodedAuthenticationKey);
+    return this.http.post(`${this.GatewayApiUrlPrefix}/transaction/get_list_pos_transaction`, httpParams);
   }
 
   getFeeByTerminal(accountTypeCode: string, terminalId: string): Observable<any> {

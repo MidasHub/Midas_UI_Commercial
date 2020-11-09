@@ -125,11 +125,9 @@ import { AddIdentitiesComponent } from './clients-view/identities-tab/add-identi
     ClientFamilyMemberDialogComponent,
     CaptureImageDialogComponent,
     CreateSelfServiceUserComponent,
-    MoneyPipe,
     AddIdentitiesComponent
   ],
   exports: [
-    MoneyPipe
   ],
   providers: [DatePipe]
 

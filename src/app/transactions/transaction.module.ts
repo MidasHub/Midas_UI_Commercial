@@ -16,7 +16,7 @@ import { ManageTransactionComponent } from './manage-transaction/manage-transact
   declarations: [ CreateTransactionComponent, ManageTransactionComponent],
   imports: [
     SharedModule,
-    TransactionRoutingModule
+    TransactionRoutingModule,
   ]
 })
 export class TransactionModule { }
