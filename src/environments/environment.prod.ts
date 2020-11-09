@@ -4,10 +4,11 @@ import env from './.env';
 export const environment = {
   production: true,
   version: env.npm_package_version,
-  fineractPlatformTenantId: 'midas',  // For connecting to server running elsewhere update the tenant identifier
-  GatewayApiUrl: 'http://localhost:8286',
+  fineractPlatformTenantId: 'default',  // For connecting to server running elsewhere update the tenant identifier
+  GatewayTenantId: 'default',
+  GatewayApiUrl: 'https://uat.tekcompay.com:8287',
   GatewayApiUrlPrefix: '/billPos',
-  baseApiUrl: 'https://metabase.tekcompay.com',
+  baseApiUrl: 'https://uat.tekcompay.com:9443',
   apiProvider: '/fineract-provider/api',
   apiVersion: '/v1',
   serverUrl: '',
