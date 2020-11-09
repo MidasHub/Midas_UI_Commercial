@@ -57,7 +57,7 @@ export class AddIdentitiesComponent implements OnInit {
     this.form.get('documentTypeId').valueChanges.subscribe((value: any) => {
       console.log(value);
       const type = this.documentTypes.find(v => v.id === value);
-      if (type && ((type.name.indexOf('CC') !== -1 && type.name !== 'CCCD') || type.name === 'Credit Card')) {
+      if (type && Number(type.id) >= 38 && Number(type.id) <= 57) {
         this.form.addControl('documentCardBank', new FormControl());
         this.form.addControl('documentCardType', new FormControl());
         this.form.addControl('dueDay', new FormControl('', [Validators.max(31), Validators.min(0)]));
@@ -73,7 +73,7 @@ export class AddIdentitiesComponent implements OnInit {
       if (value.length === 16) {
         const typeDocument = this.form.get('documentTypeId').value;
         const type = this.documentTypes.find(v => v.id === typeDocument);
-        if (type && ((type.name.indexOf('CC') !== -1 && type.name !== 'CCCD') || type.name === 'Credit Card')) {
+        if (type && Number(type.id) >= 38 && Number(type.id) <= 57) {
           this.bankService.getInfoBinCode(value).subscribe((res: any) => {
             if (res.status === '200') {
               const {bankCode, cardType} = res?.result?.bankBinCode;

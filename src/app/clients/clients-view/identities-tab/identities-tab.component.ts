@@ -127,7 +127,7 @@ export class IdentitiesTabComponent {
         const {documentCardBank, documentCardType, documentKey, documentTypeId, dueDay, expiredDate, status} = response.data.value;
         const documentTypes = response.documentTypes;
         const document = documentTypes.find((v: any) => v.id === documentTypeId);
-        if (document && ((document.name.indexOf('CC') !== -1 && document.name !== 'CCCD') || document.name === 'Credit Card')) {
+        if (document && Number(document.id) >= 38 && Number(document.id) <= 57)  {
           if (!response.existBin) {
             // this.bankService.storeInfoBinCode({
             //   cardType: documentCardType,
@@ -155,7 +155,7 @@ export class IdentitiesTabComponent {
             });
             this.identifiersTable.renderRows();
           };
-          if (document && ((document.name.indexOf('CC') !== -1 && document.name !== 'CCCD') || document.name === 'Credit Card')) {
+          if (document && Number(document.id) >= 38 && Number(document.id) <= 57) {
             this.clientService.getClientData(this.clientId).subscribe((client: any) => {
               this.bankService.storeExtraCardInfo({
                 'userId': this.clientId,
