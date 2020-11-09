@@ -10,5 +10,5 @@ jobs:
     - uses: actions/checkout@v2
     - name: yarn install, build
       run: |
-        npm install
+        yarn install
         ng build
