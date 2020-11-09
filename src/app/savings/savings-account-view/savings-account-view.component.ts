@@ -62,6 +62,7 @@ export class SavingsAccountViewComponent implements OnInit {
               private productsService: ProductsService,
               private alertService: AlertService) {
     this.route.data.subscribe((data: { savingsAccountData: any, savingsDatatables: any }) => {
+      console.log('savingsAccountData', data);
       this.savingsAccountData = data.savingsAccountData;
       this.savingsDatatables = data.savingsDatatables;
     });
@@ -80,7 +81,6 @@ export class SavingsAccountViewComponent implements OnInit {
     const {roles} = this.currentUser;
     const {savingsProductId} = this.savingsAccountData;
     this.productsService.getSavingProduct(savingsProductId).subscribe((data: any) => {
-      // console.log(data);
       this.savingProduct = data;
       if (['CCA0', 'ACA0'].indexOf(this.savingProduct.shortName) === -1) {
         this.buttonConfig.addButton({
@@ -120,7 +120,7 @@ export class SavingsAccountViewComponent implements OnInit {
       const {clientAdvanceCash, noteAdvance, amountAdvance, typeAdvanceCash} = response?.data?.value;
       const {savingsAccountId} = clientAdvanceCash;
       this.savingsService.advanceCashTransaction({
-        buSavingAccount: this.savingProduct.id,
+        buSavingAccount: this.savingsAccountData.id,
         clientSavingAccount: savingsAccountId,
         noteAdvance: noteAdvance,
         amountAdvanceCash: amountAdvance,
@@ -145,7 +145,7 @@ export class SavingsAccountViewComponent implements OnInit {
       console.log(response);
       const {partnerPaymentType, partnerAdvanceCash, partnerClientVaultAdvanceCash, amountPartnerAdvance, notePartnerAdvance} = response?.data?.value;
       this.savingsService.advanceCashPartnerTransaction({
-        buSavingAccount: this.savingProduct.id,
+        buSavingAccount: this.savingsAccountData.id,
         paymentTypeId: partnerPaymentType,
         amountAdvanceCash: amountPartnerAdvance,
         notePartnerAdvance: notePartnerAdvance,
