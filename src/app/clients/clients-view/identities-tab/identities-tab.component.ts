@@ -1,6 +1,6 @@
 /** Angular Imports */
 import {Component, ViewChild} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {MatTable} from '@angular/material/table';
 import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
 
@@ -27,15 +27,17 @@ import {BankService} from '../../../services/bank.service';
   styleUrls: ['./identities-tab.component.scss']
 })
 export class IdentitiesTabComponent {
-
+  searchKey: string;
   /** Client Identities */
-  clientIdentities: any;
+  clientIdentities:  any = [];
+  clientIdentitiesOther: any = [];
   /** Client Identifier Template */
   clientIdentifierTemplate: any;
   /** Client Id */
   clientId: string;
   /** Identities Columns */
   identitiesColumns: string[] = ['id', 'documentKey', 'description', 'type', 'documents', 'status', 'actions'];
+  identitiesOtherColumns: string[] = ['id', 'documentKey', 'description', 'type', 'documents', 'status'];
 
   /** Identifiers Table */
   @ViewChild('identifiersTable', {static: true}) identifiersTable: MatTable<Element>;
@@ -46,14 +48,23 @@ export class IdentitiesTabComponent {
    * @param {MatDialog} dialog Mat Dialog
    * @param {ClientsService} clientService Clients Service
    */
-  constructor(private route: ActivatedRoute,
+  constructor(
+              private router: Router,
+              private route: ActivatedRoute,
               public dialog: MatDialog,
               private clientService: ClientsService,
               private bankService: BankService,) {
     this.clientId = this.route.parent.snapshot.paramMap.get('clientId');
     this.route.data.subscribe((data: { clientIdentities: any, clientIdentifierTemplate: any }) => {
-      this.clientIdentities = data.clientIdentities;
+
       this.clientIdentifierTemplate = data.clientIdentifierTemplate;
+      data.clientIdentities.forEach((element: any) => {
+          if (element.documentType.id >= 37  && element.documentType.id <= 58 ){
+            this.clientIdentities.push(element);
+          }else{
+            this.clientIdentitiesOther.push(element);
+          }
+      });
     });
   }
 
@@ -67,6 +78,10 @@ export class IdentitiesTabComponent {
       const url = window.URL.createObjectURL(res);
       window.open(url);
     });
+  }
+  routeToMakeTransaction(type: string, identifierId: string){
+
+    this.router.navigate(['/transaction', this.clientId,  identifierId, type  ]);
   }
 
   /**

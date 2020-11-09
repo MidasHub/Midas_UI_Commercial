@@ -5,6 +5,13 @@
 </div>
 <div class="container" fxLayout="column" fxLayoutGap="2%">
   <mat-card >
+    <div *ngIf="isLoading"
+   style="display: flex; justify-content: center; align-items: center; background: white;">
+  <mat-progress-spinner
+    color="warn"
+    mode="indeterminate">
+  </mat-progress-spinner>
+</div>
     <div fxLayout="row wrap">
       <div fxFlex="50%" fxLayout="row wrap" class="content">
         <div fxFlex="100%" style="color: green; font-weight: bold">Loại giao dịch : Rút tiền mặt</div>

@@ -2,7 +2,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
-import { Router } from '@angular/router';
+import { ActivatedRoute, ActivatedRouteSnapshot, NavigationStart, ParamMap, Router } from '@angular/router';
 import { TransactionService } from './transaction.service';
 /** Custom Services */
 import { AuthenticationService } from 'app/core/authentication/authentication.service';
@@ -11,7 +11,7 @@ import { UserService } from 'app/self-service/users/user.service';
 import { formatCurrency } from '@angular/common';
 /** Custom Models */
 import { Alert } from '../core/alert/alert.model';
-
+import { filter, switchMap } from 'rxjs/operators';
 /** Custom Services */
 import { AlertService } from '../core/alert/alert.service';
 /**
@@ -26,34 +26,42 @@ export class TransactionComponent implements OnInit {
 
   transactionInfo: any = {};
   terminalFee: any = {};
-
+  isLoading = false;
   /**
    * @param {AuthenticationService} authenticationService Authentication Service
    * @param {UserService} userService Users Service
    * @param {Router} router Router
    * @param {MatDialog} dialog Mat Dialog
    */
-  constructor(private authenticationService: AuthenticationService,
-    private userService: UserService,
+  constructor(
+    private route: ActivatedRoute,
     private router: Router,
     private transactionService: TransactionService,
     public dialog: MatDialog,
     private alertService: AlertService,
   ) {
+      this.transactionInfo.productId = 'CA01';
 
   }
 
   ngOnInit() {
+    this.isLoading = true;
+    this.route.queryParamMap
+    .subscribe((params) => {
 
-    this.transactionService.getTransactionTemplate('148', '249').subscribe((data: any) => {
-      this.transactionInfo = data.result;
-      this.transactionInfo.productId = 'CA01';
-      this.transactionInfo.type = 'cash';
-      this.transactionInfo.clientId = '148';
-      this.transactionInfo.identifierId = '249';
-      this.transactionInfo.isDone = false;
-      this.transactionInfo.accountCash = data.result.listAccAccount[0].documentKey;
-    });
+      const clientId = params.get("clientId");
+      const identifierId = params.get("identifierId");
+      const type = params.get("type");
+      this.transactionInfo.productId = type;
+      this.transactionService.getTransactionTemplate(clientId, identifierId).subscribe((data: any) => {
+        this.isLoading = false;
+        this.transactionInfo = data.result;
+        this.transactionInfo.isDone = false;
+        this.transactionInfo.accountCash = data.result.listAccAccount[0].documentKey;
+      });
+    }
+  );
+
   }
 
   clearInfoTransaction() {
