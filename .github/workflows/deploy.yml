@@ -8,3 +8,7 @@ jobs:
     steps:
     # checkout branch
     - uses: actions/checkout@v2
+    - name: yarn install, build
+      run: |
+        yarn install
+        ng build
