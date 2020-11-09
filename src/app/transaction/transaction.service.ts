@@ -36,7 +36,7 @@ export class TransactionService {
     transactionInfo: any
   ): Observable<any> {
 
-    let httpParams = new HttpParams()
+    const httpParams = new HttpParams()
       .set('accountNumber', transactionInfo.identifyClientDto.accountNumber)
       .set('accountBankId', transactionInfo.identifyClientDto.accountBankId)
       .set('accountTypeId', transactionInfo.identifyClientDto.accountTypeId)
@@ -73,7 +73,7 @@ export class TransactionService {
                                 amountTransaction: number,
                                 terminalId: string): Observable<any> {
 
-    let httpParams = new HttpParams()
+    const httpParams = new HttpParams()
       .set('accountNumber', accountNumber)
       .set('ext4', identifierId)
       .set('AmountMappingInvoice', String(this.formatLong(String(amountTransaction))))
@@ -88,7 +88,7 @@ export class TransactionService {
 
   getFeeByTerminal(accountTypeCode: string, terminalId: string): Observable<any> {
 
-    let httpParams = new HttpParams()
+    const httpParams = new HttpParams()
       .set('accountTypeId', accountTypeCode)
       .set('terminalId', terminalId)
       .set('officeId', this.accessToken.officeId)
@@ -100,7 +100,7 @@ export class TransactionService {
 
   getListTerminalAvailable(amount: number): Observable<any> {
 
-    let httpParams = new HttpParams()
+    const httpParams = new HttpParams()
       .set('id', this.accessToken.officeId)
       .set('amountTransaction', amount.toString())
       .set('createdBy', this.accessToken.userId)
@@ -111,7 +111,7 @@ export class TransactionService {
 
   getTransactionTemplate(clientId: string, identifierId: string): Observable<any> {
 
-    let httpParams = new HttpParams()
+    const httpParams = new HttpParams()
       .set('identifyId', identifierId)
       .set('clientId', clientId)
       .set('officeId', this.accessToken.officeId)
@@ -128,15 +128,15 @@ export class TransactionService {
     if (neg) {
       value = '-'.concat(value);
     }
-    return parseInt(value);
+    return Number(value);
   }
 
   downloadVoucher(transactionId: string) {
-    var url = `${this.environment.GatewayApiUrl}${this.GatewayApiUrlPrefix}/export/download_voucher?id=${transactionId}&accessToken=${this.accessToken.base64EncodedAuthenticationKey}&createdBy=${this.accessToken.userId}`;
-    var xhr = new XMLHttpRequest();
+    const url = `${this.environment.GatewayApiUrl}${this.GatewayApiUrlPrefix}/export/download_voucher?id=${transactionId}&accessToken=${this.accessToken.base64EncodedAuthenticationKey}&createdBy=${this.accessToken.userId}`;
+    let xhr = new XMLHttpRequest();
     xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function () {
-      var a;
+      let a;
       if (xhr.readyState === 4 && xhr.status === 200) {
         a = document.createElement('a');
         a.href = window.URL.createObjectURL(xhr.response);
