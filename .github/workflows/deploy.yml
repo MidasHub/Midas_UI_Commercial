@@ -13,4 +13,4 @@ jobs:
     - name: yarn install, build
       run: |
         yarn install
-        ng build --prod --output-hashing=all --deleteOutputPath=true --base-href="/"  --serviceWorker=true --outputPath="/usr/share/nginx/html/staging/" 
+        ng build --prod --output-hashing=all --deleteOutputPath=true --base-href="/staging"  --serviceWorker=true --outputPath="/usr/share/nginx/html/staging/" 
