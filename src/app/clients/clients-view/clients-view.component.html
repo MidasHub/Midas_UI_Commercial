@@ -69,7 +69,7 @@
       </mat-menu>
 
       <button mat-raised-button [matMenuTriggerFor]="Actions">
-        <i class="fa fa-tasks"></i>{{'Client_Component.ViewClient.btnAction'|translate}}</button>
+        <i class="fas fa-tasks"></i>{{'Client_Component.ViewClient.btnAction'|translate}}</button>
       <mat-menu #Actions="matMenu">
         <button mat-menu-item (click)="doAction('Close')">{{'Client_Component.ViewClient.btnClose'|translate}}</button>
         <button mat-menu-item (click)="doAction('Transfer Client')">{{'Client_Component.ViewClient.btnTransferClient'|translate}}</button>
@@ -93,7 +93,7 @@
           <i class="fa fa-user"></i>{{'Client_Component.ViewClient.btnUnAssignStaff'|translate}}</button>
       </span>
 
-      <button mat-raised-button [matMenuTriggerFor]="More">{{'Client_Component.ViewClient.btnMoreAction'|translate}}</button>
+      <button mat-raised-button [matMenuTriggerFor]="More"><i class="fab fa-buromobelexperte"></i>{{'Client_Component.ViewClient.btnMoreAction'|translate}}</button>
       <mat-menu #More="matMenu">
         <button mat-menu-item (click)="doAction('Add Charge')" *midasHasPermission="'CREATE_CLIENTCHARGE'"> {{'Client_Component.ViewClient.btnAddCharge'|translate}} </button>
         <button mat-menu-item (click)="doAction('Survey')">Survey</button>

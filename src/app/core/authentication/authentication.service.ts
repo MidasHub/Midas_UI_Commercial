@@ -46,6 +46,18 @@ export class AuthenticationService {
   /** Key to store two factor authentication token in storage. */
   private twoFactorAuthenticationTokenStorageKey = 'mifosXTwoFactorAuthenticationToken';
 
+  /** Const for authen message */
+  authenMsg = {
+    starting: { type: 'Authentication Start', message: 'Please wait...' },
+    twoFactorRequired: { type: 'Two Factor Authentication Required', message: 'Two Factor Authentication Required' },
+    expiredPassword: { type: 'Password Expired', message: 'Your password has expired, please reset your password!' },
+    loginSuccess(cus_username: string = '') {
+      return { type: 'Authentication Success', message: `${cus_username} successfully logged in!`, msgClass: 'cssSuccess' }
+    },
+    resetPass:{ type: 'Password Reset Success', message: `Your password was sucessfully reset!` }
+  }
+
+
   /**
    * Initializes the type of storage and authorization headers depending on whether
    * credentials are presently in storage or not.
@@ -54,8 +66,8 @@ export class AuthenticationService {
    * @param {AuthenticationInterceptor} authenticationInterceptor Authentication Interceptor.
    */
   constructor(private http: HttpClient,
-              private alertService: AlertService,
-              private authenticationInterceptor: AuthenticationInterceptor) {
+    private alertService: AlertService,
+    private authenticationInterceptor: AuthenticationInterceptor) {
     this.rememberMe = false;
     this.storage = sessionStorage;
     const savedCredentials = JSON.parse(
@@ -84,7 +96,8 @@ export class AuthenticationService {
    * @returns {Observable<boolean>} True if authentication is successful.
    */
   login(loginContext: LoginContext) {
-    this.alertService.alert({ type: 'Authentication Start', message: 'Please wait...' });
+    // this.alertService.alert({ type: 'Authentication Start', message: 'Please wait...' });
+    this.alertService.alert(this.authenMsg.starting);
     this.rememberMe = loginContext.remember;
     this.storage = this.rememberMe ? localStorage : sessionStorage;
 
@@ -93,10 +106,10 @@ export class AuthenticationService {
       httpParams = httpParams.set('client_id', 'community-app');
       httpParams = httpParams.set('grant_type', 'password');
       httpParams = httpParams.set('client_secret', '123');
-      httpParams = httpParams.set('username', loginContext.username); 
+      httpParams = httpParams.set('username', loginContext.username);
       httpParams = httpParams.set('password', loginContext.password);
-      
-      return this.http.disableApiPrefix().post(`${environment.oauth.serverUrl}/oauth/token`, { }, { params: httpParams })
+
+      return this.http.disableApiPrefix().post(`${environment.oauth.serverUrl}/oauth/token`, {}, { params: httpParams })
         .pipe(
           map((tokenResponse: OAuth2Token) => {
             this.getUserDetails(tokenResponse);
@@ -180,14 +193,14 @@ export class AuthenticationService {
     }
     if (credentials.isTwoFactorAuthenticationRequired) {
       this.credentials = credentials;
-      this.alertService.alert({ type: 'Two Factor Authentication Required', message: 'Two Factor Authentication Required' });
+      this.alertService.alert(this.authenMsg.twoFactorRequired);
     } else {
       if (credentials.shouldRenewPassword) {
         this.credentials = credentials;
-        this.alertService.alert({ type: 'Password Expired', message: 'Your password has expired, please reset your password!' });
+        this.alertService.alert(this.authenMsg.expiredPassword);
       } else {
         this.setCredentials(credentials);
-        this.alertService.alert({ type: 'Authentication Success', message: `${credentials.username} successfully logged in!`, msgClass:'cssSuccess' });
+        this.alertService.alert(this.authenMsg.loginSuccess(credentials.username));
         delete this.credentials;
       }
     }
@@ -226,8 +239,8 @@ export class AuthenticationService {
    */
   isAuthenticated(): boolean {
     return !!(JSON.parse(
-        sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey)
-      ) && this.twoFactorAccessTokenIsValid());
+      sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey)
+    ) && this.twoFactorAccessTokenIsValid());
   }
 
   /**
@@ -305,10 +318,10 @@ export class AuthenticationService {
   private onOTPValidateSuccess(response: any) {
     this.authenticationInterceptor.setTwoFactorAccessToken(response.token);
     if (this.credentials.shouldRenewPassword) {
-      this.alertService.alert({ type: 'Password Expired', message: 'Your password has expired, please reset your password!' });
+      this.alertService.alert(this.authenMsg.expiredPassword);
     } else {
       this.setCredentials(this.credentials);
-      this.alertService.alert({ type: 'Authentication Success', message: `${this.credentials.username} successfully logged in!` });
+      this.alertService.alert(this.authenMsg.loginSuccess(this.credentials.username));
       delete this.credentials;
       this.storage.setItem(this.twoFactorAuthenticationTokenStorageKey, JSON.stringify(response));
     }
@@ -320,19 +333,19 @@ export class AuthenticationService {
    */
   resetPassword(passwordDetails: any) {
     return this.http.put(`/users/${this.credentials.userId}`, passwordDetails).
-    pipe(
-      map(() => {
-        this.alertService.alert({ type: 'Password Reset Success', message: `Your password was sucessfully reset!` });
-        this.authenticationInterceptor.removeAuthorization();
-        this.authenticationInterceptor.removeTwoFactorAuthorization();
-        const loginContext: LoginContext = {
-          username: this.credentials.username,
-          password: passwordDetails.password,
-          remember: this.rememberMe
-        };
-        this.login(loginContext).subscribe();
-      })
-    );
+      pipe(
+        map(() => {
+          this.alertService.alert(this.authenMsg.resetPass);
+          this.authenticationInterceptor.removeAuthorization();
+          this.authenticationInterceptor.removeTwoFactorAuthorization();
+          const loginContext: LoginContext = {
+            username: this.credentials.username,
+            password: passwordDetails.password,
+            remember: this.rememberMe
+          };
+          this.login(loginContext).subscribe();
+        })
+      );
   }
 
 }
