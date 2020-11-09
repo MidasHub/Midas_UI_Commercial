@@ -1,9 +1,6 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
 
-/* import translate service */
-import { TranslateService } from '@ngx-translate/core';
-
 /**
  * Products component.
  */
@@ -14,7 +11,7 @@ import { TranslateService } from '@ngx-translate/core';
 })
 export class ProductsComponent implements OnInit {
 
-  constructor(private translate:TranslateService) { }
+  constructor() { }
 
   ngOnInit() {
   }

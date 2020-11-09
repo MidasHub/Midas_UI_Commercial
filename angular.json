@@ -3,11 +3,11 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "mifosx-web-app": {
+    "midas-web-app": {
       "root": "",
       "sourceRoot": "src",
       "projectType": "application",
-      "prefix": "mifosx",
+      "prefix": "midas",
       "schematics": {
         "@schematics/angular:component": {
           "style": "scss"
@@ -17,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "aot": true,
+            "aot": false,
             "outputPath": "dist/web-app",
             "index": "src/index.html",
             "main": "src/main.ts",
@@ -33,30 +33,36 @@
             ],
             "styles": [
               "src/main.scss",
-              {"inject":false,
+              {
+                "inject": false,
                 "input": "src/theme/deeppurple-amber.scss",
                 "bundleName": "theme/deeppurple-amber"
-},
-              {"inject":false,
+              },
+              {
+                "inject": false,
                 "input": "src/theme/indigo-pink.scss",
                 "bundleName": "theme/indigo-pink"
-},
-              {"inject":false,
+              },
+              {
+                "inject": false,
                 "input": "src/theme/pink-bluegrey.scss",
                 "bundleName": "theme/pink-bluegrey"
-},
-              {"inject":false,
+              },
+              {
+                "inject": false,
                 "input": "src/theme/purple-green.scss",
                 "bundleName": "theme/purple-green"
-},
-              {"inject":false,
+              },
+              {
+                "inject": false,
                 "input": "src/theme/custom/denim-yellowgreen.scss",
                 "bundleName": "theme/denim-yellowgreen"
-},
-              {"inject":false,
+              },
+              {
+                "inject": false,
                 "input": "src/theme/custom/pictonblue-yellowgreen.scss",
                 "bundleName": "theme/pictonblue-yellowgreen"
-}
+              }
             ],
             "scripts": []
           },
@@ -90,18 +96,19 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "mifosx-web-app:build"
+            "browserTarget": "midas-web-app:build",
+            "aot": false
           },
           "configurations": {
             "production": {
-              "browserTarget": "mifosx-web-app:build:production"
+              "browserTarget": "midas-web-app:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "mifosx-web-app:build"
+            "browserTarget": "midas-web-app:build"
           }
         },
         "test": {
@@ -114,30 +121,36 @@
             "scripts": [],
             "styles": [
               "src/main.scss",
-              {"inject":false,
+              {
+                "inject": false,
                 "input": "src/theme/deeppurple-amber.scss",
                 "bundleName": "theme/deeppurple-amber"
-},
-              {"inject":false,
+              },
+              {
+                "inject": false,
                 "input": "src/theme/indigo-pink.scss",
                 "bundleName": "theme/indigo-pink"
-},
-              {"inject":false,
+              },
+              {
+                "inject": false,
                 "input": "src/theme/pink-bluegrey.scss",
                 "bundleName": "theme/pink-bluegrey"
-},
-              {"inject":false,
+              },
+              {
+                "inject": false,
                 "input": "src/theme/purple-green.scss",
                 "bundleName": "theme/purple-green"
-},
-              {"inject":false,
+              },
+              {
+                "inject": false,
                 "input": "src/theme/custom/denim-yellowgreen.scss",
                 "bundleName": "theme/denim-yellowgreen"
-},
-              {"inject":false,
+              },
+              {
+                "inject": false,
                 "input": "src/theme/custom/pictonblue-yellowgreen.scss",
                 "bundleName": "theme/pictonblue-yellowgreen"
-}
+              }
             ],
             "assets": [
               "src/favicon.ico",
@@ -161,7 +174,7 @@
         }
       }
     },
-    "mifosx-web-app-e2e": {
+    "midas-web-app-e2e": {
       "root": "e2e",
       "projectType": "application",
       "architect": {
@@ -169,11 +182,11 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "mifosx-web-app:serve"
+            "devServerTarget": "midas-web-app:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "mifosx-web-app:serve:production"
+              "devServerTarget": "midas-web-app:serve:production"
             }
           }
         },
@@ -191,5 +204,8 @@
       }
     }
   },
-  "defaultProject": "mifosx-web-app"
+  "defaultProject": "midas-web-app",
+  "cli": {
+    "analytics": "743dfdb3-5081-4bbe-9932-de450f46c4d5"
+  }
 }

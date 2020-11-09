@@ -1,11 +1,11 @@
 <div fxLayoutAlign="end" class="container m-b-20 transaction-buttons" fxLayoutGap="2%"
   *ngIf="!(transactionData.type.contra)">
-  <span *mifosxHasPermission="'ADJUST_LOAN'">
+  <span *midasHasPermission="'ADJUST_LOAN'">
     <button mat-raised-button color="primary" [routerLink]="'edit'">
       <fa-icon icon="edit"></fa-icon>&nbsp;&nbsp;Edit
     </button>
   </span>
-  <button mat-raised-button color="warn" *mifosxHasPermission="'ADJUST_LOAN'" (click)="undoTransaction()">
+  <button mat-raised-button color="warn" *midasHasPermission="'ADJUST_LOAN'" (click)="undoTransaction()">
     <fa-icon icon="undo"></fa-icon>&nbsp;&nbsp;Undo
   </button>
 </div>

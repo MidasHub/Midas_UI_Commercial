@@ -33,7 +33,8 @@ const log = new Logger('MifosX');
  * Main web app component.
  */
 @Component({
-  selector: 'mifosx-web-app',
+  // tslint:disable-next-line:component-selector
+  selector: 'midas-web-app',
   templateUrl: './web-app.component.html',
   styleUrls: ['./web-app.component.scss']
 })
@@ -53,15 +54,16 @@ export class WebAppComponent implements OnInit {
    * @param {AuthenticationService} authenticationService Authentication service.
    */
   constructor(private router: Router,
-              private activatedRoute: ActivatedRoute,
-              private titleService: Title,
-              private translateService: TranslateService,
-              private i18nService: I18nService,
-              private themeStorageService: ThemeStorageService,
-              public snackBar: MatSnackBar,
-              private alertService: AlertService,
-              private settingsService: SettingsService,
-              private authenticationService: AuthenticationService) { }
+    private activatedRoute: ActivatedRoute,
+    private titleService: Title,
+    private translateService: TranslateService,
+    private i18nService: I18nService,
+    private themeStorageService: ThemeStorageService,
+    public snackBar: MatSnackBar,
+    private alertService: AlertService,
+    private settingsService: SettingsService,
+    private authenticationService: AuthenticationService) {
+  }
 
   /**
    * Initial Setup:
@@ -126,20 +128,21 @@ export class WebAppComponent implements OnInit {
       this.themeStorageService.installTheme(theme);
     }
 
-    // Setup alerts
+    // Setup alerts 
     this.alertService.alertEvent.subscribe((alertEvent: Alert) => {
-      this.snackBar.open(`${alertEvent.message}`, 'Close', {
-        duration: 2000,
-        horizontalPosition: 'right',
-        verticalPosition: 'top'
+      this.snackBar.open(`${alertEvent.message}`, this.i18nService.getTranslate('Client_Component.ClientStepper.lblClose'), {
+        duration: (alertEvent.msgDuration) ? alertEvent.msgDuration : 30000,
+        horizontalPosition: (alertEvent.hPosition) ? alertEvent.hPosition : 'right',
+        verticalPosition: (alertEvent.vPosition) ? alertEvent.vPosition:'top',
+        panelClass: [alertEvent.msgClass],
       });
     });
     this.buttonConfig = new KeyboardShortcutsConfiguration();
 
     // initialize language and date format if they are null.
     if (!localStorage.getItem('midasLanguageCode')) {
-      let langCode = environment.defaultLanguage.split('-')[0];
-      console.log('[WEB-APP]LangCode:',langCode,' - name:',environment.languagesName[langCode]);
+      const langCode = environment.defaultLanguage.split('-')[0];
+      console.log('[WEB-APP]LangCode:', langCode, ' - name:', environment.languagesName[langCode]);
 
       this.settingsService.setLanguage({
         name: environment.languagesName[langCode],
@@ -147,7 +150,7 @@ export class WebAppComponent implements OnInit {
       });
     }
     if (!localStorage.getItem('midasDateFormat')) {
-      //this.settingsService.setDateFormat('dd MMMM yyyy');
+      // this.settingsService.setDateFormat('dd MMMM yyyy');
       this.settingsService.setDateFormat('dd/MM/yyyy');
     }
   }
@@ -158,8 +161,8 @@ export class WebAppComponent implements OnInit {
   }
 
   help() {
-    window.open('https://drive.google.com/drive/folders/1-J4JQyaaxBz2QSfZMzC4bPrPwWlksFWw?usp=sharing','_blank')
-    //window.open('https://mifosforge.jira.com/wiki/spaces/docs/pages/52035622/User+Manual', '_blank');
+    window.open('https://drive.google.com/drive/folders/1-J4JQyaaxBz2QSfZMzC4bPrPwWlksFWw?usp=sharing', '_blank');
+    // window.open('https://mifosforge.jira.com/wiki/spaces/docs/pages/52035622/User+Manual', '_blank');
   }
 
   // Monitor all keyboard events and excute keyboard shortcuts
@@ -201,4 +204,10 @@ export class WebAppComponent implements OnInit {
     }
   }
 
+  /** Scroll to Top Page for any route*/
+  onActivate(event: any) {
+    window.scroll(0, 0);
+    //or document.body.scrollTop = 0;
+    //or document.querySelector('body').scrollTo(0,0)
+  }
 }

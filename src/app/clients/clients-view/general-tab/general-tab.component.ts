@@ -1,9 +1,10 @@
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import {Component, OnInit} from '@angular/core';
+import {Router, ActivatedRoute} from '@angular/router';
 
 /** Custom Services. */
-import { ClientsService } from 'app/clients/clients.service';
+import {ClientsService} from 'app/clients/clients.service';
+import {AuthenticationService} from '../../../core/authentication/authentication.service';
 
 /**
  * General Tab component.
@@ -20,7 +21,7 @@ export class GeneralTabComponent {
   /** Closed Loan Accounts Columns */
   closedLoansColumns: string[] = ['Account No', 'Loan Account', 'Original Loan', 'Loan Balance', 'Amount Paid', 'Type', 'Closed Date'];
   /** Open Savings Accounts Columns */
-  openSavingsColumns: string[] = ['Account No', 'Saving Account', 'Last Active', 'Balance', 'Actions'];
+  openSavingsColumns: string[] = ['Account No', 'External Id', 'Saving Account', 'Last Active', 'Balance', 'Actions'];
   /** Closed Savings Accounts Columns */
   closedSavingsColumns: string[] = ['Account No', 'Saving Account', 'Closed Date'];
   /** Open Shares Accounts Columns */
@@ -56,6 +57,7 @@ export class GeneralTabComponent {
 
   /** Client Id */
   clientid: any;
+  isTeller = true;
 
   /**
    * @param {ActivatedRoute} route Activated Route
@@ -65,17 +67,25 @@ export class GeneralTabComponent {
   constructor(
     private route: ActivatedRoute,
     private clientService: ClientsService,
-    private router: Router
+    private router: Router,
+    private authenticationService: AuthenticationService
   ) {
     this.route.data.subscribe((data: { clientAccountsData: any, clientChargesData: any, clientSummary: any }) => {
       this.clientAccountData = data.clientAccountsData;
-      this.savingAccounts = data.clientAccountsData.savingsAccounts;
+      this.savingAccounts = data.clientAccountsData.savingsAccounts.sort((v: any) => ['SCA0', 'CCA0', 'ACA0', 'FCA0'].indexOf(v.shortProductName) === -1);
       this.loanAccounts = data.clientAccountsData.loanAccounts;
       this.shareAccounts = data.clientAccountsData.shareAccounts;
       this.upcomingCharges = data.clientChargesData.pageItems;
       this.clientSummary = data.clientSummary[0];
       this.clientid = this.route.parent.snapshot.params['clientId'];
-  });
+    });
+    const currentUser = this.authenticationService.getCredentials();
+    const {roles, staffId} = currentUser;
+    roles.map((role: any) => {
+      if (role.id !== 3) {
+        this.isTeller = false;
+      }
+    });
   }
 
   /**
@@ -119,7 +129,7 @@ export class GeneralTabComponent {
    * @param clientId Selected Client Id.
    */
   waiveCharge(chargeId: string, clientId: string) {
-    const charge = { clientId: clientId.toString(), resourceType: chargeId};
+    const charge = {clientId: clientId.toString(), resourceType: chargeId};
     this.clientService.waiveClientCharge(charge).subscribe(() => {
       this.getChargeData(clientId);
     });
@@ -147,8 +157,11 @@ export class GeneralTabComponent {
    * @param {any} loanId Loan Id
    */
   routeTransferFund(loanId: any) {
-    const queryParams: any = { loanId: loanId, accountType: 'fromloans' };
-    this.router.navigate(['../', 'loans-accounts', loanId, 'transfer-funds', 'make-account-transfer'], { relativeTo: this.route, queryParams: queryParams });
+    const queryParams: any = {loanId: loanId, accountType: 'fromloans'};
+    this.router.navigate(['../', 'loans-accounts', loanId, 'transfer-funds', 'make-account-transfer'], {
+      relativeTo: this.route,
+      queryParams: queryParams
+    });
   }
 
 }

@@ -58,7 +58,9 @@ import { ClientAddressStepComponent } from './client-stepper/client-address-step
 import { ClientFamilyMemberDialogComponent } from './client-stepper/client-family-members-step/client-family-member-dialog/client-family-member-dialog.component';
 import { CaptureImageDialogComponent } from './clients-view/custom-dialogs/capture-image-dialog/capture-image-dialog.component';
 import { CreateSelfServiceUserComponent } from './clients-view/client-actions/create-self-service-user/create-self-service-user.component';
-
+import {ReactiveFormsModule} from '@angular/forms';
+import {MoneyPipe} from '../pipes/money.pipe';
+import { AddIdentitiesComponent } from './clients-view/identities-tab/add-identities/add-identities.component';
 
 /**
  * Clients Module
@@ -70,7 +72,8 @@ import { CreateSelfServiceUserComponent } from './clients-view/client-actions/cr
     SharedModule,
     ClientsRoutingModule,
     PipesModule,
-    DirectivesModule
+    DirectivesModule,
+    ReactiveFormsModule,
   ],
   declarations: [
     ClientsComponent,
@@ -121,7 +124,12 @@ import { CreateSelfServiceUserComponent } from './clients-view/client-actions/cr
     ClientAddressStepComponent,
     ClientFamilyMemberDialogComponent,
     CaptureImageDialogComponent,
-    CreateSelfServiceUserComponent
+    CreateSelfServiceUserComponent,
+    MoneyPipe,
+    AddIdentitiesComponent
+  ],
+  exports: [
+    MoneyPipe
   ],
   providers: [DatePipe]
 

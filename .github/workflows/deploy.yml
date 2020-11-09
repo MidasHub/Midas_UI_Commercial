@@ -1,0 +1,14 @@
+on: [push]
+
+name: self-hosted-midas
+
+jobs:
+  deployStaging:
+    runs-on: self-hosted
+    steps:
+    # checkout branch
+    - uses: actions/checkout@v2
+    - name: yarn install, build
+      run: |
+        yarn install
+        ng build --prod --output-hashing=all --deleteOutputPath=true --base-href="/"  --serviceWorker=true --outputPath="/usr/share/nginx/html/staging/" 

@@ -60,8 +60,8 @@ export class EditEmployeeComponent implements OnInit {
   createEditEmployeeForm() {
     this.editEmployeeForm = this.formBuilder.group({
       'officeId': [this.employeeData.officeId, Validators.required],
-      'firstname': [this.employeeData.firstname, [Validators.required, Validators.pattern('(^[A-z]).*')]],
-      'lastname': [this.employeeData.lastname, [Validators.required, Validators.pattern('(^[A-z]).*')]],
+      'firstname': [this.employeeData.firstname, [Validators.required, Validators.pattern('^([^!@#$%^&*()_+=<>,.?\/\-]*)$')]],
+      'lastname': [this.employeeData.lastname, [Validators.required, Validators.pattern('^([^!@#$%^&*()_+=<>,.?\/\-]*)$')]],
       'isLoanOfficer': [this.employeeData.isLoanOfficer],
       'mobileNo': [this.employeeData.mobileNo],
       'isActive': [this.employeeData.isActive],

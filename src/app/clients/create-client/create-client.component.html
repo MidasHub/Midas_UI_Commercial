@@ -24,25 +24,17 @@
 
     <mat-step [stepControl]="clientGeneralForm">
 
-      <ng-template matStepLabel>GENERAL</ng-template>
+      <ng-template matStepLabel>{{'Client_Component.ClientStepper.labelGeneral'| translate}}</ng-template>
 
-      <mifosx-client-general-step [clientTemplate]="clientTemplate"></mifosx-client-general-step>
-
-    </mat-step>
-
-    <mat-step>
-
-      <ng-template matStepLabel>FAMILY MEMBERS</ng-template>
-
-      <mifosx-client-family-members-step [clientTemplate]="clientTemplate"></mifosx-client-family-members-step>
+      <mifosx-client-general-step [clientTemplate]="clientTemplate"  [clientIdentifierTemplate]="clientIdentifierTemplate"  (cancelEvent)="doCancel()"></mifosx-client-general-step>
 
     </mat-step>
 
     <mat-step>
 
-      <ng-template matStepLabel>ADDRESS</ng-template>
+      <ng-template matStepLabel>{{'Client_Component.ClientStepper.labelAddress'| translate}}</ng-template>
 
-      <mifosx-client-address-step 
+      <mifosx-client-address-step
         [clientTemplate]="clientTemplate"
         [clientAddressFieldConfig]="clientAddressFieldConfig"
       >
@@ -50,9 +42,19 @@
 
     </mat-step>
 
+    <mat-step>
+
+      <ng-template matStepLabel>{{'Client_Component.ClientStepper.labelRelative'| translate}}</ng-template>
+
+      <mifosx-client-family-members-step [clientTemplate]="clientTemplate"></mifosx-client-family-members-step>
+
+    </mat-step>
+
+
+
     <mat-step *ngIf="clientGeneralForm.valid" completed>
 
-      <ng-template matStepLabel>PREVIEW</ng-template>
+      <ng-template matStepLabel>{{'Client_Component.ClientStepper.labelPreview'| translate}}</ng-template>
 
       <mifosx-client-preview-step
         [clientTemplate]="clientTemplate"

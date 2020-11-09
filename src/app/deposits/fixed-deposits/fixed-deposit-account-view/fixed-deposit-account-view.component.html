@@ -192,7 +192,7 @@
         Standing Instructions
       </a>
       <ng-container *ngFor="let savingsDatatable of savingsDatatables">
-        <a mat-tab-link *mifosxHasPermission="'READ_' + savingsDatatable.registeredTableName"
+        <a mat-tab-link *midasHasPermission="'READ_' + savingsDatatable.registeredTableName"
           [routerLink]="['./datatables',savingsDatatable.registeredTableName]"
           routerLinkActive #datatable="routerLinkActive" [active]="datatable.isActive">
           {{savingsDatatable.registeredTableName}}

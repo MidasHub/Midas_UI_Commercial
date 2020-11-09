@@ -9,48 +9,74 @@
         <div fxLayout="column">
 
           <mat-form-field>
-            <mat-label>Name</mat-label>
+            <mat-label>{{ 'Group_Component.Create_Group_Component.labelName'| translate}}</mat-label>
             <input matInput required formControlName="name">
-            <mat-error *ngIf="editGroupForm.controls.name.hasError('required')">
-              Group Name is <strong>required</strong>
-            </mat-error>
-            <mat-error *ngIf="editGroupForm.controls.name.hasError('pattern')">
-              Group Name <strong>cannot</strong> begin with a special character or number
-            </mat-error>
+            <mat-error *ngIf="editGroupForm.controls.name.hasError('required')" [innerHTML]="'Group_Component.Create_Group_Component.labelGroupNameMsgRequired' |translate"></mat-error>
+            <mat-error *ngIf="editGroupForm.controls.name.hasError('pattern')" [innerHTML]="'Group_Component.Create_Group_Component.labelGroupNameMsgPattern' |translate"></mat-error>
           </mat-form-field>
 
           <mat-form-field>
-            <mat-label>Staff</mat-label>
+            <mat-label>{{ 'Group_Component.Create_Group_Component.labelStaff'| translate}}</mat-label>
             <mat-select formControlName="staffId">
               <mat-option *ngFor="let staff of staffData" [value]="staff.id">
               {{ staff.displayName }}
               </mat-option>
             </mat-select>
           </mat-form-field>
+          <mat-form-field>
+            <mat-label>{{ 'Group_Component.Create_Group_Component.labelType'| translate}}</mat-label>
+            <mat-select formControlName="groupTypeId">
+              <mat-option *ngFor="let type of groupType" [value]="groupTypeId" > 
+              {{ type.value }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <table mat-table [dataSource]="dataSource" class="mat-elevation" style="width: 100%;">
+            <ng-container matColumnDef="cardDescription">
+              <th mat-header-cell *matHeaderCellDef>{{ 'Group_Component.Create_Group_Component.tableColCartType'| translate}}</th>
+              <td mat-cell *matCellDef="let element">
+                <input matInput  readonly value="{{element.cardDescription}}"/>
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="minValue">
+              <th mat-header-cell *matHeaderCellDef>{{ 'Group_Component.Create_Group_Component.tableColFeeWithDraw'| translate}}</th>
+              <td mat-cell *matCellDef="let element, let index"> 
+                  <input matInput  (keypress)="onKey($event, index)" id="{{element.cardType}}_minValue" value="{{element.minValue}}"> 
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="maxValue">
+              <th mat-header-cell *matHeaderCellDef>{{ 'Group_Component.Create_Group_Component.tableColFeeRollTerm'| translate}}</th>
+              <td mat-cell *matCellDef="let element, let index"> 
+                  <input matInput (keypress)="onKey($event,index)" id="{{element.cardType}}_maxValue" value="{{element.maxValue}}"> 
+              </td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          </table>
 
           <mat-form-field *ngIf="this.editGroupForm.contains('activationDate')">
-            <mat-label>Activation Date</mat-label>
+            <mat-label>{{ 'Group_Component.Create_Group_Component.labelActivationDate'| translate}}</mat-label>
             <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="activationDatePicker" required formControlName="activationDate">
             <mat-datepicker-toggle matSuffix [for]="activationDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #activationDatePicker></mat-datepicker>
-            <mat-error *ngIf="editGroupForm.controls.activationDate.hasError('required')">
-              Activation Date is <strong>required</strong>
+            <mat-error *ngIf="editGroupForm.controls.activationDate.hasError('required')" [innerHTML]="'Group_Component.Create_Group_Component.labelGroupActivationDateMsgRequired' |translate">
             </mat-error>
           </mat-form-field>
 
           <mat-form-field>
-            <mat-label>External id</mat-label>
+            <mat-label>{{ 'Group_Component.Create_Group_Component.labelExternal'| translate}}</mat-label>
             <input matInput formControlName="externalId">
           </mat-form-field>
 
           <mat-form-field>
-            <mat-label>Submitted on</mat-label>
+            <mat-label>{{ 'Group_Component.Create_Group_Component.labelSubmittedOn'| translate}}</mat-label>
             <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="submittedOnDatePicker" required formControlName="submittedOnDate">
             <mat-datepicker-toggle matSuffix [for]="submittedOnDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #submittedOnDatePicker></mat-datepicker>
-            <mat-error *ngIf="editGroupForm.controls.submittedOnDate.hasError('required')">
-              Submission Date is <strong>required</strong>
-            </mat-error>
+            <mat-error *ngIf="editGroupForm.controls.submittedOnDate.hasError('required')" [innerHTML]="'Group_Component.Create_Group_Component.labelGroupSubmittedOnMsgRequired' |translate"></mat-error>
           </mat-form-field>
           
         </div>
@@ -58,8 +84,8 @@
       </mat-card-content>
 
       <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
-        <button type="button" mat-raised-button [routerLink]="['../']">Cancel</button>
-        <button mat-raised-button color="primary" [disabled]="!editGroupForm.valid" (click)="submit()">Submit</button>
+        <button type="button" mat-raised-button [routerLink]="['../']">{{ 'Group_Component.Create_Group_Component.btnCancel'| translate}}</button>
+        <button mat-raised-button color="primary" [disabled]="!editGroupForm.valid" (click)="submit()">{{ 'Group_Component.Create_Group_Component.btnSubmit'| translate}}</button>
       </mat-card-actions>
 
     </form>

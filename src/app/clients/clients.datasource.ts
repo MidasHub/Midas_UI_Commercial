@@ -36,7 +36,7 @@ export class ClientsDataSource implements DataSource<any> {
     this.clientsSubject.next([]);
     this.clientsService.getClients(orderBy, sortOrder, pageIndex * limit, limit)
       .subscribe((clients: any) => {
-        clients.pageItems = (clientActive) ? (clients.pageItems.filter((client: any) => client.active)) : (clients.pageItems.filter((client: any) => !client.active));
+        // clients.pageItems = (clientActive) ? (clients.pageItems.filter((client: any) => client.active)) : (clients.pageItems.filter((client: any) => !client.active));
         this.recordsSubject.next(clients.totalFilteredRecords);
         this.clientsSubject.next(clients.pageItems);
       });
@@ -68,7 +68,7 @@ export class ClientsDataSource implements DataSource<any> {
     this.clientsSubject.next([]);
     this.clientsService.getClients(orderBy, sortOrder, pageIndex * limit, limit)
       .subscribe((clients: any) => {
-        clients.pageItems = clients.pageItems.filter((client: any) => client.active === clientActive && client.displayName.toLowerCase().includes(filter));
+        clients.pageItems = clients.pageItems.filter((client: any) => client.displayName.toLowerCase().includes(filter));
         this.recordsSubject.next(clients.totalFilteredRecords);
         this.clientsSubject.next(clients.pageItems);
       });

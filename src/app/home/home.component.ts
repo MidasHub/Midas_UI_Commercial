@@ -4,18 +4,18 @@ import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { startWith, map } from 'rxjs/operators';
 
+
 /** Custom Imports. */
 import { activities } from './activities';
 
 /** Custom Services */
 import { AuthenticationService } from '../core/authentication/authentication.service';
-import { TranslateService } from '@ngx-translate/core';
 
 /**
  * Home component.
  */
 @Component({
-  selector: 'mifosx-home',
+  selector: 'midas-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
@@ -36,8 +36,11 @@ export class HomeComponent implements OnInit {
    * @param {AuthenticationService} authenticationService Authentication Service.
    * @param {FormBuilder} formBuilder Form Builder.
    */
-  constructor(private authenticationService: AuthenticationService,
-              private translate:TranslateService) { }
+
+
+
+
+  constructor(private authenticationService: AuthenticationService) { }
 
   /**
    * Sets the username of the authenticated user.
@@ -54,9 +57,9 @@ export class HomeComponent implements OnInit {
    */
   setFilteredActivities() {
     this.filteredActivities = this.searchText.valueChanges
-    .pipe(
-      map((activity: any) => typeof activity === 'string' ? activity : activity.activity),
-      map((activityName: string) => activityName ? this.filterActivity(activityName) : this.allActivities));
+      .pipe(
+        map((activity: any) => typeof activity === 'string' ? activity : activity.activity),
+        map((activityName: string) => activityName ? this.filterActivity(activityName) : this.allActivities));
   }
 
   /**
@@ -69,4 +72,5 @@ export class HomeComponent implements OnInit {
     return this.allActivities.filter(activity => activity.activity.toLowerCase().indexOf(filterValue) === 0);
   }
 
+  
 }

@@ -10,7 +10,7 @@ import { Alert } from '../core/alert/alert.model';
 
 /** Custom Services */
 import { AlertService } from '../core/alert/alert.service';
-import { TranslateService } from '@ngx-translate/core';
+// import { TranslateService } from '@ngx-translate/core';
 // import { I18nService } from '../core/i18n/i18n.service';
 // //import {environment} from '../../environments/environment'
 
@@ -37,7 +37,7 @@ export class LoginComponent implements OnInit, OnDestroy {
    */
   constructor(private alertService: AlertService,
     private router: Router,
-    private translate: TranslateService
+    // private translate: TranslateService
   ) {  }
 
   /**

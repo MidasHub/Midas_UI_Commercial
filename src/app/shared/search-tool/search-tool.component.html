@@ -1,12 +1,12 @@
 <div *ngIf="searchVisible" class="search-bar" fxFlex="auto" fxHide.lt-sm="true" fxLayout="row" fxLayoutGap="2%" [@fadeInOut]>
 
   <mat-form-field class="search">
-    <mat-label>Search</mat-label>
-    <input matInput type="text" [formControl]="query" (keydown.enter)="search()">
+    <mat-label>{{'Toolbar_Component.SearchTool_Component.lblSearch'|translate}}</mat-label>
+    <input matInput type="text" [formControl]="query" (keydown.enter)="search()" placeholder="{{'Toolbar_Component.SearchTool_Component.lblSeachPlaceholder'|translate}}">
   </mat-form-field>
 
   <mat-form-field class="resource">
-    <mat-label>Resource</mat-label>
+    <mat-label>{{'Toolbar_Component.SearchTool_Component.lblSource'|translate}}</mat-label>
     <mat-select [formControl]="resource">
       <mat-option *ngFor="let option of resourceOptions" [value]="option.value">
         {{ option.name }}

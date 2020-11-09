@@ -1,0 +1,16 @@
+.container {
+  max-width: 120rem;
+
+  .content {
+    div {
+      margin: 0.2rem 0;
+      word-wrap: break-word;
+
+      &.header {
+        font-weight: 500;
+      }
+    }
+  }
+  .center { text-align: center }
+  .left { text-align: left }
+}

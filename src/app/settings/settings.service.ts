@@ -25,23 +25,24 @@ export class SettingsService {
    */
   setLanguage(language: { name: string, code: string }) {
     localStorage.setItem('midasLanguageCode',language.code);
-    localStorage.setItem('midasLocale',language.code.split('-')[0]);
+    localStorage.setItem('code',language.code.split('-')[0]);
     localStorage.setItem('midasLanguageName',language.name) //JSON.stringify(language.code).code);
   }
 
   /**
    * Returns date format setting.
+   * TẠM THÒI HARDCODE PHẦN DATEFORMAT = 'dd MMMM yyyy' VÀ LOCALE = 'en' DO CÓ LỖI KHI GỌI API
    */
   get dateFormat() {
-    return localStorage.getItem('midasDateFormat');
+    console.log('Date Format:',localStorage.getItem('midasDateFormat'))
+    return JSON.parse( localStorage.getItem('midasDateFormat'));
   }
 
   /**
    * Returns language setting
    */
   get language() {
-    // console.log('langcode:',JSON.parse(localStorage.getItem('midasLanguageCode')))
-    return localStorage.getItem('midasLocale');
+    return { name: localStorage.getItem('midasLanguageCode'), code:'en'}; //localStorage.getItem('midasLocale') }
   }
 
 }

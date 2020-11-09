@@ -1,104 +1,107 @@
 /** Angular Imports */
-import { Component, OnInit, Inject } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { DatePipe } from '@angular/common';
+import {Component, OnInit, Inject} from '@angular/core';
+import {MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import {FormGroup, FormBuilder, Validators} from '@angular/forms';
+import {DatePipe} from '@angular/common';
 
 /** Custom Services */
-import { SettingsService } from 'app/settings/settings.service';
+import {SettingsService} from 'app/settings/settings.service';
 
 /**
  * Client Family Members Dialog
  */
 @Component({
-  selector: 'mifosx-client-family-member-dialog',
-  templateUrl: './client-family-member-dialog.component.html',
-  styleUrls: ['./client-family-member-dialog.component.scss']
+    selector: 'mifosx-client-family-member-dialog',
+    templateUrl: './client-family-member-dialog.component.html',
+    styleUrls: ['./client-family-member-dialog.component.scss']
 })
 export class ClientFamilyMemberDialogComponent implements OnInit {
 
-  /** Minimum Due Date allowed. */
-  minDate = new Date(2000, 0, 1);
-  /** Maximum Due Date allowed. */
-  maxDate = new Date();
+    /** Minimum Due Date allowed. */
+    minDate = new Date(2000, 0, 1);
+    /** Maximum Due Date allowed. */
+    maxDate = new Date();
 
-  /** Add/Edit family member form. */
-  familyMemberForm: FormGroup;
+    /** Add/Edit family member form. */
+    familyMemberForm: FormGroup;
 
-  /**
-   * @param {MatDialogRef} dialogRef Client Family Member Dialog Reference
-   * @param {FormBuilder} formBuilder Form Builder
-   * @param {DatePipe} datePipe Date Pipe
-   * @param {any} data Dialog Data
-   * @param {SettingsService} settingsService Setting service
-   */
-  constructor(public dialogRef: MatDialogRef<ClientFamilyMemberDialogComponent>,
-              private formBuilder: FormBuilder,
-              private datePipe: DatePipe,
-              @Inject(MAT_DIALOG_DATA) public data: any,
-              private settingsService: SettingsService) { }
-
-  ngOnInit() {
-    this.createFamilyMemberForm();
-    if (this.data.context === 'Edit') {
-      this.familyMemberForm.patchValue({
-        'firstName': this.data.member.firstName,
-        'middleName': this.data.member.middleName,
-        'lastName': this.data.member.lastName,
-        'qualification': this.data.member.qualification,
-        'age': this.data.member.age,
-        'isDependent': this.data.member.isDependent,
-        'relationshipId': this.data.member.relationshipId,
-        'genderId': this.data.member.genderId,
-        'professionId': this.data.member.professionId,
-        'maritalStatusId': this.data.member.maritalStatusId,
-        'dateOfBirth': this.data.member.dateOfBirth && new Date(this.data.member.dateOfBirth)
-      });
+    /**
+     * @param {MatDialogRef} dialogRef Client Family Member Dialog Reference
+     * @param {FormBuilder} formBuilder Form Builder
+     * @param {DatePipe} datePipe Date Pipe
+     * @param {any} data Dialog Data
+     * @param {SettingsService} settingsService Setting service
+     */
+    constructor(public dialogRef: MatDialogRef<ClientFamilyMemberDialogComponent>,
+                private formBuilder: FormBuilder,
+                private datePipe: DatePipe,
+                @Inject(MAT_DIALOG_DATA) public data: any,
+                private settingsService: SettingsService) {
     }
-  }
 
-  /**
-   * Creates Family Member Form
-   */
-  createFamilyMemberForm() {
-    this.familyMemberForm = this.formBuilder.group({
-      'firstName': ['', Validators.required],
-      'middleName': [''],
-      'lastName': ['', Validators.required],
-      'qualification': [''],
-      'age': [''],
-      'isDependent': [''],
-      'relationshipId': ['', Validators.required],
-      'genderId': [''],
-      'professionId': [''],
-      'maritalStatusId': [''],
-      'dateOfBirth': ['']
-    });
-  }
+    ngOnInit() {
+        this.createFamilyMemberForm();
+        if (this.data.context === 'Edit') {
+            this.familyMemberForm.patchValue({
+                'firstName': this.data.member.firstName,
+                'middleName': this.data.member.middleName,
+                'lastName': this.data.member.lastName,
+                'qualification': this.data.member.qualification,
+                'age': this.data.member.age,
+                'isDependent': this.data.member.isDependent,
+                'relationshipId': this.data.member.relationshipId,
+                'genderId': this.data.member.genderId,
+                'professionId': this.data.member.professionId,
+                'maritalStatusId': this.data.member.maritalStatusId,
+                'dateOfBirth': this.data.member.dateOfBirth && new Date(this.data.member.dateOfBirth),
+                'mobileNumber': this.data.member.mobileNumber
+            });
+        }
+    }
 
-  /**
-   * Returns Formatted Family Member
-   */
-  get familyMember() {
-    
-    const locale = this.settingsService.language;
-    const dateFormat = this.settingsService.dateFormat;
-    
-    // TODO: Update once language and date settings are setup
-    const familyMember = {
-      ...this.familyMemberForm.value,
-      dateFormat,
-      locale
-    };
-    for (const key in familyMember) {
-      if (familyMember[key] === '' || familyMember[key] === undefined) {
-        delete familyMember[key];
-      }
+    /**
+     * Creates Family Member Form
+     */
+    createFamilyMemberForm() {
+        this.familyMemberForm = this.formBuilder.group({
+            'firstName': ['', Validators.required],
+            'middleName': [''],
+            'lastName': ['', Validators.required],
+            'qualification': [''],
+            'age': [''],
+            'isDependent': [''],
+            'relationshipId': ['', Validators.required],
+            'genderId': [''],
+            'professionId': [''],
+            'maritalStatusId': [''],
+            'dateOfBirth': [''],
+            'mobileNumber': ['']
+        });
     }
-    if (familyMember.dateOfBirth) {
-      familyMember.dateOfBirth = this.datePipe.transform(familyMember.dateOfBirth, dateFormat);
+
+    /**
+     * Returns Formatted Family Member
+     */
+    get familyMember() {
+
+        const locale = this.settingsService.language.code;
+        const dateFormat = this.settingsService.dateFormat;
+
+        // TODO: Update once language and date settings are setup
+        const familyMember = {
+            ...this.familyMemberForm.value,
+            dateFormat,
+            locale
+        };
+        for (const key in familyMember) {
+            if (familyMember[key] === '' || familyMember[key] === undefined) {
+                delete familyMember[key];
+            }
+        }
+        if (familyMember.dateOfBirth) {
+            familyMember.dateOfBirth = this.datePipe.transform(familyMember.dateOfBirth, dateFormat);
+        }
+        return familyMember;
     }
-    return familyMember;
-  }
 
 }

@@ -15,6 +15,14 @@ const httpOptions = {
   }
 };
 
+const httpOptionsGateway = {
+  headers: {
+    'Gateway-TenantId': environment.GatewayTenantId
+  }
+};
+
+
+
 /** Authorization header. */
 const authorizationHeader = 'Authorization';
 /** Two factor access token header. */
@@ -32,7 +40,15 @@ export class AuthenticationInterceptor implements HttpInterceptor {
    * Intercepts a Http request and sets the request headers.
    */
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    request = request.clone({ setHeaders: httpOptions.headers });
+
+     if (!request.url.includes(environment.GatewayApiUrlPrefix)){
+
+      request = request.clone({ setHeaders: httpOptions.headers });
+
+     } else{
+
+      request = request.clone({ setHeaders: httpOptionsGateway.headers });
+     }
     return next.handle(request);
   }
 

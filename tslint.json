@@ -129,12 +129,14 @@
       true,
       "attribute",
       "mifosx",
+      "midas",
       "camelCase"
     ],
     "component-selector": [
       true,
       "element",
       "mifosx",
+      "midas",
       "kebab-case"
     ],
     "no-output-on-prefix": true,

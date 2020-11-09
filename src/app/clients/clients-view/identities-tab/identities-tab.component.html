@@ -2,7 +2,7 @@
 
     <h3>Identities</h3>
 
-    <button mat-raised-button class="f-right" color="primary" (click)="addIdentifier()" *mifosxHasPermission="'CREATE_CLIENTIDENTIFIER'">
+    <button mat-raised-button class="f-right" color="primary" (click)="addIdentifier()" *midasHasPermission="'CREATE_CLIENTIDENTIFIER'">
       <fa-icon icon="plus"></fa-icon>&nbsp;&nbsp; Add
     </button>
 
@@ -12,7 +12,10 @@
           <th mat-header-cell *matHeaderCellDef> Id </th>
           <td mat-cell *matCellDef="let identity">{{identity.id}}</td>
         </ng-container>
-
+      <ng-container matColumnDef="documentKey">
+        <th mat-header-cell *matHeaderCellDef> Document Key </th>
+        <td mat-cell *matCellDef="let identity">{{identity.documentKey}}</td>
+      </ng-container>
         <ng-container matColumnDef="description">
           <th mat-header-cell *matHeaderCellDef> Description </th>
           <td mat-cell *matCellDef="let identity"> {{identity.description}} </td>
@@ -28,7 +31,7 @@
           <td mat-cell *matCellDef="let identity">
             <div *ngFor="let document of identity.documents">
               {{document.name}}
-              <fa-icon icon="cloud-download-alt" (click)="download(document.parentEntityId,document.id)" *mifosxHasPermission="'READ_DOCUMENT'"></fa-icon>
+              <fa-icon icon="cloud-download-alt" (click)="download(document.parentEntityId,document.id)" *midasHasPermission="'READ_DOCUMENT'"></fa-icon>
             </div>
           </td>
         </ng-container>
@@ -43,10 +46,10 @@
         <ng-container matColumnDef="actions">
           <th mat-header-cell *matHeaderCellDef> Actions </th>
           <td mat-cell *matCellDef="let identity; let i = index">
-            <button class="identity-action-button" mat-raised-button color="primary" (click)="uploadDocument(i,identity.id)" *mifosxHasPermission="'CREATE_DOCUMENT'">
+            <button class="identity-action-button" mat-raised-button color="primary" (click)="uploadDocument(i,identity.id)" *midasHasPermission="'CREATE_DOCUMENT'">
               <fa-icon icon="cloud-upload-alt"></fa-icon>
             </button>
-            <button class="identity-action-button" mat-raised-button color="warn" (click)="deleteIdentifier(identity.clientId,identity.id,i)" *mifosxHasPermission="'DELETE_CLIENTIDENTIFIER'">
+            <button class="identity-action-button" mat-raised-button color="warn" (click)="deleteIdentifier(identity.clientId,identity.id,i)" *midasHasPermission="'DELETE_CLIENTIDENTIFIER'">
               <fa-icon icon="times"></fa-icon>
             </button>
           </td>

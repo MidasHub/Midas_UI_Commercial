@@ -54,7 +54,8 @@ export class ManageGroupMembersComponent implements AfterViewInit {
   ngAfterViewInit() {
     this.clientChoice.valueChanges.subscribe( (value: string) => {
       if (value.length >= 2) {
-        this.clientsService.getFilteredClients('displayName', 'ASC', true, value, this.groupData.officeId)
+        //this.clientsService.getFilteredClients('displayName', 'ASC', true, value, this.groupData.officeId)
+        this.clientsService.getFilteredClients('displayName', 'ASC', true, value,'')
           .subscribe((data: any) => {
             this.clientsData = data.pageItems;
           });
@@ -66,9 +67,15 @@ export class ManageGroupMembersComponent implements AfterViewInit {
    * Add client.
    */
   addClient() {
-    if (!this.clientMembers.includes(this.clientChoice.value)) {
+    if(this.clientMembers){
+      if (!this.clientMembers.includes(this.clientChoice.value)) {
+        this.groupsService.executeGroupCommand(this.groupData.id, 'associateClients', {clientMembers: [this.clientChoice.value.id]})
+          .subscribe(() => { this.clientMembers.push(this.clientChoice.value); });
+      }
+    }else{
+      this.clientMembers = [];
       this.groupsService.executeGroupCommand(this.groupData.id, 'associateClients', {clientMembers: [this.clientChoice.value.id]})
-        .subscribe(() => { this.clientMembers.push(this.clientChoice.value); });
+          .subscribe(() => { this.clientMembers.push(this.clientChoice.value); });
     }
   }
 

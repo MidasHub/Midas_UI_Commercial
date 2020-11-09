@@ -1,5 +1,5 @@
 <div class="container m-b-20" fxLayout="row" fxLayoutAlign="end" fxLayoutGap="20px" *ngIf="!isdividendPosted">
-  <button mat-raised-button color="primary" *mifosxHasPermission='"POST_DIVIDENDS"' (click)="postDividends()">
+  <button mat-raised-button color="primary" *midasHasPermission='"POST_DIVIDENDS"' (click)="postDividends()">
     <fa-icon icon="plus"></fa-icon>&nbsp;&nbsp;
     Post Dividend
   </button>

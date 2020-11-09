@@ -24,7 +24,8 @@ export interface HttpCacheEntry {
 export class HttpCacheService {
 
   /** Key to cache Http Requests in storage. */
-  private cachePersistenceStorageKey = 'mifosXHttpCache';
+  // private cachePersistenceStorageKey = 'mifosXHttpCache';
+  private cachePersistenceStorageKey = 'midasXHttpCache';
 
   private cachedData: { [key: string]: HttpCacheEntry; } = {};
   private storage: Storage | null = null;

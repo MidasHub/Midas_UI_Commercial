@@ -1,8 +1,8 @@
 /** Angular Imports */
-import { Injectable, EventEmitter } from '@angular/core';
+import {Injectable, EventEmitter} from '@angular/core';
 
 /** Custom Model */
-import { Alert } from './alert.model';
+import {Alert} from './alert.model';
 
 /**
  * Alert service.
@@ -29,5 +29,4 @@ export class AlertService {
   alert(alertEvent: Alert) {
     this.alertEvent.emit(alertEvent);
   }
-
 }

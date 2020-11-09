@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, Output, EventEmitter, Input } from '@angular/core';
+import {Component, Output, EventEmitter, Input} from '@angular/core';
 
 /**
  * Client Preview Step Component
@@ -17,11 +17,23 @@ export class ClientPreviewStepComponent {
   @Input() clientTemplate: any;
   /** Client Object */
   @Input() client: any;
+  @Input() documents: any;
+
+  /** Historical page from URL */
+  @Input() go_back: any;
 
   /** Form submission event */
   @Output() submit = new EventEmitter();
 
-  constructor() { }
+  constructor() {
+    this.submit.subscribe(function (e: any) {
+      console.log(e);
+    }, function (error: any) {
+      console.log('error', error);
+    }, function (success: any) {
+      console.log('success', success);
+    });
+  }
 
   /**
    * Utilized in address preview.
@@ -30,7 +42,7 @@ export class ClientPreviewStepComponent {
    * @param {any} fieldId Field Id
    */
   getSelectedValue(fieldName: any, fieldId: any) {
-    return (this.clientTemplate.address[fieldName].find((fieldObj: any) => fieldObj.id === fieldId));
+    return (this.clientTemplate.address[0][fieldName].find((fieldObj: any) => fieldObj.id === fieldId));
   }
 
   /**
@@ -38,7 +50,20 @@ export class ClientPreviewStepComponent {
    * @param {any} fieldName Field Name
    */
   isFieldEnabled(fieldName: any) {
-    return (this.clientAddressFieldConfig.find((fieldObj: any) => fieldObj.field === fieldName)).isEnabled;
+    return (this.clientAddressFieldConfig.find((fieldObj: any) => fieldObj.field === fieldName))?.isEnabled;
   }
 
+  onSubmit(event: any) {
+    console.log(this.client);
+    const data = {...this.client};
+    // delete data.documentTypeId;
+    delete data.files;
+    console.log('data', data);
+    this.submit.emit();
+    return;
+  }
+
+  clickCancel(){
+    console.log (this.go_back)
+  }
 }

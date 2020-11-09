@@ -1,6 +1,6 @@
 <div fxLayoutAlign="end" class="container m-b-20" fxLayoutGap="2%"
   *ngIf="!(transactionData.interestedPostedAsOn === false && (transactionData.transactionType.id === 17 || transactionData.transactionType.id === 3))">
-  <span *mifosxHasPermission="'ADJUSTTRANSACTION_SAVINGSACCOUNT'">
+  <span *midasHasPermission="'ADJUSTTRANSACTION_SAVINGSACCOUNT'">
     <button mat-raised-button color="primary" 
       *ngIf="transactionData.transactionType.value == 'Transfer' || transactionData.reversed == 'true' 
         || transactionData.transactionType.id==3 || transactionData.transactionType.id==17"
@@ -9,7 +9,7 @@
     </button>
   </span>
   <button mat-raised-button color="warn"
-    *mifosxHasPermission="'UNDOTRANSACTION_SAVINGSACCOUNT'"
+    *midasHasPermission="'UNDOTRANSACTION_SAVINGSACCOUNT'"
     (click)="undoTransaction()">
     <fa-icon icon="undo"></fa-icon>&nbsp;&nbsp;Undo
   </button>

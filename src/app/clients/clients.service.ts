@@ -1,5 +1,6 @@
 /** Angular Imports */
 import { Injectable } from '@angular/core';
+import { environment } from 'environments/environment';
 import { HttpClient, HttpParams } from '@angular/common/http';
 
 /** rxjs Imports */
@@ -11,10 +12,31 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class ClientsService {
+
+  private credentialsStorageKey = 'mifosXCredentials';
+  private accessToken: any;
+  private GatewayApiUrlPrefix: any;
   /**
    * @param {HttpClient} http Http Client to send requests.
    */
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+
+    this.accessToken = JSON.parse(
+      sessionStorage.getItem(this.credentialsStorageKey)
+      || localStorage.getItem(this.credentialsStorageKey)
+    );
+    this.GatewayApiUrlPrefix = environment.GatewayApiUrlPrefix ;
+   }
+
+  getClientTest(officeId: number , amount: number): Observable<any> {
+    const httpParams = new HttpParams()
+      .set('id', officeId.toString())
+      .set('amountTransaction', amount.toString())
+      .set('createdBy', this.accessToken.userId)
+      .set('accessToken', this.accessToken.base64EncodedAuthenticationKey);
+
+    return this.http.post<any>(`${this.GatewayApiUrlPrefix}/pos/get_list_terminal_by_office`, httpParams);
+  }
 
   getFilteredClients(orderBy: string, sortOrder: string, orphansOnly: boolean, displayName: string, officeId?: any): Observable<any> {
     let httpParams = new HttpParams()

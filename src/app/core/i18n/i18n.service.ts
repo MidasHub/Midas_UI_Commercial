@@ -1,16 +1,16 @@
 /** Angular Imports */
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 // import { Subject } from 'rxjs';
 
 /** Translation Imports */
-import { TranslateService, LangChangeEvent } from '@ngx-translate/core';
+import {TranslateService, LangChangeEvent} from '@ngx-translate/core';
 
 /** Custom Services */
-import { Logger } from '../logger/logger.service';
+import {Logger} from '../logger/logger.service';
 
 /** Other Imports */
-import { includes } from 'lodash';
-import { environment } from 'environments/environment';
+import {includes} from 'lodash';
+import {environment} from 'environments/environment';
 // import * as enUS from '../../../translations/en-US.json';
 // import * as frFR from '../../../translations/fr-FR.json';
 // import * as viVN from '../../../translations/vi-VN.json';
@@ -34,20 +34,20 @@ export class I18nService {
   /** Key to store current language of application in local storage. */
   private languageStorageKey = 'midasLanguageCode';
   private localeStorageKey = 'midasLocale';
-  private languagesNameStoragekey='midasLanguageName';
-  languagesNameObj:{
-    en:"English",
-    vi:"Vietnamese"
-   }
+  private languagesNameStoragekey = 'midasLanguageName';
+  languagesNameObj: {
+    en: 'English',
+    vi: 'Vietnamese'
+  };
 
   defaultLanguage: string;
   supportedLanguages: string[];
 
   constructor(private translate: TranslateService) {
     /**  Embed languages to avoid extra HTTP requests - Jean: rem due to error when using this method
-    *  Jean change to use the default http loader of ngx-translate which is configged in the app.module.ts file
-    *  
-    */
+     *  Jean change to use the default http loader of ngx-translate which is configged in the app.module.ts file
+     *
+     */
     // translate.setTranslation('en-US', enUS);
     // translate.setTranslation('fr-FR', frFR);
     // translate.setTranslation('vi-VN', viVN);
@@ -62,14 +62,14 @@ export class I18nService {
   init(defaultLanguage: string, supportedLanguages: string[]) {
     this.defaultLanguage = defaultLanguage;
     this.supportedLanguages = supportedLanguages;
-    this.language = '';
+    this.language = defaultLanguage;
 
     this.translate.onLangChange
-      .subscribe((event: LangChangeEvent) => { 
-        
-        localStorage.setItem(this.languageStorageKey, event.lang); 
-        localStorage.setItem(this.localeStorageKey, event.lang.split('-')[0]); 
-        localStorage.setItem(this.languagesNameStoragekey,environment.languagesName[event.lang.split('-')[0]]); 
+      .subscribe((event: LangChangeEvent) => {
+
+        localStorage.setItem(this.languageStorageKey, event.lang);
+        localStorage.setItem(this.localeStorageKey, event.lang.split('-')[0]);
+        localStorage.setItem(this.languagesNameStoragekey, environment.languagesName[event.lang.split('-')[0]]);
       });
   }
 
@@ -82,8 +82,8 @@ export class I18nService {
   set language(language: string) {
     language = language || localStorage.getItem(this.languageStorageKey) || this.translate.getBrowserCultureLang();
     let isSupportedLanguage = includes(this.supportedLanguages, language);
-    console.log('start:',language);
-    console.log('start supported Lang:',isSupportedLanguage);
+    console.log('start:', language);
+    console.log('start supported Lang:', isSupportedLanguage);
     // If no exact match is found, search without the region
     if (language && !isSupportedLanguage) {
       language = language.split('-')[0];
@@ -107,4 +107,13 @@ export class I18nService {
     return this.translate.currentLang;
   }
 
+  /** Translate in javascript code */
+  getTranslate(field: any): string {
+    let lbl = '';
+    this.translate.get(field).subscribe((res: string) => {
+      // console.log('title', res);
+      lbl = res;
+    });
+    return lbl;
+  }
 }

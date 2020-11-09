@@ -5,3 +5,40 @@
 .margin-t {
   margin-top: 2em;
 }
+
+.custom-files-input {
+  margin: 5px;
+  margin-top: 10px;
+  padding: 5px;
+}
+
+.toolbar ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+.toolbar ul li {
+  float: left;
+}
+
+.toolbar ul li img {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 16px;
+  text-decoration: none;
+}
+
+.card-custom {
+  margin-top: 8px;
+}
+
+.readonly-wrapper {
+  cursor: not-allowed;
+}
+
+.readonly-wrapper .readonly-block {
+  pointer-events: none;
+}

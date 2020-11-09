@@ -58,8 +58,8 @@ export class EditUserComponent implements OnInit {
     this.editUserForm = this.formBuilder.group({
       'username': [this.userData.username, Validators.required],
       'email': [this.userData.email, [Validators.required, Validators.email]],
-      'firstname': [this.userData.firstname, [Validators.required, Validators.pattern('(^[A-z]).*')]],
-      'lastname': [this.userData.lastname, [Validators.required, Validators.pattern('(^[A-z]).*')]],
+      'firstname': [this.userData.firstname, [Validators.required, Validators.pattern('^([^!@#$%^&*()_+=<>,.?\/\-]*)$')]],
+      'lastname': [this.userData.lastname, [Validators.required, Validators.pattern('^([^!@#$%^&*()_+=<>,.?\/\-]*)$')]],
       'passwordNeverExpires': [this.userData.passwordNeverExpires],
       'officeId': [this.userData.officeId, Validators.required],
       'staffId': [staffId],

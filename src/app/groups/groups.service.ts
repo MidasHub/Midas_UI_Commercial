@@ -1,7 +1,7 @@
 /** Angular Imports */
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-
+import { environment } from 'environments/environment';
 /** rxjs Imports */
 import { Observable } from 'rxjs';
 
@@ -16,7 +16,16 @@ export class GroupsService {
   /**
    * @param {HttpClient} http Http Client to send requests.
    */
-  constructor(private http: HttpClient) { }
+  private credentialsStorageKey = 'mifosXCredentials';
+  private accessToken: any;
+  private GatewayApiUrlPrefix: any;
+  constructor(private http: HttpClient) { 
+    this.accessToken = JSON.parse(
+      sessionStorage.getItem(this.credentialsStorageKey)
+      || localStorage.getItem(this.credentialsStorageKey)
+    );
+    this.GatewayApiUrlPrefix = environment.GatewayApiUrlPrefix ;
+  }
 
   /**
    * @param {any} filterBy Properties by which entries should be filtered.
@@ -40,6 +49,21 @@ export class GroupsService {
       }
     });
     return this.http.get('/groups', { params: httpParams });
+  }
+  
+  getCartTypes(): Observable<any> {
+    let httpParams = new HttpParams()
+      .set('createdBy', this.accessToken.userId)
+      .set('accessToken', this.accessToken.base64EncodedAuthenticationKey);
+    return this.http.post<any>(`${this.GatewayApiUrlPrefix}/groups/get_fee_group_template`, httpParams);
+  }
+
+  getCartTypesByGroupId(groupId:any): Observable<any> {
+    let httpParams = new HttpParams()
+      .set('createdBy', this.accessToken.userId)
+      .set('accessToken', this.accessToken.base64EncodedAuthenticationKey)
+      .set('groupId', groupId);
+    return this.http.post<any>(`${this.GatewayApiUrlPrefix}/groups/get_fee_by_GroupId`, httpParams);
   }
 
   /**
@@ -225,7 +249,24 @@ export class GroupsService {
   createGroup(group: any): Observable<any> {
     return this.http.post('/groups', group);
   }
-
+  createFeeGroup(groupId: any, listFeeGroup: any): Observable<any> {
+    let httpParams = {
+      'createdBy': this.accessToken.userId,
+      'accessToken': this.accessToken.base64EncodedAuthenticationKey,
+      'groupId': groupId,
+      'listFeeGroup': JSON.stringify(listFeeGroup)
+    };
+    return this.http.post<any>(`${this.GatewayApiUrlPrefix}/groups/add_fee_by_Group`, httpParams);
+  }
+  updateFeeGroup(groupId: any, listFeeGroup: any): Observable<any> {
+    let httpParams = {
+      'createdBy': this.accessToken.userId,
+      'accessToken': this.accessToken.base64EncodedAuthenticationKey,
+      'groupId': groupId,
+      'listFeeGroup': JSON.stringify(listFeeGroup)
+    };
+    return this.http.post<any>(`${this.GatewayApiUrlPrefix}/groups/update_fee_by_Group`, httpParams);
+  }
   /**
    * @param {any} group Group to be updated.
    * @param {any} groupId Group Id
