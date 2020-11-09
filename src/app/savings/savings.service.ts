@@ -152,7 +152,14 @@ export class SavingsService {
     const httpParams = new HttpParams().set('associations', 'all');
     return this.http.get(`/savingsaccounts/${accountId}`, {params: httpParams});
   }
-
+  /**
+   * @param accountId Savings Account Id of account to get data for.
+   * @returns {Observable<any>} Savings data.
+   */
+  getSavingsAccountNoTransactions(accountId: string): Observable<any> {
+    const httpParams = new HttpParams().set('associations', 'charges');
+    return this.http.get(`/savingsaccounts/${accountId}`, {params: httpParams});
+  }
   /**
    * @param accountId Savings Account Id of account to get data for.
    * @returns {Observable<any>} Savings account and template.

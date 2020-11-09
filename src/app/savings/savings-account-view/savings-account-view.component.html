@@ -44,7 +44,7 @@
           <i class="{{button.icon}}"></i> {{button.name | translate}}</button>
       </ng-container>
 
-      <ng-container *ngIf="buttonConfig.options">
+      <ng-container *ngIf="buttonConfig?.options">
         <button mat-raised-button
                 [matMenuTriggerFor]="More">{{ 'Saving_Account_Component.ViewSavingAccount.buttonMore'| translate}}</button>
         <mat-menu #More="matMenu">

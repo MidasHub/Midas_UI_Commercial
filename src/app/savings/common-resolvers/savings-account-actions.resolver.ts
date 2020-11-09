@@ -38,10 +38,10 @@ export class SavingsAccountActionsResolver implements Resolve<Object> {
       case 'Close':
         return forkJoin([
           this.savingsService.getSavingsTransactionTemplateResource(savingAccountId),
-          this.savingsService.getSavingsAccountData(savingAccountId)
+          this.savingsService.getSavingsAccountNoTransactions(savingAccountId)
         ]);
       case 'Apply Annual Fees':
-        return this.savingsService.getSavingsAccountData(savingAccountId);
+        return this.savingsService.getSavingsAccountNoTransactions(savingAccountId);
       default:
         return undefined;
     }
