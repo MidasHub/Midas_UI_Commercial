@@ -12,7 +12,7 @@ export const environment = {
   apiProvider: '/fineract-provider/api',
   apiVersion: '/v1',
   serverUrl: '',
-  gatewayServerUrl: '',
+  GatewayServerUrl: '',
   oauth: {
     enabled: false,  // For connecting to Midas using OAuth2 Authentication change the value to true
     serverUrl: ''
@@ -31,4 +31,4 @@ export const environment = {
 // Server URL
 environment.serverUrl = `${environment.baseApiUrl}${environment.apiProvider}${environment.apiVersion}`;
 environment.oauth.serverUrl = `${environment.baseApiUrl}${environment.apiProvider}`;
-environment.gatewayServerUrl = `${environment.GatewayApiUrl}`;
+environment.GatewayServerUrl = `${environment.GatewayApiUrl}`;
