@@ -1,18 +1,7 @@
-.container {
-  .action-button {
-    margin-left: auto;
-  }
-  .search-button {
-    min-width: 30px;
-    margin: 4px;
-  }
+table {
+  width: 100%;
 }
 
-table {
-  tr.select-row:hover {
-    cursor: pointer;
-  }
-  tr:nth-child(odd).td{
-    color : black;
-  }
+.mat-column-actions {
+  text-align: right;
 }

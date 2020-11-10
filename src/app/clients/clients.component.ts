@@ -12,6 +12,8 @@ import {tap} from 'rxjs/operators';
 /** Custom Services */
 import {ClientsService} from './clients.service';
 import {ActivatedRoute, Params, Route, Router} from '@angular/router';
+import {MidasClientService} from '../midas-client/midas-client.service';
+import {BreakpointObserver} from '@angular/cdk/layout';
 
 @Component({
   selector: 'mifosx-clients',
@@ -30,7 +32,12 @@ export class ClientsComponent implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   @ViewChild(MatSort, {static: true}) sort: MatSort;
 
-  constructor(private clientsService: ClientsService, private route: ActivatedRoute, private router: Router) {
+  constructor(private clientsService: ClientsService, private route: ActivatedRoute, private router: Router, private midasClientService: MidasClientService, private breakpointObserver: BreakpointObserver) {
+    breakpointObserver.observe(['(max-width: 600px)']).subscribe(result => {
+      this.displayedColumns = result.matches ?
+        ['name', 'clientno', 'externalid', 'status', 'mobileNo', 'gender', 'office', 'staff'] :
+        ['name', 'clientno', 'externalid', 'status', 'mobileNo', 'gender', 'office', 'staff'];
+    });
   }
 
   ngOnInit() {
@@ -88,7 +95,7 @@ export class ClientsComponent implements OnInit, AfterViewInit {
    * Initializes the data source for clients table and loads the first page.
    */
   getClients() {
-    this.dataSource = new ClientsDataSource(this.clientsService);
+    this.dataSource = new ClientsDataSource(this.clientsService, this.midasClientService);
     this.dataSource.getClients(this.sort.active, this.sort.direction, this.paginator.pageIndex, this.paginator.pageSize, !this.showClosedAccounts.checked);
   }
 

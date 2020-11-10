@@ -1,11 +1,12 @@
 /** Angular Imports */
-import { CollectionViewer, DataSource } from '@angular/cdk/collections';
+import {CollectionViewer, DataSource} from '@angular/cdk/collections';
 
 /** rxjs Imports */
-import { Observable, BehaviorSubject } from 'rxjs';
+import {Observable, BehaviorSubject} from 'rxjs';
 
 /** Custom Services */
-import { ClientsService } from './clients.service';
+import {ClientsService} from './clients.service';
+import {MidasClientService} from '../midas-client/midas-client.service';
 
 /**
  * Clients custom data source to implement server side filtering, pagination and sorting.
@@ -22,7 +23,8 @@ export class ClientsDataSource implements DataSource<any> {
   /**
    * @param {ClientsService} clientsService Clients Service
    */
-  constructor(private clientsService: ClientsService) { }
+  constructor(private clientsService: ClientsService, private midasClientService: MidasClientService) {
+  }
 
   /**
    * Gets clients on the basis of provided parameters and emits the value.
@@ -66,11 +68,12 @@ export class ClientsDataSource implements DataSource<any> {
    */
   filterClients(filter: string, orderBy: string = '', sortOrder: string = '', pageIndex: number = 0, limit: number = 10, clientActive: boolean = true) {
     this.clientsSubject.next([]);
-    this.clientsService.getClients(orderBy, sortOrder, pageIndex * limit, limit)
+    this.midasClientService.searchClientByNameAndExternalIdAndPhoneAndDocumentKey(filter)
       .subscribe((clients: any) => {
-        clients.pageItems = clients.pageItems.filter((client: any) => client.active === clientActive && client.displayName.toLowerCase().includes(filter));
-        this.recordsSubject.next(clients.totalFilteredRecords);
-        this.clientsSubject.next(clients.pageItems);
+        console.log(clients);
+        // clients.pageItems = clients.pageItems.filter((client: any) => client.active === clientActive && client.displayName.toLowerCase().includes(filter));
+        // this.recordsSubject.next(clients.totalFilteredRecords);
+        // this.clientsSubject.next(clients.pageItems);
       });
   }
 
