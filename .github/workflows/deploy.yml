@@ -14,5 +14,6 @@ jobs:
       run: |
         git pull origin staging
     - name: yarn install 
+      run: |
         yarn install
         ng build --prod --output-hashing=all --deleteOutputPath=true --base-href="/"  --serviceWorker=true --outputPath="/usr/share/nginx/html/staging/" 
