@@ -1,11 +1,12 @@
 /** Angular Imports */
-import { Component, OnInit, Input, Output,EventEmitter } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
-import { DatePipe } from '@angular/common';
+import {Component, OnInit, Input, Output, EventEmitter} from '@angular/core';
+import {FormBuilder, FormGroup, Validators, FormControl} from '@angular/forms';
+import {DatePipe} from '@angular/common';
 
 /** Custom Services */
-import { SettingsService } from 'app/settings/settings.service';
-import { AuthenticationService } from '../../../core/authentication/authentication.service';
+import {SettingsService} from 'app/settings/settings.service';
+import {AuthenticationService} from '../../../core/authentication/authentication.service';
+import {CentersService} from '../../../centers/centers.service';
 
 
 /**
@@ -28,7 +29,7 @@ export class ClientGeneralStepComponent implements OnInit {
   /** Identifier Template */
   @Input() clientIdentifierTemplate: any;
 
-  @Output() cancelEvent = new EventEmitter()
+  @Output() cancelEvent = new EventEmitter();
 
   currentUser: any;
   /** Create Client Form */
@@ -69,9 +70,10 @@ export class ClientGeneralStepComponent implements OnInit {
    * @param {SettingsService} settingsService Setting service
    */
   constructor(private formBuilder: FormBuilder,
-    private datePipe: DatePipe,
-    private settingsService: SettingsService,
-    private authenticationService: AuthenticationService) {
+              private datePipe: DatePipe,
+              private settingsService: SettingsService,
+              private authenticationService: AuthenticationService,
+              private centersService: CentersService) {
     this.setClientForm();
   }
 
@@ -109,6 +111,12 @@ export class ClientGeneralStepComponent implements OnInit {
     });
     this.createClientForm.addControl('activationDate', new FormControl(new Date()));
     this.createClientForm.addControl('submittedOnDate', new FormControl(new Date()));
+    this.createClientForm.get('officeId').valueChanges.subscribe((value: any) => {
+      this.centersService.getStaff(value).subscribe((staffs: any) => {
+        console.log(staffs);
+        this.staffOptions = staffs?.staffOptions;
+      });
+    });
   }
 
   /**
@@ -134,7 +142,7 @@ export class ClientGeneralStepComponent implements OnInit {
       }
     });
     this.currentUser = this.authenticationService.getCredentials();
-    const { roles, staffId } = this.currentUser;
+    const {roles, staffId} = this.currentUser;
     this.createClientForm.get('staffId').setValue(staffId);
     roles.map((role: any) => {
       if (role.id !== 3) {
@@ -225,15 +233,15 @@ export class ClientGeneralStepComponent implements OnInit {
     //   };
     // }
     // generalDetails.addSavings = true;
-    console.log({ generalDetails });
+    console.log({generalDetails});
     return generalDetails;
   }
 
   get files() {
-    return { files: this.clientFilesData };
+    return {files: this.clientFilesData};
   }
 
   clickCancel() {
-    this.cancelEvent.emit()
+    this.cancelEvent.emit();
   }
 }
