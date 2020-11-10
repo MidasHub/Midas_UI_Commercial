@@ -1,14 +1,30 @@
-on: [push]
+on:
+  push:
+    branches: [ staging ]
+  push:
+    branches: [ development ]    
 
-name: self-hosted-midas
+name: Midas_UI_staging_deploy
 
 jobs:
   deployStaging:
+    if: ${{ github.event_name == 'push' && github.event.branches == 'staging' }}
     runs-on: self-hosted
     steps:
     # checkout branch
-    - uses: actions/checkout@v2
-    - name: yarn install, build
+    - name: pull source from staging branch
+      run: |
+        git pull origin staging
+    - name: install dependency
       run: |
         yarn install
+    - name: build production
         ng build --prod --output-hashing=all --deleteOutputPath=true --base-href="/"  --serviceWorker=true --outputPath="/usr/share/nginx/html/staging/" 
+
+  testDev:
+    runs-on: self-hosted
+    if: ${{ github.event_name == 'push' && github.event.branches == 'development' }}
+    steps:
+    - name: test if event
+      run: |
+        @echo "Hello"
