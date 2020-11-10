@@ -1,19 +1,19 @@
 /** Angular Imports */
 import { Injectable } from '@angular/core';
 import { Resolve, ActivatedRouteSnapshot } from '@angular/router';
+import { ClientsService } from 'app/clients/clients.service';
 
 /** rxjs Imports */
 import { Observable, forkJoin, from } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 /** Custom Services */
-import { ClientsService } from '../clients.service';
 
 /**
  * Client Identities resolver.
  */
 @Injectable()
-export class ClientIdentitiesResolver implements Resolve<Object> {
+export class MidasClientIdentitiesResolver implements Resolve<Object> {
     /**
      * @param {ClientsService} ClientsService Clients service.
      */
@@ -23,14 +23,12 @@ export class ClientIdentitiesResolver implements Resolve<Object> {
      * @returns {Observable<any>}
      */
     resolve(route: ActivatedRouteSnapshot): Observable<any> {
-        const clientId = route.parent.paramMap.get('clientId');
+        const clientId = route.paramMap.get('clientId');
         let identitiesData: any;
-        return this.clientsService.getIdentifierClientCross(clientId).pipe(map((identities: any) => {
-        //return this.clientsService.getClientIdentifiers(clientId).pipe(map((identities: any) => {
-        // identitiesData = identities;
-        identitiesData = identities.result.listIdentifier;
+        return this.clientsService.getClientIdentifiers(clientId).pipe(map((identities: any) => {
+            identitiesData = identities;
             const docObservable: Observable<any>[] = [];
-            identities.result.listIdentifier.forEach((identity: any) => {
+            identities.forEach((identity: any) => {
                 docObservable.push(this.clientsService.getClientIdentificationDocuments(identity.id));
             });
             forkJoin(docObservable).subscribe(documents => {

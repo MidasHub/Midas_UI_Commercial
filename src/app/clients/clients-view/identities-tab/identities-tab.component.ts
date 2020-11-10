@@ -1,44 +1,52 @@
 /** Angular Imports */
-import {Component, ViewChild} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
-import {MatTable} from '@angular/material/table';
-import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
+import { Component, ViewChild } from "@angular/core";
+import { ActivatedRoute, NavigationExtras, Router } from "@angular/router";
+import { MatTable } from "@angular/material/table";
+import { MatDialog, MatDialogConfig } from "@angular/material/dialog";
 
 /** Custom Models */
-import {FormfieldBase} from 'app/shared/form-dialog/formfield/model/formfield-base';
-import {InputBase} from 'app/shared/form-dialog/formfield/model/input-base';
-import {SelectBase} from 'app/shared/form-dialog/formfield/model/select-base';
+import { FormfieldBase } from "app/shared/form-dialog/formfield/model/formfield-base";
+import { InputBase } from "app/shared/form-dialog/formfield/model/input-base";
+import { SelectBase } from "app/shared/form-dialog/formfield/model/select-base";
 
 /** Custom Components */
-import {UploadDocumentDialogComponent} from '../custom-dialogs/upload-document-dialog/upload-document-dialog.component';
-import {DeleteDialogComponent} from '../../../shared/delete-dialog/delete-dialog.component';
-import {FormDialogComponent} from 'app/shared/form-dialog/form-dialog.component';
-import {AddIdentitiesComponent} from './add-identities/add-identities.component';
+import { UploadDocumentDialogComponent } from "../custom-dialogs/upload-document-dialog/upload-document-dialog.component";
+import { DeleteDialogComponent } from "../../../shared/delete-dialog/delete-dialog.component";
+import { FormDialogComponent } from "app/shared/form-dialog/form-dialog.component";
+import { AddIdentitiesComponent } from "./add-identities/add-identities.component";
 /** Custom Services */
-import {ClientsService} from '../../clients.service';
-import {BankService} from '../../../services/bank.service';
+import { ClientsService } from "../../clients.service";
+import { BankService } from "../../../services/bank.service";
+import { TransactionService } from "app/transaction/transaction.service";
+import { AlertService } from "app/core/alert/alert.service";
+import { analyzeAndValidateNgModules } from "@angular/compiler";
+import { AddIdentitiesExtraInfoComponent } from "./add-identities-extra-info/add-identities-extra-info.component";
 
 /**
  * Identities Tab Component
  */
 @Component({
-  selector: 'mifosx-identities-tab',
-  templateUrl: './identities-tab.component.html',
-  styleUrls: ['./identities-tab.component.scss']
+  selector: "mifosx-identities-tab",
+  templateUrl: "./identities-tab.component.html",
+  styleUrls: ["./identities-tab.component.scss"],
 })
 export class IdentitiesTabComponent {
-
+  searchKey: string;
   /** Client Identities */
-  clientIdentities: any;
+  clientIdentities: any = [];
+  clientIdentitiesOther: any = [];
   /** Client Identifier Template */
   clientIdentifierTemplate: any;
   /** Client Id */
   clientId: string;
+
   /** Identities Columns */
-  identitiesColumns: string[] = ['id', 'documentKey', 'description', 'type', 'documents', 'status', 'actions'];
+  identitiesColumns: string[] = ["id", "documentKey", "description", "type", "documents", "status", "actions"];
+  identitiesOtherColumns: string[] = ["id", "documentKey", "description", "type", "documents", "status"];
 
   /** Identifiers Table */
-  @ViewChild('identifiersTable', {static: true}) identifiersTable: MatTable<Element>;
+  @ViewChild("identifiersTable", { static: true }) identifiersTable: MatTable<Element>;
+  @ViewChild("identifiersTableOther", { static: true }) identifiersTableOther: MatTable<Element>;
 
   // @ViewChild('')
   /**
@@ -46,14 +54,25 @@ export class IdentitiesTabComponent {
    * @param {MatDialog} dialog Mat Dialog
    * @param {ClientsService} clientService Clients Service
    */
-  constructor(private route: ActivatedRoute,
-              public dialog: MatDialog,
-              private clientService: ClientsService,
-              private bankService: BankService,) {
-    this.clientId = this.route.parent.snapshot.paramMap.get('clientId');
-    this.route.data.subscribe((data: { clientIdentities: any, clientIdentifierTemplate: any }) => {
-      this.clientIdentities = data.clientIdentities;
+  constructor(
+    private router: Router,
+    private route: ActivatedRoute,
+    public dialog: MatDialog,
+    private clientService: ClientsService,
+    private transactionService: TransactionService,
+    private alertService: AlertService,
+    private bankService: BankService
+  ) {
+    this.clientId = this.route.parent.snapshot.paramMap.get("clientId");
+    this.route.data.subscribe((data: { clientIdentities: any; clientIdentifierTemplate: any }) => {
       this.clientIdentifierTemplate = data.clientIdentifierTemplate;
+      data.clientIdentities.forEach((element: any) => {
+        if (element.documentType.id >= 37 && element.documentType.id <= 58) {
+          this.clientIdentities.push(element);
+        } else {
+          this.clientIdentitiesOther.push(element);
+        }
+      });
     });
   }
 
@@ -63,116 +82,181 @@ export class IdentitiesTabComponent {
    * @param {string} documentId Document ID
    */
   download(parentEntityId: string, documentId: string) {
-    this.clientService.downloadClientIdentificationDocument(parentEntityId, documentId).subscribe(res => {
+    this.clientService.downloadClientIdentificationDocument(parentEntityId, documentId).subscribe((res) => {
       const url = window.URL.createObjectURL(res);
       window.open(url);
+    });
+  }
+
+  routeToMakeTransaction(identifierId: string, type: string, cardNumber: string) {
+    this.transactionService.checkValidRetailCashTransaction(this.clientId).subscribe((res: any) => {
+      if (res.result.message) {
+        this.alertService.alert({
+          message: res.result.message,
+          msgClass: "cssWarning",
+          hPosition: "right",
+          vPosition: "bottom",
+        });
+      }
+
+      if (res.result.isValid) {
+        this.transactionService.checkExtraCardInfo(this.clientId, identifierId).subscribe((resExtraCardCheck: any) => {
+          const checkResult = resExtraCardCheck.result;
+
+          if (checkResult.isHaveExtraCardInfo) {
+            let dateExpired = new Date(checkResult.cardExtraInfoEntity.expiredDate);
+            let yExpired = dateExpired.getFullYear();
+            let mExpired = dateExpired.getMonth();
+
+            var dateSystem = new Date();
+            let ySystem = dateSystem.getFullYear();
+            let mSystem = dateSystem.getMonth();
+
+            // let isValidCard = false;
+
+            if (yExpired > ySystem) {
+              // isValidCard = true;
+            } else {
+              if (yExpired == ySystem) {
+                if (mExpired > mSystem) {
+                  if (mExpired == mSystem + 1) {
+                    this.alertService.alert({
+                      message:
+                        "CHÚ Ý: Thẻ sẽ hết hạn vào tháng sau, đây là lần cuối cùng được thực hiện giao dịch trên thẻ này",
+                      msgClass: "cssWarning",
+                      hPosition: "right",
+                      vPosition: "bottom",
+                    });
+                  }
+                }
+                if (mExpired == mSystem) {
+                  this.alertService.alert({
+                    message: "CẢNH BÁO: Thẻ sẽ hết hạn trong tháng này, cân nhắc khi thực hiện giao dịch trên thẻ này",
+                    msgClass: "cssDanger",
+                    hPosition: "center",
+                    vPosition: "bottom",
+                  });
+                }
+                if (mExpired < mSystem) {
+                  this.alertService.alert({
+                    message: "CẢNH BÁO: Thẻ đã hết hạn, không được thực hiện giao dịch trên thẻ này",
+                    msgClass: "cssDanger",
+                    hPosition: "center",
+                    vPosition: "top",
+                  });
+                }
+              }
+            }
+            this.router.navigate(["/transaction/create"], {
+              queryParams: {
+                clientId: this.clientId,
+                identifierId: identifierId,
+                type: type,
+              },
+            });
+          }else{
+            this.addIdentifierExtraInfo(identifierId, cardNumber);
+
+          }
+        });
+      }
     });
   }
 
   /**
    * Add Client Identifier
    */
-  addIdentifier() {
-    // const formfields: FormfieldBase[] = [
-    //   new SelectBase({
-    //     controlName: 'documentTypeId',
-    //     label: 'Document Type',
-    //     value: '',
-    //     options: {label: 'name', value: 'id', data: this.clientIdentifierTemplate.allowedDocumentTypes},
-    //     required: true,
-    //     order: 1
-    //   }),
-    //   new InputBase({
-    //     controlName: 'documentCardBank',
-    //     label: 'Chọn bank account',
-    //     value: '',
-    //     type: 'text',
-    //     order: 2
-    //   }),
-    //   new SelectBase({
-    //     controlName: 'status',
-    //     label: 'Status',
-    //     value: '2',
-    //     options: {label: 'value', value: 'value', data: [{value: 'Active'}, {value: 'Inactive'}]},
-    //     required: true,
-    //     order: 3
-    //   }),
-    //   new InputBase({
-    //     controlName: 'documentKey',
-    //     label: 'Unique Id',
-    //     value: '',
-    //     type: 'text',
-    //     required: true,
-    //     order: 4
-    //   }),
-    //   new InputBase({
-    //     controlName: 'description',
-    //     label: 'Description',
-    //     value: '',
-    //     type: 'text',
-    //     order: 5
-    //   })
-    // ];
+  addIdentifier(addOther: boolean) {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.data = {
-      title: 'Add Client Identifier',
-      clientIdentifierTemplate: this.clientIdentifierTemplate
+      title: "Add Client Identifier",
+      clientIdentifierTemplate: this.clientIdentifierTemplate,
     };
     dialogConfig.minWidth = 400;
     const addIdentifierDialogRef = this.dialog.open(AddIdentitiesComponent, dialogConfig);
     addIdentifierDialogRef.afterClosed().subscribe((response: any) => {
       console.log(response);
       if (response.data) {
-        let {description} = response.data.value;
-        const {documentCardBank, documentCardType, documentKey, documentTypeId, dueDay, expiredDate, status} = response.data.value;
+        let { description } = response.data.value;
+        const {
+          documentCardBank,
+          documentCardType,
+          documentKey,
+          documentTypeId,
+          dueDay,
+          expiredDate,
+          status,
+        } = response.data.value;
         const documentTypes = response.documentTypes;
         const document = documentTypes.find((v: any) => v.id === documentTypeId);
-        if (document && Number(document.id) >= 38 && Number(document.id) <= 57)  {
+        if (document && Number(document.id) >= 38 && Number(document.id) <= 57) {
           if (!response.existBin) {
-            // this.bankService.storeInfoBinCode({
-            //   cardType: documentCardType,
-            //   bankCode: documentCardBank,
-            //   binCode: documentKey
-            // });
           }
           description = `${documentCardBank}-${documentCardType}-${description}`;
         }
-        this.clientService.addClientIdentifier(this.clientId, {
-          documentKey,
-          documentTypeId,
-          status,
-          description
-        }).subscribe((res: any) => {
-          const call_return = () => {
-            this.clientIdentities.push({
-              id: res.resourceId,
-              description: response.data.value.description,
-              documentType: this.clientIdentifierTemplate.allowedDocumentTypes.filter((doc: any) => (doc.id === response.data.value.documentTypeId))[0],
-              documentKey: response.data.value.documentKey,
-              documents: [],
-              clientId: this.clientId,
-              status: (response.data.value.status === 'Active' ? 'clientIdentifierStatusType.active' : 'clientIdentifierStatusType.inactive')
-            });
-            this.identifiersTable.renderRows();
-          };
-          if (document && Number(document.id) >= 38 && Number(document.id) <= 57) {
-            this.clientService.getClientData(this.clientId).subscribe((client: any) => {
-              this.bankService.storeExtraCardInfo({
-                'userId': this.clientId,
-                'userIdentifyId': res.resourceId,
-                'clientName': client.displayName,
-                'cardNumber': `${documentKey.slice(0, 6)}-XXX-XXX-${documentKey.slice(12, 16)}`,
-                'mobileNo': client.mobileNo,
-                'dueDay': dueDay,
-                'expireDate': expiredDate,
-              }).subscribe((res2: any) => {
-                return call_return();
+        this.clientService
+          .addClientIdentifier(this.clientId, {
+            documentKey,
+            documentTypeId,
+            status,
+            description,
+          })
+          .subscribe((res: any) => {
+            const call_return = () => {
+              if (addOther) {
+                this.clientIdentitiesOther.push({
+                  id: res.resourceId,
+                  description: response.data.value.description,
+                  documentType: this.clientIdentifierTemplate.allowedDocumentTypes.filter(
+                    (doc: any) => doc.id === response.data.value.documentTypeId
+                  )[0],
+                  documentKey: response.data.value.documentKey,
+                  documents: [],
+                  clientId: this.clientId,
+                  status:
+                    response.data.value.status === "Active"
+                      ? "clientIdentifierStatusType.active"
+                      : "clientIdentifierStatusType.inactive",
+                });
+                this.identifiersTableOther.renderRows();
+              } else {
+                this.clientIdentities.push({
+                  id: res.resourceId,
+                  description: response.data.value.description,
+                  documentType: this.clientIdentifierTemplate.allowedDocumentTypes.filter(
+                    (doc: any) => doc.id === response.data.value.documentTypeId
+                  )[0],
+                  documentKey: response.data.value.documentKey,
+                  documents: [],
+                  clientId: this.clientId,
+                  status:
+                    response.data.value.status === "Active"
+                      ? "clientIdentifierStatusType.active"
+                      : "clientIdentifierStatusType.inactive",
+                });
+                this.identifiersTable.renderRows();
+              }
+            };
+            if (document && Number(document.id) >= 38 && Number(document.id) <= 57) {
+              this.clientService.getClientData(this.clientId).subscribe((client: any) => {
+                this.bankService
+                  .storeExtraCardInfo({
+                    userId: this.clientId,
+                    userIdentifyId: res.resourceId,
+                    clientName: client.displayName,
+                    cardNumber: `${documentKey.slice(0, 6)}-XXX-XXX-${documentKey.slice(12, 16)}`,
+                    mobileNo: client.mobileNo,
+                    dueDay: dueDay,
+                    expireDate: expiredDate,
+                  })
+                  .subscribe((res2: any) => {
+                    return call_return();
+                  });
               });
-            });
-          } else {
-            return call_return();
-          }
-        });
+            } else {
+              return call_return();
+            }
+          });
       }
     });
   }
@@ -183,15 +267,21 @@ export class IdentitiesTabComponent {
    * @param {string} identifierId Identifier Id
    * @param {number} index Index
    */
-  deleteIdentifier(clientId: string, identifierId: string, index: number) {
+  deleteIdentifier(clientId: string, identifierId: string, index: number, addOther: boolean) {
     const deleteIdentifierDialogRef = this.dialog.open(DeleteDialogComponent, {
-      data: {deleteContext: `identifier id:${identifierId}`}
+      data: { deleteContext: `identifier id:${identifierId}` },
     });
     deleteIdentifierDialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {
-        this.clientService.deleteClientIdentifier(clientId, identifierId).subscribe(res => {
-          this.clientIdentities.splice(index, 1);
-          this.identifiersTable.renderRows();
+        this.clientService.deleteClientIdentifier(clientId, identifierId).subscribe((res) => {
+          if (addOther) {
+            this.clientIdentitiesOther.splice(index, 1);
+
+            this.identifiersTableOther.renderRows();
+          } else {
+            this.clientIdentities.splice(index, 1);
+            this.identifiersTable.renderRows();
+          }
         });
       }
     });
@@ -202,27 +292,75 @@ export class IdentitiesTabComponent {
    * @param {number} index Index
    * @param {string} identifierId Identifier Id
    */
-  uploadDocument(index: number, identifierId: string) {
+  uploadDocument(index: number, identifierId: string, addOther: boolean) {
     const uploadDocumentDialogRef = this.dialog.open(UploadDocumentDialogComponent, {
-      data: {documentIdentifier: true}
+      data: { documentIdentifier: true },
     });
     uploadDocumentDialogRef.afterClosed().subscribe((dialogResponse: any) => {
       if (dialogResponse) {
-        const formData: FormData = new FormData;
-        formData.append('name', dialogResponse.fileName);
-        formData.append('file', dialogResponse.file);
+        const formData: FormData = new FormData();
+        formData.append("name", dialogResponse.fileName);
+        formData.append("file", dialogResponse.file);
         this.clientService.uploadClientIdentifierDocument(identifierId, formData).subscribe((res: any) => {
-          this.clientIdentities[index].documents.push({
-            id: res.resourceId,
-            parentEntityType: 'client_identifiers',
-            parentEntityId: identifierId,
-            name: dialogResponse.fileName,
-            fileName: dialogResponse.file.name
-          });
-          this.identifiersTable.renderRows();
+          if (addOther) {
+            this.clientIdentitiesOther[index].documents.push({
+              id: res.resourceId,
+              parentEntityType: "client_identifiers",
+              parentEntityId: identifierId,
+              name: dialogResponse.fileName,
+              fileName: dialogResponse.file.name,
+            });
+            this.identifiersTableOther.renderRows();
+          } else {
+            this.clientIdentities[index].documents.push({
+              id: res.resourceId,
+              parentEntityType: "client_identifiers",
+              parentEntityId: identifierId,
+              name: dialogResponse.fileName,
+              fileName: dialogResponse.file.name,
+            });
+            this.identifiersTable.renderRows();
+          }
         });
       }
     });
   }
 
+  /**
+   * Add Client Identifier
+   */
+  addIdentifierExtraInfo(userIdentifyId: string, cardNumber: string) {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.data = {
+      title: "Add Client Identifier Extra Info",
+      clientIdentifierTemplate: this.clientIdentifierTemplate,
+    };
+    dialogConfig.minWidth = 400;
+    const addIdentifierDialogRef = this.dialog.open(AddIdentitiesExtraInfoComponent, dialogConfig);
+    addIdentifierDialogRef.afterClosed().subscribe((response: any) => {
+      console.log(response);
+      if (response.data) {
+        const {
+          dueDay,
+          expiredDate,
+        } = response.data.value;
+        debugger;
+        this.clientService.getClientData(this.clientId).subscribe((client: any) => {
+            this.bankService
+              .storeExtraCardInfo({
+                userId: this.clientId,
+                userIdentifyId: userIdentifyId,
+                clientName: client.displayName,
+                cardNumber: `${cardNumber.slice(0, 6)}-XXX-XXX-${cardNumber.slice(12, 16)}`,
+                mobileNo: client.mobileNo,
+                dueDay: dueDay,
+                expireDate: expiredDate,
+              })
+              .subscribe((res2: any) => {
+                console.log(res2);
+              });
+          });
+        }
+    });
+  }
 }

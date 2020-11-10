@@ -27,6 +27,8 @@ export class ClientsViewComponent implements OnInit {
   clientDatatables: any;
   clientImage: any;
   clientTemplateData: any;
+  showViewClient: boolean;
+  typeViewClient: string;
 
   constructor(private route: ActivatedRoute,
               private router: Router,
@@ -38,13 +40,20 @@ export class ClientsViewComponent implements OnInit {
       clientTemplateData: any,
       clientDatatables: any
     }) => {
-      this.clientViewData = data.clientViewData;
+
+      this.clientViewData = data.clientViewData.result.clientInfo;
+      // this.clientViewData = data.clientViewData;
       this.clientDatatables = data.clientDatatables;
       this.clientTemplateData = data.clientTemplateData;
     });
   }
 
   ngOnInit() {
+    this.route.queryParamMap
+    .subscribe((params) => {
+      this.typeViewClient = params.get("typeViewClient") ;
+      this.showViewClient = this.typeViewClient  == 'transaction';
+    });
     this.clientsService.getClientProfileImage(this.clientViewData.id).subscribe(
       (base64Image: any) => {
         this.clientImage = this._sanitizer.bypassSecurityTrustResourceUrl(base64Image);
