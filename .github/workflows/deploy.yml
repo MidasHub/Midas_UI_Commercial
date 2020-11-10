@@ -1,6 +1,6 @@
 on:
   push:
-    branches: [ staging, development]   
+    branches: [ staging, master]   
 
 name: Midas_UI_staging_deploy
 
@@ -18,35 +18,20 @@ jobs:
         yarn install
     - name: build production
       run: |
-        ng build --prod --output-hashing=all --deleteOutputPath=true --base-href="/"  --serviceWorker=true --outputPath="/usr/share/nginx/html/staging/" 
+        ng build --prod --output-hashing=all --base-href="/"  --serviceWorker=true --deleteOutputPath=true --outputPath="/usr/share/nginx/html/staging/" 
 
-  testDev:
+  deployProduction:
     runs-on: self-hosted
-    if: ${{ github.event_name == 'push' && github.event.ref =='refs/heads/development' }}
+    if: ${{ github.event_name == 'push' && github.event.ref =='refs/heads/master' }}
+    runs-on: self-hosted
     steps:
-      - name: Dump GitHub context
-        run:  echo "${{ github.event.ref }}
-      - name: Dump GitHub context
-        env:
-          GITHUB_CONTEXT: ${{ toJson(github) }}
-        run: echo "$GITHUB_CONTEXT"
-      - name: Dump job context
-        env:
-          JOB_CONTEXT: ${{ toJson(job) }}
-        run: echo "$JOB_CONTEXT"
-      - name: Dump steps context
-        env:
-          STEPS_CONTEXT: ${{ toJson(steps) }}
-        run: echo "$STEPS_CONTEXT"
-      - name: Dump runner context
-        env:
-          RUNNER_CONTEXT: ${{ toJson(runner) }}
-        run: echo "$RUNNER_CONTEXT"
-      - name: Dump strategy context
-        env:
-          STRATEGY_CONTEXT: ${{ toJson(strategy) }}
-        run: echo "$STRATEGY_CONTEXT"
-      - name: Dump matrix context
-        env:
-          MATRIX_CONTEXT: ${{ toJson(matrix) }}
-        run: echo "$MATRIX_CONTEXT"
+    # checkout branch
+    - name: pull source from master branch
+      run: |
+        git pull origin master
+    - name: install dependency
+      run: |
+        yarn install
+    - name: build production
+      run: |
+        ng build --prod --output-hashing=all --base-href="/" --serviceWorker=true --deleteOutputPath=true --outputPath="/usr/share/nginx/html/prod/"

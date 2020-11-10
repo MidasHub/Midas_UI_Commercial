@@ -89,3 +89,32 @@ Use "Alert Interface" for popup Alert Msg
     hPosition?: any ; --> default: left
     vPosition?: any;--> default: top
     }
+
+### Auto deployment pipeline with Github Actions
+  - **Step 1:** Make a github runner as mentioned here : https://docs.github.com/en/free-pro-team@latest/actions/hosting-your-own-runners/adding-self-hosted-runners
+  - **Step 2:** make a deployment YML file in .github/workflows directory of the project.
+      Example: *the deployment YML file for clone source code, install dependencies and build Angular 9 project to path: /usr/share/nginx/html/staging/*
+      ```
+          on:
+            push:
+              branches: [ staging, master]   
+
+          name: Midas_UI_staging_deploy
+
+          jobs:
+            deployStaging:
+              if: ${{ github.event_name == 'push' && github.event.ref =='refs/heads/staging' }}
+              runs-on: self-hosted
+              steps:
+              # checkout branch
+              - name: pull source from staging branch
+                run: |
+                  git pull origin staging
+              - name: install dependency
+                run: |
+                  yarn install
+              - name: build production
+                run: |
+                  ng build --prod --output-hashing=all --base-href="/"  --serviceWorker=true --deleteOutputPath=true --outputPath="/usr/share/nginx/html/staging/" 
+      ```
+  - **Step 3:** Submit the deployment YML file to Github and done
