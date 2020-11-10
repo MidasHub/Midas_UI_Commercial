@@ -372,7 +372,9 @@
     }
   },
   "Toolbar_Component": {
-    "labelInstitution": "Khách hàng"
+    "labelInstitution": "Khách hàng",
+    "labelGroups": "Đại Lý",
+    "labelTerminals": "Máy POS"
   },
   "Shared_Component": {
     "DeleteDialog": {
@@ -421,5 +423,8 @@
       "btnCancel":"Hủy",
       "btnSubmit":"Hoàn tất"
     } 
+  },
+  "Terminal_Component": {
+    "labelTerminal":"Máy POS"
   }
 }

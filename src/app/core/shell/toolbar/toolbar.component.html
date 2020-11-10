@@ -57,7 +57,8 @@
 
 <mat-menu #institutionMenu="matMenu" [overlapTrigger]="false">
   <button mat-menu-item routerLink="/clients">{{'Toolbar_Component.labelInstitution'|translate}}</button>
-  <button mat-menu-item routerLink="/groups">Groups</button>
+  <button mat-menu-item routerLink="/groups">{{'Toolbar_Component.labelGroups'|translate}}</button>
+  <button mat-menu-item routerLink="/terminals">{{'Toolbar_Component.labelTerminals'|translate}}</button>
   <button mat-menu-item routerLink="/centers">Centers</button>
   <span fxHide.lg>
     <button mat-menu-item [routerLink]="['/accounting']">Accounting</button>

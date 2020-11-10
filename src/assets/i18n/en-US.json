@@ -372,7 +372,9 @@
     }
   },
   "Toolbar_Component": {
-    "labelInstitution": "Institution"
+    "labelInstitution": "Institution",
+    "labelGroups": "Groups",
+    "labelTerminals": "POS Terminals"
   },
   "Shared_Component": {
     "DeleteDialog": {
@@ -421,5 +423,8 @@
       "btnCancel":"Cancel",
       "btnSubmit":"Submit"
     }
+  },
+  "Terminal_Component": {
+    "labelTerminal":"POS Terminal"
   }
 }

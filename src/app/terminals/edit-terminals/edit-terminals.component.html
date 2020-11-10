@@ -1,0 +1,42 @@
+<div class="container">
+
+    <mat-card>
+  
+      <form [formGroup]="editTerminalForm">
+          
+        <mat-card-content>
+  
+          <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
+  
+            <mat-form-field *ngIf="editTerminalForm.contains('terminalId')" fxFlex="48%">
+                <mat-label>{{'Client_Component.ClientStepper.GeneralStep.labelFullName' |translate}}</mat-label>
+                <input matInput required formControlName="terminalId">
+                <mat-error *ngIf="editTerminalForm.controls.terminalId.hasError('required')"
+                  [innerHTML]="'Client_Component.ClientStepper.GeneralStep.labelFullNameMsg' |translate"></mat-error>
+                <mat-error *ngIf="editTerminalForm.controls.terminalId.hasError('pattern')"
+                  [innerHTML]="'Group_Component.Create_Group_Component.labelGroupNameMsgPattern' |translate"></mat-error>
+            </mat-form-field>
+    
+            <mat-form-field *ngIf="editTerminalForm.contains('terminalName')" fxFlex="48%">
+                <mat-label>{{'Client_Component.ClientStepper.GeneralStep.labelFirstName' |translate}}</mat-label>
+                <input matInput required formControlName="terminalName">
+                <mat-error *ngIf="editTerminalForm.controls.terminalName.hasError('required')" 
+                  [innerHTML]="'Client_Component.ClientStepper.GeneralStep.labelFirstNameMsg' |translate"></mat-error>
+            </mat-form-field>
+  
+          </div>
+  
+        </mat-card-content>
+  
+        <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
+          <button type="button" mat-raised-button [routerLink]="['../']">{{'Client_Component.ClientStepper.buttonCancel' |translate}}</button>
+          <!-- <button mat-raised-button color="primary" [disabled]="!editTerminalForm.valid" (click)="submit()">{{'Client_Component.ClientStepper.buttonSubmit' |translate}}</button> -->
+          <button mat-raised-button color="primary" (click)="submit()">{{'Client_Component.ClientStepper.buttonSubmit' |translate}}</button>
+        </mat-card-actions>
+  
+      </form>
+  
+    </mat-card>
+  
+  </div>
+  

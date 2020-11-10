@@ -50,6 +50,9 @@ import {AppRoutingModule} from './app-routing.module';
 
 /** Billpos Module */
 import {TransactionModule} from './transaction/transaction.module';
+import { TerminalsComponent } from './terminals/terminals.component';
+import { TerminalsModule } from './terminals/terminals.module';
+//import { EditTerminalsComponent } from './terminals/edit-terminals/edit-terminals.component';
 
 /**
  * App Module
@@ -93,14 +96,9 @@ import {TransactionModule} from './transaction/transaction.module';
     SearchModule,
     CollectionsModule,
     TasksModule,
-
-    //billpos mudule
-
     TransactionModule,
-
-    //billpos mudule
-
     // last component - fix position
+    TerminalsModule,
     AppRoutingModule,
   ],
   declarations: [WebAppComponent, NotFoundComponent],
