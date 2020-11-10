@@ -6,7 +6,6 @@ import { DatePipe } from '@angular/common';
 import { ClientsRoutingModule } from './clients-routing.module';
 import { SharedModule } from 'app/shared/shared.module';
 import { PipesModule } from '../pipes/pipes.module';
-import { DirectivesModule } from '../directives/directives.module';
 
 /** Custom Components */
 import { ClientsComponent } from './clients.component';
@@ -73,7 +72,6 @@ import { AddIdentitiesExtraInfoComponent } from './clients-view/identities-tab/a
     SharedModule,
     ClientsRoutingModule,
     PipesModule,
-    DirectivesModule,
     ReactiveFormsModule,
   ],
   declarations: [

@@ -8,23 +8,30 @@ import {ClientsDataSource} from './clients.datasource';
 /** rxjs Imports */
 import {merge} from 'rxjs';
 import {tap} from 'rxjs/operators';
+import {animate, state, style, transition, trigger} from '@angular/animations';
 
 /** Custom Services */
 import {ClientsService} from './clients.service';
 import {ActivatedRoute, Params, Route, Router} from '@angular/router';
 import {MidasClientService} from '../midas-client/midas-client.service';
-import {BreakpointObserver} from '@angular/cdk/layout';
 
 @Component({
   selector: 'mifosx-clients',
   templateUrl: './clients.component.html',
   styleUrls: ['./clients.component.scss'],
+  animations: [
+    trigger('detailExpand', [
+      state('collapsed', style({height: '0px', minHeight: '0'})),
+      state('expanded', style({height: '100px'})),
+      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
+    ]),
+  ],
 })
 export class ClientsComponent implements OnInit, AfterViewInit {
   @ViewChild('showClosedAccounts', {static: true}) showClosedAccounts: MatCheckbox;
 
-
-  displayedColumns = ['name', 'clientno', 'externalid', 'status', 'mobileNo', 'gender', 'office', 'staff'];
+  expandedElement: any;
+  displayedColumns = ['name', 'clientno', 'externalid', 'status', 'mobileNo', 'gender', 'office', 'staff','link'];
   dataSource: ClientsDataSource;
   /** Get the required filter value. */
   searchValue = '';
@@ -32,13 +39,14 @@ export class ClientsComponent implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   @ViewChild(MatSort, {static: true}) sort: MatSort;
 
-  constructor(private clientsService: ClientsService, private route: ActivatedRoute, private router: Router, private midasClientService: MidasClientService, private breakpointObserver: BreakpointObserver) {
-    breakpointObserver.observe(['(max-width: 600px)']).subscribe(result => {
-      this.displayedColumns = result.matches ?
-        ['name', 'clientno', 'externalid', 'status', 'mobileNo', 'gender', 'office', 'staff'] :
-        ['name', 'clientno', 'externalid', 'status', 'mobileNo', 'gender', 'office', 'staff'];
-    });
+  constructor(private clientsService: ClientsService,
+              private route: ActivatedRoute,
+              private router: Router,
+              private midasClientService: MidasClientService) {
   }
+
+
+  isExpansionDetailRow = (i: number, row: Object) => row.hasOwnProperty('detailRow');
 
   ngOnInit() {
     // @ts-ignore
@@ -52,7 +60,7 @@ export class ClientsComponent implements OnInit, AfterViewInit {
     }
     //   .subscribe(params => {
     //   console.log(params); // { order: "popular" }
-    //   const {pageIndex, pageSize} = params;
+    //   const {pageIndex, pageSize} = params;fxHide fxShow.gt-md
     //   if (pageIndex && pageSize) {
     //     this.paginator.pageSize = Number(pageSize);
     //     this.paginator.pageIndex = Number(pageIndex);
@@ -104,6 +112,7 @@ export class ClientsComponent implements OnInit, AfterViewInit {
    * @param {string} filterValue Value to filter data.
    */
   applyFilter(filterValue: string = '') {
+    console.log(filterValue)
     this.searchValue = filterValue;
     this.dataSource.filterClients(filterValue.trim().toLowerCase(), this.sort.active, this.sort.direction, this.paginator.pageIndex, this.paginator.pageSize, !this.showClosedAccounts.checked);
   }

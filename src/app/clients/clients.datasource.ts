@@ -19,6 +19,8 @@ export class ClientsDataSource implements DataSource<any> {
   private recordsSubject = new BehaviorSubject<number>(0);
   /** Records observable which can be subscribed to get the value of total number of filtered clients records. */
   public records$ = this.recordsSubject.asObservable();
+  public old_key: string;
+  public old_result: any[];
 
   /**
    * @param {ClientsService} clientsService Clients Service
@@ -38,6 +40,7 @@ export class ClientsDataSource implements DataSource<any> {
     this.clientsSubject.next([]);
     this.clientsService.getClients(orderBy, sortOrder, pageIndex * limit, limit)
       .subscribe((clients: any) => {
+        console.log(clients)
         clients.pageItems = (clientActive) ? (clients.pageItems.filter((client: any) => client.active)) : (clients.pageItems.filter((client: any) => !client.active));
         this.recordsSubject.next(clients.totalFilteredRecords);
         this.clientsSubject.next(clients.pageItems);
@@ -68,13 +71,22 @@ export class ClientsDataSource implements DataSource<any> {
    */
   filterClients(filter: string, orderBy: string = '', sortOrder: string = '', pageIndex: number = 0, limit: number = 10, clientActive: boolean = true) {
     this.clientsSubject.next([]);
-    this.midasClientService.searchClientByNameAndExternalIdAndPhoneAndDocumentKey(filter)
-      .subscribe((clients: any) => {
-        console.log(clients);
-        // clients.pageItems = clients.pageItems.filter((client: any) => client.active === clientActive && client.displayName.toLowerCase().includes(filter));
-        // this.recordsSubject.next(clients.totalFilteredRecords);
-        // this.clientsSubject.next(clients.pageItems);
-      });
+    if (this.old_key !== filter) {
+      this.old_key = filter;
+      this.old_result = [];
+      this.midasClientService.searchClientByNameAndExternalIdAndPhoneAndDocumentKey(filter)
+        .subscribe((clients: any) => {
+          console.log(clients)
+          this.old_result = clients?.result?.listClientSearch;
+          this.recordsSubject.next(this.old_result.length);
+          const l = this.old_result.filter((client: any) => client.active === clientActive);
+          this.clientsSubject.next(l.slice(pageIndex * limit, pageIndex * limit + limit));
+        });
+    } else {
+      this.recordsSubject.next(this.old_result.length);
+      const l = this.old_result.filter((client: any) => client.active === clientActive);
+      this.clientsSubject.next(l.slice(pageIndex * limit, pageIndex * limit + limit));
+    }
   }
 
 }

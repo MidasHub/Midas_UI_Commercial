@@ -5,6 +5,7 @@ import {CommonModule} from '@angular/common';
 /** Custom Directives */
 import {HasPermissionDirective} from './has-permission/has-permission.directive';
 import {TableResponsiveDirective} from './table-responsive.directive';
+import { AfterValueChangedDirective } from './after-value-changed.directive';
 
 /**
  *  Directives Module
@@ -13,10 +14,10 @@ import {TableResponsiveDirective} from './table-responsive.directive';
  */
 @NgModule({
   imports: [
-    CommonModule
+    CommonModule,
   ],
-  declarations: [HasPermissionDirective, TableResponsiveDirective],
-  exports: [HasPermissionDirective, TableResponsiveDirective]
+  declarations: [HasPermissionDirective, TableResponsiveDirective, AfterValueChangedDirective],
+  exports: [HasPermissionDirective, TableResponsiveDirective, AfterValueChangedDirective]
 })
 export class DirectivesModule {
 }
