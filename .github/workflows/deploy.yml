@@ -10,8 +10,9 @@ jobs:
     steps:
     # checkout branch
     #- uses: actions/checkout@v2
-    - name: yarn install, build
+    - name: git pull
       run: |
-        git pull
+        git pull origin staging
+    - name: yarn install 
         yarn install
         ng build --prod --output-hashing=all --deleteOutputPath=true --base-href="/"  --serviceWorker=true --outputPath="/usr/share/nginx/html/staging/" 
