@@ -1,6 +1,6 @@
 <mat-card class="container">
-  <div>
-    <div class="search-box">
+  <div fxLayout="row wrap" fxLayout.lt-md="column">
+    <div class="search-box" fxFlex.gt-md="48%" fxFlex.gt-sm="98%" >
       <mat-form-field>
         <input matInput [placeholder]="'Client_Component.inputPlaceholderClosedCIF'| translate"
                midasAfterValueChanged
@@ -9,7 +9,7 @@
       <mat-checkbox #showClosedAccounts labelPosition="after">{{ 'Client_Component.checkBoxShowClosedAccount'| translate}}
       </mat-checkbox>
     </div>
-    <div class="action-button" fxLayoutGap="25px">
+    <div class="action-button" style="height: 50px;" fxFlex.gt-md="48%" fxFlex.gt-sm="98%" fxLayoutAlign="end">
       <button mat-raised-button color="primary" [routerLink]="['../', 'organization', 'bulk-import', 'Clients']" *midasHasPermission="'CREATE_CLIENT'">
         <fa-icon icon="download"></fa-icon>&nbsp;&nbsp;{{ 'Client_Component.buttonImportClient'| translate}}
       </button>
