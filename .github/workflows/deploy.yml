@@ -1,7 +1,7 @@
 on:
   push:
-    branches: [ staging ]
-  push:
+    branches: [ staging, development]
+  pull:
     branches: [ development ]    
 
 name: Midas_UI_staging_deploy
