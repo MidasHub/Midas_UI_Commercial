@@ -6,7 +6,7 @@ name: Midas_UI_staging_deploy
 
 jobs:
   deployStaging:
-    if: ${{ github.event_name == 'push' && github.event.ref ='refs/heads/staging'}}
+    if: ${{ github.event_name == 'push' && github.event.ref =='refs/heads/staging' }}
     runs-on: self-hosted
     steps:
     # checkout branch
@@ -22,7 +22,7 @@ jobs:
 
   testDev:
     runs-on: self-hosted
-    if: ${{ github.event_name == 'push' && github.event.ref ='refs/heads/development' }}
+    if: ${{ github.event_name == 'push' && github.event.ref =='refs/heads/development' }}
     steps:
       - name: Dump GitHub context
         run: |
