@@ -192,7 +192,7 @@ export class ClientAddressStepComponent {
       order: 6
     }) : null);
     formfields.push(this.isFieldEnabled('countyDistrict') ? new InputBase({
-      controlName: 'countryDistrict',
+      controlName: 'countyDistrict',
       label: this.i18n.getTranslate('Client_Component.ClientStepper.AddressStep.labelDistrict'),
       value: address ? address.countyDistrict : '',
       type: 'text',

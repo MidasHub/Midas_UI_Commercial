@@ -16,7 +16,6 @@ import { ClientTrendsBarComponent } from './dashboard/client-trends-bar/client-t
 import { RolltermListComponent } from './rollterm-list/rollterm-list.component';
 import { OndueCardComponent } from './ondue-card/ondue-card.component';
 import { MainboardComponent } from './mainboard/mainboard.component';
-
 /**
  * Home Component
  *
@@ -27,6 +26,7 @@ import { MainboardComponent } from './mainboard/mainboard.component';
     SharedModule,
     PipesModule,
     HomeRoutingModule
+
   ],
   declarations: [
     HomeComponent,

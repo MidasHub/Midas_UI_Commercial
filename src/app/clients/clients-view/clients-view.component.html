@@ -38,7 +38,7 @@
             {{'Client_Component.ViewClient.lblCifNo'|translate}}:{{clientViewData.accountNo}} | {{'Client_Component.ViewClient.lblExternalID'|translate}}: {{clientViewData.externalId}} | Staff:{{clientViewData.staffName || 'Unassigned'}}<br />
             {{'Client_Component.ViewClient.lblActivationDate'|translate}} :
             {{(clientViewData.activationDate)?(clientViewData.activationDate|date) :('Client_Component.ViewClient.lblNotActivated'|translate)}}<br />
-            {{'Client_Component.ViewClient.lblMemberOf'|translate}} : 
+            {{'Client_Component.ViewClient.lblMemberOf'|translate}} :
             <span *ngFor="let group of clientViewData.groups">
               <a>{{group.name}}</a>&nbsp;
             </span>
@@ -51,13 +51,13 @@
 
     </mat-card-title-group>
 
-    <mat-card-actions class="client-actions">
+    <mat-card-actions *ngIf="!this.showViewClient"  class="client-actions">
 
       <span *midasHasPermission="'UPDATE_CLIENT'">
         <button mat-raised-button [routerLink]="['edit']">
           <i class="fa fa-edit"></i>{{'Client_Component.ViewClient.btnEdit'|translate}}</button>
       </span>
-      
+
       <button mat-raised-button [matMenuTriggerFor]="Applications">
         <i class="fa fa-file"></i>{{'Client_Component.ViewClient.btnApplication'|translate}}</button>
       <mat-menu #Applications="matMenu">
@@ -83,7 +83,7 @@
         <span *ngIf="clientViewData.status.value === 'Transfer in progress'"><button mat-menu-item (click)="doAction('Accept Transfer')">{{'Client_Component.ViewClient.btnAcceptTransfer'|translate}}</button></span>
         <span *ngIf="clientViewData.status.value === 'Transfer in progress'"><button mat-menu-item (click)="doAction('Reject Transfer')">{{'Client_Component.ViewClient.btnRejectTransfer'|translate}}</button></span>
       </mat-menu>
-      
+
       <span *ngIf="!clientViewData.staffId">
         <button mat-raised-button (click)="doAction('Assign Staff')">
           <i class="fa fa-user"></i>{{'Client_Component.ViewClient.btnAssignStaff'|translate}}</button>
@@ -114,33 +114,36 @@
 
   <mat-card-content>
     <nav mat-tab-nav-bar class="navigation-tabs">
-      <a mat-tab-link [routerLink]="['./general']" routerLinkActive #general="routerLinkActive"
+      <a *ngIf="!this.showViewClient" mat-tab-link [routerLink]="['./general']" [queryParams]="{ typeViewClient: this.typeViewClient}" routerLinkActive #general="routerLinkActive"
         [active]="general.isActive">
         {{'Client_Component.ViewClient.lblGeneral'|translate}}
       </a>
-      <a mat-tab-link [routerLink]="['./address']" routerLinkActive #address="routerLinkActive"
+      <a mat-tab-link [routerLink]="['./identities']" [queryParams]="{ typeViewClient: this.typeViewClient}" routerLinkActive #identities="routerLinkActive"
+      [active]="identities.isActive" *midasHasPermission="'READ_CLIENTIDENTIFIER'">
+      {{'Client_Component.ViewClient.lblIdentity'|translate}}
+    </a>
+      <a mat-tab-link [routerLink]="['./address']" [queryParams]="{ typeViewClient: this.typeViewClient}" routerLinkActive #address="routerLinkActive"
         [active]="address.isActive" *ngIf="clientTemplateData.isAddressEnabled">
         {{'Client_Component.ViewClient.lblAddress'|translate}}
       </a>
-      <a mat-tab-link [routerLink]="['./family-members']" routerLinkActive #familyMembers="routerLinkActive"
+      <a mat-tab-link [routerLink]="['./family-members']" [queryParams]="{ typeViewClient: this.typeViewClient}" routerLinkActive #familyMembers="routerLinkActive"
         [active]="familyMembers.isActive">
         {{'Client_Component.ViewClient.lblFamilyMember'|translate}}
       </a>
-      <a mat-tab-link [routerLink]="['./identities']" routerLinkActive #identities="routerLinkActive"
-        [active]="identities.isActive" *midasHasPermission="'READ_CLIENTIDENTIFIER'">
-        {{'Client_Component.ViewClient.lblIdentity'|translate}}
-      </a>
-      <a mat-tab-link [routerLink]="['./documents']" routerLinkActive #documents="routerLinkActive"
+      <a mat-tab-link [routerLink]="['./documents']" [queryParams]="{ typeViewClient: this.typeViewClient}" routerLinkActive #documents="routerLinkActive"
         [active]="documents.isActive" *midasHasPermission="'READ_DOCUMENT'">
         {{'Client_Component.ViewClient.lblDocument'|translate}}
-      </a>      
-      <ng-container *ngFor="let clientDatatable of clientDatatables">
-        <a mat-tab-link [routerLink]="['./datatables',clientDatatable.registeredTableName]"
+      </a>
+      <ng-container *ngIf="!this.showViewClient"  >
+        <li *ngFor="let clientDatatable of clientDatatables">
+        <a  mat-tab-link [routerLink]="['./datatables',clientDatatable.registeredTableName]" [queryParams]="{ typeViewClient: this.typeViewClient}"
           routerLinkActive #datatable="routerLinkActive" [active]="datatable.isActive" *midasHasPermission="'READ_' + clientDatatable.registeredTableName">
           {{(clientDatatable.registeredTableName.indexOf('Ext')>=0) ?  ('Client_Component.ViewClient.lblExtendInfo'|translate): (clientDatatable.registeredTableName)}}
         </a>
+
+      </li>
       </ng-container>
-      <a mat-tab-link [routerLink]="['./notes']" routerLinkActive #notes="routerLinkActive"
+      <a mat-tab-link [routerLink]="['./notes']" [queryParams]="{ typeViewClient: this.typeViewClient}" routerLinkActive #notes="routerLinkActive"
         [active]="notes.isActive" *midasHasPermission="'READ_CLIENTNOTE'">
         {{'Client_Component.ViewClient.lblNote'|translate}}
       </a>

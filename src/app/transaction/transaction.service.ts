@@ -98,6 +98,30 @@ export class TransactionService {
     return this.http.post<any>(`${this.GatewayApiUrlPrefix}/pos/get_fee_by_terminal`, httpParams);
   }
 
+  checkValidRetailCashTransaction(clientId: string): Observable<any> {
+
+    const httpParams = new HttpParams()
+
+      .set('clientId', clientId)
+      .set('officeId', this.accessToken.officeId)
+      .set('createdBy', this.accessToken.userId)
+      .set('accessToken', this.accessToken.base64EncodedAuthenticationKey);
+
+    return this.http.post<any>(`${this.GatewayApiUrlPrefix}/transaction/check_valid_for_retail_transaction`, httpParams);
+  }
+
+  checkExtraCardInfo(clientId: string, identifierId: string): Observable<any> {
+
+    const httpParams = new HttpParams()
+      .set('userIdentifyId', identifierId)
+      .set('userId', clientId)
+      .set('officeId', this.accessToken.officeId)
+      .set('createdBy', this.accessToken.userId)
+      .set('accessToken', this.accessToken.base64EncodedAuthenticationKey);
+
+    return this.http.post<any>(`${this.GatewayApiUrlPrefix}/card/check_extra_card_info`, httpParams);
+  }
+
   getListTerminalAvailable(amount: number): Observable<any> {
 
     const httpParams = new HttpParams()

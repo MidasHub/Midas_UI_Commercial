@@ -1,1 +1,67 @@
-<p>test</p>
+<mat-card>
+  <form class="mat-elevation-z8" style="padding: 0 20px;">
+    <mat-form-field style="width: 100%; "  >
+      <mat-label>Tìm kiếm khách hàng, đại lý</mat-label>
+      <input    type="email" matInput #querySearchAll (change)=" this.searchClientAndGroup(querySearchAll.value);"
+             placeholder="Tìm kiếm theo tên, số CMND/CCCD ,số thẻ, số điện thoại">
+
+    </mat-form-field>
+  </form>
+  <div class="mat-elevation-z8">
+
+    <table mat-table [dataSource]="dataSource" matSort>
+
+      <!-- ID Column -->
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Id </th>
+        <td mat-cell *matCellDef="let row"> {{row.id}} </td>
+      </ng-container>
+      <ng-container matColumnDef="officeName">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Chi nhánh </th>
+        <td mat-cell *matCellDef="let row" > {{row.officeName}} </td>
+      </ng-container>
+      <!-- Progress Column -->
+      <ng-container matColumnDef="displayName">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Tên khách hàng </th>
+        <td mat-cell *matCellDef="let row"> {{row.displayName}} </td>
+      </ng-container>
+
+      <!-- Name Column -->
+      <ng-container matColumnDef="mobileNo">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Số ĐT </th>
+        <td mat-cell *matCellDef="let row"> {{row.mobileNo}} </td>
+      </ng-container>
+
+      <!-- Color Column -->
+      <ng-container matColumnDef="documentKey">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Thẻ </th>
+        <td mat-cell *matCellDef="let row" > {{row.documentKey}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="bankName">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Ngân hàng </th>
+        <td mat-cell *matCellDef="let row" > {{row.bankName}} </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"  class="select-row"
+      [routerLink]="['/clients', row.id, 'identities']"
+      [queryParams]="{ typeViewClient: 'transaction'}"
+      ></tr>
+
+      <!-- Row shown when there is no matching data. -->
+      <tr class="mat-row" *matNoDataRow>
+        <td class="mat-cell" colspan="4">No data matching the filter </td>
+      </tr>
+    </table>
+    <div *ngIf="isLoading"
+   style="display: flex; justify-content: center; align-items: center; background: white;">
+  <mat-progress-spinner
+    color="warn"
+    mode="indeterminate">
+  </mat-progress-spinner>
+</div>
+    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+  </div>
+
+</mat-card>

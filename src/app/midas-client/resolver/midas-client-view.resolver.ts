@@ -1,18 +1,18 @@
 /** Angular Imports */
 import { Injectable } from '@angular/core';
 import { Resolve, ActivatedRouteSnapshot } from '@angular/router';
+import { ClientsService } from 'app/clients/clients.service';
 
 /** rxjs Imports */
 import { Observable } from 'rxjs';
 
 /** Custom Services */
-import { ClientsService } from '../clients.service';
 
 /**
  * Clients data resolver.
  */
 @Injectable()
-export class ClientViewResolver implements Resolve<Object> {
+export class MidasClientViewResolver implements Resolve<Object> {
 
     /**
      * @param {ClientsService} ClientsService Clients service.
@@ -25,8 +25,7 @@ export class ClientViewResolver implements Resolve<Object> {
      */
     resolve(route: ActivatedRouteSnapshot): Observable<any> {
         const clientId = route.paramMap.get('clientId');
-        //return this.clientsService.getClientData(clientId);
-        return this.clientsService.getClientCross(clientId);
+        return this.clientsService.getClientData(clientId);
     }
 
 }
