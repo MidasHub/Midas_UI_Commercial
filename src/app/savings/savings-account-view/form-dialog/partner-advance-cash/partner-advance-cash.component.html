@@ -1,0 +1,68 @@
+<h1 mat-dialog-title>{{'Saving_Account_Component.PartnerAdvanceCash.partnerTitle' |translate}}</h1>
+
+<div mat-dialog-content [formGroup]="form" [fxLayout]="'column'" fxLayout.lt-md="column" [fxLayoutGap]="'1%'"
+     fxLayoutGap.lt-md="0%">
+
+  <mat-form-field class="select-book">
+    <mat-label>{{'Saving_Account_Component.clientAdvanceCash.labelClientCash' |translate}}</mat-label>
+    <input required type="text" placeholder="{{'Saving_Account_Component.clientAdvanceCash.labelClientCash' |translate}}"
+           matInput formControlName="partnerAdvanceCash" [matAutocomplete]="auto">
+    <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+      <mat-option *ngFor="let cl of filteredPartner" [value]="cl">
+        {{cl.desc}}
+      </mat-option>
+    </mat-autocomplete>
+    <mat-error *ngIf="partner.hasError('required')">
+      Yêu cầu: chọn đối tác
+    </mat-error>
+  </mat-form-field>
+
+
+  <mat-form-field fxFlex="96%" *ngIf="form.contains('partnerPaymentType')">
+    <mat-label>{{'Saving_Account_Component.PartnerAdvanceCash.labelTypes' |translate}}</mat-label>
+    <mat-select required formControlName="partnerPaymentType">
+      <mat-option *ngFor="let type of advanceCashPaymentTypes" [value]="type.id">
+        {{ type.name }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field fxFlex="96%" *ngIf="form.contains('partnerOfficeAdvanceCash')">
+    <mat-label>{{'Saving_Account_Component.PartnerAdvanceCash.labelOfficeReciver' |translate}}</mat-label>
+    <mat-select required formControlName="partnerOfficeAdvanceCash">
+      <mat-option *ngFor="let type of partnerOfficeAdvanceCashes" [value]="type.id">
+        {{ type.name }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field fxFlex="96%" *ngIf="form.contains('partnerClientVaultAdvanceCash')">
+    <mat-label>{{'Saving_Account_Component.PartnerAdvanceCash.labelAccountReciver' |translate}}</mat-label>
+    <mat-select required formControlName="partnerClientVaultAdvanceCash">
+      <mat-option *ngFor="let type of partnerClientVaultAdvanceCashes" [value]="type.id">
+        {{ type.externalId }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field fxFlex="96%">
+    <mat-label>{{'Saving_Account_Component.PartnerAdvanceCash.labelAmountAdvance' |translate}}</mat-label>
+    <input required
+           currencyMask
+           matInput formControlName="amountPartnerAdvance">
+  </mat-form-field>
+
+
+  <mat-form-field *ngIf="form.contains('notePartnerAdvance')" fxFlex="48%">
+    <mat-label>{{'Saving_Account_Component.clientAdvanceCash.labelNoteAdvance' |translate}}</mat-label>
+    <input type="text" aria-multiline="true" matInput formControlName="notePartnerAdvance">
+  </mat-form-field>
+
+</div>
+
+<mat-dialog-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="2%">
+  <button mat-raised-button mat-dialog-close>{{ 'Shared_Component.FormDialog.btnCancel' | translate }}</button>
+  <button mat-raised-button color="primary"
+          [mat-dialog-close]="{ data: form  }"
+          [disabled]="!form.valid || form.pristine">{{ 'Shared_Component.FormDialog.btnAdd' |translate }}</button>
+</mat-dialog-actions>

@@ -1,16 +1,17 @@
 /** Angular Imports. */
-import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
-import { MatCheckbox } from '@angular/material/checkbox';
-import { MatPaginator } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
-import { ClientsDataSource } from './clients.datasource';
+import {Component, OnInit, ViewChild, AfterViewInit} from '@angular/core';
+import {MatCheckbox} from '@angular/material/checkbox';
+import {MatPaginator} from '@angular/material/paginator';
+import {MatSort} from '@angular/material/sort';
+import {ClientsDataSource} from './clients.datasource';
 
 /** rxjs Imports */
-import { merge } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import {merge} from 'rxjs';
+import {tap} from 'rxjs/operators';
 
 /** Custom Services */
-import { ClientsService } from './clients.service';
+import {ClientsService} from './clients.service';
+import {ActivatedRoute, Params, Route, Router} from '@angular/router';
 
 @Component({
   selector: 'mifosx-clients',
@@ -18,7 +19,7 @@ import { ClientsService } from './clients.service';
   styleUrls: ['./clients.component.scss'],
 })
 export class ClientsComponent implements OnInit, AfterViewInit {
-  @ViewChild('showClosedAccounts', { static: true }) showClosedAccounts: MatCheckbox;
+  @ViewChild('showClosedAccounts', {static: true}) showClosedAccounts: MatCheckbox;
 
 
   displayedColumns = ['name', 'clientno', 'externalid', 'status', 'mobileNo', 'gender', 'office', 'staff'];
@@ -26,16 +27,33 @@ export class ClientsComponent implements OnInit, AfterViewInit {
   /** Get the required filter value. */
   searchValue = '';
 
-  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
-  @ViewChild(MatSort, { static: true }) sort: MatSort;
+  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
+  @ViewChild(MatSort, {static: true}) sort: MatSort;
 
-  constructor(private clientsService: ClientsService) {
-
+  constructor(private clientsService: ClientsService, private route: ActivatedRoute, private router: Router) {
   }
 
   ngOnInit() {
+    // @ts-ignore
+    const {value} = this.route.queryParams;
+    if (value) {
+      const {i, s} = value;
+      if (i && s) {
+        this.paginator.pageSize = Number(s);
+        this.paginator.pageIndex = Number(i);
+      }
+    }
+    //   .subscribe(params => {
+    //   console.log(params); // { order: "popular" }
+    //   const {pageIndex, pageSize} = params;
+    //   if (pageIndex && pageSize) {
+    //     this.paginator.pageSize = Number(pageSize);
+    //     this.paginator.pageIndex = Number(pageIndex);
+    //   }
+    // });
     this.getClients();
   }
+
   ngAfterViewInit() {
     this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
     merge(this.sort.sortChange, this.paginator.page, this.showClosedAccounts.change)
@@ -54,9 +72,15 @@ export class ClientsComponent implements OnInit, AfterViewInit {
     }
 
     if (this.searchValue !== '') {
-    this.applyFilter(this.searchValue);
+      this.applyFilter(this.searchValue);
     } else {
-    this.dataSource.getClients(this.sort.active, this.sort.direction, this.paginator.pageIndex, this.paginator.pageSize, !this.showClosedAccounts.checked);
+      const queryParams: Params = {i: this.paginator.pageIndex, s: this.paginator.pageSize};
+      this.router.navigate([],
+        {
+          queryParams: queryParams,
+          queryParamsHandling: 'merge', // remove to replace all query params by provided
+        });
+      this.dataSource.getClients(this.sort.active, this.sort.direction, this.paginator.pageIndex, this.paginator.pageSize, !this.showClosedAccounts.checked);
     }
   }
 
@@ -72,7 +96,7 @@ export class ClientsComponent implements OnInit, AfterViewInit {
    * Filter Client Data
    * @param {string} filterValue Value to filter data.
    */
-  applyFilter(filterValue: string= '') {
+  applyFilter(filterValue: string = '') {
     this.searchValue = filterValue;
     this.dataSource.filterClients(filterValue.trim().toLowerCase(), this.sort.active, this.sort.direction, this.paginator.pageIndex, this.paginator.pageSize, !this.showClosedAccounts.checked);
   }

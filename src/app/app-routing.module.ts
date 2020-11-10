@@ -21,7 +21,7 @@ const routes: Routes = [
  * Configures the fallback route.
  */
 @NgModule({
-  imports: [RouterModule.forRoot(routes, {useHash: true })], // Jean: add useHash
+  imports: [RouterModule.forRoot(routes, {useHash: true,scrollPositionRestoration: 'enabled' },)], // Jean: add useHash, scrollPositionRestoration: 'enabled'
 
   exports: [RouterModule],
   providers: []

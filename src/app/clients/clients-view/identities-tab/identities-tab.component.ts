@@ -1,6 +1,6 @@
 /** Angular Imports */
 import {Component, ViewChild} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {MatTable} from '@angular/material/table';
 import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
 
@@ -16,6 +16,7 @@ import {FormDialogComponent} from 'app/shared/form-dialog/form-dialog.component'
 import {AddIdentitiesComponent} from './add-identities/add-identities.component';
 /** Custom Services */
 import {ClientsService} from '../../clients.service';
+import {BankService} from '../../../services/bank.service';
 
 /**
  * Identities Tab Component
@@ -26,15 +27,17 @@ import {ClientsService} from '../../clients.service';
   styleUrls: ['./identities-tab.component.scss']
 })
 export class IdentitiesTabComponent {
-
+  searchKey: string;
   /** Client Identities */
-  clientIdentities: any;
+  clientIdentities:  any = [];
+  clientIdentitiesOther: any = [];
   /** Client Identifier Template */
   clientIdentifierTemplate: any;
   /** Client Id */
   clientId: string;
   /** Identities Columns */
-  identitiesColumns: string[] = ['id', 'description', 'type', 'documents', 'status', 'actions'];
+  identitiesColumns: string[] = ['id', 'documentKey', 'description', 'type', 'documents', 'status', 'actions'];
+  identitiesOtherColumns: string[] = ['id', 'documentKey', 'description', 'type', 'documents', 'status'];
 
   /** Identifiers Table */
   @ViewChild('identifiersTable', {static: true}) identifiersTable: MatTable<Element>;
@@ -45,13 +48,23 @@ export class IdentitiesTabComponent {
    * @param {MatDialog} dialog Mat Dialog
    * @param {ClientsService} clientService Clients Service
    */
-  constructor(private route: ActivatedRoute,
+  constructor(
+              private router: Router,
+              private route: ActivatedRoute,
               public dialog: MatDialog,
-              private clientService: ClientsService) {
+              private clientService: ClientsService,
+              private bankService: BankService,) {
     this.clientId = this.route.parent.snapshot.paramMap.get('clientId');
     this.route.data.subscribe((data: { clientIdentities: any, clientIdentifierTemplate: any }) => {
-      this.clientIdentities = data.clientIdentities;
+
       this.clientIdentifierTemplate = data.clientIdentifierTemplate;
+      data.clientIdentities.forEach((element: any) => {
+          if (element.documentType.id >= 37  && element.documentType.id <= 58 ){
+            this.clientIdentities.push(element);
+          }else{
+            this.clientIdentitiesOther.push(element);
+          }
+      });
     });
   }
 
@@ -65,6 +78,10 @@ export class IdentitiesTabComponent {
       const url = window.URL.createObjectURL(res);
       window.open(url);
     });
+  }
+  routeToMakeTransaction(type: string, identifierId: string){
+
+    this.router.navigate(['/transaction', this.clientId,  identifierId, type  ]);
   }
 
   /**
@@ -116,22 +133,60 @@ export class IdentitiesTabComponent {
       title: 'Add Client Identifier',
       clientIdentifierTemplate: this.clientIdentifierTemplate
     };
-    console.log(dialogConfig);
-    // console.log(formfields);
+    dialogConfig.minWidth = 400;
     const addIdentifierDialogRef = this.dialog.open(AddIdentitiesComponent, dialogConfig);
     addIdentifierDialogRef.afterClosed().subscribe((response: any) => {
+      console.log(response);
       if (response.data) {
-        this.clientService.addClientIdentifier(this.clientId, response.data.value).subscribe((res: any) => {
-          this.clientIdentities.push({
-            id: res.resourceId,
-            description: response.data.value.description,
-            documentType: this.clientIdentifierTemplate.allowedDocumentTypes.filter((doc: any) => (doc.id === response.data.value.documentTypeId))[0],
-            documentKey: response.data.value.documentKey,
-            documents: [],
-            clientId: this.clientId,
-            status: (response.data.value.status === 'Active' ? 'clientIdentifierStatusType.active' : 'clientIdentifierStatusType.inactive')
-          });
-          this.identifiersTable.renderRows();
+        let {description} = response.data.value;
+        const {documentCardBank, documentCardType, documentKey, documentTypeId, dueDay, expiredDate, status} = response.data.value;
+        const documentTypes = response.documentTypes;
+        const document = documentTypes.find((v: any) => v.id === documentTypeId);
+        if (document && Number(document.id) >= 38 && Number(document.id) <= 57)  {
+          if (!response.existBin) {
+            // this.bankService.storeInfoBinCode({
+            //   cardType: documentCardType,
+            //   bankCode: documentCardBank,
+            //   binCode: documentKey
+            // });
+          }
+          description = `${documentCardBank}-${documentCardType}-${description}`;
+        }
+        this.clientService.addClientIdentifier(this.clientId, {
+          documentKey,
+          documentTypeId,
+          status,
+          description
+        }).subscribe((res: any) => {
+          const call_return = () => {
+            this.clientIdentities.push({
+              id: res.resourceId,
+              description: response.data.value.description,
+              documentType: this.clientIdentifierTemplate.allowedDocumentTypes.filter((doc: any) => (doc.id === response.data.value.documentTypeId))[0],
+              documentKey: response.data.value.documentKey,
+              documents: [],
+              clientId: this.clientId,
+              status: (response.data.value.status === 'Active' ? 'clientIdentifierStatusType.active' : 'clientIdentifierStatusType.inactive')
+            });
+            this.identifiersTable.renderRows();
+          };
+          if (document && Number(document.id) >= 38 && Number(document.id) <= 57) {
+            this.clientService.getClientData(this.clientId).subscribe((client: any) => {
+              this.bankService.storeExtraCardInfo({
+                'userId': this.clientId,
+                'userIdentifyId': res.resourceId,
+                'clientName': client.displayName,
+                'cardNumber': `${documentKey.slice(0, 6)}-XXX-XXX-${documentKey.slice(12, 16)}`,
+                'mobileNo': client.mobileNo,
+                'dueDay': dueDay,
+                'expireDate': expiredDate,
+              }).subscribe((res2: any) => {
+                return call_return();
+              });
+            });
+          } else {
+            return call_return();
+          }
         });
       }
     });

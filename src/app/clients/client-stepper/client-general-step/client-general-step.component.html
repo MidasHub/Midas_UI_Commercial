@@ -252,6 +252,9 @@
     </mat-card>
   </div>
   <div fxLayout="row" class="margin-t" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="2%">
+    <button mat-raised-button (click)="clickCancel()">
+      {{'Client_Component.ClientStepper.Preview.buttonCancel'|translate}}
+    </button>
     <button mat-raised-button matStepperPrevious readonly>
       <fa-icon icon="arrow-left"></fa-icon>&nbsp;&nbsp;
       {{'Client_Component.ClientStepper.buttonPrevious' |translate}}

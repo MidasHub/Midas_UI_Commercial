@@ -62,7 +62,7 @@ export class I18nService {
   init(defaultLanguage: string, supportedLanguages: string[]) {
     this.defaultLanguage = defaultLanguage;
     this.supportedLanguages = supportedLanguages;
-    this.language = '';
+    this.language = defaultLanguage;
 
     this.translate.onLangChange
       .subscribe((event: LangChangeEvent) => {
@@ -111,7 +111,7 @@ export class I18nService {
   getTranslate(field: any): string {
     let lbl = '';
     this.translate.get(field).subscribe((res: string) => {
-      console.log('title', res);
+      // console.log('title', res);
       lbl = res;
     });
     return lbl;

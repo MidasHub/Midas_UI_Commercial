@@ -1,6 +1,7 @@
 <h1 mat-dialog-title>Add Client Identifier</h1>
 
-<div mat-dialog-content [formGroup]="form" [fxLayout]="'column'" fxLayout.lt-md="column" [fxLayoutGap]="'1%'" fxLayoutGap.lt-md="0%">
+<div mat-dialog-content [formGroup]="form" [fxLayout]="'column'" fxLayout.lt-md="column" [fxLayoutGap]="'1%'"
+     fxLayoutGap.lt-md="0%">
   <mat-form-field fxFlex="96%">
     <mat-label>{{'Client_Component.ViewClient.TabIdentities.selectDocumentType' |translate}}</mat-label>
     <mat-select formControlName="documentTypeId">
@@ -11,22 +12,54 @@
   </mat-form-field>
 
   <mat-form-field fxFlex="96%">
-    <mat-label>{{'Client_Component.ViewClient.TabIdentities.inputDocumentCardBank' |translate}}</mat-label>
-    <input matInput formControlName="documentTypeId">
+    <mat-label>{{'Client_Component.ViewClient.TabIdentities.inputUniqueId' |translate}}</mat-label>
+    <input matInput formControlName="documentKey">
   </mat-form-field>
 
-  <mat-form-field fxFlex="96%">
-    <mat-label>{{'Client_Component.ViewClient.TabIdentities.inputStatus' |translate}}</mat-label>
-    <mat-select formControlName="status">
-      <mat-option *ngFor="let sa of statusOptions" [value]="sa.value">
-        {{ sa.value }}
+  <mat-form-field fxFlex="96%" *ngIf="form.contains('documentCardBank')">
+    <mat-label>{{'Client_Component.ViewClient.TabIdentities.selectBank' |translate}}</mat-label>
+    <mat-select [disabled]="isTeller" formControlName="documentCardBank">
+      <mat-option *ngFor="let sa of documentCardBanks" [value]="sa.bankCode">
+        {{ sa.bankName }}
       </mat-option>
     </mat-select>
   </mat-form-field>
 
-  <mat-form-field fxFlex="96%">
-    <mat-label>{{'Client_Component.ViewClient.TabIdentities.inputUniqueId' |translate}}</mat-label>
-    <input matInput formControlName="documentKey">
+  <mat-form-field *ngIf="form.contains('documentCardType')" fxFlex="96%">
+    <mat-label>{{'Client_Component.ViewClient.TabIdentities.selectCardType' |translate}}</mat-label>
+    <mat-select disabled formControlName="documentCardType">
+      <mat-option *ngFor="let sa of documentCardTypes" [value]="sa.code">
+        {{ sa.description }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field *ngIf="form.contains('dueDay')" fxFlex="48%">
+    <mat-label>Ngày đáo hạn thẻ:</mat-label>
+    <input
+      pattern
+      maxlength="2"
+      matInput type="number" max="31" min="0" formControlName="dueDay">
+  </mat-form-field>
+
+  <mat-form-field *ngIf="form.contains('expiredDate')" fxFlex="48%">
+    <mat-label>Ngày hết hạn thẻ:</mat-label>
+    <input
+      matInput
+      maxlength="5"
+      minlength="5"
+      type="text"
+      [dropSpecialCharacters]="false" mask="00/00"
+      formControlName="expiredDate">
+  </mat-form-field>
+
+  <mat-form-field fxFlex="96%" *ngIf="form.contains('status')">
+    <mat-label>{{'Client_Component.ViewClient.TabIdentities.selectStatus' |translate}}</mat-label>
+    <mat-select [disabled]="isTeller" formControlName="status">
+      <mat-option *ngFor="let sa of statusOptions" [value]="sa.value">
+        {{ sa.value }}
+      </mat-option>
+    </mat-select>
   </mat-form-field>
 
   <mat-form-field fxFlex="96%">
@@ -37,5 +70,7 @@
 
 <mat-dialog-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="2%">
   <button mat-raised-button mat-dialog-close>{{ 'Shared_Component.FormDialog.btnCancel' | translate }}</button>
-  <button mat-raised-button color="primary" [mat-dialog-close]="{ data: form }" [disabled]="!form.valid || form.pristine">{{ 'Shared_Component.FormDialog.btnAdd' |translate }}</button>
+  <button mat-raised-button color="primary"
+          [mat-dialog-close]="{ data: form,documentTypes:documentTypes,existBin:existBin }"
+          [disabled]="!form.valid || form.pristine">{{ 'Shared_Component.FormDialog.btnAdd' |translate }}</button>
 </mat-dialog-actions>

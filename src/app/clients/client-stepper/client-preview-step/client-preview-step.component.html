@@ -217,7 +217,8 @@
     <fa-icon icon="arrow-left"></fa-icon>&nbsp;&nbsp;
     {{'Client_Component.ClientStepper.Preview.buttonPrevious'|translate}}
   </button>
-  <button mat-raised-button [routerLink]="['../']">
+  <!-- <button mat-raised-button [routerLink]="['../']"> -->
+  <button mat-raised-button (click)="clickCancel()">
     {{'Client_Component.ClientStepper.Preview.buttonCancel'|translate}}
   </button>
   <button mat-raised-button color="primary" (click)="submit.emit()">

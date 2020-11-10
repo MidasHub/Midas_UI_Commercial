@@ -70,3 +70,22 @@ Follow the given instructions for your operating system to setup a local server 
 For connecting to server running elsewhere update the base API URL and/or tenant identifier property in the `environments/environment.ts` file and `environments/environment.prod.ts` file for development and production use respectively.
 
 By default OAuth2 is disabled. To enable it, change the value of oauth.enabled property to true in the `environments/environment.ts` file and `environments/environment.prod.ts` file for development and production use respectively.
+
+### Translate
+
+Name: 
+
+      - label đặt tên là lbl+[tên biến]
+      - button đặt tên là btn+[tên biến]
+      - message đặt lên là msg+[Tên biến]
+
+### Alert standard
+Use "Alert Interface" for popup Alert Msg
+  Alert {
+    type?: string; 
+    message: string;
+    msgClass?: string; --> user for string value: cssSuccess, cssInfo, cssDanger, cssWarning
+    msgDuration?: number --> default: 3000ms
+    hPosition?: any ; --> default: left
+    vPosition?: any;--> default: top
+    }

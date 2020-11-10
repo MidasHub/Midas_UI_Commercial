@@ -26,7 +26,7 @@
 
       <ng-template matStepLabel>{{'Client_Component.ClientStepper.labelGeneral'| translate}}</ng-template>
 
-      <mifosx-client-general-step [clientTemplate]="clientTemplate"  [clientIdentifierTemplate]="clientIdentifierTemplate"></mifosx-client-general-step>
+      <mifosx-client-general-step [clientTemplate]="clientTemplate"  [clientIdentifierTemplate]="clientIdentifierTemplate"  (cancelEvent)="doCancel()"></mifosx-client-general-step>
 
     </mat-step>
 

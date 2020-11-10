@@ -6971,7 +6971,7 @@ moment-mini@^2.22.1:
   resolved "https://registry.yarnpkg.com/moment-mini/-/moment-mini-2.24.0.tgz#fa68d98f7fe93ae65bf1262f6abb5fb6983d8d18"
   integrity sha512-9ARkWHBs+6YJIvrIp0Ik5tyTTtP9PoV0Ssu2Ocq5y9v8+NOOpWiRshAp8c4rZVWTOe+157on/5G+zj5pwIQFEQ==
 
-moment@^2.24.0:
+moment@^2.24.0, moment@^2.29.1:
   version "2.29.1"
   resolved "https://registry.yarnpkg.com/moment/-/moment-2.29.1.tgz#b2be769fa31940be9eeea6469c075e35006fa3d3"
   integrity sha512-kHmoybcPV8Sqy59DwNDY3Jefr64lK/by/da0ViFcuA4DH0vQg5Q6Ze5VimxkfQNSC+Mls/Kx53s7TjP1RhFEDQ==
@@ -7079,6 +7079,27 @@ ng2-smart-table@^1.7.1:
   dependencies:
     lodash "^4.17.10"
     tslib "^2.0.0"
+
+ngx-currency@^2.5.1:
+  version "2.5.1"
+  resolved "https://registry.yarnpkg.com/ngx-currency/-/ngx-currency-2.5.1.tgz#0d24e13e03557ba1b0012e2bd103f4c3cedd0714"
+  integrity sha512-gvVpDeAk5qfRxenUrDwEWHTU81qmsV4rKMqk+1SbJJcJzPkYV/fza0GoyE/0Gszw0Un3dMT+4KEUP2QI5Nbdog==
+  dependencies:
+    tslib "^2.0.0"
+
+ngx-mask@9.1.4:
+  version "9.1.4"
+  resolved "https://registry.yarnpkg.com/ngx-mask/-/ngx-mask-9.1.4.tgz#51367a5011bb16404f9bc1b2818895ef25fb4a5f"
+  integrity sha512-CaegSUqdH6ajSapKD55uBLo6cRroMYNrCFk7rQCVRv8XPNLHsddG1CBV/9MWFrWOdnQ5eSBZ6zJQG+eimKzifw==
+  dependencies:
+    tslib "^1.10.0"
+
+ngx-mat-select-search@^3.1.2:
+  version "3.1.2"
+  resolved "https://registry.yarnpkg.com/ngx-mat-select-search/-/ngx-mat-select-search-3.1.2.tgz#c16ff17c1f4c407ba50868dc9d996fc8b98cc775"
+  integrity sha512-F+w6lvoSq9zPlLwjbjdC9J9BVnnv2094Nuc3WS/7cWCHuPi+HPcRMKljhg4ZxLM1RV26Ri7lmvCMsctmdnmDCA==
+  dependencies:
+    tslib "^1.9.0"
 
 nice-try@^1.0.4:
   version "1.0.5"

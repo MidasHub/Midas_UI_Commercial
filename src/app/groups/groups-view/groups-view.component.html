@@ -54,39 +54,39 @@
     <mat-card-actions class="group-actions" *ngIf="!(groupViewData.status.value==='Closed')">
 
         <span *ngIf="!(groupViewData.status.value==='Active')">
-          <button mat-raised-button  *mifosxHasPermission="'UPDATE_GROUP'" (click)="doAction('Activate')">
+          <button mat-raised-button  *midasHasPermission="'UPDATE_GROUP'" (click)="doAction('Activate')">
             <i class="fa fa-check-sign"></i>Activate</button>
         </span>
-        <button mat-raised-button *mifosxHasPermission="'UPDATE_GROUP'" (click)="doAction('Edit')">
+        <button mat-raised-button *midasHasPermission="'UPDATE_GROUP'" (click)="doAction('Edit')">
           <i class="fa fa-edit"></i>Edit</button>
-        <button mat-raised-button *mifosxHasPermission="'CREATE_CLIENT'">
+        <button mat-raised-button *midasHasPermission="'CREATE_CLIENT'">
           <i class="fa fa-plus"></i>Add Clients</button>
-        <button mat-raised-button *mifosxHasPermission="'ASSOCIATECLIENTS_GROUP'" (click)="doAction('Transfer Clients')">
+        <button mat-raised-button *midasHasPermission="'ASSOCIATECLIENTS_GROUP'" (click)="doAction('Transfer Clients')">
           <i class="fa fa-exchange"></i>Transfer Clients</button>
-        <button mat-raised-button *mifosxHasPermission="'TRANSFERCLIENTS_GROUP'" (click)="doAction('Manage Members')">
+        <button mat-raised-button *midasHasPermission="'TRANSFERCLIENTS_GROUP'" (click)="doAction('Manage Members')">
           <i class="fa fa-user"></i>Manage Members</button>
 
         <button mat-raised-button *ngIf="groupViewData.active" [matMenuTriggerFor]="AccountApplications">
           <i class="fa fa-file"></i>Applications</button>
         <mat-menu #AccountApplications="matMenu">
           <span *ngIf="groupViewData.clientMembers">
-            <button mat-menu-item *mifosxHasPermission="'CREATE_LOAN'">Bulk JLG Loan Application</button></span>
-          <button mat-menu-item *mifosxHasPermission="'CREATE_SAVINGSACCOUNT'" [routerLink]="['savings-accounts', 'create']">Group Saving Application</button>
-          <button mat-menu-item *mifosxHasPermission="'CREATE_LOAN'">Group Loan Application</button>
+            <button mat-menu-item *midasHasPermission="'CREATE_LOAN'">Bulk JLG Loan Application</button></span>
+          <button mat-menu-item *midasHasPermission="'CREATE_SAVINGSACCOUNT'" [routerLink]="['savings-accounts', 'create']">Group Saving Application</button>
+          <button mat-menu-item *midasHasPermission="'CREATE_LOAN'">Group Loan Application</button>
         </mat-menu>
 
         <button mat-raised-button [matMenuTriggerFor]="More">More</button>
         <mat-menu #More="matMenu">
           <span *ngIf="groupViewData.collectionMeetingCalendar">
-            <button mat-menu-item *mifosxHasPermission="'SAVEORUPDATEATTENDANCE_MEETING'" (click)="doAction('Attendance')">Attendance</button></span>
+            <button mat-menu-item *midasHasPermission="'SAVEORUPDATEATTENDANCE_MEETING'" (click)="doAction('Attendance')">Attendance</button></span>
           <span *ngIf="!groupViewData.staffId">
-            <button mat-menu-item *mifosxHasPermission="'ASSIGNSTAFF_GROUP'" (click)="doAction('Assign Staff')">Assign Staff</button></span>
+            <button mat-menu-item *midasHasPermission="'ASSIGNSTAFF_GROUP'" (click)="doAction('Assign Staff')">Assign Staff</button></span>
           <span *ngIf="groupViewData.staffId">
-            <button mat-menu-item *mifosxHasPermission="'UNASSIGNSTAFF_GROUP'" (click)="doAction('Unassign Staff')">Unassign Staff</button></span>
+            <button mat-menu-item *midasHasPermission="'UNASSIGNSTAFF_GROUP'" (click)="doAction('Unassign Staff')">Unassign Staff</button></span>
           <span *ngIf="!(groupViewData.centerId || groupViewData.collectionMeetingCalendar) && groupViewData.status.value==='Active'">
-            <button mat-menu-item *mifosxHasPermission="'CREATE_MEETING'" (click)="doAction('Attach Meeting')">Attach Meeting</button></span>
-          <button mat-menu-item *mifosxHasPermission="'CLOSE_GROUP'" (click)="doAction('Close')">Close</button>
-          <button mat-menu-item *mifosxHasPermission="'DELETE_GROUP'" (click)="doAction('Delete')">Delete</button>
+            <button mat-menu-item *midasHasPermission="'CREATE_MEETING'" (click)="doAction('Attach Meeting')">Attach Meeting</button></span>
+          <button mat-menu-item *midasHasPermission="'CLOSE_GROUP'" (click)="doAction('Close')">Close</button>
+          <button mat-menu-item *midasHasPermission="'DELETE_GROUP'" (click)="doAction('Delete')">Delete</button>
         </mat-menu>
 
     </mat-card-actions>
@@ -100,7 +100,7 @@
       [active]="general.isActive">
         General
       </a>
-      <a mat-tab-link [routerLink]="['./notes']" *mifosxHasPermission="'READ_GROUPNOTE'" routerLinkActive #notes="routerLinkActive"
+      <a mat-tab-link [routerLink]="['./notes']" *midasHasPermission="'READ_GROUPNOTE'" routerLinkActive #notes="routerLinkActive"
       [active]="notes.isActive">
         Notes
       </a>
@@ -109,7 +109,7 @@
         Committee
       </a>
       <span *ngFor="let groupDatatable of groupDatatables">
-        <a mat-tab-link *mifosxHasPermission="'READ_' + groupDatatable.registeredTableName"
+        <a mat-tab-link *midasHasPermission="'READ_' + groupDatatable.registeredTableName"
           [routerLink]="['./datatables',groupDatatable.registeredTableName]"
           routerLinkActive #datatable="routerLinkActive" [active]="datatable.isActive">
           {{groupDatatable.registeredTableName}}

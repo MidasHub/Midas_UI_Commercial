@@ -1,60 +1,128 @@
 <div class="tab-container mat-typography">
-
-  <div fxLayout="row" fxLayoutAlign="start">
-    <div class="m-b-10">
-      <h3>All Transactions</h3>
+  <div class="container m-b-20" fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
+    <div fxFlex="18%" fxLayout="column wrap">
+      <div fxLayout="row wrap" class="container m-b-20">
+        <img src="assets/images/icons/income.svg">
+        <div style="display: flex;" fxLayout="column">
+          <span style="font-size: 20px; margin-top: 8px; padding-top: 5px;">{{totalDeposit|money}}</span>
+          <span>{{'Saving_Account_Component.tabTransactions.msgIncrease' | translate}}</span>
+        </div>
+      </div>
+      <div fxLayout="row wrap" class="container m-b-20">
+        <img src="assets/images/icons/withdraw_total.svg">
+        <div style="display: flex;" fxLayout="column">
+          <span style="font-size: 20px; margin-top: 8px; padding-top: 5px;">{{totalWithdraw|money}}</span>
+          <span>{{'Saving_Account_Component.tabTransactions.msgDecrease' | translate}}</span>
+        </div>
+      </div>
     </div>
-    <div class="action-button m-b-20" fxLayout="row" fxLayoutGap="20px" *ngIf="checkStatus()">
-      <button mat-raised-button color="primary" [routerLink]="['/accounting', 'journal-entries']">View Journal Entries</button>
-      <button mat-raised-button color="primary" [routerLink]="['export']">Export</button>
+    <div fxFlex="78%" fxLayout="column" fxLayoutAlign="start">
+      <div class="container m-b-20" fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
+        <mat-form-field fxFlex="31%">
+          <mat-label>{{'Saving_Account_Component.tabTransactions.labelTransactionDateFrom' | translate}}</mat-label>
+          <input matInput [matDatepicker]="transactionDateFromPicker" [formControl]="transactionDateFrom">
+          <mat-datepicker-toggle matSuffix [for]="transactionDateFromPicker"></mat-datepicker-toggle>
+          <mat-datepicker #transactionDateFromPicker></mat-datepicker>
+        </mat-form-field>
+        <mat-form-field fxFlex="31%">
+          <mat-label>{{'Saving_Account_Component.tabTransactions.labelTransactionDateTo' | translate}}</mat-label>
+          <input matInput [matDatepicker]="transactionDateToPicker" [formControl]="transactionDateTo">
+          <mat-datepicker-toggle matSuffix [for]="transactionDateToPicker"></mat-datepicker-toggle>
+          <mat-datepicker #transactionDateToPicker></mat-datepicker>
+        </mat-form-field>
+        <div class="action-button" fxFlex="31%" fxLayoutAlign="end" style="height: 50px;" fxLayout="row"
+             fxLayoutGap="20px">
+          <button mat-raised-button (click)="getData()" color="primary">{{'Saving_Account_Component.tabTransactions.btnSearch' | translate}}</button>
+          <button mat-raised-button color="primary" (click)="downloadReport()">{{'Saving_Account_Component.tabTransactions.btnExport' | translate}}</button>
+        </div>
+      </div>
+      <div class="container m-b-20" [formGroup]="form" fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
+        <mat-form-field fxFlex="31%" *ngIf="form.contains('txnCode')">
+          <mat-label>{{'Saving_Account_Component.tabTransactions.lblTransactionType' |translate}}</mat-label>
+          <mat-select formControlName="txnCode">
+            <mat-option *ngFor="let type of transactionType" [value]="type.id">
+              {{ type.name | translate }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field fxFlex="31%">
+          <mat-label>{{'Saving_Account_Component.tabTransactions.lblTransactionType2' | translate}}</mat-label>
+          <input formControlName="paymentDetail" matInput>
+        </mat-form-field>
+        <mat-form-field fxFlex="31%">
+          <mat-label>{{'Saving_Account_Component.tabTransactions.lblNote' | translate}}</mat-label>
+          <input formControlName="note" matInput>
+        </mat-form-field>
+      </div>
     </div>
   </div>
-
   <div class="mat-elevation-z1 m-b-25">
 
-    <table mat-table [dataSource]="dataSource" >
+    <table mat-table [dataSource]="dataSource">
 
       <ng-container matColumnDef="id">
-        <th mat-header-cell *matHeaderCellDef> ID </th>
-        <td mat-cell *matCellDef="let transaction"> {{ transaction.id }} </td>
+        <th mat-header-cell *matHeaderCellDef> ID</th>
+        <td mat-cell *matCellDef="let transaction"> {{ transaction.txnId }} </td>
       </ng-container>
 
       <ng-container matColumnDef="transactionDate">
-        <th mat-header-cell *matHeaderCellDef> Transaction Date </th>
-        <td mat-cell *matCellDef="let transaction"> {{ transaction.date | date }} </td>
+        <th mat-header-cell *matHeaderCellDef>{{'Saving_Account_Component.tabTransactions.lblTransactionDate' | translate}}</th>
+        <td mat-cell *matCellDef="let transaction"> {{ transaction.transactionDate | date }} </td>
       </ng-container>
 
       <ng-container matColumnDef="transactionType">
-        <th mat-header-cell *matHeaderCellDef> Transaction Type </th>
-        <td mat-cell *matCellDef="let transaction"> {{ transaction.transactionType.value  }} </td>
-      </ng-container>
-
-      <ng-container matColumnDef="debit">
-        <th mat-header-cell *matHeaderCellDef> Debit </th>
-        <td mat-cell *matCellDef="let transaction"> {{ isDebit(transaction.transactionType) ? transaction.amount : 'N/A'}} </td>
-      </ng-container>
-
-      <ng-container matColumnDef="credit">
-        <th mat-header-cell *matHeaderCellDef> Credit </th>
-        <td mat-cell *matCellDef="let transaction"> {{ !isDebit(transaction.transactionType) ? transaction.amount : 'N/A' }} </td>
-      </ng-container>
-
-      <ng-container matColumnDef="balance">
-        <th mat-header-cell *matHeaderCellDef> Balance </th>
-        <td mat-cell *matCellDef="let transaction"> {{ transaction.runningBalance }} </td>
-      </ng-container>
-
-      <ng-container matColumnDef="viewReciept">
-        <th mat-header-cell *matHeaderCellDef> View Reciept </th>
-        <td mat-cell *matCellDef="let transaction"> 
-          <button class="account-action-button" mat-raised-button color="primary" (click)="routeEdit($event)" [routerLink]="[transaction.id, 'reciept']">
-            <i class="fa fa-file" matTooltip="View Reciept"></i>
-          </button>
+        <th mat-header-cell *matHeaderCellDef> {{'Saving_Account_Component.tabTransactions.lblTransactionType' | translate}}</th>
+        <td mat-cell *matCellDef="let transaction">
+          <span style="text-align: center; display: flex;" *ngIf="transaction.txnCode === 'D'"><img
+            src="assets/images/icons/deposit.svg"/>{{'Saving_Account_Component.tabTransactions.lblDeposit' | translate}}</span>
+          <span style="text-align: center; display: flex;" *ngIf="transaction.txnCode === 'W'"><img
+            src="assets/images/icons/withdraw.svg"/>{{'Saving_Account_Component.tabTransactions.lblWithdraw' | translate}}</span>
         </td>
       </ng-container>
 
+      <ng-container matColumnDef="debit">
+        <th mat-header-cell *matHeaderCellDef>{{'Saving_Account_Component.tabTransactions.lblAmount' | translate}}</th>
+        <td mat-cell
+            *matCellDef="let transaction"> {{ (transaction.amount | money)}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="credit">
+        <th mat-header-cell *matHeaderCellDef>{{'Saving_Account_Component.tabTransactions.lblProportional' | translate}}</th>
+        <td mat-cell
+            *matCellDef="let transaction"> {{ (transaction.balance| money)}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="type">
+        <th mat-header-cell *matHeaderCellDef>{{'Saving_Account_Component.tabTransactions.lblTransactionType2' | translate}}</th>
+        <td mat-cell
+            *matCellDef="let transaction"> {{ (transaction.paymentDetailId)}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="note">
+        <th mat-header-cell *matHeaderCellDef>{{'Saving_Account_Component.tabTransactions.lblNote' | translate}}</th>
+        <td mat-cell  style="max-width: 200px;"
+            *matCellDef="let transaction">
+          <span aria-multiline="true" >{{ (transaction.note)}}</span> </td>
+      </ng-container>
+      <!--      <ng-container matColumnDef="balance">-->
+      <!--        <th mat-header-cell-->
+      <!--            *matHeaderCellDef> {{'Saving_Account_Component.tabTransactions.labelBalance'|translate}} </th>-->
+      <!--        <td mat-cell *matCellDef="let transaction"> {{ transaction.runningBalance | money }} </td>-->
+      <!--      </ng-container>-->
+
+      <!--            <ng-container matColumnDef="viewReciept">-->
+      <!--              <th mat-header-cell *matHeaderCellDef> View Reciept</th>-->
+      <!--              <td mat-cell *matCellDef="let transaction">-->
+      <!--                <button class="account-action-button" mat-raised-button color="primary" (click)="routeEdit($event)"-->
+      <!--                        [routerLink]="[transaction.id, 'reciept']">-->
+      <!--                  <i class="fa fa-file" matTooltip="View Reciept"></i>-->
+      <!--                </button>-->
+      <!--              </td>-->
+      <!--            </ng-container>-->
+
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="select-row" (click)="showTransactions(row)"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="select-row"
+          (click)="showTransactions(row)"></tr>
 
     </table>
 

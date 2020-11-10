@@ -11,7 +11,7 @@
       <button mat-raised-button color="primary" [routerLink]="['../', 'organization', 'bulk-import', 'Groups']">
         <fa-icon icon="download"></fa-icon>&nbsp;&nbsp;{{ 'Group_Component.btnBulkImport'| translate}}
       </button>
-      <button mat-raised-button color="primary" [routerLink]="['create']" *mifosxHasPermission="'CREATE_GROUP'">
+      <button mat-raised-button color="primary" [routerLink]="['create']" *midasHasPermission="'CREATE_GROUP'">
         <fa-icon icon="plus"></fa-icon>&nbsp;&nbsp;{{ 'Group_Component.btnCreate'| translate}}
       </button>
     </div>

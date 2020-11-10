@@ -1,63 +1,57 @@
-<div fxLayout="row" fxLayout.lt-md="column" fxLayoutAlign="start" fxLayoutGap="1%"  class="fluidcontainer m-b-10 p-l-10" >
+<div fxLayout="column">
+  <div fxLayout="row" fxLayout.lt-md="column" fxLayoutAlign="start" fxLayoutGap="1%" class="fluidcontainer m-b-10 p-10"
+    fxFlex="100">
 
-  <button mat-raised-button color="primary" [routerLink]="['/dashboard']" >
-    <fa-icon icon="tachometer-alt"></fa-icon>&nbsp;&nbsp;
-    {{'Home_Component.btnDashboard'| translate}}
-  </button>
-    <button mat-raised-button color="primary" [routerLink]="['/clients/create']" [queryParams]="{go_back:'home'}" >
-    <fa-icon icon="user-plus"></fa-icon> &nbsp;&nbsp;
-    {{'Home_Component.btnNewCustomer'| translate}}
-  </button>
-  <button mat-raised-button color="primary">
-    <i class="fab fa-google-plus-g"></i> &nbsp;&nbsp;
-    {{'Home_Component.btnNewGroup'| translate}}
-  </button>
-</div>
+    <button mat-raised-button color="primary" [routerLink]="['/dashboard']">
+      <fa-icon icon="tachometer-alt"></fa-icon>&nbsp;&nbsp;
+      {{'Home_Component.btnDashboard'| translate}}
+    </button>
+    <button mat-raised-button color="primary" [routerLink]="['/clients/create']" [queryParams]="{go_back:'home'}">
+      <fa-icon icon="user-plus"></fa-icon> &nbsp;&nbsp;
+      {{'Home_Component.btnNewCustomer'| translate}}
+    </button>
+    <button mat-raised-button color="primary" [routerLink]="['/groups/create']" [queryParams]="{go_back:'home'}">
+      <i class="fab fa-google-plus-g"></i> &nbsp;&nbsp;
+      {{'Home_Component.btnNewGroup'| translate}}
+    </button>
+  </div>
 
-<div fxLayout="row" fxLayout.lt-md="column" fxFill fxLayoutAlign="space-around start"
-  class="container m-b-20">
+  <div fxLayout="row" fxLayout.lt-md="column" fxLayoutAlign="space-around start " class="fluidcontainer p-10 m-b-20"
+    fxFlex="100">
 
-  <mat-card fxFlex.gt-md="70" fxFlexOrder.gt-xs="2" fxFlexOrder.gt-md="1">
-    <mat-card-header>
-      <mat-card-title class="title">
-        {{'Home_Component.welcome'| translate}} <strong>{{username}}</strong>!
-      </mat-card-title>
-    </mat-card-header>
-
-    <mat-card-content>
-
-      <div fxLayout="column">
-        <mat-form-field>
-          <mat-label>{{'Home_Component.searchActivity'| translate }}</mat-label>
-          <input matInput [matAutocomplete]="activitySearch" [formControl]="searchText">
-        </mat-form-field>
-      </div>
-
-      <mat-autocomplete #activitySearch="matAutocomplete">
-        <mat-option *ngFor="let activity of filteredActivities | async" [routerLink]="activity.path">
-          <span>{{activity.activity}}</span>
-        </mat-option>
-      </mat-autocomplete>
-
-    </mat-card-content>
-
-    <img mat-card-image src="assets/images/midas_lg-logo.jpg" alt="MIDAS" >
-
-  </mat-card>
-  <mat-card fxFlex.gt-md="23" fxFlexOrder.gt-xs="1" fxFlexOrder.gt-md="2">
-    <mat-card-header fxLayout="column" fxLayoutAlign="center none">
-        <mat-card-title class="title text-center ">
-
-            <h1>5</h1>
-            <span> {{'Home_Component.labelIncompleteRollterm'| translate}}</span>
-
+    <mat-card class=" m-b-20" fxFlex="70">
+      <mat-card-header>
+        <mat-card-title class="title">
+          {{'Home_Component.welcome'| translate}} <strong>{{username}}</strong>!
         </mat-card-title>
+      </mat-card-header>
 
-    </mat-card-header>
+      <mat-card-content>
 
-    <mat-card-content>
-  <midas-rollterm-list></midas-rollterm-list>
-</mat-card-content>
+        <div fxLayout="column">
+          <mat-form-field>
+            <mat-label>{{'Home_Component.searchActivity'| translate }}</mat-label>
+            <input matInput [matAutocomplete]="activitySearch" [formControl]="searchText">
+          </mat-form-field>
+        </div>
 
-</mat-card>
+        <mat-autocomplete #activitySearch="matAutocomplete">
+          <mat-option *ngFor="let activity of filteredActivities | async" [routerLink]="activity.path">
+            <span>{{activity.activity}}</span>
+          </mat-option>
+        </mat-autocomplete>
+
+      </mat-card-content>
+      <midas-mainboard></midas-mainboard>
+      <img mat-card-image src="assets/images/midas-logo-flat.png" alt="MIDAS">
+
+    </mat-card>
+
+
+    <div fxLayout="column" fxFlex="25">
+      <midas-rollterm-list></midas-rollterm-list>
+
+      <midas-ondue-card></midas-ondue-card>
+    </div>
+  </div>
 </div>
