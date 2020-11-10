@@ -25,9 +25,7 @@ jobs:
     if: ${{ github.event_name == 'push' && github.event.ref =='refs/heads/development' }}
     steps:
       - name: Dump GitHub context
-        run: |
-          echo "${{ github.event.ref.indexOf('development') }}
-          echo "${{ github.event.ref }}
+        run:  echo "${{ github.event.ref }}
       - name: Dump GitHub context
         env:
           GITHUB_CONTEXT: ${{ toJson(github) }}
