@@ -61,6 +61,7 @@ import { CreateSelfServiceUserComponent } from './clients-view/client-actions/cr
 import {ReactiveFormsModule} from '@angular/forms';
 import {MoneyPipe} from '../pipes/money.pipe';
 import { AddIdentitiesComponent } from './clients-view/identities-tab/add-identities/add-identities.component';
+import { AddIdentitiesExtraInfoComponent } from './clients-view/identities-tab/add-identities-extra-info/add-identities-extra-info.component';
 
 /**
  * Clients Module
@@ -126,7 +127,8 @@ import { AddIdentitiesComponent } from './clients-view/identities-tab/add-identi
     CaptureImageDialogComponent,
     CreateSelfServiceUserComponent,
     MoneyPipe,
-    AddIdentitiesComponent
+    AddIdentitiesComponent,
+    AddIdentitiesExtraInfoComponent,
   ],
   exports: [
     MoneyPipe

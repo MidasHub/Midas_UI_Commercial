@@ -34,27 +34,28 @@ export class CreateTransactionComponent implements OnInit {
     public dialog: MatDialog,
     private alertService: AlertService,
   ) {
-      this.transactionInfo.productId = 'CA01';
 
   }
 
   ngOnInit() {
-    this.isLoading = true;
+
     this.route.queryParamMap
-    .subscribe((params) => {
+    .subscribe((params: any) => {
       const clientId = params.get("clientId");
       const identifierId = params.get("identifierId");
       const type = params.get("type");
-      this.transactionInfo.productId = type;
+      this.isLoading = true;
       this.transactionService.getTransactionTemplate(clientId, identifierId).subscribe((data: any) => {
         this.isLoading = false;
         this.transactionInfo = data.result;
         this.transactionInfo.isDone = false;
+        this.transactionInfo.productId = (type == 'cash'? 'CA01':'AL01');
+        this.transactionInfo.type = type;
+        this.transactionInfo.identifierId = identifierId;
+        this.transactionInfo.clientId = clientId;
         this.transactionInfo.accountCash = data.result.listAccAccount[0].documentKey;
       });
-    }
-  );
-
+    });
   }
 
   clearInfoTransaction() {
@@ -64,9 +65,11 @@ export class CreateTransactionComponent implements OnInit {
     this.transactionInfo.terminalId = '';
     this.transactionInfo.feeAmount = '';
     this.transactionInfo.txnAmountAfterFee = '';
-    if (this.transactionInfo.requestAmount && this.transactionService.formatLong(this.transactionInfo.requestAmount) > 0) {
+    if (this.transactionInfo.requestAmount
+      && this.transactionService.formatLong(this.transactionInfo.requestAmount) > 0)
+      {
       this.getTerminalListEnoughBalance(this.transactionInfo.requestAmount);
-    }
+      }
   }
 
   changeAmountTransaction() {
@@ -111,10 +114,11 @@ export class CreateTransactionComponent implements OnInit {
       this.transactionInfo.terminalId
     )
       .subscribe((data: any) => {
-        if (data.status !== 200) {
+        if (data.status != 200) {
+          debugger;
 
-          if (data.statusCode === 401) {
-            if (data.error === 'Unauthorize with Midas') {
+          if (data.statusCode == 401) {
+            if (data.error == 'Unauthorize with Midas') {
               this.alertService.alert({
                 message: 'Phiên làm việc hết hạn vui lòng đăng nhập lại để tiếp tục',
                 msgClass: 'cssDanger',
@@ -123,7 +127,7 @@ export class CreateTransactionComponent implements OnInit {
             }
           }
 
-          if (data.statusCode === 666) {
+          if (data.statusCode == 666) {
             if (typeof data.error !== 'undefined' && data.error !== '') {
 
               this.alertService.alert({
@@ -141,7 +145,7 @@ export class CreateTransactionComponent implements OnInit {
           }
           return;
         }
-        if (typeof data.result.caution !== 'undefined' && data.result.caution !== 'NaN') {
+        if (typeof data.result.caution != 'undefined' && data.result.caution != 'NaN') {
           this.alertService.alert({message: data.result.caution, msgClass: 'cssDanger', hPosition: 'center'});
         }
         this.transactionInfo.invoiceMapping = data.result;

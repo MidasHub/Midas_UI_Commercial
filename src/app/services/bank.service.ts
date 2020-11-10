@@ -61,9 +61,10 @@ export class BankService {
       .set('cardNumber', body.cardNumber)
       .set('mobileNo', body.mobileNo)
       .set('dueDay', body.dueDay)
-      .set('expireDate', body.expireDate)
+      .set('expireDate', `${body.dueDay}/${body.expireDate}`)
       .set('createdBy', this.accessToken.userId)
       .set('accessToken', this.accessToken.base64EncodedAuthenticationKey);
-    return this.http.post(`${this.GatewayApiUrlPrefix}/card/store_extra_card_info`, httpParams);
+
+      return this.http.post(`${this.GatewayApiUrlPrefix}/card/store_extra_card_info`, httpParams);
   }
 }

@@ -7,7 +7,6 @@ import {MatTableDataSource} from '@angular/material/table';
 import {FormControl, FormGroupDirective, NgForm, Validators} from '@angular/forms';
 import {ErrorStateMatcher} from '@angular/material/core';
 @Component({
-  // tslint:disable-next-line:component-selector
   selector: 'midas-mainboard',
   templateUrl: './mainboard.component.html',
   styleUrls: ['./mainboard.component.scss']
@@ -21,6 +20,7 @@ export class MainboardComponent implements OnInit {
   ]);
   isLoading = false;
   matcher = new ErrorStateMatcher();
+
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   constructor(
