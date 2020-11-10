@@ -22,8 +22,12 @@ jobs:
 
   testDev:
     runs-on: self-hosted
-    #if: ${{ github.event_name == 'push' && github.event.push.base.ref == 'development' }}
+    if: ${{ github.event_name == 'push' && (github.event.ref.indexOf('development')) }}
     steps:
+      - name: Dump GitHub context
+        run: |
+          echo "${{ github.event.ref.indexOf('development') }}
+          echo "${{ github.event.ref }}
       - name: Dump GitHub context
         env:
           GITHUB_CONTEXT: ${{ toJson(github) }}
