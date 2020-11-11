@@ -95,12 +95,8 @@ import {MidasClientModule} from './midas-client/midas-client.module';
     CollectionsModule,
     TasksModule,
 
-    //billpos mudule
-
     TransactionModule,
     MidasClientModule,
-
-    //billpos mudule
 
     // last component - fix position
     AppRoutingModule,

@@ -189,6 +189,67 @@ export class TransactionService {
     xhr.setRequestHeader('Gateway-TenantId', this.environment.GatewayTenantId);
     xhr.responseType = 'blob';
     xhr.send();
+  }
 
+  downloadBill(clientId: string, documentId: string) {
+    const xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function () {
+      let a;
+      if (xhttp.readyState === 4 && xhttp.status === 200) {
+        a = document.createElement('a');
+        a.href = window.URL.createObjectURL(xhttp.response);
+        a.download = 'bill_' + clientId + '_' + documentId;
+        a.style.display = 'none';
+        document.body.appendChild(a);
+        a.click();
+      }
+    };
+    const fileUrl =
+      this.environment.GatewayApiUrl +
+      '/fineract-provider/api/v1/clients/' +
+      clientId +
+      '/documents/' +
+      documentId +
+      '/attachment?tenantIdentifier=tiktik';
+    xhttp.open('GET', fileUrl);
+    xhttp.setRequestHeader(
+      'Authorization',
+      'Bearer ' +
+      this.accessToken.base64EncodedAuthenticationKey
+    );
+    xhttp.responseType = 'blob';
+    xhttp.send();
+  }
+
+  revertTransaction(transactionId: string): Observable<any> {
+
+    const httpParams = new HttpParams()
+      .set('transactionId', transactionId)
+      .set('createdBy', this.accessToken.userId)
+      .set('accessToken', this.accessToken.base64EncodedAuthenticationKey);
+
+    return this.http.post<any>(`${this.GatewayApiUrlPrefix}/transaction/revert_transaction`, httpParams);
+  }
+
+  undoRevertTransaction(transactionId: string): Observable<any> {
+
+    const httpParams = new HttpParams()
+      .set('transactionId', transactionId)
+      .set('createdBy', this.accessToken.userId)
+      .set('accessToken', this.accessToken.base64EncodedAuthenticationKey);
+
+    return this.http.post<any>(`${this.GatewayApiUrlPrefix}/transaction/undo_revert_transaction`, httpParams);
+  }
+
+  uploadBosInformation(transId: string, payload: { traceNo: string, batchNo: string }): Observable<any> {
+
+    const httpParams = new HttpParams()
+      .set('traceNo', payload.traceNo)
+      .set('batchNo', payload.batchNo)
+      .set('transId', transId)
+      .set('createdBy', this.accessToken.userId)
+      .set('accessToken', this.accessToken.base64EncodedAuthenticationKey);
+
+    return this.http.post<any>(`${this.GatewayApiUrlPrefix}/transaction/update_pending_transaction`, httpParams);
   }
 }

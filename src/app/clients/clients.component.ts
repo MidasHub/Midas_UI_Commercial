@@ -31,7 +31,7 @@ export class ClientsComponent implements OnInit, AfterViewInit {
   @ViewChild('showClosedAccounts', {static: true}) showClosedAccounts: MatCheckbox;
 
   expandedElement: any;
-  displayedColumns = ['name', 'clientno', 'externalid', 'status', 'mobileNo', 'gender', 'office', 'staff','link'];
+  displayedColumns = ['name', 'clientno', 'externalid', 'status', 'mobileNo', 'gender', 'office', 'staff', 'link'];
   dataSource: ClientsDataSource;
   /** Get the required filter value. */
   searchValue = '';
@@ -112,7 +112,7 @@ export class ClientsComponent implements OnInit, AfterViewInit {
    * @param {string} filterValue Value to filter data.
    */
   applyFilter(filterValue: string = '') {
-    console.log(filterValue)
+    console.log(filterValue);
     this.searchValue = filterValue;
     this.dataSource.filterClients(filterValue.trim().toLowerCase(), this.sort.active, this.sort.direction, this.paginator.pageIndex, this.paginator.pageSize, !this.showClosedAccounts.checked);
   }

@@ -15,7 +15,9 @@
         <mat-datepicker #transactionDateToPicker></mat-datepicker>
       </mat-form-field>
       <div fxFlex="31%">
-        <button *ngIf="fromDateAndToDate" style="align-self: center;" color="primary" mat-raised-button>
+        <button *ngIf="fromDateAndToDate"
+                (click)="getTransaction()"
+                style="align-self: center;" color="primary" mat-raised-button>
           Tìm kiếm &nbsp;<i class="fa fa-search" aria-hidden="true"></i>
         </button>
         <h3 *ngIf="!fromDateAndToDate">Vui lòng chọn thời gian &nbsp; <i class="fa fa-calendar"
@@ -24,30 +26,169 @@
       </div>
     </div>
     <div class="container" fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
-
     </div>
   </mat-card-content>
+  <mat-card-content style="margin-top: 10px;">
+    <mat-card>
+      <div fxLayout="row swap" fxLayoutAlign.lt-sm="center" fxLayoutGap="2%" fxLayout.lt-md="column">
+        <div fxLayout="row wrap" fxFlex="20%" class="container m-b-20">
+          <img src="assets/images/icons/money.svg">
+          <div style="display: flex;" fxLayout="column">
+            <span style="font-size: 20px; margin-top: 8px; padding-top: 5px;">{{totalTerminalAmount|money}}</span>
+            <span>&nbsp;Tổng tiền giao dịch</span>
+          </div>
+        </div>
+        <div fxLayout="row wrap" fxFlex="20%" class="container m-b-20">
+          <img src="assets/images/icons/transaction.svg">
+          <div style="display: flex;" fxLayout="column">
+            <span style="font-size: 20px; margin-top: 8px; padding-top: 5px;">{{totalFeeAmount|money}}</span>
+            <span>&nbsp;Phí thu được</span>
+          </div>
+        </div>
+        <div fxLayout="row wrap" fxFlex="20%" class="container m-b-20">
+          <img src="assets/images/icons/capital.svg">
+          <div style="display: flex;" fxLayout="column">
+            <span style="font-size: 20px; margin-top: 8px; padding-top: 5px;">{{totalCogsAmount|money}}</span>
+            <span>&nbsp; SP vốn</span>
+          </div>
+        </div>
+        <div fxLayout="row wrap" fxFlex="20%" class="container m-b-20">
+          <img src="assets/images/icons/pnlAmount.svg">
+          <div style="display: flex;" fxLayout="column">
+            <span style="font-size: 20px; margin-top: 8px; padding-top: 5px;">{{totalPnlAmount|money}}</span>
+            <span> &nbsp;PNL</span>
+          </div>
+        </div>
+      </div>
+    </mat-card>
+  </mat-card-content>
+  <mat-accordion>
+
+    <mat-expansion-panel (opened)="panelOpenState = true"
+                         (closed)="panelOpenState = false">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Xem theo
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column" [formGroup]="formFilter">
+        <mat-form-field fxFlex="18%">
+          <mat-label>Chi nhánh</mat-label>
+          <mat-select formControlName="officeId">
+            <mat-option *ngFor="let type of offices" [value]="type.id">
+              {{ type.name }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field fxFlex="18%">
+          <mat-label>Loại gia dịch</mat-label>
+          <mat-select formControlName="productId">
+            <mat-option *ngFor="let type of transactionType" [value]="type.value">
+              {{ type.label }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field fxFlex="18%">
+          <mat-label>Trạng thái giao dịch</mat-label>
+          <mat-select formControlName="status">
+            <mat-option *ngFor="let type of statusOption" [value]="type.value">
+              {{ type.label }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field fxFlex="18%">
+          <mat-label>Đối tác</mat-label>
+          <mat-select formControlName="partnerCode">
+            <mat-option *ngFor="let type of partners" [value]="type.code">
+              {{ type.desc }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field fxFlex="18%">
+          <mat-label>Đại lý</mat-label>
+          <input matInput formControlName="agencyName">
+        </mat-form-field>
+
+        <mat-form-field fxFlex="18%">
+          <mat-label>Khách hàng</mat-label>
+          <input matInput formControlName="panHolderName">
+        </mat-form-field>
+
+        <mat-form-field fxFlex="18%">
+          <mat-label>Mã máy</mat-label>
+          <input matInput formControlName="terminalId">
+        </mat-form-field>
+
+        <mat-form-field fxFlex="18%">
+          <mat-label>Trace No</mat-label>
+          <input matInput formControlName="traceNo">
+        </mat-form-field>
+
+        <mat-form-field fxFlex="18%">
+          <mat-label>Batch No</mat-label>
+          <input matInput formControlName="batchNo">
+        </mat-form-field>
+
+
+        <mat-form-field fxFlex="18%">
+          <mat-label>Mã lô</mat-label>
+          <input matInput formControlName="trnRefNo">
+        </mat-form-field>
+
+        <mat-form-field fxFlex="18%">
+          <mat-label>Tiền giao dịch</mat-label>
+          <input matInput formControlName="terminalAmount">
+        </mat-form-field>
+
+        <mat-form-field fxFlex="18%">
+          <mat-label>Nhân viên</mat-label>
+          <mat-select formControlName="staffId">
+            <mat-option *ngFor="let type of staffs" [value]="type.id">
+              {{ type.displayName }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-checkbox fxFlex="18%" labelPosition="before"
+                      formControlName="RetailsChoose" class="margin-v">
+          Giao dịch lẻ
+        </mat-checkbox>
+        <mat-checkbox fxFlex="18%" labelPosition="before"
+                      formControlName="wholesaleChoose" class="margin-v">
+          Giao dịch theo lô
+        </mat-checkbox>
+        <div fxFlex="18%">
+          <button style="margin-top: 8px; height: 40px;" color="primary" mat-raised-button>Export</button>
+        </div>
+      </div>
+    </mat-expansion-panel>
+  </mat-accordion>
   <mat-card-content>
-    <table mat-table [dataSource]="dataSource" matSort>
+    <table mat-table multiTemplateDataRows class="mat-elevation-z8" [dataSource]="dataSource" matSort>
 
       <ng-container matColumnDef="productId">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>Loại giao dịch</th>
-        <td mat-cell *matCellDef="let transaction"> {{ displayProductId(transaction.productId) }} </td>
+        <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>Loại giao dịch</th>
+        <td mat-cell fxHide fxShow.gt-md
+            *matCellDef="let transaction"> {{ displayProductId(transaction.productId) }} </td>
       </ng-container>
 
       <ng-container matColumnDef="txnDate">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Ngày giao dịch</th>
-        <td mat-cell *matCellDef="let journalEntry"> {{ journalEntry.txnDate | date:'dd-MM-yyyy HH:mm:ss'}} </td>
+        <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header> Ngày giao dịch</th>
+        <td mat-cell fxHide fxShow.gt-md
+            *matCellDef="let journalEntry"> {{ journalEntry.txnDate | date:'dd-MM-yyyy HH:mm:ss'}} </td>
       </ng-container>
 
       <ng-container matColumnDef="trnRefNo">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Số giao dịch</th>
-        <td mat-cell *matCellDef="let journalEntry"> {{ journalEntry.trnRefNo }} </td>
+        <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header> Số giao dịch</th>
+        <td mat-cell fxHide fxShow.gt-md *matCellDef="let journalEntry"> {{ journalEntry.trnRefNo }} </td>
       </ng-container>
 
       <ng-container matColumnDef="status">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Trạng thái</th>
-        <td mat-cell *matCellDef="let journalEntry"> {{ journalEntry.status }} </td>
+        <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header> Trạng thái</th>
+        <td mat-cell fxHide fxShow.gt-md *matCellDef="let journalEntry"> {{ journalEntry.status }} </td>
       </ng-container>
 
       <ng-container matColumnDef="officeName">
@@ -56,8 +197,8 @@
       </ng-container>
 
       <ng-container matColumnDef="agencyName">
-        <th mat-header-cell *matHeaderCellDef> Đại lý</th>
-        <td mat-cell *matCellDef="let journalEntry"> {{ journalEntry.agencyName }} </td>
+        <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef> Đại lý</th>
+        <td mat-cell fxHide fxShow.gt-md *matCellDef="let journalEntry"> {{ journalEntry.agencyName }} </td>
       </ng-container>
 
       <ng-container matColumnDef="panHolderName">
@@ -67,57 +208,140 @@
 
       <ng-container matColumnDef="terminalAmount">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Số tiền giao dịch</th>
-        <td mat-cell *matCellDef="let journalEntry"> {{ journalEntry.terminalAmount | money}} </td>
+        <td mat-cell style="padding: 6px;"
+            *matCellDef="let journalEntry"> {{ journalEntry.terminalAmount | money}} </td>
       </ng-container>
 
       <ng-container matColumnDef="feeAmount">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>Phí thu được</th>
-        <td mat-cell *matCellDef="let journalEntry"> {{ journalEntry.feeAmount | money}} </td>
+        <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>Phí thu được</th>
+        <td mat-cell fxHide fxShow.gt-md *matCellDef="let journalEntry"> {{ journalEntry.feeAmount | money}} </td>
       </ng-container>
 
 
       <ng-container matColumnDef="cogsAmount">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> SP vốn</th>
-        <td mat-cell *matCellDef="let journalEntry"> {{ journalEntry.cogsAmount | money}} </td>
+        <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header> SP vốn</th>
+        <td mat-cell fxHide fxShow.gt-md *matCellDef="let journalEntry"> {{ journalEntry.cogsAmount | money}} </td>
       </ng-container>
 
 
       <ng-container matColumnDef="pnlAmount">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> PNL</th>
-        <td mat-cell *matCellDef="let journalEntry"> {{ journalEntry.pnlAmount | money}} </td>
+        <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header> PNL</th>
+        <td mat-cell fxHide fxShow.gt-md *matCellDef="let journalEntry"> {{ journalEntry.pnlAmount | money}} </td>
       </ng-container>
 
       <ng-container matColumnDef="actions" style="width: 25px;">
         <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
         <td mat-cell *matCellDef="let transaction"><span style="float: right; width: 15px;"
-                                                          [matMenuTriggerData]="transaction"
-                                                          [matMenuTriggerFor]="transactionMenu"
+                                                         [matMenuTriggerData]="transaction"
+                                                         [matMenuTriggerFor]="transactionMenu"
                                                          (menuOpened)="menuOpened()" (menuClosed)="menuClosed()"
         ><i
           class="fa fa-ellipsis-v" aria-hidden="true"></i></span></td>
       </ng-container>
-
+      <ng-container matColumnDef="expandedDetail">
+        <td mat-cell fxShow fxHide.gt-md *matCellDef="let element" [attr.colspan]="displayedColumns.length">
+          <div class="example-element-detail"
+               [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
+            <div class="example-element-description" fxLayout="column">
+              <div>
+                <span style="font-weight: bold;">
+                  Loại giao dịch :</span>&nbsp;{{element.productId}}
+              </div>
+              <div>
+                <span style="font-weight: bold;">
+                  Ngày giao dịch :</span>&nbsp; &nbsp;{{element.txnDate | date:'dd-MM-yyyy HH:ss'}}
+              </div>
+              <div>
+                <span style="font-weight: bold;">
+                  Số giao dịch :</span>&nbsp; &nbsp;{{element.trnRefNo}}
+              </div>
+              <div>
+                <span style="font-weight: bold;">
+                  Trạng thái:</span>&nbsp; &nbsp;{{element.status}}
+              </div>
+              <div>
+                <span style="font-weight: bold;">
+                   Phí thu được :</span>&nbsp; &nbsp;{{element.feeAmount | money}}
+              </div>
+              <div>
+                <span style="font-weight: bold;">
+                  SP vốn :</span>&nbsp; &nbsp;{{element.cogsAmount | money}}
+              </div>
+              <div>
+                <span style="font-weight: bold;">
+                  PNL :</span>&nbsp; &nbsp;{{element.pnlAmount | money}}
+              </div>
+            </div>
+          </div>
+        </td>
+      </ng-container>
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row
-          *matRowDef="let row; columns: displayedColumns;"
-          class="select-row"></tr>
+      <tr mat-row *matRowDef="let element; columns: displayedColumns;"
+          class="example-element-row"
+          [class.example-expanded-row]="expandedElement === element"
+          (click)="expandedElement = expandedElement === element ? null : element">
+      </tr>
+      <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
       <!--[routerLink]="['transactions/view', row.transactionId]"-->
     </table>
   </mat-card-content>
 
-  <mat-menu  #transactionMenu="matMenu" [overlapTrigger]="false" style="width: 50px;">
-    <ng-template matMenuContent let-custId="custId" style="width: 50px;">
-      <button mat-menu-item ><i class="fa fa-eye" aria-hidden="true"></i>&nbsp;Chi tiết</button>
-      <button mat-menu-item ><img src="assets/images/icons/add.svg" />&nbsp;Thêm thông tin POS</button>
-      <button mat-menu-item ><img src="assets/images/icons/order.svg" />&nbsp; Tải xuống hóa đơn </button>
-      <button mat-menu-item ><img src="assets/images/icons/bill.svg" />&nbsp; Tải xuống bill </button>
-      <button mat-menu-item ><img src="assets/images/icons/upload_bill.svg" />&nbsp; Upload bill</button>
+  <mat-menu #transactionMenu="matMenu" [overlapTrigger]="false" style="width: 50px;">
+    <ng-template matMenuContent
+                 let-custId="custId"
+                 let-ext2="ext2"
+                 let-status="status"
+                 let-txnDate='txnDate'
+                 let-ext7='ext7'
+                 let-agencyId='agencyId'
+                 let-refid='refid'
+                 let-trnRefNo='trnRefNo'
+                 let-batchNo='batchNo'
+                 let-traceNo='traceNo'
+                 style="width: 50px;">
+      <button mat-menu-item
+              [routerLink]="'/makeBatchBillPosTransaction/'+agencyId+'/'+ext2"
+              *ngIf="ext2 != 'rollTerm' && ext2 != 'cash' && status == 'C' && (today | date:'dd/MM/yyyy') == (txnDate | date:'dd/MM/yyyy')">
+        <img src="assets/images/icons/next.svg"/>&nbsp;Tiếp tục giao dịch
+      </button>
+      <button mat-menu-item
+              [routerLink]="'/viewDetailTransaction/'+refid+'/'+(ext2 == 'rollTerm' ? 'rollTerm':'cash')"
+      ><i class="fa fa-eye" aria-hidden="true"></i>&nbsp;Chi tiết
+      </button>
+      <button mat-menu-item
+              (click)="addPosInformation(trnRefNo,batchNo,traceNo)"
+      >
+        <img src="assets/images/icons/add.svg"/>&nbsp;Thêm thông tin POS
+      </button>
+      <button mat-menu-item
+              *ngIf="status != 'V'"
+              (click)="downloadVoucher(refid)"
+      ><img src="assets/images/icons/order.svg"/>&nbsp; Tải xuống hóa đơn
+      </button>
+      <button mat-menu-item
+              *ngIf="ext7 != null && status != 'V'"
+              (click)="downloadBill(custId,ext7)"
+      ><img src="assets/images/icons/bill.svg"/>&nbsp; Tải xuống bill
+      </button>
+      <button
+        *ngIf="ext7 == null && status != 'V'"
+        (click)="uploadBill(refid,trnRefNo)"
+        mat-menu-item><img src="assets/images/icons/upload_bill.svg"/>&nbsp; Upload bill
+      </button>
       <hr/>
-      <button mat-menu-item ><i class="fa fa-undo" aria-hidden="true"></i> &nbsp;Hoàn tác giao dịch</button>
-      <button mat-menu-item ><i class="fa fa-ban" aria-hidden="true"></i> &nbsp;Hủy giao dịch</button>
+      <button mat-menu-item
+              *ngIf="status == 'V' && ext2 != 'rollTerm'"
+              (click)="undoRevertTransaction(refid)"
+      ><i class="fa fa-undo" aria-hidden="true"></i> &nbsp;Hoàn tác giao dịch
+      </button>
+      <button mat-menu-item
+              *ngIf="status != 'V'"
+              (click)="revertTransaction(refid)"
+      ><i class="fa fa-ban" aria-hidden="true"></i> &nbsp;Hủy giao dịch
+      </button>
     </ng-template>
   </mat-menu>
-  <mat-paginator paginator [length]="transactionsData?.length" [pageSize]="10" [pageSizeOptions]="[10, 25, 50, 100]"
+  <mat-paginator paginator [length]="filterData?.length" [pageSize]="10" [pageSizeOptions]="[10, 25, 50, 100]"
                  showFirstLastButtons></mat-paginator>
 
 </mat-card>

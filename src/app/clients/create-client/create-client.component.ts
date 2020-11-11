@@ -1,22 +1,21 @@
 /** Angular Imports */
-import { Component, Input, ViewChild } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import {Component, Input, ViewChild} from '@angular/core';
+import {Router, ActivatedRoute} from '@angular/router';
 
 /** Custom Services */
-import { ClientsService } from '../clients.service';
+import {ClientsService} from '../clients.service';
 
 /** Custom Components */
-import { ClientGeneralStepComponent } from '../client-stepper/client-general-step/client-general-step.component';
-import { ClientFamilyMembersStepComponent } from '../client-stepper/client-family-members-step/client-family-members-step.component';
-import { ClientAddressStepComponent } from '../client-stepper/client-address-step/client-address-step.component';
+import {ClientGeneralStepComponent} from '../client-stepper/client-general-step/client-general-step.component';
+import {ClientFamilyMembersStepComponent} from '../client-stepper/client-family-members-step/client-family-members-step.component';
+import {ClientAddressStepComponent} from '../client-stepper/client-address-step/client-address-step.component';
 
 /** Custom Services */
-import { SettingsService } from 'app/settings/settings.service';
-import { AlertService } from 'app/core/alert/alert.service';
-import { I18nService } from 'app/core/i18n/i18n.service';
+import {SettingsService} from 'app/settings/settings.service';
+import {AlertService} from 'app/core/alert/alert.service';
+import {I18nService} from 'app/core/i18n/i18n.service';
 import * as _ from 'lodash';
-import { faBackspace } from '@fortawesome/free-solid-svg-icons';
-
+import {faBackspace} from '@fortawesome/free-solid-svg-icons';
 
 
 /**
@@ -30,11 +29,11 @@ import { faBackspace } from '@fortawesome/free-solid-svg-icons';
 export class CreateClientComponent {
 
   /** Client General Step */
-  @ViewChild(ClientGeneralStepComponent, { static: true }) clientGeneralStep: ClientGeneralStepComponent;
+  @ViewChild(ClientGeneralStepComponent, {static: true}) clientGeneralStep: ClientGeneralStepComponent;
   /** Client Family Members Step */
-  @ViewChild(ClientFamilyMembersStepComponent, { static: true }) clientFamilyMembersStep: ClientFamilyMembersStepComponent;
+  @ViewChild(ClientFamilyMembersStepComponent, {static: true}) clientFamilyMembersStep: ClientFamilyMembersStepComponent;
   /** Client Address Step */
-  @ViewChild(ClientAddressStepComponent, { static: true }) clientAddressStep: ClientAddressStepComponent;
+  @ViewChild(ClientAddressStepComponent, {static: true}) clientAddressStep: ClientAddressStepComponent;
 
   /** Historical page from URL */
   go_back: any;
@@ -52,11 +51,11 @@ export class CreateClientComponent {
    * @param {SettingsService} settingsService Setting service
    */
   constructor(private route: ActivatedRoute,
-    private router: Router,
-    private clientsService: ClientsService,
-    private settingsService: SettingsService,
-    private alertService: AlertService,
-    private i18n: I18nService) {
+              private router: Router,
+              private clientsService: ClientsService,
+              private settingsService: SettingsService,
+              private alertService: AlertService,
+              private i18n: I18nService) {
     this.route.data.subscribe((data: { clientTemplate: any, clientAddressFieldConfig: any, clientIdentifierTemplate: any, currentUser: any }) => {
       this.clientTemplate = data.clientTemplate;
       this.clientAddressFieldConfig = data.clientAddressFieldConfig;
@@ -64,12 +63,12 @@ export class CreateClientComponent {
     });
 
     this.route.queryParams.subscribe(params => {
-      console.log(params); // { order: "popular" }
-      const { go_back } = params;
-      if (go_back) {
-        this.go_back = go_back;
+        console.log(params); // { order: "popular" }
+        const {go_back} = params;
+        if (go_back) {
+          this.go_back = go_back;
+        }
       }
-    }
     );
   }
 
@@ -164,7 +163,7 @@ export class CreateClientComponent {
           status: 'Active'
         };
         this.clientsService.addClientIdentifier(response.clientId, identities_value).subscribe(async (res: any) => {
-          const { resourceId } = res;
+          const {resourceId} = res;
           for (const file of this.client.files) {
             const item = await this.resizeImage(file, 500, 600);
             const formData: FormData = new FormData;
@@ -176,10 +175,13 @@ export class CreateClientComponent {
             });
           }
           if (this.go_back === 'home') {
-            this.alertService.alert({message:this.i18n.getTranslate('Client_Component.ClientStepper.lblCustomerCreated') + response.resourceId + '!',msgClass:'cssSuccess'} )
+            this.alertService.alert({
+              message: this.i18n.getTranslate('Client_Component.ClientStepper.lblCustomerCreated') + response.resourceId + '!',
+              msgClass: 'cssSuccess'
+            });
             this.router.navigate(['/home']);
           } else {
-            this.router.navigate(['../', response.resourceId], { relativeTo: this.route });
+            this.router.navigate(['../', response.resourceId], {relativeTo: this.route});
           }
         });
 
@@ -191,13 +193,13 @@ export class CreateClientComponent {
 
   /** do Cancel */
   doCancel() {
-    this.alertService.alert({message:'Bạn vừa hủy tạo khách hàng.',msgClass:'cssInfo'});
-    
-    if (this.go_back === 'home') {      
+    this.alertService.alert({message: 'Bạn vừa hủy tạo khách hàng.', msgClass: 'cssInfo'});
+
+    if (this.go_back === 'home') {
       this.router.navigate(['/home']);
-    }else{
-      this.router.navigate(['..'],{ relativeTo: this.route });
+    } else {
+      this.router.navigate(['..'], {relativeTo: this.route});
     }
-    
+
   }
 }

@@ -71,7 +71,6 @@ import { AddIdentitiesExtraInfoComponent } from './clients-view/identities-tab/a
   imports: [
     SharedModule,
     ClientsRoutingModule,
-    PipesModule,
     ReactiveFormsModule,
   ],
   declarations: [
@@ -125,7 +124,6 @@ import { AddIdentitiesExtraInfoComponent } from './clients-view/identities-tab/a
     CaptureImageDialogComponent,
     CreateSelfServiceUserComponent,
     AddIdentitiesComponent,
-    MoneyPipe,
     AddIdentitiesComponent,
     AddIdentitiesExtraInfoComponent,
   ],
