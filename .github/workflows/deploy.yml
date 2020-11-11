@@ -1,14 +1,37 @@
-on: [push]
+on:
+  push:
+    branches: [ staging, master]   
 
-name: self-hosted-example
+name: Midas_UI_staging_deploy
 
 jobs:
-  simpleExample:
+  deployStaging:
+    if: ${{ github.event_name == 'push' && github.event.ref =='refs/heads/staging' }}
     runs-on: self-hosted
     steps:
     # checkout branch
-    - uses: actions/checkout@v2
-    - name: yarn install, build
+    - name: pull source from staging branch
+      run: |
+        git pull origin staging
+    - name: install dependency
       run: |
         yarn install
-        ng build --prod --output-hashing=all --deleteOutputPath=true --outputPath="/usr/share/nginx/html/web-app/" 
+    - name: build production
+      run: |
+        ng build --prod --output-hashing=all --base-href="/"  --serviceWorker=true --deleteOutputPath=true --outputPath="/usr/share/nginx/html/staging/" 
+
+  deployProduction:
+    runs-on: self-hosted
+    if: ${{ github.event_name == 'push' && github.event.ref =='refs/heads/master' }}
+    runs-on: self-hosted
+    steps:
+    # checkout branch
+    - name: pull source from master branch
+      run: |
+        git pull origin master
+    - name: install dependency
+      run: |
+        yarn install
+    - name: build production
+      run: |
+        ng build --prod --output-hashing=all --base-href="/" --serviceWorker=true --deleteOutputPath=true --outputPath="/usr/share/nginx/html/prod/"

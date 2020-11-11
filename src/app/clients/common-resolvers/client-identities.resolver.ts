@@ -25,10 +25,12 @@ export class ClientIdentitiesResolver implements Resolve<Object> {
     resolve(route: ActivatedRouteSnapshot): Observable<any> {
         const clientId = route.parent.paramMap.get('clientId');
         let identitiesData: any;
-        return this.clientsService.getClientIdentifiers(clientId).pipe(map((identities: any) => {
-            identitiesData = identities;
+        return this.clientsService.getIdentifierClientCross(clientId).pipe(map((identities: any) => {
+        //return this.clientsService.getClientIdentifiers(clientId).pipe(map((identities: any) => {
+        // identitiesData = identities;
+        identitiesData = identities.result.listIdentifier;
             const docObservable: Observable<any>[] = [];
-            identities.forEach((identity: any) => {
+            identities.result.listIdentifier.forEach((identity: any) => {
                 docObservable.push(this.clientsService.getClientIdentificationDocuments(identity.id));
             });
             forkJoin(docObservable).subscribe(documents => {

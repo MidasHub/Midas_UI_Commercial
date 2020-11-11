@@ -50,6 +50,7 @@ import {AppRoutingModule} from './app-routing.module';
 
 /** Billpos Module */
 import {TransactionModule} from './transactions/transaction.module';
+import {MidasClientModule} from './midas-client/midas-client.module';
 
 /**
  * App Module
@@ -97,6 +98,7 @@ import {TransactionModule} from './transactions/transaction.module';
     //billpos mudule
 
     TransactionModule,
+    MidasClientModule,
 
     //billpos mudule
 

@@ -128,10 +128,10 @@ export class WebAppComponent implements OnInit {
       this.themeStorageService.installTheme(theme);
     }
 
-    // Setup alerts 
+    // Setup alerts
     this.alertService.alertEvent.subscribe((alertEvent: Alert) => {
       this.snackBar.open(`${alertEvent.message}`, this.i18nService.getTranslate('Client_Component.ClientStepper.lblClose'), {
-        duration: (alertEvent.msgDuration) ? alertEvent.msgDuration : 30000,
+        duration: (alertEvent.msgDuration) ? alertEvent.msgDuration : 5000,
         horizontalPosition: (alertEvent.hPosition) ? alertEvent.hPosition : 'right',
         verticalPosition: (alertEvent.vPosition) ? alertEvent.vPosition:'top',
         panelClass: [alertEvent.msgClass],

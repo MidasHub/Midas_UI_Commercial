@@ -1,11 +1,15 @@
-import {Component, OnInit} from '@angular/core';
-import {AuthenticationService} from '../../core/authentication/authentication.service';
-import {UserService} from '../../self-service/users/user.service';
-import {Router} from '@angular/router';
-import {TransactionService} from '../transaction.service';
-import {MatDialog} from '@angular/material/dialog';
-import {AlertService} from '../../core/alert/alert.service';
+/** Angular Imports */
+import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { MatTableDataSource } from '@angular/material/table';
+import { ActivatedRoute,  Router } from '@angular/router';
+import { AlertService } from 'app/core/alert/alert.service';
+import { TransactionService } from '../transaction.service';
 
+
+/**
+ * transaction Component.
+ */
 @Component({
   selector: 'midas-create-transaction',
   templateUrl: './create-transaction.component.html',
@@ -16,33 +20,41 @@ export class CreateTransactionComponent implements OnInit {
 
   transactionInfo: any = {};
   terminalFee: any = {};
-
+  isLoading = false;
   /**
    * @param {AuthenticationService} authenticationService Authentication Service
    * @param {UserService} userService Users Service
    * @param {Router} router Router
    * @param {MatDialog} dialog Mat Dialog
    */
-  constructor(private authenticationService: AuthenticationService,
-              private userService: UserService,
-              private router: Router,
-              private transactionService: TransactionService,
-              public dialog: MatDialog,
-              private alertService: AlertService,
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private transactionService: TransactionService,
+    public dialog: MatDialog,
+    private alertService: AlertService,
   ) {
 
   }
 
   ngOnInit() {
 
-    this.transactionService.getTransactionTemplate('148', '249').subscribe((data: any) => {
-      this.transactionInfo = data.result;
-      this.transactionInfo.productId = 'CA01';
-      this.transactionInfo.type = 'cash';
-      this.transactionInfo.clientId = '148';
-      this.transactionInfo.identifierId = '249';
-      this.transactionInfo.isDone = false;
-      this.transactionInfo.accountCash = data.result.listAccAccount[0].documentKey;
+    this.route.queryParamMap
+    .subscribe((params: any) => {
+      const clientId = params.get("clientId");
+      const identifierId = params.get("identifierId");
+      const type = params.get("type");
+      this.isLoading = true;
+      this.transactionService.getTransactionTemplate(clientId, identifierId).subscribe((data: any) => {
+        this.isLoading = false;
+        this.transactionInfo = data.result;
+        this.transactionInfo.isDone = false;
+        this.transactionInfo.productId = (type == 'cash'? 'CA01':'AL01');
+        this.transactionInfo.type = type;
+        this.transactionInfo.identifierId = identifierId;
+        this.transactionInfo.clientId = clientId;
+        this.transactionInfo.accountCash = data.result.listAccAccount[0].documentKey;
+      });
     });
   }
 
@@ -53,9 +65,11 @@ export class CreateTransactionComponent implements OnInit {
     this.transactionInfo.terminalId = '';
     this.transactionInfo.feeAmount = '';
     this.transactionInfo.txnAmountAfterFee = '';
-    if (this.transactionInfo.requestAmount && this.transactionService.formatLong(this.transactionInfo.requestAmount) > 0) {
+    if (this.transactionInfo.requestAmount
+      && this.transactionService.formatLong(this.transactionInfo.requestAmount) > 0)
+      {
       this.getTerminalListEnoughBalance(this.transactionInfo.requestAmount);
-    }
+      }
   }
 
   changeAmountTransaction() {
@@ -100,10 +114,11 @@ export class CreateTransactionComponent implements OnInit {
       this.transactionInfo.terminalId
     )
       .subscribe((data: any) => {
-        if (data.status !== 200) {
+        if (data.status != 200) {
+          debugger;
 
-          if (data.statusCode === 401) {
-            if (data.error === 'Unauthorize with Midas') {
+          if (data.statusCode == 401) {
+            if (data.error == 'Unauthorize with Midas') {
               this.alertService.alert({
                 message: 'Phiên làm việc hết hạn vui lòng đăng nhập lại để tiếp tục',
                 msgClass: 'cssDanger',
@@ -112,7 +127,7 @@ export class CreateTransactionComponent implements OnInit {
             }
           }
 
-          if (data.statusCode === 666) {
+          if (data.statusCode == 666) {
             if (typeof data.error !== 'undefined' && data.error !== '') {
 
               this.alertService.alert({
@@ -130,7 +145,7 @@ export class CreateTransactionComponent implements OnInit {
           }
           return;
         }
-        if (typeof data.result.caution !== 'undefined' && data.result.caution !== 'NaN') {
+        if (typeof data.result.caution != 'undefined' && data.result.caution != 'NaN') {
           this.alertService.alert({message: data.result.caution, msgClass: 'cssDanger', hPosition: 'center'});
         }
         this.transactionInfo.invoiceMapping = data.result;
