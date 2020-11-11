@@ -13,7 +13,7 @@
       <!-- ID Column -->
       <ng-container matColumnDef="id">
         <mat-header-cell  *matHeaderCellDef mat-sort-header>Id</mat-header-cell>
-        <mat-cell  *matCellDef="let row">
+        <mat-cell   *matCellDef="let row">
           <span class="mobile-label">Id:</span>
           <span >{{row.id}}</span>
 
@@ -21,9 +21,9 @@
       </ng-container>
 
       <ng-container matColumnDef="officeName">
-        <mat-header-cell  *matHeaderCellDef mat-sort-header>Chi nhánh</mat-header-cell>
-        <mat-cell  *matCellDef="let row" >
-          <span class="mobile-label">Chi nhánh:</span>
+        <mat-header-cell   *matHeaderCellDef mat-sort-header>Chi nhánh</mat-header-cell>
+        <mat-cell   *matCellDef="let row" >
+          <span  class="mobile-label">Chi nhánh:</span>
 
           <span >{{row.officeName}}</span>
         </mat-cell>
@@ -40,8 +40,8 @@
 
       <!-- Name Column -->
       <ng-container matColumnDef="mobileNo">
-        <mat-header-cell  *matHeaderCellDef mat-sort-header>Số ĐT</mat-header-cell>
-        <mat-cell  *matCellDef="let row">
+        <mat-header-cell   *matHeaderCellDef mat-sort-header>Số ĐT</mat-header-cell>
+        <mat-cell    *matCellDef="let row">
           <span class="mobile-label">Số ĐT:</span>
           <span >{{row.mobileNo}}</span>
         </mat-cell>
@@ -49,8 +49,8 @@
 
       <!-- Color Column -->
       <ng-container matColumnDef="documentKey">
-        <mat-header-cell  *matHeaderCellDef mat-sort-header>Thẻ</mat-header-cell>
-        <mat-cell  *matCellDef="let row" >
+        <mat-header-cell   *matHeaderCellDef mat-sort-header>Thẻ</mat-header-cell>
+        <mat-cell    *matCellDef="let row" >
           <span class="mobile-label">Thẻ:</span>
           <span >{{row.documentKey}}</span>
         </mat-cell>
@@ -58,14 +58,16 @@
 
       <ng-container matColumnDef="bankName">
         <mat-header-cell  *matHeaderCellDef mat-sort-header>Ngân hàng</mat-header-cell>
-        <mat-cell  *matCellDef="let row" >
+        <mat-cell    *matCellDef="let row" >
           <span class="mobile-label">Ngân hàng:</span>
           <span >{{row.bankName}}</span>
         </mat-cell>
       </ng-container>
 
       <mat-header-row  *matHeaderRowDef="displayedColumns"></mat-header-row>
-      <mat-row  *matRowDef="let row; columns: displayedColumns;"  class="select-row"
+      <mat-row  *matRowDef="let row; let even = even ; columns: displayedColumns;"
+      class="select-row"
+      [ngClass]="{green: even}"
       [routerLink]="['/clients', row.id, 'identities']"
       [queryParams]="{ typeViewClient: 'transaction'}"
       ></mat-row>

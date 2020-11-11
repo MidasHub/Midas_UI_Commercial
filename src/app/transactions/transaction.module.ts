@@ -11,6 +11,7 @@ import { ManageTransactionComponent } from './manage-transaction/manage-transact
 import { ConfirmDialogComponent } from './dialog/coifrm-dialog/confirm-dialog.component';
 import { UploadBillComponent } from './dialog/upload-bill/upload-bill.component';
 import { UploadPosInformationComponent } from './dialog/upload-pos-information/upload-pos-information.component';
+import { DatePipe } from '@angular/common';
 
 /**
  * Profile Module
@@ -19,7 +20,8 @@ import { UploadPosInformationComponent } from './dialog/upload-pos-information/u
   declarations: [ CreateTransactionComponent, ManageTransactionComponent, ConfirmDialogComponent, UploadBillComponent, UploadPosInformationComponent],
   imports: [
     SharedModule,
-    TransactionRoutingModule,
-  ]
+    TransactionRoutingModule
+  ],
+  providers: [DatePipe]
 })
 export class TransactionModule { }
