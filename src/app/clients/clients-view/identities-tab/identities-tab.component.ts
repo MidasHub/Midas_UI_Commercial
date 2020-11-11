@@ -67,7 +67,7 @@ export class IdentitiesTabComponent {
     this.route.data.subscribe((data: { clientIdentities: any; clientIdentifierTemplate: any }) => {
       this.clientIdentifierTemplate = data.clientIdentifierTemplate;
       data.clientIdentities.forEach((element: any) => {
-        if (element.documentType.id >= 37 && element.documentType.id <= 58) {
+        if (element.documentType.id >= 38 && element.documentType.id <= 57) {
           this.clientIdentities.push(element);
         } else {
           this.clientIdentitiesOther.push(element);
@@ -147,6 +147,30 @@ export class IdentitiesTabComponent {
                 }
               }
             }
+
+          let validRollTerm = true;
+            if (type != 'cash'){
+            this.transactionService.checkValidCreateRollTermTransaction(identifierId).subscribe((resRollTermCheck: any) => {
+              validRollTerm = resRollTermCheck.result.isValid;
+
+              if (validRollTerm){
+                this.router.navigate(["/transaction/create"], {
+                  queryParams: {
+                    clientId: this.clientId,
+                    identifierId: identifierId,
+                    type: type,
+                  },
+                });
+              }else{
+                this.alertService.alert({
+                  message: `CẢNH BÁO: Đã tồn tại khoản đáo hạn với thẻ ${cardNumber} \n vui lòng tất toán trước khi thực hiện khởi tạo khoản đáo hạn mới !`,
+                  msgClass: "cssDanger",
+                  hPosition: "center",
+                  vPosition: "top",
+                });
+              }
+            });
+            } else {
             this.router.navigate(["/transaction/create"], {
               queryParams: {
                 clientId: this.clientId,
@@ -154,6 +178,9 @@ export class IdentitiesTabComponent {
                 type: type,
               },
             });
+            }
+
+
           }else{
             this.addIdentifierExtraInfo(identifierId, cardNumber);
 
@@ -344,8 +371,8 @@ export class IdentitiesTabComponent {
           dueDay,
           expiredDate,
         } = response.data.value;
-        debugger;
-        this.clientService.getClientData(this.clientId).subscribe((client: any) => {
+
+        this.clientService.getClientCross(this.clientId).subscribe((client: any) => {
             this.bankService
               .storeExtraCardInfo({
                 userId: this.clientId,

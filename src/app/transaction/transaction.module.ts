@@ -8,6 +8,7 @@ import { TransactionRoutingModule } from './transaction-routing.module';
 /** Custom Components */
 import { CreateTransactionComponent } from './create-transaction/create-transaction.component';
 import { ManageTransactionComponent } from './manage-transaction/manage-transaction.component';
+import { DatePipe } from '@angular/common';
 
 /**
  * Profile Module
@@ -17,6 +18,7 @@ import { ManageTransactionComponent } from './manage-transaction/manage-transact
   imports: [
     SharedModule,
     TransactionRoutingModule
-  ]
+  ],
+  providers: [DatePipe]
 })
 export class TransactionModule { }

@@ -32,7 +32,7 @@ export class TransactionService {
     this.environment = environment;
   }
 
-  submitTransaction(
+  submitTransactionCash(
     transactionInfo: any
   ): Observable<any> {
 
@@ -65,6 +65,31 @@ export class TransactionService {
       .set('accessToken', this.accessToken.base64EncodedAuthenticationKey);
 
     return this.http.post<any>(`${this.GatewayApiUrlPrefix}/transaction/create_cash_retail_transaction`, httpParams);
+  }
+
+  submitTransactionRollTerm(
+    transactionInfo: any
+  ): Observable<any> {
+
+    const httpParams = new HttpParams()
+      .set('accountNumber', transactionInfo.identifyClientDto.accountNumber)
+      .set('accountBankId', transactionInfo.identifyClientDto.accountBankId)
+      .set('accountTypeId', transactionInfo.identifyClientDto.accountTypeId)
+      .set('accountCash', transactionInfo.accountCash)
+      .set('feeRate', transactionInfo.rate)
+      .set('toClientId', transactionInfo.clientId)
+      .set('requestAmount', String(this.formatLong(transactionInfo.requestAmount)))
+      .set('productId', transactionInfo.productId)
+      .set('groupId', transactionInfo.clientDto.groupId)
+      .set('customerName', transactionInfo.clientDto.displayName)
+      .set('ext2', transactionInfo.type)
+      .set('BookingInternalDtoListString', transactionInfo.BookingInternalDtoListString)
+      .set('ext4', transactionInfo.identifierId)
+      .set('officeId', this.accessToken.officeId)
+      .set('createdBy', this.accessToken.userId)
+      .set('accessToken', this.accessToken.base64EncodedAuthenticationKey);
+
+    return this.http.post<any>(`${this.GatewayApiUrlPrefix}/transaction/create_rollTerm_retail_transaction`, httpParams);
   }
 
   mappingInvoiceWithTransaction(accountTypeCode: string,
@@ -120,6 +145,16 @@ export class TransactionService {
       .set('accessToken', this.accessToken.base64EncodedAuthenticationKey);
 
     return this.http.post<any>(`${this.GatewayApiUrlPrefix}/card/check_extra_card_info`, httpParams);
+  }
+
+  checkValidCreateRollTermTransaction( identifierId: string): Observable<any> {
+
+    const httpParams = new HttpParams()
+      .set('documentId', identifierId)
+      .set('createdBy', this.accessToken.userId)
+      .set('accessToken', this.accessToken.base64EncodedAuthenticationKey);
+
+    return this.http.post<any>(`${this.GatewayApiUrlPrefix}/transaction/check_valid_rollTerm_transaction`, httpParams);
   }
 
   getListTerminalAvailable(amount: number): Observable<any> {
