@@ -31,6 +31,7 @@ import {HttpClient} from '@angular/common/http';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 import {NgxMaskModule, IConfig} from 'ngx-mask';
 import {CurrencyMaskInputMode, NgxCurrencyModule} from 'ngx-currency';
+import {PipesModule} from '../pipes/pipes.module';
 import {DirectivesModule} from '../directives/directives.module';
 
 const maskConfig: Partial<IConfig> = {
@@ -70,7 +71,8 @@ const customCurrencyMaskConfig = {
     TranslateModule,
     NgxMaskModule.forRoot(maskConfig),
     NgxCurrencyModule.forRoot(customCurrencyMaskConfig),
-    DirectivesModule
+    DirectivesModule,
+    PipesModule,
   ],
   declarations: [
     FormfieldComponent,
@@ -108,7 +110,8 @@ const customCurrencyMaskConfig = {
     MatSelectSearchComponent,
     NgxMaskModule,
     NgxCurrencyModule,
-    DirectivesModule
+    DirectivesModule,
+    PipesModule,
   ]
 })
 export class SharedModule {

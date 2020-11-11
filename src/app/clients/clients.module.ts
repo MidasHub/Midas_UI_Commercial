@@ -124,12 +124,12 @@ import { AddIdentitiesExtraInfoComponent } from './clients-view/identities-tab/a
     ClientFamilyMemberDialogComponent,
     CaptureImageDialogComponent,
     CreateSelfServiceUserComponent,
+    AddIdentitiesComponent,
     MoneyPipe,
     AddIdentitiesComponent,
     AddIdentitiesExtraInfoComponent,
   ],
   exports: [
-    MoneyPipe
   ],
   providers: [DatePipe]
 

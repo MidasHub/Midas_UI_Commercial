@@ -49,7 +49,7 @@ import {TasksModule} from './tasks/tasks.module';
 import {AppRoutingModule} from './app-routing.module';
 
 /** Billpos Module */
-import {TransactionModule} from './transaction/transaction.module';
+import {TransactionModule} from './transactions/transaction.module';
 import {MidasClientModule} from './midas-client/midas-client.module';
 
 /**
