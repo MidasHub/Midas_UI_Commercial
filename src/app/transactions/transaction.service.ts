@@ -192,7 +192,7 @@ export class TransactionService {
     return this.http.post<any>(`${this.GatewayApiUrlPrefix}/card/check_extra_card_info`, httpParams);
   }
 
-  checkValidCreateRollTermTransaction( identifierId: string): Observable<any> {
+  checkValidCreateRollTermTransaction(identifierId: string): Observable<any> {
 
     const httpParams = new HttpParams()
       .set('documentId', identifierId)
@@ -318,5 +318,24 @@ export class TransactionService {
       .set('accessToken', this.accessToken.base64EncodedAuthenticationKey);
 
     return this.http.post<any>(`${this.GatewayApiUrlPrefix}/transaction/update_pending_transaction`, httpParams);
+  }
+
+  exportTransaction(query: string) {
+    const xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function () {
+      let a;
+      if (xhttp.readyState === 4 && xhttp.status === 200) {
+        a = document.createElement('a');
+        a.href = window.URL.createObjectURL(xhttp.response);
+        a.download = `transactions`;
+        a.style.display = 'none';
+        document.body.appendChild(a);
+        a.click();
+      }
+    };
+    const fileUrl = `${this.environment.GatewayApiUrl}${this.environment.GatewayApiUrlPrefix}/export/pre_export_transaction?ext5=ALL&typeExport=transaction&accessToken=${this.accessToken.base64EncodedAuthenticationKey}&createdBy=${this.accessToken.userId}&${query}`;
+    xhttp.open('GET', fileUrl);
+    xhttp.responseType = 'blob';
+    xhttp.send();
   }
 }

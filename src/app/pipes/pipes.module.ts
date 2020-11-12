@@ -16,4 +16,4 @@ import {MoneyPipe} from './money.pipe';
   providers: [StatusLookupPipe, AccountsFilterPipe, ChargesFilterPipe, ChargesPenaltyFilterPipe, FindPipe, UrlToStringPipe, MoneyPipe],
   exports: [StatusLookupPipe, AccountsFilterPipe, ChargesFilterPipe, ChargesPenaltyFilterPipe, FindPipe, UrlToStringPipe, MoneyPipe]
 })
-export class PipesModule { }
+export class  PipesModule { }

@@ -223,20 +223,21 @@ export class ManageTransactionComponent implements OnInit {
     delete form.wholesaleChoose;
     delete form.RetailsChoose;
     const keys = Object.keys(form);
-    console.log({form});
     this.filterData = this.transactionsData.filter(v => {
       for (const key of keys) {
         if (form[key]) {
           if (!v[key]) {
             return false;
           }
-          // if (typeof v[key] === 'number' && v[key] !== form[key]) {
-          //   return false;
-          // }
           if (!String(v[key]).includes(form[key])) {
             return false;
           }
         }
+      }
+      const check_wholesaleChoose = wholesaleChoose ? v.type.startsWith('B') : false;
+      const check_RetailsChoose = RetailsChoose ? v.type === 'cash' || v.type === 'rollterm' : false;
+      if (!check_wholesaleChoose && !check_RetailsChoose) {
+        return false;
       }
       return true;
     });
@@ -375,5 +376,36 @@ export class ManageTransactionComponent implements OnInit {
         });
       }
     });
+  }
+
+  exportTransaction() {
+    const dateFormat = this.settingsService.dateFormat;
+    let fromDate = this.formDate.get('fromDate').value;
+    let toDate = this.formDate.get('toDate').value;
+    if (fromDate) {
+      fromDate = this.datePipe.transform(fromDate, dateFormat);
+    }
+    if (toDate) {
+      toDate = this.datePipe.transform(toDate, dateFormat);
+    }
+    const {permissions} = this.currentUser;
+    const permit = permissions.includes('TXN_CREATE');
+    const form = this.formFilter.value;
+    let query = `fromDate=${fromDate}&toDate=${toDate}&permission=${!permit}&officeName=${form.officeId || 'ALL'}`;
+    const keys = Object.keys(form);
+    for (const key of keys) {
+      if (key === 'staffId') {
+        if (form[key]) {
+          query = query + '&createdByFilter=' + form[key];
+        } else {
+          query = query + '&createdByFilter=ALL';
+        }
+      } else {
+        const value = ['productId', 'status', 'partnerCode', 'officeName'].indexOf(key) === -1 ? form[key] : ((form[key] === '' || !form[key]) ? 'ALL' : form[key]);
+        query = query + '&' + key + '=' + value;
+      }
+
+    }
+    this.transactionService.exportTransaction(query);
   }
 }
