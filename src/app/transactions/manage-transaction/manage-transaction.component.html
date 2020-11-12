@@ -191,7 +191,7 @@
 
       <ng-container matColumnDef="status">
         <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header> Trạng thái</th>
-        <td mat-cell fxHide fxShow.gt-md *matCellDef="let journalEntry"> {{ journalEntry.status }} </td>
+        <td mat-cell fxHide fxShow.gt-md *matCellDef="let journalEntry"> {{ displayStatus(journalEntry.status) }} </td>
       </ng-container>
 
       <ng-container matColumnDef="officeName">
