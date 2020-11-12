@@ -76,8 +76,8 @@ export class AddIdentitiesComponent implements OnInit {
         if (type && Number(type.id) >= 38 && Number(type.id) <= 57) {
           this.bankService.getInfoBinCode(value).subscribe((res: any) => {
             if (res.status === '200') {
-              const {bankCode, cardType} = res?.result?.bankBinCode;
               if (res?.result?.existBin) {
+                const {bankCode, cardType} = res?.result?.bankBinCode;
                 this.existBin = res?.result?.existBin;
                 this.form.get('documentCardBank').setValue(bankCode);
                 this.form.get('documentCardType').setValue(cardType);

@@ -6,7 +6,6 @@ import { DatePipe } from '@angular/common';
 import { SharesRoutingModule } from './shares-routing.module';
 import { SharedModule } from 'app/shared/shared.module';
 import { PipesModule } from '../pipes/pipes.module';
-import { DirectivesModule } from '../directives/directives.module';
 import { SharesAccountViewComponent } from './shares-account-view/shares-account-view.component';
 import { TransactionsTabComponent } from './shares-account-view/transactions-tab/transactions-tab.component';
 import { DividendsTabComponent } from './shares-account-view/dividends-tab/dividends-tab.component';
@@ -39,7 +38,6 @@ import { RejectShareDialogComponent } from './shares-account-actions/reject-shar
   imports: [
     SharedModule,
     PipesModule,
-    DirectivesModule,
     SharesRoutingModule
   ],
   declarations: [

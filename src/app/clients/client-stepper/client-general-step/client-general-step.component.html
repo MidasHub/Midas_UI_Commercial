@@ -35,7 +35,7 @@
               </mat-option>
             </mat-select>
           </mat-form-field>
-          <mat-checkbox *ngIf="createClientForm.value.legalFormId === 1" fxFlex="48%" labelPosition="before"
+          <mat-checkbox *ngIf="createClientForm.value.legalFormId === 1" [disabled]="!isTeller" checked="false" fxFlex="48%" labelPosition="before"
                         formControlName="isStaff" class="margin-v">
             {{'Client_Component.ClientStepper.GeneralStep.checkboxIsStaff' |translate}}
           </mat-checkbox>

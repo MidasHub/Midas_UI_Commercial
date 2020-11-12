@@ -277,6 +277,9 @@ export class ClientsService {
   uploadClientDocument(clientId: string, documentData: any) {
     return this.http.post(`/clients/${clientId}/documents`, documentData);
   }
+  uploadClientDocumenttenantIdentifier(clientId: string, documentData: any): Observable<any>  {
+    return this.http.post(`/clients/${clientId}/documents?tenantIdentifier=tiktik`, documentData);
+  }
 
   deleteClientDocument(parentEntityId: string, documentId: string) {
     return this.http.delete(`/clients/${parentEntityId}/documents/${documentId}`);

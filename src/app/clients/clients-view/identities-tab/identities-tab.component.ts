@@ -17,7 +17,7 @@ import { AddIdentitiesComponent } from "./add-identities/add-identities.componen
 /** Custom Services */
 import { ClientsService } from "../../clients.service";
 import { BankService } from "../../../services/bank.service";
-import { TransactionService } from "app/transaction/transaction.service";
+import { TransactionService } from "../../../transactions/transaction.service";
 import { AlertService } from "app/core/alert/alert.service";
 import { analyzeAndValidateNgModules } from "@angular/compiler";
 import { AddIdentitiesExtraInfoComponent } from "./add-identities-extra-info/add-identities-extra-info.component";
@@ -67,7 +67,7 @@ export class IdentitiesTabComponent {
     this.route.data.subscribe((data: { clientIdentities: any; clientIdentifierTemplate: any }) => {
       this.clientIdentifierTemplate = data.clientIdentifierTemplate;
       data.clientIdentities.forEach((element: any) => {
-        if (element.documentType.id >= 37 && element.documentType.id <= 58) {
+        if (element.documentType.id >= 38 && element.documentType.id <= 57) {
           this.clientIdentities.push(element);
         } else {
           this.clientIdentitiesOther.push(element);
@@ -104,22 +104,22 @@ export class IdentitiesTabComponent {
           const checkResult = resExtraCardCheck.result;
 
           if (checkResult.isHaveExtraCardInfo) {
-            let dateExpired = new Date(checkResult.cardExtraInfoEntity.expiredDate);
-            let yExpired = dateExpired.getFullYear();
-            let mExpired = dateExpired.getMonth();
+            const dateExpired = new Date(checkResult.cardExtraInfoEntity.expiredDate);
+            const yExpired = dateExpired.getFullYear();
+            const mExpired = dateExpired.getMonth();
 
-            var dateSystem = new Date();
-            let ySystem = dateSystem.getFullYear();
-            let mSystem = dateSystem.getMonth();
+            const dateSystem = new Date();
+            const ySystem = dateSystem.getFullYear();
+            const mSystem = dateSystem.getMonth();
 
             // let isValidCard = false;
 
             if (yExpired > ySystem) {
               // isValidCard = true;
             } else {
-              if (yExpired == ySystem) {
+              if (yExpired === ySystem) {
                 if (mExpired > mSystem) {
-                  if (mExpired == mSystem + 1) {
+                  if (mExpired === mSystem + 1) {
                     this.alertService.alert({
                       message:
                         "CHÚ Ý: Thẻ sẽ hết hạn vào tháng sau, đây là lần cuối cùng được thực hiện giao dịch trên thẻ này",
@@ -129,7 +129,7 @@ export class IdentitiesTabComponent {
                     });
                   }
                 }
-                if (mExpired == mSystem) {
+                if (mExpired === mSystem) {
                   this.alertService.alert({
                     message: "CẢNH BÁO: Thẻ sẽ hết hạn trong tháng này, cân nhắc khi thực hiện giao dịch trên thẻ này",
                     msgClass: "cssDanger",
@@ -147,16 +147,42 @@ export class IdentitiesTabComponent {
                 }
               }
             }
-            this.router.navigate(["/transaction/create"], {
-              queryParams: {
-                clientId: this.clientId,
-                identifierId: identifierId,
-                type: type,
-              },
-            });
-          }else{
-            this.addIdentifierExtraInfo(identifierId, cardNumber);
 
+            let validRollTerm = true;
+            if (type != "cash") {
+              this.transactionService
+                .checkValidCreateRollTermTransaction(identifierId)
+                .subscribe((resRollTermCheck: any) => {
+                  validRollTerm = resRollTermCheck.result.isValid;
+
+                  if (validRollTerm) {
+                    this.router.navigate(["/transaction/create"], {
+                      queryParams: {
+                        clientId: this.clientId,
+                        identifierId: identifierId,
+                        type: type,
+                      },
+                    });
+                  } else {
+                    this.alertService.alert({
+                      message: `CẢNH BÁO: Đã tồn tại khoản đáo hạn với thẻ ${cardNumber} \n vui lòng tất toán trước khi thực hiện khởi tạo khoản đáo hạn mới !`,
+                      msgClass: "cssDanger",
+                      hPosition: "center",
+                      vPosition: "top",
+                    });
+                  }
+                });
+            } else {
+              this.router.navigate(["/transaction/create"], {
+                queryParams: {
+                  clientId: this.clientId,
+                  identifierId: identifierId,
+                  type: type,
+                },
+              });
+            }
+          } else {
+            this.addIdentifierExtraInfo(identifierId, cardNumber);
           }
         });
       }
@@ -340,27 +366,24 @@ export class IdentitiesTabComponent {
     addIdentifierDialogRef.afterClosed().subscribe((response: any) => {
       console.log(response);
       if (response.data) {
-        const {
-          dueDay,
-          expiredDate,
-        } = response.data.value;
-        debugger;
-        this.clientService.getClientData(this.clientId).subscribe((client: any) => {
-            this.bankService
-              .storeExtraCardInfo({
-                userId: this.clientId,
-                userIdentifyId: userIdentifyId,
-                clientName: client.displayName,
-                cardNumber: `${cardNumber.slice(0, 6)}-XXX-XXX-${cardNumber.slice(12, 16)}`,
-                mobileNo: client.mobileNo,
-                dueDay: dueDay,
-                expireDate: expiredDate,
-              })
-              .subscribe((res2: any) => {
-                console.log(res2);
-              });
-          });
-        }
+        const { dueDay, expiredDate } = response.data.value;
+
+        this.clientService.getClientCross(this.clientId).subscribe((client: any) => {
+          this.bankService
+            .storeExtraCardInfo({
+              userId: this.clientId,
+              userIdentifyId: userIdentifyId,
+              clientName: client.displayName,
+              cardNumber: `${cardNumber.slice(0, 6)}-XXX-XXX-${cardNumber.slice(12, 16)}`,
+              mobileNo: client.mobileNo,
+              dueDay: dueDay,
+              expireDate: expiredDate,
+            })
+            .subscribe((res2: any) => {
+              console.log(res2);
+            });
+        });
+      }
     });
   }
 }

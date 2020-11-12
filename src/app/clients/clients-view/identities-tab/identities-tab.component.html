@@ -54,14 +54,20 @@
         <ng-container matColumnDef="actions">
           <th mat-header-cell *matHeaderCellDef> Actions </th>
           <td mat-cell *matCellDef="let identity; let i = index">
-            <!-- <button class="identity-action-button" mat-raised-button color="primary" [routerLink]="['/transaction/create']"  [queryParams]="{ identifierId: identity.id, clientId: identity.clientId, type: 'cash'}"  *midasHasPermission="'CREATE_DOCUMENT'">
-              Rút TM
-            </button> -->
-            <button class="identity-action-button" mat-raised-button color="primary" (click)="routeToMakeTransaction(identity.id, 'cash', identity.documentKey)"  *midasHasPermission="'CREATE_DOCUMENT'">
+
+            <button class="identity-action-button"
+            mat-raised-button
+            color="primary"
+            (click)="routeToMakeTransaction(identity.id, 'cash', identity.documentKey)"
+            *midasHasPermission="'TXN_CREATE'">
               Rút TM
             </button>
             ||
-            <button disabled class="identity-action-button" mat-raised-button color="warn"  *midasHasPermission="'DELETE_CLIENTIDENTIFIER'">
+            <button
+             class="identity-action-button"
+             mat-raised-button color="warn"
+             *midasHasPermission="'TXN_CREATE'"
+             (click)="routeToMakeTransaction(identity.id, 'rollTerm', identity.documentKey)"  >
               Đáo HT
             </button>
           </td>

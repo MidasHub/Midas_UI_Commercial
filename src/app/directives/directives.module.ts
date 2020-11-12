@@ -1,9 +1,11 @@
 /** Angular Imports */
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
 
 /** Custom Directives */
-import { HasPermissionDirective } from './has-permission/has-permission.directive';
+import {HasPermissionDirective} from './has-permission/has-permission.directive';
+import {TableResponsiveDirective} from './table-responsive.directive';
+import { AfterValueChangedDirective } from './after-value-changed.directive';
 
 /**
  *  Directives Module
@@ -12,9 +14,10 @@ import { HasPermissionDirective } from './has-permission/has-permission.directiv
  */
 @NgModule({
   imports: [
-    CommonModule
+    CommonModule,
   ],
-  declarations: [HasPermissionDirective],
-  exports: [HasPermissionDirective]
+  declarations: [HasPermissionDirective, TableResponsiveDirective, AfterValueChangedDirective],
+  exports: [HasPermissionDirective, TableResponsiveDirective, AfterValueChangedDirective]
 })
-export class DirectivesModule { }
+export class DirectivesModule {
+}

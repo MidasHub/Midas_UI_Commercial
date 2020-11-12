@@ -4,7 +4,6 @@ import { NgModule } from '@angular/core';
 /** Custom Modules */
 import { SharedModule } from '../shared/shared.module';
 import { AccountingRoutingModule } from './accounting-routing.module';
-import { DirectivesModule } from '../directives/directives.module';
 
 /** Custom Components */
 import { AccountingComponent } from './accounting.component';
@@ -45,7 +44,6 @@ import { ViewProvisioningJournalEntriesComponent } from './provisioning-entries/
 @NgModule({
   imports: [
     SharedModule,
-    DirectivesModule,
     AccountingRoutingModule
   ],
   declarations: [
