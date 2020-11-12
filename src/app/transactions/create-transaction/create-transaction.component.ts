@@ -1,7 +1,7 @@
 /** Angular Imports */
 import { DatePipe } from "@angular/common";
 import { Component, OnInit, ViewChild } from "@angular/core";
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { FormBuilder, FormControl, FormGroup, FormGroupDirective, Validators } from "@angular/forms";
 import { MatDialog } from "@angular/material/dialog";
 import { MatPaginator } from "@angular/material/paginator";
 import { MatSort } from "@angular/material/sort";
@@ -24,10 +24,9 @@ export class CreateTransactionComponent implements OnInit {
   dataSource: MatTableDataSource<any>;
   transactionInfo: any = {};
   terminalFee: any = {};
-  ErrorValidate: any = {};
   listRollTermBooking: any = [];
   isLoading = false;
-  registerForm: FormGroup;
+  transactionCreateForm: FormGroup;
   totalBookingAmount: number;
   @ViewChild("listBookingRollTermTable") listBookingRollTermTable: MatTable<Element>;
 
@@ -49,6 +48,14 @@ export class CreateTransactionComponent implements OnInit {
     private formBuilder: FormBuilder
   ) {
     this.dataSource = new MatTableDataSource();
+    this.transactionCreateForm = new FormGroup({
+      requestAmount: new FormControl(),
+      rate: new FormControl(),
+      txnAmount: new FormControl(),
+      terminalAmount: new FormControl(),
+      batchNo: new FormControl(),
+      traceNo: new FormControl(),
+    });
   }
 
   ngOnInit() {
@@ -56,8 +63,10 @@ export class CreateTransactionComponent implements OnInit {
       const clientId = params.get("clientId");
       const identifierId = params.get("identifierId");
       const type = params.get("type");
+      const remainValue = params.get("remainValue");
+      const tranId = params.get("tranId");
       this.isLoading = true;
-      this.transactionService.getTransactionTemplate(clientId, identifierId).subscribe((data: any) => {
+      this.transactionService.getTransactionTemplate(clientId, identifierId, tranId).subscribe((data: any) => {
         this.isLoading = false;
         this.transactionInfo = data.result;
         this.transactionInfo.isDone = false;
@@ -65,37 +74,61 @@ export class CreateTransactionComponent implements OnInit {
         this.transactionInfo.type = type;
         this.transactionInfo.identifierId = identifierId;
         this.transactionInfo.clientId = clientId;
-        this.transactionInfo.accountCash = data.result.listAccAccount[0].documentKey;
-
-        this.registerForm = this.formBuilder.group({
-          requestAmount: ['', Validators.required],
-          // firstName: ['', Validators.required],
-          // lastName: ['', Validators.required],
-          // email: ['', [Validators.required, Validators.email]],
-          // password: ['', [Validators.required, Validators.minLength(6)]],
-          // confirmPassword: ['', Validators.required],
-          // acceptTerms: [false, Validators.requiredTrue]
-      }, {
-          // validator: MustMatch('password', 'confirmPassword')
-      });
-
+        this.transactionInfo.remainValue = this.formatCurrency(remainValue);
+        if (this.transactionInfo.type == "cash") {
+          this.transactionInfo.accountCash = data.result.listAccAccount[0].documentKey;
+          this.transactionCreateForm = this.formBuilder.group({
+            requestAmount: ["", Validators.required],
+            rate: ["", Validators.required],
+            txnAmount: ["", Validators.required],
+            terminalAmount: ["", [Validators.required]],
+            batchNo: ["", [Validators.required]],
+            traceNo: ["", Validators.required],
+          });
+        } else {
+          if (this.transactionInfo.type == "rollTerm") {
+            this.transactionCreateForm = this.formBuilder.group({
+              requestAmount: ["", Validators.required],
+              rate: ["", Validators.required],
+            });
+          } else {
+            this.transactionInfo.rate = this.transactionInfo.posTransaction.feePercentage;
+            this.transactionInfo.refId = tranId;
+            this.transactionCreateForm = this.formBuilder.group({
+              requestAmount: ["", Validators.required],
+              rate: [this.transactionInfo.rate, Validators.required],
+              txnAmount: ["", Validators.required],
+              terminalAmount: ["", [Validators.required]],
+              batchNo: ["", [Validators.required]],
+              traceNo: ["", Validators.required],
+            });
+          }
+        }
       });
     });
   }
 
   clearInfoTransaction() {
-    const dateFormat = this.settingsService.dateFormat;
+    if (this.transactionInfo.txnAmount && this.transactionService.formatLong(this.transactionInfo.txnAmount) > 0) {
+      setTimeout(() => {
+        this.transactionCreateForm.controls['txnAmount'].reset();
+        this.transactionCreateForm.controls['terminalAmount'].reset();
+      }, 0);
+
+    }
+
     this.transactionInfo.listTerminal = [];
     this.transactionInfo.txnAmount = "";
     this.transactionInfo.terminalAmount = "";
     this.transactionInfo.terminalId = "";
     this.transactionInfo.feeAmount = "";
     this.transactionInfo.txnAmountAfterFee = "";
+
     if (
       this.transactionInfo.requestAmount &&
       this.transactionService.formatLong(this.transactionInfo.requestAmount) > 0
     ) {
-      if (this.transactionInfo.type === "cash") {
+      if (this.transactionInfo.type === "cash" || this.transactionInfo.type === "rollTermGetCash") {
         this.getTerminalListEnoughBalance(this.transactionInfo.requestAmount);
       } else {
         if (this.transactionInfo.type === "rollTerm") {
@@ -111,12 +144,13 @@ export class CreateTransactionComponent implements OnInit {
           }
         }
         this.dataSource.data = this.listRollTermBooking;
-        this.calculateTotalBookingAmount();
+        this.totalBookingAmount = this.transactionInfo.requestAmount;
       }
     }
   }
 
-  changeAmountTransaction() {
+  changeAmountTransaction(event: any) {
+    this.transactionInfo.requestAmount = event.target.value;
     this.clearInfoTransaction();
   }
 
@@ -134,7 +168,6 @@ export class CreateTransactionComponent implements OnInit {
       this.transactionInfo.rate &&
       this.transactionInfo.rate !== 0
     ) {
-      debugger;
       const amount_value = this.transactionInfo.terminalAmount;
       const rate = this.transactionInfo.rate;
       this.transactionInfo.cogsRate = this.terminalFee.cogsRate;
@@ -225,11 +258,16 @@ export class CreateTransactionComponent implements OnInit {
         this.transactionInfo.invoiceMapping = data.result;
         this.transactionInfo.txnAmount = this.formatCurrency(data.result.amountTransaction);
         this.transactionInfo.terminalAmount = this.formatCurrency(data.result.amountTransaction);
+        this.transactionCreateForm.controls["terminalAmount"].setValue(this.transactionInfo.terminalAmount);
+        this.transactionCreateForm.controls["txnAmount"].setValue(this.transactionInfo.txnAmount);
         this.calculateFeeTransaction();
       });
   }
-
-  onchangeRateAndCheckValidRate() {
+  onchangeRate(event: any) {
+    this.transactionInfo.rate = event.target.value;
+    this.CheckValidRate();
+  }
+  CheckValidRate() {
     if (this.transactionInfo.rate == null || String(this.transactionInfo.rate).length === 0) {
       return;
     }
@@ -254,7 +292,7 @@ export class CreateTransactionComponent implements OnInit {
       .getFeeByTerminal(this.transactionInfo.identifyClientDto.accountTypeId, this.transactionInfo.terminalId)
       .subscribe((data: any) => {
         this.terminalFee = data.result.feeTerminalDto;
-        this.onchangeRateAndCheckValidRate();
+        this.CheckValidRate();
         // call mapping bill for this transaction
         this.mappingBillForTransaction();
       });
@@ -264,29 +302,43 @@ export class CreateTransactionComponent implements OnInit {
     this.transactionService.downloadVoucher(this.transactionInfo.transactionId);
   }
 
+  afterSuccessCreateCashTransaction(data: any) {
+    this.transactionInfo.transactionId = data.result.id;
+    this.transactionInfo.transactionRefNo = data.result.tranRefNo;
+    this.transactionInfo.isDone = true;
+    this.alertService.alert({
+      message: `Tạo giao dịch ${this.transactionInfo.transactionRefNo} thành công!`,
+      msgClass: "cssSuccess",
+      hPosition: "center",
+    });
+    this.clearInfoTransaction();
+  }
+
   submitTransactionCash() {
-    if (this.registerForm.invalid) {
+    if (this.transactionCreateForm.invalid) {
       return;
     }
-    if (this.validateCashTransaction()) {
+    this.transactionInfo.batchNo = this.transactionCreateForm.value.batchNo;
+    this.transactionInfo.traceNo = this.transactionCreateForm.value.traceNo;
+    if (this.transactionInfo.type == "cash") {
       this.transactionService.submitTransactionCash(this.transactionInfo).subscribe((data: any) => {
-        this.transactionInfo.transactionId = data.result.id;
-        this.transactionInfo.transactionRefNo = data.result.tranRefNo;
-        this.transactionInfo.isDone = true;
-        this.alertService.alert({
-          message: `Tạo giao dịch ${this.transactionInfo.transactionRefNo} thành công!`,
-          msgClass: "cssSuccess",
-          hPosition: "center",
-        });
-        this.transactionInfo.requestAmount = "";
-        this.transactionInfo.batchNo = "";
-        this.transactionInfo.traceNo = "";
-        this.clearInfoTransaction();
+        this.afterSuccessCreateCashTransaction(data);
       });
+    } else {
+      if (this.transactionInfo.type == "rollTermGetCash") {
+        this.transactionService
+          .submitTransactionCashFromRollTermTransaction(this.transactionInfo)
+          .subscribe((data: any) => {
+            this.afterSuccessCreateCashTransaction(data);
+          });
+      }
     }
   }
 
   submitTransactionRollTerm() {
+    if (this.transactionCreateForm.invalid) {
+      return;
+    }
     this.listRollTermBooking.forEach((booking: any) => {
       booking.amountBooking = this.transactionService.formatLong(booking.amountBooking);
       booking.txnDate = this.datePipe.transform(booking.txnDate, "dd/MM/yyyy");
@@ -308,7 +360,7 @@ export class CreateTransactionComponent implements OnInit {
         hPosition: "center",
       });
       setTimeout(() => {
-        this.router.navigate(["/home"]);
+        this.router.navigate(["/transaction"]);
       }, 5000); //5s
     });
   }
@@ -359,56 +411,6 @@ export class CreateTransactionComponent implements OnInit {
   }
 
   validateCashTransaction(): boolean {
-    debugger;
-    if (!this.transactionInfo.requestAmount || this.transactionInfo.requestAmount == 0) {
-      this.ErrorValidate.requestAmountError = true;
-      return false;
-    } else {
-      this.ErrorValidate.requestAmountError = false;
-    }
-
-    if (!this.transactionInfo.listAccAccount || this.transactionInfo.listAccAccount.length == 0) {
-      this.ErrorValidate.requestAccAccountError = true;
-      return false;
-    } else {
-      this.ErrorValidate.requestAccAccountError = false;
-    }
-
-    if (!this.transactionInfo.rate || this.transactionInfo.rate == 0) {
-      this.ErrorValidate.requestRateError = true;
-      return false;
-    } else {
-      this.ErrorValidate.requestRateError = false;
-    }
-
-    if (!this.transactionInfo.txnAmount || this.transactionInfo.txnAmount == 0) {
-      this.ErrorValidate.requestTxnAmountError = true;
-      return false;
-    } else {
-      this.ErrorValidate.requestTxnAmountError = false;
-    }
-
-    if (!this.transactionInfo.terminalAmount || this.transactionInfo.terminalAmount == 0) {
-      this.ErrorValidate.requestTerminalAmountError = true;
-      return false;
-    } else {
-      this.ErrorValidate.requestTerminalAmountError = false;
-    }
-
-    if (!this.transactionInfo.batchNo) {
-      this.ErrorValidate.requestBatchNoError = true;
-      return false;
-    } else {
-      this.ErrorValidate.requestBatchNoError = false;
-    }
-
-    if (!this.transactionInfo.traceNo) {
-      this.ErrorValidate.requestTraceNoError = true;
-      return false;
-    } else {
-      this.ErrorValidate.requestTraceNoError = false;
-    }
-
     return true;
   }
 

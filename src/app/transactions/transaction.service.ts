@@ -68,6 +68,37 @@ export class TransactionService {
     return this.http.post<any>(`${this.GatewayApiUrlPrefix}/transaction/create_cash_retail_transaction`, httpParams);
   }
 
+  submitTransactionCashFromRollTermTransaction(
+    transactionInfo: any
+  ): Observable<any> {
+
+    const httpParams = new HttpParams()
+      .set('accountNumber', transactionInfo.identifyClientDto.accountNumber)
+      .set('accountBankId', transactionInfo.identifyClientDto.accountBankId)
+      .set('accountTypeId', transactionInfo.identifyClientDto.accountTypeId)
+      .set('refid', transactionInfo.refId)
+      .set('bNo', transactionInfo.traceNo)
+      .set('tid', transactionInfo.batchNo)
+      .set('terminalAmount', String(this.formatLong(transactionInfo.terminalAmount)))
+      .set('feeRate', transactionInfo.rate)
+      .set('feeAmount', transactionInfo.feeAmount)
+      .set('cogsRate', transactionInfo.cogsRate)
+      .set('cogsAmount', transactionInfo.feeCogs)
+      .set('pnlAmount', transactionInfo.feePNL)
+      .set('invoiceAmount', String(this.formatLong(transactionInfo.txnAmount)))
+      .set('requestAmount', String(this.formatLong(transactionInfo.requestAmount)))
+      .set('transferAmount', String(this.formatLong(transactionInfo.txnAmount)))
+      .set('bills', transactionInfo.invoiceMapping.listInvoice)
+      .set('productId', transactionInfo.productId)
+      .set('customerName', transactionInfo.clientDto.displayName)
+      .set('terminalId', transactionInfo.terminalId)
+      .set('officeId', this.accessToken.officeId)
+      .set('createdBy', this.accessToken.userId)
+      .set('accessToken', this.accessToken.base64EncodedAuthenticationKey);
+
+    return this.http.post<any>(`${this.GatewayApiUrlPrefix}/transaction/create_retail_cash_from_rollTerm_transaction`, httpParams);
+  }
+
   submitTransactionRollTerm(
     transactionInfo: any
   ): Observable<any> {
@@ -182,11 +213,12 @@ export class TransactionService {
     return this.http.post<any>(`${this.GatewayApiUrlPrefix}/pos/get_list_terminal_by_office`, httpParams);
   }
 
-  getTransactionTemplate(clientId: string, identifierId: string): Observable<any> {
+  getTransactionTemplate(clientId: string, identifierId: string, transactionId?: string): Observable<any> {
 
     const httpParams = new HttpParams()
       .set('identifyId', identifierId)
       .set('clientId', clientId)
+      .set('transactionId', !transactionId ? '':transactionId)
       .set('officeId', this.accessToken.officeId)
       .set('createdBy', this.accessToken.userId)
       .set('accessToken', this.accessToken.base64EncodedAuthenticationKey);
