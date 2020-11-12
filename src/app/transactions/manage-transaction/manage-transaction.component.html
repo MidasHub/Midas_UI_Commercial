@@ -161,7 +161,10 @@
           Giao dịch theo lô
         </mat-checkbox>
         <div fxFlex="18%">
-          <button style="margin-top: 8px; height: 40px;" color="primary" mat-raised-button>Export</button>
+          <button style="margin-top: 8px; height: 40px;"
+                  (click)="exportTransaction()"
+                  color="primary" mat-raised-button>Export
+          </button>
         </div>
       </div>
     </mat-expansion-panel>
@@ -289,7 +292,7 @@
   <mat-menu #transactionMenu="matMenu" [overlapTrigger]="false" style="width: 50px;">
     <ng-template matMenuContent
                  let-custId="custId"
-                 let-ext2="ext2"
+                 let-type="type"
                  let-status="status"
                  let-txnDate='txnDate'
                  let-ext7='ext7'
@@ -300,12 +303,12 @@
                  let-traceNo='traceNo'
                  style="width: 50px;">
       <button mat-menu-item
-              [routerLink]="'/makeBatchBillPosTransaction/'+agencyId+'/'+ext2"
-              *ngIf="ext2 != 'rollTerm' && ext2 != 'cash' && status == 'C' && (today | date:'dd/MM/yyyy') == (txnDate | date:'dd/MM/yyyy')">
+              [routerLink]="'/makeBatchBillPosTransaction/'+agencyId+'/'+type"
+              *ngIf="type != 'rollTerm' && type != 'cash' && status == 'C' && (today | date:'dd/MM/yyyy') == (txnDate | date:'dd/MM/yyyy')">
         <img src="assets/images/icons/next.svg"/>&nbsp;Tiếp tục giao dịch
       </button>
       <button mat-menu-item
-              [routerLink]="'/viewDetailTransaction/'+refid+'/'+(ext2 == 'rollTerm' ? 'rollTerm':'cash')"
+              [routerLink]="'/viewDetailTransaction/'+refid+'/'+(type == 'rollTerm' ? 'rollTerm':'cash')"
       ><i class="fa fa-eye" aria-hidden="true"></i>&nbsp;Chi tiết
       </button>
       <button mat-menu-item
@@ -330,7 +333,7 @@
       </button>
       <hr/>
       <button mat-menu-item
-              *ngIf="status == 'V' && ext2 != 'rollTerm'"
+              *ngIf="status == 'V' && type != 'rollTerm'"
               (click)="undoRevertTransaction(refid)"
       ><i class="fa fa-undo" aria-hidden="true"></i> &nbsp;Hoàn tác giao dịch
       </button>
