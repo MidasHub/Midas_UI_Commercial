@@ -6,7 +6,6 @@ import {DatePipe} from '@angular/common';
 import {SavingsRoutingModule} from './savings-routing.module';
 import {SharedModule} from 'app/shared/shared.module';
 import {PipesModule} from '../pipes/pipes.module';
-import {DirectivesModule} from '../directives/directives.module';
 import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
 /** Custom Components */
 import {SavingAccountActionsComponent} from './saving-account-actions/saving-account-actions.component';
@@ -61,7 +60,6 @@ import { PartnerAdvanceCashComponent } from './savings-account-view/form-dialog/
   imports: [
     SharedModule,
     PipesModule,
-    DirectivesModule,
     SavingsRoutingModule,
     ClientsModule,
     NgxMatSelectSearchModule

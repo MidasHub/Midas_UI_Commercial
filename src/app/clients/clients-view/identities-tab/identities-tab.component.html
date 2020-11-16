@@ -3,7 +3,7 @@
   <mat-card class="card-custom" fxFlex="100%">
     <mat-card-header>
       <mat-card-title class="f-left">Danh sách thẻ giao dịch:</mat-card-title>
-      <button mat-raised-button class="f-right" color="primary" (click)="addIdentifier()" *midasHasPermission="'CREATE_CLIENTIDENTIFIER'">
+      <button mat-raised-button class="f-right" color="primary" (click)="addIdentifier(false)" *midasHasPermission="'CREATE_CLIENTIDENTIFIER'">
         <fa-icon icon="plus"></fa-icon>&nbsp;&nbsp; Add
       </button>
     </mat-card-header>
@@ -19,7 +19,7 @@
         <th mat-header-cell *matHeaderCellDef> Document Key </th>
         <td mat-cell *matCellDef="let identity ; let i = index ">
           {{identity.documentKey}}
-            <fa-icon style="color: red;" (click)="deleteIdentifier(identity.clientId,identity.id,i)" *midasHasPermission="'DELETE_CLIENTIDENTIFIER'" icon="times"></fa-icon>
+            <fa-icon style="color: red;" (click)="deleteIdentifier(identity.clientId,identity.id,i, false)" *midasHasPermission="'DELETE_CLIENTIDENTIFIER'" icon="times"></fa-icon>
         </td>
       </ng-container>
         <ng-container matColumnDef="description">
@@ -39,7 +39,7 @@
               {{document.name}}
               <fa-icon icon="cloud-download-alt" (click)="download(document.parentEntityId,document.id)" *midasHasPermission="'READ_DOCUMENT'"></fa-icon>
             </div>
-              <fa-icon style="color: green;" icon="cloud-upload-alt" (click)="uploadDocument(i,identity.id)" *midasHasPermission="'CREATE_DOCUMENT'"></fa-icon>
+              <fa-icon style="color: green;" icon="cloud-upload-alt" (click)="uploadDocument(i,identity.id, false)" *midasHasPermission="'CREATE_DOCUMENT'"></fa-icon>
 
           </td>
         </ng-container>
@@ -54,11 +54,20 @@
         <ng-container matColumnDef="actions">
           <th mat-header-cell *matHeaderCellDef> Actions </th>
           <td mat-cell *matCellDef="let identity; let i = index">
-            <button class="identity-action-button" mat-raised-button color="primary" [routerLink]="['/transaction/create']"  [queryParams]="{ identifierId: identity.id, clientId: identity.clientId, type: 'cash'}"  *midasHasPermission="'CREATE_DOCUMENT'">
+
+            <button class="identity-action-button"
+            mat-raised-button
+            color="primary"
+            (click)="routeToMakeTransaction(identity.id, 'cash', identity.documentKey)"
+            *midasHasPermission="'TXN_CREATE'">
               Rút TM
             </button>
             ||
-            <button class="identity-action-button" mat-raised-button color="warn" (click)="deleteIdentifier(identity.clientId,identity.id,i)" *midasHasPermission="'DELETE_CLIENTIDENTIFIER'">
+            <button
+             class="identity-action-button"
+             mat-raised-button color="warn"
+             *midasHasPermission="'TXN_CREATE'"
+             (click)="routeToMakeTransaction(identity.id, 'rollTerm', identity.documentKey)"  >
               Đáo HT
             </button>
           </td>
@@ -74,13 +83,13 @@
     <mat-card class="card-custom" fxFlex="100%">
       <mat-card-header>
         <mat-card-title>Danh sách tài khoản thanh toán/CMND/CCCD:</mat-card-title>
-        <button mat-raised-button class="f-right" color="primary" (click)="addIdentifier()" *midasHasPermission="'CREATE_CLIENTIDENTIFIER'">
+        <button mat-raised-button class="f-right" color="primary" (click)="addIdentifier(true)" *midasHasPermission="'CREATE_CLIENTIDENTIFIER'">
           <fa-icon icon="plus"></fa-icon>&nbsp;&nbsp; Add
         </button>
       </mat-card-header>
       <mat-card-content>
 
-    <table mat-table #identifiersTable [dataSource]="clientIdentitiesOther">
+    <table mat-table #identifiersTableOther [dataSource]="clientIdentitiesOther">
 
       <ng-container matColumnDef="id">
         <th mat-header-cell *matHeaderCellDef> Id </th>
@@ -90,7 +99,7 @@
       <th mat-header-cell *matHeaderCellDef> Document Key </th>
       <td mat-cell *matCellDef="let identity ; let i = index ">
         {{identity.documentKey}}
-        <fa-icon style="color: red;" (click)="deleteIdentifier(identity.clientId,identity.id,i)" *midasHasPermission="'DELETE_CLIENTIDENTIFIER'" icon="times"></fa-icon>
+        <fa-icon style="color: red;" (click)="deleteIdentifier(identity.clientId,identity.id,i, true)" *midasHasPermission="'DELETE_CLIENTIDENTIFIER'" icon="times"></fa-icon>
 
       </td>
     </ng-container>
@@ -111,7 +120,7 @@
             {{document.name}}
             <fa-icon icon="cloud-download-alt" (click)="download(document.parentEntityId,document.id)" *midasHasPermission="'READ_DOCUMENT'"></fa-icon>
           </div>
-          <fa-icon style="color: green;" icon="cloud-upload-alt" (click)="uploadDocument(i,identity.id)" *midasHasPermission="'CREATE_DOCUMENT'"></fa-icon>
+          <fa-icon style="color: green;" icon="cloud-upload-alt" (click)="uploadDocument(i,identity.id, true)" *midasHasPermission="'CREATE_DOCUMENT'"></fa-icon>
 
         </td>
       </ng-container>

@@ -6,7 +6,6 @@ import { DatePipe } from '@angular/common';
 import { ClientsRoutingModule } from './clients-routing.module';
 import { SharedModule } from 'app/shared/shared.module';
 import { PipesModule } from '../pipes/pipes.module';
-import { DirectivesModule } from '../directives/directives.module';
 
 /** Custom Components */
 import { ClientsComponent } from './clients.component';
@@ -61,6 +60,7 @@ import { CreateSelfServiceUserComponent } from './clients-view/client-actions/cr
 import {ReactiveFormsModule} from '@angular/forms';
 import {MoneyPipe} from '../pipes/money.pipe';
 import { AddIdentitiesComponent } from './clients-view/identities-tab/add-identities/add-identities.component';
+import { AddIdentitiesExtraInfoComponent } from './clients-view/identities-tab/add-identities-extra-info/add-identities-extra-info.component';
 
 /**
  * Clients Module
@@ -71,8 +71,6 @@ import { AddIdentitiesComponent } from './clients-view/identities-tab/add-identi
   imports: [
     SharedModule,
     ClientsRoutingModule,
-    PipesModule,
-    DirectivesModule,
     ReactiveFormsModule,
   ],
   declarations: [
@@ -125,11 +123,11 @@ import { AddIdentitiesComponent } from './clients-view/identities-tab/add-identi
     ClientFamilyMemberDialogComponent,
     CaptureImageDialogComponent,
     CreateSelfServiceUserComponent,
-    MoneyPipe,
-    AddIdentitiesComponent
+    AddIdentitiesComponent,
+    AddIdentitiesComponent,
+    AddIdentitiesExtraInfoComponent,
   ],
   exports: [
-    MoneyPipe
   ],
   providers: [DatePipe]
 

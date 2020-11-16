@@ -1,0 +1,8 @@
+<h1 mat-dialog-title>{{data.title|translate}}</h1>
+<div mat-dialog-content>
+  <p>{{ data.message }} ?</p>
+</div>
+<mat-dialog-actions align="end">
+  <button mat-raised-button mat-dialog-close>{{'Shared_Component.DeleteDialog.buttonCancel'|translate}}</button>
+  <button mat-raised-button color="warn" [mat-dialog-close]="{ delete: true }">{{'Shared_Component.DeleteDialog.buttonConfirm'|translate}}</button>
+</mat-dialog-actions>

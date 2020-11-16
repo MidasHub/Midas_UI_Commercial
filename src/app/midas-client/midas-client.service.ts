@@ -32,7 +32,7 @@ export class MidasClientService {
 
   searchClientByNameAndExternalIdAndPhoneAndDocumentKey(query: string): Observable<any> {
 
-    let httpParams = new HttpParams()
+    const httpParams = new HttpParams()
     .set('query', query)
     .set('createdBy', this.accessToken.userId)
     .set('accessToken', this.accessToken.base64EncodedAuthenticationKey);

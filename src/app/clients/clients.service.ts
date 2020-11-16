@@ -28,14 +28,24 @@ export class ClientsService {
     this.GatewayApiUrlPrefix = environment.GatewayApiUrlPrefix ;
    }
 
-  getClientTest(officeId: number , amount: number): Observable<any> {
+  getClientCross(clientId: string): Observable<any> {
     const httpParams = new HttpParams()
-      .set('id', officeId.toString())
-      .set('amountTransaction', amount.toString())
+      .set('id', clientId)
+      .set('officeId', this.accessToken.officeId)
       .set('createdBy', this.accessToken.userId)
       .set('accessToken', this.accessToken.base64EncodedAuthenticationKey);
 
-    return this.http.post<any>(`${this.GatewayApiUrlPrefix}/pos/get_list_terminal_by_office`, httpParams);
+    return this.http.post<any>(`${this.GatewayApiUrlPrefix}/client/get_client_midas_by_id`, httpParams);
+  }
+
+  getIdentifierClientCross(clientId: string): Observable<any> {
+    const httpParams = new HttpParams()
+      .set('clientId', clientId)
+      .set('officeId', this.accessToken.officeId)
+      .set('createdBy', this.accessToken.userId)
+      .set('accessToken', this.accessToken.base64EncodedAuthenticationKey);
+
+    return this.http.post<any>(`${this.GatewayApiUrlPrefix}/client/get_identifier_midas_by_client`, httpParams);
   }
 
   getFilteredClients(orderBy: string, sortOrder: string, orphansOnly: boolean, displayName: string, officeId?: any): Observable<any> {
@@ -266,6 +276,9 @@ export class ClientsService {
 
   uploadClientDocument(clientId: string, documentData: any) {
     return this.http.post(`/clients/${clientId}/documents`, documentData);
+  }
+  uploadClientDocumenttenantIdentifier(clientId: string, documentData: any): Observable<any>  {
+    return this.http.post(`/clients/${clientId}/documents?tenantIdentifier=tiktik`, documentData);
   }
 
   deleteClientDocument(parentEntityId: string, documentId: string) {

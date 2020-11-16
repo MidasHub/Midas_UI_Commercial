@@ -36,7 +36,10 @@
       </a>
 
     </span>
-
+    <a mat-tab-link class="tab-link" [matMenuTriggerFor]="transactionMenu" #institutionMenuTrigger="matMenuTrigger">
+      <fa-icon class="mr-05" icon="university" size="lg"></fa-icon>
+      Giao dịch
+    </a>
   </nav>
 
   <span fxFlex="auto"></span>
@@ -68,7 +71,9 @@
     <button mat-menu-item [matMenuTriggerFor]="selfServiceMenu">{{'Toolbar_Component.lblSelfService'|translate}}</button>
   </span>
 </mat-menu>
-
+<mat-menu #transactionMenu="matMenu" [overlapTrigger]="false">
+  <button mat-menu-item routerLink="/transaction">Quản lý giao dịch</button>
+</mat-menu>
 <!-- Toolbar Menus -->
 <mat-menu #reportsMenu="matMenu" [overlapTrigger]="false">
   <button mat-menu-item [routerLink]="['/reports']">{{'Toolbar_Component.lblAll'|translate}}</button>
