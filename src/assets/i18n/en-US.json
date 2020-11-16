@@ -550,6 +550,59 @@
     }
   },
   "Terminal_Component": {
-    "labelTerminal":"POS Terminal"
-  }
+    "labelTerminal":"POS Terminal",
+    "btnCreate":"Create POS Terminal",
+    "labelRequired":"<strong>required</strong>",
+    "labelTerminalMsgPattern":"<strong>cannot</strong> begin with a special character or number",
+    "labelFilter":"Filter",
+    "tableTerminal":{
+      "terminalNo":"Terminal No",
+      "terminalCode":"Terminal Code",
+      "terminalName":"Terminal Name",
+      "minFeeDefault":"MinFee Default",
+      "createdBy":"Created By",
+      "createdDate":"Created Date",
+      "updatedDate":"Updated Date",
+      "status":"Status"
+    },
+    "FormTerminal":{
+      "labelMsgMin100000": "Value is <strong>Minimum 100,000</strong>",
+      "labelMsgMin0": "Value is <strong>Minimum 0</strong>",
+      "labelMsgOutOffMax": "Value is <strong>Maximum 100%</strong>",
+      "labelMsgOutOffMin": "Value is out off <strong>Maximum 0%</strong>",
+      "labelRequired":"<strong>required</strong>",
+      "labelEdit":"Edit POS Terminal",
+      "labelCreate":"Create POS Terminal",
+      "labelGeneral":"Setup Fee",
+      "labelTerminalId":"Terminal ID",
+      "labelTerminalCode":"Terminal Code",
+      "labelTerminalName":"Terminal Name",
+      "labelLimitPerDay":"Limit Per Day",
+      "labelMerchantId":"Merchant ID",
+      "labelOffice":"Office",
+      "labelMinFeeDefault":"Min Fee Default",
+      "checkboxIsActive":"Is Active",
+      "labelCostPercentage":"Cost Percentage",
+      "labelCogsPercentage":"Cogs Percentage",
+      "labelMinPercentage":"Min Percentage",
+      "labelMaxPercentage":"Max Percentage",
+      "labelMaxLimitAmount":"Max Limit Amount",
+      "labelLevelLimit":"Level Limit",
+      "buttonSetupAll":"Setup",
+      "buttonResetDefault":"Reset",
+      "buttonSubmit":"Submit",
+      "buttonSubmitUpdate":"Submit Update",
+      "tableFee":{
+        "Office":"Office",
+        "CardType":"Card Type",
+        "FeeCogs":"Fee POS",
+        "FeeCost":"Fee Cost",
+        "FeeMin":"Fee Min",
+        "FeeMax":"Fee Max",
+        "MaxLimitAmountTransaction":"Max LimitAmount Per Transaction",
+        "LevelTransactionCard":"Level Transaction Per Card"
+      }
+    }
+  },
+  "labelCurrency":"$"
 }

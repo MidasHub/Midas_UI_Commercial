@@ -183,7 +183,6 @@ export class EditGroupComponent implements OnInit {
     this.cards.forEach((item: any) =>{
       if(item.cardType == index.cardType){ 
         Object.keys(item).forEach(function (key){
-          console.log(item[key]);
           if(name_input.split("_")[1] == key){
             item[key] = Number(value_input);
           }

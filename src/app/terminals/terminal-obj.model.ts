@@ -5,28 +5,25 @@ export class TerminalObj {
     status: string;
     createdBy:string;
     createdDate:string;
-    lastUpdateDate:string;
-    minFeeDefault:number;
-    uuid:string;
+    updatedDate:string;
+    minFeeDefault:number; 
 
-    constructor(
-        uuid: string,
+    constructor( 
         terminalId: string,
         terminalCode: string,
         terminalName:string,
         status: string,
         createdBy:string,
         createdDate:string,
-        lastUpdateDate:string,
-        minFeeDefault:number) {
-            this.uuid = uuid;
+        updatedDate:string,
+        minFeeDefault:number) { 
             this.terminalId=terminalId;
             this.terminalCode=terminalCode;
             this.terminalName=terminalName;
             this.status=status;
             this.createdBy=createdBy;
             this.createdDate=createdDate;
-            this.lastUpdateDate=lastUpdateDate;
+            this.updatedDate=updatedDate;
             this.minFeeDefault= minFeeDefault;
     }
   }

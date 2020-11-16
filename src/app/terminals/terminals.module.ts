@@ -12,7 +12,7 @@ import { DirectivesModule } from '../directives/directives.module';
 import { TerminalsComponent } from './terminals.component';
 import { EditTerminalsComponent } from './edit-terminals/edit-terminals.component';
 import { CreateTerminalsComponent } from './create-terminals/create-terminals.component';
-
+//import { TableModule } from 'ngx-easy-table';
 /**
  * Groups Module
  *
@@ -23,12 +23,13 @@ import { CreateTerminalsComponent } from './create-terminals/create-terminals.co
     SharedModule,
     PipesModule,
     DirectivesModule,
-    TerminalsRoutingModule
+    TerminalsRoutingModule,
+    // TableModule,
   ],
   declarations: [
     TerminalsComponent,
     EditTerminalsComponent,
-    CreateTerminalsComponent
+    CreateTerminalsComponent,
   ],
   providers: [DatePipe]
 })

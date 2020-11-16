@@ -1,0 +1,54 @@
+.mat-raised-button{
+    height: max-content;
+    margin-top: 15px;
+}
+.filter {
+    padding-left: 20px;
+    width: 300px;
+}
+.activeCheckBox{
+  padding-top: 34px;
+}
+table {
+    width: 100%;
+  }
+  
+  th, td {
+    overflow: hidden;
+    width: 100%;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+.mat-column-Office{
+    flex: none;
+    width: 20%;
+}
+.mat-column-CardType{
+    flex: none;
+    width: 20%;
+}
+.mat-column-FeePOS{
+    flex: none;
+    width: 7%;
+}
+.mat-column-FeeCost{
+    flex: none;
+    width: 7%; 
+}
+.mat-column-FeeMin{
+    flex: none;
+    width: 7%; 
+}
+.mat-column-FeeMax{
+    flex: none;
+    width: 7%; 
+}
+.mat-column-MaxLimitAmountTransaction{
+    flex: none;
+    width: 20%; 
+}
+.mat-column-LevelTransactionCard{
+    flex: none;
+    width: 7%;
+}

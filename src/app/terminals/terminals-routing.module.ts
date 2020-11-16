@@ -13,14 +13,15 @@ import { TerminalsComponent } from './terminals.component';
 //import { CreateTerminalsComponent } from './terminals.component';
 import { EditTerminalsComponent } from './edit-terminals/edit-terminals.component';
 import { CreateTerminalsComponent } from './create-terminals/create-terminals.component';
-import { TerminalsResolver } from './terminals.resolver';
+import { TerminalsResolver } from './common-resolvers/terminals.resolver';
+import { CreateTerminalsResolver } from './common-resolvers/CreateTerminalsResolver';
 
 /** Groups Routes */
 const routes: Routes = [
   Route.withShell([
     {
       path: 'terminals',
-      data: { title: extract('Terminal_Component.labelTerminal'), breadcrumb: 'Terminal_Component.labelTerminal', routeParamBreadcrumb: false },
+      data: { title: extract('POS Terminals'), breadcrumb: 'POS Terminals', routeParamBreadcrumb: false },
       children: [
         {
           path: '',
@@ -30,13 +31,13 @@ const routes: Routes = [
           path: 'create',
           component: CreateTerminalsComponent,
           data: { title: extract('Create Terminal'), breadcrumb: 'Create', routeParamBreadcrumb: false },
-          resolve: {
-            //offices: OfficesResolver
+          resolve:{
+            terminalData: CreateTerminalsResolver,
           }
         },
         {
-          path: ':terminalUUID',
-          data: { title: extract('View Terminal'), routeParamBreadcrumb: 'terminalUUID' },
+          path: ':terminalId',
+          data: { title: extract('View Terminal'), routeParamBreadcrumb: 'terminalId' },
           children: [{
             path: '',
             children: [
@@ -64,6 +65,6 @@ const routes: Routes = [
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
-  providers:[TerminalsResolver]
+  providers:[TerminalsResolver,CreateTerminalsResolver]
 })
 export class TerminalsRoutingModule { }

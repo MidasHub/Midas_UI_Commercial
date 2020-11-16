@@ -1,24 +1,17 @@
 /** Angular Imports */
 import { Injectable } from '@angular/core';
 import { Resolve, ActivatedRouteSnapshot } from '@angular/router';
-
-/** rxjs Imports */
 import { Observable } from 'rxjs';
+import { TerminalsService } from '../terminals.service';
 
-/** Custom Services */
-import { TerminalsService } from './terminals.service';
-
-/**
- * Group Accounts data resolver.
- */
 @Injectable()
 export class TerminalsResolver implements Resolve<Object> {
 
   constructor(private terminalsService: TerminalsService) { }
  
   resolve(route: ActivatedRouteSnapshot): Observable<any> { 
-    const terminalUUID = route.parent.paramMap.get('terminalUUID');
-    return this.terminalsService.getTerminalByUUID(terminalUUID);
+    const terminalId = route.parent.paramMap.get('terminalId');
+    return this.terminalsService.getTerminalByID(terminalId);
   }
 
 }
