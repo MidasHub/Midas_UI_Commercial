@@ -42,14 +42,13 @@
 
     </mat-step>
 
-    <mat-step>
+    <mat-step *ngIf="getIsRelative">
 
       <ng-template matStepLabel>{{'Client_Component.ClientStepper.labelRelative'| translate}}</ng-template>
 
       <mifosx-client-family-members-step [clientTemplate]="clientTemplate"></mifosx-client-family-members-step>
 
     </mat-step>
-
 
 
     <mat-step *ngIf="checkFormInvalid" completed>

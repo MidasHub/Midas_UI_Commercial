@@ -256,12 +256,10 @@
                 </mat-option>
               </mat-select>
             </mat-form-field>
-
-            <mat-form-field fxFlex="98%">
-              <mat-label>{{'Client_Component.ClientStepper.GeneralStep.labelCorpRemark' |translate}}</mat-label>
-              <textarea matInput formControlName="remarks"></textarea>
-            </mat-form-field>
           </div>
+          <mat-checkbox fxFlex="48%" labelPosition="before" [formControl]="isRelative">
+            Thêm người liên quan
+          </mat-checkbox>
         </div>
       </mat-card-content>
     </mat-card>

@@ -79,17 +79,22 @@ export class CreateClientComponent {
     return this.clientGeneralStep.createClientForm;
   }
 
+  get getIsRelative() {
+    return this.clientGeneralStep.getIsRelative;
+  }
+
   /**
    * Retrieves the client object
    */
   get client() {
     return {
       ...this.clientGeneralStep.clientGeneralDetails,
-      ...this.clientFamilyMembersStep.familyMembers,
+      ...(this.clientFamilyMembersStep?.familyMembers || {familyMembers: []}),
       ...this.clientGeneralStep.files,
       ...this.clientAddressStep.address
     };
   }
+
   get checkFormInvalid() {
     return this.clientGeneralStep.createClientForm.valid && this.clientGeneralStep.files?.files?.length === 2;
   }
@@ -164,6 +169,7 @@ export class CreateClientComponent {
           'description': this.client.documentTypeId,
           status: 'Active'
         };
+        // let done = 0;
         this.clientsService.addClientIdentifier(response.clientId, identities_value).subscribe(async (res: any) => {
           const {resourceId} = res;
           for (const file of this.client.files) {
@@ -174,20 +180,22 @@ export class CreateClientComponent {
             formData.append('fileName', file.name);
             this.clientsService.uploadClientIdentifierDocument(resourceId, formData).subscribe((ssss: any) => {
               console.log('document Uploaded', ssss);
+              // done += 1;
             });
-          }
-          if (this.go_back === 'home') {
-            this.alertService.alert({
-              message: this.i18n.getTranslate('Client_Component.ClientStepper.lblCustomerCreated') + response.resourceId + '!',
-              msgClass: 'cssSuccess'
-            });
-            this.router.navigate(['/home']);
-          } else {
-            this.router.navigate(['../', response.resourceId], {relativeTo: this.route});
           }
         });
-
-
+        // while (done !== this.client.files.length) {
+        //   console.log('uploading .....');
+        // }
+        if (this.go_back === 'home') {
+          this.alertService.alert({
+            message: this.i18n.getTranslate('Client_Component.ClientStepper.lblCustomerCreated') + response.resourceId + '!',
+            msgClass: 'cssSuccess'
+          });
+          this.router.navigate(['/home']);
+        } else {
+          this.router.navigate(['../', response.resourceId], {relativeTo: this.route});
+        }
       }
     });
   }

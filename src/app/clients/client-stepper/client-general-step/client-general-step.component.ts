@@ -64,6 +64,7 @@ export class ClientGeneralStepComponent implements OnInit {
   clientFilesDataBefore: any;
   clientFilesDataAfter: any;
   isTeller = true;
+  isRelative = new FormControl();
 
   /**
    * @param {FormBuilder} formBuilder Form Builder
@@ -118,6 +119,11 @@ export class ClientGeneralStepComponent implements OnInit {
         this.staffOptions = staffs?.staffOptions;
       });
     });
+    // TODO: check MGM here
+  }
+
+  get getIsRelative() {
+    return this.isRelative.value;
   }
 
   /**
@@ -239,7 +245,7 @@ export class ClientGeneralStepComponent implements OnInit {
     //   };
     // }
     // generalDetails.addSavings = true;
-    console.log({generalDetails});
+    // console.log({generalDetails});
     return generalDetails;
   }
 
