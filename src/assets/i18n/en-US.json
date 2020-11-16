@@ -260,6 +260,46 @@
         "selectBank": "Select bank",
         "selectCardType": "Select card type",
         "selectStatus": "Status"
+      },
+      "TabGeneral": {
+        "lblPerformanceHistory": "Historical Performance",
+        "lblNoLoanCycles": "No. Of Loan Cycles",
+        "lblNoActiveLoan": "No. Of Active Loan",
+        "lblLastLoanAmount": "Last Loan Amount",
+        "lblNoActiveSaving": " No. of Active Savings",
+        "lblActiveSavingAmount": "Total Savings",
+        "ActiveLoan": {
+          "lblName": "Name",
+          "lblDueAsOf": "Due as of",
+          "lblDueAmount": "Due Amount",
+          "lblPaidAmount": "Paid Amount",
+          "lblWaivedAmount": "Waived Amount",
+          "lblOutstanding": "Outstanding"
+        },
+        "SavingAccount": {
+          "lblSavingAccount": "Customer's Payable Account",
+          "lblAccountNo": "Account No#",
+          "lblExternalID": "Account Type",
+          "lblSavingProduct": "Account's Product",
+          "lblLastActive": "Last active",
+          "lblBalance": "Balance",
+          "lblCloseSavingAccount": "View Closed Accounts",
+          "lblOpenSavingAccount": "View Opening Accounts",
+          "lblCloseDate": "Closed Date"
+        },
+        "lblActions": "Actions",
+        "LoanAccount": {
+          "lblLoanAccount": "Loan Account",
+          "lblCloseLoanAccount": "Closed Loan Account",
+          "lblOpenLoanAccount": "Opening Loan Account",
+          "lblAccountNo": "Account No#",
+          "lblLoanProduct": "Loan Product",
+          "lblOriginalLoan": "Original Loan",
+          "lblLoanBalance": "Loan Balance",
+          "lblLoanPaid": "Loan Paid",
+          "lblLoanType": "Loan Type",
+          "lblCloseDate": "Closed Date"
+        }
       }
     }
   },
@@ -546,5 +586,9 @@
       "btnCancel": "Cancel",
       "btnSubmit": "Submit"
     }
+  },
+  "ShareLabel": {
+    "lblViewDetail": "View detail",
+    "lblMakeRepayment": "Make Repayment"
   }
 }
