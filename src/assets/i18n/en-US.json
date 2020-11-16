@@ -550,6 +550,7 @@
     }
   },
   "Terminal_Component": {
+    "labelTerminalNameMsgPattern": "Terminal ID <strong>cannot</strong> begin with a special character or number",
     "labelTerminal":"POS Terminal",
     "btnCreate":"Create POS Terminal",
     "labelRequired":"<strong>required</strong>",
@@ -595,10 +596,10 @@
       "tableFee":{
         "Office":"Office",
         "CardType":"Card Type",
-        "FeeCogs":"Fee POS",
-        "FeeCost":"Fee Cost",
-        "FeeMin":"Fee Min",
-        "FeeMax":"Fee Max",
+        "FeeCogs":"Fee POS(%)",
+        "FeeCost":"Fee Cost(%)",
+        "FeeMin":"Fee Min(%)",
+        "FeeMax":"Fee Max(%)",
         "MaxLimitAmountTransaction":"Max LimitAmount Per Transaction",
         "LevelTransactionCard":"Level Transaction Per Card"
       }
