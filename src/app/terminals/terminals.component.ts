@@ -41,7 +41,6 @@ export class TerminalsComponent implements OnInit, AfterViewInit {
         });
       this.dataSource.data = this.terminalsData;
       this.dataSourceDefault = this.terminalsData;
-      console.log(this.dataSource.data);
     });
   }
   ngAfterViewInit() {
@@ -54,7 +53,6 @@ export class TerminalsComponent implements OnInit, AfterViewInit {
     this.dataSource.filter = filterValue;
   }
   changeShowClosedGroups(isActive:boolean){
-    console.log("isActive",isActive);
     if(!isActive){
       delete this.sort.active;
     }else{

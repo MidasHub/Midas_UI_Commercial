@@ -4,6 +4,8 @@ import { SettingsService } from 'app/settings/settings.service';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 import { TerminalsService } from '../terminals.service';
+import { ErrorDialogComponent } from 'app/shared/error-dialog/error-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
 
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
@@ -51,7 +53,8 @@ export class EditTerminalsComponent implements OnInit {
     private terminalsService: TerminalsService,
     private datePipe: DatePipe,
     private settingsService: SettingsService,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private dialog:MatDialog
     ) {
     this.route.data.subscribe((data: { terminalData: any }) => {
       this.terminalData     = data.terminalData.result;
@@ -169,7 +172,17 @@ applyFilter(filterValue: string) {
     };
   
     this.terminalsService.update(data).subscribe((response: any) => {
-        console.log("response",response);
+        if(response.statusCode != '200' ){
+          const openErrorLogDialog = this.dialog.open(ErrorDialogComponent, {
+            width: '600px',
+            data: response.error
+          });
+          openErrorLogDialog.afterClosed().subscribe((response: any) => {
+            //this.router.navigate(['']);
+          });
+        }else{
+          this.router.navigate(['terminals']);
+        }
         //this.router.navigate(['../terminals'], { relativeTo: this.route });
     });
   

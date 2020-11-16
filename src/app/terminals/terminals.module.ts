@@ -13,11 +13,7 @@ import { TerminalsComponent } from './terminals.component';
 import { EditTerminalsComponent } from './edit-terminals/edit-terminals.component';
 import { CreateTerminalsComponent } from './create-terminals/create-terminals.component';
 //import { TableModule } from 'ngx-easy-table';
-/**
- * Groups Module
- *
- * All components related to Groups should be declared here.
- */
+
 @NgModule({
   imports: [
     SharedModule,

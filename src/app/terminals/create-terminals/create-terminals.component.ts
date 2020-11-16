@@ -5,6 +5,9 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TerminalsService } from '../terminals.service';  
+import { ErrorDialogComponent } from 'app/shared/error-dialog/error-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
+
 export interface PeriodicElements {
   officeId : number,
   officeName : string,
@@ -60,7 +63,8 @@ export class CreateTerminalsComponent implements OnInit {
       private formBuilder: FormBuilder,
       private cdr: ChangeDetectorRef,
       private terminalsService: TerminalsService,
-      private router: Router,) {
+      private router: Router,
+      private dialog:MatDialog) {
     this.route.data.subscribe((data: { terminalData: any }) => {
       this.terminalData     = data.terminalData.result;
       this.merchants        = data.terminalData.result.hollhouses;
@@ -150,8 +154,18 @@ applyFilter(filterValue: string) {
     };
 
     this.terminalsService.save(data).subscribe((response: any) => {
-        console.log("response",response);
-        //this.router.navigate(['../terminals'], { relativeTo: this.route });
+        if(response.statusCode == '404' ){
+          const openErrorLogDialog = this.dialog.open(ErrorDialogComponent, {
+            width: '600px',
+            data: response.error
+          });
+          openErrorLogDialog.afterClosed().subscribe((response: any) => {
+            //this.router.navigate(['']);
+          });
+        }else{
+          this.router.navigate(['terminals']);
+        }
+        
     });
 
   }

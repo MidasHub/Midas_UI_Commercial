@@ -14,7 +14,7 @@ export const environment = {
   apiProvider: '/fineract-provider/api',
   apiVersion: '/v1',
   serverUrl: '',
-  GatewayApiUrl: 'https://uat.tekcompay.com:8287',
+  GatewayApiUrl: 'https://localhost:8287',
   GatewayApiUrlPrefix: '/billPos',
   GatewayServerUrl: '',
   GatewayTenantId: 'default',
