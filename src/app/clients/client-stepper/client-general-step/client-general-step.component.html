@@ -212,7 +212,8 @@
                formGroupName="clientNonPersonDetails" *ngIf="createClientForm.contains('clientNonPersonDetails')">
             <mat-form-field fxFlex="48%">
               <mat-label>{{'Client_Component.ClientStepper.GeneralStep.labelCorpValidDate' |translate}}</mat-label>
-              <input  readonly matInput [min]="minDate" [max]="maxDate" [matDatepicker]="incorpValidityTillDateDatePicker"
+              <input  readonly matInput
+                      [min]="minDate" [max]="maxDate" [matDatepicker]="incorpValidityTillDateDatePicker"
                      formControlName="incorpValidityTillDate">
               <mat-datepicker-toggle matSuffix [for]="incorpValidityTillDateDatePicker"></mat-datepicker-toggle>
               <mat-datepicker #incorpValidityTillDateDatePicker></mat-datepicker>

@@ -7,6 +7,7 @@ import {DatePipe} from '@angular/common';
 import {SettingsService} from 'app/settings/settings.service';
 import {AuthenticationService} from '../../../core/authentication/authentication.service';
 import {CentersService} from '../../../centers/centers.service';
+import * as moment from 'moment';
 
 
 /**
@@ -214,13 +215,13 @@ export class ClientGeneralStepComponent implements OnInit {
         delete generalDetails[key];
       }
     }
-    if (generalDetails.submittedOnDate) {
+    if (generalDetails.submittedOnDate && moment.isDate(generalDetails.submittedOnDate)) {
       generalDetails.submittedOnDate = this.datePipe.transform(generalDetails.submittedOnDate, dateFormat);
     }
-    if (generalDetails.activationDate) {
+    if (generalDetails.activationDate && moment.isDate(generalDetails.activationDate)) {
       generalDetails.activationDate = this.datePipe.transform(generalDetails.activationDate, dateFormat);
     }
-    if (generalDetails.dateOfBirth) {
+    if (generalDetails.dateOfBirth && moment.isDate(generalDetails.dateOfBirth)) {
       generalDetails.dateOfBirth = this.datePipe.transform(generalDetails.dateOfBirth, dateFormat);
     }
     //
