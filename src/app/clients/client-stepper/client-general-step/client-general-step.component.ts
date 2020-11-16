@@ -244,7 +244,14 @@ export class ClientGeneralStepComponent implements OnInit {
   }
 
   get files() {
-    return {files: [this.clientFilesDataBefore, this.clientFilesDataAfter]};
+    const files = [];
+    if (this.clientFilesDataBefore) {
+      files.push(this.clientFilesDataBefore);
+    }
+    if (this.clientFilesDataAfter) {
+      files.push(this.clientFilesDataAfter);
+    }
+    return {files: files};
   }
 
   clickCancel() {

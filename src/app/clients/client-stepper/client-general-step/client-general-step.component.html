@@ -123,7 +123,7 @@
 
           <div fxFlex="48%" fxLayout="column"  class="custom-files-input">
             <mat-label
-              for="file">CMND mặt trước</mat-label>
+              for="file">CMND mặt trước <span style="color: red;">*</span></mat-label>
             <input
               placeholder="CMND mặt trước"
               type="file"
@@ -137,7 +137,7 @@
           </div>
           <div fxFlex="48%" fxLayout="column" class="custom-files-input">
             <mat-label
-              for="file">CMND mặt sau</mat-label>
+              for="file">CMND mặt sau <span style="color: red;">*</span></mat-label>
             <input
               placeholder="CMND mặt sau"
               type="file"
@@ -274,7 +274,9 @@
       <fa-icon icon="arrow-left"></fa-icon>&nbsp;&nbsp;
       {{'Client_Component.ClientStepper.buttonPrevious' |translate}}
     </button>
-    <button mat-raised-button matStepperNext>
+    <button mat-raised-button
+            [disabled]="!createClientForm.valid || !clientFilesDataAfter || !clientFilesDataBefore"
+            matStepperNext>
       {{'Client_Component.ClientStepper.buttonNext' |translate}}&nbsp;&nbsp;
       <fa-icon icon="arrow-right"></fa-icon>
     </button>

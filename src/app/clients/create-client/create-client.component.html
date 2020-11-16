@@ -52,7 +52,7 @@
 
 
 
-    <mat-step *ngIf="clientGeneralForm.valid" completed>
+    <mat-step *ngIf="checkFormInvalid" completed>
 
       <ng-template matStepLabel>{{'Client_Component.ClientStepper.labelPreview'| translate}}</ng-template>
 

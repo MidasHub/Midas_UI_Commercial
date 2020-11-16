@@ -90,7 +90,9 @@ export class CreateClientComponent {
       ...this.clientAddressStep.address
     };
   }
-
+  get checkFormInvalid() {
+    return this.clientGeneralStep.createClientForm.valid && this.clientGeneralStep.files?.files?.length === 2;
+  }
 
   resizeImage(file: File, maxWidth: number, maxHeight: number): Promise<File> {
     return new Promise((resolve, reject) => {
