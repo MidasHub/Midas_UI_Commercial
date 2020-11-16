@@ -27,7 +27,7 @@
             </mat-select>
           </mat-form-field>
 
-          <mat-form-field  *ngIf="!isTeller" fxFlex="48%">
+          <mat-form-field *ngIf="!isTeller" fxFlex="48%">
             <mat-label>{{'Client_Component.ClientStepper.GeneralStep.labelLegalForm' |translate}}</mat-label>
             <mat-select disabled formControlName="legalFormId">
               <mat-option *ngFor="let legalForm of legalFormOptions" [value]="legalForm.id">
@@ -35,7 +35,8 @@
               </mat-option>
             </mat-select>
           </mat-form-field>
-          <mat-checkbox *ngIf="createClientForm.value.legalFormId === 1" [disabled]="!isTeller" checked="false" fxFlex="48%" labelPosition="before"
+          <mat-checkbox *ngIf="createClientForm.value.legalFormId === 1" [disabled]="!isTeller" checked="false"
+                        fxFlex="48%" labelPosition="before"
                         formControlName="isStaff" class="margin-v">
             {{'Client_Component.ClientStepper.GeneralStep.checkboxIsStaff' |translate}}
           </mat-checkbox>
@@ -45,7 +46,8 @@
 
     <mat-card class="card-custom" fxFlex="96%">
       <mat-card-header>
-        <mat-card-title><span class="material-icons">perm_contact_calendar</span>&nbsp; Thông tin cơ bản:</mat-card-title>
+        <mat-card-title><span class="material-icons">perm_contact_calendar</span>&nbsp; Thông tin cơ bản:
+        </mat-card-title>
       </mat-card-header>
       <mat-card-content>
         <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column" fxFlex="96%">
@@ -105,7 +107,7 @@
             </mat-select>
           </mat-form-field>
 
-          <mat-form-field  fxFlex="48%">
+          <mat-form-field fxFlex="48%">
             <mat-label>{{('Client_Component.ClientStepper.GeneralStep.labelSelectDocumentTypes' |translate) }}</mat-label>
             <mat-select formControlName="documentTypeId">
               <mat-option *ngFor="let document of documentTypes" [value]="document.id">
@@ -119,23 +121,34 @@
             <input matInput required formControlName="externalId">
           </mat-form-field>
 
-          <div fxFlex="48%" class="custom-files-input">
-            <mat-label for="file">{{('Client_Component.ClientStepper.GeneralStep.labelInputFileDocument'|translate)}}</mat-label>
+          <div fxFlex="48%" fxLayout="column"  class="custom-files-input">
+            <mat-label
+              for="file">CMND mặt trước</mat-label>
             <input
-              placeholder="CMND hai mat"
+              placeholder="CMND mặt trước"
               type="file"
-              multiple
               required
               accept="image/*"
-              (change)="fileChange($event)"
+              (change)="fileChangeBefore($event)"
             >
-          </div>
-          <div *ngIf="createClientForm.value.legalFormId === 1" fxLayout="row wrap" fxFlex="96%">
-            <div fxFlex="48%" *ngFor="let file of clientFilesData">
-              <img src="{{file.path}}" width="95%" height="300"/>
+            <div *ngIf="clientFilesDataBefore">
+              <img src="{{clientFilesDataBefore.path}}" width="95%" height="300"/>
             </div>
           </div>
-
+          <div fxFlex="48%" fxLayout="column" class="custom-files-input">
+            <mat-label
+              for="file">CMND mặt sau</mat-label>
+            <input
+              placeholder="CMND mặt sau"
+              type="file"
+              required
+              accept="image/*"
+              (change)="fileChangeAfter($event)"
+            >
+            <div *ngIf="clientFilesDataAfter">
+              <img src="{{clientFilesDataAfter.path}}" width="95%" height="300"/>
+            </div>
+          </div>
         </div>
       </mat-card-content>
     </mat-card>
@@ -170,7 +183,7 @@
           </mat-form-field>
           <mat-form-field fxFlex="96%">
             <mat-label>{{'Client_Component.ClientStepper.GeneralStep.labelClientSubmittedDate' |translate}}</mat-label>
-            <input matInput  [matDatepicker]="submittedOnDatePicker"
+            <input matInput [matDatepicker]="submittedOnDatePicker"
                    formControlName="submittedOnDate" readonly>
             <mat-datepicker-toggle matSuffix [for]="submittedOnDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #submittedOnDatePicker></mat-datepicker>
@@ -187,13 +200,14 @@
           <mat-checkbox disabled fxFlex="48%" labelPosition="before" formControlName="active" class="margin-v">
             {{'Client_Component.ClientStepper.GeneralStep.checkboxIsActivate' |translate}}
           </mat-checkbox>
-          <mat-form-field  fxFlex="48%">
+          <mat-form-field fxFlex="48%">
             <mat-label>{{'Client_Component.ClientStepper.GeneralStep.labelClientActivatedDate' |translate}}</mat-label>
             <input matInput [matDatepicker]="activatedOnDatePicker"
                    formControlName="activationDate" readonly>
             <mat-datepicker-toggle matSuffix [for]="activatedOnDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #activatedOnDatePicker></mat-datepicker>
-            <mat-error [innerHTML]="'Client_Component.ClientStepper.GeneralStep.labelClientActivatedDateMsg' |translate"></mat-error>
+            <mat-error
+              [innerHTML]="'Client_Component.ClientStepper.GeneralStep.labelClientActivatedDateMsg' |translate"></mat-error>
           </mat-form-field>
           <mat-checkbox disabled fxFlex="48%" labelPosition="before" formControlName="addSavings" class="margin-v">
             {{'Client_Component.ClientStepper.GeneralStep.checkboxOpenAccount' |translate}}
@@ -212,8 +226,8 @@
                formGroupName="clientNonPersonDetails" *ngIf="createClientForm.contains('clientNonPersonDetails')">
             <mat-form-field fxFlex="48%">
               <mat-label>{{'Client_Component.ClientStepper.GeneralStep.labelCorpValidDate' |translate}}</mat-label>
-              <input  readonly matInput
-                      [min]="minDate" [max]="maxDate" [matDatepicker]="incorpValidityTillDateDatePicker"
+              <input readonly matInput
+                     [min]="minDate" [max]="maxDate" [matDatepicker]="incorpValidityTillDateDatePicker"
                      formControlName="incorpValidityTillDate">
               <mat-datepicker-toggle matSuffix [for]="incorpValidityTillDateDatePicker"></mat-datepicker-toggle>
               <mat-datepicker #incorpValidityTillDateDatePicker></mat-datepicker>

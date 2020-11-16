@@ -61,8 +61,8 @@ export class ClientGeneralStepComponent implements OnInit {
   /** Documents type */
   documentTypes: any;
 
-  clientFilesData: any[] = [];
-
+  clientFilesDataBefore: any;
+  clientFilesDataAfter: any;
   isTeller = true;
 
   /**
@@ -181,14 +181,19 @@ export class ClientGeneralStepComponent implements OnInit {
     // this.createClientForm.get('legalFormId').patchValue(1);
   }
 
-  fileChange(event: any): Promise<any> {
+  fileChangeBefore(event: any): Promise<any> {
     return new Promise<any>(async resolve => {
-      const files = [];
-      for (const file of event.target.files) {
-        file.path = await this.readURL(file);
-        files.push(file);
-      }
-      this.clientFilesData = files;
+      const file = event.target.files[0];
+      file.path = await this.readURL(file);
+      this.clientFilesDataBefore = file;
+    });
+  }
+
+  fileChangeAfter(event: any): Promise<any> {
+    return new Promise<any>(async resolve => {
+      const file = event.target.files[0];
+      file.path = await this.readURL(file);
+      this.clientFilesDataAfter = file;
     });
   }
 
@@ -239,7 +244,7 @@ export class ClientGeneralStepComponent implements OnInit {
   }
 
   get files() {
-    return {files: this.clientFilesData};
+    return {files: [this.clientFilesDataBefore, this.clientFilesDataAfter]};
   }
 
   clickCancel() {
