@@ -154,7 +154,7 @@ applyFilter(filterValue: string) {
     };
 
     this.terminalsService.save(data).subscribe((response: any) => {
-        if(response.statusCode == '404' ){
+        if(response.statusCode != 'success' ){
           const openErrorLogDialog = this.dialog.open(ErrorDialogComponent, {
             width: '600px',
             data: response.error

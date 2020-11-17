@@ -13,7 +13,7 @@
                 <input matInput required readonly formControlName="terminalId">
                 <mat-error *ngIf="editTerminalForm.controls.terminalId.hasError('required')"
                   [innerHTML]="'Terminal_Component.FormTerminal.labelRequired' |translate"></mat-error>
-                  <mat-error *ngIf="createTerminalForm.controls.terminalId.hasError('pattern')"
+                  <mat-error *ngIf="editTerminalForm.controls.terminalId.hasError('pattern')"
                   [innerHTML]="'Terminal_Component.FormTerminal.labelTerminalNameMsgPattern' |translate"></mat-error>
             </mat-form-field>
     
