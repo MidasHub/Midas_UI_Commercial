@@ -34,7 +34,6 @@ export class TransactionService {
   }
 
 
-
   submitTransactionCash(
     transactionInfo: any
   ): Observable<any> {
@@ -158,11 +157,11 @@ export class TransactionService {
     return this.http.post(`${this.GatewayApiUrlPrefix}/transaction/get_list_pos_transaction`, httpParams);
   }
 
-  getListRollTermTransactionOpenByUserId(payload: { fromDate: string, toDate: string, clientName: string , cardNumber: string , limit: number, offset: number }): Observable<any> {
+  getListRollTermTransactionOpenByUserId(payload: { fromDate: string, toDate: string, clientName: string, cardNumber: string, limit: number, offset: number }): Observable<any> {
 
     const httpParams = new HttpParams()
-      .set('cardNumber', !payload.cardNumber ? '%%': payload.cardNumber)
-      .set('customerName', !payload.clientName ? '%%': payload.clientName)
+      .set('cardNumber', !payload.cardNumber ? '%%' : payload.cardNumber)
+      .set('customerName', !payload.clientName ? '%%' : payload.clientName)
       .set('agencyName', '%%')
       .set('limit', String(payload.limit))
       .set('offset', String(payload.offset))
@@ -174,11 +173,11 @@ export class TransactionService {
     return this.http.post(`${this.GatewayApiUrlPrefix}/transaction/get_list_pos_transaction_rollterm`, httpParams);
   }
 
-  getListCardOnDueDayByUserId(payload: { fromDate: string, toDate: string, clientName: string , cardNumber: string , limit: number, offset: number }): Observable<any> {
+  getListCardOnDueDayByUserId(payload: { fromDate: string, toDate: string, clientName: string, cardNumber: string, limit: number, offset: number }): Observable<any> {
 
     const httpParams = new HttpParams()
-      .set('cardNumber', !payload.cardNumber ? '%%': payload.cardNumber)
-      .set('displayName', !payload.clientName ? '%%': payload.clientName)
+      .set('cardNumber', !payload.cardNumber ? '%%' : payload.cardNumber)
+      .set('displayName', !payload.clientName ? '%%' : payload.clientName)
       .set('agencyName', '%%')
       .set('limit', String(payload.limit))
       .set('offset', String(payload.offset))
@@ -255,7 +254,7 @@ export class TransactionService {
     const httpParams = new HttpParams()
       .set('identifyId', identifierId)
       .set('clientId', clientId)
-      .set('transactionId', !transactionId ? '':transactionId)
+      .set('transactionId', !transactionId ? '' : transactionId)
       .set('officeId', this.accessToken.officeId)
       .set('createdBy', this.accessToken.userId)
       .set('accessToken', this.accessToken.base64EncodedAuthenticationKey);
@@ -380,9 +379,30 @@ export class TransactionService {
         a.click();
       }
     };
+    // tslint:disable-next-line:max-line-length
     const fileUrl = `${this.environment.GatewayApiUrl}${this.environment.GatewayApiUrlPrefix}/export/pre_export_transaction?ext5=ALL&typeExport=transaction&accessToken=${this.accessToken.base64EncodedAuthenticationKey}&createdBy=${this.accessToken.userId}&${query}`;
     xhttp.open('GET', fileUrl);
     xhttp.responseType = 'blob';
     xhttp.send();
+  }
+
+  getFeePaidTransactions(fromDate: string, toDate: string): Observable<any> {
+    const {permissions, officeId} = this.accessToken;
+    const permit = permissions.includes('TXN_CREATE');
+    const httpParams = new HttpParams()
+      .set('fromDate', fromDate)
+      .set('toDate', toDate)
+      .set('permission', String(!permit))
+      .set('officeId', officeId)
+      .set('createdBy', this.accessToken.userId)
+      .set('accessToken', this.accessToken.base64EncodedAuthenticationKey);
+    return this.http.post<any>(`${this.GatewayApiUrlPrefix}/transaction/get_list_fee_transaction_on_range_date`, httpParams);
+  }
+
+  getPaymentTypes(): Observable<any> {
+    const httpParams = new HttpParams()
+      .set('createdBy', this.accessToken.userId)
+      .set('accessToken', this.accessToken.base64EncodedAuthenticationKey);
+    return this.http.post<any>(`${this.GatewayApiUrlPrefix}/common/get_list_payment`, httpParams);
   }
 }

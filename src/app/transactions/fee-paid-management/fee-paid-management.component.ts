@@ -1,34 +1,30 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {TransactionDatasource} from '../transaction.datasource';
+import {animate, state, style, transition, trigger} from '@angular/animations';
 import {FormBuilder, FormGroup} from '@angular/forms';
-import {TransactionService} from '../transaction.service';
 import {MatPaginator} from '@angular/material/paginator';
+import {MatSort} from '@angular/material/sort';
+import {TransactionService} from '../transaction.service';
 import {DatePipe} from '@angular/common';
 import {SettingsService} from '../../settings/settings.service';
 import {AuthenticationService} from '../../core/authentication/authentication.service';
-import * as moment from 'moment';
-import {MatSort} from '@angular/material/sort';
-import {merge} from 'rxjs';
-import {tap} from 'rxjs/operators';
-import {animate, state, style, transition, trigger} from '@angular/animations';
 import {SavingsService} from '../../savings/savings.service';
 import {SystemService} from '../../system/system.service';
 import {CentersService} from '../../centers/centers.service';
 import {AlertService} from '../../core/alert/alert.service';
 import {MatDialog} from '@angular/material/dialog';
-import {UploadDocumentDialogComponent} from '../../clients/clients-view/custom-dialogs/upload-document-dialog/upload-document-dialog.component';
+import {ClientsService} from '../../clients/clients.service';
+import {merge} from 'rxjs';
+import {tap} from 'rxjs/operators';
 import {ConfirmDialogComponent} from '../dialog/coifrm-dialog/confirm-dialog.component';
 import {UploadBillComponent} from '../dialog/upload-bill/upload-bill.component';
-import {ClientsService} from '../../clients/clients.service';
 import {FormfieldBase} from '../../shared/form-dialog/formfield/model/formfield-base';
-import {SelectBase} from '../../shared/form-dialog/formfield/model/select-base';
-import {FormDialogComponent} from '../../shared/form-dialog/form-dialog.component';
 import {InputBase} from '../../shared/form-dialog/formfield/model/input-base';
+import {FormDialogComponent} from '../../shared/form-dialog/form-dialog.component';
 
 @Component({
-  selector: 'midas-manage-transaction',
-  templateUrl: './manage-transaction.component.html',
-  styleUrls: ['./manage-transaction.component.scss'],
+  selector: 'midas-fee-paid-management',
+  templateUrl: './fee-paid-management.component.html',
+  styleUrls: ['./fee-paid-management.component.scss'],
   animations: [
     trigger('detailExpand', [
       state('collapsed', style({height: '0px', minHeight: '0'})),
@@ -37,11 +33,13 @@ import {InputBase} from '../../shared/form-dialog/formfield/model/input-base';
     ]),
   ],
 })
-export class ManageTransactionComponent implements OnInit {
+export class FeePaidManagementComponent implements OnInit {
+
   expandedElement: any;
-  displayedColumns: string[] = ['productId', 'txnDate', 'trnRefNo', 'status',
-    'officeName', 'agencyName', 'panHolderName', 'terminalAmount',
-    'feeAmount', 'cogsAmount', 'pnlAmount', 'actions'
+  displayedColumns: string[] = ['txnDate',
+    'officeName', 'txnType', 'agencyName', 'txnCode', 'batchNo',
+    'traceNo', 'customerName', 'txnAmount', 'feePaid', 'feeRemain',
+    'actions'
   ];
   formDate: FormGroup;
   formFilter: FormGroup;
@@ -69,37 +67,55 @@ export class ManageTransactionComponent implements OnInit {
       value: 'CA02'
     }
   ];
+
+
+  paidPaymentType: any[] = [];
+
+  paymentTypes: any[] = [
+    {
+      label: 'ALL',
+      value: ''
+    },
+    {
+      label: 'Thu',
+      value: 'IN'
+    },
+    {
+      label: 'Chi',
+      value: 'OUT'
+    }
+  ];
   statusOption: any[] = [
     {
       label: 'ALL',
       value: ''
     },
     {
-      label: 'Thành công',
-      value: 'C'
+      label: 'Chưa xong',
+      value: 'A'
     },
     {
-      label: 'Chờ đợi',
-      value: 'P'
+      label: 'Đã xong',
+      value: 'C'
     },
     // {
     //   label: 'F',
     //   value: 'F'
     // },
     {
-      label: 'Hủy',
+      label: 'Đã hủy',
       value: 'V'
     }
   ];
   partners: any[];
   staffs: any[];
   offices: any[];
-  totalTerminalAmount = 0;
-  totalFeeAmount = 0;
-  totalCogsAmount = 0;
-  totalPnlAmount = 0;
+  totalFeeSum = 0;
+  totalFeePaid = 0;
+  totalFeeRemain = 0;
   panelOpenState = false;
   filterData: any[];
+  groupData: any;
   today = new Date();
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   @ViewChild(MatSort, {static: true}) sort: MatSort;
@@ -121,30 +137,32 @@ export class ManageTransactionComponent implements OnInit {
       'toDate': [new Date()]
     });
     this.formFilter = this.formBuilder.group({
-      'productId': [''],
       'status': [''],
-      'partnerCode': [''],
-      'officeId': [''],
-      'panHolderName': [''],
-      'terminalId': [''],
+      'txnType': [''],
+      'officeName': [''],
+      'agencyName': [''],
+      'customerName': [''],
       'traceNo': [''],
       'batchNo': [''],
-      'terminalAmount': [''],
-      'staffId': [''],
-      'trnRefNo': [''],
-      'RetailsChoose': [true],
-      'wholesaleChoose': [true],
-      'agencyName': ['']
+      'txnPaymentType': [''],
+      'createdBy': ['']
     });
-    this.formFilter.get('officeId').valueChanges.subscribe((value => {
-      // const office = this.offices.find(v => v.name === value);
-      this.centersService.getStaff(value).subscribe((staffs: any) => {
-        this.staffs = staffs?.staffOptions;
-      });
-    }));
+    // this.formFilter.get('officeId').valueChanges.subscribe((value => {
+    //   // const office = this.offices.find(v => v.name === value);
+    // }));
     this.formFilter.valueChanges.subscribe(value => {
       this.filterTransaction();
     });
+  }
+
+  colorOfType(type: string) {
+    if (type === 'IN') {
+      return 'color: #007700;';
+    }
+    if (type === 'OUT') {
+      return 'color: #660000;';
+    }
+    return '';
   }
 
   ngOnInit(): void {
@@ -155,8 +173,26 @@ export class ManageTransactionComponent implements OnInit {
       // @ts-ignore
       this.partners.unshift({code: '', desc: 'ALL'});
     });
-    this.systemService.getOffices().subscribe(offices => {
-      this.offices = offices;
+    // this.systemService.getOffices().subscribe(offices => {
+    //   this.offices = offices;
+    //   this.offices.unshift({
+    //
+    //   })
+    // });
+    this.transactionService.getPaymentTypes().subscribe(result => {
+      console.log(result); // listPayment
+      this.paidPaymentType = result?.result?.listPayment;
+      this.paidPaymentType.unshift({
+        code: '',
+        desc: 'ALL'
+      });
+    });
+    this.centersService.getStaff(this.currentUser.officeId).subscribe((staffs: any) => {
+      this.staffs = staffs?.staffOptions;
+      this.staffs.unshift({
+        id: '',
+        displayName: 'ALL'
+      });
     });
     this.getTransaction();
   }
@@ -181,71 +217,93 @@ export class ManageTransactionComponent implements OnInit {
     if (toDate) {
       toDate = this.datePipe.transform(toDate, dateFormat);
     }
-    this.transactionService.getTransaction({fromDate, toDate}).subscribe(result => {
+    this.transactionService.getFeePaidTransactions(fromDate, toDate).subscribe(result => {
       const {permissions} = this.currentUser;
-      this.transactionsData = [];
       const permit_userTeller = permissions.includes('TXNOFFICE_CREATE');
       if (!permit_userTeller) {
-        result?.result?.listPosTransaction?.map((value: any) => {
+        this.transactionsData = [];
+        result?.result?.listFeeTransaction?.map((value: any) => {
           if (value?.createdBy === this.currentUser.userId
             || value?.staffId === this.currentUser.staffId) {
             this.transactionsData.push(value);
           }
         });
       } else {
-        this.transactionsData = result?.result?.listPosTransaction;
+        this.transactionsData = result?.result?.listFeeTransaction;
       }
-      this.totalTerminalAmount = 0;
-      this.totalFeeAmount = 0;
-      this.totalCogsAmount = 0;
-      this.totalPnlAmount = 0;
-      this.totalTerminalAmount = this.transactionsData.reduce((total: any, num: any) => {
-        return total + Math.round(num?.terminalAmount);
+      this.transactionsData.map(v => {
+        if (!v.agencyId) {
+          v.agencyId = '#';
+        }
+        v.DEAmount = 0;
+        if (v.txnType === 'BATCH') {
+          v.customerName = v.txnCode;
+          if (v.txnPaymentType === 'OUT') {
+            v.DEAmount = v.txnAmount - v.feeSum;
+          }
+        }
+      });
+      this.totalFeeSum = 0;
+      this.totalFeePaid = 0;
+      this.totalFeeRemain = 0;
+      this.totalFeeSum = this.transactionsData.reduce((total: any, num: any) => {
+        return total + Math.round(num?.feeSum);
       }, 0);
-      this.totalFeeAmount = this.transactionsData.reduce((total: any, num: any) => {
-        return total + Math.round(num?.feeAmount);
+      this.totalFeePaid = this.transactionsData.reduce((total: any, num: any) => {
+        return total + Math.round(num?.feePaid);
       }, 0);
-      this.totalCogsAmount = this.transactionsData.reduce((total: any, num: any) => {
-        return total + Math.round(num?.cogsAmount);
-      }, 0);
-      this.totalPnlAmount = this.transactionsData.reduce((total: any, num: any) => {
-        return total + Math.round(num?.pnlAmount);
+      this.totalFeeRemain = this.transactionsData.reduce((total: any, num: any) => {
+        return total + Math.round(num?.feeRemain);
       }, 0);
       this.filterTransaction();
     });
+  }
+
+  checkPermissions(key: string) {
+    const {permissions} = this.currentUser;
+    return permissions.includes(key);
   }
 
   filterTransaction() {
     const limit = this.paginator.pageSize;
     const offset = this.paginator.pageIndex * limit;
     const form = this.formFilter.value;
-    const wholesaleChoose = form.wholesaleChoose;
-    const RetailsChoose = form.RetailsChoose;
     const keys = Object.keys(form);
-    console.log(form, this.transactionsData, wholesaleChoose, RetailsChoose);
     this.filterData = this.transactionsData.filter(v => {
       for (const key of keys) {
-        if (['wholesaleChoose', 'RetailsChoose'].indexOf(key) === -1) {
-          if (form[key]) {
-            if (!v[key]) {
-              return false;
-            }
-            if (!String(v[key]).includes(form[key])) {
-              return false;
-            }
+        if (form[key]) {
+          if (!v[key]) {
+            return false;
+          }
+          if (!String(v[key]).toLowerCase().includes(form[key].toLowerCase())) {
+            return false;
           }
         }
       }
-      const check_wholesaleChoose = wholesaleChoose ? v.type.startsWith('B') : false;
-      const check_RetailsChoose = RetailsChoose ? v.type === 'cash' || v.type === 'rollterm' : false;
-      if (!check_wholesaleChoose && !check_RetailsChoose) {
-        return false;
-      }
       return true;
     });
-    console.log(this.filterData);
-    this.dataSource = this.filterData.slice(offset, offset + limit);
-    console.log(this.dataSource);
+    // @ts-ignore
+    this.groupData = this.groupBy(this.filterData, pet => pet.txnCode);
+    console.log(this.groupData);
+    this.dataSource = Array.from(this.groupData.keys()).slice(offset, offset + limit);
+  }
+
+  getDataOfGroupTxnCode(code: string) {
+    return this.groupData?.get(code);
+  }
+
+  groupBy(list: any, keyGetter: any) {
+    const map = new Map();
+    list.forEach((item: any) => {
+      const key = keyGetter(item);
+      const collection = map.get(key);
+      if (!collection) {
+        map.set(key, [item]);
+      } else {
+        collection.push(item);
+      }
+    });
+    return map;
   }
 
   get fromDateAndToDate() {

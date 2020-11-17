@@ -19,6 +19,7 @@ import { DueDayCardTabComponent } from './rollTerm-schedule-transaction/due-day-
 import { RollTermScheduleDialogComponent } from './rollTerm-schedule-transaction/dialog/roll-term-schedule/roll-term-schedule-dialog.component';
 import { CreateRollTermScheduleDialogComponent } from './rollTerm-schedule-transaction/dialog/create-roll-term-schedule/create-roll-term-schedule-dialog.component';
 import { RollTermScheduleTabComponent } from './rollTerm-schedule-transaction/roll-term-schedule-tab/roll-term-schedule-tab.component';
+import { FeePaidManagementComponent } from './fee-paid-management/fee-paid-management.component';
 
 /**
  * Profile Module
@@ -35,7 +36,8 @@ import { RollTermScheduleTabComponent } from './rollTerm-schedule-transaction/ro
     DueDayCardTabComponent,
     RollTermScheduleDialogComponent,
     CreateRollTermScheduleDialogComponent,
-    RollTermScheduleTabComponent
+    RollTermScheduleTabComponent,
+    FeePaidManagementComponent
   ],
 
   imports: [

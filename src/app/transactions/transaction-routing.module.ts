@@ -13,6 +13,7 @@ import {CreateTransactionComponent} from './create-transaction/create-transactio
 import {ManageTransactionComponent} from './manage-transaction/manage-transaction.component';
 import { ViewTransactionComponent } from './view-transaction/view-transaction.component';
 import { RollTermScheduleTransactionComponent } from './rollTerm-schedule-transaction/rollTerm-schedule-transaction.component';
+import {FeePaidManagementComponent} from './fee-paid-management/fee-paid-management.component';
 
 /** Transaction Routes */
 const routes: Routes = [
@@ -41,6 +42,11 @@ const routes: Routes = [
           component:  RollTermScheduleTransactionComponent,
           data: { title: extract('Lịch trình đáo hạn thẻ'), breadcrumb: 'Lịch trình đáo hạn thẻ' }
         },
+        {
+          path: 'fee-paid-management',
+          component:  FeePaidManagementComponent,
+          data: { title: extract('Danh sách xử lý giao dịch'), breadcrumb: 'Danh sách xử lý giao dịch' }
+        }
       ]
     }
   ])
