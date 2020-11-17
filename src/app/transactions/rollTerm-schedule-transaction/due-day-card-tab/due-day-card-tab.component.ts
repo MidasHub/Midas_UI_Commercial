@@ -1,45 +1,45 @@
-import { Component, OnInit, ViewChild } from "@angular/core";
-import { FormBuilder, FormGroup } from "@angular/forms";
-import { MatPaginator } from "@angular/material/paginator";
-import { DatePipe } from "@angular/common";
-import { MatSort } from "@angular/material/sort";
-import { merge } from "rxjs";
-import { tap } from "rxjs/operators";
-import { animate, state, style, transition, trigger } from "@angular/animations";
-import { MatDialog } from "@angular/material/dialog";
-import { TransactionService } from "app/transactions/transaction.service";
-import { SettingsService } from "app/settings/settings.service";
-import { AuthenticationService } from "app/core/authentication/authentication.service";
-import { CentersService } from "app/centers/centers.service";
-import { AlertService } from "app/core/alert/alert.service";
-import { RollTermScheduleDialogComponent } from "../dialog/roll-term-schedule/roll-term-schedule-dialog.component";
-import { CreateRollTermScheduleDialogComponent } from "../dialog/create-roll-term-schedule/create-roll-term-schedule-dialog.component";
-import { MatTableDataSource } from "@angular/material/table";
+import {Component, OnInit, ViewChild} from '@angular/core';
+import {FormBuilder, FormGroup} from '@angular/forms';
+import {MatPaginator} from '@angular/material/paginator';
+import {DatePipe} from '@angular/common';
+import {MatSort} from '@angular/material/sort';
+import {merge} from 'rxjs';
+import {tap} from 'rxjs/operators';
+import {animate, state, style, transition, trigger} from '@angular/animations';
+import {MatDialog} from '@angular/material/dialog';
+import {TransactionService} from 'app/transactions/transaction.service';
+import {SettingsService} from 'app/settings/settings.service';
+import {AuthenticationService} from 'app/core/authentication/authentication.service';
+import {CentersService} from 'app/centers/centers.service';
+import {AlertService} from 'app/core/alert/alert.service';
+import {RollTermScheduleDialogComponent} from '../dialog/roll-term-schedule/roll-term-schedule-dialog.component';
+import {CreateRollTermScheduleDialogComponent} from '../dialog/create-roll-term-schedule/create-roll-term-schedule-dialog.component';
+import {MatTableDataSource} from '@angular/material/table';
 
 @Component({
-  selector: "midas-due-day-card-transaction",
-  templateUrl: "./due-day-card-tab.component.html",
-  styleUrls: ["./due-day-card-tab.component.scss"],
+  selector: 'midas-due-day-card-transaction',
+  templateUrl: './due-day-card-tab.component.html',
+  styleUrls: ['./due-day-card-tab.component.scss'],
   animations: [
-    trigger("detailExpand", [
-      state("collapsed", style({ height: "0px", minHeight: "0" })),
-      state("expanded", style({ height: "*" })),
-      transition("expanded <=> collapsed", animate("225ms cubic-bezier(0.4, 0.0, 0.2, 1)")),
+    trigger('detailExpand', [
+      state('collapsed', style({height: '0px', minHeight: '0'})),
+      state('expanded', style({height: '*'})),
+      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
     ]),
   ],
 })
 export class DueDayCardTabComponent implements OnInit {
   expandedElement: any;
   displayedColumns: string[] = [
-    "panHolderName",
-    "phone",
-    "cardNumber",
-    "bankName",
-    "isHold",
-    "expiredDate",
-    "dueDay",
-    "status",
-    "actions",
+    'panHolderName',
+    'phone',
+    'cardNumber',
+    'bankName',
+    'isHold',
+    'expiredDate',
+    'dueDay',
+    'status',
+    'actions',
   ];
   isLoading: boolean = false;
   formDate: FormGroup;
@@ -50,20 +50,20 @@ export class DueDayCardTabComponent implements OnInit {
 
   statusOption: any[] = [
     {
-      label: "Khởi tạo",
-      value: "A",
+      label: 'Khởi tạo',
+      value: 'A',
     },
     {
-      label: "Chờ phí",
-      value: "P",
+      label: 'Chờ phí',
+      value: 'P',
     },
     {
-      label: "Từ chối",
-      value: "R",
+      label: 'Từ chối',
+      value: 'R',
     },
     {
-      label: "Đã thu phí",
-      value: "C",
+      label: 'Đã thu phí',
+      value: 'C',
     },
   ];
   partners: any[];
@@ -76,8 +76,8 @@ export class DueDayCardTabComponent implements OnInit {
   panelOpenState = false;
   filterData: any[];
   today = new Date();
-  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
-  @ViewChild(MatSort, { static: true }) sort: MatSort;
+  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
+  @ViewChild(MatSort, {static: true}) sort: MatSort;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -94,22 +94,22 @@ export class DueDayCardTabComponent implements OnInit {
       toDate: [new Date()],
     });
     this.formFilter = this.formBuilder.group({
-      productId: [""],
-      status: [""],
-      partnerCode: [""],
-      officeId: [""],
-      panHolderName: [""],
-      terminalId: [""],
-      traceNo: [""],
-      batchNo: [""],
-      terminalAmount: [""],
-      staffId: [""],
-      trnRefNo: [""],
+      productId: [''],
+      status: [''],
+      partnerCode: [''],
+      officeId: [''],
+      panHolderName: [''],
+      terminalId: [''],
+      traceNo: [''],
+      batchNo: [''],
+      terminalAmount: [''],
+      staffId: [''],
+      trnRefNo: [''],
       RetailsChoose: [true],
       wholesaleChoose: [true],
-      agencyName: [""],
+      agencyName: [''],
     });
-    this.formFilter.get("officeId").valueChanges.subscribe((value) => {
+    this.formFilter.get('officeId').valueChanges.subscribe((value) => {
       // const office = this.offices.find(v => v.name === value);
       this.centersService.getStaff(value).subscribe((staffs: any) => {
         this.staffs = staffs?.staffOptions;
@@ -141,12 +141,12 @@ export class DueDayCardTabComponent implements OnInit {
   getRollTermScheduleAndCardDueDayInfo() {
 
     const dateFormat = this.settingsService.dateFormat;
-    let fromDate = this.formDate.get("fromDate").value;
-    let toDate = this.formDate.get("toDate").value;
+    let fromDate = this.formDate.get('fromDate').value;
+    let toDate = this.formDate.get('toDate').value;
     let clientName = null;
     let cardNumber = null;
     const limit = this.paginator.pageSize ? this.paginator.pageSize : 10;
-    const offset = this.paginator.pageIndex * limit ;
+    const offset = this.paginator.pageIndex * limit;
     if (fromDate) {
       fromDate = this.datePipe.transform(fromDate, dateFormat);
     }
@@ -156,7 +156,7 @@ export class DueDayCardTabComponent implements OnInit {
     this.dataSource = [];
     this.isLoading = true;
     this.transactionService
-      .getListCardOnDueDayByUserId({ fromDate, toDate, clientName, cardNumber, limit, offset })
+      .getListCardOnDueDayByUserId({fromDate, toDate, clientName, cardNumber, limit, offset})
       .subscribe((result) => {
         this.isLoading = false;
         this.transactionsData = result?.result;
@@ -165,8 +165,8 @@ export class DueDayCardTabComponent implements OnInit {
   }
 
   get fromDateAndToDate() {
-    const fromDate = this.formDate.get("fromDate").value;
-    const toDate = this.formDate.get("toDate").value;
+    const fromDate = this.formDate.get('fromDate').value;
+    const toDate = this.formDate.get('toDate').value;
     if (fromDate && toDate) {
       return true;
     }
@@ -174,18 +174,18 @@ export class DueDayCardTabComponent implements OnInit {
   }
 
   menuOpened() {
-    console.log("menuOpened");
+    console.log('menuOpened');
   }
 
   menuClosed() {
-    console.log("menuClosed");
+    console.log('menuClosed');
   }
 
   showRollTermScheduleDialog(rollTermId: string) {
     const data = {
       rollTermId: rollTermId,
     };
-    const dialog = this.dialog.open(RollTermScheduleDialogComponent, { height: "auto", width: "80%", data });
+    const dialog = this.dialog.open(RollTermScheduleDialogComponent, {height: 'auto', width: '80%', data});
     dialog.afterClosed().subscribe((response: any) => {
       console.log(response);
       if (response.data) {
@@ -202,7 +202,7 @@ export class DueDayCardTabComponent implements OnInit {
       panNumber: panNumber,
       identifierId: identifierId,
     };
-    const dialog = this.dialog.open(CreateRollTermScheduleDialogComponent, { height: "auto", width: "80%", data });
+    const dialog = this.dialog.open(CreateRollTermScheduleDialogComponent, {height: 'auto', width: '80%', data});
     dialog.afterClosed().subscribe((response: any) => {
       console.log(response);
       if (response.data) {
