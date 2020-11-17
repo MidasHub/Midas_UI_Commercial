@@ -1,0 +1,29 @@
+.container {
+  max-width: 120rem;
+  th.mat-header-cell {
+    padding: 0px 20px ;
+    text-align: center;
+  }
+  input{
+    color: blue;
+    font-size: medium;
+  }
+  td.mat-cell, td.mat-footer-cell {
+    padding: 0px ;
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
+    text-align: center;
+  }
+  .content {
+    div {
+      margin: 0.2rem 0;
+      word-wrap: break-word;
+
+      &.header {
+        font-weight: 500;
+      }
+    }
+  }
+  .center { text-align: center }
+  .left { text-align: left }
+}

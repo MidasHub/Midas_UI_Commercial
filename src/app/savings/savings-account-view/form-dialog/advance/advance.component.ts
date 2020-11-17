@@ -1,11 +1,7 @@
-import {Component, Inject, OnInit, ViewChild} from '@angular/core';
+import {Component, Inject, OnInit} from '@angular/core';
 import {ClientsService} from '../../../../clients/clients.service';
-import {FormBuilder, FormControl, FormGroup} from '@angular/forms';
+import {FormBuilder, FormGroup} from '@angular/forms';
 import {MAT_DIALOG_DATA} from '@angular/material/dialog';
-import {Observable, ReplaySubject, Subject} from 'rxjs';
-import {map, startWith, switchMap, take, takeUntil} from 'rxjs/operators';
-import {MatSelect} from '@angular/material/select';
-import {ClientsDataSource} from '../../../../clients/clients.datasource';
 
 @Component({
   // tslint:disable-next-line:component-selector

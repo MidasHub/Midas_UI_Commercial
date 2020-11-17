@@ -11,6 +11,8 @@ import { extract } from '../core/i18n/i18n.service';
 /** Custom Components */
 import {CreateTransactionComponent} from './create-transaction/create-transaction.component';
 import {ManageTransactionComponent} from './manage-transaction/manage-transaction.component';
+import { ViewTransactionComponent } from './view-transaction/view-transaction.component';
+import { RollTermScheduleTransactionComponent } from './rollTerm-schedule-transaction/rollTerm-schedule-transaction.component';
 
 /** Transaction Routes */
 const routes: Routes = [
@@ -28,6 +30,16 @@ const routes: Routes = [
           path: 'create',
           component:  CreateTransactionComponent,
           data: { title: extract('Tạo giao dịch'), breadcrumb: 'Tạo giao dịch' }
+        },
+        {
+          path: 'view',
+          component:  ViewTransactionComponent,
+          data: { title: extract('Chi tiết'), breadcrumb: 'Chi tiết' }
+        },
+        {
+          path: 'rollTermSchedule',
+          component:  RollTermScheduleTransactionComponent,
+          data: { title: extract('Lịch trình đáo hạn thẻ'), breadcrumb: 'Lịch trình đáo hạn thẻ' }
         },
       ]
     }
