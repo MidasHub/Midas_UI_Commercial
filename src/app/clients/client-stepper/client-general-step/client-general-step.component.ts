@@ -7,6 +7,7 @@ import {DatePipe} from '@angular/common';
 import {SettingsService} from 'app/settings/settings.service';
 import {AuthenticationService} from '../../../core/authentication/authentication.service';
 import {CentersService} from '../../../centers/centers.service';
+import * as moment from 'moment';
 
 
 /**
@@ -60,9 +61,10 @@ export class ClientGeneralStepComponent implements OnInit {
   /** Documents type */
   documentTypes: any;
 
-  clientFilesData: any[] = [];
-
+  clientFilesDataBefore: any;
+  clientFilesDataAfter: any;
   isTeller = true;
+  isRelative = new FormControl();
 
   /**
    * @param {FormBuilder} formBuilder Form Builder
@@ -117,6 +119,11 @@ export class ClientGeneralStepComponent implements OnInit {
         this.staffOptions = staffs?.staffOptions;
       });
     });
+    // TODO: check MGM here
+  }
+
+  get getIsRelative() {
+    return this.isRelative.value;
   }
 
   /**
@@ -180,14 +187,19 @@ export class ClientGeneralStepComponent implements OnInit {
     // this.createClientForm.get('legalFormId').patchValue(1);
   }
 
-  fileChange(event: any): Promise<any> {
+  fileChangeBefore(event: any): Promise<any> {
     return new Promise<any>(async resolve => {
-      const files = [];
-      for (const file of event.target.files) {
-        file.path = await this.readURL(file);
-        files.push(file);
-      }
-      this.clientFilesData = files;
+      const file = event.target.files[0];
+      file.path = await this.readURL(file);
+      this.clientFilesDataBefore = file;
+    });
+  }
+
+  fileChangeAfter(event: any): Promise<any> {
+    return new Promise<any>(async resolve => {
+      const file = event.target.files[0];
+      file.path = await this.readURL(file);
+      this.clientFilesDataAfter = file;
     });
   }
 
@@ -214,13 +226,13 @@ export class ClientGeneralStepComponent implements OnInit {
         delete generalDetails[key];
       }
     }
-    if (generalDetails.submittedOnDate) {
+    if (generalDetails.submittedOnDate && moment.isDate(generalDetails.submittedOnDate)) {
       generalDetails.submittedOnDate = this.datePipe.transform(generalDetails.submittedOnDate, dateFormat);
     }
-    if (generalDetails.activationDate) {
+    if (generalDetails.activationDate && moment.isDate(generalDetails.activationDate)) {
       generalDetails.activationDate = this.datePipe.transform(generalDetails.activationDate, dateFormat);
     }
-    if (generalDetails.dateOfBirth) {
+    if (generalDetails.dateOfBirth && moment.isDate(generalDetails.dateOfBirth)) {
       generalDetails.dateOfBirth = this.datePipe.transform(generalDetails.dateOfBirth, dateFormat);
     }
     //
@@ -233,12 +245,19 @@ export class ClientGeneralStepComponent implements OnInit {
     //   };
     // }
     // generalDetails.addSavings = true;
-    console.log({generalDetails});
+    // console.log({generalDetails});
     return generalDetails;
   }
 
   get files() {
-    return {files: this.clientFilesData};
+    const files = [];
+    if (this.clientFilesDataBefore) {
+      files.push(this.clientFilesDataBefore);
+    }
+    if (this.clientFilesDataAfter) {
+      files.push(this.clientFilesDataAfter);
+    }
+    return {files: files};
   }
 
   clickCancel() {

@@ -1,0 +1,193 @@
+<mat-card class="mat-elevation-z20 container-custom">
+  <mat-card-content>
+    <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column" [formGroup]="formDate">
+      <mat-form-field fxFlex="31%">
+        <mat-label>Transaction Date From</mat-label>
+        <input matInput [matDatepicker]="transactionDateFromPicker" formControlName="fromDate" />
+        <mat-datepicker-toggle matSuffix [for]="transactionDateFromPicker"></mat-datepicker-toggle>
+        <mat-datepicker #transactionDateFromPicker></mat-datepicker>
+      </mat-form-field>
+
+      <mat-form-field fxFlex="31%">
+        <mat-label>Transaction Date To</mat-label>
+        <input matInput [matDatepicker]="transactionDateToPicker" formControlName="toDate" />
+        <mat-datepicker-toggle matSuffix [for]="transactionDateToPicker"></mat-datepicker-toggle>
+        <mat-datepicker #transactionDateToPicker></mat-datepicker>
+      </mat-form-field>
+      <div fxFlex="31%">
+        <button
+          *ngIf="fromDateAndToDate"
+          (click)="getRollTermScheduleAndCardDueDayInfo()"
+          style="align-self: center"
+          color="primary"
+          mat-raised-button
+        >
+          Tìm kiếm &nbsp;<i class="fa fa-search" aria-hidden="true"></i>
+        </button>
+        <h3 *ngIf="!fromDateAndToDate">
+          Vui lòng chọn thời gian &nbsp; <i class="fa fa-calendar" style="align-self: center" aria-hidden="true"></i>
+        </h3>
+      </div>
+    </div>
+    <div class="container" fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column"></div>
+  </mat-card-content>
+
+  <mat-accordion>
+    <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+      <mat-expansion-panel-header>
+        <mat-panel-title> Xem theo </mat-panel-title>
+      </mat-expansion-panel-header>
+      <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column" [formGroup]="formFilter">
+        <mat-form-field fxFlex="18%">
+          <mat-label>Đại lý</mat-label>
+          <input matInput formControlName="agencyName" />
+        </mat-form-field>
+
+        <mat-form-field fxFlex="18%">
+          <mat-label>Khách hàng</mat-label>
+          <input matInput formControlName="panHolderName" />
+        </mat-form-field>
+
+        <mat-form-field fxFlex="18%">
+          <mat-label>Tiền giao dịch</mat-label>
+          <input matInput formControlName="terminalAmount" />
+        </mat-form-field>
+
+        <mat-form-field fxFlex="18%">
+          <mat-label>Nhân viên</mat-label>
+          <mat-select formControlName="staffId">
+            <mat-option *ngFor="let type of staffs" [value]="type.id">
+              {{ type.displayName }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </mat-expansion-panel>
+  </mat-accordion>
+
+  <mat-card-content>
+    <table mat-table multiTemplateDataRows class="mat-elevation-z8" [dataSource]="dataSource" matSort>
+      <ng-container matColumnDef="panHolderName">
+        <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>Tên khách hàng</th>
+        <td mat-cell fxHide fxShow.gt-md *matCellDef="let transaction">{{ transaction.clientName }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="phone">
+        <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>Số điện thoại</th>
+        <td mat-cell fxHide fxShow.gt-md *matCellDef="let journalEntry">
+          {{ journalEntry.clientPhone }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="cardNumber">
+        <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>Số thẻ</th>
+        <td mat-cell fxHide fxShow.gt-md *matCellDef="let journalEntry">{{ journalEntry.cardNumber }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="bankName">
+        <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>Ngân hàng</th>
+        <td mat-cell fxHide fxShow.gt-md *matCellDef="let journalEntry">{{ journalEntry.bankName }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="isHold">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Đang giử thẻ</th>
+        <td mat-cell *matCellDef="let journalEntry">
+          <input matCheckbox type="checkbox" />
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="dueDay">
+        <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>Ngày đến hạn</th>
+        <td mat-cell fxHide fxShow.gt-md *matCellDef="let journalEntry">
+          {{ journalEntry.dueDay }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="expiredDate">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Ngày hết hạn</th>
+        <td mat-cell style="padding: 6px" *matCellDef="let journalEntry">{{ journalEntry.expiredDate }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="status">
+        <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>Trạng thái</th>
+        <td mat-cell fxHide fxShow.gt-md *matCellDef="let journalEntry">
+          {{ displayCardStatusId(journalEntry.trackingState) }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="actions" style="width: 25px">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
+        <td mat-cell *matCellDef="let transaction">
+          <span
+            style="float: right; width: 15px"
+            [matMenuTriggerData]="transaction"
+            [matMenuTriggerFor]="transactionMenu"
+            (menuOpened)="menuOpened()"
+            (menuClosed)="menuClosed()"
+            ><i class="fa fa-ellipsis-v" aria-hidden="true"></i
+          ></span>
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="expandedDetail">
+        <td mat-cell fxShow fxHide.gt-md *matCellDef="let element" [attr.colspan]="displayedColumns.length">
+          <div class="example-element-detail" [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
+            <div class="example-element-description" fxLayout="column">
+              <div><span style="font-weight: bold"> Tên khách hàng :</span>&nbsp;{{ element.panHolderName }}</div>
+              <div><span style="font-weight: bold"> Số điện thoại :</span>&nbsp; &nbsp;{{ element.clientPhone }}</div>
+              <div><span style="font-weight: bold"> Số thẻ:</span>&nbsp; &nbsp;{{ element.identifierId }}</div>
+            </div>
+          </div>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+
+      <tr
+        mat-row
+        *matRowDef="let element; columns: displayedColumns"
+        class="example-element-row"
+        [class.example-expanded-row]="expandedElement === element"
+        (click)="expandedElement = expandedElement === element ? null : element"
+      ></tr>
+      <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
+
+    </table>
+  </mat-card-content>
+  <div *ngIf="isLoading" style="display: flex; justify-content: center; align-items: center; background: white">
+    <mat-progress-spinner color="warn" mode="indeterminate"> </mat-progress-spinner>
+  </div>
+  <mat-menu #transactionMenu="matMenu" [overlapTrigger]="false" style="width: 50px">
+    <ng-template
+      matMenuContent
+      let-custId="custId"
+      let-identifierId="identifierId"
+      let-refid="refid"
+      let-panHolderName="panHolderName"
+      let-panNumber="panNumber"
+      style="width: 50px"
+    >
+      <button (click)="showCreateRollTermScheduleDialog(custId, panHolderName, identifierId, panNumber)" mat-menu-item>
+        <img src="assets/images/icons/next.svg" />&nbsp;Tạo ĐHT
+      </button>
+
+      <button (click)="showRollTermScheduleDialog(refid)" mat-menu-item>
+        <img src="assets/images/icons/add.svg" />&nbsp;Lịch ĐHT
+      </button>
+      <button mat-menu-item><img src="assets/images/icons/order.svg" />&nbsp;Xử lý ĐHT</button>
+
+      <hr />
+      <button mat-menu-item><i class="fa fa-eye" aria-hidden="true"></i>&nbsp;Hủy ĐHT</button>
+    </ng-template>
+  </mat-menu>
+
+  <mat-paginator
+
+    paginator
+    [length]="transactionsData?.sum"
+    [pageSize]="10"
+    [pageSizeOptions]="[10, 25, 50, 100]"
+    showFirstLastButtons
+    (page)="pageEvent = getRollTermScheduleAndCardDueDayInfo()"
+
+    ></mat-paginator>
+</mat-card>

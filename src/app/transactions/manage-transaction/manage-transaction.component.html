@@ -308,7 +308,8 @@
         <img src="assets/images/icons/next.svg"/>&nbsp;Tiếp tục giao dịch
       </button>
       <button mat-menu-item
-              [routerLink]="'/viewDetailTransaction/'+refid+'/'+(type == 'rollTerm' ? 'rollTerm':'cash')"
+      [routerLink]="['/transaction','view']"
+      [queryParams]="{ tranId: refid}"
       ><i class="fa fa-eye" aria-hidden="true"></i>&nbsp;Chi tiết
       </button>
       <button mat-menu-item

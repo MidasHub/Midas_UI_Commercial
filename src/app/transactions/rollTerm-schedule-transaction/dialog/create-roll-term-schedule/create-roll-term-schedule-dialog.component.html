@@ -1,0 +1,75 @@
+<mat-card>
+  <mat-card-content>
+    <h1 mat-dialog-title uppercase>
+      Tạo lịch đáo hạn thẻ của {{ transactionInfo?.panNumber }} - {{ transactionInfo?.panHolderName | uppercase }}
+    </h1>
+    <div class="header-booking" [fxLayout]="'row'" fxLayout.lt-md="column" [fxLayoutGap]="'1%'" fxLayoutGap.lt-md="0%">
+      <mat-form-field fxFlex="20%">
+        <input matInput [(value)]="transactionInfo.reqAmount" />
+        <span matPrefix>Số tiền đáo hạn:&nbsp;</span>
+      </mat-form-field>
+      <mat-form-field fxFlex="10%">
+        <input matInput [(value)]="transactionInfo.feePercentage" />
+        <span matPrefix> - Phí:&nbsp;</span>
+        <span matSuffix>%</span>
+      </mat-form-field>
+      <mat-form-field fxFlex="20%">
+        <input matInput disabled [(value)]="transactionInfo.feeAmount" />
+        <span matPrefix> - Tiền phí cần thu:&nbsp;</span>
+      </mat-form-field>
+    </div>
+  </mat-card-content>
+</mat-card>
+<div mat-dialog-content>
+  <mat-card>
+    <mat-card-content>
+      <table mat-table multiTemplateDataRows class="mat-elevation-z8" [dataSource]="dataSource" matSort>
+        <ng-container matColumnDef="transaction">
+          <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>Giao dịch</th>
+          <td mat-cell fxHide fxShow.gt-md *matCellDef="let booking; let i = dataIndex">
+            {{ i == 0 ? "Test thẻ" : "Lần " + i }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="txnDate">
+          <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>Ngày giao dịch</th>
+          <td mat-cell fxHide fxShow.gt-md *matCellDef="let booking">{{ booking.txnDate | date: "dd-MM-yyyy" }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="amount">
+          <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>Số tiền</th>
+          <td mat-cell fxHide fxShow.gt-md *matCellDef="let booking">{{ booking.bookingAmount | money }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="expandedDetail">
+          <td mat-cell fxShow fxHide.gt-md *matCellDef="let element" [attr.colspan]="displayedColumns.length">
+            <div class="example-element-detail" [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
+              <div class="example-element-description" fxLayout="column">
+                <div><span style="font-weight: bold"> Giao dịch :</span>&nbsp;{{ element.panHolderName }}</div>
+                <div>
+                  <span style="font-weight: bold"> Ngày giao dịch :</span>&nbsp; &nbsp;{{
+                    element.createdDate | date: "dd-MM-yyyy HH:ss"
+                  }}
+                </div>
+                <div><span style="font-weight: bold"> Số tiền:</span>&nbsp; &nbsp;{{ element.terminalAmount }}</div>
+              </div>
+            </div>
+          </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr
+          mat-row
+          *matRowDef="let element; columns: displayedColumns"
+          class="example-element-row"
+          [class.example-expanded-row]="expandedElement === element"
+          (click)="expandedElement = expandedElement === element ? null : element"
+        ></tr>
+      </table>
+    </mat-card-content>
+  </mat-card>
+</div>
+<div class="container" fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column"></div>
+<mat-dialog-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="2%">
+  <button mat-raised-button mat-dialog-close>Đóng</button>
+  <button mat-raised-button mat-dialog-close>Tạo</button>
+</mat-dialog-actions>
