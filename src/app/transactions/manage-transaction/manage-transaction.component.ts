@@ -294,6 +294,7 @@ export class ManageTransactionComponent implements OnInit {
               msgClass: 'cssInfo',
               message: message
             });
+            this.getTransaction();
           }
         });
       }
@@ -330,6 +331,7 @@ export class ManageTransactionComponent implements OnInit {
               msgClass: 'cssInfo',
               message: message
             });
+            this.getTransaction();
           }
         });
       }
