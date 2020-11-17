@@ -14,6 +14,7 @@ import { CentersService } from "app/centers/centers.service";
 import { AlertService } from "app/core/alert/alert.service";
 import { RollTermScheduleDialogComponent } from "../dialog/roll-term-schedule/roll-term-schedule-dialog.component";
 import { CreateRollTermScheduleDialogComponent } from "../dialog/create-roll-term-schedule/create-roll-term-schedule-dialog.component";
+import { MatTableDataSource } from "@angular/material/table";
 
 @Component({
   selector: "midas-due-day-card-transaction",
@@ -40,6 +41,7 @@ export class DueDayCardTabComponent implements OnInit {
     "status",
     "actions",
   ];
+  isLoading: boolean = false;
   formDate: FormGroup;
   formFilter: FormGroup;
   dataSource: any[];
@@ -48,24 +50,20 @@ export class DueDayCardTabComponent implements OnInit {
 
   statusOption: any[] = [
     {
-      label: "ALL",
-      value: "",
+      label: "Khởi tạo",
+      value: "A",
     },
     {
-      label: "Thành công",
-      value: "C",
-    },
-    {
-      label: "Chờ đợi",
+      label: "Chờ phí",
       value: "P",
     },
-    // {
-    //   label: 'F',
-    //   value: 'F'
-    // },
     {
-      label: "Hủy",
-      value: "V",
+      label: "Từ chối",
+      value: "R",
+    },
+    {
+      label: "Đã thu phí",
+      value: "C",
     },
   ];
   partners: any[];
@@ -136,23 +134,31 @@ export class DueDayCardTabComponent implements OnInit {
       .subscribe();
   }
 
+  displayCardStatusId(type: string) {
+    return this.statusOption.find(v => v.value === type)?.label || 'N/A';
+  }
+
   getRollTermScheduleAndCardDueDayInfo() {
+
     const dateFormat = this.settingsService.dateFormat;
     let fromDate = this.formDate.get("fromDate").value;
     let toDate = this.formDate.get("toDate").value;
     let clientName = null;
     let cardNumber = null;
     const limit = this.paginator.pageSize ? this.paginator.pageSize : 10;
-    const offset = this.paginator.pageIndex * limit ? this.paginator.pageSize * limit : 0;
+    const offset = this.paginator.pageIndex * limit ;
     if (fromDate) {
       fromDate = this.datePipe.transform(fromDate, dateFormat);
     }
     if (toDate) {
       toDate = this.datePipe.transform(toDate, dateFormat);
     }
+    this.dataSource = [];
+    this.isLoading = true;
     this.transactionService
       .getListCardOnDueDayByUserId({ fromDate, toDate, clientName, cardNumber, limit, offset })
       .subscribe((result) => {
+        this.isLoading = false;
         this.transactionsData = result?.result;
         this.dataSource = result?.result.lisCardTransactionTracking;
       });

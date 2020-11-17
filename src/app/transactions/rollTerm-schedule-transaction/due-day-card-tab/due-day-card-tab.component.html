@@ -110,7 +110,9 @@
 
       <ng-container matColumnDef="status">
         <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>Trạng thái</th>
-        <td mat-cell fxHide fxShow.gt-md *matCellDef="let journalEntry">{{ journalEntry.trackingState }}</td>
+        <td mat-cell fxHide fxShow.gt-md *matCellDef="let journalEntry">
+          {{ displayCardStatusId(journalEntry.trackingState) }}
+        </td>
       </ng-container>
 
       <ng-container matColumnDef="actions" style="width: 25px">
@@ -137,7 +139,9 @@
           </div>
         </td>
       </ng-container>
+
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+
       <tr
         mat-row
         *matRowDef="let element; columns: displayedColumns"
@@ -146,10 +150,12 @@
         (click)="expandedElement = expandedElement === element ? null : element"
       ></tr>
       <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
-      <!--[routerLink]="['transactions/view', row.transactionId]"-->
+
     </table>
   </mat-card-content>
-
+  <div *ngIf="isLoading" style="display: flex; justify-content: center; align-items: center; background: white">
+    <mat-progress-spinner color="warn" mode="indeterminate"> </mat-progress-spinner>
+  </div>
   <mat-menu #transactionMenu="matMenu" [overlapTrigger]="false" style="width: 50px">
     <ng-template
       matMenuContent
@@ -173,11 +179,15 @@
       <button mat-menu-item><i class="fa fa-eye" aria-hidden="true"></i>&nbsp;Hủy ĐHT</button>
     </ng-template>
   </mat-menu>
+
   <mat-paginator
+
     paginator
     [length]="transactionsData?.sum"
     [pageSize]="10"
     [pageSizeOptions]="[10, 25, 50, 100]"
     showFirstLastButtons
-  ></mat-paginator>
+    (page)="pageEvent = getRollTermScheduleAndCardDueDayInfo()"
+
+    ></mat-paginator>
 </mat-card>
