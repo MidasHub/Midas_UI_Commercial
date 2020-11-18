@@ -11,7 +11,7 @@ import {SavingsService} from '../../savings/savings.service';
 import {SystemService} from '../../system/system.service';
 import {CentersService} from '../../centers/centers.service';
 import {AlertService} from '../../core/alert/alert.service';
-import {MatDialog} from '@angular/material/dialog';
+import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
 import {ClientsService} from '../../clients/clients.service';
 import {merge} from 'rxjs';
 import {tap} from 'rxjs/operators';
@@ -20,6 +20,7 @@ import {UploadBillComponent} from '../dialog/upload-bill/upload-bill.component';
 import {FormfieldBase} from '../../shared/form-dialog/formfield/model/formfield-base';
 import {InputBase} from '../../shared/form-dialog/formfield/model/input-base';
 import {FormDialogComponent} from '../../shared/form-dialog/form-dialog.component';
+import {AddFeeDialogComponent} from '../dialog/add-fee-dialog/add-fee-dialog.component';
 
 @Component({
   selector: 'midas-fee-paid-management',
@@ -38,8 +39,8 @@ export class FeePaidManagementComponent implements OnInit {
   expandedElement: any;
   displayedColumns: string[] = ['txnDate',
     'officeName', 'txnType', 'agencyName', 'txnCode', 'batchNo',
-    'traceNo', 'customerName', 'txnAmount', 'feePaid', 'feeRemain',
-    'actions'
+    'traceNo', 'customerName', 'txnAmount', 'DEAmount', 'feeSum', 'feePaid', 'feeRemain',
+    'actions',
   ];
   formDate: FormGroup;
   formFilter: FormGroup;
@@ -243,9 +244,6 @@ export class FeePaidManagementComponent implements OnInit {
           }
         }
       });
-      this.totalFeeSum = 0;
-      this.totalFeePaid = 0;
-      this.totalFeeRemain = 0;
       this.totalFeeSum = this.transactionsData.reduce((total: any, num: any) => {
         return total + Math.round(num?.feeSum);
       }, 0);
@@ -286,6 +284,10 @@ export class FeePaidManagementComponent implements OnInit {
     this.groupData = this.groupBy(this.filterData, pet => pet.txnCode);
     console.log(this.groupData);
     this.dataSource = Array.from(this.groupData.keys()).slice(offset, offset + limit);
+  }
+
+  getLengthSource() {
+    return this.groupData ? Array.from(this.groupData.keys()).length : 0;
   }
 
   getDataOfGroupTxnCode(code: string) {
@@ -371,83 +373,19 @@ export class FeePaidManagementComponent implements OnInit {
     }
   }
 
-  undoRevertTransaction(transactionId: string) {
-    const dialog = this.dialog.open(ConfirmDialogComponent, {
+  addFeeDialog(txnCode: string) {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.data = {
+      title: 'Ứng tiền cho khách hàng',
       data: {
-        message: 'Bạn chắc chắn muốn hoàn tác giao dịch ' + transactionId,
-        title: 'Hoàn tác giao dịch'
-      },
-    });
-    dialog.afterClosed().subscribe(data => {
-      if (data) {
-        this.transactionService.undoRevertTransaction(transactionId).subscribe(result => {
-          if (result.status === '200') {
-            this.getTransaction();
-            const message = 'Hoàn tác giao dịch ' + transactionId + ' thành công';
-            this.alertService.alert({
-              msgClass: 'cssInfo',
-              message: message
-            });
-          }
-        });
+        txnCode: txnCode
       }
-    });
-  }
-
-  uploadBill(custId: string, trnRefNo: string) {
-    const dialog = this.dialog.open(UploadBillComponent, {});
-    dialog.afterClosed().subscribe(data => {
-      console.log(data);
-      const {file} = data;
-      const formData: FormData = new FormData();
-      formData.append('name', file.name);
-      formData.append('file', file);
-      formData.append('fileName', file.name);
-      if (data) {
-        this.clientsService.uploadClientDocumenttenantIdentifier(custId, formData).subscribe(result => {
-          console.log(result);
-          if (result.resourceId) {
-            const message = 'Tải lên bill giao dịch ' + trnRefNo + ' thành công';
-            this.alertService.alert({
-              msgClass: 'cssInfo',
-              message: message
-            });
-          }
-        });
-      }
-    });
-  }
-
-  addPosInformation(trnRefNo: string, batchNo: string, traceNo: string) {
-    const formfields: FormfieldBase[] = [
-      new InputBase({
-        controlName: 'traceNo',
-        label: 'Trace No',
-        value: traceNo,
-        type: 'text',
-        required: true
-      }),
-      new InputBase({
-        controlName: 'batchNo',
-        label: 'Batch No',
-        value: batchNo,
-        type: 'text',
-        required: true
-      }),
-    ];
-    const data = {
-      title: 'Thêm thông tin máy POS',
-      layout: {addButtonText: 'Xác nhận'},
-      formfields: formfields
     };
-    const dialog = this.dialog.open(FormDialogComponent, {data});
-    dialog.afterClosed().subscribe((response: any) => {
-      console.log(response);
-      if (response.data) {
-        const value = response.data.value;
-        this.transactionService.uploadBosInformation(trnRefNo, value).subscribe(reslut => {
-          console.log(reslut);
-        });
+    // dialogConfig.minWidth = 400;
+    const dialog = this.dialog.open(AddFeeDialogComponent, dialogConfig);
+    dialog.afterClosed().subscribe(data => {
+      if (data) {
+        console.log(data);
       }
     });
   }

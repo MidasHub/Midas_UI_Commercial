@@ -1,0 +1,84 @@
+<h1 mat-dialog-title>Thêm thu/chi tiền cho giao dịch [{{txnCode}}]</h1>
+<div mat-dialog-content>
+  <div class="custom-files-input" [formGroup]="formDialog" fxLayout="column">
+    <div fxLayout="column"
+    >
+      <h3>Tài khoản chi</h3>
+      <div fxLayout="row swap"
+           fxLayoutAlign.lt-sm="center"
+           fxLayoutGap="2%"
+           fxLayout.lt-sm="column">
+        <mat-form-field fxFlex="30%" class="input_custom">
+          <mat-label>Lựa chọn phương thức</mat-label>
+          <mat-select formControlName="paymentTypePaid">
+            <mat-option *ngFor="let type of paidPaymentType" [value]="type.code">
+              {{ type.desc }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field fxFlex="30%" class="input_custom">
+          <mat-label>Lựa chọn phương thức</mat-label>
+          <mat-select formControlName="accountPaid">
+            <mat-option *ngFor="let type of accountsFee" [value]="type.code">
+              {{ type.desc }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field fxFlex="30%">
+          <mat-label>Số tiền</mat-label>
+          <input matInput formControlName="amountPaid">
+        </mat-form-field>
+
+        <mat-form-field fxFlex="96%">
+          <mat-label>Ghi chú</mat-label>
+          <textarea matTextareaAutosize matInput formControlName="notePaid"></textarea>
+        </mat-form-field>
+      </div>
+
+    </div>
+    <div fxLayout="column"
+    >
+      <h3>Tài khoản nhận</h3>
+      <div fxLayout="row swap"
+           fxLayoutAlign.lt-sm="center"
+           fxLayoutGap="2%"
+           fxLayout.lt-sm="column">
+        <mat-form-field fxFlex="30%" *ngIf="formDialog.contains('paymentTypeFee')" class="input_custom">
+          <mat-label>Lựa chọn phương thức</mat-label>
+          <mat-select formControlName="paymentTypeFee">
+            <mat-option *ngFor="let type of paidPaymentType" [value]="type.code">
+              {{ type.desc }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field fxFlex="30%" *ngIf="formDialog.contains('accountFee')" class="input_custom">
+          <mat-label>Lựa chọn phương thức</mat-label>
+          <mat-select formControlName="accountFee">
+            <mat-option *ngFor="let type of accountsFee" [value]="type.code">
+              {{ type.desc }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field *ngIf="formDialog.contains('amountFee')" fxFlex="30%">
+          <mat-label>Số tiền</mat-label>
+          <input matInput formControlName="amountFee">
+        </mat-form-field>
+
+        <mat-form-field *ngIf="formDialog.contains('noteFee')" fxFlex="96%">
+          <mat-label>Ghi chú</mat-label>
+          <textarea matTextareaAutosize matInput formControlName="noteFee"></textarea>
+        </mat-form-field>
+      </div>
+
+    </div>
+  </div>
+</div>
+<mat-dialog-actions align="end">
+  <button mat-raised-button mat-dialog-close>{{'Shared_Component.DeleteDialog.buttonCancel'|translate}}</button>
+  <button mat-raised-button color="warn"
+          [mat-dialog-close]="{ file: true }">{{'Shared_Component.DeleteDialog.buttonConfirm'|translate}}</button>
+</mat-dialog-actions>

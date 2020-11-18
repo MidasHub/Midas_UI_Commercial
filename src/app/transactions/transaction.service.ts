@@ -405,4 +405,12 @@ export class TransactionService {
       .set('accessToken', this.accessToken.base64EncodedAuthenticationKey);
     return this.http.post<any>(`${this.GatewayApiUrlPrefix}/common/get_list_payment`, httpParams);
   }
+
+  getFeePaidTransactionByTnRefNo(trnRefNo: string): Observable<any> {
+    const httpParams = new HttpParams()
+      .set('trnRefNo', trnRefNo)
+      .set('createdBy', this.accessToken.userId)
+      .set('accessToken', this.accessToken.base64EncodedAuthenticationKey);
+    return this.http.post<any>(`${this.GatewayApiUrlPrefix}/savingTransaction/get_list_fee_transaction_by_trn_ref_no`, httpParams);
+  }
 }
