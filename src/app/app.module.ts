@@ -49,8 +49,9 @@ import {TasksModule} from './tasks/tasks.module';
 import {AppRoutingModule} from './app-routing.module';
 
 /** Billpos Module */
-import {TransactionModule} from './transactions/transaction.module';
+import { TerminalsModule } from './terminals/terminals.module';
 import {MidasClientModule} from './midas-client/midas-client.module';
+import { TransactionModule } from './transactions/transaction.module';
 
 /**
  * App Module
@@ -94,12 +95,10 @@ import {MidasClientModule} from './midas-client/midas-client.module';
     SearchModule,
     CollectionsModule,
     TasksModule,
-
     TransactionModule,
     MidasClientModule,
-
-    // last component - fix position
-    AppRoutingModule,
+    TerminalsModule,
+    AppRoutingModule
   ],
   declarations: [WebAppComponent, NotFoundComponent],
   providers: [],

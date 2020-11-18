@@ -1,0 +1,74 @@
+<mat-card class="container">
+    
+    <div fxLayout="row" fxLayoutAlign="start center">
+      <div class="search-box">
+        <mat-form-field class="filter">
+          <input matInput #filter (keyup)="applyFilter($event.target.value)" placeholder="{{ 'Terminal_Component.labelFilter'| translate}}">
+          <button mat-icon-button matSuffix aria-label="clear" *ngIf="filter.value" (click)="filter.value=''; applyFilter('');">
+            <mat-icon>close</mat-icon>
+          </button>
+        </mat-form-field>
+
+        <mat-checkbox labelPosition="after" (change)="changeShowClosedTerminals($event.checked)">{{ 'Group_Component.labelShowClosedGroups'| translate}}</mat-checkbox>
+      </div>
+      <div class="action-button" fxLayoutGap="25px">
+        <button mat-raised-button color="primary" [routerLink]="['create']">
+          <fa-icon icon="plus"></fa-icon>&nbsp;&nbsp;{{ 'Terminal_Component.btnCreate'| translate}}
+        </button>
+      </div>
+    </div>
+
+    <table mat-table [dataSource]="dataSource" matSort>
+
+      <ng-container matColumnDef="terminalNo">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'Terminal_Component.tableTerminal.terminalNo'| translate}} </th>
+        <td mat-cell *matCellDef="let terminal"> {{ terminal.terminalId }} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="terminalCode">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>  {{ 'Terminal_Component.tableTerminal.terminalCode'| translate}} </th>
+        <td mat-cell *matCellDef="let terminal"> {{ terminal.terminalCode }} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="terminalName">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>  {{ 'Terminal_Component.tableTerminal.terminalName'| translate}} </th>
+        <td mat-cell *matCellDef="let terminal"> {{ terminal.terminalName }} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="minFeeDefault">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>  {{ 'Terminal_Component.tableTerminal.minFeeDefault'| translate}} </th>
+        <td mat-cell *matCellDef="let terminal"> {{ terminal.minFeeDefault }} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="status">
+        <th mat-header-cell *matHeaderCellDef>  {{ 'Terminal_Component.tableTerminal.status'| translate}} </th>
+        <td mat-cell *matCellDef="let terminal">
+            <div [className]="terminal.status == 'Active' ? 'status-active' : 'status-deleted'">
+                <fa-icon matTooltip="{{ terminal.status == 'Active' ? 'status-active' : 'status-deleted' }}" matTooltipPosition="right" icon="circle" size="lg"></fa-icon>
+            </div>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="createdBy">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>  {{ 'Terminal_Component.tableTerminal.createdBy'| translate}} </th>
+        <td mat-cell *matCellDef="let terminal"> {{ terminal.createdBy }} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="createdDate">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>  {{ 'Terminal_Component.tableTerminal.createdDate'| translate}} </th>
+        <td mat-cell *matCellDef="let terminal"> {{ terminal.createdDate }} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="updatedDate">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>  {{ 'Terminal_Component.tableTerminal.updatedDate'| translate}} </th>
+        <td mat-cell *matCellDef="let terminal"> {{ terminal.updatedDate }} </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let terminal; columns: displayedColumns;" [routerLink]="[terminal.terminalId,'edit']" class="select-row"></tr>
+
+    </table>
+
+<!--    <mat-paginator [length]="dataSource?.records$ | async" [pageSize]="10" [pageSizeOptions]="[10, 25, 50, 100]" showFirstLastButtons></mat-paginator>-->
+
+  </mat-card>

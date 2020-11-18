@@ -1,0 +1,174 @@
+<mat-card class="mat-elevation-z20 container-custom">
+  <mat-card-content>
+    <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column" [formGroup]="formDate">
+      <mat-form-field fxFlex="31%">
+        <mat-label>Transaction Date From</mat-label>
+        <input matInput [matDatepicker]="transactionDateFromPicker" formControlName="fromDate" />
+        <mat-datepicker-toggle matSuffix [for]="transactionDateFromPicker"></mat-datepicker-toggle>
+        <mat-datepicker #transactionDateFromPicker></mat-datepicker>
+      </mat-form-field>
+
+      <mat-form-field fxFlex="31%">
+        <mat-label>Transaction Date To</mat-label>
+        <input matInput [matDatepicker]="transactionDateToPicker" formControlName="toDate" />
+        <mat-datepicker-toggle matSuffix [for]="transactionDateToPicker"></mat-datepicker-toggle>
+        <mat-datepicker #transactionDateToPicker></mat-datepicker>
+      </mat-form-field>
+
+    </div>
+    <div class="container" fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column"></div>
+  </mat-card-content>
+
+  <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column" [formGroup]="formFilter">
+    <mat-form-field fxFlex="18%">
+      <mat-label>Trạng thái</mat-label>
+      <select matSelect matNativeControl formControlName="statusFilter">
+        <option *ngFor="let status of statusOptionAll" [value]="status.value">
+          {{ status.label }}
+        </option>
+      </select>
+    </mat-form-field>
+
+    <mat-form-field fxFlex="18%">
+      <mat-label>Ngân hàng</mat-label>
+      <select matSelect matNativeControl formControlName="bankName">
+        <option *ngFor="let bank of listBank" [value]="bank.bankCode">
+          {{ bank.bankName }}
+        </option>
+      </select>
+    </mat-form-field>
+
+    <mat-form-field fxFlex="36%">
+      <mat-label>Tìm tên khách hàng/số thẻ</mat-label>
+      <input matInput formControlName="query" />
+    </mat-form-field>
+    <div fxFlex="20%">
+      <button
+        *ngIf="fromDateAndToDate"
+        (click)="getRollTermScheduleAndCardDueDayInfo()"
+        style="align-self: center"
+        color="primary"
+        mat-raised-button
+      >
+        Tìm kiếm &nbsp;<i class="fa fa-search" aria-hidden="true"></i>
+      </button>
+      <h3 *ngIf="!fromDateAndToDate">
+        Vui lòng chọn thời gian &nbsp; <i class="fa fa-calendar" style="align-self: center" aria-hidden="true"></i>
+      </h3>
+    </div>
+  </div>
+
+  <mat-card-content>
+    <table mat-table multiTemplateDataRows [dataSource]="dataSource">
+      <ng-container matColumnDef="panHolderName">
+        <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef>Tên khách hàng</th>
+        <td mat-cell fxHide fxShow.gt-md *matCellDef="let transaction">{{ transaction.clientName }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="phone">
+        <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef>Số điện thoại</th>
+        <td mat-cell fxHide fxShow.gt-md *matCellDef="let card">
+          {{ card.clientPhone }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="cardNumber">
+        <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef>Số thẻ</th>
+        <td mat-cell fxHide fxShow.gt-md *matCellDef="let card">{{ card.cardNumber }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="bankName">
+        <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef>Ngân hàng</th>
+        <td mat-cell fxHide fxShow.gt-md *matCellDef="let card">{{ card.bankName }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="dueDay">
+        <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef>Ngày đến hạn</th>
+        <td mat-cell fxHide fxShow.gt-md *matCellDef="let card">
+          <mat-form-field>
+            <input matInput type="text" [(ngModel)]="card.dueDay" mask="00" />
+          </mat-form-field>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="expiredDate">
+        <th mat-header-cell *matHeaderCellDef>Ngày hết hạn</th>
+        <td mat-cell *matCellDef="let card">
+          <mat-form-field>
+            <input type="text" matInput [(ngModel)]="card.expiredDateString" mask="00/00" />
+          </mat-form-field>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="isHold">
+        <th mat-header-cell *matHeaderCellDef>Giử thẻ</th>
+        <td mat-cell *matCellDef="let card">
+          <input matCheckbox type="checkbox" [(ngModel)]="card.isHold" [checked]="card.isHold == 1" />
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="status">
+        <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef>Trạng thái</th>
+        <td mat-cell fxHide fxShow.gt-md *matCellDef="let card">
+          <mat-form-field appearance="outline">
+            <select [disabled]="card.trackingState == 'C'" matSelect [(ngModel)]="card.trackingState" matNativeControl>
+              <option *ngFor="let status of statusOption" [value]="status.value">
+                {{ status.label }}
+              </option>
+            </select>
+          </mat-form-field>
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="note">
+        <th mat-header-cell *matHeaderCellDef>Ghi chú</th>
+        <td mat-cell *matCellDef="let card">
+          <mat-form-field>
+            <textarea matInput [(ngModel)]="card.note"></textarea>
+          </mat-form-field>
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef>Hành động</th>
+        <td mat-cell *matCellDef="let card; let i = dataIndex" style="width: 8%; text-align: center">
+          <mat-icon style="color: green" title="Cập nhật" (click)="updateCardTrackingState(i)">save</mat-icon>
+          <mat-icon style="color: blue" title="Nhận phí" (click)="advanceCash(card.refId, card.clientId)">attach_money</mat-icon>
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="expandedDetail">
+        <td mat-cell fxShow fxHide.gt-md *matCellDef="let element" [attr.colspan]="displayedColumns.length">
+          <div class="example-element-detail" [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
+            <div class="example-element-description" fxLayout="column">
+              <div><span style="font-weight: bold"> Tên khách hàng :</span>&nbsp;{{ element.panHolderName }}</div>
+              <div><span style="font-weight: bold"> Số điện thoại :</span>&nbsp; &nbsp;{{ element.clientPhone }}</div>
+              <div><span style="font-weight: bold"> Số thẻ:</span>&nbsp; &nbsp;{{ element.identifierId }}</div>
+            </div>
+          </div>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+
+      <tr
+        mat-row
+        *matRowDef="let element; columns: displayedColumns"
+        class="example-element-row"
+        [class.example-expanded-row]="expandedElement === element"
+        (click)="expandedElement = expandedElement === element ? null : element"
+      ></tr>
+      <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
+    </table>
+  </mat-card-content>
+  <div *ngIf="isLoading" style="display: flex; justify-content: center; align-items: center; background: white">
+    <mat-progress-spinner color="warn" mode="indeterminate"> </mat-progress-spinner>
+  </div>
+
+  <mat-paginator
+    paginator
+    [length]="transactionsData?.sum"
+    [pageSize]="10"
+    [pageSizeOptions]="[10, 25, 50, 100]"
+    showFirstLastButtons
+    (page)="pageEvent = getRollTermScheduleAndCardDueDayInfo()"
+  ></mat-paginator>
+  =</mat-card
+>

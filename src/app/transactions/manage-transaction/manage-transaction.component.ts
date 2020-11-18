@@ -75,19 +75,19 @@ export class ManageTransactionComponent implements OnInit {
       value: ''
     },
     {
-      label: 'C',
+      label: 'Thành công',
       value: 'C'
     },
     {
-      label: 'P',
+      label: 'Chờ đợi',
       value: 'P'
     },
+    // {
+    //   label: 'F',
+    //   value: 'F'
+    // },
     {
-      label: 'F',
-      value: 'F'
-    },
-    {
-      label: 'V',
+      label: 'Hủy',
       value: 'V'
     }
   ];
@@ -183,6 +183,7 @@ export class ManageTransactionComponent implements OnInit {
     }
     this.transactionService.getTransaction({fromDate, toDate}).subscribe(result => {
       const {permissions} = this.currentUser;
+      this.transactionsData = [];
       const permit_userTeller = permissions.includes('TXNOFFICE_CREATE');
       if (!permit_userTeller) {
         result?.result?.listPosTransaction?.map((value: any) => {
@@ -220,17 +221,18 @@ export class ManageTransactionComponent implements OnInit {
     const form = this.formFilter.value;
     const wholesaleChoose = form.wholesaleChoose;
     const RetailsChoose = form.RetailsChoose;
-    delete form.wholesaleChoose;
-    delete form.RetailsChoose;
     const keys = Object.keys(form);
+    console.log(form, this.transactionsData, wholesaleChoose, RetailsChoose);
     this.filterData = this.transactionsData.filter(v => {
       for (const key of keys) {
-        if (form[key]) {
-          if (!v[key]) {
-            return false;
-          }
-          if (!String(v[key]).includes(form[key])) {
-            return false;
+        if (['wholesaleChoose', 'RetailsChoose'].indexOf(key) === -1) {
+          if (form[key]) {
+            if (!v[key]) {
+              return false;
+            }
+            if (!String(v[key]).includes(form[key])) {
+              return false;
+            }
           }
         }
       }
@@ -241,6 +243,7 @@ export class ManageTransactionComponent implements OnInit {
       }
       return true;
     });
+    console.log(this.filterData);
     this.dataSource = this.filterData.slice(offset, offset + limit);
     console.log(this.dataSource);
   }
@@ -291,10 +294,24 @@ export class ManageTransactionComponent implements OnInit {
               msgClass: 'cssInfo',
               message: message
             });
+            this.getTransaction();
           }
         });
       }
     });
+  }
+
+  displayStatus(status: string) {
+    switch (status) {
+      case 'C':
+        return 'Thành công';
+      case 'P':
+        return 'Chờ đợi';
+      case 'V':
+        return 'Hủy';
+      default:
+        return '';
+    }
   }
 
   undoRevertTransaction(transactionId: string) {
@@ -314,6 +331,7 @@ export class ManageTransactionComponent implements OnInit {
               msgClass: 'cssInfo',
               message: message
             });
+            this.getTransaction();
           }
         });
       }

@@ -59,9 +59,11 @@
 </mat-toolbar>
 
 <mat-menu #institutionMenu="matMenu" [overlapTrigger]="false">
+  <button mat-menu-item routerLink="/centers">Centers</button>
   <button mat-menu-item routerLink="/clients">{{'Toolbar_Component.lblClient'|translate}}</button>
   <button mat-menu-item routerLink="/groups">{{'Toolbar_Component.lblGroup'|translate}}</button>
   <button mat-menu-item routerLink="/centers">{{'Toolbar_Component.lblCenter'|translate}}</button>
+  <button mat-menu-item routerLink="/terminals">{{'Toolbar_Component.labelTerminals'|translate}}</button>
   <span fxHide.lg>
     <button mat-menu-item [routerLink]="['/accounting']">{{'Toolbar_Component.lblAccounting'|translate}}</button>
     <button mat-menu-item [matMenuTriggerFor]="reportsMenu">{{'Toolbar_Component.lblReport'|translate}}</button>
@@ -71,6 +73,8 @@
 </mat-menu>
 <mat-menu #transactionMenu="matMenu" [overlapTrigger]="false">
   <button mat-menu-item routerLink="/transaction">Quản lý giao dịch</button>
+  <button mat-menu-item routerLink="/transaction/rollTermSchedule">Quản lý đáo hạn thẻ</button>
+  <button mat-menu-item routerLink="/transaction/fee-paid-management">Quản lý phí giao dịch</button>
 </mat-menu>
 <!-- Toolbar Menus -->
 <mat-menu #reportsMenu="matMenu" [overlapTrigger]="false">
