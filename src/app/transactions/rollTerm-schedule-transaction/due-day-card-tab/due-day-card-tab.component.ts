@@ -1,20 +1,22 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
-import {FormBuilder, FormGroup} from '@angular/forms';
-import {MatPaginator} from '@angular/material/paginator';
-import {DatePipe} from '@angular/common';
-import {MatSort} from '@angular/material/sort';
-import {merge} from 'rxjs';
-import {tap} from 'rxjs/operators';
-import {animate, state, style, transition, trigger} from '@angular/animations';
-import {MatDialog} from '@angular/material/dialog';
-import {TransactionService} from 'app/transactions/transaction.service';
-import {SettingsService} from 'app/settings/settings.service';
-import {AuthenticationService} from 'app/core/authentication/authentication.service';
-import {CentersService} from 'app/centers/centers.service';
-import {AlertService} from 'app/core/alert/alert.service';
-import {RollTermScheduleDialogComponent} from '../dialog/roll-term-schedule/roll-term-schedule-dialog.component';
-import {CreateRollTermScheduleDialogComponent} from '../dialog/create-roll-term-schedule/create-roll-term-schedule-dialog.component';
-import {MatTableDataSource} from '@angular/material/table';
+
+import { Component, OnInit, ViewChild } from "@angular/core";
+import { FormBuilder, FormGroup } from "@angular/forms";
+import { MatPaginator } from "@angular/material/paginator";
+import { DatePipe } from "@angular/common";
+import { MatSort } from "@angular/material/sort";
+import { animate, state, style, transition, trigger } from "@angular/animations";
+import { MatDialog, MatDialogConfig } from "@angular/material/dialog";
+import { TransactionService } from "app/transactions/transaction.service";
+import { SettingsService } from "app/settings/settings.service";
+import { AuthenticationService } from "app/core/authentication/authentication.service";
+import { CentersService } from "app/centers/centers.service";
+import { AlertService } from "app/core/alert/alert.service";
+import { RollTermScheduleDialogComponent } from "../dialog/roll-term-schedule/roll-term-schedule-dialog.component";
+import { CreateRollTermScheduleDialogComponent } from "../dialog/create-roll-term-schedule/create-roll-term-schedule-dialog.component";
+import { MatTableDataSource } from "@angular/material/table";
+import { AdvanceFeeRollTermComponent } from "../dialog/advance-fee-roll-term/advance-fee-roll-term.component";
+import { SavingsService } from "app/savings/savings.service";
+import { BankService } from "app/services/bank.service";
 
 @Component({
   selector: 'midas-due-day-card-transaction',
@@ -31,24 +33,31 @@ import {MatTableDataSource} from '@angular/material/table';
 export class DueDayCardTabComponent implements OnInit {
   expandedElement: any;
   displayedColumns: string[] = [
-    'panHolderName',
-    'phone',
-    'cardNumber',
-    'bankName',
-    'isHold',
-    'expiredDate',
-    'dueDay',
-    'status',
-    'actions',
+
+    "panHolderName",
+    "phone",
+    "cardNumber",
+    "bankName",
+    "dueDay",
+    "expiredDate",
+    "isHold",
+    "status",
+    "note",
+    "actions",
   ];
   isLoading: boolean = false;
   formDate: FormGroup;
   formFilter: FormGroup;
   dataSource: any[];
+  listBank: any[];
   transactionsData: any;
   currentUser: any;
 
-  statusOption: any[] = [
+  statusOptionAll: any[] = [
+    {
+      label: 'Tất cả trạng thái',
+      value: 'ALL',
+    },
     {
       label: 'Khởi tạo',
       value: 'A',
@@ -61,9 +70,25 @@ export class DueDayCardTabComponent implements OnInit {
       label: 'Từ chối',
       value: 'R',
     },
+  ];
+
+  statusOption: any[] = [
+
     {
-      label: 'Đã thu phí',
+      label: 'Khởi tạo',
+      value: 'A',
+    },
+    {
+      label: 'Chờ phí',
+      value: 'P',
+    },
+    {
+      label: 'Đã nhận phí',
       value: 'C',
+    },
+    {
+      label: 'Từ chối',
+      value: 'R',
     },
   ];
   partners: any[];
@@ -81,11 +106,12 @@ export class DueDayCardTabComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
+    private savingsService: SavingsService,
+    private bankService: BankService,
     private transactionService: TransactionService,
     private datePipe: DatePipe,
     private settingsService: SettingsService,
     private authenticationService: AuthenticationService,
-    private centersService: CentersService,
     private alertService: AlertService,
     public dialog: MatDialog
   ) {
@@ -94,44 +120,49 @@ export class DueDayCardTabComponent implements OnInit {
       toDate: [new Date()],
     });
     this.formFilter = this.formBuilder.group({
-      productId: [''],
-      status: [''],
-      partnerCode: [''],
-      officeId: [''],
-      panHolderName: [''],
-      terminalId: [''],
-      traceNo: [''],
-      batchNo: [''],
-      terminalAmount: [''],
-      staffId: [''],
-      trnRefNo: [''],
-      RetailsChoose: [true],
-      wholesaleChoose: [true],
-      agencyName: [''],
+      bankName: [''],
+      statusFilter: [''],
+      query: [''],
+
     });
-    this.formFilter.get('officeId').valueChanges.subscribe((value) => {
-      // const office = this.offices.find(v => v.name === value);
-      this.centersService.getStaff(value).subscribe((staffs: any) => {
-        this.staffs = staffs?.staffOptions;
-      });
-    });
-    this.formFilter.valueChanges.subscribe((value) => {
-      this.getRollTermScheduleAndCardDueDayInfo();
-    });
+
   }
 
   ngOnInit(): void {
     this.currentUser = this.authenticationService.getCredentials();
     //this.dataSource = this.transactionsData;
     this.getRollTermScheduleAndCardDueDayInfo();
+    this.bankService.getListBank().subscribe((data: any) =>{
+      this.listBank = data.result.listBank;
+      this.listBank.unshift({bankCode: 'ALL', bankName: 'Tất cả ngân hàng'});
+    })
   }
 
-  // tslint:disable-next-line:use-lifecycle-interface
-  ngAfterViewInit() {
-    this.sort.sortChange.subscribe(() => (this.paginator.pageIndex = 0));
-    merge(this.sort.sortChange, this.paginator.page)
-      .pipe(tap(() => this.getRollTermScheduleAndCardDueDayInfo()))
-      .subscribe();
+  advanceCash(cardId: string, clientId: string) {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.data = {
+      title: 'Ứng tiền cho khách hàng',
+      currentUser: this.currentUser,
+      clientId: clientId
+    };
+    dialogConfig.minWidth = 400;
+    const refDialog = this.dialog.open(AdvanceFeeRollTermComponent, dialogConfig);
+    refDialog.afterClosed().subscribe((response: any) => {
+      const {buSavingAccount, clientAdvanceCash, noteAdvance, amountAdvance, typeAdvanceCash} = response?.data?.value;
+      this.savingsService.advanceCashForDueDayCardTransaction({
+        cardId: cardId,
+        buSavingAccount: buSavingAccount,
+        clientSavingAccount: clientAdvanceCash,
+        noteAdvance: noteAdvance,
+        amountAdvanceCash: amountAdvance,
+        typeAdvanceCash: typeAdvanceCash
+      }).subscribe((result: any) => {
+        console.log(result);
+        const message = `Ứng tiền thành công cho tài khoản: ${clientAdvanceCash} với số tiền ${String(amountAdvance).replace(/\\B(?=(\\d{3})+(?!\\d))/g, ',') + ' đ'}`;
+        this.alertService.alert({message: message, msgClass: 'cssInfo'});
+        this.getRollTermScheduleAndCardDueDayInfo();
+      });
+    });
   }
 
   displayCardStatusId(type: string) {
@@ -143,8 +174,9 @@ export class DueDayCardTabComponent implements OnInit {
     const dateFormat = this.settingsService.dateFormat;
     let fromDate = this.formDate.get('fromDate').value;
     let toDate = this.formDate.get('toDate').value;
-    let clientName = null;
-    let cardNumber = null;
+    let statusFilter = this.formFilter.get('statusFilter').value;
+    let bankName = this.formFilter.get('bankName').value;
+    let query = this.formFilter.get('query').value;
     const limit = this.paginator.pageSize ? this.paginator.pageSize : 10;
     const offset = this.paginator.pageIndex * limit;
     if (fromDate) {
@@ -156,11 +188,17 @@ export class DueDayCardTabComponent implements OnInit {
     this.dataSource = [];
     this.isLoading = true;
     this.transactionService
-      .getListCardOnDueDayByUserId({fromDate, toDate, clientName, cardNumber, limit, offset})
+      .getListCardOnDueDayByUserId(
+        {
+          fromDate, toDate, limit, offset, statusFilter, bankName, query
+        })
       .subscribe((result) => {
         this.isLoading = false;
         this.transactionsData = result?.result;
         this.dataSource = result?.result.lisCardTransactionTracking;
+        this.dataSource.forEach(element => {
+          element.expiredDateString  = this.datePipe.transform(element.expiredDate, 'MMyy');
+        });
       });
   }
 
@@ -173,42 +211,19 @@ export class DueDayCardTabComponent implements OnInit {
     return false;
   }
 
-  menuOpened() {
-    console.log('menuOpened');
+  updateCardTrackingState(index: number) {
+
+    let updateData = this.dataSource[index];
+    this.isLoading = true;
+    this.transactionService.updateCardTrackingState(updateData)
+      .subscribe((result) => {
+        this.isLoading = false;
+        const message = `Cập nhật thành công cho thẻ: ${updateData.cardNumber} `;
+        // this.alertService.alertMsgTop({alertMsg: message});
+        this.alertService.alert({message: message, msgClass: 'cssInfo'});
+
+      })
   }
 
-  menuClosed() {
-    console.log('menuClosed');
-  }
 
-  showRollTermScheduleDialog(rollTermId: string) {
-    const data = {
-      rollTermId: rollTermId,
-    };
-    const dialog = this.dialog.open(RollTermScheduleDialogComponent, {height: 'auto', width: '80%', data});
-    dialog.afterClosed().subscribe((response: any) => {
-      console.log(response);
-      if (response.data) {
-        const value = response.data.value;
-
-      }
-    });
-  }
-
-  showCreateRollTermScheduleDialog(clientId: string, panHolderName: string, identifierId: string, panNumber: string) {
-    const data = {
-      clientId: clientId,
-      panHolderName: panHolderName,
-      panNumber: panNumber,
-      identifierId: identifierId,
-    };
-    const dialog = this.dialog.open(CreateRollTermScheduleDialogComponent, {height: 'auto', width: '80%', data});
-    dialog.afterClosed().subscribe((response: any) => {
-      console.log(response);
-      if (response.data) {
-        const value = response.data.value;
-
-      }
-    });
-  }
 }

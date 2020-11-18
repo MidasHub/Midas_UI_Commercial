@@ -1,10 +1,7 @@
 <mat-card class="container">
-
+    
     <div fxLayout="row" fxLayoutAlign="start center">
       <div class="search-box">
-        <!-- <mat-form-field>
-          <input matInput placeholder="{{ 'Group_Component.placeholderSearchByName'| translate}}" [formControl]="viewTerminals">
-        </mat-form-field> -->
         <mat-form-field class="filter">
           <input matInput #filter (keyup)="applyFilter($event.target.value)" placeholder="{{ 'Terminal_Component.labelFilter'| translate}}">
           <button mat-icon-button matSuffix aria-label="clear" *ngIf="filter.value" (click)="filter.value=''; applyFilter('');">
@@ -12,14 +9,13 @@
           </button>
         </mat-form-field>
 
-        <!-- <mat-checkbox #showClosedGroups labelPosition="after" (change)="changeShowClosedGroups($event.checked)">{{ 'Group_Component.labelShowClosedGroups'| translate}}</mat-checkbox> -->
+        <mat-checkbox labelPosition="after" (change)="changeShowClosedTerminals($event.checked)">{{ 'Group_Component.labelShowClosedGroups'| translate}}</mat-checkbox>
       </div>
       <div class="action-button" fxLayoutGap="25px">
         <button mat-raised-button color="primary" [routerLink]="['create']">
           <fa-icon icon="plus"></fa-icon>&nbsp;&nbsp;{{ 'Terminal_Component.btnCreate'| translate}}
         </button>
       </div>
-
     </div>
 
     <table mat-table [dataSource]="dataSource" matSort>

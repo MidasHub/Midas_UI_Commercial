@@ -40,6 +40,25 @@ export class MidasClientService {
     return this.http.post<any>(`${this.GatewayApiUrlPrefix}/client/get_list_client_by_query`, httpParams);
   }
 
+  getListSavingAccountByUserId(): Observable<any> {
+
+    const httpParams = new HttpParams()
+    .set('createdBy', this.accessToken.userId)
+    .set('accessToken', this.accessToken.base64EncodedAuthenticationKey);
+
+    return this.http.post<any>(`${this.GatewayApiUrlPrefix}/savingTransaction/get_list_saving_account_by_user_id`, httpParams);
+  }
+
+  getListSavingAccountByClientId(clientId: string): Observable<any> {
+
+    const httpParams = new HttpParams()
+    .set('clientId', clientId)
+    .set('createdBy', this.accessToken.userId)
+    .set('accessToken', this.accessToken.base64EncodedAuthenticationKey);
+
+    return this.http.post<any>(`${this.GatewayApiUrlPrefix}/savingTransaction/get_list_saving_account_by_client_id`, httpParams);
+  }
+
   formatLong(value: string){
     value = String(value) ;
     const neg = value.startsWith('-');

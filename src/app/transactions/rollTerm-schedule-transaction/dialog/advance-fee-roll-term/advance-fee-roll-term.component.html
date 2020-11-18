@@ -1,0 +1,58 @@
+<h1 mat-dialog-title>{{'Saving_Account_Component.clientAdvanceCash.titleClientAdvanceCash' |translate}}</h1>
+
+<div mat-dialog-content [formGroup]="form" [fxLayout]="'column'" fxLayout.lt-md="column" [fxLayoutGap]="'1%'"
+     fxLayoutGap.lt-md="0%">
+
+  <mat-form-field class="select-book">
+    <mat-label>{{'Saving_Account_Component.clientAdvanceCash.labelClientCash' |translate}}</mat-label>
+    <mat-select required formControlName="clientAdvanceCash">
+      <mat-option *ngFor="let saving of listSavingAccount" [value]="saving.id">
+        {{ saving.externalId }}
+      </mat-option>
+    </mat-select>
+    <mat-error *ngIf="client.hasError('required')">
+      Yêu cầu: chọn khách hàng
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field fxFlex="96%" >
+    <mat-label>Tài khoản nhận tiền</mat-label>
+    <mat-select required formControlName="buSavingAccount">
+      <mat-option *ngFor="let saving of buSavingAccounts" [value]="saving.id">
+        {{ saving.externalId }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field fxFlex="96%" *ngIf="form.contains('typeAdvanceCash')">
+    <mat-label>{{'Saving_Account_Component.clientAdvanceCash.labelTypes' |translate}}</mat-label>
+    <mat-select required formControlName="typeAdvanceCash">
+      <mat-option *ngFor="let type of typeAdvanceCashes" [value]="type.id">
+        {{ type.value }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field fxFlex="96%">
+    <mat-label>{{'Saving_Account_Component.clientAdvanceCash.labelAmountAdvance' |translate}}</mat-label>
+    <input required
+           currencyMask
+           matInput formControlName="amountAdvance">
+  </mat-form-field>
+
+
+
+  <mat-form-field *ngIf="form.contains('noteAdvance')" fxFlex="48%">
+    <mat-label>{{'Saving_Account_Component.clientAdvanceCash.labelNoteAdvance' |translate}}</mat-label>
+    <input type="text" aria-multiline="true" matInput formControlName="noteAdvance">
+  </mat-form-field>
+
+
+</div>
+
+<mat-dialog-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="2%">
+  <button mat-raised-button mat-dialog-close>{{ 'Shared_Component.FormDialog.btnCancel' | translate }}</button>
+  <button mat-raised-button color="primary"
+          [mat-dialog-close]="{ data: form  }"
+          [disabled]="!form.valid || form.pristine">{{ 'Shared_Component.FormDialog.btnAdd' |translate }}</button>
+</mat-dialog-actions>

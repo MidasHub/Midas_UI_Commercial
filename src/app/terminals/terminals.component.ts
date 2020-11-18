@@ -14,18 +14,22 @@ import { TerminalObj} from './terminal-obj.model';
   styleUrls: ['./terminals.component.scss']
 })
 export class TerminalsComponent implements OnInit, AfterViewInit {
-  @ViewChild('showClosedGroups', { static: true }) showClosedGroups: MatCheckbox;
+  //@ViewChild('showClosedTerminals', { static: true }) showClosedTerminals: MatCheckbox;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   viewTerminals = new FormControl('viewTerminals');
   displayedColumns =  ['terminalNo', 'terminalCode', 'terminalName', 'minFeeDefault', 'status', 'createdBy','createdDate','updatedDate'];
   
+
   dataSource = new MatTableDataSource<any>();
   dataSourceDefault:any;
   terminalsData: TerminalObj[] = [];
+  terminalsDataActive: TerminalObj[] = [];
+  terminalsDataInActive: TerminalObj[] = [];
   constructor(private terminalsService: TerminalsService) {}
 
   ngOnInit(): void {
+     
     this.terminalsService.getTerminals().subscribe((data: any) => {
       data.result.listPos.forEach((i: any) =>{
           let terminalObj = new TerminalObj(
@@ -39,24 +43,35 @@ export class TerminalsComponent implements OnInit, AfterViewInit {
             i.minFeeDefault);
           this.terminalsData.push(terminalObj);
         });
-      this.dataSource.data = this.terminalsData;
-      this.dataSourceDefault = this.terminalsData;
+      this.terminalsDataActive = this.terminalsData.filter(function(item) {
+          return item.status == 'Active';
+      })
+      this.terminalsDataInActive = this.terminalsData.filter(function(item) {
+        return item.status !== 'Active';
+    })
+      this.dataSource.data = this.terminalsDataActive;
+      //this.dataSourceDefault = this.terminalsData;
     });
+
   }
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
+    //this.changeShowClosedTerminals(this.showClosedTerminals.checked);
   }
   applyFilter(filterValue: string) {
     filterValue = filterValue.trim();
     filterValue = filterValue.toLowerCase();
     this.dataSource.filter = filterValue;
   }
-  changeShowClosedGroups(isActive:boolean){
-    if(!isActive){
-      delete this.sort.active;
+  changeShowClosedTerminals(isActive:boolean){
+    
+    if(isActive){
+      this.dataSource.data = this.terminalsDataInActive;
     }else{
-      this.dataSource.data = this.terminalsData;
+      this.dataSource.data = this.terminalsDataActive;
     }
+     
   }
+  
 }

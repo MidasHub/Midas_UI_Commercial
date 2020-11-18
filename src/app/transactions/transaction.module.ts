@@ -22,6 +22,7 @@ import { RollTermScheduleTabComponent } from './rollTerm-schedule-transaction/ro
 import { FeePaidManagementComponent } from './fee-paid-management/fee-paid-management.component';
 import { AddFeeDialogComponent } from './dialog/add-fee-dialog/add-fee-dialog.component';
 import { ViewFeePaidTransactionDialogComponent } from './dialog/view-fee-paid-transaction-dialog/view-fee-paid-transaction-dialog.component';
+import { AdvanceFeeRollTermComponent } from './rollTerm-schedule-transaction/dialog/advance-fee-roll-term/advance-fee-roll-term.component';
 
 /**
  * Profile Module
@@ -39,6 +40,8 @@ import { ViewFeePaidTransactionDialogComponent } from './dialog/view-fee-paid-tr
     RollTermScheduleDialogComponent,
     CreateRollTermScheduleDialogComponent,
     RollTermScheduleTabComponent,
+    FeePaidManagementComponent,
+    AdvanceFeeRollTermComponent,
     FeePaidManagementComponent,
     AddFeeDialogComponent,
     ViewFeePaidTransactionDialogComponent
