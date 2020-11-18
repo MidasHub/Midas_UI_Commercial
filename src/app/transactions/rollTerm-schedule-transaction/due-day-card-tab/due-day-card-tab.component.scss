@@ -4,7 +4,58 @@
   width: 97%;
   margin: 0 auto;
 }
+.mat-success {
+  background-color: green;
+  color: #fff;
+}
+.center { text-align: center }
+.mat-table__wrapper .mat-table {
+    min-width: auto !important;
+    width: 100% !important;
+}
 
+.mat-header-row {
+    width: 100%;
+}
+
+.mat-row {
+    width: 100%;
+}
+.mat-column-dueDay ,
+.mat-column-isHold ,
+.mat-column-status ,
+.mat-column-actions ,
+.mat-column-expiredDate  {
+  flex: 0 0 5% !important;
+  width: 5% !important;
+
+}
+mat-icon {
+  cursor: pointer;
+}
+::ng-deep .mat-column-dueDay div.mat-form-field-infix,
+::ng-deep .mat-column-expiredDate div.mat-form-field-infix {
+    flex: 0 0 100% !important;
+    width: 100% !important;
+   }
+
+::ng-deep .mat-column-dueDay div.mat-form-field-infix,
+::ng-deep .mat-column-isHold div.mat-form-field-infix,
+::ng-deep .mat-column-expiredDate div.mat-form-field-infix {
+
+    text-align: center;
+   }
+
+.mat-column-panHolderName,
+.mat-column-phone,
+.mat-column-note,
+.mat-column-bankName,
+.mat-column-cardNumber {
+
+  flex: 0 0 10% !important;
+  width: 10% !important;
+
+}
 .mat-menu-panel {
   min-width: 50px;
   max-width: 280px;
@@ -14,10 +65,6 @@
   border-radius: 4px;
   outline: 0;
   min-height: 64px;
-}
-
-table {
-  width: 100%;
 }
 
 tr.example-detail-row {

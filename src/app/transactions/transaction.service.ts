@@ -33,6 +33,23 @@ export class TransactionService {
     console.log('accessToken', this.accessToken);
   }
 
+  updateCardTrackingState(
+    updateData: any
+  ): Observable<any> {
+
+    const httpParams = new HttpParams()
+      .set('expiredDate', `${updateData.dueDay}/${updateData.expiredDateString.substring(0,2)}/${updateData.expiredDateString.substring(2,4)}`)
+      .set('refId', updateData.refId)
+      .set('note', updateData.note)
+      .set('state', updateData.trackingState)
+      .set('dueDay', updateData.dueDay)
+      .set('isHold', updateData.isHold? '1':'0' )
+      .set('officeId', this.accessToken.officeId)
+      .set('createdBy', this.accessToken.userId)
+      .set('accessToken', this.accessToken.base64EncodedAuthenticationKey);
+
+    return this.http.put<any>(`${this.GatewayApiUrlPrefix}/card/update_card_on_due_day`, httpParams);
+  }
 
   submitTransactionCash(
     transactionInfo: any
@@ -157,7 +174,10 @@ export class TransactionService {
     return this.http.post(`${this.GatewayApiUrlPrefix}/transaction/get_list_pos_transaction`, httpParams);
   }
 
-  getListRollTermTransactionOpenByUserId(payload: { fromDate: string, toDate: string, clientName: string, cardNumber: string, limit: number, offset: number }): Observable<any> {
+  getListRollTermTransactionOpenByUserId(
+    payload: { fromDate: string, toDate: string,
+       clientName: string, cardNumber: string,
+        limit: number, offset: number}): Observable<any> {
 
     const httpParams = new HttpParams()
       .set('cardNumber', !payload.cardNumber ? '%%' : payload.cardNumber)
@@ -173,18 +193,20 @@ export class TransactionService {
     return this.http.post(`${this.GatewayApiUrlPrefix}/transaction/get_list_pos_transaction_rollterm`, httpParams);
   }
 
-  getListCardOnDueDayByUserId(payload: { fromDate: string, toDate: string, clientName: string, cardNumber: string, limit: number, offset: number }): Observable<any> {
+  getListCardOnDueDayByUserId(payload: {
+     fromDate: string, toDate: string,
+     limit: number, offset: number ,
+     statusFilter: string, bankName: string, query: string  }): Observable<any> {
 
     const httpParams = new HttpParams()
-      .set('cardNumber', !payload.cardNumber ? '%%' : payload.cardNumber)
-      .set('displayName', !payload.clientName ? '%%' : payload.clientName)
+      .set('query', !payload.query ? `%%` : `%${payload.query}%`)
       .set('agencyName', '%%')
       .set('limit', String(payload.limit))
       .set('offset', String(payload.offset))
       .set('amountTransaction', '%%')
       .set('trackingState', '%%')
       .set('createdUser', '%%')
-      .set('bankName', '%%')
+      .set('bankName', payload.bankName == 'ALL'?`%%`:`%${payload.bankName}%`)
       .set('fromDate', payload.fromDate)
       .set('toDate', payload.toDate)
       .set('createdBy', this.accessToken.userId)

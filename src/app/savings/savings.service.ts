@@ -58,7 +58,20 @@ export class SavingsService {
       .set('paymentTypeId', payload.typeAdvanceCash)
       .set('createdBy', this.accessToken.userId)
       .set('accessToken', this.accessToken.base64EncodedAuthenticationKey);
-    return this.http.post<any>(`${this.GatewayApiUrlPrefix}/savingTransaction/deposite_advance_cash_transaction`, httpParams);
+    return this.http.post<any>(`${this.GatewayApiUrlPrefix}/savingTransaction/deposit_advance_cash_transaction`, httpParams);
+  }
+
+  advanceCashForDueDayCardTransaction(payload: any) {
+    const httpParams = new HttpParams()
+      .set('cardId', payload.cardId)
+      .set('buSavingAccount', payload.buSavingAccount)
+      .set('clientSavingAccount', payload.clientSavingAccount)
+      .set('note', `${payload.clientSavingAccount} - ${payload.noteAdvance}`)
+      .set('amountAdvanceCash', payload.amountAdvanceCash)
+      .set('paymentTypeId', payload.typeAdvanceCash)
+      .set('createdBy', this.accessToken.userId)
+      .set('accessToken', this.accessToken.base64EncodedAuthenticationKey);
+    return this.http.post<any>(`${this.GatewayApiUrlPrefix}/savingTransaction/deposit_advance_cash_transaction_for_due_day_card`, httpParams);
   }
 
   getListPartner() {
