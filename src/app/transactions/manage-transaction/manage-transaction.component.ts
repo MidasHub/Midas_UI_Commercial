@@ -6,7 +6,6 @@ import {MatPaginator} from '@angular/material/paginator';
 import {DatePipe} from '@angular/common';
 import {SettingsService} from '../../settings/settings.service';
 import {AuthenticationService} from '../../core/authentication/authentication.service';
-import * as moment from 'moment';
 import {MatSort} from '@angular/material/sort';
 import {merge} from 'rxjs';
 import {tap} from 'rxjs/operators';

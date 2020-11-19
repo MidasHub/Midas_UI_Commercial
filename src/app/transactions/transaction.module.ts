@@ -23,6 +23,7 @@ import { FeePaidManagementComponent } from './fee-paid-management/fee-paid-manag
 import { AddFeeDialogComponent } from './dialog/add-fee-dialog/add-fee-dialog.component';
 import { ViewFeePaidTransactionDialogComponent } from './dialog/view-fee-paid-transaction-dialog/view-fee-paid-transaction-dialog.component';
 import { AdvanceFeeRollTermComponent } from './rollTerm-schedule-transaction/dialog/advance-fee-roll-term/advance-fee-roll-term.component';
+import { TransactionHistoryDialogComponent } from './rollTerm-schedule-transaction/dialog/transaction-history/transaction-history-dialog.component';
 
 /**
  * Profile Module
@@ -44,7 +45,8 @@ import { AdvanceFeeRollTermComponent } from './rollTerm-schedule-transaction/dia
     AdvanceFeeRollTermComponent,
     FeePaidManagementComponent,
     AddFeeDialogComponent,
-    ViewFeePaidTransactionDialogComponent
+    ViewFeePaidTransactionDialogComponent,
+    TransactionHistoryDialogComponent
   ],
 
   imports: [

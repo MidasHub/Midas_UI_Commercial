@@ -17,6 +17,7 @@ import { MatTableDataSource } from "@angular/material/table";
 import { AdvanceFeeRollTermComponent } from "../dialog/advance-fee-roll-term/advance-fee-roll-term.component";
 import { SavingsService } from "app/savings/savings.service";
 import { BankService } from "app/services/bank.service";
+import { TransactionHistoryDialogComponent } from "../dialog/transaction-history/transaction-history-dialog.component";
 
 @Component({
   selector: 'midas-due-day-card-transaction',
@@ -225,5 +226,14 @@ export class DueDayCardTabComponent implements OnInit {
       })
   }
 
+
+  showHistoryTransaction(clientId: string) {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.data = {
+      clientId: clientId
+    };
+    dialogConfig.minWidth = 800;
+    this.dialog.open(TransactionHistoryDialogComponent, dialogConfig);
+  }
 
 }

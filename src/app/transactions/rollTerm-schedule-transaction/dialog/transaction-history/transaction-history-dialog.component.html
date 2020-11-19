@@ -1,0 +1,72 @@
+<mat-card-content>
+  <h1 mat-dialog-title>Danh sách giao dịch 90 ngày gần nhất</h1>
+</mat-card-content>
+<div mat-dialog-content>
+  <mat-card>
+    <mat-card-content>
+      <table mat-table multiTemplateDataRows class="mat-elevation-z8" [dataSource]="dataSource" matSort>
+        <ng-container matColumnDef="cardNumber">
+          <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>Thẻ</th>
+          <td mat-cell fxHide fxShow.gt-md *matCellDef="let transaction; let i = dataIndex">
+            {{ transaction.panNumber.replace("XXX-XXX", "X") }}
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="type">
+          <th mat-header-cell *matHeaderCellDef>Dịch vụ</th>
+          <td mat-cell *matCellDef="let transaction">{{ transaction.type }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="amount">
+          <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>Số tiền</th>
+          <td mat-cell fxHide fxShow.gt-md *matCellDef="let transaction">{{ transaction.terminalAmount | money }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="txnDate">
+          <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>Ngày giao dịch</th>
+          <td mat-cell fxHide fxShow.gt-md *matCellDef="let transaction">
+            {{ transaction.createdDate | date: "dd-MM-yyyy HH:mm:ss" }}
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="actions" style="width: 25px">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
+          <td mat-cell *matCellDef="let transaction">
+            <a href="#/transaction/view?tranId={{ transaction.refid }}">
+              <mat-icon style="color: black" title="Xem chi tiết">remove_red_eye</mat-icon>
+            </a>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="expandedDetail">
+          <td mat-cell fxShow fxHide.gt-md *matCellDef="let element" [attr.colspan]="displayedColumns.length">
+            <div class="example-element-detail" [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
+              <div class="example-element-description" fxLayout="column">
+                <div><span style="font-weight: bold"> Giao dịch :</span>&nbsp;{{ element.panHolderName }}</div>
+                <div>
+                  <span style="font-weight: bold"> Ngày giao dịch :</span>&nbsp; &nbsp;{{
+                    element.createdDate | date: "dd-MM-yyyy HH:mm:ss"
+                  }}
+                </div>
+                <div><span style="font-weight: bold"> Số tiền:</span>&nbsp; &nbsp;{{ element.terminalAmount }}</div>
+                <div><span style="font-weight: bold"> Phí thực tế:</span>&nbsp; &nbsp;{{ element.identifierId }}</div>
+                <div><span style="font-weight: bold"> Đã chi :</span>&nbsp; &nbsp;{{ element.officeName | money }}</div>
+                <div><span style="font-weight: bold"> Đã thu hồi :</span>&nbsp; &nbsp;{{ element.agencyName }}</div>
+              </div>
+            </div>
+          </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr
+          mat-row
+          *matRowDef="let element; columns: displayedColumns"
+          class="example-element-row"
+          [class.example-expanded-row]="expandedElement === element"
+          (click)="expandedElement = expandedElement === element ? null : element"
+        ></tr>
+      </table>
+
+    </mat-card-content>
+  </mat-card>
+</div>
+<div class="container" fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column"></div>
+<mat-dialog-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="2%">
+  <button mat-raised-button mat-dialog-close>Đóng</button>
+</mat-dialog-actions>
