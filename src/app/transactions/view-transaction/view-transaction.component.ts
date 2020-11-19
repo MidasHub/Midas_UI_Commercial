@@ -36,7 +36,7 @@ export class ViewTransactionComponent implements OnInit {
       const tranId = params.get("tranId");
       this.isLoading = true;
       this.transactionService.getTransactionDetail(tranId).subscribe((data: any) => {
-        debugger;
+
         this.isLoading = false;
         this.transactionInfo = data.result.detailTransactionDto;
         this.transactionInfo.requestAmount = this.formatCurrency(this.transactionInfo.requestAmount);

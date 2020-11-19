@@ -46,14 +46,11 @@ mat-icon {
     text-align: center;
    }
 
-.mat-column-panHolderName,
-.mat-column-phone,
-.mat-column-note,
-.mat-column-bankName,
-.mat-column-cardNumber {
+.mat-column-panHolderName
+{
 
-  flex: 0 0 10% !important;
-  width: 10% !important;
+  flex: 0 0 15% !important;
+  width: 15% !important;
 
 }
 .mat-menu-panel {
