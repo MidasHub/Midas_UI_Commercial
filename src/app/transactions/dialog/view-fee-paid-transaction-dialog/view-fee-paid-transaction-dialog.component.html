@@ -1,1 +1,11 @@
-<p>view-fee-paid-transaction-dialog works!</p>
+<h1 mat-dialog-title>Danh sách thu/chi đã thực hiện [{{txnCode}}]</h1>
+<div mat-dialog-content>
+
+</div>
+<mat-dialog-actions align="end">
+  <button mat-raised-button
+  >{{'Shared_Component.DeleteDialog.buttonCancel'|translate}}</button>
+  <button mat-raised-button color="warn"
+  >{{'Shared_Component.DeleteDialog.buttonConfirm'|translate}}</button>
+  <!--  [mat-dialog-close]="{ file: true }"-->
+</mat-dialog-actions>

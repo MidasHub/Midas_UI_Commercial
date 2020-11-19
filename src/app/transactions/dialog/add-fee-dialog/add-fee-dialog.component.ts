@@ -1,9 +1,10 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {TransactionService} from '../../transaction.service';
 import {FormBuilder, FormGroup} from '@angular/forms';
-import {MAT_DIALOG_DATA} from '@angular/material/dialog';
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {ClientsService} from '../../../clients/clients.service';
 import {AuthenticationService} from '../../../core/authentication/authentication.service';
+import {AlertService} from '../../../core/alert/alert.service';
 
 @Component({
   selector: 'midas-add-fee-dialog',
@@ -16,37 +17,115 @@ export class AddFeeDialogComponent implements OnInit {
   accountsFee: any[] = [];
   txnCode: string;
   transactions: any[] = [];
-  accountPaid: any[] = [];
+  accountsPaid: any[] = [];
   currentUser: any;
+  transactionFee: any;
+  transactionPaid: any;
+  showPaid = false;
+  showFee = false;
+  showCashAccountPaid = true;
+  selectedPaymentTypePaid = '';
+  paidAmount = 0;
+  feeAmount = 0;
+  donePaid = false;
+  doneFee = false;
+
   constructor(private transactionService: TransactionService,
               private formBuilder: FormBuilder,
+              public dialogRef: MatDialogRef<AddFeeDialogComponent>,
               @Inject(MAT_DIALOG_DATA) public data: any,
               private clientService: ClientsService,
-              private authenticationService: AuthenticationService) {
+              private authenticationService: AuthenticationService,
+              private alertServices: AlertService) {
     console.log(this.data);
     this.txnCode = data.data?.txnCode;
-    this.transactionService.getFeePaidTransactionByTnRefNo(this.txnCode).subscribe(result => {
-      this.transactions = result.result?.listTransactionFee;
-    });
     this.formDialog = this.formBuilder.group({
-      'paymentTypeFee': [''],
-      'accountFee': [''],
-      'amountFee': [''],
-      'noteFee': [''],
-      'paymentTypePaid': [''],
-      'accountPaid': [''],
+      'paymentCodeGet': [''],
+      'amountGet': [''],
+      'savingAccountGet': [''],
+      'noteGet': [''],
+      'paymentCode': [''],
+      'savingAccountPaid': [''],
       'amountPaid': [''],
       'notePaid': ['']
+    });
+    this.transactionService.getFeePaidTransactionByTnRefNo(this.txnCode).subscribe(result => {
+      this.transactions = result.result?.listTransactionFee;
+      this.transactionFee = this.transactions.find(v => v.txnPaymentType === 'IN');
+      this.transactionPaid = this.transactions.find(v => v.txnPaymentType === 'OUT');
+      if (this.transactionPaid && this.transactionPaid.txnType === 'BATCH') {
+        this.showCashAccountPaid = false;
+        this.showFee = false;
+        this.selectedPaymentTypePaid = 'DE';
+        this.formDialog.get('paymentCode').setValue(this.selectedPaymentTypePaid);
+        if (this.paidAmount < this.feeAmount) {
+          this.paidAmount = -this.feeAmount - this.paidAmount;
+        } else {
+          this.paidAmount = this.paidAmount - this.feeAmount;
+        }
+      } else {
+        this.selectedPaymentTypePaid = 'FT';
+
+      }
+
+      this.formDialog.get('paymentCode').setValue(this.selectedPaymentTypePaid);
     });
     // this.clientService.getClientAccountData()
     this.transactionService.getPaymentTypes().subscribe(result => {
       this.paidPaymentType = result?.result?.listPayment;
     });
     this.currentUser = this.authenticationService.getCredentials();
-    console.log(this.currentUser)
+    console.log(this.currentUser);
+    this.clientService.getClientOfStaff().subscribe(result => {
+      console.log(result);
+      const clientId = result?.result?.clientId;
+      if (clientId) {
+        this.clientService.getClientAccountData(clientId).subscribe(res => {
+          console.log(res);
+          let totalBalance = 0;
+          // @ts-ignore
+          this.accountsFee = res.savingsAccounts;
+          if (this.accountsFee) {
+            totalBalance = this.accountsFee.reduce((total: any, num: any) => {
+              if (num.accountBalance && [8, 9].indexOf(num.productId) !== -1) {
+                return total + Math.round(num?.accountBalance);
+              }
+              return total + 0;
+            }, 0);
+            this.accountsFee.map(v => {
+              if (v?.externalI?.indexOf('QTM') !== -1 || v?.externalI?.indexOf('tiền mặt') !== -1) {
+                v.flagAccountCa = true;
+              } else {
+                v.flagAccountCa = false;
+              }
+            });
+            this.accountsPaid = this.accountsFee;
+          }
+        });
+      }
+    });
   }
 
   ngOnInit(): void {
   }
 
+  submitForm() {
+    const form = this.formDialog.value;
+    form.txnCode = this.txnCode;
+    this.transactionService.paidFeeForTransaction(form).subscribe(result => {
+      if (result?.result.status) {
+        this.alertServices.alert({
+          type: '🎉🎉🎉 Thành công !!!',
+          message: '🎉🎉 Thanh toán phí thành công',
+        });
+        this.dialogRef.close({status: true});
+      } else {
+        this.alertServices.alert({
+          type: '🚨🚨🚨🚨 Lỗi ',
+          message: '🚨🚨 Lỗi thanh toán phí, vui lòng liên hệ IT Support để được hổ trợ 🚨🚨',
+        });
+        this.dialogRef.close({status: false});
+      }
+    });
+  }
 }

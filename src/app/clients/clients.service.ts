@@ -141,6 +141,15 @@ export class ClientsService {
     return this.http.get(`/clients/${clientId}/accounts`);
   }
 
+  getClientOfStaff(): Observable<any> {
+    const {displayName, officeId} = this.accessToken;
+    const httpParams = new HttpParams()
+      .set('officeId', officeId)
+      .set('querySearch', displayName)
+      .set('createdBy', this.accessToken.userId)
+      .set('accessToken', this.accessToken.base64EncodedAuthenticationKey);
+    return this.http.post<any>(`${this.GatewayApiUrlPrefix}/client/get_client_of_staff`, httpParams);
+  }
   getClientChargesData(clientId: string) {
     const httpParams = new HttpParams().set('pendingPayment', 'true');
     return this.http.get(`/clients/${clientId}/charges`, {params: httpParams});
