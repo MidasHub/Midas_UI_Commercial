@@ -158,7 +158,7 @@
 
       <ng-container matColumnDef="txnType">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Loại GD</th>
-        <td mat-cell  *matCellDef="let transaction"
+        <td mat-cell *matCellDef="let transaction"
             [ngSwitch]="getDataOfGroupTxnCode(transaction)[0].txnType">
           <button *ngSwitchCase="'CASH'" class="btn btn-success">RTM</button>
           <button *ngSwitchCase="'ROLLTERM'" class="btn btn-success">
@@ -171,14 +171,15 @@
       </ng-container>
 
       <ng-container matColumnDef="txnCode">
-        <th mat-header-cell  *matHeaderCellDef mat-sort-header>Mã gd</th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Mã gd</th>
         <td mat-cell
             *matCellDef="let transaction"> {{ getDataOfGroupTxnCode(transaction)[0].txnCode }} </td>
       </ng-container>
 
       <ng-container matColumnDef="batchNo">
         <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef>Số batch</th>
-        <td mat-cell fxHide fxShow.gt-md *matCellDef="let transaction"> {{ getDataOfGroupTxnCode(transaction)[0].batchNo }} </td>
+        <td mat-cell fxHide fxShow.gt-md
+            *matCellDef="let transaction"> {{ getDataOfGroupTxnCode(transaction)[0].batchNo }} </td>
       </ng-container>
 
       <ng-container matColumnDef="traceNo">
@@ -189,7 +190,8 @@
 
       <ng-container matColumnDef="customerName">
         <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>Chủ thể</th>
-        <td mat-cell fxHide fxShow.gt-md *matCellDef="let transaction"> {{ getDataOfGroupTxnCode(transaction)[0].customerName }} </td>
+        <td mat-cell fxHide fxShow.gt-md
+            *matCellDef="let transaction"> {{ getDataOfGroupTxnCode(transaction)[0].customerName }} </td>
       </ng-container>
 
       <ng-container matColumnDef="agencyName">
@@ -203,13 +205,33 @@
         <td mat-cell fxHide fxShow.gt-md *matCellDef="let transaction">
           <ul>
             <li *ngFor="let tra of getDataOfGroupTxnCode(transaction)" [style]="colorOfType(tra.txnPaymentType)">
-              <span>{{tra.txnPaymentType}}: &nbsp;</span>
-              {{ tra.txnAmount | money}}
+              {{tra.txnPaymentType}}: {{ tra.txnAmount | money}}
             </li>
           </ul>
         </td>
       </ng-container>
 
+      <ng-container matColumnDef="DEAmount">
+        <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>Số tiền cần trừ</th>
+        <td mat-cell fxHide fxShow.gt-md *matCellDef="let transaction">
+          <ul>
+            <li *ngFor="let tra of getDataOfGroupTxnCode(transaction)" [style]="colorOfType(tra.txnPaymentType)">
+              {{ tra.DEAmount | money}}
+            </li>
+          </ul>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="feeSum">
+        <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>Tổng thu/chi</th>
+        <td mat-cell fxHide fxShow.gt-md *matCellDef="let transaction">
+          <ul>
+            <li *ngFor="let tra of getDataOfGroupTxnCode(transaction)" [style]="colorOfType(tra.txnPaymentType)">
+              {{ tra.feeSum | money}}
+            </li>
+          </ul>
+        </td>
+      </ng-container>
 
       <ng-container matColumnDef="feePaid">
         <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>Đã thu/chi</th>
@@ -309,7 +331,9 @@
                  let-status="status"
                  let-feePaid='feePaid'
                  style="width: 50px;">
-      <button mat-menu-item *ngIf="!checkPermissions('ALL_FUNCTIONS')">
+      <button
+        (click)="addFeeDialog(txnCode)"
+        mat-menu-item *ngIf="!checkPermissions('ALL_FUNCTIONS')">
         <img src="assets/images/icons/hammer.svg"/>
         &nbsp;Thu, chi tiền
       </button>
@@ -319,7 +343,7 @@
       </button>
     </ng-template>
   </mat-menu>
-  <mat-paginator paginator [length]="filterData?.length" [pageSize]="10" [pageSizeOptions]="[10, 25, 50, 100]"
+  <mat-paginator paginator [length]="getLengthSource()" [pageSize]="10" [pageSizeOptions]="[10, 25, 50, 100]"
                  showFirstLastButtons></mat-paginator>
 
 </mat-card>
