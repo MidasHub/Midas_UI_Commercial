@@ -454,7 +454,11 @@ export class TransactionService {
       .set('accessToken', this.accessToken.base64EncodedAuthenticationKey);
     const keys = Object.keys(form);
     for (const key of keys) {
-      httpParams = httpParams.set(key, form[key]);
+      if (key.includes('amount')) {
+        httpParams = httpParams.set(key, String(Number(form[key])));
+      } else {
+        httpParams = httpParams.set(key, form[key]);
+      }
     }
     return this.http.post<any>(`${this.GatewayApiUrlPrefix}/savingTransaction/paid_fee_for_transaction`, httpParams);
   }
