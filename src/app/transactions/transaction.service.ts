@@ -449,12 +449,12 @@ export class TransactionService {
   }
 
   paidFeeForTransaction(form: any): Observable<any> {
-    const httpParams = new HttpParams()
+    let httpParams = new HttpParams()
       .set('createdBy', this.accessToken.userId)
       .set('accessToken', this.accessToken.base64EncodedAuthenticationKey);
     const keys = Object.keys(form);
     for (const key of keys) {
-      httpParams.set(key, form[key]);
+      httpParams = httpParams.set(key, form[key]);
     }
     return this.http.post<any>(`${this.GatewayApiUrlPrefix}/savingTransaction/paid_fee_for_transaction`, httpParams);
   }

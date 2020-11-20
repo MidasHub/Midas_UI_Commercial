@@ -1,6 +1,6 @@
 <h1 mat-dialog-title>Thêm thu/chi tiền cho giao dịch [{{txnCode}}]</h1>
 <div mat-dialog-content>
-  <div class="custom-files-input"  fxLayout="column">
+  <div class="custom-files-input" fxLayout="column">
     <div fxLayout="column"
          *ngIf="transactionPaid"
          [formGroup]="formDialogPaid"
@@ -24,8 +24,10 @@
         <mat-form-field fxFlex="30%" *ngIf="formDialogPaid.contains('savingAccountPaid')" class="input_custom">
           <mat-label>Lựa chọn tài khoản</mat-label>
           <mat-select required formControlName="savingAccountPaid">
-            <mat-option *ngFor="let type of accountsPaid" [value]="type.id">
-              {{type.externalId ? type.externalId + ' - ' : ''}} {{type.accountBalance | money}}
+            <mat-option *ngFor="let type of accountsPaid"
+                        [fxHide]="type.hide"
+                        [value]="type.id">
+              {{type.externalId ? type.externalId + ' - ' : ''}} {{type.balance | money}}
             </mat-option>
           </mat-select>
         </mat-form-field>
@@ -34,8 +36,10 @@
           <input
             matInput
             required
+            currencyMask
             formControlName="amountPaid">
-          <mat-error *ngIf="formDialogPaid.controls.amountPaid.hasError('required')">Vui lòng thêm thông tin trước khi thực
+          <mat-error *ngIf="formDialogPaid.controls.amountPaid.hasError('required')">Vui lòng thêm thông tin trước khi
+            thực
             hiện
           </mat-error>
         </mat-form-field>
@@ -69,8 +73,9 @@
         <mat-form-field fxFlex="30%" *ngIf="formDialogGet.contains('savingAccountGet')" class="input_custom">
           <mat-label>Lựa chọn tài khoản</mat-label>
           <mat-select required formControlName="savingAccountGet">
-            <mat-option *ngFor="let type of accountsFee" [value]="type.id">
-              {{type.externalId}} - {{type.accountBalance | money}}
+            <mat-option *ngFor="let type of accountsFee"
+                        [value]="type.id">
+              {{type.externalId}} - {{type.balance | money}}
             </mat-option>
           </mat-select>
         </mat-form-field>
@@ -79,8 +84,10 @@
           <mat-label>Số tiền</mat-label>
           <input
             required
+            currencyMask
             matInput formControlName="amountGet">
-          <mat-error *ngIf="formDialogGet.controls.amountGet.hasError('required')">Vui lòng thêm thông tin trước khi thực
+          <mat-error *ngIf="formDialogGet.controls.amountGet.hasError('required')">Vui lòng thêm thông tin trước khi
+            thực
             hiện
           </mat-error>
 
