@@ -169,11 +169,16 @@
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Loại GD</th>
         <td mat-cell *matCellDef="let transaction"
             [ngSwitch]="getDataOfGroupTxnCode(transaction)[0].txnType">
-          <button *ngSwitchCase="'CASH'" class="btn btn-success">RTM</button>
-          <button *ngSwitchCase="'ROLLTERM'" class="btn btn-success">
+          <button *ngSwitchCase="'CASH'" style="background: #FFCA00; color: white;" mat-button
+                  class="btn btn-success">RTM
+          </button>
+          <button *ngSwitchCase="'ROLLTERM'" style="background: #0f36e4; color: white;" mat-button
+                  class="btn btn-success">
             ĐHT
           </button>
-          <button *ngSwitchCase="'BATCH'" class="btn btn-success">Lô</button>
+          <button *ngSwitchCase="'BATCH'" style="background: #e74c3c; color: white;" mat-button
+                  class="btn btn-success">Lô
+          </button>
           <button *ngSwitchDefault class="btn btn-success">
             <i class="fa fa-info-circle"></i>
           </button>
