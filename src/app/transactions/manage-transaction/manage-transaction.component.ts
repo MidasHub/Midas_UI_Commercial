@@ -205,7 +205,7 @@ export class ManageTransactionComponent implements OnInit {
     const wholesaleChoose = form.wholesaleChoose;
     const RetailsChoose = form.RetailsChoose;
     const keys = Object.keys(form);
-    console.log(form, this.transactionsData, wholesaleChoose, RetailsChoose);
+    console.log(form);
     this.filterData = this.transactionsData.filter(v => {
       for (const key of keys) {
         if (['wholesaleChoose', 'RetailsChoose'].indexOf(key) === -1) {
@@ -220,7 +220,7 @@ export class ManageTransactionComponent implements OnInit {
         }
       }
       const check_wholesaleChoose = wholesaleChoose ? v.type.startsWith('B') : false;
-      const check_RetailsChoose = RetailsChoose ? v.type === 'cash' || v.type === 'rollterm' : false;
+      const check_RetailsChoose = RetailsChoose ? (v.type === 'cash' || v.type === 'rollTerm') : false;
       if (!check_wholesaleChoose && !check_RetailsChoose) {
         return false;
       }
@@ -239,7 +239,6 @@ export class ManageTransactionComponent implements OnInit {
       return total + Math.round(num?.pnlAmount);
     }, 0);
     this.dataSource = this.filterData.slice(offset, offset + limit);
-    console.log(this.dataSource);
   }
 
   get fromDateAndToDate() {

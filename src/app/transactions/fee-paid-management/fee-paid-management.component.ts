@@ -401,7 +401,6 @@ export class FeePaidManagementComponent implements OnInit {
       return v.refid;
     });
     const re = refids.toString().split(',').join( '-');
-    console.log(re);
     this.transactionService.exportTransactionFeePaid(re);
   }
 }
