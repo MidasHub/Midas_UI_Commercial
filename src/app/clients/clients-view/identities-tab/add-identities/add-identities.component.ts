@@ -25,8 +25,22 @@ export class AddIdentitiesComponent implements OnInit {
               private bankService: BankService,
               private authenticationService: AuthenticationService) {
     console.log(data);
+    this.documentTypes = [];
     const {clientIdentifierTemplate} = data;
-    this.documentTypes = clientIdentifierTemplate.allowedDocumentTypes;
+    clientIdentifierTemplate.allowedDocumentTypes.forEach((type: any) => {
+      debugger;
+      if (data.addOther){
+        if (type.id < 38 || type.id > 57){
+
+          this.documentTypes.push(type);
+        }
+      }else{
+        if (type.id >= 38 && type.id <= 57){
+          this.documentTypes.push(type);
+        }
+      }
+    })
+    //this.documentTypes = clientIdentifierTemplate.allowedDocumentTypes;
   }
 
   ngOnInit(): void {
