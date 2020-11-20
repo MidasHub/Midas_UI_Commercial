@@ -13,10 +13,13 @@ jobs:
     - name: git pull
       run: |
         cd /root/actions-runner/midas/midas_source/
+        ls
         git pull origin staging
     - name: yarn install 
       run: |
+        ls
         yarn install
     - name: build app 
       run: |
+        ls
         ng build --prod --output-hashing=all --deleteOutputPath=true --base-href="/"  --serviceWorker=true --outputPath="/usr/share/nginx/html/staging/" 
