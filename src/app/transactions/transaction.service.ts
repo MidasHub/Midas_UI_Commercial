@@ -322,7 +322,6 @@ export class TransactionService {
   downloadVoucher(transactionId: string) {
     const url = `${this.environment.GatewayApiUrl}${this.GatewayApiUrlPrefix}/export/download_voucher?id=${transactionId}&accessToken=${this.accessToken.base64EncodedAuthenticationKey}&createdBy=${this.accessToken.userId}`;
     let xhr = new XMLHttpRequest();
-    xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function () {
       let a;
       if (xhr.readyState === 4 && xhr.status === 200) {
@@ -419,6 +418,7 @@ export class TransactionService {
     // tslint:disable-next-line:max-line-length
     const fileUrl = `${this.environment.GatewayApiUrl}${this.environment.GatewayApiUrlPrefix}/export/pre_export_transaction?ext5=ALL&typeExport=transaction&accessToken=${this.accessToken.base64EncodedAuthenticationKey}&createdBy=${this.accessToken.userId}&${query}`;
     xhttp.open('GET', fileUrl);
+    xhttp.setRequestHeader('Gateway-TenantId', this.environment.GatewayTenantId);
     xhttp.responseType = 'blob';
     xhttp.send();
   }
@@ -483,6 +483,7 @@ export class TransactionService {
     &permission=${!permit}
     &createdBy=${this.accessToken.userId}&transactionList=${transactions}`;
     xhttp.open('GET', fileUrl);
+    xhttp.setRequestHeader('Gateway-TenantId', this.environment.GatewayTenantId);
     xhttp.responseType = 'blob';
     xhttp.send();
   }

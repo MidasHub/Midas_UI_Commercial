@@ -13,7 +13,8 @@ import {AlertService} from '../../../core/alert/alert.service';
 })
 export class AddFeeDialogComponent implements OnInit {
   paidPaymentType: any[] = [];
-  formDialog: FormGroup;
+  formDialogPaid: FormGroup;
+  formDialogGet: FormGroup;
   accountsFee: any[] = [];
   txnCode: string;
   transactions: any[] = [];
@@ -22,13 +23,15 @@ export class AddFeeDialogComponent implements OnInit {
   transactionFee: any;
   transactionPaid: any;
   showPaid = false;
-  showFee = false;
+  showGet = true;
   showCashAccountPaid = true;
   selectedPaymentTypePaid = '';
   paidAmount = 0;
   feeAmount = 0;
   donePaid = false;
   doneFee = false;
+  isBATCH = false;
+
 
   constructor(private transactionService: TransactionService,
               private formBuilder: FormBuilder,
@@ -39,15 +42,22 @@ export class AddFeeDialogComponent implements OnInit {
               private alertServices: AlertService) {
     console.log(this.data);
     this.txnCode = data.data?.txnCode;
-    this.formDialog = this.formBuilder.group({
-      'paymentCodeGet': [''],
-      'amountGet': [''],
-      'savingAccountGet': [''],
-      'noteGet': [''],
+    this.formDialogPaid = this.formBuilder.group({
       'paymentCode': [''],
       'savingAccountPaid': [''],
       'amountPaid': [''],
       'notePaid': ['']
+    });
+    this.formDialogGet = this.formBuilder.group({
+      'paymentCodeGet': [''],
+      'amountGet': [''],
+      'savingAccountGet': [''],
+      'noteGet': [''],
+    });
+    this.formDialogPaid.get('savingAccountPaid').valueChanges.subscribe(value => {
+      if (value !== 'DE') {
+        this.showGet = true;
+      }
     });
     this.transactionService.getFeePaidTransactionByTnRefNo(this.txnCode).subscribe(result => {
       this.transactions = result.result?.listTransactionFee;
@@ -55,9 +65,10 @@ export class AddFeeDialogComponent implements OnInit {
       this.transactionPaid = this.transactions.find(v => v.txnPaymentType === 'OUT');
       if (this.transactionPaid && this.transactionPaid.txnType === 'BATCH') {
         this.showCashAccountPaid = false;
-        this.showFee = false;
+        this.showGet = false;
+        this.isBATCH = true;
         this.selectedPaymentTypePaid = 'DE';
-        this.formDialog.get('paymentCode').setValue(this.selectedPaymentTypePaid);
+        this.formDialogPaid.get('paymentCode').setValue(this.selectedPaymentTypePaid);
         if (this.paidAmount < this.feeAmount) {
           this.paidAmount = -this.feeAmount - this.paidAmount;
         } else {
@@ -68,7 +79,7 @@ export class AddFeeDialogComponent implements OnInit {
 
       }
 
-      this.formDialog.get('paymentCode').setValue(this.selectedPaymentTypePaid);
+      this.formDialogPaid.get('paymentCode').setValue(this.selectedPaymentTypePaid);
     });
     // this.clientService.getClientAccountData()
     this.transactionService.getPaymentTypes().subscribe(result => {
@@ -105,12 +116,14 @@ export class AddFeeDialogComponent implements OnInit {
       }
     });
   }
-
+  getPaymentCode() {
+    this.formDialogPaid.get('paymentCode')
+  }
   ngOnInit(): void {
   }
 
   submitForm() {
-    const form = this.formDialog.value;
+    const form = this.formDialogPaid.value;
     form.txnCode = this.txnCode;
     this.transactionService.paidFeeForTransaction(form).subscribe(result => {
       if (result?.result.status) {

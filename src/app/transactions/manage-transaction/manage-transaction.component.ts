@@ -194,22 +194,6 @@ export class ManageTransactionComponent implements OnInit {
       } else {
         this.transactionsData = result?.result?.listPosTransaction;
       }
-      this.totalTerminalAmount = 0;
-      this.totalFeeAmount = 0;
-      this.totalCogsAmount = 0;
-      this.totalPnlAmount = 0;
-      this.totalTerminalAmount = this.transactionsData.reduce((total: any, num: any) => {
-        return total + Math.round(num?.terminalAmount);
-      }, 0);
-      this.totalFeeAmount = this.transactionsData.reduce((total: any, num: any) => {
-        return total + Math.round(num?.feeAmount);
-      }, 0);
-      this.totalCogsAmount = this.transactionsData.reduce((total: any, num: any) => {
-        return total + Math.round(num?.cogsAmount);
-      }, 0);
-      this.totalPnlAmount = this.transactionsData.reduce((total: any, num: any) => {
-        return total + Math.round(num?.pnlAmount);
-      }, 0);
       this.filterTransaction();
     });
   }
@@ -242,7 +226,18 @@ export class ManageTransactionComponent implements OnInit {
       }
       return true;
     });
-    console.log(this.filterData);
+    this.totalTerminalAmount = this.filterData.reduce((total: any, num: any) => {
+      return total + Math.round(num?.terminalAmount);
+    }, 0);
+    this.totalFeeAmount = this.filterData.reduce((total: any, num: any) => {
+      return total + Math.round(num?.feeAmount);
+    }, 0);
+    this.totalCogsAmount = this.filterData.reduce((total: any, num: any) => {
+      return total + Math.round(num?.cogsAmount);
+    }, 0);
+    this.totalPnlAmount = this.filterData.reduce((total: any, num: any) => {
+      return total + Math.round(num?.pnlAmount);
+    }, 0);
     this.dataSource = this.filterData.slice(offset, offset + limit);
     console.log(this.dataSource);
   }
