@@ -17,9 +17,11 @@ jobs:
         git pull origin staging
     - name: yarn install 
       run: |
+        cd /root/actions-runner/midas/midas_source/
         ls
         yarn install
     - name: build app 
       run: |
+        cd /root/actions-runner/midas/midas_source/
         ls
         ng build --prod --output-hashing=all --deleteOutputPath=true --base-href="/"  --serviceWorker=true --outputPath="/usr/share/nginx/html/staging/" 
