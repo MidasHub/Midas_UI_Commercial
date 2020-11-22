@@ -496,4 +496,15 @@ export class TransactionService {
       httpParams
     );
   }
+
+  revertFeeByResourceId(txnSavingResource: string): Observable<any> {
+    const httpParams = new HttpParams()
+      .set('resourceId', txnSavingResource)
+      .set('createdBy', this.accessToken.userId)
+      .set('accessToken', this.accessToken.base64EncodedAuthenticationKey);
+    return this.http.post<any>(
+      `${this.GatewayApiUrlPrefix}/savingTransaction/revert_fee_transaction`,
+      httpParams
+    );
+  }
 }

@@ -165,7 +165,7 @@ export class AddFeeDialogComponent implements OnInit {
         this.alertServices.alert({
           type: '🎉🎉🎉 Thành công !!!',
           message: '🎉🎉 Thanh toán phí thành công',
-          msgClass: 'cssBig',
+          msgClass: 'cssSuccess'
         });
         this.dialogRef.close({status: true});
       } else {
