@@ -1,22 +1,18 @@
 
+import { animate, state, style, transition, trigger } from "@angular/animations";
+import { DatePipe } from "@angular/common";
 import { Component, OnInit, ViewChild } from "@angular/core";
 import { FormBuilder, FormGroup } from "@angular/forms";
-import { MatPaginator } from "@angular/material/paginator";
-import { DatePipe } from "@angular/common";
-import { MatSort } from "@angular/material/sort";
-import { animate, state, style, transition, trigger } from "@angular/animations";
 import { MatDialog, MatDialogConfig } from "@angular/material/dialog";
-import { TransactionService } from "app/transactions/transaction.service";
-import { SettingsService } from "app/settings/settings.service";
-import { AuthenticationService } from "app/core/authentication/authentication.service";
-import { CentersService } from "app/centers/centers.service";
+import { MatPaginator } from "@angular/material/paginator";
+import { MatSort } from "@angular/material/sort";
 import { AlertService } from "app/core/alert/alert.service";
-import { RollTermScheduleDialogComponent } from "../dialog/roll-term-schedule/roll-term-schedule-dialog.component";
-import { CreateRollTermScheduleDialogComponent } from "../dialog/create-roll-term-schedule/create-roll-term-schedule-dialog.component";
-import { MatTableDataSource } from "@angular/material/table";
-import { AdvanceFeeRollTermComponent } from "../dialog/advance-fee-roll-term/advance-fee-roll-term.component";
+import { AuthenticationService } from "app/core/authentication/authentication.service";
 import { SavingsService } from "app/savings/savings.service";
 import { BankService } from "app/services/bank.service";
+import { SettingsService } from "app/settings/settings.service";
+import { TransactionService } from "app/transactions/transaction.service";
+import { AdvanceFeeRollTermComponent } from "../dialog/advance-fee-roll-term/advance-fee-roll-term.component";
 import { TransactionHistoryDialogComponent } from "../dialog/transaction-history/transaction-history-dialog.component";
 
 @Component({
@@ -34,7 +30,6 @@ import { TransactionHistoryDialogComponent } from "../dialog/transaction-history
 export class DueDayCardTabComponent implements OnInit {
   expandedElement: any;
   displayedColumns: string[] = [
-
     "panHolderName",
     "phone",
     "cardNumber",
@@ -57,7 +52,7 @@ export class DueDayCardTabComponent implements OnInit {
   statusOptionAll: any[] = [
     {
       label: 'Tất cả trạng thái',
-      value: 'ALL',
+      value: '',
     },
     {
       label: 'Khởi tạo',
@@ -82,10 +77,6 @@ export class DueDayCardTabComponent implements OnInit {
     {
       label: 'Chờ phí',
       value: 'P',
-    },
-    {
-      label: 'Đã nhận phí',
-      value: 'C',
     },
     {
       label: 'Từ chối',
@@ -135,7 +126,6 @@ export class DueDayCardTabComponent implements OnInit {
     this.getRollTermScheduleAndCardDueDayInfo();
     this.bankService.getListBank().subscribe((data: any) =>{
       this.listBank = data.result.listBank;
-      this.listBank.unshift({bankCode: 'ALL', bankName: 'Tất cả ngân hàng'});
     })
   }
 
@@ -220,7 +210,6 @@ export class DueDayCardTabComponent implements OnInit {
       .subscribe((result) => {
         this.isLoading = false;
         const message = `Cập nhật thành công cho thẻ: ${updateData.cardNumber} `;
-        // this.alertService.alertMsgTop({alertMsg: message});
         this.alertService.alert({message: message, msgClass: 'cssInfo'});
 
       })

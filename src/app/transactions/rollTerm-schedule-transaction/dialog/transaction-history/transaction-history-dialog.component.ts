@@ -80,14 +80,16 @@ formatCurrency(value: string) {
       });
   }
 
-
-  menuOpened() {
-    console.log("menuOpened");
+  displayTransactionType(type: string) {
+    if (type.startsWith("B")) return "Lô" ;
+    switch (type) {
+      case 'cash':
+        return 'RTM';
+      case 'rollTerm':
+        return 'ĐHT';
+      default:
+        return '';
+    }
   }
-
-  menuClosed() {
-    console.log("menuClosed");
-  }
-
 
 }
