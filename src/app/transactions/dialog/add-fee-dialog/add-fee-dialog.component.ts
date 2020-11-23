@@ -5,6 +5,7 @@ import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {ClientsService} from '../../../clients/clients.service';
 import {AuthenticationService} from '../../../core/authentication/authentication.service';
 import {AlertService} from '../../../core/alert/alert.service';
+import {MidasClientService} from '../../../midas-client/midas-client.service';
 
 @Component({
   selector: 'midas-add-fee-dialog',
@@ -13,7 +14,8 @@ import {AlertService} from '../../../core/alert/alert.service';
 })
 export class AddFeeDialogComponent implements OnInit {
   paidPaymentType: any[] = [];
-  formDialog: FormGroup;
+  formDialogPaid: FormGroup;
+  formDialogGet: FormGroup;
   accountsFee: any[] = [];
   txnCode: string;
   transactions: any[] = [];
@@ -22,13 +24,17 @@ export class AddFeeDialogComponent implements OnInit {
   transactionFee: any;
   transactionPaid: any;
   showPaid = false;
-  showFee = false;
+  showGet = true;
   showCashAccountPaid = true;
   selectedPaymentTypePaid = '';
   paidAmount = 0;
   feeAmount = 0;
   donePaid = false;
   doneFee = false;
+  isBATCH = false;
+  disableAmountPaid = false;
+  clientId: any;
+  clientAccount: any;
 
   constructor(private transactionService: TransactionService,
               private formBuilder: FormBuilder,
@@ -36,28 +42,91 @@ export class AddFeeDialogComponent implements OnInit {
               @Inject(MAT_DIALOG_DATA) public data: any,
               private clientService: ClientsService,
               private authenticationService: AuthenticationService,
-              private alertServices: AlertService) {
-    console.log(this.data);
+              private alertServices: AlertService,
+              private midasClientServices: MidasClientService) {
     this.txnCode = data.data?.txnCode;
-    this.formDialog = this.formBuilder.group({
-      'paymentCodeGet': [''],
-      'amountGet': [''],
-      'savingAccountGet': [''],
-      'noteGet': [''],
+    this.formDialogPaid = this.formBuilder.group({
       'paymentCode': [''],
       'savingAccountPaid': [''],
       'amountPaid': [''],
       'notePaid': ['']
     });
+    this.formDialogGet = this.formBuilder.group({
+      'paymentCodeGet': [''],
+      'amountGet': [''],
+      'savingAccountGet': [''],
+      'noteGet': [''],
+    });
+    this.formDialogPaid.get('paymentCode').valueChanges.subscribe(value => {
+      this.checkAccountAndAmountPaid();
+    });
+    this.formDialogGet.get('paymentCodeGet').valueChanges.subscribe(value => {
+      this.checkAccountFee();
+    });
+  }
+
+  getPaymentCode() {
+    return this.formDialogPaid.get('paymentCode').value;
+  }
+
+  checkAccountAndAmountPaid() {
+    const value = this.formDialogPaid.get('paymentCode').value;
+    if (value !== 'DE') {
+      this.showGet = true;
+      this.formDialogPaid.get('amountPaid').enable({onlySelf: true});
+    } else {
+      this.showGet = false;
+      this.formDialogPaid.get('amountPaid').setValue(-(this.transactionPaid?.feeRemain - this.transactionFee?.feeRemain));
+      if (!this.isBATCH) {
+        this.formDialogPaid.get('amountPaid').disable({onlySelf: true});
+      }
+    }
+    this.formDialogPaid.get('savingAccountPaid').setValue('');
+    const AC = value === 'CA' ? 9 : 8;
+    this.accountsPaid.map(v => {
+      if (v.productId !== AC) {
+        v.hide = true;
+      } else {
+        v.hide = false;
+      }
+    });
+  }
+
+  checkAccountFee() {
+    const value = this.formDialogGet.get('paymentCodeGet').value;
+    if (value === 'AM') {
+      if (!this.clientAccount) {
+        this.midasClientServices.getListSavingAccountByClientId(this.clientId).subscribe(result => {
+          this.clientAccount = result?.result?.listSavingAccount;
+          this.accountsFee = this.clientAccount;
+        });
+      } else {
+        this.accountsFee = this.clientAccount;
+      }
+    } else {
+      const AC = value === 'CA' ? 9 : 8;
+      this.accountsPaid.map(v => {
+        if (v.productId !== AC) {
+          v.hide = true;
+        } else {
+          v.hide = false;
+        }
+      });
+    }
+    this.formDialogGet.get('savingAccountGet').setValue('');
+  }
+
+  ngOnInit(): void {
     this.transactionService.getFeePaidTransactionByTnRefNo(this.txnCode).subscribe(result => {
       this.transactions = result.result?.listTransactionFee;
+      this.clientId = this.transactions[0].customerId;
       this.transactionFee = this.transactions.find(v => v.txnPaymentType === 'IN');
       this.transactionPaid = this.transactions.find(v => v.txnPaymentType === 'OUT');
       if (this.transactionPaid && this.transactionPaid.txnType === 'BATCH') {
         this.showCashAccountPaid = false;
-        this.showFee = false;
+        this.showGet = false;
+        this.isBATCH = true;
         this.selectedPaymentTypePaid = 'DE';
-        this.formDialog.get('paymentCode').setValue(this.selectedPaymentTypePaid);
         if (this.paidAmount < this.feeAmount) {
           this.paidAmount = -this.feeAmount - this.paidAmount;
         } else {
@@ -65,63 +134,44 @@ export class AddFeeDialogComponent implements OnInit {
         }
       } else {
         this.selectedPaymentTypePaid = 'FT';
-
       }
-
-      this.formDialog.get('paymentCode').setValue(this.selectedPaymentTypePaid);
+      this.formDialogPaid.get('paymentCode').setValue(this.selectedPaymentTypePaid);
     });
     // this.clientService.getClientAccountData()
     this.transactionService.getPaymentTypes().subscribe(result => {
       this.paidPaymentType = result?.result?.listPayment;
     });
     this.currentUser = this.authenticationService.getCredentials();
-    console.log(this.currentUser);
-    this.clientService.getClientOfStaff().subscribe(result => {
-      console.log(result);
-      const clientId = result?.result?.clientId;
-      if (clientId) {
-        this.clientService.getClientAccountData(clientId).subscribe(res => {
-          console.log(res);
-          let totalBalance = 0;
-          // @ts-ignore
-          this.accountsFee = res.savingsAccounts;
-          if (this.accountsFee) {
-            totalBalance = this.accountsFee.reduce((total: any, num: any) => {
-              if (num.accountBalance && [8, 9].indexOf(num.productId) !== -1) {
-                return total + Math.round(num?.accountBalance);
-              }
-              return total + 0;
-            }, 0);
-            this.accountsFee.map(v => {
-              if (v?.externalI?.indexOf('QTM') !== -1 || v?.externalI?.indexOf('tiền mặt') !== -1) {
-                v.flagAccountCa = true;
-              } else {
-                v.flagAccountCa = false;
-              }
-            });
-            this.accountsPaid = this.accountsFee;
-          }
-        });
-      }
+    this.midasClientServices.getListSavingAccountByUserId().subscribe(result => {
+      this.accountsFee = result?.result?.listSavingAccount;
+      this.accountsPaid = this.accountsFee;
+      this.checkAccountAndAmountPaid();
     });
   }
 
-  ngOnInit(): void {
-  }
-
   submitForm() {
-    const form = this.formDialog.value;
+    if (this.formDialogGet.invalid && this.formDialogPaid.invalid) {
+      this.formDialogPaid.markAllAsTouched();
+      this.formDialogGet.markAllAsTouched();
+      return;
+    }
+    const form = {
+      ...this.formDialogGet.value,
+      ...this.formDialogPaid.value
+    };
     form.txnCode = this.txnCode;
     this.transactionService.paidFeeForTransaction(form).subscribe(result => {
-      if (result?.result.status) {
+      if (result?.result?.status) {
         this.alertServices.alert({
           type: '🎉🎉🎉 Thành công !!!',
           message: '🎉🎉 Thanh toán phí thành công',
+          msgClass: 'cssSuccess'
         });
         this.dialogRef.close({status: true});
       } else {
         this.alertServices.alert({
           type: '🚨🚨🚨🚨 Lỗi ',
+          msgClass: 'cssBig',
           message: '🚨🚨 Lỗi thanh toán phí, vui lòng liên hệ IT Support để được hổ trợ 🚨🚨',
         });
         this.dialogRef.close({status: false});

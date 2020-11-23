@@ -238,22 +238,11 @@ export class FeePaidManagementComponent implements OnInit {
           v.agencyId = '#';
         }
         v.DEAmount = 0;
-        if (v.txnType === 'BATCH') {
-          v.customerName = v.txnCode;
-          if (v.txnPaymentType === 'OUT') {
-            v.DEAmount = v.txnAmount - v.feeSum;
-          }
+        v.customerName = v.txnCode;
+        if (v.txnPaymentType === 'OUT') {
+          v.DEAmount = v.txnAmount - v.feeSum;
         }
       });
-      this.totalFeeSum = this.transactionsData.reduce((total: any, num: any) => {
-        return total + Math.round(num?.feeSum);
-      }, 0);
-      this.totalFeePaid = this.transactionsData.reduce((total: any, num: any) => {
-        return total + Math.round(num?.feePaid);
-      }, 0);
-      this.totalFeeRemain = this.transactionsData.reduce((total: any, num: any) => {
-        return total + Math.round(num?.feeRemain);
-      }, 0);
       this.filterTransaction();
     });
   }
@@ -292,7 +281,15 @@ export class FeePaidManagementComponent implements OnInit {
         return false;
       });
     }
-
+    this.totalFeeSum = this.filterData.reduce((total: any, num: any) => {
+      return total + Math.round(num?.feeSum);
+    }, 0);
+    this.totalFeePaid = this.filterData.reduce((total: any, num: any) => {
+      return total + Math.round(num?.feePaid);
+    }, 0);
+    this.totalFeeRemain = this.filterData.reduce((total: any, num: any) => {
+      return total + Math.round(num?.feeRemain);
+    }, 0);
     // @ts-ignore
     this.groupData = this.groupBy(this.filterData, pet => pet.txnCode);
     this.dataSource = Array.from(this.groupData.keys()).slice(offset, offset + limit);
@@ -391,17 +388,19 @@ export class FeePaidManagementComponent implements OnInit {
     this.filterTransaction();
   }
 
-  checkMButton(tran: any) {
-    const b1 = !this.checkPermissions('ALL_FUNCTIONS') && tran.status !== 'C' && tran.status !== 'V';
-    const b2 = !this.checkPermissions('TXNOFFICE_CREATE') && tran.feePaid > 0 && tran.status !== 'V';
-    if (b1 && b2) {
-      return true;
-    }
-    return false;
+  checkShowButton(txnCode: string) {
+    return this.getDataOfGroupTxnCode(txnCode).find((v: any) => v.feeRemain) || false;
+  }
+
+  checkFeePaid(txnCode: string) {
+    return this.getDataOfGroupTxnCode(txnCode).find((v: any) => v.feePaid) || false;
   }
 
   exportTransactionFeePaid() {
-    const export_transactions = Array.from(this.groupData.keys()).toString().replace(',', '-');
-    this.transactionService.exportTransactionFeePaid(export_transactions);
+    const refids = this.filterData.map(v => {
+      return v.refid;
+    });
+    const re = refids.toString().split(',').join( '-');
+    this.transactionService.exportTransactionFeePaid(re);
   }
 }
