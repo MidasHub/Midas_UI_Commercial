@@ -5,8 +5,16 @@
     </h1>
     <div class="header-booking" [fxLayout]="'row'" fxLayout.lt-md="column" [fxLayoutGap]="'1%'" fxLayoutGap.lt-md="0%">
       <mat-form-field fxFlex="20%">
-        <input matInput disabled [(value)]="transactionInfo.reqAmount" format="money" />
+        <input matInput disabled [value]="transactionInfo?.reqAmount | money"  />
         <span matPrefix>Số tiền đáo hạn:&nbsp;</span>
+      </mat-form-field>
+      <mat-form-field fxFlex="20%">
+        <input matInput disabled [value]="transactionInfo?.totalAmountPaid | money"  />
+        <span matPrefix>Đã chi:&nbsp;</span>
+      </mat-form-field>
+      <mat-form-field fxFlex="20%">
+        <input matInput disabled [value]="transactionInfo?.totalAmountGet | money"  />
+        <span matPrefix>Đã thu hồi:&nbsp;</span>
       </mat-form-field>
       <mat-form-field fxFlex="10%">
         <input matInput disabled [(value)]="transactionInfo.feePercentage" />
@@ -14,7 +22,7 @@
         <span matSuffix>%</span>
       </mat-form-field>
       <mat-form-field fxFlex="20%">
-        <input matInput disabled [(value)]="transactionInfo.feeAmount" />
+        <input matInput disabled [value]="transactionInfo.feeAmount | money" />
         <span matPrefix> - Tiền phí cần thu:&nbsp;</span>
       </mat-form-field>
     </div>
@@ -104,13 +112,15 @@
         let-rollTermId="rollTermId"
         let-totalPaid="totalPaid"
         let-totalGet="totalGet"
+        let-refid="refid"
+        let-trnRefNo="trnRefNo"
         style="width: 50px"
       >
-        <button mat-menu-item><img src="assets/images/icons/next.svg" />&nbsp;Chi tiền</button>
-        <button mat-dialog-close (click)="routeToMakeRollTermGetCash(rollTermId, totalPaid - totalGet)" mat-menu-item>
+        <button mat-menu-item><img src="assets/images/icons/next.svg" (click)="addFeeDialogByTransactionId(rollTermId)" />&nbsp;Chi tiền</button>
+        <button mat-dialog-close  (click)="routeToMakeRollTermGetCash(rollTermId, refid, totalPaid - totalGet)" mat-menu-item>
           <img src="assets/images/icons/add.svg" />&nbsp;Thu hồi
         </button>
-        <button mat-menu-item><i class="fa fa-eye" aria-hidden="true"></i>&nbsp;Thu phí</button>
+        <button mat-menu-item *ngIf="trnRefNo" (click)="addFeeDialog(trnRefNo)"><i class="fa fa-eye" aria-hidden="true"></i>&nbsp;Thu phí</button>
       </ng-template>
     </mat-menu>
   </mat-card>

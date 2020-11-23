@@ -1,10 +1,14 @@
 import { Component, Inject, OnInit } from "@angular/core";
-import { FormBuilder, FormGroup } from "@angular/forms";
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { animate, state, style, transition, trigger } from "@angular/animations";
-import { MAT_DIALOG_DATA } from "@angular/material/dialog";
+import { MatDialog, MAT_DIALOG_DATA } from "@angular/material/dialog";
 import { FormfieldBase } from "app/shared/form-dialog/formfield/model/formfield-base";
 import { BookingService } from "app/booking-internal/booking.service";
 import { Router } from "@angular/router";
+import { MatTableDataSource } from "@angular/material/table";
+import { DatePipe } from "@angular/common";
+import { AlertService } from "app/core/alert/alert.service";
+import { TransactionService } from "../../../transaction.service";
 
 @Component({
   selector: "midas-create-roll-term-schedule-dialog",
@@ -20,51 +24,111 @@ import { Router } from "@angular/router";
 })
 export class CreateRollTermScheduleDialogComponent implements OnInit {
   expandedElement: any;
+  requestAmount: any;
+  info: any;
+  totalBookingAmount: number;
+  dataSource: MatTableDataSource<any>;
+  displayedColumns: string[] = ["transaction", "txnDate", "amount", "actions"];
   transactionInfo: any;
-  dataSource: any[];
-  displayedColumns: string[] = [
-    "transaction",
-    "txnDate",
-    "amount",
-  ];
-
-
+  listRollTermBooking: any[];
   form: FormGroup;
   pristine: boolean;
 
   constructor(
     private router: Router,
-    private bookingService : BookingService,
+    private datePipe: DatePipe,
+    private alertService: AlertService,
+    private transactionService: TransactionService,
+    public dialog: MatDialog,
     @Inject(MAT_DIALOG_DATA) public data: any,
-    private formBuilder: FormBuilder) {
+    private formBuilder: FormBuilder
+  ) {
+    this.info = data;
+    this.info.feeAmount = 0;
+    this.dataSource = new MatTableDataSource();
 
-    // this.getRollTermScheduleAndCardDueDayInfo(data.rollTermId);
-}
+    this.form = this.formBuilder.group({
+      requestAmount: ["", Validators.required],
+      feeRate: ["", Validators.required],
+      rollTermBooking: ["", Validators.required],
+    });
+    this.form.get("feeRate").valueChanges.subscribe((value) => {
+      this.calculateFee();
+    });
 
-  ngOnInit() {
+    this.form.get("requestAmount").valueChanges.subscribe((value) => {
+      this.listRollTermBooking = [];
+      this.dataSource.data = this.listRollTermBooking;
+      for (let index = 0; index < 4; index++) {
+        let amountOnPerBooking = value * 0.25;
+        let BookingRollTerm = {
+          txnDate: new Date(),
+          amountBooking: amountOnPerBooking,
+        };
+        this.listRollTermBooking.push(BookingRollTerm);
+      }
 
+      this.dataSource.data = this.listRollTermBooking;
+      this.totalBookingAmount = value;
+      this.calculateFee();
+
+      this.form.get("rollTermBooking").setValue(this.listRollTermBooking);
+    });
   }
 
-  getRollTermScheduleAndCardDueDayInfo(rollTermId: string) {
+  ngOnInit() {}
 
-    this.bookingService
-      .getBookingInternalByRollTermId(rollTermId)
-      .subscribe((result) => {
+  calculateTotalBookingAmount() {
+    let totalBookingAmountTmp = 0;
+    let lastBookingAmountExceptLast = 0;
+    let index = 0;
+    this.listRollTermBooking.forEach((booking: any) => {
+      if (index < this.listRollTermBooking.length - 1) {
+        lastBookingAmountExceptLast += booking.amountBooking;
+        index++;
+      }
+    });
 
-        this.dataSource = result?.result.bookingInternalResponseDto?.listBookingInternalEntities;
-        this.transactionInfo = result?.result.bookingInternalResponseDto?.billPosTransactionDailyEntity;
-        this.transactionInfo.feeAmount = ((this.transactionInfo.feePercentage / 100 ) * this.transactionInfo.reqAmount ).toFixed(0) ;
-      });
+    this.listRollTermBooking[this.listRollTermBooking.length - 1].amountBooking =
+      this.form.get("requestAmount").value - lastBookingAmountExceptLast;
+    this.listRollTermBooking.forEach((booking: any) => {
+      totalBookingAmountTmp += booking.amountBooking;
+    });
+
+    this.totalBookingAmount = totalBookingAmountTmp;
+    this.dataSource.data = this.listRollTermBooking;
   }
 
+  addBookingRow = function () {
+    let BookingRollTerm = {
+      txnDate: new Date(),
+      amountBooking: 0,
+    };
+    this.listRollTermBooking.push(BookingRollTerm);
+    this.calculateTotalBookingAmount();
+  };
 
-  menuOpened() {
-    console.log("menuOpened");
+  removeBookingRow(index: number) {
+    this.listRollTermBooking.forEach((rollTerm: any) => {
+      let indexMember = this.listRollTermBooking.findIndex((elementIdex: any) => elementIdex === rollTerm);
+
+      if (indexMember == index) {
+        this.listRollTermBooking.splice(
+          this.listRollTermBooking.findIndex((item: any) => item == rollTerm),
+          1
+        );
+      }
+    });
+    this.calculateTotalBookingAmount();
   }
 
-  menuClosed() {
-    console.log("menuClosed");
-  }
+  calculateFee = function () {
 
-
+    if (this.form.invalid) {
+      return;
+    }
+    let requestAmount =  this.form.get("requestAmount").value ;
+    let feeRate =  this.form.get("feeRate").value;
+    this.info.feeAmount = (requestAmount * feeRate / 100).toFixed(0) ;
+  };
 }

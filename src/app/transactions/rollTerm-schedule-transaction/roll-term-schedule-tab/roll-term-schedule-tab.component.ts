@@ -1,19 +1,21 @@
+import { animate, state, style, transition, trigger } from "@angular/animations";
+import { DatePipe } from "@angular/common";
 import { Component, OnInit, ViewChild } from "@angular/core";
 import { FormBuilder, FormGroup } from "@angular/forms";
-import { MatPaginator } from "@angular/material/paginator";
-import { DatePipe } from "@angular/common";
-import { MatSort } from "@angular/material/sort";
-import { merge } from "rxjs";
-import { tap } from "rxjs/operators";
-import { animate, state, style, transition, trigger } from "@angular/animations";
 import { MatDialog } from "@angular/material/dialog";
-import { TransactionService } from "app/transactions/transaction.service";
-import { SettingsService } from "app/settings/settings.service";
-import { AuthenticationService } from "app/core/authentication/authentication.service";
+import { MatPaginator } from "@angular/material/paginator";
+import { MatSort } from "@angular/material/sort";
 import { CentersService } from "app/centers/centers.service";
 import { AlertService } from "app/core/alert/alert.service";
-import { RollTermScheduleDialogComponent } from "../dialog/roll-term-schedule/roll-term-schedule-dialog.component";
+import { AuthenticationService } from "app/core/authentication/authentication.service";
+import { SettingsService } from "app/settings/settings.service";
+import { ConfirmDialogComponent } from "app/transactions/dialog/coifrm-dialog/confirm-dialog.component";
+import { TransactionService } from "app/transactions/transaction.service";
+import { merge } from "rxjs";
+import { tap } from "rxjs/operators";
 import { CreateRollTermScheduleDialogComponent } from "../dialog/create-roll-term-schedule/create-roll-term-schedule-dialog.component";
+import { ExecuteLoanDialogComponent } from "../dialog/execute-loan-dialog/execute-loan-dialog.component";
+import { RollTermScheduleDialogComponent } from "../dialog/roll-term-schedule/roll-term-schedule-dialog.component";
 
 @Component({
   selector: "midas-roll-term-schedule-tab",
@@ -28,6 +30,7 @@ import { CreateRollTermScheduleDialogComponent } from "../dialog/create-roll-ter
   ],
 })
 export class RollTermScheduleTabComponent implements OnInit {
+
   expandedElement: any;
   displayedColumns: string[] = [
     "panHolderName",
@@ -148,12 +151,12 @@ export class RollTermScheduleTabComponent implements OnInit {
 
   ngOnInit(): void {
     this.currentUser = this.authenticationService.getCredentials();
-    //this.dataSource = this.transactionsData;
     this.getRollTermScheduleAndCardDueDayInfo();
   }
 
   // tslint:disable-next-line:use-lifecycle-interface
   ngAfterViewInit() {
+
     this.sort.sortChange.subscribe(() => (this.paginator.pageIndex = 0));
     merge(this.sort.sortChange, this.paginator.page)
       .pipe(tap(() => this.getRollTermScheduleAndCardDueDayInfo()))
@@ -191,14 +194,6 @@ export class RollTermScheduleTabComponent implements OnInit {
     return false;
   }
 
-  menuOpened() {
-    console.log("menuOpened");
-  }
-
-  menuClosed() {
-    console.log("menuClosed");
-  }
-
   showRollTermScheduleDialog(rollTermId: string) {
     const data = {
       rollTermId: rollTermId,
@@ -213,19 +208,40 @@ export class RollTermScheduleTabComponent implements OnInit {
     });
   }
 
-  showCreateRollTermScheduleDialog(clientId: string, panHolderName: string, identifierId: string, panNumber: string) {
+  executeLoanManualDialog(refId: string) {
     const data = {
-      clientId: clientId,
-      panHolderName: panHolderName,
-      panNumber: panNumber,
-      identifierId: identifierId,
+      refId: refId,
     };
-    const dialog = this.dialog.open(CreateRollTermScheduleDialogComponent, { height: "auto", width: "80%", data });
+    const dialog = this.dialog.open(ExecuteLoanDialogComponent, { height: "auto", width: "50%", data });
     dialog.afterClosed().subscribe((response: any) => {
       console.log(response);
       if (response.data) {
         const value = response.data.value;
 
+      }
+    });
+  }
+
+  undoRollTermTransaction(transactionId: string) {
+    const dialog = this.dialog.open(ConfirmDialogComponent, {
+      data: {
+        message: 'Bạn chắc chắn muốn hủy giao dịch ' + transactionId,
+        title: 'Hủy giao dịch'
+      },
+    });
+    dialog.afterClosed().subscribe(data => {
+      if (data) {
+        this.transactionService.revertTransaction(transactionId).subscribe(result => {
+          if (result.status === '200') {
+            // this.getTransaction();
+            // const message = 'Hủy giao dịch ' + transactionId + ' thành công';
+            // this.alertService.alert({
+            //   msgClass: 'cssInfo',
+            //   message: message
+            // });
+            // this.getTransaction();
+          }
+        });
       }
     });
   }

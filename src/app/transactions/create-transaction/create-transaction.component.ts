@@ -65,6 +65,7 @@ export class CreateTransactionComponent implements OnInit {
       const type = params.get("type");
       const remainValue = params.get("remainValue");
       const tranId = params.get("tranId");
+      const bookingId = params.get("bookingId");
       this.isLoading = true;
       this.transactionService.getTransactionTemplate(clientId, identifierId, tranId).subscribe((data: any) => {
         this.isLoading = false;
@@ -74,6 +75,7 @@ export class CreateTransactionComponent implements OnInit {
         this.transactionInfo.type = type;
         this.transactionInfo.identifierId = identifierId;
         this.transactionInfo.clientId = clientId;
+        this.transactionInfo.bookingId =  bookingId;
         this.transactionInfo.remainValue = this.formatCurrency(remainValue);
         if (this.transactionInfo.type == "cash") {
           this.transactionInfo.accountCash = data.result.listAccAccount[0].documentKey;
@@ -360,7 +362,7 @@ export class CreateTransactionComponent implements OnInit {
         hPosition: "center",
       });
       setTimeout(() => {
-        this.router.navigate(["/transaction"]);
+        this.router.navigate(["/transaction/rollTermSchedule"]);
       }, 5000); //5s
     });
   }

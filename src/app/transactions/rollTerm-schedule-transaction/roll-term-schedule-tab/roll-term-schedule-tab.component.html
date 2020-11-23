@@ -202,8 +202,6 @@
             style="float: right; width: 15px"
             [matMenuTriggerData]="transaction"
             [matMenuTriggerFor]="transactionMenu"
-            (menuOpened)="menuOpened()"
-            (menuClosed)="menuClosed()"
             ><i class="fa fa-ellipsis-v" aria-hidden="true"></i
           ></span>
         </td>
@@ -256,12 +254,10 @@
       let-panNumber="panNumber"
       style="width: 50px"
     >
-      <button  (click)="showCreateRollTermScheduleDialog(custId, panHolderName, identifierId, panNumber )" mat-menu-item><img src="assets/images/icons/next.svg" />&nbsp;Tạo ĐHT</button>
-
       <button (click)="showRollTermScheduleDialog(refid)" mat-menu-item>
         <img src="assets/images/icons/add.svg" />&nbsp;Lịch ĐHT
       </button>
-      <button mat-menu-item ><img src="assets/images/icons/order.svg" />&nbsp;Xử lý ĐHT</button>
+      <button mat-menu-item (click)="executeLoanManualDialog(refid);"><img src="assets/images/icons/order.svg" />&nbsp;Xử lý ĐHT</button>
 
       <hr />
       <button mat-menu-item><i class="fa fa-eye" aria-hidden="true"></i>&nbsp;Hủy ĐHT</button>

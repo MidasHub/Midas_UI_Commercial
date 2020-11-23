@@ -27,7 +27,31 @@ export class TransactionService {
     );
     this.GatewayApiUrlPrefix = environment.GatewayApiUrlPrefix;
     this.environment = environment;
-    console.log('accessToken', this.accessToken);
+  }
+
+  ExecuteRollTermTransactionByTrnRefNo(form: any): Observable<any> {
+    let httpParams = new HttpParams()
+      .set('createdBy', this.accessToken.userId)
+      .set('accessToken', this.accessToken.base64EncodedAuthenticationKey);
+
+      const keys = Object.keys(form);
+      for (const key of keys) {
+        if (key.includes('amount')) {
+          httpParams = httpParams.set(key, String(Number(form[key])));
+        } else {
+          httpParams = httpParams.set(key, form[key]);
+        }
+      }
+    return this.http.post<any>(`${this.GatewayApiUrlPrefix}/transaction/repayment_rollterm_manual_transaction`, httpParams);
+  }
+
+  getExecuteRollTermTransactionByTrnRefNo(refId: number): Observable<any> {
+    const httpParams = new HttpParams()
+      .set('refId', String(refId))
+      .set('createdBy', this.accessToken.userId)
+      .set('accessToken', this.accessToken.base64EncodedAuthenticationKey);
+
+    return this.http.post<any>(`${this.GatewayApiUrlPrefix}/transaction/get_execute_loan_transaction_template`, httpParams);
   }
 
   getTransactionHistoryByClientId(clientId: string): Observable<any> {
@@ -106,6 +130,7 @@ export class TransactionService {
       .set('cogsRate', transactionInfo.cogsRate)
       .set('cogsAmount', transactionInfo.feeCogs)
       .set('pnlAmount', transactionInfo.feePNL)
+      .set('bookingId', transactionInfo.bookingId)
       .set('invoiceAmount', String(this.formatLong(transactionInfo.txnAmount)))
       .set('requestAmount', String(this.formatLong(transactionInfo.requestAmount)))
       .set('transferAmount', String(this.formatLong(transactionInfo.txnAmount)))
@@ -135,6 +160,31 @@ export class TransactionService {
       .set('productId', transactionInfo.productId)
       .set('groupId', transactionInfo.clientDto.groupId)
       .set('customerName', transactionInfo.clientDto.displayName)
+      .set('ext2', transactionInfo.type)
+      .set('BookingInternalDtoListString', transactionInfo.BookingInternalDtoListString)
+      .set('ext4', transactionInfo.identifierId)
+      .set('officeId', this.accessToken.officeId)
+      .set('createdBy', this.accessToken.userId)
+      .set('accessToken', this.accessToken.base64EncodedAuthenticationKey);
+
+    return this.http.post<any>(
+      `${this.GatewayApiUrlPrefix}/transaction/create_rollTerm_retail_transaction`,
+      httpParams
+    );
+  }
+
+  submitTransactionRollTermOnDialog(transactionInfo: any): Observable<any> {
+    const httpParams = new HttpParams()
+      .set('bookingId', transactionInfo.bookingId)
+      .set('accountNumber', transactionInfo.panNumber)
+      .set('accountBankId', transactionInfo.bankCode)
+      .set('accountTypeId', transactionInfo.cardType)
+      .set('feeRate', transactionInfo.rate)
+      .set('toClientId', transactionInfo.clientId)
+      .set('requestAmount', transactionInfo.requestAmount)
+      .set('productId', transactionInfo.productId)
+      .set('groupId', transactionInfo.groupId)
+      .set('customerName', transactionInfo.clientName)
       .set('ext2', transactionInfo.type)
       .set('BookingInternalDtoListString', transactionInfo.BookingInternalDtoListString)
       .set('ext4', transactionInfo.identifierId)
