@@ -61,6 +61,7 @@ import {ReactiveFormsModule} from '@angular/forms';
 import {MoneyPipe} from '../pipes/money.pipe';
 import { AddIdentitiesComponent } from './clients-view/identities-tab/add-identities/add-identities.component';
 import { AddIdentitiesExtraInfoComponent } from './clients-view/identities-tab/add-identities-extra-info/add-identities-extra-info.component';
+import { BalanceAccountClientComponent } from './balance-account-client/balance-account-client.component';
 
 /**
  * Clients Module
@@ -126,6 +127,7 @@ import { AddIdentitiesExtraInfoComponent } from './clients-view/identities-tab/a
     AddIdentitiesComponent,
     AddIdentitiesComponent,
     AddIdentitiesExtraInfoComponent,
+    BalanceAccountClientComponent,
   ],
   exports: [
   ],
