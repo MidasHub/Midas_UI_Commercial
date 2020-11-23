@@ -450,4 +450,23 @@ export class ClientsService {
       .set('accessToken', this.accessToken.base64EncodedAuthenticationKey);
     return this.http.post<any>(`${this.GatewayApiUrlPrefix}/common/get_list_staffName_of_office`, httpParams);
   }
+  getStaffOfUser(): Observable<any> {
+    const {displayName, officeId} = this.accessToken;
+    const httpParams = new HttpParams()
+      .set('officeId', officeId)
+      .set('createdBy', this.accessToken.userId)
+      .set('accessToken', this.accessToken.base64EncodedAuthenticationKey);
+    return this.http.post<any>(`${this.GatewayApiUrlPrefix}/common/get_staff_of_user`, httpParams);
+
+  }
+  getBalanceOfTeller(): Observable<any> {
+    // get_list_balance_teller
+    const {displayName, officeId} = this.accessToken;
+    const httpParams = new HttpParams()
+      .set('officeId', officeId)
+      .set('createdBy', this.accessToken.userId)
+      .set('accessToken', this.accessToken.base64EncodedAuthenticationKey);
+    return this.http.post<any>(`${this.GatewayApiUrlPrefix}/savingTransaction/get_list_balance_teller`, httpParams);
+
+  }
 }

@@ -50,13 +50,27 @@ import {ClientTransactionPayResolver} from './common-resolvers/client-transactio
 import {ClientDataAndTemplateResolver} from './common-resolvers/client-and-template.resolver';
 import {UsersResolver} from 'app/users/users.resolver';
 import {BalanceAccountClientComponent} from './balance-account-client/balance-account-client.component';
+import {BalanceAccountTellerComponent} from './balance-account-teller/balance-account-teller.component';
 
 const routes: Routes = [
   Route.withShell([
     {
-      path: 'balance-accounts',
-      data: {title: extract('Tài khoản khách hàng'), breadcrumb: 'Tài khoản khách hàng', routeParamBreadcrumb: false},
-      component: BalanceAccountClientComponent,
+      path: 'accounts',
+      data: {title: 'Tài khoản', breadcrumb: 'Tài khoản', routeParamBreadcrumb: false},
+      children: [{
+        path: 'balance-clients',
+        component: BalanceAccountClientComponent,
+        data: {title: extract('Khách hàng'), breadcrumb: 'Khách hàng'},
+      },
+        {
+          path: 'balance-teller',
+          component: BalanceAccountTellerComponent,
+          data: {title: extract('Teller'), breadcrumb: 'Teller'},
+        },
+        {
+          path: 'savings-accounts',
+          loadChildren: () => import('../savings/savings.module').then(m => m.SavingsModule)
+        }]
     },
     {
       path: 'clients',

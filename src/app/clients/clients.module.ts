@@ -62,6 +62,7 @@ import {MoneyPipe} from '../pipes/money.pipe';
 import { AddIdentitiesComponent } from './clients-view/identities-tab/add-identities/add-identities.component';
 import { AddIdentitiesExtraInfoComponent } from './clients-view/identities-tab/add-identities-extra-info/add-identities-extra-info.component';
 import { BalanceAccountClientComponent } from './balance-account-client/balance-account-client.component';
+import { BalanceAccountTellerComponent } from './balance-account-teller/balance-account-teller.component';
 
 /**
  * Clients Module
@@ -128,6 +129,7 @@ import { BalanceAccountClientComponent } from './balance-account-client/balance-
     AddIdentitiesComponent,
     AddIdentitiesExtraInfoComponent,
     BalanceAccountClientComponent,
+    BalanceAccountTellerComponent,
   ],
   exports: [
   ],
