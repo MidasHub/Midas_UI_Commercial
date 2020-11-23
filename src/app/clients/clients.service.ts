@@ -140,6 +140,14 @@ export class ClientsService {
   getClientAccountData(clientId: string) {
     return this.http.get(`/clients/${clientId}/accounts`);
   }
+  getClientAccountDataCross(clientId: string): Observable<any> {
+    const httpParams = new HttpParams()
+      .set('id', clientId)
+      .set('createdBy', this.accessToken.userId)
+      .set('accessToken', this.accessToken.base64EncodedAuthenticationKey);
+
+    return this.http.post<any>(`${this.GatewayApiUrlPrefix}/client/get_client_account_by_id`, httpParams);
+  }
 
   getClientOfStaff(): Observable<any> {
     const {displayName, officeId} = this.accessToken;
