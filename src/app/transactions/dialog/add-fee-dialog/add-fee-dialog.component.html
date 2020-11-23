@@ -74,6 +74,7 @@
           <mat-label>Lựa chọn tài khoản</mat-label>
           <mat-select required formControlName="savingAccountGet">
             <mat-option *ngFor="let type of accountsFee"
+                        [fxHide]="type.hide"
                         [value]="type.id">
               {{type.externalId}} - {{type.balance | money}}
             </mat-option>

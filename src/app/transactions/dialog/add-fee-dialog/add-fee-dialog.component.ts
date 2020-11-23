@@ -105,7 +105,8 @@ export class AddFeeDialogComponent implements OnInit {
       }
     } else {
       const AC = value === 'CA' ? 9 : 8;
-      this.accountsPaid.map(v => {
+      this.accountsFee = this.accountsPaid;
+      this.accountsFee.map(v => {
         if (v.productId !== AC) {
           v.hide = true;
         } else {
