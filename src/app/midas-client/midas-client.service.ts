@@ -40,6 +40,15 @@ export class MidasClientService {
     return this.http.post<any>(`${this.GatewayApiUrlPrefix}/client/get_list_client_by_query`, httpParams);
   }
 
+  getListSavingAccountFtByUserId(): Observable<any> {
+
+    const httpParams = new HttpParams()
+    .set('createdBy', this.accessToken.userId)
+    .set('accessToken', this.accessToken.base64EncodedAuthenticationKey);
+
+    return this.http.post<any>(`${this.GatewayApiUrlPrefix}/savingTransaction/get_list_saving_account_ft_by_user_id`, httpParams);
+  }
+
   getListSavingAccountByUserId(): Observable<any> {
 
     const httpParams = new HttpParams()

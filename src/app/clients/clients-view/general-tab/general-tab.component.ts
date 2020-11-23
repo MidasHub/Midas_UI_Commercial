@@ -71,10 +71,11 @@ export class GeneralTabComponent {
     private authenticationService: AuthenticationService
   ) {
     this.route.data.subscribe((data: { clientAccountsData: any, clientChargesData: any, clientSummary: any }) => {
-      this.clientAccountData = data.clientAccountsData;
-      this.savingAccounts = data.clientAccountsData.savingsAccounts.sort((v: any) => ['SCA0', 'CCA0', 'ACA0', 'FCA0'].indexOf(v.shortProductName) === -1);
-      this.loanAccounts = data.clientAccountsData.loanAccounts;
-      this.shareAccounts = data.clientAccountsData.shareAccounts;
+      console.log(data);
+      this.clientAccountData = data.clientAccountsData.result.clientAccount;
+      this.savingAccounts = data.clientAccountsData.result.clientAccount.savingsAccounts.sort((v: any) => ['SCA0', 'CCA0', 'ACA0', 'FCA0'].indexOf(v.shortProductName) === -1);
+      this.loanAccounts = data.clientAccountsData.result.clientAccount.loanAccounts;
+      this.shareAccounts = data.clientAccountsData.result.clientAccount.codeshareAccounts;
       this.upcomingCharges = data.clientChargesData.pageItems;
       this.clientSummary = data.clientSummary[0];
       this.clientid = this.route.parent.snapshot.params['clientId'];
