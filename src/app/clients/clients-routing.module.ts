@@ -49,6 +49,7 @@ import { ClientChargeViewResolver } from './common-resolvers/client-charge-view.
 import { ClientTransactionPayResolver } from './common-resolvers/client-transaction-pay.resolver';
 import { ClientDataAndTemplateResolver } from './common-resolvers/client-and-template.resolver';
 import { UsersResolver } from 'app/users/users.resolver';
+import {BalanceAccountClientComponent} from './balance-account-client/balance-account-client.component';
 const routes: Routes = [
   Route.withShell([{
     path: 'clients',
@@ -66,6 +67,13 @@ const routes: Routes = [
           clientAddressFieldConfig: ClientAddressFieldConfigurationResolver,
           clientTemplate: ClientTemplateResolver,
           clientIdentifierTemplate: ClientIdentifierTemplateResolver,
+        }
+      },
+      {
+        path: 'balance-accounts',
+        data: { title: extract('Tài khoản khách hàng'), breadcrumb: extract('Tài khoản khách hàng'), routeParamBreadcrumb: false },
+        component: BalanceAccountClientComponent,
+        resolve: {
         }
       },
       {
