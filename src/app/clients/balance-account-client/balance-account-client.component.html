@@ -1,19 +1,6 @@
 <mat-card class="mat-elevation-z20 container-custom">
   <mat-card-content>
     <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column" [formGroup]="formFilter">
-      <mat-form-field fxFlex="31%">
-        <mat-label>Tên khách hàng</mat-label>
-        <input matInput  formControlName="customer_name">
-      </mat-form-field>
-
-      <mat-form-field fxFlex="31%">
-        <mat-label>Nhân viên</mat-label>
-        <mat-select  formControlName="staff_id">
-          <mat-option *ngFor="let option of staffs" [value]="option.staffId">
-            {{option.staffCode}}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
       <div>
         <div style="margin-top: 15px;" fxLayout="row">
           <img src="../../../assets/images/icons/account.svg">
@@ -22,59 +9,148 @@
           </div>
         </div>
       </div>
+
+      <mat-form-field fxFlex="31%">
+        <mat-label>Tên khách hàng</mat-label>
+        <input matInput formControlName="customer_name">
+      </mat-form-field>
+
+      <mat-form-field fxFlex="31%">
+        <mat-label>Nhân viên</mat-label>
+        <mat-select formControlName="staff_id">
+          <mat-option *ngFor="let option of staffs" [value]="option.staffId">
+            {{option.staffCode}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
     </div>
   </mat-card-content>
   <mat-card-content>
-    <table mat-table class="mat-elevation-z8" (matSortChange)="sortData($event)" [dataSource]="accountsShow" matSort>
+    <table mat-table class="mat-elevation-z8"  multiTemplateDataRows (matSortChange)="sortData($event)" [dataSource]="accountsShow" matSort>
 
       <ng-container matColumnDef="customer_name">
-        <th mat-header-cell  *matHeaderCellDef mat-sort-header>Tên khách hàng</th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Tên khách hàng</th>
         <td mat-cell
             *matCellDef="let account"> {{ account.customer_name}} </td>
       </ng-container>
 
       <ng-container matColumnDef="staff_name">
-        <th mat-header-cell  *matHeaderCellDef mat-sort-header>Nhân viên phụ trách</th>
-        <td mat-cell
+        <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>Nhân viên phụ trách</th>
+        <td mat-cell fxHide fxShow.gt-md
             *matCellDef="let account"> {{ account.staff_name}} </td>
       </ng-container>
 
       <ng-container matColumnDef="account_no">
-        <th mat-header-cell  *matHeaderCellDef mat-sort-header>Số tài khoản</th>
-        <td mat-cell
+        <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>Số tài khoản</th>
+        <td mat-cell fxHide fxShow.gt-md
             *matCellDef="let account"> {{ account.account_no}} </td>
       </ng-container>
 
       <ng-container matColumnDef="account_balance_derived">
-        <th mat-header-cell  *matHeaderCellDef mat-sort-header> Tổng số dư</th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Tổng số dư</th>
         <td mat-cell
             *matCellDef="let account"> {{ account.account_balance_derived | money}} </td>
       </ng-container>
 
 
-<!--      <ng-container matColumnDef="expandedDetail">-->
-<!--        <td mat-cell fxShow fxHide.gt-md *matCellDef="let element" [attr.colspan]="displayedColumns.length">-->
-<!--          <div class="example-element-detail"-->
-<!--               [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">-->
-<!--            <div class="example-element-description" fxLayout="column">-->
-<!--&lt;!&ndash;              <div>&ndash;&gt;-->
-<!--&lt;!&ndash;                <span style="font-weight: bold;">&ndash;&gt;-->
-<!--&lt;!&ndash;                  Tên khách hàng :</span>&nbsp;&ndash;&gt;-->
-<!--&lt;!&ndash;                                &nbsp;{{ |  date:'dd-MM-yyyy HH:mm:ss'}}&ndash;&gt;-->
-<!--&lt;!&ndash;              </div>&ndash;&gt;-->
-<!--            </div>-->
-<!--          </div>-->
-<!--        </td>-->
-<!--      </ng-container>-->
-      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <ng-container matColumnDef="expandedDetail">
+              <td mat-cell fxShow fxHide.gt-md *matCellDef="let element" [attr.colspan]="displayedColumns.length">
+                <div class="example-element-detail"
+                     [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
+                  <div class="example-element-description" fxLayout="column">
+                    <div>
+                      <span style="font-weight: bold;">
+                        Nhân viên phụ trách :</span>&nbsp;
+                      &nbsp;{{ element.staff_name }}
+                    </div>
+                    <div>
+                      <span style="font-weight: bold;">
+                        Số tài khoản :</span>&nbsp;
+                      &nbsp;{{ element.account_no }}
+                    </div>
+                  </div>
+                </div>
+              </td>
+            </ng-container>
+      <tr mat-header-row  *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let element; columns: displayedColumns;"
-          class="example-element-row">
+          class="example-element-row"
+          [class.example-expanded-row]="expandedElement === element"
+          (click)="expandedElement = expandedElement === element ? null : element">
       </tr>
-<!--      <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>-->
+      <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
+      <!--      <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>-->
       <!--[routerLink]="['transactions/view', row.transactionId]"-->
     </table>
   </mat-card-content>
   <mat-paginator paginator [length]="accountFilter.length" [pageSize]="10" [pageSizeOptions]="[10, 25, 50, 100]"
                  showFirstLastButtons></mat-paginator>
 
+  <mat-card-header>
+    <div style="margin-top: 15px;" fxLayout="row">
+      <img src="../../../assets/images/icons/account.svg">
+      <div style="margin: 5px; margin-top: 5px;">
+        <h3 style="margin: 5px;">Danh sách công nợ phải thu</h3>
+        <span>Tổng cộng: &nbsp;</span> {{dataSource2.length}}
+      </div>
+    </div>
+  </mat-card-header>
+  <mat-card-content>
+    <table mat-table class="mat-elevation-z8" multiTemplateDataRows [dataSource]="dataSource2">
+
+      <ng-container matColumnDef="customer_name">
+        <th mat-header-cell *matHeaderCellDef>Tên khách hàng</th>
+        <td mat-cell
+            *matCellDef="let account"> {{ account.customer_name}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="staff_name">
+        <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef>Nhân viên phụ trách</th>
+        <td mat-cell fxHide fxShow.gt-md
+            *matCellDef="let account"> {{ account.staff_name}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="account_no">
+        <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef>Số tài khoản</th>
+        <td mat-cell fxHide fxShow.gt-md
+            *matCellDef="let account"> {{ account.account_no}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="account_balance_derived">
+        <th mat-header-cell *matHeaderCellDef> Tổng số dư</th>
+        <td mat-cell
+            *matCellDef="let account"> {{ account.account_balance_derived | money}} </td>
+      </ng-container>
+
+
+      <ng-container matColumnDef="expandedDetail">
+        <td mat-cell fxShow fxHide.gt-md *matCellDef="let element" [attr.colspan]="displayedColumns2.length">
+          <div class="example-element-detail"
+               [@detailExpand]="element == expandedElement2 ? 'expanded' : 'collapsed'">
+            <div class="example-element-description" fxLayout="column">
+              <div>
+                      <span style="font-weight: bold;">
+                        Nhân viên phụ trách :</span>&nbsp;
+                &nbsp;{{ element.staff_name }}
+              </div>
+              <div>
+                      <span style="font-weight: bold;">
+                        Số tài khoản :</span>&nbsp;
+                &nbsp;{{ element.account_no }}
+              </div>
+            </div>
+          </div>
+        </td>
+      </ng-container>
+      <tr mat-header-row  *matHeaderRowDef="displayedColumns2"></tr>
+      <tr mat-row *matRowDef="let element; columns: displayedColumns2;"
+          class="example-element-row"
+          [class.example-expanded-row]="expandedElement2 === element"
+          (click)="expandedElement2 = expandedElement2 === element ? null : element">
+      </tr>
+      <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
+      <!--      <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>-->
+      <!--[routerLink]="['transactions/view', row.transactionId]"-->
+    </table>
+  </mat-card-content>
 </mat-card>
