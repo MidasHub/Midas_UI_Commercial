@@ -1,11 +1,12 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {FormBuilder, FormGroup} from '@angular/forms';
-import {ClientsService} from '../clients.service';
+import {ClientsService} from '../../clients/clients.service';
 import {merge} from 'rxjs';
 import {tap} from 'rxjs/operators';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
 import {animate, state, style, transition, trigger} from '@angular/animations';
+import {AccountingService} from '../accounting.service';
 
 @Component({
   selector: 'midas-balance-account-client',
@@ -31,15 +32,15 @@ export class BalanceAccountClientComponent implements OnInit {
   @ViewChild(MatSort, {static: true}) sort: MatSort;
 
   constructor(
-    private clientsServices: ClientsService,
+    private accountServices: AccountingService,
     private formBuilder: FormBuilder
   ) {
-    this.clientsServices.getBalanceAccountOfCustomer().subscribe(result => {
+    this.accountServices.getBalanceAccountOfCustomer().subscribe(result => {
       this.dataSource = result?.result?.listBalanceCustomer;
       this.accountFilter = this.dataSource;
       this.loadData();
     });
-    this.clientsServices.getNameOfStaff().subscribe(result => {
+    this.accountServices.getNameOfStaff().subscribe(result => {
       this.staffs = result?.result?.listStaff;
       this.staffs.unshift({
         staffCode: 'Tất cả',
