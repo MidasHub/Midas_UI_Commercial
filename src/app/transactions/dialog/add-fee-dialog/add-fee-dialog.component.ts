@@ -35,6 +35,7 @@ export class AddFeeDialogComponent implements OnInit {
   disableAmountPaid = false;
   clientId: any;
   clientAccount: any;
+  messageNoti: string;
 
   constructor(private transactionService: TransactionService,
               private formBuilder: FormBuilder,
@@ -128,13 +129,19 @@ export class AddFeeDialogComponent implements OnInit {
         this.showGet = false;
         this.isBATCH = true;
         this.selectedPaymentTypePaid = 'DE';
-        if (this.paidAmount < this.feeAmount) {
-          this.paidAmount = -this.feeAmount - this.paidAmount;
-        } else {
-          this.paidAmount = this.paidAmount - this.feeAmount;
-        }
       } else {
         this.selectedPaymentTypePaid = 'FT';
+      }
+      if (this.transactionPaid) {
+        this.paidAmount = this.transactionPaid.feeSum - this.transactionPaid.feePaid;
+      }
+      if (this.transactionFee) {
+        this.feeAmount = this.transactionFee.feeSum - this.transactionFee.feePaid;
+      }
+      this.formDialogPaid.get('amountPaid').setValue(this.paidAmount);
+      this.formDialogGet.get('amountGet').setValue(this.feeAmount);
+      if ((this.feeAmount <= 0) && (this.paidAmount <= 0)) {
+        this.messageNoti = 'Tài khoản không khả dụng';
       }
       this.formDialogPaid.get('paymentCode').setValue(this.selectedPaymentTypePaid);
     });
