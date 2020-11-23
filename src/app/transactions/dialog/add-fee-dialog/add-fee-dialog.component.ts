@@ -133,10 +133,10 @@ export class AddFeeDialogComponent implements OnInit {
         this.selectedPaymentTypePaid = 'FT';
       }
       if (this.transactionPaid) {
-        this.paidAmount = this.transactionPaid.feeSum - this.transactionPaid.feePaid;
+        this.paidAmount = this.transactionPaid.feeRemain;
       }
       if (this.transactionFee) {
-        this.feeAmount = this.transactionFee.feeSum - this.transactionFee.feePaid;
+        this.feeAmount = this.transactionFee.feeRemain;
       }
       this.formDialogPaid.get('amountPaid').setValue(this.paidAmount);
       this.formDialogGet.get('amountGet').setValue(this.feeAmount);
