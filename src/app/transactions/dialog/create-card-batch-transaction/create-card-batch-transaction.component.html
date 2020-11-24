@@ -1,0 +1,94 @@
+<h1 mat-dialog-title>Thêm thẻ mới</h1>
+<div mat-dialog-content>
+  <div fxLayout="row swap"
+       fxLayoutAlign.lt-sm="center"
+       fxLayoutGap="2%"
+       fxLayout.lt-sm="column"
+       [formGroup]="formDialog"
+  >
+    <mat-form-field fxFlex="30%" *ngIf="formDialog.contains('memberAddIdentifier')" class="input_custom">
+      <mat-label>Chọn khách hàng</mat-label>
+      <mat-select required formControlName="memberAddIdentifier">
+        <mat-option *ngFor="let type of clients"
+                    [value]="type.value">
+          {{type.label}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field fxFlex="30%" *ngIf="formDialog.contains('documentClientIdentifierType')" class="input_custom">
+      <mat-label>Chọn thông tin cần thêm</mat-label>
+      <mat-select required formControlName="documentClientIdentifierType">
+        <mat-option *ngFor="let type of clients"
+                    [value]="type.value">
+          {{type.label}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+
+    <mat-form-field fxFlex="30%" *ngIf="formDialog.contains('documentClientIdentifierKey')">
+      <mat-label>Số ID</mat-label>
+      <input
+        matInput
+        required
+        formControlName="documentClientIdentifierKey">
+      <mat-error *ngIf="formDialog.controls.documentClientIdentifierKey.hasError('required')">Vui lòng thêm thông tin
+        trước khi
+        thực
+        hiện
+      </mat-error>
+    </mat-form-field>
+
+
+    <mat-form-field fxFlex="30%" *ngIf="formDialog.contains('documentClientIdentifierDescription')">
+      <mat-label>Thông tin chi tiết</mat-label>
+      <input
+        matInput
+        required
+        formControlName="documentClientIdentifierDescription">
+      <mat-error *ngIf="formDialog.controls.documentClientIdentifierDescription.hasError('required')">Vui lòng thêm
+        thông tin trước khi
+        thực
+        hiện
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field fxFlex="30%" *ngIf="formDialog.contains('documentCardBankClientIdentifierKey')"
+                    class="input_custom">
+      <mat-label>Chọn ngân hàng</mat-label>
+      <mat-select required formControlName="documentCardBankClientIdentifierKey">
+        <mat-option *ngFor="let type of banks"
+                    [value]="type.bankCode">
+          {{type.bankName}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field fxFlex="30%" *ngIf="formDialog.contains('documentCardTypeClientIdentifierKey')"
+                    class="input_custom">
+      <mat-label>Chọn ngân hàng</mat-label>
+      <mat-select required formControlName="documentCardTypeClientIdentifierKey">
+        <mat-option *ngFor="let type of typeCards"
+                    [value]="type.code">
+          {{type.description}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <button mat-button style="background: #0f36e4; color: white;">
+      <img src="assets/images/icons/add_info.svg">Thêm thông tin
+    </button>
+  </div>
+  <div>
+
+  </div>
+</div>
+<mat-dialog-actions align="end">
+  <button mat-raised-button
+          (click)="dialogRef.close({status:false})"
+  >{{'Shared_Component.DeleteDialog.buttonCancel'|translate}}</button>
+  <button mat-raised-button color="warn"
+          (click)="submitForm()"
+  >{{'Shared_Component.DeleteDialog.buttonConfirm'|translate}}</button>
+  <!--  [mat-dialog-close]="{ file: true }"-->
+</mat-dialog-actions>

@@ -26,6 +26,9 @@ import { AdvanceFeeRollTermComponent } from './rollTerm-schedule-transaction/dia
 import { TransactionHistoryDialogComponent } from './rollTerm-schedule-transaction/dialog/transaction-history/transaction-history-dialog.component';
 import { OnRollTermCardTabComponent } from './rollTerm-schedule-transaction/on-roll-term-card-tab/on-roll-term-card-tab.component';
 import { ExecuteLoanDialogComponent } from './rollTerm-schedule-transaction/dialog/execute-loan-dialog/execute-loan-dialog.component';
+import { CreateBatchTransactionComponent } from './batch-transactions/create-batch-transaction/create-batch-transaction.component';
+import { AddRowCreateBatchTransactionComponent } from './dialog/add-row-create-batch-transaction/add-row-create-batch-transaction.component';
+import { CreateCardBatchTransactionComponent } from './dialog/create-card-batch-transaction/create-card-batch-transaction.component';
 
 /**
  * Profile Module
@@ -51,6 +54,9 @@ import { ExecuteLoanDialogComponent } from './rollTerm-schedule-transaction/dial
     TransactionHistoryDialogComponent,
     OnRollTermCardTabComponent,
     ExecuteLoanDialogComponent,
+    CreateBatchTransactionComponent,
+    AddRowCreateBatchTransactionComponent,
+    CreateCardBatchTransactionComponent,
   ],
 
   imports: [
