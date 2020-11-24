@@ -11,10 +11,10 @@ export const environment = {
   version: env.npm_package_version + '-dev',
   fineractPlatformTenantId: 'default',  // For connecting to server running elsewhere update the tenant identifier
   baseApiUrl: 'https://uat.tekcompay.com:9443',
-  apiProvider: '/fineract-provider/api',
+  apiProvider: '/midas/api',
   apiVersion: '/v1',
   serverUrl: '',
-  GatewayApiUrl: 'https://uat.tekcompay.com:8287',
+  GatewayApiUrl: 'http://localhost:8287',
   GatewayApiUrlPrefix: '/billPos',
   GatewayServerUrl: '',
   GatewayTenantId: 'default',
