@@ -236,16 +236,17 @@ export class TransactionService {
     toDate: string;
     clientName: string;
     cardNumber: string;
+    terminalAmount: string;
     limit: number;
     offset: number;
   }): Observable<any> {
     const httpParams = new HttpParams()
-      .set('cardNumber', !payload.cardNumber ? '%%' : payload.cardNumber)
-      .set('customerName', !payload.clientName ? '%%' : payload.clientName)
+      .set('cardNumber', !payload.cardNumber ? '%%' : `%${payload.cardNumber}%`)
+      .set('customerName', !payload.clientName ? '%%' : `%${payload.clientName}%`)
       .set('agencyName', '%%')
       .set('limit', String(payload.limit))
       .set('offset', String(payload.offset))
-      .set('amountTransaction', '%%')
+      .set('amountTransaction', !payload.terminalAmount ? '%%' : `%${payload.terminalAmount}%`)
       .set('fromDate', payload.fromDate)
       .set('toDate', payload.toDate)
       .set('createdBy', this.accessToken.userId)
@@ -418,6 +419,17 @@ export class TransactionService {
       .set('accessToken', this.accessToken.base64EncodedAuthenticationKey);
 
     return this.http.post<any>(`${this.GatewayApiUrlPrefix}/transaction/revert_transaction`, httpParams);
+  }
+
+  RepaymentRolltermManualTransactionCloseLoan(refId: string, amountPaid: string): Observable<any> {
+    const httpParams = new HttpParams()
+      .set('txnCode', refId)
+      .set('amountPaid', amountPaid)
+      .set('fromOfficeId',  this.accessToken.officeId)
+      .set('createdBy', this.accessToken.userId)
+      .set('accessToken', this.accessToken.base64EncodedAuthenticationKey);
+
+    return this.http.post<any>(`${this.GatewayApiUrlPrefix}/transaction/repayment_rollterm_manual_transaction_close_loan`, httpParams);
   }
 
   undoRevertTransaction(transactionId: string): Observable<any> {

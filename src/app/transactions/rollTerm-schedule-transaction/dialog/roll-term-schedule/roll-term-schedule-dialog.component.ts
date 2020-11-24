@@ -29,7 +29,6 @@ export class RollTermScheduleDialogComponent implements OnInit {
     "txnDate",
     "amount",
     "fee",
-    "paidAmount",
     "getAmount",
     "actions",
   ];
@@ -86,10 +85,10 @@ formatCurrency(value: string) {
         this.dataSource = result?.result.bookingInternalResponseDto?.listBookingInternalEntities;
         this.transactionInfo = result?.result.bookingInternalResponseDto?.billPosTransactionDailyEntity;
         this.transactionInfo.feeAmount = ((this.transactionInfo.feePercentage / 100 ) * this.transactionInfo?.reqAmount ).toFixed(0) ;
-
+        this.transactionInfo.totalAmountGet = 0;
         this.dataSource.forEach(element => {
           this.transactionInfo.totalAmountPaid = element.totalPaid ;
-          this.transactionInfo.totalAmountGet = element.totalGet ;
+          this.transactionInfo.totalAmountGet += element.totalGet ;
         })
 
       });
