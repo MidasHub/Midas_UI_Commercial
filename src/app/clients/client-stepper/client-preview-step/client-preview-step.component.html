@@ -129,7 +129,9 @@
 
     <mat-accordion fxFlexFill class="m-t-5">
 
-      <mat-expansion-panel *ngFor="let member of client.familyMembers" class="family-member">
+      <mat-expansion-panel *ngFor="let member of client.familyMembers"
+                           expanded="true"
+                           class="family-member">
 
         <mat-expansion-panel-header>
 

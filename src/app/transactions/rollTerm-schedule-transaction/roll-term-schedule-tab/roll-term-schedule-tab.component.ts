@@ -1,19 +1,21 @@
+import { animate, state, style, transition, trigger } from "@angular/animations";
+import { DatePipe } from "@angular/common";
 import { Component, OnInit, ViewChild } from "@angular/core";
 import { FormBuilder, FormGroup } from "@angular/forms";
-import { MatPaginator } from "@angular/material/paginator";
-import { DatePipe } from "@angular/common";
-import { MatSort } from "@angular/material/sort";
-import { merge } from "rxjs";
-import { tap } from "rxjs/operators";
-import { animate, state, style, transition, trigger } from "@angular/animations";
 import { MatDialog } from "@angular/material/dialog";
-import { TransactionService } from "app/transactions/transaction.service";
-import { SettingsService } from "app/settings/settings.service";
-import { AuthenticationService } from "app/core/authentication/authentication.service";
+import { MatPaginator } from "@angular/material/paginator";
+import { MatSort } from "@angular/material/sort";
 import { CentersService } from "app/centers/centers.service";
 import { AlertService } from "app/core/alert/alert.service";
-import { RollTermScheduleDialogComponent } from "../dialog/roll-term-schedule/roll-term-schedule-dialog.component";
+import { AuthenticationService } from "app/core/authentication/authentication.service";
+import { SettingsService } from "app/settings/settings.service";
+import { ConfirmDialogComponent } from "app/transactions/dialog/coifrm-dialog/confirm-dialog.component";
+import { TransactionService } from "app/transactions/transaction.service";
+import { merge } from "rxjs";
+import { tap } from "rxjs/operators";
 import { CreateRollTermScheduleDialogComponent } from "../dialog/create-roll-term-schedule/create-roll-term-schedule-dialog.component";
+import { ExecuteLoanDialogComponent } from "../dialog/execute-loan-dialog/execute-loan-dialog.component";
+import { RollTermScheduleDialogComponent } from "../dialog/roll-term-schedule/roll-term-schedule-dialog.component";
 
 @Component({
   selector: "midas-roll-term-schedule-tab",
@@ -28,14 +30,15 @@ import { CreateRollTermScheduleDialogComponent } from "../dialog/create-roll-ter
   ],
 })
 export class RollTermScheduleTabComponent implements OnInit {
+
   expandedElement: any;
   displayedColumns: string[] = [
     "panHolderName",
+    "feeAmount",
     "createdDate",
-    "clientBalance",
     "cardNumber",
     "officeName",
-    "agencyName",
+    // "agencyName",
     "requestAmount",
     "paidAmount",
     "remainAmount",
@@ -111,7 +114,6 @@ export class RollTermScheduleTabComponent implements OnInit {
     private datePipe: DatePipe,
     private settingsService: SettingsService,
     private authenticationService: AuthenticationService,
-    private centersService: CentersService,
     private alertService: AlertService,
     public dialog: MatDialog
   ) {
@@ -120,40 +122,20 @@ export class RollTermScheduleTabComponent implements OnInit {
       toDate: [new Date()],
     });
     this.formFilter = this.formBuilder.group({
-      productId: [""],
-      status: [""],
-      partnerCode: [""],
-      officeId: [""],
       panHolderName: [""],
-      terminalId: [""],
-      traceNo: [""],
-      batchNo: [""],
       terminalAmount: [""],
       staffId: [""],
-      trnRefNo: [""],
-      RetailsChoose: [true],
-      wholesaleChoose: [true],
-      agencyName: [""],
-    });
-    this.formFilter.get("officeId").valueChanges.subscribe((value) => {
-      // const office = this.offices.find(v => v.name === value);
-      this.centersService.getStaff(value).subscribe((staffs: any) => {
-        this.staffs = staffs?.staffOptions;
-      });
-    });
-    this.formFilter.valueChanges.subscribe((value) => {
-      this.getRollTermScheduleAndCardDueDayInfo();
     });
   }
 
   ngOnInit(): void {
     this.currentUser = this.authenticationService.getCredentials();
-    //this.dataSource = this.transactionsData;
     this.getRollTermScheduleAndCardDueDayInfo();
   }
 
   // tslint:disable-next-line:use-lifecycle-interface
   ngAfterViewInit() {
+
     this.sort.sortChange.subscribe(() => (this.paginator.pageIndex = 0));
     merge(this.sort.sortChange, this.paginator.page)
       .pipe(tap(() => this.getRollTermScheduleAndCardDueDayInfo()))
@@ -164,8 +146,11 @@ export class RollTermScheduleTabComponent implements OnInit {
     const dateFormat = this.settingsService.dateFormat;
     let fromDate = this.formDate.get("fromDate").value;
     let toDate = this.formDate.get("toDate").value;
-    let clientName = null;
-    let cardNumber = null;
+    let clientName = this.formFilter.get("panHolderName").value;
+    let cardNumber = this.formFilter.get("panHolderName").value;
+    let terminalAmount = this.formFilter.get("terminalAmount").value;
+    let staffId = this.formFilter.get("staffId").value;
+
     const limit = this.paginator.pageSize ? this.paginator.pageSize : 10;
     const offset = this.paginator.pageIndex * limit ? this.paginator.pageSize * limit : 0;
     if (fromDate) {
@@ -175,7 +160,7 @@ export class RollTermScheduleTabComponent implements OnInit {
       toDate = this.datePipe.transform(toDate, dateFormat);
     }
     this.transactionService
-      .getListRollTermTransactionOpenByUserId({ fromDate, toDate, clientName, cardNumber, limit, offset })
+      .getListRollTermTransactionOpenByUserId({ fromDate, toDate, clientName, cardNumber, limit, terminalAmount, offset })
       .subscribe((result) => {
         this.transactionsData = result?.result;
         this.dataSource = result?.result.listPosTransaction;
@@ -189,14 +174,6 @@ export class RollTermScheduleTabComponent implements OnInit {
       return true;
     }
     return false;
-  }
-
-  menuOpened() {
-    console.log("menuOpened");
-  }
-
-  menuClosed() {
-    console.log("menuClosed");
   }
 
   showRollTermScheduleDialog(rollTermId: string) {
@@ -213,19 +190,46 @@ export class RollTermScheduleTabComponent implements OnInit {
     });
   }
 
-  showCreateRollTermScheduleDialog(clientId: string, panHolderName: string, identifierId: string, panNumber: string) {
+  executeLoanManualDialog(refId: string) {
     const data = {
-      clientId: clientId,
-      panHolderName: panHolderName,
-      panNumber: panNumber,
-      identifierId: identifierId,
+      refId: refId,
     };
-    const dialog = this.dialog.open(CreateRollTermScheduleDialogComponent, { height: "auto", width: "80%", data });
+    const dialog = this.dialog.open(ExecuteLoanDialogComponent, { height: "auto", width: "50%", data });
     dialog.afterClosed().subscribe((response: any) => {
       console.log(response);
       if (response.data) {
         const value = response.data.value;
 
+      }
+    });
+  }
+
+  undoRollTermTransaction(transactionId: string, amountPaid: string) {
+    const dialog = this.dialog.open(ConfirmDialogComponent, {
+      data: {
+        message: 'Bạn chắc chắn muốn hủy khoản đáo hạn ' + transactionId,
+        title: 'Hủy giao dịch'
+      },
+    });
+    dialog.afterClosed().subscribe(data => {
+      if (data) {
+        this.transactionService.RepaymentRolltermManualTransactionCloseLoan(transactionId, amountPaid).subscribe(result => {
+          if (result.status === '200') {
+
+            const message = 'Hủy giao dịch ' + transactionId + ' thành công';
+            this.alertService.alert({
+              msgClass: 'cssInfo',
+              message: message
+            });
+            this.getRollTermScheduleAndCardDueDayInfo();
+          }else{
+            const message = result.error;
+            this.alertService.alert({
+              msgClass: 'cssDanger',
+              message: message
+            });
+          }
+        });
       }
     });
   }

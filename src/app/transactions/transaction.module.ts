@@ -24,6 +24,8 @@ import { AddFeeDialogComponent } from './dialog/add-fee-dialog/add-fee-dialog.co
 import { ViewFeePaidTransactionDialogComponent } from './dialog/view-fee-paid-transaction-dialog/view-fee-paid-transaction-dialog.component';
 import { AdvanceFeeRollTermComponent } from './rollTerm-schedule-transaction/dialog/advance-fee-roll-term/advance-fee-roll-term.component';
 import { TransactionHistoryDialogComponent } from './rollTerm-schedule-transaction/dialog/transaction-history/transaction-history-dialog.component';
+import { OnRollTermCardTabComponent } from './rollTerm-schedule-transaction/on-roll-term-card-tab/on-roll-term-card-tab.component';
+import { ExecuteLoanDialogComponent } from './rollTerm-schedule-transaction/dialog/execute-loan-dialog/execute-loan-dialog.component';
 
 /**
  * Profile Module
@@ -46,7 +48,9 @@ import { TransactionHistoryDialogComponent } from './rollTerm-schedule-transacti
     FeePaidManagementComponent,
     AddFeeDialogComponent,
     ViewFeePaidTransactionDialogComponent,
-    TransactionHistoryDialogComponent
+    TransactionHistoryDialogComponent,
+    OnRollTermCardTabComponent,
+    ExecuteLoanDialogComponent,
   ],
 
   imports: [

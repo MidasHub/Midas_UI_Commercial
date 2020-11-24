@@ -55,7 +55,7 @@ export class AdvanceFeeRollTermComponent implements OnInit {
 
     });
 
-    this.midasClientService.getListSavingAccountByUserId().subscribe((saving: any) => {
+    this.midasClientService.getListSavingAccountFtByUserId().subscribe((saving: any) => {
       this.buSavingAccounts = saving.result.listSavingAccount;
 
     });

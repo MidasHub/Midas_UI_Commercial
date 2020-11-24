@@ -1,0 +1,76 @@
+<mat-card class="mat-elevation-z20 container-custom">
+  <mat-card-content>
+    <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column" [formGroup]="formFilter">
+      <mat-form-field fxFlex="31%">
+        <mat-label>Tên teller</mat-label>
+        <input matInput formControlName="tellerSourceName">
+      </mat-form-field>
+
+      <mat-form-field fxFlex="31%">
+        <mat-label>Tên tài khoản</mat-label>
+        <input matInput formControlName="sourceInfo">
+      </mat-form-field>
+      <div>
+        <div style="margin-top: 15px;" fxLayout="row">
+          <img src="../../../assets/images/icons/account.svg">
+          <div style="margin: 5px; margin-top: 20px;">
+            <span>Tổng cộng: &nbsp;</span> {{dataSource.length}}
+          </div>
+        </div>
+      </div>
+    </div>
+  </mat-card-content>
+  <mat-card-content>
+    <table mat-table class="mat-elevation-z8" (matSortChange)="sortData($event)" [dataSource]="accountsShow" matSort>
+
+      <ng-container matColumnDef="tellerSourceName">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Tên teller</th>
+        <td mat-cell
+            *matCellDef="let account"> {{ account.tellerSourceName}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="accountNo">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Mã tài khoản</th>
+        <td mat-cell
+            *matCellDef="let account"> {{ account.accountNo}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="sourceInfo">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Tên tài khoản - số dư > 0</th>
+        <td mat-cell
+            *matCellDef="let account"><a [routerLink]="['../','savings-accounts',account.savingId]">{{ account.sourceInfo}}</a></td>
+      </ng-container>
+
+      <ng-container matColumnDef="balance">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Số dư</th>
+        <td mat-cell
+            *matCellDef="let account"> {{ account.balance | money}} </td>
+      </ng-container>
+
+
+      <!--      <ng-container matColumnDef="expandedDetail">-->
+      <!--        <td mat-cell fxShow fxHide.gt-md *matCellDef="let element" [attr.colspan]="displayedColumns.length">-->
+      <!--          <div class="example-element-detail"-->
+      <!--               [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">-->
+      <!--            <div class="example-element-description" fxLayout="column">-->
+      <!--&lt;!&ndash;              <div>&ndash;&gt;-->
+      <!--&lt;!&ndash;                <span style="font-weight: bold;">&ndash;&gt;-->
+      <!--&lt;!&ndash;                  Tên khách hàng :</span>&nbsp;&ndash;&gt;-->
+      <!--&lt;!&ndash;                                &nbsp;{{ |  date:'dd-MM-yyyy HH:mm:ss'}}&ndash;&gt;-->
+      <!--&lt;!&ndash;              </div>&ndash;&gt;-->
+      <!--            </div>-->
+      <!--          </div>-->
+      <!--        </td>-->
+      <!--      </ng-container>-->
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let element; columns: displayedColumns;"
+          class="example-element-row">
+      </tr>
+      <!--      <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>-->
+      <!--[routerLink]="['transactions/view', row.transactionId]"-->
+    </table>
+  </mat-card-content>
+  <mat-paginator paginator [length]="accountFilter.length" [pageSize]="10" [pageSizeOptions]="[10, 25, 50, 100]"
+                 showFirstLastButtons></mat-paginator>
+
+</mat-card>

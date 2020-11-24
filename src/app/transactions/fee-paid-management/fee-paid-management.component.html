@@ -57,7 +57,9 @@
   </mat-card-content>
   <mat-accordion>
 
-    <mat-expansion-panel (opened)="panelOpenState = true"
+    <mat-expansion-panel
+      expanded="true"
+      (opened)="panelOpenState = true"
                          (closed)="panelOpenState = false">
       <mat-expansion-panel-header>
         <mat-panel-title>
@@ -134,13 +136,22 @@
 
         <div fxFlex="18%">
           <button style="margin-top: 8px; height: 40px;"
-                  (click)="exportTransaction()"
+                  (click)="exportTransactionFeePaid()"
                   color="primary" mat-raised-button>Export
           </button>
         </div>
       </div>
     </mat-expansion-panel>
   </mat-accordion>
+  <mat-card-header>
+    <div class="search-box">
+      <mat-form-field>
+        <input matInput placeholder="Tìm kiếm ....."
+               midasAfterValueChanged
+               (delayedInput)="applyFilter($event.target.value)">
+      </mat-form-field>
+    </div>
+  </mat-card-header>
   <mat-card-content>
     <table mat-table multiTemplateDataRows class="mat-elevation-z8" [dataSource]="dataSource" matSort>
 
@@ -160,11 +171,16 @@
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Loại GD</th>
         <td mat-cell *matCellDef="let transaction"
             [ngSwitch]="getDataOfGroupTxnCode(transaction)[0].txnType">
-          <button *ngSwitchCase="'CASH'" class="btn btn-success">RTM</button>
-          <button *ngSwitchCase="'ROLLTERM'" class="btn btn-success">
+          <button *ngSwitchCase="'CASH'" style="background: #FFCA00; color: white;" mat-button
+                  class="btn btn-success">RTM
+          </button>
+          <button *ngSwitchCase="'ROLLTERM'" style="background: #0f36e4; color: white;" mat-button
+                  class="btn btn-success">
             ĐHT
           </button>
-          <button *ngSwitchCase="'BATCH'" class="btn btn-success">Lô</button>
+          <button *ngSwitchCase="'BATCH'" style="background: #e74c3c; color: white;" mat-button
+                  class="btn btn-success">Lô
+          </button>
           <button *ngSwitchDefault class="btn btn-success">
             <i class="fa fa-info-circle"></i>
           </button>
@@ -212,11 +228,13 @@
       </ng-container>
 
       <ng-container matColumnDef="DEAmount">
-        <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>Số tiền cần trừ</th>
+        <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>Số tiền cấn trừ</th>
         <td mat-cell fxHide fxShow.gt-md *matCellDef="let transaction">
           <ul>
             <li *ngFor="let tra of getDataOfGroupTxnCode(transaction)" [style]="colorOfType(tra.txnPaymentType)">
+              <span *ngIf="tra.txnPaymentType === 'OUT'">
               {{ tra.DEAmount | money}}
+              </span>
             </li>
           </ul>
         </td>
@@ -261,8 +279,10 @@
         <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
         <td mat-cell *matCellDef="let transaction">
           <span style="float: right; width: 15px;"
-                [matMenuTriggerData]="getDataOfGroupTxnCode(transaction)[0]"
+                [matMenuTriggerData]="{txnCode:transaction}"
                 [matMenuTriggerFor]="transactionMenu"
+                matTooltip="Menu"
+                #tooltip="matTooltip"
                 (menuOpened)="menuOpened()" (menuClosed)="menuClosed()"
           ><img src="assets/images/icons/settings.svg"/></span>
         </td>
@@ -327,17 +347,18 @@
   <mat-menu #transactionMenu="matMenu" [overlapTrigger]="false" style="width: 50px;">
     <ng-template matMenuContent
                  let-txnCode="txnCode"
-                 let-customerId="customerId"
-                 let-status="status"
-                 let-feePaid='feePaid'
                  style="width: 50px;">
       <button
         (click)="addFeeDialog(txnCode)"
-        mat-menu-item *ngIf="!checkPermissions('ALL_FUNCTIONS')">
+        mat-menu-item *ngIf="!checkPermissions('ALL_FUNCTIONS') && checkShowButton(txnCode)"
+      >
         <img src="assets/images/icons/hammer.svg"/>
         &nbsp;Thu, chi tiền
       </button>
-      <button mat-menu-item *ngIf="!checkPermissions('ALL_FUNCTIONS')">
+      <button
+        (click)="viewFeeDialog(txnCode)"
+        *ngIf="checkFeePaid(txnCode)"
+        mat-menu-item>
         <img src="assets/images/icons/completed-task.svg"/>
         &nbsp;Danh sách đã thu/chi tiền
       </button>

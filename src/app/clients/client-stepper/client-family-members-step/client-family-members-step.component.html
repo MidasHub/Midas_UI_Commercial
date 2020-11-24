@@ -10,7 +10,9 @@
 
     <mat-accordion>
 
-      <mat-expansion-panel *ngFor="let member of clientFamilyMembers;index as i" class="family-member">
+      <mat-expansion-panel
+        expanded="true"
+        *ngFor="let member of clientFamilyMembers;index as i" class="family-member">
 
         <mat-expansion-panel-header>
 

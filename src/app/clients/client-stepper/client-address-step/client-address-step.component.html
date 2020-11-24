@@ -10,7 +10,9 @@
 
   <mat-accordion>
 
-    <mat-expansion-panel *ngFor="let address of clientAddressData; index as i" class="address">
+    <mat-expansion-panel
+      expanded="true"
+      *ngFor="let address of clientAddressData; index as i" class="address">
 
       <mat-expansion-panel-header>
 
@@ -37,7 +39,7 @@
       </div>
 
       <p>
-        
+
         <span *ngIf="isFieldEnabled('addressLine1')">{{'Client_Component.ClientStepper.AddressStep.labelAddressLine1' |translate}} : {{address.addressLine1}}<br /></span>
         <span *ngIf="isFieldEnabled('addressLine2')">{{'Client_Component.ClientStepper.AddressStep.labelAddressLine2' |translate}} : {{address.addressLine2}}<br /></span>
         <span *ngIf="isFieldEnabled('addressLine3')">{{'Client_Component.ClientStepper.AddressStep.labelAddressLine3' |translate}} : {{address.addressLine3}}<br /></span>
@@ -46,11 +48,11 @@
         <span *ngIf="isFieldEnabled('countyDistrict')">{{'Client_Component.ClientStepper.AddressStep.labelDistrict' |translate}} : {{address.countyDistrict}}<br /></span>
         <span *ngIf="isFieldEnabled('city')">{{'Client_Component.ClientStepper.AddressStep.labelCity' |translate}} : {{address.city}}<br /></span>
         <span *ngIf="isFieldEnabled('stateProvinceId')">{{'Client_Component.ClientStepper.AddressStep.labelStateProvince' |translate}} :
-          {{getSelectedValue('stateProvinceIdOptions',address.stateProvinceId)?.name}}<br /></span>          
+          {{getSelectedValue('stateProvinceIdOptions',address.stateProvinceId)?.name}}<br /></span>
         <span *ngIf="isFieldEnabled('countryId')">{{'Client_Component.ClientStepper.AddressStep.labelCountry' |translate}} :
           {{getSelectedValue('countryIdOptions',address.countryId)?.name}}<br /></span>
         <span *ngIf="isFieldEnabled('postalCode')">{{'Client_Component.ClientStepper.AddressStep.labelPostalCode' |translate}} : {{address.postalCode}}<br /></span>
-      
+
       </p>
 
     </mat-expansion-panel>

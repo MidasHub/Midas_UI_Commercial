@@ -13,6 +13,12 @@
     min-width: auto !important;
     width: 100% !important;
 }
+td.mat-cell {
+
+  border-bottom: 1px solid black;
+  border-top: 1px solid black;
+ }
+
 
 .mat-header-row {
     width: 100%;
@@ -49,8 +55,8 @@ mat-icon {
 .mat-column-panHolderName
 {
 
-  flex: 0 0 15% !important;
-  width: 15% !important;
+  flex: 0 0 18% !important;
+  width: 18% !important;
 
 }
 .mat-menu-panel {

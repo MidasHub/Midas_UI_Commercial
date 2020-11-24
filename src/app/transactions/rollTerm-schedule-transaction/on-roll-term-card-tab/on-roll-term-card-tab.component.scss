@@ -1,0 +1,123 @@
+
+.container-custom {
+  max-width: 94rem;
+  width: 97%;
+  margin: 0 auto;
+}
+.mat-success {
+  background-color: green;
+  color: #fff;
+}
+.center { text-align: center }
+.mat-table__wrapper .mat-table {
+    min-width: auto !important;
+    width: 100% !important;
+}
+td.mat-cell {
+  /* row padding */
+  padding: 16px 0;
+  /* row border */
+  border-bottom: 1px solid black;
+  border-top: 1px solid black;
+ }
+
+ table {
+   /* row spacing / margin */
+   border-spacing: 0 8px !important;
+ }
+
+.mat-header-row {
+    width: 100%;
+}
+
+.mat-row {
+    width: 100%;
+}
+.mat-column-dueDay ,
+.mat-column-isHold ,
+.mat-column-status ,
+.mat-column-actions ,
+.mat-column-expiredDate  {
+  flex: 0 0 5% !important;
+  width: 5% !important;
+
+}
+mat-icon {
+  cursor: pointer;
+}
+::ng-deep .mat-column-dueDay div.mat-form-field-infix,
+::ng-deep .mat-column-expiredDate div.mat-form-field-infix {
+    flex: 0 0 100% !important;
+    width: 100% !important;
+   }
+
+::ng-deep .mat-column-dueDay div.mat-form-field-infix,
+::ng-deep .mat-column-isHold div.mat-form-field-infix,
+::ng-deep .mat-column-expiredDate div.mat-form-field-infix {
+
+    text-align: center;
+   }
+
+.mat-column-panHolderName
+{
+
+  flex: 0 0 18% !important;
+  width: 18% !important;
+
+}
+.mat-menu-panel {
+  min-width: 50px;
+  max-width: 280px;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+  max-height: calc(100vh - 48px);
+  border-radius: 4px;
+  outline: 0;
+  min-height: 64px;
+}
+
+tr.example-detail-row {
+  height: 0;
+}
+
+tr.example-element-row:not(.example-expanded-row):hover {
+  background: whitesmoke;
+}
+
+tr.example-element-row:not(.example-expanded-row):active {
+  background: #efefef;
+}
+
+.example-element-row td {
+  border-bottom-width: 0;
+}
+
+.example-element-detail {
+  overflow: hidden;
+  display: flex;
+}
+
+.example-element-diagram {
+  min-width: 80px;
+  border: 2px solid black;
+  padding: 8px;
+  font-weight: lighter;
+  margin: 8px 0;
+  height: 104px;
+}
+
+.example-element-symbol {
+  font-weight: bold;
+  font-size: 40px;
+  line-height: normal;
+}
+
+.example-element-description {
+  padding: 10px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.example-element-description-attribution {
+  opacity: 0.5;
+}

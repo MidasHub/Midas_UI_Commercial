@@ -21,6 +21,7 @@ import {FormfieldBase} from '../../shared/form-dialog/formfield/model/formfield-
 import {InputBase} from '../../shared/form-dialog/formfield/model/input-base';
 import {FormDialogComponent} from '../../shared/form-dialog/form-dialog.component';
 import {AddFeeDialogComponent} from '../dialog/add-fee-dialog/add-fee-dialog.component';
+import {ViewFeePaidTransactionDialogComponent} from '../dialog/view-fee-paid-transaction-dialog/view-fee-paid-transaction-dialog.component';
 
 @Component({
   selector: 'midas-fee-paid-management',
@@ -117,6 +118,7 @@ export class FeePaidManagementComponent implements OnInit {
   panelOpenState = false;
   filterData: any[];
   groupData: any;
+  searchText = '';
   today = new Date();
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   @ViewChild(MatSort, {static: true}) sort: MatSort;
@@ -181,7 +183,6 @@ export class FeePaidManagementComponent implements OnInit {
     //   })
     // });
     this.transactionService.getPaymentTypes().subscribe(result => {
-      console.log(result); // listPayment
       this.paidPaymentType = result?.result?.listPayment;
       this.paidPaymentType.unshift({
         code: '',
@@ -237,22 +238,11 @@ export class FeePaidManagementComponent implements OnInit {
           v.agencyId = '#';
         }
         v.DEAmount = 0;
-        if (v.txnType === 'BATCH') {
-          v.customerName = v.txnCode;
-          if (v.txnPaymentType === 'OUT') {
-            v.DEAmount = v.txnAmount - v.feeSum;
-          }
+        v.customerName = v.txnCode;
+        if (v.txnPaymentType === 'OUT') {
+          v.DEAmount = v.txnAmount - v.feeSum;
         }
       });
-      this.totalFeeSum = this.transactionsData.reduce((total: any, num: any) => {
-        return total + Math.round(num?.feeSum);
-      }, 0);
-      this.totalFeePaid = this.transactionsData.reduce((total: any, num: any) => {
-        return total + Math.round(num?.feePaid);
-      }, 0);
-      this.totalFeeRemain = this.transactionsData.reduce((total: any, num: any) => {
-        return total + Math.round(num?.feeRemain);
-      }, 0);
       this.filterTransaction();
     });
   }
@@ -280,9 +270,28 @@ export class FeePaidManagementComponent implements OnInit {
       }
       return true;
     });
+    if (this.searchText) {
+      this.filterData = this.filterData.filter(v => {
+        const kes = Object.keys(v);
+        for (const key of kes) {
+          if (String(v[key]).toLowerCase().includes(this.searchText.toLowerCase())) {
+            return true;
+          }
+        }
+        return false;
+      });
+    }
+    this.totalFeeSum = this.filterData.reduce((total: any, num: any) => {
+      return total + Math.round(num?.feeSum);
+    }, 0);
+    this.totalFeePaid = this.filterData.reduce((total: any, num: any) => {
+      return total + Math.round(num?.feePaid);
+    }, 0);
+    this.totalFeeRemain = this.filterData.reduce((total: any, num: any) => {
+      return total + Math.round(num?.feeRemain);
+    }, 0);
     // @ts-ignore
     this.groupData = this.groupBy(this.filterData, pet => pet.txnCode);
-    console.log(this.groupData);
     this.dataSource = Array.from(this.groupData.keys()).slice(offset, offset + limit);
   }
 
@@ -329,37 +338,6 @@ export class FeePaidManagementComponent implements OnInit {
     console.log('menuClosed');
   }
 
-  downloadVoucher(transactionId: string) {
-    this.transactionService.downloadVoucher(transactionId);
-  }
-
-  downloadBill(clientId: string, documentId: string) {
-    this.transactionService.downloadBill(clientId, documentId);
-  }
-
-  revertTransaction(transactionId: string) {
-    const dialog = this.dialog.open(ConfirmDialogComponent, {
-      data: {
-        message: 'Bạn chắc chắn muốn hủy giao dịch ' + transactionId,
-        title: 'Hủy giao dịch'
-      },
-    });
-    dialog.afterClosed().subscribe(data => {
-      if (data) {
-        this.transactionService.revertTransaction(transactionId).subscribe(result => {
-          if (result.status === '200') {
-            this.getTransaction();
-            const message = 'Hủy giao dịch ' + transactionId + ' thành công';
-            this.alertService.alert({
-              msgClass: 'cssInfo',
-              message: message
-            });
-          }
-        });
-      }
-    });
-  }
-
   displayStatus(status: string) {
     switch (status) {
       case 'C':
@@ -376,7 +354,6 @@ export class FeePaidManagementComponent implements OnInit {
   addFeeDialog(txnCode: string) {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.data = {
-      title: 'Ứng tiền cho khách hàng',
       data: {
         txnCode: txnCode
       }
@@ -384,40 +361,46 @@ export class FeePaidManagementComponent implements OnInit {
     // dialogConfig.minWidth = 400;
     const dialog = this.dialog.open(AddFeeDialogComponent, dialogConfig);
     dialog.afterClosed().subscribe(data => {
-      if (data) {
-        console.log(data);
+      if (data && data.status) {
+        this.getTransaction();
       }
     });
   }
 
-  exportTransaction() {
-    const dateFormat = this.settingsService.dateFormat;
-    let fromDate = this.formDate.get('fromDate').value;
-    let toDate = this.formDate.get('toDate').value;
-    if (fromDate) {
-      fromDate = this.datePipe.transform(fromDate, dateFormat);
-    }
-    if (toDate) {
-      toDate = this.datePipe.transform(toDate, dateFormat);
-    }
-    const {permissions} = this.currentUser;
-    const permit = permissions.includes('TXN_CREATE');
-    const form = this.formFilter.value;
-    let query = `fromDate=${fromDate}&toDate=${toDate}&permission=${!permit}&officeName=${form.officeId || 'ALL'}`;
-    const keys = Object.keys(form);
-    for (const key of keys) {
-      if (key === 'staffId') {
-        if (form[key]) {
-          query = query + '&createdByFilter=' + form[key];
-        } else {
-          query = query + '&createdByFilter=ALL';
-        }
-      } else {
-        const value = ['productId', 'status', 'partnerCode', 'officeName'].indexOf(key) === -1 ? form[key] : ((form[key] === '' || !form[key]) ? 'ALL' : form[key]);
-        query = query + '&' + key + '=' + value;
+  viewFeeDialog(txnCode: string) {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.data = {
+      data: {
+        txnCode: txnCode
       }
+    };
+    // dialogConfig.minWidth = 400;
+    const dialog = this.dialog.open(ViewFeePaidTransactionDialogComponent, dialogConfig);
+    dialog.afterClosed().subscribe(data => {
+      if (data && data.status) {
+        this.getTransaction();
+      }
+    });
+  }
 
-    }
-    this.transactionService.exportTransaction(query);
+  applyFilter(text: string) {
+    this.searchText = text;
+    this.filterTransaction();
+  }
+
+  checkShowButton(txnCode: string) {
+    return this.getDataOfGroupTxnCode(txnCode).find((v: any) => v.feeRemain) || false;
+  }
+
+  checkFeePaid(txnCode: string) {
+    return this.getDataOfGroupTxnCode(txnCode).find((v: any) => v.feePaid) || false;
+  }
+
+  exportTransactionFeePaid() {
+    const refids = this.filterData.map(v => {
+      return v.refid;
+    });
+    const re = refids.toString().split(',').join( '-');
+    this.transactionService.exportTransactionFeePaid(re);
   }
 }

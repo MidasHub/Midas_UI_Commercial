@@ -1,1 +1,96 @@
-<p>view-fee-paid-transaction-dialog works!</p>
+<h1 mat-dialog-title>Danh sách thu/chi đã thực hiện [{{txnCode}}]</h1>
+<div mat-dialog-content>
+  <table mat-table multiTemplateDataRows class="mat-elevation-z8" [dataSource]="transactions" matSort>
+
+    <ng-container matColumnDef="txnSavingResource">
+      <th mat-header-cell class="mat-cell-custom"  *matHeaderCellDef>Mã</th>
+      <td mat-cell class="mat-cell-custom"
+          *matCellDef="let transaction"> {{ transaction.txnSavingResource }} </td>
+    </ng-container>
+
+
+    <ng-container matColumnDef="createdDate">
+      <th mat-header-cell class="mat-cell-custom" fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>Thời gian</th>
+      <td mat-cell class="mat-cell-custom" fxHide fxShow.gt-md
+          *matCellDef="let transaction">{{ transaction.createdDate | date:'dd-MM-yyyy HH:mm:ss'}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="txnSavingType">
+      <th mat-header-cell class="mat-cell-custom" *matHeaderCellDef mat-sort-header>Loại</th>
+      <td mat-cell  class="mat-cell-custom"
+          *matCellDef="let transaction">{{transaction.txnSavingType == 'W' ? 'Giảm':'Tăng' }} </td>
+    </ng-container>
+
+
+    <ng-container matColumnDef="txnPaymentCode">
+      <th mat-header-cell class="mat-cell-custom" fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>P.thức</th>
+      <td mat-cell fxHide fxShow.gt-md class="mat-cell-custom"
+          *matCellDef="let transaction">{{ transaction.txnPaymentCode }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="txnSavingId">
+      <th mat-header-cell class="mat-cell-custom" fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>Tài khoản </th>
+      <td mat-cell fxHide fxShow.gt-md class="mat-cell-custom"
+          *matCellDef="let transaction">{{ transaction.txnSavingId }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="paidAmount">
+      <th mat-header-cell class="mat-cell-custom"  *matHeaderCellDef mat-sort-header>Số tiền</th>
+      <td mat-cell class="mat-cell-custom"
+          *matCellDef="let transaction">{{ transaction.paidAmount | money }} </td>
+    </ng-container>
+
+
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell class="mat-cell-custom" *matHeaderCellDef mat-sort-header></th>
+      <td mat-cell class="mat-cell-custom"
+          *matCellDef="let transaction"
+      >
+        <button mat-button *ngIf="transaction.txnType === 'ROLLTERM'"
+                matTooltip="Hoàn tác dòng chi tiền"
+                (click)="revertTransaction(transaction.txnSavingResource)"
+        >
+          <img src="assets/images/icons/refresh.svg">
+        </button>
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="expandedDetail">
+      <td mat-cell fxShow fxHide.gt-md *matCellDef="let element" [attr.colspan]="displayedColumns.length">
+        <div class="example-element-detail"
+             [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
+          <div class="example-element-description" fxLayout="column">
+            <div>
+                <span style="font-weight: bold;">
+                  Thời gian :</span>&nbsp;
+              &nbsp;{{element.createdDate |  date:'dd-MM-yyyy HH:mm:ss'}}
+            </div>
+            <div>
+                <span style="font-weight: bold;">
+                  P.thức :</span>&nbsp;
+              &nbsp;{{element.txnPaymentCode}}
+            </div>
+            <div>
+                <span style="font-weight: bold;">
+                  Tài khoản :</span>&nbsp;
+              &nbsp;{{element.txnSavingId }}
+            </div>
+          </div>
+        </div>
+      </td>
+    </ng-container>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let element; columns: displayedColumns;"
+        class="example-element-row"
+        [class.example-expanded-row]="expandedElement === element"
+        (click)="expandedElement = expandedElement === element ? null : element">
+    </tr>
+    <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
+  </table>
+</div>
+<mat-dialog-actions align="end">
+  <button mat-raised-button
+  >{{'Shared_Component.DeleteDialog.buttonCancel'|translate}}</button>
+  <button mat-raised-button color="warn"
+  >{{'Shared_Component.DeleteDialog.buttonConfirm'|translate}}</button>
+  <!--  [mat-dialog-close]="{ file: true }"-->
+</mat-dialog-actions>

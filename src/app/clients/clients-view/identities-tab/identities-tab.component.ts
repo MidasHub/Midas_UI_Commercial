@@ -196,8 +196,10 @@ export class IdentitiesTabComponent {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.data = {
       title: "Add Client Identifier",
+      addOther: addOther,
       clientIdentifierTemplate: this.clientIdentifierTemplate,
     };
+
     dialogConfig.minWidth = 400;
     const addIdentifierDialogRef = this.dialog.open(AddIdentitiesComponent, dialogConfig);
     addIdentifierDialogRef.afterClosed().subscribe((response: any) => {

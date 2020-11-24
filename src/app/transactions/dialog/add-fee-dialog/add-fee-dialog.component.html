@@ -1,34 +1,48 @@
 <h1 mat-dialog-title>Thêm thu/chi tiền cho giao dịch [{{txnCode}}]</h1>
 <div mat-dialog-content>
-  <div class="custom-files-input" [formGroup]="formDialog" fxLayout="column">
+  <span style="color: #e74c3c;">{{messageNoti}}</span>
+  <div class="custom-files-input" fxLayout="column">
     <div fxLayout="column"
+         *ngIf="transactionPaid"
+         [formGroup]="formDialogPaid"
     >
       <h3>Tài khoản chi</h3>
       <div fxLayout="row swap"
            fxLayoutAlign.lt-sm="center"
            fxLayoutGap="2%"
            fxLayout.lt-sm="column">
-        <mat-form-field fxFlex="30%" class="input_custom">
+        <mat-form-field fxFlex="30%" *ngIf="formDialogPaid.contains('paymentCode')" class="input_custom">
           <mat-label>Lựa chọn phương thức</mat-label>
-          <mat-select formControlName="paymentTypePaid">
-            <mat-option *ngFor="let type of paidPaymentType" [value]="type.code">
+          <mat-select required formControlName="paymentCode">
+            <mat-option *ngFor="let type of paidPaymentType"
+                        [fxHide]="type.code === 'AM'"
+                        [value]="type.code">
               {{ type.desc }}
             </mat-option>
           </mat-select>
         </mat-form-field>
 
-        <mat-form-field fxFlex="30%" class="input_custom">
-          <mat-label>Lựa chọn phương thức</mat-label>
-          <mat-select formControlName="accountPaid">
-            <mat-option *ngFor="let type of accountsFee" [value]="type.code">
-              {{ type.desc }}
+        <mat-form-field fxFlex="30%" *ngIf="formDialogPaid.contains('savingAccountPaid')" class="input_custom">
+          <mat-label>Lựa chọn tài khoản</mat-label>
+          <mat-select required formControlName="savingAccountPaid">
+            <mat-option *ngFor="let type of accountsPaid"
+                        [fxHide]="type.hide"
+                        [value]="type.id">
+              {{type.externalId ? type.externalId + ' - ' : ''}} {{type.balance | money}}
             </mat-option>
           </mat-select>
         </mat-form-field>
-
         <mat-form-field fxFlex="30%">
-          <mat-label>Số tiền</mat-label>
-          <input matInput formControlName="amountPaid">
+          <mat-label>Số tiền ({{paidAmount | money}})</mat-label>
+          <input
+            matInput
+            required
+            currencyMask
+            formControlName="amountPaid">
+          <mat-error *ngIf="formDialogPaid.controls.amountPaid.hasError('required')">Vui lòng thêm thông tin trước khi
+            thực
+            hiện
+          </mat-error>
         </mat-form-field>
 
         <mat-form-field fxFlex="96%">
@@ -36,41 +50,54 @@
           <textarea matTextareaAutosize matInput formControlName="notePaid"></textarea>
         </mat-form-field>
       </div>
-
     </div>
     <div fxLayout="column"
+         *ngIf="transactionFee && showGet"
+         [formGroup]="formDialogGet"
     >
       <h3>Tài khoản nhận</h3>
       <div fxLayout="row swap"
            fxLayoutAlign.lt-sm="center"
            fxLayoutGap="2%"
            fxLayout.lt-sm="column">
-        <mat-form-field fxFlex="30%" *ngIf="formDialog.contains('paymentTypeFee')" class="input_custom">
+        <mat-form-field fxFlex="30%" *ngIf="formDialogGet.contains('paymentCodeGet')" class="input_custom">
           <mat-label>Lựa chọn phương thức</mat-label>
-          <mat-select formControlName="paymentTypeFee">
-            <mat-option *ngFor="let type of paidPaymentType" [value]="type.code">
+          <mat-select required formControlName="paymentCodeGet">
+            <mat-option *ngFor="let type of paidPaymentType"
+                        [fxHide]="type.code === 'DE'"
+                        [value]="type.code">
               {{ type.desc }}
             </mat-option>
           </mat-select>
         </mat-form-field>
 
-        <mat-form-field fxFlex="30%" *ngIf="formDialog.contains('accountFee')" class="input_custom">
-          <mat-label>Lựa chọn phương thức</mat-label>
-          <mat-select formControlName="accountFee">
-            <mat-option *ngFor="let type of accountsFee" [value]="type.code">
-              {{ type.desc }}
+        <mat-form-field fxFlex="30%" *ngIf="formDialogGet.contains('savingAccountGet')" class="input_custom">
+          <mat-label>Lựa chọn tài khoản</mat-label>
+          <mat-select required formControlName="savingAccountGet">
+            <mat-option *ngFor="let type of accountsFee"
+                        [fxHide]="type.hide"
+                        [value]="type.id">
+              {{type.externalId}} - {{type.balance | money}}
             </mat-option>
           </mat-select>
         </mat-form-field>
 
-        <mat-form-field *ngIf="formDialog.contains('amountFee')" fxFlex="30%">
-          <mat-label>Số tiền</mat-label>
-          <input matInput formControlName="amountFee">
+        <mat-form-field *ngIf="formDialogGet.contains('amountGet')" fxFlex="30%">
+          <mat-label>Số tiền ({{feeAmount|money}})</mat-label>
+          <input
+            required
+            currencyMask
+            matInput formControlName="amountGet">
+          <mat-error *ngIf="formDialogGet.controls.amountGet.hasError('required')">Vui lòng thêm thông tin trước khi
+            thực
+            hiện
+          </mat-error>
+
         </mat-form-field>
 
-        <mat-form-field *ngIf="formDialog.contains('noteFee')" fxFlex="96%">
+        <mat-form-field *ngIf="formDialogGet.contains('noteGet')" fxFlex="96%">
           <mat-label>Ghi chú</mat-label>
-          <textarea matTextareaAutosize matInput formControlName="noteFee"></textarea>
+          <textarea matTextareaAutosize matInput formControlName="noteGet"></textarea>
         </mat-form-field>
       </div>
 
@@ -78,7 +105,11 @@
   </div>
 </div>
 <mat-dialog-actions align="end">
-  <button mat-raised-button mat-dialog-close>{{'Shared_Component.DeleteDialog.buttonCancel'|translate}}</button>
+  <button mat-raised-button
+          (click)="dialogRef.close({status:false})"
+  >{{'Shared_Component.DeleteDialog.buttonCancel'|translate}}</button>
   <button mat-raised-button color="warn"
-          [mat-dialog-close]="{ file: true }">{{'Shared_Component.DeleteDialog.buttonConfirm'|translate}}</button>
+          (click)="submitForm()"
+  >{{'Shared_Component.DeleteDialog.buttonConfirm'|translate}}</button>
+  <!--  [mat-dialog-close]="{ file: true }"-->
 </mat-dialog-actions>
