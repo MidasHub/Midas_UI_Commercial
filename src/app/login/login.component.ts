@@ -10,9 +10,9 @@ import { Alert } from '../core/alert/alert.model';
 
 /** Custom Services */
 import { AlertService } from '../core/alert/alert.service';
-// import { TranslateService } from '@ngx-translate/core';
-// import { I18nService } from '../core/i18n/i18n.service';
-// //import {environment} from '../../environments/environment'
+/** Environment Imports */
+import { environment } from '../../environments/environment';
+
 
 /**
  * Login component.
@@ -23,7 +23,8 @@ import { AlertService } from '../core/alert/alert.service';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit, OnDestroy {
-
+  
+  public environment = environment;
   /** True if password requires a reset. */
   resetPassword = false;
   /** True if user requires two factor authentication. */
