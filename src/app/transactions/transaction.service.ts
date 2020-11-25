@@ -34,14 +34,14 @@ export class TransactionService {
       .set('createdBy', this.accessToken.userId)
       .set('accessToken', this.accessToken.base64EncodedAuthenticationKey);
 
-      const keys = Object.keys(form);
-      for (const key of keys) {
-        if (key.includes('amount')) {
-          httpParams = httpParams.set(key, String(Number(form[key])));
-        } else {
-          httpParams = httpParams.set(key, form[key]);
-        }
+    const keys = Object.keys(form);
+    for (const key of keys) {
+      if (key.includes('amount')) {
+        httpParams = httpParams.set(key, String(Number(form[key])));
+      } else {
+        httpParams = httpParams.set(key, form[key]);
       }
+    }
     return this.http.post<any>(`${this.GatewayApiUrlPrefix}/transaction/repayment_rollterm_manual_transaction`, httpParams);
   }
 
@@ -425,7 +425,7 @@ export class TransactionService {
     const httpParams = new HttpParams()
       .set('txnCode', refId)
       .set('amountPaid', amountPaid)
-      .set('fromOfficeId',  this.accessToken.officeId)
+      .set('fromOfficeId', this.accessToken.officeId)
       .set('createdBy', this.accessToken.userId)
       .set('accessToken', this.accessToken.base64EncodedAuthenticationKey);
 
@@ -566,6 +566,73 @@ export class TransactionService {
       .set('accessToken', this.accessToken.base64EncodedAuthenticationKey);
     return this.http.post<any>(
       `${this.GatewayApiUrlPrefix}/savingTransaction/revert_fee_transaction`,
+      httpParams
+    );
+  }
+
+  getBatchTransactions(batchTxnName: string): Observable<any> {
+    const httpParams = new HttpParams()
+      .set('batchTxnName', batchTxnName)
+      .set('createdBy', this.accessToken.userId)
+      .set('accessToken', this.accessToken.base64EncodedAuthenticationKey);
+    return this.http.post<any>(
+      `${this.GatewayApiUrlPrefix}/transaction/get_list_batch_transaction`,
+      httpParams
+    );
+  }
+
+  getMembersInGroup(groupId: string): Observable<any> {
+    const httpParams = new HttpParams()
+      .set('groupId', groupId)
+      .set('createdBy', this.accessToken.userId)
+      .set('accessToken', this.accessToken.base64EncodedAuthenticationKey);
+    return this.http.post<any>(
+      `${this.GatewayApiUrlPrefix}/groups/get_list_member_group`,
+      httpParams
+    );
+  }
+
+  getMembersAvailableGroup(groupId: string): Observable<any> {
+    const httpParams = new HttpParams()
+      .set('groupId', groupId)
+      .set('createdBy', this.accessToken.userId)
+      .set('accessToken', this.accessToken.base64EncodedAuthenticationKey);
+    return this.http.post<any>(
+      `${this.GatewayApiUrlPrefix}/groups/get_list_member_group_with_identifier`,
+      httpParams
+    );
+  }
+
+  checkValidTransactionBtach(clientId: string): Observable<any> {
+    const httpParams = new HttpParams()
+      .set('clientId', clientId)
+      .set('createdBy', this.accessToken.userId)
+      .set('accessToken', this.accessToken.base64EncodedAuthenticationKey);
+    return this.http.post<any>(
+      `${this.GatewayApiUrlPrefix}/transaction/check_valid_for_transaction`,
+      httpParams
+    );
+  }
+
+  checkExtraCardTransactionBatch(userId: string, userIdentifyId: string): Observable<any> {
+    const httpParams = new HttpParams()
+      .set('userId', userId)
+      .set('userIdentifyId', userIdentifyId)
+
+      .set('createdBy', this.accessToken.userId)
+      .set('accessToken', this.accessToken.base64EncodedAuthenticationKey);
+    return this.http.post<any>(
+      `${this.GatewayApiUrlPrefix}/card/check_extra_card_info`,
+      httpParams
+    );
+  }
+  getTransactionGroupFee(groupId: string): Observable<any> {
+    const httpParams = new HttpParams()
+      .set('groupId', groupId)
+      .set('createdBy', this.accessToken.userId)
+      .set('accessToken', this.accessToken.base64EncodedAuthenticationKey);
+    return this.http.post<any>(
+      `${this.GatewayApiUrlPrefix}/savingTransaction/get_fee_transaction_by_Group`,
       httpParams
     );
   }

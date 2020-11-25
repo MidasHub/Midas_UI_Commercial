@@ -15,6 +15,8 @@ import {ViewTransactionComponent} from './view-transaction/view-transaction.comp
 import {RollTermScheduleTransactionComponent} from './rollTerm-schedule-transaction/rollTerm-schedule-transaction.component';
 import {FeePaidManagementComponent} from './fee-paid-management/fee-paid-management.component';
 import {CreateBatchTransactionComponent} from './batch-transactions/create-batch-transaction/create-batch-transaction.component';
+import {MemberInGroupResolver} from './resolver/member-in-group.resolver';
+import {MemberAvailableInGroupResolver} from './resolver/member-available-in-group.resolver';
 
 /** Transaction Routes */
 const routes: Routes = [
@@ -58,6 +60,10 @@ const routes: Routes = [
               title: extract('Danh sách xử lý giao dịch'),
               breadcrumb: 'Danh sách xử lý giao dịch',
               routeParamBreadcrumb: 'groupId'
+            },
+            resolve: {
+              membersInGroup: MemberInGroupResolver,
+              // memberAvailableInGroup: MemberAvailableInGroupResolver
             }
           }]
         }
