@@ -2,13 +2,14 @@
 import { DatePipe } from "@angular/common";
 import { Component, OnInit, ViewChild } from "@angular/core";
 import { FormBuilder, FormControl, FormGroup, FormGroupDirective, Validators } from "@angular/forms";
-import { MatDialog } from "@angular/material/dialog";
+import { MatDialog, MatDialogConfig } from "@angular/material/dialog";
 import { MatPaginator } from "@angular/material/paginator";
 import { MatSort } from "@angular/material/sort";
 import { MatTable, MatTableDataSource } from "@angular/material/table";
 import { ActivatedRoute, Router } from "@angular/router";
 import { AlertService } from "app/core/alert/alert.service";
 import { SettingsService } from "app/settings/settings.service";
+import { AddFeeDialogComponent } from "../dialog/add-fee-dialog/add-fee-dialog.component";
 import { TransactionService } from "../transaction.service";
 
 /**
@@ -356,6 +357,8 @@ export class CreateTransactionComponent implements OnInit {
       this.listRollTermBooking = [];
       this.transactionInfo.transactionRefNo = data.result.tranRefNo;
       this.transactionInfo.transactionId = data.result.id;
+      this.transactionInfo.isDone = true;
+
       this.alertService.alert({
         message: `Tạo giao dịch ${this.transactionInfo.transactionRefNo} thành công!`,
         msgClass: "cssSuccess",
@@ -414,6 +417,23 @@ export class CreateTransactionComponent implements OnInit {
 
   validateCashTransaction(): boolean {
     return true;
+  }
+
+  addFeeDialog(txnCode: string) {
+
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.data = {
+      data: {
+        txnCode: txnCode,
+      },
+    };
+    // dialogConfig.minWidth = 400;
+    const dialog = this.dialog.open(AddFeeDialogComponent, dialogConfig);
+    dialog.afterClosed().subscribe((data) => {
+      if (data) {
+        //this.getRollTermScheduleAndCardDueDayInfo(data.rollTermId);
+      }
+    });
   }
 
   formatCurrency(value: string) {
