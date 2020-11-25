@@ -153,6 +153,15 @@ export class WebAppComponent implements OnInit {
       // this.settingsService.setDateFormat('dd MMMM yyyy');
       this.settingsService.setDateFormat('dd/MM/yyyy');
     }
+
+    if (!localStorage.getItem('midasServers')) {
+      this.settingsService.setServers([
+        'https://uat.tekcompay.com:9443',
+        'https://staging-app.midascore.net',
+        'https://localhost:9443',
+        'https://localhost:8443'
+      ]);
+    }
   }
 
   logout() {
