@@ -9,7 +9,7 @@ import { SettingsService } from 'app/settings/settings.service';
  * Server Selector Component
  */
 @Component({
-  selector: 'mifosx-server-selector',
+  selector: 'midas-server-selector',
   templateUrl: './server-selector.component.html',
   styleUrls: ['./server-selector.component.scss']
 })

@@ -162,6 +162,13 @@ export class WebAppComponent implements OnInit {
         'https://localhost:8443'
       ]);
     }
+
+    if (!localStorage.getItem('midasBillposServers')) {
+      this.settingsService.setBillposServers([
+        'https://uat.tekcompay.com:8287',
+        'https://localhost:8287'
+      ]);
+    }
   }
 
   logout() {

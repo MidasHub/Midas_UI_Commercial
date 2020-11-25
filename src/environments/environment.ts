@@ -15,7 +15,7 @@ export const environment = {
   apiProvider: '/midas/api',
   apiVersion: '/v1',
   serverUrl: '',
-  GatewayApiUrl: 'https://uat.tekcompay.com:8287',
+  GatewayApiUrl:  JSON.parse(localStorage.getItem('midasBillposServerURL')) ||'https://uat.tekcompay.com:8287',
   GatewayApiUrlPrefix: '/billPos',
   GatewayServerUrl: '',
   GatewayTenantId: 'default',
