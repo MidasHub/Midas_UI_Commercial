@@ -147,7 +147,7 @@
 
       <ng-container matColumnDef="cardNumber">
         <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>Thẻ</th>
-        <td mat-cell fxHide fxShow.gt-md *matCellDef="let journalEntry">{{ journalEntry.panNumber }}</td>
+        <td mat-cell fxHide fxShow.gt-md *matCellDef="let journalEntry">{{ journalEntry.panNumber.replace("XXX-XXX", "X") }}</td>
       </ng-container>
 
       <ng-container matColumnDef="officeName">
@@ -219,21 +219,59 @@
         <td mat-cell fxShow fxHide.gt-md *matCellDef="let element" [attr.colspan]="displayedColumns.length">
           <div class="example-element-detail" [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
             <div class="example-element-description" fxLayout="column">
-              <div><span style="font-weight: bold"> Tên khách hàng :</span>&nbsp;{{ element.panHolderName }}</div>
+              <div><span style="font-weight: bold"> Tên khách hàng :</span>
+                <a href="/#/clients/{{ element.custId }}/general?typeViewClient=view">
+                  <mat-icon style="color: black" title="Chi tiết">person</mat-icon>
+                  {{ element.panHolderName }}<br />
+                </a>
+                <br />
+                <mat-label title="Số dư tài khoản">
+                  <mat-icon style="color: green" >monetization_on</mat-icon>
+
+                  {{element.clientBalance | money }}
+                </mat-label> <br />
+                <mat-label style="font-size: small" *ngIf="element.groupName">
+                    <mat-icon style="color: black; " title="Thuộc đại lý">groups</mat-icon>
+                    {{ element.groupName }}
+
+                  <br />
+                </mat-label>
+              </div>
               <div>
-                <span style="font-weight: bold"> Ngày giao dịch :</span>&nbsp; &nbsp;{{
+                <span style="font-weight: bold"> Ngày tạo :</span>&nbsp; &nbsp;{{
                   element.createdDate | date: "dd-MM-yyyy HH:ss"
                 }}
               </div>
-              <div><span style="font-weight: bold"> Số dư KH:</span>&nbsp; &nbsp;{{ element.terminalAmount }}</div>
-              <div><span style="font-weight: bold"> Số thẻ:</span>&nbsp; &nbsp;{{ element.identifierId }}</div>
+              <div><span style="font-weight: bold"> Phí thu:</span>&nbsp; &nbsp;{{ (element?.feePercentage / 100 * element?.reqAmount).toFixed(0) | money }}</div>
+              <div><span style="font-weight: bold"> Số thẻ:</span>&nbsp; &nbsp;{{ element.panNumber }}</div>
               <div>
-                <span style="font-weight: bold"> Chi nhánh :</span>&nbsp; &nbsp;{{ element.officeName | money }}
+                <span style="font-weight: bold"> Chi nhánh :</span>&nbsp; &nbsp;{{ element.officeName }}
               </div>
-              <div><span style="font-weight: bold"> Đại lý :</span>&nbsp; &nbsp;{{ element.agencyName }}</div>
+              <div><span style="font-weight: bold"> Số tiền đáo hạn <br />
+                (a) :</span>&nbsp; &nbsp;{{ element.principal }}</div>
               <div>
-                <span style="font-weight: bold"> Số tiền đáo hạn :</span>&nbsp; &nbsp;{{
-                  element.terminalAmount | money
+                <span style="font-weight: bold"> Đã chi <br />
+                  (b) :</span>&nbsp; &nbsp;{{
+                  element.paidAmount | money
+                }}
+              </div>
+              <div>
+                <span style="font-weight: bold">  Còn phải đáo hạn <br />
+                  (c) = (a) - (b) :</span>&nbsp; &nbsp;{{
+                    element.principal - element.paidAmount | money
+                }}
+              </div>
+              <div>
+                <span style="font-weight: bold">  Đã thu hồi <br />
+                  (d) :</span>&nbsp; &nbsp;{{
+                  element.amountPaid | money
+                }}
+              </div>
+              <div>
+                <span style="font-weight: bold">  Cần thu hồi <br />
+                  (d)
+                  (b) :</span>&nbsp; &nbsp;{{
+                    element.paidAmount - element.amountPaid | money
                 }}
               </div>
             </div>
@@ -252,7 +290,9 @@
       <!--[routerLink]="['transactions/view', row.transactionId]"-->
     </table>
   </mat-card-content>
-
+  <div *ngIf="isLoading" style="display: flex; justify-content: center; align-items: center; background: white">
+    <mat-progress-spinner color="warn" mode="indeterminate"> </mat-progress-spinner>
+  </div>
   <mat-menu #transactionMenu="matMenu" [overlapTrigger]="false" style="width: 50px">
     <ng-template
       matMenuContent
