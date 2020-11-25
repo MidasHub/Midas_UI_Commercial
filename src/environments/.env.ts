@@ -1,4 +1,4 @@
 export default {
-  'midas_version': '0.0.0',
+  'midas_version': '3.11.9',
   'allow_switching_backend_instance': true
 };

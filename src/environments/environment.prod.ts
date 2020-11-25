@@ -7,8 +7,8 @@
 import env from './.env';
 //baseApiUrl: 'https://uat.tekcompay.com:9443',
 export const environment = {
-  production: false,
-  version: env.npm_package_version + '-dev',
+  production: true,
+  version: env.midas_version + '-dev',
   fineractPlatformTenantId: 'default',  // For connecting to server running elsewhere update the tenant identifier
   baseApiUrl: 'https://uat.tekcompay.com:9443',
   apiProvider: '/midas/api',
