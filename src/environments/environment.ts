@@ -8,13 +8,14 @@ import env from './.env';
 //baseApiUrl: 'https://uat.tekcompay.com:9443',
 export const environment = {
   production: false,
-  version: env.npm_package_version + '-dev',
+  version: env.midas_version + '-dev',
   fineractPlatformTenantId: 'default',  // For connecting to server running elsewhere update the tenant identifier
-  baseApiUrl: 'https://uat.tekcompay.com:9443',
-  apiProvider: '/fineract-provider/api',
+  baseApiUrl: JSON.parse(localStorage.getItem('midasServerURL')) ||'https://uat.tekcompay.com:9443',
+  allowServerSwitch: env.allow_switching_backend_instance,
+  apiProvider: '/midas/api',
   apiVersion: '/v1',
   serverUrl: '',
-  GatewayApiUrl: 'https://uat.tekcompay.com:8287',
+  GatewayApiUrl:  JSON.parse(localStorage.getItem('midasBillposServerURL')) ||'https://uat.tekcompay.com:8287',
   GatewayApiUrlPrefix: '/billPos',
   GatewayServerUrl: '',
   GatewayTenantId: 'default',

@@ -88,9 +88,9 @@
   </table>
 </div>
 <mat-dialog-actions align="end">
-  <button mat-raised-button
-  >{{'Shared_Component.DeleteDialog.buttonCancel'|translate}}</button>
-  <button mat-raised-button color="warn"
-  >{{'Shared_Component.DeleteDialog.buttonConfirm'|translate}}</button>
+<!--  <button mat-raised-button-->
+<!--  >{{'Shared_Component.DeleteDialog.buttonCancel'|translate}}</button>-->
+  <button mat-raised-button color="warn"  [mat-dialog-close]="{ file: true }"
+  >Đóng</button>
   <!--  [mat-dialog-close]="{ file: true }"-->
 </mat-dialog-actions>

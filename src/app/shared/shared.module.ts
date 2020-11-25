@@ -21,6 +21,9 @@ import {NotificationsTrayComponent} from './notifications-tray/notifications-tra
 import {SearchToolComponent} from './search-tool/search-tool.component';
 import {KeyboardShortcutsDialogComponent} from './keyboard-shortcuts-dialog/keyboard-shortcuts-dialog.component';
 import {MatSelectSearchComponent} from './mat-select-search/mat-select-search.component';
+import { ServerSelectorComponent } from './server-selector/server-selector.component';
+import {BillposSelectorComponent} from './billpos-selector/billpos-selector.component';
+
 /** Custom Modules */
 import {IconsModule} from './icons.module';
 import {MaterialModule} from './material.module';
@@ -91,12 +94,16 @@ const customCurrencyMaskConfig = {
     ErrorDialogComponent,
     NotificationsTrayComponent,
     SearchToolComponent,
+    ServerSelectorComponent,
+    BillposSelectorComponent,
     MatSelectSearchComponent
   ],
   exports: [
     FileUploadComponent,
     FooterComponent,
     LanguageSelectorComponent,
+    ServerSelectorComponent,
+    BillposSelectorComponent,
     ThemePickerComponent,
     NotificationsTrayComponent,
     SearchToolComponent,

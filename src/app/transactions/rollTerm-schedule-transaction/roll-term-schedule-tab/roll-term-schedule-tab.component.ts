@@ -30,7 +30,7 @@ import { RollTermScheduleDialogComponent } from "../dialog/roll-term-schedule/ro
   ],
 })
 export class RollTermScheduleTabComponent implements OnInit {
-
+  isLoading: boolean = false;
   expandedElement: any;
   displayedColumns: string[] = [
     "panHolderName",
@@ -159,9 +159,12 @@ export class RollTermScheduleTabComponent implements OnInit {
     if (toDate) {
       toDate = this.datePipe.transform(toDate, dateFormat);
     }
+    this.isLoading = true;
+    this.dataSource = [];
     this.transactionService
       .getListRollTermTransactionOpenByUserId({ fromDate, toDate, clientName, cardNumber, limit, terminalAmount, offset })
       .subscribe((result) => {
+        this.isLoading = false;
         this.transactionsData = result?.result;
         this.dataSource = result?.result.listPosTransaction;
       });
@@ -201,6 +204,7 @@ export class RollTermScheduleTabComponent implements OnInit {
         const value = response.data.value;
 
       }
+      this.getRollTermScheduleAndCardDueDayInfo();
     });
   }
 

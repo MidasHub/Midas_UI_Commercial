@@ -1,0 +1,8 @@
+<mat-form-field id="server-selector">
+    <mat-label>Billpos Service Server</mat-label>
+    <mat-select [formControl]="serverBillposSelector">
+      <mat-option *ngFor="let serverBillpos of billposServers" [value]="serverBillpos">
+        {{ serverBillpos }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
