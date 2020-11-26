@@ -10,6 +10,9 @@ import {ActivatedRoute, ActivatedRouteSnapshot, Router} from '@angular/router';
 import {AlertService} from '../../../core/alert/alert.service';
 import {AuthenticationService} from '../../../core/authentication/authentication.service';
 import {GroupsService} from '../../../groups/groups.service';
+import {AddInformationCardBatchComponent} from '../../dialog/add-information-card-batch/add-information-card-batch.component';
+import {AddIdentitiesExtraInfoComponent} from '../../../clients/clients-view/identities-tab/add-identities-extra-info/add-identities-extra-info.component';
+import {ClientsService} from '../../../clients/clients.service';
 
 @Component({
   selector: 'midas-create-batch-transaction',
@@ -30,6 +33,15 @@ export class CreateBatchTransactionComponent implements OnInit {
     'amount', 'terminalId', 'requestAmount', 'amountTransaction',
     'fee', 'CM', 'batchNo', 'tid', 'terminalAmount', 'actions'
   ];
+  terminals: any[] = [];
+  batchProducts: any[] = [{
+    label: 'RTM',
+    value: 'CA01'
+  },
+    {
+      label: 'ĐHT',
+      value: 'RTM'
+    }];
   expandedElement: any;
   accountFilter: any[] = [];
   accountsShow: any[] = [];
@@ -79,9 +91,12 @@ export class CreateBatchTransactionComponent implements OnInit {
     transactionRefNo: null,
     saveFlag: 0,
     ext5: null,
+    CM: false
   };
   currentUser: any;
   feeGroup: any;
+  batchTxnName: any;
+  bookingTxnDailyId: any;
 
   constructor(private formBuilder: FormBuilder,
               public dialog: MatDialog,
@@ -89,9 +104,22 @@ export class CreateBatchTransactionComponent implements OnInit {
               private route: ActivatedRoute,
               private alertService: AlertService,
               private authenticationService: AuthenticationService,
-              private groupServices: GroupsService
+              private groupServices: GroupsService,
+              private clientsServices: ClientsService
   ) {
-
+    // @ts-ignore
+    const {value} = this.route.queryParams;
+    if (value) {
+      const {batchTxnName, bookingTxnDailyId} = value;
+      if (batchTxnName) {
+        this.batchTxnName = batchTxnName;
+        this.defaultData.batchTxnName = batchTxnName;
+      }
+      if (bookingTxnDailyId) {
+        this.bookingTxnDailyId = bookingTxnDailyId;
+        this.defaultData.bookingTxnDailyId = bookingTxnDailyId;
+      }
+    }
     this.formFilter = this.formBuilder.group({
       'member': ['']
     });
@@ -139,28 +167,51 @@ export class CreateBatchTransactionComponent implements OnInit {
     // });
   }
 
-  addRow() {
+  generaForm(data: any) {
+    const keys = Object.keys(data);
+    const formData = {};
+    for (const key of keys) {
+      formData[key] = [data[key]];
+    }
+    return this.formBuilder.group(formData);
+  }
+
+  async addRow() {
     const member = this.formFilter.get('member').value;
     if (!member) {
       return this.formFilter.markAllAsTouched();
     }
     console.log({member});
-    // this.checkValidTransaction(member.clientId);
+    const checkValidTransaction1 = await this.checkValidTransaction(member.clientId);
+    console.log({checkValidTransaction1});
+    if (!checkValidTransaction1?.result?.isValid) {
+      return this.alertService.alert({
+        message: checkValidTransaction1?.result?.message,
+        msgClass: 'cssWarning'
+      });
+    }
     const resultCard = this.checkCard(member.clientId, member.documentId);
-    console.log(resultCard);
+    console.log({resultCard});
     if (resultCard) {
-      const batchTransaction = {
-        ...this.defaultData,
-        identitydocumentsId: member.identifierId,
-        customerName: member.fullName,
-        clientId: member.clientId,
-        toClientId: member.clientId,
-        clientName: member.fullName,
-        documentId: member.documentId,
-        rate: this.getFee(member.identifierId, 'CA01')
-      };
-      this.dataSource = [...this.dataSource, batchTransaction];
-      console.log(this.dataSource);
+      this.clientsServices.getClientById(member.clientId).subscribe(result => {
+        if (result) {
+          const batchTransaction = {
+            ...this.defaultData,
+            identitydocumentsId: member.identifierId,
+            customerName: member.fullName,
+            clientId: member.clientId,
+            toClientId: member.clientId,
+            clientName: member.fullName,
+            documentId: member.documentId,
+            toAccountId: result?.result?.clientInfo?.savingsAccountId,
+            rate: this.getFee(member.identifierId, 'CA01')
+          };
+          this.dataSource = [...this.dataSource, this.generaForm(batchTransaction)];
+          console.log(this.dataSource);
+        }
+      });
+    } else {
+      this.addCardInformation(member);
     }
   }
 
@@ -202,9 +253,11 @@ export class CreateBatchTransactionComponent implements OnInit {
     });
   }
 
-  checkValidTransaction(clientId: string) {
-    return this.transactionServices.checkValidTransactionBtach(clientId).subscribe(result => {
-      console.log(result);
+  checkValidTransaction(clientId: string): Promise<any> {
+    return new Promise<any>(async resolve => {
+      this.transactionServices.checkValidTransactionBtach(clientId).subscribe(result => {
+        return resolve(result);
+      });
     });
   }
 
@@ -230,6 +283,21 @@ export class CreateBatchTransactionComponent implements OnInit {
   //     }
   //   });
   // }
+
+  addCardInformation(member: any) {
+    this.clientsServices.getClientIdentifierTemplate(member.clientId).subscribe(result => {
+      const dialogConfig = new MatDialogConfig();
+      dialogConfig.data = {
+        clientIdentifierTemplate: result
+      };
+      // dialogConfig.minWidth = 400;
+      const dialog = this.dialog.open(AddIdentitiesExtraInfoComponent, dialogConfig);
+      dialog.afterClosed().subscribe(data => {
+        if (data && data.status) {
+        }
+      });
+    });
+  }
 
   addCard() {
     const dialogConfig = new MatDialogConfig();

@@ -31,6 +31,7 @@ import {AddRowCreateBatchTransactionComponent} from './dialog/add-row-create-bat
 import {CreateCardBatchTransactionComponent} from './dialog/create-card-batch-transaction/create-card-batch-transaction.component';
 import {MemberInGroupResolver} from './resolver/member-in-group.resolver';
 import {MemberAvailableInGroupResolver} from './resolver/member-available-in-group.resolver';
+import { AddInformationCardBatchComponent } from './dialog/add-information-card-batch/add-information-card-batch.component';
 
 /**
  * Profile Module
@@ -59,6 +60,7 @@ import {MemberAvailableInGroupResolver} from './resolver/member-available-in-gro
     CreateBatchTransactionComponent,
     AddRowCreateBatchTransactionComponent,
     CreateCardBatchTransactionComponent,
+    AddInformationCardBatchComponent,
   ],
 
   imports: [

@@ -140,6 +140,20 @@ export class ClientsService {
   getClientAccountData(clientId: string) {
     return this.http.get(`/clients/${clientId}/accounts`);
   }
+
+  getClientAccountDataWithQuery(clientId: string, query: string): Observable<any> {
+    return this.http.get(`/clients/${clientId}/accounts?${query}`);
+  }
+
+  getClientById(clientId: string): Observable<any> {
+    const httpParams = new HttpParams()
+      .set('id', clientId)
+      .set('createdBy', this.accessToken.userId)
+      .set('accessToken', this.accessToken.base64EncodedAuthenticationKey);
+    return this.http.post<any>(`${this.GatewayApiUrlPrefix}/client/get_client_by_id`, httpParams);
+
+  }
+
   getClientAccountDataCross(clientId: string): Observable<any> {
     const httpParams = new HttpParams()
       .set('id', clientId)
@@ -158,6 +172,7 @@ export class ClientsService {
       .set('accessToken', this.accessToken.base64EncodedAuthenticationKey);
     return this.http.post<any>(`${this.GatewayApiUrlPrefix}/client/get_client_of_staff`, httpParams);
   }
+
   getClientChargesData(clientId: string) {
     const httpParams = new HttpParams().set('pendingPayment', 'true');
     return this.http.get(`/clients/${clientId}/charges`, {params: httpParams});
@@ -434,6 +449,7 @@ export class ClientsService {
   createSelfServiceUser(userData: any) {
     return this.http.post(`/users`, userData);
   }
+
   getBalanceAccountOfCustomer(): Observable<any> {
     const {displayName, officeId} = this.accessToken;
     const httpParams = new HttpParams()
@@ -442,6 +458,7 @@ export class ClientsService {
       .set('accessToken', this.accessToken.base64EncodedAuthenticationKey);
     return this.http.post<any>(`${this.GatewayApiUrlPrefix}/savingTransaction/get_list_balance_customer`, httpParams);
   }
+
   getNameOfStaff(): Observable<any> {
     const {displayName, officeId} = this.accessToken;
     const httpParams = new HttpParams()
@@ -450,6 +467,7 @@ export class ClientsService {
       .set('accessToken', this.accessToken.base64EncodedAuthenticationKey);
     return this.http.post<any>(`${this.GatewayApiUrlPrefix}/common/get_list_staffName_of_office`, httpParams);
   }
+
   getStaffOfUser(): Observable<any> {
     const {displayName, officeId} = this.accessToken;
     const httpParams = new HttpParams()
@@ -459,6 +477,7 @@ export class ClientsService {
     return this.http.post<any>(`${this.GatewayApiUrlPrefix}/common/get_staff_of_user`, httpParams);
 
   }
+
   getBalanceOfTeller(): Observable<any> {
     // get_list_balance_teller
     const {displayName, officeId} = this.accessToken;

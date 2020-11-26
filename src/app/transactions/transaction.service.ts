@@ -609,7 +609,7 @@ export class TransactionService {
       .set('createdBy', this.accessToken.userId)
       .set('accessToken', this.accessToken.base64EncodedAuthenticationKey);
     return this.http.post<any>(
-      `${this.GatewayApiUrlPrefix}/transaction/check_valid_for_transaction`,
+      `${this.GatewayApiUrlPrefix}/transaction/check_valid_for_batch_transaction`,
       httpParams
     );
   }
