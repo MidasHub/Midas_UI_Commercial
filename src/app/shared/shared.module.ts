@@ -36,6 +36,9 @@ import {NgxMaskModule, IConfig} from 'ngx-mask';
 import {CurrencyMaskInputMode, NgxCurrencyModule} from 'ngx-currency';
 import {PipesModule} from '../pipes/pipes.module';
 import {DirectivesModule} from '../directives/directives.module';
+import { UserAccountInfoComponent } from './user-account-info/user-account-info.component';
+import { MainboardComponent } from 'app/home/mainboard/mainboard.component';
+import { RouterModule } from '@angular/router';
 
 const maskConfig: Partial<IConfig> = {
   validation: false,
@@ -70,6 +73,7 @@ const customCurrencyMaskConfig = {
     CommonModule,
     IconsModule,
     MaterialModule,
+    RouterModule,
     ReactiveFormsModule,
     TranslateModule,
     NgxMaskModule.forRoot(maskConfig),
@@ -96,7 +100,9 @@ const customCurrencyMaskConfig = {
     SearchToolComponent,
     ServerSelectorComponent,
     BillposSelectorComponent,
-    MatSelectSearchComponent
+    MatSelectSearchComponent,
+    UserAccountInfoComponent,
+    MainboardComponent,
   ],
   exports: [
     FileUploadComponent,
@@ -106,6 +112,7 @@ const customCurrencyMaskConfig = {
     BillposSelectorComponent,
     ThemePickerComponent,
     NotificationsTrayComponent,
+    UserAccountInfoComponent,
     SearchToolComponent,
     ErrorDialogComponent,
     CommonModule,
@@ -115,6 +122,7 @@ const customCurrencyMaskConfig = {
     ReactiveFormsModule,
     TranslateModule,
     MatSelectSearchComponent,
+    MainboardComponent,
     NgxMaskModule,
     NgxCurrencyModule,
     DirectivesModule,

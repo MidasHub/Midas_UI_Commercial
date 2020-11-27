@@ -12,6 +12,7 @@ import { DirectivesModule } from '../directives/directives.module';
 import { TerminalsComponent } from './terminals.component';
 import { EditTerminalsComponent } from './edit-terminals/edit-terminals.component';
 import { CreateTerminalsComponent } from './create-terminals/create-terminals.component';
+import { ViewLimitTerminalComponent } from './view-limit-terminal/view-limit-terminal.component';
 //import { TableModule } from 'ngx-easy-table';
 
 @NgModule({
@@ -20,12 +21,14 @@ import { CreateTerminalsComponent } from './create-terminals/create-terminals.co
     PipesModule,
     DirectivesModule,
     TerminalsRoutingModule,
+
     // TableModule,
   ],
   declarations: [
     TerminalsComponent,
     EditTerminalsComponent,
     CreateTerminalsComponent,
+    ViewLimitTerminalComponent
   ],
   providers: [DatePipe]
 })

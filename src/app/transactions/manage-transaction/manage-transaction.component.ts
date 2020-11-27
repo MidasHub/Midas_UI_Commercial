@@ -318,7 +318,6 @@ export class ManageTransactionComponent implements OnInit {
       if (data) {
         this.transactionService.undoRevertTransaction(transactionId).subscribe(result => {
           if (result.status === '200') {
-            this.getTransaction();
             const message = 'Hoàn tác giao dịch ' + transactionId + ' thành công';
             this.alertService.alert({
               msgClass: 'cssInfo',

@@ -52,6 +52,7 @@ import {AppRoutingModule} from './app-routing.module';
 import { TerminalsModule } from './terminals/terminals.module';
 import {MidasClientModule} from './midas-client/midas-client.module';
 import { TransactionModule } from './transactions/transaction.module';
+import { BookingManageModule } from './booking-manage/booking-manage.module';
 
 /**
  * App Module
@@ -98,6 +99,9 @@ import { TransactionModule } from './transactions/transaction.module';
     TransactionModule,
     MidasClientModule,
     TerminalsModule,
+    BookingManageModule,
+
+
     AppRoutingModule
   ],
   declarations: [WebAppComponent, NotFoundComponent],

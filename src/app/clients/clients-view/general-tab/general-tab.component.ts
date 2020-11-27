@@ -71,7 +71,7 @@ export class GeneralTabComponent {
     private authenticationService: AuthenticationService
   ) {
     this.route.data.subscribe((data: { clientAccountsData: any, clientChargesData: any, clientSummary: any }) => {
-      console.log(data);
+
       this.clientAccountData = data.clientAccountsData.result.clientAccount;
       this.savingAccounts = data.clientAccountsData.result.clientAccount.savingsAccounts.sort((v: any) => ['SCA0', 'CCA0', 'ACA0', 'FCA0'].indexOf(v.shortProductName) === -1);
       this.loanAccounts = data.clientAccountsData.result.clientAccount.loanAccounts;
