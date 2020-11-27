@@ -12,7 +12,6 @@ export const environment = {
   allowServerSwitch: env.allow_switching_backend_instance,
   fineractPlatformTenantId: 'default',  // For connecting to server running elsewhere update the tenant identifier
   baseApiUrl: JSON.parse(localStorage.getItem('midasServerURL')) ||'https://uat.tekcompay.com:9443',
-  allowServerSwitch: env.allow_switching_backend_instance,
   apiProvider: '/midas/api',
   apiVersion: '/v1',
   serverUrl: '',
