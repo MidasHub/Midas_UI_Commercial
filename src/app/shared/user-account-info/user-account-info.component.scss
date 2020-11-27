@@ -1,0 +1,19 @@
+.midas-saving-menu {
+
+  mat-nav-list >  mat-list-item{
+   border-bottom: 1px solid black;
+  }
+  .mat-menu-content {
+    padding: 0 !important;
+  }
+}
+
+.mat-menu-panel{
+  max-width: none !important;
+}
+::ng-deep .midas-saving-menu {
+  width: 300px;
+  height: auto;
+}
+
+

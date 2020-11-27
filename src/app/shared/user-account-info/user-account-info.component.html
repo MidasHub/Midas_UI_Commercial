@@ -1,0 +1,21 @@
+<button mat-icon-button class="ml-1" matTooltip="Tổng số dư tài khoản ngân hàng" [matMenuTriggerFor]="UserSavingMenu">
+  <fa-icon icon="money-bill-alt" size="lg"></fa-icon>
+
+  {{ totalBalance | money }}
+</button>
+
+<mat-menu class="midas-saving-menu" #UserSavingMenu="matMenu" [overlapTrigger]="false">
+  <mat-card>
+    <mat-card-content>
+      <mat-nav-list>
+        <mat-list-item *ngFor="let account of listSaving">
+          <a matLine href="#/">{{ account.externalId }}</a>
+          <button mat-button color="primary" >
+            {{ account.balance | money }}
+          </button>
+        </mat-list-item>
+      </mat-nav-list>
+    </mat-card-content>
+  </mat-card>
+
+</mat-menu>

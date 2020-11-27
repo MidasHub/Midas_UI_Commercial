@@ -1,0 +1,25 @@
+<div mat-dialog-content>
+  <h1 style="color: green;">Chúc mừng! Bạn đã thực hiện giao dịch [{{transactionInfo.trnRefNo}}] thành công</h1>
+  <h2>Bạn sẽ</h2>
+  <mat-dialog-actions align="center">
+    <button (click)="this.downloadVoucherTransaction()" mat-raised-button color="primary">
+      <fa-icon icon="download"></fa-icon>&nbsp;&nbsp; Tải hóa đơn
+    </button>
+    <button (click)="this.addFeeDialog(transactionInfo.transactionRefNo)" mat-raised-button color="warn">
+      <fa-icon icon="check"></fa-icon>&nbsp;&nbsp; Thực hiện thu/chi
+    </button>
+  </mat-dialog-actions>
+
+  <h2>Hay là</h2>
+  <a mat-dialog-close href="#/transaction/create?clientId={{transactionInfo.clientId}}&identifierId={{transactionInfo.identifierId}}&type=cash">Tiếp tục giao dịch với thẻ {{transactionInfo.panNumber}} của khách hàng {{transactionInfo.clientName}}</a>
+  <br />
+  <a mat-dialog-close href="#/clients/{{transactionInfo.clientId}}/identities?typeViewClient=transaction">Chọn thẻ khác của khách hàng {{transactionInfo.clientName}}</a>
+
+  <h2>Tìm kiếm khách hàng khác đề tiếp tục giao dịch</h2>
+  <midas-mainboard> </midas-mainboard>
+</div>
+<mat-dialog-actions align="center">
+  <a mat-dialog-close href="#/">
+    <button mat-raised-button (click)="dialogRef.close({ status: false })" color="warn">Quay lại trang chủ</button></a
+  >
+</mat-dialog-actions>

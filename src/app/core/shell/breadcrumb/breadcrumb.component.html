@@ -7,7 +7,7 @@
           <a *ngIf="breadcrumb.url"
           [routerLink]="breadcrumb.url"
           >{{ breadcrumb.label  | translate }}</a>
-          <a *ngIf="breadcrumb.url">{{ breadcrumb.label  | translate }}</a>
+          <!-- <a *ngIf="breadcrumb.url">{{ breadcrumb.label  | translate }}</a> -->
           <span *ngIf="!breadcrumb.url">{{ breadcrumb.label  | translate }}</span>
         </span>
         <span *ngIf="last">{{ breadcrumb.label  | translate }}</span>

@@ -1,7 +1,19 @@
-.action-button {
-  button {
-    max-height: 42px;
-  }
+
+.container-custom {
+  max-width: 105rem;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.mat-menu-panel {
+  min-width: 50px;
+  max-width: 280px;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+  max-height: calc(100vh - 48px);
+  border-radius: 4px;
+  outline: 0;
+  min-height: 64px;
 }
 
 table {
@@ -54,25 +66,9 @@ tr.example-element-row:not(.example-expanded-row):active {
   opacity: 0.5;
 }
 
-.money-total {
-  font-size: 18px;
-  font-weight: bold;
-  margin: 6px;
+.mat-cell-custom {
+  padding: 6px;
+  padding-left: 10px;
+  padding-right: 10px;
+  margin: 8px;
 }
-
-.select-custom {
-  width: 70px;
-}
-
-.input-custom {
-  width: 70px;
-}
-
-.money-cell {
-  text-align: right;
-}
-
-.actions {
-  width: 30px;
-}
-

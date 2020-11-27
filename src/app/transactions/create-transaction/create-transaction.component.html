@@ -1,6 +1,6 @@
 <div class="container m-b-5" fxLayout="row" fxLayout.lt-md="column" fxLayoutAlign="end" fxLayoutGap="1%">
   <div fxFlex="100%" align="center" class="header">
-    <h2 class="m-5">MÀN HÌNH GIAO DỊCH - THÔNG TIN GIAO DỊCH</h2>
+    <h2  class="m-5">MÀN HÌNH GIAO DỊCH - THÔNG TIN GIAO DỊCH</h2>
   </div>
 </div>
 <div class="container" fxLayout="column" fxLayoutGap="2%">
@@ -215,6 +215,7 @@
               <input
                 matInput
                 [(ngModel)]="booking.amountBooking"
+                [disabled]="i == ( listRollTermBooking.length - 1 ) "
                 [ngModelOptions]="{ standalone: true }"
                 (change)="this.calculateTotalBookingAmount()"
                 (keyup)="booking.amountBooking = this.formatCurrency(booking.amountBooking)"
@@ -280,7 +281,7 @@
                 matNativeControl
               >
                 <option *ngFor="let terminal of transactionInfo.listTerminal" [value]="terminal.terminalId">
-                  {{ terminal.terminalName }}
+                  {{ terminal.terminalName }} - Hạn mức khả dụng: {{ terminal.limitRemain  | money }}
                 </option>
               </select>
             </mat-form-field>

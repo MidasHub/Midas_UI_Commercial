@@ -1,0 +1,76 @@
+<mat-card class="mat-elevation-z20 container-custom">
+  <mat-card-content>
+    <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column" [formGroup]="formFilter">
+      <mat-form-field fxFlex="31%">
+        <mat-label>Chi nhánh</mat-label>
+        <input matInput formControlName="officeName">
+      </mat-form-field>
+
+      <mat-form-field fxFlex="31%">
+        <mat-label>Tên máy</mat-label>
+        <input matInput formControlName="terminalName">
+      </mat-form-field>
+      <div>
+        <div style="margin-top: 15px;" fxLayout="row">
+          <div style="margin: 5px; margin-top: 20px;">
+            <span>Tổng cộng: &nbsp;</span> {{terminalFilter.length}}
+          </div>
+        </div>
+      </div>
+    </div>
+  </mat-card-content>
+  <mat-card-content>
+    <table mat-table class="mat-elevation-z8" (matSortChange)="sortData($event)" [dataSource]="terminalList" matSort>
+
+      <ng-container matColumnDef="officeName">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Chi nhánh</th>
+        <td mat-cell
+            *matCellDef="let terminal"> {{ terminal.officeName}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="terminalId">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Mã máy</th>
+        <td mat-cell
+            *matCellDef="let terminal"> {{ terminal.terminalId}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="terminalName">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Tên máy</th>
+        <td mat-cell
+            *matCellDef="let terminal"> {{ terminal.terminalName}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="limitDefault">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Hạn mức</th>
+        <td mat-cell
+            *matCellDef="let terminal">
+            {{ terminal.limitAmountDefault  | money }}
+            </td>
+      </ng-container>
+
+      <ng-container matColumnDef="limitMovement">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Đã dùng</th>
+        <td mat-cell
+            *matCellDef="let terminal">
+            {{ terminal.limitAmountMovement  | money }}
+            </td>
+      </ng-container>
+
+      <ng-container matColumnDef="limitRemain">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Khả dụng</th>
+        <td mat-cell
+            *matCellDef="let terminal">
+            {{ terminal.limitRemain  | money }}
+            </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let element; columns: displayedColumns;"
+          class="example-element-row">
+      </tr>
+      </table>
+  </mat-card-content>
+  <mat-paginator paginator [length]="terminalFilter.length" [pageSize]="10" [pageSizeOptions]="[10, 25, 50, 100]"
+                 showFirstLastButtons></mat-paginator>
+
+</mat-card>
