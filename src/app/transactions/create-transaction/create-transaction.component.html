@@ -167,15 +167,7 @@
               <div fxFlex="20%">{{ formatCurrency(transactionInfo.txnAmountAfterFee) }}</div>
               <div fxFlex="20%"></div>
             </div>
-            <div fxFlex="100%" fxLayout="row wrap" class="content m-l-20" *ngIf="transactionInfo.isDone">
-              <button (click)="this.downloadVoucherTransaction()" mat-raised-button color="primary">
-                <fa-icon icon="download"></fa-icon>&nbsp;&nbsp; Tải hóa đơn
-              </button>
-              <button (click)="this.addFeeDialog(transactionInfo.transactionRefNo)" mat-raised-button color="primary" >
-              <fa-icon icon="check"></fa-icon>&nbsp;&nbsp;
-                Thực hiện thu/chi
-              </button>
-            </div>
+
           </div>
         </div>
       </div>
