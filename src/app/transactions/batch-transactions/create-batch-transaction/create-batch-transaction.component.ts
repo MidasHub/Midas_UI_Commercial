@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup} from '@angular/forms';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
 import {AddFeeDialogComponent} from '../../dialog/add-fee-dialog/add-fee-dialog.component';
@@ -13,6 +13,9 @@ import {GroupsService} from '../../../groups/groups.service';
 import {AddInformationCardBatchComponent} from '../../dialog/add-information-card-batch/add-information-card-batch.component';
 import {AddIdentitiesExtraInfoComponent} from '../../../clients/clients-view/identities-tab/add-identities-extra-info/add-identities-extra-info.component';
 import {ClientsService} from '../../../clients/clients.service';
+import {debounce, distinctUntilChanged, takeUntil} from 'rxjs/operators';
+import {Subject, timer} from 'rxjs';
+import {ConfirmDialogComponent} from '../../dialog/coifrm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'midas-create-batch-transaction',
@@ -77,7 +80,6 @@ export class CreateBatchTransactionComponent implements OnInit {
     maxRate: 0,
     cogsRate: 0,
     pnlRate: 0,
-    terminalList: [],
     terminalId: null,
     tid: null,
     mid: null,
@@ -97,6 +99,7 @@ export class CreateBatchTransactionComponent implements OnInit {
   feeGroup: any;
   batchTxnName: any;
   bookingTxnDailyId: any;
+  private destroy$ = new Subject<void>();
 
   constructor(private formBuilder: FormBuilder,
               public dialog: MatDialog,
@@ -105,7 +108,7 @@ export class CreateBatchTransactionComponent implements OnInit {
               private alertService: AlertService,
               private authenticationService: AuthenticationService,
               private groupServices: GroupsService,
-              private clientsServices: ClientsService
+              private clientsServices: ClientsService,
   ) {
     // @ts-ignore
     const {value} = this.route.queryParams;
@@ -147,6 +150,7 @@ export class CreateBatchTransactionComponent implements OnInit {
     return 2.0;
   }
 
+
   ngOnInit(): void {
     this.currentUser = this.authenticationService.getCredentials();
     this.transactionServices.getMembersAvailableGroup(this.group.id).subscribe(data => {
@@ -173,25 +177,58 @@ export class CreateBatchTransactionComponent implements OnInit {
     for (const key of keys) {
       formData[key] = [data[key]];
     }
-    return this.formBuilder.group(formData);
+    const from = this.formBuilder.group(formData);
+    from.get('CM').valueChanges.subscribe(value => {
+      console.log(value);
+      const terminalId = from.get('terminalId').value;
+      if (!terminalId || terminalId === '--') {
+        from.get('CM').setValue(false);
+        return this.alertService.alert({
+          message: 'Vui lòng chọn máy POS trước khi thưc hiện',
+          msgClass: 'cssWarning'
+        });
+      }
+    });
+    // @ts-ignore
+    from.data = {
+      terminals: []
+    };
+    from.get('amount').valueChanges.pipe(
+      debounce(() => timer(1000)),
+      distinctUntilChanged(
+        null,
+        (event: any) => {
+          return event;
+        }
+      ),
+      takeUntil(this.destroy$),
+    ).subscribe(value => {
+      console.log(value);
+      if (value && value > 0) {
+        this.transactionServices.getListTerminalAvailable(value).subscribe(result => {
+          // @ts-ignore
+          from?.data.terminals = result?.result?.listTerminal;
+          from.get('terminalId').setValidators([Validators.required]);
+        });
+      }
+    });
+    return from;
   }
+
 
   async addRow() {
     const member = this.formFilter.get('member').value;
     if (!member) {
       return this.formFilter.markAllAsTouched();
     }
-    console.log({member});
     const checkValidTransaction1 = await this.checkValidTransaction(member.clientId);
-    console.log({checkValidTransaction1});
     if (!checkValidTransaction1?.result?.isValid) {
       return this.alertService.alert({
         message: checkValidTransaction1?.result?.message,
         msgClass: 'cssWarning'
       });
     }
-    const resultCard = this.checkCard(member.clientId, member.documentId);
-    console.log({resultCard});
+    const resultCard = await this.checkCard(member.clientId, member.documentId);
     if (resultCard) {
       this.clientsServices.getClientById(member.clientId).subscribe(result => {
         if (result) {
@@ -215,41 +252,63 @@ export class CreateBatchTransactionComponent implements OnInit {
     }
   }
 
-  checkCard(userId: string, userIdentifyId: string): any {
-    return this.transactionServices.checkExtraCardInfo(userId, userIdentifyId).subscribe(result => {
-      if (result?.result && result?.result?.isHaveExtraCardInfo) {
-        let {expiredDate} = result?.result?.cardExtraInfoEntity;
-        expiredDate = new Date(expiredDate);
-        const now = new Date();
-        if (expiredDate.getFullYear() > now.getFullYear()) {
+  onSave(form: any) {
+    const dialog = this.dialog.open(ConfirmDialogComponent, {
+      data: {
+        message: 'Bạn chắc chắn muốn lưu giao dịch',
+        title: 'Hoàn thành giao dịch'
+      },
+    });
+    dialog.afterClosed().subscribe(data => {
+      if (data) {
+        this.transactionServices.onSaveTransactionBatch(form.value).subscribe(result => {
+          console.log(result);
+          return this.alertService.alert({
+            message: 'Giao dịch thành công',
+            msgClass: 'cssSuccess'
+          });
+        });
+      }
+    });
+  }
 
-        } else {
-          if (expiredDate.getFullYear() === now.getFullYear()) {
-            if (expiredDate.getMonth() > now.getMonth()) {
-              if (expiredDate.getMonth() === now.getMonth() + 1) {
+  checkCard(userId: string, userIdentifyId: string): Promise<any> {
+    return new Promise<any>(async resolve => {
+      await this.transactionServices.checkExtraCardInfo(userId, userIdentifyId).subscribe(result => {
+        if (result?.result && result?.result?.isHaveExtraCardInfo) {
+          let {expiredDate} = result?.result?.cardExtraInfoEntity;
+          expiredDate = new Date(expiredDate);
+          const now = new Date();
+          if (expiredDate.getFullYear() > now.getFullYear()) {
+
+          } else {
+            if (expiredDate.getFullYear() === now.getFullYear()) {
+              if (expiredDate.getMonth() > now.getMonth()) {
+                if (expiredDate.getMonth() === now.getMonth() + 1) {
+                  this.alertService.alert({
+                    message: 'CHÚ Ý: Thẻ sẽ hết hạn vào tháng sau, đây là lần cuối cùng được thực hiện giao dịch trên thẻ này',
+                    msgClass: 'cssWarning'
+                  });
+                }
+              }
+              if (expiredDate.getMonth() === now.getMonth()) {
                 this.alertService.alert({
-                  message: 'CHÚ Ý: Thẻ sẽ hết hạn vào tháng sau, đây là lần cuối cùng được thực hiện giao dịch trên thẻ này',
+                  message: 'CẢNH BÁO: Thẻ sẽ hết hạn trong tháng này, cân nhắc khi thực hiện giao dịch trên thẻ này',
+                  msgClass: 'cssWarning'
+                });
+              }
+              if (expiredDate.getMonth() < now.getMonth()) {
+                this.alertService.alert({
+                  message: 'CẢNH BÁO: Thẻ đã hết hạn, không được thực hiện giao dịch trên thẻ này',
                   msgClass: 'cssWarning'
                 });
               }
             }
-            if (expiredDate.getMonth() === now.getMonth()) {
-              this.alertService.alert({
-                message: 'CẢNH BÁO: Thẻ sẽ hết hạn trong tháng này, cân nhắc khi thực hiện giao dịch trên thẻ này',
-                msgClass: 'cssWarning'
-              });
-            }
-            if (expiredDate.getMonth() < now.getMonth()) {
-              this.alertService.alert({
-                message: 'CẢNH BÁO: Thẻ đã hết hạn, không được thực hiện giao dịch trên thẻ này',
-                msgClass: 'cssWarning'
-              });
-            }
           }
+          return resolve(result?.result);
         }
-        return result?.result;
-      }
-      return false;
+        return resolve(false);
+      });
     });
   }
 

@@ -65,14 +65,24 @@ tr.example-element-row:not(.example-expanded-row):active {
 }
 
 .input-custom {
-  width: 70px;
+  width: 80%;
+  padding-right: 8px;
+  padding-left: 8px;
+  max-width: 150px;
 }
 
 .money-cell {
-  text-align: right;
+  text-align: center;
 }
 
 .actions {
   width: 30px;
 }
 
+.export-item {
+  margin-top: 10px;
+}
+
+.no-input {
+  max-width: 70px;
+}
