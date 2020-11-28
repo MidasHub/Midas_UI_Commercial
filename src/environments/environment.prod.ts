@@ -9,6 +9,7 @@ import env from './.env';
 export const environment = {
   production: true,
   version: env.midas_version + '-dev',
+  allowServerSwitch: env.allow_switching_backend_instance,
   fineractPlatformTenantId: 'default',  // For connecting to server running elsewhere update the tenant identifier
   baseApiUrl: 'https://uat.tekcompay.com:9443',
   apiProvider: '/midas/api',

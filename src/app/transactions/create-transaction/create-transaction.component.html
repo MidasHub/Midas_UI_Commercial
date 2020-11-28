@@ -1,6 +1,6 @@
 <div class="container m-b-5" fxLayout="row" fxLayout.lt-md="column" fxLayoutAlign="end" fxLayoutGap="1%">
   <div fxFlex="100%" align="center" class="header">
-    <h2 class="m-5">MÀN HÌNH GIAO DỊCH - THÔNG TIN GIAO DỊCH</h2>
+    <h2  class="m-5">MÀN HÌNH GIAO DỊCH - THÔNG TIN GIAO DỊCH</h2>
   </div>
 </div>
 <div class="container" fxLayout="column" fxLayoutGap="2%">
@@ -167,15 +167,7 @@
               <div fxFlex="20%">{{ formatCurrency(transactionInfo.txnAmountAfterFee) }}</div>
               <div fxFlex="20%"></div>
             </div>
-            <div fxFlex="100%" fxLayout="row wrap" class="content m-l-20" *ngIf="transactionInfo.isDone">
-              <button (click)="this.downloadVoucherTransaction()" mat-raised-button color="primary">
-                <fa-icon icon="download"></fa-icon>&nbsp;&nbsp; Tải hóa đơn
-              </button>
-              <button (click)="this.addFeeDialog(transactionInfo.transactionRefNo)" mat-raised-button color="primary" >
-              <fa-icon icon="check"></fa-icon>&nbsp;&nbsp;
-                Thực hiện thu/chi
-              </button>
-            </div>
+
           </div>
         </div>
       </div>
@@ -215,6 +207,7 @@
               <input
                 matInput
                 [(ngModel)]="booking.amountBooking"
+                [disabled]="i == ( listRollTermBooking.length - 1 ) "
                 [ngModelOptions]="{ standalone: true }"
                 (change)="this.calculateTotalBookingAmount()"
                 (keyup)="booking.amountBooking = this.formatCurrency(booking.amountBooking)"
@@ -280,7 +273,7 @@
                 matNativeControl
               >
                 <option *ngFor="let terminal of transactionInfo.listTerminal" [value]="terminal.terminalId">
-                  {{ terminal.terminalName }}
+                  {{ terminal.terminalName }} - Hạn mức khả dụng: {{ terminal.limitRemain  | money }}
                 </option>
               </select>
             </mat-form-field>

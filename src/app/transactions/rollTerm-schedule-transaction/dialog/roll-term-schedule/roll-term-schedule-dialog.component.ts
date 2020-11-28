@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup } from "@angular/forms";
 import { animate, state, style, transition, trigger } from "@angular/animations";
 import { MatDialog, MatDialogConfig, MAT_DIALOG_DATA } from "@angular/material/dialog";
 import { FormfieldBase } from "app/shared/form-dialog/formfield/model/formfield-base";
-import { BookingService } from "app/booking-internal/booking.service";
+import { BookingService } from "app/booking-manage/booking.service";
 import { Router } from "@angular/router";
 import { AddFeeDialogComponent } from "app/transactions/dialog/add-fee-dialog/add-fee-dialog.component";
 import { TransactionService } from "app/transactions/transaction.service";

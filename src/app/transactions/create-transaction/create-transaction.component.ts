@@ -10,6 +10,7 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { AlertService } from "app/core/alert/alert.service";
 import { SettingsService } from "app/settings/settings.service";
 import { AddFeeDialogComponent } from "../dialog/add-fee-dialog/add-fee-dialog.component";
+import { CreateSuccessTransactionDialogComponent } from "../dialog/create-success-transaction-dialog/create-success-transaction-dialog.component";
 import { TransactionService } from "../transaction.service";
 
 /**
@@ -301,10 +302,6 @@ export class CreateTransactionComponent implements OnInit {
       });
   }
 
-  downloadVoucherTransaction() {
-    this.transactionService.downloadVoucher(this.transactionInfo.transactionId);
-  }
-
   afterSuccessCreateCashTransaction(data: any) {
     this.transactionInfo.transactionId = data.result.id;
     this.transactionInfo.transactionRefNo = data.result.tranRefNo;
@@ -314,7 +311,7 @@ export class CreateTransactionComponent implements OnInit {
       msgClass: "cssSuccess",
       hPosition: "center",
     });
-    this.clearInfoTransaction();
+    this.showSuccessCreateTransactionDialog();
   }
 
   submitTransactionCash() {
@@ -354,10 +351,10 @@ export class CreateTransactionComponent implements OnInit {
     });
     this.transactionInfo.BookingInternalDtoListString = listBookingRollTerm;
     this.transactionService.submitTransactionRollTerm(this.transactionInfo).subscribe((data: any) => {
-      this.listRollTermBooking = [];
-      this.transactionInfo.transactionRefNo = data.result.tranRefNo;
-      this.transactionInfo.transactionId = data.result.id;
-      this.transactionInfo.isDone = true;
+      // this.listRollTermBooking = [];
+      // this.transactionInfo.transactionRefNo = data.result.tranRefNo;
+      // this.transactionInfo.transactionId = data.result.id;
+      // this.transactionInfo.isDone = true;
 
       this.alertService.alert({
         message: `Tạo giao dịch ${this.transactionInfo.transactionRefNo} thành công!`,
@@ -366,7 +363,7 @@ export class CreateTransactionComponent implements OnInit {
       });
       setTimeout(() => {
         this.router.navigate(["/transaction/rollTermSchedule"]);
-      }, 5000); //5s
+      }, 2000); //5s
     });
   }
 
@@ -419,23 +416,25 @@ export class CreateTransactionComponent implements OnInit {
     return true;
   }
 
-  addFeeDialog(txnCode: string) {
 
-    const dialogConfig = new MatDialogConfig();
-    dialogConfig.data = {
-      data: {
-        txnCode: txnCode,
-      },
+  showSuccessCreateTransactionDialog() {
+    const data = {
+      trnRefNo: this.transactionInfo.transactionRefNo,
+      transactionId: this.transactionInfo.transactionId,
+      panNumber: this.transactionInfo.identifyClientDto.accountNumber,
+      clientName: this.transactionInfo.clientDto.displayName,
+      clientId: this.transactionInfo.clientId,
+      identifierId: this.transactionInfo.identifierId,
     };
-    // dialogConfig.minWidth = 400;
-    const dialog = this.dialog.open(AddFeeDialogComponent, dialogConfig);
-    dialog.afterClosed().subscribe((data) => {
-      if (data) {
-        //this.getRollTermScheduleAndCardDueDayInfo(data.rollTermId);
+    const dialog = this.dialog.open(CreateSuccessTransactionDialogComponent, { height: "80%", width: "auto", disableClose: true ,  data });
+    dialog.afterClosed().subscribe((response: any) => {
+      console.log(response);
+      if (response.data) {
+        const value = response.data.value;
+
       }
     });
   }
-
   formatCurrency(value: string) {
     value = String(value);
     const neg = value.startsWith("-");
