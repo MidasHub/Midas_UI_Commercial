@@ -270,7 +270,7 @@ export class CreateBatchTransactionComponent implements OnInit {
       const rate = form.get('rate').value;
       // @ts-ignore
       // tslint:disable-next-line:no-shadowed-variable
-      const {identifierId, documentId} = form.data.member;
+      const {documentId} = form.data.member;
       if (amount && rate !== 0) {
         // amount,
         //           result,
@@ -281,7 +281,7 @@ export class CreateBatchTransactionComponent implements OnInit {
         //           from.data.binCodeInfo.cardType
         // @ts-ignore
         this.transactionServices.mappingInvoiceWithTransaction(form.data.binCodeInfo.cardType,
-          identifierId, identifierId, amount, result).subscribe(result2 => {
+          documentId, documentId, amount, result).subscribe(result2 => {
           if (result2?.result) {
             const value = result2?.result.amountTransaction;
             form.get('amountTransaction').setValue(value);
@@ -296,11 +296,12 @@ export class CreateBatchTransactionComponent implements OnInit {
     form.get('terminalAmount').valueChanges.subscribe(result => {
       const rate = form.get('rate').value;
       const cogsRate = form.get('cogsRate').value;
-      form.get('fee').setValue(this.formatLong(result * (rate / 100)));
-      const feeCP = Number(result * (cogsRate / 100));
-      form.get('feeCP').setValue(this.formatLong(feeCP));
+      const fee = Number(result * (rate / 100)).toFixed(0);
+      form.get('fee').setValue(fee);
+      const feeCP = Number(result * (cogsRate / 100)).toFixed(0);
+      form.get('feeCP').setValue(feeCP);
       // @ts-ignore
-      form.get('feePNL').setValue(this.formatLong(result * (feeCP / 100)));
+      form.get('feePNL').setValue(Number(fee - feeCP).toFixed(0));
     });
     return form;
   }
@@ -325,16 +326,17 @@ export class CreateBatchTransactionComponent implements OnInit {
     if (resultCard) {
       this.clientsServices.getClientById(member.clientId).subscribe(result => {
         if (result) {
+          console.log(member, result);
           const batchTransaction = {
             ...this.defaultData,
-            identitydocumentsId: member.identifierId,
+            identitydocumentsId: member.documentId,
             customerName: member.fullName,
             clientId: member.clientId,
             toClientId: member.clientId,
             clientName: member.fullName,
             documentId: member.documentId,
             toAccountId: result?.result?.clientInfo?.savingsAccountId,
-            rate: this.getFee(member.identifierId, 'CA01')
+            rate: this.getFee(member.documentId, 'CA01')
           };
           this.dataSource = [...this.dataSource, this.generaForm(batchTransaction, member)];
           console.log(this.dataSource);
