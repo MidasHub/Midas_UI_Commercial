@@ -648,7 +648,7 @@ export class TransactionService {
       httpParams = httpParams.set(key, form[key]);
     }
     return this.http.post<any>(
-      `${this.GatewayApiUrlPrefix}/savingTransaction/store_single_batch_pos_transaction`,
+      `${this.GatewayApiUrlPrefix}/transaction/store_single_batch_pos_transaction`,
       httpParams
     );
   }

@@ -130,15 +130,15 @@
             </ng-container>
 
 
-            <ng-container matColumnDef="CM">
-              <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>C/M</th>
-              <td mat-cell fxHide fxShow.gt-md
-                  *matCellDef="let form" [formGroup]="form" class="select-custom">
-                <mat-checkbox checked="false" labelPosition="before"
-                              formControlName="CM" class="margin-v">
-                </mat-checkbox>
-              </td>
-            </ng-container>
+<!--            <ng-container matColumnDef="CM">-->
+<!--              <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>C/M</th>-->
+<!--              <td mat-cell fxHide fxShow.gt-md-->
+<!--                  *matCellDef="let form" [formGroup]="form" class="select-custom">-->
+<!--                <mat-checkbox checked="false" labelPosition="before"-->
+<!--                              formControlName="CM" class="margin-v">-->
+<!--                </mat-checkbox>-->
+<!--              </td>-->
+<!--            </ng-container>-->
 
             <ng-container matColumnDef="batchNo">
               <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>Batch No</th>
@@ -267,35 +267,42 @@
           <div fxLayout="row" class="export-item">
             <img src="assets/images/icons/transaction_total.svg">
             <div fxLayout="column">
-              <span class="money-total">120000 d</span>
+              <span class="money-total">{{dataSource.length}}</span>
               <span>Tổng giao dịch </span>
             </div>
           </div>
           <div fxLayout="row" class="export-item">
             <img src="assets/images/icons/trading.svg">
             <div fxLayout="column">
-              <span class="money-total">120000 d</span>
+              <span class="money-total">{{totalAmount | money}}</span>
               <span>Tiền giao dịch</span>
             </div>
           </div>
           <div fxLayout="row" class="export-item">
             <img src="assets/images/icons/bank.svg">
             <div fxLayout="column">
-              <span class="money-total">120000 d</span>
+              <span class="money-total">{{totalRequest | money}}</span>
               <span>Tiền đề xuất</span>
             </div>
           </div>
           <div fxLayout="row" class="export-item">
             <img src="assets/images/icons/fees.svg">
             <div fxLayout="column">
-              <span class="money-total">120000 d</span>
+              <span class="money-total">{{totalAmountTransaction | money}}</span>
               <span>Tiền thực chi</span>
+            </div>
+          </div>
+          <div fxLayout="row" class="export-item">
+            <img src="assets/images/icons/fees.svg">
+            <div fxLayout="column">
+              <span class="money-total">{{ totalFee | money}}</span>
+              <span>Phí thu</span>
             </div>
           </div>
           <div fxLayout="row" class="export-item">
             <img src="assets/images/icons/invoice.svg">
             <div fxLayout="column">
-              <span class="money-total">120000 d</span>
+              <span class="money-total">{{totalTerminalAmount | money}}</span>
               <span>Tổng số bill trên POS</span>
             </div>
           </div>

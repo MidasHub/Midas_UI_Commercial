@@ -16,6 +16,7 @@ import {ClientsService} from '../../../clients/clients.service';
 import {debounce, distinctUntilChanged, takeUntil} from 'rxjs/operators';
 import {Subject, timer} from 'rxjs';
 import {ConfirmDialogComponent} from '../../dialog/coifrm-dialog/confirm-dialog.component';
+import {BankService} from '../../../services/bank.service';
 
 @Component({
   selector: 'midas-create-batch-transaction',
@@ -34,7 +35,7 @@ export class CreateBatchTransactionComponent implements OnInit {
   formFilter: FormGroup;
   displayedColumns: any[] = ['clientName', 'productId', 'rate',
     'amount', 'terminalId', 'requestAmount', 'amountTransaction',
-    'fee', 'CM', 'batchNo', 'tid', 'terminalAmount', 'actions'
+    'fee', 'batchNo', 'tid', 'terminalAmount', 'actions'
   ];
   terminals: any[] = [];
   batchProducts: any[] = [{
@@ -45,6 +46,11 @@ export class CreateBatchTransactionComponent implements OnInit {
       label: 'ĐHT',
       value: 'RTM'
     }];
+  totalAmount = 0;
+  totalRequest = 0;
+  totalFee = 0;
+  totalAmountTransaction = 0;
+  totalTerminalAmount = 0;
   expandedElement: any;
   accountFilter: any[] = [];
   accountsShow: any[] = [];
@@ -87,13 +93,13 @@ export class CreateBatchTransactionComponent implements OnInit {
     refNo: null,
     appCode: null,
     bills: null,
-    bookingId: null,
-    campaignId: null,
-    transactionId: null,
-    transactionRefNo: null,
+    bookingId: 0,
+    campaignId: 0,
+    transactionId: 0,
+    transactionRefNo: 0,
     saveFlag: 0,
     ext5: null,
-    CM: false
+    // CM: false
   };
   currentUser: any;
   feeGroup: any;
@@ -109,6 +115,7 @@ export class CreateBatchTransactionComponent implements OnInit {
               private authenticationService: AuthenticationService,
               private groupServices: GroupsService,
               private clientsServices: ClientsService,
+              private bankServices: BankService
   ) {
     // @ts-ignore
     const {value} = this.route.queryParams;
@@ -150,6 +157,23 @@ export class CreateBatchTransactionComponent implements OnInit {
     return 2.0;
   }
 
+  onChangeTotal() {
+    this.totalAmount = this.dataSource.reduce((total: any, num: any) => {
+      return total + Math.round(num?.get('amount').value);
+    }, 0);
+    this.totalAmountTransaction = this.dataSource.reduce((total: any, num: any) => {
+      return total + Math.round(num?.get('amountTransaction').value);
+    }, 0);
+    this.totalTerminalAmount = this.dataSource.reduce((total: any, num: any) => {
+      return total + Math.round(num?.get('terminalAmount').value);
+    }, 0);
+    this.totalFee = this.dataSource.reduce((total: any, num: any) => {
+      return total + Math.round(num?.get('fee').value);
+    }, 0);
+    this.totalRequest = this.dataSource.reduce((total: any, num: any) => {
+      return total + Math.round(num?.get('requestAmount').value);
+    }, 0);
+  }
 
   ngOnInit(): void {
     this.currentUser = this.authenticationService.getCredentials();
@@ -171,29 +195,31 @@ export class CreateBatchTransactionComponent implements OnInit {
     // });
   }
 
-  generaForm(data: any) {
+  generaForm(data: any, member: any) {
     const keys = Object.keys(data);
     const formData = {};
     for (const key of keys) {
       formData[key] = [data[key]];
     }
-    const from = this.formBuilder.group(formData);
-    from.get('CM').valueChanges.subscribe(value => {
-      console.log(value);
-      const terminalId = from.get('terminalId').value;
-      if (!terminalId || terminalId === '--') {
-        from.get('CM').setValue(false);
-        return this.alertService.alert({
-          message: 'Vui lòng chọn máy POS trước khi thưc hiện',
-          msgClass: 'cssWarning'
-        });
-      }
-    });
+    const form = this.formBuilder.group(formData);
+    // form.get('CM').valueChanges.subscribe(value => {
+    //   const terminalId = form.get('terminalId').value;
+    //   if (!terminalId || terminalId === '--') {
+    //     form.get('CM').setValue(false);
+    //     return this.alertService.alert({
+    //       message: 'Vui lòng chọn máy POS trước khi thưc hiện',
+    //       msgClass: 'cssWarning'
+    //     });
+    //   }
+    // });
     // @ts-ignore
-    from.data = {
-      terminals: []
+    form.data = {
+      terminals: [],
+      binCodeInfo: {},
+      feeTerminalDto: {},
+      member: member
     };
-    from.get('amount').valueChanges.pipe(
+    form.get('amount').valueChanges.pipe(
       debounce(() => timer(1000)),
       distinctUntilChanged(
         null,
@@ -203,18 +229,85 @@ export class CreateBatchTransactionComponent implements OnInit {
       ),
       takeUntil(this.destroy$),
     ).subscribe(value => {
-      console.log(value);
       if (value && value > 0) {
         this.transactionServices.getListTerminalAvailable(value).subscribe(result => {
           // @ts-ignore
-          from?.data.terminals = result?.result?.listTerminal;
-          from.get('terminalId').setValidators([Validators.required]);
+          form?.data.terminals = result?.result?.listTerminal;
+          form.get('terminalId').setValidators([Validators.required]);
         });
       }
     });
-    return from;
+    form.valueChanges.subscribe(e => {
+      this.onChangeTotal();
+    });
+    this.bankServices.getInfoBinCode(member.cardNumber.slice(0, 6)).subscribe(result => {
+      // @ts-ignore
+      form.data.binCodeInfo = result?.result?.bankBinCode;
+    });
+    form.get('terminalId').valueChanges.subscribe(result => {
+      // @ts-ignore
+      this.transactionServices.getFeeByTerminal(form.data.binCodeInfo.cardType, result).subscribe(result1 => {
+        // @ts-ignore
+        form.data.feeTerminalDto = result1?.result?.feeTerminalDto;
+        const {minRate, maxRate, cogsRate} = result1?.result?.feeTerminalDto;
+        form.get('cogsRate').setValue(cogsRate);
+        // tslint:disable-next-line:no-shadowed-variable
+        const rate = form.get('rate').value;
+        if (rate < minRate || rate > maxRate) {
+          form.get('rate').setValue(maxRate);
+          // @ts-ignore
+          form.get('pnlRate').setValue(Number(maxRate - cogsRate).toFixed(2));
+          this.alertService.alert({
+            message: 'Tỉ lệ phí không được thấp hơn ' + minRate + ' và cao hơn ' + maxRate,
+            msgClass: 'cssWarning'
+          });
+        } else {
+          // @ts-ignore
+          form.get('pnlRate').setValue(Number(rate - cogsRate).toFixed(2));
+        }
+      });
+      const amount = form.get('amount').value;
+      const rate = form.get('rate').value;
+      // @ts-ignore
+      // tslint:disable-next-line:no-shadowed-variable
+      const {identifierId, documentId} = form.data.member;
+      if (amount && rate !== 0) {
+        // amount,
+        //           result,
+        //           bills,
+        //           identifierId,
+        //           documentId,
+        //           // @ts-ignore
+        //           from.data.binCodeInfo.cardType
+        // @ts-ignore
+        this.transactionServices.mappingInvoiceWithTransaction(form.data.binCodeInfo.cardType,
+          identifierId, identifierId, amount, result).subscribe(result2 => {
+          if (result2?.result) {
+            const value = result2?.result.amountTransaction;
+            form.get('amountTransaction').setValue(value);
+            form.get('requestAmount').setValue(value);
+            form.get('terminalAmount').setValue(value);
+            // @ts-ignore
+            form.get('bills').setValue(result2.result.listInvoice);
+          }
+        });
+      }
+    });
+    form.get('terminalAmount').valueChanges.subscribe(result => {
+      const rate = form.get('rate').value;
+      const cogsRate = form.get('cogsRate').value;
+      form.get('fee').setValue(this.formatLong(result * (rate / 100)));
+      const feeCP = Number(result * (cogsRate / 100));
+      form.get('feeCP').setValue(this.formatLong(feeCP));
+      // @ts-ignore
+      form.get('feePNL').setValue(this.formatLong(result * (feeCP / 100)));
+    });
+    return form;
   }
 
+  formatLong(value: any) {
+    return Number(String(value).replace(/[^0-9]+/g, ''));
+  }
 
   async addRow() {
     const member = this.formFilter.get('member').value;
@@ -243,7 +336,7 @@ export class CreateBatchTransactionComponent implements OnInit {
             toAccountId: result?.result?.clientInfo?.savingsAccountId,
             rate: this.getFee(member.identifierId, 'CA01')
           };
-          this.dataSource = [...this.dataSource, this.generaForm(batchTransaction)];
+          this.dataSource = [...this.dataSource, this.generaForm(batchTransaction, member)];
           console.log(this.dataSource);
         }
       });
@@ -259,13 +352,22 @@ export class CreateBatchTransactionComponent implements OnInit {
         title: 'Hoàn thành giao dịch'
       },
     });
+    console.log(form);
     dialog.afterClosed().subscribe(data => {
       if (data) {
-        this.transactionServices.onSaveTransactionBatch(form.value).subscribe(result => {
+        const formData = {...form.data.member, ...form.value};
+        console.log(formData);
+        this.transactionServices.onSaveTransactionBatch(formData).subscribe(result => {
           console.log(result);
+          if (result?.status === '200') {
+            return this.alertService.alert({
+              message: 'Giao dịch thành công',
+              msgClass: 'cssSuccess'
+            });
+          }
           return this.alertService.alert({
-            message: 'Giao dịch thành công',
-            msgClass: 'cssSuccess'
+            message: result?.error,
+            msgClass: 'cssDanger'
           });
         });
       }
