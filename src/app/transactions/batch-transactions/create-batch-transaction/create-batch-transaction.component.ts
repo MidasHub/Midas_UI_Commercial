@@ -95,6 +95,7 @@ export class CreateBatchTransactionComponent implements OnInit {
     bills: null,
     bookingId: 0,
     campaignId: 0,
+    isUseCampaign: false,
     transactionId: 0,
     transactionRefNo: 0,
     saveFlag: 0,
@@ -329,7 +330,7 @@ export class CreateBatchTransactionComponent implements OnInit {
           console.log(member, result);
           const batchTransaction = {
             ...this.defaultData,
-            identitydocumentsId: member.documentId,
+            identitydocumentsId: `${member.cardNumber.slice(0,6)}-XXX-XXX-${member.cardNumber.slice(member.cardNumber.length-4 ,member.cardNumber.length)} `,
             customerName: member.fullName,
             clientId: member.clientId,
             toClientId: member.clientId,
