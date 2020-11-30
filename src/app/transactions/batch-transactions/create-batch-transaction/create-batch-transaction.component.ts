@@ -116,27 +116,79 @@ export class CreateBatchTransactionComponent implements OnInit {
               private authenticationService: AuthenticationService,
               private groupServices: GroupsService,
               private clientsServices: ClientsService,
-              private bankServices: BankService
+              private bankServices: BankService,
+              private router: Router
   ) {
-    // @ts-ignore
-    const {value} = this.route.queryParams;
-    if (value) {
-      const {batchTxnName, bookingTxnDailyId} = value;
-      if (batchTxnName) {
-        this.batchTxnName = batchTxnName;
-        this.defaultData.batchTxnName = batchTxnName;
-      }
-      if (bookingTxnDailyId) {
-        this.bookingTxnDailyId = bookingTxnDailyId;
-        this.defaultData.bookingTxnDailyId = bookingTxnDailyId;
-      }
-    }
+    this.currentUser = this.authenticationService.getCredentials();
     this.formFilter = this.formBuilder.group({
       'member': ['']
     });
+  }
+
+  getLabelProduct(productId: string) {
+    return this.batchProducts.find(v => v.value === productId)?.label;
+  }
+
+  init() {
     // getTransactionGroupFee
-    this.route.data.subscribe((data: any) => {
-      this.group = data.membersInGroup?.result?.listMemberGroup;
+    this.route.data.subscribe(({groupId}: any) => {
+      // @ts-ignore
+      console.log(groupId);
+      this.transactionServices.getMembersInGroup(groupId).subscribe(res => {
+        this.group = res?.result?.listMemberGroup;
+        this.defaultData.groupId = this.group.id;
+        this.defaultData.fromClientId = this.currentUser.userId;
+        this.defaultData.officeId = this.currentUser.officeId;
+        this.transactionServices.getMembersAvailableGroup(this.group.id).subscribe(data => {
+          this.members = data?.result?.listMemberGroupWithIdentifier;
+          this.route.queryParams.subscribe(({batchTxnName, bookingTxnDailyId}: any) => {
+            console.log({batchTxnName, bookingTxnDailyId});
+            if (batchTxnName && this.batchTxnName !== batchTxnName) {
+              this.batchTxnName = batchTxnName;
+              this.defaultData.batchTxnName = batchTxnName;
+              this.transactionServices.getListTransExistingOfBatch(batchTxnName).subscribe(result => {
+                console.log(result); // listBatchTransaction
+                this.dataSource = [];
+                result?.result?.listBatchTransaction?.forEach((v: any) => {
+                  const member = this.members.find(f => String(f.clientId) === String(v.custId));
+                  console.log({member});
+                  const batchTransaction = {
+                    index: this.dataSource.length,
+                    ...this.defaultData,
+                    ...v,
+                    identitydocumentsId: `${member.cardNumber.slice(0, 6)}-XXX-XXX-${member.cardNumber.slice(member.cardNumber.length - 4, member.cardNumber.length)} `,
+                    customerName: member.fullName,
+                    clientId: member.clientId,
+                    toClientId: member.clientId,
+                    clientName: member.fullName,
+                    documentId: member.documentId,
+                    tid: v.traceNo,
+                    fee: v.feeAmount,
+                    requestAmount: v.reqAmount,
+                    amount: v.terminalAmount,
+                    amountTransaction: v.txnAmount,
+                    // toAccountId: result?.result?.clientInfo?.savingsAccountId,
+                    rate: this.getFee(member.documentId, 'CA01'),
+                    saved: true,
+                  };
+                  this.dataSource = [...this.dataSource, this.generaForm(batchTransaction, member)];
+                });
+                this.onChangeTotal();
+              });
+            }
+            if (bookingTxnDailyId) {
+              this.bookingTxnDailyId = bookingTxnDailyId;
+              this.defaultData.bookingTxnDailyId = bookingTxnDailyId;
+            }
+          });
+        });
+        this.transactionServices.getTransactionGroupFee(this.group.id).subscribe(data => {
+          this.feeGroup = data?.result.listFeeGroup;
+        });
+        // this.groupServices.getGroupData(this.group.id).subscribe(data => {
+        //   console.log(data);
+        // });
+      });
     });
   }
 
@@ -177,23 +229,7 @@ export class CreateBatchTransactionComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.currentUser = this.authenticationService.getCredentials();
-    this.transactionServices.getMembersAvailableGroup(this.group.id).subscribe(data => {
-      this.members = data?.result?.listMemberGroupWithIdentifier;
-    });
-    this.transactionServices.getTransactionGroupFee(this.group.id).subscribe(data => {
-      this.feeGroup = data?.result.listFeeGroup;
-    });
-    this.groupServices.getGroupData(this.group.id).subscribe(data => {
-      console.log(data);
-    });
-    this.defaultData.groupId = this.group.id;
-    this.defaultData.fromClientId = this.currentUser.userId;
-    this.defaultData.officeId = this.currentUser.officeId;
-    // this.transactionServices.getMembersInGroup()
-    // this.formFilter.get('member').valueChanges.subscribe(result => {
-    //   console.log(result);
-    // });
+    this.init();
   }
 
   generaForm(data: any, member: any) {
@@ -327,10 +363,10 @@ export class CreateBatchTransactionComponent implements OnInit {
     if (resultCard) {
       this.clientsServices.getClientById(member.clientId).subscribe(result => {
         if (result) {
-          console.log(member, result);
           const batchTransaction = {
+            index: this.dataSource.length,
             ...this.defaultData,
-            identitydocumentsId: `${member.cardNumber.slice(0,6)}-XXX-XXX-${member.cardNumber.slice(member.cardNumber.length-4 ,member.cardNumber.length)} `,
+            identitydocumentsId: `${member.cardNumber.slice(0, 6)}-XXX-XXX-${member.cardNumber.slice(member.cardNumber.length - 4, member.cardNumber.length)} `,
             customerName: member.fullName,
             clientId: member.clientId,
             toClientId: member.clientId,
@@ -340,7 +376,6 @@ export class CreateBatchTransactionComponent implements OnInit {
             rate: this.getFee(member.documentId, 'CA01')
           };
           this.dataSource = [...this.dataSource, this.generaForm(batchTransaction, member)];
-          console.log(this.dataSource);
         }
       });
     } else {
@@ -355,7 +390,6 @@ export class CreateBatchTransactionComponent implements OnInit {
         title: 'Hoàn thành giao dịch'
       },
     });
-    console.log(form);
     dialog.afterClosed().subscribe(data => {
       if (data) {
         const formData = {...form.data.member, ...form.value};
@@ -363,6 +397,15 @@ export class CreateBatchTransactionComponent implements OnInit {
         this.transactionServices.onSaveTransactionBatch(formData).subscribe(result => {
           console.log(result);
           if (result?.status === '200') {
+            this.batchTxnName = result?.result?.batchTxnName;
+            this.defaultData.batchTxnName = this.batchTxnName;
+            const queryParams = {batchTxnName: this.batchTxnName};
+            this.router.navigate([],
+              {
+                queryParams: queryParams,
+                queryParamsHandling: 'merge', // remove to replace all query params by provided
+              });
+            this.updateData(form, result?.result?.transactionId);
             return this.alertService.alert({
               message: 'Giao dịch thành công',
               msgClass: 'cssSuccess'
@@ -374,6 +417,38 @@ export class CreateBatchTransactionComponent implements OnInit {
           });
         });
       }
+    });
+  }
+
+  updateData(form: any, transactionId: any) {
+    this.transactionServices.getTransactionDetail(transactionId).subscribe(result => {
+      console.log(result);
+      const v = result?.result?.detailTransactionDto;
+      const member = form.data.member;
+      const index = form.get('index').value;
+      const batchTransaction = {
+        index: index,
+        ...this.defaultData,
+        ...v,
+        identitydocumentsId: `${member.cardNumber.slice(0, 6)}-XXX-XXX-${member.cardNumber.slice(member.cardNumber.length - 4, member.cardNumber.length)} `,
+        customerName: member.fullName,
+        clientId: member.clientId,
+        toClientId: member.clientId,
+        clientName: member.fullName,
+        documentId: member.documentId,
+        tid: v.traceNo,
+        fee: v.feeAmount,
+        requestAmount: v.reqAmount,
+        amount: v.terminalAmount,
+        amountTransaction: v.txnAmount,
+        // toAccountId: result?.result?.clientInfo?.savingsAccountId,
+        rate: this.getFee(member.documentId, 'CA01'),
+        saved: true,
+      };
+      const form_new = this.generaForm(batchTransaction, member);
+      const newDataSo = this.dataSource.slice();
+      newDataSo[index] = form_new;
+      this.dataSource = newDataSo;
     });
   }
 
@@ -437,16 +512,6 @@ export class CreateBatchTransactionComponent implements OnInit {
     return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
   }
 
-  // addRow() {
-  //   const dialogConfig = new MatDialogConfig();
-  //   dialogConfig.data = {};
-  //   // dialogConfig.minWidth = 400;
-  //   const dialog = this.dialog.open(AddRowCreateBatchTransactionComponent, dialogConfig);
-  //   dialog.afterClosed().subscribe(data => {
-  //     if (data && data.status) {
-  //     }
-  //   });
-  // }
 
   addCardInformation(member: any) {
     this.clientsServices.getClientIdentifierTemplate(member.clientId).subscribe(result => {
@@ -465,7 +530,10 @@ export class CreateBatchTransactionComponent implements OnInit {
 
   addCard() {
     const dialogConfig = new MatDialogConfig();
-    dialogConfig.data = {};
+    dialogConfig.data = {
+      members: this.members,
+      group: this.group
+    };
     // dialogConfig.minWidth = 400;
     const dialog = this.dialog.open(CreateCardBatchTransactionComponent, dialogConfig);
     dialog.afterClosed().subscribe(data => {

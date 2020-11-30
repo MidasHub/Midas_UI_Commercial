@@ -51,7 +51,7 @@
               <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>Dịch vụ</th>
               <td mat-cell fxHide fxShow.gt-md
                   *matCellDef="let form" [formGroup]="form">
-                <mat-form-field *ngIf="form.contains('productId')" class="select-custom">
+                <mat-form-field *ngIf="form.contains('productId') && !form.contains('saved')" class="select-custom">
                   <mat-label>Dịch vụ</mat-label>
                   <mat-select required formControlName="productId">
                     <mat-option *ngFor="let type of batchProducts"
@@ -60,7 +60,7 @@
                     </mat-option>
                   </mat-select>
                 </mat-form-field>
-
+                <span *ngIf="form.contains('saved')">{{getLabelProduct(form.get('productId').value)}}</span>
               </td>
             </ng-container>
 
@@ -68,13 +68,14 @@
               <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>Tỉ lệ Phí</th>
               <td mat-cell fxHide fxShow.gt-md
                   *matCellDef="let form" [formGroup]="form">
-                <mat-form-field *ngIf="form.contains('rate')" class="input-custom">
+                <mat-form-field *ngIf="form.contains('rate') && !form.contains('saved')" class="input-custom">
                   <mat-label>Tỉ lệ phí</mat-label>
                   <input
                     matInput
                     required
                     formControlName="rate">
                 </mat-form-field>
+                <span *ngIf="form.contains('saved')">{{form.get('rate').value}}</span>
               </td>
             </ng-container>
 
@@ -82,7 +83,7 @@
               <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header> Số tiền giao dịch</th>
               <td mat-cell fxHide fxShow.gt-md
                   *matCellDef="let form" [formGroup]="form">
-                <mat-form-field *ngIf="form.contains('amount')" class="input-custom">
+                <mat-form-field *ngIf="form.contains('amount') && !form.contains('saved')" class="input-custom">
                   <mat-label>Số tiền giao dịch</mat-label>
                   <input
                     matInput
@@ -90,6 +91,7 @@
                     currencyMask
                     formControlName="amount">
                 </mat-form-field>
+                <span *ngIf="form.contains('saved')">{{form.get('amount').value | money}}</span>
               </td>
             </ng-container>
 
@@ -97,7 +99,7 @@
               <th mat-header-cell *matHeaderCellDef mat-sort-header>Máy POS</th>
               <td mat-cell
                   *matCellDef="let form" [formGroup]="form">
-                <mat-form-field *ngIf="form.contains('terminalId')" class="select-custom">
+                <mat-form-field *ngIf="form.contains('terminalId') && !form.contains('saved')" class="select-custom">
                   <mat-label>Chọn máy POS</mat-label>
                   <mat-select formControlName="terminalId">
                     <mat-option *ngFor="let type of form?.data?.terminals"
@@ -106,6 +108,7 @@
                     </mat-option>
                   </mat-select>
                 </mat-form-field>
+                <span *ngIf="form.contains('saved')">{{form.get('terminalId').value}}</span>
               </td>
             </ng-container>
 
@@ -144,12 +147,14 @@
               <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>Batch No</th>
               <td mat-cell fxHide fxShow.gt-md
                   *matCellDef="let form" [formGroup]="form">
-                <mat-form-field *ngIf="form.contains('batchNo')" class="no-input">
+                <mat-form-field *ngIf="form.contains('batchNo') && !form.contains('saved')" class="no-input">
                   <mat-label>Batch No</mat-label>
                   <input
                     matInput
                     formControlName="batchNo">
                 </mat-form-field>
+                <span *ngIf="form.contains('saved')">{{form.get('batchNo').value}}</span>
+
               </td>
             </ng-container>
 
@@ -158,12 +163,13 @@
               <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>Trace No</th>
               <td mat-cell fxHide fxShow.gt-md
                   *matCellDef="let form" [formGroup]="form">
-                <mat-form-field *ngIf="form.contains('tid')" class="no-input">
+                <mat-form-field *ngIf="form.contains('tid') && !form.contains('saved')" class="no-input">
                   <mat-label>Trace No</mat-label>
                   <input
                     matInput
                     formControlName="tid">
                 </mat-form-field>
+                <span *ngIf="form.contains('saved')">{{form.get('tid').value}}</span>
               </td>
             </ng-container>
 
@@ -172,13 +178,14 @@
               <th mat-header-cell *matHeaderCellDef mat-sort-header>Số tiền trên bill</th>
               <td mat-cell
                   *matCellDef="let form" [formGroup]="form">
-                <mat-form-field *ngIf="form.contains('terminalAmount')" class="input-custom">
+                <mat-form-field *ngIf="form.contains('terminalAmount') && !form.contains('saved')" class="input-custom">
                   <mat-label>Số tiền trên bill</mat-label>
                   <input
                     matInput
                     currencyMask
                     formControlName="terminalAmount">
                 </mat-form-field>
+                <span *ngIf="form.contains('saved')">{{form.get('terminalAmount').value | money}}</span>
               </td>
             </ng-container>
             <ng-container matColumnDef="actions" style="width: 25px;">

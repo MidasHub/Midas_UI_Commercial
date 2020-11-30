@@ -652,4 +652,23 @@ export class TransactionService {
       httpParams
     );
   }
+  getListTransExistingOfBatch(batchTxnName: string): Observable<any> {
+    const httpParams = new HttpParams()
+      .set('batchTxnName', batchTxnName)
+      .set('createdBy', this.accessToken.userId)
+      .set('accessToken', this.accessToken.base64EncodedAuthenticationKey);
+    return this.http.post<any>(
+      `${this.GatewayApiUrlPrefix}/transaction/get_list_batch_transaction`,
+      httpParams
+    );
+  }
+  getDocumentTemplate(): Observable<any> {
+    const httpParams = new HttpParams()
+      .set('createdBy', this.accessToken.userId)
+      .set('accessToken', this.accessToken.base64EncodedAuthenticationKey);
+    return this.http.post<any>(
+      `${this.GatewayApiUrlPrefix}/common/get_document_templates`,
+      httpParams
+    );
+  }
 }
