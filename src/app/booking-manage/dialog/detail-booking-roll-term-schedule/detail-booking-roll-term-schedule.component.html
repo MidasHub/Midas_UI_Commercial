@@ -1,0 +1,60 @@
+<h1 mat-dialog-title>Danh sách Booking đáo hạn thẻ [{{ bookingRefNo }}]</h1>
+<div mat-dialog-content>
+  <table mat-table multiTemplateDataRows class="mat-elevation-z8" [dataSource]="transactions" matSort>
+    <ng-container matColumnDef="bookingRefNo">
+      <th mat-header-cell class="mat-cell-custom" *matHeaderCellDef>Loại</th>
+      <td mat-cell class="mat-cell-custom" *matCellDef="let transaction ; let i = dataIndex">
+        <mat-label>
+          {{ i == 0 ? "Test thẻ" : "Lần " + i }}
+        </mat-label>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="txnDate">
+      <th mat-header-cell class="mat-cell-custom" fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>Thời gian</th>
+      <td mat-cell class="mat-cell-custom" fxHide fxShow.gt-md *matCellDef="let transaction">
+        {{ transaction.txnDate | date: "dd-MM-yyyy" }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="clientName">
+      <th mat-header-cell class="mat-cell-custom" fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>Khách hàng</th>
+      <td mat-cell fxHide fxShow.gt-md class="mat-cell-custom" *matCellDef="let transaction">
+        {{ transaction.customerName }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="bookingAmount">
+      <th mat-header-cell class="mat-cell-custom" *matHeaderCellDef mat-sort-header>Số tiền</th>
+      <td mat-cell class="mat-cell-custom" *matCellDef="let transaction">{{ transaction.bookingAmount | money }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="expandedDetail">
+      <td mat-cell fxShow fxHide.gt-md *matCellDef="let element" [attr.colspan]="displayedColumns.length">
+        <div class="example-element-detail" [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
+          <div class="example-element-description" fxLayout="column">
+            <div>
+              <span style="font-weight: bold"> Thời gian :</span>&nbsp; &nbsp;{{
+                element.txnDate | date: "dd-MM-yyyy HH:mm:ss"
+              }}
+            </div>
+            <div><span style="font-weight: bold"> Khách hàng :</span>&nbsp; &nbsp;{{ element.customerName }}</div>
+            <div><span style="font-weight: bold"> Số tiền :</span>&nbsp; &nbsp;{{ element.bookingAmount | money }}</div>
+          </div>
+        </div>
+      </td>
+    </ng-container>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr
+      mat-row
+      *matRowDef="let element; columns: displayedColumns"
+      class="example-element-row"
+      [class.example-expanded-row]="expandedElement === element"
+      (click)="expandedElement = expandedElement === element ? null : element"
+    ></tr>
+    <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
+  </table>
+</div>
+<mat-dialog-actions align="center">
+  <button mat-raised-button color="warn" [mat-dialog-close]="{ file: true }">Đóng</button>
+</mat-dialog-actions>

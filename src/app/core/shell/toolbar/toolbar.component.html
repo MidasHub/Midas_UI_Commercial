@@ -100,6 +100,9 @@
 </mat-menu>
 <mat-menu #BookingMenu="matMenu" [overlapTrigger]="false">
   <button mat-menu-item routerLink="/booking/agency">Đại lý</button>
+  <button mat-menu-item routerLink="/booking/create">Tạo booking nội bộ</button>
+  <button *midasHasPermission="'POS_UPDATE'" mat-menu-item routerLink="/booking/view">Quản lý booking nội bộ</button>
+
 </mat-menu>
 <!-- Toolbar Menus -->
 <mat-menu #reportsMenu="matMenu" [overlapTrigger]="false">

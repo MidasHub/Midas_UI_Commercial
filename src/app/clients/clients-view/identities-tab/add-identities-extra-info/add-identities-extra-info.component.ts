@@ -40,11 +40,6 @@ export class AddIdentitiesExtraInfoComponent implements OnInit {
     this.form = this.formBuilder.group({
 
     });
-    this.form.addControl('dueDay', new FormControl('', [Validators.max(31), Validators.min(0)]));
-    this.form.addControl('expiredDate', new FormControl(''));
-
-
-
 
   }
 

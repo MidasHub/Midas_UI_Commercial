@@ -27,7 +27,74 @@ export class BookingService {
     );
     this.GatewayApiUrlPrefix = environment.GatewayApiUrlPrefix;
     this.environment = environment;
-    console.log("accessToken", this.accessToken);
+  }
+
+  getDetailRollTermScheduleBookingByRefNo(bookingRefNo: string): Observable<any> {
+    const httpParams = new HttpParams()
+      .set("refNo", bookingRefNo)
+      .set("createdBy", this.accessToken.userId)
+      .set("accessToken", this.accessToken.base64EncodedAuthenticationKey);
+
+    return this.http.post<any>(
+      `${this.GatewayApiUrlPrefix}/bookingInternal/get_booking_internal_by_txn_date_by_refNo`,
+      httpParams
+    );
+  }
+
+  transferBookingAmount(transferInfo: any): Observable<any> {
+    const httpParams = new HttpParams()
+      .set("fromOfficeId", this.accessToken.officeId)
+      .set("toOfficeId", this.accessToken.officeId)
+      .set("txnCode", transferInfo.bookingRefNo)
+      .set("amountPaid", transferInfo.amountPaid)
+      .set("savingAccountPaid", transferInfo.savingAccountPaid)
+      .set("savingAccountGet", transferInfo.savingAccountGet)
+      .set("createdBy", this.accessToken.userId)
+      .set("accessToken", this.accessToken.base64EncodedAuthenticationKey);
+
+    return this.http.post<any>(`${this.GatewayApiUrlPrefix}/bookingInternal/transfer_booking_amount`, httpParams);
+  }
+
+  getTransferBookingAmountTemplate(createBy: string): Observable<any> {
+    const httpParams = new HttpParams()
+      .set("staffCreateById", createBy)
+      .set("createdBy", this.accessToken.userId)
+      .set("accessToken", this.accessToken.base64EncodedAuthenticationKey);
+
+    return this.http.post<any>(
+      `${this.GatewayApiUrlPrefix}/bookingInternal/get_transfer_booking_amount_template`,
+      httpParams
+    );
+  }
+
+  removeBookingInternal(bookingInternalId: string): Observable<any> {
+    const httpParams = new HttpParams()
+      .set("bookingInternalId", bookingInternalId)
+      .set("createdBy", this.accessToken.userId)
+      .set("accessToken", this.accessToken.base64EncodedAuthenticationKey);
+
+    return this.http.post<any>(`${this.GatewayApiUrlPrefix}/bookingInternal/remove_booking_internal`, httpParams);
+  }
+
+  editBookingInternal(bookingInfo: any): Observable<any> {
+    const httpParams = new HttpParams()
+      .set("bookingInternalId", bookingInfo.bookingInternalId)
+      .set("txnDate", bookingInfo.txnDate)
+      .set("amountBooking", bookingInfo.amountBooking)
+      .set("createdBy", this.accessToken.userId)
+      .set("accessToken", this.accessToken.base64EncodedAuthenticationKey);
+
+    return this.http.post<any>(`${this.GatewayApiUrlPrefix}/bookingInternal/edit_booking_internal`, httpParams);
+  }
+
+  addBookingInternal(bookingInfo: any): Observable<any> {
+    const httpParams = new HttpParams()
+      .set("txnDate", bookingInfo.txnDate)
+      .set("amountBooking", bookingInfo.amountBooking)
+      .set("createdBy", this.accessToken.userId)
+      .set("accessToken", this.accessToken.base64EncodedAuthenticationKey);
+
+    return this.http.post<any>(`${this.GatewayApiUrlPrefix}/bookingInternal/save_booking_internal`, httpParams);
   }
 
   cancelBookingAgency(bookingId: string): Observable<any> {
@@ -58,6 +125,56 @@ export class BookingService {
     return this.http.post<any>(`${this.GatewayApiUrlPrefix}/bookingInternal/get_list_booking_agency_daily`, httpParams);
   }
 
+  getBookingInternal(fromDate: string, toDate: string): Observable<any> {
+    const httpParams = new HttpParams()
+      .set("fromDate", fromDate)
+      .set("toDate", toDate)
+      .set("createdBy", this.accessToken.userId)
+      .set("accessToken", this.accessToken.base64EncodedAuthenticationKey);
+
+    return this.http.post<any>(
+      `${this.GatewayApiUrlPrefix}/bookingInternal/get_booking_internal_by_txn_date`,
+      httpParams
+    );
+  }
+
+  getManageBookingInternal(officeName: string, staffName: string, fromDate: string, toDate: string): Observable<any> {
+
+    officeName = officeName === "" ? "%%" : `%${officeName}%`;
+    staffName = staffName === "" ? '%%':`%${staffName}%`
+    const httpParams = new HttpParams()
+      .set("fromDate", fromDate)
+      .set("toDate", toDate)
+      .set("staffName", staffName)
+      .set("officeName", this.accessToken.officeId == 1 ? officeName : `${this.accessToken.officeName}`)
+      .set("createdBy", this.accessToken.userId)
+      .set("accessToken", this.accessToken.base64EncodedAuthenticationKey);
+    return this.http.post<any>(
+      `${this.GatewayApiUrlPrefix}/bookingInternal/management_booking_internal_by_txn_date`,
+      httpParams
+    );
+  }
+
+  getManageBookingRollTermSchedule(officeName: string, staffName: string,  clientName: string, fromDate: string, toDate: string): Observable<any> {
+
+    officeName = officeName === "" ? "%%" : `%${officeName}%`;
+    staffName = staffName === "" ? '%%':`%${staffName}%`
+    clientName = clientName === "" ? '%%':`%${clientName}%`
+
+    const httpParams = new HttpParams()
+      .set("fromDate", fromDate)
+      .set("toDate", toDate)
+      .set("staffName", staffName)
+      .set("clientName", clientName)
+      .set("officeName", this.accessToken.officeId == 1 ? officeName : `${this.accessToken.officeName}`)
+      .set("createdBy", this.accessToken.userId)
+      .set("accessToken", this.accessToken.base64EncodedAuthenticationKey);
+    return this.http.post<any>(
+      `${this.GatewayApiUrlPrefix}/bookingInternal/management_booking_roll_term_schedule_by_txn_date`,
+      httpParams
+    );
+  }
+
   removeRowBookingInternalOnRollTermSchedule(bookingInfo: any): Observable<any> {
     const httpParams = new HttpParams()
 
@@ -84,10 +201,7 @@ export class BookingService {
       .set("createdBy", this.accessToken.userId)
       .set("accessToken", this.accessToken.base64EncodedAuthenticationKey);
 
-    return this.http.post<any>(
-      `${this.GatewayApiUrlPrefix}/bookingInternal/save_booking_internal_by_txn_date`,
-      httpParams
-    );
+    return this.http.post<any>(`${this.GatewayApiUrlPrefix}/bookingInternal/save_booking_rollTerm`, httpParams);
   }
 
   editBookingInternalOnRollTermSchedule(bookingInfo: any): Observable<any> {
