@@ -6,9 +6,9 @@
        fxLayout.lt-sm="column"
        [formGroup]="formDialog"
   >
-    <mat-form-field fxFlex="30%" *ngIf="formDialog.contains('memberAddIdentifier')" class="input_custom">
+    <mat-form-field fxFlex="30%" *ngIf="formDialog.contains('clientId')" class="input_custom">
       <mat-label>Chọn khách hàng</mat-label>
-      <mat-select required formControlName="memberAddIdentifier">
+      <mat-select required formControlName="clientId">
         <mat-option *ngFor="let type of clients"
                     [value]="type.clientId">
           {{type.fullName}}
@@ -16,9 +16,9 @@
       </mat-select>
     </mat-form-field>
 
-    <mat-form-field fxFlex="30%" *ngIf="formDialog.contains('documentClientIdentifierType')" class="input_custom">
+    <mat-form-field fxFlex="30%" *ngIf="formDialog.contains('documentTypeId')" class="input_custom">
       <mat-label>Chọn thông tin cần thêm</mat-label>
-      <mat-select required formControlName="documentClientIdentifierType">
+      <mat-select required formControlName="documentTypeId">
         <mat-option *ngFor="let type of documents"
                     [value]="type.id">
           {{type.name}}
@@ -27,13 +27,13 @@
     </mat-form-field>
 
 
-    <mat-form-field fxFlex="30%" *ngIf="formDialog.contains('documentClientIdentifierKey')">
+    <mat-form-field fxFlex="30%" *ngIf="formDialog.contains('documentKey')">
       <mat-label>Số ID</mat-label>
       <input
         matInput
         required
-        formControlName="documentClientIdentifierKey">
-      <mat-error *ngIf="formDialog.controls.documentClientIdentifierKey.hasError('required')">Vui lòng thêm thông tin
+        formControlName="documentKey">
+      <mat-error *ngIf="formDialog.controls.documentKey.hasError('required')">Vui lòng thêm thông tin
         trước khi
         thực
         hiện
@@ -41,23 +41,23 @@
     </mat-form-field>
 
 
-    <mat-form-field fxFlex="30%" *ngIf="formDialog.contains('documentClientIdentifierDescription')">
+    <mat-form-field fxFlex="30%" *ngIf="formDialog.contains('description')">
       <mat-label>Thông tin chi tiết</mat-label>
       <input
         matInput
         required
-        formControlName="documentClientIdentifierDescription">
-      <mat-error *ngIf="formDialog.controls.documentClientIdentifierDescription.hasError('required')">Vui lòng thêm
+        formControlName="description">
+      <mat-error *ngIf="formDialog.controls.description.hasError('required')">Vui lòng thêm
         thông tin trước khi
         thực
         hiện
       </mat-error>
     </mat-form-field>
 
-    <mat-form-field fxFlex="30%" *ngIf="formDialog.contains('documentCardBankClientIdentifierKey')"
+    <mat-form-field fxFlex="30%" *ngIf="formDialog.contains('bank')"
                     class="input_custom">
       <mat-label>Chọn ngân hàng</mat-label>
-      <mat-select disabled formControlName="documentCardBankClientIdentifierKey">
+      <mat-select disabled formControlName="bank">
         <mat-option *ngFor="let type of banks"
                     [value]="type.bankCode">
           {{type.bankName}}
@@ -65,30 +65,75 @@
       </mat-select>
     </mat-form-field>
 
-    <mat-form-field fxFlex="30%" *ngIf="formDialog.contains('documentCardTypeClientIdentifierKey')"
+    <mat-form-field fxFlex="30%" *ngIf="formDialog.contains('cardType')"
                     class="input_custom">
       <mat-label>Chọn ngân hàng</mat-label>
-      <mat-select  disabled formControlName="documentCardTypeClientIdentifierKey">
+      <mat-select disabled formControlName="cardType">
         <mat-option *ngFor="let type of typeCards"
                     [value]="type.code">
           {{type.description}}
         </mat-option>
       </mat-select>
     </mat-form-field>
-    <button mat-button style="background: #0f36e4; color: white;">
+    <button
+      (click)="addRow()"
+      mat-button style="background: #0f36e4; color: white;">
       <img src="assets/images/icons/add_info.svg">Thêm thông tin
     </button>
   </div>
-  <div>
+  <mat-card-content>
+    <table mat-table class="mat-elevation-z8" multiTemplateDataRows
+           [dataSource]="getData()" matSort>
 
-  </div>
+
+      <ng-container matColumnDef="documentTypeId">
+        <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header> Thông tin</th>
+        <td mat-cell fxHide fxShow.gt-md
+            *matCellDef="let form" > {{getTypeDocument(form.documentTypeId)}} </td>
+      </ng-container>
+
+
+      <ng-container matColumnDef="documentKey">
+        <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>Số id</th>
+        <td mat-cell fxHide fxShow.gt-md
+            *matCellDef="let form" > {{form.documentKey}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="description">
+        <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>Thông tin chi tiết</th>
+        <td mat-cell fxHide fxShow.gt-md
+            *matCellDef="let form" > {{form.description}}</td>
+      </ng-container>
+
+
+      <ng-container matColumnDef="expandedDetail">
+        <td mat-cell fxShow fxHide.gt-md *matCellDef="let element" [attr.colspan]="displayedColumns.length">
+          <div class="example-element-detail"
+               [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
+            <div class="example-element-description" fxLayout="column">
+
+            </div>
+          </div>
+        </td>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let element; columns: displayedColumns;"
+          class="example-element-row"
+          [class.example-expanded-row]="expandedElement === element"
+          (click)="expandedElement = expandedElement === element ? null : element">
+      </tr>
+      <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
+      <!--      <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>-->
+      <!--[routerLink]="['transactions/view', row.transactionId]"-->
+    </table>
+  </mat-card-content>
 </div>
 <mat-dialog-actions align="end">
   <button mat-raised-button
           (click)="dialogRef.close({status:false})"
   >{{'Shared_Component.DeleteDialog.buttonCancel'|translate}}</button>
   <button mat-raised-button color="warn"
-          (click)="submitForm()"
+            (click)="submitForm()"
   >{{'Shared_Component.DeleteDialog.buttonConfirm'|translate}}</button>
   <!--  [mat-dialog-close]="{ file: true }"-->
 </mat-dialog-actions>

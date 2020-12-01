@@ -652,6 +652,7 @@ export class TransactionService {
       httpParams
     );
   }
+
   getListTransExistingOfBatch(batchTxnName: string): Observable<any> {
     const httpParams = new HttpParams()
       .set('batchTxnName', batchTxnName)
@@ -662,12 +663,37 @@ export class TransactionService {
       httpParams
     );
   }
+
   getDocumentTemplate(): Observable<any> {
     const httpParams = new HttpParams()
       .set('createdBy', this.accessToken.userId)
       .set('accessToken', this.accessToken.base64EncodedAuthenticationKey);
     return this.http.post<any>(
       `${this.GatewayApiUrlPrefix}/common/get_document_templates`,
+      httpParams
+    );
+  }
+
+  addIdentifierBatch(clientId: string, listIdentifier: string): Observable<any> {
+    const httpParams = new HttpParams()
+      .set('createdBy', this.accessToken.userId)
+      .set('clientId', clientId)
+      .set('listIdentifier', listIdentifier)
+      .set('accessToken', this.accessToken.base64EncodedAuthenticationKey);
+    return this.http.post<any>(
+      `${this.GatewayApiUrlPrefix}/client/add_identifier`,
+      httpParams
+    );
+  }
+
+  getIdentifierTypeCC(clientId: string): Observable<any> {
+    const httpParams = new HttpParams()
+      .set('createdBy', this.accessToken.userId)
+      .set('clientId', clientId)
+      .set('officeId', this.accessToken.officeId)
+      .set('accessToken', this.accessToken.base64EncodedAuthenticationKey);
+    return this.http.post<any>(
+      `${this.GatewayApiUrlPrefix}/client/get_identifier_midas_by_client_group`,
       httpParams
     );
   }
