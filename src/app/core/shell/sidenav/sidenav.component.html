@@ -1,21 +1,20 @@
 <div
   [ngClass]="{
-  'sidebar-full': !sidenavCollapsed,
-  'sidebar-compact': sidenavCollapsed
-  }">
-
+    'sidebar-full': !sidenavCollapsed,
+    'sidebar-compact': sidenavCollapsed
+  }"
+>
   <div class="navigation-panel" fxLayout="column">
-
     <!-- TODO: Allow customization by organization -->
     <div class="app-brand" [routerLink]="['/home']">
-      <img src="assets/images/Midas-Logo-01.png" alt="app-logo" class="app-logo">
+      <img src="assets/images/Midas-Logo-01.png" alt="app-logo" class="app-logo" />
       <span class="app-logo-text text-muted">MIDAS</span>
     </div>
 
     <div class="app-user">
       <div class="app-user-photo">
         <!-- TODO: Decision to be taken on providing this feature -->
-        <img src="assets/images/user_placeholder.png" alt="app-user-photo">
+        <img src="assets/images/user_placeholder.png" alt="app-user-photo" />
       </div>
       <span class="app-user-name mb-05">
         {{ username }}
@@ -31,8 +30,7 @@
     </div>
 
     <div class="app-sidenav">
-
-      <div class="mt-1 mb-1 nav-item-sep">
+      <!-- <div class="mt-1 mb-1 nav-item-sep">
         <mat-divider></mat-divider>
         <span class="text-muted icon-menu-title">Frequently Accessed</span>
       </div>
@@ -42,45 +40,139 @@
             <fa-icon [icon]="activity.icon" size="lg"></fa-icon>
           </button>
         </div>
-      </div>
+      </div> -->
 
       <div class="nav-item-sep">
         <mat-divider></mat-divider>
         <span class="text-muted">Main Items</span>
       </div>
+      <mat-menu #adminMenu="matMenu" [overlapTrigger]="false">
+        <button mat-menu-item [routerLink]="['/users']">{{ "Toolbar_Component.lblUser" | translate }}</button>
+        <button mat-menu-item [routerLink]="['/organization']">{{ "Toolbar_Component.lblOrg" | translate }}</button>
+        <button mat-menu-item [routerLink]="['/system']">{{ "Toolbar_Component.lblSys" | translate }}</button>
+        <button mat-menu-item [routerLink]="['/products']">{{ "Toolbar_Component.lblProduct" | translate }}</button>
+        <button mat-menu-item [routerLink]="['/templates']">{{ "Toolbar_Component.lblTemplate" | translate }}</button>
+      </mat-menu>
 
+      <mat-menu #selfServiceMenu="matMenu" [overlapTrigger]="false">
+        <button mat-menu-item [routerLink]="['/self-service/users']">
+          {{ "Toolbar_Component.lblUserManagement" | translate }}
+        </button>
+        <button mat-menu-item [routerLink]="['/self-service/app-configuration']">
+          {{ "Toolbar_Component.lblAppConfig" | translate }}
+        </button>
+        <button mat-menu-item [routerLink]="['/self-service/task-management']">
+          {{ "Toolbar_Component.lblTaskManagement" | translate }}
+        </button>
+      </mat-menu>
+
+      <mat-menu #accountingMenu="matMenu" [overlapTrigger]="false">
+
+        <button mat-menu-item [routerLink]="['/accounting']">{{ "Toolbar_Component.lblAccounting" | translate }}</button>
+        <button mat-menu-item [matMenuTriggerFor]="reportsMenu">{{ "Toolbar_Component.lblReport" | translate }}</button>
+        <button mat-menu-item [matMenuTriggerFor]="adminMenu">{{ "Toolbar_Component.lblAdmin" | translate }}</button>
+        <button mat-menu-item [matMenuTriggerFor]="selfServiceMenu">
+          {{ "Toolbar_Component.lblSelfService" | translate }}
+        </button>
+
+      </mat-menu>
+
+      <!-- Toolbar Menus -->
+      <mat-menu #reportsMenu="matMenu" [overlapTrigger]="false">
+        <button mat-menu-item [routerLink]="['/reports']">{{ "Toolbar_Component.lblAll" | translate }}</button>
+        <button mat-menu-item [routerLink]="['/reports', 'Client']">
+          {{ "Toolbar_Component.lblClient" | translate }}
+        </button>
+        <button mat-menu-item [routerLink]="['/reports', 'Loan']">{{ "Toolbar_Component.lblLoan" | translate }}</button>
+        <button mat-menu-item [routerLink]="['/reports', 'Savings']">
+          {{ "Toolbar_Component.lblSaving" | translate }}
+        </button>
+        <button mat-menu-item [routerLink]="['/reports', 'Fund']">{{ "Toolbar_Component.lblFund" | translate }}</button>
+        <button mat-menu-item [routerLink]="['/reports', 'Accounting']">
+          {{ "Toolbar_Component.lblAccounting" | translate }}
+        </button>
+        <button mat-menu-item [routerLink]="['/xbrl']">{{ "Toolbar_Component.lblXBRL" | translate }}</button>
+      </mat-menu>
       <mat-nav-list>
+        <mat-list-item
+          *midasHasPermission="'ALL_FUNCTIONS'"
+          class="tab-link"
+          [matMenuTriggerFor]="reportsMenu"
+          #reportsMenuTrigger="matMenuTrigger"
+        >
+          <mat-icon matListIcon>
+            <fa-icon matListIcon size="sm" icon="chart-bar" ></fa-icon>
+          </mat-icon>
+          <a matLine> {{ "Toolbar_Component.lblReport" | translate }}</a>
+        </mat-list-item>
+
+        <mat-list-item
+          *midasHasPermission="'ALL_FUNCTIONS'"
+          class="tab-link"
+          [matMenuTriggerFor]="accountingMenu"
+          #accountingMenuTrigger="matMenuTrigger"
+        >
+          <mat-icon matListIcon>
+            <fa-icon matListIcon size="sm" icon="money-bill-alt" ></fa-icon>
+          </mat-icon>
+          <a matLine> {{ "Toolbar_Component.lblAccounting" | translate }}</a>
+        </mat-list-item>
+
+        <mat-list-item
+          *midasHasPermission="'ALL_FUNCTIONS'"
+          class="tab-link"
+          [matMenuTriggerFor]="adminMenu"
+          #adminMenuTrigger="matMenuTrigger"
+        >
+          <mat-icon matListIcon>
+            <fa-icon matListIcon size="sm" icon="shield-alt" ></fa-icon>
+          </mat-icon>
+          <a matLine>  {{ "Toolbar_Component.lblAdmin" | translate }}</a>
+        </mat-list-item>
+
+        <mat-list-item
+          *midasHasPermission="'ALL_FUNCTIONS'"
+          class="tab-link"
+          [matMenuTriggerFor]="selfServiceMenu"
+          #selfServiceMenuTrigger="matMenuTrigger"
+        >
+          <mat-icon matListIcon>
+            <fa-icon matListIcon size="sm" icon="users" ></fa-icon>
+          </mat-icon>
+          <a matLine> {{ "Toolbar_Component.lblSelfService" | translate }}</a>
+        </mat-list-item>
+
         <mat-list-item [routerLink]="['/dashboard']">
           <mat-icon matListIcon>
             <fa-icon icon="tachometer-alt" size="sm"></fa-icon>
           </mat-icon>
           <a matLine>Dashboard</a>
         </mat-list-item>
-        <mat-list-item [routerLink]="['/navigation']">
+        <!-- <mat-list-item [routerLink]="['/navigation']">
           <mat-icon matListIcon>
             <fa-icon icon="location-arrow" size="sm"></fa-icon>
           </mat-icon>
           <a matLine>Navigation</a>
-        </mat-list-item>
+        </mat-list-item> -->
         <mat-list-item [routerLink]="['/checker-inbox-and-tasks/checker-inbox']">
           <mat-icon matListIcon>
             <i class="fa fa-check"></i>
           </mat-icon>
           <a matLine>Checker Inbox and Tasks</a>
         </mat-list-item>
-        <mat-list-item [routerLink]="['/collections/individual-collection-sheet']">
+        <!-- <mat-list-item [routerLink]="['/collections/individual-collection-sheet']">
           <mat-icon matListIcon>
-            <i class="fas fa-tasks "></i>
+            <i class="fas fa-tasks"></i>
           </mat-icon>
           <a matLine>Individual Collection Sheet</a>
-        </mat-list-item>
+        </mat-list-item> -->
         <mat-list-item [routerLink]="['/notifications']">
           <mat-icon matListIcon>
             <fa-icon icon="bell" size="sm"></fa-icon>
           </mat-icon>
           <a matLine>Notifications</a>
         </mat-list-item>
-        <mat-list-item [routerLink]="['/accounting/journal-entries/frequent-postings']">
+        <!-- <mat-list-item [routerLink]="['/accounting/journal-entries/frequent-postings']">
           <mat-icon matListIcon>
             <fa-icon icon="sync" size="sm"></fa-icon>
           </mat-icon>
@@ -103,7 +195,7 @@
             <fa-icon icon="keyboard" size="sm"></fa-icon>
           </mat-icon>
           <a matLine>Keyboard Shortcuts</a>
-        </mat-list-item>
+        </mat-list-item> -->
         <mat-list-item>
           <mat-icon matListIcon (click)="help()">
             <fa-icon icon="question-circle" size="sm"></fa-icon>
@@ -111,10 +203,6 @@
           <a matLine>Help</a>
         </mat-list-item>
       </mat-nav-list>
-      
-
     </div>
-
   </div>
-
 </div>
