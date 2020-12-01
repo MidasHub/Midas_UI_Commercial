@@ -1,0 +1,35 @@
+<h1 mat-dialog-title>{{data.btnTitle}} booking nội bộ</h1>
+
+<div
+  mat-dialog-content
+  [formGroup]="formDialog"
+  [fxLayout]="'column'"
+  fxLayout.lt-md="column"
+  [fxLayoutGap]="'1%'"
+  fxLayoutGap.lt-md="0%"
+>
+  <mat-form-field fxFlex="48%">
+    <mat-label>Ngày giao dịch:</mat-label>
+
+    <input isOpen="true" matInput [matDatepicker]="transactionDateFromPicker" formControlName="txnDate" />
+    <mat-datepicker-toggle matSuffix [for]="transactionDateFromPicker"></mat-datepicker-toggle>
+    <mat-datepicker #transactionDateFromPicker></mat-datepicker>
+  </mat-form-field>
+
+  <mat-form-field fxFlex="48%">
+    <mat-label>Số tiền booking:</mat-label>
+    <input matInput currencyMask formControlName="bookingAmount" />
+  </mat-form-field>
+</div>
+
+<mat-dialog-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="2%">
+  <button mat-raised-button mat-dialog-close>{{ "Shared_Component.FormDialog.btnCancel" | translate }}</button>
+  <button
+    mat-raised-button
+    color="primary"
+    [mat-dialog-close]="{ data: formDialog}"
+    [disabled]="!formDialog.valid "
+  >
+  {{ data.btnTitle }}
+  </button>
+</mat-dialog-actions>

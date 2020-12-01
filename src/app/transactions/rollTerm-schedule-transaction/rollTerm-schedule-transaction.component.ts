@@ -1,7 +1,6 @@
 import { animate, state, style, transition, trigger } from "@angular/animations";
 import { Component, OnInit } from "@angular/core";
 import { MatDialog } from "@angular/material/dialog";
-import { RollTermScheduleTabComponent } from "./roll-term-schedule-tab/roll-term-schedule-tab.component";
 
 @Component({
   selector: "midas-rollTerm-schedule-transaction",

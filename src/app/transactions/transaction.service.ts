@@ -626,6 +626,7 @@ export class TransactionService {
       httpParams
     );
   }
+
   getTransactionGroupFee(groupId: string): Observable<any> {
     const httpParams = new HttpParams()
       .set('groupId', groupId)
@@ -633,6 +634,40 @@ export class TransactionService {
       .set('accessToken', this.accessToken.base64EncodedAuthenticationKey);
     return this.http.post<any>(
       `${this.GatewayApiUrlPrefix}/savingTransaction/get_fee_transaction_by_Group`,
+      httpParams
+    );
+  }
+
+  onSaveTransactionBatch(form: any): Observable<any> {
+    let httpParams = new HttpParams()
+      .set('createdBy', this.accessToken.userId)
+      .set('accessToken', this.accessToken.base64EncodedAuthenticationKey);
+
+    const keys = Object.keys(form);
+    for (const key of keys) {
+      httpParams = httpParams.set(key, form[key]);
+    }
+    return this.http.post<any>(
+      `${this.GatewayApiUrlPrefix}/transaction/store_single_batch_pos_transaction`,
+      httpParams
+    );
+  }
+  getListTransExistingOfBatch(batchTxnName: string): Observable<any> {
+    const httpParams = new HttpParams()
+      .set('batchTxnName', batchTxnName)
+      .set('createdBy', this.accessToken.userId)
+      .set('accessToken', this.accessToken.base64EncodedAuthenticationKey);
+    return this.http.post<any>(
+      `${this.GatewayApiUrlPrefix}/transaction/get_list_batch_transaction`,
+      httpParams
+    );
+  }
+  getDocumentTemplate(): Observable<any> {
+    const httpParams = new HttpParams()
+      .set('createdBy', this.accessToken.userId)
+      .set('accessToken', this.accessToken.base64EncodedAuthenticationKey);
+    return this.http.post<any>(
+      `${this.GatewayApiUrlPrefix}/common/get_document_templates`,
       httpParams
     );
   }

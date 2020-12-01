@@ -1,0 +1,41 @@
+<h1 mat-dialog-title>
+  ĐIỀU CHUYỂN TIỀN BOOKING CHO [{{bookingInfo?.staffName}}]
+</h1>
+
+<div mat-dialog-content [formGroup]="form" [fxLayout]="'column'" fxLayout.lt-md="column" [fxLayoutGap]="'1%'"
+     fxLayoutGap.lt-md="0%">
+
+  <mat-form-field class="select-book">
+    <mat-label>Tài khoản nhận tiền</mat-label>
+    <mat-select required formControlName="clientSavingAccount">
+      <mat-option *ngFor="let saving of listSavingAccount" [value]="saving.id">
+        {{ saving.externalId }} - Số dư: {{ saving.balance | money}}
+      </mat-option>
+    </mat-select>
+
+  </mat-form-field>
+
+  <mat-form-field fxFlex="96%" >
+    <mat-label>Tài khoản chi tiền</mat-label>
+    <mat-select required formControlName="buSavingAccount">
+      <mat-option *ngFor="let saving of buSavingAccounts" [value]="saving.id">
+        {{ saving.externalId }} - Số dư: {{ saving.balance | money }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field fxFlex="96%">
+    <mat-label>{{'Saving_Account_Component.clientAdvanceCash.labelAmountAdvance' |translate}}</mat-label>
+    <input required
+           currencyMask
+           matInput formControlName="amountTransfer">
+  </mat-form-field>
+
+</div>
+
+<mat-dialog-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="2%">
+  <button mat-raised-button mat-dialog-close>{{ 'Shared_Component.FormDialog.btnCancel' | translate }}</button>
+  <button mat-raised-button color="primary"
+          [mat-dialog-close]="{ data: form  }"
+          [disabled]="!form.valid || form.pristine">Điều chuyển</button>
+</mat-dialog-actions>

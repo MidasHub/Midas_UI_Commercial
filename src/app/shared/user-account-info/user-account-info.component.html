@@ -9,7 +9,7 @@
     <mat-card-content>
       <mat-nav-list>
         <mat-list-item *ngFor="let account of listSaving">
-          <a matLine href="#/">{{ account.externalId }}</a>
+          <a matLine href="#/clients/{{account.clientId}}/savings-accounts/{{account.id}}">{{ account.externalId }}</a>
           <button mat-button color="primary" >
             {{ account.balance | money }}
           </button>

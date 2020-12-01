@@ -62,7 +62,7 @@ const routes: Routes = [
               routeParamBreadcrumb: 'groupId'
             },
             resolve: {
-              membersInGroup: MemberInGroupResolver,
+              groupId: MemberInGroupResolver,
               // memberAvailableInGroup: MemberAvailableInGroupResolver
             }
           }]

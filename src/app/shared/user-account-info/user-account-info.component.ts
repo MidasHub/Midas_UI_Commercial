@@ -34,11 +34,13 @@ export class UserAccountInfoComponent implements OnInit, OnDestroy {
    * @param {NotificationsService} notificationsService Notifications Service
    */
   constructor(public midasClientService: MidasClientService) {
+    this.listSaving = [];
+    this.totalBalance = 0;
     this.midasClientService.getInfoSavingAccountByUserId()
     .subscribe((response: any) => {
-      console.log(response);
-      this.listSaving = response.result.listSavingAccount ;
-      this.totalBalance = response.result.totalBalance ;
+
+      this.listSaving = response?.result?.listSavingAccount ;
+      this.totalBalance = response?.result?.totalBalance ;
 
     });
   }
@@ -63,10 +65,13 @@ export class UserAccountInfoComponent implements OnInit, OnDestroy {
    * Recursively fetch unread notifications.
    */
   fetchSavingAccountOfUser() {
-    // this.notificationsService.getInfoSavingAccountByUserId().subscribe((response: any) => {
-    //   this.unreadNotifications = this.unreadNotifications.concat(response.pageItems);
-    //   this.setTotalBalance();
-    // });
+    this.midasClientService.getInfoSavingAccountByUserId()
+    .subscribe((response: any) => {
+
+      this.listSaving = response.result.listSavingAccount ;
+      this.totalBalance = response.result.totalBalance ;
+
+    });
 
     this.timer = setTimeout(() => { this.fetchSavingAccountOfUser(); }, 60000);
   }

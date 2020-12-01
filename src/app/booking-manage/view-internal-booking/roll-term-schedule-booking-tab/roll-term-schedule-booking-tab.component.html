@@ -1,0 +1,163 @@
+<mat-card class="mat-elevation-z20 container-custom">
+  <mat-card-title align="center">MÀN HÌNH QUẢN LÝ BOOKING DỊCH VỤ ĐÁO HẠN THẺ</mat-card-title>
+  <mat-card-subtitle align="center" style="color: blue; font-weight: bold">
+    Chi nhánh: {{ staffBookingInfo?.officeName }}
+    <br />
+    Nhân viên: {{ staffBookingInfo?.staffName }}
+  </mat-card-subtitle>
+
+  <mat-card-content>
+    <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column" [formGroup]="formDate">
+      <mat-form-field fxFlex="31%">
+        <mat-label>Transaction Date From</mat-label>
+        <input matInput [matDatepicker]="transactionDateFromPicker" formControlName="fromDate" />
+        <mat-datepicker-toggle matSuffix [for]="transactionDateFromPicker"></mat-datepicker-toggle>
+        <mat-datepicker #transactionDateFromPicker></mat-datepicker>
+      </mat-form-field>
+
+      <mat-form-field fxFlex="31%">
+        <mat-label>Transaction Date To</mat-label>
+        <input matInput [matDatepicker]="transactionDateToPicker" formControlName="toDate" />
+        <mat-datepicker-toggle matSuffix [for]="transactionDateToPicker"></mat-datepicker-toggle>
+        <mat-datepicker #transactionDateToPicker></mat-datepicker>
+      </mat-form-field>
+      <div fxFlex="31%">
+        <button
+          *ngIf="formDate"
+          (click)="getBookingInternal()"
+          style="align-self: center"
+          color="primary"
+          mat-raised-button
+        >
+          Tìm kiếm &nbsp;<i class="fa fa-search" aria-hidden="true"></i>
+        </button>
+        <h3 *ngIf="!formDate">
+          Vui lòng chọn thời gian &nbsp; <i class="fa fa-calendar" style="align-self: center" aria-hidden="true"></i>
+        </h3>
+      </div>
+    </div>
+    <div class="container" fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column"></div>
+  </mat-card-content>
+  <div *midasHasPermission="'POS_UPDATE'" fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column" [formGroup]="formFilter">
+    <mat-form-field fxFlex="18%" *midasHasPermission="'ALL_FUNCTIONS'">
+      <mat-label>Chi nhánh</mat-label>
+      <input matInput type="text" (blur)="getBookingInternal()" formControlName="officeName" />
+    </mat-form-field>
+
+    <mat-form-field fxFlex="18%">
+      <mat-label>Nhân viên</mat-label>
+      <input matInput type="text" (blur)="getBookingInternal()" formControlName="staffName"  />
+
+    </mat-form-field>
+
+    <mat-form-field fxFlex="18%">
+      <mat-label>Khách hàng</mat-label>
+      <input matInput type="text" (blur)="getBookingInternal()" formControlName="clientName"  />
+
+    </mat-form-field>
+
+  </div>
+  <mat-card-content style="margin-top: 10px">
+    <mat-card>
+      <div fxLayout="row swap" fxLayoutAlign.lt-sm="center" fxLayoutGap="2%" fxLayout.lt-md="column">
+        <div fxLayout="row wrap" fxFlex="20%" class="container m-b-20">
+          <img src="assets/images/icons/money.svg" />
+          <div style="display: flex" fxLayout="column">
+            <span style="font-size: 20px; margin-top: 8px; padding-top: 5px">{{
+              staffBookingInfo?.totalAmountBooking | money
+            }}</span>
+            <span>&nbsp;Tiền booking</span>
+          </div>
+        </div>
+        <!-- <div fxLayout="row wrap" fxFlex="20%" class="container m-b-20">
+          <img src="assets/images/icons/transaction.svg" />
+          <div style="display: flex" fxLayout="column">
+            <span style="font-size: 20px; margin-top: 8px; padding-top: 5px">{{
+              staffBookingInfo?.totalAmountFromBooking | money
+            }}</span>
+            <span>&nbsp;Đã nhận</span>
+          </div>
+        </div>
+        <div fxLayout="row wrap" fxFlex="20%" class="container m-b-20">
+          <img src="assets/images/icons/capital.svg" />
+          <div style="display: flex" fxLayout="column">
+            <span style="font-size: 20px; margin-top: 8px; padding-top: 5px">{{
+              staffBookingInfo?.totalAmountPaidTransaction | money
+            }}</span>
+            <span>&nbsp;Đã giao dịch</span>
+          </div>
+        </div>
+        <div fxLayout="row wrap" fxFlex="20%" class="container m-b-20">
+          <img src="assets/images/icons/pnlAmount.svg" />
+          <div style="display: flex" fxLayout="column">
+            <span style="font-size: 20px; margin-top: 8px; padding-top: 5px">
+              {{ staffBookingInfo?.totalAmountRemain | money }}
+            </span>
+            <span>&nbsp;Còn lại</span>
+          </div>
+        </div> -->
+      </div>
+    </mat-card>
+  </mat-card-content>
+
+  <mat-card-content>
+    <table mat-table class="mat-elevation-z8" [dataSource]="BookingList" matSort>
+      <ng-container matColumnDef="bookingRefNo">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Mã booking</th>
+        <td mat-cell *matCellDef="let booking">
+          <a href="javascript:void(0)">
+            <mat-label>
+              {{ booking?.bookingRefNo }}
+            </mat-label>
+          </a>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="bookingAmount">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Số tiền</th>
+        <td mat-cell *matCellDef="let booking">{{ booking?.totalBooking | money }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="officeName">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Chi nhánh</th>
+        <td mat-cell *matCellDef="let booking">
+          {{ booking?.officeName }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="userName">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Nhân viên</th>
+        <td mat-cell *matCellDef="let booking">
+          {{ booking?.userName }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="clientName">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Khách hàng</th>
+        <td mat-cell *matCellDef="let booking">
+          {{ booking?.clientName }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Hành động</th>
+        <td mat-cell *matCellDef="let booking">
+
+          <button mat-mini-fab color="default" (click)="viewBookingInternal(booking)">
+            <mat-icon title="Xem chi tiết booking "> remove_red_eye </mat-icon>
+          </button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let element; columns: displayedColumns" class="example-element-row"></tr>
+    </table>
+  </mat-card-content>
+  <mat-paginator
+    paginator
+    [length]="BookingFilter?.length"
+    [pageSize]="10"
+    [pageSizeOptions]="[10, 25, 50, 100]"
+    showFirstLastButtons
+  ></mat-paginator>
+</mat-card>

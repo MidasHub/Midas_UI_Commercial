@@ -21,22 +21,22 @@
     </a>
 
     <span *midasHasPermission="'ALL_FUNCTIONS'" fxHide.lt-lg="true">
-      <a mat-tab-link class="tab-link" [routerLink]="['/accounting']">
+      <!-- <a mat-tab-link class="tab-link" [routerLink]="['/accounting']">
         <fa-icon class="mr-05" icon="money-bill-alt" size="lg"></fa-icon>
         {{ "Toolbar_Component.lblAccounting" | translate }}
-      </a>
-      <a mat-tab-link class="tab-link" [matMenuTriggerFor]="reportsMenu" #reportsMenuTrigger="matMenuTrigger">
+      </a> -->
+      <!-- <a mat-tab-link class="tab-link" [matMenuTriggerFor]="reportsMenu" #reportsMenuTrigger="matMenuTrigger">
         <fa-icon class="mr-05" icon="chart-bar" size="lg"></fa-icon>
         {{ "Toolbar_Component.lblReport" | translate }}
-      </a>
-      <a mat-tab-link class="tab-link" [matMenuTriggerFor]="adminMenu" #adminMenuTrigger="matMenuTrigger">
+      </a> -->
+      <!-- <a mat-tab-link class="tab-link" [matMenuTriggerFor]="adminMenu" #adminMenuTrigger="matMenuTrigger">
         <fa-icon class="mr-05" icon="shield-alt" size="lg"></fa-icon>
         {{ "Toolbar_Component.lblAdmin" | translate }}
       </a>
       <a mat-tab-link class="tab-link" [matMenuTriggerFor]="selfServiceMenu" #selfServiceMenuTrigger="matMenuTrigger">
         <fa-icon class="mr-05" icon="users" size="lg"></fa-icon>
         {{ "Toolbar_Component.lblSelfService" | translate }}
-      </a>
+      </a> -->
     </span>
     <a mat-tab-link class="tab-link" [matMenuTriggerFor]="POSPartnerMenu" #institutionMenuTrigger="matMenuTrigger">
       <fa-icon class="mr-05" icon="university" size="lg"></fa-icon>
@@ -77,14 +77,14 @@
   <button mat-menu-item routerLink="/accounts/balance-clients">{{ "Quản lý số dư khách hàng" | translate }}</button>
   <button mat-menu-item routerLink="/accounts/balance-teller">{{ "Quản lý số dư teller" | translate }}</button>
 
-  <span fxHide.lg>
+  <!-- <span fxHide.lg>
     <button mat-menu-item [routerLink]="['/accounting']">{{ "Toolbar_Component.lblAccounting" | translate }}</button>
     <button mat-menu-item [matMenuTriggerFor]="reportsMenu">{{ "Toolbar_Component.lblReport" | translate }}</button>
     <button mat-menu-item [matMenuTriggerFor]="adminMenu">{{ "Toolbar_Component.lblAdmin" | translate }}</button>
     <button mat-menu-item [matMenuTriggerFor]="selfServiceMenu">
       {{ "Toolbar_Component.lblSelfService" | translate }}
     </button>
-  </span>
+  </span> -->
 </mat-menu>
 
 <mat-menu #POSPartnerMenu="matMenu" [overlapTrigger]="false">
@@ -100,6 +100,9 @@
 </mat-menu>
 <mat-menu #BookingMenu="matMenu" [overlapTrigger]="false">
   <button mat-menu-item routerLink="/booking/agency">Đại lý</button>
+  <button mat-menu-item routerLink="/booking/create">Tạo booking nội bộ</button>
+  <button *midasHasPermission="'POS_UPDATE'" mat-menu-item routerLink="/booking/view">Quản lý booking nội bộ</button>
+
 </mat-menu>
 <!-- Toolbar Menus -->
 <mat-menu #reportsMenu="matMenu" [overlapTrigger]="false">

@@ -54,3 +54,4 @@ Thumbs.db
 package-lock.json
 yarn.lock
 *.lock
+.vscode/settings.json

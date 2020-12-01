@@ -9,6 +9,8 @@ import { Route } from '../core/route/route.service';
 import { extract } from '../core/i18n/i18n.service';
 import { BookingManageComponent } from './booking-manage.component';
 import { BookingAgencyComponent } from './agency-booking/agency-booking.component';
+import { CreateInternalBookingComponent } from './create-internal-booking/create-internal-booking.component';
+import { ViewInternalBookingComponent } from './view-internal-booking/view-internal-booking.component';
 
 
 
@@ -27,35 +29,20 @@ const routes: Routes = [
           path: 'agency',
           component: BookingAgencyComponent,
           data: { title: extract(''), breadcrumb: 'Đại lý', routeParamBreadcrumb: false },
-          // resolve:{
-          //   terminalData: CreateTerminalsResolver,
-          // }
+
         },
-        // {
-        //   path: 'limit',
-        //   component: ViewLimitTerminalComponent,
-        //   data: { title: extract('Hạn mức'), breadcrumb: 'Hạn mức', routeParamBreadcrumb: false },
-        //   resolve:{
-        //     terminalData: LimitTerminalsResolver,
-        //   }
-        // },
-        // {
-        //   path: ':terminalId',
-        //   data: { title: extract('View Terminal'), routeParamBreadcrumb: 'terminalId' },
-        //   children: [{
-        //     path: '',
-        //     children: [
-        //       {
-        //         path: 'edit',
-        //         component: EditTerminalsComponent,
-        //         data: { title: extract('Edit Terminal'), breadcrumb: 'view', routeParamBreadcrumb: false },
-        //         resolve:{
-        //           terminalData: TerminalsResolver,
-        //         }
-        //       }
-        //   ]
-        // }]
-        // }
+        {
+          path: 'create',
+          component: CreateInternalBookingComponent,
+          data: { title: extract(''), breadcrumb: 'Tạo booking nội bộ', routeParamBreadcrumb: false },
+
+        },
+        {
+          path: 'view',
+          component: ViewInternalBookingComponent,
+          data: { title: extract(''), breadcrumb: 'Danh sách booking nội bộ', routeParamBreadcrumb: false },
+
+        },
       ]
     }
   ])

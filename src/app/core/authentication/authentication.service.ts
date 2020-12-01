@@ -260,7 +260,6 @@ export class AuthenticationService {
    * @param {Credentials} credentials Authenticated user credentials.
    */
   private setCredentials(credentials?: Credentials) {
-    debugger;
     if (credentials) {
       credentials.rememberMe = this.rememberMe;
       this.storage.setItem(this.credentialsStorageKey, JSON.stringify(credentials));
