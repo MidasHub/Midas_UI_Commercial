@@ -35,6 +35,7 @@ export class CreateCardBatchTransactionComponent implements OnInit {
     return [...this.newDocuments, ...this.documentAlreadyExits];
   }
 
+
   constructor(public dialogRef: MatDialogRef<CreateCardBatchTransactionComponent>,
               @Inject(MAT_DIALOG_DATA) public data: any,
               private formBuilder: FormBuilder,
@@ -110,7 +111,10 @@ export class CreateCardBatchTransactionComponent implements OnInit {
         this.alterService.alert({message: 'Thêm thẻ thành công', msgClass: 'cssSuccess'});
         return this.dialogRef.close({status: true});
       } else {
-        return this.alterService.alert({message: result?.result?.message?.errors[0]?.developerMessage, msgClass: 'cssWarning'});
+        return this.alterService.alert({
+          message: result?.result?.message?.errors[0]?.developerMessage,
+          msgClass: 'cssWarning'
+        });
       }
     });
   }

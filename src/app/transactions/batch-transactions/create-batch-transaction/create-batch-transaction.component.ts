@@ -17,6 +17,7 @@ import {debounce, distinctUntilChanged, takeUntil} from 'rxjs/operators';
 import {Subject, timer} from 'rxjs';
 import {ConfirmDialogComponent} from '../../dialog/coifrm-dialog/confirm-dialog.component';
 import {BankService} from '../../../services/bank.service';
+import {MakeFeeOnAdvanceComponent} from '../../dialog/make-fee-on-advance/make-fee-on-advance.component';
 
 @Component({
   selector: 'midas-create-batch-transaction',
@@ -129,6 +130,10 @@ export class CreateBatchTransactionComponent implements OnInit {
     return this.batchProducts.find(v => v.value === productId)?.label;
   }
 
+  exportTransactions() {
+    return this.transactionServices.exportTransactionBatch(this.batchTxnName);
+  }
+
   init() {
     // getTransactionGroupFee
     this.route.data.subscribe(({groupId}: any) => {
@@ -153,7 +158,7 @@ export class CreateBatchTransactionComponent implements OnInit {
                   const member = this.members.find(f => String(f.clientId) === String(v.custId));
                   console.log({member});
                   const batchTransaction = {
-                    index: this.dataSource.length,
+                    index: `${String(new Date().getMilliseconds())}___${this.dataSource.length}`,
                     ...this.defaultData,
                     ...v,
                     identitydocumentsId: `${member.cardNumber.slice(0, 6)}-XXX-XXX-${member.cardNumber.slice(member.cardNumber.length - 4, member.cardNumber.length)} `,
@@ -364,7 +369,7 @@ export class CreateBatchTransactionComponent implements OnInit {
       this.clientsServices.getClientById(member.clientId).subscribe(result => {
         if (result) {
           const batchTransaction = {
-            index: this.dataSource.length,
+            index: `${String(new Date().getMilliseconds())}___${this.dataSource.length}`,
             ...this.defaultData,
             identitydocumentsId: `${member.cardNumber.slice(0, 6)}-XXX-XXX-${member.cardNumber.slice(member.cardNumber.length - 4, member.cardNumber.length)} `,
             customerName: member.fullName,
@@ -383,7 +388,30 @@ export class CreateBatchTransactionComponent implements OnInit {
     }
   }
 
+  deleteRow(form: any) {
+    this.dataSource = this.dataSource.filter(v => v.get('index').value !== form.get('index').value);
+  }
+
+  makeFeeOnAdvance() {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.data = {
+      batchTxnName: this.batchTxnName
+    };
+    // dialogConfig.minWidth = 400;
+    const dialog = this.dialog.open(MakeFeeOnAdvanceComponent, dialogConfig);
+    dialog.afterClosed().subscribe(data => {
+      if (data && data.status) {
+      }
+    });
+  }
+
   onSave(form: any) {
+    if (form.invalid || !form.get('terminalId').value) {
+      return this.alertService.alert({
+        message: 'Vui lòng điền đầy đủ thông tin',
+        msgClass: 'cssDanger'
+      });
+    }
     const dialog = this.dialog.open(ConfirmDialogComponent, {
       data: {
         message: 'Bạn chắc chắn muốn lưu giao dịch',
@@ -393,6 +421,7 @@ export class CreateBatchTransactionComponent implements OnInit {
     dialog.afterClosed().subscribe(data => {
       if (data) {
         const formData = {...form.data.member, ...form.value};
+        delete formData.index;
         console.log(formData);
         this.transactionServices.onSaveTransactionBatch(formData).subscribe(result => {
           console.log(result);
@@ -447,7 +476,8 @@ export class CreateBatchTransactionComponent implements OnInit {
       };
       const form_new = this.generaForm(batchTransaction, member);
       const newDataSo = this.dataSource.slice();
-      newDataSo[index] = form_new;
+      const indesx = newDataSo.findIndex((j: any) => j.get('index').value === form.get('index').value);
+      newDataSo[indesx] = form_new;
       this.dataSource = newDataSo;
     });
   }
