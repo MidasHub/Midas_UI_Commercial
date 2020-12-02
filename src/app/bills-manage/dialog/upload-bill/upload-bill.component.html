@@ -1,0 +1,68 @@
+<h1 mat-dialog-title align="center">UPLOAD HÓA ĐƠN</h1>
+
+<div
+  mat-dialog-content
+  [formGroup]="formDialog"
+  [fxLayout]="'column'"
+  fxLayout.lt-md="column"
+  [fxLayoutGap]="'1%'"
+  fxLayoutGap.lt-md="0%"
+>
+  <mat-form-field fxFlex="80%">
+    <mat-label>Tên file:</mat-label>
+    <input matInput type="text" formControlName="fileName" />
+  </mat-form-field>
+
+  <mat-form-field fxFlex="80%">
+    <mat-label>Hộ kinh doanh:</mat-label>
+    <select matNativeControl
+    formControlName="merchantId" >
+    <option
+    *ngFor="let merchant of listMerchant"
+    value="{{merchant.name}}">{{merchant.name}}</option>
+    </select>
+  </mat-form-field>
+
+  <mat-form-field fxFlex="80%">
+    <mat-label>Đối tác:</mat-label>
+    <select matNativeControl
+    formControlName="partner" >
+    <option
+    *ngFor="let partner of listPartner"
+    value="{{partner.code}}">{{partner.desc}}</option>
+    </select>
+  </mat-form-field>
+
+  <mat-form-field fxFlex="80%">
+    <mat-label>Mô tả:</mat-label>
+    <input matInput type="text"  formControlName="note" />
+  </mat-form-field>
+
+  <div  fxFlex="80%" align="center">
+    <button type="button" mat-raised-button color="primary" (click)="fileInput.click()">
+      <mat-icon>attach_file</mat-icon>
+      <span>Chọn file upload</span>
+      <input
+      (change)="fileChange($event)"
+      #fileInput type="file"
+      formControlName="file"
+      accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
+      style="display:none;" />
+    </button>
+  </div>
+  <div  fxFlex="80%"  align="center" >
+    <mat-label>{{fileNameChosen}}</mat-label>
+  </div>
+</div>
+<br />
+<mat-dialog-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="2%">
+  <button mat-raised-button mat-dialog-close>{{ "Shared_Component.FormDialog.btnCancel" | translate }}</button>
+  <button
+    mat-raised-button
+    color="primary"
+    [mat-dialog-close]="{ data: formDialog, file: file}"
+    [disabled]="!formDialog.valid || formDialog.pristine"
+  >
+    Tải lên
+  </button>
+</mat-dialog-actions>
