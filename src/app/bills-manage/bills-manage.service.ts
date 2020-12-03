@@ -38,6 +38,28 @@ export class BillsService {
     return this.http.post<any>(`${this.GatewayApiUrlPrefix}/invoice/get_list_doc_invoice`, httpParams);
   }
 
+  getListInvoiceByBatchCode(batchCode: string,
+    query: string, limit: number,
+     offset: number): Observable<any> {
+    const httpParams = new HttpParams()
+      .set("batchCode", batchCode)
+      .set("query", query)
+      .set("limit", String(limit))
+      .set("offset", String(offset))
+      .set("createdBy", this.accessToken.userId)
+      .set("accessToken", this.accessToken.base64EncodedAuthenticationKey);
+    return this.http.post<any>(`${this.GatewayApiUrlPrefix}/invoice/get_list_invoice_batchcode`, httpParams);
+  }
+
+  // findListInvoiceByBatchCodeAndQuery(batchCode: string, query: string): Observable<any> {
+  //   const httpParams = new HttpParams()
+  //     .set("batchCode", batchCode)
+  //     .set("query", query)
+  //     .set("createdBy", this.accessToken.userId)
+  //     .set("accessToken", this.accessToken.base64EncodedAuthenticationKey);
+  //   return this.http.post<any>(`${this.GatewayApiUrlPrefix}/invoice/get_list_invoice_batchcode`, httpParams);
+  // }
+
   getListMerchant(): Observable<any> {
     const httpParams = new HttpParams()
       .set("createdBy", this.accessToken.userId)

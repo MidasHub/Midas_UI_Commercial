@@ -1,0 +1,80 @@
+<mat-card class="">
+  <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
+    <mat-form-field fxFlex="31%" class="filter">
+      <mat-label>Tìm kiếm mã, tên khách hàng, số tiền(viết liền)</mat-label>
+      <input matInput #filterBill placeholder="Nhập nội dung tìm kiếm..." />
+    </mat-form-field>
+
+    <div class="action-button" fxFlex="31%">
+      <button mat-raised-button color="primary" (click)="findBills(filterBill.value)">
+        <i class="fa fa-search" aria-hidden="true"></i>
+        Tìm kiếm
+      </button>
+    </div>
+  </div>
+
+  <table mat-table [dataSource]="dataSource" matSort>
+    <ng-container matColumnDef="refNo">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Mã</th>
+      <td mat-cell *matCellDef="let bill">
+        {{ !bill?.referenceNo ? "#" : bill.referenceNo }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="customerName">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Khách hàng</th>
+      <td mat-cell *matCellDef="let bill">
+        {{ bill?.referenceName }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="status">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Trạng thái</th>
+      <td mat-cell *matCellDef="let bill">
+        <mat-label title="Hóa đơn khả dụng" style="color: green; font-weight: bold" *ngIf="bill?.status == 'A'">
+          <mat-icon>check</mat-icon>
+        </mat-label>
+        <mat-label title="Hóa đơn đã sử dụng" style="color: red; font-weight: bold" *ngIf="bill?.status == 'C'">
+          <mat-icon>close</mat-icon>
+        </mat-label>
+        <mat-label title="Hóa đơn đang giao dịch" style="color: blue; font-weight: bold" *ngIf="bill?.status == 'P'">
+          <mat-icon>sync</mat-icon>
+        </mat-label>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="uploadDate">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Ngày tải lên</th>
+      <td mat-cell *matCellDef="let bill">
+        {{ bill?.createdDate | date: "dd/MM/yyyy hh:MM:ss" }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="merchant">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Hộ kinh doanh</th>
+      <td mat-cell *matCellDef="let bill">
+        {{ bill?.merchantId }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="amount">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Số tiền</th>
+      <td mat-cell *matCellDef="let bill">
+        {{ bill?.amount | money }}
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let bill; columns: displayedColumns" class="select-row"></tr>
+  </table>
+  <div *ngIf="isLoading" style="display: flex; justify-content: center; align-items: center; background: white">
+    <mat-progress-spinner color="warn" mode="indeterminate"> </mat-progress-spinner>
+  </div>
+  <mat-paginator
+    [length]="sumBills"
+    [pageSize]="10"
+    [pageSizeOptions]="[10, 25, 50, 100]"
+    (page)="findBills(filterBill.value)"
+    showFirstLastButtons
+  ></mat-paginator>
+</mat-card>

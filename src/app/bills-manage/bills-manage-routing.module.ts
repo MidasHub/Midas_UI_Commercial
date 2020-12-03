@@ -11,13 +11,15 @@ import { extract } from "../core/i18n/i18n.service";
 /** Custom Imports */
 import { BillsManageComponent } from "./bills-manage.component";
 import { BillsManageResolver } from "./common-resolvers/BillsManageResolver";
+import { ViewDetailBatchUploadComponent } from "./view-detail-batch-upload/view-detail-batch-upload.component";
+import { ViewBillsBatchUploadResolver } from "./common-resolvers/ViewBillsBatchUpload.resolver";
 
 /** Groups Routes */
 const routes: Routes = [
   Route.withShell([
     {
       path: "bills",
-      data: { title: extract(""), breadcrumb: "Hóa đơn", routeParamBreadcrumb: false },
+      data: { title: extract(""), breadcrumb: "Quản lý file hóa đơn", routeParamBreadcrumb: false },
       children: [
         {
           path: "",
@@ -26,39 +28,14 @@ const routes: Routes = [
             BillsResourceData: BillsManageResolver,
           },
         },
-        // {
-        //   path: 'create',
-        //   component: CreateTerminalsComponent,
-        //   data: { title: extract('Create Terminal'), breadcrumb: 'Create', routeParamBreadcrumb: false },
-        //   resolve:{
-        //     terminalData: CreateTerminalsResolver,
-        //   }
-        // },
-        // {
-        //   path: 'limit',
-        //   component: ViewLimitTerminalComponent,
-        //   data: { title: extract('Hạn mức'), breadcrumb: 'Hạn mức', routeParamBreadcrumb: false },
-        //   resolve:{
-        //     terminalData: LimitTerminalsResolver,
-        //   }
-        // },
-        // {
-        //   path: ':terminalId',
-        //   data: { title: extract('View Terminal'), routeParamBreadcrumb: 'terminalId' },
-        //   children: [{
-        //     path: '',
-        //     children: [
-        //       {
-        //         path: 'edit',
-        //         component: EditTerminalsComponent,
-        //         data: { title: extract('Edit Terminal'), breadcrumb: 'view', routeParamBreadcrumb: false },
-        //         resolve:{
-        //           terminalData: TerminalsResolver,
-        //         }
-        //       }
-        //   ]
-        // }]
-        // }
+        {
+          path: ':batchCode',
+          data: { title: extract(''), breadcrumb: "Chi tiết lô upload :batchCode", routeParamBreadcrumb: 'batchCode' },
+          component: ViewDetailBatchUploadComponent,
+          resolve: {
+            BillsResourceData: ViewBillsBatchUploadResolver,
+          },
+        }
       ],
     },
   ]),
@@ -72,6 +49,6 @@ const routes: Routes = [
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
-  providers: [BillsManageResolver],
+  providers: [BillsManageResolver, ViewBillsBatchUploadResolver],
 })
 export class BillsManageRoutingModule {}

@@ -65,8 +65,7 @@ export class MakeFeeOnAdvanceComponent implements OnInit {
       this.transactions = result?.result?.listTransactionAlready;
     });
     this.clientService.getClientOfStaff().subscribe(result => {
-      this.clientService.getClientAccountData(result?.result?.clientId).subscribe(result1 => {
-        console.log(result1);
+      this.clientService.getClientAccountData(result?.result?.clientId).subscribe((result1: any) => {
         this.clientAccountsTeller = result1?.savingsAccounts;
       });
     });

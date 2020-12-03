@@ -8,7 +8,8 @@ import { SharedModule } from 'app/shared/shared.module';
 import { PipesModule } from '../pipes/pipes.module';
 import { DirectivesModule } from '../directives/directives.module';
 import { BillsManageComponent } from './bills-manage.component';
-import { UploadBillComponent } from './dialog/upload-bill/upload-bill.component';
+import { UploadFileBillComponent } from './dialog/upload-bill/upload-bill.component';
+import { ViewDetailBatchUploadComponent } from './view-detail-batch-upload/view-detail-batch-upload.component';
 
 /** Custom Components */
 
@@ -23,7 +24,8 @@ import { UploadBillComponent } from './dialog/upload-bill/upload-bill.component'
   ],
   declarations: [
     BillsManageComponent,
-    UploadBillComponent,
+    UploadFileBillComponent,
+    ViewDetailBatchUploadComponent,
   ],
   providers: [DatePipe]
 })

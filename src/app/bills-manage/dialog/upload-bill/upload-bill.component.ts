@@ -8,7 +8,7 @@ import { BillsService } from "app/bills-manage/bills-manage.service";
   templateUrl: "./upload-bill.component.html",
   styleUrls: ["./upload-bill.component.scss"],
 })
-export class UploadBillComponent implements OnInit {
+export class UploadFileBillComponent implements OnInit {
   formDialog: FormGroup;
   listMerchant: any;
   listPartner: any;
@@ -16,7 +16,6 @@ export class UploadBillComponent implements OnInit {
   file: any;
 
   constructor(
-    public dialogRef: MatDialogRef<UploadBillComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private formBuilder: FormBuilder,
     private billsService: BillsService

@@ -9,7 +9,7 @@ import { MatTableDataSource } from "@angular/material/table";
 import { ActivatedRoute } from "@angular/router";
 import { AlertService } from "app/core/alert/alert.service";
 import { BillsService } from "./bills-manage.service";
-import { UploadBillComponent } from "./dialog/upload-bill/upload-bill.component";
+import { UploadFileBillComponent } from "./dialog/upload-bill/upload-bill.component";
 @Component({
   selector: "midas-bills-manage",
   templateUrl: "./bills-manage.component.html",
@@ -19,7 +19,8 @@ export class BillsManageComponent implements OnInit, AfterViewInit {
   //@ViewChild('showClosedTerminals', { static: true }) showClosedTerminals: MatCheckbox;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
-  viewTerminals = new FormControl("viewTerminals");
+  timer: any;
+  isProcessing: boolean = false;
   displayedColumns = [
     "fileName",
     "partner",
@@ -29,22 +30,48 @@ export class BillsManageComponent implements OnInit, AfterViewInit {
     "createdBy",
     "totalBill",
     "batchUpload",
+    "actions",
   ];
 
   dataSource = new MatTableDataSource<any>();
-  constructor(private billsService: BillsService,
-     private route: ActivatedRoute,
-     private dialog: MatDialog,
-     private alertService: AlertService,
-     ) {
+  constructor(
+    private billsService: BillsService,
+    private route: ActivatedRoute,
+    private dialog: MatDialog,
+    private alertService: AlertService
+  ) {
     this.route.data.subscribe((data: any) => {
       this.dataSource.data = data?.BillsResourceData?.result?.listDocInvoice;
+      this.isProcessing = data?.BillsResourceData?.result?.havePending;
+
+      if (this.isProcessing) {
+        this.loadDocUpdate();
+      } else {
+        clearTimeout(this.timer);
+      }
     });
   }
 
-  ngOnInit(): void {
-
+  ngOnDestroy() {
+    clearTimeout(this.timer);
   }
+
+  loadDocUpdate() {
+    this.billsService.getBillsResource().subscribe((data: any) => {
+      this.dataSource.data = data?.result?.listDocInvoice;
+      this.isProcessing = data?.result?.havePending;
+
+      if (this.isProcessing) {
+        this.timer = setTimeout(() => {
+          this.loadDocUpdate();
+        }, 5000);
+      } else {
+        clearTimeout(this.timer);
+      }
+    });
+  }
+
+  ngOnInit(): void {}
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
@@ -56,8 +83,9 @@ export class BillsManageComponent implements OnInit, AfterViewInit {
   }
 
   uploadBill() {
-    const dialog = this.dialog.open(UploadBillComponent, {
-      height: "auto", width: "600px",
+    const dialog = this.dialog.open(UploadFileBillComponent, {
+      height: "auto",
+      width: "600px",
       data: {
         // btnTitle: 'Thêm',
       },
@@ -73,14 +101,14 @@ export class BillsManageComponent implements OnInit, AfterViewInit {
 
       if (data) {
         this.billsService.uploadBills(formData).subscribe((result) => {
-
-          if (result.status === "200") {
+          if (result.status === 200) {
             const message = `Tải lên file ${data.data.value.fileName} thành công`;
             this.alertService.alert({
               msgClass: "cssInfo",
               message: message,
             });
 
+            this.loadDocUpdate();
           }
         });
       }

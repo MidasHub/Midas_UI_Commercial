@@ -1,31 +1,13 @@
 <mat-card class="">
-  <div fxLayout="row">
-    <div class="search-box" fxLayoutAlign="start center">
-      <mat-form-field class="filter">
-        <input
-          matInput
-          #filter
-          (keyup)="applyFilter($event.target.value)"
-          placeholder="{{ 'Terminal_Component.labelFilter' | translate }}"
-        />
-        <button
-          mat-icon-button
-          matSuffix
-          aria-label="clear"
-          *ngIf="filter.value"
-          (click)="filter.value = ''; applyFilter('')"
-        >
-          <mat-icon>close</mat-icon>
-        </button>
-      </mat-form-field>
-    </div>
-    <div class="action-button" fxLayoutAlign="end center">
+  <div fxLayout="row"  fxLayoutAlign="end center">
+    <div class="action-button">
       <button mat-raised-button color="primary" (click)="uploadBill()">
         <fa-icon icon="plus"></fa-icon>
         Tải lên hóa đơn
       </button>
     </div>
   </div>
+  <br />
 
   <table mat-table [dataSource]="dataSource" matSort>
     <ng-container matColumnDef="fileName">
@@ -47,14 +29,14 @@
     <ng-container matColumnDef="status">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Trạng thái</th>
       <td mat-cell *matCellDef="let file">
-        <mat-label style="color: green; font-weight: bold;" *ngIf="file.status == 'C'">
+        <mat-label style="color: green; font-weight: bold" *ngIf="file.status == 'C'">
           <mat-icon>check</mat-icon>
         </mat-label>
-        <mat-label style="color: red; font-weight: bold;" *ngIf="file.status == 'F'">
+        <mat-label style="color: red; font-weight: bold" *ngIf="file.status == 'F'">
           <mat-icon>close</mat-icon>
         </mat-label>
-        <mat-label style="color: blue; font-weight: bold;" *ngIf="file.status == 'P'">
-          <mat-icon>sync</mat-icon>
+        <mat-label style="color: blue; font-weight: bold" *ngIf="file.status == 'P'">
+          <mat-progress-spinner color="warn" mode="indeterminate" diameter="20"> </mat-progress-spinner>
         </mat-label>
       </td>
     </ng-container>
@@ -62,7 +44,7 @@
     <ng-container matColumnDef="createdDate">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Ngày tải lên</th>
       <td mat-cell *matCellDef="let file">
-        {{ file.createdDate | date: "dd/MM/yyyy" }}
+        {{ file.createdDate | date: "dd/MM/yyyy HH:mm:ss" }}
       </td>
     </ng-container>
 
@@ -76,7 +58,18 @@
     <ng-container matColumnDef="totalBill">
       <th mat-header-cell *matHeaderCellDef>Tổng số hóa đơn</th>
       <td mat-cell *matCellDef="let file">
-        {{ file.totalBill }}
+        <mat-label style="color: blue; font-weight: bold" *ngIf="file.status == 'P'">
+          <mat-progress-spinner color="warn" mode="indeterminate" diameter="20"> </mat-progress-spinner>
+        </mat-label>
+
+        <mat-label style="color: green; font-weight: bold" *ngIf="file.status == 'C'">
+          {{ file.totalBill }}
+         </mat-label>
+
+         <mat-label style="color: ref; font-weight: bold" *ngIf="file.status == 'F'">
+         0
+         </mat-label>
+
       </td>
     </ng-container>
 
@@ -91,6 +84,15 @@
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Người tải lên</th>
       <td mat-cell *matCellDef="let file">
         {{ file.createdBy }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Chi tiết</th>
+      <td mat-cell *matCellDef="let file">
+        <button mat-button color="primary" routerLink="/bills/{{ file.batchCode }}">
+          <mat-icon size="sm"> remove_red_eye </mat-icon>
+        </button>
       </td>
     </ng-container>
 

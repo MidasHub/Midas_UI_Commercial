@@ -1,19 +1,19 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { UploadBillComponent } from './upload-bill.component';
+import { UploadFileBillComponent } from './upload-bill.component';
 
-describe('UploadBillComponent', () => {
-  let component: UploadBillComponent;
-  let fixture: ComponentFixture<UploadBillComponent>;
+describe('UploadFileBillComponent', () => {
+  let component: UploadFileBillComponent;
+  let fixture: ComponentFixture<UploadFileBillComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ UploadBillComponent ]
+      declarations: [ UploadFileBillComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(UploadBillComponent);
+    fixture = TestBed.createComponent(UploadFileBillComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
