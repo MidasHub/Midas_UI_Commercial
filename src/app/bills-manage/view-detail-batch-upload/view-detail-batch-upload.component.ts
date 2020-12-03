@@ -27,7 +27,7 @@ export class ViewDetailBatchUploadComponent implements OnInit, AfterViewInit {
   }
 
   findBills(filterValue: string) {
-    filterValue = filterValue? filterValue:'%%'
+    filterValue = filterValue? `%${filterValue}%`:'%%'
     this.isLoading = true;
     this.dataSource = new MatTableDataSource<any>();
     const limit = this.paginator.pageSize ? this.paginator.pageSize : 10;
