@@ -148,7 +148,7 @@
           </mat-icon>
           <a matLine>Dashboard</a>
         </mat-list-item>
-        <mat-list-item [routerLink]="['/bills']">
+        <mat-list-item *midasHasPermission="'ALL_FUNCTIONS'" [routerLink]="['/bills']">
           <mat-icon matListIcon>
             <fa-icon icon="random" size="sm"></fa-icon>
           </mat-icon>

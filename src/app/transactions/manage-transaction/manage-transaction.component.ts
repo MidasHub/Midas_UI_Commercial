@@ -116,7 +116,7 @@ export class ManageTransactionComponent implements OnInit {
               private clientsService: ClientsService
   ) {
     this.formDate = this.formBuilder.group({
-      'fromDate': [new Date(new Date().setMonth(new Date().getMonth() - 1))],
+      'fromDate': [new Date()],
       'toDate': [new Date()]
     });
     this.formFilter = this.formBuilder.group({
