@@ -15,7 +15,6 @@ import { EditTerminalsComponent } from './edit-terminals/edit-terminals.componen
 import { CreateTerminalsComponent } from './create-terminals/create-terminals.component';
 import { TerminalsResolver } from './common-resolvers/terminals.resolver';
 import { CreateTerminalsResolver } from './common-resolvers/CreateTerminalsResolver';
-
 /** Groups Routes */
 const routes: Routes = [
   Route.withShell([
@@ -44,13 +43,13 @@ const routes: Routes = [
               {
                 path: 'edit',
                 component: EditTerminalsComponent,
-                data: { title: extract('Edit Terminal'), breadcrumb: 'view', routeParamBreadcrumb: false },
+                //data: { title: extract('Edit Terminal'),  routeParamBreadcrumb: true },
                 resolve:{
                   terminalData: TerminalsResolver,
                 }
               }
-          ]
-        }]
+            ]
+          }]
         }
       ]
     }

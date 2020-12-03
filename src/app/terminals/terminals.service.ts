@@ -5,7 +5,7 @@ import { environment } from 'environments/environment';
 import { Observable } from 'rxjs';
 
 /**
- * Groups service.
+ * Terminal service.
  */
 @Injectable({
     providedIn: 'root'
@@ -27,8 +27,16 @@ export class TerminalsService {
   getTerminals(): Observable<any> {
     const httpParams = new HttpParams()
       .set('createdBy', this.accessToken.userId)
-      .set('accessToken', this.accessToken.base64EncodedAuthenticationKey);
+      .set('accessToken', this.accessToken.base64EncodedAuthenticationKey)
     return this.http.post<any>(`${this.GatewayApiUrlPrefix}/pos`, httpParams);
+  }
+
+  getTerminalInfo(terminalId:string): Observable<any> {
+    const httpParams = new HttpParams()
+      .set('createdBy', this.accessToken.userId)
+      .set('accessToken', this.accessToken.base64EncodedAuthenticationKey)
+      .set('terminalId', terminalId);
+    return this.http.post<any>(`${this.GatewayApiUrlPrefix}/pos/info`, httpParams);
   }
 
   getTerminalByID(terminalId:string): Observable<any> {
@@ -73,4 +81,14 @@ export class TerminalsService {
     return this.http.post<any>(`${this.GatewayApiUrlPrefix}/pos/getpos`,  httpParams );
     //return of(user).pipe(delay(500));
   }
+
+  transfer(terminalId:string, officeId:string): Observable<any> {
+    const httpParams = new HttpParams()
+    .set('createdBy', this.accessToken.userId)
+    .set('accessToken', this.accessToken.base64EncodedAuthenticationKey)
+    .set("terminalId",terminalId)
+    .set("officeId",officeId);
+    return this.http.post<any>(`${this.GatewayApiUrlPrefix}/pos/assignterminal`,  httpParams );
+  }
+
 }

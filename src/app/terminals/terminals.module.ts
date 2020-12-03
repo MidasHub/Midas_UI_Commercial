@@ -12,6 +12,7 @@ import { DirectivesModule } from '../directives/directives.module';
 import { TerminalsComponent } from './terminals.component';
 import { EditTerminalsComponent } from './edit-terminals/edit-terminals.component';
 import { CreateTerminalsComponent } from './create-terminals/create-terminals.component';
+import { TransferTerminalComponent } from './transfer-terminal/transfer-terminal.component';
 //import { TableModule } from 'ngx-easy-table';
 
 @NgModule({
@@ -26,6 +27,7 @@ import { CreateTerminalsComponent } from './create-terminals/create-terminals.co
     TerminalsComponent,
     EditTerminalsComponent,
     CreateTerminalsComponent,
+    TransferTerminalComponent,
   ],
   providers: [DatePipe]
 })
