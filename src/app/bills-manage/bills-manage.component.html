@@ -1,0 +1,108 @@
+<mat-card class="">
+  <div fxLayout="row"  fxLayoutAlign="end center">
+    <div class="action-button">
+      <button mat-raised-button color="primary" (click)="uploadBill()">
+        <fa-icon icon="plus"></fa-icon>
+        Tải lên hóa đơn
+      </button>
+    </div>
+  </div>
+  <br />
+
+  <table mat-table [dataSource]="dataSource" matSort>
+    <ng-container matColumnDef="fileName">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Tên file</th>
+      <td mat-cell *matCellDef="let file">
+        - File: {{ file.fileName }} <br />
+        - Tên: {{ file.name }} <br />
+        - Mô tả: {{ file.description }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="partner">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Đối tác</th>
+      <td mat-cell *matCellDef="let file">
+        {{ file.invoiceType }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="status">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Trạng thái</th>
+      <td mat-cell *matCellDef="let file">
+        <mat-label style="color: green; font-weight: bold" *ngIf="file.status == 'C'">
+          <mat-icon>check</mat-icon>
+        </mat-label>
+        <mat-label style="color: red; font-weight: bold" *ngIf="file.status == 'F'">
+          <mat-icon>close</mat-icon>
+        </mat-label>
+        <mat-label style="color: blue; font-weight: bold" *ngIf="file.status == 'P'">
+          <mat-progress-spinner color="warn" mode="indeterminate" diameter="20"> </mat-progress-spinner>
+        </mat-label>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="createdDate">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Ngày tải lên</th>
+      <td mat-cell *matCellDef="let file">
+        {{ file.createdDate | date: "dd/MM/yyyy HH:mm:ss" }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="merchant">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Hộ kinh doanh</th>
+      <td mat-cell *matCellDef="let file">
+        {{ file.merchantId }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="totalBill">
+      <th mat-header-cell *matHeaderCellDef>Tổng số hóa đơn</th>
+      <td mat-cell *matCellDef="let file">
+        <mat-label style="color: blue; font-weight: bold" *ngIf="file.status == 'P'">
+          <mat-progress-spinner color="warn" mode="indeterminate" diameter="20"> </mat-progress-spinner>
+        </mat-label>
+
+        <mat-label style="color: green; font-weight: bold" *ngIf="file.status == 'C'">
+          {{ file.totalBill }}
+         </mat-label>
+
+         <mat-label style="color: ref; font-weight: bold" *ngIf="file.status == 'F'">
+         0
+         </mat-label>
+
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="batchUpload">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Số lô upload</th>
+      <td mat-cell *matCellDef="let file">
+        {{ file.batchCode }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="createdBy">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Người tải lên</th>
+      <td mat-cell *matCellDef="let file">
+        {{ file.createdBy }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Chi tiết</th>
+      <td mat-cell *matCellDef="let file">
+        <button mat-button color="primary" routerLink="/bills/{{ file.batchCode }}">
+          <mat-icon size="sm"> remove_red_eye </mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let file; columns: displayedColumns" class="select-row"></tr>
+  </table>
+  <mat-paginator
+    [length]="dataSource"
+    [pageSize]="10"
+    [pageSizeOptions]="[10, 25, 50, 100]"
+    showFirstLastButtons
+  ></mat-paginator>
+</mat-card>

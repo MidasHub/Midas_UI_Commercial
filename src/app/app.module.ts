@@ -53,6 +53,7 @@ import { TerminalsModule } from './terminals/terminals.module';
 import {MidasClientModule} from './midas-client/midas-client.module';
 import { TransactionModule } from './transactions/transaction.module';
 import { BookingManageModule } from './booking-manage/booking-manage.module';
+import { BillsManageModule } from './bills-manage/bills-manage.module';
 
 /**
  * App Module
@@ -100,6 +101,7 @@ import { BookingManageModule } from './booking-manage/booking-manage.module';
     MidasClientModule,
     TerminalsModule,
     BookingManageModule,
+    BillsManageModule,
 
 
     AppRoutingModule
