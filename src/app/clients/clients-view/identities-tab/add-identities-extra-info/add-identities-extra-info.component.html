@@ -7,8 +7,9 @@
     <mat-label>Ngày đáo hạn thẻ:</mat-label>
     <input
       pattern
+      required
       maxlength="2"
-      matInput type="number" max="31" min="0" formControlName="dueDay">
+      matInput type="number" max="31" min="1" formControlName="dueDay">
   </mat-form-field>
 
   <mat-form-field  fxFlex="48%">
@@ -18,6 +19,7 @@
       maxlength="5"
       minlength="5"
       type="text"
+      required
       [dropSpecialCharacters]="false" mask="00/00"
       formControlName="expiredDate">
   </mat-form-field>

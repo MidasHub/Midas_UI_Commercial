@@ -1,6 +1,9 @@
 /** Angular Imports */
 import { Injectable } from '@angular/core';
 
+/** Environment Imports */
+import { environment } from '../../environments/environment';
+
 /**
  * Settings Service
  */
@@ -30,6 +33,38 @@ export class SettingsService {
   }
 
   /**
+   * Sets server URL setting throughout the app.
+   * @param {string} url URL
+   */
+  setServer(url: string) {
+    localStorage.setItem('midasServerURL', JSON.stringify(url));
+  }
+
+  /**
+   * Sets server URL setting throughout the app.
+   * @param {string[]} list List of default servers
+   */
+  setServers(list: string[]) {
+    localStorage.setItem('midasServers', JSON.stringify(list));
+  }
+
+  /**
+   * Sets server URL setting throughout the app.
+   * @param {string} url URL
+   */
+  setBillposServer(url: string) {
+    localStorage.setItem('midasBillposServerURL', JSON.stringify(url));
+  }
+
+  /**
+   * Sets server URL setting throughout the app.
+   * @param {string[]} list List of default servers
+   */
+  setBillposServers(list: string[]) {
+    localStorage.setItem('midasBillposServers', JSON.stringify(list));
+  }
+
+  /**
    * Returns date format setting.
    * TẠM THÒI HARDCODE PHẦN DATEFORMAT = 'dd MMMM yyyy' VÀ LOCALE = 'en' DO CÓ LỖI KHI GỌI API
    */
@@ -45,4 +80,30 @@ export class SettingsService {
     return { name: localStorage.getItem('midasLanguageCode'), code:'en'}; //localStorage.getItem('midasLocale') }
   }
 
+  /**
+   * Returns list of default server
+   */
+  get servers() {
+    return JSON.parse(localStorage.getItem('midasServers'));
+  }
+
+  /**
+   * Returns server setting
+   */
+  get server() {
+    return environment.baseApiUrl;
+  }
+  /**
+   * Returns list of default server
+   */
+  get serversBillpos() {
+    return JSON.parse(localStorage.getItem('midasBillposServers'));
+  }
+
+  /**
+   * Returns server setting
+   */
+  get serverBillpos() {
+    return environment.GatewayApiUrl;
+  }
 }

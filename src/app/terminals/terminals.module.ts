@@ -13,6 +13,7 @@ import { TerminalsComponent } from './terminals.component';
 import { EditTerminalsComponent } from './edit-terminals/edit-terminals.component';
 import { CreateTerminalsComponent } from './create-terminals/create-terminals.component';
 import { TransferTerminalComponent } from './transfer-terminal/transfer-terminal.component';
+import { ViewLimitTerminalComponent } from './view-limit-terminal/view-limit-terminal.component';
 //import { TableModule } from 'ngx-easy-table';
 
 @NgModule({
@@ -21,6 +22,7 @@ import { TransferTerminalComponent } from './transfer-terminal/transfer-terminal
     PipesModule,
     DirectivesModule,
     TerminalsRoutingModule,
+
     // TableModule,
   ],
   declarations: [
@@ -28,6 +30,7 @@ import { TransferTerminalComponent } from './transfer-terminal/transfer-terminal
     EditTerminalsComponent,
     CreateTerminalsComponent,
     TransferTerminalComponent,
+    ViewLimitTerminalComponent
   ],
   providers: [DatePipe]
 })

@@ -21,6 +21,9 @@ import {NotificationsTrayComponent} from './notifications-tray/notifications-tra
 import {SearchToolComponent} from './search-tool/search-tool.component';
 import {KeyboardShortcutsDialogComponent} from './keyboard-shortcuts-dialog/keyboard-shortcuts-dialog.component';
 import {MatSelectSearchComponent} from './mat-select-search/mat-select-search.component';
+import { ServerSelectorComponent } from './server-selector/server-selector.component';
+import {BillposSelectorComponent} from './billpos-selector/billpos-selector.component';
+
 /** Custom Modules */
 import {IconsModule} from './icons.module';
 import {MaterialModule} from './material.module';
@@ -33,6 +36,9 @@ import {NgxMaskModule, IConfig} from 'ngx-mask';
 import {CurrencyMaskInputMode, NgxCurrencyModule} from 'ngx-currency';
 import {PipesModule} from '../pipes/pipes.module';
 import {DirectivesModule} from '../directives/directives.module';
+import { UserAccountInfoComponent } from './user-account-info/user-account-info.component';
+import { MainboardComponent } from 'app/home/mainboard/mainboard.component';
+import { RouterModule } from '@angular/router';
 
 const maskConfig: Partial<IConfig> = {
   validation: false,
@@ -67,6 +73,7 @@ const customCurrencyMaskConfig = {
     CommonModule,
     IconsModule,
     MaterialModule,
+    RouterModule,
     ReactiveFormsModule,
     TranslateModule,
     NgxMaskModule.forRoot(maskConfig),
@@ -91,14 +98,21 @@ const customCurrencyMaskConfig = {
     ErrorDialogComponent,
     NotificationsTrayComponent,
     SearchToolComponent,
-    MatSelectSearchComponent
+    ServerSelectorComponent,
+    BillposSelectorComponent,
+    MatSelectSearchComponent,
+    UserAccountInfoComponent,
+    MainboardComponent,
   ],
   exports: [
     FileUploadComponent,
     FooterComponent,
     LanguageSelectorComponent,
+    ServerSelectorComponent,
+    BillposSelectorComponent,
     ThemePickerComponent,
     NotificationsTrayComponent,
+    UserAccountInfoComponent,
     SearchToolComponent,
     ErrorDialogComponent,
     CommonModule,
@@ -108,6 +122,7 @@ const customCurrencyMaskConfig = {
     ReactiveFormsModule,
     TranslateModule,
     MatSelectSearchComponent,
+    MainboardComponent,
     NgxMaskModule,
     NgxCurrencyModule,
     DirectivesModule,

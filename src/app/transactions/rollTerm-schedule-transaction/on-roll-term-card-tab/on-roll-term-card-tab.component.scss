@@ -13,6 +13,18 @@
     min-width: auto !important;
     width: 100% !important;
 }
+td.mat-cell {
+  /* row padding */
+  padding: 16px 0;
+  /* row border */
+  border-bottom: 1px solid black;
+  border-top: 1px solid black;
+ }
+
+ table {
+   /* row spacing / margin */
+   border-spacing: 0 8px !important;
+ }
 
 .mat-header-row {
     width: 100%;

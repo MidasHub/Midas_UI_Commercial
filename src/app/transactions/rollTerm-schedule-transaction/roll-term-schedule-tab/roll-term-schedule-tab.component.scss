@@ -16,9 +16,6 @@
   min-height: 64px;
 }
 
-table {
-  width: 100%;
-}
 
 tr.example-detail-row {
   height: 0;
@@ -65,3 +62,18 @@ tr.example-element-row:not(.example-expanded-row):active {
 .example-element-description-attribution {
   opacity: 0.5;
 }
+
+td.mat-cell {
+  /* row padding */
+  padding: 16px 0;
+  /* row border */
+  border-bottom: 1px solid black;
+  border-top: 1px solid black;
+ }
+
+ table {
+  width: 100%;
+   border-spacing: 0 8px !important;
+ }
+
+

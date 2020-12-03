@@ -28,7 +28,6 @@ export class AddIdentitiesComponent implements OnInit {
     this.documentTypes = [];
     const {clientIdentifierTemplate} = data;
     clientIdentifierTemplate.allowedDocumentTypes.forEach((type: any) => {
-      debugger;
       if (data.addOther){
         if (type.id < 38 || type.id > 57){
 

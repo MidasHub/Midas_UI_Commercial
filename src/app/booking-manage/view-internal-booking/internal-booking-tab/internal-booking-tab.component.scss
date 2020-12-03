@@ -1,0 +1,14 @@
+.onBookingAmount {
+  color: green;
+  font-weight: bold;
+  font-size: larger;
+}
+
+.onTransactionAmount {
+  color: red;
+  text-decoration: line-through;
+}
+
+mat-icon{
+  cursor: pointer;
+}

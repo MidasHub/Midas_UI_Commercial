@@ -30,15 +30,15 @@ import { RollTermScheduleDialogComponent } from "../dialog/roll-term-schedule/ro
   ],
 })
 export class RollTermScheduleTabComponent implements OnInit {
-
+  isLoading: boolean = false;
   expandedElement: any;
   displayedColumns: string[] = [
     "panHolderName",
+    "feeAmount",
     "createdDate",
-    "clientBalance",
     "cardNumber",
     "officeName",
-    "agencyName",
+    // "agencyName",
     "requestAmount",
     "paidAmount",
     "remainAmount",
@@ -114,7 +114,6 @@ export class RollTermScheduleTabComponent implements OnInit {
     private datePipe: DatePipe,
     private settingsService: SettingsService,
     private authenticationService: AuthenticationService,
-    private centersService: CentersService,
     private alertService: AlertService,
     public dialog: MatDialog
   ) {
@@ -123,29 +122,9 @@ export class RollTermScheduleTabComponent implements OnInit {
       toDate: [new Date()],
     });
     this.formFilter = this.formBuilder.group({
-      productId: [""],
-      status: [""],
-      partnerCode: [""],
-      officeId: [""],
       panHolderName: [""],
-      terminalId: [""],
-      traceNo: [""],
-      batchNo: [""],
       terminalAmount: [""],
       staffId: [""],
-      trnRefNo: [""],
-      RetailsChoose: [true],
-      wholesaleChoose: [true],
-      agencyName: [""],
-    });
-    this.formFilter.get("officeId").valueChanges.subscribe((value) => {
-      // const office = this.offices.find(v => v.name === value);
-      this.centersService.getStaff(value).subscribe((staffs: any) => {
-        this.staffs = staffs?.staffOptions;
-      });
-    });
-    this.formFilter.valueChanges.subscribe((value) => {
-      this.getRollTermScheduleAndCardDueDayInfo();
     });
   }
 
@@ -167,8 +146,11 @@ export class RollTermScheduleTabComponent implements OnInit {
     const dateFormat = this.settingsService.dateFormat;
     let fromDate = this.formDate.get("fromDate").value;
     let toDate = this.formDate.get("toDate").value;
-    let clientName = null;
-    let cardNumber = null;
+    let clientName = this.formFilter.get("panHolderName").value;
+    let cardNumber = this.formFilter.get("panHolderName").value;
+    let terminalAmount = this.formFilter.get("terminalAmount").value;
+    let staffId = this.formFilter.get("staffId").value;
+
     const limit = this.paginator.pageSize ? this.paginator.pageSize : 10;
     const offset = this.paginator.pageIndex * limit ? this.paginator.pageSize * limit : 0;
     if (fromDate) {
@@ -177,9 +159,12 @@ export class RollTermScheduleTabComponent implements OnInit {
     if (toDate) {
       toDate = this.datePipe.transform(toDate, dateFormat);
     }
+    this.isLoading = true;
+    this.dataSource = [];
     this.transactionService
-      .getListRollTermTransactionOpenByUserId({ fromDate, toDate, clientName, cardNumber, limit, offset })
+      .getListRollTermTransactionOpenByUserId({ fromDate, toDate, clientName, cardNumber, limit, terminalAmount, offset })
       .subscribe((result) => {
+        this.isLoading = false;
         this.transactionsData = result?.result;
         this.dataSource = result?.result.listPosTransaction;
       });
@@ -219,27 +204,34 @@ export class RollTermScheduleTabComponent implements OnInit {
         const value = response.data.value;
 
       }
+      this.getRollTermScheduleAndCardDueDayInfo();
     });
   }
 
-  undoRollTermTransaction(transactionId: string) {
+  undoRollTermTransaction(transactionId: string, amountPaid: string) {
     const dialog = this.dialog.open(ConfirmDialogComponent, {
       data: {
-        message: 'Bạn chắc chắn muốn hủy giao dịch ' + transactionId,
+        message: 'Bạn chắc chắn muốn hủy khoản đáo hạn ' + transactionId,
         title: 'Hủy giao dịch'
       },
     });
     dialog.afterClosed().subscribe(data => {
       if (data) {
-        this.transactionService.revertTransaction(transactionId).subscribe(result => {
+        this.transactionService.RepaymentRolltermManualTransactionCloseLoan(transactionId, amountPaid).subscribe(result => {
           if (result.status === '200') {
-            // this.getTransaction();
-            // const message = 'Hủy giao dịch ' + transactionId + ' thành công';
-            // this.alertService.alert({
-            //   msgClass: 'cssInfo',
-            //   message: message
-            // });
-            // this.getTransaction();
+
+            const message = 'Hủy giao dịch ' + transactionId + ' thành công';
+            this.alertService.alert({
+              msgClass: 'cssInfo',
+              message: message
+            });
+            this.getRollTermScheduleAndCardDueDayInfo();
+          }else{
+            const message = result.error;
+            this.alertService.alert({
+              msgClass: 'cssDanger',
+              message: message
+            });
           }
         });
       }

@@ -242,6 +242,8 @@ export class OnRollTermCardTabComponent implements OnInit {
           msgClass: "cssSuccess",
           hPosition: "center",
         });
+
+        this.getOnCardDueDayInfo();
       });
     });
   }

@@ -53,6 +53,8 @@ import { TerminalsModule } from './terminals/terminals.module';
 import {MidasClientModule} from './midas-client/midas-client.module';
 import { TransactionModule } from './transactions/transaction.module';
 import { ThirdPartyModule } from './third-party/third-party.module';
+import { BookingManageModule } from './booking-manage/booking-manage.module';
+import { BillsManageModule } from './bills-manage/bills-manage.module';
 
 /**
  * App Module
@@ -100,6 +102,10 @@ import { ThirdPartyModule } from './third-party/third-party.module';
     MidasClientModule,
     TerminalsModule,
     ThirdPartyModule,
+    BookingManageModule,
+    BillsManageModule,
+
+
     AppRoutingModule
   ],
   declarations: [WebAppComponent, NotFoundComponent],

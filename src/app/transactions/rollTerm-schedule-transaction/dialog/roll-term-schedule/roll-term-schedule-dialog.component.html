@@ -5,24 +5,27 @@
     </h1>
     <div class="header-booking" [fxLayout]="'row'" fxLayout.lt-md="column" [fxLayoutGap]="'1%'" fxLayoutGap.lt-md="0%">
       <mat-form-field fxFlex="20%">
-        <input matInput disabled [value]="transactionInfo?.reqAmount | money"  />
+        <input matInput disabled [value]="transactionInfo?.reqAmount | money" />
         <span matPrefix>Số tiền đáo hạn:&nbsp;</span>
       </mat-form-field>
       <mat-form-field fxFlex="20%">
-        <input matInput disabled [value]="transactionInfo?.totalAmountPaid | money"  />
-        <span matPrefix>Đã chi:&nbsp;</span>
+        <input matInput disabled [value]="transactionInfo?.totalAmountPaid | money" />
+        <span matPrefix  >Đã chi:&nbsp;
+          <a href="javascript:void(0)" (click)="viewFeeDialogHistory(false, transactionInfo.rollTermId)">Chi tiết</a>
+        </span>
       </mat-form-field>
       <mat-form-field fxFlex="20%">
-        <input matInput disabled [value]="transactionInfo?.totalAmountGet | money"  />
+        <input matInput disabled [value]="transactionInfo?.totalAmountGet | money" />
         <span matPrefix>Đã thu hồi:&nbsp;</span>
       </mat-form-field>
+
       <mat-form-field fxFlex="10%">
-        <input matInput disabled [(value)]="transactionInfo.feePercentage" />
-        <span matPrefix> - Phí:&nbsp;</span>
+        <input matInput #feeModel (change)="transactionInfo.feePercentage = feeModel.value"  [ngModel]="transactionInfo?.feePercentage" />
+        <span matPrefix>Phí:&nbsp;</span>
         <span matSuffix>%</span>
       </mat-form-field>
       <mat-form-field fxFlex="20%">
-        <input matInput disabled [value]="transactionInfo.feeAmount | money" />
+        <input matInput disabled [value]="transactionInfo?.feeAmount | money" />
         <span matPrefix> - Tiền phí cần thu:&nbsp;</span>
       </mat-form-field>
     </div>
@@ -31,32 +34,67 @@
 <div mat-dialog-content>
   <mat-card>
     <mat-card-content>
-      <table mat-table multiTemplateDataRows class="mat-elevation-z8" [dataSource]="dataSource" matSort>
+      <table mat-table multiTemplateDataRows class="mat-elevation-z8" [dataSource]="dataSource" >
         <ng-container matColumnDef="transaction">
-          <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>Giao dịch</th>
+          <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef >Giao dịch</th>
           <td mat-cell fxHide fxShow.gt-md *matCellDef="let booking; let i = dataIndex">
-            {{ i == 0 ? "Test thẻ" : "Lần " + i }}
+            <mat-label>
+              {{ i == 0 ? "Test thẻ" : "Lần " + i }}
+            </mat-label>
+
+            <mat-label>
+              <fa-icon
+              *ngIf=" ( i > 0 && !booking.trnRefNo && transactionInfo?.totalAmountGet > 0 ) || ( i > 1 && transactionInfo?.totalAmountGet == 0 ) "
+              (click)="this.removeBookingRow(i)"
+              title="Xóa dòng booking"
+              style="color: red"
+              icon="times"
+            ></fa-icon>
+            </mat-label>
+
+
           </td>
         </ng-container>
 
         <ng-container matColumnDef="txnDate">
-          <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>Ngày giao dịch</th>
-          <td mat-cell fxHide fxShow.gt-md *matCellDef="let booking">{{ booking.txnDate | date: "dd-MM-yyyy" }}</td>
+          <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef >Ngày giao dịch</th>
+          <td mat-cell fxHide fxShow.gt-md *matCellDef="let booking">
+            <!-- {{ booking.txnDate | date: "dd-MM-yyyy" }} -->
+            <mat-form-field>
+              <input
+                matInput
+                opened="true"
+                required
+                readonly
+                [matDatepicker]="transactionDatePicker"
+                [(ngModel)]="booking.txnDate"
+                (dateChange)="editBookingRow(booking)"
+              />
+              <mat-datepicker-toggle [disabled]="booking.trnRefNo" matSuffix [for]="transactionDatePicker"></mat-datepicker-toggle>
+              <mat-datepicker #transactionDatePicker></mat-datepicker>
+            </mat-form-field>
+          </td>
         </ng-container>
 
         <ng-container matColumnDef="amount">
-          <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>Số tiền</th>
-          <td mat-cell fxHide fxShow.gt-md *matCellDef="let booking">{{ booking.bookingAmount | money }}</td>
+          <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef >Số tiền</th>
+          <td mat-cell fxHide fxShow.gt-md *matCellDef="let booking ; let i = dataIndex">
+            <mat-form-field>
+            <input
+            type="text"
+            matInput
+            [disabled]="i == (this.dataSource.length - 1)"
+            currencyMask
+            [(ngModel)]="booking.bookingAmount"
+            (blur)="calculateTotalBookingAmount(i)"
+             />
+            </mat-form-field>
+          </td>
         </ng-container>
 
         <ng-container matColumnDef="fee">
-          <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>Phí thực tế</th>
-          <td mat-cell fxHide fxShow.gt-md *matCellDef="let booking">{{ transactionInfo.feePercentage }}%</td>
-        </ng-container>
-
-        <ng-container matColumnDef="paidAmount">
-          <th mat-header-cell *matHeaderCellDef>Đã chi</th>
-          <td mat-cell *matCellDef="let booking">{{ booking.totalPaid | money }}</td>
+          <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef >Phí thực tế</th>
+          <td mat-cell fxHide fxShow.gt-md *matCellDef="let booking">{{ transactionInfo?.feePercentage }}%</td>
         </ng-container>
 
         <ng-container matColumnDef="getAmount">
@@ -65,16 +103,41 @@
         </ng-container>
 
         <ng-container matColumnDef="actions" style="width: 25px">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
+          <th mat-header-cell *matHeaderCellDef >
+            <button color="primary" (click)="this.addBookingRow()"
+            title="Thêm dòng booking" mat-raised-button>
+            <fa-icon
+            style="color: green; font-weight: bold;"
+            icon="plus"
+          ></fa-icon> Thêm
+            </button>
+           </th>
           <td mat-cell *matCellDef="let transaction">
-            <span
-              style="float: right; width: 15px"
-              [matMenuTriggerData]="transaction"
-              [matMenuTriggerFor]="transactionMenu"
-              (menuOpened)="menuOpened()"
-              (menuClosed)="menuClosed()"
-              ><i class="fa fa-ellipsis-v" aria-hidden="true"></i
-            ></span>
+            <mat-icon
+              style="color: red;"
+              title="Chi tiền"
+              (click)="addFeeDialogByTransactionId(false, transaction.rollTermId)"
+            >
+              attach_money
+            </mat-icon>
+            <mat-icon mat-dialog-close
+              style="color: blue;"
+              title="Làm giao dịch thu hồi đáo hạn"
+              (click)="
+                routeToMakeRollTermGetCash(
+                  transaction.rollTermId,
+                  transaction.refid,
+                  transactionInfo.totalAmountPaid - transactionInfo.totalAmountGet
+                )"
+              >gavel
+            </mat-icon>
+            <mat-icon
+              style="color: green;"
+              title="Thực hiện thu tiền phí "
+              (click)="addFeeDialogByTransactionId(true,transaction.trnRefNo)"
+            >
+              attach_money
+            </mat-icon>
           </td>
         </ng-container>
         <ng-container matColumnDef="expandedDetail">
@@ -104,25 +167,10 @@
           (click)="expandedElement = expandedElement === element ? null : element"
         ></tr>
       </table>
+      <div *ngIf="isLoading" style="display: flex; justify-content: center; align-items: center; background: white">
+        <mat-progress-spinner color="warn" mode="indeterminate"> </mat-progress-spinner>
+      </div>
     </mat-card-content>
-
-    <mat-menu #transactionMenu="matMenu" [overlapTrigger]="false" style="width: 50px">
-      <ng-template
-        matMenuContent
-        let-rollTermId="rollTermId"
-        let-totalPaid="totalPaid"
-        let-totalGet="totalGet"
-        let-refid="refid"
-        let-trnRefNo="trnRefNo"
-        style="width: 50px"
-      >
-        <button mat-menu-item><img src="assets/images/icons/next.svg" (click)="addFeeDialogByTransactionId(rollTermId)" />&nbsp;Chi tiền</button>
-        <button mat-dialog-close  (click)="routeToMakeRollTermGetCash(rollTermId, refid, totalPaid - totalGet)" mat-menu-item>
-          <img src="assets/images/icons/add.svg" />&nbsp;Thu hồi
-        </button>
-        <button mat-menu-item *ngIf="trnRefNo" (click)="addFeeDialog(trnRefNo)"><i class="fa fa-eye" aria-hidden="true"></i>&nbsp;Thu phí</button>
-      </ng-template>
-    </mat-menu>
   </mat-card>
 </div>
 <div class="container" fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column"></div>

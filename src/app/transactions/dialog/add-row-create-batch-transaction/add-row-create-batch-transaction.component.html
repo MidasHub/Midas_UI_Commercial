@@ -1,0 +1,155 @@
+<h1 mat-dialog-title>Thêm dòng giao dịch mới</h1>
+<div mat-dialog-content [formGroup]="formDialog">
+  <div fxLayout="row swap"
+       fxLayoutAlign.lt-sm="center"
+       fxLayoutGap="2%"
+       fxLayout.lt-sm="column">
+    <mat-form-field fxFlex="30%" *ngIf="formDialog.contains('productId')" class="input_custom">
+      <mat-label>Dịch vụ</mat-label>
+      <mat-select required formControlName="productId">
+        <mat-option *ngFor="let type of optionsProducts"
+                    [value]="type.value">
+          {{type.label}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field fxFlex="30%" *ngIf="formDialog.contains('rate')">
+      <mat-label>Tỉ lệ phí </mat-label>
+      <input
+        matInput
+        required
+        formControlName="rate">
+      <mat-error *ngIf="formDialog.controls.rate.hasError('required')">Vui lòng thêm thông tin trước khi
+        thực
+        hiện
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field fxFlex="30%" *ngIf="formDialog.contains('amount')">
+      <mat-label>Số tiền giao dịch </mat-label>
+      <input
+        matInput
+        required
+        currencyMask
+        formControlName="amount">
+      <mat-error *ngIf="formDialog.controls.amount.hasError('required')">Vui lòng thêm thông tin trước khi
+        thực
+        hiện
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field fxFlex="30%" *ngIf="formDialog.contains('terminalId')" class="input_custom">
+      <mat-label>Chọn máy POS</mat-label>
+      <mat-select required formControlName="terminalId">
+        <mat-option *ngFor="let type of terminals"
+                    [value]="type.terminalId">
+          {{type.terminalName}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field fxFlex="30%" *ngIf="formDialog.contains('requestAmount')">
+      <mat-label>Số tiền đề xuất</mat-label>
+      <input
+        matInput
+        required
+        currencyMask
+        readonly
+        formControlName="requestAmount">
+      <mat-error *ngIf="formDialog.controls.requestAmount.hasError('required')">Vui lòng thêm thông tin trước khi
+        thực
+        hiện
+      </mat-error>
+    </mat-form-field>
+
+
+    <mat-form-field fxFlex="30%" *ngIf="formDialog.contains('amountTransaction')">
+      <mat-label>Tiền thực chi</mat-label>
+      <input
+        matInput
+        required
+        currencyMask
+        formControlName="amountTransaction">
+      <mat-error *ngIf="formDialog.controls.amountTransaction.hasError('required')">Vui lòng thêm thông tin trước khi
+        thực
+        hiện
+      </mat-error>
+    </mat-form-field>
+
+
+    <mat-form-field fxFlex="30%" *ngIf="formDialog.contains('fee')">
+      <mat-label>Phí thu</mat-label>
+      <input
+        matInput
+        required
+        readonly
+        currencyMask
+        formControlName="fee">
+      <mat-error *ngIf="formDialog.controls.fee.hasError('required')">Vui lòng thêm thông tin trước khi
+        thực
+        hiện
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field fxFlex="30%" *ngIf="formDialog.contains('fee')">
+      <mat-label>Chọn C/M</mat-label>
+      <input
+        matInput
+        required
+        formControlName="fee">
+      <mat-error *ngIf="formDialog.controls.fee.hasError('required')">Vui lòng thêm thông tin trước khi
+        thực
+        hiện
+      </mat-error>
+    </mat-form-field>
+
+
+    <mat-form-field fxFlex="30%" *ngIf="formDialog.contains('batchNo')">
+      <mat-label>Batch No</mat-label>
+      <input
+        matInput
+        required
+        formControlName="batchNo">
+      <mat-error *ngIf="formDialog.controls.batchNo.hasError('required')">Vui lòng thêm thông tin trước khi
+        thực
+        hiện
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field fxFlex="30%" *ngIf="formDialog.contains('tid')">
+      <mat-label>Trace No</mat-label>
+      <input
+        matInput
+        required
+        formControlName="tid">
+      <mat-error *ngIf="formDialog.controls.tid.hasError('required')">Vui lòng thêm thông tin trước khi
+        thực
+        hiện
+      </mat-error>
+    </mat-form-field>
+
+
+    <mat-form-field fxFlex="30%" *ngIf="formDialog.contains('terminalAmount')">
+      <mat-label>Số tiền trên bill</mat-label>
+      <input
+        matInput
+        required
+        currencyMask
+        formControlName="terminalAmount">
+      <mat-error *ngIf="formDialog.controls.terminalAmount.hasError('required')">Vui lòng thêm thông tin trước khi
+        thực
+        hiện
+      </mat-error>
+    </mat-form-field>
+
+  </div>
+</div>
+<mat-dialog-actions align="end">
+  <button mat-raised-button
+          (click)="dialogRef.close({status:false})"
+  >{{'Shared_Component.DeleteDialog.buttonCancel'|translate}}</button>
+  <button mat-raised-button color="warn"
+          (click)="submitForm()"
+  >{{'Shared_Component.DeleteDialog.buttonConfirm'|translate}}</button>
+  <!--  [mat-dialog-close]="{ file: true }"-->
+</mat-dialog-actions>

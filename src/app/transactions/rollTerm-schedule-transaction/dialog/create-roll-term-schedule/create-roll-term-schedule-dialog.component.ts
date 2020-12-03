@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { animate, state, style, transition, trigger } from "@angular/animations";
 import { MatDialog, MAT_DIALOG_DATA } from "@angular/material/dialog";
 import { FormfieldBase } from "app/shared/form-dialog/formfield/model/formfield-base";
-import { BookingService } from "app/booking-internal/booking.service";
+import { BookingService } from "app/booking-manage/booking.service";
 import { Router } from "@angular/router";
 import { MatTableDataSource } from "@angular/material/table";
 import { DatePipe } from "@angular/common";

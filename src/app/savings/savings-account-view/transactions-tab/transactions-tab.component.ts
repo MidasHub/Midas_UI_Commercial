@@ -26,7 +26,7 @@ export class TransactionsTabComponent implements OnInit {
   displayedColumns: string[] = ['id', 'transactionDate', 'transactionType', 'debit', 'credit', 'type', 'note'];
   /** Data source for transactions table. */
   dataSource: MatTableDataSource<any>;
-  transactionDateFrom = new FormControl(new Date(new Date().setMonth(new Date().getMonth() - 1)));
+  transactionDateFrom = new FormControl(new Date());
   /** Transaction date to form control. */
   transactionDateTo = new FormControl(new Date());
   form: FormGroup;

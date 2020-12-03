@@ -16,12 +16,20 @@ export class TerminalsService {
   private credentialsStorageKey = 'mifosXCredentials';
   private accessToken: any;
   private GatewayApiUrlPrefix: any;
-  constructor(private http: HttpClient) { 
+  constructor(private http: HttpClient) {
     this.accessToken = JSON.parse(
       sessionStorage.getItem(this.credentialsStorageKey)
       || localStorage.getItem(this.credentialsStorageKey)
     );
     this.GatewayApiUrlPrefix = environment.GatewayApiUrlPrefix ;
+  }
+
+  getLimitTerminals(): Observable<any> {
+    console.log(this.accessToken);
+    const httpParams = new HttpParams()
+      .set('createdBy', this.accessToken.userId)
+      .set('accessToken', this.accessToken.base64EncodedAuthenticationKey);
+    return this.http.post<any>(`${this.GatewayApiUrlPrefix}/pos/get_list_limit_pos`, httpParams);
   }
 
   getTerminals(): Observable<any> {
@@ -50,16 +58,16 @@ export class TerminalsService {
   getGroupAndHouseHolds(): Observable<any> {
     const httpParams = new HttpParams()
       .set('createdBy', this.accessToken.userId)
-      .set('accessToken', this.accessToken.base64EncodedAuthenticationKey);   
+      .set('accessToken', this.accessToken.base64EncodedAuthenticationKey);
     return this.http.get<any>(`${this.GatewayApiUrlPrefix}/pos/groupandhouseholds`, { params: httpParams });
   }
-  
+
   save(data:any): Observable<any> {
     const httpParams = {
       'createdBy': this.accessToken.userId,
       'accessToken': this.accessToken.base64EncodedAuthenticationKey,
       ...data
-    }  
+    }
     return this.http.post<any>(`${this.GatewayApiUrlPrefix}/pos/save`,  httpParams );
   }
 
@@ -68,7 +76,7 @@ export class TerminalsService {
       'createdBy': this.accessToken.userId,
       'accessToken': this.accessToken.base64EncodedAuthenticationKey,
       ...data
-    }  
+    }
     return this.http.post<any>(`${this.GatewayApiUrlPrefix}/pos/update`,  httpParams );
   }
 
@@ -77,7 +85,7 @@ export class TerminalsService {
       'createdBy': this.accessToken.userId,
       'accessToken': this.accessToken.base64EncodedAuthenticationKey,
       'posterminaid':TerminalNo
-    }  
+    }
     return this.http.post<any>(`${this.GatewayApiUrlPrefix}/pos/getpos`,  httpParams );
     //return of(user).pipe(delay(500));
   }

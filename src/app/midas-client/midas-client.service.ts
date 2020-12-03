@@ -30,6 +30,15 @@ export class MidasClientService {
     this.environment = environment ;
    }
 
+   getInfoSavingAccountByUserId(): Observable<any> {
+
+    const httpParams = new HttpParams()
+    .set('createdBy', this.accessToken.userId)
+    .set('accessToken', this.accessToken.base64EncodedAuthenticationKey);
+
+    return this.http.post<any>(`${this.GatewayApiUrlPrefix}/savingTransaction/get_info_saving_account_by_user_id`, httpParams);
+  }
+
   searchClientByNameAndExternalIdAndPhoneAndDocumentKey(query: string): Observable<any> {
 
     const httpParams = new HttpParams()

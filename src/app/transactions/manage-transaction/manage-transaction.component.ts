@@ -116,7 +116,7 @@ export class ManageTransactionComponent implements OnInit {
               private clientsService: ClientsService
   ) {
     this.formDate = this.formBuilder.group({
-      'fromDate': [new Date(new Date().setMonth(new Date().getMonth() - 1))],
+      'fromDate': [new Date()],
       'toDate': [new Date()]
     });
     this.formFilter = this.formBuilder.group({
@@ -318,7 +318,6 @@ export class ManageTransactionComponent implements OnInit {
       if (data) {
         this.transactionService.undoRevertTransaction(transactionId).subscribe(result => {
           if (result.status === '200') {
-            this.getTransaction();
             const message = 'Hoàn tác giao dịch ' + transactionId + ' thành công';
             this.alertService.alert({
               msgClass: 'cssInfo',
