@@ -38,7 +38,8 @@ export class AddIdentitiesExtraInfoComponent implements OnInit {
       }
     });
     this.form = this.formBuilder.group({
-
+      dueDay: ['', Validators.required],
+      expiredDate: ['',  Validators.required]
     });
 
   }

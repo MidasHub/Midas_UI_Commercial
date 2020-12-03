@@ -27,9 +27,9 @@
             | {{entityType}} Name: {{savingsAccountData.clientName || savingsAccountData.groupName}}<br/>
             <span *ngIf="!savingsAccountData.status.rejected && !savingsAccountData.status.submittedAndPendingApproval">
               {{'Saving_Account_Component.ViewSavingAccount.labelCurrencyBalance'|translate}}
-              : {{savingsAccountData.currency.displaySymbol}}&nbsp;{{savingsAccountData.summary.accountBalance}}<br/>
+              : {{savingsAccountData.currency.displaySymbol}}&nbsp;{{savingsAccountData.summary.accountBalance | money }}<br/>
               {{'Saving_Account_Component.ViewSavingAccount.labelAvailableBalance'|translate}}
-              : {{savingsAccountData.currency.displaySymbol}}&nbsp;{{savingsAccountData.summary.availableBalance}}<br/>
+              : {{savingsAccountData.currency.displaySymbol}}&nbsp;{{savingsAccountData.summary.availableBalance | money }}<br/>
             </span>
           </p>
         </mat-card-subtitle>

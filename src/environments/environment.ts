@@ -9,7 +9,7 @@ import env from './.env';
 export const environment = {
   production: false,
   version: env.midas_version + '-dev',
-  fineractPlatformTenantId: 'default',  // For connecting to server running elsewhere update the tenant identifier
+  fineractPlatformTenantId: 'jean',  // For connecting to server running elsewhere update the tenant identifier
   baseApiUrl: JSON.parse(localStorage.getItem('midasServerURL')) ||'https://uat.tekcompay.com:9443',
   allowServerSwitch: env.allow_switching_backend_instance,
   apiProvider: '/midas/api',
@@ -18,7 +18,7 @@ export const environment = {
   GatewayApiUrl:  JSON.parse(localStorage.getItem('midasBillposServerURL')) ||'https://uat.tekcompay.com:8287',
   GatewayApiUrlPrefix: '/billPos',
   GatewayServerUrl: '',
-  GatewayTenantId: 'default',
+  GatewayTenantId: 'midas',
   oauth: {
     enabled: false,  // For connecting to Midas using OAuth2 Authentication change the value to true
     serverUrl: ''
