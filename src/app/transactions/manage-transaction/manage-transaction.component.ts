@@ -49,7 +49,7 @@ export class ManageTransactionComponent implements OnInit {
   currentUser: any;
   transactionType: any[] = [
     {
-      label: 'All',
+      label: 'Tất cả',
       value: ''
     },
     {
@@ -70,7 +70,7 @@ export class ManageTransactionComponent implements OnInit {
   ];
   statusOption: any[] = [
     {
-      label: 'ALL',
+      label: 'Tất cả',
       value: ''
     },
     {
@@ -152,10 +152,12 @@ export class ManageTransactionComponent implements OnInit {
     this.savingsService.getListPartner().subscribe(partner => {
       this.partners = partner?.result?.listPartner;
       // @ts-ignore
-      this.partners.unshift({code: '', desc: 'ALL'});
+      this.partners.unshift({code: '', desc: 'Tất cả'});
     });
     this.systemService.getOffices().subscribe(offices => {
       this.offices = offices;
+      const officeId = this.currentUser.officeId;
+      this.formFilter.get('officeId').setValue(officeId);
     });
     this.getTransaction();
   }
@@ -196,6 +198,10 @@ export class ManageTransactionComponent implements OnInit {
       }
       this.filterTransaction();
     });
+  }
+
+  checkB(type: string) {
+    return type.startsWith('B');
   }
 
   filterTransaction() {
