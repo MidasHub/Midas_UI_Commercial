@@ -23,7 +23,7 @@ export class TerminalsComponent implements OnInit, AfterViewInit {
   displayedColumns =  ['terminalNo', 'terminalCode', 'terminalName', 'minFeeDefault', 'status', 'createdBy','createdDate','updatedDate','action'];
   
 
-  dataSource = new MatTableDataSource<any>();
+  dataSource = new MatTableDataSource<TerminalObj>();
   dataSourceDefault:any;
   terminalsData: TerminalObj[] = [];
   terminalsDataActive: TerminalObj[] = [];

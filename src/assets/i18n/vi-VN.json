@@ -654,7 +654,8 @@
       "labelOffice":"Chi nhánh",
       "labelLimitRemain":"Hạn mức",
       "labelOfficeToTransfer":"Chuyển đến chi nhánh",
-      "btnSubmit":"Thực hiện"
+      "btnSubmit":"Thực hiện",
+      "msgErrorLimitDaily":"Máy POS KHÔNG điều chuyển được do KHÔNG có hạn mức giao dịch trong ngày, Vui lòng liên hệ IT để hỗ trợ."
     }
   },
   "labelCurrency":"$",
