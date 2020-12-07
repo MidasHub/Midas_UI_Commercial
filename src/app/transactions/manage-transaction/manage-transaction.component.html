@@ -67,7 +67,7 @@
     <mat-expansion-panel
       expanded="true"
       (opened)="panelOpenState = true"
-                         (closed)="panelOpenState = false">
+      (closed)="panelOpenState = false">
       <mat-expansion-panel-header>
         <mat-panel-title>
           Xem theo
@@ -188,12 +188,27 @@
 
       <ng-container matColumnDef="trnRefNo">
         <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header> Số giao dịch</th>
-        <td mat-cell fxHide fxShow.gt-md *matCellDef="let journalEntry"> {{ journalEntry.trnRefNo }} </td>
+        <td mat-cell fxHide fxShow.gt-md *matCellDef="let journalEntry"><span>{{ journalEntry.trnRefNo }}</span><br/>
+          <span *ngIf="checkB(journalEntry.type)" style="color: red;">{{journalEntry.type}}</span>
+        </td>
       </ng-container>
 
       <ng-container matColumnDef="status">
         <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header> Trạng thái</th>
-        <td mat-cell fxHide fxShow.gt-md *matCellDef="let journalEntry"> {{ displayStatus(journalEntry.status) }} </td>
+        <td mat-cell fxHide fxShow.gt-md *matCellDef="let journalEntry" [ngSwitch]="journalEntry.status">
+          <img
+            *ngSwitchCase="'C'"
+            src="assets/images/icons/check.svg"/>
+          <img
+            *ngSwitchCase="'P'"
+            src="assets/images/icons/pending.svg"/>
+          <img
+            *ngSwitchCase="'V'"
+            src="assets/images/icons/cancel.svg"/>
+          <img
+            *ngSwitchDefault
+            src="assets/images/icons/question.svg"/>
+        </td>
       </ng-container>
 
       <ng-container matColumnDef="officeName">
@@ -262,7 +277,21 @@
               </div>
               <div>
                 <span style="font-weight: bold;">
-                  Trạng thái:</span>&nbsp; &nbsp;{{element.status}}
+                  Trạng thái:</span>&nbsp; &nbsp;
+                <span [ngSwitch]="element.status">
+                  <img
+                    *ngSwitchCase="'C'"
+                    src="assets/images/icons/check.svg"/>
+                  <img
+                    *ngSwitchCase="'P'"
+                    src="assets/images/icons/pending.svg"/>
+                  <img
+                    *ngSwitchCase="'V'"
+                    src="assets/images/icons/cancel.svg"/>
+                  <img
+                    *ngSwitchDefault
+                    src="assets/images/icons/question.svg"/>
+                </span>
               </div>
               <div>
                 <span style="font-weight: bold;">
@@ -310,8 +339,8 @@
         <img src="assets/images/icons/next.svg"/>&nbsp;Tiếp tục giao dịch
       </button>
       <button mat-menu-item
-      [routerLink]="['/transaction','view']"
-      [queryParams]="{ tranId: refid}"
+              [routerLink]="['/transaction','view']"
+              [queryParams]="{ tranId: refid}"
       ><i class="fa fa-eye" aria-hidden="true"></i>&nbsp;Chi tiết
       </button>
       <button mat-menu-item

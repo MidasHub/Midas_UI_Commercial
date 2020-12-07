@@ -1,21 +1,23 @@
-<mat-card class="mat-elevation-z20 container-custom">
-  <mat-card-content>
+<div fxLayout="row" fxLayout.lt-md="column" class="fluidcontainer " fxLayoutAlign="space-around start ">
+<mat-card  fxFlex="45" class="m-b-10" >
+  <mat-card-header>
     <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column" [formGroup]="formFilter">
-      <div>
-        <div style="margin-top: 15px;" fxLayout="row">
+      
+        <div style="margin-top: 15px;" fxLayout="row" fxFlex="100">
           <img src="../../../assets/images/icons/account.svg">
           <div style="margin: 5px; margin-top: 20px;">
+            <h3 style="margin: 5px;">Danh sách công nợ phải trả (tạm ứng) của khách hàng</h3>
             <span>Tổng cộng: &nbsp;</span> {{dataSource.length}}
           </div>
         </div>
-      </div>
+   
 
-      <mat-form-field fxFlex="31%">
+      <mat-form-field fxFlex="48">
         <mat-label>Tên khách hàng</mat-label>
         <input matInput formControlName="customer_name">
       </mat-form-field>
 
-      <mat-form-field fxFlex="31%">
+      <mat-form-field fxFlex="48">
         <mat-label>Nhân viên</mat-label>
         <mat-select formControlName="staff_id">
           <mat-option *ngFor="let option of staffs" [value]="option.staffId">
@@ -24,14 +26,16 @@
         </mat-select>
       </mat-form-field>
     </div>
-  </mat-card-content>
+  </mat-card-header>
   <mat-card-content>
-    <table mat-table class="mat-elevation-z8"  multiTemplateDataRows (matSortChange)="sortData($event)" [dataSource]="accountsShow" matSort>
+    <table mat-table class="mat-elevation-z8" multiTemplateDataRows (matSortChange)="sortData($event)"
+           [dataSource]="accountsShow" matSort>
 
       <ng-container matColumnDef="customer_name">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Tên khách hàng</th>
         <td mat-cell
-            *matCellDef="let account"> {{ account.customer_name}} </td>
+            *matCellDef="let account"><a [routerLink]="['../../clients',account.client_id,'general']"
+                                         [queryParams]="{ typeViewClient: 'view'}"> {{ account.customer_name}}</a></td>
       </ng-container>
 
       <ng-container matColumnDef="staff_name">
@@ -53,26 +57,26 @@
       </ng-container>
 
 
-            <ng-container matColumnDef="expandedDetail">
-              <td mat-cell fxShow fxHide.gt-md *matCellDef="let element" [attr.colspan]="displayedColumns.length">
-                <div class="example-element-detail"
-                     [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
-                  <div class="example-element-description" fxLayout="column">
-                    <div>
+      <ng-container matColumnDef="expandedDetail">
+        <td mat-cell fxShow fxHide.gt-md *matCellDef="let element" [attr.colspan]="displayedColumns.length">
+          <div class="example-element-detail"
+               [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
+            <div class="example-element-description" fxLayout="column">
+              <div>
                       <span style="font-weight: bold;">
                         Nhân viên phụ trách :</span>&nbsp;
-                      &nbsp;{{ element.staff_name }}
-                    </div>
-                    <div>
+                &nbsp;{{ element.staff_name }}
+              </div>
+              <div>
                       <span style="font-weight: bold;">
                         Số tài khoản :</span>&nbsp;
-                      &nbsp;{{ element.account_no }}
-                    </div>
-                  </div>
-                </div>
-              </td>
-            </ng-container>
-      <tr mat-header-row  *matHeaderRowDef="displayedColumns"></tr>
+                &nbsp;{{ element.account_no }}
+              </div>
+            </div>
+          </div>
+        </td>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let element; columns: displayedColumns;"
           class="example-element-row"
           [class.example-expanded-row]="expandedElement === element"
@@ -86,15 +90,34 @@
   <mat-paginator paginator [length]="accountFilter.length" [pageSize]="10" [pageSizeOptions]="[10, 25, 50, 100]"
                  showFirstLastButtons></mat-paginator>
 
+
+</mat-card>
+<mat-card  fxFlex="45" class="m-b-10">
   <mat-card-header>
-    <div style="margin-top: 15px;" fxLayout="row">
+    <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column" >
+    <div style="margin-top: 15px;" fxLayout="row" fxFlex="100">
       <img src="../../../assets/images/icons/account.svg">
       <div style="margin: 5px; margin-top: 5px;">
-        <h3 style="margin: 5px;">Danh sách công nợ phải thu</h3>
+        <h3 style="margin: 5px;">Danh sách công nợ phải thu của khách hàng</h3>
         <span>Tổng cộng: &nbsp;</span> {{dataSource2.length}}
       </div>
     </div>
+    <mat-form-field fxFlex="48">
+      <mat-label>Tên khách hàng</mat-label>
+      <input matInput formControlName="customer_name">
+    </mat-form-field>
+
+    <mat-form-field fxFlex="48">
+      <mat-label>Nhân viên</mat-label>
+      <mat-select formControlName="staff_id">
+        <mat-option *ngFor="let option of staffs" [value]="option.staffId">
+          {{option.staffCode}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
   </mat-card-header>
+
   <mat-card-content>
     <table mat-table class="mat-elevation-z8" multiTemplateDataRows [dataSource]="dataSource2">
 
@@ -142,7 +165,7 @@
           </div>
         </td>
       </ng-container>
-      <tr mat-header-row  *matHeaderRowDef="displayedColumns2"></tr>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns2"></tr>
       <tr mat-row *matRowDef="let element; columns: displayedColumns2;"
           class="example-element-row"
           [class.example-expanded-row]="expandedElement2 === element"
@@ -153,4 +176,7 @@
       <!--[routerLink]="['transactions/view', row.transactionId]"-->
     </table>
   </mat-card-content>
+  <mat-paginator paginator [length]="accountFilter.length" [pageSize]="10" [pageSizeOptions]="[10, 25, 50, 100]"
+                 showFirstLastButtons></mat-paginator>
 </mat-card>
+</div>

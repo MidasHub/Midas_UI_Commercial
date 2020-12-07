@@ -38,10 +38,14 @@ export class ClientsDataSource implements DataSource<any> {
    */
   getClients(orderBy: string = '', sortOrder: string = '', pageIndex: number = 0, limit: number = 10, clientActive: boolean = true) {
     this.clientsSubject.next([]);
-    this.clientsService.getClientsByOfficeOfUser(orderBy, sortOrder, pageIndex * limit, limit)
+    let sqlSearch = '';
+    if (clientActive) {
+      sqlSearch = `c.status_enum = 300`;
+    }
+    this.clientsService.getClientsByOfficeOfUser('', '', pageIndex * limit, limit, sqlSearch)
       .subscribe((clients: any) => {
         console.log(clients);
-        clients.pageItems = (clientActive) ? (clients.pageItems.filter((client: any) => client.active)) : (clients.pageItems.filter((client: any) => !client.active));
+        // clients.pageItems = (clientActive) ? (clients.pageItems.filter((client: any) => client.active)) : (clients.pageItems.filter((client: any) => !client.active));
         this.recordsSubject.next(clients.totalFilteredRecords);
         this.clientsSubject.next(clients.pageItems);
       });

@@ -118,7 +118,7 @@ export class CreateBatchTransactionComponent implements OnInit {
               private groupServices: GroupsService,
               private clientsServices: ClientsService,
               private bankServices: BankService,
-              private router: Router
+              private router: Router,
   ) {
     this.currentUser = this.authenticationService.getCredentials();
     this.formFilter = this.formBuilder.group({
@@ -282,6 +282,22 @@ export class CreateBatchTransactionComponent implements OnInit {
     form.valueChanges.subscribe(e => {
       this.onChangeTotal();
     });
+    form.get('rate').valueChanges.subscribe(rate => {
+      // @ts-ignore
+      const {minRate, maxRate, cogsRate} = form?.data?.feeTerminalDto;
+      if (rate < minRate || rate > maxRate) {
+        form.get('rate').setValue(maxRate);
+        // @ts-ignore
+        form.get('pnlRate').setValue(Number(maxRate - cogsRate).toFixed(2));
+        this.alertService.alert({
+          message: 'Tỉ lệ phí không được thấp hơn ' + minRate + ' và cao hơn ' + maxRate,
+          msgClass: 'cssWarning'
+        });
+      } else {
+        // @ts-ignore
+        form.get('pnlRate').setValue(Number(rate - cogsRate).toFixed(2));
+      }
+    });
     this.bankServices.getInfoBinCode(member.cardNumber.slice(0, 6)).subscribe(result => {
       // @ts-ignore
       form.data.binCodeInfo = result?.result?.bankBinCode;
@@ -293,6 +309,10 @@ export class CreateBatchTransactionComponent implements OnInit {
         form.data.feeTerminalDto = result1?.result?.feeTerminalDto;
         const {minRate, maxRate, cogsRate} = result1?.result?.feeTerminalDto;
         form.get('cogsRate').setValue(cogsRate);
+        // @ts-ignore
+        form.data.feeTerminalDto = {
+          minRate, maxRate, cogsRate
+        };
         // tslint:disable-next-line:no-shadowed-variable
         const rate = form.get('rate').value;
         if (rate < minRate || rate > maxRate) {
@@ -304,6 +324,8 @@ export class CreateBatchTransactionComponent implements OnInit {
             msgClass: 'cssWarning'
           });
         } else {
+          const terminalAmount = form.get('terminalAmount').value;
+          form.get('fee').setValue(Number(terminalAmount * (rate / 100)).toFixed(0));
           // @ts-ignore
           form.get('pnlRate').setValue(Number(rate - cogsRate).toFixed(2));
         }
@@ -551,8 +573,25 @@ export class CreateBatchTransactionComponent implements OnInit {
       };
       // dialogConfig.minWidth = 400;
       const dialog = this.dialog.open(AddIdentitiesExtraInfoComponent, dialogConfig);
-      dialog.afterClosed().subscribe(data => {
-        if (data && data.status) {
+      dialog.afterClosed().subscribe(response => {
+        if (response.data) {
+          const { dueDay, expiredDate } = response.data.value;
+
+          this.clientsServices.getClientCross(member.clientId).subscribe((client: any) => {
+            this.bankServices
+              .storeExtraCardInfo({
+                userId: member.clientId,
+                userIdentifyId: member.documentId,
+                clientName: client.displayName,
+                cardNumber: `${member.cardNumber.slice(0, 6)}-XXX-XXX-${member.cardNumber.slice(12, 16)}`,
+                mobileNo: client.mobileNo,
+                dueDay: dueDay,
+                expireDate: expiredDate,
+              })
+              .subscribe((res2: any) => {
+                console.log(res2);
+              });
+          });
         }
       });
     });

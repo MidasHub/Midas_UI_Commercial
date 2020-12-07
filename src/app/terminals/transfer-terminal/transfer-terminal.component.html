@@ -1,0 +1,63 @@
+
+<div class="container">
+
+  <mat-card *ngIf="isTF; else templateError">
+    
+    <form [formGroup]="transferTerminalForm">
+        
+      <mat-card-content>
+        <h3 class="mat-h3" fxFlexFill>{{'Terminal_Component.FormTransfer.labelTransfer'|translate}}</h3>
+        <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
+
+          <mat-form-field fxFlex="98%">
+              <mat-label>{{'Terminal_Component.FormTransfer.labelTerminalId'|translate}}</mat-label>
+              <input matInput required readonly formControlName="terminalId">
+          </mat-form-field>
+
+          <mat-form-field fxFlex="98%">
+            <mat-label>{{'Terminal_Component.FormTransfer.labelTerminalName'|translate}}</mat-label>
+            <input matInput required readonly formControlName="terminalName">
+          </mat-form-field>
+
+          <mat-form-field fxFlex="98%">
+            <mat-label>{{'Terminal_Component.FormTransfer.labelOffice'|translate}}</mat-label>
+            <input matInput required readonly formControlName="officeName">
+          </mat-form-field>
+  
+          <mat-form-field  fxFlex="98%">
+              <mat-label>{{'Terminal_Component.FormTransfer.labelLimitRemain'|translate}}</mat-label>
+              <input matInput readonly required formControlName="limitRemain" type="number">
+          </mat-form-field>
+
+          <mat-form-field *ngIf="transferTerminalForm.contains('officeId')" fxFlex="98%">
+            <mat-label>{{'Terminal_Component.FormTransfer.labelOfficeToTransfer'|translate}}</mat-label>
+            <mat-select required formControlName="officeId">
+                <mat-option *ngFor="let office of offices" [value]="office.id">
+                  {{ office.name }}
+                </mat-option>
+            </mat-select> 
+            <mat-error *ngIf="transferTerminalForm.controls.officeId.hasError('required')" 
+                  [innerHTML]="'Terminal_Component.transferTerminalForm.labelRequired' |translate"></mat-error>
+          </mat-form-field>
+
+        </div> 
+         
+      </mat-card-content>
+
+       
+    <mat-card-content>
+      <div style="text-align: center">
+      <button mat-raised-button color="primary" (click)="submit()">
+        <fa-icon icon="check"></fa-icon>
+        {{'Terminal_Component.FormTransfer.btnSubmit'|translate}}
+      </button>
+    </div>
+    </mat-card-content>
+    </form>
+
+  </mat-card>
+  
+  <ng-template #templateError>
+    {{'Terminal_Component.FormTransfer.msgErrorLimitDaily'|translate}}
+  </ng-template>
+</div>

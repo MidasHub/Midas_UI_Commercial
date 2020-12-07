@@ -450,7 +450,8 @@
       "lblSource": "Đối tượng tìm",
       "lblSeachPlaceholder": "Nhập CMND/ số thẻ/ Tên khách và bấm Enter để tìm"
     },
-    "lblShare": "TK Chứng khoán"
+    "lblShare": "TK Chứng khoán",
+    "lblThirdParty": "Đối tác"
   },
   "Shared_Component": {
     "DeleteDialog": {
@@ -590,12 +591,14 @@
     }
   },
   "Terminal_Component": {
+    "btnTransfer":"Điều chuyển POS",
     "labelTerminalNameMsgPattern": "Mã Máy POS <strong>KHÔNG</strong> bắt đầu bằng ký tự đặc biệt(!@#$%^&*()_+=<>,.?]*) hoặc số",
     "labelTerminal":"Máy POS",
     "btnCreate":"Tạo thông tin máy POS",
     "labelRequired":"<strong>Bắt bộc</strong>",
     "labelTerminalMsgPattern":"<strong>Không</strong> Nhập ký tự đặc biệt",
     "labelFilter":"Bộ lọc",
+    "labelAction":"Thao tác",
     "tableTerminal":{
       "terminalNo":"Mã máy POS",
       "terminalCode":"Code máy POS",
@@ -643,6 +646,16 @@
         "MaxLimitAmountTransaction":"Hạn mức tối giao dịch",
         "LevelTransactionCard":"Số lần giao dịch"
       }
+    },
+    "FormTransfer":{
+      "labelTransfer":"Điều chuyển máy POS",
+      "labelTerminalId":"Mã máy POS",
+      "labelTerminalName":"Tên máy POS",
+      "labelOffice":"Chi nhánh",
+      "labelLimitRemain":"Hạn mức",
+      "labelOfficeToTransfer":"Chuyển đến chi nhánh",
+      "btnSubmit":"Thực hiện",
+      "msgErrorLimitDaily":"Máy POS KHÔNG điều chuyển được do KHÔNG có hạn mức giao dịch trong ngày, Vui lòng liên hệ IT để hỗ trợ."
     }
   },
   "labelCurrency":"$",

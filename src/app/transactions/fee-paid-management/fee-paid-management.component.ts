@@ -50,7 +50,7 @@ export class FeePaidManagementComponent implements OnInit {
   currentUser: any;
   transactionType: any[] = [
     {
-      label: 'All',
+      label: 'Tất cả',
       value: ''
     },
     {
@@ -75,7 +75,7 @@ export class FeePaidManagementComponent implements OnInit {
 
   paymentTypes: any[] = [
     {
-      label: 'ALL',
+      label: 'Tất cả',
       value: ''
     },
     {
@@ -89,7 +89,7 @@ export class FeePaidManagementComponent implements OnInit {
   ];
   statusOption: any[] = [
     {
-      label: 'ALL',
+      label: 'Tất cả',
       value: ''
     },
     {
@@ -174,7 +174,7 @@ export class FeePaidManagementComponent implements OnInit {
     this.savingsService.getListPartner().subscribe(partner => {
       this.partners = partner?.result?.listPartner;
       // @ts-ignore
-      this.partners.unshift({code: '', desc: 'ALL'});
+      this.partners.unshift({code: '', desc: 'Tất cả'});
     });
     // this.systemService.getOffices().subscribe(offices => {
     //   this.offices = offices;
@@ -186,14 +186,14 @@ export class FeePaidManagementComponent implements OnInit {
       this.paidPaymentType = result?.result?.listPayment;
       this.paidPaymentType.unshift({
         code: '',
-        desc: 'ALL'
+        desc: 'Tất cả'
       });
     });
     this.centersService.getStaff(this.currentUser.officeId).subscribe((staffs: any) => {
       this.staffs = staffs?.staffOptions;
       this.staffs.unshift({
         id: '',
-        displayName: 'ALL'
+        displayName: 'Tất cả'
       });
     });
     this.getTransaction();
