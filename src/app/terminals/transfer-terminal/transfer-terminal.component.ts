@@ -20,7 +20,7 @@ export class TransferTerminalComponent implements OnInit {
   terminalId:string;
   itemPos:any;
   officeId:number;
-
+  isTF:boolean = false;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -45,16 +45,20 @@ export class TransferTerminalComponent implements OnInit {
     });
     this.terminalsService.getTerminalInfo(this.terminalId).subscribe((data) => {
       console.log("TransferTerminalComponent result",data);
-      this.itemPos = data.result.limitPos;
-      this.offices = data.result.listOffice;
-      console.log("TransferTerminal",this.itemPos);
-      this.transferTerminalForm.patchValue({
-        'terminalId': this.terminalId ,
-        'terminalName': this.terminalName,
-        'officeId': this.itemPos.officeId,
-        'officeName': this.itemPos.officeName,
-        'limitRemain': this.itemPos.limitRemain,
-      });
+      if(data.statusCode==='200'){
+        this.itemPos = data.result.limitPos;
+        this.offices = data.result.listOffice;
+        console.log("TransferTerminal",this.itemPos);
+        this.transferTerminalForm.patchValue({
+          'terminalId': this.terminalId ,
+          'terminalName': this.terminalName,
+          'officeId': this.itemPos.officeId,
+          'officeName': this.itemPos.officeName,
+          'limitRemain': this.itemPos.limitRemain,
+        });
+        this.isTF = true;
+      }
+      
     });
   }
     

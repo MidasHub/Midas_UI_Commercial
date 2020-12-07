@@ -1,7 +1,8 @@
+
 <div class="container">
 
-  <mat-card>
-
+  <mat-card *ngIf="isTF; else templateError">
+    
     <form [formGroup]="transferTerminalForm">
         
       <mat-card-content>
@@ -55,5 +56,8 @@
     </form>
 
   </mat-card>
-
+  
+  <ng-template #templateError>
+    {{'Terminal_Component.FormTransfer.msgErrorLimitDaily'|translate}}
+  </ng-template>
 </div>
