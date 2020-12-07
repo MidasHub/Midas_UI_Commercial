@@ -203,7 +203,6 @@ export class IdentitiesTabComponent {
     dialogConfig.minWidth = 400;
     const addIdentifierDialogRef = this.dialog.open(AddIdentitiesComponent, dialogConfig);
     addIdentifierDialogRef.afterClosed().subscribe((response: any) => {
-      console.log(response);
       if (response.data) {
         let { description } = response.data.value;
         const {
@@ -366,10 +365,8 @@ export class IdentitiesTabComponent {
     dialogConfig.minWidth = 400;
     const addIdentifierDialogRef = this.dialog.open(AddIdentitiesExtraInfoComponent, dialogConfig);
     addIdentifierDialogRef.afterClosed().subscribe((response: any) => {
-      console.log(response);
       if (response.data) {
         const { dueDay, expiredDate } = response.data.value;
-
         this.clientService.getClientCross(this.clientId).subscribe((client: any) => {
           this.bankService
             .storeExtraCardInfo({

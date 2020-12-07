@@ -32,7 +32,9 @@ export class CreateCardBatchTransactionComponent implements OnInit {
   expandedElement: any;
 
   getData() {
-    return [...this.newDocuments, ...this.documentAlreadyExits];
+    return [...this.newDocuments, ...this.documentAlreadyExits.map(v => {
+      return {...v, saved: true};
+    })];
   }
 
 
@@ -41,7 +43,8 @@ export class CreateCardBatchTransactionComponent implements OnInit {
               private formBuilder: FormBuilder,
               private transactionService: TransactionService,
               private bankService: BankService,
-              private alterService: AlertService) {
+              private alterService: AlertService,
+              private clientService: ClientsService) {
     console.log({data: this.data});
     this.formDialog = this.formBuilder.group({
       'clientId': [''],
@@ -64,7 +67,6 @@ export class CreateCardBatchTransactionComponent implements OnInit {
       });
     });
     this.transactionService.getDocumentTemplate().subscribe(result => {
-      console.log(result);
       this.documents = result?.result?.documentTemplate?.allowedDocumentTypes?.filter((type: any) => Number(type.id) >= 38 && Number(type.id) <= 57);
     });
     this.bankService.getListBank().subscribe(result => {
@@ -88,7 +90,10 @@ export class CreateCardBatchTransactionComponent implements OnInit {
                 this.formDialog.get('cardType').setValue(cardType);
               } else {
                 this.existBin = false;
-                alert('Đầu thẻ chưa tồn tại trong hệ thống, vui lòng chọn ngân hàng bên cạnh!');
+                this.alterService.alert({
+                  message: 'Đầu thẻ chưa tồn tại trong hệ thống, vui lòng chọn ngân hàng bên cạnh!',
+                  msgClass: 'cssDanger'
+                });
               }
             }
           });
@@ -100,23 +105,36 @@ export class CreateCardBatchTransactionComponent implements OnInit {
     this.clients = members;
   }
 
+  documentView(d: any) {
+    return this.documentAlreadyExits.find(v => v.documentTypeId === d.id) ? true : false;
+  }
+
   ngOnInit(): void {
   }
 
   submitForm() {
     const list = JSON.stringify(this.newDocuments);
-    this.transactionService.addIdentifierBatch(this.formDialog.get('clientId').value, list).subscribe(result => {
-      console.log(result);
-      if (Number(result?.status) === 200) {
-        this.alterService.alert({message: 'Thêm thẻ thành công', msgClass: 'cssSuccess'});
-        return this.dialogRef.close({status: true});
-      } else {
-        return this.alterService.alert({
-          message: result?.result?.message?.errors[0]?.developerMessage,
-          msgClass: 'cssWarning'
-        });
-      }
+    this.newDocuments.forEach(document => {
+      this.clientService
+        .addClientIdentifier(this.formDialog.get('clientId').value, {
+          documentKey: document.documentKey,
+          documentTypeId: document.documentTypeId,
+          status: 'Active',
+          description: document.description,
+        }).subscribe(result => {
+        // @ts-ignore
+        if (Number(result?.status) === 200) {
+          this.alterService.alert({message: `Thêm thẻ thành công: ${document.documentKey}`, msgClass: 'cssSuccess'});
+        } else {
+          return this.alterService.alert({
+            // @ts-ignore
+            message: `[- ${document.documentKey} - ]${result?.result?.message?.errors[0]?.developerMessage}`,
+            msgClass: 'cssWarning'
+          });
+        }
+      });
     });
+    this.dialogRef.close({status: true});
   }
 
   addRow() {

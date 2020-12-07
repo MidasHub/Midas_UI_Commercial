@@ -3,6 +3,7 @@ import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {MAT_DIALOG_DATA} from '@angular/material/dialog';
 import {BankService} from '../../../../services/bank.service';
 import {AuthenticationService} from '../../../../core/authentication/authentication.service';
+import {AlertService} from '../../../../core/alert/alert.service';
 
 @Component({
   // tslint:disable-next-line:component-selector
@@ -23,23 +24,23 @@ export class AddIdentitiesComponent implements OnInit {
   constructor(private formBuilder: FormBuilder,
               @Inject(MAT_DIALOG_DATA) public data: any,
               private bankService: BankService,
-              private authenticationService: AuthenticationService) {
-    console.log(data);
+              private authenticationService: AuthenticationService,
+              private alterService: AlertService) {
     this.documentTypes = [];
     const {clientIdentifierTemplate} = data;
     clientIdentifierTemplate.allowedDocumentTypes.forEach((type: any) => {
-      if (data.addOther){
-        if (type.id < 38 || type.id > 57){
+      if (data.addOther) {
+        if (type.id < 38 || type.id > 57) {
 
           this.documentTypes.push(type);
         }
-      }else{
-        if (type.id >= 38 && type.id <= 57){
+      } else {
+        if (type.id >= 38 && type.id <= 57) {
           this.documentTypes.push(type);
         }
       }
-    })
-    //this.documentTypes = clientIdentifierTemplate.allowedDocumentTypes;
+    });
+    // this.documentTypes = clientIdentifierTemplate.allowedDocumentTypes;
   }
 
   ngOnInit(): void {
@@ -96,7 +97,10 @@ export class AddIdentitiesComponent implements OnInit {
                 this.form.get('documentCardType').setValue(cardType);
               } else {
                 this.existBin = false;
-                alert('Đầu thẻ chưa tồn tại trong hệ thống, vui lòng chọn ngân hàng bên cạnh!');
+                this.alterService.alert({
+                  message: 'Đầu thẻ chưa tồn tại trong hệ thống, vui lòng chọn ngân hàng bên cạnh!',
+                  msgClass: 'cssDanger'
+                });
               }
             }
           });
