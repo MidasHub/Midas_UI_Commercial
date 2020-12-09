@@ -51,6 +51,10 @@
       <fa-icon class="mr-05" icon="university" size="lg"></fa-icon>
       Booking
     </a>
+    <a mat-tab-link class="tab-link" [matMenuTriggerFor]="Marketing" #institutionMenuTrigger="matMenuTrigger">
+      <fa-icon class="mr-05" icon="university" size="lg"></fa-icon>
+      Marketing
+    </a>
   </nav>
 
   <span fxFlex="auto">
@@ -105,6 +109,11 @@
   <button mat-menu-item routerLink="/booking/create">Tạo booking nội bộ</button>
   <button *midasHasPermission="'POS_UPDATE'" mat-menu-item routerLink="/booking/view">Quản lý booking nội bộ</button>
 
+</mat-menu>
+<mat-menu #Marketing="matMenu" [overlapTrigger]="false">
+  <button mat-menu-item routerLink="/marketing/create">Tạo chiển dịch</button>
+  <button mat-menu-item routerLink="/marketing">Quản lý chiến dịch</button>
+  <button mat-menu-item routerLink="/marketing/booking">Booking</button>
 </mat-menu>
 <!-- Toolbar Menus -->
 <mat-menu #reportsMenu="matMenu" [overlapTrigger]="false">
