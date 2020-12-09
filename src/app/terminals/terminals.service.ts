@@ -13,7 +13,7 @@ import { Observable } from 'rxjs';
 export class TerminalsService {
 
 
-  private credentialsStorageKey = 'mifosXCredentials';
+  private credentialsStorageKey = 'midasCredentials';
   private accessToken: any;
   private GatewayApiUrlPrefix: any;
   constructor(private http: HttpClient) {

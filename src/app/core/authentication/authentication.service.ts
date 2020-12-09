@@ -40,7 +40,7 @@ export class AuthenticationService {
 
   private credentials: Credentials;
   /** Key to store credentials in storage. */
-  private credentialsStorageKey = 'mifosXCredentials';
+  private credentialsStorageKey = 'midasCredentials';
   /** Key to store oauth token details in storage. */
   private oAuthTokenDetailsStorageKey = 'mifosXOAuthTokenDetails';
   /** Key to store two factor authentication token in storage. */

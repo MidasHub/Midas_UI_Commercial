@@ -27,7 +27,7 @@ import { Alert } from './core/alert/alert.model';
 import { KeyboardShortcutsConfiguration } from './keyboards-shortcut-config';
 
 /** Initialize Logger */
-const log = new Logger('MifosX');
+const log = new Logger('Midas');
 
 /**
  * Main web app component.
@@ -169,7 +169,11 @@ export class WebAppComponent implements OnInit {
         'https://localhost:8287'
       ]);
     }
+
+   
   }
+
+  
 
   logout() {
     this.authenticationService.logout()

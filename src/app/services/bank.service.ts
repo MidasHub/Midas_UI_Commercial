@@ -7,7 +7,7 @@ import {Observable} from 'rxjs';
   providedIn: 'root'
 })
 export class BankService {
-  private credentialsStorageKey = 'mifosXCredentials';
+  private credentialsStorageKey = 'midasCredentials';
   private accessToken: any;
   private GatewayApiUrlPrefix: any;
 

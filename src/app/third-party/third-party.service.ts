@@ -12,7 +12,7 @@ import { Observable } from 'rxjs';
 })
 export class ThirdPartyService {
   
-  private credentialsStorageKey = 'mifosXCredentials';
+  private credentialsStorageKey = 'midasCredentials';
   private accessToken: any;
   private GatewayApiUrlPrefix: any;
   constructor(private http: HttpClient) { 
