@@ -177,7 +177,7 @@
       <ng-container matColumnDef="productId">
         <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>Loại giao dịch</th>
         <td mat-cell fxHide fxShow.gt-md
-            *matCellDef="let transaction"> {{ displayProductId(transaction.productId) }} </td>
+            *matCellDef="let transaction"> <span class="productId">{{ displayProductId(transaction.productId) }}</span>  </td>
       </ng-container>
 
       <ng-container matColumnDef="txnDate">
