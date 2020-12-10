@@ -11,12 +11,35 @@ import {MAT_DIALOG_DATA} from '@angular/material/dialog';
 })
 export class AdvanceComponent implements OnInit {
   currentUser: any;
+  disable = false;
+  savingsAccountData: any;
 
   constructor(private serviceClient: ClientsService,
               @Inject(MAT_DIALOG_DATA) public data: any,
               private formBuilder: FormBuilder) {
+    this.form = this.formBuilder.group({
+      'clientAdvanceCash': [''],
+      'typeAdvanceCash': [''],
+      'amountAdvance': [''],
+      'noteAdvance': ['']
+    });
     this.currentUser = data.currentUser;
-    console.log(this.currentUser)
+    this.disable = data.disableUser;
+    this.savingsAccountData = data.savingsAccountData;
+    console.log(this.savingsAccountData);
+    if (this.disable) {
+      console.log(data.savingsAccountData.clientName);
+      this.form.get('clientAdvanceCash').setValue(data.savingsAccountData.clientName);
+    }
+    this.serviceClient.getClients('', '', 0, -1).subscribe((cl: any) => {
+      this.clients = cl.pageItems?.filter((v: any) => v?.accountNo?.startsWith('C') && v?.staffId === this.currentUser?.staffId);
+      this.filteredClient = this.filterClient(null).slice(0, 30);
+      if (!this.disable) {
+        this.client.valueChanges.subscribe((value: any) => {
+          this.filteredClient = this.filterClient(value).slice(0, 30);
+        });
+      }
+    });
   }
 
   typeAdvanceCashes: any[] = [{
@@ -36,27 +59,15 @@ export class AdvanceComponent implements OnInit {
   filteredClient: any[];
 
   ngOnInit(): void {
-    this.form = this.formBuilder.group({
-      'clientAdvanceCash': [''],
-      'typeAdvanceCash': [''],
-      'amountAdvance': [''],
-      'noteAdvance': ['']
-    });
-    this.serviceClient.getClients('', '', 0, -1).subscribe((cl: any) => {
-      this.clients = cl.pageItems?.filter((v: any) => v?.accountNo?.startsWith('C') && v?.staffId ===  this.currentUser?.staffId );
-      this.filteredClient = this.filterClient(null).slice(0, 30);
-      this.client.valueChanges.subscribe(value => {
-        this.filteredClient = this.filterClient(value).slice(0, 30);
-      });
-    });
+
   }
 
   get client() {
-    return this.form.get('clientAdvanceCash');
+    return this.disable ? this.clients?.find((v: any) => v.id === this.savingsAccountData.clientId) : this.form.get('clientAdvanceCash');
   }
 
   displayFn(client?: any): string | undefined {
-    return client ? client.displayName : undefined;
+    return this.disable ? client : client.displayName;
   }
 
   private filterClient(value: string | any) {
