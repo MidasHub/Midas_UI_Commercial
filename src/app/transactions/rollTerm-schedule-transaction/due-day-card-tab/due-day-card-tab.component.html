@@ -58,7 +58,7 @@
   </div>
 
   <mat-card-content>
-    <table mat-table multiTemplateDataRows [dataSource]="dataSource">
+    <table mat-table multiTemplateDataRows [dataSource]="dataSource" class="mat-elevation-z8">
       <ng-container matColumnDef="panHolderName">
         <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef>Tên khách hàng</th>
         <td mat-cell fxHide fxShow.gt-md *matCellDef="let transaction">
