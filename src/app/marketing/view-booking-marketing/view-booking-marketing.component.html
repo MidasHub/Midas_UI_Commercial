@@ -53,103 +53,101 @@
   <div>
     <h3>Thông tin chi tiết</h3>
     <div *ngIf="campaign" fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
-      <div fxFlex="30%" *ngIf="campaign && campaign.campaign.cashRule === -1">
-        <div fxLayout="row">
-          <img src="assets/images/icons/fast-delivery.svg">
-          <div fxLayout="column">
-            <p
-              style="font-size: 18px; font-weight: bold; margin: 2px;">Ngay</p>
-            <span>Chính sách tiền</span>
+      <div fxFlex="20%" fxLayout="column">
+        <div fxFlex="30%" *ngIf="campaign">
+          <div fxLayout="row" style="margin: 8px;">
+            <img src="assets/images/icons/money-deposit.svg">
+            <div fxLayout="column">
+              <p
+                style="font-size: 18px; font-weight: bold; margin: 2px; color: #1fb050;">{{campaign.campaign.budget | money}}</p>
+              <span>Tổng hạn mức</span>
+            </div>
+          </div>
+        </div>
+        <div fxFlex="30%" *ngIf="campaign">
+          <div fxLayout="row" style="margin: 8px;">
+            <img src="assets/images/icons/bill_booking.svg">
+            <div fxLayout="column">
+              <p
+                style="font-size: 18px; font-weight: bold; margin: 2px; color: #1fb050;">{{sumBooking | money}}</p>
+              <span>Tổng hạn mức đã đăng kí</span>
+            </div>
+          </div>
+        </div>
+        <div fxFlex="30%" *ngIf="campaign && campaign.campaign.cashRule === -1">
+          <div fxLayout="row" style="margin: 8px;">
+            <img src="assets/images/icons/fast-delivery.svg">
+            <div fxLayout="column">
+              <p
+                style="font-size: 18px; font-weight: bold; margin: 2px;">Ngay</p>
+              <span>Chính sách tiền</span>
+            </div>
+          </div>
+        </div>
+        <div fxFlex="30%" *ngIf="campaign && campaign.campaign.cashRule !== -1">
+          <div fxLayout="row" style="margin: 8px;">
+            <img src="assets/images/icons/delay.svg">
+            <div fxLayout="column">
+              <p
+                style="font-size: 18px; font-weight: bold; margin: 2px;">Chờ  {{campaign.campaign.cashRule}} phút</p>
+              <span>Chính sách tiền</span>
+            </div>
           </div>
         </div>
       </div>
-      <div fxFlex="30%" *ngIf="campaign && campaign.campaign.cashRule !== -1">
-        <div fxLayout="row">
-          <img src="assets/images/icons/delay.svg">
-          <div fxLayout="column">
-            <p
-              style="font-size: 18px; font-weight: bold; margin: 2px;">Chờ  {{campaign.campaign.cashRule}} phút</p>
-            <span>Chính sách tiền</span>
-          </div>
-        </div>
-      </div>
-      <div fxFlex="30%" *ngIf="campaign">
-        <div fxLayout="row">
-          <img src="assets/images/icons/money-deposit.svg">
-          <div fxLayout="column">
-            <p
-              style="font-size: 18px; font-weight: bold; margin: 2px; color: #1fb050;">{{campaign.campaign.budget | money}}</p>
-            <span>Tổng hạn mức</span>
-          </div>
-        </div>
-      </div>
-      <div fxFlex="30%" *ngIf="campaign">
-        <div fxLayout="row">
-          <img src="assets/images/icons/bill_booking.svg">
-          <div fxLayout="column">
-            <p
-              style="font-size: 18px; font-weight: bold; margin: 2px; color: #1fb050;">{{sumBooking | money}}</p>
-            <span>Tổng hạn mức đã đăng kí</span>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div *ngIf="campaign" fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
-      <div fxFlex="96%" *ngIf="campaign">
-        <div fxLayout="column">
-          <h4>Chính sách thẻ</h4>
-          <div>
-            <table class="mat-elevation-z8" mat-table [dataSource]="cards" matSort
-                   multiTemplateDataRows>
-              <!-- Name Column -->
-              <ng-container matColumnDef="cardType">
-                <th mat-header-cell *matHeaderCellDef
-                >Thẻ
-                </th>
-                <td mat-cell *matCellDef="let row"> {{row.cardType}} </td>
-              </ng-container>
+      <div fxFlex="75%">
+        <table mat-table [dataSource]="cards" matSort
+               multiTemplateDataRows>
+          <!-- Name Column -->
+          <ng-container matColumnDef="cardType">
+            <th mat-header-cell *matHeaderCellDef
+            >Thẻ
+            </th>
+            <td mat-cell *matCellDef="let row"> {{row.cardType}} </td>
+          </ng-container>
 
-              <!-- Account no Column -->
-              <ng-container matColumnDef="costRate">
-                <th mat-header-cell *matHeaderCellDef
-                > Phí POS
-                </th>
-                <td mat-cell fxHide fxShow.gt-md *matCellDef="let row"> {{row.costRate}} </td>
-              </ng-container>
+          <!-- Account no Column -->
+          <ng-container matColumnDef="costRate">
+            <th mat-header-cell *matHeaderCellDef
+            > Phí POS
+            </th>
+            <td mat-cell fxHide fxShow.gt-md *matCellDef="let row"> {{row.costRate}} </td>
+          </ng-container>
 
-              <!-- External ID Column -->
-              <ng-container matColumnDef="cogsRate">
-                <th mat-header-cell d *matHeaderCellDef
-                > Phí Vốn
-                </th>
-                <td mat-cell fxHide fxShow.gt-md *matCellDef="let row"> {{row.cogsRate}} </td>
-              </ng-container>
+          <!-- External ID Column -->
+          <ng-container matColumnDef="cogsRate">
+            <th mat-header-cell d *matHeaderCellDef
+            > Phí Vốn
+            </th>
+            <td mat-cell fxHide fxShow.gt-md *matCellDef="let row"> {{row.cogsRate}} </td>
+          </ng-container>
 
 
-              <ng-container matColumnDef="minRate">
-                <th mat-header-cell *matHeaderCellDef
-                >Phí GD
-                </th>
-                <td mat-cell fxHide fxShow.gt-md *matCellDef="let row"> {{row.minRate}} </td>
-              </ng-container>
+          <ng-container matColumnDef="minRate">
+            <th mat-header-cell *matHeaderCellDef
+            >Phí GD
+            </th>
+            <td mat-cell fxHide fxShow.gt-md *matCellDef="let row"> {{row.minRate}} </td>
+          </ng-container>
 
 
-              <tr mat-header-row *matHeaderRowDef="displayedCardColumns"></tr>
-              <tr mat-row *matRowDef="let element; columns: displayedCardColumns;"
-                  class="example-element-row">
-              </tr>
-            </table>
-          </div>
-        </div>
+          <tr mat-header-row *matHeaderRowDef="displayedCardColumns"></tr>
+          <tr mat-row *matRowDef="let element; columns: displayedCardColumns;"
+              class="example-element-row">
+          </tr>
+        </table>
       </div>
     </div>
   </div>
   <div *ngIf="campaign" fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column" style="margin-top: 20px;">
     <div fxFlex="96%" *ngIf="campaign">
-      <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column" >
+      <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
         <h3 fxFlex="48%">Tồng số: {{booking?.length}}</h3>
         <div fxFlex="48%">
-          <button style="float: right;" mat-raised-button color="primary">Thêm</button>
+          <button style="float: right;"
+                  (click)="addBookingDialog()"
+                  mat-raised-button color="primary">Thêm
+          </button>
         </div>
       </div>
       <table class="mat-elevation-z8" mat-table [dataSource]="booking" matSort multiTemplateDataRows>
@@ -184,7 +182,17 @@
           <td mat-cell *matCellDef="let row"> {{row.bookingAmount | money}} </td>
         </ng-container>
 
-
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef>Actions</th>
+          <td mat-cell *matCellDef="let row">
+            <div fxLayout="row">
+              <span (click)="EditBookingDialog(row)" style="margin-right: 5px;"><img src="assets/images/icons/edit.svg"></span>
+              &nbsp;
+              <span (click)="RemoveBookingDialog(row)" style="margin-right: 5px;"><img
+                src="assets/images/icons/delete.svg"></span>
+            </div>
+          </td>
+        </ng-container>
         <!--          <ng-container matColumnDef="expandedDetail">-->
         <!--            <td mat-cell fxShow fxHide.gt-md *matCellDef="let element" [attr.colspan]="displayedColumns.length">-->
         <!--              <div class="example-element-detail"-->
