@@ -13,12 +13,12 @@
     min-width: auto !important;
     width: 100% !important;
 }
+
 td.mat-cell {
+  /* row padding */
+  padding: 16px 5px;
 
-  border-bottom: 1px solid black;
-  border-top: 1px solid black;
  }
-
 
 .mat-header-row {
     width: 100%;
@@ -92,7 +92,6 @@ tr.example-detail-row {
 
 .example-element-diagram {
   min-width: 80px;
-  border: 2px solid black;
   padding: 8px;
   font-weight: lighter;
   margin: 8px 0;
