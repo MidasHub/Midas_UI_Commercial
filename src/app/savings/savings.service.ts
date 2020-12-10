@@ -13,7 +13,7 @@ import {environment} from '../../environments/environment';
   providedIn: 'root'
 })
 export class SavingsService {
-  private credentialsStorageKey = 'mifosXCredentials';
+  private credentialsStorageKey = 'midasCredentials';
   private accessToken: any;
   private GatewayApiUrlPrefix: any;
 

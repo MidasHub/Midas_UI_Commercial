@@ -55,6 +55,7 @@ import { TransactionModule } from './transactions/transaction.module';
 import { ThirdPartyModule } from './third-party/third-party.module';
 import { BookingManageModule } from './booking-manage/booking-manage.module';
 import { BillsManageModule } from './bills-manage/bills-manage.module';
+import {MarketingModule} from './marketing/marketing.module';
 
 /**
  * App Module
@@ -104,8 +105,7 @@ import { BillsManageModule } from './bills-manage/bills-manage.module';
     ThirdPartyModule,
     BookingManageModule,
     BillsManageModule,
-
-
+    MarketingModule,
     AppRoutingModule
   ],
   declarations: [WebAppComponent, NotFoundComponent],

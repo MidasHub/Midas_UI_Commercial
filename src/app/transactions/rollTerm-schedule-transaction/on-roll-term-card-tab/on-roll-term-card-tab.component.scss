@@ -15,10 +15,8 @@
 }
 td.mat-cell {
   /* row padding */
-  padding: 16px 0;
-  /* row border */
-  border-bottom: 1px solid black;
-  border-top: 1px solid black;
+  padding: 16px 5px;
+
  }
 
  table {
@@ -80,12 +78,11 @@ tr.example-detail-row {
   height: 0;
 }
 
-tr.example-element-row:not(.example-expanded-row):hover {
-  background: whitesmoke;
+.mat-row:nth-child(4n + 1) {
+  background: #cef0f5 !important;
 }
-
-tr.example-element-row:not(.example-expanded-row):active {
-  background: #efefef;
+.mat-row:not(:nth-child(2n + 1)) {
+  background-color:#fff !important;
 }
 
 .example-element-row td {
@@ -99,7 +96,6 @@ tr.example-element-row:not(.example-expanded-row):active {
 
 .example-element-diagram {
   min-width: 80px;
-  border: 2px solid black;
   padding: 8px;
   font-weight: lighter;
   margin: 8px 0;

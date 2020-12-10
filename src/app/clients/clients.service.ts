@@ -14,7 +14,7 @@ import {Observable} from 'rxjs';
 })
 export class ClientsService {
 
-  private credentialsStorageKey = 'mifosXCredentials';
+  private credentialsStorageKey = 'midasCredentials';
   private accessToken: any;
   private GatewayApiUrlPrefix: any;
 

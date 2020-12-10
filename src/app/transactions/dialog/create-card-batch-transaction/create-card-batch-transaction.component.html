@@ -20,6 +20,7 @@
       <mat-label>Chọn thông tin cần thêm</mat-label>
       <mat-select required formControlName="documentTypeId">
         <mat-option *ngFor="let type of documents"
+                    [fxHide]="documentView(type)"
                     [value]="type.id">
           {{type.name}}
         </mat-option>
@@ -32,6 +33,7 @@
       <input
         matInput
         required
+        mask="0000-0000-0000-0000"
         formControlName="documentKey">
       <mat-error *ngIf="formDialog.controls.documentKey.hasError('required')">Vui lòng thêm thông tin
         trước khi
@@ -89,20 +91,20 @@
       <ng-container matColumnDef="documentTypeId">
         <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header> Thông tin</th>
         <td mat-cell fxHide fxShow.gt-md
-            *matCellDef="let form" > {{getTypeDocument(form.documentTypeId)}} </td>
+            *matCellDef="let form"> {{getTypeDocument(form.documentTypeId)}} </td>
       </ng-container>
 
 
       <ng-container matColumnDef="documentKey">
         <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>Số id</th>
         <td mat-cell fxHide fxShow.gt-md
-            *matCellDef="let form" > {{form.documentKey}} </td>
+            *matCellDef="let form"> {{form.documentKey}} </td>
       </ng-container>
 
       <ng-container matColumnDef="description">
         <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>Thông tin chi tiết</th>
         <td mat-cell fxHide fxShow.gt-md
-            *matCellDef="let form" > {{form.description}}</td>
+            *matCellDef="let form"> {{form.description}}</td>
       </ng-container>
 
 
@@ -120,6 +122,7 @@
       <tr mat-row *matRowDef="let element; columns: displayedColumns;"
           class="example-element-row"
           [class.example-expanded-row]="expandedElement === element"
+          [class.create]="!element.saved"
           (click)="expandedElement = expandedElement === element ? null : element">
       </tr>
       <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
@@ -133,7 +136,8 @@
           (click)="dialogRef.close({status:false})"
   >{{'Shared_Component.DeleteDialog.buttonCancel'|translate}}</button>
   <button mat-raised-button color="warn"
-            (click)="submitForm()"
+          (click)="submitForm()"
+          *ngIf="newDocuments.length > 0"
   >{{'Shared_Component.DeleteDialog.buttonConfirm'|translate}}</button>
   <!--  [mat-dialog-close]="{ file: true }"-->
 </mat-dialog-actions>
