@@ -88,6 +88,17 @@ export class BookingAgencyComponent implements OnInit {
     else if (status == "C") return " onTransactionAmount";
   }
 
+getUrlReturnBatchTransaction(agencyId: string, batchTxnName: string){
+  let url = "/transaction/batch-transaction" ;
+  if (!batchTxnName){
+    url = `${url}/${agencyId}` ;
+  }else{
+    url = `${url}/${agencyId}??batchTxnName=${batchTxnName}`;
+  }
+
+  return url;
+}
+
   displayTrancheNo(tranche: string) {
     return this.TrancheNoOption.find((v) => v.value == tranche)?.label || "N/A";
   }
