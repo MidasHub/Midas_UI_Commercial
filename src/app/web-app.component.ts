@@ -171,9 +171,7 @@ export class WebAppComponent implements OnInit {
     }
 
    
-  }
-
-  
+  }  
 
   logout() {
     this.authenticationService.logout()
@@ -182,7 +180,7 @@ export class WebAppComponent implements OnInit {
 
   help() {
     window.open('https://drive.google.com/drive/folders/1-J4JQyaaxBz2QSfZMzC4bPrPwWlksFWw?usp=sharing', '_blank');
-    // window.open('https://mifosforge.jira.com/wiki/spaces/docs/pages/52035622/User+Manual', '_blank');
+    // window.open('https://mifosforge.jira.com/wiki/spaces/docs/pages/52035622/User+Manual', '_blank');ng
   }
 
   // Monitor all keyboard events and excute keyboard shortcuts
