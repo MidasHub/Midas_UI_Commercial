@@ -13,7 +13,7 @@ if (subdomain === 'staging-hn') {
   tenant = 'hanoi'
   billpostenant = 'midas'
 }
-if (subdomain === 'staging-hcm') {
+if (subdomain === 'staging-hcm' || subdomain === 'staging' || subdomain === 'localhost' ) {
   tenant = 'jean'
   billpostenant = 'midas'
 }
