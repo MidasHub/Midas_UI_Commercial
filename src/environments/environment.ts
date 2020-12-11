@@ -7,7 +7,7 @@
 // check Url for tenant
 console.log('subdomain',window.location.hostname.split(".")[0]);
 const subdomain = window.location.hostname.split(".")[0];
-let tenant= 'default';
+let tenant= 'jean';
 let billpostenant = 'midas'
 if (subdomain === 'staging-hn') {
   tenant = 'hanoi'
@@ -18,7 +18,7 @@ if (subdomain === 'staging-hcm') {
   billpostenant = 'midas'
 }
 
-  
+
 
 import env from './.env';
 //baseApiUrl: 'https://uat.tekcompay.com:9443',
