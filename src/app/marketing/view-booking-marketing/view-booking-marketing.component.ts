@@ -2,6 +2,12 @@ import {Component, OnInit} from '@angular/core';
 import {MarketingServices} from '../marketing.services';
 import {FormControl} from '@angular/forms';
 import {animate, state, style, transition, trigger} from '@angular/animations';
+import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
+import {AddFeeDialogComponent} from '../../transactions/dialog/add-fee-dialog/add-fee-dialog.component';
+import {CreateTransactionBookingComponent} from '../dialog/create-transaction-booking/create-transaction-booking.component';
+import {AlertService} from '../../core/alert/alert.service';
+import {ConfirmDialogComponent} from '../../transactions/dialog/coifrm-dialog/confirm-dialog.component';
+import {MoneyPipe} from '../../pipes/money.pipe';
 
 @Component({
   selector: 'midas-view-booking-marketing',
@@ -23,11 +29,14 @@ export class ViewBookingMarketingComponent implements OnInit {
   displayedCardColumns: any[] = ['cardType', 'costRate', 'cogsRate', 'minRate'];
   cards: any[] = [];
   displayedColumns: any[] = ['createdDate', 'officeId', 'userIdStaff', 'userNameTelegram',
-  'bookingAmount'];
+    'bookingAmount', 'actions'];
   expandedElement: any;
   booking: any[] = [];
 
-  constructor(private marketingServices: MarketingServices) {
+  constructor(private marketingServices: MarketingServices,
+              public dialog: MatDialog,
+              private alterService: AlertService,
+              private money: MoneyPipe) {
   }
 
   ngOnInit(): void {
@@ -41,6 +50,81 @@ export class ViewBookingMarketingComponent implements OnInit {
     this.filterCampaign.valueChanges.subscribe(result => {
       this.campaign = result;
       this.getBooking();
+    });
+  }
+
+  addBookingDialog() {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.data = {
+      booking: false
+    };
+    dialogConfig.minWidth = 400;
+    const dialog = this.dialog.open(CreateTransactionBookingComponent, dialogConfig);
+    dialog.afterClosed().subscribe((result) => {
+      if (result) {
+        this.marketingServices.createBooking(this.campaign.campaign.refid, result.userNameTelegram, result.bookingAmount).subscribe(re => {
+          console.log(re);
+          if (re?.result?.status) {
+            this.getBooking();
+            return this.alterService.alert({message: 'Thêm booking thành công 🎊🎊🎊🎊🎊🎊!', msgClass: 'cssSuccess'});
+          }
+          return this.alterService.alert({
+            message: re?.result?.message || 'Có lỗi xảy ra vui lòng liên hệ IT Support 🆘',
+            msgClass: 'cssDanger'
+          });
+        });
+      }
+    });
+  }
+
+  EditBookingDialog(booking: any) {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.data = {
+      booking: booking
+    };
+    dialogConfig.minWidth = 400;
+    const dialog = this.dialog.open(CreateTransactionBookingComponent, dialogConfig);
+    dialog.afterClosed().subscribe((result) => {
+      if (result) {
+        this.marketingServices.updateBooking(booking.refid, result.bookingAmount).subscribe(re => {
+          console.log(re);
+          if (re?.result?.status) {
+            this.getBooking();
+            return this.alterService.alert({
+              message: 'Update booking thành công 🎊🎊🎊🎊🎊🎊!',
+              msgClass: 'cssSuccess'
+            });
+          }
+          return this.alterService.alert({
+            message: re?.result?.message || 'Có lỗi xảy ra vui lòng liên hệ IT Support 🆘',
+            msgClass: 'cssDanger'
+          });
+        });
+      }
+    });
+  }
+
+  RemoveBookingDialog(booking: any) {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.data = {
+      message: `💥 💥 💥 Bạn có chắc chắn muốn xóa booking của ${booking.userNameTelegram} với số tiền ${this.money.transform(booking.bookingAmount)}`,
+      title: `Xóa booking [${booking.refid}]`
+    };
+    dialogConfig.minWidth = 400;
+    const dialog = this.dialog.open(ConfirmDialogComponent, dialogConfig);
+    dialog.afterClosed().subscribe((result) => {
+      if (result) {
+        this.marketingServices.RemoveBooking(booking.refid).subscribe(re => {
+          if (re?.result?.status) {
+            this.getBooking();
+            return this.alterService.alert({message: 'Thêm booking thành công 🎊🎊🎊🎊🎊🎊!', msgClass: 'cssSuccess'});
+          }
+          return this.alterService.alert({
+            message: re?.result?.message || 'Có lỗi xảy ra vui lòng liên hệ IT Support 🆘',
+            msgClass: 'cssDanger'
+          });
+        });
+      }
     });
   }
 
