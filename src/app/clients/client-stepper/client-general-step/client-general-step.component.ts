@@ -33,6 +33,7 @@ export class ClientGeneralStepComponent implements OnInit {
   @Output() cancelEvent = new EventEmitter();
 
   currentUser: any;
+  
   /** Create Client Form */
   createClientForm: FormGroup;
 
@@ -77,6 +78,8 @@ export class ClientGeneralStepComponent implements OnInit {
               private authenticationService: AuthenticationService,
               private centersService: CentersService) {
     this.setClientForm();
+    this.currentUser = this.authenticationService.getCredentials();
+    console.log("Current User: ", this.currentUser)
   }
 
   ngOnInit() {
@@ -88,10 +91,11 @@ export class ClientGeneralStepComponent implements OnInit {
    * Creates the client form.
    */
   setClientForm() {
+    
     this.createClientForm = this.formBuilder.group({
       'officeId': ['', Validators.required],
       'staffId': [''],
-      'isStaff': [false],
+      'isStaff': [true],
       'active': [true],
       'addSavings': [true],
       'accountNo': [''],
@@ -148,14 +152,18 @@ export class ClientGeneralStepComponent implements OnInit {
         this.createClientForm.get('documentTypeId').setValue(type.id);
       }
     });
-    this.currentUser = this.authenticationService.getCredentials();
+    //this.currentUser = this.authenticationService.getCredentials();
     const {roles, staffId} = this.currentUser;
     this.createClientForm.get('staffId').setValue(staffId);
-    roles.map((role: any) => {
-      if (role.id !== 3) {
+    roles.map((role: any,index: number) => {
+      console.log("Role:", role.id)
+      if (role.id !== 3 ) {
         this.isTeller = false;
       }
-    });
+      
+    }
+    
+    );
   }
 
   /**
