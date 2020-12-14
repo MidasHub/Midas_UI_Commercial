@@ -63,7 +63,7 @@ export class EditCenterComponent implements OnInit {
   createEditCenterForm() {
     const dateFormat = this.settingsService.dateFormat;
     this.editCenterForm = this.formBuilder.group({
-      'name': [this.centerData.name, [Validators.required, Validators.pattern('^([^!@#$%^&*()_+=<>,.?\/\-]*)$')]],
+      'name': [this.centerData.name, [Validators.required, Validators.pattern('^([^!@#$%^&*()+=<>,?\/]*)$')]],
       'staffId': [this.centerData.staffId],
       'externalId': [this.centerData.externalId]
     });

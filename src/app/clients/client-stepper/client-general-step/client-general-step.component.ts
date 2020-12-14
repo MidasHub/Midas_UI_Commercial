@@ -166,15 +166,15 @@ export class ClientGeneralStepComponent implements OnInit {
     //   if (legalFormId === 1) {
     //     this.createClientForm.removeControl('fullname');
     //     this.createClientForm.removeControl('clientNonPersonDetails');
-    //     // Jean: change from '(^[A-z]).*' to  '^([^!@#$%^&*()_+=<>,.?\/\-]*)$'
-    //     this.createClientForm.addControl('firstname', new FormControl('', [Validators.required, Validators.pattern('^([^!@#$%^&*()_+=<>,.?\/\-]*)$')]));
-    //     this.createClientForm.addControl('middlename', new FormControl('', Validators.pattern('^([^!@#$%^&*()_+=<>,.?\/\-]*)$')));
-    //     this.createClientForm.addControl('lastname', new FormControl('', [Validators.required, Validators.pattern('^([^!@#$%^&*()_+=<>,.?\/\-]*)$')]));
+    //     // Jean: change from '(^[A-z]).*' to  '^([^!@#$%^&*()+=<>,?\/]*)$'
+    //     this.createClientForm.addControl('firstname', new FormControl('', [Validators.required, Validators.pattern('^([^!@#$%^&*()+=<>,?\/]*)$')]));
+    //     this.createClientForm.addControl('middlename', new FormControl('', Validators.pattern('^([^!@#$%^&*()+=<>,?\/]*)$')));
+    //     this.createClientForm.addControl('lastname', new FormControl('', [Validators.required, Validators.pattern('^([^!@#$%^&*()+=<>,?\/]*)$')]));
     //   } else {
     //     this.createClientForm.removeControl('firstname');
     //     this.createClientForm.removeControl('middlename');
     //     this.createClientForm.removeControl('lastname');
-    //     this.createClientForm.addControl('fullname', new FormControl('', [Validators.required, Validators.pattern('^([^!@#$%^&*()_+=<>,.?\/\-]*)$')]));
+    //     this.createClientForm.addControl('fullname', new FormControl('', [Validators.required, Validators.pattern('^([^!@#$%^&*()+=<>,?\/]*)$')]));
     //     this.createClientForm.addControl('clientNonPersonDetails', this.formBuilder.group({
     //       'constitutionId': [''],
     //       'incorpValidityTillDate': [''],
