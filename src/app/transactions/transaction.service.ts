@@ -381,7 +381,9 @@ export class TransactionService {
     };
 
     xhr.open('GET', url);
+    if(this.environment.isNewBillPos){
     xhr.setRequestHeader('Gateway-TenantId', this.environment.GatewayTenantId);
+    }
     xhr.responseType = 'blob';
     xhr.send();
   }

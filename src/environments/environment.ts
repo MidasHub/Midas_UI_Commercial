@@ -26,6 +26,7 @@ import te from './checkurl'
 //baseApiUrl: 'https://uat.tekcompay.com:9443',
 export const environment = {
   production: false,
+  isNewBillPos: true,
   version: env.midas_version + '-dev',
   fineractPlatformTenantId: te.coreT,  // For connecting to server running elsewhere update the tenant identifier
   baseApiUrl: JSON.parse(localStorage.getItem('midasServerURL')) ||te.defaultbaseURL,
