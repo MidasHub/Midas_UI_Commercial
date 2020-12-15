@@ -143,7 +143,9 @@ export class SavingsService {
     };
 
     xhr.open('GET', url);
+    if (environment.isNewBillPos){
     xhr.setRequestHeader('Gateway-TenantId', environment.GatewayTenantId);
+    }
     xhr.responseType = 'blob';
     return xhr.send();
   }

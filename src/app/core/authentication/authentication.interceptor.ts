@@ -46,8 +46,9 @@ export class AuthenticationInterceptor implements HttpInterceptor {
       request = request.clone({ setHeaders: httpOptions.headers });
 
      } else{
-
+      if(environment.isNewBillPos){
       request = request.clone({ setHeaders: httpOptionsGateway.headers });
+      }
      }
     return next.handle(request);
   }

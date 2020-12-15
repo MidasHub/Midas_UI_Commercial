@@ -60,8 +60,8 @@ export class CreateEmployeeComponent implements OnInit {
   createEmployeeForm() {
     this.employeeForm = this.formBuilder.group({
       'officeId': ['', Validators.required],
-      'firstname': ['', [Validators.required, Validators.pattern('^([^!@#$%^&*()_+=<>,.?\/\-]*)$')]],
-      'lastname': ['', [Validators.required, Validators.pattern('^([^!@#$%^&*()_+=<>,.?\/\-]*)$')]],
+      'firstname': ['', [Validators.required, Validators.pattern('^([^!@#$%^&*()+=<>,.?\/]*)$')]],
+      'lastname': ['', [Validators.required, Validators.pattern('^([^!@#$%^&*()+=<>,.?\/]*)$')]],
       'isLoanOfficer': [false],
       'mobileNo': [''],
       'joiningDate': ['', Validators.required],

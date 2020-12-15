@@ -26,20 +26,21 @@ import te from './checkurl'
 //baseApiUrl: 'https://uat.tekcompay.com:9443',
 export const environment = {
   production: true,
+  isNewBillPos:false,
   version: env.midas_version + '-staging',
   allowServerSwitch: false,
   fineractPlatformTenantId: te.coreT,  // For connecting to server running elsewhere update the tenant identifier
 
-  baseApiUrl: JSON.parse(localStorage.getItem('midasServerURL')) ||'https://uat.tekcompay.com:9443',
-  apiProvider: '/midas/api',
-  apiVersion: '/v1',
+  baseApiUrl: JSON.parse(localStorage.getItem('midasServerURL')) ||te.defaultbaseURL,
+  apiProvider:te.apiProvider,
+  apiVersion: te.apiVersion,
   serverUrl: '',
-  GatewayApiUrl: JSON.parse(localStorage.getItem('midasBillposServerURL')) ||'https://uat.tekcompay.com:8287',
+  GatewayApiUrl: JSON.parse(localStorage.getItem('midasBillposServerURL')) ||te.defaultbillposURL,
   GatewayApiUrlPrefix: '/billPos',
   GatewayServerUrl: '',
   GatewayTenantId:  te.billposT,
   oauth: {
-    enabled: false,  // For connecting to Midas using OAuth2 Authentication change the value to true
+    enabled: true,  // For connecting to Midas using OAuth2 Authentication change the value to true
     serverUrl: ''
   },
   defaultLanguage: 'vi-VN',

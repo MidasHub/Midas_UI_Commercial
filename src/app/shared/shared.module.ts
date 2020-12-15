@@ -39,6 +39,10 @@ import {DirectivesModule} from '../directives/directives.module';
 import { UserAccountInfoComponent } from './user-account-info/user-account-info.component';
 import { MainboardComponent } from 'app/home/mainboard/mainboard.component';
 import { RouterModule } from '@angular/router';
+import {
+  OwlDateTimeModule,
+  OwlNativeDateTimeModule
+} from 'ng-pick-datetime';
 
 const maskConfig: Partial<IConfig> = {
   validation: false,
@@ -80,6 +84,8 @@ const customCurrencyMaskConfig = {
     NgxCurrencyModule.forRoot(customCurrencyMaskConfig),
     DirectivesModule,
     PipesModule,
+    OwlDateTimeModule,
+    OwlNativeDateTimeModule,
   ],
   declarations: [
     FormfieldComponent,
@@ -127,6 +133,8 @@ const customCurrencyMaskConfig = {
     NgxCurrencyModule,
     DirectivesModule,
     PipesModule,
+    OwlDateTimeModule,
+    OwlNativeDateTimeModule,
   ]
 })
 export class SharedModule {
