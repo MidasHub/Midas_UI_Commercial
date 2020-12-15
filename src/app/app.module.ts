@@ -77,7 +77,6 @@ import {MarketingModule} from './marketing/marketing.module';
       },
       isolate: true,
     }),
-
     CoreModule,
     HomeModule,
     LoginModule,
