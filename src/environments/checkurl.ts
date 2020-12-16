@@ -10,25 +10,25 @@ let apiVersion = '/v1'
 
 
 if (subdomain === 'staging-hn') {
-  tenant = 'hanoi'
-  billpostenant = 'hanoi'
+  tenant = 'hanoi';
+  billpostenant = 'hanoi';
 }
 
 if (subdomain === 'hanoi') {
-  tenant = 'hanoi'
-  billpostenant = 'hanoi'
-  defaultbaseURL = 'https://app2.midascore.net:8443'
-  defaultbillposURL= 'https://app1.midascore.net:8088'
-  apiProvider ='/fineract-provider/api'
+  tenant = 'hanoi';
+  billpostenant = 'hanoi';
+  defaultbaseURL = 'https://app2.midascore.net:8443';
+  defaultbillposURL = 'https://app1.midascore.net:8088';
+  apiProvider = '/fineract-provider/api';
 
 }
 
 export default {
-    coreT: tenant,
-    billposT: billpostenant,
-    defaultbaseURL: defaultbaseURL,
-    defaultbillposURL:defaultbillposURL,
-    apiProvider:apiProvider,
-    apiVersion:apiVersion
+  coreT: tenant,
+  billposT: billpostenant,
+  defaultbaseURL: defaultbaseURL,
+  defaultbillposURL: defaultbillposURL,
+  apiProvider: apiProvider,
+  apiVersion: apiVersion
 
-}
+};
