@@ -159,9 +159,7 @@ export class WebAppComponent implements OnInit {
         'https://staging.midascore.net',
         'https://staging-app.midascore.net',
         'https://localhost:9443',
-        'https://localhost:8443',
-        'http://uat.tekcompay.com:8080',
-        'http://uat.tekcompay.com:8287'
+        'https://localhost:8443'
       ]);
     }
 
@@ -169,8 +167,7 @@ export class WebAppComponent implements OnInit {
       this.settingsService.setBillposServers([
         'https://staging.midascore.net',
 
-        'https://localhost:8287',
-        'http://uat.tekcompay.com:8287'
+        'https://localhost:8287'
       ]);
     }
 
