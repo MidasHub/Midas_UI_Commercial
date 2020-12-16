@@ -10,11 +10,14 @@ import {MarketingViewResolver} from './marketing-view.resolver';
 import { ViewBookingMarketingComponent } from './view-booking-marketing/view-booking-marketing.component';
 import { CreateBookingMarketingComponent } from './create-booking-marketing/create-booking-marketing.component';
 import { CreateTransactionBookingComponent } from './dialog/create-transaction-booking/create-transaction-booking.component';
+import { OwlDateTimeModule, OwlNativeDateTimeModule } from '@busacca/ng-pick-datetime';
 
 @NgModule({
   imports: [
     SharedModule,
-    MarketingRoutingModule
+    MarketingRoutingModule,
+    OwlDateTimeModule,
+    OwlNativeDateTimeModule
   ],
   declarations: [
     ManagementComponent,
