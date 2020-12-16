@@ -26,12 +26,12 @@ const routes: Routes = [
       },
       {
         path: 'create',
-        component: CreateBookingMarketingComponent,
+        component: CreateUpdateMarketingComponent,
         data: {title: 'Tạo chiển dịch', breadcrumb: 'Tạo chiển dịch'}
       },
       {
         path: 'view/:id',
-        component: CreateBookingMarketingComponent,
+        component: CreateUpdateMarketingComponent,
         data: {title: 'Tạo chiển dịch', breadcrumb: 'Tạo chiển dịch', routeParamBreadcrumb: 'id'},
         resolve: {
           id: MarketingViewResolver

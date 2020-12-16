@@ -10,6 +10,7 @@ import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 export class CreateTransactionBookingComponent implements OnInit {
   formDialog: FormGroup;
   booking: any;
+
   constructor(private formBuilder: FormBuilder,
               public dialogRef: MatDialogRef<CreateTransactionBookingComponent>,
               @Inject(MAT_DIALOG_DATA) public data: any) {
