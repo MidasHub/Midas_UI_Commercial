@@ -36,13 +36,6 @@ export class MarketingServices {
 
   }
 
-  getCampaignTemplate(): Observable<any> {
-    const httpParams = new HttpParams()
-      .set('createdBy', this.accessToken.userId)
-      .set('accessToken', this.accessToken.base64EncodedAuthenticationKey);
-    return this.http.post<any>(`${this.GatewayApiUrlPrefix}/campaign/template`, httpParams);
-  }
-
   getBooking(campaignId: string): Observable<any> {
     const httpParams = new HttpParams()
       .set('campaignId', campaignId)
@@ -62,7 +55,6 @@ export class MarketingServices {
 
     return this.http.post<any>(`${this.GatewayApiUrlPrefix}/campaign/booking_pos_campain_manual`, httpParams);
   }
-
   updateBooking(campaignId: string, amountBooking: string): Observable<any> {
     const httpParams = new HttpParams()
       .set('bookingId', campaignId)
@@ -71,7 +63,6 @@ export class MarketingServices {
       .set('accessToken', this.accessToken.base64EncodedAuthenticationKey);
     return this.http.post<any>(`${this.GatewayApiUrlPrefix}/campaign/booking_pos_campain_manual`, httpParams);
   }
-
   RemoveBooking(bookingId: string): Observable<any> {
     const httpParams = new HttpParams()
       .set('bookingId', bookingId)
