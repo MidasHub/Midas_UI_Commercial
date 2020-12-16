@@ -19,22 +19,20 @@
 // }
 
 
-
-
 import env from './.env';
-import te from './checkurl'
-//baseApiUrl: 'https://uat.tekcompay.com:9443',
+import te from './checkurl';
+// baseApiUrl: 'https://uat.tekcompay.com:9443',
 export const environment = {
   production: false,
   isNewBillPos: true,
   version: env.midas_version + '-dev',
   fineractPlatformTenantId: te.coreT,  // For connecting to server running elsewhere update the tenant identifier
-  baseApiUrl: JSON.parse(localStorage.getItem('midasServerURL')) ||te.defaultbaseURL,
+  baseApiUrl: JSON.parse(localStorage.getItem('midasServerURL')) || te.defaultbaseURL,
   allowServerSwitch: env.allow_switching_backend_instance,
   apiProvider: te.apiProvider,
   apiVersion: te.apiVersion,
   serverUrl: '',
-  GatewayApiUrl:  JSON.parse(localStorage.getItem('midasBillposServerURL')) || te.defaultbillposURL,
+  GatewayApiUrl: JSON.parse(localStorage.getItem('midasBillposServerURL')) || te.defaultbillposURL,
   GatewayApiUrlPrefix: '/billPos',
   GatewayServerUrl: '',
   GatewayTenantId: te.billposT,
@@ -57,5 +55,5 @@ export const environment = {
 environment.serverUrl = `${environment.baseApiUrl}${environment.apiProvider}${environment.apiVersion}`;
 environment.oauth.serverUrl = `${environment.baseApiUrl}${environment.apiProvider}`;
 environment.GatewayServerUrl = `${environment.GatewayApiUrl}`;
-console.log('tenant:',environment.fineractPlatformTenantId);
-console.log('billpostenant:',environment.GatewayTenantId);
+console.log('tenant:', environment.fineractPlatformTenantId);
+console.log('billpostenant:', environment.GatewayTenantId);

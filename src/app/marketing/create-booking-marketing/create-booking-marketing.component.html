@@ -1,1 +1,205 @@
-<p>create-booking-marketing works!</p>
+<mat-card class="container" [formGroup]="fromGroup">
+  <mat-form-field style="width: 90%;">
+    <mat-label>Tên chiến dịch</mat-label>
+    <input matInput formControlName="PosCampaignName">
+  </mat-form-field>
+  <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
+
+    <mat-form-field fxFlex="23%">
+      <mat-label>Thời gian thông báo</mat-label>
+      <input matInput formControlName="notifyDate" [owlDateTime]="dt2" [owlDateTimeTrigger]="dt2"
+             placeholder="Thời gian thông báo">
+      <mat-icon matSuffix><img src="assets/images/icons/warning.svg" height="22" width="22"></mat-icon>
+      <owl-date-time #dt2></owl-date-time>
+    </mat-form-field>
+    <mat-form-field fxFlex="23%">
+      <mat-label>Thời gian bắt đầu</mat-label>
+      <input matInput formControlName="fromDate" [owlDateTime]="dt0" [owlDateTimeTrigger]="dt0"
+             placeholder="Thời gian bắt đầu">
+      <mat-icon matSuffix><img src="assets/images/icons/start.svg" height="22" width="22"></mat-icon>
+      <owl-date-time #dt0></owl-date-time>
+    </mat-form-field>
+    <mat-form-field fxFlex="23%">
+      <mat-label>Thời gian kết thúc</mat-label>
+      <input matInput formControlName="toDate" [owlDateTime]="dt1" [min]="minDateTo()" [owlDateTimeTrigger]="dt1"
+             placeholder="Thời gian kết thúc">
+      <mat-icon matSuffix><img src="assets/images/icons/end.svg" height="22" width="22"></mat-icon>
+      <owl-date-time #dt1></owl-date-time>
+    </mat-form-field>
+    <mat-form-field fxFlex="23%">
+      <mat-label>Thời gian booking</mat-label>
+      <input matInput formControlName="secondRemain">
+      <mat-icon matSuffix><img src="assets/images/icons/end.svg" height="22" width="22"></mat-icon>
+    </mat-form-field>
+  </div>
+  <mat-card>
+    <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
+      <div fxFlex="30%" fxLayout="column">
+        <mat-form-field>
+          <div fxLayout="row" style="margin: 8px;">
+            <img src="assets/images/icons/money-deposit.svg" width="22" height="22">
+            <input formControlName="budget" matInput formControlName="budget" currencyMask>
+          </div>
+        </mat-form-field>
+        <div fxLayout="column">
+          <label class="example-margin">Chính sách tiền:</label>
+          <mat-radio-group formControlName="cashRule" [(ngModel)]="labelPosition">
+            <mat-radio-button class="example-margin" value="1">
+              <div fxLayout="row" style="margin: 8px;">
+                <img src="assets/images/icons/delay.svg" height="22" width="22">
+                <p
+                  style="font-size: 18px; font-weight: bold; margin: 2px;">Chờ</p>
+              </div>
+            </mat-radio-button>
+            <mat-radio-button class="example-margin" value="-1">
+              <div fxLayout="row" style="margin: 8px;">
+                <img src="assets/images/icons/fast-delivery.svg" width="22" height="22">
+                <p
+                  style="font-size: 18px; font-weight: bold; margin: 2px;">Ngay</p>
+              </div>
+            </mat-radio-button>
+          </mat-radio-group>
+        </div>
+      </div>
+      <div fxFlex="65%">
+        <table mat-table [dataSource]="cards" matSort
+               multiTemplateDataRows>
+          <!-- Name Column -->
+          <ng-container matColumnDef="cardType">
+            <th mat-header-cell *matHeaderCellDef
+            >Thẻ
+            </th>
+            <td mat-cell *matCellDef="let row"> {{row.cardType}} </td>
+          </ng-container>
+
+          <!-- Account no Column -->
+          <ng-container matColumnDef="costRate">
+            <th mat-header-cell *matHeaderCellDef
+            > Phí POS
+            </th>
+            <td mat-cell fxHide fxShow.gt-md *matCellDef="let row"> {{row.costRate}} </td>
+          </ng-container>
+
+          <!-- External ID Column -->
+          <ng-container matColumnDef="cogsRate">
+            <th mat-header-cell d *matHeaderCellDef
+            > Phí Vốn
+            </th>
+            <td mat-cell fxHide fxShow.gt-md *matCellDef="let row"> {{row.cogsRate}} </td>
+          </ng-container>
+          <ng-container matColumnDef="minRate">
+            <th mat-header-cell *matHeaderCellDef
+            >Phí GD
+            </th>
+            <td mat-cell fxHide fxShow.gt-md *matCellDef="let row"> {{row.minRate}} </td>
+          </ng-container>
+          <tr mat-header-row *matHeaderRowDef="displayedCardColumns"></tr>
+          <tr mat-row *matRowDef="let element; columns: displayedCardColumns;"
+              class="example-element-row">
+          </tr>
+        </table>
+      </div>
+    </div>
+  </mat-card>
+  <mat-card style="margin-top: 20px;">
+    <mat-tab-group>
+      <mat-tab label="Chi nhánh">
+        <mat-card-content>
+          <div fxLayout="row wrap" [formGroup]="fromGroup" fxLayoutGap="2%" cdkDropListGroup>
+            <div fxFlex="44%" class="example-container">
+              <h3>Chi nhánh</h3>
+              <hr/>
+              <div style="margin: 12px;">
+                <input matInput placeholder="Search">
+              </div>
+              <div
+                cdkDropList
+                [cdkDropListData]="offices"
+                class="example-list"
+                cdkDropListSortingDisabled
+                (cdkDropListDropped)="drop($event)">
+                <div class="example-box" *ngFor="let item of offices" cdkDrag>{{item}}</div>
+              </div>
+            </div>
+            <div fxFlex="5%" style="display: flex;">
+              <div fxLayout="column" style="display: flex; margin-top: auto; margin-bottom: auto;">
+                <button style="margin: 3px;" mat-raised-button> ></button>
+                <button style="margin: 3px;" mat-raised-button> >></button>
+                <hr/>
+                <button style="margin: 3px;" mat-raised-button> <</button>
+                <button style="margin: 3px;" mat-raised-button> <<</button>
+
+              </div>
+            </div>
+            <div fxFlex="44%" class="example-container">
+              <h3>Áp dụng với chi nhánh</h3>
+              <hr/>
+              <div style="margin: 12px;">
+                <input matInput placeholder="Search">
+              </div>
+              <div
+                cdkDropList
+                [cdkDropListData]="officeIds"
+                class="example-list"
+                (cdkDropListDropped)="drop($event)">
+                <div class="example-box" *ngFor="let item of officeIds" cdkDrag>{{item}}</div>
+              </div>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-tab>
+      <mat-tab label="Máy POS">
+        <mat-card-content>
+          <div fxLayout="row wrap" [formGroup]="fromGroup" fxLayoutGap="2%" cdkDropListGroup>
+            <div fxFlex="44%" class="example-container">
+              <h3>Máy POS</h3>
+              <hr/>
+              <div style="margin: 12px;">
+                <input matInput placeholder="Search">
+              </div>
+              <div
+                cdkDropList
+                [cdkDropListData]="offices"
+                class="example-list"
+                cdkDropListSortingDisabled
+                (cdkDropListDropped)="drop($event)">
+                <div class="example-box" *ngFor="let item of offices" cdkDrag>{{item}}</div>
+              </div>
+            </div>
+            <div fxFlex="5%" style="display: flex;">
+              <div fxLayout="column" style="display: flex; margin-top: auto; margin-bottom: auto;">
+                <button style="margin: 3px;" mat-raised-button> ></button>
+                <button style="margin: 3px;" mat-raised-button> >></button>
+                <hr/>
+                <button style="margin: 3px;" mat-raised-button> <</button>
+                <button style="margin: 3px;" mat-raised-button> <<</button>
+              </div>
+            </div>
+            <div fxFlex="44%" class="example-container">
+              <h3>Áp dụng với máy POST</h3>
+              <hr/>
+              <div style="margin: 12px;">
+                <input matInput placeholder="Search">
+              </div>
+              <div
+                cdkDropList
+                [cdkDropListData]="officeIds"
+                class="example-list"
+                (cdkDropListDropped)="drop($event)">
+                <div class="example-box" *ngFor="let item of officeIds" cdkDrag>{{item}}</div>
+              </div>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-tab>
+    </mat-tab-group>
+  </mat-card>
+  <mat-card-actions align="center">
+    <button mat-raised-button>
+      Hủy
+    </button>
+    <button mat-raised-button color="primary">
+      Tạo chiến dịch
+    </button>
+  </mat-card-actions>
+</mat-card>
