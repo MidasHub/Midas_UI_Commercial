@@ -26,7 +26,7 @@ const routes: Routes = [
       },
       {
         path: 'create',
-        component: CreateBookingMarketingComponent,
+        component: CreateUpdateMarketingComponent,
         data: {title: 'Tạo chiển dịch', breadcrumb: 'Tạo chiển dịch'}
       },
       {
