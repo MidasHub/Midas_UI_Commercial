@@ -5,7 +5,6 @@ import {Routes, RouterModule} from '@angular/router';
 /** Transalation Imports */
 import {extract} from '../core/i18n/i18n.service';
 import {ManagementComponent} from './management/management.component';
-import {CreateUpdateMarketingComponent} from './create-update-marketing/create-update-marketing.component';
 import {MarketingViewResolver} from './marketing-view.resolver';
 import {Route} from '../core/route/route.service';
 import {ViewBookingMarketingComponent} from './view-booking-marketing/view-booking-marketing.component';
@@ -26,16 +25,8 @@ const routes: Routes = [
       },
       {
         path: 'create',
-        component: CreateUpdateMarketingComponent,
+        component: CreateBookingMarketingComponent,
         data: {title: 'Tạo chiển dịch', breadcrumb: 'Tạo chiển dịch'}
-      },
-      {
-        path: 'view/:id',
-        component: CreateUpdateMarketingComponent,
-        data: {title: 'Tạo chiển dịch', breadcrumb: 'Tạo chiển dịch', routeParamBreadcrumb: 'id'},
-        resolve: {
-          id: MarketingViewResolver
-        }
       },
       {
         path: 'booking',
