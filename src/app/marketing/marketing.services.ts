@@ -80,4 +80,15 @@ export class MarketingServices {
 
     return this.http.post<any>(`${this.GatewayApiUrlPrefix}/campaign/inactive_booking_campain`, httpParams);
   }
+
+  addPosCampain(payload: any) {
+    let httpParams = new HttpParams()
+      .set('createdBy', this.accessToken.userId)
+      .set('accessToken', this.accessToken.base64EncodedAuthenticationKey);
+    for (const key of Object.keys(payload)) {
+      httpParams = httpParams.set(key, payload[key]);
+    }
+    return this.http.post<any>(`${this.GatewayApiUrlPrefix}/campaign/add_pos_campain`, httpParams);
+
+  }
 }
