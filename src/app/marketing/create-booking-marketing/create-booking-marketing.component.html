@@ -118,16 +118,31 @@
                 class="example-list"
                 cdkDropListSortingDisabled
                 (cdkDropListDropped)="drop($event)">
-                <div class="example-box" *ngFor="let item of offices" cdkDrag>{{item}}</div>
+                <div
+                  (click)="setOfficeSelect(item,'left')"
+                  [class.selected_box]="item===office_selected_left"
+                  class="example-box" *ngFor="let item of offices" cdkDrag>{{item}}</div>
               </div>
             </div>
             <div fxFlex="5%" style="display: flex;">
               <div fxLayout="column" style="display: flex; margin-top: auto; margin-bottom: auto;">
-                <button style="margin: 3px;" mat-raised-button> ></button>
-                <button style="margin: 3px;" mat-raised-button> >></button>
+                <button
+                  (click)="changeOffices('b','left')"
+                  style="margin: 3px;" mat-raised-button> >
+                </button>
+                <button
+                  (click)="changeOffices('all','left')"
+                  style="margin: 3px;" mat-raised-button> >>
+                </button>
                 <hr/>
-                <button style="margin: 3px;" mat-raised-button> <</button>
-                <button style="margin: 3px;" mat-raised-button> <<</button>
+                <button
+                  (click)="changeOffices('b','right')"
+                  style="margin: 3px;" mat-raised-button> <
+                </button>
+                <button
+                  (click)="changeOffices('all','right')"
+                  style="margin: 3px;" mat-raised-button> <<
+                </button>
 
               </div>
             </div>
@@ -142,7 +157,10 @@
                 [cdkDropListData]="officeIds"
                 class="example-list"
                 (cdkDropListDropped)="drop($event)">
-                <div class="example-box" *ngFor="let item of officeIds" cdkDrag>{{item}}</div>
+                <div class="example-box"
+                     (click)="setOfficeSelect(item,'right')"
+                      [class.selected_box]="item===office_selected_right"
+                     *ngFor="let item of officeIds" cdkDrag>{{item}}</div>
               </div>
             </div>
           </div>

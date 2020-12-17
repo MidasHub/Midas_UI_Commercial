@@ -18,6 +18,10 @@ export class CreateBookingMarketingComponent implements OnInit {
   maxDate = new Date();
   displayedCardColumns = ['cardType', 'costRate', 'cogsRate', 'minRate'];
   cards: any[] = [];
+  office_selected_right: any;
+  office_selected_left: any;
+  pos_selected_right: any;
+  pos_selected_left: any;
   offices = [
     'Carrots',
     'Tomatoes',
@@ -71,4 +75,35 @@ export class CreateBookingMarketingComponent implements OnInit {
     return this.fromGroup.get('fromDate').value ? this.fromGroup.get('fromDate').value : new Date().toDateString();
   }
 
+  changeOffices(type: any, b: any) {
+    if (type === 'all') {
+      if (b === 'left') {
+        this.officeIds = [...this.officeIds, ...this.offices];
+        this.offices = [];
+      } else {
+        this.offices = [...this.offices, ...this.officeIds];
+        this.officeIds = [];
+      }
+    } else {
+      if (b === 'left' && this.office_selected_left) {
+        this.officeIds = [...this.officeIds, this.office_selected_left];
+        this.offices = this.offices.filter(v => v !== this.office_selected_left);
+        this.office_selected_left = null;
+      } else {
+        this.offices = [...this.offices, this.office_selected_right];
+        this.officeIds = this.officeIds.filter(v => v !== this.office_selected_right);
+        this.office_selected_right = null;
+      }
+    }
+  }
+
+  setOfficeSelect(item: any, b: string) {
+    if (b === 'left') {
+      this.office_selected_left = item;
+      this.office_selected_right = null;
+    } else {
+      this.office_selected_left = null;
+      this.office_selected_right = item;
+    }
+  }
 }
