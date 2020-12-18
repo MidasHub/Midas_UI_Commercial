@@ -65,11 +65,13 @@
         <table mat-table [dataSource]="cards" matSort
                multiTemplateDataRows>
           <!-- Name Column -->
-          <ng-container matColumnDef="cardType">
+          <ng-container matColumnDef="description">
             <th mat-header-cell *matHeaderCellDef
             >Thẻ
             </th>
-            <td mat-cell *matCellDef="let row"> {{row.cardType}} </td>
+            <td mat-cell *matCellDef="let row" [formGroup]="row">
+              {{row.get('description').value}}
+            </td>
           </ng-container>
 
           <!-- Account no Column -->
@@ -77,7 +79,9 @@
             <th mat-header-cell *matHeaderCellDef
             > Phí POS
             </th>
-            <td mat-cell fxHide fxShow.gt-md *matCellDef="let row"> {{row.costRate}} </td>
+            <td mat-cell *matCellDef="let row" [formGroup]="row">
+              <input matInput class="input-card" formControlName="costRate">
+            </td>
           </ng-container>
 
           <!-- External ID Column -->
@@ -85,13 +89,17 @@
             <th mat-header-cell d *matHeaderCellDef
             > Phí Vốn
             </th>
-            <td mat-cell fxHide fxShow.gt-md *matCellDef="let row"> {{row.cogsRate}} </td>
+            <td mat-cell *matCellDef="let row" [formGroup]="row">
+              <input matInput class="input-card"  formControlName="cogsRate">
+            </td>
           </ng-container>
-          <ng-container matColumnDef="minRate">
+          <ng-container matColumnDef="rate">
             <th mat-header-cell *matHeaderCellDef
             >Phí GD
             </th>
-            <td mat-cell fxHide fxShow.gt-md *matCellDef="let row"> {{row.minRate}} </td>
+            <td mat-cell *matCellDef="let row" [formGroup]="row">
+              <input matInput class="input-card"  formControlName="rate">
+            </td>
           </ng-container>
           <tr mat-header-row *matHeaderRowDef="displayedCardColumns"></tr>
           <tr mat-row *matRowDef="let element; columns: displayedCardColumns;"
@@ -118,16 +126,34 @@
                 class="example-list"
                 cdkDropListSortingDisabled
                 (cdkDropListDropped)="drop($event)">
-                <div class="example-box" *ngFor="let item of offices" cdkDrag>{{item}}</div>
+                <div
+                  style="padding: 10px; margin: 4px; border-color: #666f73;
+                     border-width: 1px;
+                      border-radius: 10px;"
+                  (click)="setOfficeSelect(item,'left')"
+                  [class.selected_box]="item===office_selected_left"
+                  class="example-box" *ngFor="let item of offices" cdkDrag>{{item.name}}</div>
               </div>
             </div>
             <div fxFlex="5%" style="display: flex;">
               <div fxLayout="column" style="display: flex; margin-top: auto; margin-bottom: auto;">
-                <button style="margin: 3px;" mat-raised-button> ></button>
-                <button style="margin: 3px;" mat-raised-button> >></button>
+                <button
+                  (click)="changeOffices('b','left')"
+                  style="margin: 3px;" mat-raised-button> >
+                </button>
+                <button
+                  (click)="changeOffices('all','left')"
+                  style="margin: 3px;" mat-raised-button> >>
+                </button>
                 <hr/>
-                <button style="margin: 3px;" mat-raised-button> <</button>
-                <button style="margin: 3px;" mat-raised-button> <<</button>
+                <button
+                  (click)="changeOffices('b','right')"
+                  style="margin: 3px;" mat-raised-button> <
+                </button>
+                <button
+                  (click)="changeOffices('all','right')"
+                  style="margin: 3px;" mat-raised-button> <<
+                </button>
 
               </div>
             </div>
@@ -142,7 +168,11 @@
                 [cdkDropListData]="officeIds"
                 class="example-list"
                 (cdkDropListDropped)="drop($event)">
-                <div class="example-box" *ngFor="let item of officeIds" cdkDrag>{{item}}</div>
+                <div class="example-box"
+                     style="padding: 10px; margin: 4px; border-color: #666f73; border-width: 1px; border-radius: 10px;"
+                     (click)="setOfficeSelect(item,'right')"
+                     [class.selected_box]="item===office_selected_right"
+                     *ngFor="let item of officeIds" cdkDrag>{{item.name}}</div>
               </div>
             </div>
           </div>
@@ -158,21 +188,35 @@
                 <input matInput placeholder="Search">
               </div>
               <div
-                cdkDropList
-                [cdkDropListData]="offices"
-                class="example-list"
-                cdkDropListSortingDisabled
-                (cdkDropListDropped)="drop($event)">
-                <div class="example-box" *ngFor="let item of offices" cdkDrag>{{item}}</div>
+                style=" height: 60vh;
+                          overflow: auto;">
+                <div class="example-box" *ngFor="let item of poses"
+                     [class.selected_box]="pos_selected_left===item"
+                     (click)="setPosSelect(item,'left')"
+                     style="padding: 10px; margin: 4px; border-color: #666f73; border-width: 1px; border-radius: 10px;"
+                     cdkDrag>{{item.terminalName}}</div>
               </div>
             </div>
             <div fxFlex="5%" style="display: flex;">
               <div fxLayout="column" style="display: flex; margin-top: auto; margin-bottom: auto;">
-                <button style="margin: 3px;" mat-raised-button> ></button>
-                <button style="margin: 3px;" mat-raised-button> >></button>
+                <button
+                  (click)="changePoses('b','left')"
+                  style="margin: 3px;" mat-raised-button> >
+                </button>
+                <button
+                  (click)="changePoses('all','left')"
+                  style="margin: 3px;" mat-raised-button> >>
+                </button>
                 <hr/>
-                <button style="margin: 3px;" mat-raised-button> <</button>
-                <button style="margin: 3px;" mat-raised-button> <<</button>
+                <button
+                  (click)="changePoses('b','right')"
+                  style="margin: 3px;" mat-raised-button> <
+                </button>
+                <button
+                  (click)="changePoses('all','right')"
+                  style="margin: 3px;" mat-raised-button> <<
+                </button>
+
               </div>
             </div>
             <div fxFlex="44%" class="example-container">
@@ -182,11 +226,13 @@
                 <input matInput placeholder="Search">
               </div>
               <div
-                cdkDropList
-                [cdkDropListData]="officeIds"
-                class="example-list"
-                (cdkDropListDropped)="drop($event)">
-                <div class="example-box" *ngFor="let item of officeIds" cdkDrag>{{item}}</div>
+                style="   height: 60vh;
+                          overflow: auto;">
+                <div class="example-box"
+                     [class.selected_box]="pos_selected_right===item"
+                     (click)="setPosSelect(item,'right')"
+                     style="padding: 10px; margin: 4px; border-color: #666f73; border-width: 1px; border-radius: 10px;"
+                     *ngFor="let item of terminalId" cdkDrag>{{item.terminalName}}</div>
               </div>
             </div>
           </div>
@@ -198,7 +244,9 @@
     <button mat-raised-button>
       Hủy
     </button>
-    <button mat-raised-button color="primary">
+    <button mat-raised-button
+            (click)="onSubmit()"
+            color="primary">
       Tạo chiến dịch
     </button>
   </mat-card-actions>
