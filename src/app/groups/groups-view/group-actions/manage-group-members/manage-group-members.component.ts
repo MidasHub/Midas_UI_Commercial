@@ -105,4 +105,13 @@ export class ManageGroupMembersComponent implements AfterViewInit {
     return client ? client.displayName : undefined;
   }
 
+
+  /**
+   * This is customer function to show some customer infor and a view detial button.
+   * @param {any} client Client data.
+   * @returns {string} Client name if valid otherwise undefined.
+   */
+  showClientDetail(client: any): void {
+    return alert("Nhờ anh em tạo dialog box show thông tin khách hàng " + JSON.stringify(client) + " giúp anh nhé ! (Jean) ");
+  }
 }
