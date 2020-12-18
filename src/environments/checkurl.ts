@@ -15,7 +15,7 @@ if (subdomain === 'staging-hn') {
 }
 
 if (subdomain === 'hanoi') {
-  tenant = 'hanoi'
+  tenant = 'hanoigolive'
   billpostenant = 'hanoi'
   defaultbaseURL = 'https://app2.midascore.net:8443'
   defaultbillposURL= 'https://app1.midascore.net:8088'
