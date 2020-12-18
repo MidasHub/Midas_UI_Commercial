@@ -211,14 +211,14 @@ export class CreateBookingMarketingComponent implements OnInit {
     const officeId = of.toString().split(',').join('-');
     console.log({
       ...fromGroupV,
-      listRateCardType,
+      listRateCardType: JSON.stringify(listRateCardType),
       terminalId,
       officeId
     });
     if (this.campaign) {
       this.marketingServices.UpdateCampain({
         ...fromGroupV,
-        listRateCardType,
+        listRateCardType: JSON.stringify(listRateCardType),
         terminalId,
         officeId
       }).subscribe(result => {
@@ -232,7 +232,7 @@ export class CreateBookingMarketingComponent implements OnInit {
     } else {
       this.marketingServices.addPosCampain({
         ...fromGroupV,
-        listRateCardType,
+        listRateCardType: JSON.stringify(listRateCardType),
         terminalId,
         officeId
       }).subscribe(result => {
