@@ -5,20 +5,21 @@ import {NgModule} from '@angular/core';
 import {SharedModule} from '../shared/shared.module';
 import {MarketingRoutingModule} from './marketing-routing.module';
 import {ManagementComponent} from './management/management.component';
-import {CreateUpdateMarketingComponent} from './create-update-marketing/create-update-marketing.component';
 import {MarketingViewResolver} from './marketing-view.resolver';
 import { ViewBookingMarketingComponent } from './view-booking-marketing/view-booking-marketing.component';
 import { CreateBookingMarketingComponent } from './create-booking-marketing/create-booking-marketing.component';
 import { CreateTransactionBookingComponent } from './dialog/create-transaction-booking/create-transaction-booking.component';
+import { OwlDateTimeModule, OwlNativeDateTimeModule } from '@busacca/ng-pick-datetime';
 
 @NgModule({
   imports: [
     SharedModule,
-    MarketingRoutingModule
+    MarketingRoutingModule,
+    OwlDateTimeModule,
+    OwlNativeDateTimeModule
   ],
   declarations: [
     ManagementComponent,
-    CreateUpdateMarketingComponent,
     ViewBookingMarketingComponent,
     CreateBookingMarketingComponent,
     CreateTransactionBookingComponent,

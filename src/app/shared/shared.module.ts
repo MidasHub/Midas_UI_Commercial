@@ -79,7 +79,7 @@ const customCurrencyMaskConfig = {
     NgxMaskModule.forRoot(maskConfig),
     NgxCurrencyModule.forRoot(customCurrencyMaskConfig),
     DirectivesModule,
-    PipesModule,
+    PipesModule
   ],
   declarations: [
     FormfieldComponent,
@@ -126,7 +126,7 @@ const customCurrencyMaskConfig = {
     NgxMaskModule,
     NgxCurrencyModule,
     DirectivesModule,
-    PipesModule,
+    PipesModule
   ]
 })
 export class SharedModule {
