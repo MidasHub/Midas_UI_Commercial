@@ -6,7 +6,8 @@ import {MoneyPipe} from '../../pipes/money.pipe';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {CdkDragDrop, moveItemInArray, transferArrayItem} from '@angular/cdk/drag-drop';
 import {ClientsService} from '../../clients/clients.service';
-import {Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
+import * as moment from 'moment';
 
 @Component({
   selector: 'midas-create-booking-marketing',
@@ -26,7 +27,7 @@ export class CreateBookingMarketingComponent implements OnInit {
   pos_selected_left: any;
   poses: any[] = [];
   offices: any[] = [];
-
+  campaign: any;
   officeIds: any[] = [];
   terminalId: any[] = [];
   filterOffice = '';
@@ -49,7 +50,8 @@ export class CreateBookingMarketingComponent implements OnInit {
               private money: MoneyPipe,
               private formBuilder: FormBuilder,
               private clientsServices: ClientsService,
-              private router: Router) {
+              private router: Router,
+              private route: ActivatedRoute) {
   }
 
   ngOnInit(): void {
@@ -62,19 +64,62 @@ export class CreateBookingMarketingComponent implements OnInit {
       'budget': [''],
       'cashRule': ['']
     });
+    this.route.data.subscribe(({id}: any) => {
+      if (id) {
+        this.marketingServices.getCampaign().subscribe(result => {
+          this.campaign = result?.result.listPosCampaignLimit?.find((v: any) => v.campaign.refid === Number(id));
+          this.getCards();
+          console.log(this.campaign);
+
+          if (this.campaign) {
+            if (this.campaign.listPosSelected) {
+
+            }
+            if (this.campaign.listOfficeDtos) {
+
+            }
+            console.log(moment(this.campaign.campaign.fromDate).format('DD/MM/YYYY, hh:mm A'));
+            this.fromGroup.get('PosCampaignName').setValue(this.campaign.campaign.campainName);
+            this.fromGroup.get('fromDate').setValue(moment(this.campaign.campaign.fromDate).toDate());
+            this.fromGroup.get('notifyDate').setValue(moment(this.campaign.campaign.timeNotify).toDate());
+            this.fromGroup.get('toDate').setValue(moment(this.campaign.campaign.toDate).toDate());
+            this.fromGroup.get('secondRemain').setValue(this.campaign.campaign.secondRemain);
+            this.fromGroup.get('budget').setValue(this.campaign.campaign.budget);
+            this.fromGroup.get('cashRule').setValue(this.campaign.campaign.cashRule);
+
+          }
+          console.log(this.campaign);
+        });
+      } else {
+        this.getCards();
+      }
+    });
+    this.clientsServices.getOffices().subscribe(resuts => {
+      this.offices = resuts;
+    });
+  }
+
+  getCards() {
     this.marketingServices.getCampaignTemplate().subscribe(result => {
       this.cards = result?.result?.listCardType?.map((card: any) => {
+        let default_v = {};
+        if (this.campaign) {
+          default_v = this.campaign.listPosRateCampainEntities.find((j: any) => j.cardType === card.code);
+          default_v['select'] = true;
+          default_v['rate'] = default_v['minRate'];
+        }
         const data = {
           ...card,
           costRate: '',
           cogsRate: '',
           rate: '',
-          select: false
+          select: false,
+          ...default_v
         };
         const keys = Object.keys(data);
         const formData = {};
         for (const key of keys) {
-          formData[key] = [card[key]];
+          formData[key] = [data[key]];
         }
         const form = this.formBuilder.group(formData);
         form.valueChanges.subscribe(va => {
@@ -85,9 +130,6 @@ export class CreateBookingMarketingComponent implements OnInit {
         return form;
       });
       this.poses = result?.result?.listPos;
-    });
-    this.clientsServices.getOffices().subscribe(resuts => {
-      this.offices = resuts;
     });
   }
 
@@ -173,18 +215,35 @@ export class CreateBookingMarketingComponent implements OnInit {
       terminalId,
       officeId
     });
-    this.marketingServices.addPosCampain({
-      ...fromGroupV,
-      listRateCardType,
-      terminalId,
-      officeId
-    }).subscribe(result => {
-      console.log(result);
-      if (result.status !== '200') {
-        return this.alterService.alert({message: result.error, msgClass: 'cssWarning'});
-      }
-      this.alterService.alert({message: 'Tạo chiến dịch thành công!', msgClass: 'cssSuccess'});
-      return  this.router.navigate(['/marketing']);
-    });
+    if (this.campaign) {
+      this.marketingServices.UpdateCampain({
+        ...fromGroupV,
+        listRateCardType,
+        terminalId,
+        officeId
+      }).subscribe(result => {
+        console.log(result);
+        if (result.status !== '200') {
+          return this.alterService.alert({message: result.error, msgClass: 'cssWarning'});
+        }
+        this.alterService.alert({message: 'Cập nhập chiến dịch thành công!', msgClass: 'cssSuccess'});
+        return this.router.navigate(['/marketing']);
+      });
+    } else {
+      this.marketingServices.addPosCampain({
+        ...fromGroupV,
+        listRateCardType,
+        terminalId,
+        officeId
+      }).subscribe(result => {
+        console.log(result);
+        if (result.status !== '200') {
+          return this.alterService.alert({message: result.error, msgClass: 'cssWarning'});
+        }
+        this.alterService.alert({message: 'Tạo chiến dịch thành công!', msgClass: 'cssSuccess'});
+        return this.router.navigate(['/marketing']);
+      });
+    }
   }
+
 }

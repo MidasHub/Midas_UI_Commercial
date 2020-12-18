@@ -94,6 +94,9 @@
             </div>
           </div>
         </div>
+        <button mat-raised-button *ngIf="campaign" style="float: right;"
+                [routerLink]="['/marketing/booking',campaign.campaign.refid]">Edit
+        </button>
       </div>
       <div fxFlex="75%">
         <table mat-table [dataSource]="cards" matSort

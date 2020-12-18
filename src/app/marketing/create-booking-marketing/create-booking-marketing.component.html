@@ -43,7 +43,7 @@
         </mat-form-field>
         <div fxLayout="column">
           <label class="example-margin">Chính sách tiền:</label>
-          <mat-radio-group formControlName="cashRule" [(ngModel)]="labelPosition">
+          <mat-radio-group formControlName="cashRule">
             <mat-radio-button class="example-margin" value="1">
               <div fxLayout="row" style="margin: 8px;">
                 <img src="assets/images/icons/delay.svg" height="22" width="22">
@@ -59,6 +59,11 @@
               </div>
             </mat-radio-button>
           </mat-radio-group>
+          <mat-form-field *ngIf="fromGroup.get('cashRule').value !== '-1'">
+            <div fxLayout="row" style="margin: 8px;">
+              <input formControlName="cashRule" matInput>
+            </div>
+          </mat-form-field>
         </div>
       </div>
       <div fxFlex="65%">
@@ -90,7 +95,7 @@
             > Phí Vốn
             </th>
             <td mat-cell *matCellDef="let row" [formGroup]="row">
-              <input matInput class="input-card"  formControlName="cogsRate">
+              <input matInput class="input-card" formControlName="cogsRate">
             </td>
           </ng-container>
           <ng-container matColumnDef="rate">
@@ -98,7 +103,7 @@
             >Phí GD
             </th>
             <td mat-cell *matCellDef="let row" [formGroup]="row">
-              <input matInput class="input-card"  formControlName="rate">
+              <input matInput class="input-card" formControlName="rate">
             </td>
           </ng-container>
           <tr mat-header-row *matHeaderRowDef="displayedCardColumns"></tr>
@@ -247,7 +252,8 @@
     <button mat-raised-button
             (click)="onSubmit()"
             color="primary">
-      Tạo chiến dịch
+      <span *ngIf="!campaign">Tạo chiến dịch</span>
+      <span *ngIf="campaign">Cập nhập chiến dịch</span>
     </button>
   </mat-card-actions>
 </mat-card>
