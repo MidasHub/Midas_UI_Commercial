@@ -19,7 +19,7 @@ export class CreateBookingMarketingComponent implements OnInit {
   minDate = new Date(2000, 0, 1);
   /** Maximum closing date allowed. */
   maxDate = new Date();
-  displayedCardColumns = ['description', 'costRate', 'cogsRate', 'rate'];
+  displayedCardColumns = ['description', 'costRate', 'cogsRate', 'rate', 'select'];
   cards: any[] = [];
   office_selected_right: any;
   office_selected_left: any;
@@ -68,7 +68,6 @@ export class CreateBookingMarketingComponent implements OnInit {
       if (id) {
         this.marketingServices.getCampaign().subscribe(result => {
           this.campaign = result?.result.listPosCampaignLimit?.find((v: any) => v.campaign.refid === Number(id));
-          this.getCards();
           console.log(this.campaign);
 
           if (this.campaign) {
@@ -83,12 +82,11 @@ export class CreateBookingMarketingComponent implements OnInit {
             this.fromGroup.get('fromDate').setValue(moment(this.campaign.campaign.fromDate).toDate());
             this.fromGroup.get('notifyDate').setValue(moment(this.campaign.campaign.timeNotify).toDate());
             this.fromGroup.get('toDate').setValue(moment(this.campaign.campaign.toDate).toDate());
-            this.fromGroup.get('secondRemain').setValue(this.campaign.campaign.secondRemain);
+            this.fromGroup.get('secondRemain').setValue(this.campaign.campaign.secondRemain / 60);
             this.fromGroup.get('budget').setValue(this.campaign.campaign.budget);
             this.fromGroup.get('cashRule').setValue(this.campaign.campaign.cashRule);
-
+            this.getCards();
           }
-          console.log(this.campaign);
         });
       } else {
         this.getCards();
@@ -105,9 +103,15 @@ export class CreateBookingMarketingComponent implements OnInit {
         let default_v = {};
         if (this.campaign) {
           default_v = this.campaign.listPosRateCampainEntities.find((j: any) => j.cardType === card.code);
-          default_v['select'] = true;
-          default_v['rate'] = default_v['minRate'];
+          if (default_v) {
+            default_v['select'] = true;
+            default_v['rate'] = default_v['minRate'];
+          } else {
+            default_v = {};
+          }
+
         }
+        console.log(this.campaign);
         const data = {
           ...card,
           costRate: '',
@@ -122,11 +126,13 @@ export class CreateBookingMarketingComponent implements OnInit {
           formData[key] = [data[key]];
         }
         const form = this.formBuilder.group(formData);
-        form.valueChanges.subscribe(va => {
-          if (!va.select) {
-            form.get('select').setValue(true);
-          }
-        });
+        // form.valueChanges.subscribe(va => {
+        //   for (const key of keys) {
+        //     if (key !== 'select' && !form.get('select').value && va[key]) {
+        //       form.get('select').setValue(true);
+        //     }
+        //   }
+        // });
         return form;
       });
       this.poses = result?.result?.listPos;
@@ -152,9 +158,11 @@ export class CreateBookingMarketingComponent implements OnInit {
         this.offices = this.offices.filter(v => v !== this.office_selected_left);
         this.office_selected_left = null;
       } else {
-        this.offices = [...this.offices, this.office_selected_right];
-        this.officeIds = this.officeIds.filter(v => v !== this.office_selected_right);
-        this.office_selected_right = null;
+        if (this.office_selected_right) {
+          this.offices = [...this.offices, this.office_selected_right];
+          this.officeIds = this.officeIds.filter(v => v !== this.office_selected_right);
+          this.office_selected_right = null;
+        }
       }
     }
   }
@@ -184,9 +192,11 @@ export class CreateBookingMarketingComponent implements OnInit {
         this.poses = this.poses.filter(v => v !== this.pos_selected_left);
         this.pos_selected_left = null;
       } else {
-        this.poses = [...this.poses, this.pos_selected_right];
-        this.terminalId = this.terminalId.filter(v => v !== this.pos_selected_right);
-        this.pos_selected_right = null;
+        if (this.pos_selected_right) {
+          this.poses = [...this.poses, this.pos_selected_right];
+          this.terminalId = this.terminalId.filter(v => v !== this.pos_selected_right);
+          this.pos_selected_right = null;
+        }
       }
     }
   }
@@ -202,7 +212,15 @@ export class CreateBookingMarketingComponent implements OnInit {
   }
 
   onSubmit() {
+    if (this.fromGroup.invalid) {
+      return this.fromGroup.markAllAsTouched();
+    }
     const fromGroupV = this.fromGroup.value;
+    for (const card of this.cards) {
+      if (card.invalid) {
+        return card.markAllAsTouched();
+      }
+    }
     const listRateCardType = this.cards.filter((v: any) => v.get('select').value).map(value => value.value);
     //    const re = refids.toString().split(',').join( '-');
     const te = this.terminalId.map(i => i.terminalId);
@@ -211,18 +229,19 @@ export class CreateBookingMarketingComponent implements OnInit {
     const officeId = of.toString().split(',').join('-');
     console.log({
       ...fromGroupV,
-      listRateCardType: JSON.stringify(listRateCardType),
+      listRateCardType: listRateCardType.length === 0 ? '' : JSON.stringify(listRateCardType),
       terminalId,
-      officeId
+      officeId,
+      secondRemain: fromGroupV.secondRemain * 60
     });
     if (this.campaign) {
       this.marketingServices.UpdateCampain({
         ...fromGroupV,
-        listRateCardType: JSON.stringify(listRateCardType),
+        listRateCardType: listRateCardType.length === 0 ? '' : JSON.stringify(listRateCardType),
         terminalId,
-        officeId
+        officeId,
+        secondRemain: fromGroupV.secondRemain * 60
       }).subscribe(result => {
-        console.log(result);
         if (result.status !== '200') {
           return this.alterService.alert({message: result.error, msgClass: 'cssWarning'});
         }
