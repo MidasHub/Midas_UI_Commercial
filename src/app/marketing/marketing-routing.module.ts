@@ -19,11 +19,6 @@ const routes: Routes = [
     data: {title: extract('MARKETING CAMPAIGN')},
     children: [
       {
-        path: '',
-        component: ManagementComponent,
-        data: {title: 'Quản lý marketing', breadcrumb: 'Quản lý marketing'}
-      },
-      {
         path: 'create',
         component: CreateBookingMarketingComponent,
         data: {title: 'Tạo chiển dịch', breadcrumb: 'Tạo chiển dịch'}

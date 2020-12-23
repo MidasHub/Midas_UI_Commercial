@@ -1,34 +1,35 @@
 <mat-card class="container" [formGroup]="fromGroup">
   <mat-form-field style="width: 90%;">
     <mat-label>Tên chiến dịch</mat-label>
-    <input matInput formControlName="PosCampaignName">
+    <input matInput required formControlName="PosCampaignName">
   </mat-form-field>
   <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
 
     <mat-form-field fxFlex="23%">
       <mat-label>Thời gian thông báo</mat-label>
-      <input matInput formControlName="notifyDate" [owlDateTime]="dt2" [owlDateTimeTrigger]="dt2"
+      <input matInput required formControlName="notifyDate" [owlDateTime]="dt2" [owlDateTimeTrigger]="dt2"
              placeholder="Thời gian thông báo">
       <mat-icon matSuffix><img src="assets/images/icons/warning.svg" height="22" width="22"></mat-icon>
       <owl-date-time #dt2></owl-date-time>
     </mat-form-field>
     <mat-form-field fxFlex="23%">
       <mat-label>Thời gian bắt đầu</mat-label>
-      <input matInput formControlName="fromDate" [owlDateTime]="dt0" [owlDateTimeTrigger]="dt0"
+      <input matInput required formControlName="fromDate" [owlDateTime]="dt0" [owlDateTimeTrigger]="dt0"
              placeholder="Thời gian bắt đầu">
       <mat-icon matSuffix><img src="assets/images/icons/start.svg" height="22" width="22"></mat-icon>
       <owl-date-time #dt0></owl-date-time>
     </mat-form-field>
     <mat-form-field fxFlex="23%">
       <mat-label>Thời gian kết thúc</mat-label>
-      <input matInput formControlName="toDate" [owlDateTime]="dt1" [min]="minDateTo()" [owlDateTimeTrigger]="dt1"
+      <input matInput required formControlName="toDate" [owlDateTime]="dt1" [min]="minDateTo()"
+             [owlDateTimeTrigger]="dt1"
              placeholder="Thời gian kết thúc">
       <mat-icon matSuffix><img src="assets/images/icons/end.svg" height="22" width="22"></mat-icon>
       <owl-date-time #dt1></owl-date-time>
     </mat-form-field>
     <mat-form-field fxFlex="23%">
       <mat-label>Thời gian booking</mat-label>
-      <input matInput formControlName="secondRemain">
+      <input matInput type="number" required formControlName="secondRemain">
       <mat-icon matSuffix><img src="assets/images/icons/end.svg" height="22" width="22"></mat-icon>
     </mat-form-field>
   </div>
@@ -38,12 +39,12 @@
         <mat-form-field>
           <div fxLayout="row" style="margin: 8px;">
             <img src="assets/images/icons/money-deposit.svg" width="22" height="22">
-            <input formControlName="budget" matInput formControlName="budget" currencyMask>
+            <input formControlName="budget" required matInput formControlName="budget" currencyMask>
           </div>
         </mat-form-field>
         <div fxLayout="column">
           <label class="example-margin">Chính sách tiền:</label>
-          <mat-radio-group formControlName="cashRule" [(ngModel)]="labelPosition">
+          <mat-radio-group formControlName="cashRule">
             <mat-radio-button class="example-margin" value="1">
               <div fxLayout="row" style="margin: 8px;">
                 <img src="assets/images/icons/delay.svg" height="22" width="22">
@@ -59,6 +60,12 @@
               </div>
             </mat-radio-button>
           </mat-radio-group>
+          <mat-form-field *ngIf="fromGroup.get('cashRule').value !== '-1'">
+            <div fxLayout="row" style="margin: 8px;">
+              <input type="number" [required]="fromGroup.get('cashRule').value !== '-1'" formControlName="cashRule"
+                     matInput>
+            </div>
+          </mat-form-field>
         </div>
       </div>
       <div fxFlex="65%">
@@ -80,7 +87,9 @@
             > Phí POS
             </th>
             <td mat-cell *matCellDef="let row" [formGroup]="row">
-              <input matInput class="input-card" formControlName="costRate">
+              <mat-form-field class="input-card">
+                <input type="number" matInput [required]="row.get('select').value" formControlName="costRate">
+              </mat-form-field>
             </td>
           </ng-container>
 
@@ -90,7 +99,9 @@
             > Phí Vốn
             </th>
             <td mat-cell *matCellDef="let row" [formGroup]="row">
-              <input matInput class="input-card"  formControlName="cogsRate">
+              <mat-form-field class="input-card">
+                <input type="number" [required]="row.get('select').value" matInput formControlName="cogsRate">
+              </mat-form-field>
             </td>
           </ng-container>
           <ng-container matColumnDef="rate">
@@ -98,7 +109,18 @@
             >Phí GD
             </th>
             <td mat-cell *matCellDef="let row" [formGroup]="row">
-              <input matInput class="input-card"  formControlName="rate">
+              <mat-form-field class="input-card">
+                <input type="number" matInput [required]="row.get('select').value" formControlName="rate">
+              </mat-form-field>
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="select" style="width: 50px;">
+            <th mat-header-cell *matHeaderCellDef
+            >Status
+            </th>
+            <td mat-cell *matCellDef="let row" [formGroup]="row">
+              <mat-checkbox formControlName="select" class="margin-v">
+              </mat-checkbox>
             </td>
           </ng-container>
           <tr mat-header-row *matHeaderRowDef="displayedCardColumns"></tr>
@@ -127,12 +149,10 @@
                 cdkDropListSortingDisabled
                 (cdkDropListDropped)="drop($event)">
                 <div
-                  style="padding: 10px; margin: 4px; border-color: #666f73;
-                     border-width: 1px;
-                      border-radius: 10px;"
+                  class="box"
                   (click)="setOfficeSelect(item,'left')"
                   [class.selected_box]="item===office_selected_left"
-                  class="example-box" *ngFor="let item of offices" cdkDrag>{{item.name}}</div>
+                  *ngFor="let item of offices" cdkDrag>{{item.name}}</div>
               </div>
             </div>
             <div fxFlex="5%" style="display: flex;">
@@ -168,8 +188,7 @@
                 [cdkDropListData]="officeIds"
                 class="example-list"
                 (cdkDropListDropped)="drop($event)">
-                <div class="example-box"
-                     style="padding: 10px; margin: 4px; border-color: #666f73; border-width: 1px; border-radius: 10px;"
+                <div class="box"
                      (click)="setOfficeSelect(item,'right')"
                      [class.selected_box]="item===office_selected_right"
                      *ngFor="let item of officeIds" cdkDrag>{{item.name}}</div>
@@ -190,11 +209,12 @@
               <div
                 style=" height: 60vh;
                           overflow: auto;">
-                <div class="example-box" *ngFor="let item of poses"
+                <div
+                     *ngFor="let item of poses"
                      [class.selected_box]="pos_selected_left===item"
                      (click)="setPosSelect(item,'left')"
-                     style="padding: 10px; margin: 4px; border-color: #666f73; border-width: 1px; border-radius: 10px;"
-                     cdkDrag>{{item.terminalName}}</div>
+                     class="box"
+                     cdkDrag>{{item?.terminalName}}</div>
               </div>
             </div>
             <div fxFlex="5%" style="display: flex;">
@@ -228,11 +248,11 @@
               <div
                 style="   height: 60vh;
                           overflow: auto;">
-                <div class="example-box"
+                <div class="box"
+                     *ngFor="let item of terminalId"
                      [class.selected_box]="pos_selected_right===item"
                      (click)="setPosSelect(item,'right')"
-                     style="padding: 10px; margin: 4px; border-color: #666f73; border-width: 1px; border-radius: 10px;"
-                     *ngFor="let item of terminalId" cdkDrag>{{item.terminalName}}</div>
+                     cdkDrag>{{item.terminalName}}</div>
               </div>
             </div>
           </div>
@@ -247,7 +267,8 @@
     <button mat-raised-button
             (click)="onSubmit()"
             color="primary">
-      Tạo chiến dịch
+      <span *ngIf="!campaign">Tạo chiến dịch</span>
+      <span *ngIf="campaign">Cập nhập chiến dịch</span>
     </button>
   </mat-card-actions>
 </mat-card>
