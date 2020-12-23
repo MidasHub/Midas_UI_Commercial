@@ -1,10 +1,10 @@
 
 console.log('subdomain',window.location.hostname.split(".")[0]);
 const subdomain = window.location.hostname.split(".")[0];
-let tenant= 'jean';
-let billpostenant = 'jean'
-let defaultbaseURL = 'https://staging.midascore.net'
-let defaultbillposURL ='https://staging.midascore.net'
+let tenant= 'default';
+let billpostenant = 'default'
+let defaultbaseURL =  'https://uat.tekcompay.com:8443'
+let defaultbillposURL = 'https://uat.tekcompay.com:8287'
 let apiProvider ='/midas/api'
 let apiVersion = '/v1'
 

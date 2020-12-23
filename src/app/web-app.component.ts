@@ -158,6 +158,7 @@ export class WebAppComponent implements OnInit {
       this.settingsService.setServers([
         'https://staging.midascore.net',
         'https://staging-app.midascore.net',
+        'https://uat.tekcompay.com:8443',
         'https://localhost:9443',
         'https://localhost:8443'
       ]);
@@ -166,7 +167,7 @@ export class WebAppComponent implements OnInit {
     if (!localStorage.getItem('midasBillposServers')) {
       this.settingsService.setBillposServers([
         'https://staging.midascore.net',
-
+        'https://uat.tekcompay.com:8287',
         'https://localhost:8287'
       ]);
     }
