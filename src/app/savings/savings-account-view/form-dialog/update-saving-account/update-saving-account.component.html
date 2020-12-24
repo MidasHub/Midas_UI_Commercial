@@ -3,39 +3,39 @@
 <div mat-dialog-content [formGroup]="form" [fxLayout]="'column'" fxLayout.lt-md="column" [fxLayoutGap]="'1%'"
      fxLayoutGap.lt-md="0%">
   <mat-form-field *ngIf="form.contains('paymentTypeId')" fxFlex="48%">
-    <mat-label>paymentTypeId</mat-label>
+    <mat-label>Loại</mat-label>
     <mat-select formControlName="paymentTypeId">
       <mat-option *ngFor="let type of templateData?.paymentTypeOptions" [value]="type.id">
         {{ type.name }}
       </mat-option>
     </mat-select>
   </mat-form-field>
-  <mat-form-field *ngIf="form.contains('accountNumber')" fxFlex="48%">
-    <mat-label>accountNumber</mat-label>
-    <input matInput formControlName="accountNumber">
-  </mat-form-field>
+<!--  <mat-form-field *ngIf="form.contains('accountNumber')" fxFlex="48%">-->
+<!--    <mat-label>Số tài khoản</mat-label>-->
+<!--    <input matInput formControlName="accountNumber">-->
+<!--  </mat-form-field>-->
 
 
-  <mat-form-field *ngIf="form.contains('checkNumber')" fxFlex="48%">
-    <mat-label>checkNumber</mat-label>
-    <input matInput formControlName="checkNumber">
-  </mat-form-field>
+<!--  <mat-form-field *ngIf="form.contains('checkNumber')" fxFlex="48%">-->
+<!--    <mat-label>Check Number</mat-label>-->
+<!--    <input matInput formControlName="checkNumber">-->
+<!--  </mat-form-field>-->
 
-  <mat-form-field *ngIf="form.contains('routingCode')" fxFlex="48%">
-    <mat-label>routingCode</mat-label>
-    <input matInput formControlName="routingCode">
-  </mat-form-field>
+<!--  <mat-form-field *ngIf="form.contains('routingCode')" fxFlex="48%">-->
+<!--    <mat-label>Routing Code</mat-label>-->
+<!--    <input matInput formControlName="routingCode">-->
+<!--  </mat-form-field>-->
 
-  <mat-form-field *ngIf="form.contains('receiptNumber')" fxFlex="48%">
-    <mat-label>receiptNumber</mat-label>
-    <input matInput formControlName="receiptNumber">
-  </mat-form-field>
+<!--  <mat-form-field *ngIf="form.contains('receiptNumber')" fxFlex="48%">-->
+<!--    <mat-label>Receipt Number</mat-label>-->
+<!--    <input matInput formControlName="receiptNumber">-->
+<!--  </mat-form-field>-->
 
 
-  <mat-form-field *ngIf="form.contains('bankNumber')" fxFlex="48%">
-    <mat-label>bankNumber</mat-label>
-    <input matInput formControlName="bankNumber">
-  </mat-form-field>
+<!--  <mat-form-field *ngIf="form.contains('bankNumber')" fxFlex="48%">-->
+<!--    <mat-label>Bank Number</mat-label>-->
+<!--    <input matInput formControlName="bankNumber">-->
+<!--  </mat-form-field>-->
 
 </div>
 
