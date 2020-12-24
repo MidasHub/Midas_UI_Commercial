@@ -206,7 +206,6 @@ export class TransactionsTabComponent implements OnInit {
       width: '400px',
     });
     dialog.afterClosed().subscribe(result => {
-      console.log(result);
       if (result) {
         const {data} = result;
         this.savingsService.executeSavingsAccountTransactionsCommand(transaction.accountId, 'modify', data, txnId).subscribe(response => {
