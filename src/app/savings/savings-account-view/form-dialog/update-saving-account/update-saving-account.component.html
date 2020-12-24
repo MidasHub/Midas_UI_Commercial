@@ -1,62 +1,15 @@
-<h1 mat-dialog-title>Chỉnh sửa tài khoản</h1>
+<h1 mat-dialog-title>Chỉnh sửa tài khoản [{{templateData?.accountNo}}]</h1>
 
 <div mat-dialog-content [formGroup]="form" [fxLayout]="'column'" fxLayout.lt-md="column" [fxLayoutGap]="'1%'"
      fxLayoutGap.lt-md="0%">
-
-  <!--  <mat-form-field *ngIf="!disable" class="select-book">-->
-  <!--    <mat-label>{{'Saving_Account_Component.clientAdvanceCash.labelClientCash' |translate}}</mat-label>-->
-  <!--    <input [required]="!disable" [readonly]="disable" type="text"-->
-  <!--           placeholder="{{'Saving_Account_Component.clientAdvanceCash.labelClientCash' |translate}}" matInput-->
-  <!--           formControlName="clientAdvanceCash" [matAutocomplete]="auto">-->
-  <!--    <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">-->
-  <!--      <mat-option *ngFor="let cl of filteredClient" [value]="cl">-->
-  <!--        {{cl.displayName}}-->
-  <!--      </mat-option>-->
-  <!--    </mat-autocomplete>-->
-  <!--  </mat-form-field>-->
-  <!--  <mat-form-field *ngIf="disable" class="select-book">-->
-  <!--    <mat-label>{{'Saving_Account_Component.clientAdvanceCash.labelClientCash' |translate}}</mat-label>-->
-  <!--    <input [readonly]="disable" type="text"-->
-  <!--           placeholder="{{'Saving_Account_Component.clientAdvanceCash.labelClientCash' |translate}}" matInput-->
-  <!--           formControlName="clientAdvanceCash">-->
-  <!--  </mat-form-field>-->
-
-  <!--  <mat-form-field fxFlex="96%" *ngIf="form.contains('typeAdvanceCash')">-->
-  <!--    <mat-label>{{'Saving_Account_Component.clientAdvanceCash.labelTypes' |translate}}</mat-label>-->
-  <!--    <mat-select required formControlName="typeAdvanceCash">-->
-  <!--      <mat-option *ngFor="let type of typeAdvanceCashes" [value]="type.id">-->
-  <!--        {{ type.value }}-->
-  <!--      </mat-option>-->
-  <!--    </mat-select>-->
-  <!--  </mat-form-field>-->
-
-  <!--  <mat-form-field fxFlex="96%">-->
-  <!--    <mat-label>{{'Saving_Account_Component.clientAdvanceCash.labelAmountAdvance' |translate}}</mat-label>-->
-  <!--    <input required-->
-  <!--           currencyMask-->
-  <!--           matInput formControlName="amountAdvance">-->
-  <!--  </mat-form-field>-->
-  <mat-form-field fxFlex="30%">
-    <mat-label>To Date</mat-label>
-    <input matInput [matDatepicker]="toDatePicker" required formControlName="transactionDate">
-    <mat-datepicker-toggle matSuffix [for]="toDatePicker"></mat-datepicker-toggle>
-    <mat-datepicker #toDatePicker></mat-datepicker>
-    <mat-error>
-      Date is <strong>required</strong>
-    </mat-error>
-  </mat-form-field>
-
-  <mat-form-field *ngIf="form.contains('transactionAmount')" fxFlex="48%">
-    <mat-label>transactionAmount</mat-label>
-    <input currencyMask matInput formControlName="transactionAmount">
-  </mat-form-field>
-
-
   <mat-form-field *ngIf="form.contains('paymentTypeId')" fxFlex="48%">
     <mat-label>paymentTypeId</mat-label>
-    <input matInput formControlName="paymentTypeId">
+    <mat-select formControlName="paymentTypeId">
+      <mat-option *ngFor="let type of templateData?.paymentTypeOptions" [value]="type.id">
+        {{ type.name }}
+      </mat-option>
+    </mat-select>
   </mat-form-field>
-
   <mat-form-field *ngIf="form.contains('accountNumber')" fxFlex="48%">
     <mat-label>accountNumber</mat-label>
     <input matInput formControlName="accountNumber">

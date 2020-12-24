@@ -201,10 +201,6 @@ export class TransactionsTabComponent implements OnInit {
 
   updateTransaction(transferId: any, txnId: any) {
     const transaction = this.transactionsData.find((v: any) => v.txnId === txnId);
-    this.savingsService.getSavingsAccountTransactionTemplate(transaction.accountId, transaction.txnId).subscribe(account => {
-      console.log(account);
-    });
-    console.log({transaction});
     const dialog = this.dialog.open(UpdateSavingAccountComponent, {
       data: transaction,
       width: '400px',
