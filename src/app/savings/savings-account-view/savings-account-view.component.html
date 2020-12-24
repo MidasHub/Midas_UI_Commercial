@@ -15,8 +15,8 @@
       <div class="mat-typography account-card-title">
         <mat-card-title>
           <h3>
-            <i class="fa fa-stop" [ngClass]="savingsAccountData.status.code | statusLookup"
-               [matTooltip]="savingsAccountData.status.value"></i>
+            <i class="fa fa-stop" [ngClass]="savingsAccountData?.status?.code | statusLookup"
+               [matTooltip]="savingsAccountData?.status?.value"></i>
             <a>{{('Saving_Account_Component.ViewSavingAccount.labelAccountName'|translate)}}</a>
             : {{savingsAccountData.savingsProductName}}
           </h3>

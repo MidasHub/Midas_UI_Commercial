@@ -7,6 +7,11 @@ import {SavingsService} from '../../savings.service';
 import {SettingsService} from '../../../settings/settings.service';
 import {DatePipe} from '@angular/common';
 import * as moment from 'moment';
+import {animate, state, style, transition, trigger} from '@angular/animations';
+import {MatDialog} from '@angular/material/dialog';
+import {ConfirmDialogComponent} from '../../../transactions/dialog/coifrm-dialog/confirm-dialog.component';
+import {UpdateSavingAccountComponent} from '../form-dialog/update-saving-account/update-saving-account.component';
+import {AlertService} from '../../../core/alert/alert.service';
 
 /**
  * Transactions Tab Component.
@@ -14,7 +19,14 @@ import * as moment from 'moment';
 @Component({
   selector: 'mifosx-transactions-tab',
   templateUrl: './transactions-tab.component.html',
-  styleUrls: ['./transactions-tab.component.scss']
+  styleUrls: ['./transactions-tab.component.scss'],
+  animations: [
+    trigger('detailExpand', [
+      state('collapsed', style({height: '0px', minHeight: '0'})),
+      state('expanded', style({height: '*'})),
+      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
+    ]),
+  ],
 })
 export class TransactionsTabComponent implements OnInit {
 
@@ -23,7 +35,7 @@ export class TransactionsTabComponent implements OnInit {
   /** Transactions Data */
   transactionsData: any;
   /** Columns to be displayed in transactions table. */
-  displayedColumns: string[] = ['id', 'transactionDate', 'transactionType', 'debit', 'credit', 'type', 'note'];
+  displayedColumns: string[] = ['id', 'transactionDate', 'transactionType', 'debit', 'credit', 'type', 'note', 'actions'];
   /** Data source for transactions table. */
   dataSource: MatTableDataSource<any>;
   transactionDateFrom = new FormControl(new Date());
@@ -55,6 +67,8 @@ export class TransactionsTabComponent implements OnInit {
               private formBuilder: FormBuilder,
               private settingsService: SettingsService,
               private datePipe: DatePipe,
+              public dialog: MatDialog,
+              private alterServices: AlertService
   ) {
     this.route.parent.parent.data.subscribe((data: { savingsAccountData: any }) => {
       this.savingsAccountData = data.savingsAccountData; // .transactions?.filter((transaction: any) => !transaction.reversed);
@@ -176,14 +190,32 @@ export class TransactionsTabComponent implements OnInit {
    * Show Transactions Details
    * @param transactionsData Transactions Data
    */
-  showTransactions(transactionsData: any) {
-    console.log(transactionsData);
-    if (transactionsData.transferId) {
-      this.router.navigate([`account-transfers/account-transfers/${transactionsData.transferId}`], {relativeTo: this.route});
+  showTransactions(transferId: any, txnId: any) {
+    if (transferId) {
+      this.router.navigate([`account-transfers/account-transfers/${transferId}`], {relativeTo: this.route});
     } else {
       // location.path('/viewsavingtrxn/' + savingsAccountId + '/trxnId/' + transactionId);
-      this.router.navigate([transactionsData.txnId], {relativeTo: this.route});
+      this.router.navigate([txnId], {relativeTo: this.route});
     }
+  }
+
+  updateTransaction(transferId: any, txnId: any) {
+    const transaction = this.transactionsData.find((v: any) => v.txnId === txnId);
+    const dialog = this.dialog.open(UpdateSavingAccountComponent, {
+      data: transaction,
+      width: '400px',
+    });
+    dialog.afterClosed().subscribe(result => {
+      if (result) {
+        const {data} = result;
+        this.savingsService.executeSavingsAccountTransactionsCommand(transaction.accountId, 'modify', data, txnId).subscribe(response => {
+          console.log(response);
+          if (response) {
+            this.alterServices.alert({message: 'Cập nhập tài khoản thành công', msgClass: 'cssSuccess'});
+          }
+        });
+      }
+    });
   }
 
   /**
