@@ -208,9 +208,9 @@ export class TransactionsTabComponent implements OnInit {
     dialog.afterClosed().subscribe(result => {
       if (result) {
         const {data} = result;
-        this.savingsService.executeSavingsAccountTransactionsCommand(transaction.accountId, 'modify', data, txnId).subscribe(response => {
+        this.savingsService.updateAccountTransactions(transaction.accountId, txnId, data?.paymentTypeId).subscribe(response => {
           console.log(response);
-          if (response) {
+          if (response && response?.result?.status) {
             this.alterServices.alert({message: 'Cập nhập tài khoản thành công', msgClass: 'cssSuccess'});
           }
         });
