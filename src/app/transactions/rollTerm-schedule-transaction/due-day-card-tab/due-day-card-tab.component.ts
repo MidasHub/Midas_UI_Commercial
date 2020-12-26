@@ -9,11 +9,11 @@ import { MatSort } from "@angular/material/sort";
 import { AlertService } from "app/core/alert/alert.service";
 import { AuthenticationService } from "app/core/authentication/authentication.service";
 import { SavingsService } from "app/savings/savings.service";
-import { BankService } from "app/services/bank.service";
 import { SettingsService } from "app/settings/settings.service";
 import { TransactionService } from "app/transactions/transaction.service";
 import { AdvanceFeeRollTermComponent } from "../dialog/advance-fee-roll-term/advance-fee-roll-term.component";
 import { TransactionHistoryDialogComponent } from "../dialog/transaction-history/transaction-history-dialog.component";
+import {BanksService} from '../../../banks/banks.service';
 
 @Component({
   selector: 'midas-due-day-card-transaction',
@@ -99,7 +99,7 @@ export class DueDayCardTabComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private savingsService: SavingsService,
-    private bankService: BankService,
+    private bankService: BanksService,
     private transactionService: TransactionService,
     private datePipe: DatePipe,
     private settingsService: SettingsService,

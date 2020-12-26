@@ -3,9 +3,9 @@ import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {ClientsService} from '../../../clients/clients.service';
 import {TransactionService} from '../../transaction.service';
-import {BankService} from '../../../services/bank.service';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import {AlertService} from '../../../core/alert/alert.service';
+import {BanksService} from '../../../banks/banks.service';
 
 @Component({
   selector: 'midas-create-card-batch-transaction',
@@ -42,7 +42,7 @@ export class CreateCardBatchTransactionComponent implements OnInit {
               @Inject(MAT_DIALOG_DATA) public data: any,
               private formBuilder: FormBuilder,
               private transactionService: TransactionService,
-              private bankService: BankService,
+              private bankService: BanksService,
               private alterService: AlertService,
               private clientService: ClientsService) {
     console.log({data: this.data});

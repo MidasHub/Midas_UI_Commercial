@@ -16,11 +16,11 @@ import { FormDialogComponent } from "app/shared/form-dialog/form-dialog.componen
 import { AddIdentitiesComponent } from "./add-identities/add-identities.component";
 /** Custom Services */
 import { ClientsService } from "../../clients.service";
-import { BankService } from "../../../services/bank.service";
 import { TransactionService } from "../../../transactions/transaction.service";
 import { AlertService } from "app/core/alert/alert.service";
 import { analyzeAndValidateNgModules } from "@angular/compiler";
 import { AddIdentitiesExtraInfoComponent } from "./add-identities-extra-info/add-identities-extra-info.component";
+import {BanksService} from '../../../banks/banks.service';
 
 /**
  * Identities Tab Component
@@ -61,7 +61,7 @@ export class IdentitiesTabComponent {
     private clientService: ClientsService,
     private transactionService: TransactionService,
     private alertService: AlertService,
-    private bankService: BankService
+    private bankService: BanksService
   ) {
     this.clientId = this.route.parent.snapshot.paramMap.get("clientId");
     this.route.data.subscribe((data: { clientIdentities: any; clientIdentifierTemplate: any }) => {

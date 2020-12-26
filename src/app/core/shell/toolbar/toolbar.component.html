@@ -55,6 +55,10 @@
       <fa-icon class="mr-05" icon="university" size="lg"></fa-icon>
       Marketing
     </a>
+    <a mat-tab-link class="tab-link" routerLink="/banks">
+      <fa-icon class="mr-05" icon="university" size="lg"></fa-icon>
+      Banks
+    </a>
   </nav>
 
   <span fxFlex="auto">
@@ -63,14 +67,14 @@
 
   </span>
 
-  <mifosx-search-tool *midasHasPermission="'ALL_FUNCTIONS'" ></mifosx-search-tool>
+  <mifosx-search-tool *midasHasPermission="'ALL_FUNCTIONS'"></mifosx-search-tool>
 
   <mifosx-theme-picker fxHide.lt-md></mifosx-theme-picker>
 
   <mifosx-notifications-tray fxHide.lt-md></mifosx-notifications-tray>
 
   <button mat-icon-button class="ml-1 img-button" [matMenuTriggerFor]="applicationMenu">
-    <img src="assets/images/user_placeholder.png" />
+    <img src="assets/images/user_placeholder.png"/>
   </button>
 </mat-toolbar>
 
@@ -167,7 +171,7 @@
     </mat-icon>
     <span>{{ "Toolbar_Component.lblSetting" | translate }}</span>
   </button>
-  <button mat-menu-item >
+  <button mat-menu-item>
     <mat-icon>
       <fa-icon icon="cog" size="sm"></fa-icon>
     </mat-icon>

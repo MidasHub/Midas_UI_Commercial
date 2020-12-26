@@ -16,8 +16,8 @@ import {ClientsService} from '../../../clients/clients.service';
 import {debounce, distinctUntilChanged, map, startWith, takeUntil} from 'rxjs/operators';
 import {Observable, Subject, timer} from 'rxjs';
 import {ConfirmDialogComponent} from '../../dialog/coifrm-dialog/confirm-dialog.component';
-import {BankService} from '../../../services/bank.service';
 import {MakeFeeOnAdvanceComponent} from '../../dialog/make-fee-on-advance/make-fee-on-advance.component';
+import {BanksService} from '../../../banks/banks.service';
 
 @Component({
     selector: 'midas-create-batch-transaction',
@@ -124,7 +124,7 @@ export class CreateBatchTransactionComponent implements OnInit {
                 private authenticationService: AuthenticationService,
                 private groupServices: GroupsService,
                 private clientsServices: ClientsService,
-                private bankServices: BankService,
+                private bankServices: BanksService,
                 private router: Router,
     ) {
         this.currentUser = this.authenticationService.getCredentials();

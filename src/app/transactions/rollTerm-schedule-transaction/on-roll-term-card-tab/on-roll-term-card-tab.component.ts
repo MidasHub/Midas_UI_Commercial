@@ -15,8 +15,8 @@ import { CreateRollTermScheduleDialogComponent } from "../dialog/create-roll-ter
 import { MatTableDataSource } from "@angular/material/table";
 import { AdvanceFeeRollTermComponent } from "../dialog/advance-fee-roll-term/advance-fee-roll-term.component";
 import { SavingsService } from "app/savings/savings.service";
-import { BankService } from "app/services/bank.service";
 import { TransactionHistoryDialogComponent } from "../dialog/transaction-history/transaction-history-dialog.component";
+import {BanksService} from '../../../banks/banks.service';
 
 @Component({
   selector: "midas-on-roll-term-card-tab",
@@ -86,7 +86,7 @@ export class OnRollTermCardTabComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private savingsService: SavingsService,
-    private bankService: BankService,
+    private bankService: BanksService,
     private transactionService: TransactionService,
     private datePipe: DatePipe,
     private settingsService: SettingsService,
