@@ -8,6 +8,7 @@ import {SharedModule} from 'app/shared/shared.module';
 import {PipesModule} from '../pipes/pipes.module';
 import {DirectivesModule} from '../directives/directives.module';
 import {BanksRoutingModule} from './banks-routing.module';
+import {MatRippleModule} from '@angular/material/core';
 
 /** Custom Components */
 
@@ -16,7 +17,8 @@ import {BanksRoutingModule} from './banks-routing.module';
     SharedModule,
     PipesModule,
     DirectivesModule,
-    BanksRoutingModule
+    BanksRoutingModule,
+    MatRippleModule
   ],
   declarations: [
     CardBankViewComponent,

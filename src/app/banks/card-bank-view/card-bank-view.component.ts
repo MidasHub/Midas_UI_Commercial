@@ -12,7 +12,12 @@ export class CardBankViewComponent implements OnInit {
   cardTypes: any[] = [];
   textSearch: string;
   dataStore: any[] = [];
+  centered = false;
+  disabled = false;
+  unbounded = false;
 
+  radius: number;
+  color: string;
   constructor(private banksServices: BanksService) {
   }
 
