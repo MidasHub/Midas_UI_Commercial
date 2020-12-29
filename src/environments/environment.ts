@@ -28,7 +28,7 @@ export const environment = {
   version: env.midas_version + '-dev',
   fineractPlatformTenantId: te.coreT,  // For connecting to server running elsewhere update the tenant identifier
   baseApiUrl: JSON.parse(sessionStorage.getItem('midasServerURL')) ||te.defaultbaseURL,
-  ận: env.allow_switching_backend_instance,
+  allowServerSwitch: env.allow_switching_backend_instance,
   apiProvider: te.apiProvider,
   apiVersion: te.apiVersion,
   serverUrl: '',
