@@ -7,6 +7,7 @@ import {Route} from '../core/route/route.service';
 /** Translation Imports */
 import {extract} from '../core/i18n/i18n.service';
 import {CardBankViewComponent} from './card-bank-view/card-bank-view.component';
+import {BanksComponent} from './banks/banks.component';
 
 const routes: Routes = [
   Route.withShell([
@@ -16,8 +17,8 @@ const routes: Routes = [
       children: [
         {
           path: '',
-          data: {title: extract('Cards'), breadcrumb: 'cards'},
-          component: CardBankViewComponent
+          data: {title: extract('Banks'), breadcrumb: 'Banks'},
+          component: BanksComponent
         }
       ]
     }

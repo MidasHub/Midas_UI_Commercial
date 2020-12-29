@@ -9,6 +9,7 @@ import {PipesModule} from '../pipes/pipes.module';
 import {DirectivesModule} from '../directives/directives.module';
 import {BanksRoutingModule} from './banks-routing.module';
 import {MatRippleModule} from '@angular/material/core';
+import { BanksComponent } from './banks/banks.component';
 
 /** Custom Components */
 
@@ -22,6 +23,7 @@ import {MatRippleModule} from '@angular/material/core';
   ],
   declarations: [
     CardBankViewComponent,
+    BanksComponent,
   ],
   providers: [DatePipe]
 })
