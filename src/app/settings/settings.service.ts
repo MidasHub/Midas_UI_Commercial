@@ -37,7 +37,7 @@ export class SettingsService {
    * @param {string} url URL
    */
   setServer(url: string) {
-    localStorage.setItem('midasServerURL', JSON.stringify(url));
+    sessionStorage.setItem('midasServerURL', JSON.stringify(url));
   }
 
   /**
@@ -53,7 +53,7 @@ export class SettingsService {
    * @param {string} url URL
    */
   setBillposServer(url: string) {
-    localStorage.setItem('midasBillposServerURL', JSON.stringify(url));
+    sessionStorage.setItem('midasBillposServerURL', JSON.stringify(url));
   }
 
   /**
