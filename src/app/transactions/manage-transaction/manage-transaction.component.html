@@ -52,7 +52,7 @@
             <span>&nbsp; SP vốn</span>
           </div>
         </div>
-        <div fxLayout="row wrap" fxFlex="20%" class="container m-b-20">
+        <div *midasHasPermission="'MANAGER'" fxLayout="row wrap" fxFlex="20%" class="container m-b-20">
           <img src="assets/images/icons/pnlAmount.svg">
           <div style="display: flex;" fxLayout="column">
             <span style="font-size: 20px; margin-top: 8px; padding-top: 5px;">{{totalPnlAmount|money}}</span>
@@ -177,19 +177,25 @@
       <ng-container matColumnDef="productId">
         <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>Loại giao dịch</th>
         <td mat-cell fxHide fxShow.gt-md
-            *matCellDef="let transaction"> <span class="productId">{{ displayProductId(transaction.productId) }}</span>  </td>
+            *matCellDef="let transaction"><span class="productId">{{ displayProductId(transaction.productId) }}</span>
+        </td>
       </ng-container>
 
       <ng-container matColumnDef="txnDate">
         <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header> Ngày giao dịch</th>
         <td mat-cell fxHide fxShow.gt-md
+            style=" word-wrap: break-word; width: 150px;"
             *matCellDef="let journalEntry"> {{ journalEntry.txnDate | date:'dd-MM-yyyy HH:mm:ss'}} </td>
       </ng-container>
 
       <ng-container matColumnDef="trnRefNo">
         <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header> Số giao dịch</th>
-        <td mat-cell fxHide fxShow.gt-md *matCellDef="let journalEntry"><span>{{ journalEntry.trnRefNo }}</span><br/>
-          <span *ngIf="checkB(journalEntry.type)" style="color: red;">{{journalEntry.type}}</span>
+        <td mat-cell
+            style="width: 150px;"
+            fxHide fxShow.gt-md *matCellDef="let journalEntry"><span
+          style=" word-wrap: break-word;">{{ journalEntry.trnRefNo }}</span><br/>
+          <span *ngIf="checkB(journalEntry.type)"
+                style="color: red;  word-wrap: break-word;">{{journalEntry.type}}</span>
         </td>
       </ng-container>
 
@@ -237,6 +243,11 @@
         <td mat-cell fxHide fxShow.gt-md *matCellDef="let journalEntry"> {{ journalEntry.feeAmount | money}} </td>
       </ng-container>
 
+      <ng-container matColumnDef="terminalAmount_feeAmount">
+        <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header> Tỉ lệ phí</th>
+        <td mat-cell fxHide fxShow.gt-md
+            *matCellDef="let journalEntry"> {{ journalEntry.feeAmount / journalEntry.terminalAmount}} </td>
+      </ng-container>
 
       <ng-container matColumnDef="cogsAmount">
         <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header> SP vốn</th>
@@ -246,7 +257,8 @@
 
       <ng-container matColumnDef="pnlAmount">
         <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header> PNL</th>
-        <td mat-cell fxHide fxShow.gt-md *matCellDef="let journalEntry"> {{ journalEntry.pnlAmount | money}} </td>
+        <td mat-cell fxHide fxShow.gt-md *matCellDef="let journalEntry"><span
+          *midasHasPermission="'MANAGER'">{{ journalEntry.pnlAmount | money}}</span></td>
       </ng-container>
 
       <ng-container matColumnDef="actions" style="width: 25px;">
@@ -301,7 +313,7 @@
                 <span style="font-weight: bold;">
                   SP vốn :</span>&nbsp; &nbsp;{{element.cogsAmount | money}}
               </div>
-              <div>
+              <div *midasHasPermission="'MANAGER'">
                 <span style="font-weight: bold;">
                   PNL :</span>&nbsp; &nbsp;{{element.pnlAmount | money}}
               </div>

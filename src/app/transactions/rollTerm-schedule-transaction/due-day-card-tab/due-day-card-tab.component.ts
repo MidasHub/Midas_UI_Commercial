@@ -1,19 +1,18 @@
-
-import { animate, state, style, transition, trigger } from "@angular/animations";
-import { DatePipe } from "@angular/common";
-import { Component, OnInit, ViewChild } from "@angular/core";
-import { FormBuilder, FormGroup } from "@angular/forms";
-import { MatDialog, MatDialogConfig } from "@angular/material/dialog";
-import { MatPaginator } from "@angular/material/paginator";
-import { MatSort } from "@angular/material/sort";
-import { AlertService } from "app/core/alert/alert.service";
-import { AuthenticationService } from "app/core/authentication/authentication.service";
-import { SavingsService } from "app/savings/savings.service";
-import { BankService } from "app/services/bank.service";
-import { SettingsService } from "app/settings/settings.service";
-import { TransactionService } from "app/transactions/transaction.service";
-import { AdvanceFeeRollTermComponent } from "../dialog/advance-fee-roll-term/advance-fee-roll-term.component";
-import { TransactionHistoryDialogComponent } from "../dialog/transaction-history/transaction-history-dialog.component";
+import {animate, state, style, transition, trigger} from '@angular/animations';
+import {DatePipe} from '@angular/common';
+import {Component, OnInit, ViewChild} from '@angular/core';
+import {FormBuilder, FormGroup} from '@angular/forms';
+import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
+import {MatPaginator} from '@angular/material/paginator';
+import {MatSort} from '@angular/material/sort';
+import {AlertService} from 'app/core/alert/alert.service';
+import {AuthenticationService} from 'app/core/authentication/authentication.service';
+import {SavingsService} from 'app/savings/savings.service';
+import {SettingsService} from 'app/settings/settings.service';
+import {TransactionService} from 'app/transactions/transaction.service';
+import {AdvanceFeeRollTermComponent} from '../dialog/advance-fee-roll-term/advance-fee-roll-term.component';
+import {TransactionHistoryDialogComponent} from '../dialog/transaction-history/transaction-history-dialog.component';
+import {BanksService} from '../../../banks/banks.service';
 
 @Component({
   selector: 'midas-due-day-card-transaction',
@@ -30,16 +29,16 @@ import { TransactionHistoryDialogComponent } from "../dialog/transaction-history
 export class DueDayCardTabComponent implements OnInit {
   expandedElement: any;
   displayedColumns: string[] = [
-    "panHolderName",
-    "phone",
-    "cardNumber",
-    "bankName",
-    "dueDay",
-    "expiredDate",
-    "isHold",
-    "status",
-    "note",
-    "actions",
+    'panHolderName',
+    'phone',
+    'cardNumber',
+    'bankName',
+    'dueDay',
+    'expiredDate',
+    'isHold',
+    'status',
+    'note',
+    'actions',
   ];
   isLoading: boolean = false;
   formDate: FormGroup;
@@ -99,7 +98,7 @@ export class DueDayCardTabComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private savingsService: SavingsService,
-    private bankService: BankService,
+    private bankService: BanksService,
     private transactionService: TransactionService,
     private datePipe: DatePipe,
     private settingsService: SettingsService,
@@ -122,11 +121,12 @@ export class DueDayCardTabComponent implements OnInit {
 
   ngOnInit(): void {
     this.currentUser = this.authenticationService.getCredentials();
-    //this.dataSource = this.transactionsData;
     this.getRollTermScheduleAndCardDueDayInfo();
-    this.bankService.getListBank().subscribe((data: any) =>{
-      this.listBank = data.result.listBank;
-    })
+    this.bankService.getBanks().subscribe((data: any) => {
+      if (data) {
+        this.listBank = data;
+      }
+    });
   }
 
   advanceCash(cardId: string, clientId: string) {
@@ -188,7 +188,7 @@ export class DueDayCardTabComponent implements OnInit {
         this.transactionsData = result?.result;
         this.dataSource = result?.result.lisCardTransactionTracking;
         this.dataSource.forEach(element => {
-          element.expiredDateString  = this.datePipe.transform(element.expiredDate, 'MMyy');
+          element.expiredDateString = this.datePipe.transform(element.expiredDate, 'MMyy');
         });
       });
   }
@@ -212,7 +212,7 @@ export class DueDayCardTabComponent implements OnInit {
         const message = `Cập nhật thành công cho thẻ: ${updateData.cardNumber} `;
         this.alertService.alert({message: message, msgClass: 'cssInfo'});
 
-      })
+      });
   }
 
 

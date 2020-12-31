@@ -67,7 +67,7 @@
 
           <mat-autocomplete autoActiveFirstOption #clientsAutocomplete="matAutocomplete" [displayWith]="displayClient">
             <mat-option *ngFor="let client of clientsData" [value]="client">
-              {{ client.id }} - {{ client.displayName }}
+              {{ client.id }} - {{ client.displayName }} - {{client.officeName}}
             </mat-option>
           </mat-autocomplete>
 

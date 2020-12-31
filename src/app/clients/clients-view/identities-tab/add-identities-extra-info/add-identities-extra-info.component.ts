@@ -1,8 +1,8 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {MAT_DIALOG_DATA} from '@angular/material/dialog';
-import {BankService} from '../../../../services/bank.service';
 import {AuthenticationService} from '../../../../core/authentication/authentication.service';
+import {BanksService} from '../../../../banks/banks.service';
 
 @Component({
   // tslint:disable-next-line:component-selector
@@ -22,7 +22,7 @@ export class AddIdentitiesExtraInfoComponent implements OnInit {
 
   constructor(private formBuilder: FormBuilder,
               @Inject(MAT_DIALOG_DATA) public data: any,
-              private bankService: BankService,
+              private bankService: BanksService,
               private authenticationService: AuthenticationService) {
     console.log(data);
     const {clientIdentifierTemplate} = data;

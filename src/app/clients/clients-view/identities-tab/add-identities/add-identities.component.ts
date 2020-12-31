@@ -1,9 +1,9 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {MAT_DIALOG_DATA} from '@angular/material/dialog';
-import {BankService} from '../../../../services/bank.service';
 import {AuthenticationService} from '../../../../core/authentication/authentication.service';
 import {AlertService} from '../../../../core/alert/alert.service';
+import {BanksService} from '../../../../banks/banks.service';
 
 @Component({
   // tslint:disable-next-line:component-selector
@@ -23,7 +23,7 @@ export class AddIdentitiesComponent implements OnInit {
 
   constructor(private formBuilder: FormBuilder,
               @Inject(MAT_DIALOG_DATA) public data: any,
-              private bankService: BankService,
+              private bankService: BanksService,
               private authenticationService: AuthenticationService,
               private alterService: AlertService) {
     this.documentTypes = [];
@@ -57,15 +57,15 @@ export class AddIdentitiesComponent implements OnInit {
       'documentKey': [''],
       'description': ['']
     });
-    this.bankService.getListBank().subscribe((result: any) => {
+    this.bankService.getBanks().subscribe((result: any) => {
       console.log(result);
-      if (result.status === '200') {
-        this.documentCardBanks = result?.result?.listBank;
+      if (result) {
+        this.documentCardBanks = result;
       }
     });
-    this.bankService.getListCardType().subscribe((result: any) => {
-      if (result.status === '200') {
-        this.documentCardTypes = result?.result?.listCardType;
+    this.bankService.getCardTypes().subscribe((result: any) => {
+      if (result) {
+        this.documentCardTypes = result;
       }
     });
     this.form.get('documentTypeId').valueChanges.subscribe((value: any) => {
@@ -89,10 +89,10 @@ export class AddIdentitiesComponent implements OnInit {
         const type = this.documentTypes.find(v => v.id === typeDocument);
         if (type && Number(type.id) >= 38 && Number(type.id) <= 57) {
           this.bankService.getInfoBinCode(value).subscribe((res: any) => {
-            if (res.status === '200') {
-              if (res?.result?.existBin) {
-                const {bankCode, cardType} = res?.result?.bankBinCode;
-                this.existBin = res?.result?.existBin;
+            if (res) {
+              if (res.existBin) {
+                const {bankCode, cardType} = res;
+                this.existBin = res.existBin;
                 this.form.get('documentCardBank').setValue(bankCode);
                 this.form.get('documentCardType').setValue(cardType);
               } else {
