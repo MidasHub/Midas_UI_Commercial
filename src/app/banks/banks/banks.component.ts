@@ -143,29 +143,15 @@ export class BanksComponent implements OnInit, AfterViewInit {
       if (response.data) {
         const formData = response.data.value;
         if (!card) {
+
           const binCode = formData.binCode;
-          switch (binCode[0]) {
-            case '4':
-              formData.cardType = 'VC';
-              break;
-            case '5':
-              formData.cardType = 'MC';
-              break;
-            case '3':
-              formData.cardType = 'JCB';
-              break;
-            case '2':
-              formData.cardType = 'AMEX';
-              break;
-            default:
-              if (String(binCode).startsWith('9704')) {
-                formData.cardType = 'ATM';
-              } else {
-                formData.cardType = '';
-              }
+          for (const typeCard of this.cardTypes) {
+            if (String(binCode).startsWith(String(typeCard.codeDigit))) {
+              formData.cardType = typeCard.code;
+            }
           }
         }
-        this.banksServices.storeBinCode(formData.binCode, formData.bankCode, formData.cardType, formData.cardClass || '').subscribe(result => {
+        this.banksServices.storeBinCode(formData.binCode, formData.bankCode, formData.cardType || '', formData.cardClass || '').subscribe(result => {
           console.log(result);
           if (result.status === '200') {
             if (card) {
