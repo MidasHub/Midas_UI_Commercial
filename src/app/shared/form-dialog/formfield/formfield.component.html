@@ -8,11 +8,13 @@
 
       <input *ngIf="formfield.controlType==='input' && (!formfield.maxLength || formfield.maxLength===0)"
              [type]="formfield.type" matInput
+             [readonly]="formfield.disabled"
              [formControlName]="formfield.controlName" [required]="formfield.required">
       <input *ngIf="formfield.controlType==='input' && formfield.maxLength>0"
              [maxlength]="formfield.maxLength"
              [minlength]="formfield.minLength"
              [type]="formfield.type" matInput
+             [readonly]="formfield.disabled"
              [formControlName]="formfield.controlName" [required]="formfield.required">
       <mat-select *ngIf="formfield.controlType==='select'"
                   [disabled]="formfield.disabled"

@@ -111,16 +111,18 @@ export class BanksComponent implements OnInit, AfterViewInit {
         label: 'Loại',
         value: card ? card.cardType : '',
         options: {label: 'description', value: 'code', data: this.cardTypes},
-        required: true
+        required: false,
+        disabled: true
       }),
       new InputBase({
         controlName: 'binCode',
         label: 'Bin Code',
         value: card ? card.binCode : '',
         type: 'text',
-        required: true,
         maxLength: 6,
-        minLength: 6
+        minLength: 6,
+        required: card ? false : true,
+        disabled: card ? true : false
       }),
       new InputBase({
         controlName: 'cardClass',
@@ -140,6 +142,29 @@ export class BanksComponent implements OnInit, AfterViewInit {
       console.log(response);
       if (response.data) {
         const formData = response.data.value;
+        if (!card) {
+          const binCode = formData.binCode;
+          switch (binCode[0]) {
+            case '4':
+              formData.cardType = 'VC';
+              break;
+            case '5':
+              formData.cardType = 'MC';
+              break;
+            case '3':
+              formData.cardType = 'JCB';
+              break;
+            case '2':
+              formData.cardType = 'AMEX';
+              break;
+            default:
+              if (String(binCode).startsWith('9704')) {
+                formData.cardType = 'ATM';
+              } else {
+                formData.cardType = '';
+              }
+          }
+        }
         this.banksServices.storeBinCode(formData.binCode, formData.bankCode, formData.cardType, formData.cardClass || '').subscribe(result => {
           console.log(result);
           if (result.status === '200') {
