@@ -125,7 +125,7 @@ export class ManageTransactionComponent implements OnInit {
     // }
     this.currentUser = this.authenticationService.getCredentials();
     const {permissions} = this.currentUser;
-    const permit_userTeller = permissions.includes('MANAGER');
+    const permit_userTeller = permissions.includes('POS_UPDATE');
     if (permit_userTeller) {
       this.displayedColumns.push('pnlAmount');
     }
@@ -203,7 +203,12 @@ export class ManageTransactionComponent implements OnInit {
           }
         });
       } else {
-        this.transactionsData = result?.result?.listPosTransaction;
+        this.transactionsData = result?.result?.listPosTransaction.map((v: any) => {
+          return {
+            ...v,
+            terminalAmount_feeAmount: Number(v.feeAmount / v.terminalAmount).toFixed(3)
+          };
+        });
       }
       this.filterTransaction();
     });

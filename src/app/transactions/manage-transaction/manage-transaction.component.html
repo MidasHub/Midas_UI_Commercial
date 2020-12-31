@@ -52,7 +52,7 @@
             <span>&nbsp; SP vốn</span>
           </div>
         </div>
-        <div *midasHasPermission="'MANAGER'" fxLayout="row wrap" fxFlex="20%" class="container m-b-20">
+        <div *midasHasPermission="'POS_UPDATE'" fxLayout="row wrap" fxFlex="20%" class="container m-b-20">
           <img src="assets/images/icons/pnlAmount.svg">
           <div style="display: flex;" fxLayout="column">
             <span style="font-size: 20px; margin-top: 8px; padding-top: 5px;">{{totalPnlAmount|money}}</span>
@@ -246,7 +246,7 @@
       <ng-container matColumnDef="terminalAmount_feeAmount">
         <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header> Tỉ lệ phí</th>
         <td mat-cell fxHide fxShow.gt-md
-            *matCellDef="let journalEntry"> {{ journalEntry.feeAmount / journalEntry.terminalAmount}} </td>
+            *matCellDef="let journalEntry"> {{ journalEntry.terminalAmount_feeAmount}} </td>
       </ng-container>
 
       <ng-container matColumnDef="cogsAmount">
@@ -258,7 +258,7 @@
       <ng-container matColumnDef="pnlAmount">
         <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header> PNL</th>
         <td mat-cell fxHide fxShow.gt-md *matCellDef="let journalEntry"><span
-          *midasHasPermission="'MANAGER'">{{ journalEntry.pnlAmount | money}}</span></td>
+          *midasHasPermission="'POS_UPDATE'">{{ journalEntry.pnlAmount | money}}</span></td>
       </ng-container>
 
       <ng-container matColumnDef="actions" style="width: 25px;">
@@ -313,7 +313,7 @@
                 <span style="font-weight: bold;">
                   SP vốn :</span>&nbsp; &nbsp;{{element.cogsAmount | money}}
               </div>
-              <div *midasHasPermission="'MANAGER'">
+              <div *midasHasPermission="'POS_UPDATE'">
                 <span style="font-weight: bold;">
                   PNL :</span>&nbsp; &nbsp;{{element.pnlAmount | money}}
               </div>
