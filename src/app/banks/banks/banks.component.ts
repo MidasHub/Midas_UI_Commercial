@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {BanksService} from '../banks.service';
 
 @Component({
@@ -18,20 +18,27 @@ export class BanksComponent implements OnInit {
 
   radius: number;
   color: string;
+
   constructor(private banksServices: BanksService) {
   }
 
   ngOnInit(): void {
     this.banksServices.getCards().subscribe(result => {
-      this.banks = result?.result?.listBank;
-      this.cards = result?.result?.ListBinCodeEntity;
-      this.banks.map(bank => {
-        bank.cards = this.cards.filter((v: any) => v.bankCode === bank.bankCode);
-      });
-      this.cardTypes = result?.result?.listCardType;
-      this.filterData();
-      console.log('cards', this.banks);
-      console.log('cardTypes', this.cardTypes);
+      if (result) {
+        this.cards = result;
+      }
+    });
+    this.banksServices.getBanks().subscribe(result => {
+      console.log('result', result);
+      if (result) {
+        this.banks = result;
+        this.filterData();
+      }
+    });
+    this.banksServices.getCardTypes().subscribe(result => {
+      if (result) {
+        this.cardTypes = result;
+      }
     });
   }
 

@@ -17,6 +17,7 @@ export class ClientsService {
   private credentialsStorageKey = 'midasCredentials';
   private accessToken: any;
   private GatewayApiUrlPrefix: any;
+  private cacheClientRequest = {};
 
   /**
    * @param {HttpClient} http Http Client to send requests.
@@ -90,7 +91,17 @@ export class ClientsService {
   }
 
   getClientData(clientId: string) {
-    return this.http.get(`/clients/${clientId}`);
+    const key = `getClientData_${clientId}`;
+    if (this.cacheClientRequest[key]) {
+      return this.cacheClientRequest[key];
+    } else {
+      return this.http.get(`/clients/${clientId}`).subscribe(result => {
+        if (result) {
+          this.cacheClientRequest[key] = result;
+          return this.cacheClientRequest[key];
+        }
+      });
+    }
   }
 
   createClient(client: any) {

@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpParams} from '@angular/common/http';
 import {environment} from '../../environments/environment';
-import {Observable} from 'rxjs';
+import {BehaviorSubject, Observable, of, Subject} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -10,6 +10,9 @@ export class BanksService {
   private credentialsStorageKey = 'midasCredentials';
   private accessToken: any;
   private GatewayApiUrlPrefix: any;
+  public cards: any;
+  public banks: any;
+  public cardTypes: any;
 
   constructor(private http: HttpClient) {
     this.accessToken = JSON.parse(
@@ -19,12 +22,11 @@ export class BanksService {
     this.GatewayApiUrlPrefix = environment.GatewayApiUrlPrefix;
   }
 
-  getListBank(): Observable<any> {
-    console.log(environment.baseApiUrl);
-    const httpParams = new HttpParams()
-      .set('createdBy', this.accessToken.userId)
-      .set('accessToken', this.accessToken.base64EncodedAuthenticationKey);
-    return this.http.post<any>(`${this.GatewayApiUrlPrefix}/common/get_list_bank`, httpParams);
+  getBanks(): BehaviorSubject<any> {
+    if (!this.banks) {
+      this.getData();
+    }
+    return this.banks;
   }
 
   storeBank(bankCode: string, bankName: string): Observable<any> {
@@ -36,11 +38,37 @@ export class BanksService {
     return this.http.post<any>(`${this.GatewayApiUrlPrefix}/common/store_bank_info`, httpParams);
   }
 
-  getCards(): Observable<any> {
+  getData() {
+    if (!this.cards) {
+      this.cards = new BehaviorSubject(null);
+    }
+    if (!this.banks) {
+      this.banks = new BehaviorSubject(null);
+    }
+    if (!this.cardTypes) {
+      this.cardTypes = new BehaviorSubject(null);
+    }
     const httpParams = new HttpParams()
       .set('createdBy', this.accessToken.userId)
       .set('accessToken', this.accessToken.base64EncodedAuthenticationKey);
-    return this.http.post<any>(`${this.GatewayApiUrlPrefix}/card/get_all_bincode_info`, httpParams);
+    this.http.post<any>(`${this.GatewayApiUrlPrefix}/card/get_all_bincode_info`, httpParams).subscribe(result => {
+      if (result?.result) {
+        const {ListBinCodeEntity = [], listBank = [], listCardType = []} = result.result;
+        listBank.map((bank: any) => {
+          bank.cards = ListBinCodeEntity.filter((v: any) => v.bankCode === bank.bankCode);
+        });
+        this.cards.next(ListBinCodeEntity);
+        this.banks.next(listBank);
+        this.cardTypes.next(listCardType);
+      }
+    });
+  }
+
+  getCards(): BehaviorSubject<any> {
+    if (!this.cards) {
+      this.getData();
+    }
+    return this.cards;
   }
 
   getCardInfo(binCode: string): Observable<any> {
@@ -62,20 +90,35 @@ export class BanksService {
     return this.http.post<any>(`${this.GatewayApiUrlPrefix}/card/store_bincode_info`, httpParams);
   }
 
-  getListCardType(): Observable<any> {
-    console.log(environment.baseApiUrl);
-    const httpParams = new HttpParams()
-      .set('createdBy', this.accessToken.userId)
-      .set('accessToken', this.accessToken.base64EncodedAuthenticationKey);
-    return this.http.post<any>(`${this.GatewayApiUrlPrefix}/common/get_list_card_type`, httpParams);
+
+  getCardTypes(): BehaviorSubject<any> {
+    if (!this.cardTypes) {
+      this.getData();
+    }
+    return this.cardTypes;
   }
 
-  getInfoBinCode(binCode: string): Observable<any> {
-    const httpParams = new HttpParams()
-      .set('binCode', binCode)
-      .set('createdBy', this.accessToken.userId)
-      .set('accessToken', this.accessToken.base64EncodedAuthenticationKey);
-    return this.http.post(`${this.GatewayApiUrlPrefix}/common/get_info_bin_code`, httpParams);
+  getInfoBinCode(binCode: string): BehaviorSubject<any> {
+    const result = new BehaviorSubject(null);
+    if (!this.cards) {
+      this.getData();
+    }
+    this.cards.subscribe((values: any) => {
+      if (values) {
+        let have = false;
+        for (const v of values) {
+          if (v.binCode === binCode) {
+            have = true;
+            result.next({...v, existBin: true});
+            break;
+          }
+        }
+        if (!have) {
+          result.next({existBin: false});
+        }
+      }
+    });
+    return result;
   }
 
   storeInfoBinCode(body: any): Observable<any> {

@@ -69,11 +69,15 @@ export class CreateCardBatchTransactionComponent implements OnInit {
     this.transactionService.getDocumentTemplate().subscribe(result => {
       this.documents = result?.result?.documentTemplate?.allowedDocumentTypes?.filter((type: any) => Number(type.id) >= 38 && Number(type.id) <= 57);
     });
-    this.bankService.getListBank().subscribe(result => {
-      this.banks = result?.result?.listBank;
+    this.bankService.getBanks().subscribe(result => {
+      if (result) {
+        this.banks = result;
+      }
     });
-    this.bankService.getListCardType().subscribe(result => {
-      this.typeCards = result?.result?.listCardType;
+    this.bankService.getCardTypes().subscribe(result => {
+      if (result) {
+        this.typeCards = result;
+      }
     });
     this.formDialog.get('documentKey').valueChanges.subscribe((value: any) => {
       if (value && value?.length === 16) {
@@ -82,10 +86,10 @@ export class CreateCardBatchTransactionComponent implements OnInit {
         if (type && Number(type.id) >= 38 && Number(type.id) <= 57) {
           this.bankService.getInfoBinCode(value).subscribe((res: any) => {
             console.log(res);
-            if (res.status === '200') {
-              if (res?.result?.existBin) {
-                const {bankCode, cardType} = res?.result?.bankBinCode;
-                this.existBin = res?.result?.existBin;
+            if (res) {
+              if (res.existBin) {
+                const {bankCode, cardType} = res;
+                this.existBin = res.existBin;
                 this.formDialog.get('bank').setValue(bankCode);
                 this.formDialog.get('cardType').setValue(cardType);
               } else {
