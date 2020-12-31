@@ -25,6 +25,21 @@ export class SavingsService {
     this.GatewayApiUrlPrefix = environment.GatewayApiUrlPrefix;
   }
 
+/**
+   * @param {string} savingAccountId is saving account's Id.
+   * @returns {Observable<any>}
+   */
+  getLimitSavingsTransactionConfig(paymentTypeId: string, staffId?: string): Observable<any> {
+    let httpParams = new HttpParams()
+      .set('paymentTypeId', paymentTypeId)
+      .set('staffId', staffId? staffId:"")
+      .set('createdBy', this.accessToken.userId)
+      .set('accessToken', this.accessToken.base64EncodedAuthenticationKey);
+
+
+    return this.http.post(`${this.GatewayApiUrlPrefix}/config/get_limit_withdrawal_config_amount`, httpParams);
+  }
+
   /**
    * @param {string} savingAccountId is saving account's Id.
    * @returns {Observable<any>}
