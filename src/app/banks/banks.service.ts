@@ -22,6 +22,56 @@ export class BanksService {
     this.GatewayApiUrlPrefix = environment.GatewayApiUrlPrefix;
   }
 
+  addBank(bank: any) {
+    const banks = this.banks.getValue();
+    banks.push({
+      ...bank,
+      cards: [],
+      status: 'O'
+    });
+    this.banks.next(banks);
+  }
+
+  addCard(card: any) {
+    const cards = this.cards.getValue();
+    this.cards.next([...cards, card]);
+    const banks = this.banks.getValue();
+    banks.map((bank: any) => {
+      if (bank.bankCode === card.bankCode) {
+        bank.cards.push(card);
+      }
+    });
+    this.banks.next(banks);
+  }
+
+  updateCard(card: any) {
+    const cards = this.cards.getValue().map((c: any) => {
+      if (card.refid === c.refid) {
+        return {
+          ...c,
+          ...card
+        };
+      }
+      return c;
+    });
+    this.cards.next(cards);
+    const banks = this.banks.getValue();
+    banks.map((bank: any) => {
+      if (bank.bankCode === card.bankCode) {
+        bank.cards = bank.cards.map((c: any) => {
+          if (card.refid === c.refid) {
+            return {
+              ...c,
+              ...card
+            };
+          }
+          return c;
+        });
+      }
+    });
+    this.banks.next(banks);
+  }
+
   getBanks(): BehaviorSubject<any> {
     if (!this.banks) {
       this.getData();
