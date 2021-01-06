@@ -78,24 +78,31 @@ export class ClientsDataSource implements DataSource<any> {
     if (!filter) {
       this.getClients();
     } else {
-      if (this.old_key !== filter) {
-        this.old_key = filter;
-        this.old_result = [];
-        const sqlSearch = `(display_name LIKE "%${filter}%")
-       OR (c.external_id LIKE "%${filter}%") OR  (c.mobile_no LIKE "%${filter}%")`; // searchClientByNameAndExternalIdAndPhoneAndDocumentKey
-        this.clientsService.getClientsByOfficeOfUser('', '', pageIndex * limit, limit, sqlSearch)
-          .subscribe((clients: any) => {
-            console.log(clients);
-            this.old_result = clients?.pageItems;
-            this.recordsSubject.next(this.old_result.length);
-            const l = this.old_result.filter((client: any) => client.active === clientActive);
-            this.clientsSubject.next(l.slice(pageIndex * limit, pageIndex * limit + limit));
-          });
-      } else {
-        this.recordsSubject.next(this.old_result.length);
-        const l = this.old_result.filter((client: any) => client.active === clientActive);
-        this.clientsSubject.next(l.slice(pageIndex * limit, pageIndex * limit + limit));
+      // if (this.old_key !== filter) {
+      this.old_key = filter;
+      this.old_result = [];
+      // let sqlSearch = `((display_name LIKE "%${filter}%")
+      //  OR (c.external_id LIKE "%${filter}%") OR  (c.mobile_no LIKE "%${filter}%"))`; // searchClientByNameAndExternalIdAndPhoneAndDocumentKey
+      let sqlSearch = `((display_name LIKE BINARY "%${filter}%")
+       OR (c.external_id LIKE BINARY "%${filter}%") OR  (c.mobile_no LIKE BINARY "%${filter}%"))`; // searchClientByNameAndExternalIdAndPhoneAndDocumentKey
+
+      if (clientActive) {
+        sqlSearch = sqlSearch + ` AND c.status_enum = 300`;
       }
+      this.clientsService.getClientsByOfficeOfUser('', '', pageIndex * limit, limit, sqlSearch)
+        .subscribe((clients: any) => {
+          // console.log(clients);
+          this.old_result = clients?.pageItems;
+          // this.recordsSubject.next(this.old_result.length);
+          this.recordsSubject.next(clients.totalFilteredRecords);
+          const l = clients?.pageItems.filter((client: any) => client.active === clientActive);
+          this.clientsSubject.next(l);
+        });
+      // } else {
+      //   this.recordsSubject.next(this.old_result.length);
+      //   const l = this.old_result.filter((client: any) => client.active === clientActive);
+      //   this.clientsSubject.next(l.slice(pageIndex * limit, pageIndex * limit + limit));
+      // }
     }
 
   }

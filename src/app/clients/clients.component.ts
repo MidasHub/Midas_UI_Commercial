@@ -114,8 +114,8 @@ export class ClientsComponent implements OnInit, AfterViewInit {
   applyFilter(filterValue: string = '') {
     console.log(filterValue);
     this.searchValue = filterValue;
-    this.dataSource.filterClients(filterValue.trim().toLowerCase(), this.sort.active, this.sort.direction, this.paginator.pageIndex, this.paginator.pageSize, !this.showClosedAccounts.checked);
-    this.paginator.pageIndex = 0;
+    this.dataSource.filterClients(filterValue, this.sort.active, this.sort.direction, this.paginator.pageIndex, this.paginator.pageSize, !this.showClosedAccounts.checked);
+    // this.paginator.pageIndex = 0;
   }
 
 }
