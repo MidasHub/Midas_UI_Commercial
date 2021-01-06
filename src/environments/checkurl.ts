@@ -1,7 +1,7 @@
 console.log('subdomain', window.location.hostname.split('.')[0]);
 const subdomain = window.location.hostname.split('.')[0];
-let tenant = 'default';
-let billpostenant = 'default';
+let tenant = 'staging';
+let billpostenant = 'staging';
 let defaultbaseURL = 'https://staging.midascore.net';
 let defaultbillposURL = 'https://staging.midascore.net';
 let apiProvider = '/midas/api';

@@ -157,7 +157,6 @@ export class WebAppComponent implements OnInit {
     if (!localStorage.getItem('midasServers')) {
       this.settingsService.setServers([
         'https://staging.midascore.net',
-        'https://staging-app.midascore.net',
         'https://uat.tekcompay.com:8443',
         'https://localhost:9443',
         'https://localhost:8443'
