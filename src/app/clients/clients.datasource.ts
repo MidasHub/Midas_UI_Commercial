@@ -83,11 +83,10 @@ export class ClientsDataSource implements DataSource<any> {
       this.old_result = [];
       // let sqlSearch = `((display_name LIKE "%${filter}%")
       //  OR (c.external_id LIKE "%${filter}%") OR  (c.mobile_no LIKE "%${filter}%"))`; // searchClientByNameAndExternalIdAndPhoneAndDocumentKey
-      let sqlSearch = `((display_name LIKE BINARY "%${filter}%")
-       OR (c.external_id LIKE BINARY "%${filter}%") OR  (c.mobile_no LIKE BINARY "%${filter}%"))`; // searchClientByNameAndExternalIdAndPhoneAndDocumentKey
+      let sqlSearch = `(display_name LIKE BINARY "%${filter}%" OR c.external_id LIKE "%${filter}%" OR  c.mobile_no LIKE "%${filter}%")`; // searchClientByNameAndExternalIdAndPhoneAndDocumentKey
 
       if (clientActive) {
-        sqlSearch = sqlSearch + ` AND c.status_enum = 300`;
+        sqlSearch = `${sqlSearch} AND c.status_enum = 300`;
       }
       this.clientsService.getClientsByOfficeOfUser('', '', pageIndex * limit, limit, sqlSearch)
         .subscribe((clients: any) => {
