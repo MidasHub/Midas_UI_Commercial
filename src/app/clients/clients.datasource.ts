@@ -78,12 +78,15 @@ export class ClientsDataSource implements DataSource<any> {
     if (!filter) {
       this.getClients();
     } else {
+      filter = String(filter).normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '')
+        .replace(/đ/g, 'd').replace(/Đ/g, 'D');
       // if (this.old_key !== filter) {
       this.old_key = filter;
       this.old_result = [];
       // let sqlSearch = `((display_name LIKE "%${filter}%")
       //  OR (c.external_id LIKE "%${filter}%") OR  (c.mobile_no LIKE "%${filter}%"))`; // searchClientByNameAndExternalIdAndPhoneAndDocumentKey
-      let sqlSearch = `(display_name LIKE BINARY "%${filter}%" OR c.external_id LIKE "%${filter}%" OR  c.mobile_no LIKE "%${filter}%")`; // searchClientByNameAndExternalIdAndPhoneAndDocumentKey
+      let sqlSearch = `(display_name LIKE "%${filter}%" OR c.external_id LIKE "%${filter}%" OR  c.mobile_no LIKE "%${filter}%")`; // searchClientByNameAndExternalIdAndPhoneAndDocumentKey
 
       if (clientActive) {
         sqlSearch = `${sqlSearch} AND c.status_enum = 300`;
