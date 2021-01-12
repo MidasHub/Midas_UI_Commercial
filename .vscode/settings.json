@@ -1,4 +1,5 @@
 {
+   "svn.ignoreMissingSvnWarning": true
    // "terminal.integrated.shell.windows":"C:\\softwares\\CentOS\\CentOS7.exe",
    // "terminal.integrated.shellArgs.windows": "runp",
 }

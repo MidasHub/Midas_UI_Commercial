@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from 'environments/environment';
 /** rxjs Imports */
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 /**
  * Groups service.
@@ -19,7 +19,9 @@ export class GroupsService {
   private credentialsStorageKey = 'midasCredentials';
   private accessToken: any;
   private GatewayApiUrlPrefix: any;
-  constructor(private http: HttpClient) { 
+  public pending_limit: any;
+
+  constructor(private http: HttpClient) {
     this.accessToken = JSON.parse(
       sessionStorage.getItem(this.credentialsStorageKey)
       || localStorage.getItem(this.credentialsStorageKey)
@@ -50,16 +52,16 @@ export class GroupsService {
     });
     return this.http.get('/groups', { params: httpParams });
   }
-  
+
   getCartTypes(): Observable<any> {
-    let httpParams = new HttpParams()
+    const httpParams = new HttpParams()
       .set('createdBy', this.accessToken.userId)
       .set('accessToken', this.accessToken.base64EncodedAuthenticationKey);
     return this.http.post<any>(`${this.GatewayApiUrlPrefix}/groups/get_fee_group_template`, httpParams);
   }
 
-  getCartTypesByGroupId(groupId:any): Observable<any> {
-    let httpParams = new HttpParams()
+  getCartTypesByGroupId(groupId: any): Observable<any> {
+    const httpParams = new HttpParams()
       .set('createdBy', this.accessToken.userId)
       .set('accessToken', this.accessToken.base64EncodedAuthenticationKey)
       .set('groupId', groupId);
@@ -250,7 +252,7 @@ export class GroupsService {
     return this.http.post('/groups', group);
   }
   createFeeGroup(groupId: any, listFeeGroup: any): Observable<any> {
-    let httpParams = {
+    const httpParams = {
       'createdBy': this.accessToken.userId,
       'accessToken': this.accessToken.base64EncodedAuthenticationKey,
       'groupId': groupId,
@@ -259,7 +261,7 @@ export class GroupsService {
     return this.http.post<any>(`${this.GatewayApiUrlPrefix}/groups/add_fee_by_Group`, httpParams);
   }
   updateFeeGroup(groupId: any, listFeeGroup: any): Observable<any> {
-    let httpParams = {
+    const httpParams = {
       'createdBy': this.accessToken.userId,
       'accessToken': this.accessToken.base64EncodedAuthenticationKey,
       'groupId': groupId,
@@ -351,6 +353,43 @@ export class GroupsService {
         .set('officeId', id.toString())
         .set('staffInSelectedOfficeOnly', 'true');
     return this.http.get('/groups/template', { params: httpParams });
+  }
+  getStaffs(officeId: string): Observable<any> {
+    const httpParams = new HttpParams()
+    .set('createdBy', this.accessToken.userId)
+    .set('accessToken', this.accessToken.base64EncodedAuthenticationKey)
+        .set('officeId', officeId);
+      return  this.http.post<any>(`${this.GatewayApiUrlPrefix}/common/get_list_staffName_of_office`, httpParams);
+  }
+  storeSpendingLimit(data: any): Observable<any> {
+    const httpParams = {
+      'createdBy': this.accessToken.userId,
+      'accessToken': this.accessToken.base64EncodedAuthenticationKey,
+      ...data
+    };
+    return this.http.post<any>(`${this.GatewayApiUrlPrefix}/config/store_limit_config_info`, httpParams);
+  }
+  getConfigSpendingLimit(year: number, month: number): BehaviorSubject<any> {
+    if (!this.pending_limit) {
+      this.pending_limit =  new BehaviorSubject(null);
+    }
+    const data = this.pending_limit.getValue();
+    if (!data || data.year !== year || data.month !== month) {
+      const httpParams = {
+        'createdBy': this.accessToken.userId,
+        'accessToken': this.accessToken.base64EncodedAuthenticationKey,
+        'year': year,
+        'month': month
+      };
+      this.http.post<any>(`${this.GatewayApiUrlPrefix}/config/get_limit_config_info`, httpParams).subscribe(response => {
+        this.pending_limit.next({
+          year: year,
+          month: month,
+          data: response?.result
+        });
+      });
+    }
+    return this.pending_limit;
   }
 
 }

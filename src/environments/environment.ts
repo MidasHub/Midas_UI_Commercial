@@ -33,7 +33,7 @@ export const environment = {
   apiVersion: te.apiVersion,
   serverUrl: '',
   GatewayApiUrl: JSON.parse(sessionStorage.getItem('midasBillposServerURL')) || te.defaultbillposURL,
-  GatewayApiUrlPrefix: '/billPos',
+  GatewayApiUrlPrefix: '/billpos',
   GatewayServerUrl: '',
   GatewayTenantId: te.billposT,
   oauth: {
