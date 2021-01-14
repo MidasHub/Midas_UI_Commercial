@@ -1,4 +1,4 @@
-<h1 mat-dialog-title>Hạn mức chi tiêu</h1>
+<h1 mat-dialog-title> {{ editData ? 'Cập nhập hạn mức chi tiêu' : 'Thêm hạn mức chi tiêu'}}</h1>
 
 <div mat-dialog-content [formGroup]="formDialog" [fxLayout]="'column'" fxLayout.lt-md="column" [fxLayoutGap]="'1%'" fxLayoutGap.lt-md="0%">
     <mat-form-field>
@@ -27,7 +27,11 @@
     </mat-form-field>
     <mat-form-field>
         <mat-label>Loại hạn mức</mat-label>
-        <input required type="number" matInput formControlName="limitType" />
+        <select matSelect required matNativeControl formControlName="limitType">
+        <option *ngFor="let type of limitTypes" [value]="type.id">
+          {{  type.value }}
+        </option>
+      </select>
     </mat-form-field>
     <mat-form-field>
         <mat-label>Hạn mức mặc định</mat-label>

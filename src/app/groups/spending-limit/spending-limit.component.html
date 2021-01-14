@@ -23,7 +23,7 @@
             </div>
         </div>
         <div class="action-button" fxFlex="20%">
-            <button mat-raised-button color="primary" (click)="createSpending()">
+            <button mat-raised-button color="primary" (click)="createEditSpending()">
                 <fa-icon icon="plus"></fa-icon>&nbsp;&nbsp;Thêm hạn mức
             </button>
         </div>
@@ -31,31 +31,34 @@
 
     <table mat-table [dataSource]="dataSource" matSort>
 
-        <ng-container matColumnDef="id">
+        <ng-container matColumnDef="refid">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>Id</th>
-            <td mat-cell *matCellDef="let row"> {{ row.id }} </td>
+            <td mat-cell *matCellDef="let row"> {{ row.refid }} </td>
         </ng-container>
 
-        <ng-container matColumnDef="description">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Mô tả</th>
-            <td mat-cell *matCellDef="let row"> {{ row.description }} </td>
+        <ng-container matColumnDef="month">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Tháng</th>
+            <td mat-cell *matCellDef="let row"> {{ row.month }} </td>
         </ng-container>
 
-        <ng-container matColumnDef="isCashPayment">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> isCashPayment</th>
-            <td mat-cell *matCellDef="let row"> {{ row.isCashPayment }} </td>
+        <ng-container matColumnDef="year">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Năm</th>
+            <td mat-cell *matCellDef="let row"> {{ row.year }} </td>
         </ng-container>
-
-        <ng-container matColumnDef="value">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> value </th>
-            <td mat-cell *matCellDef="let row"> {{ row.value }}</td>
+        <ng-container matColumnDef="paymentTypeId">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Loại </th>
+            <td mat-cell *matCellDef="let row"> {{ getPaymetType(row.paymentTypeId) }}</td>
+        </ng-container>
+        <ng-container matColumnDef="status">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Trạng thái </th>
+            <td mat-cell *matCellDef="let row"> {{ row.status }}</td>
         </ng-container>
         <ng-container matColumnDef="action">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>
                 <>
             </th>
             <td mat-cell *matCellDef="let row">
-                <button mat-raised-button color="primary">
+                <button mat-raised-button (click)="createEditSpending(row)" color="primary">
             <fa-icon icon="edit"></fa-icon>
           </button>
             </td>
@@ -66,5 +69,5 @@
         <tr mat-row *matRowDef="let terminal; columns: displayedColumns;" class="select-row"></tr>
     </table>
 
-    <mat-paginator paginator [pageSize]="10" [pageSizeOptions]="[10, 25, 50, 100]" showFirstLastButtons></mat-paginator>
+    <mat-paginator paginator [length]="data?.listSavingLimitConfig?.length" [pageSize]="10" [pageSizeOptions]="[10, 25, 50, 100]" showFirstLastButtons></mat-paginator>
 </mat-card>

@@ -9,7 +9,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
  * Groups service.
  */
 @Injectable({
-    providedIn: 'root'
+  providedIn: 'root'
 })
 export class GroupsService {
 
@@ -26,7 +26,7 @@ export class GroupsService {
       sessionStorage.getItem(this.credentialsStorageKey)
       || localStorage.getItem(this.credentialsStorageKey)
     );
-    this.GatewayApiUrlPrefix = environment.GatewayApiUrlPrefix ;
+    this.GatewayApiUrlPrefix = environment.GatewayApiUrlPrefix;
   }
 
   /**
@@ -94,7 +94,7 @@ export class GroupsService {
    */
   getGroupsByOfficeId(officeId: number): Observable<any> {
     const httpParams = new HttpParams().set('officeId', officeId.toString());
-    return this.http.get('/groups', { params: httpParams } );
+    return this.http.get('/groups', { params: httpParams });
   }
 
   /**
@@ -239,8 +239,8 @@ export class GroupsService {
    */
   unAssignRoleCommand(groupId: string, roleId: any): Observable<any> {
     const httpParams = new HttpParams()
-        .set('command', 'unassignRole')
-        .set('roleId', roleId);
+      .set('command', 'unassignRole')
+      .set('roleId', roleId);
     return this.http.post(`/groups/${groupId}`, {}, { params: httpParams });
   }
 
@@ -350,37 +350,38 @@ export class GroupsService {
    */
   getStaff(id: number): Observable<any> {
     const httpParams = new HttpParams()
-        .set('officeId', id.toString())
-        .set('staffInSelectedOfficeOnly', 'true');
+      .set('officeId', id.toString())
+      .set('staffInSelectedOfficeOnly', 'true');
     return this.http.get('/groups/template', { params: httpParams });
   }
   getStaffs(officeId: string): Observable<any> {
     const httpParams = new HttpParams()
-    .set('createdBy', this.accessToken.userId)
-    .set('accessToken', this.accessToken.base64EncodedAuthenticationKey)
-        .set('officeId', officeId);
-      return  this.http.post<any>(`${this.GatewayApiUrlPrefix}/common/get_list_staffName_of_office`, httpParams);
+      .set('createdBy', this.accessToken.userId)
+      .set('accessToken', this.accessToken.base64EncodedAuthenticationKey)
+      .set('officeId', officeId);
+    return this.http.post<any>(`${this.GatewayApiUrlPrefix}/common/get_list_staffName_of_office`, httpParams);
   }
   storeSpendingLimit(data: any): Observable<any> {
-    const httpParams = {
-      'createdBy': this.accessToken.userId,
-      'accessToken': this.accessToken.base64EncodedAuthenticationKey,
-      ...data
-    };
+    let httpParams = new HttpParams()
+      .set('createdBy', this.accessToken.userId)
+      .set('accessToken', this.accessToken.base64EncodedAuthenticationKey);
+    const keys = Object.keys(data);
+    for (const key of keys) {
+      httpParams = httpParams.set(key, data[key]);
+    }
     return this.http.post<any>(`${this.GatewayApiUrlPrefix}/config/store_limit_config_info`, httpParams);
   }
   getConfigSpendingLimit(year: number, month: number): BehaviorSubject<any> {
     if (!this.pending_limit) {
-      this.pending_limit =  new BehaviorSubject(null);
+      this.pending_limit = new BehaviorSubject(null);
     }
     const data = this.pending_limit.getValue();
     if (!data || data.year !== year || data.month !== month) {
-      const httpParams = {
-        'createdBy': this.accessToken.userId,
-        'accessToken': this.accessToken.base64EncodedAuthenticationKey,
-        'year': year,
-        'month': month
-      };
+      const httpParams = new HttpParams()
+        .set('createdBy', this.accessToken.userId)
+        .set('accessToken', this.accessToken.base64EncodedAuthenticationKey)
+        .set('year', String(year))
+        .set('month', String(month));
       this.http.post<any>(`${this.GatewayApiUrlPrefix}/config/get_limit_config_info`, httpParams).subscribe(response => {
         this.pending_limit.next({
           year: year,
@@ -391,5 +392,35 @@ export class GroupsService {
     }
     return this.pending_limit;
   }
-
+  addLimitRow(row: any) {
+    const value = this.pending_limit.getValue();
+    if (value.year === row.year && value.month === row.month) {
+      const newData = {
+        ...value,
+        data: {
+          ...value.data,
+          listSavingLimitConfig: [row, ...value.data.listSavingLimitConfig]
+        }
+      };
+      this.pending_limit.next(newData);
+    }
+  }
+  updateLimitRow(row: any) {
+    const value = this.pending_limit.getValue();
+    if (value.year === row.year && value.month === row.month) {
+      const newData = {
+        ...value,
+        data: {
+          ...value.data,
+          listSavingLimitConfig: value.data.listSavingLimitConfig.map( (item: any) => {
+            if (item.refid === row.refid) {
+              return row;
+            }
+            return item;
+          })
+        }
+      };
+      this.pending_limit.next(newData);
+    }
+  }
 }
