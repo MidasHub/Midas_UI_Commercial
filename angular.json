@@ -24,12 +24,17 @@
             "tsConfig": "src/tsconfig.app.json",
             "polyfills": "src/polyfills.ts",
             "extractCss": true,
+            "allowedCommonJsDependencies": [
+              "lodash",
+              "@ckeditor/ckeditor5-build-classic"
+            ],
             "assets": [
               "src/favicon.ico",
               "src/robots.txt",
               "src/manifest.json",
               "src/assets",
-              "src/assets/i8n"
+              "src/assets/i8n",
+              "src/theme"
             ],
             "styles": [
               "src/main.scss",
