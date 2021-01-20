@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { CreateRecurringDepositProductComponent } from './create-recurring-deposit-product.component';
 
@@ -6,7 +6,7 @@ describe('CreateRecurringDepositProductComponent', () => {
   let component: CreateRecurringDepositProductComponent;
   let fixture: ComponentFixture<CreateRecurringDepositProductComponent>;
 
-  beforeEach(waitForAsync(() => {
+  beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ CreateRecurringDepositProductComponent ]
     })

@@ -1,11 +1,11 @@
-import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
+import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 import { TransferBookingInternalComponent } from "./transfer-booking-internal.component";
 
 describe("TransferBookingInternalComponent", () => {
   let component: TransferBookingInternalComponent;
   let fixture: ComponentFixture<TransferBookingInternalComponent>;
 
-  beforeEach(waitForAsync(() => {
+  beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [TransferBookingInternalComponent],
     }).compileComponents();

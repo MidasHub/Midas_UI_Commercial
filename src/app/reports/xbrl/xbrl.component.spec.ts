@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { XBRLComponent } from './xbrl.component';
 
@@ -6,7 +6,7 @@ describe('XBRLComponent', () => {
   let component: XBRLComponent;
   let fixture: ComponentFixture<XBRLComponent>;
 
-  beforeEach(waitForAsync(() => {
+  beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ XBRLComponent ]
     })

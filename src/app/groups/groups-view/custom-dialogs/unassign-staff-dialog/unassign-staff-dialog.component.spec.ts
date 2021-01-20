@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { UnassignStaffDialogComponent } from './unassign-staff-dialog.component';
 
@@ -6,7 +6,7 @@ describe('UnassignStaffDialogComponent', () => {
   let component: UnassignStaffDialogComponent;
   let fixture: ComponentFixture<UnassignStaffDialogComponent>;
 
-  beforeEach(waitForAsync(() => {
+  beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ UnassignStaffDialogComponent ]
     })

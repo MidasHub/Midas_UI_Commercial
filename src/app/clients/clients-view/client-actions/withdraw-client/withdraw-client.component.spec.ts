@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { WithdrawClientComponent } from './withdraw-client.component';
 
@@ -6,7 +6,7 @@ describe('WithdrawClientComponent', () => {
   let component: WithdrawClientComponent;
   let fixture: ComponentFixture<WithdrawClientComponent>;
 
-  beforeEach(waitForAsync(() => {
+  beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ WithdrawClientComponent ]
     })

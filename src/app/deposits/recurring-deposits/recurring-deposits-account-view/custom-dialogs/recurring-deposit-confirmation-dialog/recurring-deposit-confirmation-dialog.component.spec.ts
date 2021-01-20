@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { RecurringDepositConfirmationDialogComponent } from './recurring-deposit-confirmation-dialog.component';
 
@@ -6,7 +6,7 @@ describe('RecurringDepositConfirmationDialogComponent', () => {
   let component: RecurringDepositConfirmationDialogComponent;
   let fixture: ComponentFixture<RecurringDepositConfirmationDialogComponent>;
 
-  beforeEach(waitForAsync(() => {
+  beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ RecurringDepositConfirmationDialogComponent ]
     })

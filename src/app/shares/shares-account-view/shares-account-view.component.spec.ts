@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SharesAccountViewComponent } from './shares-account-view.component';
 
@@ -6,7 +6,7 @@ describe('SharesAccountViewComponent', () => {
   let component: SharesAccountViewComponent;
   let fixture: ComponentFixture<SharesAccountViewComponent>;
 
-  beforeEach(waitForAsync(() => {
+  beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ SharesAccountViewComponent ]
     })

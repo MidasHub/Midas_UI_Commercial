@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { FixedDepositAccountPreviewStepComponent } from './fixed-deposit-account-preview-step.component';
 
@@ -6,7 +6,7 @@ describe('FixedDepositAccountPreviewStepComponent', () => {
   let component: FixedDepositAccountPreviewStepComponent;
   let fixture: ComponentFixture<FixedDepositAccountPreviewStepComponent>;
 
-  beforeEach(waitForAsync(() => {
+  beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ FixedDepositAccountPreviewStepComponent ]
     })

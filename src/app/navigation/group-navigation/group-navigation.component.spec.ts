@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { GroupNavigationComponent } from './group-navigation.component';
 
@@ -6,7 +6,7 @@ describe('GroupNavigationComponent', () => {
   let component: GroupNavigationComponent;
   let fixture: ComponentFixture<GroupNavigationComponent>;
 
-  beforeEach(waitForAsync(() => {
+  beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ GroupNavigationComponent ]
     })

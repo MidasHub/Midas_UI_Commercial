@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { MidasClientComponent } from './midas-client.component';
 
@@ -6,7 +6,7 @@ describe('ProfileComponent', () => {
   let component: MidasClientComponent;
   let fixture: ComponentFixture<MidasClientComponent>;
 
-  beforeEach(waitForAsync(() => {
+  beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ MidasClientComponent ]
     })

@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ViewSignatureDialogComponent } from './view-signature-dialog.component';
 
@@ -6,7 +6,7 @@ describe('ViewSignatureDialogComponent', () => {
   let component: ViewSignatureDialogComponent;
   let fixture: ComponentFixture<ViewSignatureDialogComponent>;
 
-  beforeEach(waitForAsync(() => {
+  beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ ViewSignatureDialogComponent ]
     })

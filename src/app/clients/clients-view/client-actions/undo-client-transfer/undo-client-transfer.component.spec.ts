@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { UndoClientTransferComponent } from './undo-client-transfer.component';
 
@@ -6,7 +6,7 @@ describe('UndoClientTransferComponent', () => {
   let component: UndoClientTransferComponent;
   let fixture: ComponentFixture<UndoClientTransferComponent>;
 
-  beforeEach(waitForAsync(() => {
+  beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ UndoClientTransferComponent ]
     })

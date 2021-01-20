@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ViewLoanProvisioningCriteriaComponent } from './view-loan-provisioning-criteria.component';
 
@@ -6,7 +6,7 @@ describe('ViewLoanProvisioningCriteriaComponent', () => {
   let component: ViewLoanProvisioningCriteriaComponent;
   let fixture: ComponentFixture<ViewLoanProvisioningCriteriaComponent>;
 
-  beforeEach(waitForAsync(() => {
+  beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ ViewLoanProvisioningCriteriaComponent ]
     })
