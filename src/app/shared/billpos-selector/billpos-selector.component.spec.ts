@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { BillposSelectorComponent } from './billpos-selector.component';
 
@@ -6,7 +6,7 @@ describe('BillposSelectorComponent', () => {
   let component: BillposSelectorComponent;
   let fixture: ComponentFixture<BillposSelectorComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ BillposSelectorComponent ]
     })

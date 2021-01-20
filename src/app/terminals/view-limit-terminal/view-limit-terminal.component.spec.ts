@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { ViewLimitTerminalComponent } from './view-limit-terminal.component';
 
 
@@ -6,7 +6,7 @@ describe('ViewLimitTerminalComponent', () => {
   let component: ViewLimitTerminalComponent;
   let fixture: ComponentFixture<ViewLimitTerminalComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ ViewLimitTerminalComponent ]
     })

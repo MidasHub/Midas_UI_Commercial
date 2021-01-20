@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { RollTermScheduleTabComponent } from './roll-term-schedule-tab.component';
 
 
@@ -6,7 +6,7 @@ describe('RollTermScheduleTabComponent', () => {
   let component: RollTermScheduleTabComponent;
   let fixture: ComponentFixture<RollTermScheduleTabComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ RollTermScheduleTabComponent ]
     })
