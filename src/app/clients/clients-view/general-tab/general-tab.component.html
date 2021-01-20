@@ -5,11 +5,11 @@
     <p>
       {{'Client_Component.ViewClient.TabGeneral.lblNoLoanCycles'| translate }}:{{clientSummary?.loanCycle}} <br/>
       {{'Client_Component.ViewClient.TabGeneral.lblNoActiveLoan'| translate }} :{{clientSummary?.activeLoans}} <br/>
-      {{'Client_Component.ViewClient.TabGeneral.lblLastLoanAmount'| translate }} :{{clientSummary?.lastLoanAmount}} <br/>
+      {{'Client_Component.ViewClient.TabGeneral.lblLastLoanAmount'| translate }} :{{clientSummary?.lastLoanAmount | money}} <br/>
     </p>
     <p>
       {{'Client_Component.ViewClient.TabGeneral.lblNoActiveSaving'| translate }} :{{clientSummary?.activeSavings}} <br/>
-      {{'Client_Component.ViewClient.TabGeneral.lblActiveSavingAmount'| translate }} :{{clientSummary?.totalSavings}} <br/>
+      {{'Client_Component.ViewClient.TabGeneral.lblActiveSavingAmount'| translate }} :{{clientSummary?.totalSavings | money}} <br/>
     </p>
   </div>
 
@@ -29,22 +29,22 @@
 
     <ng-container matColumnDef="Due">
       <th mat-header-cell *matHeaderCellDef> {{'Client_Component.ViewClient.TabGeneral.ActiveLoan.lblDueAmount'| translate }}</th>
-      <td mat-cell *matCellDef="let element"> {{element.amount}} </td>
+      <td mat-cell *matCellDef="let element"> {{element.amount | money}} </td>
     </ng-container>
 
     <ng-container matColumnDef="Paid">
       <th mat-header-cell *matHeaderCellDef>{{'Client_Component.ViewClient.TabGeneral.ActiveLoan.lblPaidAmount'| translate }}</th>
-      <td mat-cell *matCellDef="let element"> {{element.amountPaid}} </td>
+      <td mat-cell *matCellDef="let element"> {{element.amountPaid | money }} </td>
     </ng-container>
 
     <ng-container matColumnDef="Waived">
       <th mat-header-cell *matHeaderCellDef> {{'Client_Component.ViewClient.TabGeneral.ActiveLoan.lblWaivedAmount'| translate }}</th>
-      <td mat-cell *matCellDef="let element"> {{element.amountWaived}} </td>
+      <td mat-cell *matCellDef="let element"> {{element.amountWaived | money }} </td>
     </ng-container>
 
     <ng-container matColumnDef="Outstanding">
       <th mat-header-cell *matHeaderCellDef> {{'Client_Component.ViewClient.TabGeneral.ActiveLoan.lblOutstanding'| translate }}</th>
-      <td mat-cell *matCellDef="let element"> {{element.amountOutstanding}} </td>
+      <td mat-cell *matCellDef="let element"> {{element.amountOutstanding | money }} </td>
     </ng-container>
 
     <ng-container matColumnDef="Actions">
@@ -186,12 +186,12 @@
     </ng-container>
     <ng-container matColumnDef="Loan Balance">
       <th mat-header-cell *matHeaderCellDef>{{'Client_Component.ViewClient.TabGeneral.LoanAccount.lblLoanBalance'| translate }}</th>
-      <td mat-cell *matCellDef="let element"> {{element.loanBalance}} </td>
+      <td mat-cell *matCellDef="let element"> {{element.loanBalance | money}} </td>
     </ng-container>
 
     <ng-container matColumnDef="Amount Paid">
       <th mat-header-cell *matHeaderCellDef> {{'Client_Component.ViewClient.TabGeneral.LoanAccount.lblLoanPaid'| translate }}</th>
-      <td mat-cell *matCellDef="let element"> {{element.accountBalance}} </td>
+      <td mat-cell *matCellDef="let element"> {{element.accountBalance | money}} </td>
     </ng-container>
 
     <ng-container matColumnDef="Type">
@@ -265,12 +265,12 @@
 
     <ng-container matColumnDef="Loan Balance">
       <th mat-header-cell *matHeaderCellDef>{{'Client_Component.ViewClient.TabGeneral.LoanAccount.lblLoanBalance'| translate }}</th>
-      <td mat-cell *matCellDef="let element"> {{element.loanBalance}} </td>
+      <td mat-cell *matCellDef="let element"> {{element.loanBalance | money}} </td>
     </ng-container>
 
     <ng-container matColumnDef="Amount Paid">
       <th mat-header-cell *matHeaderCellDef> {{'Client_Component.ViewClient.TabGeneral.LoanAccount.lblLoanPaid'| translate }}</th>
-      <td mat-cell *matCellDef="let element"> {{element.accountBalance}} </td>
+      <td mat-cell *matCellDef="let element"> {{element.accountBalance | money}} </td>
     </ng-container>
 
     <ng-container matColumnDef="Type">
@@ -359,7 +359,7 @@
 
     <ng-container matColumnDef="Balance">
       <th mat-header-cell *matHeaderCellDef> Balance</th>
-      <td mat-cell *matCellDef="let element"> {{element.accountBalance | currency}} </td>
+      <td mat-cell *matCellDef="let element"> {{element.accountBalance | money}} </td>
     </ng-container>
 
     <ng-container matColumnDef="Actions">
@@ -456,7 +456,7 @@
 
     <ng-container matColumnDef="Balance">
       <th mat-header-cell *matHeaderCellDef> Balance</th>
-      <td mat-cell *matCellDef="let element"> {{element.accountBalance}} </td>
+      <td mat-cell *matCellDef="let element"> {{element.accountBalance | money}} </td>
     </ng-container>
 
     <ng-container matColumnDef="Actions">

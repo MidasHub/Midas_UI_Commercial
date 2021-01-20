@@ -16,7 +16,7 @@ export class GroupsService {
   /**
    * @param {HttpClient} http Http Client to send requests.
    */
-  private credentialsStorageKey = 'mifosXCredentials';
+  private credentialsStorageKey = 'midasCredentials';
   private accessToken: any;
   private GatewayApiUrlPrefix: any;
   constructor(private http: HttpClient) { 

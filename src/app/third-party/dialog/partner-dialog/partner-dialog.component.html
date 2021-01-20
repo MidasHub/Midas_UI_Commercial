@@ -1,0 +1,48 @@
+<div class="container">
+
+    <mat-card>
+  
+      <form [formGroup]="partnerForm">
+          
+        <mat-card-content>
+          <h3 class="mat-h3" fxFlexFill>Thông tin đối tác</h3>
+          <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
+  
+            <mat-form-field fxFlex="98%">
+                <mat-label>mã đối tác </mat-label>
+                <input matInput required formControlName="code">
+            </mat-form-field>
+  
+            <mat-form-field fxFlex="98%">
+              <mat-label>Tên đối tác</mat-label>
+              <input matInput required   formControlName="desc">
+            </mat-form-field>
+  
+            
+            <mat-checkbox labelPosition="before" formControlName="typeCheckValid" class="entries">
+                kiem tra só lân cà thẻ .
+            </mat-checkbox>
+            
+            <mat-form-field  fxFlex="98%">
+                <mat-label>Số lân cà thẻ cho phép</mat-label>
+                <input matInput  required formControlName="limit" type="number">
+            </mat-form-field>
+  
+            
+            <mat-checkbox labelPosition="before" formControlName="active" class="entries">
+                kích hoạt đối tác
+            </mat-checkbox>
+            
+          </div> 
+            <div style="text-align: center">
+                <button mat-raised-button color="primary" (click)="action === 'edit'? update():submit()">
+                <fa-icon icon="check"></fa-icon>
+                Thực hiện
+                </button>
+            </div>
+        </mat-card-content>  
+      </form>
+    </mat-card>
+  
+</div>
+  

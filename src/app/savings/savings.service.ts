@@ -13,7 +13,7 @@ import {environment} from '../../environments/environment';
   providedIn: 'root'
 })
 export class SavingsService {
-  private credentialsStorageKey = 'mifosXCredentials';
+  private credentialsStorageKey = 'midasCredentials';
   private accessToken: any;
   private GatewayApiUrlPrefix: any;
 
@@ -23,6 +23,21 @@ export class SavingsService {
       || localStorage.getItem(this.credentialsStorageKey)
     );
     this.GatewayApiUrlPrefix = environment.GatewayApiUrlPrefix;
+  }
+
+/**
+   * @param {string} savingAccountId is saving account's Id.
+   * @returns {Observable<any>}
+   */
+  getLimitSavingsTransactionConfig(paymentTypeId: string, staffId?: string): Observable<any> {
+    let httpParams = new HttpParams()
+      .set('paymentTypeId', paymentTypeId)
+      .set('staffId', staffId? staffId:"")
+      .set('createdBy', this.accessToken.userId)
+      .set('accessToken', this.accessToken.base64EncodedAuthenticationKey);
+
+
+    return this.http.post(`${this.GatewayApiUrlPrefix}/config/get_limit_withdrawal_config_amount`, httpParams);
   }
 
   /**
@@ -143,7 +158,9 @@ export class SavingsService {
     };
 
     xhr.open('GET', url);
-    xhr.setRequestHeader('Gateway-TenantId', environment.GatewayTenantId);
+    if (environment.isNewBillPos) {
+      xhr.setRequestHeader('Gateway-TenantId', environment.GatewayTenantId);
+    }
     xhr.responseType = 'blob';
     return xhr.send();
   }
@@ -165,6 +182,7 @@ export class SavingsService {
     const httpParams = new HttpParams().set('associations', 'all');
     return this.http.get(`/savingsaccounts/${accountId}`, {params: httpParams});
   }
+
   /**
    * @param accountId Savings Account Id of account to get data for.
    * @returns {Observable<any>} Savings data.
@@ -173,6 +191,7 @@ export class SavingsService {
     const httpParams = new HttpParams().set('associations', 'charges');
     return this.http.get(`/savingsaccounts/${accountId}`, {params: httpParams});
   }
+
   /**
    * @param accountId Savings Account Id of account to get data for.
    * @returns {Observable<any>} Savings account and template.
@@ -343,6 +362,15 @@ export class SavingsService {
       return this.http.post(`/savingsaccounts/${accountId}/transactions/${transactionId}`, data, {params: httpParams});
     }
     return this.http.post(`/savingsaccounts/${accountId}/transactions`, data, {params: httpParams});
+  }
+
+  updateAccountTransactions(accountId: string, transactionId: string, paymentTypeId: string): Observable<any> {
+    const httpParams = new HttpParams()
+      .set('createdBy', this.accessToken.userId)
+      .set('txnId', transactionId)
+      .set('paymentTypeId', paymentTypeId)
+      .set('accessToken', this.accessToken.base64EncodedAuthenticationKey);
+    return this.http.post(`${this.GatewayApiUrlPrefix}/savingTransaction/modified_payment_type`, httpParams);
   }
 
   /**

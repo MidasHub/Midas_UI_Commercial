@@ -23,6 +23,7 @@ import {FormfieldBase} from '../../shared/form-dialog/formfield/model/formfield-
 import {SelectBase} from '../../shared/form-dialog/formfield/model/select-base';
 import {FormDialogComponent} from '../../shared/form-dialog/form-dialog.component';
 import {InputBase} from '../../shared/form-dialog/formfield/model/input-base';
+import {HasPermissionDirective} from '../../directives/has-permission/has-permission.directive';
 
 @Component({
   selector: 'midas-manage-transaction',
@@ -40,8 +41,8 @@ export class ManageTransactionComponent implements OnInit {
   expandedElement: any;
   displayedColumns: string[] = ['productId', 'txnDate', 'trnRefNo', 'status',
     'officeName', 'agencyName', 'panHolderName', 'terminalAmount',
-    'feeAmount', 'cogsAmount', 'pnlAmount', 'actions'
-  ];
+    'feeAmount', 'cogsAmount', 'terminalAmount_feeAmount', 'actions'
+  ]; // pnlAmount
   formDate: FormGroup;
   formFilter: FormGroup;
   dataSource: any[];
@@ -49,7 +50,7 @@ export class ManageTransactionComponent implements OnInit {
   currentUser: any;
   transactionType: any[] = [
     {
-      label: 'All',
+      label: 'Tất cả',
       value: ''
     },
     {
@@ -70,7 +71,7 @@ export class ManageTransactionComponent implements OnInit {
   ];
   statusOption: any[] = [
     {
-      label: 'ALL',
+      label: 'Tất cả',
       value: ''
     },
     {
@@ -113,12 +114,21 @@ export class ManageTransactionComponent implements OnInit {
               private centersService: CentersService,
               private alertService: AlertService,
               public dialog: MatDialog,
-              private clientsService: ClientsService
+              private clientsService: ClientsService,
   ) {
     this.formDate = this.formBuilder.group({
-      'fromDate': [new Date(new Date().setMonth(new Date().getMonth() - 1))],
+      'fromDate': [new Date()],
       'toDate': [new Date()]
     });
+    // if (this.hasPermissionDirective.midasHasPermission('MANAGER')) {
+    //   this.displayedColumns.push('pnlAmount');
+    // }
+    this.currentUser = this.authenticationService.getCredentials();
+    const {permissions} = this.currentUser;
+    const permit_userTeller = permissions.includes('POS_UPDATE');
+    if (permit_userTeller) {
+      this.displayedColumns.push('pnlAmount');
+    }
     this.formFilter = this.formBuilder.group({
       'productId': [''],
       'status': [''],
@@ -147,15 +157,16 @@ export class ManageTransactionComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.currentUser = this.authenticationService.getCredentials();
     this.dataSource = this.transactionsData;
     this.savingsService.getListPartner().subscribe(partner => {
       this.partners = partner?.result?.listPartner;
       // @ts-ignore
-      this.partners.unshift({code: '', desc: 'ALL'});
+      this.partners.unshift({code: '', desc: 'Tất cả'});
     });
     this.systemService.getOffices().subscribe(offices => {
       this.offices = offices;
+      const officeId = this.currentUser.officeId;
+      this.formFilter.get('officeId').setValue(officeId);
     });
     this.getTransaction();
   }
@@ -192,10 +203,19 @@ export class ManageTransactionComponent implements OnInit {
           }
         });
       } else {
-        this.transactionsData = result?.result?.listPosTransaction;
+        this.transactionsData = result?.result?.listPosTransaction.map((v: any) => {
+          return {
+            ...v,
+            terminalAmount_feeAmount: Number(v.feeAmount / v.terminalAmount).toFixed(3)
+          };
+        });
       }
       this.filterTransaction();
     });
+  }
+
+  checkB(type: string) {
+    return type.startsWith('B');
   }
 
   filterTransaction() {

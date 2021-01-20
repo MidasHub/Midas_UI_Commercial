@@ -1,5 +1,5 @@
 <mat-card>
-  <mat-label>Thực hiện giao dịch</mat-label>
+  <!-- <mat-label>Thực hiện giao dịch</mat-label> -->
 
   <div class="example-container " >
     <mat-form-field style="width: 100%; "  >
@@ -9,7 +9,7 @@
 
     </mat-form-field>
   </div>
-  <div class="example-container " >
+  <div class="example-container " *ngIf="showSearchTable">
 
     <mat-table   [dataSource]="dataSource" matSort>
       <!-- ID Column -->

@@ -13,7 +13,7 @@ import {Observable} from 'rxjs';
   providedIn: 'root',
 })
 export class TransactionService {
-  private credentialsStorageKey = 'mifosXCredentials';
+  private credentialsStorageKey = 'midasCredentials';
   private accessToken: any;
   private GatewayApiUrlPrefix: any;
   private environment: any;
@@ -381,7 +381,9 @@ export class TransactionService {
     };
 
     xhr.open('GET', url);
+    if(this.environment.isNewBillPos){
     xhr.setRequestHeader('Gateway-TenantId', this.environment.GatewayTenantId);
+    }
     xhr.responseType = 'blob';
     xhr.send();
   }
@@ -465,7 +467,7 @@ export class TransactionService {
 
   exportTransaction(query: string) {
     // tslint:disable-next-line:max-line-length
-    const fileUrl = `${this.environment.GatewayApiUrl}${this.environment.GatewayApiUrlPrefix}/export/pre_export_transaction?ext5=ALL&typeExport=transaction&accessToken=${this.accessToken.base64EncodedAuthenticationKey}&createdBy=${this.accessToken.userId}&${query}`;
+    const fileUrl = `${this.environment.GatewayApiUrl}${this.environment.GatewayApiUrlPrefix}/export/export_transaction?ext5=ALL&typeExport=transaction&accessToken=${this.accessToken.base64EncodedAuthenticationKey}&createdBy=${this.accessToken.userId}&${query}`;
     this.getExportExcelFile(fileUrl).subscribe((data: any) => {
       const downloadURL = window.URL.createObjectURL(data);
       const link = document.createElement('a');
@@ -475,7 +477,18 @@ export class TransactionService {
 
     });
   }
+  exportTransactionBatch(batchNo: string) {
+    // tslint:disable-next-line:max-line-length
+    const fileUrl = `${this.environment.GatewayApiUrl}${this.environment.GatewayApiUrlPrefix}/export/pre_export_batch_transaction?ext5=ALL&typeExport=transaction&accessToken=${this.accessToken.base64EncodedAuthenticationKey}&createdBy=${this.accessToken.userId}&batchNo=${batchNo}`;
+    this.getExportExcelFile(fileUrl).subscribe((data: any) => {
+      const downloadURL = window.URL.createObjectURL(data);
+      const link = document.createElement('a');
+      link.href = downloadURL;
+      link.download = `batch_${batchNo}_transactions_.xlsx`;
+      link.click();
 
+    });
+  }
   getFeePaidTransactions(fromDate: string, toDate: string): Observable<any> {
     const {permissions, officeId} = this.accessToken;
     const permit = permissions.includes('TXN_CREATE');
@@ -652,6 +665,20 @@ export class TransactionService {
       httpParams
     );
   }
+  makeFeeOnAdvanceExecute(form: any): Observable<any> {
+    let httpParams = new HttpParams()
+      .set('createdBy', this.accessToken.userId)
+      .set('accessToken', this.accessToken.base64EncodedAuthenticationKey);
+
+    const keys = Object.keys(form);
+    for (const key of keys) {
+      httpParams = httpParams.set(key, form[key]);
+    }
+    return this.http.post<any>(
+      `${this.GatewayApiUrlPrefix}/savingTransaction/paid_fee_advance_transaction`,
+      httpParams
+    );
+  }
   getListTransExistingOfBatch(batchTxnName: string): Observable<any> {
     const httpParams = new HttpParams()
       .set('batchTxnName', batchTxnName)
@@ -662,12 +689,37 @@ export class TransactionService {
       httpParams
     );
   }
+
   getDocumentTemplate(): Observable<any> {
     const httpParams = new HttpParams()
       .set('createdBy', this.accessToken.userId)
       .set('accessToken', this.accessToken.base64EncodedAuthenticationKey);
     return this.http.post<any>(
       `${this.GatewayApiUrlPrefix}/common/get_document_templates`,
+      httpParams
+    );
+  }
+
+  addIdentifierBatch(clientId: string, listIdentifier: string): Observable<any> {
+    const httpParams = new HttpParams()
+      .set('createdBy', this.accessToken.userId)
+      .set('clientId', clientId)
+      .set('listIdentifier', listIdentifier)
+      .set('accessToken', this.accessToken.base64EncodedAuthenticationKey);
+    return this.http.post<any>(
+      `${this.GatewayApiUrlPrefix}/client/add_identifier`,
+      httpParams
+    );
+  }
+
+  getIdentifierTypeCC(clientId: string): Observable<any> {
+    const httpParams = new HttpParams()
+      .set('createdBy', this.accessToken.userId)
+      .set('clientId', clientId)
+      .set('officeId', this.accessToken.officeId)
+      .set('accessToken', this.accessToken.base64EncodedAuthenticationKey);
+    return this.http.post<any>(
+      `${this.GatewayApiUrlPrefix}/client/get_identifier_midas_by_client_group`,
       httpParams
     );
   }

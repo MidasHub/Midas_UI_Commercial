@@ -27,7 +27,7 @@ import { Alert } from './core/alert/alert.model';
 import { KeyboardShortcutsConfiguration } from './keyboards-shortcut-config';
 
 /** Initialize Logger */
-const log = new Logger('MifosX');
+const log = new Logger('Midas');
 
 /**
  * Main web app component.
@@ -156,8 +156,8 @@ export class WebAppComponent implements OnInit {
 
     if (!localStorage.getItem('midasServers')) {
       this.settingsService.setServers([
-        'https://uat.tekcompay.com:9443',
-        'https://staging-app.midascore.net',
+        'https://staging.midascore.net',
+        'https://uat.tekcompay.com:8443',
         'https://localhost:9443',
         'https://localhost:8443'
       ]);
@@ -165,10 +165,13 @@ export class WebAppComponent implements OnInit {
 
     if (!localStorage.getItem('midasBillposServers')) {
       this.settingsService.setBillposServers([
+        'https://staging.midascore.net',
         'https://uat.tekcompay.com:8287',
         'https://localhost:8287'
       ]);
     }
+
+
   }
 
   logout() {
@@ -178,7 +181,7 @@ export class WebAppComponent implements OnInit {
 
   help() {
     window.open('https://drive.google.com/drive/folders/1-J4JQyaaxBz2QSfZMzC4bPrPwWlksFWw?usp=sharing', '_blank');
-    // window.open('https://mifosforge.jira.com/wiki/spaces/docs/pages/52035622/User+Manual', '_blank');
+    // window.open('https://mifosforge.jira.com/wiki/spaces/docs/pages/52035622/User+Manual', '_blank');ng
   }
 
   // Monitor all keyboard events and excute keyboard shortcuts

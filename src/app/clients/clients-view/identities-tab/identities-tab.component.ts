@@ -1,34 +1,34 @@
 /** Angular Imports */
-import { Component, ViewChild } from "@angular/core";
-import { ActivatedRoute, NavigationExtras, Router } from "@angular/router";
-import { MatTable } from "@angular/material/table";
-import { MatDialog, MatDialogConfig } from "@angular/material/dialog";
+import {Component, ViewChild} from '@angular/core';
+import {ActivatedRoute, NavigationExtras, Router} from '@angular/router';
+import {MatTable} from '@angular/material/table';
+import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
 
 /** Custom Models */
-import { FormfieldBase } from "app/shared/form-dialog/formfield/model/formfield-base";
-import { InputBase } from "app/shared/form-dialog/formfield/model/input-base";
-import { SelectBase } from "app/shared/form-dialog/formfield/model/select-base";
+import {FormfieldBase} from 'app/shared/form-dialog/formfield/model/formfield-base';
+import {InputBase} from 'app/shared/form-dialog/formfield/model/input-base';
+import {SelectBase} from 'app/shared/form-dialog/formfield/model/select-base';
 
 /** Custom Components */
-import { UploadDocumentDialogComponent } from "../custom-dialogs/upload-document-dialog/upload-document-dialog.component";
-import { DeleteDialogComponent } from "../../../shared/delete-dialog/delete-dialog.component";
-import { FormDialogComponent } from "app/shared/form-dialog/form-dialog.component";
-import { AddIdentitiesComponent } from "./add-identities/add-identities.component";
+import {UploadDocumentDialogComponent} from '../custom-dialogs/upload-document-dialog/upload-document-dialog.component';
+import {DeleteDialogComponent} from '../../../shared/delete-dialog/delete-dialog.component';
+import {FormDialogComponent} from 'app/shared/form-dialog/form-dialog.component';
+import {AddIdentitiesComponent} from './add-identities/add-identities.component';
 /** Custom Services */
-import { ClientsService } from "../../clients.service";
-import { BankService } from "../../../services/bank.service";
-import { TransactionService } from "../../../transactions/transaction.service";
-import { AlertService } from "app/core/alert/alert.service";
-import { analyzeAndValidateNgModules } from "@angular/compiler";
-import { AddIdentitiesExtraInfoComponent } from "./add-identities-extra-info/add-identities-extra-info.component";
+import {ClientsService} from '../../clients.service';
+import {TransactionService} from '../../../transactions/transaction.service';
+import {AlertService} from 'app/core/alert/alert.service';
+import {analyzeAndValidateNgModules} from '@angular/compiler';
+import {AddIdentitiesExtraInfoComponent} from './add-identities-extra-info/add-identities-extra-info.component';
+import {BanksService} from '../../../banks/banks.service';
 
 /**
  * Identities Tab Component
  */
 @Component({
-  selector: "mifosx-identities-tab",
-  templateUrl: "./identities-tab.component.html",
-  styleUrls: ["./identities-tab.component.scss"],
+  selector: 'mifosx-identities-tab',
+  templateUrl: './identities-tab.component.html',
+  styleUrls: ['./identities-tab.component.scss'],
 })
 export class IdentitiesTabComponent {
   searchKey: string;
@@ -39,14 +39,14 @@ export class IdentitiesTabComponent {
   clientIdentifierTemplate: any;
   /** Client Id */
   clientId: string;
-
+  images: any[] = [];
   /** Identities Columns */
-  identitiesColumns: string[] = ["id", "documentKey", "description", "type", "documents", "status", "actions"];
-  identitiesOtherColumns: string[] = ["id", "documentKey", "description", "type", "documents", "status"];
+  identitiesColumns: string[] = ['id', 'documentKey', 'description', 'type', 'documents', 'status', 'actions'];
+  identitiesOtherColumns: string[] = ['id', 'documentKey', 'description', 'type', 'documents', 'status'];
 
   /** Identifiers Table */
-  @ViewChild("identifiersTable", { static: true }) identifiersTable: MatTable<Element>;
-  @ViewChild("identifiersTableOther", { static: true }) identifiersTableOther: MatTable<Element>;
+  @ViewChild('identifiersTable', {static: true}) identifiersTable: MatTable<Element>;
+  @ViewChild('identifiersTableOther', {static: true}) identifiersTableOther: MatTable<Element>;
 
   // @ViewChild('')
   /**
@@ -61,9 +61,9 @@ export class IdentitiesTabComponent {
     private clientService: ClientsService,
     private transactionService: TransactionService,
     private alertService: AlertService,
-    private bankService: BankService
+    private bankService: BanksService
   ) {
-    this.clientId = this.route.parent.snapshot.paramMap.get("clientId");
+    this.clientId = this.route.parent.snapshot.paramMap.get('clientId');
     this.route.data.subscribe((data: { clientIdentities: any; clientIdentifierTemplate: any }) => {
       this.clientIdentifierTemplate = data.clientIdentifierTemplate;
       data.clientIdentities.forEach((element: any) => {
@@ -71,6 +71,9 @@ export class IdentitiesTabComponent {
           this.clientIdentities.push(element);
         } else {
           this.clientIdentitiesOther.push(element);
+          if (element.documentType.name === 'CMND') {
+            this.images.push(element);
+          }
         }
       });
     });
@@ -93,9 +96,9 @@ export class IdentitiesTabComponent {
       if (res.result.message) {
         this.alertService.alert({
           message: res.result.message,
-          msgClass: "cssWarning",
-          hPosition: "right",
-          vPosition: "bottom",
+          msgClass: 'cssWarning',
+          hPosition: 'right',
+          vPosition: 'bottom',
         });
       }
 
@@ -122,41 +125,41 @@ export class IdentitiesTabComponent {
                   if (mExpired === mSystem + 1) {
                     this.alertService.alert({
                       message:
-                        "CHÚ Ý: Thẻ sẽ hết hạn vào tháng sau, đây là lần cuối cùng được thực hiện giao dịch trên thẻ này",
-                      msgClass: "cssWarning",
-                      hPosition: "right",
-                      vPosition: "bottom",
+                        'CHÚ Ý: Thẻ sẽ hết hạn vào tháng sau, đây là lần cuối cùng được thực hiện giao dịch trên thẻ này',
+                      msgClass: 'cssWarning',
+                      hPosition: 'right',
+                      vPosition: 'bottom',
                     });
                   }
                 }
                 if (mExpired === mSystem) {
                   this.alertService.alert({
-                    message: "CẢNH BÁO: Thẻ sẽ hết hạn trong tháng này, cân nhắc khi thực hiện giao dịch trên thẻ này",
-                    msgClass: "cssDanger",
-                    hPosition: "center",
-                    vPosition: "bottom",
+                    message: 'CẢNH BÁO: Thẻ sẽ hết hạn trong tháng này, cân nhắc khi thực hiện giao dịch trên thẻ này',
+                    msgClass: 'cssDanger',
+                    hPosition: 'center',
+                    vPosition: 'bottom',
                   });
                 }
                 if (mExpired < mSystem) {
                   this.alertService.alert({
-                    message: "CẢNH BÁO: Thẻ đã hết hạn, không được thực hiện giao dịch trên thẻ này",
-                    msgClass: "cssDanger",
-                    hPosition: "center",
-                    vPosition: "top",
+                    message: 'CẢNH BÁO: Thẻ đã hết hạn, không được thực hiện giao dịch trên thẻ này',
+                    msgClass: 'cssDanger',
+                    hPosition: 'center',
+                    vPosition: 'top',
                   });
                 }
               }
             }
 
             let validRollTerm = true;
-            if (type != "cash") {
+            if (type !== 'cash') {
               this.transactionService
                 .checkValidCreateRollTermTransaction(identifierId)
                 .subscribe((resRollTermCheck: any) => {
                   validRollTerm = resRollTermCheck.result.isValid;
 
                   if (validRollTerm) {
-                    this.router.navigate(["/transaction/create"], {
+                    this.router.navigate(['/transaction/create'], {
                       queryParams: {
                         clientId: this.clientId,
                         identifierId: identifierId,
@@ -166,14 +169,14 @@ export class IdentitiesTabComponent {
                   } else {
                     this.alertService.alert({
                       message: `CẢNH BÁO: Đã tồn tại khoản đáo hạn với thẻ ${cardNumber} \n vui lòng tất toán trước khi thực hiện khởi tạo khoản đáo hạn mới !`,
-                      msgClass: "cssDanger",
-                      hPosition: "center",
-                      vPosition: "top",
+                      msgClass: 'cssDanger',
+                      hPosition: 'center',
+                      vPosition: 'top',
                     });
                   }
                 });
             } else {
-              this.router.navigate(["/transaction/create"], {
+              this.router.navigate(['/transaction/create'], {
                 queryParams: {
                   clientId: this.clientId,
                   identifierId: identifierId,
@@ -195,7 +198,7 @@ export class IdentitiesTabComponent {
   addIdentifier(addOther: boolean) {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.data = {
-      title: "Add Client Identifier",
+      title: 'Add Client Identifier',
       addOther: addOther,
       clientIdentifierTemplate: this.clientIdentifierTemplate,
     };
@@ -203,9 +206,8 @@ export class IdentitiesTabComponent {
     dialogConfig.minWidth = 400;
     const addIdentifierDialogRef = this.dialog.open(AddIdentitiesComponent, dialogConfig);
     addIdentifierDialogRef.afterClosed().subscribe((response: any) => {
-      console.log(response);
       if (response.data) {
-        let { description } = response.data.value;
+        let {description} = response.data.value;
         const {
           documentCardBank,
           documentCardType,
@@ -242,9 +244,9 @@ export class IdentitiesTabComponent {
                   documents: [],
                   clientId: this.clientId,
                   status:
-                    response.data.value.status === "Active"
-                      ? "clientIdentifierStatusType.active"
-                      : "clientIdentifierStatusType.inactive",
+                    response.data.value.status === 'Active'
+                      ? 'clientIdentifierStatusType.active'
+                      : 'clientIdentifierStatusType.inactive',
                 });
                 this.identifiersTableOther.renderRows();
               } else {
@@ -258,9 +260,9 @@ export class IdentitiesTabComponent {
                   documents: [],
                   clientId: this.clientId,
                   status:
-                    response.data.value.status === "Active"
-                      ? "clientIdentifierStatusType.active"
-                      : "clientIdentifierStatusType.inactive",
+                    response.data.value.status === 'Active'
+                      ? 'clientIdentifierStatusType.active'
+                      : 'clientIdentifierStatusType.inactive',
                 });
                 this.identifiersTable.renderRows();
               }
@@ -297,7 +299,7 @@ export class IdentitiesTabComponent {
    */
   deleteIdentifier(clientId: string, identifierId: string, index: number, addOther: boolean) {
     const deleteIdentifierDialogRef = this.dialog.open(DeleteDialogComponent, {
-      data: { deleteContext: `identifier id:${identifierId}` },
+      data: {deleteContext: `identifier id:${identifierId}`},
     });
     deleteIdentifierDialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {
@@ -322,18 +324,18 @@ export class IdentitiesTabComponent {
    */
   uploadDocument(index: number, identifierId: string, addOther: boolean) {
     const uploadDocumentDialogRef = this.dialog.open(UploadDocumentDialogComponent, {
-      data: { documentIdentifier: true },
+      data: {documentIdentifier: true},
     });
     uploadDocumentDialogRef.afterClosed().subscribe((dialogResponse: any) => {
       if (dialogResponse) {
         const formData: FormData = new FormData();
-        formData.append("name", dialogResponse.fileName);
-        formData.append("file", dialogResponse.file);
+        formData.append('name', dialogResponse.fileName);
+        formData.append('file', dialogResponse.file);
         this.clientService.uploadClientIdentifierDocument(identifierId, formData).subscribe((res: any) => {
           if (addOther) {
             this.clientIdentitiesOther[index].documents.push({
               id: res.resourceId,
-              parentEntityType: "client_identifiers",
+              parentEntityType: 'client_identifiers',
               parentEntityId: identifierId,
               name: dialogResponse.fileName,
               fileName: dialogResponse.file.name,
@@ -342,7 +344,7 @@ export class IdentitiesTabComponent {
           } else {
             this.clientIdentities[index].documents.push({
               id: res.resourceId,
-              parentEntityType: "client_identifiers",
+              parentEntityType: 'client_identifiers',
               parentEntityId: identifierId,
               name: dialogResponse.fileName,
               fileName: dialogResponse.file.name,
@@ -360,16 +362,14 @@ export class IdentitiesTabComponent {
   addIdentifierExtraInfo(userIdentifyId: string, cardNumber: string) {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.data = {
-      title: "Add Client Identifier Extra Info",
+      title: 'Add Client Identifier Extra Info',
       clientIdentifierTemplate: this.clientIdentifierTemplate,
     };
     dialogConfig.minWidth = 400;
     const addIdentifierDialogRef = this.dialog.open(AddIdentitiesExtraInfoComponent, dialogConfig);
     addIdentifierDialogRef.afterClosed().subscribe((response: any) => {
-      console.log(response);
       if (response.data) {
-        const { dueDay, expiredDate } = response.data.value;
-
+        const {dueDay, expiredDate} = response.data.value;
         this.clientService.getClientCross(this.clientId).subscribe((client: any) => {
           this.bankService
             .storeExtraCardInfo({

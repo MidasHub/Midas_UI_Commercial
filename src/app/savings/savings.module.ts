@@ -49,7 +49,7 @@ import {ClientsModule} from '../clients/clients.module';
 import {TranslatePipe} from '@ngx-translate/core';
 import { AdvanceComponent } from './savings-account-view/form-dialog/advance/advance.component';
 import { PartnerAdvanceCashComponent } from './savings-account-view/form-dialog/partner-advance-cash/partner-advance-cash.component';
-
+import {UpdateSavingAccountComponent} from './savings-account-view/form-dialog/update-saving-account/update-saving-account.component'
 
 /**
  * Savings Module
@@ -103,7 +103,8 @@ import { PartnerAdvanceCashComponent } from './savings-account-view/form-dialog/
     EditTransactionComponent,
     ApplyAnnualFeesSavingsAccountComponent,
     AdvanceComponent,
-    PartnerAdvanceCashComponent
+    PartnerAdvanceCashComponent,
+    UpdateSavingAccountComponent
   ],
   providers: [DatePipe]
 })

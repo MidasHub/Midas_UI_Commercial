@@ -1,5 +1,5 @@
 {
-  "APP_NAME": "Midas - VN",
+  "APP_NAME": "Midas ",
   "Client_Component": {
     "ClientStepper": {
       "AddressStep": {
@@ -322,7 +322,7 @@
     "btnViewOnDueCard": "Xem chi tiết"
   },
   "Login_Component": {
-    "APP_SLOGAN": "Phần mềm quản lý hiệu quả",
+    "APP_SLOGAN": "Bứt phá mọi giới hạn của bạn",
     "About": "Về Chúng Tôi",
     "Home": "Trang chủ",
     "Logged in as": "Đã đăng nhập là",
@@ -450,7 +450,8 @@
       "lblSource": "Đối tượng tìm",
       "lblSeachPlaceholder": "Nhập CMND/ số thẻ/ Tên khách và bấm Enter để tìm"
     },
-    "lblShare": "TK Chứng khoán"
+    "lblShare": "TK Chứng khoán",
+    "lblThirdParty": "Đối tác"
   },
   "Shared_Component": {
     "DeleteDialog": {
@@ -590,62 +591,74 @@
     }
   },
   "Terminal_Component": {
+    "btnTransfer": "Điều chuyển POS",
     "labelTerminalNameMsgPattern": "Mã Máy POS <strong>KHÔNG</strong> bắt đầu bằng ký tự đặc biệt(!@#$%^&*()_+=<>,.?]*) hoặc số",
-    "labelTerminal":"Máy POS",
-    "btnCreate":"Tạo thông tin máy POS",
-    "labelRequired":"<strong>Bắt bộc</strong>",
-    "labelTerminalMsgPattern":"<strong>Không</strong> Nhập ký tự đặc biệt",
-    "labelFilter":"Bộ lọc",
-    "tableTerminal":{
-      "terminalNo":"Mã máy POS",
-      "terminalCode":"Code máy POS",
-      "terminalName":"Tên POS",
-      "minFeeDefault":"Phí mặc định tối thiểu",
-      "createdBy":"Tài khoản tạo",
-      "createdDate":"Ngày tạo",
-      "updatedDate":"Ngày cập nhật",
-      "status":"Trạng thái"
+    "labelTerminal": "Máy POS",
+    "btnCreate": "Tạo thông tin máy POS",
+    "labelRequired": "<strong>Bắt bộc</strong>",
+    "labelTerminalMsgPattern": "<strong>Không</strong> Nhập ký tự đặc biệt",
+    "labelFilter": "Bộ lọc",
+    "labelAction": "Thao tác",
+    "tableTerminal": {
+      "terminalNo": "Mã máy POS",
+      "terminalCode": "Code máy POS",
+      "terminalName": "Tên POS",
+      "minFeeDefault": "Phí mặc định tối thiểu",
+      "createdBy": "Tài khoản tạo",
+      "createdDate": "Ngày tạo",
+      "updatedDate": "Ngày cập nhật",
+      "status": "Trạng thái"
     },
-    "FormTerminal":{
+    "FormTerminal": {
       "labelMsgMin100000": "Giá trị <strong>nhỏ nhất là 100,000</strong>",
       "labelMsgMin0": "Giá trị <strong>nhỏ nhất là 0</strong>",
       "labelMsgOutOffMax": "Giá trị <strong>lớn nhất là 100%</strong>",
       "labelMsgOutOffMin": "Giá trị <strong>nhổ nhất 0%</strong>",
-      "labelRequired":"<strong>Bắt bộc</strong>",
-      "labelEdit":"Chỉnh sửa thông tin máy POS",
-      "labelCreate":"Tạo POS",
-      "labelGeneral":"Cài đặt Phí",
-      "labelTerminalId":"Mã POS",
-      "labelTerminalCode":"Code POS",
-      "labelTerminalName":"Tên POS",
-      "labelLimitPerDay":"Hạn mức số tiền giao dịch trong ngày",
-      "labelMerchantId":"Đối tác",
-      "labelOffice":"Chi nhánh",
-      "labelMinFeeDefault":"Phí tối thiểu mặc định",
-      "checkboxIsActive":"Hoạt động",
-      "labelCostPercentage":"Phí Cost(%)",
-      "labelCogsPercentage":"Phí Cogs(%)",
-      "labelMinPercentage":"Phí thấp nhất(%)",
-      "labelMaxPercentage":"Phí cao nhất(%)",
-      "labelMaxLimitAmount":"Hạn mức máy POS",
-      "labelLevelLimit":"Số lần giao dịch trong ngày",
-      "buttonSetupAll":"Cài đặt chung",
-      "buttonResetDefault":"Hoàn tác",
-      "buttonSubmit":"Khởi tạo",
-      "buttonSubmitUpdate":"Cập nhật",
-      "tableFee":{
-        "Office":"Chi nhánh",
-        "CardType":"Loại thẻ",
-        "FeeCogs":"Phí POS(%)",
-        "FeeCost":"Phí Cost(%)",
-        "FeeMin":"Phí thấp nhất(%)",
-        "FeeMax":"Phí cao nhất(%)",
-        "MaxLimitAmountTransaction":"Hạn mức tối giao dịch",
-        "LevelTransactionCard":"Số lần giao dịch"
+      "labelRequired": "<strong>Bắt bộc</strong>",
+      "labelEdit": "Chỉnh sửa thông tin máy POS",
+      "labelCreate": "Tạo POS",
+      "labelGeneral": "Cài đặt Phí",
+      "labelTerminalId": "Mã POS",
+      "labelTerminalCode": "Code POS",
+      "labelTerminalName": "Tên POS",
+      "labelLimitPerDay": "Hạn mức số tiền giao dịch trong ngày",
+      "labelMerchantId": "Đối tác",
+      "labelOffice": "Chi nhánh",
+      "labelMinFeeDefault": "Phí tối thiểu mặc định",
+      "checkboxIsActive": "Hoạt động",
+      "labelCostPercentage": "Phí Cost(%)",
+      "labelCogsPercentage": "Phí Cogs(%)",
+      "labelMinPercentage": "Phí thấp nhất(%)",
+      "labelMaxPercentage": "Phí cao nhất(%)",
+      "labelMaxLimitAmount": "Hạn mức máy POS",
+      "labelLevelLimit": "Số lần giao dịch trong ngày",
+      "buttonSetupAll": "Cài đặt chung",
+      "buttonResetDefault": "Hoàn tác",
+      "buttonSubmit": "Khởi tạo",
+      "buttonSubmitUpdate": "Cập nhật",
+      "tableFee": {
+        "Office": "Chi nhánh",
+        "CardType": "Loại thẻ",
+        "FeeCogs": "Phí POS(%)",
+        "FeeCost": "Phí Cost(%)",
+        "FeeMin": "Phí thấp nhất(%)",
+        "FeeMax": "Phí cao nhất(%)",
+        "MaxLimitAmountTransaction": "Hạn mức tối giao dịch",
+        "LevelTransactionCard": "Số lần giao dịch"
       }
+    },
+    "FormTransfer": {
+      "labelTransfer": "Điều chuyển máy POS",
+      "labelTerminalId": "Mã máy POS",
+      "labelTerminalName": "Tên máy POS",
+      "labelOffice": "Chi nhánh",
+      "labelLimitRemain": "Hạn mức",
+      "labelOfficeToTransfer": "Chuyển đến chi nhánh",
+      "btnSubmit": "Thực hiện",
+      "msgErrorLimitDaily": "Máy POS KHÔNG điều chuyển được do KHÔNG có hạn mức giao dịch trong ngày, Vui lòng liên hệ IT để hỗ trợ."
     }
   },
-  "labelCurrency":"$",
+  "labelCurrency": "đ",
   "ShareLabel": {
     "lblViewDetail": "Xem chi tiết",
     "lblMakeRepayment": "Thanh toán nợ"

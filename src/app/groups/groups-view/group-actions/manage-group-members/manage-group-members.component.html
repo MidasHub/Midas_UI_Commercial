@@ -1,49 +1,53 @@
-<div class="container" fxLayout="row" fxLayoutGap="3%">
+<div class="container-fluid" fxLayout="row" fxLayoutAlign="space-around start" fxLayoutGap="3%">
 
-  <mat-card fxFlex class="client-card" fxLayout="column" fxLayoutGap="2%">
+  <mat-card fxFlex="30%" class="client-card" fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="2%">
 
-    <mat-form-field fxFlex="30%">
+    <mat-form-field>
       <mat-label>Add Clients</mat-label>
       <input matInput [formControl]="clientChoice" [matAutocomplete]="clientsAutocomplete">
     </mat-form-field>
 
     <mat-autocomplete autoActiveFirstOption #clientsAutocomplete="matAutocomplete" [displayWith]="displayClient">
       <mat-option *ngFor="let client of clientsData" [value]="client">
-        {{ client.displayName }}
+        {{ client.displayName}} - chi nhánh: {{client.officeName}}
       </mat-option>
     </mat-autocomplete>
 
-    <div class="mat-table">
-      <div class="mat-header-row">
-        <div class="mat-header-cell">Client Details</div>
+    <div class="mat-table" fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="2%">
+      <div class="mat-header-row" fxLayout="row" fxLayoutAlign="start center">
+        <div class="mat-header-cell" fxFlex="25%">Client Details</div>
         <button mat-icon-button (click)="addClient()">
           <fa-icon icon="plus"></fa-icon>
         </button>
       </div>
       <div class="mat-row">
-        <div class="mat-cell">Name</div>
-        <div class="mat-cell">{{clientChoice.value.displayName}}</div>
+        <div class="mat-cell" fxFlex="20%">Name</div>
+        <div class="mat-cell" fxFlex="80%">{{clientChoice.value.displayName}}</div>
       </div>
       <div class="mat-row">
-        <div class="mat-cell">Id</div>
-        <div class="mat-cell">{{clientChoice.value.id}}</div>
+        <div class="mat-cell" fxFlex="20%">Id</div>
+        <div class="mat-cell" fxFlex="80%">{{clientChoice.value.id}}</div>
       </div>
       <div class="mat-row">
-        <div class="mat-cell">Office</div>
-        <div class="mat-cell">{{clientChoice.value.officeName}}</div>
+        <div class="mat-cell" fxFlex="20%">Office</div>
+        <div class="mat-cell" fxFlex="80%">{{clientChoice.value.officeName}}</div>
       </div>
     </div>
 
   </mat-card>
 
-  <mat-card fxFlex="40%">
+  <mat-card fxFlex="68%">
 
     <h3 matSubheader>Client Members</h3>
+    <h3 matSubheader>Chuyển cái này về dạng table có search giúp anh ! (JEAN)</h3>
 
-    <mat-nav-list  *ngIf="clientMembers?.length">
+    <mat-nav-list *ngIf="clientMembers?.length">
       <div mat-list-item *ngFor="let client of clientMembers index as i">
-        <span matLine class="p-t-10">{{client.displayName}}</span>
+        <span matLine class="p-t-10">{{client.displayName}} - chi nhánh: {{client.officeName}} </span>
         <div fxFlex></div>
+        <button mat-icon-button color="primary" (click)="showClientDetail(client)">
+          <fa-icon icon="eye"></fa-icon>
+        </button>
         <button mat-icon-button color="warn" (click)="removeClient(i, client)">
           <fa-icon icon="trash"></fa-icon>
         </button>

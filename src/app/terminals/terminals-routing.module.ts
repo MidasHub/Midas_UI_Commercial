@@ -54,13 +54,13 @@ const routes: Routes = [
               {
                 path: 'edit',
                 component: EditTerminalsComponent,
-                data: { title: extract('Edit Terminal'), breadcrumb: 'view', routeParamBreadcrumb: false },
+                //data: { title: extract('Edit Terminal'),  routeParamBreadcrumb: true },
                 resolve:{
                   terminalData: TerminalsResolver,
                 }
               }
-          ]
-        }]
+            ]
+          }]
         }
       ]
     }
