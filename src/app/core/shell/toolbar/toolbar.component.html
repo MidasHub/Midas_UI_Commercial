@@ -59,6 +59,10 @@
       <fa-icon class="mr-05" icon="university" size="lg"></fa-icon>
       Banks
     </a>
+    <a mat-tab-link class="tab-link" [matMenuTriggerFor]="selfServiceMenu" #selfServiceMenuTrigger="matMenuTrigger">
+      <fa-icon class="mr-05" icon="users" size="lg"></fa-icon>
+      Self Service
+    </a>
   </nav>
 
   <span fxFlex="auto">
@@ -137,6 +141,8 @@
   <button mat-menu-item [routerLink]="['/system']">{{ "Toolbar_Component.lblSys" | translate }}</button>
   <button mat-menu-item [routerLink]="['/products']">{{ "Toolbar_Component.lblProduct" | translate }}</button>
   <button mat-menu-item [routerLink]="['/templates']">{{ "Toolbar_Component.lblTemplate" | translate }}</button>
+  <button mat-menu-item [matMenuTriggerFor]="selfServiceMenu">Self Service</button>
+
 </mat-menu>
 
 <mat-menu #selfServiceMenu="matMenu" [overlapTrigger]="false">

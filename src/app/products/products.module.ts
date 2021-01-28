@@ -10,6 +10,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../shared/shared.module';
 import { ProductsRoutingModule } from './products-routing.module';
 import { PipesModule } from 'app/pipes/pipes.module';
+import { DirectivesModule } from '../directives/directives.module';
 
 /** Custom Components */
 import { ProductsComponent } from './products.component';
@@ -108,6 +109,7 @@ import { EditFixedDepositProductComponent } from './fixed-deposit-products/edit-
     SharedModule,
     ProductsRoutingModule,
     PipesModule,
+    DirectivesModule
   ],
   declarations: [
     ProductsComponent,

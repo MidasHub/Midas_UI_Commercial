@@ -25,7 +25,6 @@ import { OndueCardComponent } from './ondue-card/ondue-card.component';
     SharedModule,
     PipesModule,
     HomeRoutingModule
-
   ],
   declarations: [
     HomeComponent,

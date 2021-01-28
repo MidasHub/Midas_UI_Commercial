@@ -6,6 +6,7 @@ import { DatePipe } from '@angular/common';
 import { AccountTransfersRoutingModule } from './account-transfers-routing.module';
 import { SharedModule } from 'app/shared/shared.module';
 import { PipesModule } from '../pipes/pipes.module';
+import { DirectivesModule } from '../directives/directives.module';
 
 /** Custom Components */
 import { ViewStandingInstructionsComponent } from './view-standing-instructions/view-standing-instructions.component';
@@ -21,7 +22,7 @@ import { ViewAccountTransferComponent } from './view-account-transfer/view-accou
  * All components related to Account Transfers functions should be declared here.
  */
 @NgModule({
-  imports: [SharedModule, PipesModule, AccountTransfersRoutingModule],
+  imports: [SharedModule, PipesModule, DirectivesModule, AccountTransfersRoutingModule],
   declarations: [
     ViewStandingInstructionsComponent,
     EditStandingInstructionsComponent,

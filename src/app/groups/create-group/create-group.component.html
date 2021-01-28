@@ -39,7 +39,7 @@
           <mat-form-field>
             <mat-label>{{ 'Group_Component.Create_Group_Component.labelType'| translate}}</mat-label>
             <mat-select formControlName="groupTypeId">
-              <mat-option *ngFor="let type of groupType" [value]="groupTypeId"> 
+              <mat-option *ngFor="let type of groupType" [value]="groupTypeId">
               {{ type.viewValue }}
               </mat-option>
             </mat-select>
@@ -63,7 +63,7 @@
               <th mat-header-cell *matHeaderCellDef>{{ 'Group_Component.Create_Group_Component.tableColFeeWithDraw'| translate}}</th>
               <td mat-cell mat-body-row-fee *matCellDef="let element, let index">
                 <mat-form-field>
-                  <input matInput  (keypress)="onKey($event, index)" id="{{element.cardType}}_minValue" value="{{element.minValue}}"> 
+                  <input matInput  (keypress)="onKey($event, index)" id="{{element.cardType}}_minValue" value="{{element.minValue}}">
                 </mat-form-field>
               </td>
             </ng-container>
@@ -72,7 +72,7 @@
               <th mat-header-cell *matHeaderCellDef>{{ 'Group_Component.Create_Group_Component.tableColFeeRollTerm'| translate}}</th>
               <td mat-cell mat-body-row-fee *matCellDef="let element, let index">
                 <mat-form-field>
-                  <input matInput (keypress)="onKey($event,index)" id="{{element.cardType}}_maxValue" value="{{element.maxValue}}"> 
+                  <input matInput (keypress)="onKey($event,index)" id="{{element.cardType}}_maxValue" value="{{element.maxValue}}">
                 </mat-form-field>
               </td>
             </ng-container>
@@ -107,7 +107,7 @@
             <mat-label>{{ 'Group_Component.Create_Group_Component.labelAddClients'| translate}}</mat-label>
             <input matInput [formControl]="clientChoice" [matAutocomplete]="clientsAutocomplete">
           </mat-form-field>
-  
+
         </div>
 
         <mat-autocomplete autoActiveFirstOption #clientsAutocomplete="matAutocomplete" [displayWith]="displayClient">

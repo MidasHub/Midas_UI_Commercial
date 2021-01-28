@@ -6,6 +6,7 @@ import { DatePipe } from '@angular/common';
 import { RecurringDepositsRoutingModule } from './recurring-deposits-routing.module';
 import { SharedModule } from 'app/shared/shared.module';
 import { PipesModule } from '../../pipes/pipes.module';
+import { DirectivesModule } from '../../directives/directives.module';
 
 /** Custom Components */
 import { RecurringDepositsAccountViewComponent } from './recurring-deposits-account-view/recurring-deposits-account-view.component';
@@ -50,6 +51,7 @@ import { RecurringDepositConfirmationDialogComponent } from './recurring-deposit
   imports: [
     SharedModule,
     PipesModule,
+    DirectivesModule,
     RecurringDepositsRoutingModule
   ],
   declarations: [

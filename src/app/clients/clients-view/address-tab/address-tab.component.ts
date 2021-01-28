@@ -93,7 +93,6 @@ export class AddressTabComponent {
         const addressData = response.data.value;
         addressData.addressId = address.addressId;
         addressData.isActive = address.isActive;
-
         this.clientService.editClientAddress(this.clientId, address.addressTypeId, addressData).subscribe((res: any) => {
           addressData.addressTypeId = address.addressTypeId;
           addressData.addressType = address.addressType;

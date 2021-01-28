@@ -23,7 +23,7 @@ import { environment } from '../../environments/environment';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit, OnDestroy {
-  
+
   public environment = environment;
   /** True if password requires a reset. */
   resetPassword = false;
@@ -59,7 +59,6 @@ export class LoginComponent implements OnInit, OnDestroy {
         this.router.navigate(['/'], { replaceUrl: true });
       }
     });
-
   }
 
   /**

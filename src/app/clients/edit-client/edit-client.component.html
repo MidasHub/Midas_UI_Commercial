@@ -47,7 +47,7 @@
           <mat-form-field *ngIf="editClientForm.contains('firstname')" fxFlex="48%">
             <mat-label>{{'Client_Component.ClientStepper.GeneralStep.labelFirstName' |translate}}</mat-label>
             <input matInput required formControlName="firstname">
-            <mat-error *ngIf="editClientForm.controls.firstname.hasError('required')" 
+            <mat-error *ngIf="editClientForm.controls.firstname.hasError('required')"
               [innerHTML]="'Client_Component.ClientStepper.GeneralStep.labelFirstNameMsg' |translate"></mat-error>
           </mat-form-field>
 
@@ -142,12 +142,12 @@
               <mat-datepicker-toggle matSuffix [for]="incorpValidityTillDateDatePicker"></mat-datepicker-toggle>
               <mat-datepicker #incorpValidityTillDateDatePicker></mat-datepicker>
             </mat-form-field>
-  
+
             <mat-form-field fxFlex="48%">
               <mat-label>{{'Client_Component.ClientStepper.GeneralStep.labelCorpID' |translate}}</mat-label>
               <input matInput formControlName="incorpNumber">
             </mat-form-field>
-  
+
             <mat-form-field fxFlex="48%">
               <mat-label>{{'Client_Component.ClientStepper.GeneralStep.labelCorpMainBiz' |translate}}</mat-label>
               <mat-select formControlName="mainBusinessLineId">
@@ -156,7 +156,7 @@
                 </mat-option>
               </mat-select>
             </mat-form-field>
-  
+
             <mat-form-field fxFlex="48%">
               <mat-label>{{'Client_Component.ClientStepper.GeneralStep.labelCorpConstitution'|translate}}</mat-label>
               <mat-select formControlName="constitutionId">
@@ -165,7 +165,7 @@
                 </mat-option>
               </mat-select>
             </mat-form-field>
-  
+
             <mat-form-field fxFlex="98%">
               <mat-label>{{'Client_Component.ClientStepper.GeneralStep.labelCorpRemark' |translate}}</mat-label>
               <textarea matInput formControlName="remarks"></textarea>

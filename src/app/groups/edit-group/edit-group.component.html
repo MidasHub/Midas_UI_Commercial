@@ -26,7 +26,7 @@
           <mat-form-field>
             <mat-label>{{ 'Group_Component.Create_Group_Component.labelType'| translate}}</mat-label>
             <mat-select formControlName="groupTypeId">
-              <mat-option *ngFor="let type of groupType" [value]="groupTypeId" > 
+              <mat-option *ngFor="let type of groupType" [value]="groupTypeId" >
               {{ type.value }}
               </mat-option>
             </mat-select>
@@ -42,15 +42,15 @@
 
             <ng-container matColumnDef="minValue">
               <th mat-header-cell *matHeaderCellDef>{{ 'Group_Component.Create_Group_Component.tableColFeeWithDraw'| translate}}</th>
-              <td mat-cell *matCellDef="let element, let index"> 
-                  <input matInput  (keypress)="onKey($event, index)" id="{{element.cardType}}_minValue" value="{{element.minValue}}"> 
+              <td mat-cell *matCellDef="let element, let index">
+                  <input matInput  (keypress)="onKey($event, index)" id="{{element.cardType}}_minValue" value="{{element.minValue}}">
               </td>
             </ng-container>
 
             <ng-container matColumnDef="maxValue">
               <th mat-header-cell *matHeaderCellDef>{{ 'Group_Component.Create_Group_Component.tableColFeeRollTerm'| translate}}</th>
-              <td mat-cell *matCellDef="let element, let index"> 
-                  <input matInput (keypress)="onKey($event,index)" id="{{element.cardType}}_maxValue" value="{{element.maxValue}}"> 
+              <td mat-cell *matCellDef="let element, let index">
+                  <input matInput (keypress)="onKey($event,index)" id="{{element.cardType}}_maxValue" value="{{element.maxValue}}">
               </td>
             </ng-container>
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
@@ -78,7 +78,7 @@
             <mat-datepicker #submittedOnDatePicker></mat-datepicker>
             <mat-error *ngIf="editGroupForm.controls.submittedOnDate.hasError('required')" [innerHTML]="'Group_Component.Create_Group_Component.labelGroupSubmittedOnMsgRequired' |translate"></mat-error>
           </mat-form-field>
-          
+
         </div>
 
       </mat-card-content>

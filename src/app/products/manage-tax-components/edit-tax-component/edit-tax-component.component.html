@@ -22,18 +22,18 @@
             <mat-error *ngIf="taxComponentForm.controls.name.hasError('required')">
               Percentage is <strong>required</strong>
             </mat-error>
-          </mat-form-field>    
+          </mat-form-field>
 
           <mat-form-field *ngIf="taxComponentData.creditAccountType.value">
             <mat-label>Credit Account Type</mat-label>
             <input matInput formControlName="creditAccountType">
-          </mat-form-field> 
+          </mat-form-field>
 
           <mat-form-field *ngIf="taxComponentData.creditAccount.name">
             <mat-label>Credit Account</mat-label>
             <input matInput formControlName="creditAccount">
-          </mat-form-field> 
-        
+          </mat-form-field>
+
           <mat-form-field>
             <mat-label>Start Date</mat-label>
             <input matInput [min]="minDate" [matDatepicker]="startDatePicker" required formControlName="startDate">
