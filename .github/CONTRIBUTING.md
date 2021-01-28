@@ -1,26 +1,10 @@
 # Getting Started
 
-- View the [README](../README.md) or [watch this video](https://youtu.be/OnxxC3K2oro) to get your development environment up and running. 
+- View the [README](../README.md) to get your development environment up and running. 
 - Learn how to [format pull requests](#submitting-a-pull-request).
 - Read how to [rebase/merge upstream branches](#configuring-remotes).
-- Understand our [commit message conventions](https://github.com/openMF/web-app/blob/master/.github/COMMIT_MESSAGE.md).
-- Sign our [Mifos CLA](http://mifos.org/about-us/financial-legal/mifos-contributor-agreement/).
-- Follow our [code of conduct](CODE_OF_CONDUCT.md).
-- [Find an issue to work on](https://github.com/openMF/web-app/issues) and start smashing!
-- [Ask a question on Gitter](https://gitter.im/openMF/web-app).
-- Learn more at our [getting started guide](https://mifosforge.jira.com/wiki/spaces/RES/pages/464322561/New+Contributor+Getting+Started+Guide).
-
-# Contributing Guidelines [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/openMF/web-app/issues)
-
-When contributing to this repository, please first discuss the change you wish to make via an issue.
-
-Make sure you read the [Wiki](https://github.com/openMF/web-app/wiki).
-
-Do not open issues for general support questions as we want to keep GitHub issues for bug reports and feature requests. If you have got any questions, please email to our [mailing list](https://sourceforge.net/projects/mifos/lists/mifos-developer). You can also join our [gitter channel](https://gitter.im/openMF/web-app) to chat about your queries in real-time. 
-
-Each active repository has its own channel to direct questions to. Also join the [official gitter channel](https://gitter.im/openMF/mifos) of Mifos.
-
-Remember that this is an inclusive community, commited to creating a safe, positive environment. See the whole [Code of Conduct](CODE_OF_CONDUCT.md) and please follow it in all your interactions with the project.
+- [Find an issue to work on](https://github.com/MidasHub/webapp_angular9.git/issues) and start smashing!
+- [Ask a question on Gitter](https://github.com/MidasHub/webapp_angular9.git).
 
 
 ## Submitting or Requesting an Issue/Enhancement
@@ -92,10 +76,10 @@ git remote add upstream https://github.com/openMF/web-app.git
 ```
 2. Use `git remote -v` to check the status. The output must be something like this:
 ```
-  > origin    https://github.com/your-username/web-app.git (fetch)
-  > origin    https://github.com/your-username/web-app.git (push)
-  > upstream  https://github.com/openMF/web-app.git (fetch)
-  > upstream  https://github.com/openMF/web-app.git (push)
+  > origin    https://github.com/your-username/webapp_angular9.git (fetch)
+  > origin    https://github.com/your-username/webapp_angular9.git(push)
+  > upstream  https://github.com/MidasHub/webapp_angular9.git (fetch)
+  > upstream  https://github.com/MidasHub/webapp_angular9.git (push)
 ```
 3. To update your local copy with remote changes, run the following: (This will give you an exact copy of the current remote. You should not have any local changes on your master branch, if you do, use rebase instead.)
 ```

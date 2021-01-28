@@ -6,7 +6,6 @@ import { DatePipe } from '@angular/common';
 import { ClientsRoutingModule } from './clients-routing.module';
 import { SharedModule } from 'app/shared/shared.module';
 import { PipesModule } from '../pipes/pipes.module';
-import { DirectivesModule } from '../directives/directives.module';
 
 /** Custom Components */
 import { ClientsComponent } from './clients.component';
@@ -75,8 +74,6 @@ import { BalanceAccountTellerComponent } from './balance-account-teller/balance-
     SharedModule,
     ClientsRoutingModule,
     ReactiveFormsModule,
-    PipesModule,
-    DirectivesModule
   ],
   declarations: [
     ClientsComponent,
@@ -135,7 +132,6 @@ import { BalanceAccountTellerComponent } from './balance-account-teller/balance-
     BalanceAccountTellerComponent,
   ],
   exports: [
-    CreateSelfServiceUserComponent
   ],
   providers: [DatePipe]
 

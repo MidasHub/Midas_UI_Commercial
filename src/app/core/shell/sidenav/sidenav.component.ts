@@ -67,7 +67,7 @@ export class SidenavComponent implements OnInit {
    * old Help link //window.open('https://mifosforge.jira.com/wiki/spaces/docs/pages/52035622/User+Manual', '_blank');
    */
   help() {
-
+    
     window.open('https://drive.google.com/drive/folders/1-J4JQyaaxBz2QSfZMzC4bPrPwWlksFWw?usp=sharing', '_blank');
   }
 

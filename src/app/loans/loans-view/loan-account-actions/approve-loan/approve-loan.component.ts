@@ -7,7 +7,6 @@ import { DatePipe } from '@angular/common';
 
 /** Custom Services. */
 import { LoansService } from 'app/loans/loans.service';
-import { SettingsService } from 'app/settings/settings.service';
 
 /**
  * Approve Loan component.
@@ -37,14 +36,12 @@ export class ApproveLoanComponent implements OnInit {
    * @param datePipe Date Pipe.
    * @param loanService Loan Service.
    * @param router Router.
-   * @param {SettingsService} settingsService Settings Service
    */
   constructor(private formBuilder: FormBuilder,
     private route: ActivatedRoute,
     private datePipe: DatePipe,
     private loanService: LoansService,
-    private router: Router,
-    private settingsService: SettingsService) {
+    private router: Router) {
     this.route.data.subscribe((data: { actionButtonData: any }) => {
       this.loanData = data.actionButtonData;
     });
@@ -77,8 +74,8 @@ export class ApproveLoanComponent implements OnInit {
    * Submits Approve form.
    */
   submit() {
-    const local = this.settingsService.language.code;
-    const dateFormat = this.settingsService.dateFormat;
+    const dateFormat = 'dd MMMM yyyy';
+    const local = 'en';
     const approvedOnDate = this.approveLoanForm.value.approvedOnDate;
     const expectedDisbursementDate = this.approveLoanForm.value.expectedDisbursementDate;
     this.approveLoanForm.patchValue({

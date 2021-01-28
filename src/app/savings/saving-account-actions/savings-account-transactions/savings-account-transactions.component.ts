@@ -61,6 +61,7 @@ export class SavingsAccountTransactionsComponent implements OnInit {
     this.transactionCommand = this.route.snapshot.params['name'].toLowerCase();
     this.transactionType[this.transactionCommand] = true;
     this.savingAccountId = this.route.parent.snapshot.params['savingAccountId'];
+
   }
 
   /**
@@ -68,6 +69,7 @@ export class SavingsAccountTransactionsComponent implements OnInit {
    */
   ngOnInit() {
     this.createSavingAccountTransactionForm();
+
   }
 
   /**

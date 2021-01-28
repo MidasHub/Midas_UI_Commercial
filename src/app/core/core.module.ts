@@ -4,7 +4,6 @@ import { HTTP_INTERCEPTORS, HttpClient, HttpClientModule } from '@angular/common
 import { RouteReuseStrategy, RouterModule } from '@angular/router';
 
 /** Translation Imports */
-import { TranslateModule } from '@ngx-translate/core';
 
 /** Custom Services */
 import { AuthenticationService } from './authentication/authentication.service';
@@ -47,7 +46,6 @@ import { ContentComponent } from './shell/content/content.component';
   imports: [
     SharedModule,
     HttpClientModule,
-    TranslateModule,
     RouterModule
   ],
   declarations: [

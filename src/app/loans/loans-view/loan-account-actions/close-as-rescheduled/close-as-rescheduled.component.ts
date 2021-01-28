@@ -4,9 +4,6 @@ import { LoansService } from 'app/loans/loans.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DatePipe } from '@angular/common';
 
-/** Custom Services */
-import { SettingsService } from 'app/settings/settings.service';
-
 @Component({
   selector: 'mifosx-close-as-rescheduled',
   templateUrl: './close-as-rescheduled.component.html',
@@ -30,14 +27,12 @@ export class CloseAsRescheduledComponent implements OnInit {
    * @param {LoansService} systemService Loan Service.
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router for navigation.
-   * @param {SettingsService} settingsService Settings Service
    */
   constructor(private formBuilder: FormBuilder,
     private loanService: LoansService,
     private route: ActivatedRoute,
     private router: Router,
-    private datePipe: DatePipe,
-    private settingsService: SettingsService) {
+    private datePipe: DatePipe) {
       this.loanId = this.route.parent.snapshot.params['loanId'];
     }
 
@@ -64,12 +59,12 @@ export class CloseAsRescheduledComponent implements OnInit {
    */
   submit() {
     const transactionDate = this.closeLoanForm.value.transactionDate;
-    const dateFormat = this.settingsService.dateFormat;
+    const dateFormat = 'yyyy-MM-dd';
     this.closeLoanForm.patchValue({
       transactionDate: this.datePipe.transform(transactionDate, dateFormat)
     });
     const closeForm = this.closeLoanForm.value;
-    closeForm.locale = this.settingsService.language.code;
+    closeForm.locale = 'en';
     closeForm.dateFormat = dateFormat;
     this.loanService.submitLoanActionButton(this.loanId, closeForm, 'close-rescheduled')
       .subscribe((response: any) => {

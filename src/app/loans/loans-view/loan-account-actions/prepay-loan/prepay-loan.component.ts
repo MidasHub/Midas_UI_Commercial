@@ -6,8 +6,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 /** Custom Services */
 import { LoansService } from 'app/loans/loans.service';
 import { DatePipe } from '@angular/common';
-import { SettingsService } from 'app/settings/settings.service';
-
 
 /**
  * Loan Prepay Loan Option
@@ -43,14 +41,12 @@ export class PrepayLoanComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router for navigation.
    * @param {DatePipe} datePipe Date Pipe.
-   * @param {SettingsService} settingsService Settings Service
    */
   constructor(private formBuilder: FormBuilder,
     private loanService: LoansService,
     private route: ActivatedRoute,
     private router: Router,
-    private datePipe: DatePipe,
-    private settingsService: SettingsService) {
+    private datePipe: DatePipe) {
       this.loanId = this.route.parent.snapshot.params['loanId'];
     }
 
@@ -115,12 +111,12 @@ export class PrepayLoanComponent implements OnInit {
   submit() {
     const prevTransactionDate: Date = this.prepayLoanForm.value.transactionDate;
     // TODO: Update once language and date settings are setup
-    const dateFormat = this.settingsService.dateFormat;
+    const dateFormat = 'dd-MM-yyyy';
     this.prepayLoanForm.patchValue({
       transactionDate: this.datePipe.transform(prevTransactionDate, dateFormat)
     });
     const prepayLoanData = this.prepayLoanForm.value;
-    prepayLoanData.locale = this.settingsService.language.code;
+    prepayLoanData.locale = 'en';
     prepayLoanData.dateFormat = dateFormat;
     this.loanService.submitLoanActionButton(this.loanId, prepayLoanData, 'repayment')
       .subscribe((response: any) => {

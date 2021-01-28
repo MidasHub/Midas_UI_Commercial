@@ -5,9 +5,6 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { LoansService } from 'app/loans/loans.service';
 import { DatePipe } from '@angular/common';
 
-/** Custom Services */
-import { SettingsService } from 'app/settings/settings.service';
-
 @Component({
   selector: 'mifosx-loans-account-close',
   templateUrl: './loans-account-close.component.html',
@@ -31,14 +28,12 @@ export class LoansAccountCloseComponent implements OnInit {
    * @param {LoansService} systemService Loan Service.
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router for navigation.
-   * @param {SettingsService} settingsService Settings Service
    */
   constructor(private formBuilder: FormBuilder,
     private loanService: LoansService,
     private route: ActivatedRoute,
     private router: Router,
-    private datePipe: DatePipe,
-    private settingsService: SettingsService) {
+    private datePipe: DatePipe) {
       this.loanId = this.route.parent.snapshot.params['loanId'];
     }
 
@@ -65,12 +60,12 @@ export class LoansAccountCloseComponent implements OnInit {
    */
   submit() {
     const transactionDate = this.closeLoanForm.value.transactionDate;
-    const dateFormat = this.settingsService.dateFormat;
+    const dateFormat = 'yyyy-MM-dd';
     this.closeLoanForm.patchValue({
       transactionDate: this.datePipe.transform(transactionDate, dateFormat)
     });
     const closeForm = this.closeLoanForm.value;
-    closeForm.locale = this.settingsService.language.code;
+    closeForm.locale = 'en';
     closeForm.dateFormat = dateFormat;
     this.loanService.submitLoanActionButton(this.loanId, closeForm, 'close')
       .subscribe((response: any) => {
