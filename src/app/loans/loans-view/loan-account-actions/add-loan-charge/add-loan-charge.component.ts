@@ -6,7 +6,6 @@ import { DatePipe } from '@angular/common';
 
 /** Custom Services */
 import { LoansService } from '../../../loans.service';
-import { SettingsService } from 'app/settings/settings.service';
 
 /**
  * Create Add Loan Charge component.
@@ -49,14 +48,12 @@ export class AddLoanChargeComponent implements OnInit {
    * @param {AccountingService} accountingService Accounting Service.
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router for navigation.
-   * @param {SettingsService} settingsService Settings Service
    */
   constructor(private formBuilder: FormBuilder,
               private route: ActivatedRoute,
               private router: Router,
               private datePipe: DatePipe,
-              private loansService: LoansService,
-              private settingsService: SettingsService) {
+              private loansService: LoansService) {
     this.route.data.subscribe((data: { actionButtonData: any }) => {
       this.loanChargeOptions = data.actionButtonData.chargeOptions;
     });
@@ -100,12 +97,12 @@ export class AddLoanChargeComponent implements OnInit {
   submit() {
     const prevDueDate: Date = this.loanChargeForm.value.dueDate;
     // TODO: Update once language and date settings are setup
-    const dateFormat = this.settingsService.dateFormat;
+    const dateFormat = 'yyyy-MM-dd';
     this.loanChargeForm.patchValue({
       dueDate: this.datePipe.transform(prevDueDate, dateFormat)
     });
     const loanCharge = this.loanChargeForm.value;
-    loanCharge.locale = this.settingsService.language.code;
+    loanCharge.locale = 'en';
     loanCharge.dateFormat = dateFormat;
     this.loansService.createLoanCharge(this.loanId, 'charges', loanCharge).subscribe(res => {
       this.router.navigate(['../../general'], { relativeTo: this.route });

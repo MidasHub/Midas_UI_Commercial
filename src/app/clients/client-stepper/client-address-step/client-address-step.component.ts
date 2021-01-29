@@ -35,7 +35,7 @@ export class ClientAddressStepComponent {
     street: ' ',            // lưu thông tin đường
     townVillage:'',         // Lưu thông tin phường xã
     countyDistrict:'',      // Lưu Thông tin quận huyện
-    city: '',               // lưu thông tin TP thuộc tỉnh như TP Thủ Đức
+    city: '',               // lưu thông tin TP thuộc tỉnh như TP Thủ Đức       
     stateProvinceId: 122,   // Lưu thông tin tỉnh thành như TPHCM, Bình Dương
     countryId: 27,          // Lưu thông tin quốc gia
     addressTypeId: 15,      // Lưu loại địa chỉ: 15 là địa chỉ trường trú

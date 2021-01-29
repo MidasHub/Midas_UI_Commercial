@@ -7,8 +7,6 @@ import {SavingsRoutingModule} from './savings-routing.module';
 import {SharedModule} from 'app/shared/shared.module';
 import {PipesModule} from '../pipes/pipes.module';
 import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
-import { DirectivesModule } from '../directives/directives.module';
-
 /** Custom Components */
 import {SavingAccountActionsComponent} from './saving-account-actions/saving-account-actions.component';
 import {SavingsAccountTransactionsComponent} from './saving-account-actions/savings-account-transactions/savings-account-transactions.component';
@@ -62,10 +60,9 @@ import {UpdateSavingAccountComponent} from './savings-account-view/form-dialog/u
   imports: [
     SharedModule,
     PipesModule,
+    SavingsRoutingModule,
     ClientsModule,
-    NgxMatSelectSearchModule,
-    DirectivesModule,
-    SavingsRoutingModule
+    NgxMatSelectSearchModule
   ],
   declarations: [
     SavingAccountActionsComponent,

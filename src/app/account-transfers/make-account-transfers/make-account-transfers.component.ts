@@ -151,17 +151,17 @@ export class MakeAccountTransfersComponent implements OnInit, AfterViewInit {
   ngAfterViewInit() {
     this.makeAccountTransferForm.controls.toClientId.valueChanges.subscribe((value: string) => {
       // console.log( this.toClientTypeData);
-      if (value.length >= 2) {
+      if (value.length >= 3) {
         // this.clientsService.getFilteredClients('displayName', 'ASC', true, value)
         //   .subscribe((data: any) => {
         //     this.clientsData = data.pageItems;
         //   });
-
+        
         this.clientsData = this.toClientTypeData.filter((item:any) => item.displayName.toLowerCase().includes(value));
         console.log(this.clientsData)
         this.changeEvent();
       }
-
+      
     });
   }
 

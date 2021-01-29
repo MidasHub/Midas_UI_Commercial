@@ -218,7 +218,7 @@ export class CreateGroupComponent implements OnInit, AfterViewInit {
     this.groupService.createGroup(group).subscribe((response: any) => {
       console.log('response', response);
       this.createFeeGroup(response);
-
+      
     });
   }
 

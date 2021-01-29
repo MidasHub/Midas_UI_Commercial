@@ -1,5 +1,5 @@
 <div class="tab-container mat-typography">
-
+  
   <div fxLayout="row" fxLayoutAlign="start">
     <div class="m-b-10">
       <h3>Client Members</h3>
@@ -12,7 +12,7 @@
   </div>
 
   <div *ngIf="groupRolesData">
-
+    
     <table #rolesTable mat-table [dataSource]="groupRolesData" class="mat-elevation-z1 m-b-25">
 
       <ng-container matColumnDef="Name">

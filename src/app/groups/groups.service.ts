@@ -19,7 +19,7 @@ export class GroupsService {
   private credentialsStorageKey = 'midasCredentials';
   private accessToken: any;
   private GatewayApiUrlPrefix: any;
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient) { 
     this.accessToken = JSON.parse(
       sessionStorage.getItem(this.credentialsStorageKey)
       || localStorage.getItem(this.credentialsStorageKey)
@@ -50,7 +50,7 @@ export class GroupsService {
     });
     return this.http.get('/groups', { params: httpParams });
   }
-
+  
   getCartTypes(): Observable<any> {
     let httpParams = new HttpParams()
       .set('createdBy', this.accessToken.userId)

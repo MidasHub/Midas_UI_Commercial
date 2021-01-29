@@ -6,7 +6,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 /** Custom Services */
 import { LoansService } from 'app/loans/loans.service';
 import { DatePipe } from '@angular/common';
-import { SettingsService } from 'app/settings/settings.service';
 
 /**
  * Loan Make Repayment Component
@@ -38,14 +37,12 @@ export class MakeRepaymentComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router for navigation.
    * @param {DatePipe} datePipe Date Pipe.
-   * @param {SettingsService} settingsService Settings Service
    */
   constructor(private formBuilder: FormBuilder,
     private loanService: LoansService,
     private route: ActivatedRoute,
     private router: Router,
-    private datePipe: DatePipe,
-    private settingsService: SettingsService) {
+    private datePipe: DatePipe) {
       this.loanId = this.route.parent.snapshot.params['loanId'];
     }
 
@@ -102,16 +99,16 @@ export class MakeRepaymentComponent implements OnInit {
   submit() {
     const prevTransactionDate: Date = this.repaymentLoanForm.value.transactionDate;
     // TODO: Update once language and date settings are setup
-    const dateFormat = this.settingsService.dateFormat;
+    const dateFormat = 'dd-MM-yyyy';
     this.repaymentLoanForm.patchValue({
       transactionDate: this.datePipe.transform(prevTransactionDate, dateFormat)
     });
     const repaymentLoanData = this.repaymentLoanForm.value;
-    repaymentLoanData.locale = this.settingsService.language.code;
+    repaymentLoanData.locale = 'en';
     repaymentLoanData.dateFormat = dateFormat;
     this.loanService.submitLoanActionButton(this.loanId, repaymentLoanData, 'repayment')
       .subscribe((response: any) => {
-        this.router.navigate(['../../../general'], { relativeTo: this.route });
+        this.router.navigate(['../../../'+this.loanId +'/general'], { relativeTo: this.route });
     });
   }
 

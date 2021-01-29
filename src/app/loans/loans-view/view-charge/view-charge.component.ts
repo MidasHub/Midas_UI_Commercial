@@ -6,7 +6,6 @@ import { DatePipe } from '@angular/common';
 
 /** Custom Services */
 import { LoansService } from 'app/loans/loans.service';
-import { SettingsService } from 'app/settings/settings.service';
 
 /** Custom Dialogs */
 import { FormDialogComponent } from 'app/shared/form-dialog/form-dialog.component';
@@ -40,14 +39,12 @@ export class ViewChargeComponent {
    * @param {Router} router Router for navigation.
    * @param {MatDialog} dialog Dialog reference.
    * @param {DatePipe} datePipe DatePipe.
-   * @param {SettingsService} settingsService Settings Service
    */
   constructor(private loansService: LoansService,
               private route: ActivatedRoute,
               private datePipe: DatePipe,
               private router: Router,
-              public dialog: MatDialog,
-              private settingsService: SettingsService) {
+              public dialog: MatDialog) {
     this.route.data.subscribe((data: { loansAccountCharge: any, loanDetailsData: any }) => {
       this.chargeData = data.loansAccountCharge;
       this.loansAccountData = data.loanDetailsData;
@@ -82,8 +79,8 @@ export class ViewChargeComponent {
     const payChargeDialogRef = this.dialog.open(FormDialogComponent, { data });
     payChargeDialogRef.afterClosed().subscribe((response: any) => {
       if (response.data) {
-        const locale = this.settingsService.language.code;
-        const dateFormat = this.settingsService.dateFormat;
+        const locale = 'en';
+        const dateFormat = 'dd MMMM yyyy';
         const dataObject = {
           ...response.data.value,
           dueDate: this.datePipe.transform(response.data.value.dueDate, dateFormat),
@@ -134,8 +131,8 @@ export class ViewChargeComponent {
     const editChargeDialogRef = this.dialog.open(FormDialogComponent, { data });
     editChargeDialogRef.afterClosed().subscribe((response: any) => {
       if (response.data) {
-        const locale = this.settingsService.language.code;
-        const dateFormat = this.settingsService.dateFormat;
+        const locale = 'en';
+        const dateFormat = 'dd MMMM yyyy';
         const dataObject = {
           ...response.data.value,
           dateFormat,

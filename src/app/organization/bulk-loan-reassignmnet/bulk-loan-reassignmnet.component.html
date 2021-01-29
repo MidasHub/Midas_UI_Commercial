@@ -12,11 +12,11 @@
             <mat-label>Office</mat-label>
             <mat-select required (selectionChange)="getOffice($event.value)">
               <mat-option *ngFor="let office of offices" [value]="office.id">
-                {{ office.name }}
+                {{ office.name }} 
               </mat-option>
             </mat-select>
           </mat-form-field>
-
+        
         </div>
 
         <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
@@ -39,7 +39,7 @@
             <mat-label>From loan officer</mat-label>
             <mat-select required formControlName="fromLoanOfficerId" (selectionChange)="getFromOfficers($event.value)">
               <mat-option *ngFor="let fromOfficers of fromLoanOfficers" [value]="fromOfficers.id">
-                {{ fromOfficers.displayName }}
+                {{ fromOfficers.displayName }} 
               </mat-option>
             </mat-select>
             <mat-error *ngIf="bulkLoanForm.controls.fromLoanOfficerId.hasError('required')">
@@ -55,7 +55,7 @@
             <mat-label>To loan officer</mat-label>
             <mat-select required formControlName="toLoanOfficerId">
               <mat-option *ngFor="let toOfficers of toLoanOfficers" [value]="toOfficers.id">
-                {{ toOfficers.displayName }}
+                {{ toOfficers.displayName }} 
               </mat-option>
             </mat-select>
             <mat-error *ngIf="bulkLoanForm.controls.toLoanOfficerId.hasError('required')">
@@ -80,25 +80,25 @@
               <tr *ngFor="let clients of officerTemplate.accountSummaryCollection.clients">
 
                 <table>
-
+  
                   <tr>
-
+  
                     <td> <strong> {{ clients.displayName }} </strong></td>
-
+  
                   </tr>
 
                   <tr *ngFor="let loans of clients.loans">
 
-                    <td>
+                    <td> 
 
                       <mat-checkbox (change)="getLoans($event,loans.id)">{{ loans.productName}}({{ loans.accountNo }})</mat-checkbox>
 
                     </td>
 
                   </tr>
-
+  
                 </table>
-
+  
               </tr>
 
             </tbody>
@@ -118,25 +118,25 @@
               <tr *ngFor="let groups of officerTemplate.accountSummaryCollection.groups">
 
                 <table>
-
+  
                   <tr>
-
+  
                     <td> <strong> {{ groups.displayName }} </strong></td>
-
+  
                   </tr>
 
                   <tr *ngFor="let loans of groups.loans">
 
-                    <td>
+                    <td> 
 
                       <mat-checkbox>{{ loans.productName}}({{ loans.accountNo }})</mat-checkbox>
 
                     </td>
 
                   </tr>
-
+  
                 </table>
-
+  
               </tr>
 
             </tbody>

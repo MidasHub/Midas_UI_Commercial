@@ -4,9 +4,6 @@ import { LoansService } from 'app/loans/loans.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DatePipe } from '@angular/common';
 
-/** Custom Services */
-import { SettingsService } from 'app/settings/settings.service';
-
 @Component({
   selector: 'mifosx-foreclosure',
   templateUrl: './foreclosure.component.html',
@@ -30,14 +27,12 @@ export class ForeclosureComponent implements OnInit {
    * @param {LoansService} systemService Loan Service.
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router for navigation.
-   * @param {SettingsService} settingsService Settings Service
    */
   constructor(private formBuilder: FormBuilder,
     private loanService: LoansService,
     private route: ActivatedRoute,
     private router: Router,
-    private datePipe: DatePipe,
-    private settingsService: SettingsService) {
+    private datePipe: DatePipe) {
       this.loanId = this.route.parent.snapshot.params['loanId'];
     }
 
@@ -67,12 +62,12 @@ export class ForeclosureComponent implements OnInit {
   }
 
   retrieveLoanForeclosureTemplate(val: any) {
-    const dateFormat = this.settingsService.dateFormat;
+    const dateFormat = 'dd MMMM yyyy';
     const transactionDateFormatted = this.datePipe.transform(val, dateFormat);
     const data = {
       command: 'foreclosure',
-      dateFormat: this.settingsService.dateFormat,
-      locale: this.settingsService.language.code,
+      dateFormat: 'dd MMMM yyyy',
+      locale: 'en',
       transactionDate: transactionDateFormatted
     };
     this.loanService.getForeclosureData(this.loanId, data)
@@ -109,13 +104,13 @@ export class ForeclosureComponent implements OnInit {
 
   submit() {
     const transactionDate = this.foreclosureForm.value.transactionDate;
-    const dateFormat = this.settingsService.dateFormat;
+    const dateFormat = 'yyyy-MM-dd';
     this.foreclosureForm.patchValue({
       transactionDate: this.datePipe.transform(transactionDate, dateFormat)
     });
     const formData = {
       transactionDate: this.foreclosureForm.value.transactionDate,
-      locale: this.settingsService.language.code,
+      locale: 'en',
       dateFormat: dateFormat,
       note: this.foreclosureForm.value.note
     };

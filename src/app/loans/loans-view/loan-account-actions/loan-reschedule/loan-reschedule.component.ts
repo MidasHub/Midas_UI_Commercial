@@ -5,9 +5,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { DatePipe } from '@angular/common';
 import { subscribeOn } from 'rxjs/operators';
 
-/** Custom Services */
-import { SettingsService } from 'app/settings/settings.service';
-
 @Component({
   selector: 'mifosx-loan-reschedule',
   templateUrl: './loan-reschedule.component.html',
@@ -35,14 +32,12 @@ export class LoanRescheduleComponent implements OnInit {
    * @param {LoansService} systemService Loan Service.
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router for navigation.
-   * @param {SettingsService} settingsService Settings Service
    */
   constructor(private formBuilder: FormBuilder,
     private loanService: LoansService,
     private route: ActivatedRoute,
     private router: Router,
-    private datePipe: DatePipe,
-    private settingsService: SettingsService) {
+    private datePipe: DatePipe) {
       this.loanId = this.route.parent.snapshot.params['loanId'];
     }
 
@@ -70,7 +65,7 @@ export class LoanRescheduleComponent implements OnInit {
     const rescheduleFromDate = this.rescheduleLoanForm.value.rescheduleFromDate;
     const adjustedDueDate = this.rescheduleLoanForm.value.adjustedDueDate;
     const submittedOnDate = this.rescheduleLoanForm.value.submittedOnDate;
-    const dateFormat = this.settingsService.dateFormat;
+    const dateFormat = 'dd MMMM yyyy';
 
     this.rescheduleLoanForm.patchValue({
       rescheduleFromDate: this.datePipe.transform(rescheduleFromDate, dateFormat),
@@ -78,7 +73,7 @@ export class LoanRescheduleComponent implements OnInit {
       submittedOnDate: this.datePipe.transform(submittedOnDate, dateFormat)
     });
     const rescheduleForm = this.rescheduleLoanForm.value;
-    rescheduleForm.locale = this.settingsService.language.code;
+    rescheduleForm.locale = 'en';
     rescheduleForm.dateFormat = dateFormat;
     rescheduleForm.loanId = this.loanId;
     this.loanService.submitRescheduleData(rescheduleForm).subscribe((response: any) => {
