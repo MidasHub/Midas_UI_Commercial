@@ -30,7 +30,7 @@
 
         <mat-form-field>
           <mat-label>Payment group</mat-label>
-          <mat-select formControlName="paymentTypeGroup" >
+          <mat-select #paymentTypeGroup formControlName="paymentTypeGroup" >
             <!-- <mat-option *ngFor="let paymentType of paymentTypeOptions" [value]="paymentType.id">
               {{ paymentType.name }}
             </mat-option> -->
@@ -74,15 +74,15 @@
 
         <div  fxLayout="row" fxLayout.xs="column"
               class="form-group"
-              ng-show="limitConfigByPaymentTypeId && limitConfigByPaymentTypeId.limitConfig != 0 "
+              *ngIf="limitInfo && limitInfo.limitConfig != 0 "
             >
 
                 <ul>
                   <li>
                     <span>Định mức tháng này:</span
                     ><span class="text-right">
-                      <!-- {{limitConfigByPaymentTypeId.limitConfig | money}} -->
-                     5,000,000
+                      {{ limitInfo.limitConfig | money }}
+
                       </span
                     >
                   </li>
@@ -92,9 +92,7 @@
                       class="text-right"
                       style="color: red; font-weight: bold"
                     >
-                    5,000,000
-
-                      <!-- {{formatCurrency(limitConfigByPaymentTypeId.limitUsed)}} -->
+                    {{ limitInfo.limitUsed | money }}
                       </span
                     >
                   </li>
@@ -104,10 +102,8 @@
                       class="text-right"
                       style="color: green; font-weight: bold"
                     >
-                    5,000,000
 
-                      <!-- {{formatCurrency(limitConfigByPaymentTypeId.limitConfig -
-                      limitConfigByPaymentTypeId.limitUsed)}} -->
+                    {{ limitInfo.limitConfig - limitInfo.limitUsed | money }}
                       </span
                     >
                   </li>
@@ -121,9 +117,23 @@
           </button>
         </div> -->
 
-        <mat-form-field *ngIf="savingAccountTransactionForm.controls['accountNumber']">
+        <mat-form-field *ngIf="savingAccountTransactionForm.controls['accountNumber'] && !showStaffChoose">
           <mat-label>Account Number</mat-label>
           <input type="number" formControlName="accountNumber" matInput />
+        </mat-form-field>
+        <mat-form-field *ngIf="savingAccountTransactionForm.controls['accountNumber']
+        && showStaffChoose ">
+          <mat-label>Account Number</mat-label>
+          <!-- <input type="number" formControlName="accountNumber" matInput /> -->
+          <mat-select formControlName="accountNumber">
+
+            <mat-option selected label="Vương Ngọc Khiêm" value="51">
+              Vương Ngọc Khiêm
+            </mat-option>
+            <mat-option label="Đặng Tô Vân Toàn" value="43">
+              Đặng Tô Vân Toàn
+            </mat-option>
+          </mat-select>
         </mat-form-field>
 
         <mat-form-field *ngIf="savingAccountTransactionForm.controls['checkNumber']">

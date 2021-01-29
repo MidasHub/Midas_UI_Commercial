@@ -80,9 +80,9 @@ export class ClientsService {
       .set('sortOrder', sortOrder)
       .set('orderBy', orderBy)
       .set('officeId', this.accessToken.officeId);
-    if (sqlSearch) {
-      httpParams = httpParams.set('sqlSearch', sqlSearch);
-    }
+    // if (sqlSearch) {
+    //   httpParams = httpParams.set('sqlSearch', sqlSearch);
+    // }
     return this.http.get('/clients', {params: httpParams});
   }
 

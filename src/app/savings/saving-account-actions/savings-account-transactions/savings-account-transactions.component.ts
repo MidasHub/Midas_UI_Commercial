@@ -1,22 +1,22 @@
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
-import { DatePipe } from '@angular/common';
+import { Component, OnInit } from "@angular/core";
+import { FormGroup, FormBuilder, Validators, FormControl } from "@angular/forms";
+import { Router, ActivatedRoute } from "@angular/router";
+import { DatePipe } from "@angular/common";
 
 /** Custom Services */
-import { SavingsService } from '../../savings.service';
+import { SavingsService } from "../../savings.service";
+import { AlertService } from "app/core/alert/alert.service";
 
 /**
  * Create savings account transactions component.
  */
 @Component({
-  selector: 'mifosx-savings-transactions',
-  templateUrl: './savings-account-transactions.component.html',
-  styleUrls: ['./savings-account-transactions.component.scss']
+  selector: "mifosx-savings-transactions",
+  templateUrl: "./savings-account-transactions.component.html",
+  styleUrls: ["./savings-account-transactions.component.scss"],
 })
 export class SavingsAccountTransactionsComponent implements OnInit {
-
   /** Minimum Due Date allowed. */
   minDate = new Date(2000, 0, 1);
   /** Maximum Due Date allowed. */
@@ -25,21 +25,24 @@ export class SavingsAccountTransactionsComponent implements OnInit {
   savingAccountTransactionForm: FormGroup;
   /** savings account transaction payment options. */
   paymentTypeOptions: {
-    id: number,
-    name: string,
-    description: string,
-    isCashPayment: boolean,
-    position: number
+    id: number;
+    name: string;
+    description: string;
+    isCashPayment: boolean;
+    position: number;
   }[];
+
+  limitInfo: any;
   /** Flag to enable payment details fields. */
   addPaymentDetailsFlag: Boolean = false;
   paymentTypeIdGroup: string = "!Expense";
   /** transaction type flag to render required UI */
-  transactionType: { deposit: boolean, withdrawal: boolean } = { deposit: false, withdrawal: false };
+  transactionType: { deposit: boolean; withdrawal: boolean } = { deposit: false, withdrawal: false };
   /** transaction command for submit request */
   transactionCommand: string;
   /** saving account's Id */
   savingAccountId: string;
+  showStaffChoose: boolean = false;
   filteredOptions: any = [];
   paymentTypeDescription: string;
   /**
@@ -50,18 +53,20 @@ export class SavingsAccountTransactionsComponent implements OnInit {
    * @param {DatePipe} datePipe DatePipe.
    * @param {Router} router Router for navigation.
    */
-  constructor(private formBuilder: FormBuilder,
-              private route: ActivatedRoute,
-              private router: Router,
-              private datePipe: DatePipe,
-              private savingsService: SavingsService) {
+  constructor(
+    private formBuilder: FormBuilder,
+    private route: ActivatedRoute,
+    private router: Router,
+    private datePipe: DatePipe,
+    private alertService: AlertService,
+    private savingsService: SavingsService
+  ) {
     this.route.data.subscribe((data: { savingsAccountActionData: any }) => {
       this.paymentTypeOptions = data.savingsAccountActionData.paymentTypeOptions;
     });
-    this.transactionCommand = this.route.snapshot.params['name'].toLowerCase();
+    this.transactionCommand = this.route.snapshot.params["name"].toLowerCase();
     this.transactionType[this.transactionCommand] = true;
-    this.savingAccountId = this.route.parent.snapshot.params['savingAccountId'];
-
+    this.savingAccountId = this.route.parent.snapshot.params["savingAccountId"];
   }
 
   /**
@@ -69,7 +74,6 @@ export class SavingsAccountTransactionsComponent implements OnInit {
    */
   ngOnInit() {
     this.createSavingAccountTransactionForm();
-
   }
 
   /**
@@ -77,65 +81,76 @@ export class SavingsAccountTransactionsComponent implements OnInit {
    */
   createSavingAccountTransactionForm() {
     this.savingAccountTransactionForm = this.formBuilder.group({
-      'transactionDate': [new Date(), Validators.required],
-      'transactionAmount': ['', Validators.required],
-      'paymentTypeGroup': ['', Validators.required],
-      'paymentTypeId': ['', Validators.required],
-      'note': ['']
+      transactionDate: [new Date(), Validators.required],
+      transactionAmount: ["", Validators.required],
+      paymentTypeGroup: ["", Validators.required],
+      paymentTypeId: ["", Validators.required],
+      note: [""],
     });
 
-     // **SÁNG** filter payment type by group
-    this.savingAccountTransactionForm.get('paymentTypeGroup').valueChanges.subscribe((value => {
+    // **SÁNG** filter payment type by group
+    this.savingAccountTransactionForm.get("paymentTypeGroup").valueChanges.subscribe((value) => {
       this.filterPaymentType();
-    }));
+    });
 
-    this.savingAccountTransactionForm.get('paymentTypeId').valueChanges.subscribe((value => {
+    this.savingAccountTransactionForm.get("paymentTypeId").valueChanges.subscribe((value) => {
       this.changePaymentType();
-    }));
-     // **SÁNG** open add on info on default
-     this.addPaymentDetails();
+    });
+
+    // **SÁNG** open add on info on default
+    this.addPaymentDetails();
   }
 
   filterPaymentType() {
     this.paymentTypeDescription = "";
-    let groupId = String(this.savingAccountTransactionForm.get("paymentTypeGroup").value) ;
-    this.filteredOptions = this.paymentTypeOptions.filter(
-      item =>{
-        if (groupId.startsWith("!")){
-          return item.name.indexOf(groupId.substring(1)) == -1;
+    let groupId = String(this.savingAccountTransactionForm.get("paymentTypeGroup").value);
+    if (groupId == "Expense-Equity") {
+      this.showStaffChoose = true;
+      this.savingAccountTransactionForm.get("accountNumber").setValue("51");
+    } else {
+      this.showStaffChoose = false;
+      this.savingAccountTransactionForm.get("accountNumber").setValue(null);
+    }
 
-        }else{
-          return item.name.includes(groupId);
-
-        }
+    this.filteredOptions = this.paymentTypeOptions.filter((item) => {
+      if (groupId.startsWith("!")) {
+        return item.name.indexOf(groupId.substring(1)) == -1;
+      } else {
+        return item.name.includes(groupId);
       }
-    );
+    });
     this.savingAccountTransactionForm.get("paymentTypeId").setValue(null);
   }
 
-  changePaymentType(){
-
-    let paymentTypeId = this.savingAccountTransactionForm.get("paymentTypeId").value ;
-    if(!paymentTypeId){
+  changePaymentType() {
+    let paymentTypeId = this.savingAccountTransactionForm.get("paymentTypeId").value;
+    if (!paymentTypeId) {
       return;
     }
     let paymentTypeDescription = "";
-    this.paymentTypeOptions.forEach(function(paymentType){
-        if (paymentType.id == paymentTypeId){
-          paymentTypeDescription = paymentType.description;
-        }
-    })
+    this.paymentTypeOptions.forEach(function (paymentType) {
+      if (paymentType.id == paymentTypeId) {
+        paymentTypeDescription = paymentType.description;
+      }
+    });
     this.paymentTypeDescription = paymentTypeDescription;
-    this.checkValidAmountWithdrawalTransaction(paymentTypeId);
+    if (this.transactionCommand == "withdrawal") {
+      if (this.showStaffChoose) {
 
-}
+        let staffId = this.savingAccountTransactionForm.get("accountNumber").value;
+        this.checkValidAmountWithdrawalTransaction(paymentTypeId, staffId);
+      } else {
+        this.checkValidAmountWithdrawalTransaction(paymentTypeId);
+      }
+    }
+  }
 
-checkValidAmountWithdrawalTransaction(paymentTypeId: string, staffId?: string){
-
-  this.savingsService.getLimitSavingsTransactionConfig(paymentTypeId).subscribe((config) => {
-    console.log(config);
-  })
-}
+  // get limit config for withdraw action
+  checkValidAmountWithdrawalTransaction(paymentTypeId: string, staffId?: string) {
+    this.savingsService.getLimitSavingsTransactionConfig(paymentTypeId, staffId).subscribe((config) => {
+      this.limitInfo = config.result;
+    });
+  }
 
   /**
    * Method to add payment detail fields to the UI.
@@ -143,17 +158,21 @@ checkValidAmountWithdrawalTransaction(paymentTypeId: string, staffId?: string){
   addPaymentDetails() {
     this.addPaymentDetailsFlag = !this.addPaymentDetailsFlag;
     if (this.addPaymentDetailsFlag) {
-      this.savingAccountTransactionForm.addControl('accountNumber', new FormControl(''));
-      this.savingAccountTransactionForm.addControl('checkNumber', new FormControl(''));
-      this.savingAccountTransactionForm.addControl('routingCode', new FormControl(''));
-      this.savingAccountTransactionForm.addControl('receiptNumber', new FormControl(''));
-      this.savingAccountTransactionForm.addControl('bankNumber', new FormControl(''));
+      this.savingAccountTransactionForm.addControl("accountNumber", new FormControl(""));
+      this.savingAccountTransactionForm.addControl("checkNumber", new FormControl(""));
+      this.savingAccountTransactionForm.addControl("routingCode", new FormControl(""));
+      this.savingAccountTransactionForm.addControl("receiptNumber", new FormControl(""));
+      this.savingAccountTransactionForm.addControl("bankNumber", new FormControl(""));
+
+      this.savingAccountTransactionForm.get("accountNumber").valueChanges.subscribe((value) => {
+        this.changePaymentType();
+      });
     } else {
-      this.savingAccountTransactionForm.removeControl('accountNumber');
-      this.savingAccountTransactionForm.removeControl('checkNumber');
-      this.savingAccountTransactionForm.removeControl('routingCode');
-      this.savingAccountTransactionForm.removeControl('receiptNumber');
-      this.savingAccountTransactionForm.removeControl('bankNumber');
+      this.savingAccountTransactionForm.removeControl("accountNumber");
+      this.savingAccountTransactionForm.removeControl("checkNumber");
+      this.savingAccountTransactionForm.removeControl("routingCode");
+      this.savingAccountTransactionForm.removeControl("receiptNumber");
+      this.savingAccountTransactionForm.removeControl("bankNumber");
     }
   }
 
@@ -161,17 +180,37 @@ checkValidAmountWithdrawalTransaction(paymentTypeId: string, staffId?: string){
    * Method to submit the transaction details.
    */
   submit() {
+    if (this.limitInfo) {
+      if (
+        this.limitInfo >= this.limitInfo.limitConfig ||
+        this.limitInfo.limitConfig - this.limitInfo.limitUsed <
+          this.savingAccountTransactionForm.get("transactionAmount").value
+      ) {
+        this.alertService.alert({
+          message: `Số tiền chi vượt hạn mức hoặc đã hết hạn mức, không thể thực hiện!`,
+          msgClass: "cssDanger",
+          hPosition: "center",
+        });
+
+        return;
+      }
+    }
+    // remove un use controller
+    this.savingAccountTransactionForm.removeControl("paymentTypeGroup");
+
     const prevTransactionDate: Date = this.savingAccountTransactionForm.value.transactionDate;
     // TODO: Update once language and date settings are setup
-    const dateFormat = 'dd-MM-yyyy';
+    const dateFormat = "dd-MM-yyyy";
     this.savingAccountTransactionForm.patchValue({
-      transactionDate: this.datePipe.transform(prevTransactionDate, dateFormat)
+      transactionDate: this.datePipe.transform(prevTransactionDate, dateFormat),
     });
     const transactionData = this.savingAccountTransactionForm.value;
-    transactionData.locale = 'en';
+    transactionData.locale = "en";
     transactionData.dateFormat = dateFormat;
-    this.savingsService.executeSavingsAccountTransactionsCommand(this.savingAccountId, this.transactionCommand, transactionData).subscribe(res => {
-      this.router.navigate(['../../'], { relativeTo: this.route });
-    });
+    this.savingsService
+      .executeSavingsAccountTransactionsCommand(this.savingAccountId, this.transactionCommand, transactionData)
+      .subscribe((res) => {
+        this.router.navigate(["../../"], { relativeTo: this.route });
+      });
   }
 }
