@@ -4,7 +4,6 @@ import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { startWith, map } from 'rxjs/operators';
 
-
 /** Custom Imports. */
 import { activities } from './activities';
 
@@ -72,5 +71,4 @@ export class HomeComponent implements OnInit {
     return this.allActivities.filter(activity => activity.activity.toLowerCase().indexOf(filterValue) === 0);
   }
 
-  
 }

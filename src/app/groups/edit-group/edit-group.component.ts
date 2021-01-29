@@ -75,7 +75,7 @@ export class EditGroupComponent implements OnInit {
    * Creates and sets the edit group form.
    */
   ngOnInit() {
-    let name = String(this.groupData.name).trim().replace('(C)', ''); 
+    let name = String(this.groupData.name).trim().replace('(C)', '');
     name = String(name).trim().replace('(I)', '');
     if(this.groupData.name.search("(C)") > 0){
       this.groupTypeId = 1;
@@ -95,13 +95,13 @@ export class EditGroupComponent implements OnInit {
     this.groupService.getCartTypesByGroupId(this.groupData.id).subscribe( (data: any) => {
       data.result.listFeeGroup.forEach((item: any) =>{
          let fee = {
-             cardType: item.cardType , 
+             cardType: item.cardType ,
              cardDescription: item.description ,
-             minValue: item.minValue , 
+             minValue: item.minValue ,
              maxValue: item.maxValue ,
          };
          this.cards.push(fee);
-      }); 
+      });
       this.dataSource.data = this.cards;
     });
   }
@@ -154,12 +154,12 @@ export class EditGroupComponent implements OnInit {
       let name = String(group.name).trim().replace('(I)', '');
       group.name = "(I) " + name;
     }
-    
+
     delete group.groupTypeId;
 
     group.locale = this.settingsService.language.code;
     group.dateFormat = dateFormat;
- 
+
     this.groupService.updateGroup(group, this.groupData.id).subscribe((response: any) => {
       //this.router.navigate(['../'], { relativeTo: this.route });
       this.updateFeeGroup(response);
@@ -167,13 +167,13 @@ export class EditGroupComponent implements OnInit {
   }
   updateFeeGroup(groupObj:any){
     this.groupService.updateFeeGroup(groupObj.groupId,this.cards).subscribe((response: any) => {
-       
+
       this.router.navigate(['../general'], { relativeTo: this.route });
     });
   }
 
   onKey(event: any, index:any) {
-    
+
     const charCode = (event.which) ? event.which : event.keyCode;
     if (charCode > 31 && ((charCode < 45 ||  charCode == 47) || charCode > 57)) {
       return false;
@@ -181,13 +181,13 @@ export class EditGroupComponent implements OnInit {
     let name_input = event.target.id;
     let value_input = event.target.value;
     this.cards.forEach((item: any) =>{
-      if(item.cardType == index.cardType){ 
+      if(item.cardType == index.cardType){
         Object.keys(item).forEach(function (key){
           if(name_input.split("_")[1] == key){
             item[key] = Number(value_input);
           }
         });
-      } 
-    }); 
+      }
+    });
   }
 }

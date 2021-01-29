@@ -17,7 +17,7 @@
             <mat-error *ngIf="tellerForm.controls.name.hasError('pattern')">
               Teller Name <strong>cannot</strong> begin with a special character or number
             </mat-error>
-          </mat-form-field>		
+          </mat-form-field>
 
           <mat-form-field>
             <mat-label>Office</mat-label>
@@ -26,8 +26,8 @@
                 {{ office.name }}
               </mat-option>
             </mat-select>
-          </mat-form-field>   
-                
+          </mat-form-field>
+
           <mat-form-field>
             <mat-label>Description</mat-label>
             <input matInput formControlName="description">

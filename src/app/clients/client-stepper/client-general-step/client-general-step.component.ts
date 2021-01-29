@@ -33,7 +33,7 @@ export class ClientGeneralStepComponent implements OnInit {
   @Output() cancelEvent = new EventEmitter();
 
   currentUser: any;
-  
+
   /** Create Client Form */
   createClientForm: FormGroup;
 
@@ -91,7 +91,7 @@ export class ClientGeneralStepComponent implements OnInit {
    * Creates the client form.
    */
   setClientForm() {
-    
+
     this.createClientForm = this.formBuilder.group({
       'officeId': ['', Validators.required],
       'staffId': [''],
@@ -160,9 +160,9 @@ export class ClientGeneralStepComponent implements OnInit {
       if (role.id !== 3 ) {
         this.isTeller = false;
       }
-      
+
     }
-    
+
     );
   }
 

@@ -106,8 +106,9 @@ export class AuthenticationService {
       httpParams = httpParams.set('client_id', 'community-app');
       httpParams = httpParams.set('grant_type', 'password');
       httpParams = httpParams.set('client_secret', '123');
-      httpParams = httpParams.set('username', loginContext.username);
-      httpParams = httpParams.set('password', loginContext.password);
+
+      // httpParams = httpParams.set('username', loginContext.username);
+      // httpParams = httpParams.set('password', loginContext.password);
 
       return this.http.disableApiPrefix().post(`${environment.oauth.serverUrl}/oauth/token`, {}, { params: httpParams })
         .pipe(

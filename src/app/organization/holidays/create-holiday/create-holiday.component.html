@@ -40,7 +40,7 @@
             <mat-label>Repayment Scheduling Type</mat-label>
             <mat-select required formControlName="reschedulingType">
               <mat-option *ngFor="let repayments of repaymentSchedulingTypes" [value]="repayments.id">
-                {{ repayments.value }} 
+                {{ repayments.value }}
               </mat-option>
             </mat-select>
             <mat-error *ngIf="holidayForm.controls.reschedulingType.hasError('required')">
@@ -61,14 +61,14 @@
           <mat-form-field>
             <mat-label>Description</mat-label>
             <input matInput formControlName="description">
-          </mat-form-field>   
-          
+          </mat-form-field>
+
           <!-- TODO: Replace multi-select by custom angular material tree -->
           <mat-form-field>
             <mat-label>Applicable Offices</mat-label>
             <mat-select required formControlName="offices" multiple>
               <mat-option *ngFor="let office of officesData" [value]="{ officeId: office.id }">
-                {{ office.name }} 
+                {{ office.name }}
               </mat-option>
             </mat-select>
             <mat-error *ngIf="holidayForm.controls.offices.hasError('required')">

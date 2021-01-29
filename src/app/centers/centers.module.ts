@@ -5,6 +5,7 @@ import { NgModule } from '@angular/core';
 import { CentersRoutingModule } from './centers-routing.module';
 import { SharedModule } from 'app/shared/shared.module';
 import { PipesModule } from '../pipes/pipes.module';
+import { DirectivesModule } from '../directives/directives.module';
 
 /** Custom Components */
 import { CentersComponent } from './centers.component';
@@ -37,6 +38,7 @@ import { EditCenterComponent } from './edit-center/edit-center.component';
     SharedModule,
     CentersRoutingModule,
     PipesModule,
+    DirectivesModule
   ],
   declarations: [
     CentersComponent,
