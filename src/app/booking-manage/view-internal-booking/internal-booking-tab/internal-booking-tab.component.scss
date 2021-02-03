@@ -12,10 +12,3 @@
 mat-icon{
   cursor: pointer;
 }
-
-.mat-row:nth-child(4n + 1) {
-  background: #cef0f5 !important;
-}
-.mat-row:not(:nth-child(2n + 1)) {
-  background-color:#fff !important;
-}

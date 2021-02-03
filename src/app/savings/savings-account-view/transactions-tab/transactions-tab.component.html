@@ -32,10 +32,8 @@
         </mat-form-field>
         <div class="action-button" fxFlex="31%" fxLayoutAlign="end" style="height: 50px;" fxLayout="row"
              fxLayoutGap="20px">
-          <button mat-raised-button (click)="getData()"
-                  color="primary">{{'Saving_Account_Component.tabTransactions.btnSearch' | translate}}</button>
-          <button mat-raised-button color="primary"
-                  (click)="downloadReport()">{{'Saving_Account_Component.tabTransactions.btnExport' | translate}}</button>
+          <button mat-raised-button (click)="getData()" color="primary">{{'Saving_Account_Component.tabTransactions.btnSearch' | translate}}</button>
+          <button mat-raised-button color="primary" (click)="downloadReport()">{{'Saving_Account_Component.tabTransactions.btnExport' | translate}}</button>
         </div>
       </div>
       <div class="container m-b-20" [formGroup]="form" fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
@@ -68,14 +66,12 @@
       </ng-container>
 
       <ng-container matColumnDef="transactionDate">
-        <th mat-header-cell
-            *matHeaderCellDef>{{'Saving_Account_Component.tabTransactions.lblTransactionDate' | translate}}</th>
+        <th mat-header-cell *matHeaderCellDef>{{'Saving_Account_Component.tabTransactions.lblTransactionDate' | translate}}</th>
         <td mat-cell *matCellDef="let transaction"> {{ transaction.transactionDate | date }} </td>
       </ng-container>
 
       <ng-container matColumnDef="transactionType">
-        <th mat-header-cell
-            *matHeaderCellDef> {{'Saving_Account_Component.tabTransactions.lblTransactionType' | translate}}</th>
+        <th mat-header-cell *matHeaderCellDef> {{'Saving_Account_Component.tabTransactions.lblTransactionType' | translate}}</th>
         <td mat-cell *matCellDef="let transaction">
           <span style="text-align: center; display: flex;" *ngIf="transaction.txnCode === 'D'"><img
             src="assets/images/icons/deposit.svg"/>{{'Saving_Account_Component.tabTransactions.lblDeposit' | translate}}</span>
@@ -91,50 +87,45 @@
       </ng-container>
 
       <ng-container matColumnDef="credit">
-        <th mat-header-cell
-            *matHeaderCellDef>{{'Saving_Account_Component.tabTransactions.lblProportional' | translate}}</th>
+        <th mat-header-cell *matHeaderCellDef>{{'Saving_Account_Component.tabTransactions.lblProportional' | translate}}</th>
         <td mat-cell
             *matCellDef="let transaction"> {{ (transaction.balance| money)}} </td>
       </ng-container>
 
       <ng-container matColumnDef="type">
-        <th mat-header-cell
-            *matHeaderCellDef>{{'Saving_Account_Component.tabTransactions.lblTransactionType2' | translate}}</th>
+        <th mat-header-cell *matHeaderCellDef>{{'Saving_Account_Component.tabTransactions.lblTransactionType2' | translate}}</th>
         <td mat-cell
             *matCellDef="let transaction"> {{ (transaction.paymentDetailId)}} </td>
       </ng-container>
 
       <ng-container matColumnDef="note">
         <th mat-header-cell *matHeaderCellDef>{{'Saving_Account_Component.tabTransactions.lblNote' | translate}}</th>
-        <td mat-cell style="max-width: 200px;"
+        <td mat-cell  style="max-width: 200px;"
             *matCellDef="let transaction">
-          <span aria-multiline="true">{{ (transaction.note)}}</span></td>
+          <span aria-multiline="true" >{{ (transaction.note)}}</span> </td>
       </ng-container>
-      <ng-container matColumnDef="actions" style="width: 25px;">
-        <th mat-header-cell *matHeaderCellDef>Actions</th>
-        <td mat-cell *matCellDef="let transaction"><span style="float: right; width: 15px;"
-                                                         [matMenuTriggerData]="transaction"
-                                                         [matMenuTriggerFor]="transactionMenu"
-        ><i
-          class="fa fa-ellipsis-v" aria-hidden="true"></i></span></td>
-      </ng-container>
+      <!--      <ng-container matColumnDef="balance">-->
+      <!--        <th mat-header-cell-->
+      <!--            *matHeaderCellDef> {{'Saving_Account_Component.tabTransactions.labelBalance'|translate}} </th>-->
+      <!--        <td mat-cell *matCellDef="let transaction"> {{ transaction.runningBalance | money }} </td>-->
+      <!--      </ng-container>-->
+
+      <!--            <ng-container matColumnDef="viewReciept">-->
+      <!--              <th mat-header-cell *matHeaderCellDef> View Reciept</th>-->
+      <!--              <td mat-cell *matCellDef="let transaction">-->
+      <!--                <button class="account-action-button" mat-raised-button color="primary" (click)="routeEdit($event)"-->
+      <!--                        [routerLink]="[transaction.id, 'reciept']">-->
+      <!--                  <i class="fa fa-file" matTooltip="View Reciept"></i>-->
+      <!--                </button>-->
+      <!--              </td>-->
+      <!--            </ng-container>-->
+
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="select-row"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="select-row"
+          (click)="showTransactions(row)"></tr>
 
     </table>
-    <mat-menu #transactionMenu="matMenu" [overlapTrigger]="false" style="width: 50px;">
-      <ng-template matMenuContent
-                   let-transferId='transferId'
-                   let-txnId='txnId'
-                   style="width: 50px;">
-        <button mat-menu-item (click)="showTransactions(transferId,txnId)"
-        ><i class="fa fa-eye" aria-hidden="true"></i>&nbsp;Chi tiết
-        </button>
-        <button mat-menu-item (click)="updateTransaction(transferId,txnId)"
-        ><i class="fa fa-pencil-square-o" aria-hidden="true"></i>&nbsp;Cập nhập tài khoản
-        </button>
-      </ng-template>
-    </mat-menu>
+
   </div>
 
 </div>

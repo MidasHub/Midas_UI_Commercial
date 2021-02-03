@@ -33,15 +33,13 @@ export class SavingsAccountTransactionsComponent implements OnInit {
   }[];
   /** Flag to enable payment details fields. */
   addPaymentDetailsFlag: Boolean = false;
-  paymentTypeIdGroup: string = "!Expense";
   /** transaction type flag to render required UI */
   transactionType: { deposit: boolean, withdrawal: boolean } = { deposit: false, withdrawal: false };
   /** transaction command for submit request */
   transactionCommand: string;
   /** saving account's Id */
   savingAccountId: string;
-  filteredOptions: any = [];
-  paymentTypeDescription: string;
+
   /**
    * Retrieves the Saving Account transaction template data from `resolve`.
    * @param {FormBuilder} formBuilder Form Builder.
@@ -61,7 +59,6 @@ export class SavingsAccountTransactionsComponent implements OnInit {
     this.transactionCommand = this.route.snapshot.params['name'].toLowerCase();
     this.transactionType[this.transactionCommand] = true;
     this.savingAccountId = this.route.parent.snapshot.params['savingAccountId'];
-
   }
 
   /**
@@ -69,7 +66,6 @@ export class SavingsAccountTransactionsComponent implements OnInit {
    */
   ngOnInit() {
     this.createSavingAccountTransactionForm();
-
   }
 
   /**
@@ -77,65 +73,12 @@ export class SavingsAccountTransactionsComponent implements OnInit {
    */
   createSavingAccountTransactionForm() {
     this.savingAccountTransactionForm = this.formBuilder.group({
-      'transactionDate': [new Date(), Validators.required],
+      'transactionDate': ['', Validators.required],
       'transactionAmount': ['', Validators.required],
-      'paymentTypeGroup': ['', Validators.required],
-      'paymentTypeId': ['', Validators.required],
+      'paymentTypeId': [''],
       'note': ['']
     });
-
-     // **SÁNG** filter payment type by group
-    this.savingAccountTransactionForm.get('paymentTypeGroup').valueChanges.subscribe((value => {
-      this.filterPaymentType();
-    }));
-
-    this.savingAccountTransactionForm.get('paymentTypeId').valueChanges.subscribe((value => {
-      this.changePaymentType();
-    }));
-     // **SÁNG** open add on info on default
-     this.addPaymentDetails();
   }
-
-  filterPaymentType() {
-    this.paymentTypeDescription = "";
-    let groupId = String(this.savingAccountTransactionForm.get("paymentTypeGroup").value) ;
-    this.filteredOptions = this.paymentTypeOptions.filter(
-      item =>{
-        if (groupId.startsWith("!")){
-          return item.name.indexOf(groupId.substring(1)) == -1;
-
-        }else{
-          return item.name.includes(groupId);
-
-        }
-      }
-    );
-    this.savingAccountTransactionForm.get("paymentTypeId").setValue(null);
-  }
-
-  changePaymentType(){
-
-    let paymentTypeId = this.savingAccountTransactionForm.get("paymentTypeId").value ;
-    if(!paymentTypeId){
-      return;
-    }
-    let paymentTypeDescription = "";
-    this.paymentTypeOptions.forEach(function(paymentType){
-        if (paymentType.id == paymentTypeId){
-          paymentTypeDescription = paymentType.description;
-        }
-    })
-    this.paymentTypeDescription = paymentTypeDescription;
-    this.checkValidAmountWithdrawalTransaction(paymentTypeId);
-
-}
-
-checkValidAmountWithdrawalTransaction(paymentTypeId: string, staffId?: string){
-
-  this.savingsService.getLimitSavingsTransactionConfig(paymentTypeId).subscribe((config) => {
-    console.log(config);
-  })
-}
 
   /**
    * Method to add payment detail fields to the UI.

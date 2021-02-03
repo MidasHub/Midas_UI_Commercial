@@ -29,19 +29,14 @@ export class ClientAddressStepComponent {
 
   /** Client Address Data */
   clientAddressData: any[] = [{
-    addressLine1: '',
-    //addressLine2: '',     // Tạm ẩn do không dùng
-    //addressLine3: '',     // Tạm ẩn do không dùng
-    street: ' ',            // lưu thông tin đường
-    townVillage:'',         // Lưu thông tin phường xã
-    countyDistrict:'',      // Lưu Thông tin quận huyện
-    city: '',               // lưu thông tin TP thuộc tỉnh như TP Thủ Đức       
-    stateProvinceId: 122,   // Lưu thông tin tỉnh thành như TPHCM, Bình Dương
-    countryId: 27,          // Lưu thông tin quốc gia
-    addressTypeId: 15,      // Lưu loại địa chỉ: 15 là địa chỉ trường trú
-    //latitude:'',          // Dùng để lưu GEO data - vĩ độ - tạm ẩn
-    //longitude:'',         // Dùng để lưu GEO data - kinh độ - tạm ẩn
-    isActive: true
+    addressLine1: '0',
+    addressLine2: '0',
+    addressLine3: '0',
+    addressTypeId: 15,
+    city: '0',
+    countryId: 27,
+    isActive: false,
+    stateProvinceId: 122
   }];
 
   /**

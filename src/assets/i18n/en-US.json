@@ -1,5 +1,5 @@
 {
-  "APP_NAME": "Midas",
+  "APP_NAME": "Midas - En",
   "Client_Component": {
     "ClientStepper": {
       "AddressStep": {
@@ -322,7 +322,7 @@
     "btnViewOnDueCard": "View detail"
   },
   "Login_Component": {
-    "APP_SLOGAN": "Break your limit",
+    "APP_SLOGAN": "This is a Single Page Web that can help your Business grow",
     "About": "About",
     "Home": "Home",
     "Logged in as": "Logged in as",
@@ -450,8 +450,7 @@
       "lblSource": "Source",
       "lblSeachPlaceholder": "Please input params and press Enter to Search"
     },
-    "lblShare": "Share",
-    "lblThirdParty": "Third Party"
+    "lblShare": "Share"
   },
   "Shared_Component": {
     "DeleteDialog": {
@@ -592,73 +591,61 @@
   },
   "Terminal_Component": {
     "labelTerminalNameMsgPattern": "Terminal ID <strong>cannot</strong> begin with a special character or number",
-    "labelTerminal": "POS Terminal",
-    "btnCreate": "Create POS Terminal",
-    "labelRequired": "<strong>required</strong>",
-    "labelTerminalMsgPattern": "<strong>cannot</strong> begin with a special character or number",
-    "labelFilter": "Filter",
-    "tableTerminal": {
-      "terminalNo": "Terminal No",
-      "terminalCode": "Terminal Code",
-      "terminalName": "Terminal Name",
-      "minFeeDefault": "MinFee Default",
-      "createdBy": "Created By",
-      "createdDate": "Created Date",
-      "updatedDate": "Updated Date",
-      "status": "Status"
+    "labelTerminal":"POS Terminal",
+    "btnCreate":"Create POS Terminal",
+    "labelRequired":"<strong>required</strong>",
+    "labelTerminalMsgPattern":"<strong>cannot</strong> begin with a special character or number",
+    "labelFilter":"Filter",
+    "tableTerminal":{
+      "terminalNo":"Terminal No",
+      "terminalCode":"Terminal Code",
+      "terminalName":"Terminal Name",
+      "minFeeDefault":"MinFee Default",
+      "createdBy":"Created By",
+      "createdDate":"Created Date",
+      "updatedDate":"Updated Date",
+      "status":"Status"
     },
-    "FormTerminal": {
+    "FormTerminal":{
       "labelMsgMin100000": "Value is <strong>Minimum 100,000</strong>",
       "labelMsgMin0": "Value is <strong>Minimum 0</strong>",
       "labelMsgOutOffMax": "Value is <strong>Maximum 100%</strong>",
       "labelMsgOutOffMin": "Value is out off <strong>Maximum 0%</strong>",
-      "labelRequired": "<strong>required</strong>",
-      "labelEdit": "Edit POS Terminal",
-      "labelCreate": "Create POS Terminal",
-      "labelGeneral": "Setup Fee",
-      "labelTerminalId": "Terminal ID",
-      "labelTerminalCode": "Terminal Code",
-      "labelTerminalName": "Terminal Name",
-      "labelLimitPerDay": "Limit Per Day",
-      "labelMerchantId": "Merchant ID",
-      "labelOffice": "Office",
-      "labelMinFeeDefault": "Min Fee Default",
-      "checkboxIsActive": "Is Active",
-      "labelCostPercentage": "Cost Percentage",
-      "labelCogsPercentage": "Cogs Percentage",
-      "labelMinPercentage": "Min Percentage",
-      "labelMaxPercentage": "Max Percentage",
-      "labelMaxLimitAmount": "Max Limit Amount",
-      "labelLevelLimit": "Level Limit",
-      "buttonSetupAll": "Setup",
-      "buttonResetDefault": "Reset",
-      "buttonSubmit": "Submit",
-      "buttonSubmitUpdate": "Submit Update",
-      "tableFee": {
-        "Office": "Office",
-        "CardType": "Card Type",
-        "FeeCogs": "Fee POS(%)",
-        "FeeCost": "Fee Cost(%)",
-        "FeeMin": "Fee Min(%)",
-        "FeeMax": "Fee Max(%)",
-        "MaxLimitAmountTransaction": "Max LimitAmount Per Transaction",
-        "LevelTransactionCard": "Level Transaction Per Card"
+      "labelRequired":"<strong>required</strong>",
+      "labelEdit":"Edit POS Terminal",
+      "labelCreate":"Create POS Terminal",
+      "labelGeneral":"Setup Fee",
+      "labelTerminalId":"Terminal ID",
+      "labelTerminalCode":"Terminal Code",
+      "labelTerminalName":"Terminal Name",
+      "labelLimitPerDay":"Limit Per Day",
+      "labelMerchantId":"Merchant ID",
+      "labelOffice":"Office",
+      "labelMinFeeDefault":"Min Fee Default",
+      "checkboxIsActive":"Is Active",
+      "labelCostPercentage":"Cost Percentage",
+      "labelCogsPercentage":"Cogs Percentage",
+      "labelMinPercentage":"Min Percentage",
+      "labelMaxPercentage":"Max Percentage",
+      "labelMaxLimitAmount":"Max Limit Amount",
+      "labelLevelLimit":"Level Limit",
+      "buttonSetupAll":"Setup",
+      "buttonResetDefault":"Reset",
+      "buttonSubmit":"Submit",
+      "buttonSubmitUpdate":"Submit Update",
+      "tableFee":{
+        "Office":"Office",
+        "CardType":"Card Type",
+        "FeeCogs":"Fee POS(%)",
+        "FeeCost":"Fee Cost(%)",
+        "FeeMin":"Fee Min(%)",
+        "FeeMax":"Fee Max(%)",
+        "MaxLimitAmountTransaction":"Max LimitAmount Per Transaction",
+        "LevelTransactionCard":"Level Transaction Per Card"
       }
-    },
-    "btnTransfer": "POS transfer",
-    "labelAction": "Actions",
-    "FormTransfer": {
-      "btnSubmit": "Submit",
-      "labelLimitRemain": "Limit Remain",
-      "labelOffice": "Office",
-      "labelOfficeToTransfer": "Transfer to",
-      "labelTerminalId": "Terminal ID",
-      "labelTerminalName": "Terminal Name",
-      "labelTransfer": "Transfer",
-      "msgErrorLimitDaily": "Error: Can't transfer POS due to insufficient daily limit. Please contact IT for support !"
     }
   },
-  "labelCurrency": "$",
+  "labelCurrency":"$",
   "ShareLabel": {
     "lblViewDetail": "View detail",
     "lblMakeRepayment": "Make Repayment"

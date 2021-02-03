@@ -22,104 +22,27 @@
 
         <mat-form-field>
           <mat-label>Transaction Amount</mat-label>
-          <input type="text" formControlName="transactionAmount" required matInput currencyMask />
+          <input type="number" formControlName="transactionAmount" required matInput />
           <mat-error *ngIf="savingAccountTransactionForm.controls.transactionAmount.hasError('required')">
             Transaction Amount is <strong>required</strong>
           </mat-error>
         </mat-form-field>
 
         <mat-form-field>
-          <mat-label>Payment group</mat-label>
-          <mat-select formControlName="paymentTypeGroup" >
-            <!-- <mat-option *ngFor="let paymentType of paymentTypeOptions" [value]="paymentType.id">
-              {{ paymentType.name }}
-            </mat-option> -->
-            <mat-option
-                    label="Chi phí khác"
-                    value="!Expense"
-                  >
-                  Chi phí khác
-                  </mat-option>
-                  <mat-option
-                    label="Định phí"
-                    value="Expense-Fixed"
-                  >
-                    Định phí
-                  </mat-option>
-                  <mat-option  label="Biến phí" value="Expense-Variabled">
-                    Biến phí
-                  </mat-option>
-                  <mat-option label="Tạm ứng thù lao" value="Expense-Equity">
-                    Tạm ứng thù lao
-                  </mat-option>
-          </mat-select>
-          <mat-error *ngIf="savingAccountTransactionForm.controls.paymentTypeGroup.hasError('required')">
-            Payment Type group is <strong>required</strong>
-          </mat-error>
-        </mat-form-field>
-
-        <mat-form-field>
           <mat-label>Payment Type</mat-label>
           <mat-select formControlName="paymentTypeId">
-            <mat-option *ngFor="let paymentType of filteredOptions " [value]="paymentType.id">
+            <mat-option *ngFor="let paymentType of paymentTypeOptions" [value]="paymentType.id">
               {{ paymentType.name }}
             </mat-option>
           </mat-select>
-          <mat-label style="color: green; font-weight: bold;">: {{paymentTypeDescription}}</mat-label>
-
-          <mat-error *ngIf="savingAccountTransactionForm.controls.paymentTypeId.hasError('required')">
-            Payment Type is <strong>required</strong>
-          </mat-error>
         </mat-form-field>
 
-        <div  fxLayout="row" fxLayout.xs="column"
-              class="form-group"
-              ng-show="limitConfigByPaymentTypeId && limitConfigByPaymentTypeId.limitConfig != 0 "
-            >
-
-                <ul>
-                  <li>
-                    <span>Định mức tháng này:</span
-                    ><span class="text-right">
-                      <!-- {{limitConfigByPaymentTypeId.limitConfig | money}} -->
-                     5,000,000
-                      </span
-                    >
-                  </li>
-                  <li>
-                    <span>Hiện tại đã chi:</span>
-                    <span
-                      class="text-right"
-                      style="color: red; font-weight: bold"
-                    >
-                    5,000,000
-
-                      <!-- {{formatCurrency(limitConfigByPaymentTypeId.limitUsed)}} -->
-                      </span
-                    >
-                  </li>
-                  <li>
-                    <span>Định mức còn lại:</span
-                    ><span
-                      class="text-right"
-                      style="color: green; font-weight: bold"
-                    >
-                    5,000,000
-
-                      <!-- {{formatCurrency(limitConfigByPaymentTypeId.limitConfig -
-                      limitConfigByPaymentTypeId.limitUsed)}} -->
-                      </span
-                    >
-                  </li>
-                </ul>
-              </div>
-
-        <!-- <div fxLayoutGap="5px" fxLayout="row" fxLayout.xs="column">
+        <div fxLayoutGap="5px" fxLayout="row" fxLayout.xs="column">
           <mat-label fxFlexAlign="center">Show Payment Details</mat-label>
           <button type="button" mat-mini-fab color="primary" (click)="addPaymentDetails()">
             <fa-icon [icon]="!addPaymentDetailsFlag ? 'plus-circle' : 'minus-circle'" size="lg"></fa-icon>
           </button>
-        </div> -->
+        </div>
 
         <mat-form-field *ngIf="savingAccountTransactionForm.controls['accountNumber']">
           <mat-label>Account Number</mat-label>
@@ -157,9 +80,10 @@
         </mat-card-actions>
 
       </mat-card-content>
-
+      
     </form>
 
   </mat-card>
 
 </div>
+  

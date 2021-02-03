@@ -8,8 +8,6 @@ import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
 import { TerminalsService} from './terminals.service';
 import { TerminalObj} from './terminal-obj.model';
-import { MatDialog } from '@angular/material/dialog';
-import { TransferTerminalComponent } from './transfer-terminal/transfer-terminal.component';
 @Component({
   selector: 'midas-terminals',
   templateUrl: './terminals.component.html',
@@ -20,15 +18,15 @@ export class TerminalsComponent implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   viewTerminals = new FormControl('viewTerminals');
-  displayedColumns =  ['terminalNo', 'terminalCode', 'terminalName', 'minFeeDefault', 'status', 'createdBy','createdDate','updatedDate','action'];
+  displayedColumns =  ['terminalNo', 'terminalCode', 'terminalName', 'minFeeDefault', 'status', 'createdBy','createdDate','updatedDate'];
   
 
-  dataSource = new MatTableDataSource<TerminalObj>();
+  dataSource = new MatTableDataSource<any>();
   dataSourceDefault:any;
   terminalsData: TerminalObj[] = [];
   terminalsDataActive: TerminalObj[] = [];
   terminalsDataInActive: TerminalObj[] = [];
-  constructor(private terminalsService: TerminalsService,public dialog: MatDialog) {}
+  constructor(private terminalsService: TerminalsService) {}
 
   ngOnInit(): void {
      
@@ -50,8 +48,9 @@ export class TerminalsComponent implements OnInit, AfterViewInit {
       })
       this.terminalsDataInActive = this.terminalsData.filter(function(item) {
         return item.status !== 'Active';
-      })
+    })
       this.dataSource.data = this.terminalsDataActive;
+      //this.dataSourceDefault = this.terminalsData;
     });
 
   }
@@ -73,19 +72,6 @@ export class TerminalsComponent implements OnInit, AfterViewInit {
       this.dataSource.data = this.terminalsDataActive;
     }
      
-  }
-  addTransferDialogByTransactionId(terminalId:string,terminalName:string){
-    const data = {
-      terminalId: terminalId,
-      terminalName: terminalName,
-    };
-    const dialog = this.dialog.open(TransferTerminalComponent, { height: "auto", width: "30%", data });
-    dialog.afterClosed().subscribe((response: any) => {
-      // console.log("response",response);
-      // if (response.data) {
-      //   const value = response.data.value;
-      // }
-    });
   }
   
 }

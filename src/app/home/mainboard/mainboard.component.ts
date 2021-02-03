@@ -6,9 +6,6 @@ import {ErrorStateMatcher} from '@angular/material/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
-import { AlertService } from 'app/core/alert/alert.service';
-
-
 @Component({
   selector: 'midas-mainboard',
   templateUrl: './mainboard.component.html',
@@ -22,14 +19,12 @@ export class MainboardComponent implements OnInit {
     Validators.email,
   ]);
   isLoading = false;
-  showSearchTable =false;
   matcher = new ErrorStateMatcher();
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   constructor(
     private midasClientService: MidasClientService,
-    private alertService: AlertService,
     private router: Router,
     ) {
     this.dataSource = new MatTableDataSource();
@@ -45,9 +40,7 @@ export class MainboardComponent implements OnInit {
   }
 
   searchClientAndGroup(query: string): void {
-    // if (query.length > 2){
     this.dataSource.data = [];
-    this.showSearchTable = true;
     this.isLoading = true;
     this.midasClientService.searchClientByNameAndExternalIdAndPhoneAndDocumentKey(query).subscribe((data: any) =>{
       this.isLoading = false;
@@ -56,9 +49,6 @@ export class MainboardComponent implements OnInit {
     },
     error => this.isLoading = false
     );
-  // }else{
-  //   this.alertService.alert({message:'Từ khóa tìm kiếm phải có tối thiểu 3 kí tự.',msgClass:'cssWarning'})
-  // } 
   }
 
 }

@@ -12,7 +12,6 @@ import { DirectivesModule } from '../directives/directives.module';
 import { TerminalsComponent } from './terminals.component';
 import { EditTerminalsComponent } from './edit-terminals/edit-terminals.component';
 import { CreateTerminalsComponent } from './create-terminals/create-terminals.component';
-import { TransferTerminalComponent } from './transfer-terminal/transfer-terminal.component';
 import { ViewLimitTerminalComponent } from './view-limit-terminal/view-limit-terminal.component';
 //import { TableModule } from 'ngx-easy-table';
 
@@ -29,7 +28,6 @@ import { ViewLimitTerminalComponent } from './view-limit-terminal/view-limit-ter
     TerminalsComponent,
     EditTerminalsComponent,
     CreateTerminalsComponent,
-    TransferTerminalComponent,
     ViewLimitTerminalComponent
   ],
   providers: [DatePipe]

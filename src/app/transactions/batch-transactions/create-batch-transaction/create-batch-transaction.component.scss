@@ -86,20 +86,3 @@ tr.example-element-row:not(.example-expanded-row):active {
 .no-input {
   max-width: 70px;
 }
-
-.example-container {
-  position: relative;
-  min-height: 200px;
-}
-
-.example-table-container {
-  position: relative;
-  max-height: 400px;
-  overflow: auto;
-}
-
-table {
-  width: 100%;
-}
-
-

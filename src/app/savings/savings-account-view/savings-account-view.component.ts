@@ -90,7 +90,7 @@ export class SavingsAccountViewComponent implements OnInit {
           action: 'advanceCashPartnerTransaction'
         });
       }
-      if (['FCA0', 'SCA0'].indexOf(this.savingProduct.shortName) === -1 && savingsProductId !== 2) {
+      if (['FCA0', 'SCA0'].indexOf(this.savingProduct.shortName) === -1) {
         this.buttonConfig.addButton({
           name: 'Công nợ khách hàng',
           icon: 'fa fa-recycle',
@@ -109,33 +109,28 @@ export class SavingsAccountViewComponent implements OnInit {
 
   advanceCash() {
     const dialogConfig = new MatDialogConfig();
-    console.log(this.savingProduct);
     dialogConfig.data = {
       title: 'Ứng tiền cho khách hàng',
-      currentUser: this.currentUser,
-      disableUser: String(this.savingProduct.shortName).startsWith('CCA'),
-      savingsAccountData: this.savingsAccountData
+      currentUser: this.currentUser
     };
     dialogConfig.minWidth = 400;
     const refDialog = this.dialog.open(AdvanceComponent, dialogConfig);
     refDialog.afterClosed().subscribe((response: any) => {
       console.log(response);
-      if (response) {
-        const {clientAdvanceCash, noteAdvance, amountAdvance, typeAdvanceCash} = response?.data?.value;
-        const {savingsAccountId} = clientAdvanceCash;
-        this.savingsService.advanceCashTransaction({
-          buSavingAccount: this.savingsAccountData.id,
-          clientSavingAccount: savingsAccountId,
-          noteAdvance: noteAdvance,
-          amountAdvanceCash: amountAdvance,
-          typeAdvanceCash: typeAdvanceCash
-        }).subscribe((result: any) => {
-          console.log(result);
-          const message = `Ứng tiền thành công cho khách hàng: ${clientAdvanceCash.displayName} với số tiền ${String(amountAdvance).replace(/\\B(?=(\\d{3})+(?!\\d))/g, ',') + ' đ'}`;
-          // this.alertService.alertMsgTop({alertMsg: message});
-          this.alertService.alert({message: message, msgClass: 'cssInfo'});
-        });
-      }
+      const {clientAdvanceCash, noteAdvance, amountAdvance, typeAdvanceCash} = response?.data?.value;
+      const {savingsAccountId} = clientAdvanceCash;
+      this.savingsService.advanceCashTransaction({
+        buSavingAccount: this.savingsAccountData.id,
+        clientSavingAccount: savingsAccountId,
+        noteAdvance: noteAdvance,
+        amountAdvanceCash: amountAdvance,
+        typeAdvanceCash: typeAdvanceCash
+      }).subscribe((result: any) => {
+        console.log(result);
+        const message = `Ứng tiền thành công cho khách hàng: ${clientAdvanceCash.displayName} với số tiền ${String(amountAdvance).replace(/\\B(?=(\\d{3})+(?!\\d))/g, ',') + ' đ'}`;
+        // this.alertService.alertMsgTop({alertMsg: message});
+        this.alertService.alert({message: message, msgClass: 'cssInfo'});
+      });
     });
   }
 
@@ -149,28 +144,19 @@ export class SavingsAccountViewComponent implements OnInit {
     const refDialog = this.dialog.open(PartnerAdvanceCashComponent, dialogConfig);
     refDialog.afterClosed().subscribe((response: any) => {
       console.log(response);
-      if (response) {
-        const {
-          partnerPaymentType,
-          partnerAdvanceCash,
-          partnerClientVaultAdvanceCash,
-          amountPartnerAdvance,
-          notePartnerAdvance
-        } = response?.data?.value;
-        this.savingsService.advanceCashPartnerTransaction({
-          buSavingAccount: this.savingsAccountData.id,
-          paymentTypeId: partnerPaymentType,
-          amountAdvanceCash: amountPartnerAdvance,
-          notePartnerAdvance: notePartnerAdvance,
-          partnerAdvanceCash: partnerAdvanceCash?.code,
-          partnerClientVaultAdvanceCash: partnerClientVaultAdvanceCash
-        }).subscribe(res => {
-          const message = `Điều chuyển tiền từ đối tác: ${partnerAdvanceCash.desc} với số tiền ${String(amountPartnerAdvance).replace(/\\B(?=(\\d{3})+(?!\\d))/g, ',') + ' đ'}`;
-          // this.alertService.alertMsgTop({alertMsg: message});
-          this.alertService.alert({message: message, msgClass: 'cssInfo'});
-        });
-      }
-
+      const {partnerPaymentType, partnerAdvanceCash, partnerClientVaultAdvanceCash, amountPartnerAdvance, notePartnerAdvance} = response?.data?.value;
+      this.savingsService.advanceCashPartnerTransaction({
+        buSavingAccount: this.savingsAccountData.id,
+        paymentTypeId: partnerPaymentType,
+        amountAdvanceCash: amountPartnerAdvance,
+        notePartnerAdvance: notePartnerAdvance,
+        partnerAdvanceCash: partnerAdvanceCash?.code,
+        partnerClientVaultAdvanceCash: partnerClientVaultAdvanceCash
+      }).subscribe(res => {
+        const message = `Điều chuyển tiền từ đối tác: ${partnerAdvanceCash.desc} với số tiền ${String(amountPartnerAdvance).replace(/\\B(?=(\\d{3})+(?!\\d))/g, ',') + ' đ'}`;
+        // this.alertService.alertMsgTop({alertMsg: message});
+        this.alertService.alert({message: message, msgClass: 'cssInfo'});
+      });
     });
   }
 

@@ -112,7 +112,6 @@ export class MakeAccountTransfersComponent implements OnInit, AfterViewInit {
     this.toOfficeTypeData = this.accountTransferTemplateData.toOfficeOptions;
     this.toAccountTypeData = this.accountTransferTemplateData.toAccountTypeOptions;
     this.toAccountData = this.accountTransferTemplateData.toAccountOptions;
-    //this.toClientTypeData = this.accountTransferTemplateData.toClientOptions;
   }
 
   /** Executes on change of various select options */
@@ -150,18 +149,13 @@ export class MakeAccountTransfersComponent implements OnInit, AfterViewInit {
    */
   ngAfterViewInit() {
     this.makeAccountTransferForm.controls.toClientId.valueChanges.subscribe((value: string) => {
-      // console.log( this.toClientTypeData);
-      if (value.length >= 3) {
-        // this.clientsService.getFilteredClients('displayName', 'ASC', true, value)
-        //   .subscribe((data: any) => {
-        //     this.clientsData = data.pageItems;
-        //   });
-        
-        this.clientsData = this.toClientTypeData.filter((item:any) => item.displayName.toLowerCase().includes(value));
-        console.log(this.clientsData)
+      if (value.length >= 2) {
+        this.clientsService.getFilteredClients('displayName', 'ASC', true, value)
+          .subscribe((data: any) => {
+            this.clientsData = data.pageItems;
+          });
         this.changeEvent();
       }
-      
     });
   }
 
@@ -192,8 +186,7 @@ export class MakeAccountTransfersComponent implements OnInit, AfterViewInit {
       fromOfficeId: this.accountTransferTemplateData.fromClient.officeId
     };
     this.accountTransfersService.createAccountTransfer(makeAccountTransferData).subscribe(() => {
-      this.router.navigate(['../../transactions'], { relativeTo: this.route });
-      console.log(this.router.navigate(['../../transactions'], { relativeTo: this.route }))
+      this.router.navigate(['../../general'], { relativeTo: this.route });
     });
   }
 

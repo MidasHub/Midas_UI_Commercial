@@ -34,7 +34,6 @@ import {MemberAvailableInGroupResolver} from './resolver/member-available-in-gro
 import { AddInformationCardBatchComponent } from './dialog/add-information-card-batch/add-information-card-batch.component';
 import { CreateSuccessTransactionDialogComponent } from './dialog/create-success-transaction-dialog/create-success-transaction-dialog.component';
 import { MainboardComponent } from 'app/home/mainboard/mainboard.component';
-import { MakeFeeOnAdvanceComponent } from './dialog/make-fee-on-advance/make-fee-on-advance.component';
 
 /**
  * Profile Module
@@ -65,7 +64,6 @@ import { MakeFeeOnAdvanceComponent } from './dialog/make-fee-on-advance/make-fee
     CreateCardBatchTransactionComponent,
     AddInformationCardBatchComponent,
     CreateSuccessTransactionDialogComponent,
-    MakeFeeOnAdvanceComponent,
 
   ],
 

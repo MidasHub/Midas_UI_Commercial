@@ -62,11 +62,10 @@
           <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>
             Số tiền - Tổng: {{ totalBookingAmount | money }}
           </th>
-          <td mat-cell fxHide fxShow.gt-md *matCellDef="let booking ; let i = dataIndex">
+          <td mat-cell fxHide fxShow.gt-md *matCellDef="let booking">
             <mat-form-field>
               <input
                 matInput
-                [disabled]="i == (this.dataSource.data.length - 1)"
                 type="text"
                 currencyMask
                 [(ngModel)]="booking.amountBooking"

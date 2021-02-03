@@ -64,7 +64,7 @@ export class CreateTellerComponent implements OnInit {
   createTellerForm() {
     this.tellerForm = this.formBuilder.group({
       'officeId': ['', Validators.required],
-      'name': ['', [Validators.required, Validators.pattern('^([^!@#$%^&*()+=<>,?\/]*)$')]],
+      'name': ['', [Validators.required, Validators.pattern('^([^!@#$%^&*()_+=<>,.?\/\-]*)$')]],
       'description': [''],
       'startDate': ['', Validators.required],
       'endDate': [''],

@@ -16,9 +16,8 @@
 //$fa-font-path: "../node_modules/font-awesome/fonts";
 //@import "../node_modules/font-awesome/scss/font-awesome.scss";
 // don't use fontawesome from node_module
-$fa-font-path:"/src/theme/fontawesome/webfonts";
+$fa-font-path:"theme/fontawesome/webfonts";
 @import "theme/fontawesome/scss/fontawesome.scss";
 @import "theme/fontawesome/scss/brands.scss";
 @import "theme/fontawesome/scss/solid.scss";
 // @import "~ngx-easy-table/style.scss";
-@import "~@busacca/ng-pick-datetime/assets/style/picker.min.css";

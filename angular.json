@@ -17,24 +17,19 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "aot": true,
+            "aot": false,
             "outputPath": "dist/web-app",
             "index": "src/index.html",
             "main": "src/main.ts",
             "tsConfig": "src/tsconfig.app.json",
             "polyfills": "src/polyfills.ts",
             "extractCss": true,
-            "allowedCommonJsDependencies": [
-              "lodash",
-              "@ckeditor/ckeditor5-build-classic"
-            ],
             "assets": [
               "src/favicon.ico",
               "src/robots.txt",
               "src/manifest.json",
               "src/assets",
-              "src/assets/i8n",
-              "src/theme"
+              "src/assets/i8n"
             ],
             "styles": [
               "src/main.scss",
@@ -102,7 +97,7 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
             "browserTarget": "midas-web-app:build",
-            "aot": true
+            "aot": false
           },
           "configurations": {
             "production": {

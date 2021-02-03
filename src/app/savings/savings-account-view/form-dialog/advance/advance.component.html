@@ -3,23 +3,19 @@
 <div mat-dialog-content [formGroup]="form" [fxLayout]="'column'" fxLayout.lt-md="column" [fxLayoutGap]="'1%'"
      fxLayoutGap.lt-md="0%">
 
-  <mat-form-field *ngIf="!disable" class="select-book">
+  <mat-form-field class="select-book">
     <mat-label>{{'Saving_Account_Component.clientAdvanceCash.labelClientCash' |translate}}</mat-label>
-    <input [required]="!disable" [readonly]="disable" type="text"
-           placeholder="{{'Saving_Account_Component.clientAdvanceCash.labelClientCash' |translate}}" matInput
-           formControlName="clientAdvanceCash" [matAutocomplete]="auto">
+    <input required type="text" placeholder="{{'Saving_Account_Component.clientAdvanceCash.labelClientCash' |translate}}" matInput formControlName="clientAdvanceCash" [matAutocomplete]="auto">
     <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
       <mat-option *ngFor="let cl of filteredClient" [value]="cl">
         {{cl.displayName}}
       </mat-option>
     </mat-autocomplete>
+    <mat-error *ngIf="client.hasError('required')">
+      Yêu cầu: chọn khách hàng
+    </mat-error>
   </mat-form-field>
-  <mat-form-field *ngIf="disable" class="select-book">
-    <mat-label>{{'Saving_Account_Component.clientAdvanceCash.labelClientCash' |translate}}</mat-label>
-    <input [readonly]="disable" type="text"
-           placeholder="{{'Saving_Account_Component.clientAdvanceCash.labelClientCash' |translate}}" matInput
-           formControlName="clientAdvanceCash">
-  </mat-form-field>
+
 
   <mat-form-field fxFlex="96%" *ngIf="form.contains('typeAdvanceCash')">
     <mat-label>{{'Saving_Account_Component.clientAdvanceCash.labelTypes' |translate}}</mat-label>
@@ -36,6 +32,7 @@
            currencyMask
            matInput formControlName="amountAdvance">
   </mat-form-field>
+
 
 
   <mat-form-field *ngIf="form.contains('noteAdvance')" fxFlex="48%">

@@ -33,7 +33,6 @@ export class ClientGeneralStepComponent implements OnInit {
   @Output() cancelEvent = new EventEmitter();
 
   currentUser: any;
-  
   /** Create Client Form */
   createClientForm: FormGroup;
 
@@ -78,8 +77,6 @@ export class ClientGeneralStepComponent implements OnInit {
               private authenticationService: AuthenticationService,
               private centersService: CentersService) {
     this.setClientForm();
-    this.currentUser = this.authenticationService.getCredentials();
-    console.log("Current User: ", this.currentUser)
   }
 
   ngOnInit() {
@@ -91,11 +88,10 @@ export class ClientGeneralStepComponent implements OnInit {
    * Creates the client form.
    */
   setClientForm() {
-    
     this.createClientForm = this.formBuilder.group({
       'officeId': ['', Validators.required],
       'staffId': [''],
-      'isStaff': [true],
+      'isStaff': [false],
       'active': [true],
       'addSavings': [true],
       'accountNo': [''],
@@ -152,18 +148,14 @@ export class ClientGeneralStepComponent implements OnInit {
         this.createClientForm.get('documentTypeId').setValue(type.id);
       }
     });
-    //this.currentUser = this.authenticationService.getCredentials();
+    this.currentUser = this.authenticationService.getCredentials();
     const {roles, staffId} = this.currentUser;
     this.createClientForm.get('staffId').setValue(staffId);
-    roles.map((role: any,index: number) => {
-      console.log("Role:", role.id)
-      if (role.id !== 3 ) {
+    roles.map((role: any) => {
+      if (role.id !== 3) {
         this.isTeller = false;
       }
-      
-    }
-    
-    );
+    });
   }
 
   /**
@@ -174,15 +166,15 @@ export class ClientGeneralStepComponent implements OnInit {
     //   if (legalFormId === 1) {
     //     this.createClientForm.removeControl('fullname');
     //     this.createClientForm.removeControl('clientNonPersonDetails');
-    //     // Jean: change from '(^[A-z]).*' to  '^([^!@#$%^&*()+=<>,?\/]*)$'
-    //     this.createClientForm.addControl('firstname', new FormControl('', [Validators.required, Validators.pattern('^([^!@#$%^&*()+=<>,?\/]*)$')]));
-    //     this.createClientForm.addControl('middlename', new FormControl('', Validators.pattern('^([^!@#$%^&*()+=<>,?\/]*)$')));
-    //     this.createClientForm.addControl('lastname', new FormControl('', [Validators.required, Validators.pattern('^([^!@#$%^&*()+=<>,?\/]*)$')]));
+    //     // Jean: change from '(^[A-z]).*' to  '^([^!@#$%^&*()_+=<>,.?\/\-]*)$'
+    //     this.createClientForm.addControl('firstname', new FormControl('', [Validators.required, Validators.pattern('^([^!@#$%^&*()_+=<>,.?\/\-]*)$')]));
+    //     this.createClientForm.addControl('middlename', new FormControl('', Validators.pattern('^([^!@#$%^&*()_+=<>,.?\/\-]*)$')));
+    //     this.createClientForm.addControl('lastname', new FormControl('', [Validators.required, Validators.pattern('^([^!@#$%^&*()_+=<>,.?\/\-]*)$')]));
     //   } else {
     //     this.createClientForm.removeControl('firstname');
     //     this.createClientForm.removeControl('middlename');
     //     this.createClientForm.removeControl('lastname');
-    //     this.createClientForm.addControl('fullname', new FormControl('', [Validators.required, Validators.pattern('^([^!@#$%^&*()+=<>,?\/]*)$')]));
+    //     this.createClientForm.addControl('fullname', new FormControl('', [Validators.required, Validators.pattern('^([^!@#$%^&*()_+=<>,.?\/\-]*)$')]));
     //     this.createClientForm.addControl('clientNonPersonDetails', this.formBuilder.group({
     //       'constitutionId': [''],
     //       'incorpValidityTillDate': [''],

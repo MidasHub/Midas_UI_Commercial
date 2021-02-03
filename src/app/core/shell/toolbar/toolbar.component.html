@@ -51,14 +51,6 @@
       <fa-icon class="mr-05" icon="university" size="lg"></fa-icon>
       Booking
     </a>
-    <a mat-tab-link class="tab-link" [matMenuTriggerFor]="Marketing" #institutionMenuTrigger="matMenuTrigger">
-      <fa-icon class="mr-05" icon="university" size="lg"></fa-icon>
-      Marketing
-    </a>
-    <a mat-tab-link class="tab-link" routerLink="/banks">
-      <fa-icon class="mr-05" icon="university" size="lg"></fa-icon>
-      Banks
-    </a>
   </nav>
 
   <span fxFlex="auto">
@@ -67,14 +59,14 @@
 
   </span>
 
-  <mifosx-search-tool *midasHasPermission="'ALL_FUNCTIONS'"></mifosx-search-tool>
+  <mifosx-search-tool ></mifosx-search-tool>
 
   <mifosx-theme-picker fxHide.lt-md></mifosx-theme-picker>
 
   <mifosx-notifications-tray fxHide.lt-md></mifosx-notifications-tray>
 
   <button mat-icon-button class="ml-1 img-button" [matMenuTriggerFor]="applicationMenu">
-    <img src="assets/images/user_placeholder.png"/>
+    <img src="assets/images/user_placeholder.png" />
   </button>
 </mat-toolbar>
 
@@ -100,8 +92,6 @@
     {{ "Toolbar_Component.labelTerminals" | translate }}
   </button>
   <button mat-menu-item routerLink="/terminals/limit">{{ "Quản lý hạn mức POS" | translate }}</button>
-  <button mat-menu-item routerLink="/terminals">{{ "Quản lý máy POS" | translate }}</button>
-  <button mat-menu-item routerLink="/third-party">{{'Toolbar_Component.lblThirdParty'|translate}}</button>
 </mat-menu>
 <mat-menu #transactionMenu="matMenu" [overlapTrigger]="false">
   <button mat-menu-item routerLink="/transaction">Quản lý giao dịch</button>
@@ -113,10 +103,6 @@
   <button mat-menu-item routerLink="/booking/create">Tạo booking nội bộ</button>
   <button *midasHasPermission="'POS_UPDATE'" mat-menu-item routerLink="/booking/view">Quản lý booking nội bộ</button>
 
-</mat-menu>
-<mat-menu #Marketing="matMenu" [overlapTrigger]="false">
-  <button mat-menu-item routerLink="/marketing/create">Tạo chiển dịch</button>
-  <button mat-menu-item routerLink="/marketing/booking">Booking</button>
 </mat-menu>
 <!-- Toolbar Menus -->
 <mat-menu #reportsMenu="matMenu" [overlapTrigger]="false">
@@ -171,7 +157,7 @@
     </mat-icon>
     <span>{{ "Toolbar_Component.lblSetting" | translate }}</span>
   </button>
-  <button mat-menu-item>
+  <button mat-menu-item >
     <mat-icon>
       <fa-icon icon="cog" size="sm"></fa-icon>
     </mat-icon>

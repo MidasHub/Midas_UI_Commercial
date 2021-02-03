@@ -32,23 +32,23 @@
     <mat-card>
       <div fxLayout="row swap" fxLayoutAlign.lt-sm="center" fxLayoutGap="2%" fxLayout.lt-md="column">
         <div fxLayout="row wrap" fxFlex="20%" class="container m-b-20">
-          <img src="assets/images/icons/money.svg" width="40" height="40">
+          <img src="assets/images/icons/money.svg">
           <div style="display: flex;" fxLayout="column">
-            <span style="font-size: 16px; margin-top: 1px; padding-top: 2px;">{{totalFeeSum|money}}</span>
+            <span style="font-size: 20px; margin-top: 8px; padding-top: 5px;">{{totalFeeSum|money}}</span>
             <span>&nbsp;Tổng thu chi</span>
           </div>
         </div>
         <div fxLayout="row wrap" fxFlex="20%" class="container m-b-20">
-          <img src="assets/images/icons/transaction.svg" width="40" height="40">
+          <img src="assets/images/icons/transaction.svg">
           <div style="display: flex;" fxLayout="column">
-            <span style="font-size: 16px; margin-top: 1px; padding-top: 2px;">{{totalFeePaid|money}}</span>
+            <span style="font-size: 20px; margin-top: 8px; padding-top: 5px;">{{totalFeePaid|money}}</span>
             <span>&nbsp;Đã thu/chi</span>
           </div>
         </div>
         <div fxLayout="row wrap" fxFlex="20%" class="container m-b-20">
-          <img src="assets/images/icons/capital.svg" width="40" height="40">
+          <img src="assets/images/icons/capital.svg">
           <div style="display: flex;" fxLayout="column">
-            <span style="font-size: 16px; margin-top: 1px; padding-top: 2px;">{{totalFeeRemain|money}}</span>
+            <span style="font-size: 20px; margin-top: 8px; padding-top: 5px;">{{totalFeeRemain|money}}</span>
             <span>&nbsp;Cần thu/chi</span>
           </div>
         </div>
@@ -60,7 +60,7 @@
     <mat-expansion-panel
       expanded="true"
       (opened)="panelOpenState = true"
-      (closed)="panelOpenState = false">
+                         (closed)="panelOpenState = false">
       <mat-expansion-panel-header>
         <mat-panel-title>
           Xem theo
@@ -195,28 +195,13 @@
       <ng-container matColumnDef="batchNo">
         <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef>Số batch</th>
         <td mat-cell fxHide fxShow.gt-md
-            *matCellDef="let transaction"
-        >  <span style="overflow-wrap: break-word;
-                white-space: nowrap;
-                overflow: hidden;
-                text-overflow: ellipsis;
-                max-width: 50px;
-                padding-right: 5px;"
-                 [matTooltip]="getDataOfGroupTxnCode(transaction)[0].traceNo"> {{ getDataOfGroupTxnCode(transaction)[0].batchNo }}</span> </td>
+            *matCellDef="let transaction"> {{ getDataOfGroupTxnCode(transaction)[0].batchNo }} </td>
       </ng-container>
 
       <ng-container matColumnDef="traceNo">
         <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef>Số trace</th>
         <td mat-cell fxHide fxShow.gt-md
-            *matCellDef="let transaction"
-        > <span style="overflow-wrap: break-word;
-                white-space: nowrap;
-                overflow: hidden;
-                text-overflow: ellipsis;
-                max-width: 50px;
-                padding-left: 10px;"
-                [matTooltip]="getDataOfGroupTxnCode(transaction)[0].traceNo"> {{ getDataOfGroupTxnCode(transaction)[0].traceNo }}</span>
-        </td>
+            *matCellDef="let transaction"> {{ getDataOfGroupTxnCode(transaction)[0].traceNo }} </td>
       </ng-container>
 
       <ng-container matColumnDef="customerName">

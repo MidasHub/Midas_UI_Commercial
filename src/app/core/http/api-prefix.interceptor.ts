@@ -7,7 +7,7 @@ import {Observable} from 'rxjs';
 
 /** Environment Configuration */
 import {environment} from 'environments/environment';
-// import {indexOf} from 'lodash';
+import {indexOf} from 'lodash';
 
 /**
  * Http request interceptor to prefix a request with `environment.serverUrl`.

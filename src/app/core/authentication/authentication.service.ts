@@ -40,7 +40,7 @@ export class AuthenticationService {
 
   private credentials: Credentials;
   /** Key to store credentials in storage. */
-  private credentialsStorageKey = 'midasCredentials';
+  private credentialsStorageKey = 'mifosXCredentials';
   /** Key to store oauth token details in storage. */
   private oAuthTokenDetailsStorageKey = 'mifosXOAuthTokenDetails';
   /** Key to store two factor authentication token in storage. */
@@ -120,7 +120,6 @@ export class AuthenticationService {
       return this.http.post('/authentication', { username: loginContext.username, password: loginContext.password })
         .pipe(
           map((credentials: Credentials) => {
-            console.log(credentials);
             this.onLoginSuccess(credentials);
             return of(true);
           })

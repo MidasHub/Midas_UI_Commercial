@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
 import {AddFeeDialogComponent} from '../../dialog/add-fee-dialog/add-fee-dialog.component';
@@ -13,11 +13,10 @@ import {GroupsService} from '../../../groups/groups.service';
 import {AddInformationCardBatchComponent} from '../../dialog/add-information-card-batch/add-information-card-batch.component';
 import {AddIdentitiesExtraInfoComponent} from '../../../clients/clients-view/identities-tab/add-identities-extra-info/add-identities-extra-info.component';
 import {ClientsService} from '../../../clients/clients.service';
-import {debounce, distinctUntilChanged, map, startWith, takeUntil} from 'rxjs/operators';
-import {Observable, Subject, timer} from 'rxjs';
+import {debounce, distinctUntilChanged, takeUntil} from 'rxjs/operators';
+import {Subject, timer} from 'rxjs';
 import {ConfirmDialogComponent} from '../../dialog/coifrm-dialog/confirm-dialog.component';
-import {MakeFeeOnAdvanceComponent} from '../../dialog/make-fee-on-advance/make-fee-on-advance.component';
-import {BanksService} from '../../../banks/banks.service';
+import {BankService} from '../../../services/bank.service';
 
 @Component({
   selector: 'midas-create-batch-transaction',
@@ -33,9 +32,9 @@ import {BanksService} from '../../../banks/banks.service';
 })
 export class CreateBatchTransactionComponent implements OnInit {
   dataSource: any[] = [];
-  formFilter = new FormControl('');
+  formFilter: FormGroup;
   displayedColumns: any[] = ['clientName', 'productId', 'rate',
-    'amount', 'terminalId', 'requestAmount',
+    'amount', 'terminalId', 'requestAmount', 'amountTransaction',
     'fee', 'batchNo', 'tid', 'terminalAmount', 'actions'
   ];
   terminals: any[] = [];
@@ -109,13 +108,6 @@ export class CreateBatchTransactionComponent implements OnInit {
   bookingTxnDailyId: any;
   private destroy$ = new Subject<void>();
 
-  filteredOptions: Observable<any[]>;
-
-  private _filter(value: string): string[] {
-    const filterValue = String(value).toLowerCase();
-    return this.members.filter((option: any) => option.fullName.toLowerCase().indexOf(filterValue) === 0);
-  }
-
   constructor(private formBuilder: FormBuilder,
               public dialog: MatDialog,
               private transactionServices: TransactionService,
@@ -124,83 +116,72 @@ export class CreateBatchTransactionComponent implements OnInit {
               private authenticationService: AuthenticationService,
               private groupServices: GroupsService,
               private clientsServices: ClientsService,
-              private bankServices: BanksService,
-              private router: Router,
+              private bankServices: BankService,
+              private router: Router
   ) {
     this.currentUser = this.authenticationService.getCredentials();
-    // this.formFilter = this.formBuilder.group({
-    //   'member': ['']
-    // });
-  }
-
-  displayClient(client: any): string | undefined {
-    return client ? `${client.cardNumber.slice(0, 6)} X ${client.cardNumber.slice(client.cardNumber.length - 5, client.cardNumber.length)} - ${client.fullName}` : undefined;
+    this.formFilter = this.formBuilder.group({
+      'member': ['']
+    });
   }
 
   getLabelProduct(productId: string) {
     return this.batchProducts.find(v => v.value === productId)?.label;
   }
 
-  exportTransactions() {
-    return this.transactionServices.exportTransactionBatch(this.batchTxnName);
-  }
-
-  getData(reset?: boolean) {
-    this.transactionServices.getMembersAvailableGroup(this.group.id).subscribe(data => {
-      this.members = data?.result?.listMemberGroupWithIdentifier;
-      if (reset) {
-        this.route.queryParams.subscribe(({batchTxnName, bookingTxnDailyId}: any) => {
-          if (batchTxnName && this.batchTxnName !== batchTxnName) {
-            this.batchTxnName = batchTxnName;
-            this.defaultData.batchTxnName = batchTxnName;
-            this.transactionServices.getListTransExistingOfBatch(batchTxnName).subscribe(result => {
-              this.dataSource = [];
-              result?.result?.listBatchTransaction?.forEach((v: any) => {
-                const member = this.members.find(f => String(f.clientId) === String(v.custId));
-                console.log({member});
-                const batchTransaction = {
-                  index: `${String(new Date().getMilliseconds())}___${this.dataSource.length}`,
-                  ...this.defaultData,
-                  ...v,
-                  identitydocumentsId: `${member.cardNumber.slice(0, 6)}-XXX-XXX-${member.cardNumber.slice(member.cardNumber.length - 4, member.cardNumber.length)} `,
-                  customerName: member.fullName,
-                  clientId: member.clientId,
-                  toClientId: member.clientId,
-                  clientName: member.fullName,
-                  documentId: member.documentId,
-                  tid: v.traceNo,
-                  fee: v.feeAmount,
-                  requestAmount: v.reqAmount,
-                  amount: v.terminalAmount,
-                  amountTransaction: v.txnAmount,
-                  // toAccountId: result?.result?.clientInfo?.savingsAccountId,
-                  rate: this.getFee(member.documentId, 'CA01'),
-                  saved: true,
-                };
-                this.dataSource = [...this.dataSource, this.generaForm(batchTransaction, member)];
-              });
-              this.onChangeTotal();
-            });
-          }
-          if (bookingTxnDailyId) {
-            this.bookingTxnDailyId = bookingTxnDailyId;
-            this.defaultData.bookingTxnDailyId = bookingTxnDailyId;
-          }
-        });
-      }
-    });
-  }
-
   init() {
     // getTransactionGroupFee
     this.route.data.subscribe(({groupId}: any) => {
       // @ts-ignore
+      console.log(groupId);
       this.transactionServices.getMembersInGroup(groupId).subscribe(res => {
         this.group = res?.result?.listMemberGroup;
         this.defaultData.groupId = this.group.id;
         this.defaultData.fromClientId = this.currentUser.userId;
         this.defaultData.officeId = this.currentUser.officeId;
-        this.getData(true);
+        this.transactionServices.getMembersAvailableGroup(this.group.id).subscribe(data => {
+          this.members = data?.result?.listMemberGroupWithIdentifier;
+          this.route.queryParams.subscribe(({batchTxnName, bookingTxnDailyId}: any) => {
+            console.log({batchTxnName, bookingTxnDailyId});
+            if (batchTxnName && this.batchTxnName !== batchTxnName) {
+              this.batchTxnName = batchTxnName;
+              this.defaultData.batchTxnName = batchTxnName;
+              this.transactionServices.getListTransExistingOfBatch(batchTxnName).subscribe(result => {
+                console.log(result); // listBatchTransaction
+                this.dataSource = [];
+                result?.result?.listBatchTransaction?.forEach((v: any) => {
+                  const member = this.members.find(f => String(f.clientId) === String(v.custId));
+                  console.log({member});
+                  const batchTransaction = {
+                    index: this.dataSource.length,
+                    ...this.defaultData,
+                    ...v,
+                    identitydocumentsId: `${member.cardNumber.slice(0, 6)}-XXX-XXX-${member.cardNumber.slice(member.cardNumber.length - 4, member.cardNumber.length)} `,
+                    customerName: member.fullName,
+                    clientId: member.clientId,
+                    toClientId: member.clientId,
+                    clientName: member.fullName,
+                    documentId: member.documentId,
+                    tid: v.traceNo,
+                    fee: v.feeAmount,
+                    requestAmount: v.reqAmount,
+                    amount: v.terminalAmount,
+                    amountTransaction: v.txnAmount,
+                    // toAccountId: result?.result?.clientInfo?.savingsAccountId,
+                    rate: this.getFee(member.documentId, 'CA01'),
+                    saved: true,
+                  };
+                  this.dataSource = [...this.dataSource, this.generaForm(batchTransaction, member)];
+                });
+                this.onChangeTotal();
+              });
+            }
+            if (bookingTxnDailyId) {
+              this.bookingTxnDailyId = bookingTxnDailyId;
+              this.defaultData.bookingTxnDailyId = bookingTxnDailyId;
+            }
+          });
+        });
         this.transactionServices.getTransactionGroupFee(this.group.id).subscribe(data => {
           this.feeGroup = data?.result.listFeeGroup;
         });
@@ -233,9 +214,9 @@ export class CreateBatchTransactionComponent implements OnInit {
     this.totalAmount = this.dataSource.reduce((total: any, num: any) => {
       return total + Math.round(num?.get('amount').value);
     }, 0);
-    // this.totalAmountTransaction = this.dataSource.reduce((total: any, num: any) => {
-    //     return total + Math.round(num?.get('amountTransaction').value);
-    // }, 0);
+    this.totalAmountTransaction = this.dataSource.reduce((total: any, num: any) => {
+      return total + Math.round(num?.get('amountTransaction').value);
+    }, 0);
     this.totalTerminalAmount = this.dataSource.reduce((total: any, num: any) => {
       return total + Math.round(num?.get('terminalAmount').value);
     }, 0);
@@ -249,10 +230,6 @@ export class CreateBatchTransactionComponent implements OnInit {
 
   ngOnInit(): void {
     this.init();
-    this.filteredOptions = this.formFilter.valueChanges.pipe(
-      startWith(''),
-      map((value: any) => this._filter(value))
-    );
   }
 
   generaForm(data: any, member: any) {
@@ -300,75 +277,32 @@ export class CreateBatchTransactionComponent implements OnInit {
     form.valueChanges.subscribe(e => {
       this.onChangeTotal();
     });
-    form.get('rate').valueChanges.pipe(
-      debounce(() => timer(1000)),
-      distinctUntilChanged(
-        null,
-        (event: any) => {
-          return event;
-        }
-      ),
-      takeUntil(this.destroy$),
-    ).subscribe(value => {
-      let rate = value;
-      // @ts-ignore
-      const {minRate, maxRate, cogsRate} = form?.data?.feeTerminalDto;
-      if (rate < minRate || rate > maxRate) {
-        form.get('rate').setValue(maxRate);
-        rate = maxRate;
-        // @ts-ignore
-        form.get('pnlRate').setValue(Number(maxRate - cogsRate).toFixed(2));
-        this.alertService.alert({
-          message: 'Tỉ lệ phí không được thấp hơn ' + minRate + ' và cao hơn ' + maxRate,
-          msgClass: 'cssWarning'
-        });
-
-      } else {
-        // @ts-ignore
-        form.get('pnlRate').setValue(Number(rate - cogsRate).toFixed(2));
-      }
-      const terminalAmount = form.get('terminalAmount').value;
-      form.get('fee').setValue(Number(terminalAmount * (rate / 100)).toFixed(0));
-
-    });
     this.bankServices.getInfoBinCode(member.cardNumber.slice(0, 6)).subscribe(result => {
-      if (result) {
-        // @ts-ignore
-        form.data.binCodeInfo = result;
-      }
+      // @ts-ignore
+      form.data.binCodeInfo = result?.result?.bankBinCode;
     });
     form.get('terminalId').valueChanges.subscribe(result => {
-      if (result) {
+      // @ts-ignore
+      this.transactionServices.getFeeByTerminal(form.data.binCodeInfo.cardType, result).subscribe(result1 => {
         // @ts-ignore
-        this.transactionServices.getFeeByTerminal(form.data.binCodeInfo.cardType, result).subscribe(result1 => {
+        form.data.feeTerminalDto = result1?.result?.feeTerminalDto;
+        const {minRate, maxRate, cogsRate} = result1?.result?.feeTerminalDto;
+        form.get('cogsRate').setValue(cogsRate);
+        // tslint:disable-next-line:no-shadowed-variable
+        const rate = form.get('rate').value;
+        if (rate < minRate || rate > maxRate) {
+          form.get('rate').setValue(maxRate);
           // @ts-ignore
-          form.data.feeTerminalDto = result1?.result?.feeTerminalDto;
-          const {minRate, maxRate, cogsRate} = result1?.result?.feeTerminalDto;
-          form.get('cogsRate').setValue(cogsRate);
+          form.get('pnlRate').setValue(Number(maxRate - cogsRate).toFixed(2));
+          this.alertService.alert({
+            message: 'Tỉ lệ phí không được thấp hơn ' + minRate + ' và cao hơn ' + maxRate,
+            msgClass: 'cssWarning'
+          });
+        } else {
           // @ts-ignore
-          form.data.feeTerminalDto = {
-            minRate, maxRate, cogsRate
-          };
-          // tslint:disable-next-line:no-shadowed-variable
-          let rate = form.get('rate').value;
-          if (rate < minRate || rate > maxRate) {
-            form.get('rate').setValue(maxRate);
-            rate = maxRate;
-            // @ts-ignore
-            form.get('pnlRate').setValue(Number(maxRate - cogsRate).toFixed(2));
-            this.alertService.alert({
-              message: 'Tỉ lệ phí không được thấp hơn ' + minRate + ' và cao hơn ' + maxRate,
-              msgClass: 'cssWarning'
-            });
-          } else {
-            // @ts-ignore
-            form.get('pnlRate').setValue(Number(rate - cogsRate).toFixed(2));
-          }
-          const terminalAmount = form.get('terminalAmount').value;
-          form.get('fee').setValue(Number(terminalAmount * (rate / 100)).toFixed(0));
-        });
-      }
-
+          form.get('pnlRate').setValue(Number(rate - cogsRate).toFixed(2));
+        }
+      });
       const amount = form.get('amount').value;
       const rate = form.get('rate').value;
       // @ts-ignore
@@ -387,7 +321,7 @@ export class CreateBatchTransactionComponent implements OnInit {
           documentId, documentId, amount, result).subscribe(result2 => {
           if (result2?.result) {
             const value = result2?.result.amountTransaction;
-            // form.get('amountTransaction').setValue(value);
+            form.get('amountTransaction').setValue(value);
             form.get('requestAmount').setValue(value);
             form.get('terminalAmount').setValue(value);
             // @ts-ignore
@@ -414,7 +348,7 @@ export class CreateBatchTransactionComponent implements OnInit {
   }
 
   async addRow() {
-    const member = this.formFilter.value;
+    const member = this.formFilter.get('member').value;
     if (!member) {
       return this.formFilter.markAllAsTouched();
     }
@@ -430,7 +364,7 @@ export class CreateBatchTransactionComponent implements OnInit {
       this.clientsServices.getClientById(member.clientId).subscribe(result => {
         if (result) {
           const batchTransaction = {
-            index: `${String(new Date().getMilliseconds())}___${this.dataSource.length}`,
+            index: this.dataSource.length,
             ...this.defaultData,
             identitydocumentsId: `${member.cardNumber.slice(0, 6)}-XXX-XXX-${member.cardNumber.slice(member.cardNumber.length - 4, member.cardNumber.length)} `,
             customerName: member.fullName,
@@ -449,30 +383,7 @@ export class CreateBatchTransactionComponent implements OnInit {
     }
   }
 
-  deleteRow(form: any) {
-    this.dataSource = this.dataSource.filter(v => v.get('index').value !== form.get('index').value);
-  }
-
-  makeFeeOnAdvance() {
-    const dialogConfig = new MatDialogConfig();
-    dialogConfig.data = {
-      batchTxnName: this.batchTxnName
-    };
-    // dialogConfig.minWidth = 400;
-    const dialog = this.dialog.open(MakeFeeOnAdvanceComponent, dialogConfig);
-    dialog.afterClosed().subscribe(data => {
-      if (data && data.status) {
-      }
-    });
-  }
-
   onSave(form: any) {
-    if (form.invalid || !form.get('terminalId').value) {
-      return this.alertService.alert({
-        message: 'Vui lòng điền đầy đủ thông tin',
-        msgClass: 'cssDanger'
-      });
-    }
     const dialog = this.dialog.open(ConfirmDialogComponent, {
       data: {
         message: 'Bạn chắc chắn muốn lưu giao dịch',
@@ -482,7 +393,6 @@ export class CreateBatchTransactionComponent implements OnInit {
     dialog.afterClosed().subscribe(data => {
       if (data) {
         const formData = {...form.data.member, ...form.value};
-        delete formData.index;
         console.log(formData);
         this.transactionServices.onSaveTransactionBatch(formData).subscribe(result => {
           console.log(result);
@@ -526,7 +436,6 @@ export class CreateBatchTransactionComponent implements OnInit {
         toClientId: member.clientId,
         clientName: member.fullName,
         documentId: member.documentId,
-        terminalId: v.terminalName,
         tid: v.traceNo,
         fee: v.feeAmount,
         requestAmount: v.reqAmount,
@@ -538,8 +447,7 @@ export class CreateBatchTransactionComponent implements OnInit {
       };
       const form_new = this.generaForm(batchTransaction, member);
       const newDataSo = this.dataSource.slice();
-      const indesx = newDataSo.findIndex((j: any) => j.get('index').value === form.get('index').value);
-      newDataSo[indesx] = form_new;
+      newDataSo[index] = form_new;
       this.dataSource = newDataSo;
     });
   }
@@ -613,25 +521,8 @@ export class CreateBatchTransactionComponent implements OnInit {
       };
       // dialogConfig.minWidth = 400;
       const dialog = this.dialog.open(AddIdentitiesExtraInfoComponent, dialogConfig);
-      dialog.afterClosed().subscribe(response => {
-        if (response.data) {
-          const {dueDay, expiredDate} = response.data.value;
-
-          this.clientsServices.getClientCross(member.clientId).subscribe((client: any) => {
-            this.bankServices
-              .storeExtraCardInfo({
-                userId: member.clientId,
-                userIdentifyId: member.documentId,
-                clientName: client.displayName,
-                cardNumber: `${member.cardNumber.slice(0, 6)}-XXX-XXX-${member.cardNumber.slice(12, 16)}`,
-                mobileNo: client.mobileNo,
-                dueDay: dueDay,
-                expireDate: expiredDate,
-              })
-              .subscribe((res2: any) => {
-                console.log(res2);
-              });
-          });
+      dialog.afterClosed().subscribe(data => {
+        if (data && data.status) {
         }
       });
     });
@@ -646,7 +537,8 @@ export class CreateBatchTransactionComponent implements OnInit {
     // dialogConfig.minWidth = 400;
     const dialog = this.dialog.open(CreateCardBatchTransactionComponent, dialogConfig);
     dialog.afterClosed().subscribe(data => {
-      this.getData(false);
+      if (data && data.status) {
+      }
     });
   }
 }

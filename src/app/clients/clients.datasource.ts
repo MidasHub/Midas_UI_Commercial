@@ -38,14 +38,10 @@ export class ClientsDataSource implements DataSource<any> {
    */
   getClients(orderBy: string = '', sortOrder: string = '', pageIndex: number = 0, limit: number = 10, clientActive: boolean = true) {
     this.clientsSubject.next([]);
-    let sqlSearch = '';
-    if (clientActive) {
-      sqlSearch = `c.status_enum = 300`;
-    }
-    this.clientsService.getClientsByOfficeOfUser('', '', pageIndex * limit, limit, sqlSearch)
+    this.clientsService.getClientsByOfficeOfUser(orderBy, sortOrder, pageIndex * limit, limit)
       .subscribe((clients: any) => {
         console.log(clients);
-        // clients.pageItems = (clientActive) ? (clients.pageItems.filter((client: any) => client.active)) : (clients.pageItems.filter((client: any) => !client.active));
+        clients.pageItems = (clientActive) ? (clients.pageItems.filter((client: any) => client.active)) : (clients.pageItems.filter((client: any) => !client.active));
         this.recordsSubject.next(clients.totalFilteredRecords);
         this.clientsSubject.next(clients.pageItems);
       });
@@ -78,33 +74,24 @@ export class ClientsDataSource implements DataSource<any> {
     if (!filter) {
       this.getClients();
     } else {
-      filter = String(filter).normalize('NFD')
-        .replace(/[\u0300-\u036f]/g, '')
-        .replace(/đ/g, 'd').replace(/Đ/g, 'D');
-      // if (this.old_key !== filter) {
-      this.old_key = filter;
-      this.old_result = [];
-      // let sqlSearch = `((display_name LIKE "%${filter}%")
-      //  OR (c.external_id LIKE "%${filter}%") OR  (c.mobile_no LIKE "%${filter}%"))`; // searchClientByNameAndExternalIdAndPhoneAndDocumentKey
-      let sqlSearch = `(display_name LIKE "%${filter}%" OR c.external_id LIKE "%${filter}%" OR  c.mobile_no LIKE "%${filter}%")`; // searchClientByNameAndExternalIdAndPhoneAndDocumentKey
-
-      if (clientActive) {
-        sqlSearch = `${sqlSearch} AND c.status_enum = 300`;
+      if (this.old_key !== filter) {
+        this.old_key = filter;
+        this.old_result = [];
+        const sqlSearch = `(display_name LIKE "%${filter}%")
+       OR (c.external_id LIKE "%${filter}%") OR  (c.mobile_no LIKE "%${filter}%")`; // searchClientByNameAndExternalIdAndPhoneAndDocumentKey
+        this.clientsService.getClientsByOfficeOfUser('', '', pageIndex * limit, limit, sqlSearch)
+          .subscribe((clients: any) => {
+            console.log(clients);
+            this.old_result = clients?.pageItems;
+            this.recordsSubject.next(this.old_result.length);
+            const l = this.old_result.filter((client: any) => client.active === clientActive);
+            this.clientsSubject.next(l.slice(pageIndex * limit, pageIndex * limit + limit));
+          });
+      } else {
+        this.recordsSubject.next(this.old_result.length);
+        const l = this.old_result.filter((client: any) => client.active === clientActive);
+        this.clientsSubject.next(l.slice(pageIndex * limit, pageIndex * limit + limit));
       }
-      this.clientsService.getClientsByOfficeOfUser('', '', pageIndex * limit, limit, sqlSearch)
-        .subscribe((clients: any) => {
-          // console.log(clients);
-          this.old_result = clients?.pageItems;
-          // this.recordsSubject.next(this.old_result.length);
-          this.recordsSubject.next(clients.totalFilteredRecords);
-          const l = clients?.pageItems.filter((client: any) => client.active === clientActive);
-          this.clientsSubject.next(l);
-        });
-      // } else {
-      //   this.recordsSubject.next(this.old_result.length);
-      //   const l = this.old_result.filter((client: any) => client.active === clientActive);
-      //   this.clientsSubject.next(l.slice(pageIndex * limit, pageIndex * limit + limit));
-      // }
     }
 
   }

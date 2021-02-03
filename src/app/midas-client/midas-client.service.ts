@@ -13,7 +13,7 @@ import { Observable } from 'rxjs';
 })
 export class MidasClientService {
 
-  private credentialsStorageKey = 'midasCredentials';
+  private credentialsStorageKey = 'mifosXCredentials';
   private accessToken: any;
   private GatewayApiUrlPrefix: any;
   private environment: any;

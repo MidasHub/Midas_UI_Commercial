@@ -63,8 +63,8 @@ export class CreateUserComponent implements OnInit {
     this.userForm = this.formBuilder.group({
       'username': ['', Validators.required],
       'email': ['', [Validators.required, Validators.email]],
-      'firstname': ['', [Validators.required, Validators.pattern('^([^!@#$%^&*()+=<>,.?\/]*)$')]],
-      'lastname': ['', [Validators.required, Validators.pattern('^([^!@#$%^&*()+=<>,.?\/]*)$')]],
+      'firstname': ['', [Validators.required, Validators.pattern('^([^!@#$%^&*()_+=<>,.?\/\-]*)$')]],
+      'lastname': ['', [Validators.required, Validators.pattern('^([^!@#$%^&*()_+=<>,.?\/\-]*)$')]],
       'sendPasswordToEmail': [true],
       'passwordNeverExpires': [false],
       'officeId': ['', Validators.required],

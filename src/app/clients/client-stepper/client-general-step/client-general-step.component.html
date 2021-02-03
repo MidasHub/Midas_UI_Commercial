@@ -27,7 +27,7 @@
             </mat-select>
           </mat-form-field>
 
-          <mat-form-field  fxFlex="48%">
+          <mat-form-field *ngIf="!isTeller" fxFlex="48%">
             <mat-label>{{'Client_Component.ClientStepper.GeneralStep.labelLegalForm' |translate}}</mat-label>
             <mat-select disabled formControlName="legalFormId">
               <mat-option *ngFor="let legalForm of legalFormOptions" [value]="legalForm.id">
@@ -35,7 +35,7 @@
               </mat-option>
             </mat-select>
           </mat-form-field>
-          <mat-checkbox *ngIf="createClientForm.value.legalFormId === 1" [disabled]="isTeller" checked="false"
+          <mat-checkbox *ngIf="createClientForm.value.legalFormId === 1" [disabled]="!isTeller" checked="false"
                         fxFlex="48%" labelPosition="before"
                         formControlName="isStaff" class="margin-v">
             {{'Client_Component.ClientStepper.GeneralStep.checkboxIsStaff' |translate}}
@@ -214,7 +214,7 @@
           </mat-checkbox>
           <mat-form-field *ngIf="createClientForm.contains('savingsProductId')" fxFlex="48%">
             <mat-label>{{'Client_Component.ClientStepper.GeneralStep.labelSavingProduct' |translate}}</mat-label>
-            <mat-select [disabled]="isTeller" formControlName="savingsProductId">
+            <mat-select disabled formControlName="savingsProductId">
               <mat-option *ngFor="let product of savingProductOptions" [value]="product.id">
                 {{ product.name }}
               </mat-option>
