@@ -9,6 +9,10 @@ import {Observable} from 'rxjs';
 import {environment} from 'environments/environment';
 // import {indexOf} from 'lodash';
 
+/** Logger */
+import {Logger} from '../logger/logger.service'
+const log = new Logger('API-Interceptor');
+
 /**
  * Http request interceptor to prefix a request with `environment.serverUrl`.
  */
@@ -36,6 +40,7 @@ export class ApiPrefixInterceptor implements HttpInterceptor {
       }
     }
 
+    log.debug("Add Url Step: ", request)
     return next.handle(request);
   }
 

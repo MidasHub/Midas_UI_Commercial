@@ -22,7 +22,7 @@ export class DashboardComponent implements OnInit {
    * Gets user activities from local storage.
    */
   constructor() {
-    this.userActivity = JSON.parse(localStorage.getItem('midasXLocation'));
+    this.userActivity = JSON.parse(sessionStorage.getItem('midasLocation'));
   }
 
   ngOnInit() {

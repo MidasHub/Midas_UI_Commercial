@@ -45,7 +45,7 @@ export class SettingsService {
    * @param {string[]} list List of default servers
    */
   setServers(list: string[]) {
-    localStorage.setItem('midasServers', JSON.stringify(list));
+    sessionStorage.setItem('midasServers', JSON.stringify(list));
   }
 
   /**
@@ -61,7 +61,7 @@ export class SettingsService {
    * @param {string[]} list List of default servers
    */
   setBillposServers(list: string[]) {
-    localStorage.setItem('midasBillposServers', JSON.stringify(list));
+    sessionStorage.setItem('midasBillposServers', JSON.stringify(list));
   }
 
   /**
@@ -84,7 +84,7 @@ export class SettingsService {
    * Returns list of default server
    */
   get servers() {
-    return JSON.parse(localStorage.getItem('midasServers'));
+    return JSON.parse(sessionStorage.getItem('midasServers'));
   }
 
   /**
@@ -97,7 +97,7 @@ export class SettingsService {
    * Returns list of default server
    */
   get serversBillpos() {
-    return JSON.parse(localStorage.getItem('midasBillposServers'));
+    return JSON.parse(sessionStorage.getItem('midasBillposServers'));
   }
 
   /**

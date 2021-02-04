@@ -198,13 +198,16 @@ export class IdentitiesTabComponent {
   addIdentifier(addOther: boolean) {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.data = {
-      title: 'Add Client Identifier',
+      title: 'Thêm Thẻ | CMND/CCCD | TK bank',
       addOther: addOther,
       clientIdentifierTemplate: this.clientIdentifierTemplate,
     };
 
     dialogConfig.minWidth = 400;
+    // init data for opening
     const addIdentifierDialogRef = this.dialog.open(AddIdentitiesComponent, dialogConfig);
+
+    //Call API after close dialog box
     addIdentifierDialogRef.afterClosed().subscribe((response: any) => {
       if (response.data) {
         let {description} = response.data.value;
@@ -267,6 +270,7 @@ export class IdentitiesTabComponent {
                 this.identifiersTable.renderRows();
               }
             };
+
             if (document && Number(document.id) >= 38 && Number(document.id) <= 57) {
               this.clientService.getClientData(this.clientId).subscribe((client: any) => {
                 this.bankService
@@ -362,7 +366,7 @@ export class IdentitiesTabComponent {
   addIdentifierExtraInfo(userIdentifyId: string, cardNumber: string) {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.data = {
-      title: 'Add Client Identifier Extra Info',
+      title: 'Thông tin bổ sung cho thẻ',
       clientIdentifierTemplate: this.clientIdentifierTemplate,
     };
     dialogConfig.minWidth = 400;

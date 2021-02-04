@@ -21,6 +21,9 @@ const httpOptionsGateway = {
   }
 };
 
+/** Logger */
+import {Logger} from '../logger/logger.service'
+const log = new Logger('Authen-interceptor');
 
 
 /** Authorization header. */
@@ -50,6 +53,8 @@ export class AuthenticationInterceptor implements HttpInterceptor {
       request = request.clone({ setHeaders: httpOptionsGateway.headers });
       }
      }
+
+     log.debug("Authen Step: ", request)
     return next.handle(request);
   }
 

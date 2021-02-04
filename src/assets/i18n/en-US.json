@@ -259,7 +259,9 @@
         "inputUniqueId": "Unique Id",
         "selectBank": "Select bank",
         "selectCardType": "Select card type",
-        "selectStatus": "Status"
+        "selectStatus": "Status",
+        "dialogIdentifierTitle": "Add Client Identifier",
+        "dialogIdentifierTitleExtra": "Add card extra infos"
       },
       "TabGeneral": {
         "lblPerformanceHistory": "Historical Performance",
