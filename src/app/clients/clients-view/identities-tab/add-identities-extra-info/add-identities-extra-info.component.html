@@ -29,5 +29,5 @@
   <button mat-raised-button mat-dialog-close>{{ 'Shared_Component.FormDialog.btnCancel' | translate }}</button>
   <button mat-raised-button color="primary"
           [mat-dialog-close]="{ data: form,documentTypes:documentTypes,existBin:existBin }"
-          [disabled]="!form.valid || form.pristine">{{ 'Shared_Component.FormDialog.btnAdd' |translate }}</button>
+          [disabled]="!form.valid || form.pristine">{{ (this.data.cardinfo)?'Sửa':'Shared_Component.FormDialog.btnAdd' |translate }}</button>
 </mat-dialog-actions>

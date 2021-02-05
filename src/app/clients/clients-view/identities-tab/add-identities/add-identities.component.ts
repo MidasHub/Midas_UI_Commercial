@@ -32,13 +32,16 @@ export class AddIdentitiesComponent implements OnInit {
               private alterService: AlertService) {
     this.documentTypes = [];
     const {clientIdentifierTemplate} = data;
+    //Chuyển đổi thông tin Documenttype ID thành type
     clientIdentifierTemplate.allowedDocumentTypes.forEach((type: any) => {
       if (data.addOther) {
+        //Nếu có thông tin add Other trong bộ đata
         if (type.id < 38 || type.id > 57) {
 
           this.documentTypes.push(type);
         }
       } else {
+        //Nếu là thẻ
         if (type.id >= 38 && type.id <= 57) {
           this.documentTypes.push(type);
         }

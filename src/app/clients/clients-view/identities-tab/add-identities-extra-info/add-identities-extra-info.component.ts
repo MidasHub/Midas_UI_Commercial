@@ -4,6 +4,9 @@ import {MAT_DIALOG_DATA} from '@angular/material/dialog';
 import {AuthenticationService} from '../../../../core/authentication/authentication.service';
 import {BanksService} from '../../../../banks/banks.service';
 
+//**Logger */
+import {Logger} from '../../../../core/logger/logger.service';
+const log = new Logger('-Add card extra info-')
 @Component({
   // tslint:disable-next-line:component-selector
   selector: 'midas-add-identities-extra-info',
@@ -24,7 +27,7 @@ export class AddIdentitiesExtraInfoComponent implements OnInit {
               @Inject(MAT_DIALOG_DATA) public data: any,
               private bankService: BanksService,
               private authenticationService: AuthenticationService) {
-    console.log(data);
+    log.debug(data);
     const {clientIdentifierTemplate} = data;
     this.documentTypes = clientIdentifierTemplate.allowedDocumentTypes;
   }
@@ -37,10 +40,19 @@ export class AddIdentitiesExtraInfoComponent implements OnInit {
         this.isTeller = false;
       }
     });
+    if (this.data.cardinfo){
+      log.debug(this.data.cardinfo);
+      this.form = this.formBuilder.group({
+        dueDay: [this.data.cardinfo.cardExtraInfoEntity.dueDay, Validators.required],
+        expiredDate: [this.data.cardinfo.cardExtraInfoEntity.expiredDate.slice(5,7)+'/'+this.data.cardinfo.cardExtraInfoEntity.expiredDate.slice(2,4),  Validators.required]
+      });
+
+    }else{
     this.form = this.formBuilder.group({
       dueDay: ['', Validators.required],
       expiredDate: ['',  Validators.required]
     });
+   }
 
   }
 
