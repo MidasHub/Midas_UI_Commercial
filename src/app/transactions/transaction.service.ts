@@ -223,7 +223,6 @@ export class TransactionService {
     const permit = permissions.includes('TXN_CREATE');
     const httpParams = new HttpParams()
       .set('officeId', officeId)
-      .set('permission', String(!permit))
       .set('fromDate', payload.fromDate)
       .set('toDate', payload.toDate)
       .set('createdBy', this.accessToken.userId)
@@ -271,10 +270,11 @@ export class TransactionService {
       .set('amountTransaction', '%%')
       .set('trackingState', payload.statusFilter === '' ? `%%` : `%${payload.statusFilter}%`)
       .set('createdUser', '%%')
-      .set('bankName', payload.bankName === '' ? `%%` : `%${payload.bankName}%`)
+      .set('bankName', payload.bankName === '' ? `%%` : `${payload.bankName}`)
       .set('fromDate', payload.fromDate)
       .set('toDate', payload.toDate)
       .set('createdBy', this.accessToken.userId)
+      .set('staffId', this.accessToken.staffId)
       .set('accessToken', this.accessToken.base64EncodedAuthenticationKey);
     return this.http.post(`${this.GatewayApiUrlPrefix}/card/get_list_card_on_due_day`, httpParams);
   }

@@ -90,32 +90,35 @@
       </ng-container>
 
       <ng-container matColumnDef="cardNumber">
-        <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef>Số thẻ</th>
-        <td mat-cell fxHide fxShow.gt-md *matCellDef="let card">{{ card.cardNumber.replace("XXX-XXX", "X") }}</td>
-      </ng-container>
+        <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef>Số thẻ (Ngân hàng)</th>
+        <td mat-cell fxHide fxShow.gt-md *matCellDef="let card">
+          {{ card.cardNumber.replace("XXX-XXX", "X") }} (
+            <span style="color: red; font-weight: bold">{{ card.bankCode }}</span>
+            )
 
-      <ng-container matColumnDef="bankName">
-        <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef>Ngân hàng</th>
-        <td mat-cell fxHide fxShow.gt-md *matCellDef="let card">{{ card.bankName }}</td>
+        </td>
       </ng-container>
 
       <ng-container matColumnDef="dueDay">
-        <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef>Ngày<br />đến hạn</th>
+        <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef>Ngày <br /> đến hạn / <br /> hết hạn</th>
         <td mat-cell fxHide fxShow.gt-md *matCellDef="let card">
           <mat-form-field>
-            <input matInput type="text" [(ngModel)]="card.dueDay" mask="00" />
+            <input style="color: green; font-weight: bold" matInput type="text" [(ngModel)]="card.dueDay" mask="00" />
+            <hr style="font-weight: bold;">
+            <input style="color: red; font-weight: bold" type="text" matInput [(ngModel)]="card.expiredDateString" mask="00/00" />
+
           </mat-form-field>
         </td>
       </ng-container>
 
-      <ng-container matColumnDef="expiredDate">
+      <!-- <ng-container matColumnDef="expiredDate">
         <th mat-header-cell *matHeaderCellDef>Ngày<br />hết hạn</th>
         <td mat-cell *matCellDef="let card">
           <mat-form-field>
             <input type="text" matInput [(ngModel)]="card.expiredDateString" mask="00/00" />
           </mat-form-field>
         </td>
-      </ng-container>
+      </ng-container> -->
 
       <ng-container matColumnDef="isHold">
         <th mat-header-cell *matHeaderCellDef>Giử thẻ</th>
@@ -139,14 +142,14 @@
       <ng-container matColumnDef="note">
         <th mat-header-cell *matHeaderCellDef>Ghi chú</th>
         <td mat-cell *matCellDef="let card">
-          <mat-form-field>
-            <textarea matInput [(ngModel)]="card.note"></textarea>
+          <mat-form-field style="width: 100%;">
+            <textarea  matInput [(ngModel)]="card.note"></textarea>
           </mat-form-field>
         </td>
       </ng-container>
       <ng-container matColumnDef="actions">
-        <th mat-header-cell *matHeaderCellDef>Hành động</th>
-        <td mat-cell *matCellDef="let card; let i = dataIndex" style="width: 8%; text-align: center">
+        <th mat-header-cell *matHeaderCellDef  >Hành động</th>
+        <td mat-cell *matCellDef="let card; let i = dataIndex" style="width: 8% !important; text-align: center">
           <mat-icon style="color: green" title="Cập nhật" (click)="updateCardTrackingState(i)">save</mat-icon>
           <mat-icon style="color: blue" title="Nhận phí" (click)="advanceCash(card.refId, card.clientId)"
             >attach_money</mat-icon
