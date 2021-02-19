@@ -39,9 +39,9 @@ import {HasPermissionDirective} from '../../directives/has-permission/has-permis
 })
 export class ManageTransactionComponent implements OnInit {
   expandedElement: any;
-  displayedColumns: string[] = ['productId', 'txnDate', 'trnRefNo', 'status',
-    'officeName', 'agencyName', 'panHolderName', 'terminalAmount',
-    'feeAmount', 'cogsAmount', 'terminalAmount_feeAmount', 'actions'
+  displayedColumns: string[] = ['productId', 'txnDate', 
+    'officeName',  'panHolderName', 'terminalAmount',
+    'feeAmount', 'cogsAmount', 'terminalAmount_feeAmount'
   ]; // pnlAmount
   formDate: FormGroup;
   formFilter: FormGroup;
@@ -51,21 +51,32 @@ export class ManageTransactionComponent implements OnInit {
   transactionType: any[] = [
     {
       label: 'Tất cả',
+      shortName: 'Tất cả',
       value: ''
     },
     {
       label: 'Giao dịch RTM',
+      shortName: 'RTM',
       value: 'CA01'
     },
     {
-      label: 'Giao dịch ĐHT',
+      label: 'Giao dịch ĐHT lẻ',
+      shortName: 'ĐHT lẻ',
       value: 'AL01'
-    }, {
+    },
+    {
+      label: 'Giao dịch ĐHT sỉ',
+      shortName: 'ĐHT sỉ',
+      value: 'AL02'
+    }, 
+    {
       label: 'Giao dịch test thẻ',
+      shortName: 'TEST',
       value: 'TEST'
     },
     {
       label: 'Giao dịch lô lẻ',
+      shortName: 'lô lẻ',
       value: 'CA02'
     }
   ];
@@ -128,6 +139,9 @@ export class ManageTransactionComponent implements OnInit {
     const permit_userTeller = permissions.includes('POS_UPDATE');
     if (permit_userTeller) {
       this.displayedColumns.push('pnlAmount');
+      this.displayedColumns.push('actions');
+    }else{
+       this.displayedColumns.push('actions');
     }
     this.formFilter = this.formBuilder.group({
       'productId': [''],
@@ -192,24 +206,14 @@ export class ManageTransactionComponent implements OnInit {
       toDate = this.datePipe.transform(toDate, dateFormat);
     }
     this.transactionService.getTransaction({fromDate, toDate}).subscribe(result => {
-      const {permissions} = this.currentUser;
+      
       this.transactionsData = [];
-      const permit_userTeller = permissions.includes('TXNOFFICE_CREATE');
-      if (!permit_userTeller) {
-        result?.result?.listPosTransaction?.map((value: any) => {
-          if (value?.createdBy === this.currentUser.userId
-            || value?.staffId === this.currentUser.staffId) {
-            this.transactionsData.push(value);
-          }
-        });
-      } else {
         this.transactionsData = result?.result?.listPosTransaction.map((v: any) => {
           return {
             ...v,
-            terminalAmount_feeAmount: Number(v.feeAmount / v.terminalAmount).toFixed(3)
+            terminalAmount_feeAmount: Number((v.feeAmount / v.terminalAmount ).toFixed(3)) * 100
           };
         });
-      }
       this.filterTransaction();
     });
   }
@@ -271,7 +275,7 @@ export class ManageTransactionComponent implements OnInit {
   }
 
   displayProductId(type: string) {
-    return this.transactionType.find(v => v.value === type)?.label || 'N/A';
+    return this.transactionType.find(v => v.value === type)?.shortName || 'N/A';
   }
 
   menuOpened() {

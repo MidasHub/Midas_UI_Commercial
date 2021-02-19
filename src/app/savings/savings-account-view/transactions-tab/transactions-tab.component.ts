@@ -125,15 +125,20 @@ export class TransactionsTabComponent implements OnInit {
   }
 
   downloadReport() {
-    let transactions = '';
-    this.transactionsData.map((item: any) => {
-      if (!transactions) {
-        transactions = item.txnId;
-      } else {
-        transactions += '-' + item.txnId;
-      }
-    });
-    return this.savingsService.downloadReport(transactions);
+    const dateFormat = this.settingsService.dateFormat;
+    let fromDate = this.transactionDateFrom.value;
+    if (fromDate) {
+      fromDate = this.datePipe.transform(fromDate, dateFormat);
+    }
+    let toDate = this.transactionDateTo.value;
+    if (toDate) {
+      toDate = this.datePipe.transform(toDate, dateFormat);
+    }
+    const note = this.form.get('note').value;
+    const txnCode = this.form.get('txnCode').value;
+    const paymentDetail = this.form.get('paymentDetail').value;
+
+    return this.savingsService.downloadReport(this.savingsAccountData.id, toDate, fromDate, note, txnCode, paymentDetail);
   }
 
   ngOnInit() {

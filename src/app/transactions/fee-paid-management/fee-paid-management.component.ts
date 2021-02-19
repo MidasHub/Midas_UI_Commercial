@@ -220,19 +220,8 @@ export class FeePaidManagementComponent implements OnInit {
       toDate = this.datePipe.transform(toDate, dateFormat);
     }
     this.transactionService.getFeePaidTransactions(fromDate, toDate).subscribe(result => {
-      const {permissions} = this.currentUser;
-      const permit_userTeller = permissions.includes('TXNOFFICE_CREATE');
-      if (!permit_userTeller) {
-        this.transactionsData = [];
-        result?.result?.listFeeTransaction?.map((value: any) => {
-          if (value?.createdBy === this.currentUser.userId
-            || value?.staffId === this.currentUser.staffId) {
-            this.transactionsData.push(value);
-          }
-        });
-      } else {
-        this.transactionsData = result?.result?.listFeeTransaction;
-      }
+
+      this.transactionsData = result?.result?.listFeeTransaction;
       this.transactionsData.map(v => {
         if (!v.agencyId) {
           v.agencyId = '#';

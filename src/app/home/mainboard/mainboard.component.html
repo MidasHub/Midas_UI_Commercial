@@ -36,7 +36,11 @@
         <mat-header-cell  *matHeaderCellDef mat-sort-header>Tên khách hàng</mat-header-cell>
         <mat-cell  *matCellDef="let row">
           <span class="mobile-label">Khách hàng:</span>
-          <span >{{row.displayName}}</span>
+          <span >{{row.displayName}}
+            <div  *ngIf="row.isBad"  style="color: red; font-weight: bold;">
+              LỪA ĐẢO
+            </div>
+          </span>
         </mat-cell>
       </ng-container>
 
