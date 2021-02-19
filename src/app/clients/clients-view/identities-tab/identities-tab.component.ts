@@ -433,7 +433,7 @@ export class IdentitiesTabComponent {
 
             this.alertService.alert({
               message:
-              'Khoa xử lý cập nhật thông tin bổ sung cho thẻ giúp anh. Sau đóng Dialog box, response là ' + JSON.stringify(response),
+              'Khoa xử lý cập nhật thông tin bổ sung cho thẻ giúp anh.',
               msgClass: 'cssWarning',
               hPosition: 'right',
               vPosition: 'bottom',

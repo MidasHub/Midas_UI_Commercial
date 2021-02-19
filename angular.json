@@ -16,13 +16,8 @@
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
-          
           "options": {
             "aot": true,
-            "allowedCommonJsDependencies": [
-              "lodash",
-              "@ckeditor/ckeditor5-build-classic"
-           ],
             "outputPath": "dist/web-app",
             "index": "src/index.html",
             "main": "src/main.ts",

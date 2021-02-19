@@ -11,15 +11,33 @@
   </mat-dialog-actions>
 
   <h2>Hay là</h2>
-  <a mat-dialog-close href="#/transaction/create?clientId={{transactionInfo.clientId}}&identifierId={{transactionInfo.identifierId}}&type=cash">Tiếp tục giao dịch với thẻ {{transactionInfo.panNumber}} của khách hàng {{transactionInfo.clientName}}</a>
+  <ul>
+    <li>
+      Tiếp tục giao dịch với thẻ {{transactionInfo.panNumber}} của khách hàng {{transactionInfo.clientName}}. 
+      <a mat-dialog-close mat-mini-fab href="#/transaction/create?clientId={{transactionInfo.clientId}}&identifierId={{transactionInfo.identifierId}}&type=cash" color="primary">
+        <fa-icon icon="arrow-alt-circle-left"></fa-icon> 
+      </a>
+    </li>
+    <li>Chọn thẻ khác của khách hàng {{transactionInfo.clientName}} để tiếp tục thực hiện giao dịch. 
+      <a mat-dialog-close mat-mini-fab href="#/clients/{{transactionInfo.clientId}}/identities?typeViewClient=transaction">
+        <fa-icon icon="arrow-alt-circle-right"></fa-icon>         
+      </a>
+    </li>
+  </ul>
+ 
   <br />
-  <a mat-dialog-close href="#/clients/{{transactionInfo.clientId}}/identities?typeViewClient=transaction">Chọn thẻ khác của khách hàng {{transactionInfo.clientName}}</a>
+  
 
   <h2>Tìm kiếm khách hàng khác đề tiếp tục giao dịch</h2>
   <midas-mainboard> </midas-mainboard>
 </div>
 <mat-dialog-actions align="center">
-  <a mat-dialog-close href="#/">
-    <button mat-raised-button (click)="dialogRef.close({ status: false })" color="warn">Quay lại trang chủ</button></a
+  <p>
+ <a mat-dialog-close mat-mini-fab href="#/" (click)="dialogRef.close({ status: false })">
+    <!-- <button mat-raised-button  color="warn">Quay lại trang chủ</button> -->
+    <fa-icon icon="home"></fa-icon>
+    </a
   >
+  <br/>
+ <span>Quay lại trang chủ</span></p>
 </mat-dialog-actions>
