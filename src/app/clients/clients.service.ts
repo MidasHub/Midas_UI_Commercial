@@ -3,6 +3,10 @@ import {Injectable} from '@angular/core';
 import {environment} from 'environments/environment';
 import {HttpClient, HttpParams} from '@angular/common/http';
 
+/** Logger */
+import {Logger} from '../core/logger/logger.service'
+const log = new Logger('Client');
+
 /** rxjs Imports */
 import {Observable} from 'rxjs';
 
@@ -37,7 +41,7 @@ export class ClientsService {
       .set('officeId', this.accessToken.officeId)
       .set('createdBy', this.accessToken.userId)
       .set('accessToken', this.accessToken.base64EncodedAuthenticationKey);
-
+      log.debug("Http - get_client_midas_by_id: ",httpParams);
     return this.http.post<any>(`${this.GatewayApiUrlPrefix}/client/get_client_midas_by_id`, httpParams);
   }
 

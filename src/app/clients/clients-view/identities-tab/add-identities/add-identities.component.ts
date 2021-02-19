@@ -5,6 +5,10 @@ import {AuthenticationService} from '../../../../core/authentication/authenticat
 import {AlertService} from '../../../../core/alert/alert.service';
 import {BanksService} from '../../../../banks/banks.service';
 
+import { Logger } from "../../../../core/logger/logger.service";
+import { slice } from 'lodash';
+const log = new Logger('-Add-Identities-')
+
 @Component({
   // tslint:disable-next-line:component-selector
   selector: 'midas-add-identities',
@@ -15,8 +19,8 @@ export class AddIdentitiesComponent implements OnInit {
   form: FormGroup;
   documentTypes: any[];
   statusOptions: any[] = [{value: 'Active'}, {value: 'Inactive'}];
-  documentCardBanks: any[];
-  documentCardTypes: any[];
+  documentCardBanks: any[] = this.bankService.documentCardBanks;
+  documentCardTypes: any[] = this.bankService.documentCardTypes;
   currentUser: any;
   isTeller = true;
   existBin = false;
@@ -28,13 +32,16 @@ export class AddIdentitiesComponent implements OnInit {
               private alterService: AlertService) {
     this.documentTypes = [];
     const {clientIdentifierTemplate} = data;
+    //Chuyển đổi thông tin Documenttype ID thành type
     clientIdentifierTemplate.allowedDocumentTypes.forEach((type: any) => {
       if (data.addOther) {
+        //Nếu có thông tin add Other trong bộ đata
         if (type.id < 38 || type.id > 57) {
 
           this.documentTypes.push(type);
         }
       } else {
+        //Nếu là thẻ
         if (type.id >= 38 && type.id <= 57) {
           this.documentTypes.push(type);
         }
@@ -57,17 +64,22 @@ export class AddIdentitiesComponent implements OnInit {
       'documentKey': [''],
       'description': ['']
     });
-    this.bankService.getBanks().subscribe((result: any) => {
-      console.log(result);
-      if (result) {
-        this.documentCardBanks = result;
-      }
-    });
-    this.bankService.getCardTypes().subscribe((result: any) => {
-      if (result) {
-        this.documentCardTypes = result;
-      }
-    });
+
+    // this.bankService.getBanks().subscribe((result: any) => {
+    //   log.debug(result);
+    //   if (result) {
+    //     this.documentCardBanks = result;
+    //   }
+    // });
+
+    // this.bankService.getCardTypes().subscribe((result: any) => {
+    //   log.debug(result);
+    //   if (result) {
+    //     this.documentCardTypes = result;
+    //   }
+    // });
+    log.debug('The data import from bankService: ', this.documentCardBanks,this.documentCardTypes);
+
     this.form.get('documentTypeId').valueChanges.subscribe((value: any) => {
       console.log(value);
       const type = this.documentTypes.find(v => v.id === value);
@@ -83,12 +95,16 @@ export class AddIdentitiesComponent implements OnInit {
         this.form.removeControl('expiredDate');
       }
     });
+
     this.form.get('documentKey').valueChanges.subscribe((value: any) => {
       if (value.length === 16) {
         const typeDocument = this.form.get('documentTypeId').value;
         const type = this.documentTypes.find(v => v.id === typeDocument);
         if (type && Number(type.id) >= 38 && Number(type.id) <= 57) {
-          this.bankService.getInfoBinCode(value).subscribe((res: any) => {
+          
+          log.debug('Cần tìm thông bincode: ',value,' - 6 first: ', value.slice(0,6))
+      
+          this.bankService.getInfoBinCode(value.slice(0,6)).subscribe((res: any) => {
             if (res) {
               if (res.existBin) {
                 const {bankCode, cardType} = res;

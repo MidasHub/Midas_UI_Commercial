@@ -3,6 +3,9 @@ import {HttpClient, HttpParams} from '@angular/common/http';
 import {environment} from '../../environments/environment';
 import {BehaviorSubject, Observable, of, Subject} from 'rxjs';
 
+//** Logger */
+import {Logger} from "../core/logger/logger.service";
+const log = new Logger("Bank-Service");
 @Injectable({
   providedIn: 'root'
 })
@@ -13,6 +16,8 @@ export class BanksService {
   public cards: any;
   public banks: any;
   public cardTypes: any;
+  public documentCardBanks: any[];
+  public documentCardTypes: any[];
 
   constructor(private http: HttpClient) {
     this.accessToken = JSON.parse(
@@ -150,14 +155,16 @@ export class BanksService {
 
   getInfoBinCode(binCode: string): BehaviorSubject<any> {
     const result = new BehaviorSubject(null);
-    if (!this.cards) {
-      this.getData();
-    }
+    // if (!this.cards) {
+    //   this.getData();
+    // }
+    log.debug('This Card:',this.cards)
     this.cards.subscribe((values: any) => {
       if (values) {
+        log.debug('Value is: ',values)
         let have = false;
         for (const v of values) {
-          if (v.binCode === binCode) {
+          if (v.binCode == binCode) {
             have = true;
             result.next({...v, existBin: true});
             break;
@@ -195,4 +202,19 @@ export class BanksService {
 
     return this.http.post(`${this.GatewayApiUrlPrefix}/card/store_extra_card_info`, httpParams);
   }
+
+  bankCardDataInit() {
+    this.getBanks().subscribe((result: any) => {
+      if (result) {
+        this.documentCardBanks = result;
+      }
+      });
+    this.getCardTypes().subscribe((result:any)=>{
+      if (result) {
+        this.documentCardTypes = result;
+      }
+    }
+    );
+  }
+//----end Class---//
 }

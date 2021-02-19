@@ -248,14 +248,16 @@
       "tipCaptureImage": "Chụp hình ",
       "tipDeleteImage": "Xóa hình",
       "TabIdentities": {
-        "selectDocumentType": "Kiểu tài liệu",
-        "inputDocumentCardBank": "Mã nhận diện",
+        "selectDocumentType": "Loại tài liệu",
+        "inputDocumentCardBank": "Số thẻ|CMND/CCCD| TKBank",
         "inputStatus": "Trạng thái",
         "inputDescription": "Mô tả",
-        "inputUniqueId": "Mã nhận dạng",
+        "inputUniqueId": "Số thẻ| CMND/CCCD| TKBank",
         "selectBank": "Chọn ngân hàng",
         "selectCardType": "Chọn loại thẻ",
-        "selectStatus": "Trạng thái"
+        "selectStatus": "Trạng thái",
+        "dialogIdentifierTitle": "Thêm thẻ mới | CMND/CCCD | TK Bank",
+        "dialogIdentifierTitleExtra": "Thông tin bổ sung cho thẻ"
       },
       "TabGeneral": {
         "lblPerformanceHistory": "Lịch sử hoạt động ",

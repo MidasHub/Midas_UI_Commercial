@@ -1,4 +1,4 @@
-<h1 mat-dialog-title>Add Client Identifier extra info</h1>
+<h1 mat-dialog-title>{{'Client_Component.ViewClient.TabIdentities.dialogIdentifierTitleExtra' |translate}}</h1>
 
 <div mat-dialog-content [formGroup]="form" [fxLayout]="'column'" fxLayout.lt-md="column" [fxLayoutGap]="'1%'"
      fxLayoutGap.lt-md="0%">
@@ -29,5 +29,5 @@
   <button mat-raised-button mat-dialog-close>{{ 'Shared_Component.FormDialog.btnCancel' | translate }}</button>
   <button mat-raised-button color="primary"
           [mat-dialog-close]="{ data: form,documentTypes:documentTypes,existBin:existBin }"
-          [disabled]="!form.valid || form.pristine">{{ 'Shared_Component.FormDialog.btnAdd' |translate }}</button>
+          [disabled]="!form.valid || form.pristine">{{ (this.data.cardinfo)?'Sửa':'Shared_Component.FormDialog.btnAdd' |translate }}</button>
 </mat-dialog-actions>

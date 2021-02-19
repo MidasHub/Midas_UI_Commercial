@@ -21,6 +21,7 @@ import { ThemeStorageService } from './shared/theme-picker/theme-storage.service
 import { AlertService } from './core/alert/alert.service';
 import { AuthenticationService } from './core/authentication/authentication.service';
 import { SettingsService } from './settings/settings.service';
+import { BanksService} from "./banks/banks.service"
 
 /** Custom Items */
 import { Alert } from './core/alert/alert.model';
@@ -62,7 +63,8 @@ export class WebAppComponent implements OnInit {
     public snackBar: MatSnackBar,
     private alertService: AlertService,
     private settingsService: SettingsService,
-    private authenticationService: AuthenticationService) {
+    private authenticationService: AuthenticationService,
+    private bankService : BanksService) {
   }
 
   /**
@@ -111,15 +113,15 @@ export class WebAppComponent implements OnInit {
 
     // Stores top 100 user activites as local storage object.
     let activities: string[] = [];
-    if (localStorage.getItem('midasXLocation')) {
-      const activitiesArray: string[] = JSON.parse(localStorage.getItem('midasXLocation'));
+    if (sessionStorage.getItem('midasLocation')) {
+      const activitiesArray: string[] = JSON.parse(sessionStorage.getItem('midasLocation'));
       const length = activitiesArray.length;
       activities = length > 100 ? activitiesArray.slice(length - 100) : activitiesArray;
     }
     // Store route URLs array in local storage on navigation end.
     onNavigationEnd.subscribe(() => {
       activities.push(this.router.url);
-      localStorage.setItem('midasXLocation', JSON.stringify(activities));
+      sessionStorage.setItem('midasLocation', JSON.stringify(activities));
     });
 
     // Setup theme
@@ -154,7 +156,7 @@ export class WebAppComponent implements OnInit {
       this.settingsService.setDateFormat('dd/MM/yyyy');
     }
 
-    if (!localStorage.getItem('midasServers')) {
+    if (!sessionStorage.getItem('midasServers')) {
       this.settingsService.setServers([
         'https://staging.midascore.net',
         'https://uat.tekcompay.com:8443',
@@ -163,7 +165,7 @@ export class WebAppComponent implements OnInit {
       ]);
     }
 
-    if (!localStorage.getItem('midasBillposServers')) {
+    if (!sessionStorage.getItem('midasBillposServers')) {
       this.settingsService.setBillposServers([
         'https://staging.midascore.net',
         'https://uat.tekcompay.com:8287',
@@ -171,7 +173,10 @@ export class WebAppComponent implements OnInit {
       ]);
     }
 
+    // load card and bank data
+    this.bankService.bankCardDataInit();
 
+  // ----- End ngOnInit
   }
 
   logout() {

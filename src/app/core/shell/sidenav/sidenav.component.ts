@@ -42,7 +42,7 @@ export class SidenavComponent implements OnInit {
   constructor(private router: Router,
               public dialog: MatDialog,
               private authenticationService: AuthenticationService) {
-    this.userActivity = JSON.parse(localStorage.getItem('midasXLocation'));
+    this.userActivity = JSON.parse(sessionStorage.getItem('midasLocation'));
   }
 
   /**

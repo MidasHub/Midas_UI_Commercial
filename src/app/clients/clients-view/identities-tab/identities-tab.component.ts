@@ -21,6 +21,8 @@ import {AlertService} from 'app/core/alert/alert.service';
 import {analyzeAndValidateNgModules} from '@angular/compiler';
 import {AddIdentitiesExtraInfoComponent} from './add-identities-extra-info/add-identities-extra-info.component';
 import {BanksService} from '../../../banks/banks.service';
+import {Logger} from 'app/core/logger/logger.service';
+const log = new Logger("-IDENTIFIER TAB-")
 
 /**
  * Identities Tab Component
@@ -198,13 +200,16 @@ export class IdentitiesTabComponent {
   addIdentifier(addOther: boolean) {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.data = {
-      title: 'Add Client Identifier',
+      title: 'Thêm Thẻ | CMND/CCCD | TK bank',
       addOther: addOther,
       clientIdentifierTemplate: this.clientIdentifierTemplate,
     };
 
     dialogConfig.minWidth = 400;
+    // init data for opening
     const addIdentifierDialogRef = this.dialog.open(AddIdentitiesComponent, dialogConfig);
+
+    //Call API after close dialog box
     addIdentifierDialogRef.afterClosed().subscribe((response: any) => {
       if (response.data) {
         let {description} = response.data.value;
@@ -267,6 +272,7 @@ export class IdentitiesTabComponent {
                 this.identifiersTable.renderRows();
               }
             };
+
             if (document && Number(document.id) >= 38 && Number(document.id) <= 57) {
               this.clientService.getClientData(this.clientId).subscribe((client: any) => {
                 this.bankService
@@ -362,7 +368,7 @@ export class IdentitiesTabComponent {
   addIdentifierExtraInfo(userIdentifyId: string, cardNumber: string) {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.data = {
-      title: 'Add Client Identifier Extra Info',
+      title: 'Thông tin bổ sung cho thẻ',
       clientIdentifierTemplate: this.clientIdentifierTemplate,
     };
     dialogConfig.minWidth = 400;
@@ -388,4 +394,93 @@ export class IdentitiesTabComponent {
       }
     });
   }
-}
+
+  addEditExtraInfo(clientId: string, identifierId: string,cardNumber:string, index: number, addOther: boolean = false){
+    log.debug ('oki',clientId,identifierId,cardNumber,index,addOther);
+    //Jean : đang sửa tới đây
+    this.transactionService.checkExtraCardInfo(this.clientId, identifierId).subscribe((resExtraCardCheck: any) => {
+      const checkResult = resExtraCardCheck.result;
+
+      if (checkResult.isHaveExtraCardInfo) {
+        const dateExpired = new Date(checkResult.cardExtraInfoEntity.expiredDate);
+        const yExpired = dateExpired.getFullYear();
+        const mExpired = dateExpired.getMonth();
+
+        const dateSystem = new Date();
+        const ySystem = dateSystem.getFullYear();
+        const mSystem = dateSystem.getMonth();
+        const dialogConfig = new MatDialogConfig();
+
+        /** Dialog box setup */
+        dialogConfig.data = {
+        title: 'Thông tin bổ sung cho thẻ',
+        clientIdentifierTemplate: this.clientIdentifierTemplate,
+        cardinfo:checkResult
+         };
+        dialogConfig.minWidth = 400;
+        
+       
+
+        if (yExpired > ySystem) {
+          this.alertService.alert({
+            message: 'Card có thông tin',
+            msgClass: 'cssSuccess',
+            hPosition: 'center',
+            vPosition: 'top',
+          });
+          const showIdentifierDialogRef = this.dialog.open(AddIdentitiesExtraInfoComponent, dialogConfig);
+          showIdentifierDialogRef.afterClosed().subscribe((response: any) => {
+
+            this.alertService.alert({
+              message:
+              'Khoa xử lý cập nhật thông tin bổ sung cho thẻ giúp anh. Sau đóng Dialog box, response là ' + JSON.stringify(response),
+              msgClass: 'cssWarning',
+              hPosition: 'right',
+              vPosition: 'bottom',
+            });
+            log.debug('After close dialog box, response is ',response)
+            // Khoa xử lý cập nhật thong tin g
+             
+          })
+        } else {
+          if (yExpired === ySystem) {
+            if (mExpired > mSystem) {
+              if (mExpired === mSystem + 1) {
+                this.alertService.alert({
+                  message:
+                    'CHÚ Ý: Thẻ sẽ hết hạn vào tháng sau, đây là lần cuối cùng được thực hiện giao dịch trên thẻ này',
+                  msgClass: 'cssWarning',
+                  hPosition: 'right',
+                  vPosition: 'bottom',
+                });
+              }
+            }
+            if (mExpired === mSystem) {
+              this.alertService.alert({
+                message: 'CẢNH BÁO: Thẻ sẽ hết hạn trong tháng này, cân nhắc khi thực hiện giao dịch trên thẻ này',
+                msgClass: 'cssDanger',
+                hPosition: 'center',
+                vPosition: 'bottom',
+              });
+            }
+            if (mExpired < mSystem) {
+              this.alertService.alert({
+                message: 'CẢNH BÁO: Thẻ đã hết hạn, không được thực hiện giao dịch trên thẻ này',
+                msgClass: 'cssDanger',
+                hPosition: 'center',
+                vPosition: 'top',
+              });
+            }
+          }
+        }
+
+        
+        
+      }else{
+        log.debug ("Card không có thông tin: ", checkResult)
+        this.addIdentifierExtraInfo(identifierId, cardNumber);
+
+      };
+    })
+  }
+};

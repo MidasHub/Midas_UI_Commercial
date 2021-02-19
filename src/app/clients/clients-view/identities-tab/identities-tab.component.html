@@ -20,6 +20,8 @@
         <td mat-cell *matCellDef="let identity ; let i = index ">
           {{identity.documentKey}}
             <fa-icon style="color: red;" (click)="deleteIdentifier(identity.clientId,identity.id,i, false)" *midasHasPermission="'DELETE_CLIENTIDENTIFIER'" icon="times"></fa-icon>
+            <fa-icon style="color: blue;margin-left: 5px" (click)="addEditExtraInfo(identity.clientId,identity.id,identity.documentKey,i, true)" icon="address-card"></fa-icon>
+            
         </td>
       </ng-container>
         <ng-container matColumnDef="description">
@@ -96,11 +98,11 @@
         <td mat-cell *matCellDef="let identity">{{identity.id}}</td>
       </ng-container>
     <ng-container matColumnDef="documentKey">
-      <th mat-header-cell *matHeaderCellDef> Document Key </th>
+      <th mat-header-cell *matHeaderCellDef> Số CMND/CCCD |TK Bank  </th>
       <td mat-cell *matCellDef="let identity ; let i = index ">
         {{identity.documentKey}}
         <fa-icon style="color: red;" (click)="deleteIdentifier(identity.clientId,identity.id,i, true)" *midasHasPermission="'DELETE_CLIENTIDENTIFIER'" icon="times"></fa-icon>
-
+        
       </td>
     </ng-container>
       <ng-container matColumnDef="description">
