@@ -634,7 +634,7 @@
       "labelMaxPercentage": "Phí cao nhất(%)",
       "labelMaxLimitAmount": "Hạn mức máy POS",
       "labelLevelLimit": "Số lần giao dịch trong ngày",
-      "buttonSetupAll": "Cài đặt chung",
+      "buttonSetupAll": "Áp dụng cho toàn hệ thống",
       "buttonResetDefault": "Hoàn tác",
       "buttonSubmit": "Khởi tạo",
       "buttonSubmitUpdate": "Cập nhật",
