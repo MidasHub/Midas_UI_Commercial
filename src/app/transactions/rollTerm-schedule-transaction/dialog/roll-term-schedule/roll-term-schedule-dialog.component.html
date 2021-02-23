@@ -116,6 +116,7 @@
             <mat-icon
               style="color: red;"
               title="Chi tiền"
+              mat-dialog-close
               (click)="addFeeDialogByTransactionId(false, transaction.rollTermId)"
             >
               attach_money
@@ -132,6 +133,7 @@
               >gavel
             </mat-icon>
             <mat-icon
+              mat-dialog-close
               style="color: green;"
               title="Thực hiện thu tiền phí "
               (click)="addFeeDialogByTransactionId(true,transaction.trnRefNo)"

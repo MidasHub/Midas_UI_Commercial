@@ -124,14 +124,14 @@ export class AddFeeDialogComponent implements OnInit {
       this.clientId = this.transactions[0].customerId;
       this.transactionFee = this.transactions.find(v => v.txnPaymentType === 'IN');
       this.transactionPaid = this.transactions.find(v => v.txnPaymentType === 'OUT');
+      this.selectedPaymentTypePaid = 'FT';
       if (this.transactionPaid && this.transactionPaid.txnType === 'BATCH') {
         this.showCashAccountPaid = false;
         this.showGet = false;
         this.isBATCH = true;
         this.selectedPaymentTypePaid = 'DE';
-      } else {
-        this.selectedPaymentTypePaid = 'FT';
       }
+
       if (this.transactionPaid) {
         this.paidAmount = this.transactionPaid.feeRemain;
       }
@@ -180,7 +180,8 @@ export class AddFeeDialogComponent implements OnInit {
         this.alertServices.alert({
           type: '🚨🚨🚨🚨 Lỗi ',
           msgClass: 'cssBig',
-          message: '🚨🚨 Lỗi thanh toán phí, vui lòng liên hệ IT Support để được hổ trợ 🚨🚨',
+          // message: '🚨🚨 Lỗi thanh toán phí, vui lòng liên hệ IT Support để được hổ trợ 🚨🚨',
+          message: result?.error,
         });
         this.dialogRef.close({status: false});
       }
