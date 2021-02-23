@@ -103,7 +103,7 @@ export class InternalBookingTabComponent implements OnInit {
     const dialog = this.dialog.open(TransferBookingInternalComponent, {
       data: {
         createdBy: bookingInternal.createdBy,
-        staffName: bookingInternal.customerName,
+        staffName: bookingInternal.userName,
       },
     });
     dialog.afterClosed().subscribe((data) => {
@@ -116,14 +116,24 @@ export class InternalBookingTabComponent implements OnInit {
 
       if (data) {
         this.bookingService.transferBookingAmount(transferInfo).subscribe((result) => {
-          if (result.status === "200") {
+          if (result?.result?.status) {
             const message = `Chi tiền cho booking ${transferInfo.bookingRefNo} thành công`;
+
             this.alertService.alert({
-              msgClass: "cssInfo",
+              type: '🎉🎉🎉 Thành công !!!',
               message: message,
+              msgClass: 'cssSuccess'
             });
             this.getBookingInternal();
+          } else {
+            this.alertService.alert({
+              type: '🚨🚨🚨🚨 Lỗi ',
+              msgClass: 'cssDanger',
+              // message: '🚨🚨 Lỗi thanh toán phí, vui lòng liên hệ IT Support để được hổ trợ 🚨🚨',
+              message: result?.error,
+            });
           }
+
         });
       }
     });

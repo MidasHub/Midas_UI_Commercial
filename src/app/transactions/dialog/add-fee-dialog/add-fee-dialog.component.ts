@@ -179,7 +179,7 @@ export class AddFeeDialogComponent implements OnInit {
       } else {
         this.alertServices.alert({
           type: '🚨🚨🚨🚨 Lỗi ',
-          msgClass: 'cssBig',
+          msgClass: 'cssDanger',
           // message: '🚨🚨 Lỗi thanh toán phí, vui lòng liên hệ IT Support để được hổ trợ 🚨🚨',
           message: result?.error,
         });
