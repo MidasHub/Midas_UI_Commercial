@@ -69,8 +69,6 @@ export class ClientIdentitiesResolver implements Resolve<Object> {
 
           })
         }
-
       });
-      debugger;
     }
 }

@@ -329,6 +329,7 @@ export class CreateTransactionComponent implements OnInit {
         this.transactionService
           .submitTransactionCashFromRollTermTransaction(this.transactionInfo)
           .subscribe((data: any) => {
+
             this.afterSuccessCreateCashTransaction(data);
           });
       }
@@ -351,9 +352,9 @@ export class CreateTransactionComponent implements OnInit {
     });
     this.transactionInfo.BookingInternalDtoListString = listBookingRollTerm;
     this.transactionService.submitTransactionRollTerm(this.transactionInfo).subscribe((data: any) => {
-      // this.listRollTermBooking = [];
-      // this.transactionInfo.transactionRefNo = data.result.tranRefNo;
-      // this.transactionInfo.transactionId = data.result.id;
+      this.listRollTermBooking = [];
+      this.transactionInfo.transactionRefNo = data.result.tranRefNo;
+      this.transactionInfo.transactionId = data.result.id;
       // this.transactionInfo.isDone = true;
 
       this.alertService.alert({
