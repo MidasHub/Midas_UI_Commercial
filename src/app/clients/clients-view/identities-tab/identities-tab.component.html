@@ -1,145 +1,189 @@
 <div fxLayout="row wrap" fxLayoutGap="1%" fxLayout.lt-md="column">
-
   <mat-card class="card-custom" fxFlex="100%">
     <mat-card-header>
-      <mat-card-title class="f-left">Danh sách thẻ giao dịch:</mat-card-title>
-      <button mat-raised-button class="f-right" color="primary" (click)="addIdentifier(false)" *midasHasPermission="'CREATE_CLIENTIDENTIFIER'">
+      <mat-card-title>Hình ảnh CMND/CCCD/PASSPORT:</mat-card-title>
+    </mat-card-header>
+    <mat-card-content   *ngFor="let identity of clientIdentitiesOther">
+      <div  fxFlex.gt-sm="50%" class="image-container" *ngFor="let images of identity?.documents[0]?.imageIdentifier">
+        <img width="95%" height="400" class="profile-image" [src]="images?.base64data" />
+      </div>
+    </mat-card-content>
+  </mat-card>
+  <mat-card class="card-custom" fxFlex="100%">
+    <mat-card-header>
+      <mat-card-title>Danh sách tài khoản thanh toán/CMND/CCCD:</mat-card-title>
+      <button
+        mat-raised-button
+        class="f-right"
+        color="primary"
+        (click)="addIdentifier(true)"
+        *midasHasPermission="'CREATE_CLIENTIDENTIFIER'"
+      >
         <fa-icon icon="plus"></fa-icon>&nbsp;&nbsp; Add
       </button>
     </mat-card-header>
     <mat-card-content>
-
-    <table mat-table #identifiersTable [dataSource]="clientIdentities">
-
+      <table mat-table #identifiersTableOther [dataSource]="clientIdentitiesOther">
         <ng-container matColumnDef="id">
-          <th mat-header-cell *matHeaderCellDef> Id </th>
-          <td mat-cell *matCellDef="let identity">{{identity.id}}</td>
+          <th mat-header-cell *matHeaderCellDef>Id</th>
+          <td mat-cell *matCellDef="let identity">{{ identity.id }}</td>
         </ng-container>
-      <ng-container matColumnDef="documentKey">
-        <th mat-header-cell *matHeaderCellDef> Document Key </th>
-        <td mat-cell *matCellDef="let identity ; let i = index ">
-          {{identity.documentKey}}
-            <fa-icon style="color: red;" (click)="deleteIdentifier(identity.clientId,identity.id,i, false)" *midasHasPermission="'DELETE_CLIENTIDENTIFIER'" icon="times"></fa-icon>
-            <fa-icon style="color: blue;margin-left: 5px" (click)="addEditExtraInfo(identity.clientId,identity.id,identity.documentKey,i, true)" icon="address-card"></fa-icon>
-            
-        </td>
-      </ng-container>
+        <ng-container matColumnDef="documentKey">
+          <th mat-header-cell *matHeaderCellDef>Số CMND/CCCD |TK Bank</th>
+          <td mat-cell *matCellDef="let identity; let i = index">
+            {{ identity.documentKey }}
+            <fa-icon
+              style="color: red"
+              (click)="deleteIdentifier(identity.clientId, identity.id, i, true)"
+              *midasHasPermission="'DELETE_CLIENTIDENTIFIER'"
+              icon="times"
+            ></fa-icon>
+
+          </td>
+        </ng-container>
         <ng-container matColumnDef="description">
-          <th mat-header-cell *matHeaderCellDef> Description </th>
-          <td mat-cell *matCellDef="let identity"> {{identity.description}} </td>
+          <th mat-header-cell *matHeaderCellDef>Description</th>
+          <td mat-cell *matCellDef="let identity">{{ identity.description }}</td>
         </ng-container>
 
         <ng-container matColumnDef="type">
-          <th mat-header-cell *matHeaderCellDef> type </th>
-          <td mat-cell *matCellDef="let identity"> {{identity.documentType.name}}</td>
+          <th mat-header-cell *matHeaderCellDef>type</th>
+          <td mat-cell *matCellDef="let identity">{{ identity.documentType.name }}</td>
         </ng-container>
 
         <ng-container matColumnDef="documents">
-          <th mat-header-cell *matHeaderCellDef>Identity Documents </th>
-          <td mat-cell *matCellDef="let identity ; let i = index ">
+          <th mat-header-cell *matHeaderCellDef>Identity Documents</th>
+          <td mat-cell *matCellDef="let identity; let i = index">
             <div *ngFor="let document of identity.documents">
-              {{document.name}}
-              <fa-icon icon="cloud-download-alt" (click)="download(document.parentEntityId,document.id)" *midasHasPermission="'READ_DOCUMENT'"></fa-icon>
+              {{ document.name }}
+              <fa-icon
+                icon="cloud-download-alt"
+                (click)="download(document.parentEntityId, document.id)"
+                *midasHasPermission="'READ_DOCUMENT'"
+              ></fa-icon>
             </div>
-              <fa-icon style="color: green;" icon="cloud-upload-alt" (click)="uploadDocument(i,identity.id, false)" *midasHasPermission="'CREATE_DOCUMENT'"></fa-icon>
-
+            <fa-icon
+              style="color: green"
+              icon="cloud-upload-alt"
+              (click)="uploadDocument(i, identity.id, true)"
+              *midasHasPermission="'CREATE_DOCUMENT'"
+            ></fa-icon>
           </td>
         </ng-container>
 
         <ng-container matColumnDef="status">
-          <th mat-header-cell *matHeaderCellDef> Status </th>
+          <th mat-header-cell *matHeaderCellDef>Status</th>
           <td mat-cell *matCellDef="let identity">
-              {{(identity.status==='clientIdentifierStatusType.active')?'active':'inactive'}}
+            {{ identity.status === "clientIdentifierStatusType.active" ? "active" : "inactive" }}
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="identitiesOtherColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: identitiesOtherColumns"></tr>
+      </table>
+    </mat-card-content>
+  </mat-card>
+  <mat-card class="card-custom" fxFlex="100%">
+    <mat-card-header>
+      <mat-card-title class="f-left">Danh sách thẻ giao dịch:</mat-card-title>
+      <button
+        mat-raised-button
+        class="f-right"
+        color="primary"
+        (click)="addIdentifier(false)"
+        *midasHasPermission="'CREATE_CLIENTIDENTIFIER'"
+      >
+        <fa-icon icon="plus"></fa-icon>&nbsp;&nbsp; Add
+      </button>
+    </mat-card-header>
+    <mat-card-content>
+      <table mat-table #identifiersTable [dataSource]="clientIdentities">
+        <ng-container matColumnDef="id">
+          <th mat-header-cell *matHeaderCellDef>Id</th>
+          <td mat-cell *matCellDef="let identity">{{ identity.id }}</td>
+        </ng-container>
+        <ng-container matColumnDef="documentKey">
+          <th mat-header-cell *matHeaderCellDef>Document Key</th>
+          <td mat-cell *matCellDef="let identity; let i = index">
+            {{ identity.documentKey }}
+            <fa-icon
+              style="color: red"
+              (click)="deleteIdentifier(identity.clientId, identity.id, i, false)"
+              *midasHasPermission="'DELETE_CLIENTIDENTIFIER'"
+              icon="times"
+            ></fa-icon>
+            <fa-icon
+              style="color: blue; margin-left: 5px"
+              (click)="addEditExtraInfo(identity.clientId, identity.id, identity.documentKey, i, true)"
+              icon="address-card"
+            ></fa-icon>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="description">
+          <th mat-header-cell *matHeaderCellDef>Description</th>
+          <td mat-cell *matCellDef="let identity">{{ identity.description }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="type">
+          <th mat-header-cell *matHeaderCellDef>type</th>
+          <td mat-cell *matCellDef="let identity">{{ identity.documentType.name }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="documents">
+          <th mat-header-cell *matHeaderCellDef>Identity Documents</th>
+          <td mat-cell *matCellDef="let identity; let i = index">
+            <div *ngFor="let document of identity.documents">
+              {{ document.name }}
+              <fa-icon
+                icon="cloud-download-alt"
+                (click)="download(document.parentEntityId, document.id)"
+                *midasHasPermission="'READ_DOCUMENT'"
+              ></fa-icon>
+            </div>
+            <fa-icon
+              style="color: green"
+              icon="cloud-upload-alt"
+              (click)="uploadDocument(i, identity.id, false)"
+              *midasHasPermission="'CREATE_DOCUMENT'"
+            ></fa-icon>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="status">
+          <th mat-header-cell *matHeaderCellDef>Status</th>
+          <td mat-cell *matCellDef="let identity">
+            {{ identity.status === "clientIdentifierStatusType.active" ? "active" : "inactive" }}
           </td>
         </ng-container>
 
         <ng-container matColumnDef="actions">
-          <th mat-header-cell *matHeaderCellDef> Actions </th>
+          <th mat-header-cell *matHeaderCellDef>Actions</th>
           <td mat-cell *matCellDef="let identity; let i = index">
-
-            <button class="identity-action-button"
-            mat-raised-button
-            color="primary"
-            (click)="routeToMakeTransaction(identity.id, 'cash', identity.documentKey)"
-            *midasHasPermission="'TXN_CREATE'">
+            <button
+              class="identity-action-button"
+              mat-raised-button
+              color="primary"
+              (click)="routeToMakeTransaction(identity.id, 'cash', identity.documentKey)"
+              *midasHasPermission="'TXN_CREATE'"
+            >
               Rút TM
             </button>
             ||
             <button
-             class="identity-action-button"
-             mat-raised-button color="warn"
-             *midasHasPermission="'TXN_CREATE'"
-             (click)="routeToMakeTransaction(identity.id, 'rollTerm', identity.documentKey)"  >
+              class="identity-action-button"
+              mat-raised-button
+              color="warn"
+              *midasHasPermission="'TXN_CREATE'"
+              (click)="routeToMakeTransaction(identity.id, 'rollTerm', identity.documentKey)"
+            >
               Tạo ĐHT
             </button>
           </td>
         </ng-container>
 
         <tr mat-header-row *matHeaderRowDef="identitiesColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: identitiesColumns;"></tr>
-
-    </table>
-  </mat-card-content>
-</mat-card>
-
-    <mat-card class="card-custom" fxFlex="100%">
-      <mat-card-header>
-        <mat-card-title>Danh sách tài khoản thanh toán/CMND/CCCD:</mat-card-title>
-        <button mat-raised-button class="f-right" color="primary" (click)="addIdentifier(true)" *midasHasPermission="'CREATE_CLIENTIDENTIFIER'">
-          <fa-icon icon="plus"></fa-icon>&nbsp;&nbsp; Add
-        </button>
-      </mat-card-header>
-      <mat-card-content>
-
-    <table mat-table #identifiersTableOther [dataSource]="clientIdentitiesOther">
-
-      <ng-container matColumnDef="id">
-        <th mat-header-cell *matHeaderCellDef> Id </th>
-        <td mat-cell *matCellDef="let identity">{{identity.id}}</td>
-      </ng-container>
-    <ng-container matColumnDef="documentKey">
-      <th mat-header-cell *matHeaderCellDef> Số CMND/CCCD |TK Bank  </th>
-      <td mat-cell *matCellDef="let identity ; let i = index ">
-        {{identity.documentKey}}
-        <fa-icon style="color: red;" (click)="deleteIdentifier(identity.clientId,identity.id,i, true)" *midasHasPermission="'DELETE_CLIENTIDENTIFIER'" icon="times"></fa-icon>
-        
-      </td>
-    </ng-container>
-      <ng-container matColumnDef="description">
-        <th mat-header-cell *matHeaderCellDef> Description </th>
-        <td mat-cell *matCellDef="let identity"> {{identity.description}} </td>
-      </ng-container>
-
-      <ng-container matColumnDef="type">
-        <th mat-header-cell *matHeaderCellDef> type </th>
-        <td mat-cell *matCellDef="let identity"> {{identity.documentType.name}}</td>
-      </ng-container>
-
-      <ng-container matColumnDef="documents">
-        <th mat-header-cell *matHeaderCellDef>Identity Documents </th>
-        <td mat-cell *matCellDef="let identity ; let i = index ">
-          <div *ngFor="let document of identity.documents">
-            {{document.name}}
-            <fa-icon icon="cloud-download-alt" (click)="download(document.parentEntityId,document.id)" *midasHasPermission="'READ_DOCUMENT'"></fa-icon>
-          </div>
-          <fa-icon style="color: green;" icon="cloud-upload-alt" (click)="uploadDocument(i,identity.id, true)" *midasHasPermission="'CREATE_DOCUMENT'"></fa-icon>
-
-        </td>
-      </ng-container>
-
-      <ng-container matColumnDef="status">
-        <th mat-header-cell *matHeaderCellDef> Status </th>
-        <td mat-cell *matCellDef="let identity">
-            {{(identity.status==='clientIdentifierStatusType.active')?'active':'inactive'}}
-        </td>
-      </ng-container>
-
-
-
-      <tr mat-header-row *matHeaderRowDef="identitiesOtherColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: identitiesOtherColumns;"></tr>
-
-  </table>
-</mat-card-content>
-</mat-card>
+        <tr mat-row *matRowDef="let row; columns: identitiesColumns"></tr>
+      </table>
+    </mat-card-content>
+  </mat-card>
 </div>

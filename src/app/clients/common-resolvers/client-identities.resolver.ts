@@ -36,9 +36,41 @@ export class ClientIdentitiesResolver implements Resolve<Object> {
             forkJoin(docObservable).subscribe(documents => {
                 documents.forEach((document, index) => {
                     identitiesData[index].documents = document;
+                    console.log("load document");
                 });
+                this.LoadImageIdentifier(identitiesData);
             });
             return identitiesData;
         }));
+    }
+
+    LoadImageIdentifier(identitiesData: any) {
+      let listPersonalIdentifier: any = [];
+      identitiesData.forEach((element: any) => {
+        if (element.documentType.id >= 1 && element.documentType.id <= 3) {
+          let imageIds = element.documents;
+          imageIds.forEach((image: any) => {
+
+           this.clientsService.loadImageIdentifier(element.id, image.id)
+            .subscribe((imageResult: any) => {
+
+            var reader = new FileReader();
+            reader.readAsDataURL(imageResult);
+            reader.onloadend = function () {
+                var base64data = reader.result;
+                let object = {
+                  key: element.description,
+                  base64data: base64data
+                }
+                listPersonalIdentifier.push(object);
+            }
+            image.imageIdentifier = listPersonalIdentifier;
+            });
+
+          })
+        }
+
+      });
+      debugger;
     }
 }

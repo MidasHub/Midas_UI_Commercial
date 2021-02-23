@@ -35,6 +35,13 @@ export class ClientsService {
     this.GatewayApiUrlPrefix = environment.GatewayApiUrlPrefix;
   }
 
+  loadImageIdentifier (identifierId: string, imageId: string): Observable<any> {
+
+    const url = `/client_identifiers/${identifierId}/documents/${imageId}/attachment?tenantIdentifier=${environment.fineractPlatformTenantId}`;
+    return this.http.get(url, { responseType: 'blob' });
+
+}
+
   getClientCross(clientId: string): Observable<any> {
     const httpParams = new HttpParams()
       .set('id', clientId)
