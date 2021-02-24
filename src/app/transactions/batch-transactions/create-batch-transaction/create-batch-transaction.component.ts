@@ -35,7 +35,7 @@ export class CreateBatchTransactionComponent implements OnInit {
   dataSource: any[] = [];
   formFilter = new FormControl('');
   displayedColumns: any[] = ['clientName', 'productId', 'rate',
-    'amount', 'terminalId', 'requestAmount',
+    'amount', 'terminalId', 'invoiceAmount',
     'fee', 'batchNo', 'tid', 'terminalAmount', 'actions'
   ];
   terminals: any[] = [];
@@ -72,7 +72,7 @@ export class CreateBatchTransactionComponent implements OnInit {
     documentId: '', // documentId
     amount: 0,
     terminalAmount: 0,
-    amountTransaction: 0,
+    invoiceAmount: 0,
     requestAmount: 0,
     rate: '', // scope.getFeeByCardAndType(identifierId, 'CA01'),
     fee: 0,
@@ -134,6 +134,7 @@ export class CreateBatchTransactionComponent implements OnInit {
   }
 
   displayClient(client: any): string | undefined {
+    debugger;
     return client ? `${client.cardNumber.slice(0, 6)} X ${client.cardNumber.slice(client.cardNumber.length - 5, client.cardNumber.length)} - ${client.fullName}` : undefined;
   }
 
@@ -171,10 +172,8 @@ export class CreateBatchTransactionComponent implements OnInit {
                   tid: v.traceNo,
                   fee: v.feeAmount,
                   requestAmount: v.reqAmount,
-                  amount: v.terminalAmount,
-                  amountTransaction: v.txnAmount,
-                  // toAccountId: result?.result?.clientInfo?.savingsAccountId,
-                  rate: this.getFee(member.documentId, 'CA01'),
+                  invoiceAmount: v.invoiceAmount,
+                  rate: v.feePercentage,
                   saved: true,
                 };
                 this.dataSource = [...this.dataSource, this.generaForm(batchTransaction, member)];
@@ -279,7 +278,7 @@ export class CreateBatchTransactionComponent implements OnInit {
       feeTerminalDto: {},
       member: member
     };
-    form.get('amount').valueChanges.pipe(
+    form.get('requestAmount').valueChanges.pipe(
       debounce(() => timer(1000)),
       distinctUntilChanged(
         null,
@@ -369,7 +368,7 @@ export class CreateBatchTransactionComponent implements OnInit {
         });
       }
 
-      const amount = form.get('amount').value;
+      const amount = form.get('requestAmount').value;
       const rate = form.get('rate').value;
       // @ts-ignore
       // tslint:disable-next-line:no-shadowed-variable
@@ -388,7 +387,8 @@ export class CreateBatchTransactionComponent implements OnInit {
           if (result2?.result) {
             const value = result2?.result.amountTransaction;
             // form.get('amountTransaction').setValue(value);
-            form.get('requestAmount').setValue(value);
+            form.get('invoiceAmount').setValue(value);
+
             form.get('terminalAmount').setValue(value);
             // @ts-ignore
             form.get('bills').setValue(result2.result.listInvoice);
@@ -529,11 +529,9 @@ export class CreateBatchTransactionComponent implements OnInit {
         terminalId: v.terminalName,
         tid: v.traceNo,
         fee: v.feeAmount,
-        requestAmount: v.reqAmount,
-        amount: v.terminalAmount,
-        amountTransaction: v.txnAmount,
-        // toAccountId: result?.result?.clientInfo?.savingsAccountId,
-        rate: this.getFee(member.documentId, 'CA01'),
+        requestAmount: v.requestAmount,
+        invoiceAmount: v.invoiceAmount,
+        rate: v.feeRate,
         saved: true,
       };
       const form_new = this.generaForm(batchTransaction, member);

@@ -185,7 +185,7 @@
         <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header> Ngày giao dịch</th>
         <td mat-cell fxHide fxShow.gt-md
             style=" word-wrap: break-word; width: 150px;"
-            *matCellDef="let journalEntry"> 
+            *matCellDef="let journalEntry">
             <label [ngSwitch]="journalEntry.status">
               <img
                 *ngSwitchCase="'C'"
@@ -211,10 +211,10 @@
 
       <ng-container matColumnDef="officeName">
         <th mat-header-cell *matHeaderCellDef> Chi nhánh / <br /> Người tạo / <br /> Máy Pos </th>
-        <td mat-cell *matCellDef="let journalEntry"> 
+        <td mat-cell *matCellDef="let journalEntry">
           {{ journalEntry.officeName }} <br />
           {{ journalEntry.createdByName }} <br />
-          {{ journalEntry.terminalId }} 
+          {{ journalEntry.terminalId }}
         </td>
       </ng-container>
 
@@ -344,7 +344,8 @@
                  let-traceNo='traceNo'
                  style="width: 50px;">
       <button mat-menu-item
-              [routerLink]="'/makeBatchBillPosTransaction/'+agencyId+'/'+type"
+              [routerLink]="['/transaction/batch-transaction/',agencyId]"
+              [queryParams]="{batchTxnName: type}"
               *ngIf="type != 'rollTerm' && type != 'cash' && status == 'C' && (today | date:'dd/MM/yyyy') == (txnDate | date:'dd/MM/yyyy')">
         <img src="assets/images/icons/next.svg"/>&nbsp;Tiếp tục giao dịch
       </button>
