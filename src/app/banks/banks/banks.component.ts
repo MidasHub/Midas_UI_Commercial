@@ -122,7 +122,8 @@ export class BanksComponent implements OnInit, AfterViewInit {
         maxLength: 6,
         minLength: 6,
         required: card ? false : true,
-        disabled: card ? true : false
+        disabled: card ? true : false,
+
       }),
       new InputBase({
         controlName: 'cardClass',
@@ -135,8 +136,10 @@ export class BanksComponent implements OnInit, AfterViewInit {
     const data = {
       title: card ? `Cập nhập thông tin thẻ` : 'Thêm thẻ mới',
       layout: {addButtonText: 'Lưu'},
-      formfields: formfields
+      formfields: formfields,
+      cardTypes: this.cardTypes
     };
+
     const dialogCard = this.dialog.open(FormDialogComponent, {data});
     dialogCard.afterClosed().subscribe((response: any) => {
       console.log(response);
