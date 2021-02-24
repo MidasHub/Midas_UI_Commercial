@@ -134,7 +134,6 @@ export class CreateBatchTransactionComponent implements OnInit {
   }
 
   displayClient(client: any): string | undefined {
-    debugger;
     return client ? `${client.cardNumber.slice(0, 6)} X ${client.cardNumber.slice(client.cardNumber.length - 5, client.cardNumber.length)} - ${client.fullName}` : undefined;
   }
 
@@ -329,6 +328,7 @@ export class CreateBatchTransactionComponent implements OnInit {
     });
     this.bankServices.getInfoBinCode(member.cardNumber.slice(0, 6)).subscribe(result => {
       if (result) {
+
         // @ts-ignore
         form.data.binCodeInfo = result;
       }
@@ -436,7 +436,7 @@ export class CreateBatchTransactionComponent implements OnInit {
             clientName: member.fullName,
             documentId: member.documentId,
             toAccountId: result?.result?.clientInfo?.savingsAccountId,
-            rate: this.getFee(member.documentId, 'CA01')
+            rate: this.getFee(member.cardNumber.slice(0, 6), 'CA01')
           };
           this.dataSource = [...this.dataSource, this.generaForm(batchTransaction, member)];
         }
