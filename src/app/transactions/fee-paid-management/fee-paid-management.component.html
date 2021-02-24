@@ -143,7 +143,7 @@
       </div>
     </mat-expansion-panel>
   </mat-accordion>
-  <mat-card-header>
+  <!-- <mat-card-header>
     <div class="search-box">
       <mat-form-field>
         <input matInput placeholder="Tìm kiếm ....."
@@ -151,14 +151,17 @@
                (delayedInput)="applyFilter($event.target.value)">
       </mat-form-field>
     </div>
-  </mat-card-header>
+  </mat-card-header> -->
   <mat-card-content>
     <table mat-table multiTemplateDataRows class="mat-elevation-z8" [dataSource]="dataSource" matSort>
 
       <ng-container matColumnDef="txnDate">
-        <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>Ngày giao dịch</th>
+        <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>Ngày /<br />Mã giao dịch </th>
         <td mat-cell fxHide fxShow.gt-md
-            *matCellDef="let transaction"> {{ getDataOfGroupTxnCode(transaction)[0].txnDate | date:'dd-MM-yyyy HH:mm:ss'}} </td>
+            *matCellDef="let transaction">
+            {{ getDataOfGroupTxnCode(transaction)[0].txnDate | date:'dd-MM-yyyy HH:mm:ss'}} <br />
+            {{ getDataOfGroupTxnCode(transaction)[0].txnCode }}
+          </td>
       </ng-container>
 
       <ng-container matColumnDef="officeName">
@@ -186,50 +189,54 @@
           </button>
       </ng-container>
 
-      <ng-container matColumnDef="txnCode">
+      <!-- <ng-container matColumnDef="txnCode">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Mã gd</th>
         <td mat-cell
             *matCellDef="let transaction"> {{ getDataOfGroupTxnCode(transaction)[0].txnCode }} </td>
-      </ng-container>
+      </ng-container> -->
 
       <ng-container matColumnDef="batchNo">
-        <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef>Số batch</th>
+        <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef>
+          Số batch /<br /> Số trace
+        </th>
         <td mat-cell fxHide fxShow.gt-md
             *matCellDef="let transaction"
-        >  <span style="overflow-wrap: break-word;
-                white-space: nowrap;
-                overflow: hidden;
-                text-overflow: ellipsis;
-                max-width: 50px;
-                padding-right: 5px;"
-                 [matTooltip]="getDataOfGroupTxnCode(transaction)[0].traceNo"> {{ getDataOfGroupTxnCode(transaction)[0].batchNo }}</span> </td>
-      </ng-container>
-
-      <ng-container matColumnDef="traceNo">
-        <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef>Số trace</th>
-        <td mat-cell fxHide fxShow.gt-md
-            *matCellDef="let transaction"
-        > <span style="overflow-wrap: break-word;
-                white-space: nowrap;
-                overflow: hidden;
-                text-overflow: ellipsis;
-                max-width: 50px;
-                padding-left: 10px;"
-                [matTooltip]="getDataOfGroupTxnCode(transaction)[0].traceNo"> {{ getDataOfGroupTxnCode(transaction)[0].traceNo }}</span>
-        </td>
+        >
+          <span style="overflow-wrap: break-word;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 50px;"
+            [matTooltip]="getDataOfGroupTxnCode(transaction)[0].batchNo">
+            {{ getDataOfGroupTxnCode(transaction)[0].batchNo }}
+          </span>
+            <br />
+          <span style="overflow-wrap: break-word;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 50px;"
+            [matTooltip]="getDataOfGroupTxnCode(transaction)[0].traceNo">
+            {{ getDataOfGroupTxnCode(transaction)[0].traceNo }}
+          </span>
+          </td>
       </ng-container>
 
       <ng-container matColumnDef="customerName">
-        <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>Chủ thể</th>
+        <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>Chủ thể /<br /> Đại lý</th>
         <td mat-cell fxHide fxShow.gt-md
-            *matCellDef="let transaction"> {{ getDataOfGroupTxnCode(transaction)[0].customerName }} </td>
+            *matCellDef="let transaction">
+            {{ getDataOfGroupTxnCode(transaction)[0].customerName }} <br />
+            {{ getDataOfGroupTxnCode(transaction)[0].agencyName }}
+
+           </td>
       </ng-container>
 
-      <ng-container matColumnDef="agencyName">
+      <!-- <ng-container matColumnDef="agencyName">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Đại lý</th>
         <td mat-cell style="padding: 6px;"
             *matCellDef="let transaction"> {{ getDataOfGroupTxnCode(transaction)[0].agencyName }} </td>
-      </ng-container>
+      </ng-container> -->
 
       <ng-container matColumnDef="txnAmount">
         <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>Số tiền GD</th>

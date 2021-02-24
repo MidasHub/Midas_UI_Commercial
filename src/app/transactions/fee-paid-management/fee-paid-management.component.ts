@@ -38,9 +38,17 @@ import {ViewFeePaidTransactionDialogComponent} from '../dialog/view-fee-paid-tra
 export class FeePaidManagementComponent implements OnInit {
 
   expandedElement: any;
-  displayedColumns: string[] = ['txnDate',
-    'officeName', 'txnType', 'agencyName', 'txnCode', 'batchNo',
-    'traceNo', 'customerName', 'txnAmount', 'DEAmount', 'feeSum', 'feePaid', 'feeRemain',
+  displayedColumns: string[] = [
+    'txnDate',
+    'officeName',
+    'txnType',
+    'batchNo',
+    'customerName',
+    'txnAmount',
+    'DEAmount',
+    'feeSum',
+    'feePaid',
+    'feeRemain',
     'actions',
   ];
   formDate: FormGroup;
@@ -378,11 +386,11 @@ export class FeePaidManagementComponent implements OnInit {
   }
 
   checkShowButton(txnCode: string) {
-    return this.getDataOfGroupTxnCode(txnCode).find((v: any) => v.feeRemain) || false;
+    return this.getDataOfGroupTxnCode(txnCode).find((v: any) => v.status == "A") || false;
   }
 
   checkFeePaid(txnCode: string) {
-    return this.getDataOfGroupTxnCode(txnCode).find((v: any) => v.feePaid) || false;
+    return this.getDataOfGroupTxnCode(txnCode).find((v: any) => v.status == "C") || false;
   }
 
   exportTransactionFeePaid() {
