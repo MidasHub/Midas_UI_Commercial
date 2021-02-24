@@ -230,7 +230,7 @@ export class CreateBatchTransactionComponent implements OnInit {
 
   onChangeTotal() {
     this.totalAmount = this.dataSource.reduce((total: any, num: any) => {
-      return total + Math.round(num?.get('amount').value);
+      return total + Math.round(num?.get('requestAmount').value);
     }, 0);
     // this.totalAmountTransaction = this.dataSource.reduce((total: any, num: any) => {
     //     return total + Math.round(num?.get('amountTransaction').value);
@@ -242,7 +242,7 @@ export class CreateBatchTransactionComponent implements OnInit {
       return total + Math.round(num?.get('fee').value);
     }, 0);
     this.totalRequest = this.dataSource.reduce((total: any, num: any) => {
-      return total + Math.round(num?.get('requestAmount').value);
+      return total + Math.round(num?.get('invoiceAmount').value);
     }, 0);
   }
 
