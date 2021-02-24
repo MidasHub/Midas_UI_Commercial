@@ -109,7 +109,14 @@ export class CreateBookingMarketingComponent implements OnInit {
           }
 
         }
-
+        const data = {
+          ...card,
+          costRate: '',
+          cogsRate: '',
+          rate: '',
+          select: false,
+          ...default_v
+        };
         const keys = Object.keys(data);
         const formData = {};
         for (const key of keys) {
