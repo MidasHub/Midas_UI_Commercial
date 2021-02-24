@@ -4,7 +4,7 @@ import { MatCheckbox } from '@angular/material/checkbox';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
- 
+
 import { ActivatedRoute } from '@angular/router';
 import { TerminalsService} from './terminals.service';
 import { TerminalObj} from './terminal-obj.model';
@@ -21,7 +21,7 @@ export class TerminalsComponent implements OnInit, AfterViewInit {
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   viewTerminals = new FormControl('viewTerminals');
   displayedColumns =  ['terminalNo', 'terminalCode', 'terminalName', 'minFeeDefault', 'status', 'createdBy','createdDate','updatedDate','action'];
-  
+
 
   dataSource = new MatTableDataSource<TerminalObj>();
   dataSourceDefault:any;
@@ -31,7 +31,7 @@ export class TerminalsComponent implements OnInit, AfterViewInit {
   constructor(private terminalsService: TerminalsService,public dialog: MatDialog) {}
 
   ngOnInit(): void {
-     
+
     this.terminalsService.getTerminals().subscribe((data: any) => {
       data.result.listPos.forEach((i: any) =>{
           let terminalObj = new TerminalObj(
@@ -66,13 +66,13 @@ export class TerminalsComponent implements OnInit, AfterViewInit {
     this.dataSource.filter = filterValue;
   }
   changeShowClosedTerminals(isActive:boolean){
-    
+
     if(isActive){
       this.dataSource.data = this.terminalsDataInActive;
     }else{
       this.dataSource.data = this.terminalsDataActive;
     }
-     
+
   }
   addTransferDialogByTransactionId(terminalId:string,terminalName:string){
     const data = {
@@ -81,11 +81,8 @@ export class TerminalsComponent implements OnInit, AfterViewInit {
     };
     const dialog = this.dialog.open(TransferTerminalComponent, { height: "auto", width: "30%", data });
     dialog.afterClosed().subscribe((response: any) => {
-      // console.log("response",response);
-      // if (response.data) {
-      //   const value = response.data.value;
-      // }
+
     });
   }
-  
+
 }

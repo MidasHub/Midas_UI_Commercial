@@ -388,7 +388,6 @@ export class IdentitiesTabComponent {
               expireDate: expiredDate,
             })
             .subscribe((res2: any) => {
-              console.log(res2);
             });
         });
       }
@@ -418,8 +417,8 @@ export class IdentitiesTabComponent {
         cardinfo:checkResult
          };
         dialogConfig.minWidth = 400;
-        
-       
+
+
 
         if (yExpired > ySystem) {
           this.alertService.alert({
@@ -440,7 +439,7 @@ export class IdentitiesTabComponent {
             });
             log.debug('After close dialog box, response is ',response)
             // Khoa xử lý cập nhật thong tin g
-             
+
           })
         } else {
           if (yExpired === ySystem) {
@@ -474,8 +473,8 @@ export class IdentitiesTabComponent {
           }
         }
 
-        
-        
+
+
       }else{
         log.debug ("Card không có thông tin: ", checkResult)
         this.addIdentifierExtraInfo(identifierId, cardNumber);

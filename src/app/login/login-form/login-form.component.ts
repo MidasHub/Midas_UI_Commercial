@@ -66,7 +66,6 @@ export class LoginFormComponent implements OnInit {
    * TODO: Decision to be taken on providing this feature.
    */
   forgotPassword() {
-    console.log('Forgot Password feature currently unavailable.');
     alert('Forgot Password feature currently unavailable.')
   }
 

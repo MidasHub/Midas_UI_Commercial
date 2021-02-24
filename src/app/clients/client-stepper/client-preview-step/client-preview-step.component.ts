@@ -27,11 +27,8 @@ export class ClientPreviewStepComponent {
 
   constructor() {
     this.submit.subscribe(function (e: any) {
-      console.log(e);
     }, function (error: any) {
-      console.log('error', error);
     }, function (success: any) {
-      console.log('success', success);
     });
   }
 
@@ -54,11 +51,9 @@ export class ClientPreviewStepComponent {
   }
 
   onSubmit(event: any) {
-    console.log(this.client);
     const data = {...this.client};
     // delete data.documentTypeId;
     delete data.files;
-    console.log('data', data);
     this.submit.emit();
     return;
   }

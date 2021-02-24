@@ -148,7 +148,6 @@ export class DueDayCardTabComponent implements OnInit {
         amountAdvanceCash: amountAdvance,
         typeAdvanceCash: typeAdvanceCash
       }).subscribe((result: any) => {
-        console.log(result);
         const message = `Ứng tiền thành công cho tài khoản: ${clientAdvanceCash} với số tiền ${String(amountAdvance).replace(/\\B(?=(\\d{3})+(?!\\d))/g, ',') + ' đ'}`;
         this.alertService.alert({message: message, msgClass: 'cssInfo'});
         this.getRollTermScheduleAndCardDueDayInfo();

@@ -15,7 +15,6 @@ export class UploadBillComponent implements OnInit {
   ngOnInit(): void {
   }
   fileChange(event: any): Promise<any> {
-    console.log(event)
     return new Promise<any>(async resolve => {
       const file = event.target.files[0];
       file.path = await this.readURL(file);

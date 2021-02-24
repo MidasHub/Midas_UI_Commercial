@@ -41,7 +41,6 @@ export class ViewFeePaidTransactionDialogComponent implements OnInit {
 
   getData() {
     this.transactionServices.getListFeeSavingTransaction(this.txnCode).subscribe(result => {
-      console.log(result);
       this.transactions = result?.result?.listTransactionAlready;
     });
   }

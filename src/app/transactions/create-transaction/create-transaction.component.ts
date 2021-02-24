@@ -429,7 +429,6 @@ export class CreateTransactionComponent implements OnInit {
     };
     const dialog = this.dialog.open(CreateSuccessTransactionDialogComponent, { height: "80%", width: "auto", disableClose: true ,  data });
     dialog.afterClosed().subscribe((response: any) => {
-      console.log(response);
       if (response.data) {
         const value = response.data.value;
 

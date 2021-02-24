@@ -111,7 +111,6 @@ export class I18nService {
   getTranslate(field: any): string {
     let lbl = '';
     this.translate.get(field).subscribe((res: string) => {
-      // console.log('title', res);
       lbl = res;
     });
     return lbl;

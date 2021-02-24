@@ -81,11 +81,9 @@ export class BanksComponent implements OnInit, AfterViewInit {
     };
     const dialogBank = this.dialog.open(FormDialogComponent, {data});
     dialogBank.afterClosed().subscribe((response: any) => {
-      console.log(response);
       if (response.data) {
         const value = response.data.value;
         this.banksServices.storeBank(value.bankCode, value.bankName).subscribe(result => {
-          console.log(result);
           if (result?.status === '200') {
             this.alertService.alert({message: 'Thêm ngân hàng thành công.', msgClass: 'cssSuccess'});
             this.banksServices.addBank(value);
@@ -142,7 +140,6 @@ export class BanksComponent implements OnInit, AfterViewInit {
 
     const dialogCard = this.dialog.open(FormDialogComponent, {data});
     dialogCard.afterClosed().subscribe((response: any) => {
-      console.log(response);
       if (response.data) {
         const formData = response.data.value;
         if (!card) {
@@ -155,7 +152,6 @@ export class BanksComponent implements OnInit, AfterViewInit {
           }
         }
         this.banksServices.storeBinCode(formData.binCode, formData.bankCode, formData.cardType || '', formData.cardClass || '').subscribe(result => {
-          console.log(result);
           if (result.status === '200') {
             if (card) {
               this.alertService.alert({message: 'Cập nhập thông tin thẻ thành công', msgClass: 'cssSuccess'});
@@ -176,7 +172,6 @@ export class BanksComponent implements OnInit, AfterViewInit {
   saveBank() {
     const value = this.nameBank.value;
     this.banksServices.storeBank(this.bank_active.bankCode, value).subscribe(result => {
-      console.log(result);
       if (result.status === '200') {
         this.alertService.alert({message: 'Cập nhập thông tin thành công', msgClass: 'cssSuccess'});
         this.bank_active.bankName = value;
@@ -192,7 +187,6 @@ export class BanksComponent implements OnInit, AfterViewInit {
       }
     });
     this.banksServices.getBanks().subscribe(result => {
-      console.log('result', result);
       if (result) {
         this.banks = result;
         if (this.bank_active) {

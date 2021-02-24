@@ -68,7 +68,6 @@ export class CreateBookingMarketingComponent implements OnInit {
       if (id) {
         this.marketingServices.getCampaign().subscribe(result => {
           this.campaign = result?.result.listPosCampaignLimit?.find((v: any) => v.campaign.refid === Number(id));
-          console.log(this.campaign);
 
           if (this.campaign) {
             if (this.campaign.listPosSelected) {
@@ -77,7 +76,6 @@ export class CreateBookingMarketingComponent implements OnInit {
             if (this.campaign.listOfficeDtos) {
 
             }
-            console.log(moment(this.campaign.campaign.fromDate).format('DD/MM/YYYY, hh:mm A'));
             this.fromGroup.get('PosCampaignName').setValue(this.campaign.campaign.campainName);
             this.fromGroup.get('fromDate').setValue(moment(this.campaign.campaign.fromDate).toDate());
             this.fromGroup.get('notifyDate').setValue(moment(this.campaign.campaign.timeNotify).toDate());
@@ -111,15 +109,7 @@ export class CreateBookingMarketingComponent implements OnInit {
           }
 
         }
-        console.log(this.campaign);
-        const data = {
-          ...card,
-          costRate: '',
-          cogsRate: '',
-          rate: '',
-          select: false,
-          ...default_v
-        };
+
         const keys = Object.keys(data);
         const formData = {};
         for (const key of keys) {
@@ -227,13 +217,7 @@ export class CreateBookingMarketingComponent implements OnInit {
     const terminalId = te.toString().split(',').join('-');
     const of = this.officeIds.map(i => i.id);
     const officeId = of.toString().split(',').join('-');
-    console.log({
-      ...fromGroupV,
-      listRateCardType: listRateCardType.length === 0 ? '' : JSON.stringify(listRateCardType),
-      terminalId,
-      officeId,
-      secondRemain: fromGroupV.secondRemain * 60
-    });
+
     if (this.campaign) {
       this.marketingServices.UpdateCampain({
         ...fromGroupV,
@@ -255,7 +239,6 @@ export class CreateBookingMarketingComponent implements OnInit {
         terminalId,
         officeId
       }).subscribe(result => {
-        console.log(result);
         if (result.status !== '200') {
           return this.alterService.alert({message: result.error, msgClass: 'cssWarning'});
         }

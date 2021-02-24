@@ -6,7 +6,6 @@ export class Mytool{
     getTranslate(field:any):string{
         let lbl='';
         this.translate.get('Client_Component.ClientStepper.AddressStep.buttonAdd').subscribe((res: string) => {
-          console.log('title', res);
           lbl = res
         })
         return lbl

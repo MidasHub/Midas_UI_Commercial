@@ -63,7 +63,6 @@ export class ViewBookingMarketingComponent implements OnInit {
     dialog.afterClosed().subscribe((result) => {
       if (result) {
         this.marketingServices.createBooking(this.campaign.campaign.refid, result.userNameTelegram, result.bookingAmount).subscribe(re => {
-          console.log(re);
           if (re?.result?.status) {
             this.getBooking();
             return this.alterService.alert({message: 'Thêm booking thành công 🎊🎊🎊🎊🎊🎊!', msgClass: 'cssSuccess'});
@@ -87,7 +86,6 @@ export class ViewBookingMarketingComponent implements OnInit {
     dialog.afterClosed().subscribe((result) => {
       if (result) {
         this.marketingServices.updateBooking(booking.refid, result.bookingAmount).subscribe(re => {
-          console.log(re);
           if (re?.result?.status) {
             this.getBooking();
             return this.alterService.alert({

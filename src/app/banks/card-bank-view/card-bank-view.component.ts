@@ -30,13 +30,11 @@ export class CardBankViewComponent implements OnInit {
       });
       this.cardTypes = result?.result?.listCardType;
       this.filterData();
-      console.log('cards', this.banks);
-      console.log('cardTypes', this.cardTypes);
+
     });
   }
 
   filterData() {
-    console.log(this.textSearch);
     if (this.textSearch) {
       this.dataStore = this.banks.filter(value => String(value.bankName).toLowerCase().indexOf(this.textSearch) !== -1 || String(value.bankCode).toLowerCase().indexOf(this.textSearch) !== -1);
     } else {

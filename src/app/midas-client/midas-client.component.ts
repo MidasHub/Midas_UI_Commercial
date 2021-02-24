@@ -41,10 +41,6 @@ export class MidasClientComponent implements OnInit {
       this.clientIdentifierViewData = data.midasClientIdentifierViewData;
       this.clientIdentifierTemplateData = data.midasClientIdentifierTemplateData;
 
-
-      console.log(data.midasClientViewResolver);
-      console.log(data.midasClientIdentifierViewData);
-      console.log(data.midasClientIdentifierTemplateData);
  });
   }
 

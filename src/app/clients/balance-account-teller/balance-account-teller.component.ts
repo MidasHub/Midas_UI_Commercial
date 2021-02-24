@@ -27,7 +27,6 @@ export class BalanceAccountTellerComponent implements OnInit {
     private formBuilder: FormBuilder
   ) {
     this.clientServices.getBalanceOfTeller().subscribe(result => {
-      console.log(result)
       this.dataSource = result?.result?.listBalanceTeller;
       this.accountFilter = this.dataSource;
       this.loadData();

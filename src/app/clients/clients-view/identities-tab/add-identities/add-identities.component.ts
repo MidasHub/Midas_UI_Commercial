@@ -81,7 +81,6 @@ export class AddIdentitiesComponent implements OnInit {
     log.debug('The data import from bankService: ', this.documentCardBanks,this.documentCardTypes);
 
     this.form.get('documentTypeId').valueChanges.subscribe((value: any) => {
-      console.log(value);
       const type = this.documentTypes.find(v => v.id === value);
       if (type && Number(type.id) >= 38 && Number(type.id) <= 57) {
         this.form.addControl('documentCardBank', new FormControl());
@@ -101,9 +100,9 @@ export class AddIdentitiesComponent implements OnInit {
         const typeDocument = this.form.get('documentTypeId').value;
         const type = this.documentTypes.find(v => v.id === typeDocument);
         if (type && Number(type.id) >= 38 && Number(type.id) <= 57) {
-          
+
           log.debug('Cần tìm thông bincode: ',value,' - 6 first: ', value.slice(0,6))
-      
+
           this.bankService.getInfoBinCode(value.slice(0,6)).subscribe((res: any) => {
             if (res) {
               if (res.existBin) {

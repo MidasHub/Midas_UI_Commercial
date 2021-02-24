@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { AlertService } from 'app/core/alert/alert.service';
 import { ThirdPartyService } from 'app/third-party/third-party.service';
- 
+
 
 @Component({
   selector: 'midas-merchant-dialog',
@@ -24,7 +24,6 @@ export class MerchantDialogComponent implements OnInit {
     public dialogRef: MatDialogRef<MerchantDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any
   ){
-    console.log("data",data);
     this.dataFrom = data;
     this.action = data.action;
   }
@@ -61,7 +60,7 @@ export class MerchantDialogComponent implements OnInit {
     const payload = {
       ...this.merchantForm.value
     };
-  
+
     this.thirdPartyService.saveMerchant(payload).subscribe((response: any) => {
       if (response.statusCode === 'success') {
         this.alertServices.alert({
@@ -80,7 +79,7 @@ export class MerchantDialogComponent implements OnInit {
       }
     });
 
-  } 
+  }
 
   update(){
     if (!this.merchantForm.valid) {
@@ -90,7 +89,7 @@ export class MerchantDialogComponent implements OnInit {
     const payload = {
       ...this.merchantForm.value
     };
-    
+
     this.thirdPartyService.updateMerchant(payload).subscribe((response: any) => {
       if (response.statusCode === 'success') {
         this.alertServices.alert({
@@ -108,5 +107,5 @@ export class MerchantDialogComponent implements OnInit {
         this.dialogRef.close(payload);
       }
     });
-  } 
+  }
 }

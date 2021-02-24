@@ -15,7 +15,6 @@ export class AddInformationCardBatchComponent implements OnInit {
               @Inject(MAT_DIALOG_DATA) public data: any,
               private formBuilder: FormBuilder) {
     this.member = data.member;
-    console.log(data);
     this.formDialog = this.formBuilder.group({});
   }
 

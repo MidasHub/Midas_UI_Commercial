@@ -35,7 +35,6 @@ export class DetailBookingRollTermScheduleComponent implements OnInit {
 
   getData() {
     this.bookingService.getDetailRollTermScheduleBookingByRefNo(this.bookingRefNo).subscribe((result) => {
-      console.log(result);
       this.transactions = result?.result?.bookingInternalResponseDto?.listBookingInternalEntities;
     });
   }

@@ -59,7 +59,6 @@ export class ClientsComponent implements OnInit, AfterViewInit {
       }
     }
     //   .subscribe(params => {
-    //   console.log(params); // { order: "popular" }
     //   const {pageIndex, pageSize} = params;fxHide fxShow.gt-md
     //   if (pageIndex && pageSize) {
     //     this.paginator.pageSize = Number(pageSize);
@@ -112,7 +111,6 @@ export class ClientsComponent implements OnInit, AfterViewInit {
    * @param {string} filterValue Value to filter data.
    */
   applyFilter(filterValue: string = '') {
-    console.log(filterValue);
     this.searchValue = filterValue;
     this.dataSource.filterClients(filterValue, this.sort.active, this.sort.direction, this.paginator.pageIndex, this.paginator.pageSize, !this.showClosedAccounts.checked);
     // this.paginator.pageIndex = 0;

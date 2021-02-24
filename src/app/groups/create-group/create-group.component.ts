@@ -78,7 +78,6 @@ export class CreateGroupComponent implements OnInit, AfterViewInit {
     });
     /** Get go_back params */
     this.route.params.subscribe((params => {
-      console.log('Params:', params)
       let { go_back } = params
       if (go_back) {
         this.go_back = go_back
@@ -216,9 +215,8 @@ export class CreateGroupComponent implements OnInit, AfterViewInit {
     }
     delete group.groupTypeId;
     this.groupService.createGroup(group).subscribe((response: any) => {
-      console.log('response', response);
       this.createFeeGroup(response);
-      
+
     });
   }
 
@@ -229,7 +227,6 @@ export class CreateGroupComponent implements OnInit, AfterViewInit {
         this.alertservice.alert({message: this.i18n.getTranslate('Group_Component.Create_Group_Component.msgCreatedGroup'),msgClass:'cssSuccess'})
         this.router.navigate(['/home']);
       }else{
-      console.log('GroupOBJ: ..',groupObj)
       this.router.navigate(['../groups']);
       }
     });
@@ -245,7 +242,6 @@ export class CreateGroupComponent implements OnInit, AfterViewInit {
     this.cards.forEach((item: any) => {
       if (item.cardType == index.cardType) {
         Object.keys(item).forEach(function (key) {
-          console.log(item[key]);
           if (name_input.split("_")[1] == key) {
             item[key] = Number(value_input);
           }

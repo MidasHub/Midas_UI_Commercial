@@ -33,7 +33,7 @@ export class ClientGeneralStepComponent implements OnInit {
   @Output() cancelEvent = new EventEmitter();
 
   currentUser: any;
-  
+
   /** Create Client Form */
   createClientForm: FormGroup;
 
@@ -79,7 +79,6 @@ export class ClientGeneralStepComponent implements OnInit {
               private centersService: CentersService) {
     this.setClientForm();
     this.currentUser = this.authenticationService.getCredentials();
-    console.log("Current User: ", this.currentUser)
   }
 
   ngOnInit() {
@@ -91,7 +90,7 @@ export class ClientGeneralStepComponent implements OnInit {
    * Creates the client form.
    */
   setClientForm() {
-    
+
     this.createClientForm = this.formBuilder.group({
       'officeId': ['', Validators.required],
       'staffId': [''],
@@ -119,7 +118,6 @@ export class ClientGeneralStepComponent implements OnInit {
     this.createClientForm.addControl('submittedOnDate', new FormControl(new Date()));
     this.createClientForm.get('officeId').valueChanges.subscribe((value: any) => {
       this.centersService.getStaff(value).subscribe((staffs: any) => {
-        console.log(staffs);
         this.staffOptions = staffs?.staffOptions;
       });
     });
@@ -156,13 +154,12 @@ export class ClientGeneralStepComponent implements OnInit {
     const {roles, staffId} = this.currentUser;
     this.createClientForm.get('staffId').setValue(staffId);
     roles.map((role: any,index: number) => {
-      console.log("Role:", role.id)
       if (role.id !== 3 ) {
         this.isTeller = false;
       }
-      
+
     }
-    
+
     );
   }
 
@@ -253,7 +250,6 @@ export class ClientGeneralStepComponent implements OnInit {
     //   };
     // }
     // generalDetails.addSavings = true;
-    // console.log({generalDetails});
     return generalDetails;
   }
 

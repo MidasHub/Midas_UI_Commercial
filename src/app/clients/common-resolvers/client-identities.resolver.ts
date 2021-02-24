@@ -36,7 +36,6 @@ export class ClientIdentitiesResolver implements Resolve<Object> {
             forkJoin(docObservable).subscribe(documents => {
                 documents.forEach((document, index) => {
                     identitiesData[index].documents = document;
-                    console.log("load document");
                 });
                 this.LoadImageIdentifier(identitiesData);
             });

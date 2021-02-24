@@ -63,7 +63,6 @@ export class CreateClientComponent {
     });
 
     this.route.queryParams.subscribe(params => {
-        console.log(params); // { order: "popular" }
         const {go_back} = params;
         if (go_back) {
           this.go_back = go_back;
@@ -179,13 +178,11 @@ export class CreateClientComponent {
             formData.append('file', item);
             formData.append('fileName', file.name);
             this.clientsService.uploadClientIdentifierDocument(resourceId, formData).subscribe((ssss: any) => {
-              console.log('document Uploaded', ssss);
               // done += 1;
             });
           }
         });
         // while (done !== this.client.files.length) {
-        //   console.log('uploading .....');
         // }
         if (this.go_back === 'home') {
           this.alertService.alert({

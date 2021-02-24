@@ -62,11 +62,9 @@ export class SavingsAccountViewComponent implements OnInit {
               private productsService: ProductsService,
               private alertService: AlertService) {
     this.route.data.subscribe((data: { savingsAccountData: any, savingsDatatables: any }) => {
-      console.log('savingsAccountData', data);
       this.savingsAccountData = data.savingsAccountData;
       this.savingsDatatables = data.savingsDatatables;
     });
-    console.log(this.savingsAccountData, this.savingsDatatables);
     if (this.router.url.includes('clients')) {
       this.entityType = 'Client';
     } else if (this.router.url.includes('groups')) {
@@ -109,7 +107,6 @@ export class SavingsAccountViewComponent implements OnInit {
 
   advanceCash() {
     const dialogConfig = new MatDialogConfig();
-    console.log(this.savingProduct);
     dialogConfig.data = {
       title: 'Ứng tiền cho khách hàng',
       currentUser: this.currentUser,
@@ -119,7 +116,6 @@ export class SavingsAccountViewComponent implements OnInit {
     dialogConfig.minWidth = 400;
     const refDialog = this.dialog.open(AdvanceComponent, dialogConfig);
     refDialog.afterClosed().subscribe((response: any) => {
-      console.log(response);
       if (response) {
         const {clientAdvanceCash, noteAdvance, amountAdvance, typeAdvanceCash} = response?.data?.value;
         const {savingsAccountId} = clientAdvanceCash;
@@ -130,7 +126,6 @@ export class SavingsAccountViewComponent implements OnInit {
           amountAdvanceCash: amountAdvance,
           typeAdvanceCash: typeAdvanceCash
         }).subscribe((result: any) => {
-          console.log(result);
           const message = `Ứng tiền thành công cho khách hàng: ${clientAdvanceCash.displayName} với số tiền ${String(amountAdvance).replace(/\\B(?=(\\d{3})+(?!\\d))/g, ',') + ' đ'}`;
           // this.alertService.alertMsgTop({alertMsg: message});
           this.alertService.alert({message: message, msgClass: 'cssInfo'});
@@ -148,7 +143,6 @@ export class SavingsAccountViewComponent implements OnInit {
     dialogConfig.minWidth = 500;
     const refDialog = this.dialog.open(PartnerAdvanceCashComponent, dialogConfig);
     refDialog.afterClosed().subscribe((response: any) => {
-      console.log(response);
       if (response) {
         const {
           partnerPaymentType,

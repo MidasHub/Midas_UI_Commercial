@@ -44,7 +44,6 @@ export class BalanceAccountClientComponent implements OnInit {
     this.currentUser = this.authenticationService.getCredentials();
     this.clientServices.getBalanceAccountOfCustomer().subscribe(result => {
       const {permissions, staffId} = this.currentUser;
-      console.log(permissions, result);
       const permit_userTeller = permissions.includes('TXNOFFICE_CREATE');
       this.dataSource = result?.result?.listBalanceCustomer.filter((v: any) => Number(v.account_balance_derived) >= 0 && (permit_userTeller || staffId === v.staff_id));
       this.dataSource2 = result?.result?.listBalanceCustomer.filter((v: any) => Number(v.account_balance_derived) < 0 && (permit_userTeller || staffId === v.staff_id));

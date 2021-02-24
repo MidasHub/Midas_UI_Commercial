@@ -69,7 +69,6 @@ export class SettingsService {
    * TẠM THÒI HARDCODE PHẦN DATEFORMAT = 'dd MMMM yyyy' VÀ LOCALE = 'en' DO CÓ LỖI KHI GỌI API
    */
   get dateFormat() {
-    console.log('Date Format:',localStorage.getItem('midasDateFormat'))
     return JSON.parse( localStorage.getItem('midasDateFormat'));
   }
 

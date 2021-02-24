@@ -109,7 +109,6 @@ export class RescheduleLoanComponent implements OnInit {
       this.batchRequests.push(batchData);
     });
     this.tasksService.submitBatchData(this.batchRequests).subscribe((response: any) => {
-      console.log(response);
       this.reload();
     });
   }

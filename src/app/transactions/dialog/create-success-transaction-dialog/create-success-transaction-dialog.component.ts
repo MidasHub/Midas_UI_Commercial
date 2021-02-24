@@ -29,7 +29,6 @@ export class CreateSuccessTransactionDialogComponent implements OnInit {
     public dialog: MatDialog
   ) {
     this.transactionInfo = data;
-    console.log(this.transactionInfo);
   }
 
   downloadVoucherTransaction() {

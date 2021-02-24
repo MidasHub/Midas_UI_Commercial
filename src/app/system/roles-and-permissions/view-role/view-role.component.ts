@@ -215,7 +215,6 @@ export class ViewRoleComponent implements OnInit {
     this.checkboxesChanged = false;
     this.isDisabled = true;
     this.systemService.updateRolePermission(this.roleId, permissionData).subscribe((response: any) => {
-      console.log('response: ', response);
     });
   }
 

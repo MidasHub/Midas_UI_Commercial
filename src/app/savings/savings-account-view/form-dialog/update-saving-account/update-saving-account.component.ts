@@ -20,7 +20,6 @@ export class UpdateSavingAccountComponent implements OnInit {
               @Inject(MAT_DIALOG_DATA) public data: any,
               private formBuilder: FormBuilder,
               private savingsService: SavingsService) {
-    console.log(data);
     this.transactions = data;
     this.form = this.formBuilder.group({
       'locale': ['en'],
@@ -38,7 +37,6 @@ export class UpdateSavingAccountComponent implements OnInit {
 
   ngOnInit(): void { // 19619
     this.savingsService.getSavingsAccountTransaction(this.data?.accountId, this.data?.txnId).subscribe(result => {
-      console.log('đây này ', {result});
       if (result) {
         this.payments = result;
         const keys = ['accountNumber', 'bankNumber', 'checkNumber', 'paymentType', 'receiptNumber', 'routingCode'];
@@ -70,7 +68,6 @@ export class UpdateSavingAccountComponent implements OnInit {
       }
     });
     this.savingsService.getSavingsTransactionTemplateResource(this.data?.accountId).subscribe(result => {
-      console.log(result);
       this.templateData = result;
     });
   }

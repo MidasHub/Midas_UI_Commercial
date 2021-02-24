@@ -26,9 +26,7 @@ export class AdvanceComponent implements OnInit {
     this.currentUser = data.currentUser;
     this.disable = data.disableUser;
     this.savingsAccountData = data.savingsAccountData;
-    console.log(this.savingsAccountData);
     if (this.disable) {
-      console.log(data.savingsAccountData.clientName);
       this.form.get('clientAdvanceCash').setValue(data.savingsAccountData.clientName);
     }
     this.serviceClient.getClients('', '', 0, -1).subscribe((cl: any) => {

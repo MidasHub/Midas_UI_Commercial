@@ -103,7 +103,6 @@ export class RollTermScheduleDialogComponent implements OnInit {
         this.transactionInfo.totalAmountPaid = element.totalPaid;
         this.transactionInfo.totalAmountGet += element.totalGet;
       });
-      console.log(this.dataSource);
     });
   }
 

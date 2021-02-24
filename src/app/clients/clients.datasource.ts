@@ -44,7 +44,6 @@ export class ClientsDataSource implements DataSource<any> {
     }
     this.clientsService.getClientsByOfficeOfUser('', '', pageIndex * limit, limit, sqlSearch)
       .subscribe((clients: any) => {
-        console.log(clients);
         // clients.pageItems = (clientActive) ? (clients.pageItems.filter((client: any) => client.active)) : (clients.pageItems.filter((client: any) => !client.active));
         this.recordsSubject.next(clients.totalFilteredRecords);
         this.clientsSubject.next(clients.pageItems);
@@ -93,7 +92,6 @@ export class ClientsDataSource implements DataSource<any> {
       }
       this.clientsService.getClientsByOfficeOfUser('', '', pageIndex * limit, limit, sqlSearch)
         .subscribe((clients: any) => {
-          // console.log(clients);
           this.old_result = clients?.pageItems;
           // this.recordsSubject.next(this.old_result.length);
           this.recordsSubject.next(clients.totalFilteredRecords);

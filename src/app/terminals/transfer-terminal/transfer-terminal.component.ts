@@ -10,8 +10,8 @@ import { AlertService } from 'app/core/alert/alert.service';
   styleUrls: ['./transfer-terminal.component.scss']
 })
 export class TransferTerminalComponent implements OnInit {
-  
-  transferTerminalForm:FormGroup; 
+
+  transferTerminalForm:FormGroup;
   listLimitPos:any[];
   offices: any[];
   limitRemain:number
@@ -29,13 +29,13 @@ export class TransferTerminalComponent implements OnInit {
     public dialogRef: MatDialogRef<TransferTerminalComponent>,
       @Inject(MAT_DIALOG_DATA) public data: any
     ) {
-       
+
       this.terminalId = data.terminalId;
       this.terminalName = data.terminalName;
   }
 
-  ngOnInit(){ 
-    
+  ngOnInit(){
+
    this.transferTerminalForm = this.formBuilder.group({
     'terminalId': [''],
     'terminalName': [''],
@@ -44,11 +44,9 @@ export class TransferTerminalComponent implements OnInit {
     'limitRemain': [''],
     });
     this.terminalsService.getTerminalInfo(this.terminalId).subscribe((data) => {
-      console.log("TransferTerminalComponent result",data);
       if(data.statusCode==='200'){
         this.itemPos = data.result.limitPos;
         this.offices = data.result.listOffice;
-        console.log("TransferTerminal",this.itemPos);
         this.transferTerminalForm.patchValue({
           'terminalId': this.terminalId ,
           'terminalName': this.terminalName,
@@ -58,11 +56,11 @@ export class TransferTerminalComponent implements OnInit {
         });
         this.isTF = true;
       }
-      
+
     });
   }
-    
- 
+
+
 submit(){
 
     if (!this.transferTerminalForm.valid) {
@@ -81,7 +79,7 @@ submit(){
         "terminalId":this.terminalId,
         "officeId":officeIdSelect,
     };
-  
+
     this.terminalsService.transfer(this.terminalId, officeIdSelect).subscribe((response: any) => {
       if (response.statusCode === 'success') {
         this.alertServices.alert({
@@ -99,6 +97,6 @@ submit(){
         this.dialogRef.close({ status: false });
       }
     });
-  
-  } 
+
+  }
 }

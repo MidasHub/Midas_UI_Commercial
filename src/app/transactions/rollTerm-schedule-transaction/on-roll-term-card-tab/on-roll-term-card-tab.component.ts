@@ -137,7 +137,6 @@ export class OnRollTermCardTabComponent implements OnInit {
           typeAdvanceCash: typeAdvanceCash,
         })
         .subscribe((result: any) => {
-          console.log(result);
           const message = `Ứng tiền thành công cho tài khoản: ${clientAdvanceCash} với số tiền ${
             String(amountAdvance).replace(/\\B(?=(\\d{3})+(?!\\d))/g, ',') + ' đ'
           }`;

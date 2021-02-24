@@ -244,7 +244,6 @@ export class ManageTransactionComponent implements OnInit {
     const wholesaleChoose = form.wholesaleChoose;
     const RetailsChoose = form.RetailsChoose;
     const keys = Object.keys(form);
-    console.log(form);
     this.filterData = this.transactionsData.filter((v) => {
       for (const key of keys) {
         if (["wholesaleChoose", "RetailsChoose"].indexOf(key) === -1) {
@@ -372,7 +371,6 @@ export class ManageTransactionComponent implements OnInit {
   uploadBill(custId: string, trnRefNo: string) {
     const dialog = this.dialog.open(UploadBillComponent, {});
     dialog.afterClosed().subscribe((data) => {
-      console.log(data);
       const { file } = data;
       const formData: FormData = new FormData();
       formData.append("name", file.name);
@@ -380,7 +378,6 @@ export class ManageTransactionComponent implements OnInit {
       formData.append("fileName", file.name);
       if (data) {
         this.clientsService.uploadClientDocumenttenantIdentifier(custId, formData).subscribe((result) => {
-          console.log(result);
           if (result.resourceId) {
             const message = "Tải lên bill giao dịch " + trnRefNo + " thành công";
             this.alertService.alert({
@@ -417,11 +414,9 @@ export class ManageTransactionComponent implements OnInit {
     };
     const dialog = this.dialog.open(FormDialogComponent, { data });
     dialog.afterClosed().subscribe((response: any) => {
-      console.log(response);
       if (response.data) {
         const value = response.data.value;
         this.transactionService.uploadBosInformation(trnRefNo, value).subscribe((reslut) => {
-          console.log(reslut);
         });
       }
     });

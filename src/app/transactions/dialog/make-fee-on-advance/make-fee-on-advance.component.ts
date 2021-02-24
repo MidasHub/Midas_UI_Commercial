@@ -49,7 +49,6 @@ export class MakeFeeOnAdvanceComponent implements OnInit {
               private transactionService: TransactionService,
               private clientService: ClientsService,
               private alterService: AlertService) {
-    console.log({data: this.data});
     this.batchTxnName = this.data.batchTxnName;
     this.formDialog = this.formBuilder.group({
       'amountPaid': [''],
@@ -61,7 +60,6 @@ export class MakeFeeOnAdvanceComponent implements OnInit {
 
   ngOnInit(): void {
     this.transactionService.getListFeeSavingTransaction(this.batchTxnName).subscribe(result => {
-      console.log(result);
       this.transactions = result?.result?.listTransactionAlready;
     });
     this.clientService.getClientOfStaff().subscribe(result => {
@@ -80,7 +78,6 @@ export class MakeFeeOnAdvanceComponent implements OnInit {
       'txnCode': this.batchTxnName,
       ...form
     };
-    console.log(formData);
     this.transactionService.makeFeeOnAdvanceExecute(formData).subscribe(result => {
       if (Number(result?.status) === 200) {
         this.alterService.alert({

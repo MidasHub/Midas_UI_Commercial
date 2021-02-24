@@ -1,4 +1,5 @@
-console.log('subdomain', window.location.hostname.split('.')[0]);
+
+
 const subdomain = window.location.hostname.split('.')[0];
 let tenant = 'staging';
 let billpostenant = 'staging';

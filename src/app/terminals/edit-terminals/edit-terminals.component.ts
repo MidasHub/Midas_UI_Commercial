@@ -69,7 +69,6 @@ export class EditTerminalsComponent implements OnInit, AfterViewInit {
       // this.dataSource = new MatTableDataSource(this.ItemPosLimitList);
       this.dataSource.data = this.ItemPosLimitList;
       this.posLimitDefault = this.ItemPosLimitList;
-      console.log('paginator', this.paginator);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
     });

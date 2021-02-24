@@ -158,7 +158,6 @@ export class CreateBatchTransactionComponent implements OnInit {
               this.dataSource = [];
               result?.result?.listBatchTransaction?.forEach((v: any) => {
                 const member = this.members.find(f => String(f.clientId) === String(v.custId));
-                console.log({member});
                 const batchTransaction = {
                   index: `${String(new Date().getMilliseconds())}___${this.dataSource.length}`,
                   ...this.defaultData,
@@ -203,9 +202,7 @@ export class CreateBatchTransactionComponent implements OnInit {
         this.transactionServices.getTransactionGroupFee(this.group.id).subscribe(data => {
           this.feeGroup = data?.result.listFeeGroup;
         });
-        // this.groupServices.getGroupData(this.group.id).subscribe(data => {
-        //   console.log(data);
-        // });
+
       });
     });
   }
@@ -483,9 +480,7 @@ export class CreateBatchTransactionComponent implements OnInit {
       if (data) {
         const formData = {...form.data.member, ...form.value};
         delete formData.index;
-        console.log(formData);
         this.transactionServices.onSaveTransactionBatch(formData).subscribe(result => {
-          console.log(result);
           if (result?.status === '200') {
             this.batchTxnName = result?.result?.batchTxnName;
             this.defaultData.batchTxnName = this.batchTxnName;
@@ -512,7 +507,6 @@ export class CreateBatchTransactionComponent implements OnInit {
 
   updateData(form: any, transactionId: any) {
     this.transactionServices.getTransactionDetail(transactionId).subscribe(result => {
-      console.log(result);
       const v = result?.result?.detailTransactionDto;
       const member = form.data.member;
       const index = form.get('index').value;
@@ -627,7 +621,6 @@ export class CreateBatchTransactionComponent implements OnInit {
                 expireDate: expiredDate,
               })
               .subscribe((res2: any) => {
-                console.log(res2);
               });
           });
         }

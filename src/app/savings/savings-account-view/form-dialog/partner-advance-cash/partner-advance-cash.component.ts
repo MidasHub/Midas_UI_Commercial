@@ -57,7 +57,6 @@ export class PartnerAdvanceCashComponent implements OnInit {
         this.form.addControl('partnerClientVaultAdvanceCash', new FormControl('', [Validators.required]));
         this.form.get('partnerOfficeAdvanceCash').valueChanges.subscribe(value1 => {
           this.savingService.getListSavingAdvanceCashFromPartner(value1).subscribe(resulte => {
-            console.log('getListSavingAdvanceCashFromPartner', resulte);
             this.partnerClientVaultAdvanceCashes = resulte?.result?.listClientSavingVault;
           });
         });
@@ -67,7 +66,6 @@ export class PartnerAdvanceCashComponent implements OnInit {
       }
     });
     this.savingService.getListPartner().subscribe((result: any) => {
-      console.log(result);
       this.partnerAdvanceCashes = result?.result?.listPartner;
       this.filteredPartner = this.filterPartner(null).slice(0, 30);
       this.partner.valueChanges.subscribe(value => {
@@ -75,7 +73,6 @@ export class PartnerAdvanceCashComponent implements OnInit {
       });
     });
     this.savingService.getListOfficeCommon().subscribe(result => {
-      console.log('partnerOfficeAdvanceCashes', result);
       this.partnerOfficeAdvanceCashes = result?.result?.listOffice;
     });
 

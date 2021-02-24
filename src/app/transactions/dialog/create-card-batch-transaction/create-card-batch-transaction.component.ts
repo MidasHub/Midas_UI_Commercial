@@ -45,7 +45,6 @@ export class CreateCardBatchTransactionComponent implements OnInit {
               private bankService: BanksService,
               private alterService: AlertService,
               private clientService: ClientsService) {
-    console.log({data: this.data});
     this.formDialog = this.formBuilder.group({
       'clientId': [''],
       'documentTypeId': [''],
@@ -85,7 +84,6 @@ export class CreateCardBatchTransactionComponent implements OnInit {
         const type = this.documents.find(v => v.id === typeDocument);
         if (type && Number(type.id) >= 38 && Number(type.id) <= 57) {
           this.bankService.getInfoBinCode(value.substring(0,6)).subscribe((res: any) => {
-            console.log(res);
             if (res) {
               if (res.existBin) {
                 const {bankCode, cardType} = res;

@@ -29,7 +29,7 @@ export class LanguageSelectorComponent implements OnInit {
     this.languageSelector.setValue(this.currentLanguage);//
   }
 
-  
+
 
   ngOnInit() {
   }
@@ -61,7 +61,6 @@ export class LanguageSelectorComponent implements OnInit {
   }
 
   // changeLocale(locale: string) {
-  //   console.log(locale)
-  //   this.i18nService.changeLocale(locale);   
+  //   this.i18nService.changeLocale(locale);
   // }
 }

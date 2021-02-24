@@ -25,7 +25,6 @@ export class TerminalsService {
   }
 
   getLimitTerminals(): Observable<any> {
-    console.log(this.accessToken);
     const httpParams = new HttpParams()
       .set('createdBy', this.accessToken.userId)
       .set('accessToken', this.accessToken.base64EncodedAuthenticationKey);

@@ -120,7 +120,6 @@ export class AuthenticationService {
       return this.http.post('/authentication', { username: loginContext.username, password: loginContext.password })
         .pipe(
           map((credentials: Credentials) => {
-            console.log(credentials);
             this.onLoginSuccess(credentials);
             return of(true);
           })

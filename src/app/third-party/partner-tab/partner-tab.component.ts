@@ -20,13 +20,13 @@ export class PartnerTabComponent implements OnInit {
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   //@ViewChild('showClosedPartners', { static: true }) showClosedPartners: MatCheckbox;
 
-  
+
   partners:any[];
   dataSource: MatTableDataSource<any>;
   displayedColumns =  ['code', 'desc', 'typeCheckValid', 'status', 'limit', 'createdBy','createdDate','updatedDate','action'];
   partnersDataActive:any[];
   partnersDataInActive:any[];
-  
+
   constructor(
     private alertServices: AlertService,
     private thirdPartyService: ThirdPartyService,
@@ -53,17 +53,16 @@ export class PartnerTabComponent implements OnInit {
     };
     const dialog = this.dialog.open(PartnerDialogComponent, { height: "auto", width: "30%" , data });
     dialog.afterClosed().subscribe((payload: any) => {
-      console.log("payload",payload);
         if(payload){
           this.dataSource.data.push(payload);
-        } 
+        }
     });
   }
 
   editPartner(partner:any, index:number){
-     
+
     if(partner){
-      partner.status === 'O' ? partner['status']=true : partner['status']=false; 
+      partner.status === 'O' ? partner['status']=true : partner['status']=false;
     }
     const data = {
       action: 'edit',
@@ -71,15 +70,14 @@ export class PartnerTabComponent implements OnInit {
     };
     const dialog = this.dialog.open(PartnerDialogComponent, { height: "auto", width: "30%" , data });
     dialog.afterClosed().subscribe((payload: any) => {
-      console.log("payload",payload);
       if(payload){
         this.dataSource.data.slice(index,1);
         this.dataSource.data.push(payload);
-      } 
+      }
     });
   }
 
- 
+
   changeShowClosedPartners(isActive:boolean){
     if(isActive){
       this.thirdPartyService.getPartners("inactive").subscribe((data: any) => {

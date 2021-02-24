@@ -185,7 +185,6 @@ export class RollTermScheduleTabComponent implements OnInit {
     };
     const dialog = this.dialog.open(RollTermScheduleDialogComponent, { height: "auto", width: "80%", data });
     dialog.afterClosed().subscribe((response: any) => {
-      console.log(response);
       if (response.data) {
         const value = response.data.value;
 
@@ -199,7 +198,6 @@ export class RollTermScheduleTabComponent implements OnInit {
     };
     const dialog = this.dialog.open(ExecuteLoanDialogComponent, { height: "auto", width: "50%", data });
     dialog.afterClosed().subscribe((response: any) => {
-      console.log(response);
       if (response.data) {
         const value = response.data.value;
 
