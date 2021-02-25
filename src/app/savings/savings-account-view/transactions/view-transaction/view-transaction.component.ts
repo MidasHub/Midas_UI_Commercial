@@ -10,6 +10,7 @@ import { SettingsService } from 'app/settings/settings.service';
 
 /** Custom Dialogs */
 import { UndoTransactionDialogComponent } from '../../custom-dialogs/undo-transaction-dialog/undo-transaction-dialog.component';
+import { AlertService } from 'app/core/alert/alert.service';
 
 /**
  * View Transaction Component.
@@ -35,14 +36,16 @@ export class ViewTransactionComponent {
    * @param {SettingsService} settingsService Setting service
    */
   constructor(private savingsService: SavingsService,
-              private route: ActivatedRoute,
               private datePipe: DatePipe,
+              private alertService: AlertService,
+              private route: ActivatedRoute,
               private router: Router,
               public dialog: MatDialog,
               private settingsService: SettingsService) {
     this.route.data.subscribe((data: { savingsAccountTransaction: any }) => {
       this.transactionData = data.savingsAccountTransaction;
     });
+
   }
 
   /**
@@ -62,7 +65,13 @@ export class ViewTransactionComponent {
           locale
         };
         this.savingsService.executeSavingsAccountTransactionsCommand(accountId, 'undo', data, this.transactionData.id).subscribe(() => {
-          this.router.navigate(['../'], { relativeTo: this.route });
+          this.alertService.alert({
+            message: `Hủy giao dịch ${this.transactionData.id} thành công!`,
+            msgClass: "cssSuccess",
+            hPosition: "center",
+          });
+          // this.router.navigate(['../../transactions'], { relativeTo: this.route });
+
         });
       }
     });
