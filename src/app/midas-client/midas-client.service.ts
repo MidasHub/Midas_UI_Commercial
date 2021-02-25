@@ -30,7 +30,13 @@ export class MidasClientService {
     this.environment = environment ;
    }
 
+
    getInfoSavingAccountByUserId(): Observable<any> {
+
+    this.accessToken = JSON.parse(
+      sessionStorage.getItem(this.credentialsStorageKey)
+      || localStorage.getItem(this.credentialsStorageKey)
+    );
 
     const httpParams = new HttpParams()
     .set('createdBy', this.accessToken.userId)
