@@ -416,8 +416,7 @@ export class ManageTransactionComponent implements OnInit {
     dialog.afterClosed().subscribe((response: any) => {
       if (response.data) {
         const value = response.data.value;
-        this.transactionService.uploadBosInformation(trnRefNo, value).subscribe((reslut) => {
-        });
+        this.transactionService.uploadBosInformation(trnRefNo, value).subscribe((reslut) => {});
       }
     });
   }
