@@ -142,6 +142,7 @@ export class SavingsService {
       .set("toDate", payload.toDate)
       .set("accountId", payload.accountId)
       .set("note", payload.note)
+      .set("isRevert", payload.isRevert)
       .set("txnCode", payload.txnCode)
       .set("paymentDetail", payload.paymentDetail)
 
@@ -392,11 +393,12 @@ export class SavingsService {
     return this.http.post(`/savingsaccounts/${accountId}/transactions`, data, { params: httpParams });
   }
 
-  updateAccountTransactions(accountId: string, transactionId: string, paymentTypeId: string): Observable<any> {
+  updateAccountTransactions(accountId: string, transactionId: string, paymentTypeId: string, note: string): Observable<any> {
     const httpParams = new HttpParams()
       .set("createdBy", this.accessToken.userId)
       .set("txnId", transactionId)
       .set("paymentTypeId", paymentTypeId)
+      .set("note", note)
       .set("accessToken", this.accessToken.base64EncodedAuthenticationKey);
     return this.http.post(`${this.GatewayApiUrlPrefix}/savingTransaction/modified_payment_type`, httpParams);
   }

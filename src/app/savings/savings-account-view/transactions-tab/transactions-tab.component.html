@@ -59,82 +59,96 @@
     </div>
   </div>
   <div class="mat-elevation-z1 m-b-25">
+    <mat-tab-group (selectedTabChange)="changeTabTransaction($event)">
+      <mat-tab label="Giao dịch" >
 
-    <table mat-table [dataSource]="dataSource">
+      </mat-tab>
+      <mat-tab label="Giao dịch hủy" >
 
-      <ng-container matColumnDef="id">
-        <th mat-header-cell *matHeaderCellDef> ID</th>
-        <td mat-cell *matCellDef="let transaction"> {{ transaction.txnId }} </td>
-      </ng-container>
+      </mat-tab>
 
-      <ng-container matColumnDef="transactionDate">
-        <th mat-header-cell
-            *matHeaderCellDef>{{'Saving_Account_Component.tabTransactions.lblTransactionDate' | translate}}</th>
-        <td mat-cell *matCellDef="let transaction"> {{ transaction.transactionDate | date }} </td>
-      </ng-container>
+      </mat-tab-group>
+      <table mat-table  [dataSource]="transactionsData" matSort>
 
-      <ng-container matColumnDef="transactionType">
-        <th mat-header-cell
-            *matHeaderCellDef> {{'Saving_Account_Component.tabTransactions.lblTransactionType' | translate}}</th>
-        <td mat-cell *matCellDef="let transaction">
-          <span style="text-align: center; display: flex;" *ngIf="transaction.txnCode === 'D'"><img
-            src="assets/images/icons/deposit.svg"/>{{'Saving_Account_Component.tabTransactions.lblDeposit' | translate}}</span>
-          <span style="text-align: center; display: flex;" *ngIf="transaction.txnCode === 'W'"><img
-            src="assets/images/icons/withdraw.svg"/>{{'Saving_Account_Component.tabTransactions.lblWithdraw' | translate}}</span>
-        </td>
-      </ng-container>
+        <ng-container matColumnDef="id">
+          <th mat-header-cell *matHeaderCellDef> ID</th>
+          <td mat-cell *matCellDef="let transaction"> {{ transaction.txnId }} </td>
+        </ng-container>
 
-      <ng-container matColumnDef="debit">
-        <th mat-header-cell *matHeaderCellDef>{{'Saving_Account_Component.tabTransactions.lblAmount' | translate}}</th>
-        <td mat-cell
-            *matCellDef="let transaction"> {{ (transaction.amount | money)}} </td>
-      </ng-container>
+        <ng-container matColumnDef="transactionDate">
+          <th mat-header-cell
+              *matHeaderCellDef>{{'Saving_Account_Component.tabTransactions.lblTransactionDate' | translate}}</th>
+          <td mat-cell *matCellDef="let transaction"> {{ transaction.transactionDate | date }} </td>
+        </ng-container>
 
-      <ng-container matColumnDef="credit">
-        <th mat-header-cell
-            *matHeaderCellDef>{{'Saving_Account_Component.tabTransactions.lblProportional' | translate}}</th>
-        <td mat-cell
-            *matCellDef="let transaction"> {{ (transaction.balance| money)}} </td>
-      </ng-container>
+        <ng-container matColumnDef="transactionType">
+          <th mat-header-cell
+              *matHeaderCellDef> {{'Saving_Account_Component.tabTransactions.lblTransactionType' | translate}}</th>
+          <td mat-cell *matCellDef="let transaction">
+            <span style="text-align: center; display: flex;" *ngIf="transaction.txnCode === 'D'"><img
+              src="assets/images/icons/deposit.svg"/>
 
-      <ng-container matColumnDef="type">
-        <th mat-header-cell
-            *matHeaderCellDef>{{'Saving_Account_Component.tabTransactions.lblTransactionType2' | translate}}</th>
-        <td mat-cell
-            *matCellDef="let transaction"> {{ (transaction.paymentDetailId)}} </td>
-      </ng-container>
+            </span>
+            <span style="text-align: center; display: flex;" *ngIf="transaction.txnCode === 'W'"><img
+              src="assets/images/icons/withdraw.svg"/>
 
-      <ng-container matColumnDef="note">
-        <th mat-header-cell *matHeaderCellDef>{{'Saving_Account_Component.tabTransactions.lblNote' | translate}}</th>
-        <td mat-cell style="max-width: 200px;"
-            *matCellDef="let transaction">
-          <span aria-multiline="true">{{ (transaction.note)}}</span></td>
-      </ng-container>
-      <ng-container matColumnDef="actions" style="width: 25px;">
-        <th mat-header-cell *matHeaderCellDef>Actions</th>
-        <td mat-cell *matCellDef="let transaction"><span style="float: right; width: 15px;"
-                                                         [matMenuTriggerData]="transaction"
-                                                         [matMenuTriggerFor]="transactionMenu"
-        ><i
-          class="fa fa-ellipsis-v" aria-hidden="true"></i></span></td>
-      </ng-container>
-      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="select-row"></tr>
+            </span>
+          </td>
+        </ng-container>
 
-    </table>
-    <mat-menu #transactionMenu="matMenu" [overlapTrigger]="false" style="width: 50px;">
-      <ng-template matMenuContent
-                   let-transferId='transferId'
-                   let-txnId='txnId'
-                   style="width: 50px;">
-        <button mat-menu-item (click)="showTransactions(transferId,txnId)"
-        ><i class="fa fa-eye" aria-hidden="true"></i>&nbsp;Chi tiết
-        </button>
-        <button mat-menu-item (click)="updateTransaction(transferId,txnId)"
-        ><i class="fa fa-pencil-square-o" aria-hidden="true"></i>&nbsp;Cập nhập tài khoản
-        </button>
-      </ng-template>
-    </mat-menu>
+        <ng-container matColumnDef="debit">
+          <th mat-header-cell *matHeaderCellDef>{{'Saving_Account_Component.tabTransactions.lblAmount' | translate}}</th>
+          <td mat-cell
+              *matCellDef="let transaction"> {{ (transaction.amount | money)}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="credit">
+          <th mat-header-cell
+              *matHeaderCellDef>{{'Saving_Account_Component.tabTransactions.lblProportional' | translate}}</th>
+          <td mat-cell
+              *matCellDef="let transaction"> {{ (transaction.balance| money)}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="type">
+          <th mat-header-cell
+              *matHeaderCellDef>{{'Saving_Account_Component.tabTransactions.lblTransactionType2' | translate}}</th>
+          <td mat-cell
+              *matCellDef="let transaction"> {{ (transaction.paymentDetailId)}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="note">
+          <th mat-header-cell *matHeaderCellDef>{{'Saving_Account_Component.tabTransactions.lblNote' | translate}}</th>
+          <td mat-cell style="max-width: 200px;"
+              *matCellDef="let transaction">
+            <span aria-multiline="true">{{ (transaction.note)}}</span></td>
+        </ng-container>
+        <ng-container matColumnDef="actions" style="width: 25px;">
+          <th mat-header-cell *matHeaderCellDef>Actions</th>
+          <td mat-cell *matCellDef="let transaction"><span style="float: right; width: 15px;"
+                                                           [matMenuTriggerData]="transaction"
+                                                           [matMenuTriggerFor]="transactionMenu"
+          ><i
+            class="fa fa-ellipsis-v" aria-hidden="true"></i></span></td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="select-row"></tr>
+
+      </table>
+      <mat-menu #transactionMenu="matMenu" [overlapTrigger]="false" style="width: 50px;">
+        <ng-template matMenuContent
+                     let-transferId='transferId'
+                     let-txnId='txnId'
+                     style="width: 50px;">
+          <button mat-menu-item (click)="showTransactions(transferId,txnId)"
+          ><i class="fa fa-eye" aria-hidden="true"></i>&nbsp;Chi tiết
+          </button>
+          <button mat-menu-item (click)="updateTransaction(transferId,txnId)"
+          ><i class="fa fa-pencil-square-o" aria-hidden="true"></i>&nbsp;Sửa giao dịch
+          </button>
+        </ng-template>
+      </mat-menu>
+      <mat-paginator paginator [length]="transactionsData.length" [pageSize]="10" [pageSizeOptions]="[10, 25, 50, 100]"
+                   showFirstLastButtons></mat-paginator>
   </div>
 
 </div>
