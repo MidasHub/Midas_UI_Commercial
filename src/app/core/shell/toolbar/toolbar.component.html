@@ -21,7 +21,7 @@
     </a>
     <!-- Menu danh cho các user Admin -->
     <span *midasHasPermission="'ALL_FUNCTIONS'" fxHide.lt-lg="true">
-       <a mat-tab-link class="tab-link" [routerLink]="['/accounting']">
+      <a mat-tab-link class="tab-link" [routerLink]="['/accounting']">
         <fa-icon class="mr-05" icon="money-bill-alt" size="lg"></fa-icon>
         {{ "Toolbar_Component.lblAccounting" | translate }}
       </a>
@@ -52,39 +52,39 @@
       <fa-icon class="mr-05" icon="university" size="lg"></fa-icon>
       Booking
     </a>
-    <a *midasHasPermission="'POS_UPDATE'" mat-tab-link class="tab-link" [matMenuTriggerFor]="Marketing" #institutionMenuTrigger="matMenuTrigger">
+    <a
+      *midasHasPermission="'POS_UPDATE'"
+      mat-tab-link
+      class="tab-link"
+      [matMenuTriggerFor]="Marketing"
+      #institutionMenuTrigger="matMenuTrigger"
+    >
       <fa-icon class="mr-05" icon="university" size="lg"></fa-icon>
       Marketing
     </a>
-    <a *midasHasPermission="'ALL_FUNCTIONS'" mat-tab-link class="tab-link" routerLink="/banks">
-      <fa-icon class="mr-05" icon="university" size="lg"></fa-icon>
-      Banks
-    </a>
   </nav>
-
   <span fxFlex="auto">
     <span fxFlex="60%"></span>
     <midas-user-account-info fxFlex="40%"></midas-user-account-info>
-
   </span>
-
-  <mifosx-search-tool *midasHasPermission="'ALL_FUNCTIONS'"></mifosx-search-tool>
 
   <mifosx-theme-picker fxHide.lt-md></mifosx-theme-picker>
 
   <mifosx-notifications-tray fxHide.lt-md></mifosx-notifications-tray>
 
   <button mat-icon-button class="ml-1 img-button" [matMenuTriggerFor]="applicationMenu">
-    <img src="assets/images/user_placeholder.png"/>
+    <img src="assets/images/user_placeholder.png" />
   </button>
 </mat-toolbar>
 
 <mat-menu #institutionMenu="matMenu" [overlapTrigger]="false">
   <button mat-menu-item routerLink="/clients">{{ "Toolbar_Component.lblClient" | translate }}</button>
   <button mat-menu-item routerLink="/groups">{{ "Toolbar_Component.lblGroup" | translate }}</button>
-  <button mat-menu-item *midasHasPermission="'ALL_FUNCTIONS'"routerLink="/centers">Centers</button>
+  <button mat-menu-item *midasHasPermission="'ALL_FUNCTIONS'" routerLink="/centers">Centers</button>
   <button mat-menu-item routerLink="/accounts/balance-clients">{{ "Quản lý số dư khách hàng" | translate }}</button>
-  <button mat-menu-item *midasHasPermission="'MANAGER' || 'ALL_FUNCTIONS'" routerLink="/accounts/balance-teller">{{ "Quản lý số dư teller" | translate }}</button>
+  <button mat-menu-item *midasHasPermission="'MANAGER' || 'ALL_FUNCTIONS'" routerLink="/accounts/balance-teller">
+    {{ "Quản lý số dư teller" | translate }}
+  </button>
 
   <!-- <span fxHide.lg>
     <button mat-menu-item [routerLink]="['/accounting']">{{ "Toolbar_Component.lblAccounting" | translate }}</button>
@@ -101,8 +101,12 @@
     {{ "Toolbar_Component.labelTerminals" | translate }}
   </button>
   <button mat-menu-item routerLink="/terminals/limit">{{ "Quản lý hạn mức POS" | translate }}</button>
-  <button mat-menu-item *midasHasPermission="'ALL_FUNCTIONS'" routerLink="/terminals">{{ "Quản lý máy POS" | translate }}</button>
-  <button mat-menu-item *midasHasPermission="'ALL_FUNCTIONS'" routerLink="/third-party">{{'Toolbar_Component.lblThirdParty'|translate}}</button>
+  <button mat-menu-item *midasHasPermission="'ALL_FUNCTIONS'" routerLink="/terminals">
+    {{ "Quản lý máy POS" | translate }}
+  </button>
+  <button mat-menu-item *midasHasPermission="'ALL_FUNCTIONS'" routerLink="/third-party">
+    {{ "Toolbar_Component.lblThirdParty" | translate }}
+  </button>
 </mat-menu>
 <mat-menu #transactionMenu="matMenu" [overlapTrigger]="false">
   <button mat-menu-item routerLink="/transaction">Quản lý giao dịch</button>
@@ -113,7 +117,6 @@
   <button mat-menu-item routerLink="/booking/agency">Đại lý</button>
   <button mat-menu-item routerLink="/booking/create">Tạo booking nội bộ</button>
   <button *midasHasPermission="'POS_UPDATE'" mat-menu-item routerLink="/booking/view">Quản lý booking nội bộ</button>
-
 </mat-menu>
 <mat-menu #Marketing="matMenu" [overlapTrigger]="false">
   <button mat-menu-item routerLink="/marketing/create">Tạo chiển dịch</button>
