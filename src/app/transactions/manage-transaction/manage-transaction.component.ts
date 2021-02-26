@@ -52,6 +52,7 @@ export class ManageTransactionComponent implements OnInit {
   formDate: FormGroup;
   formFilter: FormGroup;
   dataSource: any[];
+  isLoading: boolean = false;
   transactionsData: any[] = [];
   currentUser: any;
   transactionType: any[] = [
@@ -221,8 +222,10 @@ export class ManageTransactionComponent implements OnInit {
     if (toDate) {
       toDate = this.datePipe.transform(toDate, dateFormat);
     }
+    this.transactionsData = [];
+    this.isLoading = true;
     this.transactionService.getTransaction({ fromDate, toDate }).subscribe((result) => {
-      this.transactionsData = [];
+      this.isLoading = false;
       this.transactionsData = result?.result?.listPosTransaction.map((v: any) => {
         return {
           ...v,

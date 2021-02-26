@@ -145,7 +145,8 @@ export class SavingsService {
       .set("isRevert", payload.isRevert)
       .set("txnCode", payload.txnCode)
       .set("paymentDetail", payload.paymentDetail)
-
+      .set("limit", payload.limit)
+      .set("offset", payload.offset)
       .set("createdBy", this.accessToken.userId)
       .set("accessToken", this.accessToken.base64EncodedAuthenticationKey);
     return this.http.post<any>(
