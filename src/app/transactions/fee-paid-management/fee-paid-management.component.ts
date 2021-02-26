@@ -53,6 +53,7 @@ export class FeePaidManagementComponent implements OnInit {
   formDate: FormGroup;
   formFilter: FormGroup;
   dataSource: any[];
+  isLoading: boolean = false;
   transactionsData: any[] = [];
   currentUser: any;
   transactionType: any[] = [
@@ -137,11 +138,8 @@ export class FeePaidManagementComponent implements OnInit {
     private settingsService: SettingsService,
     private authenticationService: AuthenticationService,
     private savingsService: SavingsService,
-    private systemService: SystemService,
     private centersService: CentersService,
-    private alertService: AlertService,
     public dialog: MatDialog,
-    private clientsService: ClientsService
   ) {
     this.formDate = this.formBuilder.group({
       fromDate: [new Date()],
@@ -227,7 +225,10 @@ export class FeePaidManagementComponent implements OnInit {
     if (toDate) {
       toDate = this.datePipe.transform(toDate, dateFormat);
     }
+    this.dataSource = [];
+    this.isLoading = true;
     this.transactionService.getFeePaidTransactions(fromDate, toDate).subscribe((result) => {
+      this.isLoading = false;
       this.transactionsData = result?.result?.listFeeTransaction;
       this.transactionsData.map((v) => {
         if (!v.agencyId) {
@@ -268,7 +269,6 @@ export class FeePaidManagementComponent implements OnInit {
           }
         }
       }
-      debugger;
       const check_wholesaleChoose = wholesaleChoose ? v.txnType.startsWith("B") : false;
       const check_RetailsChoose = RetailsChoose ? v.txnType === "CASH" || v.txnType === "ROLLTERM" : false;
       if (!check_wholesaleChoose && !check_RetailsChoose) {

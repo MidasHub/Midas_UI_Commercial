@@ -124,12 +124,14 @@
             </mat-option>
           </mat-select>
         </mat-form-field>
-        <mat-checkbox fxFlex="18%" labelPosition="before" formControlName="RetailsChoose" class="margin-v">
-          Giao dịch lẻ
-        </mat-checkbox>
-        <mat-checkbox fxFlex="18%" labelPosition="before" formControlName="wholesaleChoose" class="margin-v">
-          Giao dịch theo lô
-        </mat-checkbox>
+        <div fxFlex="18%" fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
+          <mat-checkbox fxFlex="100%" labelPosition="before" formControlName="RetailsChoose" class="margin-v">
+            Giao dịch lẻ
+          </mat-checkbox>
+          <mat-checkbox fxFlex="100%" labelPosition="before" formControlName="wholesaleChoose" class="margin-v">
+            Giao dịch lô
+          </mat-checkbox>
+        </div>
         <div fxFlex="18%">
           <button
             style="margin-top: 8px; height: 40px"
@@ -402,6 +404,9 @@
       </button>
     </ng-template>
   </mat-menu>
+  <div *ngIf="isLoading" style="display: flex; justify-content: center; align-items: center; background: white">
+    <mat-progress-spinner color="warn" mode="indeterminate"> </mat-progress-spinner>
+  </div>
   <mat-paginator
     paginator
     [length]="getLengthSource()"

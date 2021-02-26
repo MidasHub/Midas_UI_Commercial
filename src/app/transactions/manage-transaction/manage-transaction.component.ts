@@ -222,7 +222,7 @@ export class ManageTransactionComponent implements OnInit {
     if (toDate) {
       toDate = this.datePipe.transform(toDate, dateFormat);
     }
-    this.transactionsData = [];
+    this.dataSource = [];
     this.isLoading = true;
     this.transactionService.getTransaction({ fromDate, toDate }).subscribe((result) => {
       this.isLoading = false;
