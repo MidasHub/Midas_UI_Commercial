@@ -64,9 +64,15 @@ export class SavingsAccountDetailsStepComponent implements OnInit {
   createSavingsAccountDetailsForm() {
     this.savingsAccountDetailsForm = this.formBuilder.group({
       'productId': ['', Validators.required],
-      'submittedOnDate': ['', Validators.required],
+      'submittedOnDate': [new Date(), Validators.required],
       'fieldOfficerId': [''],
       'externalId': ['']
+    });
+
+    // trigger on change product savings
+    this.savingsAccountDetailsForm.get("productId").valueChanges.subscribe((value) => {
+      this.buildDependencies();
+
     });
   }
 
@@ -74,6 +80,7 @@ export class SavingsAccountDetailsStepComponent implements OnInit {
    * Fetches savings account product template on productId value changes
    */
   buildDependencies() {
+
     const entityId = this.savingsAccountTemplate.clientId || this.savingsAccountTemplate.groupId;
     this.savingsAccountDetailsForm.get('productId').valueChanges.subscribe((productId: string) => {
       this.savingsService.getSavingsAccountTemplate(entityId, productId, this.savingsAccountTemplate.groupId ? true : false)
