@@ -107,7 +107,7 @@ export class OnRollTermCardTabComponent implements OnInit {
   ngOnInit(): void {
     this.currentUser = this.authenticationService.getCredentials();
     // this.dataSource = this.transactionsData;
-    this.getOnCardDueDayInfo();
+    // this.getOnCardDueDayInfo();
     this.bankService.getBanks().subscribe((data: any) => {
       if (data) {
         this.listBank = data;

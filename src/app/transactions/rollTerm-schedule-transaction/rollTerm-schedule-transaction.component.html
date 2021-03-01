@@ -1,5 +1,5 @@
 <mat-card class="mat-elevation-z20 container-custom">
-  <mat-tab-group>
+  <mat-tab-group (selectedTabChange)="changeTabTransaction($event)">
     <mat-tab label="Đến hạn chưa xử lý">
       <midas-due-day-card-transaction></midas-due-day-card-transaction>
     </mat-tab>

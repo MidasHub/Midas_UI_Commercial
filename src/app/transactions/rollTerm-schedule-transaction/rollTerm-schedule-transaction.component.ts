@@ -1,6 +1,10 @@
 import { animate, state, style, transition, trigger } from "@angular/animations";
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, ViewChild } from "@angular/core";
 import { MatDialog } from "@angular/material/dialog";
+import { MatTabChangeEvent } from "@angular/material/tabs";
+import { DueDayCardTabComponent } from "./due-day-card-tab/due-day-card-tab.component";
+import { OnRollTermCardTabComponent } from "./on-roll-term-card-tab/on-roll-term-card-tab.component";
+import { RollTermScheduleTabComponent } from "./roll-term-schedule-tab/roll-term-schedule-tab.component";
 
 @Component({
   selector: "midas-rollTerm-schedule-transaction",
@@ -16,6 +20,10 @@ import { MatDialog } from "@angular/material/dialog";
 })
 export class RollTermScheduleTransactionComponent implements OnInit {
 
+  @ViewChild(OnRollTermCardTabComponent) private onRollTermCardTabComponent: OnRollTermCardTabComponent;
+  @ViewChild(DueDayCardTabComponent) private dueDayCardTabComponent: DueDayCardTabComponent;
+  @ViewChild(RollTermScheduleTabComponent) private rollTermScheduleTabComponent: RollTermScheduleTabComponent;
+
   constructor(
     public dialog: MatDialog,
   ) {
@@ -25,4 +33,19 @@ export class RollTermScheduleTransactionComponent implements OnInit {
 
   }
 
+  changeTabTransaction(event: MatTabChangeEvent): void {
+    if(event.index == 0)
+    {
+        this.dueDayCardTabComponent.getRollTermScheduleAndCardDueDayInfo();//Or whatever name the method is called
+    }
+    else
+    {  if(event.index == 1)
+      {
+          this.onRollTermCardTabComponent.getOnCardDueDayInfo();//Or whatever name the method is called
+      }else{
+        this.rollTermScheduleTabComponent.getRollTermScheduleAndCardDueDayInfo(); //Or whatever name the method is called
+
+      }
+    }
+  }
 }

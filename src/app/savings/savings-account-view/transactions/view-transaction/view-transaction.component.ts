@@ -70,6 +70,8 @@ export class ViewTransactionComponent {
             msgClass: "cssSuccess",
             hPosition: "center",
           });
+          this.router.navigate(['../'], { relativeTo: this.route.parent });
+
           // this.router.navigate(['../../transactions'], { relativeTo: this.route });
 
         });
