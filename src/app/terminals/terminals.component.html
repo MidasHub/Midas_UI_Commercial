@@ -9,7 +9,7 @@
           </button>
         </mat-form-field>
 
-        <mat-checkbox labelPosition="after" (change)="changeShowClosedTerminals($event.checked)">{{ 'Group_Component.labelShowClosedGroups'| translate}}</mat-checkbox>
+        <mat-checkbox labelPosition="after" (change)="changeShowClosedTerminals($event.checked)">{{ 'Terminal_Component.labelShowClosedterminal'| translate}}</mat-checkbox>
       </div>
       <div class="action-button" fxLayoutGap="25px">
         <button mat-raised-button color="primary" [routerLink]="['create']">
@@ -67,10 +67,10 @@
       <ng-container matColumnDef="action">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'Terminal_Component.labelAction'| translate}} </th>
         <td mat-cell *matCellDef="let terminal">
-          <button mat-raised-button color="primary" (click)="addTransferDialogByTransactionId(terminal.terminalId, terminal.terminalName)">
+          <button title="Điều chuyển máy POS" mat-raised-button color="primary" (click)="addTransferDialogByTransactionId(terminal.terminalId, terminal.terminalName)">
             <fa-icon icon="sync"></fa-icon>
           </button>
-          <button mat-raised-button color="primary" [routerLink]="[terminal.terminalId,'edit']">
+          <button title="Chỉnh sửa thông tin máy POS" mat-raised-button color="primary" [routerLink]="[terminal.terminalId,'edit']">
             <fa-icon icon="edit"></fa-icon>
           </button>
         </td>

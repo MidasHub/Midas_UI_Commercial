@@ -7,7 +7,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { TerminalsService } from '../terminals.service';  
 import { ErrorDialogComponent } from 'app/shared/error-dialog/error-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
-
+import {Location} from '@angular/common';
 export interface PeriodicElements {
   officeId : number,
   officeName : string,
@@ -64,7 +64,8 @@ export class CreateTerminalsComponent implements OnInit {
       private cdr: ChangeDetectorRef,
       private terminalsService: TerminalsService,
       private router: Router,
-      private dialog:MatDialog) {
+      private dialog:MatDialog,
+      private _location: Location ) {
     this.route.data.subscribe((data: { terminalData: any }) => {
       this.terminalData     = data.terminalData.result;
       this.merchants        = data.terminalData.result.hollhouses;
@@ -190,6 +191,10 @@ applyFilter(filterValue: string) {
     dataCopy.splice(index, 1);
     dataCopy.splice(index, 0, e);
     this.dataSource.data = dataCopy;
+  }
+
+  backClicked() {
+    this._location.back();
   }
  
 }

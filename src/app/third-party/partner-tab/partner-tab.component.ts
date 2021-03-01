@@ -9,6 +9,10 @@ import { AlertService } from 'app/core/alert/alert.service';
 import { faLessThanEqual } from '@fortawesome/free-solid-svg-icons';
 import { sampleSize } from 'lodash';
 //import { MatCheckbox } from '@angular/material/checkbox';
+import {MatTabsModule} from '@angular/material/tabs';
+import { ThirdPartyComponent } from '../third-party.component';
+import { MatSlideToggleChange } from '@angular/material/slide-toggle';
+//import { MerchantTabComponent } from '../merchant-tab/merchant-tab.component';
 
 @Component({
   selector: 'midas-partner-tab',
@@ -23,15 +27,18 @@ export class PartnerTabComponent implements OnInit {
 
   partners:any[];
   dataSource: MatTableDataSource<any>;
-  displayedColumns =  ['code', 'desc', 'typeCheckValid', 'status', 'limit', 'createdBy','createdDate','updatedDate','action'];
+  displayedColumns =  ['code', 'desc', 'typeCheckValid', 'status', 'limit', 'action'];
   partnersDataActive:any[];
   partnersDataInActive:any[];
+  selectedIndex: number = 0;
 
   constructor(
     private alertServices: AlertService,
     private thirdPartyService: ThirdPartyService,
-    public dialog: MatDialog
-    ) {
+    public dialog : MatDialog,
+    public thirdPartyComponent : ThirdPartyComponent ,  
+  //  private  merchantTabComponent : MerchantTabComponent
+    ){
 
   }
 
@@ -60,10 +67,9 @@ export class PartnerTabComponent implements OnInit {
   }
 
   editPartner(partner:any, index:number){
-
-    if(partner){
-      partner.status === 'O' ? partner['status']=true : partner['status']=false;
-    }
+    // if(partner){
+    //   partner.status === 'O' ? partner['status']=true : partner['status']=false; 
+    // }
     const data = {
       action: 'edit',
       ... partner
@@ -71,9 +77,10 @@ export class PartnerTabComponent implements OnInit {
     const dialog = this.dialog.open(PartnerDialogComponent, { height: "auto", width: "30%" , data });
     dialog.afterClosed().subscribe((payload: any) => {
       if(payload){
-        this.dataSource.data.slice(index,1);
-        this.dataSource.data.push(payload);
-      }
+        // this.dataSource.data.slice(index,1);
+        // this.dataSource.data.push(payload);
+        this.ngOnInit()
+      } 
     });
   }
 
@@ -98,6 +105,50 @@ export class PartnerTabComponent implements OnInit {
 
   applyFilter(filterValue: string) {
     this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+
+  nextStep(partner:any) {
+    console.log('nextStep', this.selectedIndex);
+    // if (this.selectedIndex != 1) {
+    //   this.selectedIndex = this.selectedIndex + 1;
+    // }
+    this.thirdPartyService.setInputFilter(partner.desc);
+    this.thirdPartyComponent.changeTab(1);
+    
+  }
+
+  onChange(value: MatSlideToggleChange, partner : any) {
+
+    console.log('merchant == ', partner);
+    console.log('onChange == ', value.checked);
+
+    partner.status = value.checked ? 'true' : 'false' ;
+
+    console.log('partner 1== ', partner);
+
+
+    const payload = {
+      ...  partner
+    };
+    
+    this.thirdPartyService.updatePartnerStatus(payload).subscribe((response: any) => {
+      if (response.result.status === 'success') {
+        this.alertServices.alert({
+          type: "🎉🎉🎉 Thành công !!!",
+          message: "🎉🎉 Xử lý thành công",
+          msgClass: "cssSuccess",
+        }); 
+      } else {
+        this.alertServices.alert({
+          type: "🚨🚨🚨🚨 Lỗi ",
+          msgClass: "cssBig",
+          message: "🚨🚨 Lỗi cập nhật trạng thái đối tác, kiểm tra tất cả hộ khinh doanh liên kết với đối tác phải đóng hoặc vui lòng liên hệ IT Support để được hổ trợ 🚨🚨",
+        });
+        this.ngOnInit();
+      }
+      //this.ngOnInit();
+    });
+
   }
 
 }
