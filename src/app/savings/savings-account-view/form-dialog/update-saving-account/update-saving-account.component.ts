@@ -31,7 +31,9 @@ export class UpdateSavingAccountComponent implements OnInit {
       'checkNumber': [''],
       'routingCode': [''],
       'receiptNumber': [''],
-      'bankNumber': ['']
+      'bankNumber': [''],
+
+      'note': [''],
     });
   }
 
@@ -39,18 +41,23 @@ export class UpdateSavingAccountComponent implements OnInit {
     this.savingsService.getSavingsAccountTransaction(this.data?.accountId, this.data?.txnId).subscribe(result => {
       if (result) {
         this.payments = result;
-        const keys = ['accountNumber', 'bankNumber', 'checkNumber', 'paymentType', 'receiptNumber', 'routingCode'];
+        const keys = ['accountNumber', 'bankNumber',
+         'checkNumber', 'paymentType', 'receiptNumber',
+          'routingCode', 'note'];
         const {paymentDetailData, date, amount} = this.payments;
         for (const key of keys) {
-          if (paymentDetailData[key]) {
+          // if (paymentDetailData[key]) {
             switch (key) {
               case 'paymentType':
                 this.form.get('paymentTypeId').setValue(paymentDetailData?.paymentType?.id);
                 break;
+              case 'note':
+                this.form.get('note').setValue(this.payments?.note);
+                break;
               default:
                 this.form.get(key).setValue(paymentDetailData[key]);
             }
-          }
+          // }
         }
         if (date && date.length === 3) {
           this.form.get('transactionDate').setValue(moment(date[0], date[1], date[2]).format('dd MMMM yyyy'));
@@ -58,13 +65,6 @@ export class UpdateSavingAccountComponent implements OnInit {
         if (amount) {
           this.form.get('transactionAmount').setValue(amount);
         }
-// accountNumber: ""
-// bankNumber: ""
-// checkNumber: ""
-// id: 19619
-// paymentType: {id: 18, name: "Nhan_ung_tien_tu_doi_tac"}
-// receiptNumber: ""
-// routingCode: "ECP002"
       }
     });
     this.savingsService.getSavingsTransactionTemplateResource(this.data?.accountId).subscribe(result => {

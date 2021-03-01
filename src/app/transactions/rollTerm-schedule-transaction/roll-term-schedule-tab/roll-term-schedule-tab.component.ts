@@ -130,7 +130,7 @@ export class RollTermScheduleTabComponent implements OnInit {
 
   ngOnInit(): void {
     this.currentUser = this.authenticationService.getCredentials();
-    this.getRollTermScheduleAndCardDueDayInfo();
+    // this.getRollTermScheduleAndCardDueDayInfo();
   }
 
   // tslint:disable-next-line:use-lifecycle-interface

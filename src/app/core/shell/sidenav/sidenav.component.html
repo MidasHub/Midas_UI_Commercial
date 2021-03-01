@@ -20,6 +20,7 @@
         {{ username }}
       </span>
       <div class="app-user-controls">
+        <mifosx-search-tool *midasHasPermission="'ALL_FUNCTIONS'"></mifosx-search-tool>
         <button class="xs-button" mat-icon-button matTooltip="Settings" [routerLink]="['/settings']">
           <fa-icon icon="cog"></fa-icon>
         </button>
@@ -154,6 +155,13 @@
           </mat-icon>
           <a matLine>Quản lý hóa đơn</a>
         </mat-list-item>
+        <mat-list-item *midasHasPermission="'ALL_FUNCTIONS'" [routerLink]="['/banks']">
+          <mat-icon matListIcon>
+            <fa-icon  icon="university" size="sm"></fa-icon>
+          </mat-icon>
+          <a matLine>Quản lý Banks</a>
+        </mat-list-item>
+
         <!-- <mat-list-item [routerLink]="['/navigation']">
           <mat-icon matListIcon>
             <fa-icon icon="location-arrow" size="sm"></fa-icon>
