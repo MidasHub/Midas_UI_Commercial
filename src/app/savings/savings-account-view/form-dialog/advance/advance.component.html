@@ -3,6 +3,15 @@
 <div mat-dialog-content [formGroup]="form" [fxLayout]="'column'" fxLayout.lt-md="column" [fxLayoutGap]="'1%'"
      fxLayoutGap.lt-md="0%">
 
+     <mat-form-field fxFlex="96%" *ngIf="form.contains('entityAdvanceCash')">
+      <mat-label>Loại </mat-label>
+      <mat-select required formControlName="entityAdvanceCash">
+        <mat-option *ngFor="let type of typeEntityAdvanceCashes" [value]="type.id">
+          {{ type.value }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
   <mat-form-field *ngIf="!disable" class="select-book">
     <mat-label>{{'Saving_Account_Component.clientAdvanceCash.labelClientCash' |translate}}</mat-label>
     <input [required]="!disable" [readonly]="disable" type="text"
@@ -10,7 +19,7 @@
            formControlName="clientAdvanceCash" [matAutocomplete]="auto">
     <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
       <mat-option *ngFor="let cl of filteredClient" [value]="cl">
-        {{cl.displayName}}
+        {{ cl.displayName ? cl.displayName : cl.name }}
       </mat-option>
     </mat-autocomplete>
   </mat-form-field>

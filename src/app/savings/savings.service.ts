@@ -90,7 +90,7 @@ export class SavingsService {
     const httpParams = new HttpParams()
       .set("buSavingAccount", payload.buSavingAccount)
       .set("clientSavingAccount", payload.clientSavingAccount)
-      .set("note", `${payload.clientSavingAccount} - ${payload.noteAdvance}`)
+      .set("note", payload.noteAdvance)
       .set("amountAdvanceCash", payload.amountAdvanceCash)
       .set("paymentTypeId", payload.typeAdvanceCash)
       .set("createdBy", this.accessToken.userId)
