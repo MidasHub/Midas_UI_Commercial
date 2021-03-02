@@ -83,9 +83,12 @@ export class BanksComponent implements OnInit, AfterViewInit {
     dialogBank.afterClosed().subscribe((response: any) => {
       if (response.data) {
         const value = response.data.value;
-        this.banksServices.storeBank(value.bankCode, value.bankName).subscribe(result => {
-          if (result?.status === '200') {
+        this.banksServices.storeBank(value.bankCode, value.bankName).subscribe(rp => {
+          if (rp?.status === '200') {
             this.alertService.alert({message: 'Thêm ngân hàng thành công.', msgClass: 'cssSuccess'});
+            console.log("result===",rp);
+            value.refid = rp.result.id;
+            console.log("value===",value);
             this.banksServices.addBank(value);
           }
         });
@@ -151,14 +154,15 @@ export class BanksComponent implements OnInit, AfterViewInit {
             }
           }
         }
-        this.banksServices.storeBinCode(formData.binCode, formData.bankCode, formData.cardType || '', formData.cardClass || '').subscribe(result => {
-          if (result.status === '200') {
+        this.banksServices.storeBinCode(formData.binCode, formData.bankCode, formData.cardType || '', formData.cardClass || '').subscribe(rp => {
+          if (rp.status === '200') {
             if (card) {
               this.alertService.alert({message: 'Cập nhập thông tin thẻ thành công', msgClass: 'cssSuccess'});
               card = {...card, ...formData};
               this.banksServices.updateCard(card);
             } else {
               this.alertService.alert({message: 'Thêm thẻ thành công', msgClass: 'cssSuccess'});
+              formData.refid = rp.result.id
               this.banksServices.addCard(formData);
             }
             // this.cards_active = this.bank_active.cards;
