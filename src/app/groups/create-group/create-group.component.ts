@@ -287,6 +287,18 @@ export class CreateGroupComponent implements OnInit, AfterViewInit {
             locale,
           };
           this.savingsService.executeSavingsAccountCommand(savingsAccount.savingsId, "activate", data).subscribe(() => {
+            this.groupService.updateDefaultSavingAccount({groupId: groupId ,savingAccountId: savingsAccount.savingsId }).subscribe((result: any) => {
+
+              if (result.result.status){
+                // successfully update default saving account
+              }else{
+                this.alertservice.alert({
+                  message: result.result.message,
+                  msgClass: "cssWarning",
+                });
+              }
+
+            })
           });
         });
       });

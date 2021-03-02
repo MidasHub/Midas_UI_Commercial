@@ -63,18 +63,19 @@
       Marketing
     </a>
   </nav>
-  <span fxFlex="auto">
+
+  <div fxFlex="auto">
     <span fxFlex="60%"></span>
     <midas-user-account-info fxFlex="40%"></midas-user-account-info>
-  </span>
+    <mifosx-theme-picker fxHide.lt-md></mifosx-theme-picker>
 
-  <mifosx-theme-picker fxHide.lt-md></mifosx-theme-picker>
+    <mifosx-notifications-tray fxHide.lt-md></mifosx-notifications-tray>
+    <br />
+    <button mat-icon-button class="ml-1 img-button" [matMenuTriggerFor]="applicationMenu">
+      <img src="assets/images/user_placeholder.png" />
+    </button>
+  </div>
 
-  <mifosx-notifications-tray fxHide.lt-md></mifosx-notifications-tray>
-
-  <button mat-icon-button class="ml-1 img-button" [matMenuTriggerFor]="applicationMenu">
-    <img src="assets/images/user_placeholder.png" />
-  </button>
 </mat-toolbar>
 
 <mat-menu #institutionMenu="matMenu" [overlapTrigger]="false">

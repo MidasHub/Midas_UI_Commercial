@@ -7,7 +7,11 @@
     padding: 0 !important;
   }
 }
-
+.aligned-with-icons{
+  position: absolute;
+  margin-top: 20px;
+  margin-left: -25px; /* optional */
+}
 .mat-menu-panel{
   max-width: none !important;
 }
