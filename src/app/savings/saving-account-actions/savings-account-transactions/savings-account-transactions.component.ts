@@ -180,9 +180,9 @@ export class SavingsAccountTransactionsComponent implements OnInit {
    * Method to submit the transaction details.
    */
   submit() {
-    if (this.limitInfo) {
+    if (this.limitInfo && this.limitInfo.limitConfig > 0) {
       if (
-        this.limitInfo >= this.limitInfo.limitConfig ||
+        this.limitInfo.limitUsed >= this.limitInfo.limitConfig ||
         this.limitInfo.limitConfig - this.limitInfo.limitUsed <
           this.savingAccountTransactionForm.get("transactionAmount").value
       ) {
