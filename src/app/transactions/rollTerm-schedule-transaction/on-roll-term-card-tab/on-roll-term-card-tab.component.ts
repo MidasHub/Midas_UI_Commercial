@@ -176,8 +176,7 @@ export class OnRollTermCardTabComponent implements OnInit {
         statusFilter,
         bankName,
         query,
-      })
-      .subscribe((result) => {
+      }).subscribe((result) => {
         this.isLoading = false;
         this.transactionsData = result?.result;
         this.dataSource = result?.result.lisCardTransactionTracking;
@@ -212,7 +211,7 @@ export class OnRollTermCardTabComponent implements OnInit {
         booking.amountBooking = booking.amountBooking;
         booking.txnDate = this.datePipe.transform(booking.txnDate, 'dd/MM/yyyy');
       });
-      var listBookingRollTerm = JSON.stringify(rollTermBooking, function (key, value) {
+      const listBookingRollTerm = JSON.stringify(rollTermBooking, function (key, value) {
         if (key === '$$hashKey') {
           return undefined;
         }
