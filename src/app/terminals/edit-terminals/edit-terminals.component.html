@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container mat-elevation-z8">
 
     <mat-card>
 
@@ -164,84 +164,88 @@
             </button> -->
           </div>
 
-        </mat-card-content>
+        <!-- </mat-card-content> -->
 
-        <div class=" mat-elevation-z8">
+        <!-- <div class=" mat-elevation-z8"> -->
           <mat-form-field class="filter">
             <input matInput #filter (keyup)="applyFilter($event.target.value)" placeholder="Filter">
             <button mat-icon-button matSuffix aria-label="clear" *ngIf="filter.value" (click)="filter.value=''; applyFilter('');">
               <mat-icon>close</mat-icon>
             </button>
           </mat-form-field>
-          <table mat-table [dataSource]="dataSource"  matSort matSortActive="officeName" matSortDirection="asc">
-            <ng-container matColumnDef="officeName" >
-              <mat-header-cell *matHeaderCellDef  mat-sort-header>{{'Terminal_Component.FormTerminal.tableFee.Office'|translate}} </mat-header-cell>
-              <mat-cell *matCellDef="let element">{{element.officeName}} </mat-cell>
-            </ng-container>
+          <div class="example-table-container"> 
+            <table mat-table [dataSource]="dataSource"  matSort matSortActive="officeName" matSortDirection="asc" class="example-table">
+              <ng-container matColumnDef="officeName" >
+                <th mat-header-cell *matHeaderCellDef  mat-sort-header>{{'Terminal_Component.FormTerminal.tableFee.Office'|translate}} </th>
+                <td mat-cell *matCellDef="let element">{{element.officeName}} </td>
+              </ng-container>
 
-            <ng-container matColumnDef="CardType">
-              <mat-header-cell *matHeaderCellDef>{{'Terminal_Component.FormTerminal.tableFee.CardType'|translate}} </mat-header-cell>
-              <mat-cell *matCellDef="let element">{{element.cardDescription}} </mat-cell>
-            </ng-container>
+              <ng-container matColumnDef="CardType">
+                <th mat-header-cell *matHeaderCellDef>{{'Terminal_Component.FormTerminal.tableFee.CardType'|translate}} </th>
+                <td mat-cell *matCellDef="let element">{{element.cardDescription}} </td>
+              </ng-container>
 
-            <ng-container matColumnDef="FeePOS">
-              <mat-header-cell *matHeaderCellDef>{{'Terminal_Component.FormTerminal.tableFee.FeeCogs'|translate}}</mat-header-cell>
-              <mat-cell *matCellDef="let element, let i = index">
-                <mat-form-field  >
-                  <input type="number" matInput (keyup)="validateNumber($event, element)" id="{{i}}_cogsPercentage" [value]="element.cogsPercentage" [(ngModel)]="element.cogsPercentage" [ngModelOptions]="{standalone: true}">
-                </mat-form-field>
-              </mat-cell>
-            </ng-container>
+              <ng-container matColumnDef="FeePOS">
+                <th mat-header-cell *matHeaderCellDef>{{'Terminal_Component.FormTerminal.tableFee.FeeCogs'|translate}}</th>
+                <td mat-cell *matCellDef="let element, let i = index">
+                  <mat-form-field  >
+                    <input type="number" matInput (keyup)="validateNumber($event, element)" id="{{i}}_cogsPercentage" [value]="element.cogsPercentage" [(ngModel)]="element.cogsPercentage" [ngModelOptions]="{standalone: true}">
+                  </mat-form-field>
+                </td>
+              </ng-container>
 
-            <ng-container matColumnDef="FeeCost">
-              <mat-header-cell *matHeaderCellDef>{{'Terminal_Component.FormTerminal.tableFee.FeeCost'|translate}}</mat-header-cell>
-              <mat-cell *matCellDef="let element , let i = index">
-                <mat-form-field floatLabel="never">
-                  <input matInput (keyup)="validateNumber($event, element)" id="{{i}}_costPercentage" [value]="element.costPercentage" [(ngModel)]="element.costPercentage" [ngModelOptions]="{standalone: true}">
-                </mat-form-field>
-              </mat-cell>
-            </ng-container>
+              <ng-container matColumnDef="FeeCost">
+                <th mat-header-cell *matHeaderCellDef>{{'Terminal_Component.FormTerminal.tableFee.FeeCost'|translate}}</th>
+                <td mat-cell *matCellDef="let element , let i = index">
+                  <mat-form-field floatLabel="never">
+                    <input matInput (keyup)="validateNumber($event, element)" id="{{i}}_costPercentage" [value]="element.costPercentage" [(ngModel)]="element.costPercentage" [ngModelOptions]="{standalone: true}">
+                  </mat-form-field>
+                </td>
+              </ng-container>
 
-            <ng-container matColumnDef="FeeMin">
-              <mat-header-cell *matHeaderCellDef>{{'Terminal_Component.FormTerminal.tableFee.FeeMin'|translate}}</mat-header-cell>
-              <mat-cell *matCellDef="let element, let i = index">
-                <mat-form-field floatLabel="never">
-                  <input matInput (keyup)="validateNumber($event, element)" [value]="element.txnRateMin" id="{{i}}_txnRateMin" [(ngModel)]="element.txnRateMin" [ngModelOptions]="{standalone: true}">
-                </mat-form-field>
-              </mat-cell>
-            </ng-container>
+              <ng-container matColumnDef="FeeMin">
+                <th mat-header-cell *matHeaderCellDef>{{'Terminal_Component.FormTerminal.tableFee.FeeMin'|translate}}</th>
+                <td mat-cell *matCellDef="let element, let i = index">
+                  <mat-form-field floatLabel="never">
+                    <input matInput (keyup)="validateNumber($event, element)" [value]="element.txnRateMin" id="{{i}}_txnRateMin" [(ngModel)]="element.txnRateMin" [ngModelOptions]="{standalone: true}">
+                  </mat-form-field>
+                </td>
+              </ng-container>
 
-            <ng-container matColumnDef="FeeMax">
-              <mat-header-cell *matHeaderCellDef>{{'Terminal_Component.FormTerminal.tableFee.FeeMax'|translate}}</mat-header-cell>
-              <mat-cell *matCellDef="let element, let i = index">
-                <mat-form-field floatLabel="never">
-                  <input matInput (keyup)="validateNumber($event, element)" id="{{i}}_txnRateMax" [value]="element.txnRateMax" [(ngModel)]="element.txnRateMax" [ngModelOptions]="{standalone: true}">
-                </mat-form-field>
-              </mat-cell>
-            </ng-container>
+              <ng-container matColumnDef="FeeMax">
+                <th mat-header-cell *matHeaderCellDef>{{'Terminal_Component.FormTerminal.tableFee.FeeMax'|translate}}</th>
+                <td mat-cell *matCellDef="let element, let i = index">
+                  <mat-form-field floatLabel="never">
+                    <input matInput (keyup)="validateNumber($event, element)" id="{{i}}_txnRateMax" [value]="element.txnRateMax" [(ngModel)]="element.txnRateMax" [ngModelOptions]="{standalone: true}">
+                  </mat-form-field>
+                </td>
+              </ng-container>
 
-            <ng-container matColumnDef="MaxLimitAmountTransaction">
-              <mat-header-cell *matHeaderCellDef>{{'Terminal_Component.FormTerminal.tableFee.MaxLimitAmountTransaction'|translate}} ({{'labelCurrency'|translate}})</mat-header-cell>
-              <mat-cell *matCellDef="let element, let i = index">
-                <mat-form-field floatLabel="never">
-                  <input matInput  (keyup)="validateNumber($event, element)" id="{{i}}_maxLimitAmount" [value]="element.maxLimitAmount" [(ngModel)]="element.maxLimitAmount" [ngModelOptions]="{standalone: true}">
-                </mat-form-field>
-              </mat-cell>
-            </ng-container>
+              <ng-container matColumnDef="MaxLimitAmountTransaction">
+                <th mat-header-cell *matHeaderCellDef>{{'Terminal_Component.FormTerminal.tableFee.MaxLimitAmountTransaction'|translate}} ({{'labelCurrency'|translate}})</th>
+                <td mat-cell *matCellDef="let element, let i = index">
+                  <mat-form-field floatLabel="never">
+                    <input matInput  (keyup)="validateNumber($event, element)" id="{{i}}_maxLimitAmount" [value]="element.maxLimitAmount" [(ngModel)]="element.maxLimitAmount" [ngModelOptions]="{standalone: true}">
+                  </mat-form-field>
+                </td>
+              </ng-container>
 
-            <ng-container matColumnDef="LevelTransactionCard">
-              <mat-header-cell *matHeaderCellDef>{{'Terminal_Component.FormTerminal.tableFee.LevelTransactionCard'|translate}}</mat-header-cell>
-              <mat-cell *matCellDef="let element, let i = index">
-                <mat-form-field floatLabel="never">
-                  <input matInput (keyup)="validateNumber($event, element)" id="{{i}}_levelLimit" [value]="element.levelLimit" [(ngModel)]="element.levelLimit" [ngModelOptions]="{standalone: true}">
-                </mat-form-field>
-              </mat-cell>
-            </ng-container>
-            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-            <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
-          </table>
+              <ng-container matColumnDef="LevelTransactionCard">
+                <th mat-header-cell *matHeaderCellDef>{{'Terminal_Component.FormTerminal.tableFee.LevelTransactionCard'|translate}}</th>
+                <td mat-cell *matCellDef="let element, let i = index">
+                  <mat-form-field floatLabel="never">
+                    <input matInput (keyup)="validateNumber($event, element)" id="{{i}}_levelLimit" [value]="element.levelLimit" [(ngModel)]="element.levelLimit" [ngModelOptions]="{standalone: true}">
+                  </mat-form-field>
+                </td>
+              </ng-container>
+              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+          </div>
           <mat-paginator  [pageSize]="10" [pageSizeOptions]="[10, 25, 50, 100]" showFirstLastButtons></mat-paginator>
-      </div>
+        
+        </mat-card-content>
+      <!-- </div> -->
       <mat-card-content>
         <div style="text-align: center">
         <button mat-raised-button color="primary" (click)="submit()">

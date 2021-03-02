@@ -15,6 +15,9 @@ import { AmountDisbursedPieComponent } from './dashboard/amount-disbursed-pie/am
 import { ClientTrendsBarComponent } from './dashboard/client-trends-bar/client-trends-bar.component';
 import { RolltermListComponent } from './rollterm-list/rollterm-list.component';
 import { OndueCardComponent } from './ondue-card/ondue-card.component';
+import { CalendarModule, DateAdapter } from 'angular-calendar';
+import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
+import { CalendarComponent } from './calendar/calendar.component';
 /**
  * Home Component
  *
@@ -24,7 +27,11 @@ import { OndueCardComponent } from './ondue-card/ondue-card.component';
   imports: [
     SharedModule,
     PipesModule,
-    HomeRoutingModule
+    HomeRoutingModule,
+    CalendarModule.forRoot({
+      provide: DateAdapter,
+      useFactory: adapterFactory,
+    }),
 
   ],
   declarations: [
@@ -35,6 +42,7 @@ import { OndueCardComponent } from './ondue-card/ondue-card.component';
     ClientTrendsBarComponent,
     RolltermListComponent,
     OndueCardComponent,
+    CalendarComponent,
   ],
   providers: [
     DatePipe

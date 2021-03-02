@@ -1,0 +1,119 @@
+<div  fxLayout="column">
+  <div fxLayout="row" fxLayout.lt-md="column" fxLayoutAlign="space-around start" fxLayoutGap="1%">
+    
+      <mat-button-toggle-group appearance="legacy" name="fontStyle" aria-label="Font Style">
+        <mat-button-toggle mwlCalendarPreviousView [view]="view" [(viewDate)]="viewDate"
+        (viewDateChange)="closeOpenMonthViewDay()">Tháng trước</mat-button-toggle>
+        <mat-button-toggle mwlCalendarToday [(viewDate)]="viewDate">Tháng này</mat-button-toggle>
+        <mat-button-toggle mwlCalendarNextView [view]="view" [(viewDate)]="viewDate"
+        (viewDateChange)="closeOpenMonthViewDay()">Tháng sau</mat-button-toggle>
+      </mat-button-toggle-group>
+      
+    <h3>{{ viewDate | calendarDate:(view + 'ViewTitle'):'en' }}</h3>
+  
+    <mat-button-toggle-group appearance="legacy" name="fontStyle" aria-label="Font Style">
+      <mat-button-toggle  (click)="setView(CalendarView.Month)" [class.active]="view === CalendarView.Month">Lịch tháng</mat-button-toggle>
+      <mat-button-toggle  (click)="setView(CalendarView.Week)" [class.active]="view === CalendarView.Week">Lịch tuần</mat-button-toggle>
+      <mat-button-toggle (click)="setView(CalendarView.Day)" [class.active]="view === CalendarView.Day">Lịch ngày</mat-button-toggle>
+    </mat-button-toggle-group>
+   
+</div>
+<br />
+<div [ngSwitch]="view">
+  <mwl-calendar-month-view *ngSwitchCase="CalendarView.Month" [viewDate]="viewDate" [events]="events"
+    [refresh]="refresh" [activeDayIsOpen]="activeDayIsOpen" (dayClicked)="dayClicked($event.day)"
+    (eventClicked)="handleEvent('Clicked', $event.event)" (eventTimesChanged)="eventTimesChanged($event)">
+  </mwl-calendar-month-view>
+  <mwl-calendar-week-view *ngSwitchCase="CalendarView.Week" [viewDate]="viewDate" [events]="events" [refresh]="refresh"
+    (eventClicked)="handleEvent('Clicked', $event.event)" (eventTimesChanged)="eventTimesChanged($event)">
+  </mwl-calendar-week-view>
+  <mwl-calendar-day-view *ngSwitchCase="CalendarView.Day" [viewDate]="viewDate" [events]="events" [refresh]="refresh"
+    (eventClicked)="handleEvent('Clicked', $event.event)" (eventTimesChanged)="eventTimesChanged($event)">
+  </mwl-calendar-day-view>
+</div>
+
+<!-- Everything you see below is just for the demo, you don't need to include it in your app -->
+
+<br /><br /><br />
+
+<h3>
+  Danh sách công việc
+  <button mat-raised-button color="primary" (click)="addEvent()">
+    <fa-icon icon="plus"></fa-icon> &nbsp;&nbsp;
+    <!-- {{'Home_Component.btnNewCustomer'| translate}} -->
+    Thêm công việc mới
+  </button>
+  <!-- <button class="btn btn-primary float-right" (click)="addEvent()">
+    Thêm mới
+  </button> -->
+  <div class="clearfix"></div>
+</h3>
+
+<div class="table-responsive">
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>Title</th>
+        <th>Primary color</th>
+        <th>Secondary color</th>
+        <th>Starts at</th>
+        <th>Ends at</th>
+        <th>Remove</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr *ngFor="let event of events">
+        <td>
+          <input type="text" class="form-control" [(ngModel)]="event.title" (keyup)="refresh.next()" />
+        </td>
+        <td>
+          <input type="color" [(ngModel)]="event.color.primary" (change)="refresh.next()" />
+        </td>
+        <td>
+          <input type="color" [(ngModel)]="event.color.secondary" (change)="refresh.next()" />
+        </td>
+        <td>
+          <input class="form-control" type="text" mwlFlatpickr [(ngModel)]="event.start"
+            (ngModelChange)="refresh.next()" dateFormat="Y-m-dTH:i" altFormat="F j, Y H:i" placeholder="Not set" />
+        </td>
+        <td>
+          <input class="form-control" type="text" mwlFlatpickr [(ngModel)]="event.end" (ngModelChange)="refresh.next()"
+            dateFormat="Y-m-dTH:i" altFormat="F j, Y H:i" placeholder="Not set" />
+        </td>
+        <td>
+          <button mat-raised-button color="danger" (click)="addEvent()">
+            <fa-icon icon="trash"></fa-icon> &nbsp;&nbsp;
+            <!-- {{'Home_Component.btnNewCustomer'| translate}} -->
+            Xóa
+          </button>
+  
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<ng-template #modalContent let-close="close">
+  <div class="modal-header">
+    <h5 class="modal-title">Event action occurred</h5>
+    <button type="button" class="close" (click)="close()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div>
+      Action:
+      <pre>{{ modalData?.action }}</pre>
+    </div>
+    <div>
+      Event:
+      <pre>{{ modalData?.event | json }}</pre>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-secondary" (click)="close()">
+      OK
+    </button>
+  </div>
+</ng-template>
