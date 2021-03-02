@@ -5,6 +5,9 @@ import { HttpClient, HttpParams } from "@angular/common/http";
 /** rxjs Imports */
 import { Observable } from "rxjs";
 import { environment } from "../../environments/environment";
+import { DatePipe } from "@angular/common";
+import { SettingsService } from "app/settings/settings.service";
+import { FormBuilder, FormControl } from "@angular/forms";
 
 /**
  * Savings Service.
@@ -17,15 +20,35 @@ export class SavingsService {
   private accessToken: any;
   private GatewayApiUrlPrefix: any;
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient,
+     private datePipe: DatePipe,
+     private settingsService: SettingsService,
+     private formBuilder: FormBuilder
+    ) {
     this.accessToken = JSON.parse(
       sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey)
     );
     this.GatewayApiUrlPrefix = environment.GatewayApiUrlPrefix;
   }
 
+  createGroupSavingsAccount(groupId:string, productId: string, savingsAccount: any): Observable<any> {
+    const dateFormat = this.settingsService.dateFormat;
+    const locale = this.settingsService.language.code;
+    const savingGroupForm = this.formBuilder.group({
+    "productId": [productId],
+    "groupId": [groupId],
+    "submittedOnDate": [this.datePipe.transform(new Date(), dateFormat)],
+    "locale": [locale],
+    "dateFormat": [dateFormat],
+    });
+
+    const savingsAccountInfo = {
+      ...savingGroupForm.value }
+    return this.http.post("/savingsaccounts", savingsAccountInfo);
+  }
+
   /**
-   * @param {string} savingAccountId is saving account's Id.
+   * @param {string} savingAccountId is saving account"s Id.
    * @returns {Observable<any>}
    */
   getLimitSavingsTransactionConfig(paymentTypeId: string, staffId?: string): Observable<any> {
@@ -40,7 +63,7 @@ export class SavingsService {
   }
 
   /**
-   * @param {string} savingAccountId is saving account's Id.
+   * @param {string} savingAccountId is saving account"s Id.
    * @returns {Observable<any>}
    */
   getSavingsTransactionTemplateResource(savingAccountId: string): Observable<any> {
