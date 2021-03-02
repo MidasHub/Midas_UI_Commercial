@@ -1330,6 +1330,11 @@
   resolved "https://registry.yarnpkg.com/@kurkle/color/-/color-0.1.9.tgz#949ea1494581b15576fca50d8486e5816fccfd27"
   integrity sha512-K3Aul4Ct6O48yWw0/az5rqk2K76oNXXX3Su32Xkh4SfMFvPt0QEkq0Q6+3icE5S3U2c88WAuq3Vh1Iaz4aUH+w==
 
+"@mattlewis92/dom-autoscroller@^2.4.2":
+  version "2.4.2"
+  resolved "https://registry.yarnpkg.com/@mattlewis92/dom-autoscroller/-/dom-autoscroller-2.4.2.tgz#ccb753fbcf6b3672b0273e0c3bda7924fe238013"
+  integrity sha512-YbrUWREPGEjE/FU6foXcAT1YbVwqD/jkYnY1dFb0o4AxtP3s4xKBthlELjndZih8uwsDWgQZx1eNskRNe2BgZQ==
+
 "@mrmlnc/readdir-enhanced@^2.2.1":
   version "2.2.1"
   resolved "https://registry.yarnpkg.com/@mrmlnc/readdir-enhanced/-/readdir-enhanced-2.2.1.tgz#524af240d1a360527b730475ecfa1344aa540dde"
@@ -1415,6 +1420,11 @@
   integrity sha512-jjMmK1tnZbm1Jq5a7fBliM4gQwjxMU7TFoRNwIyzwlO+eHPRCFv/Nv+H/Gi1jc3WR7QURG8D5d0Tn12YGrUqBQ==
   dependencies:
     esquery "^1.0.1"
+
+"@scarf/scarf@^1.1.0":
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@scarf/scarf/-/scarf-1.1.0.tgz#b84b4a91cd938a688d36245b7a7db6fbc476a499"
+  integrity sha512-b2iE8kjjzzUo2WZ0xuE2N77kfnTds7ClrDxcz3Atz7h2XrNVoAPUoT75i7CY0st5x++70V91Y+c6RpBX9MX7Jg==
 
 "@schematics/angular@9.1.12":
   version "9.1.12"
@@ -1885,6 +1895,33 @@ alphanum-sort@^1.0.0:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/alphanum-sort/-/alphanum-sort-1.0.2.tgz#97a1119649b211ad33691d9f9f486a8ec9fbe0a3"
   integrity sha1-l6ERlkmyEa0zaR2fn0hqjsn74KM=
+
+angular-calendar@^0.28.22:
+  version "0.28.22"
+  resolved "https://registry.yarnpkg.com/angular-calendar/-/angular-calendar-0.28.22.tgz#3484d78732490e4a2243f462e13f4eaa87c64a63"
+  integrity sha512-jcLszdvSI6+iSYEIqyQjPK5kgGAXaMoGKKGyDpmjy0nRIdaBGMzoveKr/OyiSx1B1oyxRVjj4Ig60n1/BzXmpw==
+  dependencies:
+    "@scarf/scarf" "^1.1.0"
+    angular-draggable-droppable "^4.5.5"
+    angular-resizable-element "^3.3.3"
+    calendar-utils "^0.8.3"
+    positioning "^2.0.1"
+    tslib "^1.14.1"
+
+angular-draggable-droppable@^4.5.5:
+  version "4.6.0"
+  resolved "https://registry.yarnpkg.com/angular-draggable-droppable/-/angular-draggable-droppable-4.6.0.tgz#9e8671e2c13854dcabea3df2b15208af3dc85a2b"
+  integrity sha512-+8JhTDMKkc/NuFFqb8/H/QHpB+v4Z7YNrgvEbV+PQxXry19rkr89ofZgjNIXhZexTvJNb03BYlSQoknzXE9b3g==
+  dependencies:
+    "@mattlewis92/dom-autoscroller" "^2.4.2"
+    tslib "^1.9.0"
+
+angular-resizable-element@^3.3.3:
+  version "3.3.5"
+  resolved "https://registry.yarnpkg.com/angular-resizable-element/-/angular-resizable-element-3.3.5.tgz#e0c86655e53280306c5a6e0ed1d1f60b323b0497"
+  integrity sha512-PT7p3CGva1BmcTt8LA80yOblHqynZHPQYQ1KMMLgllCn3UZx/+0eCRtSXKwnWT5IYHBg9qI3tmd92SFExa1UMg==
+  dependencies:
+    tslib "^1.9.0"
 
 angular2-uuid@^1.1.1:
   version "1.1.1"
@@ -2671,6 +2708,11 @@ cache-base@^1.0.1:
     to-object-path "^0.3.0"
     union-value "^1.0.0"
     unset-value "^1.0.0"
+
+calendar-utils@^0.8.3:
+  version "0.8.4"
+  resolved "https://registry.yarnpkg.com/calendar-utils/-/calendar-utils-0.8.4.tgz#a69575e29ef73b92ef61e2637ac943d384dffbe1"
+  integrity sha512-0btakIxxHrCMX/7L6jayixKG9OnGIbqAh5oHe0Me2LYAS7zdEUoRxndyN4N04yVyZURgx1iNXj4l5m51/sDShg==
 
 call-me-maybe@^1.0.1:
   version "1.0.1"
@@ -3912,6 +3954,11 @@ dashdash@^1.12.0:
   integrity sha1-hTz6D3y+L+1d4gMmuN1YEDX24vA=
   dependencies:
     assert-plus "^1.0.0"
+
+date-fns@^2.18.0:
+  version "2.18.0"
+  resolved "https://registry.yarnpkg.com/date-fns/-/date-fns-2.18.0.tgz#08e50aee300ad0d2c5e054e3f0d10d8f9cdfe09e"
+  integrity sha512-NYyAg4wRmGVU4miKq5ivRACOODdZRY3q5WLmOJSq8djyzftYphU7dTHLcEtLqEvfqMKQ0jVv91P4BAwIjsXIcw==
 
 date-format@^2.1.0:
   version "2.1.0"
@@ -6959,10 +7006,10 @@ lodash.uniq@^4.5.0:
   resolved "https://registry.yarnpkg.com/lodash.uniq/-/lodash.uniq-4.5.0.tgz#d0225373aeb652adc1bc82e4945339a842754773"
   integrity sha1-0CJTc662Uq3BvILklFM5qEJ1R3M=
 
-lodash@4.17.19:
-  version "4.17.19"
-  resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.19.tgz#e48ddedbe30b3321783c5b4301fbd353bc1e4a4b"
-  integrity sha512-JNvd8XER9GQX0v2qJgsaN/mzFCNA5BRe/j8JN9d+tWyGLSodKQHKFicdwNYzWwI3wjRnaKPsGj1XkBjx/F96DQ==
+lodash@4.17.21:
+  version "4.17.21"
+  resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.21.tgz#679591c564c3bffaae8454cf0b3df370c3d6911c"
+  integrity sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg==
 
 lodash@^4.17.10, lodash@^4.17.11, lodash@^4.17.13, lodash@^4.17.14, lodash@^4.17.15, lodash@^4.17.19, lodash@^4.17.20, lodash@^4.17.4, lodash@~4.17.19:
   version "4.17.20"
@@ -8412,6 +8459,11 @@ portfinder@^1.0.26:
     async "^2.6.2"
     debug "^3.1.1"
     mkdirp "^0.5.5"
+
+positioning@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/positioning/-/positioning-2.0.1.tgz#4f1b3a65ed4b830e0922a3fcdf6de58a545bd398"
+  integrity sha512-DsAgM42kV/ObuwlRpAzDTjH9E8fGKkMDJHWFX+kfNXSxh7UCCQxEmdjv/Ws5Ft1XDnt3JT8fIDYeKNSE2TbttA==
 
 posix-character-classes@^0.1.0:
   version "0.1.1"
@@ -11028,17 +11080,17 @@ ts-node@8.2.0:
     source-map-support "^0.5.6"
     yn "^3.0.0"
 
-tslib@1.10.0:
-  version "1.10.0"
-  resolved "https://registry.yarnpkg.com/tslib/-/tslib-1.10.0.tgz#c3c19f95973fb0a62973fb09d90d961ee43e5c8a"
-  integrity sha512-qOebF53frne81cf0S9B41ByenJ3/IuH8yJKngAX35CmiZySA0khhkovshKK+jGCaMnVomla7gVlIcc3EvKPbTQ==
-
 tslib@1.11.1:
   version "1.11.1"
   resolved "https://registry.yarnpkg.com/tslib/-/tslib-1.11.1.tgz#eb15d128827fbee2841549e171f45ed338ac7e35"
   integrity sha512-aZW88SY8kQbU7gpV19lN24LtXh/yD4ZZg6qieAJDDg+YBsJcSmLGK9QpnUjAKVG/xefmvJGd1WUmfpT/g6AJGA==
 
-tslib@^1.10.0, tslib@^1.8.0, tslib@^1.8.1, tslib@^1.9.0:
+tslib@1.12.0:
+  version "1.12.0"
+  resolved "https://registry.yarnpkg.com/tslib/-/tslib-1.12.0.tgz#d1fc9cacd06a1456c62f2902b361573e83d66473"
+  integrity sha512-5rxCQkP0kytf4H1T4xz1imjxaUUPMvc5aWp0rJ/VMIN7ClRiH1FwFvBt8wOeMasp/epeUnmSW6CixSIePtiLqA==
+
+tslib@^1.10.0, tslib@^1.14.1, tslib@^1.8.0, tslib@^1.8.1, tslib@^1.9.0:
   version "1.14.1"
   resolved "https://registry.yarnpkg.com/tslib/-/tslib-1.14.1.tgz#cf2d38bdc34a134bcaf1091c41f6619e2f672d00"
   integrity sha512-Xni35NKzjgMrwevysHTCArtLDpPvye8zV/0E4EyYn43P7/7qvQwPh9BGkHewbMulVntbigmcT7rdX3BNo9wRJg==
