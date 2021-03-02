@@ -19,7 +19,9 @@
   <div fxLayout="row" fxLayout.lt-md="column" fxLayoutAlign="space-around start " class="fluidcontainer p-10 m-b-20"
     fxFlex="100">
 
-    <mat-card class=" m-b-20" fxFlex="70">
+    <div fxLayout="column" fxLayout.lt-md="column" class="fluidcontainer p-10 m-b-20"
+    fxFlex="70">
+    <mat-card class=" m-b-20" fxFlex="100">
       <mat-card-header>
         <mat-card-title class="title">
           {{'Home_Component.welcome'| translate}} <strong>{{username}}</strong>!
@@ -46,12 +48,29 @@
       <!-- <img mat-card-image src="assets/images/midas-logo-flat.png" alt="MIDAS"> -->
 
     </mat-card>
+    <mat-card class=" m-b-20" fxFlex="100">
+      <mat-card-header>
+        <mat-card-title class="title">
+          <!-- {{'Home_Component.Card'| translate}} <strong>{{username}}</strong>! -->
+          Lịch làm việc
+        </mat-card-title>
+      </mat-card-header>
 
+      <mat-card-content>
+        <midas-calendar></midas-calendar>
+      </mat-card-content>
 
+      
+
+    </mat-card>
+
+    </div>
     <div fxLayout="column" fxFlex="25">
+      
       <midas-rollterm-list></midas-rollterm-list>
 
-      <midas-ondue-card></midas-ondue-card>
+      <!-- <midas-ondue-card></midas-ondue-card> -->
     </div>
+    
   </div>
 </div>

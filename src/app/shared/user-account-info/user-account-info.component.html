@@ -1,7 +1,8 @@
-<button mat-icon-button class="ml-1" matTooltip="Tổng số dư tài khoản ngân hàng" [matMenuTriggerFor]="UserSavingMenu">
+<button mat-icon-button class="ml-1"
+  matTooltip="Tổng số dư tài khoản ngân hàng"
+  [matMenuTriggerFor]="UserSavingMenu">
   <fa-icon icon="money-bill-alt" size="lg"></fa-icon>
-
-  {{ totalBalance | money }}
+  <span class="aligned-with-icons">{{ totalBalance | money }}</span>
 </button>
 
 <mat-menu class="midas-saving-menu" #UserSavingMenu="matMenu" [overlapTrigger]="false">

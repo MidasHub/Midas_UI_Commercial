@@ -19,12 +19,21 @@ export class GroupsService {
   private credentialsStorageKey = 'midasCredentials';
   private accessToken: any;
   private GatewayApiUrlPrefix: any;
-  constructor(private http: HttpClient) { 
+  constructor(private http: HttpClient) {
     this.accessToken = JSON.parse(
       sessionStorage.getItem(this.credentialsStorageKey)
       || localStorage.getItem(this.credentialsStorageKey)
     );
     this.GatewayApiUrlPrefix = environment.GatewayApiUrlPrefix ;
+  }
+
+  updateDefaultSavingAccount(savingAccountInfo: any): Observable<any> {
+    let httpParams = new HttpParams()
+      .set('createdBy', this.accessToken.userId)
+      .set('accessToken', this.accessToken.base64EncodedAuthenticationKey)
+      .set('groupId', savingAccountInfo.groupId)
+      .set('savingAccountId', savingAccountInfo.savingAccountId);
+    return this.http.post<any>(`${this.GatewayApiUrlPrefix}/groups/edit_group_default_saving_account`, httpParams);
   }
 
   /**
@@ -50,7 +59,7 @@ export class GroupsService {
     });
     return this.http.get('/groups', { params: httpParams });
   }
-  
+
   getCartTypes(): Observable<any> {
     let httpParams = new HttpParams()
       .set('createdBy', this.accessToken.userId)
