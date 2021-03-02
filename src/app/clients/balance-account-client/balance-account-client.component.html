@@ -1,4 +1,4 @@
-<!-- <div fxLayout="row" fxLayout.lt-md="column" class="fluidcontainer " fxLayoutAlign="space-around start "> -->
+a<!-- <div fxLayout="row" fxLayout.lt-md="column" class="fluidcontainer " fxLayoutAlign="space-around start "> -->
   <mat-tab-group mat-align-tabs="center" >
     <mat-tab label="Danh sách công nợ phải trả (tạm ứng) của khách hàng">
       <mat-card class="container">
@@ -50,7 +50,7 @@
               <ng-container matColumnDef="account_no">
                 <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>Số tài khoản</th>
                 <td mat-cell fxHide fxShow.gt-md
-                    *matCellDef="let account"> {{ account.account_no}} </td>
+                    *matCellDef="let account"> <a [routerLink]="['../', 'savings-accounts', account.account_id, 'transactions']"> {{account.account_no}}</a> </td>
               </ng-container>
         
               <ng-container matColumnDef="account_balance_derived">
@@ -131,7 +131,8 @@
               <ng-container matColumnDef="customer_name">
                 <th mat-header-cell *matHeaderCellDef>Tên khách hàng</th>
                 <td mat-cell
-                    *matCellDef="let account"> {{ account.customer_name}} </td>
+                    *matCellDef="let account"> <a [routerLink]="['../../clients',account.client_id,'general']"
+                    [queryParams]="{ typeViewClient: 'view'}"> {{ account.customer_name}}</a></td>
               </ng-container>
         
               <ng-container matColumnDef="staff_name">
@@ -143,7 +144,7 @@
               <ng-container matColumnDef="account_no">
                 <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef>Số tài khoản</th>
                 <td mat-cell fxHide fxShow.gt-md
-                    *matCellDef="let account"> {{ account.account_no}} </td>
+                    *matCellDef="let account"> <a [routerLink]="['../', 'savings-accounts', account.account_id, 'transactions']"> {{account.account_no}}</a></td>
               </ng-container>
         
               <ng-container matColumnDef="account_balance_derived">
