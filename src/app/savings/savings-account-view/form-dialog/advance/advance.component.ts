@@ -14,6 +14,7 @@ export class AdvanceComponent implements OnInit {
   currentUser: any;
   disable = false;
   savingsAccountData: any;
+  isLoading:boolean = false;
 
   constructor(
     private serviceClient: ClientsService,
@@ -72,12 +73,14 @@ export class AdvanceComponent implements OnInit {
     this.form.get("entityAdvanceCash").valueChanges.subscribe((value) => {
       this.clients = [];
       this.filteredClient = [];
+      this.isLoading = true;
       if (value == "C") {
         this.serviceClient.getClients("", "", 0, -1).subscribe((cl: any) => {
           this.clients = cl.pageItems?.filter(
             (v: any) => v?.accountNo?.startsWith("C")
           );
           this.filteredClient = this.filterClient(null).slice(0, 30);
+          this.isLoading = false;
         });
       } else {
         const filterGroupsBy = [
@@ -89,6 +92,8 @@ export class AdvanceComponent implements OnInit {
         this.groupService.getGroups(filterGroupsBy, "", "", 0, -1).subscribe((gr: any) => {
           this.clients = gr.pageItems;
           this.filteredClient = this.filterClient(null).slice(0, 30);
+          this.isLoading = false;
+
         });
       }
 
@@ -104,23 +109,39 @@ export class AdvanceComponent implements OnInit {
       : this.form.get("clientAdvanceCash");
   }
 
+  displayClientWithExternalId(client?: any): string | undefined {
+    let result = client.displayName ;
+    if (client.externalId){
+      result = `${result} - IDs:${client.externalId} `
+    }
+
+    if (client.mobileNo){
+      result = `${result} - SĐT:${client.mobileNo} `
+    }
+    return result;
+  }
+
   displayFn(client?: any): string | undefined {
     return this.disable ? client : client.displayName ? client.displayName : client.name;
   }
+
+
 
   private filterClient(value: string | any) {
     let filterValue = "";
     if (this.form.get("entityAdvanceCash").value == "C") {
       if (value) {
-        filterValue = typeof value === "string" ? value.toLowerCase() : "";
-        return this.clients.filter((client: any) => client.displayName.toLowerCase().includes(filterValue));
+        filterValue = typeof value === "string" ? value.toLowerCase().trim() : "";
+        return this.clients.filter((client: any) =>
+        client.displayName.toLowerCase().trim().includes(filterValue)
+        );
       } else {
         return this.clients;
       }
     } else {
       if (value) {
-        filterValue = typeof value === "string" ? value.toLowerCase() : "";
-        return this.clients.filter((client: any) => client.name.toLowerCase().includes(filterValue));
+        filterValue = typeof value === "string" ? value.toLowerCase().trim() : "";
+        return this.clients.filter((client: any) => client.name.toLowerCase().trim().includes(filterValue));
       } else {
         return this.clients;
       }

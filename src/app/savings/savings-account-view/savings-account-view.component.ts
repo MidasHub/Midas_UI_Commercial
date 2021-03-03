@@ -114,25 +114,32 @@ export class SavingsAccountViewComponent implements OnInit {
       disableUser: String(this.savingProduct.shortName).startsWith("CCA"),
       savingsAccountData: this.savingsAccountData,
     };
-    dialogConfig.minWidth = 400;
+    dialogConfig.minWidth = 800;
     const refDialog = this.dialog.open(AdvanceComponent, dialogConfig);
     refDialog.afterClosed().subscribe((response: any) => {
       if (response) {
         const { clientAdvanceCash, noteAdvance, amountAdvance, typeAdvanceCash } = response?.data?.value;
         // const {savingsAccountId} = clientAdvanceCash;
-        if (!clientAdvanceCash.displayName && !clientAdvanceCash.defaultSavingsAccount) {
+        if (clientAdvanceCash.displayName && !clientAdvanceCash.savingsAccountId) {
           this.alertService.alert({
-            message: "Đại lý chưa có tài khoản thanh toán mặc định, vui lòng thêm tài khoản trước!",
+            message: "Khách hàng chưa có tài khoản thanh toán mặc định, vui lòng thêm tài khoản trước!",
             msgClass: "cssWarning",
           });
           return;
+        } else{
+          if (!clientAdvanceCash.displayName && !clientAdvanceCash.defaultSavingsAccount) {
+            this.alertService.alert({
+              message: "Đại lý chưa có tài khoản thanh toán mặc định, vui lòng thêm tài khoản trước!",
+              msgClass: "cssWarning",
+            });
+            return;
+          }
         }
-        debugger;
-        return;
+
         this.savingsService
           .advanceCashTransaction({
             buSavingAccount: this.savingsAccountData.id,
-            clientSavingAccount: clientAdvanceCash.defaultSavingsAccount,
+            clientSavingAccount: clientAdvanceCash.defaultSavingsAccount ? clientAdvanceCash.defaultSavingsAccount : clientAdvanceCash.savingsAccountId  ,
             noteAdvance: clientAdvanceCash.displayName
               ? `${clientAdvanceCash.displayName} - ${noteAdvance}`
               : `${clientAdvanceCash.name} - ${noteAdvance}`,
@@ -140,8 +147,8 @@ export class SavingsAccountViewComponent implements OnInit {
             typeAdvanceCash: typeAdvanceCash,
           })
           .subscribe((result: any) => {
-            const message = `Ứng tiền thành công cho khách hàng: ${
-              clientAdvanceCash.displayName ? clientAdvanceCash.displayName : clientAdvanceCash.name
+            const message = `Ứng tiền thành công cho : ${
+              clientAdvanceCash.displayName ? ` khách hàng ${clientAdvanceCash.displayName} ` : ` đại lý ${clientAdvanceCash.name} `
             } với số tiền ${String(amountAdvance).replace(/\\B(?=(\\d{3})+(?!\\d))/g, ",") + " đ"}`;
             this.alertService.alert({ message: message, msgClass: "cssInfo" });
           });
