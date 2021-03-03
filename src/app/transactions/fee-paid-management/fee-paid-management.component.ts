@@ -123,7 +123,7 @@ export class FeePaidManagementComponent implements OnInit {
   totalFeeSum = 0;
   totalFeePaid = 0;
   totalFeeRemain = 0;
-  panelOpenState = false;
+  panelOpenState = true;
   filterData: any[];
   groupData: any;
   searchText = "";

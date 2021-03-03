@@ -66,7 +66,7 @@
     </mat-card>
   </mat-card-content>
   <mat-accordion>
-    <mat-expansion-panel expanded="true" (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+    <mat-expansion-panel expanded="false" (opened)="panelOpenState = true" (closed)="panelOpenState = false">
       <mat-expansion-panel-header>
         <mat-panel-title> Xem theo </mat-panel-title>
       </mat-expansion-panel-header>
@@ -171,7 +171,7 @@
     <table mat-table multiTemplateDataRows class="mat-elevation-z8" [dataSource]="dataSource" matSort>
       <ng-container matColumnDef="productId">
         <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>Loại giao dịch</th>
-        <td mat-cell fxHide fxShow.gt-md *matCellDef="let transaction">
+        <td mat-cell fxHide fxShow.gt-md *matCellDef="let transaction" style="width: 80px;">
           <span class="productId">{{ displayProductId(transaction.productId) }}</span>
         </td>
       </ng-container>
@@ -179,19 +179,19 @@
       <ng-container matColumnDef="txnDate">
         <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>Ngày giao dịch</th>
         <td mat-cell fxHide fxShow.gt-md style="word-wrap: break-word; width: 150px" *matCellDef="let journalEntry">
-          <label [ngSwitch]="journalEntry.status">
+          <span [ngSwitch]="journalEntry.status">
             <img *ngSwitchCase="'C'" src="assets/images/icons/check.svg" />
             <img *ngSwitchCase="'P'" src="assets/images/icons/pending.svg" />
             <img *ngSwitchCase="'V'" src="assets/images/icons/cancel.svg" />
             <img *ngSwitchDefault src="assets/images/icons/question.svg" />
+          </span>
+          {{ journalEntry.txnDate | date: "dd-MM-yyyy HH:mm:ss" }}
+          <br />
+          <span class="green_text">{{ journalEntry.trnRefNo }}</span>
+          <br />
+          <label class="red_text" *ngIf="checkB(journalEntry.type)">
+            {{ journalEntry.type }}
           </label>
-          <label>{{ journalEntry.txnDate | date: "dd-MM-yyyy HH:mm:ss" }} </label>
-          <br />
-          <label>{{ journalEntry.trnRefNo }}</label>
-          <br />
-          <label *ngIf="checkB(journalEntry.type)" style="color: red; word-wrap: break-word">{{
-            journalEntry.type
-          }}</label>
         </td>
       </ng-container>
 
@@ -203,8 +203,8 @@
         </th>
         <td mat-cell *matCellDef="let journalEntry">
           {{ journalEntry.officeName }} <br />
-          {{ journalEntry.createdByName }} <br />
-          {{ journalEntry.terminalId }}
+          <span class="blue_text">{{ journalEntry.createdByName }} </span><br />
+          <span class="red_text">{{ journalEntry.terminalId }}</span>
         </td>
       </ng-container>
 
@@ -217,7 +217,7 @@
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Khách hàng</th>
         <td mat-cell *matCellDef="let journalEntry">
           {{ journalEntry.panHolderName }} <br />
-          {{ journalEntry.agencyName }}
+          <span class="green_text">{{ journalEntry.agencyName == "#" ? "" : journalEntry.agencyName  }}</span>
         </td>
       </ng-container>
 
@@ -233,7 +233,7 @@
 
       <ng-container matColumnDef="terminalAmount_feeAmount">
         <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>Tỉ lệ phí</th>
-        <td mat-cell fxHide fxShow.gt-md *matCellDef="let journalEntry">{{ journalEntry.terminalAmount_feeAmount }}</td>
+        <td mat-cell fxHide fxShow.gt-md *matCellDef="let journalEntry">{{ journalEntry.terminalAmount_feeAmount | number  }}</td>
       </ng-container>
 
       <ng-container matColumnDef="cogsAmount">
