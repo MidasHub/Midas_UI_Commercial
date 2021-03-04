@@ -11,7 +11,7 @@ import {AlertService} from '../../../core/alert/alert.service';
 import {AuthenticationService} from '../../../core/authentication/authentication.service';
 import {GroupsService} from '../../../groups/groups.service';
 import {AddInformationCardBatchComponent} from '../../dialog/add-information-card-batch/add-information-card-batch.component';
-import {AddIdentitiesExtraInfoComponent} from '../../../clients/clients-view/identities-tab/add-identities-extra-info/add-identities-extra-info.component';
+import {AddIdentitiesExtraInfoComponent} from '../../../clients/clients-view/identities-tab/dialog-add-identities-extra-info/add-identities-extra-info.component';
 import {ClientsService} from '../../../clients/clients.service';
 import {debounce, distinctUntilChanged, map, startWith, takeUntil} from 'rxjs/operators';
 import {Observable, Subject, timer} from 'rxjs';

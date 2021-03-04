@@ -73,6 +73,12 @@
             </a>
             <br />
           </mat-label>
+          <mat-label style="font-size: small" title="Số dư tài khoản">
+            <mat-icon style="color: green">monetization_on</mat-icon>
+
+            {{ transaction.accountBalanceDerived | money }}
+          </mat-label>
+          <br />
           <mat-label (click)="showHistoryTransaction(transaction.clientId)" title="Xem lịch sử giao dịch 90 ngày gần nhất">
             <mat-icon style="color: black">fact_check</mat-icon>
             <a style="color: black;" href="javascript:void(0)">

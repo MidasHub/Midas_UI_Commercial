@@ -7,6 +7,8 @@ import { MatPaginator } from "@angular/material/paginator";
 import { MatSort } from "@angular/material/sort";
 import { MatTable, MatTableDataSource } from "@angular/material/table";
 import { ActivatedRoute, Router } from "@angular/router";
+import { BanksService } from "app/banks/banks.service";
+import { AddLimitIdentitiesExtraInfoComponent } from "app/clients/clients-view/identities-tab/dialog-add-limit-extra-info/dialog-add-limit-extra-info.component";
 import { AlertService } from "app/core/alert/alert.service";
 import { SettingsService } from "app/settings/settings.service";
 import { AddFeeDialogComponent } from "../dialog/add-fee-dialog/add-fee-dialog.component";
@@ -47,7 +49,8 @@ export class CreateTransactionComponent implements OnInit {
     private alertService: AlertService,
     private datePipe: DatePipe,
     private settingsService: SettingsService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private bankService: BanksService
   ) {
     this.dataSource = new MatTableDataSource();
     this.transactionCreateForm = new FormGroup({
@@ -77,7 +80,7 @@ export class CreateTransactionComponent implements OnInit {
         this.transactionInfo.type = type;
         this.transactionInfo.identifierId = identifierId;
         this.transactionInfo.clientId = clientId;
-        this.transactionInfo.bookingId =  bookingId;
+        this.transactionInfo.bookingId = bookingId;
         this.transactionInfo.remainValue = this.formatCurrency(remainValue);
         if (this.transactionInfo.type == "cash") {
           this.transactionInfo.accountCash = data.result.listAccAccount[0].documentKey;
@@ -115,10 +118,9 @@ export class CreateTransactionComponent implements OnInit {
   clearInfoTransaction() {
     if (this.transactionInfo.txnAmount && this.transactionService.formatLong(this.transactionInfo.txnAmount) > 0) {
       setTimeout(() => {
-        this.transactionCreateForm.controls['txnAmount'].reset();
-        this.transactionCreateForm.controls['terminalAmount'].reset();
+        this.transactionCreateForm.controls["txnAmount"].reset();
+        this.transactionCreateForm.controls["terminalAmount"].reset();
       }, 0);
-
     }
 
     this.transactionInfo.listTerminal = [];
@@ -329,14 +331,59 @@ export class CreateTransactionComponent implements OnInit {
         this.transactionService
           .submitTransactionCashFromRollTermTransaction(this.transactionInfo)
           .subscribe((data: any) => {
-
             this.afterSuccessCreateCashTransaction(data);
           });
       }
     }
   }
 
+  addIdentifierExtraInfo() {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.data = {
+      title: "Thông tin bổ sung cho thẻ",
+      clientIdentifierTemplate: this.transactionInfo.cardExtraInfo,
+    };
+    dialogConfig.minWidth = 400;
+    const addIdentifierDialogRef = this.dialog.open(AddLimitIdentitiesExtraInfoComponent, dialogConfig);
+    addIdentifierDialogRef.afterClosed().subscribe((response: any) => {
+      if (response.data) {
+        const { limitCard, classCard } = response.data.value;
+        const expiredDateString = this.datePipe.transform(this.transactionInfo.cardExtraInfo.expiredDate, "MMyy");
+
+        this.transactionService
+          .updateCardTrackingState({
+            refId: this.transactionInfo.cardExtraInfo.refid,
+            limitCard: limitCard,
+            classCard: classCard,
+            expiredDateString: expiredDateString,
+            dueDay: this.transactionInfo.cardExtraInfo.dueDay,
+            isHold: this.transactionInfo.cardExtraInfo.isHold,
+          })
+          .subscribe((res2: any) => {
+            if (res2.result.status) {
+              this.transactionInfo.cardExtraInfo.limit = limitCard;
+              this.transactionInfo.cardExtraInfo.classCard = classCard;
+
+              this.submitTransactionRollTerm();
+            } else {
+              this.alertService.alert({
+                message: res2.result.message ? res2.result.message : "Lỗi thêm thông tin hạn mức, hạng thẻ!",
+                msgClass: "cssError",
+                hPosition: "center",
+              });
+              return;
+            }
+          });
+      }
+    });
+  }
+
   submitTransactionRollTerm() {
+    if (!this.transactionInfo.cardExtraInfo.limit || !this.transactionInfo.cardExtraInfo.classCard) {
+      this.addIdentifierExtraInfo();
+      return;
+    }
+
     if (this.transactionCreateForm.invalid) {
       return;
     }
@@ -417,7 +464,6 @@ export class CreateTransactionComponent implements OnInit {
     return true;
   }
 
-
   showSuccessCreateTransactionDialog() {
     const data = {
       trnRefNo: this.transactionInfo.transactionRefNo,
@@ -427,11 +473,15 @@ export class CreateTransactionComponent implements OnInit {
       clientId: this.transactionInfo.clientId,
       identifierId: this.transactionInfo.identifierId,
     };
-    const dialog = this.dialog.open(CreateSuccessTransactionDialogComponent, { height: "80%", width: "auto", disableClose: true ,  data });
+    const dialog = this.dialog.open(CreateSuccessTransactionDialogComponent, {
+      height: "80%",
+      width: "auto",
+      disableClose: true,
+      data,
+    });
     dialog.afterClosed().subscribe((response: any) => {
       if (response.data) {
         const value = response.data.value;
-
       }
     });
   }

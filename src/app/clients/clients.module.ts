@@ -60,9 +60,10 @@ import { CreateSelfServiceUserComponent } from './clients-view/client-actions/cr
 import {ReactiveFormsModule} from '@angular/forms';
 import {MoneyPipe} from '../pipes/money.pipe';
 import { AddIdentitiesComponent } from './clients-view/identities-tab/add-identities/add-identities.component';
-import { AddIdentitiesExtraInfoComponent } from './clients-view/identities-tab/add-identities-extra-info/add-identities-extra-info.component';
+import { AddIdentitiesExtraInfoComponent } from './clients-view/identities-tab/dialog-add-identities-extra-info/add-identities-extra-info.component';
 import { BalanceAccountClientComponent } from './balance-account-client/balance-account-client.component';
 import { BalanceAccountTellerComponent } from './balance-account-teller/balance-account-teller.component';
+import { AddLimitIdentitiesExtraInfoComponent } from './clients-view/identities-tab/dialog-add-limit-extra-info/dialog-add-limit-extra-info.component';
 
 /**
  * Clients Module
@@ -128,6 +129,7 @@ import { BalanceAccountTellerComponent } from './balance-account-teller/balance-
     AddIdentitiesComponent,
     AddIdentitiesComponent,
     AddIdentitiesExtraInfoComponent,
+    AddLimitIdentitiesExtraInfoComponent,
     BalanceAccountClientComponent,
     BalanceAccountTellerComponent,
   ],
