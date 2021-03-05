@@ -52,6 +52,7 @@ export class OnRollTermCardTabComponent implements OnInit {
   listBank: any[];
   transactionsData: any;
   currentUser: any;
+  minDate: any;
 
   statusOption: any[] = [
     {
@@ -95,9 +96,10 @@ export class OnRollTermCardTabComponent implements OnInit {
     private alertService: AlertService,
     public dialog: MatDialog
   ) {
+    this.minDate = new Date();
     this.formDate = this.formBuilder.group({
-      fromDate: [new Date(new Date().setMonth(new Date().getMonth() - 1))],
-      toDate: [new Date()],
+      fromDate: [new Date()],
+      toDate: [new Date(new Date().setMonth(new Date().getMonth() + 1))],
     });
     this.formFilter = this.formBuilder.group({
       bankName: [''],

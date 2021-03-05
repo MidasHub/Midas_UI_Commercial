@@ -3,14 +3,14 @@
     <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column" [formGroup]="formDate">
       <mat-form-field fxFlex="31%">
         <mat-label>Transaction Date From</mat-label>
-        <input matInput [matDatepicker]="transactionDateFromPicker" formControlName="fromDate" />
+        <input matInput [matDatepicker]="transactionDateFromPicker" [min]="minDate" formControlName="fromDate" />
         <mat-datepicker-toggle matSuffix [for]="transactionDateFromPicker"></mat-datepicker-toggle>
         <mat-datepicker #transactionDateFromPicker></mat-datepicker>
       </mat-form-field>
 
       <mat-form-field fxFlex="31%">
         <mat-label>Transaction Date To</mat-label>
-        <input matInput [matDatepicker]="transactionDateToPicker" formControlName="toDate" />
+        <input matInput [matDatepicker]="transactionDateToPicker" [min]="minDate" formControlName="toDate" />
         <mat-datepicker-toggle matSuffix [for]="transactionDateToPicker"></mat-datepicker-toggle>
         <mat-datepicker #transactionDateToPicker></mat-datepicker>
       </mat-form-field>
