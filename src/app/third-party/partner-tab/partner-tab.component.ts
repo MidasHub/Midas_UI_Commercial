@@ -108,7 +108,6 @@ export class PartnerTabComponent implements OnInit {
   }
 
   nextStep(partner:any) {
-    console.log('nextStep', this.selectedIndex);
     // if (this.selectedIndex != 1) {
     //   this.selectedIndex = this.selectedIndex + 1;
     // }
@@ -119,13 +118,7 @@ export class PartnerTabComponent implements OnInit {
 
   onChange(value: MatSlideToggleChange, partner : any) {
 
-    console.log('merchant == ', partner);
-    console.log('onChange == ', value.checked);
-
     partner.status = value.checked ? 'true' : 'false' ;
-
-    console.log('partner 1== ', partner);
-
 
     const payload = {
       ...  partner

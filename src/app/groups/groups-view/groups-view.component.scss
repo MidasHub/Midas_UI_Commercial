@@ -23,13 +23,14 @@
     }
     .group-meeting {
       align-self: flex-end;
-      width: 300px;
+      width: 600px;
       height: 140px;
       div, ng-template > div {
         background-color: #0a6aac;
         p {
           color: white;
           padding: 0 10px;
+          font-weight: bold;
         }
       }
     }
@@ -48,4 +49,12 @@
   i:hover {
     cursor: pointer;
   }
-}
+
+  div .fixRightHeader{
+    width: 100%;
+  }
+
+  div .fixRightHeader > p{
+    margin: 5px 2px 2px;
+  }
+} 

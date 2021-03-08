@@ -362,4 +362,18 @@ export class GroupsService {
     return this.http.get('/groups/template', { params: httpParams });
   }
 
+  getLastTransaction(groupId:any): Observable<any> {
+    const httpParams = new HttpParams()
+    .set('createdBy', this.accessToken.userId)
+    .set('accessToken', this.accessToken.base64EncodedAuthenticationKey);
+    return this.http.post<any>(`${this.GatewayApiUrlPrefix}/groups/${groupId}/last_transaction`,  httpParams );
+  }
+
+  getSalesLast3months(groupId:any): Observable<any> {
+    const httpParams = new HttpParams()
+    .set('createdBy', this.accessToken.userId)
+    .set('accessToken', this.accessToken.base64EncodedAuthenticationKey);
+    return this.http.post<any>(`${this.GatewayApiUrlPrefix}/groups/${groupId}/sales_last_3_months`,  httpParams );
+  }
+
 }
