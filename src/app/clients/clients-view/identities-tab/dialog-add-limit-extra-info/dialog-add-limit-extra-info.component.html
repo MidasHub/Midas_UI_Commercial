@@ -1,0 +1,29 @@
+<h1 mat-dialog-title>{{'Client_Component.ViewClient.TabIdentities.dialogIdentifierTitleExtra' |translate}}</h1>
+
+<div mat-dialog-content [formGroup]="form" [fxLayout]="'column'" fxLayout.lt-md="column" [fxLayoutGap]="'1%'"
+     fxLayoutGap.lt-md="0%">
+
+  <mat-form-field  fxFlex="48%">
+    <mat-label>Hạn mức thẻ:</mat-label>
+    <input
+      currencyMask
+      required
+      matInput type="text"  formControlName="limitCard">
+  </mat-form-field>
+
+  <mat-form-field  fxFlex="48%">
+    <mat-label>Hạng thẻ:</mat-label>
+    <input
+      matInput
+      type="text"
+      required
+      formControlName="classCard">
+  </mat-form-field>
+</div>
+
+<mat-dialog-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="2%">
+  <button mat-raised-button mat-dialog-close>{{ 'Shared_Component.FormDialog.btnCancel' | translate }}</button>
+  <button mat-raised-button color="primary"
+          [mat-dialog-close]="{ data: form,documentTypes:documentTypes,existBin:existBin }"
+          [disabled]="!form.valid || form.pristine">{{ (this.data.cardinfo)?'Sửa':'Shared_Component.FormDialog.btnAdd' |translate }}</button>
+</mat-dialog-actions>

@@ -17,6 +17,7 @@ import {AdvanceFeeRollTermComponent} from '../dialog/advance-fee-roll-term/advan
 import {SavingsService} from 'app/savings/savings.service';
 import {TransactionHistoryDialogComponent} from '../dialog/transaction-history/transaction-history-dialog.component';
 import {BanksService} from '../../../banks/banks.service';
+import { AddLimitIdentitiesExtraInfoComponent } from 'app/clients/clients-view/identities-tab/dialog-add-limit-extra-info/dialog-add-limit-extra-info.component';
 
 @Component({
   selector: 'midas-on-roll-term-card-tab',
@@ -51,6 +52,7 @@ export class OnRollTermCardTabComponent implements OnInit {
   listBank: any[];
   transactionsData: any;
   currentUser: any;
+  minDate: any;
 
   statusOption: any[] = [
     {
@@ -94,9 +96,10 @@ export class OnRollTermCardTabComponent implements OnInit {
     private alertService: AlertService,
     public dialog: MatDialog
   ) {
+    this.minDate = new Date();
     this.formDate = this.formBuilder.group({
-      fromDate: [new Date(new Date().setMonth(new Date().getMonth() - 1))],
-      toDate: [new Date()],
+      fromDate: [new Date()],
+      toDate: [new Date(new Date().setMonth(new Date().getMonth() + 1))],
     });
     this.formFilter = this.formBuilder.group({
       bankName: [''],
@@ -195,8 +198,91 @@ export class OnRollTermCardTabComponent implements OnInit {
     return false;
   }
 
-  showCreateRollTermScheduleDialog(card: any) {
+  addIdentifierExtraInfo(card: any, rollTermBooking: any, requestAmount: any, feeRate: any) {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.data = {
+      title: "Thông tin bổ sung cho thẻ",
+      clientIdentifierTemplate: card,
+    };
+    dialogConfig.minWidth = 400;
+    const addIdentifierDialogRef = this.dialog.open(AddLimitIdentitiesExtraInfoComponent, dialogConfig);
+    addIdentifierDialogRef.afterClosed().subscribe((response: any) => {
+      if (response.data) {
+        const { limitCard, classCard } = response.data.value;
+        const expiredDateString = this.datePipe.transform(card.expiredDate, "MMyy");
+
+        this.transactionService
+          .updateCardTrackingState({
+            refId: card.refId,
+            limitCard: limitCard,
+            classCard: classCard,
+            expiredDateString: expiredDateString,
+            dueDay: card.dueDay,
+            isHold: card.isHold,
+          })
+          .subscribe((res2: any) => {
+            if (res2.result.status) {
+              card.limit = limitCard;
+              card.classCard = classCard;
+
+              this.submitTransactionRollTerm(card, rollTermBooking, requestAmount, feeRate);
+            } else {
+              this.alertService.alert({
+                message: res2.result.message ? res2.result.message : "Lỗi thêm thông tin hạn mức, hạng thẻ!",
+                msgClass: "cssError",
+                hPosition: "center",
+              });
+              return;
+            }
+          });
+      }
+    });
+  }
+
+  submitTransactionRollTerm(card: any, rollTermBooking: any, requestAmount: any, feeRate: any){
     let info: any = {};
+    rollTermBooking.forEach((booking: any) => {
+      booking.amountBooking = booking.amountBooking;
+      booking.txnDate = this.datePipe.transform(booking.txnDate, 'dd/MM/yyyy');
+    });
+    const listBookingRollTerm = JSON.stringify(rollTermBooking, function (key, value) {
+      if (key === '$$hashKey') {
+        return undefined;
+      }
+      return value;
+    });
+
+    // prepare value for create schedule roll term transaction
+    info.type = 'rollTerm';
+    info.productId = 'AL01';
+    info.rate = feeRate;
+    info.requestAmount = requestAmount;
+    info.BookingInternalDtoListString = listBookingRollTerm;
+    info.clientName = card.clientName;
+    info.panNumber = card.cardNumber;
+    info.identifierId = card.cardId;
+    info.groupId = card.groupId ? card.groupId : '0';
+    info.cardType = card.cardType;
+    info.bankCode = card.bankCode;
+    info.bookingId = card.bookingId;
+    info.clientId = card.clientId;
+
+    this.isLoading = true;
+    this.transactionService.submitTransactionRollTermOnDialog(info).subscribe((data: any) => {
+      this.isLoading = false;
+      let transactionRefNo = data.result.tranRefNo;
+      this.alertService.alert({
+        message: `Tạo giao dịch ${transactionRefNo} thành công!`,
+        msgClass: 'cssSuccess',
+        hPosition: 'center',
+      });
+
+      this.getOnCardDueDayInfo();
+    });
+  }
+
+  showCreateRollTermScheduleDialog(card: any) {
+
     const data = {
       clientId: card.clientId,
       panHolderName: card.clientName,
@@ -207,44 +293,13 @@ export class OnRollTermCardTabComponent implements OnInit {
     dialog.afterClosed().subscribe((response: any) => {
 
       const {rollTermBooking, requestAmount, feeRate} = response?.data?.value;
-      rollTermBooking.forEach((booking: any) => {
-        booking.amountBooking = booking.amountBooking;
-        booking.txnDate = this.datePipe.transform(booking.txnDate, 'dd/MM/yyyy');
-      });
-      const listBookingRollTerm = JSON.stringify(rollTermBooking, function (key, value) {
-        if (key === '$$hashKey') {
-          return undefined;
-        }
-        return value;
-      });
-
-      // prepare value for create schedule roll term transaction
-      info.type = 'rollTerm';
-      info.productId = 'AL01';
-      info.rate = feeRate;
-      info.requestAmount = requestAmount;
-      info.BookingInternalDtoListString = listBookingRollTerm;
-      info.clientName = card.clientName;
-      info.panNumber = card.cardNumber;
-      info.identifierId = card.cardId;
-      info.groupId = card.groupId ? card.groupId : '0';
-      info.cardType = card.cardType;
-      info.bankCode = card.bankCode;
-      info.bookingId = card.bookingId;
-      info.clientId = card.clientId;
-
-      this.isLoading = true;
-      this.transactionService.submitTransactionRollTermOnDialog(info).subscribe((data: any) => {
-        this.isLoading = false;
-        let transactionRefNo = data.result.tranRefNo;
-        this.alertService.alert({
-          message: `Tạo giao dịch ${transactionRefNo} thành công!`,
-          msgClass: 'cssSuccess',
-          hPosition: 'center',
-        });
-
-        this.getOnCardDueDayInfo();
-      });
+      if (!card.limit || !card.cardClass) {
+        this.addIdentifierExtraInfo(card, rollTermBooking, requestAmount, feeRate);
+        return;
+      } else{
+        this.submitTransactionRollTerm(card, rollTermBooking, requestAmount, feeRate);
+        return;
+      }
     });
   }
 

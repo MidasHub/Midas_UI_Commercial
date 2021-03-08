@@ -116,7 +116,7 @@ export class ManageTransactionComponent implements OnInit {
   totalFeeAmount = 0;
   totalCogsAmount = 0;
   totalPnlAmount = 0;
-  panelOpenState = false;
+  panelOpenState = true;
   filterData: any[];
   today = new Date();
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;

@@ -12,12 +12,12 @@
 
         <div fxFlexFill>
           <span fxFlex="40%">{{'Account_Transfer_Component.MakeAccountTransfer.lblApplicant'|translate}}</span>
-          <span fxFlex="60%">{{ accountTransferTemplateData.fromClient.displayName }}</span>
+          <span fxFlex="60%">{{ accountTransferTemplateData.fromClient? accountTransferTemplateData.fromClient.displayName : accountTransferTemplateData.fromAccount.groupName }}</span>
         </div>
 
         <div fxFlexFill>
           <span fxFlex="40%">{{'Account_Transfer_Component.MakeAccountTransfer.lblOffice'|translate}}</span>
-          <span fxFlex="60%">{{ accountTransferTemplateData.fromOffice.name }}</span>
+          <span fxFlex="60%">{{ accountTransferTemplateData.fromOffice? accountTransferTemplateData.fromOffice.name : accessToken.officeName }}</span>
         </div>
 
         <div fxFlexFill>

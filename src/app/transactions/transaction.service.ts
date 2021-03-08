@@ -64,18 +64,19 @@ export class TransactionService {
   }
 
   updateCardTrackingState(updateData: any): Observable<any> {
+
+    const expiredDateString = `${updateData.dueDay}/${updateData.expiredDateString?.substring(0, 2)}/${updateData.expiredDateString?.substring(
+      2,
+      4
+    )}`
     const httpParams = new HttpParams()
-      .set(
-        'expiredDate',
-        `${updateData.dueDay}/${updateData.expiredDateString.substring(0, 2)}/${updateData.expiredDateString.substring(
-          2,
-          4
-        )}`
-      )
+      .set('expiredDate', expiredDateString ? expiredDateString: "" )
       .set('refId', updateData.refId)
-      .set('note', updateData.note)
-      .set('state', updateData.trackingState)
-      .set('dueDay', updateData.dueDay)
+      .set('note', updateData.note ? updateData.note: "")
+      .set('state', updateData.trackingState ? updateData.trackingState: "A")
+      .set('dueDay', updateData.dueDay ? updateData.dueDay: "1" )
+      .set('limit', updateData.limitCard ? updateData.limitCard: "")
+      .set('classCard', updateData.classCard ? updateData.classCard: "")
       .set('isHold', updateData.isHold ? '1' : '0')
       .set('officeId', this.accessToken.officeId)
       .set('createdBy', this.accessToken.userId)
@@ -153,7 +154,7 @@ export class TransactionService {
       .set('accountNumber', transactionInfo.identifyClientDto.accountNumber)
       .set('accountBankId', transactionInfo.identifyClientDto.accountBankId)
       .set('accountTypeId', transactionInfo.identifyClientDto.accountTypeId)
-      .set('accountCash', transactionInfo.accountCash)
+      .set('accountCash', transactionInfo.accountCash? transactionInfo.accountCash : "")
       .set('feeRate', transactionInfo.rate)
       .set('toClientId', transactionInfo.clientId)
       .set('requestAmount', String(this.formatLong(transactionInfo.requestAmount)))
@@ -166,7 +167,10 @@ export class TransactionService {
       .set('officeId', this.accessToken.officeId)
       .set('createdBy', this.accessToken.userId)
       .set('accessToken', this.accessToken.base64EncodedAuthenticationKey);
+    if (transactionInfo.accountCash){
+      httpParams.set('accountCash', transactionInfo.accountCash);
 
+    }
     return this.http.post<any>(
       `${this.GatewayApiUrlPrefix}/transaction/create_rollTerm_retail_transaction`,
       httpParams

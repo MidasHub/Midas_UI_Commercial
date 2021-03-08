@@ -19,7 +19,7 @@ import {ClientsService} from '../../clients.service';
 import {TransactionService} from '../../../transactions/transaction.service';
 import {AlertService} from 'app/core/alert/alert.service';
 import {analyzeAndValidateNgModules} from '@angular/compiler';
-import {AddIdentitiesExtraInfoComponent} from './add-identities-extra-info/add-identities-extra-info.component';
+import {AddIdentitiesExtraInfoComponent} from './dialog-add-identities-extra-info/add-identities-extra-info.component';
 import {BanksService} from '../../../banks/banks.service';
 import {Logger} from 'app/core/logger/logger.service';
 const log = new Logger("-IDENTIFIER TAB-")
