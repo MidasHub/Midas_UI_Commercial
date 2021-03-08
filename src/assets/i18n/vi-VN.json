@@ -553,8 +553,8 @@
       "btnExport": "Xuất báo cáo"
     },
     "clientAdvanceCash": {
-      "titleClientAdvanceCash": "Ứng tiền cho khác",
-      "labelClientCash": "Khách hàng ứng tiền",
+      "titleClientAdvanceCash": "Nhận tạm ứng phí",
+      "labelClientCash": "Tài khoản tạm ứng của khách hàng",
       "labelTypes": "Loại",
       "labelAmountAdvance": "Số tiền ứng",
       "labelNoteAdvance": "Ghi chú"

@@ -15,4 +15,34 @@
   .sidebar-compact {
     width: 4rem;
   }
+
+  .contentCss{
+    position:relative;
+    top:64px;
+  }
+
+  .breadcrumbCss{
+    position:relative;
+    top:64px;
+  }
+
+  .progressBarCss{
+    position:fixed;
+    z-index: 9999;
+    top:64px;
+  }
+
+  .toolBarCss{
+    position: fixed;
+    top: 0px;
+    z-index: 9999;
+    width: 100%;
+  }
+
+  .footerCss{
+    position:fixed;
+    bottom: 0px;
+    z-index: 9999;
+    width: 100%;
+  }
 }
