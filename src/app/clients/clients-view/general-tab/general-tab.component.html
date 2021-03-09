@@ -112,9 +112,10 @@
       <td mat-cell *matCellDef="let element"> {{element.accountBalance | money }} </td>
     </ng-container>
 
-    <ng-container *ngIf="!isTeller" matColumnDef="Actions">
+    <ng-container matColumnDef="Actions">
       <th mat-header-cell *matHeaderCellDef> {{'Client_Component.ViewClient.TabGeneral.lblActions'| translate }}</th>
-      <td mat-cell *matCellDef="let element">
+      <td mat-cell *matCellDef="let element" >
+        <div *ngIf="!isTeller" >
         <button *ngIf="element.status.active" class="account-action-button" mat-raised-button color="primary"
                 (click)="routeEdit($event)" [routerLink]="['../','savings-accounts', element.id, 'actions', 'Deposit']">
           <i class="fa fa-arrow-up"></i>
@@ -139,6 +140,7 @@
                 [routerLink]="['../','savings-accounts', element.id, 'actions', 'Activate']">
           <i class="fa fa-check-circle"></i>
         </button>
+        </div>
       </td>
     </ng-container>
 
