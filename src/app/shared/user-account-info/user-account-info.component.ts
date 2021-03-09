@@ -29,6 +29,8 @@ export class UserAccountInfoComponent implements OnInit, OnDestroy {
   timer: any;
   listSaving: [];
   totalBalance: number;
+  private credentialsStorageKey = 'midasCredentials';
+  private storage: any;
 
   /**
    * @param {NotificationsService} notificationsService Notifications Service
@@ -39,8 +41,8 @@ export class UserAccountInfoComponent implements OnInit, OnDestroy {
     this.midasClientService.getInfoSavingAccountByUserId()
     .subscribe((response: any) => {
 
-      this.listSaving = response?.result?.listSavingAccount ;
-      this.totalBalance = response?.result?.totalBalance ;
+      this.listSaving = response.result.listSaving ;
+      this.totalBalance = response.result.totalBalance ;
 
     });
   }

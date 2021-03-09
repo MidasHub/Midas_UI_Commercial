@@ -39,10 +39,20 @@ export class MidasClientService {
     );
 
     const httpParams = new HttpParams()
-    .set('createdBy', this.accessToken.userId)
+    .set('createdBy',  this.accessToken.userId)
     .set('accessToken', this.accessToken.base64EncodedAuthenticationKey);
 
     return this.http.post<any>(`${this.GatewayApiUrlPrefix}/savingTransaction/get_info_saving_account_by_user_id`, httpParams);
+  }
+
+  getInfoModuleActive( userId?: number, officeId?:number, accessToken?:string): Observable<any> {
+
+    const httpParams = new HttpParams()
+    .set('createdBy', userId.toString() )
+    .set('officeId', officeId.toString())
+    .set('accessToken', accessToken );
+
+    return this.http.post<any>(`${this.GatewayApiUrlPrefix}/config/get_info_module_active`, httpParams);
   }
 
   searchClientByNameAndExternalIdAndPhoneAndDocumentKey(query: string): Observable<any> {

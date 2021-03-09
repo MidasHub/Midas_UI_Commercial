@@ -108,7 +108,6 @@ export class CreateBatchTransactionComponent implements OnInit {
   batchTxnName: any;
   bookingTxnDailyId: any;
   private destroy$ = new Subject<void>();
-
   filteredOptions: Observable<any[]>;
 
   private _filter(value: string): string[] {
@@ -128,9 +127,10 @@ export class CreateBatchTransactionComponent implements OnInit {
               private router: Router,
   ) {
     this.currentUser = this.authenticationService.getCredentials();
-    // this.formFilter = this.formBuilder.group({
-    //   'member': ['']
-    // });
+    if (!this.authenticationService.checkAppModuleSetting("billModule")){
+      this.displayedColumns.splice(this.displayedColumns.indexOf('invoiceAmount'), 1);
+    }
+
   }
 
   displayClient(client: any): string | undefined {
