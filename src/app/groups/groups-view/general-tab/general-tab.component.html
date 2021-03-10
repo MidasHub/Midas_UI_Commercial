@@ -53,21 +53,23 @@
         <ng-container matColumnDef="JLG Loan Application">
           <th mat-header-cell *matHeaderCellDef> {{'Group_Component.General_tab.CustomerDetails' |translate}}  </th>
           <td mat-cell *matCellDef="let element">
-            <div class="m-l-30" *ngIf="element.status.code !== 'clientStatusType.closed'">
-              <button class="account-action-button" mat-raised-button color="primary">
-                <i class="fa fa-eye" matTooltip="{{'Group_Component.General_tab.NewLoanApplication' |translate}}"></i>
-              </button>
-            </div>
+            <button class="account-action-button" mat-raised-button color="primary" (click)="addIdentifier(element)">
+              <i class="fa fa-credit-card" matTooltip="{{'Thêm thẻ mới' |translate}}"></i> Thêm thẻ mới
+            </button>
+            <button class="account-action-button" mat-raised-button color="primary" [routerLink]="['/clients', element.id, 'general']">
+              <i class="fa fa-eye" matTooltip="{{'Group_Component.General_tab.NewLoanApplication' |translate}}"></i>
+            </button>
           </td>
         </ng-container>
 
         <tr mat-header-row *matHeaderRowDef="clientMemberColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: clientMemberColumns;" [routerLink]="['/clients', row.id, 'general']" class="select-row"></tr>
-
+        <!-- <tr mat-row *matRowDef="let row; columns: clientMemberColumns;" [routerLink]="['/clients', row.id, 'general']" class="select-row"></tr> -->
+        <tr mat-row *matRowDef="let row; columns: clientMemberColumns;"class="select-row"></tr>
       </table>
       <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
     </div>
 
+    <h3>{{'Group_Component.General_tab.ClientMembersDiffidentOffice' |translate}}</h3>
     <div class="fix-table1-client">
       <div fxLayout fxLayoutAlign="start center">
         <mat-form-field fxFlex="40%">
@@ -98,16 +100,18 @@
         <ng-container matColumnDef="JLG Loan Application">
           <th mat-header-cell *matHeaderCellDef> {{'Group_Component.General_tab.CustomerDetails' |translate}}  </th>
           <td mat-cell *matCellDef="let element">
-            <div class="m-l-30" *ngIf="element.status.code !== 'clientStatusType.closed'">
-              <button class="account-action-button" mat-raised-button color="primary">
-                <i class="fa fa-eye" matTooltip="{{'Group_Component.General_tab.NewLoanApplication' |translate}}"></i>
-              </button>
-            </div>
+            <button class="account-action-button" mat-raised-button color="primary" (click)="addIdentifier(element)">
+              <i class="fa fa-credit-card"></i> Thêm thẻ mới
+            </button>
+            <button class="account-action-button" mat-raised-button color="primary" [routerLink]="['/clients', element.id, 'general']">
+              <i class="fa fa-eye" matTooltip="{{'Group_Component.General_tab.NewLoanApplication' |translate}}"></i>
+            </button>
           </td>
         </ng-container>
 
         <tr mat-header-row *matHeaderRowDef="clientMemberColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: clientMemberColumns;" [routerLink]="['/clients', row.id, 'general']" class="select-row"></tr>      
+        <!-- <tr mat-row *matRowDef="let row; columns: clientMemberColumns;" [routerLink]="['/clients', row.id, 'general']" class="select-row"></tr>       -->
+        <tr mat-row *matRowDef="let row; columns: clientMemberColumns;"class="select-row"></tr>
       </table>
       <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
     </div>

@@ -45,26 +45,72 @@ export class CreateCardBatchTransactionComponent implements OnInit {
               private bankService: BanksService,
               private alterService: AlertService,
               private clientService: ClientsService) {
-    this.formDialog = this.formBuilder.group({
-      'clientId': [''],
-      'documentTypeId': [''],
-      'description': [''],
-      'documentKey': [''],
-      'bank': [''],
-      'cardType': ['']
-    });
-    this.formDialog.get('clientId').valueChanges.subscribe(value => {
-      this.transactionService.getIdentifierTypeCC(value).subscribe(result => {
-        this.documentAlreadyExits = result?.result?.listIdentifier?.filter((v: any) => Number(v.documentType.id) >= 38 && Number(v.documentType.id) <= 57).map((v: any) => {
-          return {
-            documentTypeId: v.documentType?.id,
-            documentKey: v.documentKey,
-            description: v.description,
-            exit: true
-          };
+
+    if(data.members.length ===  1){
+      console.log("data", data);
+      this.formDialog = this.formBuilder.group({
+        'clientId': [data.members[0].clientId],
+        'documentTypeId': [''],
+        'description': [''],
+        'documentKey': [''],
+        'bank': [''],
+        'cardType': ['']
+      });
+      //this.formDialog.get('clientId').valueChanges.subscribe(value => {
+        this.transactionService.getIdentifierTypeCC(data.members[0].clientId).subscribe(result => {
+          this.documentAlreadyExits = result?.result?.listIdentifier?.filter((v: any) => Number(v.documentType.id) >= 38 && Number(v.documentType.id) <= 57).map((v: any) => {
+            return {
+              documentTypeId: v.documentType?.id,
+              documentKey: v.documentKey,
+              description: v.description,
+              exit: true
+            };
+          });
+        });
+      //});
+
+    }else{
+      this.formDialog = this.formBuilder.group({
+        'clientId': [''],
+        'documentTypeId': [''],
+        'description': [''],
+        'documentKey': [''],
+        'bank': [''],
+        'cardType': ['']
+      });
+      this.formDialog.get('clientId').valueChanges.subscribe(value => {
+        this.transactionService.getIdentifierTypeCC(value).subscribe(result => {
+          this.documentAlreadyExits = result?.result?.listIdentifier?.filter((v: any) => Number(v.documentType.id) >= 38 && Number(v.documentType.id) <= 57).map((v: any) => {
+            return {
+              documentTypeId: v.documentType?.id,
+              documentKey: v.documentKey,
+              description: v.description,
+              exit: true
+            };
+          });
         });
       });
-    });
+    }
+    // this.formDialog = this.formBuilder.group({
+    //   'clientId': [''],
+    //   'documentTypeId': [''],
+    //   'description': [''],
+    //   'documentKey': [''],
+    //   'bank': [''],
+    //   'cardType': ['']
+    // });
+    // this.formDialog.get('clientId').valueChanges.subscribe(value => {
+    //   this.transactionService.getIdentifierTypeCC(value).subscribe(result => {
+    //     this.documentAlreadyExits = result?.result?.listIdentifier?.filter((v: any) => Number(v.documentType.id) >= 38 && Number(v.documentType.id) <= 57).map((v: any) => {
+    //       return {
+    //         documentTypeId: v.documentType?.id,
+    //         documentKey: v.documentKey,
+    //         description: v.description,
+    //         exit: true
+    //       };
+    //     });
+    //   });
+    // });
     this.transactionService.getDocumentTemplate().subscribe(result => {
       this.documents = result?.result?.documentTemplate?.allowedDocumentTypes?.filter((type: any) => Number(type.id) >= 38 && Number(type.id) <= 57);
     });

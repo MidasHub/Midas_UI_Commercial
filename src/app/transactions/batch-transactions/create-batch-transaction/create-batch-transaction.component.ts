@@ -629,6 +629,7 @@ export class CreateBatchTransactionComponent implements OnInit {
   }
 
   addCard() {
+    console.log("member",this.members);
     const dialogConfig = new MatDialogConfig();
     dialogConfig.data = {
       members: this.members,
