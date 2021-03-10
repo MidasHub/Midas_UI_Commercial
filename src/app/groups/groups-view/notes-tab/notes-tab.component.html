@@ -1,6 +1,7 @@
 <div class="tab-container mat-typography">
 
-  <h3>Notes</h3>
+  <!-- <h3>Notes</h3> -->
+  <h3>Ghi chú</h3>
 
   <form #formRef="ngForm" [formGroup]="noteForm" fxLayout="row" fxLayoutAlign="start baseline" fxLayoutGap="20px"
       (ngSubmit)="addNote()">
@@ -10,7 +11,8 @@
     </mat-form-field>
 
     <button mat-raised-button fxFlex color="primary" *midasHasPermission="'CREATE_GROUPNOTE'" [disabled]="!noteForm.valid">
-      <fa-icon icon="plus"></fa-icon>&nbsp;&nbsp; Add
+      <!-- <fa-icon icon="plus"></fa-icon>&nbsp;&nbsp; Add -->
+      <fa-icon icon="plus"></fa-icon>&nbsp;&nbsp; Thêm
     </button>
 
   </form>
@@ -21,8 +23,10 @@
       <fa-icon icon="sticky-note" matListIcon></fa-icon>
       <h3 matLine>{{groupNote.note}} </h3>
       <p matLine>
-        <span>Created by: {{groupNote.createdByUsername}}</span><br />
-        <span>Date: {{groupNote.createdOn | date}}</span>
+        <!-- <span>Created by: {{groupNote.createdByUsername}}</span><br />
+        <span>Date: {{groupNote.createdOn | date}}</span> -->
+        <span>Tạo bởi: {{groupNote.createdByUsername}}</span><br />
+        <span>Ngày: {{groupNote.createdOn | date}}</span>
       </p>
       <div fxLayout="row" fxLayoutAlign="flex-start">
         <button mat-button color="primary" (click)="editNote(groupNote.id,groupNote.note,i)">
