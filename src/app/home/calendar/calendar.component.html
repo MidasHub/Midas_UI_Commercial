@@ -1,7 +1,7 @@
 <!-- Phần calendar -->
 <div  fxLayout="column">
   <div fxLayout="row" fxLayout.lt-md="column" fxLayoutAlign="space-around start" fxLayoutGap="1%">
-    
+
       <mat-button-toggle-group appearance="legacy" name="fontStyle" aria-label="Font Style">
         <mat-button-toggle mwlCalendarPreviousView [view]="view" [(viewDate)]="viewDate"
         (viewDateChange)="closeOpenMonthViewDay()">Tháng trước</mat-button-toggle>
@@ -9,15 +9,15 @@
         <mat-button-toggle mwlCalendarNextView [view]="view" [(viewDate)]="viewDate"
         (viewDateChange)="closeOpenMonthViewDay()">Tháng sau</mat-button-toggle>
       </mat-button-toggle-group>
-      
+
     <h3>{{ viewDate | calendarDate:(view + 'ViewTitle'):'en' }}</h3>
-  
+
     <mat-button-toggle-group appearance="legacy" name="fontStyle" aria-label="Font Style">
       <mat-button-toggle  (click)="setView(CalendarView.Month)" [class.active]="view === CalendarView.Month">Lịch tháng</mat-button-toggle>
       <mat-button-toggle  (click)="setView(CalendarView.Week)" [class.active]="view === CalendarView.Week">Lịch tuần</mat-button-toggle>
       <mat-button-toggle (click)="setView(CalendarView.Day)" [class.active]="view === CalendarView.Day">Lịch ngày</mat-button-toggle>
     </mat-button-toggle-group>
-   
+
 </div>
 <br />
 <div [ngSwitch]="view">
@@ -32,16 +32,14 @@
     (eventClicked)="handleEvent('Clicked', $event.event)" (eventTimesChanged)="eventTimesChanged($event)">
   </mwl-calendar-day-view>
 </div>
-<br /><br />
+
 <!-- Phần bảng danh sách công việc -->
-<h3>
-  Thêm công việc mới:   
+<!-- <h3>
+  Thêm công việc mới:
   <button  mat-mini-fab  color="primary" (click)="addEvent()">
-    <fa-icon icon="plus"></fa-icon>    
-    <!-- {{'Home_Component.btnNewCustomer'| translate}} -->
+    <fa-icon icon="plus"></fa-icon>
   </button>
 
-  <!-- <div class="clearfix"></div> -->
 </h3>
 
 <div class="table-responsive">
@@ -68,38 +66,38 @@
           <mat-form-field style="width: 32px;" >
             <input matInput type="color" [(ngModel)]="event.color.primary" (change)="refresh.next()" />
           </mat-form-field>
-          
+
         </td>
         <td style="width: 5%;">
           <mat-form-field style="width: 32px;">
             <input matInput type="color" [(ngModel)]="event.color.secondary" (change)="refresh.next()" />
           </mat-form-field>
-          
+
         </td>
         <td style="width: 15%;">
           <mat-form-field  style="width: 95%">
             <input matInput class="form-control" type="date" mwlFlatpickr [(ngModel)]="event.start"
             (ngModelChange)="refresh.next()" dateFormat="Y-m-dTH:i" altFormat="F j, Y H:i" placeholder="Not set" />
           </mat-form-field>
-         
+
         </td>
         <td style="width: 15%;">
           <mat-form-field style="width: 94%">
             <input matInput class="form-control" type="date" mwlFlatpickr [(ngModel)]="event.end" (ngModelChange)="refresh.next()"
             dateFormat="Y-m-dTH:i" altFormat="F j, Y H:i" placeholder="Not set" />
           </mat-form-field>
-          
+
         </td>
         <td fxLayout="row" fxLayout.lt-md="column" fxLayoutAlign="center center ">
           <button mat-mini-fab color="warn" (click)="addEvent()" title="Xóa events">
             <fa-icon icon="trash"></fa-icon>
           </button>
-  
+
         </td>
       </tr>
     </tbody>
   </table>
-</div>
+</div> -->
 <!-- ------------------------- -->
 <!-- <ng-template #modalContent let-close="close">
   <div class="modal-header">

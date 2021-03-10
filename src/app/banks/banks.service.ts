@@ -84,6 +84,13 @@ export class BanksService {
     return this.banks;
   }
 
+  getAllCardOnDueDay(): Observable<any> {
+    const httpParams = new HttpParams()
+      .set('createdBy', this.accessToken.userId)
+      .set('accessToken', this.accessToken.base64EncodedAuthenticationKey);
+    return this.http.post<any>(`${this.GatewayApiUrlPrefix}/card/get_all_card_on_due_day`, httpParams);
+  }
+
   storeBank(bankCode: string, bankName: string): Observable<any> {
     const httpParams = new HttpParams()
       .set('createdBy', this.accessToken.userId)
