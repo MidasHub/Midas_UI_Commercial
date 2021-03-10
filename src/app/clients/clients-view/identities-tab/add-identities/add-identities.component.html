@@ -13,7 +13,11 @@
 
   <mat-form-field fxFlex="96%">
     <mat-label>{{'Client_Component.ViewClient.TabIdentities.inputUniqueId' |translate}}</mat-label>
-    <input matInput formControlName="documentKey">
+    <input *ngIf="!form.contains('documentCardType')" matInput formControlName="documentKey" >
+    <input *ngIf="form.contains('documentCardType')"
+    matInput
+    formControlName="documentKey"
+    [dropSpecialCharacters]="true" mask="0000-0000-0000-0000" >
   </mat-form-field>
 
   <mat-form-field fxFlex="96%" *ngIf="form.contains('documentCardBank')">
@@ -35,7 +39,7 @@
   </mat-form-field>
 
   <mat-form-field *ngIf="form.contains('dueDay')" fxFlex="48%">
-    <mat-label>Ngày đáo hạn thẻ:</mat-label>
+    <mat-label>Ngày đáo hạn thẻ(vd: 03 --> ngày 3):</mat-label>
     <input
       pattern
       maxlength="2"
@@ -43,7 +47,7 @@
   </mat-form-field>
 
   <mat-form-field *ngIf="form.contains('expiredDate')" fxFlex="48%">
-    <mat-label>Ngày hết hạn thẻ:</mat-label>
+    <mat-label>Ngày hết hạn thẻ(vd: 10/24 --> tháng 10 năm 2024):</mat-label>
     <input
       matInput
       maxlength="5"
