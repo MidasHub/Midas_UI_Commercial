@@ -43,6 +43,7 @@ export class ManageTransactionComponent implements OnInit {
     "txnDate",
     "officeName",
     "panHolderName",
+    "panBank",
     "terminalAmount",
     "feeAmount",
     "cogsAmount",

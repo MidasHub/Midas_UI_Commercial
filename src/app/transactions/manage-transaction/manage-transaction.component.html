@@ -196,13 +196,13 @@
       </ng-container>
 
       <ng-container matColumnDef="officeName">
-        <th mat-header-cell *matHeaderCellDef>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
           Chi nhánh / <br />
           Người tạo / <br />
           Máy Pos
         </th>
         <td mat-cell *matCellDef="let journalEntry">
-          {{ journalEntry.officeName }} <br />
+          <!-- {{ journalEntry.officeName }} <br /> -->
           <span class="blue_text">{{ journalEntry.createdByName }} </span><br />
           <span class="red_text">{{ journalEntry.terminalId }}</span>
         </td>
@@ -218,6 +218,14 @@
         <td mat-cell *matCellDef="let journalEntry">
           {{ journalEntry.panHolderName }} <br />
           <span class="green_text">{{ journalEntry.agencyName == "#" ? "" : journalEntry.agencyName  }}</span>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="panBank">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Thẻ /<br /> Ngân hàng</th>
+        <td mat-cell *matCellDef="let journalEntry">
+          {{ journalEntry.panNumber.replace("XXX-XXX", "X")}} <br />
+          <span class="blue_text">({{ journalEntry.panBank  }})</span>
         </td>
       </ng-container>
 
