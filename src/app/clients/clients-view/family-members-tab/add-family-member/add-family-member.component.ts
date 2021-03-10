@@ -19,7 +19,7 @@ import { SettingsService } from 'app/settings/settings.service';
 export class AddFamilyMemberComponent implements OnInit {
 
   /** Minimum Due Date allowed. */
-  minDate = new Date(2000, 0, 1);
+  minDate = new Date(1920, 0, 1);
   /** Maximum Due Date allowed. */
   maxDate = new Date();
   /** Add family member form. */
@@ -89,6 +89,11 @@ export class AddFamilyMemberComponent implements OnInit {
     this.clientsService.addFamilyMember(this.clientId, familyMemberData).subscribe(res => {
       this.router.navigate(['../'], { relativeTo: this.route });
     });
+  }
+  onChange(event:any){
+    let currentDate: Date = new Date();
+    this.addFamilyMemberForm.patchValue({age: currentDate.getFullYear() - event.value.getFullYear()});   
+
   }
 
 }
