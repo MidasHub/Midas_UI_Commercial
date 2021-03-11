@@ -45,39 +45,44 @@ export class SavingsButtonsConfiguration {
           },
         ];
         break;
-      // case 'Submitted and pending approval':
-      //   this.buttonsArray = [
-      //     {
-      //       name: 'Modify Application',
-      //       icon: 'fa fa-pencil ',
-      //       taskPermissionName: 'UPDATE_SAVINGSACCOUNT'
-      //     },
-      //     {
-      //       name: 'Approve',
-      //       icon: 'fa fa-check',
-      //       taskPermissionName: 'APPROVE_SAVINGSACCOUNT'
-      //     }
-      //   ];
-      //   break;
-      // case 'Approved':
-      //   this.buttonsArray = [
-      //     {
-      //       name: 'Undo Approval',
-      //       icon: 'fa fa-undo',
-      //       taskPermissionName: 'APPROVALUNDO_SAVINGSACCOUNT'
-      //     },
-      //     {
-      //       name: 'Activate',
-      //       icon: 'fa fa-check',
-      //       taskPermissionName: 'ACTIVATE_SAVINGSACCOUNT'
-      //     },
-      //     {
-      //       name: 'Add Charge',
-      //       icon: 'fa fa-plus',
-      //       taskPermissionName: 'CREATE_SAVINGSACCOUNTCHARGE'
-      //     }
-      //   ];
-      // break;
+      case 'Submitted and pending approval':
+        this.buttonsArray = [
+          {
+            name: 'Modify Application',
+            icon: 'fa fa-pencil ',
+            taskPermissionName: 'UPDATE_SAVINGSACCOUNT',
+            action: "Modify Application"
+          },
+          {
+            name: 'Approve',
+            icon: 'fa fa-check',
+            taskPermissionName: 'APPROVE_SAVINGSACCOUNT',
+            action: "Approve"
+          }
+        ];
+        break;
+      case 'Approved':
+        this.buttonsArray = [
+          {
+            name: 'Undo Approval',
+            icon: 'fa fa-undo',
+            taskPermissionName: 'APPROVALUNDO_SAVINGSACCOUNT',
+            action: "Undo Approval"
+          },
+          {
+            name: 'Activate',
+            icon: 'fa fa-check',
+            taskPermissionName: 'ACTIVATE_SAVINGSACCOUNT',
+            action: "Activate"
+          },
+          // {
+          //   name: 'Add Charge',
+          //   icon: 'fa fa-plus',
+          //   taskPermissionName: 'CREATE_SAVINGSACCOUNTCHARGE',
+          //   action: "Add Charge"
+          // }
+        ];
+      break;
       default:
         this.buttonsArray = [];
     }
