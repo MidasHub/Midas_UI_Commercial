@@ -60,6 +60,16 @@ import {BanksModule} from './banks/banks.module';
 import { CommonHttpParams } from './shared/CommonHttpParams';
 
 /**
+ * Import Vietnamese locale for built-in pipe like DatePipe, CurrencyPipe...
+ */
+ import { registerLocaleData } from '@angular/common';
+ import localeVi from '@angular/common/locales/vi';
+import { LOCALE_ID } from '@angular/core';
+ 
+ registerLocaleData(localeVi, 'vi');
+
+
+/**
  * App Module
  *
  * Core module and all feature modules should be imported here in proper order.
@@ -111,8 +121,12 @@ import { CommonHttpParams } from './shared/CommonHttpParams';
     BanksModule,
     AppRoutingModule],
   declarations: [WebAppComponent, NotFoundComponent],
-  providers: [CommonHttpParams],
+  providers: [CommonHttpParams,
+    {
+      provide: LOCALE_ID,
+      useValue: 'vi'
+    },
+  ],
   bootstrap: [WebAppComponent]
 })
-export class AppModule {
-}
+export class AppModule { }
