@@ -74,7 +74,7 @@
       <button mat-raised-button *midasHasPermission="'UPDATE_GROUP'" (click)="doAction('Edit')">
         <i class="fa fa-edit"></i>Edit
       </button>
-      <button mat-raised-button *midasHasPermission="'CREATE_CLIENT'" (click)="doAction('CreateClient')">
+      <button mat-raised-button *midasHasPermission="'CREATE_CLIENT'" [routerLink]="['/clients/create/']" [queryParams]="{'group': groupViewData.id }">
         <i class="fa fa-plus"></i>Add Clients
       </button>
       

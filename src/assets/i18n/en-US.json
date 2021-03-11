@@ -664,6 +664,7 @@
       "buttonSetupAll": "Setup",
       "buttonResetDefault": "Reset",
       "buttonSubmit": "Submit",
+      "buttonBackClicked": "Back",
       "buttonSubmitUpdate": "Submit Update",
       "tableFee": {
         "Office": "Office",

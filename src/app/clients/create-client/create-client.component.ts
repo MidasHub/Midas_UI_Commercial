@@ -1,5 +1,5 @@
 /** Angular Imports */
-import {Component, Input, ViewChild} from '@angular/core';
+import {Component, Input, OnInit, ViewChild} from '@angular/core';
 import {Router, ActivatedRoute} from '@angular/router';
 
 /** Custom Services */
@@ -17,6 +17,7 @@ import {I18nService} from 'app/core/i18n/i18n.service';
 import * as _ from 'lodash';
 import {faBackspace} from '@fortawesome/free-solid-svg-icons';
 
+import {GroupsService} from 'app/groups/groups.service';
 
 /**
  * Create Client Component.
@@ -26,7 +27,7 @@ import {faBackspace} from '@fortawesome/free-solid-svg-icons';
   templateUrl: './create-client.component.html',
   styleUrls: ['./create-client.component.scss']
 })
-export class CreateClientComponent {
+export class CreateClientComponent implements OnInit{
 
   /** Client General Step */
   @ViewChild(ClientGeneralStepComponent, {static: true}) clientGeneralStep: ClientGeneralStepComponent;
@@ -43,6 +44,7 @@ export class CreateClientComponent {
   clientAddressFieldConfig: any;
   clientIdentifierTemplate: any;
 
+  groupId: string;
   /**
    * Fetches client and address template from `resolve`
    * @param {ActivatedRoute} route Activated Route
@@ -55,8 +57,9 @@ export class CreateClientComponent {
               private clientsService: ClientsService,
               private settingsService: SettingsService,
               private alertService: AlertService,
-              private i18n: I18nService) {
-    this.route.data.subscribe((data: { clientTemplate: any, clientAddressFieldConfig: any, clientIdentifierTemplate: any, currentUser: any }) => {
+              private i18n: I18nService,
+              private groupsService: GroupsService,) {
+    this.route.data.subscribe((data: { groupId: any, clientTemplate: any, clientAddressFieldConfig: any, clientIdentifierTemplate: any, currentUser: any }) => {
       this.clientTemplate = data.clientTemplate;
       this.clientAddressFieldConfig = data.clientAddressFieldConfig;
       this.clientIdentifierTemplate = data.clientIdentifierTemplate;
@@ -69,6 +72,19 @@ export class CreateClientComponent {
         }
       }
     );
+
+    
+    this.route.queryParams.subscribe(params => {
+      console.log('Called Constructor = ======', params['group']); 
+      this.groupId = params['group'];
+    });
+  }
+  ngOnInit(){
+     
+    // this.route.params.subscribe(({groupId}: any) => {
+    //   // @ts-ignore
+    //    console.log("groupId" , groupId ) ;
+    // });
   }
 
   /**
@@ -151,10 +167,10 @@ export class CreateClientComponent {
       alert('Vui lòng nhập ít nhất một địa chỉ');
       return;
     }
-    if (_.isEmpty(this.client.files) || this.client.files.length !== 2) {
-      alert('Vui lòng chọn hình ảnh trước khi upload, không quá 2 hình');
-      return;
-    }
+    // if (_.isEmpty(this.client.files) || this.client.files.length !== 2) {
+    //   alert('Vui lòng chọn hình ảnh trước khi upload, không quá 2 hình');
+    //   return;
+    // }
     const clientData = {
       ...data,
       dateFormat,
@@ -181,6 +197,16 @@ export class CreateClientComponent {
               // done += 1;
             });
           }
+
+          if(this.groupId){
+            this.groupsService.executeGroupCommand(this.groupId, 'associateClients', {clientMembers: [response.clientId]}) .subscribe(() => { 
+              this.alertService.alert({
+                message: 'Added Client to group',
+                msgClass: 'cssSuccess'
+              });
+             }); 
+          }
+
         });
         // while (done !== this.client.files.length) {
         // }

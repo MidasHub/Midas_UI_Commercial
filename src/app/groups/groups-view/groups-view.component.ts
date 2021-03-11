@@ -84,8 +84,6 @@ export class GroupsViewComponent {
       case 'Delete':
         this.deleteGroup();
         break;
-      case 'CreateClient':
-        break;
     }
   }
 
@@ -142,8 +140,5 @@ export class GroupsViewComponent {
       }
     });
   }
-  private CreateClient(){
 
-  }
-  
 }

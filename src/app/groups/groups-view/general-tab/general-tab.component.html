@@ -19,7 +19,7 @@
   </div>
 
   <!-- Client Members Table -->
-  <div *ngIf="groupClientMembers">
+  <div *ngIf="groupClientMembersSameOffice">
      
     <h3>{{'Group_Component.General_tab.ClientMembers' |translate}}</h3>
     <div class="fix-table-client">
@@ -68,7 +68,8 @@
       </table>
       <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
     </div>
-
+  </div>
+  <div *ngIf="groupClientMembersDiffidentOffice">
     <h3>{{'Group_Component.General_tab.ClientMembersDiffidentOffice' |translate}}</h3>
     <div class="fix-table1-client">
       <div fxLayout fxLayoutAlign="start center">
@@ -115,8 +116,9 @@
       </table>
       <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
     </div>
-
   </div>
+
+
   <div style="clear: both;"></div>
   <div *ngIf="loanAccounts">
 
