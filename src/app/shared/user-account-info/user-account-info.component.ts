@@ -29,26 +29,16 @@ export class UserAccountInfoComponent implements OnInit, OnDestroy {
   timer: any;
   listSaving: [];
   totalBalance: number;
-  private credentialsStorageKey = 'midasCredentials';
-  private storage: any;
 
   /**
    * @param {NotificationsService} notificationsService Notifications Service
    */
   constructor(public midasClientService: MidasClientService) {
-    this.listSaving = [];
-    this.totalBalance = 0;
-    this.midasClientService.getInfoSavingAccountByUserId()
-    .subscribe((response: any) => {
 
-      this.listSaving = response.result.listSaving ;
-      this.totalBalance = response.result.totalBalance ;
-
-    });
   }
 
   ngOnInit() {
-    setTimeout(() => { this.fetchSavingAccountOfUser(); }, 60000);
+    this.fetchSavingAccountOfUser();
   }
 
   ngOnDestroy() {
@@ -89,7 +79,4 @@ export class UserAccountInfoComponent implements OnInit, OnDestroy {
     this.unreadNotifications = [];
     this.setTotalBalance();
   }
-
-
-
 }
