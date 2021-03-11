@@ -9,8 +9,12 @@ import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.co
 /** Custom Services */
 import { GroupsService } from 'app/groups/groups.service';
 import { ClientsService } from 'app/clients/clients.service';
-import { MatDialog } from '@angular/material/dialog';
-
+import { MatDialog, MatDialogConfig, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { ViewChild } from '@angular/core'; 
+import { Inject } from '@angular/core';
 /**
  * Manage Group Members Component
  */
@@ -20,7 +24,8 @@ import { MatDialog } from '@angular/material/dialog';
   styleUrls: ['./manage-group-members.component.scss']
 })
 export class ManageGroupMembersComponent implements AfterViewInit {
-
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
   /** Group Data */
   groupData: any;
   /** Client data. */
@@ -30,6 +35,8 @@ export class ManageGroupMembersComponent implements AfterViewInit {
   /** Client Choice. */
   clientChoice = new FormControl('');
 
+  dataSource: MatTableDataSource<any>;
+  displayedColumns =  ['Name', 'Action'];
   /**
    * Fetches group action data from `resolve`
    * @param {ActivatedRoute} route Activated Route
@@ -44,6 +51,10 @@ export class ManageGroupMembersComponent implements AfterViewInit {
     this.route.data.subscribe((data: { groupActionData: any }) => {
       this.groupData = data.groupActionData;
       this.clientMembers = data.groupActionData.clientMembers;
+       
+      this.dataSource = new MatTableDataSource(data.groupActionData.clientMembers);
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
     });
   }
 
@@ -112,6 +123,36 @@ export class ManageGroupMembersComponent implements AfterViewInit {
    * @returns {string} Client name if valid otherwise undefined.
    */
   showClientDetail(client: any): void {
-    return alert("Nhờ anh em tạo dialog box show thông tin khách hàng " + JSON.stringify(client) + " giúp anh nhé ! (Jean) ");
+    const dialogRef = this.dialog.open(DialogOverviewExampleDialog, {
+      width: '400px',
+      data: {...client}
+    });
+    //dialogRef.afterClosed().subscribe();
   }
+ 
+  doFilterGroupClients(filterValue: string) {
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+}
+
+export interface DialogDataClient {
+  animal: string;
+  name: string;
+}
+@Component({
+  selector: 'dialog-overview-example-dialog',
+  templateUrl: 'group_member_details.html',
+})
+export class DialogOverviewExampleDialog {
+
+  constructor(
+    public dialogRef: MatDialogRef<DialogOverviewExampleDialog>,
+    @Inject(MAT_DIALOG_DATA) public data: DialogDataClient) {
+      console.log("data===",data);
+    }
+
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
+
 }

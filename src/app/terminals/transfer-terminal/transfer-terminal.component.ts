@@ -44,7 +44,6 @@ export class TransferTerminalComponent implements OnInit {
     'limitRemain': [''],
     });
     this.terminalsService.getTerminalInfo(this.terminalId).subscribe((data) => {
-      console.log("TransferTerminalComponent result",data);
       if(data.status==='200'){
         this.itemPos = data.result.limitPos;
         this.offices = data.result.listOffice;

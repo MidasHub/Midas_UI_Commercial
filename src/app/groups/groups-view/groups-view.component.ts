@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 
@@ -25,6 +25,8 @@ export class GroupsViewComponent {
   /** Group datatables data */
   groupDatatables: any;
 
+  lastTransaction: any;
+  salesLast3months: any;
   /**
    * Fetches group data from `resolve`
    * @param {ActivatedRoute} route Activated Route
@@ -40,8 +42,20 @@ export class GroupsViewComponent {
       this.groupViewData = data.groupViewData;
       this.groupDatatables = data.groupDatatables;
     });
+      this.groupsService.getLastTransaction(this.groupViewData.id).subscribe((response: any) => {
+      this.lastTransaction = response.result.result;
+    });
+    this.groupsService.getSalesLast3months(this.groupViewData.id).subscribe((response: any) => {
+      this.salesLast3months = response.result.result;
+    });
   }
 
+  // ngOnInit(): void {
+    
+  //   // this.lastTransaction = this.groupsService.getLastTransaction(this.groupViewData.id);
+  //   // this.salesLast3months = this.groupsService.getSalesLast3months(this.groupViewData.id);
+
+  // }
   /**
    * Performs action button/option action.
    * @param {string} name action name.

@@ -12,7 +12,7 @@
     margin-left: auto;
   }
   table {
-    width: 100%;
+    // width: 100%;
     .account-action-button{
       min-width: 26px;
       padding: 0 6px;
@@ -26,4 +26,14 @@
   i:hover {
     cursor: pointer;
   }
+
+  // .fix-table-client{
+  //   width: 50%;
+  //   float: left;
+  // }
+
+  // .fix-table1-client{
+  //   width: 50%;
+  // }
+
 }

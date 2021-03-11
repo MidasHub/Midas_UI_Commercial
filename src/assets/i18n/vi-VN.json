@@ -502,6 +502,35 @@
       "btnCancel": "Hủy",
       "btnSubmit": "Hoàn tất",
       "msgCreatedGroup": "Đã tạo thành công Đại lý"
+    },
+    "General_tab":{
+      "GroupDetails":"Thông tin Đại lý",
+      "ActiveClientLoans":"Active Client Loans", 
+      "ActiveClientBorrowers": "Active Client Borrowers", 
+      "ActiveOverdueClientLoans": "Active Overdue Client Loans",
+      "ActiveGroupLoans": "Active Group Loans",  
+      "ActiveGroupBorrowers": "Active Group Borrowers",  
+      "ActiveOverdueGroupLoans":"Active Overdue Group Loans",   
+      "ActiveClients": "Active Clients", 
+      "ClientMembers": "Client Members",
+      "ClientMembersDiffidentOffice": "Client Members Diffident Office", 
+      "Name":"Name",
+      "AccountNo.":"Account No.",
+      "Office":"Office",
+      "CustomerDetails":"Thông tin khách hàng", 
+      "LoanAccounts":"Loan Accounts",
+      "LoanAccount": "Loan Account",
+      "OriginalLoan": "Original Loan",
+      "LoanBalance":"Loan Balance",
+      "AmountPaid":"Amount Paid",
+      "Type":"Loại",
+      "ClosedDate":"Ngày đóng",
+      "SavingAccounts":"Saving Accounts",
+      "LastActive":"Last Active",
+      "Balance":"Số dư hiện tại",
+      "Actions":"Hành động",
+      "SavingAccount":"Saving Account",
+      "NewLoanApplication":"New Loan Application"
     }
   },
   "Saving_Account_Component": {
@@ -637,6 +666,7 @@
       "buttonSetupAll": "Áp dụng cho toàn hệ thống",
       "buttonResetDefault": "Hoàn tác",
       "buttonSubmit": "Khởi tạo",
+      "buttonBackClicked": "Quay lại",
       "buttonSubmitUpdate": "Cập nhật",
       "tableFee": {
         "Office": "Chi nhánh",
