@@ -218,19 +218,18 @@ export class TransactionService {
   getListRollTermTransactionOpenByUserId(payload: {
     fromDate: string;
     toDate: string;
-    clientName: string;
-    cardNumber: string;
-    terminalAmount: string;
+    query: string;
+    bankFilter: string;
+    createdByFilter: string;
     limit: number;
     offset: number;
   }): Observable<any> {
     let httpParams = this.commonHttpParams.getCommonHttpParams();
-    httpParams = httpParams.set("cardNumber", !payload.cardNumber ? "%%" : `%${payload.cardNumber}%`);
-    httpParams = httpParams.set("customerName", !payload.clientName ? "%%" : `%${payload.clientName}%`);
-    httpParams = httpParams.set("agencyName", "%%");
+    httpParams = httpParams.set("bankFilter", payload.bankFilter == 'ALL' ? "%%" : payload.bankFilter);
+    httpParams = httpParams.set("createdByFilter", payload.createdByFilter == 'ALL' ? "%%" : payload.createdByFilter);
+    httpParams = httpParams.set("customerSearch", !payload.query ? "%%" : `%${payload.query}%`);
     httpParams = httpParams.set("limit", String(payload.limit));
     httpParams = httpParams.set("offset", String(payload.offset));
-    httpParams = httpParams.set("amountTransaction", !payload.terminalAmount ? "%%" : `%${payload.terminalAmount}%`);
     httpParams = httpParams.set("fromDate", payload.fromDate);
     httpParams = httpParams.set("toDate", payload.toDate);
 

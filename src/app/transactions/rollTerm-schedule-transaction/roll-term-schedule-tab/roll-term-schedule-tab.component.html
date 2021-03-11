@@ -22,23 +22,29 @@
       <div [formGroup]="formFilter" fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column" [formGroup]="formFilter">
 
         <mat-form-field fxFlex="18%">
-          <mat-label>Khách hàng/số thẻ</mat-label>
-          <input matInput formControlName="panHolderName" />
-        </mat-form-field>
-
-        <mat-form-field fxFlex="18%">
-          <mat-label>Tiền giao dịch</mat-label>
-          <input matInput formControlName="terminalAmount" currencyMask />
-        </mat-form-field>
-
-        <mat-form-field fxFlex="18%">
           <mat-label>Nhân viên</mat-label>
-          <mat-select formControlName="staffId">
+          <mat-select formControlName="createdByFilter">
             <mat-option *ngFor="let type of staffs" [value]="type.id">
               {{ type.displayName }}
             </mat-option>
           </mat-select>
         </mat-form-field>
+
+        <mat-form-field fxFlex="18%">
+          <mat-label>Ngân hàng</mat-label>
+          <mat-select formControlName="bankFilter">
+            <mat-option *ngFor="let bank of banks" [value]="bank.bankCode">
+              {{ bank.bankName }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field fxFlex="18%">
+          <mat-label>Thông tin khách hàng</mat-label>
+          <input matInput formControlName="query" />
+        </mat-form-field>
+
+
         <div fxFlex="18%">
           <button
             *ngIf="fromDateAndToDate"

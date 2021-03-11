@@ -5,6 +5,7 @@ import { FormBuilder, FormGroup } from "@angular/forms";
 import { MatDialog } from "@angular/material/dialog";
 import { MatPaginator } from "@angular/material/paginator";
 import { MatSort } from "@angular/material/sort";
+import { BanksService } from "app/banks/banks.service";
 import { CentersService } from "app/centers/centers.service";
 import { AlertService } from "app/core/alert/alert.service";
 import { AuthenticationService } from "app/core/authentication/authentication.service";
@@ -97,6 +98,7 @@ export class RollTermScheduleTabComponent implements OnInit {
   ];
   partners: any[];
   staffs: any[];
+  banks: any[];
   offices: any[];
   totalTerminalAmount = 0;
   totalFeeAmount = 0;
@@ -115,22 +117,26 @@ export class RollTermScheduleTabComponent implements OnInit {
     private settingsService: SettingsService,
     private authenticationService: AuthenticationService,
     private alertService: AlertService,
-    public dialog: MatDialog
+    private dialog: MatDialog,
+    private banksServices: BanksService,
   ) {
     this.formDate = this.formBuilder.group({
       fromDate: [new Date(new Date().setMonth(new Date().getMonth() - 1))],
       toDate: [new Date()],
     });
     this.formFilter = this.formBuilder.group({
-      panHolderName: [""],
-      terminalAmount: [""],
-      staffId: [""],
+      createdByFilter: ["ALL"],
+      bankFilter: ["ALL"],
+      query: [""],
     });
   }
 
   ngOnInit(): void {
     this.currentUser = this.authenticationService.getCredentials();
-    // this.getRollTermScheduleAndCardDueDayInfo();
+    this.banksServices.getBanks().subscribe(result => {
+
+        this.banks = result;
+      })
   }
 
   // tslint:disable-next-line:use-lifecycle-interface
@@ -146,10 +152,9 @@ export class RollTermScheduleTabComponent implements OnInit {
     const dateFormat = this.settingsService.dateFormat;
     let fromDate = this.formDate.get("fromDate").value;
     let toDate = this.formDate.get("toDate").value;
-    let clientName = this.formFilter.get("panHolderName").value;
-    let cardNumber = this.formFilter.get("panHolderName").value;
-    let terminalAmount = this.formFilter.get("terminalAmount").value;
-    let staffId = this.formFilter.get("staffId").value;
+    let query = this.formFilter.get("query").value;
+    let bankFilter = this.formFilter.get("bankFilter").value;
+    let createdByFilter = this.formFilter.get("createdByFilter").value;
 
     const limit = this.paginator.pageSize ? this.paginator.pageSize : 10;
     const offset = this.paginator.pageIndex * limit ? this.paginator.pageSize * limit : 0;
@@ -162,7 +167,7 @@ export class RollTermScheduleTabComponent implements OnInit {
     this.isLoading = true;
     this.dataSource = [];
     this.transactionService
-      .getListRollTermTransactionOpenByUserId({ fromDate, toDate, clientName, cardNumber, limit, terminalAmount, offset })
+      .getListRollTermTransactionOpenByUserId({ fromDate, toDate, bankFilter, query, limit, createdByFilter, offset })
       .subscribe((result) => {
         this.isLoading = false;
         this.transactionsData = result?.result;
