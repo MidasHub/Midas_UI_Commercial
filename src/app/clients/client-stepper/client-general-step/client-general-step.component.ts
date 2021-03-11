@@ -77,8 +77,9 @@ export class ClientGeneralStepComponent implements OnInit {
               private settingsService: SettingsService,
               private authenticationService: AuthenticationService,
               private centersService: CentersService) {
-    this.setClientForm();
+
     this.currentUser = this.authenticationService.getCredentials();
+    this.setClientForm();
   }
 
   ngOnInit() {
@@ -92,9 +93,9 @@ export class ClientGeneralStepComponent implements OnInit {
   setClientForm() {
 
     this.createClientForm = this.formBuilder.group({
-      'officeId': ['', Validators.required],
-      'staffId': [''],
-      'isStaff': [true],
+      'officeId': [this.currentUser.officeId, Validators.required],
+      'staffId': [this.currentUser.staffId],
+      'isStaff': [false],
       'active': [true],
       'addSavings': [true],
       'accountNo': [''],
@@ -103,7 +104,7 @@ export class ClientGeneralStepComponent implements OnInit {
       'mobileNo': [''],
       'dateOfBirth': [''],
       'clientTypeId': [21],
-      'clientClassificationId': [''],
+      'clientClassificationId': [20],
       // 'submittedOnDate': [{value: '', disabled: true}],
       'staff_code': [''],
       'documentTypeId': [''],
