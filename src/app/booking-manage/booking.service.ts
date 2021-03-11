@@ -5,6 +5,7 @@ import { HttpClient, HttpParams } from "@angular/common/http";
 
 /** rxjs Imports */
 import { Observable } from "rxjs";
+import { CommonHttpParams } from "app/shared/CommonHttpParams";
 
 /**
  * Booking service.
@@ -21,7 +22,7 @@ export class BookingService {
   /**
    * @param {HttpClient} http Http Client to send requests.
    */
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private commonHttpParams: CommonHttpParams) {
     this.accessToken = JSON.parse(
       sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey)
     );
@@ -30,10 +31,8 @@ export class BookingService {
   }
 
   getDetailRollTermScheduleBookingByRefNo(bookingRefNo: string): Observable<any> {
-    const httpParams = new HttpParams()
-      .set("refNo", bookingRefNo)
-      .set("createdBy", this.accessToken.userId)
-      .set("accessToken", this.accessToken.base64EncodedAuthenticationKey);
+    let httpParams = this.commonHttpParams.getCommonHttpParams();
+    httpParams = httpParams.set("refNo", bookingRefNo);
 
     return this.http.post<any>(
       `${this.GatewayApiUrlPrefix}/bookingInternal/get_booking_internal_by_txn_date_by_refNo`,
@@ -42,24 +41,19 @@ export class BookingService {
   }
 
   transferBookingAmount(transferInfo: any): Observable<any> {
-    const httpParams = new HttpParams()
-      .set("fromOfficeId", this.accessToken.officeId)
-      .set("toOfficeId", this.accessToken.officeId)
-      .set("txnCode", transferInfo.bookingRefNo)
-      .set("amountPaid", transferInfo.amountPaid)
-      .set("savingAccountPaid", transferInfo.savingAccountPaid)
-      .set("savingAccountGet", transferInfo.savingAccountGet)
-      .set("createdBy", this.accessToken.userId)
-      .set("accessToken", this.accessToken.base64EncodedAuthenticationKey);
+    let httpParams = this.commonHttpParams.getCommonHttpParams();
+
+    httpParams = httpParams.set("txnCode", transferInfo.bookingRefNo);
+    httpParams = httpParams.set("amountPaid", transferInfo.amountPaid);
+    httpParams = httpParams.set("savingAccountPaid", transferInfo.savingAccountPaid);
+    httpParams = httpParams.set("savingAccountGet", transferInfo.savingAccountGet);
 
     return this.http.post<any>(`${this.GatewayApiUrlPrefix}/bookingInternal/transfer_booking_amount`, httpParams);
   }
 
   getTransferBookingAmountTemplate(createBy: string): Observable<any> {
-    const httpParams = new HttpParams()
-      .set("staffCreateById", createBy)
-      .set("createdBy", this.accessToken.userId)
-      .set("accessToken", this.accessToken.base64EncodedAuthenticationKey);
+    let httpParams = this.commonHttpParams.getCommonHttpParams();
+    httpParams = httpParams.set("staffCreateById", createBy);
 
     return this.http.post<any>(
       `${this.GatewayApiUrlPrefix}/bookingInternal/get_transfer_booking_amount_template`,
@@ -68,69 +62,55 @@ export class BookingService {
   }
 
   removeBookingInternal(bookingInternalId: string): Observable<any> {
-    const httpParams = new HttpParams()
-      .set("bookingInternalId", bookingInternalId)
-      .set("createdBy", this.accessToken.userId)
-      .set("accessToken", this.accessToken.base64EncodedAuthenticationKey);
+    let httpParams = this.commonHttpParams.getCommonHttpParams();
+    httpParams = httpParams.set("bookingInternalId", bookingInternalId);
 
     return this.http.post<any>(`${this.GatewayApiUrlPrefix}/bookingInternal/remove_booking_internal`, httpParams);
   }
 
   editBookingInternal(bookingInfo: any): Observable<any> {
-    const httpParams = new HttpParams()
-      .set("bookingInternalId", bookingInfo.bookingInternalId)
-      .set("txnDate", bookingInfo.txnDate)
-      .set("amountBooking", bookingInfo.amountBooking)
-      .set("createdBy", this.accessToken.userId)
-      .set("accessToken", this.accessToken.base64EncodedAuthenticationKey);
+    let httpParams = this.commonHttpParams.getCommonHttpParams();
+    httpParams = httpParams.set("bookingInternalId", bookingInfo.bookingInternalId);
+    httpParams = httpParams.set("txnDate", bookingInfo.txnDate);
+    httpParams = httpParams.set("amountBooking", bookingInfo.amountBooking);
 
     return this.http.post<any>(`${this.GatewayApiUrlPrefix}/bookingInternal/edit_booking_internal`, httpParams);
   }
 
   addBookingInternal(bookingInfo: any): Observable<any> {
-    const httpParams = new HttpParams()
-      .set("txnDate", bookingInfo.txnDate)
-      .set("amountBooking", bookingInfo.amountBooking)
-      .set("createdBy", this.accessToken.userId)
-      .set("accessToken", this.accessToken.base64EncodedAuthenticationKey);
+    let httpParams = this.commonHttpParams.getCommonHttpParams();
+    httpParams = httpParams.set("txnDate", bookingInfo.txnDate);
+    httpParams = httpParams.set("amountBooking", bookingInfo.amountBooking);
 
     return this.http.post<any>(`${this.GatewayApiUrlPrefix}/bookingInternal/save_booking_internal`, httpParams);
   }
 
   cancelBookingAgency(bookingId: string): Observable<any> {
-    const httpParams = new HttpParams()
-      .set("bookingId", bookingId)
-      .set("createdBy", this.accessToken.userId)
-      .set("accessToken", this.accessToken.base64EncodedAuthenticationKey);
+    let httpParams = this.commonHttpParams.getCommonHttpParams();
+    httpParams = httpParams.set("bookingId", bookingId);
 
     return this.http.post<any>(`${this.GatewayApiUrlPrefix}/bookingInternal/check_use_on_booking_dly`, httpParams);
   }
 
   removeBookingAgency(bookingId: string): Observable<any> {
-    const httpParams = new HttpParams()
-      .set("bookingId", bookingId)
-      .set("createdBy", this.accessToken.userId)
-      .set("accessToken", this.accessToken.base64EncodedAuthenticationKey);
+    let httpParams = this.commonHttpParams.getCommonHttpParams();
+    httpParams = httpParams.set("bookingId", bookingId);
 
     return this.http.post<any>(`${this.GatewayApiUrlPrefix}/bookingInternal/remove_on_booking_dly`, httpParams);
   }
 
   getBookingAgency(fromDate: string, toDate: string): Observable<any> {
-    const httpParams = new HttpParams()
-      .set("fromDate", fromDate)
-      .set("toDate", toDate)
-      .set("createdBy", this.accessToken.userId)
-      .set("accessToken", this.accessToken.base64EncodedAuthenticationKey);
+    let httpParams = this.commonHttpParams.getCommonHttpParams();
+    httpParams = httpParams.set("fromDate", fromDate);
+    httpParams = httpParams.set("toDate", toDate);
 
     return this.http.post<any>(`${this.GatewayApiUrlPrefix}/bookingInternal/get_list_booking_agency_daily`, httpParams);
   }
 
   getBookingInternal(fromDate: string, toDate: string): Observable<any> {
-    const httpParams = new HttpParams()
-      .set("fromDate", fromDate)
-      .set("toDate", toDate)
-      .set("createdBy", this.accessToken.userId)
-      .set("accessToken", this.accessToken.base64EncodedAuthenticationKey);
+    let httpParams = this.commonHttpParams.getCommonHttpParams();
+    httpParams = httpParams.set("fromDate", fromDate);
+    httpParams = httpParams.set("toDate", toDate);
 
     return this.http.post<any>(
       `${this.GatewayApiUrlPrefix}/bookingInternal/get_booking_internal_by_txn_date`,
@@ -140,35 +120,50 @@ export class BookingService {
 
   getManageBookingInternal(officeName: string, staffName: string, fromDate: string, toDate: string): Observable<any> {
 
+    this.accessToken = JSON.parse(
+      sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey)
+    );
     officeName = officeName === "" ? "%%" : `%${officeName}%`;
-    staffName = staffName === "" ? '%%':`%${staffName}%`
-    const httpParams = new HttpParams()
-      .set("fromDate", fromDate)
-      .set("toDate", toDate)
-      .set("staffName", staffName)
-      .set("officeName", this.accessToken.officeId == 1 ? officeName : `${this.accessToken.officeName}`)
-      .set("createdBy", this.accessToken.userId)
-      .set("accessToken", this.accessToken.base64EncodedAuthenticationKey);
+    staffName = staffName === "" ? "%%" : `%${staffName}%`;
+    let httpParams = this.commonHttpParams.getCommonHttpParams();
+    httpParams = httpParams.set("fromDate", fromDate);
+    httpParams = httpParams.set("toDate", toDate);
+    httpParams = httpParams.set("staffName", staffName);
+    httpParams = httpParams.set(
+      "officeName",
+      this.accessToken.officeId == 1 ? officeName : `${this.accessToken.officeName}`
+    );
+
     return this.http.post<any>(
       `${this.GatewayApiUrlPrefix}/bookingInternal/management_booking_internal_by_txn_date`,
       httpParams
     );
   }
 
-  getManageBookingRollTermSchedule(officeName: string, staffName: string,  clientName: string, fromDate: string, toDate: string): Observable<any> {
-
+  getManageBookingRollTermSchedule(
+    officeName: string,
+    staffName: string,
+    clientName: string,
+    fromDate: string,
+    toDate: string
+  ): Observable<any> {
+    this.accessToken = JSON.parse(
+      sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey)
+    );
     officeName = officeName === "" ? "%%" : `%${officeName}%`;
-    staffName = staffName === "" ? '%%':`%${staffName}%`
-    clientName = clientName === "" ? '%%':`%${clientName}%`
+    staffName = staffName === "" ? "%%" : `%${staffName}%`;
+    clientName = clientName === "" ? "%%" : `%${clientName}%`;
 
-    const httpParams = new HttpParams()
-      .set("fromDate", fromDate)
-      .set("toDate", toDate)
-      .set("staffName", staffName)
-      .set("clientName", clientName)
-      .set("officeName", this.accessToken.officeId == 1 ? officeName : `${this.accessToken.officeName}`)
-      .set("createdBy", this.accessToken.userId)
-      .set("accessToken", this.accessToken.base64EncodedAuthenticationKey);
+    let httpParams = this.commonHttpParams.getCommonHttpParams();
+    httpParams = httpParams.set("fromDate", fromDate);
+    httpParams = httpParams.set("toDate", toDate);
+    httpParams = httpParams.set("staffName", staffName);
+    httpParams = httpParams.set("clientName", clientName);
+    httpParams = httpParams.set(
+      "officeName",
+      this.accessToken.officeId == 1 ? officeName : `${this.accessToken.officeName}`
+    );
+
     return this.http.post<any>(
       `${this.GatewayApiUrlPrefix}/bookingInternal/management_booking_roll_term_schedule_by_txn_date`,
       httpParams
@@ -176,11 +171,8 @@ export class BookingService {
   }
 
   removeRowBookingInternalOnRollTermSchedule(bookingInfo: any): Observable<any> {
-    const httpParams = new HttpParams()
-
-      .set("bookingInternalId", bookingInfo.bookingInternalId)
-      .set("createdBy", this.accessToken.userId)
-      .set("accessToken", this.accessToken.base64EncodedAuthenticationKey);
+    let httpParams = this.commonHttpParams.getCommonHttpParams();
+    httpParams = httpParams.set("bookingInternalId", bookingInfo.bookingInternalId);
 
     return this.http.post<any>(
       `${this.GatewayApiUrlPrefix}/bookingInternal/remove_booking_internal_roll_term`,
@@ -189,28 +181,24 @@ export class BookingService {
   }
 
   addRowBookingInternalOnRollTermSchedule(bookingInfo: any): Observable<any> {
-    const httpParams = new HttpParams()
-      .set("bookingRefNo", bookingInfo.bookingRefNo)
-      .set("isIsTmpBooking", bookingInfo.isIsTmpBooking)
-      .set("txnDate", bookingInfo.txnDate)
-      .set("productId", bookingInfo.productId)
-      .set("rollTermId", bookingInfo.rollTermId)
-      .set("cardId", bookingInfo.cardId)
-      .set("amountBooking", bookingInfo.amountBooking)
-      .set("clientId", bookingInfo.clientId)
-      .set("createdBy", this.accessToken.userId)
-      .set("accessToken", this.accessToken.base64EncodedAuthenticationKey);
+    let httpParams = this.commonHttpParams.getCommonHttpParams();
+    httpParams = httpParams.set("bookingRefNo", bookingInfo.bookingRefNo);
+    httpParams = httpParams.set("isIsTmpBooking", bookingInfo.isIsTmpBooking);
+    httpParams = httpParams.set("txnDate", bookingInfo.txnDate);
+    httpParams = httpParams.set("productId", bookingInfo.productId);
+    httpParams = httpParams.set("rollTermId", bookingInfo.rollTermId);
+    httpParams = httpParams.set("cardId", bookingInfo.cardId);
+    httpParams = httpParams.set("amountBooking", bookingInfo.amountBooking);
+    httpParams = httpParams.set("clientId", bookingInfo.clientId);
 
     return this.http.post<any>(`${this.GatewayApiUrlPrefix}/bookingInternal/save_booking_rollTerm`, httpParams);
   }
 
   editBookingInternalOnRollTermSchedule(bookingInfo: any): Observable<any> {
-    const httpParams = new HttpParams()
-      .set("amountBooking", bookingInfo.amountBooking)
-      .set("txnDate", bookingInfo.txnDate)
-      .set("bookingInternalId", bookingInfo.bookingInternalId)
-      .set("createdBy", this.accessToken.userId)
-      .set("accessToken", this.accessToken.base64EncodedAuthenticationKey);
+    let httpParams = this.commonHttpParams.getCommonHttpParams();
+    httpParams = httpParams.set("amountBooking", bookingInfo.amountBooking);
+    httpParams = httpParams.set("txnDate", bookingInfo.txnDate);
+    httpParams = httpParams.set("bookingInternalId", bookingInfo.bookingInternalId);
 
     return this.http.post<any>(
       `${this.GatewayApiUrlPrefix}/bookingInternal/edit_booking_internal_roll_term`,
@@ -219,11 +207,8 @@ export class BookingService {
   }
 
   getBookingInternalByRollTermId(rollTermId: string): Observable<any> {
-    const httpParams = new HttpParams()
-
-      .set("rollTermId", rollTermId)
-      .set("createdBy", this.accessToken.userId)
-      .set("accessToken", this.accessToken.base64EncodedAuthenticationKey);
+    let httpParams = this.commonHttpParams.getCommonHttpParams();
+    httpParams = httpParams.set("rollTermId", rollTermId);
 
     return this.http.post<any>(
       `${this.GatewayApiUrlPrefix}/bookingInternal/get_booking_internal_by_roll_term_id`,
@@ -232,6 +217,9 @@ export class BookingService {
   }
 
   exportTransaction(query: string) {
+    this.accessToken = JSON.parse(
+      sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey)
+    );
     const xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function () {
       let a;

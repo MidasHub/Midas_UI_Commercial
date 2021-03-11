@@ -1,16 +1,17 @@
-import {Injectable} from '@angular/core';
-import {HttpClient, HttpParams} from '@angular/common/http';
-import {environment} from '../../environments/environment';
-import {BehaviorSubject, Observable, of, Subject} from 'rxjs';
+import { Injectable } from "@angular/core";
+import { HttpClient, HttpParams } from "@angular/common/http";
+import { environment } from "../../environments/environment";
+import { BehaviorSubject, Observable, of, Subject } from "rxjs";
 
 //** Logger */
-import {Logger} from "../core/logger/logger.service";
+import { Logger } from "../core/logger/logger.service";
+import { CommonHttpParams } from "app/shared/CommonHttpParams";
 const log = new Logger("Bank-Service");
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root",
 })
 export class BanksService {
-  private credentialsStorageKey = 'midasCredentials';
+  private credentialsStorageKey = "midasCredentials";
   private accessToken: any;
   private GatewayApiUrlPrefix: any;
   public cards: any;
@@ -19,10 +20,9 @@ export class BanksService {
   public documentCardBanks: any[];
   public documentCardTypes: any[];
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private commonHttpParams: CommonHttpParams) {
     this.accessToken = JSON.parse(
-      sessionStorage.getItem(this.credentialsStorageKey)
-      || localStorage.getItem(this.credentialsStorageKey)
+      sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey)
     );
     this.GatewayApiUrlPrefix = environment.GatewayApiUrlPrefix;
   }
@@ -32,7 +32,7 @@ export class BanksService {
     banks.push({
       ...bank,
       cards: [],
-      status: 'O'
+      status: "O",
     });
     this.banks.next(banks);
   }
@@ -54,7 +54,7 @@ export class BanksService {
       if (card.refid === c.refid) {
         return {
           ...c,
-          ...card
+          ...card,
         };
       }
       return c;
@@ -67,7 +67,7 @@ export class BanksService {
           if (card.refid === c.refid) {
             return {
               ...c,
-              ...card
+              ...card,
             };
           }
           return c;
@@ -85,18 +85,16 @@ export class BanksService {
   }
 
   getAllCardOnDueDay(): Observable<any> {
-    const httpParams = new HttpParams()
-      .set('createdBy', this.accessToken.userId)
-      .set('accessToken', this.accessToken.base64EncodedAuthenticationKey);
+    let httpParams = this.commonHttpParams.getCommonHttpParams();
+
     return this.http.post<any>(`${this.GatewayApiUrlPrefix}/card/get_all_card_on_due_day`, httpParams);
   }
 
   storeBank(bankCode: string, bankName: string): Observable<any> {
-    const httpParams = new HttpParams()
-      .set('createdBy', this.accessToken.userId)
-      .set('bankCode', bankCode)
-      .set('bankName', bankName)
-      .set('accessToken', this.accessToken.base64EncodedAuthenticationKey);
+    let httpParams = this.commonHttpParams.getCommonHttpParams();
+
+    httpParams = httpParams.set("bankCode", bankCode);
+    httpParams = httpParams.set("bankName", bankName);
     return this.http.post<any>(`${this.GatewayApiUrlPrefix}/common/store_bank_info`, httpParams);
   }
 
@@ -110,12 +108,11 @@ export class BanksService {
     if (!this.cardTypes) {
       this.cardTypes = new BehaviorSubject(null);
     }
-    const httpParams = new HttpParams()
-      .set('createdBy', this.accessToken.userId)
-      .set('accessToken', this.accessToken.base64EncodedAuthenticationKey);
-    this.http.post<any>(`${this.GatewayApiUrlPrefix}/card/get_all_bincode_info`, httpParams).subscribe(result => {
+    let httpParams = this.commonHttpParams.getCommonHttpParams();
+
+    this.http.post<any>(`${this.GatewayApiUrlPrefix}/card/get_all_bincode_info`, httpParams).subscribe((result) => {
       if (result?.result) {
-        const {ListBinCodeEntity = [], listBank = [], listCardType = []} = result.result;
+        const { ListBinCodeEntity = [], listBank = [], listCardType = [] } = result.result;
         listBank.map((bank: any) => {
           bank.cards = ListBinCodeEntity.filter((v: any) => v.bankCode === bank.bankCode);
         });
@@ -134,24 +131,22 @@ export class BanksService {
   }
 
   getCardInfo(binCode: string): Observable<any> {
-    const httpParams = new HttpParams()
-      .set('createdBy', this.accessToken.userId)
-      .set('bincode', binCode)
-      .set('accessToken', this.accessToken.base64EncodedAuthenticationKey);
+    let httpParams = this.commonHttpParams.getCommonHttpParams();
+
+    httpParams = httpParams.set("bincode", binCode);
+
     return this.http.post<any>(`${this.GatewayApiUrlPrefix}/card/get_bincode_info`, httpParams);
   }
 
   storeBinCode(binCode: string, bankCode: string, cardType: string, cardClass: string): Observable<any> {
-    const httpParams = new HttpParams()
-      .set('createdBy', this.accessToken.userId)
-      .set('bincode', binCode)
-      .set('bankCode', bankCode)
-      .set('cardType', cardType)
-      .set('cardClass', cardClass)
-      .set('accessToken', this.accessToken.base64EncodedAuthenticationKey);
+    let httpParams = this.commonHttpParams.getCommonHttpParams();
+
+    httpParams = httpParams.set("bincode", binCode);
+    httpParams = httpParams.set("bankCode", bankCode);
+    httpParams = httpParams.set("cardType", cardType);
+    httpParams = httpParams.set("cardClass", cardClass);
     return this.http.post<any>(`${this.GatewayApiUrlPrefix}/card/store_bincode_info`, httpParams);
   }
-
 
   getCardTypes(): BehaviorSubject<any> {
     if (!this.cardTypes) {
@@ -165,20 +160,20 @@ export class BanksService {
     // if (!this.cards) {
     //   this.getData();
     // }
-    log.debug('This Card:',this.cards)
+    log.debug("This Card:", this.cards);
     this.cards.subscribe((values: any) => {
       if (values) {
-        log.debug('Value is: ',values)
+        log.debug("Value is: ", values);
         let have = false;
         for (const v of values) {
           if (v.binCode == binCode) {
             have = true;
-            result.next({...v, existBin: true});
+            result.next({ ...v, existBin: true });
             break;
           }
         }
         if (!have) {
-          result.next({existBin: false});
+          result.next({ existBin: false });
         }
       }
     });
@@ -186,39 +181,38 @@ export class BanksService {
   }
 
   storeInfoBinCode(body: any): Observable<any> {
-    const httpParams = new HttpParams()
-      .set('binCode', body.binCode)
-      .set('cardType', body.cardType)
-      .set('bankCode', body.bankCode)
-      .set('createdBy', this.accessToken.userId)
-      .set('accessToken', this.accessToken.base64EncodedAuthenticationKey);
+    let httpParams = this.commonHttpParams.getCommonHttpParams();
+
+    httpParams = httpParams.set("binCode", body.binCode);
+    httpParams = httpParams.set("cardType", body.cardType);
+    httpParams = httpParams.set("bankCode", body.bankCode);
+
     return this.http.post(`${this.GatewayApiUrlPrefix}/common/store_info_bin_code`, httpParams);
   }
 
   storeExtraCardInfo(body: any): Observable<any> {
-    const httpParams = new HttpParams()
-      .set('userId', body.userId)
-      .set('userIdentifyId', body.userIdentifyId)
-      .set('dueDay', body.dueDay)
-      .set('expireDate', `${body.dueDay}/${body.expireDate}`)
-      .set('createdBy', this.accessToken.userId)
-      .set('accessToken', this.accessToken.base64EncodedAuthenticationKey);
+    let httpParams = this.commonHttpParams.getCommonHttpParams();
+    httpParams = httpParams.set("userId", body.userId);
+    httpParams = httpParams.set("userIdentifyId", body.userIdentifyId);
+    httpParams = httpParams.set("dueDay", body.dueDay);
+    httpParams = httpParams.set("expireDate", `${body.dueDay}/${body.expireDate}`);
 
     return this.http.post(`${this.GatewayApiUrlPrefix}/card/store_extra_card_info`, httpParams);
   }
 
   bankCardDataInit() {
-    this.getBanks().subscribe((result: any) => {
-      if (result) {
-        this.documentCardBanks = result;
-      }
+    if (this.accessToken) {
+      this.getBanks().subscribe((result: any) => {
+        if (result) {
+          this.documentCardBanks = result;
+        }
       });
-    this.getCardTypes().subscribe((result:any)=>{
-      if (result) {
-        this.documentCardTypes = result;
-      }
+      this.getCardTypes().subscribe((result: any) => {
+        if (result) {
+          this.documentCardTypes = result;
+        }
+      });
     }
-    );
   }
-//----end Class---//
+  //----end Class---//
 }
