@@ -15,7 +15,7 @@
           <span>Tiền giao dịch</span>
         </div>
       </div>
-      <div fxLayout="row" fxFlex="18%" class="export-item">
+      <div fxLayout="row" fxFlex="18%" class="export-item" *midasHasActiveModule="'billModule'">
         <img src="assets/images/icons/bank.svg" />
         <div fxLayout="column">
           <span class="money-total">{{ totalRequest | money }}</span>
@@ -201,16 +201,10 @@
 
           <ng-container matColumnDef="invoiceAmount">
             <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>Số tiền đề xuất</th>
-            <td mat-cell fxHide fxShow.gt-md *matCellDef="let form" class="money-cell">
-              {{ form.get("invoiceAmount")?.value | money }}
+            <td mat-cell fxHide fxShow.gt-md *matCellDef="let form" class="money-cell" >
+               <label *midasHasActiveModule="'billModule'"> {{ form.get("invoiceAmount")?.value | money }} </label>
             </td>
           </ng-container>
-
-          <!--            <ng-container matColumnDef="amountTransaction">-->
-          <!--              <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>Tiền thực chi</th>-->
-          <!--              <td mat-cell fxHide fxShow.gt-md-->
-          <!--                  *matCellDef="let form" class="money-cell"> {{ form.get('amountTransaction')?.value | money}} </td>-->
-          <!--            </ng-container>-->
 
           <ng-container matColumnDef="fee">
             <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>Phí thu</th>
@@ -219,15 +213,15 @@
             </td>
           </ng-container>
 
-          <!--            <ng-container matColumnDef="CM">-->
-          <!--              <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>C/M</th>-->
-          <!--              <td mat-cell fxHide fxShow.gt-md-->
-          <!--                  *matCellDef="let form" [formGroup]="form" class="select-custom">-->
-          <!--                <mat-checkbox checked="false" labelPosition="before"-->
-          <!--                              formControlName="CM" class="margin-v">-->
-          <!--                </mat-checkbox>-->
-          <!--              </td>-->
-          <!--            </ng-container>-->
+        <!--            <ng-container matColumnDef="CM">-->
+        <!--              <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>C/M</th>-->
+        <!--              <td mat-cell fxHide fxShow.gt-md-->
+        <!--                  *matCellDef="let form" [formGroup]="form" class="select-custom">-->
+        <!--                <mat-checkbox checked="false" labelPosition="before"-->
+        <!--                              formControlName="CM" class="margin-v">-->
+        <!--                </mat-checkbox>-->
+        <!--              </td>-->
+        <!--            </ng-container>-->
 
           <ng-container matColumnDef="batchNo">
             <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header style="text-align: center;">Batch No</th>

@@ -2,11 +2,13 @@
 
   <router-outlet>
 
-    <h3>Family Members</h3>
+    <!-- <h3>Family Members</h3> -->
+    <h3>Người liên quan</h3>
 
     <div fxLayout="row" fxLayoutAlign="flex-end">
       <button mat-raised-button color="primary" [routerLink]="['./add']">
-        <fa-icon icon="plus"></fa-icon>&nbsp;&nbsp;Add
+        <!-- <fa-icon icon="plus"></fa-icon>&nbsp;&nbsp;Add -->
+        <fa-icon icon="plus"></fa-icon>&nbsp;&nbsp; Thêm
       </button>
     </div>
 
@@ -36,7 +38,7 @@
           </button>
         </div>
 
-        <p>
+        <!-- <p>
           First Name : {{member.firstName}}<br />
           Middle Name : {{member.middleName}}<br />
           Last Name : {{member.lastName}}<br />
@@ -48,6 +50,20 @@
           Gender : {{member.gender}}<br />
           Profession : {{member.profession}}<br />
           Date Of Birth : {{member.dateOfBirth|date}}<br />
+        </p> -->
+        <p>
+          Họ : {{member.firstName}}<br />
+          Tên Lót : {{member.middleName}}<br />
+          Tên : {{member.lastName}}<br />
+          Date Of Birth : {{member.dateOfBirth|date}}<br />  
+          Tuổi : {{member.age}}<br />       
+          ĐTDD : {{member.mobileNumber}}<br />          
+          Là người phụ thuộc : {{member.isDependent}}<br />
+          Tình trạng hôn nhân : {{member.maritalStatus}}<br />
+          Giới tính : {{member.gender}}<br />
+          Chuyên môn : {{member.profession}}<br />
+          Trình độ : {{member.qualification}}<br />
+          
         </p>
 
       </mat-expansion-panel>

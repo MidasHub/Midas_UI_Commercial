@@ -1,6 +1,7 @@
+<!-- Phần calendar -->
 <div  fxLayout="column">
   <div fxLayout="row" fxLayout.lt-md="column" fxLayoutAlign="space-around start" fxLayoutGap="1%">
-    
+
       <mat-button-toggle-group appearance="legacy" name="fontStyle" aria-label="Font Style">
         <mat-button-toggle mwlCalendarPreviousView [view]="view" [(viewDate)]="viewDate"
         (viewDateChange)="closeOpenMonthViewDay()">Tháng trước</mat-button-toggle>
@@ -8,15 +9,15 @@
         <mat-button-toggle mwlCalendarNextView [view]="view" [(viewDate)]="viewDate"
         (viewDateChange)="closeOpenMonthViewDay()">Tháng sau</mat-button-toggle>
       </mat-button-toggle-group>
-      
+
     <h3>{{ viewDate | calendarDate:(view + 'ViewTitle'):'en' }}</h3>
-  
+
     <mat-button-toggle-group appearance="legacy" name="fontStyle" aria-label="Font Style">
       <mat-button-toggle  (click)="setView(CalendarView.Month)" [class.active]="view === CalendarView.Month">Lịch tháng</mat-button-toggle>
       <mat-button-toggle  (click)="setView(CalendarView.Week)" [class.active]="view === CalendarView.Week">Lịch tuần</mat-button-toggle>
       <mat-button-toggle (click)="setView(CalendarView.Day)" [class.active]="view === CalendarView.Day">Lịch ngày</mat-button-toggle>
     </mat-button-toggle-group>
-   
+
 </div>
 <br />
 <div [ngSwitch]="view">
@@ -32,69 +33,73 @@
   </mwl-calendar-day-view>
 </div>
 
-<!-- Everything you see below is just for the demo, you don't need to include it in your app -->
-
-<br /><br /><br />
-
-<h3>
-  Danh sách công việc
-  <button mat-raised-button color="primary" (click)="addEvent()">
-    <fa-icon icon="plus"></fa-icon> &nbsp;&nbsp;
-    <!-- {{'Home_Component.btnNewCustomer'| translate}} -->
-    Thêm công việc mới
+<!-- Phần bảng danh sách công việc -->
+<!-- <h3>
+  Thêm công việc mới:
+  <button  mat-mini-fab  color="primary" (click)="addEvent()">
+    <fa-icon icon="plus"></fa-icon>
   </button>
-  <!-- <button class="btn btn-primary float-right" (click)="addEvent()">
-    Thêm mới
-  </button> -->
-  <div class="clearfix"></div>
+
 </h3>
 
 <div class="table-responsive">
   <table class="table table-bordered">
     <thead>
       <tr>
-        <th>Title</th>
-        <th>Primary color</th>
-        <th>Secondary color</th>
-        <th>Starts at</th>
-        <th>Ends at</th>
-        <th>Remove</th>
+        <th>Nội dung</th>
+        <th>Nhóm chính</th>
+        <th>Nhóm phụ</th>
+        <th>Từ lúc</th>
+        <th>Đến lúc</th>
+        <th>Hành động</th>
       </tr>
     </thead>
 
     <tbody>
       <tr *ngFor="let event of events">
-        <td>
-          <input type="text" class="form-control" [(ngModel)]="event.title" (keyup)="refresh.next()" />
+        <td style="width: 55%;">
+          <mat-form-field style="width: 100%">
+          <input matInput type="text" class="form-control" [(ngModel)]="event.title" (keyup)="refresh.next()" />
+          </mat-form-field >
         </td>
-        <td>
-          <input type="color" [(ngModel)]="event.color.primary" (change)="refresh.next()" />
+        <td style="width: 5%;">
+          <mat-form-field style="width: 32px;" >
+            <input matInput type="color" [(ngModel)]="event.color.primary" (change)="refresh.next()" />
+          </mat-form-field>
+
         </td>
-        <td>
-          <input type="color" [(ngModel)]="event.color.secondary" (change)="refresh.next()" />
+        <td style="width: 5%;">
+          <mat-form-field style="width: 32px;">
+            <input matInput type="color" [(ngModel)]="event.color.secondary" (change)="refresh.next()" />
+          </mat-form-field>
+
         </td>
-        <td>
-          <input class="form-control" type="text" mwlFlatpickr [(ngModel)]="event.start"
+        <td style="width: 15%;">
+          <mat-form-field  style="width: 95%">
+            <input matInput class="form-control" type="date" mwlFlatpickr [(ngModel)]="event.start"
             (ngModelChange)="refresh.next()" dateFormat="Y-m-dTH:i" altFormat="F j, Y H:i" placeholder="Not set" />
+          </mat-form-field>
+
         </td>
-        <td>
-          <input class="form-control" type="text" mwlFlatpickr [(ngModel)]="event.end" (ngModelChange)="refresh.next()"
+        <td style="width: 15%;">
+          <mat-form-field style="width: 94%">
+            <input matInput class="form-control" type="date" mwlFlatpickr [(ngModel)]="event.end" (ngModelChange)="refresh.next()"
             dateFormat="Y-m-dTH:i" altFormat="F j, Y H:i" placeholder="Not set" />
+          </mat-form-field>
+
         </td>
-        <td>
-          <button mat-raised-button color="danger" (click)="addEvent()">
-            <fa-icon icon="trash"></fa-icon> &nbsp;&nbsp;
-            <!-- {{'Home_Component.btnNewCustomer'| translate}} -->
-            Xóa
+        <td fxLayout="row" fxLayout.lt-md="column" fxLayoutAlign="center center ">
+          <button mat-mini-fab color="warn" (click)="addEvent()" title="Xóa events">
+            <fa-icon icon="trash"></fa-icon>
           </button>
-  
+
         </td>
       </tr>
     </tbody>
   </table>
-</div>
-
-<ng-template #modalContent let-close="close">
+</div> -->
+<!-- ------------------------- -->
+<!-- <ng-template #modalContent let-close="close">
   <div class="modal-header">
     <h5 class="modal-title">Event action occurred</h5>
     <button type="button" class="close" (click)="close()">
@@ -116,4 +121,4 @@
       OK
     </button>
   </div>
-</ng-template>
+</ng-template> -->

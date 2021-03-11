@@ -19,6 +19,7 @@ import { environment } from '../../../environments/environment';
 import { LoginContext } from './login-context.model';
 import { Credentials } from './credentials.model';
 import { OAuth2Token } from './o-auth2-token.model';
+import { MidasClientService } from 'app/midas-client/midas-client.service';
 
 /**
  * Authentication workflow.
@@ -67,6 +68,7 @@ export class AuthenticationService {
    */
   constructor(private http: HttpClient,
     private alertService: AlertService,
+    private midasClientService: MidasClientService,
     private authenticationInterceptor: AuthenticationInterceptor) {
     this.rememberMe = false;
     this.storage = sessionStorage;
@@ -221,6 +223,77 @@ export class AuthenticationService {
     return of(true);
   }
 
+   /**
+   * Checks if the two factor access token for authenticated user is valid.
+   * @returns {boolean} True if the two factor access token is valid or two factor authentication is not required.
+   */
+    getBalanceAndSetting(userId: number, officeId:number, accessToken:string): void {
+
+      this.midasClientService.getInfoModuleActive(
+        userId, officeId, accessToken
+      ).subscribe((response: any) => {
+
+      const savedCredentials = JSON.parse(
+        sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey)
+      );
+
+      savedCredentials.appSettingModule = response?.result?.appSettingModule;
+
+      this.storage = sessionStorage;
+      if (savedCredentials) {
+        if (savedCredentials.rememberMe) {
+
+          this.storage = localStorage;
+        }
+      }
+
+      this.storage.setItem(this.credentialsStorageKey, JSON.stringify(savedCredentials));
+
+    });
+    }
+
+    /**
+   * Checks if the setting module available.
+   * @returns {boolean} True if the two factor access token is valid or two factor authentication is not required.
+   */
+    checkAppModuleSetting(moduleName: string): boolean {
+      const credentials = this.getCredentials();
+
+      if (!credentials.appSettingModule) {
+        this.midasClientService.getInfoModuleActive(
+          credentials.userId,
+          credentials.officeId  , credentials.base64EncodedAuthenticationKey
+        ).subscribe((response: any) => {
+
+          credentials.appSettingModule = response?.result?.appSettingModule;
+
+          switch (moduleName) {
+            case 'billModule' : {
+              let isBillModule = credentials.appSettingModule.billModule;
+              return isBillModule == 1;
+            }
+
+            ///  ......  another module setting ///
+          }
+
+        })
+
+      } else {
+        switch (moduleName) {
+          case 'billModule' : {
+            let isBillModule = credentials.appSettingModule.billModule;
+            return isBillModule == 1;
+          }
+
+          ///  ......  another module setting ///
+        }
+
+      }
+
+
+      return false;
+    }
+
   /**
    * Checks if the two factor access token for authenticated user is valid.
    * @returns {boolean} True if the two factor access token is valid or two factor authentication is not required.
@@ -263,11 +336,14 @@ export class AuthenticationService {
     if (credentials) {
       credentials.rememberMe = this.rememberMe;
       this.storage.setItem(this.credentialsStorageKey, JSON.stringify(credentials));
+
     } else {
       this.storage.removeItem(this.credentialsStorageKey);
       this.storage.removeItem(this.oAuthTokenDetailsStorageKey);
       this.storage.removeItem(this.twoFactorAuthenticationTokenStorageKey);
     }
+
+
   }
 
   /**

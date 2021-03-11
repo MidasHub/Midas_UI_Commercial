@@ -33,6 +33,7 @@ export class SidenavComponent implements OnInit {
   mappedActivities: any[] = [];
   /** Collection of possible frequent activities */
   frequentActivities: any[] = frequentActivities;
+  credentials: any;
 
   /**
    * @param {Router} router Router for navigation.
@@ -43,14 +44,15 @@ export class SidenavComponent implements OnInit {
               public dialog: MatDialog,
               private authenticationService: AuthenticationService) {
     this.userActivity = JSON.parse(sessionStorage.getItem('midasLocation'));
+
   }
 
   /**
    * Sets the username of the authenticated user.
    */
   ngOnInit() {
-    const credentials = this.authenticationService.getCredentials();
-    this.username = credentials.username;
+    this.credentials = this.authenticationService.getCredentials();
+    this.username = this.credentials.username;
     this.setMappedAcitivites();
   }
 
@@ -67,7 +69,7 @@ export class SidenavComponent implements OnInit {
    * old Help link //window.open('https://mifosforge.jira.com/wiki/spaces/docs/pages/52035622/User+Manual', '_blank');
    */
   help() {
-    
+
     window.open('https://drive.google.com/drive/folders/1-J4JQyaaxBz2QSfZMzC4bPrPwWlksFWw?usp=sharing', '_blank');
   }
 

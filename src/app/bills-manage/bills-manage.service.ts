@@ -3,6 +3,7 @@ import { Injectable } from "@angular/core";
 import { HttpClient, HttpParams } from "@angular/common/http";
 import { environment } from "environments/environment";
 import { Observable } from "rxjs";
+import { CommonHttpParams } from "app/shared/CommonHttpParams";
 
 /**
  * Groups service.
@@ -14,7 +15,7 @@ export class BillsService {
   private credentialsStorageKey = "midasCredentials";
   private accessToken: any;
   private GatewayApiUrlPrefix: any;
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private commonHttpParams: CommonHttpParams) {
     this.accessToken = JSON.parse(
       sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey)
     );
@@ -22,6 +23,11 @@ export class BillsService {
   }
 
   uploadBills(formData: any): Observable<any> {
+
+    this.accessToken = JSON.parse(
+      sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey)
+    );
+
     formData.append("createdBy", this.accessToken.userId);
     formData.append("accessToken", this.accessToken.base64EncodedAuthenticationKey);
 
@@ -32,46 +38,35 @@ export class BillsService {
   }
 
   getBillsResource(): Observable<any> {
-    const httpParams = new HttpParams()
-      .set("createdBy", this.accessToken.userId)
-      .set("accessToken", this.accessToken.base64EncodedAuthenticationKey);
+    let httpParams = this.commonHttpParams.getCommonHttpParams();
+
     return this.http.post<any>(`${this.GatewayApiUrlPrefix}/invoice/get_list_doc_invoice`, httpParams);
   }
 
   getListInvoiceByBatchCode(batchCode: string,
     query: string, limit: number,
      offset: number): Observable<any> {
-    const httpParams = new HttpParams()
-      .set("batchCode", batchCode)
-      .set("query", query)
-      .set("limit", String(limit))
-      .set("offset", String(offset))
-      .set("createdBy", this.accessToken.userId)
-      .set("accessToken", this.accessToken.base64EncodedAuthenticationKey);
+      let httpParams = this.commonHttpParams.getCommonHttpParams();
+
+      httpParams = httpParams.set("batchCode", batchCode);
+      httpParams = httpParams.set("query", query);
+      httpParams = httpParams.set("limit", String(limit));
+      httpParams = httpParams.set("offset", String(offset));
+
     return this.http.post<any>(`${this.GatewayApiUrlPrefix}/invoice/get_list_invoice_batchcode`, httpParams);
   }
 
-  // findListInvoiceByBatchCodeAndQuery(batchCode: string, query: string): Observable<any> {
-  //   const httpParams = new HttpParams()
-  //     .set("batchCode", batchCode)
-  //     .set("query", query)
-  //     .set("createdBy", this.accessToken.userId)
-  //     .set("accessToken", this.accessToken.base64EncodedAuthenticationKey);
-  //   return this.http.post<any>(`${this.GatewayApiUrlPrefix}/invoice/get_list_invoice_batchcode`, httpParams);
-  // }
 
   getListMerchant(): Observable<any> {
-    const httpParams = new HttpParams()
-      .set("createdBy", this.accessToken.userId)
-      .set("accessToken", this.accessToken.base64EncodedAuthenticationKey);
+    let httpParams = this.commonHttpParams.getCommonHttpParams();
+
     return this.http.post<any>(`${this.GatewayApiUrlPrefix}/invoice/get_list_merchant`, httpParams);
   }
 
   getListPartnerByMerchant(merchantId: string): Observable<any> {
-    const httpParams = new HttpParams()
-      .set("merchantId", merchantId)
-      .set("createdBy", this.accessToken.userId)
-      .set("accessToken", this.accessToken.base64EncodedAuthenticationKey);
+    let httpParams = this.commonHttpParams.getCommonHttpParams();
+    httpParams = httpParams.set("merchantId", merchantId);
+
     return this.http.post<any>(`${this.GatewayApiUrlPrefix}/invoice/get_list_partner_by_merchant`, httpParams);
   }
 }

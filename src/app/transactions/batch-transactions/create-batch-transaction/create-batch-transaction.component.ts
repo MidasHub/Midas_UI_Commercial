@@ -108,7 +108,6 @@ export class CreateBatchTransactionComponent implements OnInit {
   batchTxnName: any;
   bookingTxnDailyId: any;
   private destroy$ = new Subject<void>();
-
   filteredOptions: Observable<any[]>;
 
   private _filter(value: string): string[] {
@@ -128,9 +127,10 @@ export class CreateBatchTransactionComponent implements OnInit {
               private router: Router,
   ) {
     this.currentUser = this.authenticationService.getCredentials();
-    // this.formFilter = this.formBuilder.group({
-    //   'member': ['']
-    // });
+    if (!this.authenticationService.checkAppModuleSetting("billModule")){
+      this.displayedColumns.splice(this.displayedColumns.indexOf('invoiceAmount'), 1);
+    }
+
   }
 
   displayClient(client: any): string | undefined {
@@ -609,20 +609,16 @@ export class CreateBatchTransactionComponent implements OnInit {
         if (response.data) {
           const {dueDay, expiredDate} = response.data.value;
 
-          this.clientsServices.getClientCross(member.clientId).subscribe((client: any) => {
             this.bankServices
               .storeExtraCardInfo({
                 userId: member.clientId,
                 userIdentifyId: member.documentId,
-                clientName: client.displayName,
-                cardNumber: `${member.cardNumber.slice(0, 6)}-XXX-XXX-${member.cardNumber.slice(12, 16)}`,
-                mobileNo: client.mobileNo,
                 dueDay: dueDay,
                 expireDate: expiredDate,
               })
               .subscribe((res2: any) => {
               });
-          });
+
         }
       });
     });

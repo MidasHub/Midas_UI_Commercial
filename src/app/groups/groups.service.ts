@@ -4,6 +4,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from 'environments/environment';
 /** rxjs Imports */
 import { Observable } from 'rxjs';
+import { CommonHttpParams } from 'app/shared/CommonHttpParams';
 
 /**
  * Groups service.
@@ -19,7 +20,7 @@ export class GroupsService {
   private credentialsStorageKey = 'midasCredentials';
   private accessToken: any;
   private GatewayApiUrlPrefix: any;
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private commonHttpParams: CommonHttpParams) {
     this.accessToken = JSON.parse(
       sessionStorage.getItem(this.credentialsStorageKey)
       || localStorage.getItem(this.credentialsStorageKey)
@@ -28,11 +29,10 @@ export class GroupsService {
   }
 
   updateDefaultSavingAccount(savingAccountInfo: any): Observable<any> {
-    let httpParams = new HttpParams()
-      .set('createdBy', this.accessToken.userId)
-      .set('accessToken', this.accessToken.base64EncodedAuthenticationKey)
-      .set('groupId', savingAccountInfo.groupId)
-      .set('savingAccountId', savingAccountInfo.savingAccountId);
+    let httpParams = this.commonHttpParams.getCommonHttpParams();
+    httpParams = httpParams.set('groupId', savingAccountInfo.groupId);
+    httpParams = httpParams.set('savingAccountId', savingAccountInfo.savingAccountId);
+
     return this.http.post<any>(`${this.GatewayApiUrlPrefix}/groups/edit_group_default_saving_account`, httpParams);
   }
 
@@ -61,17 +61,15 @@ export class GroupsService {
   }
 
   getCartTypes(): Observable<any> {
-    let httpParams = new HttpParams()
-      .set('createdBy', this.accessToken.userId)
-      .set('accessToken', this.accessToken.base64EncodedAuthenticationKey);
+    let httpParams = this.commonHttpParams.getCommonHttpParams();
+
     return this.http.post<any>(`${this.GatewayApiUrlPrefix}/groups/get_fee_group_template`, httpParams);
   }
 
   getCartTypesByGroupId(groupId:any): Observable<any> {
-    let httpParams = new HttpParams()
-      .set('createdBy', this.accessToken.userId)
-      .set('accessToken', this.accessToken.base64EncodedAuthenticationKey)
-      .set('groupId', groupId);
+    let httpParams = this.commonHttpParams.getCommonHttpParams();
+
+    httpParams = httpParams.set('groupId', groupId);
     return this.http.post<any>(`${this.GatewayApiUrlPrefix}/groups/get_fee_by_GroupId`, httpParams);
   }
 
@@ -259,6 +257,10 @@ export class GroupsService {
     return this.http.post('/groups', group);
   }
   createFeeGroup(groupId: any, listFeeGroup: any): Observable<any> {
+    this.accessToken = JSON.parse(
+      sessionStorage.getItem(this.credentialsStorageKey)
+      || localStorage.getItem(this.credentialsStorageKey)
+    );
     let httpParams = {
       'createdBy': this.accessToken.userId,
       'accessToken': this.accessToken.base64EncodedAuthenticationKey,
@@ -268,6 +270,10 @@ export class GroupsService {
     return this.http.post<any>(`${this.GatewayApiUrlPrefix}/groups/add_fee_by_Group`, httpParams);
   }
   updateFeeGroup(groupId: any, listFeeGroup: any): Observable<any> {
+    this.accessToken = JSON.parse(
+      sessionStorage.getItem(this.credentialsStorageKey)
+      || localStorage.getItem(this.credentialsStorageKey)
+    );
     let httpParams = {
       'createdBy': this.accessToken.userId,
       'accessToken': this.accessToken.base64EncodedAuthenticationKey,

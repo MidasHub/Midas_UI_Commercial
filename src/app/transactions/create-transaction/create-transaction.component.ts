@@ -25,6 +25,7 @@ import { TransactionService } from "../transaction.service";
 })
 export class CreateTransactionComponent implements OnInit {
   displayedColumns: string[] = ["no", "amountBooking", "txnDate", "action"];
+
   dataSource: MatTableDataSource<any>;
   transactionInfo: any = {};
   terminalFee: any = {};
@@ -61,6 +62,7 @@ export class CreateTransactionComponent implements OnInit {
       batchNo: new FormControl(),
       traceNo: new FormControl(),
     });
+
   }
 
   ngOnInit() {
@@ -220,12 +222,12 @@ export class CreateTransactionComponent implements OnInit {
   }
 
   mappingBillForTransaction() {
-    this.transactionInfo.identifyClientDto.identifyId = "249";
+
     this.transactionService
       .mappingInvoiceWithTransaction(
         this.transactionInfo.identifyClientDto.accountTypeId,
         this.transactionInfo.identifyClientDto.accountNumber,
-        this.transactionInfo.identifyClientDto.identifyId,
+        this.transactionInfo.identifierId,
         this.transactionInfo.requestAmount,
         this.transactionInfo.terminalId
       )

@@ -23,7 +23,6 @@ import { FormfieldBase } from "../../shared/form-dialog/formfield/model/formfiel
 import { SelectBase } from "../../shared/form-dialog/formfield/model/select-base";
 import { FormDialogComponent } from "../../shared/form-dialog/form-dialog.component";
 import { InputBase } from "../../shared/form-dialog/formfield/model/input-base";
-import { HasPermissionDirective } from "../../directives/has-permission/has-permission.directive";
 
 @Component({
   selector: "midas-manage-transaction",
@@ -44,6 +43,7 @@ export class ManageTransactionComponent implements OnInit {
     "txnDate",
     "officeName",
     "panHolderName",
+    "panBank",
     "terminalAmount",
     "feeAmount",
     "cogsAmount",
@@ -119,6 +119,7 @@ export class ManageTransactionComponent implements OnInit {
   panelOpenState = true;
   filterData: any[];
   today = new Date();
+
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
@@ -139,9 +140,7 @@ export class ManageTransactionComponent implements OnInit {
       fromDate: [new Date()],
       toDate: [new Date()],
     });
-    // if (this.hasPermissionDirective.midasHasPermission('MANAGER')) {
-    //   this.displayedColumns.push('pnlAmount');
-    // }
+
     this.currentUser = this.authenticationService.getCredentials();
     const { permissions } = this.currentUser;
     const permit_userTeller = permissions.includes("POS_UPDATE");
@@ -176,6 +175,7 @@ export class ManageTransactionComponent implements OnInit {
     this.formFilter.valueChanges.subscribe((value) => {
       this.filterTransaction();
     });
+
   }
 
   ngOnInit(): void {

@@ -149,11 +149,11 @@
           </mat-icon>
           <a matLine>Dashboard</a>
         </mat-list-item>
-        <mat-list-item *midasHasPermission="'ALL_FUNCTIONS'" [routerLink]="['/bills']">
-          <mat-icon matListIcon>
-            <fa-icon icon="random" size="sm"></fa-icon>
-          </mat-icon>
-          <a matLine>Quản lý hóa đơn</a>
+        <mat-list-item *midasHasActiveModule="'billModule'"  [routerLink]="['/bills']">
+            <mat-icon *midasHasPermission="'ALL_FUNCTIONS'" matListIcon>
+              <fa-icon icon="random" size="sm"></fa-icon>
+            </mat-icon>
+            <a *midasHasPermission="'ALL_FUNCTIONS'" matLine>Quản lý hóa đơn</a>
         </mat-list-item>
         <mat-list-item *midasHasPermission="'ALL_FUNCTIONS'" [routerLink]="['/banks']">
           <mat-icon matListIcon>

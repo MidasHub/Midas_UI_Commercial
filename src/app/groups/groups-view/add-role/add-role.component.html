@@ -9,26 +9,29 @@
         <div fxLayout="column">
 
           <mat-form-field>
-            <mat-label>Client</mat-label>
+            <mat-label>Chủ sở hữu của Đại lý</mat-label>
             <mat-select formControlName="clientId">
               <mat-option *ngFor="let client of clientMemberData" [value]="client.id">
                 {{ client.displayName }}
               </mat-option>
             </mat-select>
             <mat-error *ngIf="groupsAddRoleForm.controls.clientId.hasError('required')">
-              Client Member is <strong>required</strong>
+              <!-- Client Member is <strong>required</strong> -->
+              <strong>Yêu cầu: </strong> Nhập thông tin Chủ sở hữu của Đại lý
             </mat-error>
           </mat-form-field>
 
           <mat-form-field>
-            <mat-label>Role</mat-label>
+            <!-- <mat-label>Role</mat-label> -->
+            <mat-label>Vai trò</mat-label>
             <mat-select formControlName="role">
               <mat-option *ngFor="let role of roleData" [value]="role.id">
                 {{ role.name }}
               </mat-option>
             </mat-select>
             <mat-error *ngIf="groupsAddRoleForm.controls.role.hasError('required')">
-              Role is <strong>required</strong>
+              <!-- Role is <strong>required</strong> -->
+              <strong>Yêu cầu:</strong> Nhập vai trò của Chủ sở hữu
             </mat-error>
           </mat-form-field>
 
@@ -37,9 +40,9 @@
       </mat-card-content>
 
       <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
-        <button type="button" mat-raised-button [routerLink]="['../']">Cancel</button>
+        <button type="button" mat-raised-button [routerLink]="['../']">Hủy</button>
         <button mat-raised-button color="primary" [disabled]="!groupsAddRoleForm.valid"
-          *midasHasPermission="'ASSIGNROLE_GROUP'">Confirm</button>
+          *midasHasPermission="'ASSIGNROLE_GROUP'">Chấp nhận</button>
       </mat-card-actions>
 
     </form>

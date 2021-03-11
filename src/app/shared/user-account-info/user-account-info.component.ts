@@ -34,19 +34,11 @@ export class UserAccountInfoComponent implements OnInit, OnDestroy {
    * @param {NotificationsService} notificationsService Notifications Service
    */
   constructor(public midasClientService: MidasClientService) {
-    this.listSaving = [];
-    this.totalBalance = 0;
-    this.midasClientService.getInfoSavingAccountByUserId()
-    .subscribe((response: any) => {
 
-      this.listSaving = response?.result?.listSavingAccount ;
-      this.totalBalance = response?.result?.totalBalance ;
-
-    });
   }
 
   ngOnInit() {
-    setTimeout(() => { this.fetchSavingAccountOfUser(); }, 60000);
+    this.fetchSavingAccountOfUser();
   }
 
   ngOnDestroy() {
@@ -87,7 +79,4 @@ export class UserAccountInfoComponent implements OnInit, OnDestroy {
     this.unreadNotifications = [];
     this.setTotalBalance();
   }
-
-
-
 }

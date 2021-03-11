@@ -2,6 +2,7 @@
  * Credentials model.
  */
 export interface Credentials {
+  appSettingModule: any;
   accessToken?: string;
   authenticated: boolean;
   base64EncodedAuthenticationKey?: string;

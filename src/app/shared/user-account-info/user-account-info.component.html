@@ -5,15 +5,18 @@
   <span >{{ totalBalance | money }}</span>
 </button>
 
-<mat-menu class="midas-saving-menu" #UserSavingMenu="matMenu" [overlapTrigger]="false">
+<mat-menu  style="min-width: 300px;" class="midas-saving-menu" #UserSavingMenu="matMenu" [overlapTrigger]="false">
   <mat-card>
     <mat-card-content>
       <mat-nav-list>
         <mat-list-item *ngFor="let account of listSaving">
-          <a matLine href="#/clients/{{account.clientId}}/savings-accounts/{{account.id}}">{{ account.externalId }}</a>
-          <button mat-button color="primary" >
-            {{ account.balance | money }}
-          </button>
+          <a matLine href="#/clients/{{account.clientId}}/savings-accounts/{{account.id}}">
+
+            <button mat-button color="primary" >
+              {{ account.externalId }} -  Số dư: {{ account.balance | money }}
+            </button>
+          </a>
+
         </mat-list-item>
       </mat-nav-list>
     </mat-card-content>

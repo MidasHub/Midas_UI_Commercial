@@ -57,6 +57,7 @@ import { BookingManageModule } from './booking-manage/booking-manage.module';
 import { BillsManageModule } from './bills-manage/bills-manage.module';
 import {MarketingModule} from './marketing/marketing.module';
 import {BanksModule} from './banks/banks.module';
+import { CommonHttpParams } from './shared/CommonHttpParams';
 
 /**
  * App Module
@@ -110,7 +111,7 @@ import {BanksModule} from './banks/banks.module';
     BanksModule,
     AppRoutingModule],
   declarations: [WebAppComponent, NotFoundComponent],
-  providers: [],
+  providers: [CommonHttpParams],
   bootstrap: [WebAppComponent]
 })
 export class AppModule {

@@ -50,8 +50,8 @@ import { ContentComponent } from './shell/content/content.component';
   ],
   declarations: [
     ShellComponent,
-    SidenavComponent,
     ToolbarComponent,
+    SidenavComponent,
     BreadcrumbComponent,
     ContentComponent
   ],

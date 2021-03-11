@@ -70,9 +70,7 @@ export class MakeAccountTransfersComponent implements OnInit, AfterViewInit {
       this.setParams();
       this.setOptions();
     });
-    this.accessToken = JSON.parse(
-      sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey)
-    );
+
   }
   /** Sets the value from the URL */
   setParams() {
@@ -183,6 +181,9 @@ export class MakeAccountTransfersComponent implements OnInit, AfterViewInit {
    * Submits the standing instructions form
    */
   submit() {
+    this.accessToken = JSON.parse(
+      sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey)
+    );
     const dateFormat = this.settingsService.dateFormat;
     const locale = this.settingsService.language.code;
     const makeAccountTransferData = {

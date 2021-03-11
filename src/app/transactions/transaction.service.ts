@@ -1,19 +1,20 @@
 /** Angular Imports */
-import {Injectable} from '@angular/core';
-import {environment} from 'environments/environment';
-import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
+import { Injectable } from "@angular/core";
+import { environment } from "environments/environment";
+import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
 
 /** rxjs Imports */
-import {Observable} from 'rxjs';
+import { Observable } from "rxjs";
+import { CommonHttpParams } from "app/shared/CommonHttpParams";
 
 /**
  * Transaction service.
  */
 @Injectable({
-  providedIn: 'root',
+  providedIn: "root",
 })
 export class TransactionService {
-  private credentialsStorageKey = 'midasCredentials';
+  private credentialsStorageKey = "midasCredentials";
   private accessToken: any;
   private GatewayApiUrlPrefix: any;
   private environment: any;
@@ -21,7 +22,7 @@ export class TransactionService {
   /**
    * @param {HttpClient} http Http Client to send requests.
    */
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private commonHttpParams: CommonHttpParams) {
     this.accessToken = JSON.parse(
       sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey)
     );
@@ -30,118 +31,109 @@ export class TransactionService {
   }
 
   ExecuteRollTermTransactionByTrnRefNo(form: any): Observable<any> {
-    let httpParams = new HttpParams()
-      .set('createdBy', this.accessToken.userId)
-      .set('accessToken', this.accessToken.base64EncodedAuthenticationKey);
+    let httpParams = this.commonHttpParams.getCommonHttpParams();
 
     const keys = Object.keys(form);
     for (const key of keys) {
-      if (key.includes('amount')) {
+      if (key.includes("amount")) {
         httpParams = httpParams.set(key, String(Number(form[key])));
       } else {
         httpParams = httpParams.set(key, form[key]);
       }
     }
-    return this.http.post<any>(`${this.GatewayApiUrlPrefix}/transaction/repayment_rollterm_manual_transaction`, httpParams);
+    return this.http.post<any>(
+      `${this.GatewayApiUrlPrefix}/transaction/repayment_rollterm_manual_transaction`,
+      httpParams
+    );
   }
 
   getExecuteRollTermTransactionByTrnRefNo(refId: number): Observable<any> {
-    const httpParams = new HttpParams()
-      .set('refId', String(refId))
-      .set('createdBy', this.accessToken.userId)
-      .set('accessToken', this.accessToken.base64EncodedAuthenticationKey);
+    let httpParams = this.commonHttpParams.getCommonHttpParams();
+    httpParams = httpParams.set("refId", String(refId));
 
-    return this.http.post<any>(`${this.GatewayApiUrlPrefix}/transaction/get_execute_loan_transaction_template`, httpParams);
+    return this.http.post<any>(
+      `${this.GatewayApiUrlPrefix}/transaction/get_execute_loan_transaction_template`,
+      httpParams
+    );
   }
 
   getTransactionHistoryByClientId(clientId: string): Observable<any> {
-    const httpParams = new HttpParams()
-      .set('clientId', clientId)
-      .set('createdBy', this.accessToken.userId)
-      .set('accessToken', this.accessToken.base64EncodedAuthenticationKey);
+    let httpParams = this.commonHttpParams.getCommonHttpParams();
+
+    httpParams = httpParams.set("clientId", clientId);
 
     return this.http.post<any>(`${this.GatewayApiUrlPrefix}/transaction/get_list_transaction_by_client`, httpParams);
   }
 
   updateCardTrackingState(updateData: any): Observable<any> {
-
-    const expiredDateString = `${updateData.dueDay}/${updateData.expiredDateString?.substring(0, 2)}/${updateData.expiredDateString?.substring(
-      2,
-      4
-    )}`
-    const httpParams = new HttpParams()
-      .set('expiredDate', expiredDateString ? expiredDateString: "" )
-      .set('refId', updateData.refId)
-      .set('note', updateData.note ? updateData.note: "")
-      .set('state', updateData.trackingState ? updateData.trackingState: "A")
-      .set('dueDay', updateData.dueDay ? updateData.dueDay: "1" )
-      .set('limit', updateData.limitCard ? updateData.limitCard: "")
-      .set('classCard', updateData.classCard ? updateData.classCard: "")
-      .set('isHold', updateData.isHold ? '1' : '0')
-      .set('officeId', this.accessToken.officeId)
-      .set('createdBy', this.accessToken.userId)
-      .set('accessToken', this.accessToken.base64EncodedAuthenticationKey);
+    const expiredDateString = `${updateData.dueDay}/${updateData.expiredDateString?.substring(
+      0,
+      2
+    )}/${updateData.expiredDateString?.substring(2, 4)}`;
+    let httpParams = this.commonHttpParams.getCommonHttpParams();
+    httpParams = httpParams.set("expiredDate", expiredDateString ? expiredDateString : "");
+    httpParams = httpParams.set("refId", updateData.refId);
+    httpParams = httpParams.set("note", updateData.note ? updateData.note : "");
+    httpParams = httpParams.set("state", updateData.trackingState ? updateData.trackingState : "A");
+    httpParams = httpParams.set("dueDay", updateData.dueDay ? updateData.dueDay : "1");
+    httpParams = httpParams.set("limit", updateData.limitCard ? updateData.limitCard : "");
+    httpParams = httpParams.set("classCard", updateData.classCard ? updateData.classCard : "");
+    httpParams = httpParams.set("isHold", updateData.isHold ? "1" : "0");
 
     return this.http.put<any>(`${this.GatewayApiUrlPrefix}/card/update_card_on_due_day`, httpParams);
   }
 
   submitTransactionCash(transactionInfo: any): Observable<any> {
-    const httpParams = new HttpParams()
-      .set('accountNumber', transactionInfo.identifyClientDto.accountNumber)
-      .set('accountBankId', transactionInfo.identifyClientDto.accountBankId)
-      .set('accountTypeId', transactionInfo.identifyClientDto.accountTypeId)
-      .set('accountCash', transactionInfo.accountCash)
-      .set('bNo', transactionInfo.traceNo)
-      .set('tid', transactionInfo.batchNo)
-      .set('terminalAmount', String(this.formatLong(transactionInfo.terminalAmount)))
-      .set('feeRate', transactionInfo.rate)
-      .set('toClientId', transactionInfo.clientId)
-      .set('feeAmount', transactionInfo.feeAmount)
-      .set('cogsRate', transactionInfo.cogsRate)
-      .set('cogsAmount', transactionInfo.feeCogs)
-      .set('pnlAmount', transactionInfo.feePNL)
-      .set('invoiceAmount', String(this.formatLong(transactionInfo.txnAmount)))
-      .set('requestAmount', String(this.formatLong(transactionInfo.requestAmount)))
-      .set('transferAmount', String(this.formatLong(transactionInfo.txnAmount)))
-      .set('bills', transactionInfo.invoiceMapping.listInvoice)
-      .set('productId', transactionInfo.productId)
-      .set('groupId', transactionInfo.clientDto.groupId)
-      .set('customerName', transactionInfo.clientDto.displayName)
-      .set('terminalId', transactionInfo.terminalId)
-      .set('ext2', transactionInfo.type)
-      .set('ext4', transactionInfo.identifierId)
-      .set('officeId', this.accessToken.officeId)
-      .set('createdBy', this.accessToken.userId)
-      .set('accessToken', this.accessToken.base64EncodedAuthenticationKey);
+    let httpParams = this.commonHttpParams.getCommonHttpParams();
+    httpParams = httpParams.set("accountNumber", transactionInfo.identifyClientDto.accountNumber);
+    httpParams = httpParams.set("accountBankId", transactionInfo.identifyClientDto.accountBankId);
+    httpParams = httpParams.set("accountTypeId", transactionInfo.identifyClientDto.accountTypeId);
+    httpParams = httpParams.set("accountCash", transactionInfo.accountCash);
+    httpParams = httpParams.set("bNo", transactionInfo.traceNo);
+    httpParams = httpParams.set("tid", transactionInfo.batchNo);
+    httpParams = httpParams.set("terminalAmount", String(this.formatLong(transactionInfo.terminalAmount)));
+    httpParams = httpParams.set("feeRate", transactionInfo.rate);
+    httpParams = httpParams.set("toClientId", transactionInfo.clientId);
+    httpParams = httpParams.set("feeAmount", transactionInfo.feeAmount);
+    httpParams = httpParams.set("cogsRate", transactionInfo.cogsRate);
+    httpParams = httpParams.set("cogsAmount", transactionInfo.feeCogs);
+    httpParams = httpParams.set("pnlAmount", transactionInfo.feePNL);
+    httpParams = httpParams.set("invoiceAmount", String(this.formatLong(transactionInfo.txnAmount)));
+    httpParams = httpParams.set("requestAmount", String(this.formatLong(transactionInfo.requestAmount)));
+    httpParams = httpParams.set("transferAmount", String(this.formatLong(transactionInfo.txnAmount)));
+    httpParams = httpParams.set("bills", transactionInfo.invoiceMapping.listInvoice);
+    httpParams = httpParams.set("productId", transactionInfo.productId);
+    httpParams = httpParams.set("groupId", transactionInfo.clientDto.groupId);
+    httpParams = httpParams.set("customerName", transactionInfo.clientDto.displayName);
+    httpParams = httpParams.set("terminalId", transactionInfo.terminalId);
+    httpParams = httpParams.set("ext2", transactionInfo.type);
+    httpParams = httpParams.set("ext4", transactionInfo.identifierId);
 
     return this.http.post<any>(`${this.GatewayApiUrlPrefix}/transaction/create_cash_retail_transaction`, httpParams);
   }
 
   submitTransactionCashFromRollTermTransaction(transactionInfo: any): Observable<any> {
-    const httpParams = new HttpParams()
-      .set('accountNumber', transactionInfo.identifyClientDto.accountNumber)
-      .set('accountBankId', transactionInfo.identifyClientDto.accountBankId)
-      .set('accountTypeId', transactionInfo.identifyClientDto.accountTypeId)
-      .set('refid', transactionInfo.refId)
-      .set('bNo', transactionInfo.traceNo)
-      .set('tid', transactionInfo.batchNo)
-      .set('terminalAmount', String(this.formatLong(transactionInfo.terminalAmount)))
-      .set('feeRate', transactionInfo.rate)
-      .set('feeAmount', transactionInfo.feeAmount)
-      .set('cogsRate', transactionInfo.cogsRate)
-      .set('cogsAmount', transactionInfo.feeCogs)
-      .set('pnlAmount', transactionInfo.feePNL)
-      .set('bookingId', transactionInfo.bookingId)
-      .set('invoiceAmount', String(this.formatLong(transactionInfo.txnAmount)))
-      .set('requestAmount', String(this.formatLong(transactionInfo.requestAmount)))
-      .set('transferAmount', String(this.formatLong(transactionInfo.txnAmount)))
-      .set('bills', transactionInfo.invoiceMapping.listInvoice)
-      .set('productId', transactionInfo.productId)
-      .set('customerName', transactionInfo.clientDto.displayName)
-      .set('terminalId', transactionInfo.terminalId)
-      .set('officeId', this.accessToken.officeId)
-      .set('createdBy', this.accessToken.userId)
-      .set('accessToken', this.accessToken.base64EncodedAuthenticationKey);
+    let httpParams = this.commonHttpParams.getCommonHttpParams();
+    httpParams = httpParams.set("accountNumber", transactionInfo.identifyClientDto.accountNumber);
+    httpParams = httpParams.set("accountBankId", transactionInfo.identifyClientDto.accountBankId);
+    httpParams = httpParams.set("accountTypeId", transactionInfo.identifyClientDto.accountTypeId);
+    httpParams = httpParams.set("refid", transactionInfo.refId);
+    httpParams = httpParams.set("bNo", transactionInfo.traceNo);
+    httpParams = httpParams.set("tid", transactionInfo.batchNo);
+    httpParams = httpParams.set("terminalAmount", String(this.formatLong(transactionInfo.terminalAmount)));
+    httpParams = httpParams.set("feeRate", transactionInfo.rate);
+    httpParams = httpParams.set("feeAmount", transactionInfo.feeAmount);
+    httpParams = httpParams.set("cogsRate", transactionInfo.cogsRate);
+    httpParams = httpParams.set("cogsAmount", transactionInfo.feeCogs);
+    httpParams = httpParams.set("pnlAmount", transactionInfo.feePNL);
+    httpParams = httpParams.set("bookingId", transactionInfo.bookingId);
+    httpParams = httpParams.set("invoiceAmount", String(this.formatLong(transactionInfo.txnAmount)));
+    httpParams = httpParams.set("requestAmount", String(this.formatLong(transactionInfo.requestAmount)));
+    httpParams = httpParams.set("transferAmount", String(this.formatLong(transactionInfo.txnAmount)));
+    httpParams = httpParams.set("bills", transactionInfo.invoiceMapping.listInvoice);
+    httpParams = httpParams.set("productId", transactionInfo.productId);
+    httpParams = httpParams.set("customerName", transactionInfo.clientDto.displayName);
+    httpParams = httpParams.set("terminalId", transactionInfo.terminalId);
 
     return this.http.post<any>(
       `${this.GatewayApiUrlPrefix}/transaction/create_retail_cash_from_rollTerm_transaction`,
@@ -150,26 +142,23 @@ export class TransactionService {
   }
 
   submitTransactionRollTerm(transactionInfo: any): Observable<any> {
-    const httpParams = new HttpParams()
-      .set('accountNumber', transactionInfo.identifyClientDto.accountNumber)
-      .set('accountBankId', transactionInfo.identifyClientDto.accountBankId)
-      .set('accountTypeId', transactionInfo.identifyClientDto.accountTypeId)
-      .set('accountCash', transactionInfo.accountCash? transactionInfo.accountCash : "")
-      .set('feeRate', transactionInfo.rate)
-      .set('toClientId', transactionInfo.clientId)
-      .set('requestAmount', String(this.formatLong(transactionInfo.requestAmount)))
-      .set('productId', transactionInfo.productId)
-      .set('groupId', transactionInfo.clientDto.groupId)
-      .set('customerName', transactionInfo.clientDto.displayName)
-      .set('ext2', transactionInfo.type)
-      .set('BookingInternalDtoListString', transactionInfo.BookingInternalDtoListString)
-      .set('ext4', transactionInfo.identifierId)
-      .set('officeId', this.accessToken.officeId)
-      .set('createdBy', this.accessToken.userId)
-      .set('accessToken', this.accessToken.base64EncodedAuthenticationKey);
-    if (transactionInfo.accountCash){
-      httpParams.set('accountCash', transactionInfo.accountCash);
+    let httpParams = this.commonHttpParams.getCommonHttpParams();
+    httpParams = httpParams.set("accountNumber", transactionInfo.identifyClientDto.accountNumber);
+    httpParams = httpParams.set("accountBankId", transactionInfo.identifyClientDto.accountBankId);
+    httpParams = httpParams.set("accountTypeId", transactionInfo.identifyClientDto.accountTypeId);
+    httpParams = httpParams.set("accountCash", transactionInfo.accountCash ? transactionInfo.accountCash : "");
+    httpParams = httpParams.set("feeRate", transactionInfo.rate);
+    httpParams = httpParams.set("toClientId", transactionInfo.clientId);
+    httpParams = httpParams.set("requestAmount", String(this.formatLong(transactionInfo.requestAmount)));
+    httpParams = httpParams.set("productId", transactionInfo.productId);
+    httpParams = httpParams.set("groupId", transactionInfo.clientDto.groupId);
+    httpParams = httpParams.set("customerName", transactionInfo.clientDto.displayName);
+    httpParams = httpParams.set("ext2", transactionInfo.type);
+    httpParams = httpParams.set("BookingInternalDtoListString", transactionInfo.BookingInternalDtoListString);
+    httpParams = httpParams.set("ext4", transactionInfo.identifierId);
 
+    if (transactionInfo.accountCash) {
+      httpParams = httpParams.set("accountCash", transactionInfo.accountCash);
     }
     return this.http.post<any>(
       `${this.GatewayApiUrlPrefix}/transaction/create_rollTerm_retail_transaction`,
@@ -178,23 +167,21 @@ export class TransactionService {
   }
 
   submitTransactionRollTermOnDialog(transactionInfo: any): Observable<any> {
-    const httpParams = new HttpParams()
-      .set('bookingId', transactionInfo.bookingId)
-      .set('accountNumber', transactionInfo.panNumber)
-      .set('accountBankId', transactionInfo.bankCode)
-      .set('accountTypeId', transactionInfo.cardType)
-      .set('feeRate', transactionInfo.rate)
-      .set('toClientId', transactionInfo.clientId)
-      .set('requestAmount', transactionInfo.requestAmount)
-      .set('productId', transactionInfo.productId)
-      .set('groupId', transactionInfo.groupId)
-      .set('customerName', transactionInfo.clientName)
-      .set('ext2', transactionInfo.type)
-      .set('BookingInternalDtoListString', transactionInfo.BookingInternalDtoListString)
-      .set('ext4', transactionInfo.identifierId)
-      .set('officeId', this.accessToken.officeId)
-      .set('createdBy', this.accessToken.userId)
-      .set('accessToken', this.accessToken.base64EncodedAuthenticationKey);
+    let httpParams = this.commonHttpParams.getCommonHttpParams();
+
+    httpParams = httpParams.set("bookingId", transactionInfo.bookingId);
+    httpParams = httpParams.set("accountNumber", transactionInfo.panNumber);
+    httpParams = httpParams.set("accountBankId", transactionInfo.bankCode);
+    httpParams = httpParams.set("accountTypeId", transactionInfo.cardType);
+    httpParams = httpParams.set("feeRate", transactionInfo.rate);
+    httpParams = httpParams.set("toClientId", transactionInfo.clientId);
+    httpParams = httpParams.set("requestAmount", transactionInfo.requestAmount);
+    httpParams = httpParams.set("productId", transactionInfo.productId);
+    httpParams = httpParams.set("groupId", transactionInfo.groupId);
+    httpParams = httpParams.set("customerName", transactionInfo.clientName);
+    httpParams = httpParams.set("ext2", transactionInfo.type);
+    httpParams = httpParams.set("BookingInternalDtoListString", transactionInfo.BookingInternalDtoListString);
+    httpParams = httpParams.set("ext4", transactionInfo.identifierId);
 
     return this.http.post<any>(
       `${this.GatewayApiUrlPrefix}/transaction/create_rollTerm_retail_transaction`,
@@ -209,28 +196,22 @@ export class TransactionService {
     amountTransaction: number,
     terminalId: string
   ): Observable<any> {
-    const httpParams = new HttpParams()
-      .set('accountNumber', accountNumber)
-      .set('ext4', identifierId)
-      .set('AmountMappingInvoice', String(this.formatLong(String(amountTransaction))))
-      .set('accountTypeId', accountTypeCode)
-      .set('terminalId', terminalId)
-      .set('officeId', this.accessToken.officeId)
-      .set('createdBy', this.accessToken.userId)
-      .set('accessToken', this.accessToken.base64EncodedAuthenticationKey);
+    let httpParams = this.commonHttpParams.getCommonHttpParams();
+    httpParams = httpParams.set("accountNumber", accountNumber);
+    httpParams = httpParams.set("ext4", identifierId);
+    httpParams = httpParams.set("AmountMappingInvoice", String(this.formatLong(String(amountTransaction))));
+    httpParams = httpParams.set("accountTypeId", accountTypeCode);
+    httpParams = httpParams.set("terminalId", terminalId);
 
     return this.http.post<any>(`${this.GatewayApiUrlPrefix}/transaction/mapping_invoice_transaction`, httpParams);
   }
 
   getTransaction(payload: { fromDate: string; toDate: string }): Observable<any> {
-    const {permissions, officeId} = this.accessToken;
-    const permit = permissions.includes('TXN_CREATE');
-    const httpParams = new HttpParams()
-      .set('officeId', officeId)
-      .set('fromDate', payload.fromDate)
-      .set('toDate', payload.toDate)
-      .set('createdBy', this.accessToken.userId)
-      .set('accessToken', this.accessToken.base64EncodedAuthenticationKey);
+    let httpParams = this.commonHttpParams.getCommonHttpParams();
+
+    httpParams = httpParams.set("fromDate", payload.fromDate);
+    httpParams = httpParams.set("toDate", payload.toDate);
+
     return this.http.post(`${this.GatewayApiUrlPrefix}/transaction/get_list_pos_transaction`, httpParams);
   }
 
@@ -243,17 +224,16 @@ export class TransactionService {
     limit: number;
     offset: number;
   }): Observable<any> {
-    const httpParams = new HttpParams()
-      .set('cardNumber', !payload.cardNumber ? '%%' : `%${payload.cardNumber}%`)
-      .set('customerName', !payload.clientName ? '%%' : `%${payload.clientName}%`)
-      .set('agencyName', '%%')
-      .set('limit', String(payload.limit))
-      .set('offset', String(payload.offset))
-      .set('amountTransaction', !payload.terminalAmount ? '%%' : `%${payload.terminalAmount}%`)
-      .set('fromDate', payload.fromDate)
-      .set('toDate', payload.toDate)
-      .set('createdBy', this.accessToken.userId)
-      .set('accessToken', this.accessToken.base64EncodedAuthenticationKey);
+    let httpParams = this.commonHttpParams.getCommonHttpParams();
+    httpParams = httpParams.set("cardNumber", !payload.cardNumber ? "%%" : `%${payload.cardNumber}%`);
+    httpParams = httpParams.set("customerName", !payload.clientName ? "%%" : `%${payload.clientName}%`);
+    httpParams = httpParams.set("agencyName", "%%");
+    httpParams = httpParams.set("limit", String(payload.limit));
+    httpParams = httpParams.set("offset", String(payload.offset));
+    httpParams = httpParams.set("amountTransaction", !payload.terminalAmount ? "%%" : `%${payload.terminalAmount}%`);
+    httpParams = httpParams.set("fromDate", payload.fromDate);
+    httpParams = httpParams.set("toDate", payload.toDate);
+
     return this.http.post(`${this.GatewayApiUrlPrefix}/transaction/get_list_pos_transaction_rollterm`, httpParams);
   }
 
@@ -266,41 +246,33 @@ export class TransactionService {
     bankName: string;
     query: string;
   }): Observable<any> {
-    const httpParams = new HttpParams()
-      .set('query', !payload.query ? `%%` : `%${payload.query}%`)
-      .set('agencyName', '%%')
-      .set('limit', String(payload.limit))
-      .set('offset', String(payload.offset))
-      .set('amountTransaction', '%%')
-      .set('trackingState', payload.statusFilter === '' ? `%%` : `%${payload.statusFilter}%`)
-      .set('createdUser', '%%')
-      .set('bankName', payload.bankName === '' ? `%%` : `${payload.bankName}`)
-      .set('fromDate', payload.fromDate)
-      .set('toDate', payload.toDate)
-      .set('createdBy', this.accessToken.userId)
-      .set('staffId', this.accessToken.staffId)
-      .set('accessToken', this.accessToken.base64EncodedAuthenticationKey);
+    let httpParams = this.commonHttpParams.getCommonHttpParams();
+    httpParams = httpParams.set("query", !payload.query ? `%%` : `%${payload.query}%`);
+    httpParams = httpParams.set("agencyName", "%%");
+    httpParams = httpParams.set("limit", String(payload.limit));
+    httpParams = httpParams.set("offset", String(payload.offset));
+    httpParams = httpParams.set("amountTransaction", "%%");
+    httpParams = httpParams.set("trackingState", payload.statusFilter === "" ? `%%` : `%${payload.statusFilter}%`);
+    httpParams = httpParams.set("createdUser", "%%");
+    httpParams = httpParams.set("bankName", payload.bankName === "" ? `%%` : `${payload.bankName}`);
+    httpParams = httpParams.set("fromDate", payload.fromDate);
+    httpParams = httpParams.set("toDate", payload.toDate);
+
     return this.http.post(`${this.GatewayApiUrlPrefix}/card/get_list_card_on_due_day`, httpParams);
   }
 
   getFeeByTerminal(accountTypeCode: string, terminalId: string): Observable<any> {
-    const httpParams = new HttpParams()
-      .set('accountTypeId', accountTypeCode)
-      .set('terminalId', terminalId)
-      .set('officeId', this.accessToken.officeId)
-      .set('createdBy', this.accessToken.userId)
-      .set('accessToken', this.accessToken.base64EncodedAuthenticationKey);
+    let httpParams = this.commonHttpParams.getCommonHttpParams();
+    httpParams = httpParams.set("accountTypeId", accountTypeCode);
+    httpParams = httpParams.set("terminalId", terminalId);
 
     return this.http.post<any>(`${this.GatewayApiUrlPrefix}/pos/get_fee_by_terminal`, httpParams);
   }
 
   checkValidRetailCashTransaction(clientId: string): Observable<any> {
-    const httpParams = new HttpParams()
+    let httpParams = this.commonHttpParams.getCommonHttpParams();
 
-      .set('clientId', clientId)
-      .set('officeId', this.accessToken.officeId)
-      .set('createdBy', this.accessToken.userId)
-      .set('accessToken', this.accessToken.base64EncodedAuthenticationKey);
+    httpParams = httpParams.set("clientId", clientId);
 
     return this.http.post<any>(
       `${this.GatewayApiUrlPrefix}/transaction/check_valid_for_retail_transaction`,
@@ -309,176 +281,165 @@ export class TransactionService {
   }
 
   checkExtraCardInfo(clientId: string, identifierId: string): Observable<any> {
-    const httpParams = new HttpParams()
-      .set('userIdentifyId', identifierId)
-      .set('userId', clientId)
-      .set('officeId', this.accessToken.officeId)
-      .set('createdBy', this.accessToken.userId)
-      .set('accessToken', this.accessToken.base64EncodedAuthenticationKey);
+    let httpParams = this.commonHttpParams.getCommonHttpParams();
+    httpParams = httpParams.set("userIdentifyId", identifierId);
+    httpParams = httpParams.set("userId", clientId);
 
     return this.http.post<any>(`${this.GatewayApiUrlPrefix}/card/check_extra_card_info`, httpParams);
   }
 
   checkValidCreateRollTermTransaction(identifierId: string): Observable<any> {
-    const httpParams = new HttpParams()
-      .set('documentId', identifierId)
-      .set('createdBy', this.accessToken.userId)
-      .set('accessToken', this.accessToken.base64EncodedAuthenticationKey);
+    let httpParams = this.commonHttpParams.getCommonHttpParams();
+    httpParams = httpParams.set("documentId", identifierId);
 
     return this.http.post<any>(`${this.GatewayApiUrlPrefix}/transaction/check_valid_rollTerm_transaction`, httpParams);
   }
 
   getListTerminalAvailable(amount: number): Observable<any> {
-    const httpParams = new HttpParams()
-      .set('id', this.accessToken.officeId)
-      .set('amountTransaction', amount.toString())
-      .set('createdBy', this.accessToken.userId)
-      .set('accessToken', this.accessToken.base64EncodedAuthenticationKey);
+    let httpParams = this.commonHttpParams.getCommonHttpParams();
+    httpParams = httpParams.set("amountTransaction", amount.toString());
 
     return this.http.post<any>(`${this.GatewayApiUrlPrefix}/pos/get_list_terminal_by_office`, httpParams);
   }
 
   getTransactionTemplate(clientId: string, identifierId: string, transactionId?: string): Observable<any> {
-    const httpParams = new HttpParams()
-      .set('identifyId', identifierId)
-      .set('clientId', clientId)
-      .set('transactionId', !transactionId ? '' : transactionId)
-      .set('officeId', this.accessToken.officeId)
-      .set('createdBy', this.accessToken.userId)
-      .set('accessToken', this.accessToken.base64EncodedAuthenticationKey);
+    let httpParams = this.commonHttpParams.getCommonHttpParams();
+    httpParams = httpParams.set("identifyId", identifierId);
+    httpParams = httpParams.set("clientId", clientId);
+    httpParams = httpParams.set("transactionId", !transactionId ? "" : transactionId);
 
     return this.http.post<any>(`${this.GatewayApiUrlPrefix}/transaction/get_retail_transaction_template`, httpParams);
   }
 
   getTransactionDetail(transactionId: string): Observable<any> {
-    const httpParams = new HttpParams()
-      .set('transactionId', transactionId)
-      .set('createdBy', this.accessToken.userId)
-      .set('accessToken', this.accessToken.base64EncodedAuthenticationKey);
+    let httpParams = this.commonHttpParams.getCommonHttpParams();
+    httpParams = httpParams.set("transactionId", transactionId);
 
     return this.http.post<any>(`${this.GatewayApiUrlPrefix}/transaction/get_transaction`, httpParams);
   }
 
   formatLong(value: string) {
     value = String(value);
-    const neg = value.startsWith('-');
-    value = value.replace(/[^0-9]+/g, '');
+    const neg = value.startsWith("-");
+    value = value.replace(/[^0-9]+/g, "");
     if (neg) {
-      value = '-'.concat(value);
+      value = "-".concat(value);
     }
     return Number(value);
   }
 
   downloadVoucher(transactionId: string) {
+    this.accessToken = JSON.parse(
+      sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey)
+    );
     const url = `${this.environment.GatewayApiUrl}${this.GatewayApiUrlPrefix}/export/download_voucher?id=${transactionId}&accessToken=${this.accessToken.base64EncodedAuthenticationKey}&createdBy=${this.accessToken.userId}`;
     const xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function () {
       let a;
       if (xhr.readyState === 4 && xhr.status === 200) {
-        a = document.createElement('a');
+        a = document.createElement("a");
         a.href = window.URL.createObjectURL(xhr.response);
         a.download = `V_${transactionId}`;
-        a.style.display = 'none';
+        a.style.display = "none";
         document.body.appendChild(a);
         a.click();
       }
     };
 
-    xhr.open('GET', url);
-    if(this.environment.isNewBillPos){
-    xhr.setRequestHeader('Gateway-TenantId', this.environment.GatewayTenantId);
+    xhr.open("GET", url);
+    if (this.environment.isNewBillPos) {
+      xhr.setRequestHeader("Gateway-TenantId", this.environment.GatewayTenantId);
     }
-    xhr.responseType = 'blob';
+    xhr.responseType = "blob";
     xhr.send();
   }
 
   downloadBill(clientId: string, documentId: string) {
+    this.accessToken = JSON.parse(
+      sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey)
+    );
     const xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function () {
       let a;
       if (xhttp.readyState === 4 && xhttp.status === 200) {
-        a = document.createElement('a');
+        a = document.createElement("a");
         a.href = window.URL.createObjectURL(xhttp.response);
-        a.download = 'bill_' + clientId + '_' + documentId;
-        a.style.display = 'none';
+        a.download = "bill_" + clientId + "_" + documentId;
+        a.style.display = "none";
         document.body.appendChild(a);
         a.click();
       }
     };
     const fileUrl =
       this.environment.GatewayApiUrl +
-      '/fineract-provider/api/v1/clients/' +
+      `${this.environment.apiProvider}${this.environment.apiVersion}/clients/` +
       clientId +
-      '/documents/' +
+      "/documents/" +
       documentId +
-      '/attachment?tenantIdentifier=tiktik';
-    xhttp.open('GET', fileUrl);
-    xhttp.setRequestHeader('Authorization', 'Bearer ' + this.accessToken.base64EncodedAuthenticationKey);
-    xhttp.responseType = 'blob';
+      `/attachment?tenantIdentifier=${this.environment.fineractPlatformTenantId}`;
+    xhttp.open("GET", fileUrl);
+    xhttp.setRequestHeader("Authorization", "Bearer " + this.accessToken.base64EncodedAuthenticationKey);
+    xhttp.responseType = "blob";
     xhttp.send();
   }
 
   revertTransaction(transactionId: string): Observable<any> {
-    const httpParams = new HttpParams()
-      .set('transactionId', transactionId)
-      .set('createdBy', this.accessToken.userId)
-      .set('accessToken', this.accessToken.base64EncodedAuthenticationKey);
+    let httpParams = this.commonHttpParams.getCommonHttpParams();
+    httpParams = httpParams.set("transactionId", transactionId);
 
     return this.http.post<any>(`${this.GatewayApiUrlPrefix}/transaction/revert_transaction`, httpParams);
   }
 
   RepaymentRolltermManualTransactionCloseLoan(refId: string, amountPaid: string): Observable<any> {
-    const httpParams = new HttpParams()
-      .set('txnCode', refId)
-      .set('amountPaid', amountPaid)
-      .set('fromOfficeId', this.accessToken.officeId)
-      .set('createdBy', this.accessToken.userId)
-      .set('accessToken', this.accessToken.base64EncodedAuthenticationKey);
+    let httpParams = this.commonHttpParams.getCommonHttpParams();
+    httpParams = httpParams.set("txnCode", refId);
+    httpParams = httpParams.set("amountPaid", amountPaid);
 
-    return this.http.post<any>(`${this.GatewayApiUrlPrefix}/transaction/repayment_rollterm_manual_transaction_close_loan`, httpParams);
+    return this.http.post<any>(
+      `${this.GatewayApiUrlPrefix}/transaction/repayment_rollterm_manual_transaction_close_loan`,
+      httpParams
+    );
   }
 
   undoRevertTransaction(transactionId: string): Observable<any> {
-    const httpParams = new HttpParams()
-      .set('transactionId', transactionId)
-      .set('createdBy', this.accessToken.userId)
-      .set('accessToken', this.accessToken.base64EncodedAuthenticationKey);
+    let httpParams = this.commonHttpParams.getCommonHttpParams();
+    httpParams = httpParams.set("transactionId", transactionId);
 
     return this.http.post<any>(`${this.GatewayApiUrlPrefix}/transaction/undo_revert_transaction`, httpParams);
   }
 
   uploadBosInformation(transId: string, payload: { traceNo: string; batchNo: string }): Observable<any> {
-    const httpParams = new HttpParams()
-      .set('traceNo', payload.traceNo)
-      .set('batchNo', payload.batchNo)
-      .set('transId', transId)
-      .set('createdBy', this.accessToken.userId)
-      .set('accessToken', this.accessToken.base64EncodedAuthenticationKey);
+    let httpParams = this.commonHttpParams.getCommonHttpParams();
+    httpParams = httpParams.set("traceNo", payload.traceNo);
+    httpParams = httpParams.set("batchNo", payload.batchNo);
+    httpParams = httpParams.set("transId", transId);
 
     return this.http.post<any>(`${this.GatewayApiUrlPrefix}/transaction/update_pending_transaction`, httpParams);
   }
 
   getExportExcelFile(url: string) {
     const httpOptions = {
-      responseType: 'blob' as 'json',
+      responseType: "blob" as "json",
       headers: new HttpHeaders({
-        'Gateway-TenantId': this.environment.GatewayTenantId
-      })
+        "Gateway-TenantId": this.environment.GatewayTenantId,
+      }),
     };
 
     return this.http.get(url, httpOptions);
   }
 
   exportTransaction(query: string) {
+    this.accessToken = JSON.parse(
+      sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey)
+    );
     // tslint:disable-next-line:max-line-length
     const fileUrl = `${this.environment.GatewayApiUrl}${this.environment.GatewayApiUrlPrefix}/export/export_transaction?ext5=ALL&typeExport=transaction&accessToken=${this.accessToken.base64EncodedAuthenticationKey}&createdBy=${this.accessToken.userId}&${query}`;
     this.getExportExcelFile(fileUrl).subscribe((data: any) => {
       const downloadURL = window.URL.createObjectURL(data);
-      const link = document.createElement('a');
+      const link = document.createElement("a");
       link.href = downloadURL;
-      link.download = 'V_transaction.xlsx';
+      link.download = "V_transaction.xlsx";
       link.click();
-
     });
   }
   exportTransactionBatch(batchNo: string) {
@@ -486,23 +447,18 @@ export class TransactionService {
     const fileUrl = `${this.environment.GatewayApiUrl}${this.environment.GatewayApiUrlPrefix}/export/pre_export_batch_transaction?ext5=ALL&typeExport=transaction&accessToken=${this.accessToken.base64EncodedAuthenticationKey}&createdBy=${this.accessToken.userId}&batchNo=${batchNo}`;
     this.getExportExcelFile(fileUrl).subscribe((data: any) => {
       const downloadURL = window.URL.createObjectURL(data);
-      const link = document.createElement('a');
+      const link = document.createElement("a");
       link.href = downloadURL;
       link.download = `batch_${batchNo}_transactions_.xlsx`;
       link.click();
-
     });
   }
   getFeePaidTransactions(fromDate: string, toDate: string): Observable<any> {
-    const {permissions, officeId} = this.accessToken;
-    const permit = permissions.includes('TXN_CREATE');
-    const httpParams = new HttpParams()
-      .set('fromDate', fromDate)
-      .set('toDate', toDate)
-      .set('permission', String(!permit))
-      .set('officeId', officeId)
-      .set('createdBy', this.accessToken.userId)
-      .set('accessToken', this.accessToken.base64EncodedAuthenticationKey);
+    let httpParams = this.commonHttpParams.getCommonHttpParams();
+
+    httpParams = httpParams.set("fromDate", fromDate);
+    httpParams = httpParams.set("toDate", toDate);
+
     return this.http.post<any>(
       `${this.GatewayApiUrlPrefix}/transaction/get_list_fee_transaction_on_range_date`,
       httpParams
@@ -510,17 +466,16 @@ export class TransactionService {
   }
 
   getPaymentTypes(): Observable<any> {
-    const httpParams = new HttpParams()
-      .set('createdBy', this.accessToken.userId)
-      .set('accessToken', this.accessToken.base64EncodedAuthenticationKey);
+    let httpParams = this.commonHttpParams.getCommonHttpParams();
+
     return this.http.post<any>(`${this.GatewayApiUrlPrefix}/common/get_list_payment`, httpParams);
   }
 
   getFeePaidTransactionByTnRefNo(trnRefNo: string): Observable<any> {
-    const httpParams = new HttpParams()
-      .set('trnRefNo', trnRefNo)
-      .set('createdBy', this.accessToken.userId)
-      .set('accessToken', this.accessToken.base64EncodedAuthenticationKey);
+    let httpParams = this.commonHttpParams.getCommonHttpParams();
+
+    httpParams = httpParams.set("trnRefNo", trnRefNo);
+
     return this.http.post<any>(
       `${this.GatewayApiUrlPrefix}/savingTransaction/get_list_fee_transaction_by_trn_ref_no`,
       httpParams
@@ -528,12 +483,11 @@ export class TransactionService {
   }
 
   paidFeeForTransaction(form: any): Observable<any> {
-    let httpParams = new HttpParams()
-      .set('createdBy', this.accessToken.userId)
-      .set('accessToken', this.accessToken.base64EncodedAuthenticationKey);
+    let httpParams = this.commonHttpParams.getCommonHttpParams();
+
     const keys = Object.keys(form);
     for (const key of keys) {
-      if (key.includes('amount')) {
+      if (key.includes("amount")) {
         httpParams = httpParams.set(key, String(Number(form[key])));
       } else {
         httpParams = httpParams.set(key, form[key]);
@@ -543,8 +497,11 @@ export class TransactionService {
   }
 
   exportTransactionFeePaid(transactions: string) {
-    const {permissions, officeId} = this.accessToken;
-    const permit = permissions.includes('TXN_CREATE');
+    this.accessToken = JSON.parse(
+      sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey)
+    );
+    const { permissions, officeId } = this.accessToken;
+    const permit = permissions.includes("TXN_CREATE");
 
     // tslint:disable-next-line:max-line-length
     const fileUrl = `${this.environment.GatewayApiUrl}${
@@ -555,21 +512,18 @@ export class TransactionService {
     &createdBy=${this.accessToken.userId}&transactionList=${transactions}`;
 
     this.getExportExcelFile(fileUrl).subscribe((data: any) => {
-
       const downloadURL = window.URL.createObjectURL(data);
-      const link = document.createElement('a');
+      const link = document.createElement("a");
       link.href = downloadURL;
-      link.download = 'F_transaction.xlsx';
+      link.download = "F_transaction.xlsx";
       link.click();
-
     });
   }
 
   getListFeeSavingTransaction(txnCode: string): Observable<any> {
-    const httpParams = new HttpParams()
-      .set('tranRefNo', txnCode)
-      .set('createdBy', this.accessToken.userId)
-      .set('accessToken', this.accessToken.base64EncodedAuthenticationKey);
+    let httpParams = this.commonHttpParams.getCommonHttpParams();
+    httpParams = httpParams.set("tranRefNo", txnCode);
+
     return this.http.post<any>(
       `${this.GatewayApiUrlPrefix}/savingTransaction/get_list_fee_saving_transaction`,
       httpParams
@@ -577,78 +531,52 @@ export class TransactionService {
   }
 
   revertFeeByResourceId(txnSavingResource: string): Observable<any> {
-    const httpParams = new HttpParams()
-      .set('resourceId', txnSavingResource)
-      .set('createdBy', this.accessToken.userId)
-      .set('accessToken', this.accessToken.base64EncodedAuthenticationKey);
-    return this.http.post<any>(
-      `${this.GatewayApiUrlPrefix}/savingTransaction/revert_fee_transaction`,
-      httpParams
-    );
+    let httpParams = this.commonHttpParams.getCommonHttpParams();
+    httpParams = httpParams.set("resourceId", txnSavingResource);
+
+    return this.http.post<any>(`${this.GatewayApiUrlPrefix}/savingTransaction/revert_fee_transaction`, httpParams);
   }
 
   getBatchTransactions(batchTxnName: string): Observable<any> {
-    const httpParams = new HttpParams()
-      .set('batchTxnName', batchTxnName)
-      .set('createdBy', this.accessToken.userId)
-      .set('accessToken', this.accessToken.base64EncodedAuthenticationKey);
-    return this.http.post<any>(
-      `${this.GatewayApiUrlPrefix}/transaction/get_list_batch_transaction`,
-      httpParams
-    );
+    let httpParams = this.commonHttpParams.getCommonHttpParams();
+    httpParams = httpParams.set("batchTxnName", batchTxnName);
+
+    return this.http.post<any>(`${this.GatewayApiUrlPrefix}/transaction/get_list_batch_transaction`, httpParams);
   }
 
   getMembersInGroup(groupId: string): Observable<any> {
-    const httpParams = new HttpParams()
-      .set('groupId', groupId)
-      .set('createdBy', this.accessToken.userId)
-      .set('accessToken', this.accessToken.base64EncodedAuthenticationKey);
-    return this.http.post<any>(
-      `${this.GatewayApiUrlPrefix}/groups/get_list_member_group`,
-      httpParams
-    );
+    let httpParams = this.commonHttpParams.getCommonHttpParams();
+    httpParams = httpParams.set("groupId", groupId);
+
+    return this.http.post<any>(`${this.GatewayApiUrlPrefix}/groups/get_list_member_group`, httpParams);
   }
 
   getMembersAvailableGroup(groupId: string): Observable<any> {
-    const httpParams = new HttpParams()
-      .set('groupId', groupId)
-      .set('createdBy', this.accessToken.userId)
-      .set('accessToken', this.accessToken.base64EncodedAuthenticationKey);
-    return this.http.post<any>(
-      `${this.GatewayApiUrlPrefix}/groups/get_list_member_group_with_identifier`,
-      httpParams
-    );
+    let httpParams = this.commonHttpParams.getCommonHttpParams();
+    httpParams = httpParams.set("groupId", groupId);
+
+    return this.http.post<any>(`${this.GatewayApiUrlPrefix}/groups/get_list_member_group_with_identifier`, httpParams);
   }
 
   checkValidTransactionBtach(clientId: string): Observable<any> {
-    const httpParams = new HttpParams()
-      .set('clientId', clientId)
-      .set('createdBy', this.accessToken.userId)
-      .set('accessToken', this.accessToken.base64EncodedAuthenticationKey);
-    return this.http.post<any>(
-      `${this.GatewayApiUrlPrefix}/transaction/check_valid_for_batch_transaction`,
-      httpParams
-    );
+    let httpParams = this.commonHttpParams.getCommonHttpParams();
+    httpParams = httpParams.set("clientId", clientId);
+
+    return this.http.post<any>(`${this.GatewayApiUrlPrefix}/transaction/check_valid_for_batch_transaction`, httpParams);
   }
 
   checkExtraCardTransactionBatch(userId: string, userIdentifyId: string): Observable<any> {
-    const httpParams = new HttpParams()
-      .set('userId', userId)
-      .set('userIdentifyId', userIdentifyId)
+    let httpParams = this.commonHttpParams.getCommonHttpParams();
+    httpParams = httpParams.set("userId", userId);
+    httpParams = httpParams.set("userIdentifyId", userIdentifyId);
 
-      .set('createdBy', this.accessToken.userId)
-      .set('accessToken', this.accessToken.base64EncodedAuthenticationKey);
-    return this.http.post<any>(
-      `${this.GatewayApiUrlPrefix}/card/check_extra_card_info`,
-      httpParams
-    );
+    return this.http.post<any>(`${this.GatewayApiUrlPrefix}/card/check_extra_card_info`, httpParams);
   }
 
   getTransactionGroupFee(groupId: string): Observable<any> {
-    const httpParams = new HttpParams()
-      .set('groupId', groupId)
-      .set('createdBy', this.accessToken.userId)
-      .set('accessToken', this.accessToken.base64EncodedAuthenticationKey);
+    let httpParams = this.commonHttpParams.getCommonHttpParams();
+    httpParams = httpParams.set("groupId", groupId);
+
     return this.http.post<any>(
       `${this.GatewayApiUrlPrefix}/savingTransaction/get_fee_transaction_by_Group`,
       httpParams
@@ -656,9 +584,7 @@ export class TransactionService {
   }
 
   onSaveTransactionBatch(form: any): Observable<any> {
-    let httpParams = new HttpParams()
-      .set('createdBy', this.accessToken.userId)
-      .set('accessToken', this.accessToken.base64EncodedAuthenticationKey);
+    let httpParams = this.commonHttpParams.getCommonHttpParams();
 
     const keys = Object.keys(form);
     for (const key of keys) {
@@ -670,9 +596,7 @@ export class TransactionService {
     );
   }
   makeFeeOnAdvanceExecute(form: any): Observable<any> {
-    let httpParams = new HttpParams()
-      .set('createdBy', this.accessToken.userId)
-      .set('accessToken', this.accessToken.base64EncodedAuthenticationKey);
+    let httpParams = this.commonHttpParams.getCommonHttpParams();
 
     const keys = Object.keys(form);
     for (const key of keys) {
@@ -684,47 +608,31 @@ export class TransactionService {
     );
   }
   getListTransExistingOfBatch(batchTxnName: string): Observable<any> {
-    const httpParams = new HttpParams()
-      .set('batchTxnName', batchTxnName)
-      .set('createdBy', this.accessToken.userId)
-      .set('accessToken', this.accessToken.base64EncodedAuthenticationKey);
-    return this.http.post<any>(
-      `${this.GatewayApiUrlPrefix}/transaction/get_list_batch_transaction`,
-      httpParams
-    );
+    let httpParams = this.commonHttpParams.getCommonHttpParams();
+
+    httpParams = httpParams.set("batchTxnName", batchTxnName);
+
+    return this.http.post<any>(`${this.GatewayApiUrlPrefix}/transaction/get_list_batch_transaction`, httpParams);
   }
 
   getDocumentTemplate(): Observable<any> {
-    const httpParams = new HttpParams()
-      .set('createdBy', this.accessToken.userId)
-      .set('accessToken', this.accessToken.base64EncodedAuthenticationKey);
-    return this.http.post<any>(
-      `${this.GatewayApiUrlPrefix}/common/get_document_templates`,
-      httpParams
-    );
+    let httpParams = this.commonHttpParams.getCommonHttpParams();
+
+    return this.http.post<any>(`${this.GatewayApiUrlPrefix}/common/get_document_templates`, httpParams);
   }
 
   addIdentifierBatch(clientId: string, listIdentifier: string): Observable<any> {
-    const httpParams = new HttpParams()
-      .set('createdBy', this.accessToken.userId)
-      .set('clientId', clientId)
-      .set('listIdentifier', listIdentifier)
-      .set('accessToken', this.accessToken.base64EncodedAuthenticationKey);
-    return this.http.post<any>(
-      `${this.GatewayApiUrlPrefix}/client/add_identifier`,
-      httpParams
-    );
+    let httpParams = this.commonHttpParams.getCommonHttpParams();
+
+    httpParams = httpParams.set("clientId", clientId);
+    httpParams = httpParams.set("listIdentifier", listIdentifier);
+    return this.http.post<any>(`${this.GatewayApiUrlPrefix}/client/add_identifier`, httpParams);
   }
 
   getIdentifierTypeCC(clientId: string): Observable<any> {
-    const httpParams = new HttpParams()
-      .set('createdBy', this.accessToken.userId)
-      .set('clientId', clientId)
-      .set('officeId', this.accessToken.officeId)
-      .set('accessToken', this.accessToken.base64EncodedAuthenticationKey);
-    return this.http.post<any>(
-      `${this.GatewayApiUrlPrefix}/client/get_identifier_midas_by_client_group`,
-      httpParams
-    );
+    let httpParams = this.commonHttpParams.getCommonHttpParams();
+      httpParams = httpParams.set("clientId", clientId);
+
+    return this.http.post<any>(`${this.GatewayApiUrlPrefix}/client/get_identifier_midas_by_client_group`, httpParams);
   }
 }

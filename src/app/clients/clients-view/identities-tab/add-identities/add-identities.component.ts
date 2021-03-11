@@ -96,7 +96,7 @@ export class AddIdentitiesComponent implements OnInit {
     });
 
     this.form.get('documentKey').valueChanges.subscribe((value: any) => {
-      if (value.length === 16) {
+      if (value.length === 6) {
         const typeDocument = this.form.get('documentTypeId').value;
         const type = this.documentTypes.find(v => v.id === typeDocument);
         if (type && Number(type.id) >= 38 && Number(type.id) <= 57) {
@@ -121,7 +121,6 @@ export class AddIdentitiesComponent implements OnInit {
           });
         }
       }
-
     });
   }
 

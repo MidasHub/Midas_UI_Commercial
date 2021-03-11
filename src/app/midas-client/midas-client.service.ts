@@ -5,6 +5,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 
 /** rxjs Imports */
 import { Observable } from 'rxjs';
+import { CommonHttpParams } from 'app/shared/CommonHttpParams';
 /**
  * midas client service.
  */
@@ -20,7 +21,7 @@ export class MidasClientService {
   /**
    * @param {HttpClient} http Http Client to send requests.
    */
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private commonHttpParams: CommonHttpParams) {
 
     this.accessToken = JSON.parse(
       sessionStorage.getItem(this.credentialsStorageKey)
@@ -32,53 +33,42 @@ export class MidasClientService {
 
 
    getInfoSavingAccountByUserId(): Observable<any> {
-
-    this.accessToken = JSON.parse(
-      sessionStorage.getItem(this.credentialsStorageKey)
-      || localStorage.getItem(this.credentialsStorageKey)
-    );
-
-    const httpParams = new HttpParams()
-    .set('createdBy', this.accessToken.userId)
-    .set('accessToken', this.accessToken.base64EncodedAuthenticationKey);
+    let httpParams = this.commonHttpParams.getCommonHttpParams();
 
     return this.http.post<any>(`${this.GatewayApiUrlPrefix}/savingTransaction/get_info_saving_account_by_user_id`, httpParams);
   }
 
+  getInfoModuleActive( userId?: number, officeId?:number, accessToken?:string): Observable<any> {
+
+    let httpParams = this.commonHttpParams.getCommonHttpParams();
+    return this.http.post<any>(`${this.GatewayApiUrlPrefix}/config/get_info_module_active`, httpParams);
+  }
+
   searchClientByNameAndExternalIdAndPhoneAndDocumentKey(query: string): Observable<any> {
 
-    const httpParams = new HttpParams()
-    .set('query', query)
-    .set('createdBy', this.accessToken.userId)
-    .set('accessToken', this.accessToken.base64EncodedAuthenticationKey);
+    let httpParams = this.commonHttpParams.getCommonHttpParams();
+    httpParams = httpParams.set('query', query);
 
     return this.http.post<any>(`${this.GatewayApiUrlPrefix}/client/get_list_client_by_query`, httpParams);
   }
 
   getListSavingAccountFtByUserId(): Observable<any> {
-
-    const httpParams = new HttpParams()
-    .set('createdBy', this.accessToken.userId)
-    .set('accessToken', this.accessToken.base64EncodedAuthenticationKey);
+    let httpParams = this.commonHttpParams.getCommonHttpParams();
 
     return this.http.post<any>(`${this.GatewayApiUrlPrefix}/savingTransaction/get_list_saving_account_ft_by_user_id`, httpParams);
   }
 
   getListSavingAccountByUserId(): Observable<any> {
 
-    const httpParams = new HttpParams()
-    .set('createdBy', this.accessToken.userId)
-    .set('accessToken', this.accessToken.base64EncodedAuthenticationKey);
+    let httpParams = this.commonHttpParams.getCommonHttpParams();
 
     return this.http.post<any>(`${this.GatewayApiUrlPrefix}/savingTransaction/get_list_saving_account_by_user_id`, httpParams);
   }
 
   getListSavingAccountByClientId(clientId: string): Observable<any> {
 
-    const httpParams = new HttpParams()
-    .set('clientId', clientId)
-    .set('createdBy', this.accessToken.userId)
-    .set('accessToken', this.accessToken.base64EncodedAuthenticationKey);
+    let httpParams = this.commonHttpParams.getCommonHttpParams();
+    httpParams = httpParams.set('clientId', clientId);
 
     return this.http.post<any>(`${this.GatewayApiUrlPrefix}/savingTransaction/get_list_saving_account_by_client_id`, httpParams);
   }

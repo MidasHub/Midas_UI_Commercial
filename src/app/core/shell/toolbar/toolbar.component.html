@@ -1,4 +1,4 @@
-<mat-toolbar fxLayout="row" color="primary" id="mifosx-toolbar">
+<mat-toolbar fxLayout="row" color="primary" id="mifosx-toolbar" >
   <button mat-icon-button *ngIf="!sidenavCollapsed" (click)="toggleSidenav()" matTooltip="Toggle Hide/Open">
     <fa-icon icon="bars" size="lg"></fa-icon>
   </button>
@@ -14,7 +14,7 @@
     <fa-icon *ngIf="sidenavCollapsed" icon="chevron-right"></fa-icon>
   </button>
 
-  <nav mat-tab-nav-bar backgroundColor="primary" class="ml-1">
+  <nav mat-tab-nav-bar backgroundColor="primary" class="ml-1" fxFlex>
     <a mat-tab-link class="tab-link" [matMenuTriggerFor]="institutionMenu" #institutionMenuTrigger="matMenuTrigger">
       <fa-icon class="mr-05" icon="university" size="lg"></fa-icon>
       {{ "Toolbar_Component.labelInstitution" | translate }}
@@ -64,16 +64,17 @@
     </a>
   </nav>
 
-  <div fxFlex="auto">
-    <span fxFlex="60%"></span>
-    <midas-user-account-info fxFlex="40%"></midas-user-account-info>
-    <mifosx-theme-picker fxHide.lt-md></mifosx-theme-picker>
+  <div fxFlex  fxLayout="row" fxLayoutAlign="end center" >
+    <!-- <span ></span> -->
+    <midas-user-account-info fxFlex="85%" fxLayout="row" fxLayoutAlign="center center"></midas-user-account-info>
+    <mifosx-theme-picker fxHide.lt-md fxFlex="5%" fxLayout="row" fxLayoutAlign="center center"></mifosx-theme-picker>
 
-    <mifosx-notifications-tray fxHide.lt-md></mifosx-notifications-tray>
-    <br />
-    <button mat-icon-button class="ml-1 img-button" [matMenuTriggerFor]="applicationMenu">
+    <mifosx-notifications-tray fxHide.lt-md fxFlex="5%" fxLayout="row" fxLayoutAlign="center center"> </mifosx-notifications-tray>
+    <!-- <br /> -->
+    <button mat-icon-button class="ml-1 img-button" [matMenuTriggerFor]="applicationMenu" fxFlex="5%" fxLayout="row" fxLayoutAlign="center center">
       <img src="assets/images/user_placeholder.png" />
     </button>
+
   </div>
 
 </mat-toolbar>
