@@ -1,6 +1,6 @@
 <button class="aligned-with-icons" mat-icon-button class="ml-1"
   matTooltip="Tổng số dư tài khoản ngân hàng"
-  [matMenuTriggerFor]="UserSavingMenu">
+  [matMenuTriggerFor]="listSaving.length > 0 ? UserSavingMenu : null">
   Số dư:
   <span >{{ totalBalance | money }}</span>
 </button>
