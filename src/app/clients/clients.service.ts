@@ -487,7 +487,7 @@ export class ClientsService {
   getNameOfStaff(): Observable<any> {
     let httpParams = this.commonHttpParams.getCommonHttpParams();
 
-    return this.http.post<any>(`${this.GatewayApiUrlPrefix}/common/get_list_staffName_of_office`, httpParams);
+    return this.http.post<any>(`${this.GatewayApiUrlPrefix}/common/get_list_staff_of_office`, httpParams);
   }
 
   getStaffOfUser(): Observable<any> {
