@@ -1,12 +1,13 @@
 {
-  "short_name": "MifosX",
-  "name": "MifosX Web App",
+  "short_name": "Midas",
+  "name": "Midas Web App",
   "start_url": "./",
   "scope": "./",
   "theme_color": "#fff",
   "background_color": "#fff",
   "display": "standalone",
   "description": "MIDAS Web App is the default web application built on top of the Fineract platform and Angular framework.",
+  "gcm_sender_id": "83286799966",
   "icons": [
     {
       "src": "assets/images/Midas-Logo-01.png",

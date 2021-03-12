@@ -15,19 +15,26 @@ import { TranslateService } from '@ngx-translate/core';
 import { environment } from 'environments/environment';
 
 /** Custom Services */
-import { Logger } from './core/logger/logger.service';
+
 import { I18nService } from './core/i18n/i18n.service';
 import { ThemeStorageService } from './shared/theme-picker/theme-storage.service';
 import { AlertService } from './core/alert/alert.service';
 import { AuthenticationService } from './core/authentication/authentication.service';
 import { SettingsService } from './settings/settings.service';
-import { BanksService} from "./banks/banks.service"
+import { BanksService } from "./banks/banks.service"
 
 /** Custom Items */
 import { Alert } from './core/alert/alert.model';
 import { KeyboardShortcutsConfiguration } from './keyboards-shortcut-config';
 
+/**
+ * Firebase Messaging
+ */
+
+import { FireBaseMessagingService } from './firebase/fire-base-messaging.service';
+
 /** Initialize Logger */
+import { Logger } from './core/logger/logger.service';
 const log = new Logger('Midas');
 
 /**
@@ -64,8 +71,11 @@ export class WebAppComponent implements OnInit {
     private alertService: AlertService,
     private settingsService: SettingsService,
     private authenticationService: AuthenticationService,
-    private bankService : BanksService) {
-  }
+    private bankService: BanksService,
+    private messagingService: FireBaseMessagingService) { }
+
+  //Variables for Firebase messsage
+  message: any
 
   /**
    * Initial Setup:
@@ -135,7 +145,7 @@ export class WebAppComponent implements OnInit {
       this.snackBar.open(`${alertEvent.message}`, this.i18nService.getTranslate('Client_Component.ClientStepper.lblClose'), {
         duration: (alertEvent.msgDuration) ? alertEvent.msgDuration : 5000,
         horizontalPosition: (alertEvent.hPosition) ? alertEvent.hPosition : 'right',
-        verticalPosition: (alertEvent.vPosition) ? alertEvent.vPosition:'top',
+        verticalPosition: (alertEvent.vPosition) ? alertEvent.vPosition : 'top',
         panelClass: [alertEvent.msgClass],
       });
     });
@@ -176,7 +186,13 @@ export class WebAppComponent implements OnInit {
     // load card and bank data
     this.bankService.bankCardDataInit();
 
-  // ----- End ngOnInit
+    // Firebase Message
+
+    this.messagingService.requestPermission()
+    this.messagingService.receiveMessage()
+    this.message = this.messagingService.currentMessage
+
+    // ----- End ngOnInit
   }
 
   logout() {
