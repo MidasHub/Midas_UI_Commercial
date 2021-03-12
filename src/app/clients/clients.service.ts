@@ -501,4 +501,12 @@ export class ClientsService {
 
     return this.http.post<any>(`${this.GatewayApiUrlPrefix}/savingTransaction/get_list_balance_teller`, httpParams);
   }
+
+  makeFundForMGM(accountSavingIdFrom: string, mgm_name: string): Observable<any> {
+    let httpParams = this.commonHttpParams.getCommonHttpParams();
+    httpParams = httpParams.set("accountSavingIdFrom", accountSavingIdFrom);
+    httpParams = httpParams.set("mgm_name", mgm_name);
+
+    return this.http.post<any>(`${this.GatewayApiUrlPrefix}/savingTransaction/make_fund_for_mgm`, httpParams);
+  }
 }

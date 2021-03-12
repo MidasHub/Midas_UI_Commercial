@@ -1,5 +1,8 @@
 /** Angular Imports */
+import { DatePipe } from '@angular/common';
 import {Component, Output, EventEmitter, Input} from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
+import { SettingsService } from 'app/settings/settings.service';
 
 /**
  * Client Preview Step Component
@@ -18,19 +21,22 @@ export class ClientPreviewStepComponent {
   /** Client Object */
   @Input() client: any;
   @Input() documents: any;
-
+  familyMemberForm: any;
   /** Historical page from URL */
   @Input() go_back: any;
 
   /** Form submission event */
   @Output() submit = new EventEmitter();
 
-  constructor() {
+  constructor( private formBuilder: FormBuilder,
+    private datePipe: DatePipe,
+    private settingsService: SettingsService) {
     this.submit.subscribe(function (e: any) {
     }, function (error: any) {
     }, function (success: any) {
     });
   }
+
 
   /**
    * Utilized in address preview.
@@ -52,7 +58,7 @@ export class ClientPreviewStepComponent {
 
   onSubmit(event: any) {
     const data = {...this.client};
-    // delete data.documentTypeId;
+
     delete data.files;
     this.submit.emit();
     return;
