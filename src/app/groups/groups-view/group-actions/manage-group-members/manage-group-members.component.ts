@@ -123,7 +123,7 @@ export class ManageGroupMembersComponent implements AfterViewInit {
    * @returns {string} Client name if valid otherwise undefined.
    */
   showClientDetail(client: any): void {
-    const dialogRef = this.dialog.open(DialogOverviewExampleDialog, {
+    const dialogRef = this.dialog.open(DialogOverviewClientDialog, {
       width: '400px',
       data: {...client}
     });
@@ -136,20 +136,21 @@ export class ManageGroupMembersComponent implements AfterViewInit {
 }
 
 export interface DialogDataClient {
-  animal: string;
-  name: string;
+  accountNo: string;
+  externalId: string;
+  officeName: string;
+  staffName: string;
+  mobileNo: string;
 }
 @Component({
   selector: 'dialog-overview-example-dialog',
   templateUrl: 'group_member_details.html',
 })
-export class DialogOverviewExampleDialog {
+export class DialogOverviewClientDialog {
 
   constructor(
-    public dialogRef: MatDialogRef<DialogOverviewExampleDialog>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogDataClient) {
-      console.log("data===",data);
-    }
+    public dialogRef: MatDialogRef<DialogOverviewClientDialog>,
+    @Inject(MAT_DIALOG_DATA) public data: DialogDataClient) {}
 
   onNoClick(): void {
     this.dialogRef.close();
