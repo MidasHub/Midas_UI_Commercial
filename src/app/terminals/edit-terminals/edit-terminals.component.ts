@@ -41,6 +41,7 @@ export class EditTerminalsComponent implements OnInit, AfterViewInit {
   ItemPosLimitList: any;
   ItemPosBranch: any;
   ItemPos: any;
+  banks: any[] = [];
   posLimits: any;
   posLimitDefault: PeriodicElements[] = [];
   dataSource = new MatTableDataSource();
@@ -51,8 +52,6 @@ export class EditTerminalsComponent implements OnInit, AfterViewInit {
     private formBuilder: FormBuilder,
     private router: Router,
     private terminalsService: TerminalsService,
-    private datePipe: DatePipe,
-    private settingsService: SettingsService,
     private cdr: ChangeDetectorRef,
     private dialog: MatDialog
     ) {}
@@ -66,7 +65,7 @@ export class EditTerminalsComponent implements OnInit, AfterViewInit {
       this.ItemPosLimitList = data.terminalData.result.ItemPosLimitList;
       this.ItemPos          = data.terminalData.result.ItemPos;
       this.ItemPosBranch    = data.terminalData.result.ItemPosBranch;
-      // this.dataSource = new MatTableDataSource(this.ItemPosLimitList);
+      this.banks =  data.terminalData.result.listBank;
       this.dataSource.data = this.ItemPosLimitList;
       this.posLimitDefault = this.ItemPosLimitList;
       this.dataSource.paginator = this.paginator;
@@ -79,6 +78,8 @@ export class EditTerminalsComponent implements OnInit, AfterViewInit {
       'terminalName': this.ItemPos.terminalName,
       'limitAmount': this.ItemPosLimitList[0].limitAmount,
       'officeId': this.ItemPosBranch.officeId,
+      'bankCode': this.ItemPos.bankCode,
+      'timeChargeValid': this.ItemPos.timeChargeValid,
       'minFeeDefault': this.ItemPos.minFeeDefault,
       'merchantId': this.ItemPosBranch.merchantId,
       'status': this.ItemPos.status === 'A' ? true : false,
@@ -98,6 +99,8 @@ export class EditTerminalsComponent implements OnInit, AfterViewInit {
       'terminalName': ['', [Validators.required, ]],
       'merchantId': ['', [Validators.required]],
       'officeId': ['', [Validators.required]],
+      'bankCode': ["", [Validators.required]],
+      'timeChargeValid': ["", [Validators.required, Validators.max(99), Validators.min(1)]],
       'status': [true],
       'minFeeDefault': ['', [Validators.required, Validators.min(0)]],
       'costPercentage': ['', [Validators.max(100), Validators.min(0)]],
@@ -124,7 +127,7 @@ export class EditTerminalsComponent implements OnInit, AfterViewInit {
      this.offices.forEach ((office: any) => {
       this.cardTypes.forEach((card: any) => {
             const limit = {
-                officeId : office.id,
+                officeId : office.officeId,
                 officeName : office.name,
                 cardCode : card.code,
                 cardDescription : card.description,
@@ -162,7 +165,7 @@ export class EditTerminalsComponent implements OnInit, AfterViewInit {
     const office = this.offices.find((i: any) => i.id === officeId);
     this.cardTypes.forEach((card: any) => {
       const limit = {
-        officeId : office.id,
+        officeId : office.officeId,
         officeName : office.name,
         cardCode : card.code,
         cardDescription : card.description,
