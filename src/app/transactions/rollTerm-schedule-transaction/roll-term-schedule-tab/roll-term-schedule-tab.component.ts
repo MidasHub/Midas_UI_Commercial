@@ -7,6 +7,7 @@ import { MatPaginator } from "@angular/material/paginator";
 import { MatSort } from "@angular/material/sort";
 import { BanksService } from "app/banks/banks.service";
 import { CentersService } from "app/centers/centers.service";
+import { ClientsService } from "app/clients/clients.service";
 import { AlertService } from "app/core/alert/alert.service";
 import { AuthenticationService } from "app/core/authentication/authentication.service";
 import { SettingsService } from "app/settings/settings.service";
@@ -87,10 +88,6 @@ export class RollTermScheduleTabComponent implements OnInit {
       label: "Chờ đợi",
       value: "P",
     },
-    // {
-    //   label: 'F',
-    //   value: 'F'
-    // },
     {
       label: "Hủy",
       value: "V",
@@ -105,6 +102,7 @@ export class RollTermScheduleTabComponent implements OnInit {
   totalCogsAmount = 0;
   totalPnlAmount = 0;
   panelOpenState = false;
+  permitFee = false;
   filterData: any[];
   today = new Date();
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
@@ -119,29 +117,32 @@ export class RollTermScheduleTabComponent implements OnInit {
     private alertService: AlertService,
     private dialog: MatDialog,
     private banksServices: BanksService,
+    private clientServices: ClientsService
   ) {
     this.formDate = this.formBuilder.group({
       fromDate: [new Date(new Date().setMonth(new Date().getMonth() - 1))],
       toDate: [new Date()],
     });
+  }
+
+  ngOnInit(): void {
+    this.currentUser = this.authenticationService.getCredentials();
+    this.banksServices.getBanks().subscribe((result) => {
+      this.banks = result;
+    });
+    this.clientServices.getNameOfStaff().subscribe((result: any) => {
+      this.staffs = result?.result?.listStaff;
+    });
+
     this.formFilter = this.formBuilder.group({
-      createdByFilter: ["ALL"],
+      createdByFilter: [this.currentUser.userId],
       bankFilter: ["ALL"],
       query: [""],
     });
   }
 
-  ngOnInit(): void {
-    this.currentUser = this.authenticationService.getCredentials();
-    this.banksServices.getBanks().subscribe(result => {
-
-        this.banks = result;
-      })
-  }
-
   // tslint:disable-next-line:use-lifecycle-interface
   ngAfterViewInit() {
-
     this.sort.sortChange.subscribe(() => (this.paginator.pageIndex = 0));
     merge(this.sort.sortChange, this.paginator.page)
       .pipe(tap(() => this.getRollTermScheduleAndCardDueDayInfo()))
@@ -192,7 +193,6 @@ export class RollTermScheduleTabComponent implements OnInit {
     dialog.afterClosed().subscribe((response: any) => {
       if (response.data) {
         const value = response.data.value;
-
       }
     });
   }
@@ -205,7 +205,6 @@ export class RollTermScheduleTabComponent implements OnInit {
     dialog.afterClosed().subscribe((response: any) => {
       if (response.data) {
         const value = response.data.value;
-
       }
       this.getRollTermScheduleAndCardDueDayInfo();
     });
@@ -214,29 +213,30 @@ export class RollTermScheduleTabComponent implements OnInit {
   undoRollTermTransaction(transactionId: string, amountPaid: string) {
     const dialog = this.dialog.open(ConfirmDialogComponent, {
       data: {
-        message: 'Bạn chắc chắn muốn hủy khoản đáo hạn ' + transactionId,
-        title: 'Hủy giao dịch'
+        message: "Bạn chắc chắn muốn hủy khoản đáo hạn " + transactionId,
+        title: "Hủy giao dịch",
       },
     });
-    dialog.afterClosed().subscribe(data => {
+    dialog.afterClosed().subscribe((data) => {
       if (data) {
-        this.transactionService.RepaymentRolltermManualTransactionCloseLoan(transactionId, amountPaid).subscribe(result => {
-          if (result.status === '200') {
-
-            const message = 'Hủy giao dịch ' + transactionId + ' thành công';
-            this.alertService.alert({
-              msgClass: 'cssInfo',
-              message: message
-            });
-            this.getRollTermScheduleAndCardDueDayInfo();
-          }else{
-            const message = result.error;
-            this.alertService.alert({
-              msgClass: 'cssDanger',
-              message: message
-            });
-          }
-        });
+        this.transactionService
+          .RepaymentRolltermManualTransactionCloseLoan(transactionId, amountPaid)
+          .subscribe((result) => {
+            if (result.status === "200") {
+              const message = "Hủy giao dịch " + transactionId + " thành công";
+              this.alertService.alert({
+                msgClass: "cssInfo",
+                message: message,
+              });
+              this.getRollTermScheduleAndCardDueDayInfo();
+            } else {
+              const message = result.error;
+              this.alertService.alert({
+                msgClass: "cssDanger",
+                message: message,
+              });
+            }
+          });
       }
     });
   }

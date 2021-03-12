@@ -10,6 +10,7 @@ import { TransactionService } from "app/transactions/transaction.service";
 import { AlertService } from "app/core/alert/alert.service";
 import { ViewFeePaidTransactionDialogComponent } from "app/transactions/dialog/view-fee-paid-transaction-dialog/view-fee-paid-transaction-dialog.component";
 import { DatePipe } from "@angular/common";
+import { AuthenticationService } from "app/core/authentication/authentication.service";
 
 @Component({
   selector: "midas-roll-term-schedule-dialog",
@@ -32,6 +33,8 @@ export class RollTermScheduleDialogComponent implements OnInit {
   rollTermId: string;
   form: FormGroup;
   pristine: boolean;
+  currentUser: any;
+  permitFee: boolean = false;
 
   constructor(
     private router: Router,
@@ -40,6 +43,7 @@ export class RollTermScheduleDialogComponent implements OnInit {
     private alertService: AlertService,
     private changeDetectorRefs: ChangeDetectorRef,
     private transactionService: TransactionService,
+    private authenticationService: AuthenticationService,
     public dialog: MatDialog,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private formBuilder: FormBuilder
@@ -48,7 +52,24 @@ export class RollTermScheduleDialogComponent implements OnInit {
     this.getRollTermScheduleAndCardDueDayInfo(data.rollTermId);
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.currentUser = this.authenticationService.getCredentials();
+    this.checkPermissionMakeRepayment();
+  }
+
+  checkPermissionMakeRepayment() {
+
+    const permitREFINANCE_MAKE_PAYMENT = this.currentUser.permissions.includes("REFINANCE_MAKE_PAYMENT");
+    const permitREFINANCE_EXECUTIVE = this.currentUser.permissions.includes("REFINANCE_EXECUTIVE");
+
+    if (permitREFINANCE_MAKE_PAYMENT && permitREFINANCE_EXECUTIVE) {
+      this.permitFee = true;
+    } else {
+      if (!permitREFINANCE_EXECUTIVE) {
+        this.permitFee = true;
+      }
+    }
+  }
 
   routeToMakeRollTermGetCash(tranId: string, bookingId: string, remainValue: string) {
     if (this.transactionInfo?.totalAmountPaid <= this.transactionInfo?.totalAmountGet) {

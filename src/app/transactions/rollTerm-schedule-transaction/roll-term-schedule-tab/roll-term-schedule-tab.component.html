@@ -14,52 +14,49 @@
         <mat-datepicker-toggle matSuffix [for]="transactionDateToPicker"></mat-datepicker-toggle>
         <mat-datepicker #transactionDateToPicker></mat-datepicker>
       </mat-form-field>
-
     </div>
     <div class="container" fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column"></div>
   </mat-card-content>
 
-      <div [formGroup]="formFilter" fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column" [formGroup]="formFilter">
+  <div [formGroup]="formFilter" fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column" [formGroup]="formFilter">
+    <mat-form-field fxFlex="18%" *midasHasPermission="'REFINANCE_EXECUTIVE'">
+      <mat-label>Nhân viên</mat-label>
+      <mat-select formControlName="createdByFilter">
+        <mat-option *ngFor="let option of staffs" [value]="option.userId">
+          {{ option.displayName }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
 
-        <mat-form-field fxFlex="18%">
-          <mat-label>Nhân viên</mat-label>
-          <mat-select formControlName="createdByFilter">
-            <mat-option *ngFor="let type of staffs" [value]="type.id">
-              {{ type.displayName }}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
+    <mat-form-field fxFlex="18%">
+      <mat-label>Ngân hàng</mat-label>
+      <mat-select formControlName="bankFilter">
+        <mat-option *ngFor="let bank of banks" [value]="bank.bankCode">
+          {{ bank.bankName }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
 
-        <mat-form-field fxFlex="18%">
-          <mat-label>Ngân hàng</mat-label>
-          <mat-select formControlName="bankFilter">
-            <mat-option *ngFor="let bank of banks" [value]="bank.bankCode">
-              {{ bank.bankName }}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
+    <mat-form-field fxFlex="18%">
+      <mat-label>Thông tin khách hàng</mat-label>
+      <input matInput formControlName="query" />
+    </mat-form-field>
 
-        <mat-form-field fxFlex="18%">
-          <mat-label>Thông tin khách hàng</mat-label>
-          <input matInput formControlName="query" />
-        </mat-form-field>
-
-
-        <div fxFlex="18%">
-          <button
-            *ngIf="fromDateAndToDate"
-            (click)="getRollTermScheduleAndCardDueDayInfo()"
-            style="align-self: center"
-            color="primary"
-            mat-raised-button
-          >
-            Tìm kiếm &nbsp;<i class="fa fa-search" aria-hidden="true"></i>
-          </button>
-          <h3 *ngIf="!fromDateAndToDate">
-            Vui lòng chọn thời gian &nbsp; <i class="fa fa-calendar" style="align-self: center" aria-hidden="true"></i>
-          </h3>
-        </div>
-      </div>
+    <div fxFlex="18%">
+      <button
+        *ngIf="fromDateAndToDate"
+        (click)="getRollTermScheduleAndCardDueDayInfo()"
+        style="align-self: center"
+        color="primary"
+        mat-raised-button
+      >
+        Tìm kiếm &nbsp;<i class="fa fa-search" aria-hidden="true"></i>
+      </button>
+      <h3 *ngIf="!fromDateAndToDate">
+        Vui lòng chọn thời gian &nbsp; <i class="fa fa-calendar" style="align-self: center" aria-hidden="true"></i>
+      </h3>
+    </div>
+  </div>
 
   <mat-card-content>
     <mat-card>
@@ -119,20 +116,20 @@
       <ng-container matColumnDef="panHolderName">
         <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>Tên khách hàng</th>
         <td mat-cell fxHide fxShow.gt-md *matCellDef="let transaction">
-
           <a href="/#/clients/{{ transaction.custId }}/general?typeViewClient=view">
             <mat-icon style="color: black" title="Chi tiết">person</mat-icon>
             {{ transaction.panHolderName }}<br />
           </a>
           <br />
           <mat-label title="Số dư tài khoản">
-            <mat-icon style="color: green" >monetization_on</mat-icon>
+            <mat-icon style="color: green">monetization_on</mat-icon>
 
-            {{transaction.clientBalance | money }}
-          </mat-label> <br />
+            {{ transaction.clientBalance | money }}
+          </mat-label>
+          <br />
           <mat-label style="font-size: small" *ngIf="transaction.groupName">
-              <mat-icon style="color: black; " title="Thuộc đại lý">groups</mat-icon>
-              {{ transaction.groupName }}
+            <mat-icon style="color: black" title="Thuộc đại lý">groups</mat-icon>
+            {{ transaction.groupName }}
 
             <br />
           </mat-label>
@@ -148,12 +145,16 @@
 
       <ng-container matColumnDef="feeAmount">
         <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>Phí thu</th>
-        <td mat-cell fxHide fxShow.gt-md *matCellDef="let journalEntry">{{ (journalEntry?.feePercentage / 100 * journalEntry?.reqAmount).toFixed(0) | money }}</td>
+        <td mat-cell fxHide fxShow.gt-md *matCellDef="let journalEntry">
+          {{ ((journalEntry?.feePercentage / 100) * journalEntry?.reqAmount).toFixed(0) | money }}
+        </td>
       </ng-container>
 
       <ng-container matColumnDef="cardNumber">
         <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>Thẻ</th>
-        <td mat-cell fxHide fxShow.gt-md *matCellDef="let journalEntry">{{ journalEntry.panNumber.replace("XXX-XXX", "X") }}</td>
+        <td mat-cell fxHide fxShow.gt-md *matCellDef="let journalEntry">
+          {{ journalEntry.panNumber.replace("XXX-XXX", "X") }}
+        </td>
       </ng-container>
 
       <ng-container matColumnDef="officeName">
@@ -225,20 +226,22 @@
         <td mat-cell fxShow fxHide.gt-md *matCellDef="let element" [attr.colspan]="displayedColumns.length">
           <div class="example-element-detail" [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
             <div class="example-element-description" fxLayout="column">
-              <div><span style="font-weight: bold"> Tên khách hàng :</span>
+              <div>
+                <span style="font-weight: bold"> Tên khách hàng :</span>
                 <a href="/#/clients/{{ element.custId }}/general?typeViewClient=view">
                   <mat-icon style="color: black" title="Chi tiết">person</mat-icon>
                   {{ element.panHolderName }}<br />
                 </a>
                 <br />
                 <mat-label title="Số dư tài khoản">
-                  <mat-icon style="color: green" >monetization_on</mat-icon>
+                  <mat-icon style="color: green">monetization_on</mat-icon>
 
-                  {{element.clientBalance | money }}
-                </mat-label> <br />
+                  {{ element.clientBalance | money }}
+                </mat-label>
+                <br />
                 <mat-label style="font-size: small" *ngIf="element.groupName">
-                    <mat-icon style="color: black; " title="Thuộc đại lý">groups</mat-icon>
-                    {{ element.groupName }}
+                  <mat-icon style="color: black" title="Thuộc đại lý">groups</mat-icon>
+                  {{ element.groupName }}
 
                   <br />
                 </mat-label>
@@ -248,37 +251,42 @@
                   element.createdDate | date: "dd-MM-yyyy HH:ss"
                 }}
               </div>
-              <div><span style="font-weight: bold"> Phí thu:</span>&nbsp; &nbsp;{{ (element?.feePercentage / 100 * element?.reqAmount).toFixed(0) | money }}</div>
+              <div>
+                <span style="font-weight: bold"> Phí thu:</span>&nbsp; &nbsp;{{
+                  ((element?.feePercentage / 100) * element?.reqAmount).toFixed(0) | money
+                }}
+              </div>
               <div><span style="font-weight: bold"> Số thẻ:</span>&nbsp; &nbsp;{{ element.panNumber }}</div>
+              <div><span style="font-weight: bold"> Chi nhánh :</span>&nbsp; &nbsp;{{ element.officeName }}</div>
               <div>
-                <span style="font-weight: bold"> Chi nhánh :</span>&nbsp; &nbsp;{{ element.officeName }}
-              </div>
-              <div><span style="font-weight: bold"> Số tiền đáo hạn <br />
-                (a) :</span>&nbsp; &nbsp;{{ element.principal }}</div>
-              <div>
-                <span style="font-weight: bold"> Đã chi <br />
-                  (b) :</span>&nbsp; &nbsp;{{
-                  element.paidAmount | money
-                }}
+                <span style="font-weight: bold">
+                  Số tiền đáo hạn <br />
+                  (a) :</span
+                >&nbsp; &nbsp;{{ element.principal }}
               </div>
               <div>
-                <span style="font-weight: bold">  Còn phải đáo hạn <br />
-                  (c) = (a) - (b) :</span>&nbsp; &nbsp;{{
-                    element.principal - element.paidAmount | money
-                }}
+                <span style="font-weight: bold">
+                  Đã chi <br />
+                  (b) :</span
+                >&nbsp; &nbsp;{{ element.paidAmount | money }}
               </div>
               <div>
-                <span style="font-weight: bold">  Đã thu hồi <br />
-                  (d) :</span>&nbsp; &nbsp;{{
-                  element.amountPaid | money
-                }}
+                <span style="font-weight: bold">
+                  Còn phải đáo hạn <br />
+                  (c) = (a) - (b) :</span
+                >&nbsp; &nbsp;{{ element.principal - element.paidAmount | money }}
               </div>
               <div>
-                <span style="font-weight: bold">  Cần thu hồi <br />
-                  (d)
-                  (b) :</span>&nbsp; &nbsp;{{
-                    element.paidAmount - element.amountPaid | money
-                }}
+                <span style="font-weight: bold">
+                  Đã thu hồi <br />
+                  (d) :</span
+                >&nbsp; &nbsp;{{ element.amountPaid | money }}
+              </div>
+              <div>
+                <span style="font-weight: bold">
+                  Cần thu hồi <br />
+                  (d) (b) :</span
+                >&nbsp; &nbsp;{{ element.paidAmount - element.amountPaid | money }}
               </div>
             </div>
           </div>
@@ -314,10 +322,14 @@
       <button (click)="showRollTermScheduleDialog(refid)" mat-menu-item>
         <img src="assets/images/icons/add.svg" />&nbsp;Lịch ĐHT
       </button>
-      <button mat-menu-item (click)="executeLoanManualDialog(refid)"><img src="assets/images/icons/order.svg" />&nbsp;Xử lý ĐHT</button>
+      <button mat-menu-item (click)="executeLoanManualDialog(refid)">
+        <img src="assets/images/icons/order.svg" />&nbsp;Xử lý ĐHT
+      </button>
 
       <hr />
-      <button mat-menu-item (click)="undoRollTermTransaction(refid, principal - paidAmount)"><i class="fa fa-eye" aria-hidden="true"></i>&nbsp;Hủy ĐHT</button>
+      <button mat-menu-item (click)="undoRollTermTransaction(refid, principal - paidAmount)">
+        <i class="fa fa-eye" aria-hidden="true"></i>&nbsp;Hủy ĐHT
+      </button>
     </ng-template>
   </mat-menu>
   <mat-paginator
