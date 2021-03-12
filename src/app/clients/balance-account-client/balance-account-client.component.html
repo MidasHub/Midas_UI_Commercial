@@ -5,7 +5,7 @@ a<!-- <div fxLayout="row" fxLayout.lt-md="column" class="fluidcontainer " fxLayo
         <mat-card  fxFlex="100" class="m-b-10" >
           <mat-card-header>
             <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column" [formGroup]="formFilter">
-              
+
                 <div style="margin-top: 15px;" fxLayout="row" fxFlex="100">
                   <img src="../../../assets/images/icons/account.svg">
                   <div style="margin: 5px; margin-top: 20px;">
@@ -13,18 +13,18 @@ a<!-- <div fxLayout="row" fxLayout.lt-md="column" class="fluidcontainer " fxLayo
                     <span>Tổng cộng: &nbsp;</span> {{dataSource.length}}
                   </div>
                 </div>
-          
-        
+
+
               <mat-form-field fxFlex="48">
                 <mat-label>Tên khách hàng</mat-label>
                 <input matInput formControlName="customer_name">
               </mat-form-field>
-        
+
               <mat-form-field fxFlex="48">
                 <mat-label>Nhân viên</mat-label>
                 <mat-select formControlName="staff_id">
                   <mat-option *ngFor="let option of staffs" [value]="option.staffId">
-                    {{option.staffCode}}
+                    {{option.displayName}}
                   </mat-option>
                 </mat-select>
               </mat-form-field>
@@ -33,33 +33,33 @@ a<!-- <div fxLayout="row" fxLayout.lt-md="column" class="fluidcontainer " fxLayo
           <mat-card-content>
             <table mat-table class="mat-elevation-z8" multiTemplateDataRows (matSortChange)="sortData($event)"
                   [dataSource]="accountsShow" matSort>
-        
+
               <ng-container matColumnDef="customer_name">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header>Tên khách hàng</th>
                 <td mat-cell
                     *matCellDef="let account"><a [routerLink]="['../../clients',account.client_id,'general']"
                                                 [queryParams]="{ typeViewClient: 'view'}"> {{ account.customer_name}}</a></td>
               </ng-container>
-        
+
               <ng-container matColumnDef="staff_name">
                 <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>Nhân viên phụ trách</th>
                 <td mat-cell fxHide fxShow.gt-md
                     *matCellDef="let account"> {{ account.staff_name}} </td>
               </ng-container>
-        
+
               <ng-container matColumnDef="account_no">
                 <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>Số tài khoản</th>
                 <td mat-cell fxHide fxShow.gt-md
                     *matCellDef="let account"> <a [routerLink]="['../', 'savings-accounts', account.account_id, 'transactions']"> {{account.account_no}}</a> </td>
               </ng-container>
-        
+
               <ng-container matColumnDef="account_balance_derived">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> Tổng số dư</th>
                 <td mat-cell
                     *matCellDef="let account"> {{ account.account_balance_derived | money}} </td>
               </ng-container>
-        
-        
+
+
               <ng-container matColumnDef="expandedDetail">
                 <td mat-cell fxShow fxHide.gt-md *matCellDef="let element" [attr.colspan]="displayedColumns.length">
                   <div class="example-element-detail"
@@ -113,7 +113,7 @@ a<!-- <div fxLayout="row" fxLayout.lt-md="column" class="fluidcontainer " fxLayo
               <mat-label>Tên khách hàng</mat-label>
               <input matInput formControlName="customer_name">
             </mat-form-field>
-        
+
             <mat-form-field fxFlex="48">
               <mat-label>Nhân viên</mat-label>
               <mat-select formControlName="staff_id">
@@ -124,36 +124,36 @@ a<!-- <div fxLayout="row" fxLayout.lt-md="column" class="fluidcontainer " fxLayo
             </mat-form-field>
           </div>
           </mat-card-header>
-        
+
           <mat-card-content>
             <table mat-table class="mat-elevation-z8" multiTemplateDataRows [dataSource]="dataSource2">
-        
+
               <ng-container matColumnDef="customer_name">
                 <th mat-header-cell *matHeaderCellDef>Tên khách hàng</th>
                 <td mat-cell
                     *matCellDef="let account"> <a [routerLink]="['../../clients',account.client_id,'general']"
                     [queryParams]="{ typeViewClient: 'view'}"> {{ account.customer_name}}</a></td>
               </ng-container>
-        
+
               <ng-container matColumnDef="staff_name">
                 <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef>Nhân viên phụ trách</th>
                 <td mat-cell fxHide fxShow.gt-md
                     *matCellDef="let account"> {{ account.staff_name}} </td>
               </ng-container>
-        
+
               <ng-container matColumnDef="account_no">
                 <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef>Số tài khoản</th>
                 <td mat-cell fxHide fxShow.gt-md
                     *matCellDef="let account"> <a [routerLink]="['../', 'savings-accounts', account.account_id, 'transactions']"> {{account.account_no}}</a></td>
               </ng-container>
-        
+
               <ng-container matColumnDef="account_balance_derived">
                 <th mat-header-cell *matHeaderCellDef> Tổng số dư</th>
                 <td mat-cell
                     *matCellDef="let account"> {{ account.account_balance_derived | money}} </td>
               </ng-container>
-        
-        
+
+
               <ng-container matColumnDef="expandedDetail">
                 <td mat-cell fxShow fxHide.gt-md *matCellDef="let element" [attr.colspan]="displayedColumns2.length">
                   <div class="example-element-detail"
