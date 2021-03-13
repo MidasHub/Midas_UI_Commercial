@@ -41,12 +41,10 @@ export class RollTermScheduleDialogComponent implements OnInit {
     private datePipe: DatePipe,
     private bookingService: BookingService,
     private alertService: AlertService,
-    private changeDetectorRefs: ChangeDetectorRef,
     private transactionService: TransactionService,
     private authenticationService: AuthenticationService,
     public dialog: MatDialog,
     @Inject(MAT_DIALOG_DATA) public data: any,
-    private formBuilder: FormBuilder
   ) {
     this.rollTermId = data.rollTermId;
     this.getRollTermScheduleAndCardDueDayInfo(data.rollTermId);
@@ -128,6 +126,7 @@ export class RollTermScheduleDialogComponent implements OnInit {
   }
 
   addFeeDialogByTransactionId(isTrnRefNo: boolean, transactionId: string) {
+    return;
     if (isTrnRefNo) {
       this.addFeeDialog(transactionId);
     } else {
