@@ -74,7 +74,7 @@
       <button mat-raised-button *midasHasPermission="'UPDATE_GROUP'" (click)="doAction('Edit')">
         <i class="fa fa-edit"></i>Sửa thông tin
       </button>
-      <button mat-raised-button *midasHasPermission="'CREATE_CLIENT'" [routerLink]="['/clients/create/']" [queryParams]="{'group': groupViewData.id }">
+      <!-- <button mat-raised-button *midasHasPermission="'CREATE_CLIENT'" [routerLink]="['/clients/create/']" [queryParams]="{'group': groupViewData.id }">
         <i class="fa fa-plus"></i>Add Clients
       </button>
       
@@ -98,7 +98,7 @@
       </mat-menu> -->
       <button mat-raised-button [matMenuTriggerFor]="Member">Thành viên</button>
       <mat-menu #Member="matMenu">
-        <button mat-menu-item *midasHasPermission="'CREATE_CLIENT'">
+        <button mat-menu-item *midasHasPermission="'CREATE_CLIENT'" [routerLink]="['/clients/create/']" [queryParams]="{'group': groupViewData.id }">
           <i class="fa fa-plus"></i>Thêm thành viên
         </button>
         <button mat-menu-item *midasHasPermission="'ASSOCIATECLIENTS_GROUP'" (click)="doAction('Transfer Clients')">
