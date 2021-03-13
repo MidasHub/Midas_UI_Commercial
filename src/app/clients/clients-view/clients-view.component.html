@@ -42,6 +42,12 @@
         <p (click)="doAction('View Signature')" class="signature">
           {{ "Client_Component.ViewClient.lblViewSignature" | translate }}
         </p>
+        <p *midasHasActiveModule="'mgmModule'">
+          <button mat-raised-button  [routerLink]="['/clients/create/']" [queryParams]="{'mgmId': clientViewData.id }">
+            <i class="fa fa-plus"></i> Thêm MGM
+          </button>
+        </p>
+
       </div>
 
       <div class="mat-typography client-card-title">
@@ -82,6 +88,8 @@
     </mat-card-title-group>
 
     <mat-card-actions *ngIf="!this.showViewClient" class="client-actions">
+
+
       <span *midasHasPermission="'UPDATE_CLIENT'">
         <button mat-raised-button [routerLink]="['edit']">
           <i class="fa fa-edit"></i>{{ "Client_Component.ViewClient.btnEdit" | translate }}

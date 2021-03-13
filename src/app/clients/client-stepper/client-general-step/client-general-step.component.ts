@@ -100,6 +100,7 @@ export class ClientGeneralStepComponent implements OnInit {
       'addSavings': [true],
       'accountNo': [''],
       'externalId': [''],
+      'maritalStatus': ['', Validators.required],
       'genderId': [''],
       'mobileNo': [''],
       'dateOfBirth': [''],
@@ -258,9 +259,13 @@ export class ClientGeneralStepComponent implements OnInit {
     const files = [];
     if (this.clientFilesDataBefore) {
       files.push(this.clientFilesDataBefore);
+    } else {
+      files.push(null);
     }
     if (this.clientFilesDataAfter) {
       files.push(this.clientFilesDataAfter);
+    } else {
+      files.push(null);
     }
     return {files: files};
   }

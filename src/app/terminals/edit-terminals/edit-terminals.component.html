@@ -54,13 +54,35 @@
             <mat-form-field *ngIf="editTerminalForm.contains('officeId')" fxFlex="48%">
                 <mat-label>{{'Terminal_Component.FormTerminal.labelOffice' |translate}}</mat-label>
                 <mat-select required formControlName="officeId">
-                    <mat-option *ngFor="let o of offices" [value]="o.id">
+                    <mat-option *ngFor="let o of offices" [value]="o.officeId">
                       {{ o.name }}
                     </mat-option>
                 </mat-select>
                 <mat-error *ngIf="editTerminalForm.controls.officeId.hasError('required')"
                   [innerHTML]="'Terminal_Component.FormTerminal.labelRequired' |translate"></mat-error>
             </mat-form-field>
+
+            <mat-form-field *ngIf="editTerminalForm.contains('bankCode')" fxFlex="48%">
+              <mat-label>Ngân hàng</mat-label>
+              <mat-select required formControlName="bankCode">
+                  <mat-option *ngFor="let bank of banks" [value]="bank.bankCode">
+                    {{ bank.bankName }}
+                  </mat-option>
+              </mat-select>
+              <mat-error *ngIf="editTerminalForm.controls.officeId.hasError('required')"
+                [innerHTML]="'Terminal_Component.FormTerminal.labelRequired' |translate"></mat-error>
+          </mat-form-field>
+
+          <mat-form-field *ngIf="editTerminalForm.contains('timeChargeValid')" fxFlex="48%">
+            <mat-label>Số lần cà/ngày</mat-label>
+            <input  matInput required formControlName="timeChargeValid">
+            <mat-error *ngIf="editTerminalForm.controls.timeChargeValid.hasError('required')"
+              [innerHTML]="'Terminal_Component.FormTerminal.labelRequired' |translate"></mat-error>
+            <mat-error *ngIf="editTerminalForm.controls.timeChargeValid.hasError('min')"
+              [innerHTML]="'Terminal_Component.FormTerminal.labelMsgMin0' |translate"></mat-error>
+              <mat-error *ngIf="editTerminalForm.controls.timeChargeValid.hasError('max')"
+                  [innerHTML]="'Terminal_Component.FormTerminal.labelMsgOutOffMax' |translate"></mat-error>
+          </mat-form-field>
 
             <mat-form-field *ngIf="editTerminalForm.contains('minFeeDefault')" fxFlex="48%">
                 <mat-label>{{'Terminal_Component.FormTerminal.labelMinFeeDefault' |translate}}</mat-label>
@@ -173,7 +195,7 @@
               <mat-icon>close</mat-icon>
             </button>
           </mat-form-field>
-          <div class="example-table-container"> 
+          <div class="example-table-container">
             <table mat-table [dataSource]="dataSource"  matSort matSortActive="officeName" matSortDirection="asc" class="example-table">
               <ng-container matColumnDef="officeName" >
                 <th mat-header-cell *matHeaderCellDef  mat-sort-header>{{'Terminal_Component.FormTerminal.tableFee.Office'|translate}} </th>
@@ -243,7 +265,7 @@
             </table>
           </div>
           <mat-paginator  [pageSize]="10" [pageSizeOptions]="[10, 25, 50, 100]" showFirstLastButtons></mat-paginator>
-        
+
         </mat-card-content>
       <!-- </div> -->
       <mat-card-content>

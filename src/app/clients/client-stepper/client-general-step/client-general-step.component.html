@@ -1,5 +1,4 @@
 <form [formGroup]="createClientForm">
-
   <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
     <mat-card class="card-custom" fxFlex="96%">
       <mat-card-header>
@@ -8,18 +7,20 @@
       <mat-card-content>
         <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
           <mat-form-field fxFlex="48%">
-            <mat-label>{{'Client_Component.ClientStepper.GeneralStep.labelOffice' |translate}}</mat-label>
+            <mat-label>{{ "Client_Component.ClientStepper.GeneralStep.labelOffice" | translate }}</mat-label>
             <mat-select required formControlName="officeId">
               <mat-option *ngFor="let office of officeOptions" [value]="office.id">
                 {{ office.name }}
               </mat-option>
             </mat-select>
-            <mat-error *ngIf="createClientForm.controls.officeId.hasError('required')"
-                       [innerHTML]="'Client_Component.ClientStepper.GeneralStep.labelOfficeMsg' |translate"></mat-error>
+            <mat-error
+              *ngIf="createClientForm.controls.officeId.hasError('required')"
+              [innerHTML]="'Client_Component.ClientStepper.GeneralStep.labelOfficeMsg' | translate"
+            ></mat-error>
           </mat-form-field>
 
           <mat-form-field fxFlex="48%">
-            <mat-label>{{'Client_Component.ClientStepper.GeneralStep.labelStaff' |translate}}</mat-label>
+            <mat-label>{{ "Client_Component.ClientStepper.GeneralStep.labelStaff" | translate }}</mat-label>
             <mat-select formControlName="staffId">
               <mat-option *ngFor="let staff of staffOptions" [value]="staff.id">
                 {{ staff.displayName }}
@@ -27,18 +28,24 @@
             </mat-select>
           </mat-form-field>
 
-          <mat-form-field  fxFlex="48%">
-            <mat-label>{{'Client_Component.ClientStepper.GeneralStep.labelLegalForm' |translate}}</mat-label>
+          <mat-form-field fxFlex="48%">
+            <mat-label>{{ "Client_Component.ClientStepper.GeneralStep.labelLegalForm" | translate }}</mat-label>
             <mat-select disabled formControlName="legalFormId">
               <mat-option *ngFor="let legalForm of legalFormOptions" [value]="legalForm.id">
                 {{ legalForm.value }}
               </mat-option>
             </mat-select>
           </mat-form-field>
-          <mat-checkbox *ngIf="createClientForm.value.legalFormId === 1" [disabled]="isTeller" checked="false"
-                        fxFlex="48%" labelPosition="before"
-                        formControlName="isStaff" class="margin-v">
-            {{'Client_Component.ClientStepper.GeneralStep.checkboxIsStaff' |translate}}
+          <mat-checkbox
+            *ngIf="createClientForm.value.legalFormId === 1"
+            [disabled]="isTeller"
+            checked="false"
+            fxFlex="48%"
+            labelPosition="before"
+            formControlName="isStaff"
+            class="margin-v"
+          >
+            {{ "Client_Component.ClientStepper.GeneralStep.checkboxIsStaff" | translate }}
           </mat-checkbox>
         </div>
       </mat-card-content>
@@ -46,60 +53,89 @@
 
     <mat-card class="card-custom" fxFlex="96%">
       <mat-card-header>
-        <mat-card-title><span class="material-icons">perm_contact_calendar</span>&nbsp; Thông tin cơ bản:
+        <mat-card-title
+          ><span class="material-icons">perm_contact_calendar</span>&nbsp; Thông tin cơ bản:
         </mat-card-title>
       </mat-card-header>
       <mat-card-content>
         <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column" fxFlex="96%">
+
+          <div fxFlex="96%" *ngIf="createClientForm.contains('maritalStatus')" >
+            <mat-label fxFlex="30%">Tình trạng hôn nhân *</mat-label>
+            <mat-radio-group  fxFlex="66%" fxLayout="row" fxLayoutGap="5%" formControlName="maritalStatus">
+              <mat-radio-button value="0">Độc thân</mat-radio-button>
+              <mat-radio-button value="5">Kết hôn</mat-radio-button>
+            </mat-radio-group>
+            <mat-error fxFlex="100%"
+              *ngIf="createClientForm.controls.maritalStatus.hasError('required')" >Bắt buộc!</mat-error>
+          </div>
+
           <mat-form-field *ngIf="createClientForm.contains('fullname')" fxFlex="48%">
-            <mat-label>{{'Client_Component.ClientStepper.GeneralStep.labelFullName' |translate}}</mat-label>
-            <input matInput required formControlName="fullname">
-            <mat-error *ngIf="createClientForm.controls.fullname.hasError('required')"
-                       [innerHTML]="'Client_Component.ClientStepper.GeneralStep.labelFullNameMsg' |translate"></mat-error>
-            <mat-error *ngIf="createClientForm.controls.fullname.hasError('pattern')"
-                       [innerHTML]="'Client_Component.ClientStepper.GeneralStep.labelFullNameMsgSpecialChar' |translate"></mat-error>
+            <mat-label>{{ "Client_Component.ClientStepper.GeneralStep.labelFullName" | translate }}</mat-label>
+            <input matInput required formControlName="fullname" />
+            <mat-error
+              *ngIf="createClientForm.controls.fullname.hasError('required')"
+              [innerHTML]="'Client_Component.ClientStepper.GeneralStep.labelFullNameMsg' | translate"
+            ></mat-error>
+            <mat-error
+              *ngIf="createClientForm.controls.fullname.hasError('pattern')"
+              [innerHTML]="'Client_Component.ClientStepper.GeneralStep.labelFullNameMsgSpecialChar' | translate"
+            ></mat-error>
           </mat-form-field>
 
           <mat-form-field *ngIf="createClientForm.contains('firstname')" fxFlex="48%">
-            <mat-label>{{'Client_Component.ClientStepper.GeneralStep.labelFirstName' |translate}}</mat-label>
-            <input matInput required formControlName="firstname">
-            <mat-error *ngIf="createClientForm.controls.firstname.hasError('required')"
-                       [innerHTML]="'Client_Component.ClientStepper.GeneralStep.labelFirstNameMsg' |translate"></mat-error>
-            <mat-error *ngIf="createClientForm.controls.firstname.hasError('pattern')"
-                       [innerHTML]="'Client_Component.ClientStepper.GeneralStep.labelFullNameMsgSpecialChar' |translate"></mat-error>
+            <mat-label>{{ "Client_Component.ClientStepper.GeneralStep.labelFirstName" | translate }}</mat-label>
+            <input matInput required formControlName="firstname" />
+            <mat-error
+              *ngIf="createClientForm.controls.firstname.hasError('required')"
+              [innerHTML]="'Client_Component.ClientStepper.GeneralStep.labelFirstNameMsg' | translate"
+            ></mat-error>
+            <mat-error
+              *ngIf="createClientForm.controls.firstname.hasError('pattern')"
+              [innerHTML]="'Client_Component.ClientStepper.GeneralStep.labelFullNameMsgSpecialChar' | translate"
+            ></mat-error>
           </mat-form-field>
 
           <mat-form-field *ngIf="createClientForm.contains('middlename')" fxFlex="48%">
-            <mat-label>{{'Client_Component.ClientStepper.GeneralStep.labelMidName' |translate}}</mat-label>
-            <input matInput formControlName="middlename">
-            <mat-error *ngIf="createClientForm.controls.middlename.hasError('pattern')"
-                       [innerHTML]="'Client_Component.ClientStepper.GeneralStep.labelMidNameMsgSpecialChar' |translate"></mat-error>
+            <mat-label>{{ "Client_Component.ClientStepper.GeneralStep.labelMidName" | translate }}</mat-label>
+            <input matInput formControlName="middlename" />
+            <mat-error
+              *ngIf="createClientForm.controls.middlename.hasError('pattern')"
+              [innerHTML]="'Client_Component.ClientStepper.GeneralStep.labelMidNameMsgSpecialChar' | translate"
+            ></mat-error>
           </mat-form-field>
 
           <mat-form-field *ngIf="createClientForm.contains('lastname')" fxFlex="48%">
-            <mat-label>{{'Client_Component.ClientStepper.GeneralStep.labelLastName' |translate}}</mat-label>
-            <input matInput required formControlName="lastname">
-            <mat-error *ngIf="createClientForm.controls.lastname.hasError('required')"
-                       [innerHTML]="'Client_Component.ClientStepper.GeneralStep.labelLastNameMsg' |translate"></mat-error>
-            <mat-error *ngIf="createClientForm.controls.lastname.hasError('pattern')"
-                       [innerHTML]="'Client_Component.ClientStepper.GeneralStep.labelLastNameMsgSpecialChar' |translate"></mat-error>
+            <mat-label>{{ "Client_Component.ClientStepper.GeneralStep.labelLastName" | translate }}</mat-label>
+            <input matInput required formControlName="lastname" />
+            <mat-error
+              *ngIf="createClientForm.controls.lastname.hasError('required')"
+              [innerHTML]="'Client_Component.ClientStepper.GeneralStep.labelLastNameMsg' | translate"
+            ></mat-error>
+            <mat-error
+              *ngIf="createClientForm.controls.lastname.hasError('pattern')"
+              [innerHTML]="'Client_Component.ClientStepper.GeneralStep.labelLastNameMsgSpecialChar' | translate"
+            ></mat-error>
           </mat-form-field>
 
           <mat-form-field fxFlex="48%">
-            <mat-label>{{ createClientForm.value.legalFormId === 1 ? ('Client_Component.ClientStepper.GeneralStep.labelDOB' |translate) : ('Client_Component.ClientStepper.GeneralStep.labelCorpDate' |translate)}}</mat-label>
-            <input matInput [max]="maxDate" [matDatepicker]="dateOfBirthDatePicker" formControlName="dateOfBirth">
+            <mat-label>{{
+              createClientForm.value.legalFormId === 1
+                ? ("Client_Component.ClientStepper.GeneralStep.labelDOB" | translate)
+                : ("Client_Component.ClientStepper.GeneralStep.labelCorpDate" | translate)
+            }}</mat-label>
+            <input matInput [max]="maxDate" [matDatepicker]="dateOfBirthDatePicker" formControlName="dateOfBirth" />
             <mat-datepicker-toggle matSuffix [for]="dateOfBirthDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #dateOfBirthDatePicker></mat-datepicker>
           </mat-form-field>
 
-
           <mat-form-field fxFlex="48%">
-            <mat-label>{{'Client_Component.ClientStepper.GeneralStep.labelMobile' |translate}}</mat-label>
-            <input matInput type="number" formControlName="mobileNo">
+            <mat-label>{{ "Client_Component.ClientStepper.GeneralStep.labelMobile" | translate }}</mat-label>
+            <input matInput type="number" formControlName="mobileNo" />
           </mat-form-field>
 
           <mat-form-field *ngIf="createClientForm.value.legalFormId === 1" fxFlex="48%">
-            <mat-label>{{'Client_Component.ClientStepper.GeneralStep.labelGender' |translate}}</mat-label>
+            <mat-label>{{ "Client_Component.ClientStepper.GeneralStep.labelGender" | translate }}</mat-label>
             <mat-select formControlName="genderId">
               <mat-option *ngFor="let gender of genderOptions" [value]="gender.id">
                 {{ gender.name }}
@@ -108,7 +144,9 @@
           </mat-form-field>
 
           <mat-form-field fxFlex="48%">
-            <mat-label>{{('Client_Component.ClientStepper.GeneralStep.labelSelectDocumentTypes' |translate) }}</mat-label>
+            <mat-label>{{
+              "Client_Component.ClientStepper.GeneralStep.labelSelectDocumentTypes" | translate
+            }}</mat-label>
             <mat-select formControlName="documentTypeId">
               <mat-option *ngFor="let document of documentTypes" [value]="document.id">
                 {{ document.name }}
@@ -117,130 +155,130 @@
           </mat-form-field>
 
           <mat-form-field fxFlex="48%">
-            <mat-label>{{ ('Client_Component.ClientStepper.GeneralStep.labelExternalID' |translate) }}</mat-label>
-            <input matInput required formControlName="externalId">
+            <mat-label>{{ "Client_Component.ClientStepper.GeneralStep.labelExternalID" | translate }}</mat-label>
+            <input matInput required formControlName="externalId" />
           </mat-form-field>
 
-          <div fxFlex="48%" fxLayout="column"  class="custom-files-input">
-            <mat-label
-              for="file">CMND mặt trước </mat-label>
-            <input
-              placeholder="CMND mặt trước"
-              type="file"
-               
-              accept="image/*"
-              (change)="fileChangeBefore($event)"
-            >
+          <div fxFlex="48%" fxLayout="column" class="custom-files-input">
+            <mat-label for="file">CMND mặt trước </mat-label>
+            <input placeholder="CMND mặt trước" type="file" accept="image/*" (change)="fileChangeBefore($event)" />
             <div *ngIf="clientFilesDataBefore">
-              <img src="{{clientFilesDataBefore.path}}" width="95%" height="300"/>
+              <img src="{{ clientFilesDataBefore.path }}" width="95%" height="300" />
             </div>
           </div>
           <div fxFlex="48%" fxLayout="column" class="custom-files-input">
-            <mat-label
-              for="file">CMND mặt sau </mat-label>
-            <input
-              placeholder="CMND mặt sau"
-              type="file"
-               
-              accept="image/*"
-              (change)="fileChangeAfter($event)"
-            >
+            <mat-label for="file">CMND mặt sau </mat-label>
+            <input placeholder="CMND mặt sau" type="file" accept="image/*" (change)="fileChangeAfter($event)" />
             <div *ngIf="clientFilesDataAfter">
-              <img src="{{clientFilesDataAfter.path}}" width="95%" height="300"/>
+              <img src="{{ clientFilesDataAfter.path }}" width="95%" height="300" />
             </div>
           </div>
+
         </div>
       </mat-card-content>
     </mat-card>
 
-
     <mat-card class="card-custom" fxFlex="96%">
       <mat-card-header>
-        <mat-card-title>
-          Thông tin khác:
-        </mat-card-title>
+        <mat-card-title> Thông tin khác: </mat-card-title>
       </mat-card-header>
       <mat-card-content>
         <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column" fxFlex="96%">
           <mat-form-field fxFlex="48%">
-            <mat-label>{{'Client_Component.ClientStepper.GeneralStep.labelClientType' |translate}}</mat-label>
-            <mat-select
-              [disabled]="isTeller"
-              formControlName="clientTypeId">
+            <mat-label>{{ "Client_Component.ClientStepper.GeneralStep.labelClientType" | translate }}</mat-label>
+            <mat-select [disabled]="isTeller" formControlName="clientTypeId">
               <mat-option *ngFor="let clientType of clientTypeOptions" [value]="clientType.id">
                 {{ clientType.name }}
               </mat-option>
             </mat-select>
           </mat-form-field>
           <mat-form-field fxFlex="48%">
-            <mat-label>{{'Client_Component.ClientStepper.GeneralStep.labelClientClass' |translate}}</mat-label>
+            <mat-label>{{ "Client_Component.ClientStepper.GeneralStep.labelClientClass" | translate }}</mat-label>
             <mat-select formControlName="clientClassificationId">
-              <mat-option *ngFor="let clientClassification of clientClassificationTypeOptions"
-                          [value]="clientClassification.id">
+              <mat-option
+                *ngFor="let clientClassification of clientClassificationTypeOptions"
+                [value]="clientClassification.id"
+              >
                 {{ clientClassification.name }}
               </mat-option>
             </mat-select>
           </mat-form-field>
           <mat-form-field fxFlex="96%">
-            <mat-label>{{'Client_Component.ClientStepper.GeneralStep.labelClientSubmittedDate' |translate}}</mat-label>
-            <input matInput [matDatepicker]="submittedOnDatePicker"
-                   formControlName="submittedOnDate" readonly>
+            <mat-label>{{
+              "Client_Component.ClientStepper.GeneralStep.labelClientSubmittedDate" | translate
+            }}</mat-label>
+            <input matInput [matDatepicker]="submittedOnDatePicker" formControlName="submittedOnDate" readonly />
             <mat-datepicker-toggle matSuffix [for]="submittedOnDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #submittedOnDatePicker></mat-datepicker>
           </mat-form-field>
           <mat-form-field *ngIf="createClientForm.contains('account_payment')" fxFlex="48%">
-            <mat-label>{{'Client_Component.ClientStepper.GeneralStep.labelSelectAccountForPayment' |translate}}</mat-label>
+            <mat-label>{{
+              "Client_Component.ClientStepper.GeneralStep.labelSelectAccountForPayment" | translate
+            }}</mat-label>
             <mat-select readonly formControlName="account_payment">
-              <mat-option *ngFor="let account of accountPayments"
-                          [value]="account.id">
+              <mat-option *ngFor="let account of accountPayments" [value]="account.id">
                 {{ account.name }}
               </mat-option>
             </mat-select>
           </mat-form-field>
           <mat-checkbox disabled fxFlex="48%" labelPosition="before" formControlName="active" class="margin-v">
-            {{'Client_Component.ClientStepper.GeneralStep.checkboxIsActivate' |translate}}
+            {{ "Client_Component.ClientStepper.GeneralStep.checkboxIsActivate" | translate }}
           </mat-checkbox>
           <mat-form-field fxFlex="48%">
-            <mat-label>{{'Client_Component.ClientStepper.GeneralStep.labelClientActivatedDate' |translate}}</mat-label>
-            <input matInput [matDatepicker]="activatedOnDatePicker"
-                   formControlName="activationDate" readonly>
+            <mat-label>{{
+              "Client_Component.ClientStepper.GeneralStep.labelClientActivatedDate" | translate
+            }}</mat-label>
+            <input matInput [matDatepicker]="activatedOnDatePicker" formControlName="activationDate" readonly />
             <mat-datepicker-toggle matSuffix [for]="activatedOnDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #activatedOnDatePicker></mat-datepicker>
             <mat-error
-              [innerHTML]="'Client_Component.ClientStepper.GeneralStep.labelClientActivatedDateMsg' |translate"></mat-error>
+              [innerHTML]="'Client_Component.ClientStepper.GeneralStep.labelClientActivatedDateMsg' | translate"
+            ></mat-error>
           </mat-form-field>
           <mat-checkbox disabled fxFlex="48%" labelPosition="before" formControlName="addSavings" class="margin-v">
-            {{'Client_Component.ClientStepper.GeneralStep.checkboxOpenAccount' |translate}}
+            {{ "Client_Component.ClientStepper.GeneralStep.checkboxOpenAccount" | translate }}
           </mat-checkbox>
           <mat-form-field *ngIf="createClientForm.contains('savingsProductId')" fxFlex="48%">
-            <mat-label>{{'Client_Component.ClientStepper.GeneralStep.labelSavingProduct' |translate}}</mat-label>
+            <mat-label>{{ "Client_Component.ClientStepper.GeneralStep.labelSavingProduct" | translate }}</mat-label>
             <mat-select [disabled]="isTeller" formControlName="savingsProductId">
               <mat-option *ngFor="let product of savingProductOptions" [value]="product.id">
                 {{ product.name }}
               </mat-option>
             </mat-select>
-            <mat-error *ngIf="createClientForm.controls.savingsProductId.hasError('required')"
-                       [innerHTML]="'Client_Component.ClientStepper.GeneralStep.labelSavingProductMsg' |translate"></mat-error>
+            <mat-error
+              *ngIf="createClientForm.controls.savingsProductId.hasError('required')"
+              [innerHTML]="'Client_Component.ClientStepper.GeneralStep.labelSavingProductMsg' | translate"
+            ></mat-error>
           </mat-form-field>
-          <div fxFlex="96%" fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column"
-               formGroupName="clientNonPersonDetails" *ngIf="createClientForm.contains('clientNonPersonDetails')">
+          <div
+            fxFlex="96%"
+            fxLayout="row wrap"
+            fxLayoutGap="2%"
+            fxLayout.lt-md="column"
+            formGroupName="clientNonPersonDetails"
+            *ngIf="createClientForm.contains('clientNonPersonDetails')"
+          >
             <mat-form-field fxFlex="48%">
-              <mat-label>{{'Client_Component.ClientStepper.GeneralStep.labelCorpValidDate' |translate}}</mat-label>
-              <input readonly matInput
-                     [min]="minDate" [max]="maxDate" [matDatepicker]="incorpValidityTillDateDatePicker"
-                     formControlName="incorpValidityTillDate">
+              <mat-label>{{ "Client_Component.ClientStepper.GeneralStep.labelCorpValidDate" | translate }}</mat-label>
+              <input
+                readonly
+                matInput
+                [min]="minDate"
+                [max]="maxDate"
+                [matDatepicker]="incorpValidityTillDateDatePicker"
+                formControlName="incorpValidityTillDate"
+              />
               <mat-datepicker-toggle matSuffix [for]="incorpValidityTillDateDatePicker"></mat-datepicker-toggle>
               <mat-datepicker #incorpValidityTillDateDatePicker></mat-datepicker>
             </mat-form-field>
 
             <mat-form-field fxFlex="48%">
-              <mat-label>{{'Client_Component.ClientStepper.GeneralStep.labelCorpID' |translate}}</mat-label>
-              <input readonly matInput formControlName="incorpNumber">
+              <mat-label>{{ "Client_Component.ClientStepper.GeneralStep.labelCorpID" | translate }}</mat-label>
+              <input readonly matInput formControlName="incorpNumber" />
             </mat-form-field>
 
-
             <mat-form-field fxFlex="48%">
-              <mat-label>{{'Client_Component.ClientStepper.GeneralStep.labelCorpMainBiz' |translate}}</mat-label>
+              <mat-label>{{ "Client_Component.ClientStepper.GeneralStep.labelCorpMainBiz" | translate }}</mat-label>
               <mat-select formControlName="mainBusinessLineId">
                 <mat-option *ngFor="let business of businessLineOptions" [value]="business.id">
                   {{ business.name }}
@@ -249,7 +287,9 @@
             </mat-form-field>
 
             <mat-form-field fxFlex="48%">
-              <mat-label>{{'Client_Component.ClientStepper.GeneralStep.labelCorpConstitution'|translate}}</mat-label>
+              <mat-label>{{
+                "Client_Component.ClientStepper.GeneralStep.labelCorpConstitution" | translate
+              }}</mat-label>
               <mat-select formControlName="constitutionId">
                 <mat-option *ngFor="let constitution of constitutionOptions" [value]="constitution.id">
                   {{ constitution.name }}
@@ -266,18 +306,15 @@
   </div>
   <div fxLayout="row" class="margin-t" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="2%">
     <button mat-raised-button (click)="clickCancel()">
-      {{'Client_Component.ClientStepper.Preview.buttonCancel'|translate}}
+      {{ "Client_Component.ClientStepper.Preview.buttonCancel" | translate }}
     </button>
     <button mat-raised-button matStepperPrevious readonly>
       <fa-icon icon="arrow-left"></fa-icon>&nbsp;&nbsp;
-      {{'Client_Component.ClientStepper.buttonPrevious' |translate}}
+      {{ "Client_Component.ClientStepper.buttonPrevious" | translate }}
     </button>
-    <button mat-raised-button
-            [disabled]="!createClientForm.valid"
-            matStepperNext>
-      {{'Client_Component.ClientStepper.buttonNext' |translate}}&nbsp;&nbsp;
+    <button mat-raised-button [disabled]="!createClientForm.valid" matStepperNext>
+      {{ "Client_Component.ClientStepper.buttonNext" | translate }}&nbsp;&nbsp;
       <fa-icon icon="arrow-right"></fa-icon>
     </button>
   </div>
-
 </form>

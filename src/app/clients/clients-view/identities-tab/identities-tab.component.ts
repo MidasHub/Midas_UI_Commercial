@@ -255,7 +255,6 @@ export class IdentitiesTabComponent {
                 });
                 this.identifiersTableOther.renderRows();
               } else {
-                debugger;
                 this.clientIdentities.push({
                   id: res.resourceId,
                   description: `${response.data.value.documentCardBank}-${response.data.value.documentCardType}-${response.data.value.description}`,
