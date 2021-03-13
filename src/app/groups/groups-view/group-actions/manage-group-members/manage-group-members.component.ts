@@ -23,9 +23,9 @@ import { Inject } from '@angular/core';
   templateUrl: './manage-group-members.component.html',
   styleUrls: ['./manage-group-members.component.scss']
 })
-export class ManageGroupMembersComponent implements AfterViewInit {
+export class ManageGroupMembersComponent implements AfterViewInit,OnInit {
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
-  @ViewChild(MatSort, { static: true }) sort: MatSort;
+  @ViewChild(MatSort) sort: MatSort;
   /** Group Data */
   groupData: any;
   /** Client data. */
@@ -36,7 +36,7 @@ export class ManageGroupMembersComponent implements AfterViewInit {
   clientChoice = new FormControl('');
 
   dataSource: MatTableDataSource<any>;
-  displayedColumns =  ['Name', 'Action'];
+  displayedColumns =  ['displayName', 'Status','Action'];
   /**
    * Fetches group action data from `resolve`
    * @param {ActivatedRoute} route Activated Route
@@ -48,14 +48,16 @@ export class ManageGroupMembersComponent implements AfterViewInit {
               private groupsService: GroupsService,
               private clientsService: ClientsService,
               public dialog: MatDialog) {
-    this.route.data.subscribe((data: { groupActionData: any }) => {
-      this.groupData = data.groupActionData;
-      this.clientMembers = data.groupActionData.clientMembers;
-       
-      this.dataSource = new MatTableDataSource(data.groupActionData.clientMembers);
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort;
+      this.route.data.subscribe((data: { groupActionData: any }) => {
+        this.groupData = data.groupActionData;
+        this.clientMembers = data.groupActionData.clientMembers;
+        this.dataSource = new MatTableDataSource();
     });
+  }
+  ngOnInit(): void {
+    this.dataSource.data = this.clientMembers;
+    this.dataSource.paginator = this.paginator;
+    // this.dataSource.sort = this.sort;
   }
 
 
@@ -63,6 +65,7 @@ export class ManageGroupMembersComponent implements AfterViewInit {
    * Subscribes to Clients search filter:
    */
   ngAfterViewInit() {
+    this.dataSource.sort = this.sort;
     this.clientChoice.valueChanges.subscribe( (value: string) => {
       if (value.length >= 2) {
         //this.clientsService.getFilteredClients('displayName', 'ASC', true, value, this.groupData.officeId)
@@ -81,13 +84,14 @@ export class ManageGroupMembersComponent implements AfterViewInit {
     if(this.clientMembers){
       if (!this.clientMembers.includes(this.clientChoice.value)) {
         this.groupsService.executeGroupCommand(this.groupData.id, 'associateClients', {clientMembers: [this.clientChoice.value.id]})
-          .subscribe(() => { this.clientMembers.push(this.clientChoice.value); });
+          .subscribe(() => { this.clientMembers.splice(0,0,this.clientChoice.value); this.dataSource.data = this.clientMembers;});
       }
     }else{
       this.clientMembers = [];
       this.groupsService.executeGroupCommand(this.groupData.id, 'associateClients', {clientMembers: [this.clientChoice.value.id]})
-          .subscribe(() => { this.clientMembers.push(this.clientChoice.value); });
+          .subscribe(() => { this.clientMembers.push(this.clientChoice.value); this.dataSource.data = this.clientMembers;});
     }
+    
   }
 
   /**
@@ -102,7 +106,10 @@ export class ManageGroupMembersComponent implements AfterViewInit {
     removeMemberDialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {
         this.groupsService.executeGroupCommand(this.groupData.id, 'disassociateClients', {clientMembers: [client.id]})
-          .subscribe(() => { this.clientMembers.splice(index, 1); });
+          .subscribe(() => { 
+            this.clientMembers.splice(index, 1); 
+            this.dataSource.data = this.clientMembers;
+          });
       }
     });
   }
