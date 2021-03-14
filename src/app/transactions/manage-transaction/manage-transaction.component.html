@@ -48,13 +48,13 @@
             <span>&nbsp;Phí thu được</span>
           </div>
         </div>
-        <div fxLayout="row wrap" fxFlex="20%" class="container m-b-20">
+        <!-- <div fxLayout="row wrap" *midasHasPermission="'POS_UPDATE'" fxFlex="20%" class="container m-b-20">
           <img src="assets/images/icons/capital.svg" />
           <div style="display: flex" fxLayout="column">
             <span style="font-size: 20px; margin-top: 8px; padding-top: 5px">{{ totalCogsAmount | money }}</span>
             <span>&nbsp; SP vốn</span>
           </div>
-        </div>
+        </div> -->
         <div *midasHasPermission="'POS_UPDATE'" fxLayout="row wrap" fxFlex="20%" class="container m-b-20">
           <img src="assets/images/icons/pnlAmount.svg" />
           <div style="display: flex" fxLayout="column">
@@ -71,15 +71,14 @@
         <mat-panel-title> Xem theo </mat-panel-title>
       </mat-expansion-panel-header>
       <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column" [formGroup]="formFilter">
-        <mat-form-field fxFlex="18%">
+        <mat-form-field fxFlex="18%" *midasHasPermission= "'ALL_FUNCTIONS'">
           <mat-label>Chi nhánh</mat-label>
           <mat-select formControlName="officeId">
-            <mat-option *ngFor="let type of offices" [value]="type.id">
+            <mat-option *ngFor="let type of offices" [value]="type.officeId">
               {{ type.name }}
             </mat-option>
           </mat-select>
         </mat-form-field>
-
         <mat-form-field fxFlex="18%">
           <mat-label>Loại gia dịch</mat-label>
           <mat-select formControlName="productId">

@@ -183,12 +183,18 @@ export class ManageTransactionComponent implements OnInit {
     this.savingsService.getListPartner().subscribe((partner) => {
       this.partners = partner?.result?.listPartner;
       // @ts-ignore
-      this.partners.unshift({ code: "", desc: "Tất cả" });
+      this.partners?.unshift({ code: "", desc: "Tất cả" });
     });
-    this.systemService.getOffices().subscribe((offices) => {
-      this.offices = offices;
+    this.savingsService.getListOfficeCommon().subscribe((offices) => {
+      this.offices = offices.result.listOffice;
       const officeId = this.currentUser.officeId;
-      this.formFilter.get("officeId").setValue(officeId);
+      this.currentUser = this.authenticationService.getCredentials();
+      const { permissions } = this.currentUser;
+      const permit_Head = permissions.includes("ALL_FUNCTIONS");
+      if (!permit_Head) {
+          this.formFilter.get("officeId").setValue(officeId);
+
+      }
     });
     this.getTransaction();
   }
@@ -247,7 +253,7 @@ export class ManageTransactionComponent implements OnInit {
     const wholesaleChoose = form.wholesaleChoose;
     const RetailsChoose = form.RetailsChoose;
     const keys = Object.keys(form);
-    this.filterData = this.transactionsData.filter((v) => {
+    this.filterData = this.transactionsData?.filter((v) => {
       for (const key of keys) {
         if (["wholesaleChoose", "RetailsChoose"].indexOf(key) === -1) {
           if (form[key]) {
