@@ -63,7 +63,7 @@
               <th mat-header-cell *matHeaderCellDef>{{ 'Group_Component.Create_Group_Component.tableColFeeWithDraw'| translate}}</th>
               <td mat-cell mat-body-row-fee *matCellDef="let element, let index">
                 <mat-form-field>
-                  <input matInput  (keypress)="onKey($event, index)" id="{{element.cardType}}_minValue" value="{{element.minValue}}"> 
+                  <input matInput type="number" (blur)="onBlur($event, index)" id="{{element.cardType}}_minValue" value="{{element.minValue}}"> 
                 </mat-form-field>
               </td>
             </ng-container>
@@ -72,7 +72,7 @@
               <th mat-header-cell *matHeaderCellDef>{{ 'Group_Component.Create_Group_Component.tableColFeeRollTerm'| translate}}</th>
               <td mat-cell mat-body-row-fee *matCellDef="let element, let index">
                 <mat-form-field>
-                  <input matInput (keypress)="onKey($event,index)" id="{{element.cardType}}_maxValue" value="{{element.maxValue}}"> 
+                  <input matInput type="number" (blur)="onBlur($event, index)" id="{{element.cardType}}_maxValue" value="{{element.maxValue}}"> 
                 </mat-form-field>
               </td>
             </ng-container>

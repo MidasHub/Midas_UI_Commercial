@@ -17,9 +17,9 @@ export interface PeriodicElements {
   minValue: number;
   maxValue: number;
 }
-export interface groupT {
-  key: number;
+interface groupT {
   value: string;
+  viewValue: string;
 }
 @Component({
   selector: 'mifosx-edit-group',
@@ -41,11 +41,11 @@ export class EditGroupComponent implements OnInit {
   /** Submitted On Date */
   submittedOnDate: any;
   groupType: groupT[] = [
-    {key: 0, value: 'Group lẻ, MGM'},
-    {key: 1, value: 'Group sỉ'}
+    {value: 'I', viewValue: 'Group lẻ, MGM'},
+    {value: 'C', viewValue: 'Group sỉ'}
   ];
-
-  groupTypeId : number;
+     
+  groupTypeId : any;
   displayedColumns: string[] = ['cardDescription', 'minValue', 'maxValue'];
   dataSource = new MatTableDataSource<any>();
   cards : PeriodicElements[] = [];
@@ -68,6 +68,7 @@ export class EditGroupComponent implements OnInit {
       this.staffData = data.groupAndTemplateData.staffOptions;
       this.groupData = data.groupAndTemplateData;
       this.submittedOnDate = data.groupViewData.timeline.submittedOnDate && new Date(data.groupViewData.timeline.submittedOnDate);
+
     });
   }
 
@@ -75,21 +76,24 @@ export class EditGroupComponent implements OnInit {
    * Creates and sets the edit group form.
    */
   ngOnInit() {
+    
+    
     let name = String(this.groupData.name).trim().replace('(C)', ''); 
     name = String(name).trim().replace('(I)', '');
-    if(this.groupData.name.search("(C)") > 0){
-      this.groupTypeId = 1;
+
+    if(this.groupData.name.indexOf("(C)") === -1 ){
+      this.groupTypeId = this.groupType[0].value;
     }else{
-      this.groupTypeId = 0;
+      this.groupTypeId = this.groupType[1].value;
     }
-    let s =  {key: 1, value: 'Group sỉ'};
+
     this.createEditGroupForm();
     this.editGroupForm.patchValue({
       'name': name,
       'submittedOnDate': this.submittedOnDate,
       'staffId': this.groupData.staffId,
       'externalId': this.groupData.externalId,
-      'groupTypeId':this.groupTypeId
+      'groupTypeId': this.groupTypeId
     });
 
     this.groupService.getCartTypesByGroupId(this.groupData.id).subscribe( (data: any) => {
@@ -147,8 +151,8 @@ export class EditGroupComponent implements OnInit {
     });
     const group = this.editGroupForm.value;
 
-    if (group.groupTypeId == 1) {
-      let name = String(group.name).trim().replace('(C)', '');
+    let name = String(group.name).trim().replace('(I)', '').replace('(C)', '');
+    if (group.groupTypeId === 'C') {
       group.name = "(C) " + name;
     } else {
       let name = String(group.name).trim().replace('(I)', '');
@@ -166,25 +170,23 @@ export class EditGroupComponent implements OnInit {
     });
   }
   updateFeeGroup(groupObj:any){
+    
     this.groupService.updateFeeGroup(groupObj.groupId,this.cards).subscribe((response: any) => {
        
       this.router.navigate(['../general'], { relativeTo: this.route });
     });
   }
 
-  onKey(event: any, index:any) {
     
-    const charCode = (event.which) ? event.which : event.keyCode;
-    if (charCode > 31 && ((charCode < 45 ||  charCode == 47) || charCode > 57)) {
-      return false;
-    }
+  onBlur(event:any, index:any){
+    console.log("value_input === ", event.target.value);
+    console.log("value === === ", event.target.id);
     let name_input = event.target.id;
-    let value_input = event.target.value;
     this.cards.forEach((item: any) =>{
       if(item.cardType == index.cardType){ 
         Object.keys(item).forEach(function (key){
           if(name_input.split("_")[1] == key){
-            item[key] = Number(value_input);
+            item[key] = Number(event.target.value);
           }
         });
       } 
