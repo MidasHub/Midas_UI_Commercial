@@ -170,16 +170,20 @@ export class WebAppComponent implements OnInit {
       this.settingsService.setServers([
         'https://staging.midascore.net',
         'https://uat.tekcompay.com:8443',
+        'https://training.kiotthe.com',
+        'https://midas.kiotthe.com',
         'https://localhost:9443',
-        'https://localhost:8443'
+        'https://localhost:7443'
       ]);
     }
 
     if (!sessionStorage.getItem('midasBillposServers')) {
       this.settingsService.setBillposServers([
         'https://staging.midascore.net',
-        'https://uat.tekcompay.com:8287',
-        'https://localhost:8287'
+        'https://training.kiotthe.com',
+        'https://midas.kiotthe.com',
+        'https://uat.tekcompay.com:8088',
+        'http://localhost:8088'
       ]);
     }
 
