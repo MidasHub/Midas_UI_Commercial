@@ -239,22 +239,21 @@ export class CreateGroupComponent implements OnInit, AfterViewInit {
     });
   }
 
-  onKey(event: any, index: any) {
-    const charCode = event.which ? event.which : event.keyCode;
-    if (charCode > 31 && (charCode < 45 || charCode == 47 || charCode > 57)) {
-      return false;
-    }
+   
+
+  onBlur(event:any, index:any){
+    console.log("value_input === ", event.target.value);
+    console.log("value === === ", event.target.id);
     let name_input = event.target.id;
-    let value_input = event.target.value;
-    this.cards.forEach((item: any) => {
-      if (item.cardType == index.cardType) {
-        Object.keys(item).forEach(function (key) {
-          if (name_input.split("_")[1] == key) {
-            item[key] = Number(value_input);
+    this.cards.forEach((item: any) =>{
+      if(item.cardType == index.cardType){ 
+        Object.keys(item).forEach(function (key){
+          if(name_input.split("_")[1] == key){
+            item[key] = Number(event.target.value);
           }
         });
-      }
-    });
+      } 
+    }); 
   }
 
   createGroupSavingAccountTemplate(groupId: string, productId: string) {
