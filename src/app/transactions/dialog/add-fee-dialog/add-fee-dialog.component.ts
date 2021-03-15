@@ -79,6 +79,11 @@ export class AddFeeDialogComponent implements OnInit {
     if (value !== "DE") {
       this.showGet = true;
       this.formDialogPaid.get("amountPaid").enable();
+      this.transactionFee = this.transactions.find((v) => v.txnPaymentType === "IN");
+      this.transactionPaid = this.transactions.find((v) => v.txnPaymentType === "OUT");
+      this.formDialogPaid.get("amountPaid").setValue(this.transactionPaid.feeRemain);
+      this.formDialogGet.get("amountGet").setValue(this.transactionFee.feeRemain);
+
     } else {
       this.showGet = false;
       this.formDialogPaid.get("amountPaid").setValue(this.transactionPaid?.feeRemain - this.transactionFee?.feeRemain);
@@ -131,31 +136,30 @@ export class AddFeeDialogComponent implements OnInit {
       this.transactionFee = this.transactions.find((v) => v.txnPaymentType === "IN");
       this.transactionPaid = this.transactions.find((v) => v.txnPaymentType === "OUT");
       this.selectedPaymentTypePaid = "FT";
-      if (this.transactionPaid && this.transactionPaid.txnType === "BATCH") {
-        this.showCashAccountPaid = false;
-        this.showGet = false;
-        this.isBATCH = true;
-        this.selectedPaymentTypePaid = "DE";
-      }
 
       if (this.transactionPaid) {
-        this.paidAmount = this.transactionPaid.feeRemain;
+        this.paidAmount = this.transactionPaid?.feeRemain;
       }
       if (this.transactionFee) {
-        this.feeAmount = this.transactionFee.feeRemain;
+        this.feeAmount = this.transactionFee?.feeRemain;
       }
 
       if (this.feeAmount <= 0 && this.paidAmount <= 0) {
         this.messageNoti = "Tài khoản không khả dụng";
       }
-      this.formDialogPaid.get("paymentCode").setValue(this.selectedPaymentTypePaid);
-      this.formDialogPaid.get("amountPaid").setValue(this.paidAmount);
-      if (this.selectedPaymentTypePaid == "DE") {
 
-        this.transactionPaid.feeRemain = this.transactionPaid?.feeRemain - this.transactionFee?.feeRemain;
-      }else{
-        this.formDialogGet.get("amountGet").setValue(this.feeAmount);
+      if (this.transactionPaid && this.transactionPaid.txnType === "BATCH") {
+        this.showCashAccountPaid = false;
+        this.showGet = false;
+        this.isBATCH = true;
+        this.selectedPaymentTypePaid = "DE";
+        this.paidAmount = this.paidAmount - this.feeAmount;
+        this.formDialogPaid.get("amountPaid").setValue(this.paidAmount);
+
       }
+      this.formDialogGet.get("amountGet").setValue(this.feeAmount);
+      this.formDialogPaid.get("paymentCode").setValue(this.selectedPaymentTypePaid);
+      this.formDialogGet.get("paymentCodeGet").setValue("FT");
 
     });
     // this.clientService.getClientAccountData()
