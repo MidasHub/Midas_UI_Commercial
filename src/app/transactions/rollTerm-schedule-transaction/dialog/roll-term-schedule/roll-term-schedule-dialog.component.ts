@@ -120,7 +120,7 @@ export class RollTermScheduleDialogComponent implements OnInit {
       this.dataSource.forEach((element) => {
         this.transactionInfo.rollTermId = element.rollTermId;
         this.transactionInfo.totalAmountPaid = element.totalPaid;
-        this.transactionInfo.totalAmountGet += element.totalGet;
+        this.transactionInfo.totalAmountGet = element.totalGet;
       });
     });
   }
