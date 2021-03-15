@@ -37,6 +37,9 @@ export class ManageGroupMembersComponent implements AfterViewInit,OnInit {
 
   dataSource: MatTableDataSource<any>;
   displayedColumns =  ['displayName', 'Status','Action'];
+
+  displayAddClient: boolean = true;
+
   /**
    * Fetches group action data from `resolve`
    * @param {ActivatedRoute} route Activated Route
@@ -69,7 +72,7 @@ export class ManageGroupMembersComponent implements AfterViewInit,OnInit {
     this.clientChoice.valueChanges.subscribe( (value: string) => {
       if (value.length >= 2) {
         //this.clientsService.getFilteredClients('displayName', 'ASC', true, value, this.groupData.officeId)
-        this.clientsService.getFilteredClients('displayName', 'ASC', true, value,'')
+        this.clientsService.getFilteredClients('displayName', 'ASC', false, value,'')
           .subscribe((data: any) => {
             this.clientsData = data.pageItems;
           });
@@ -139,6 +142,18 @@ export class ManageGroupMembersComponent implements AfterViewInit,OnInit {
  
   doFilterGroupClients(filterValue: string) {
     this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+
+  getClientIdSelect(clientSelect:any){
+    this.displayAddClient = true;
+    this.clientMembers.forEach((item)=>{ 
+      if(item.id === clientSelect.id){
+        this.displayAddClient = false;
+      }
+    });
+    // if(!this.displayAddClient){
+    //   this.doFilterGroupClients(clientSelect.displayName);
+    // }
   }
 }
 
