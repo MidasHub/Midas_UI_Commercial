@@ -26,6 +26,9 @@
       'toolBarCss-full': sidenavCollapsed,
       'toolBarCss-compact': !sidenavCollapsed
     }"
+    [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+    [mode]="(isHandset$ | async) ? 'over' : 'side'"
+    [opened]="!(isHandset$ | async)"
     ></mifosx-toolbar>
     <!-- Progress Bar -->
     <mat-progress-bar [mode]="progressBarMode" class="progressBarCss"></mat-progress-bar>
