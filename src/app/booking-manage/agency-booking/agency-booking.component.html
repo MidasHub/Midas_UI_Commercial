@@ -178,7 +178,7 @@
 
           <button mat-mini-fab color="primary"
           [routerLink]="['/transaction/batch-transaction/',booking.agencyId]"
-          [queryParams]="{batchTxnName: booking.batchTxnName}">
+          [queryParams]="{batchTxnName: booking.batchTxnName, bookingTxnDailyId: booking.refid}">
             <mat-icon title="Thực hiện giao dịch "> gavel </mat-icon>
           </button>
           <button mat-mini-fab color="warn" (click)="cancelBooking(booking)">

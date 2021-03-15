@@ -150,6 +150,11 @@ export class CreateBatchTransactionComponent implements OnInit {
       this.members = data?.result?.listMemberGroupWithIdentifier;
       if (reset) {
         this.route.queryParams.subscribe(({batchTxnName, bookingTxnDailyId}: any) => {
+          if (bookingTxnDailyId) {
+            this.bookingTxnDailyId = bookingTxnDailyId;
+            this.defaultData.bookingTxnDailyId = bookingTxnDailyId;
+          }
+
           if (batchTxnName && this.batchTxnName !== batchTxnName) {
             this.batchTxnName = batchTxnName;
             this.defaultData.batchTxnName = batchTxnName;
@@ -179,10 +184,7 @@ export class CreateBatchTransactionComponent implements OnInit {
               this.onChangeTotal();
             });
           }
-          if (bookingTxnDailyId) {
-            this.bookingTxnDailyId = bookingTxnDailyId;
-            this.defaultData.bookingTxnDailyId = bookingTxnDailyId;
-          }
+
         });
       }
     });
