@@ -185,7 +185,7 @@ export class ManageTransactionComponent implements OnInit {
       // @ts-ignore
       this.partners?.unshift({ code: "", desc: "Tất cả" });
     });
-    this.savingsService.getListOfficeCommon().subscribe((offices) => {
+    this.savingsService.getListOfficeCommon().subscribe((offices: any) => {
       this.offices = offices.result.listOffice;
       const officeId = this.currentUser.officeId;
       this.currentUser = this.authenticationService.getCredentials();
