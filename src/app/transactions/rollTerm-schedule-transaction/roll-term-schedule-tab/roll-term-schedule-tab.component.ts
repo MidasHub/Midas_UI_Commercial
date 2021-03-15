@@ -157,8 +157,8 @@ export class RollTermScheduleTabComponent implements OnInit {
     let bankFilter = this.formFilter.get("bankFilter").value;
     let createdByFilter = this.formFilter.get("createdByFilter").value;
 
-    const limit = this.paginator.pageSize ? this.paginator.pageSize : 10;
-    const offset = this.paginator.pageIndex * limit ? this.paginator.pageSize * limit : 0;
+    const limit = this.paginator.pageSize  ? this.paginator.pageSize : 10;
+    const offset = ((this.paginator.pageIndex) * limit);
     if (fromDate) {
       fromDate = this.datePipe.transform(fromDate, dateFormat);
     }

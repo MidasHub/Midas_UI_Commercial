@@ -43,10 +43,10 @@ export class CreateBatchTransactionComponent implements OnInit {
     label: 'RTM',
     value: 'CA01'
   },
-    {
+  {
       label: 'ĐHT',
-      value: 'RTM'
-    }];
+      value: 'AL02'
+  }];
   totalAmount = 0;
   totalRequest = 0;
   totalFee = 0;
@@ -106,6 +106,7 @@ export class CreateBatchTransactionComponent implements OnInit {
   currentUser: any;
   feeGroup: any;
   batchTxnName: any;
+  isLoading: Boolean = false;
   bookingTxnDailyId: any;
   private destroy$ = new Subject<void>();
   filteredOptions: Observable<any[]>;
@@ -146,7 +147,9 @@ export class CreateBatchTransactionComponent implements OnInit {
   }
 
   getData(reset?: boolean) {
+    this.isLoading = true;
     this.transactionServices.getMembersAvailableGroup(this.group.id).subscribe(data => {
+      this.isLoading = false;
       this.members = data?.result?.listMemberGroupWithIdentifier;
       if (reset) {
         this.route.queryParams.subscribe(({batchTxnName, bookingTxnDailyId}: any) => {
@@ -158,7 +161,9 @@ export class CreateBatchTransactionComponent implements OnInit {
           if (batchTxnName && this.batchTxnName !== batchTxnName) {
             this.batchTxnName = batchTxnName;
             this.defaultData.batchTxnName = batchTxnName;
+            this.isLoading = true;
             this.transactionServices.getListTransExistingOfBatch(batchTxnName).subscribe(result => {
+              this.isLoading = false;
               this.dataSource = [];
               result?.result?.listBatchTransaction?.forEach((v: any) => {
                 const member = this.members.find(f => String(f.clientId) === String(v.custId));

@@ -19,25 +19,7 @@
       <fa-icon class="mr-05" icon="university" size="lg"></fa-icon>
       {{ "Toolbar_Component.labelInstitution" | translate }}
     </a>
-    <!-- Menu danh cho các user Admin -->
-    <span *midasHasPermission="'ALL_FUNCTIONS'" fxHide.lt-lg="true">
-      <a mat-tab-link class="tab-link" [routerLink]="['/accounting']">
-        <fa-icon class="mr-05" icon="money-bill-alt" size="lg"></fa-icon>
-        {{ "Toolbar_Component.lblAccounting" | translate }}
-      </a>
-      <a mat-tab-link class="tab-link" [matMenuTriggerFor]="reportsMenu" #reportsMenuTrigger="matMenuTrigger">
-        <fa-icon class="mr-05" icon="chart-bar" size="lg"></fa-icon>
-        {{ "Toolbar_Component.lblReport" | translate }}
-      </a>
-      <a mat-tab-link class="tab-link" [matMenuTriggerFor]="adminMenu" #adminMenuTrigger="matMenuTrigger">
-        <fa-icon class="mr-05" icon="shield-alt" size="lg"></fa-icon>
-        {{ "Toolbar_Component.lblAdmin" | translate }}
-      </a>
-      <a mat-tab-link class="tab-link" [matMenuTriggerFor]="selfServiceMenu" #selfServiceMenuTrigger="matMenuTrigger">
-        <fa-icon class="mr-05" icon="users" size="lg"></fa-icon>
-        {{ "Toolbar_Component.lblSelfService" | translate }}
-      </a>
-    </span>
+
     <!-- Menu danh cho các user Admin -->
     <a mat-tab-link class="tab-link" [matMenuTriggerFor]="POSPartnerMenu" #institutionMenuTrigger="matMenuTrigger">
       <fa-icon class="mr-05" icon="university" size="lg"></fa-icon>
@@ -62,6 +44,25 @@
       <fa-icon class="mr-05" icon="university" size="lg"></fa-icon>
       Marketing
     </a>
+    <!-- Menu danh cho các user Admin -->
+    <span *midasHasPermission="'ALL_FUNCTIONS'" fxHide.lt-lg="true">
+      <a mat-tab-link class="tab-link" [routerLink]="['/accounting']">
+        <fa-icon class="mr-05" icon="money-bill-alt" size="lg"></fa-icon>
+        {{ "Toolbar_Component.lblAccounting" | translate }}
+      </a>
+      <a mat-tab-link class="tab-link" [matMenuTriggerFor]="reportsMenu" #reportsMenuTrigger="matMenuTrigger">
+        <fa-icon class="mr-05" icon="chart-bar" size="lg"></fa-icon>
+        {{ "Toolbar_Component.lblReport" | translate }}
+      </a>
+      <a mat-tab-link class="tab-link" [matMenuTriggerFor]="adminMenu" #adminMenuTrigger="matMenuTrigger">
+        <fa-icon class="mr-05" icon="shield-alt" size="lg"></fa-icon>
+        {{ "Toolbar_Component.lblAdmin" | translate }}
+      </a>
+      <a mat-tab-link class="tab-link" [matMenuTriggerFor]="selfServiceMenu" #selfServiceMenuTrigger="matMenuTrigger">
+        <fa-icon class="mr-05" icon="users" size="lg"></fa-icon>
+        {{ "Toolbar_Component.lblSelfService" | translate }}
+      </a>
+    </span>
   </nav>
 
   <div fxFlex  fxLayout="row" fxLayoutAlign="end center" >

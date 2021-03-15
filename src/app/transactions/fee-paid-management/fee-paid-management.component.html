@@ -34,6 +34,14 @@
   <mat-card-content style="margin-top: 10px">
     <mat-card>
       <div fxLayout="row swap" fxLayoutAlign.lt-sm="center" fxLayoutGap="2%" fxLayout.lt-md="column">
+
+        <div fxLayout="row" fxFlex="18%" class="export-item">
+          <img src="assets/images/icons/transaction_total.svg" />
+          <div fxLayout="column">
+            <span class="money-total">{{ getLengthSource() }}</span>
+            <span>Tổng giao dịch </span>
+          </div>
+        </div>
         <div fxLayout="row wrap" fxFlex="20%" class="container m-b-20">
           <img src="assets/images/icons/money.svg" width="40" height="40" />
           <div style="display: flex" fxLayout="column">
