@@ -21,11 +21,12 @@
   <mat-sidenav-content>
 
     <!-- Toolbar -->
-    <mifosx-toolbar [sidenav]="sidenav" (collapse)="toggleCollapse($event)" 
+    <mifosx-toolbar [sidenav]="sidenav" (collapse)="toggleCollapse($event)"
     [ngClass]="{
       'toolBarCss-full': sidenavCollapsed,
       'toolBarCss-compact': !sidenavCollapsed
     }"
+
     ></mifosx-toolbar>
     <!-- Progress Bar -->
     <mat-progress-bar [mode]="progressBarMode" class="progressBarCss"></mat-progress-bar>

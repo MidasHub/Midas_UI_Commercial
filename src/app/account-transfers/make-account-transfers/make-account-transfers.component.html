@@ -88,7 +88,7 @@
             <mat-label>{{'Account_Transfer_Component.MakeAccountTransfer.lblAccount'|translate}}</mat-label>
             <mat-select required formControlName="toAccountId" (selectionChange)="changeEvent()">
               <mat-option *ngFor="let toAccount of toAccountData" [value]="toAccount.id">
-                {{ toAccount.productName }} - {{ toAccount.accountNo }}
+                {{ toAccount.productName }} - {{ toAccount.accountNo }} - {{ toAccount.externalId }}
               </mat-option>
             </mat-select>
             <mat-error *ngIf="makeAccountTransferForm.controls.toAccountId.hasError('required')"

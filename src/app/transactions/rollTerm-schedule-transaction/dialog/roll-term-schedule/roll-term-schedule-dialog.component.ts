@@ -126,7 +126,7 @@ export class RollTermScheduleDialogComponent implements OnInit {
   }
 
   addFeeDialogByTransactionId(isTrnRefNo: boolean, transactionId: string) {
-    return;
+
     if (isTrnRefNo) {
       this.addFeeDialog(transactionId);
     } else {

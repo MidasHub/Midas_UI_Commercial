@@ -55,28 +55,28 @@
           <h3>
             <i
               class="fa fa-stop"
-              [ngClass]="clientViewData.status.code | statusLookup"
-              [matTooltip]="clientViewData.status.value"
+              [ngClass]="clientViewData?.status?.code | statusLookup"
+              [matTooltip]="clientViewData?.status?.value"
             ></i>
-            {{ "Client_Component.ViewClient.lblClientName" | translate }} : {{ clientViewData.displayName }}
+            {{ "Client_Component.ViewClient.lblClientName" | translate }} : {{ clientViewData?.displayName }}
           </h3>
         </mat-card-title>
 
         <mat-card-subtitle>
           <p>
-            {{ "Client_Component.ViewClient.lblCifNo" | translate }}:{{ clientViewData.accountNo }} |
-            {{ "Client_Component.ViewClient.lblExternalID" | translate }}: {{ clientViewData.externalId }} | Staff:{{
-              clientViewData.staffName || "Unassigned"
+            {{ "Client_Component.ViewClient.lblCifNo" | translate }}:{{ clientViewData?.accountNo }} |
+            {{ "Client_Component.ViewClient.lblExternalID" | translate }}: {{ clientViewData?.externalId }} | Staff:{{
+              clientViewData?.staffName || "Unassigned"
             }}<br />
             {{ "Client_Component.ViewClient.lblActivationDate" | translate }} :
             {{
-              clientViewData.activationDate
-                ? (clientViewData.activationDate | date)
+              clientViewData?.activationDate
+                ? (clientViewData?.activationDate | date)
                 : ("Client_Component.ViewClient.lblNotActivated" | translate)
             }}<br />
             {{ "Client_Component.ViewClient.lblMemberOf" | translate }} :
-            <span *ngFor="let group of clientViewData.groups">
-              <a>{{ group.name }}</a
+            <span *ngFor="let group of clientViewData?.groups">
+              <a [routerLink]="['/groups', group.id, 'general']" >{{ group.name }}</a
               >&nbsp;
             </span>
             <span *ngIf="!clientViewData.groups">{{ "Client_Component.ViewClient.lblUnassigned" | translate }}</span>

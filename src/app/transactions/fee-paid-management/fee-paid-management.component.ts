@@ -235,7 +235,8 @@ export class FeePaidManagementComponent implements OnInit {
           v.agencyId = "#";
         }
         v.DEAmount = 0;
-        v.customerName = v.txnCode;
+        // v.customerNameText = v.customerName;
+        v.customerName = v.txnType == 'BATCH' ? v.txnCode : v.customerName;
         if (v.txnPaymentType === "OUT") {
           v.DEAmount = v.txnAmount - v.feeSum;
         }

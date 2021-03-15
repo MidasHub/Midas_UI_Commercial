@@ -99,11 +99,11 @@
 </mat-menu>
 
 <mat-menu #POSPartnerMenu="matMenu" [overlapTrigger]="false">
-  <button *midasHasPermission="'ALL_FUNCTIONS'" mat-menu-item routerLink="/terminals">
-    {{ "Toolbar_Component.labelTerminals" | translate }}
-  </button>
+  <!-- <button *midasHasPermission="'POS_UPDATE'" mat-menu-item routerLink="/terminals">
+    Điều chuyển máy POS
+  </button> -->
   <button mat-menu-item routerLink="/terminals/limit">{{ "Quản lý hạn mức POS" | translate }}</button>
-  <button mat-menu-item *midasHasPermission="'ALL_FUNCTIONS'" routerLink="/terminals">
+  <button mat-menu-item *midasHasPermission="'POS_UPDATE'" routerLink="/terminals">
     {{ "Quản lý máy POS" | translate }}
   </button>
   <button mat-menu-item *midasHasPermission="'ALL_FUNCTIONS'" routerLink="/third-party">

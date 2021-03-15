@@ -1,5 +1,5 @@
 <mat-card class="container">
-    
+
     <div fxLayout="row" fxLayoutAlign="start center">
       <div class="search-box">
         <mat-form-field class="filter">
@@ -11,7 +11,7 @@
 
         <mat-checkbox labelPosition="after" (change)="changeShowClosedTerminals($event.checked)">{{ 'Terminal_Component.labelShowClosedterminal'| translate}}</mat-checkbox>
       </div>
-      <div class="action-button" fxLayoutGap="25px">
+      <div *midasHasPermission="'ALL_FUNCTIONS'" class="action-button" fxLayoutGap="25px">
         <button mat-raised-button color="primary" [routerLink]="['create']">
           <fa-icon icon="plus"></fa-icon>&nbsp;&nbsp;{{ 'Terminal_Component.btnCreate'| translate}}
         </button>
@@ -63,14 +63,14 @@
         <th mat-header-cell *matHeaderCellDef mat-sort-header>  {{ 'Terminal_Component.tableTerminal.updatedDate'| translate}} </th>
         <td mat-cell *matCellDef="let terminal"> {{ terminal.updatedDate }} </td>
       </ng-container>
-      
+
       <ng-container matColumnDef="action">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'Terminal_Component.labelAction'| translate}} </th>
         <td mat-cell *matCellDef="let terminal">
           <button title="Điều chuyển máy POS" mat-raised-button color="primary" (click)="addTransferDialogByTransactionId(terminal.terminalId, terminal.terminalName)">
             <fa-icon icon="sync"></fa-icon>
           </button>
-          <button title="Chỉnh sửa thông tin máy POS" mat-raised-button color="primary" [routerLink]="[terminal.terminalId,'edit']">
+          <button *midasHasPermission="'ALL_FUNCTIONS'" title="Chỉnh sửa thông tin máy POS" mat-raised-button color="primary" [routerLink]="[terminal.terminalId,'edit']">
             <fa-icon icon="edit"></fa-icon>
           </button>
         </td>

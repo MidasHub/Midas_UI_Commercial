@@ -322,14 +322,17 @@ export class CreateTransactionComponent implements OnInit {
     if (this.transactionCreateForm.invalid) {
       return;
     }
+
     this.transactionInfo.batchNo = this.transactionCreateForm.value.batchNo;
     this.transactionInfo.traceNo = this.transactionCreateForm.value.traceNo;
+    this.transactionInfo.terminalAmount = this.transactionCreateForm.value.terminalAmount;
     if (this.transactionInfo.type == "cash") {
       this.transactionService.submitTransactionCash(this.transactionInfo).subscribe((data: any) => {
         this.afterSuccessCreateCashTransaction(data);
       });
     } else {
       if (this.transactionInfo.type == "rollTermGetCash") {
+
         this.transactionService
           .submitTransactionCashFromRollTermTransaction(this.transactionInfo)
           .subscribe((data: any) => {
