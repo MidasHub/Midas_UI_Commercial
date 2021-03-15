@@ -93,7 +93,7 @@ export class TerminalsService {
 
   transfer(terminalId:string, officeId:string): Observable<any> {
     let httpParams = this.commonHttpParams.getCommonHttpParams();
-    httpParams = httpParams.set("terminalId",terminalId).set("officeId",officeId);
+    httpParams = httpParams.set("terminalId",terminalId).set("toOfficeId",officeId);
 
     return this.http.post<any>(`${this.GatewayApiUrlPrefix}/pos/assignterminal`,  httpParams );
   }
