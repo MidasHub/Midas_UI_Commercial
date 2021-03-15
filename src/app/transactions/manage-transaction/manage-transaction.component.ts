@@ -46,7 +46,7 @@ export class ManageTransactionComponent implements OnInit {
     "panBank",
     "terminalAmount",
     "feeAmount",
-    "cogsAmount",
+    // "cogsAmount",
     "terminalAmount_feeAmount",
   ]; // pnlAmount
   formDate: FormGroup;
@@ -235,7 +235,7 @@ export class ManageTransactionComponent implements OnInit {
       this.transactionsData = result?.result?.listPosTransaction.map((v: any) => {
         return {
           ...v,
-          terminalAmount_feeAmount: Number((v.feeAmount / v.terminalAmount).toFixed(3)) * 100,
+          terminalAmount_feeAmount: Number(v.feePercentage) ,
         };
       });
       this.filterTransaction();
