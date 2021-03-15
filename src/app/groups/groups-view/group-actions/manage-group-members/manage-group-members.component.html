@@ -7,7 +7,7 @@
       <input matInput [formControl]="clientChoice" [matAutocomplete]="clientsAutocomplete">
     </mat-form-field>
 
-    <mat-autocomplete autoActiveFirstOption #clientsAutocomplete="matAutocomplete" [displayWith]="displayClient">
+    <mat-autocomplete autoActiveFirstOption #clientsAutocomplete="matAutocomplete" [displayWith]="displayClient" (optionSelected)='getClientIdSelect($event.option.value)'>
       <mat-option *ngFor="let client of clientsData" [value]="client">
         {{ client.displayName}} - chi nhánh: {{client.officeName}}
       </mat-option>
@@ -16,7 +16,7 @@
     <div class="mat-table" fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="2%">
       <div class="mat-header-row" fxLayout="row" fxLayoutAlign="start center">
         <div class="mat-header-cell" fxFlex="25%">Client Details</div>
-        <button mat-icon-button (click)="addClient()">
+        <button mat-icon-button (click)="addClient()" [disabled]="!displayAddClient">
           <fa-icon icon="plus"></fa-icon>
         </button>
       </div>
