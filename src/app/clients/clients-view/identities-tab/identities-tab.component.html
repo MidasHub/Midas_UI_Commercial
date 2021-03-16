@@ -3,9 +3,12 @@
     <mat-card-header>
       <mat-card-title>Hình ảnh CMND/CCCD/PASSPORT:</mat-card-title>
     </mat-card-header>
-    <mat-card-content   *ngFor="let identity of clientIdentitiesOther">
-      <div  fxFlex.gt-sm="50%" class="image-container" *ngFor="let images of identity?.documents[0]?.imageIdentifier">
-        <img width="95%" height="400" class="profile-image" [src]="images?.base64data" />
+    <mat-card-content  *ngFor="let identity of clientIdentitiesOther">
+      <div  fxFlex.gt-sm="100%"  *ngIf="identity?.documents">
+        <div fxFlex.gt-sm="50%" class="image-container" *ngFor="let images of identity?.documents[0]?.imageIdentifier" >
+          <img width="95%" height="400" class="profile-image" [src]="images?.base64data" />
+        </div>
+
       </div>
     </mat-card-content>
   </mat-card>

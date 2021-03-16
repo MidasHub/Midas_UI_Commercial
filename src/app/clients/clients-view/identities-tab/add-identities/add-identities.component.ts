@@ -103,7 +103,7 @@ export class AddIdentitiesComponent implements OnInit {
 
           log.debug('Cần tìm thông bincode: ',value,' - 6 first: ', value.slice(0,6))
 
-          this.bankService.getInfoBinCode(value.slice(0,6)).subscribe((res: any) => {
+          this.bankService?.getInfoBinCode(value.slice(0,6)).subscribe((res: any) => {
             if (res) {
               if (res.existBin) {
                 const {bankCode, cardType} = res;

@@ -333,7 +333,7 @@ export class CreateBatchTransactionComponent implements OnInit {
       form.get('fee').setValue(Number(terminalAmount * (rate / 100)).toFixed(0));
 
     });
-    this.bankServices.getInfoBinCode(member.cardNumber.slice(0, 6)).subscribe(result => {
+    this.bankServices?.getInfoBinCode(member.cardNumber.slice(0, 6)).subscribe(result => {
       if (result) {
 
         // @ts-ignore

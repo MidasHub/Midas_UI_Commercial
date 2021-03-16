@@ -172,7 +172,7 @@ export class RollTermScheduleTabComponent implements OnInit {
       .subscribe((result) => {
         this.isLoading = false;
         this.transactionsData = result?.result;
-        this.dataSource = result?.result.listPosTransaction;
+        this.dataSource = result?.result?.listPosTransaction;
       });
   }
 
