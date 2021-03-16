@@ -72,7 +72,7 @@ export class BookingAgencyComponent implements OnInit {
     private alertService: AlertService
   ) {
     this.formDate = this.formBuilder.group({
-      fromDate: [new Date(new Date().setMonth(new Date().getMonth() - 4))],
+      fromDate: [new Date()],
       toDate: [new Date()],
     });
     this.formFilter = this.formBuilder.group({

@@ -85,7 +85,7 @@
   <button mat-menu-item routerLink="/groups">{{ "Toolbar_Component.lblGroup" | translate }}</button>
   <button mat-menu-item *midasHasPermission="'ALL_FUNCTIONS'" routerLink="/centers">Centers</button>
   <button mat-menu-item routerLink="/accounts/balance-clients">{{ "Quản lý công nợ khách hàng khách hàng lẻ" | translate }}</button>
-  <button mat-menu-item *midasHasPermission="'MANAGER' || 'ALL_FUNCTIONS'" routerLink="/accounts/balance-teller">
+  <button mat-menu-item *midasHasPermission="'POS_UPDATE'" routerLink="/accounts/balance-teller">
     {{ "Quản lý số dư teller" | translate }}
   </button>
 

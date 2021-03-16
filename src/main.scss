@@ -24,3 +24,9 @@ $fa-font-path:"theme/fontawesome/webfonts";
 @import "~@busacca/ng-pick-datetime/assets/style/picker.min.css";
 // add css for angular-calendar lib
 @import "../node_modules/angular-calendar/css/angular-calendar.css";
+
+// custom disable input style
+.mat-input-element:disabled, .mat-form-field-type-mat-native-select.mat-form-field-disabled .mat-form-field-infix::after {
+  color: red !important;
+  font-weight: bold !important;
+}

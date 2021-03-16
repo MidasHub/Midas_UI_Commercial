@@ -175,7 +175,6 @@ export class ManageTransactionComponent implements OnInit {
     this.formFilter.valueChanges.subscribe((value) => {
       this.filterTransaction();
     });
-
   }
 
   ngOnInit(): void {
@@ -192,8 +191,7 @@ export class ManageTransactionComponent implements OnInit {
       const { permissions } = this.currentUser;
       const permit_Head = permissions.includes("ALL_FUNCTIONS");
       if (!permit_Head) {
-          this.formFilter.get("officeId").setValue(officeId);
-
+        this.formFilter.get("officeId").setValue(officeId);
       }
     });
     this.getTransaction();
@@ -235,7 +233,7 @@ export class ManageTransactionComponent implements OnInit {
       this.transactionsData = result?.result?.listPosTransaction.map((v: any) => {
         return {
           ...v,
-          terminalAmount_feeAmount: Number(v.feePercentage) ,
+          terminalAmount_feeAmount: Number(v.feePercentage),
         };
       });
       this.filterTransaction();
@@ -453,15 +451,18 @@ export class ManageTransactionComponent implements OnInit {
           query = query + "&createdByFilter=ALL";
         }
       } else {
-        const value =
-          ["productId", "status", "partnerCode", "officeName"].indexOf(key) === -1
-            ? form[key]
-            : form[key] === "" || !form[key]
-            ? "ALL"
-            : form[key];
-        query = query + "&" + key + "=" + value;
+        if (key !== "officeId") {
+          const value =
+            ["productId", "status", "partnerCode", "officeName"].indexOf(key) === -1
+              ? form[key]
+              : form[key] === "" || !form[key]
+              ? "ALL"
+              : form[key];
+          query = query + "&" + key + "=" + value;
+        }
       }
     }
+
     this.transactionService.exportTransaction(query);
   }
 }
