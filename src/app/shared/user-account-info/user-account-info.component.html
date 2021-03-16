@@ -1,25 +1,40 @@
-<button class="aligned-with-icons" mat-icon-button class="ml-1"
+<button
+  class="aligned-with-icons"
+  mat-icon-button
+  class="ml-1"
   matTooltip="Tổng số dư tài khoản ngân hàng"
-  [matMenuTriggerFor]="listSaving?.length > 0 ? UserSavingMenu : null">
+  [matMenuTriggerFor]="UserSavingMenu"
+>
   Số dư:
-  <span >{{ totalBalance | money }}</span>
+  <span>{{ totalBalance | money }}</span>
 </button>
 
-<mat-menu  style="min-width: 300px;" class="midas-saving-menu" #UserSavingMenu="matMenu" [overlapTrigger]="false">
+<mat-menu style="min-width: 300px" class="midas-saving-menu" #UserSavingMenu="matMenu" [overlapTrigger]="false">
   <mat-card>
     <mat-card-content>
-      <mat-nav-list>
-        <mat-list-item *ngFor="let account of listSaving">
-          <a matLine href="#/clients/{{account.clientId}}/savings-accounts/{{account.id}}">
-
-            <button mat-button color="primary" >
-              {{ account.externalId }} -  Số dư: {{ account.balance | money }}
-            </button>
-          </a>
-
-        </mat-list-item>
-      </mat-nav-list>
+      <ul class="dropdown-menu" *ngIf="listSaving?.length == 0">
+        <li style="padding: 10px 0; margin: 2px 0 0; pointer-events: auto ">
+          <strong style="color: red;">(NOT AVAILABLE)</strong>
+        </li>
+      </ul>
+      <ul class="dropdown-menu" *ngIf="listSaving?.length > 0">
+        <li style="padding: 10px 0; margin: 2px 0 0; pointer-events: auto " *ngFor="let account of listSaving">
+          <label >
+            <a href="#/clients/{{ account.clientId }}/savings-accounts/{{ account.id }}">
+              <label  class="control-label col-6 ng-binding" style="float: left">
+                {{ account.externalId }}
+              </label>
+              <label
+                class="control-label col-6 ng-binding"
+                style="float: right; color: green; margin-left: 20px"
+              >
+                <i class="fa fa-money"></i>
+                {{ account.balance | money }}
+              </label>
+            </a>
+          </label>
+        </li>
+      </ul>
     </mat-card-content>
   </mat-card>
-
 </mat-menu>

@@ -485,9 +485,7 @@ export class CreateTransactionComponent implements OnInit {
       data,
     });
     dialog.afterClosed().subscribe((response: any) => {
-      if (response.data) {
-        const value = response.data.value;
-      }
+      this.ngOnInit();
     });
   }
   formatCurrency(value: string) {

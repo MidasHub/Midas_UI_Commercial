@@ -31,7 +31,7 @@ export class CalendarComponent {
   @ViewChild("modalContent", { static: true }) modalContent: TemplateRef<any>;
 
   setEvents() {
-    this.bankService.getAllCardOnDueDay().subscribe((response: any) => {
+    this.bankService?.getAllCardOnDueDay().subscribe((response: any) => {
       this.events = [];
       const listCard = response.result.listCard;
       listCard.forEach((element: any) => {

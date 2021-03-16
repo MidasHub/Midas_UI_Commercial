@@ -14,14 +14,17 @@
   <ul>
     <li>
       Tiếp tục giao dịch với thẻ {{transactionInfo.panNumber}} của khách hàng {{transactionInfo.clientName}}.
-      <a mat-dialog-close mat-mini-fab href="#/transaction/create?clientId={{transactionInfo.clientId}}&identifierId={{transactionInfo.identifierId}}&type=cash" color="primary">
-        <fa-icon icon="arrow-alt-circle-left"></fa-icon>
+      <a mat-dialog-close mat-mini-fab  color="primary">
+        <fa-icon icon="arrow-alt-circle-left"> </fa-icon>
       </a>
     </li>
     <li>Chọn thẻ khác của khách hàng {{transactionInfo.clientName}} để tiếp tục thực hiện giao dịch.
-      <a mat-dialog-close mat-mini-fab href="#/clients/{{transactionInfo.clientId}}/identities?typeViewClient=transaction">
-        <fa-icon icon="arrow-alt-circle-right"></fa-icon>
-      </a>
+
+          <a mat-dialog-close
+          mat-mini-fab href="#/clients/{{transactionInfo.clientId}}/identities?typeViewClient=transaction">
+          <fa-icon icon="arrow-alt-circle-right"> </fa-icon>
+        </a>
+
     </li>
   </ul>
 
