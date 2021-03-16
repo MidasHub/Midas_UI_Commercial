@@ -146,7 +146,7 @@ export class FeePaidManagementComponent implements OnInit {
       toDate: [new Date()],
     });
     this.formFilter = this.formBuilder.group({
-      status: [""],
+      status: ["A"],
       // txnType: [''],
       officeName: [""],
       agencyName: [""],
@@ -168,10 +168,10 @@ export class FeePaidManagementComponent implements OnInit {
 
   colorOfType(type: string) {
     if (type === "IN") {
-      return "color: #007700;";
+      return "color: green; font-weight: bold;";
     }
     if (type === "OUT") {
-      return "color: #660000;";
+      return "color: red;  font-weight: bold;";
     }
     return "";
   }

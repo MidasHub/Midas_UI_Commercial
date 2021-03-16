@@ -19,12 +19,15 @@
   </mat-card-content>
 
   <div [formGroup]="formFilter" fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column" [formGroup]="formFilter">
-    <mat-form-field fxFlex="18%" *midasHasPermission="'REFINANCE_EXECUTIVE'">
+    <mat-form-field fxFlex="40%" *midasHasPermission="'REFINANCE_EXECUTIVE'">
       <mat-label>Nhân viên</mat-label>
       <mat-select formControlName="createdByFilter">
         <mat-option *ngFor="let option of staffs" [value]="option.userId">
           {{ option.displayName }}
         </mat-option>
+        <!-- <mat-option *ngFor="let type of staffs" [value]="type.id">
+          {{ type.displayName }}
+        </mat-option> -->
       </mat-select>
     </mat-form-field>
 

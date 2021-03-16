@@ -215,35 +215,33 @@
 
       <ng-container matColumnDef="batchNo">
         <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef>
-          Số batch /<br />
+          Số batch
+          <hr />
           Số trace
         </th>
-        <td mat-cell fxHide fxShow.gt-md *matCellDef="let transaction">
-          <span
-            style="
+        <td mat-cell
+        fxHide fxShow.gt-md
+        *matCellDef="let transaction"
+        style=" padding: 5px;
               overflow-wrap: break-word;
               white-space: nowrap;
               overflow: hidden;
               text-overflow: ellipsis;
-              max-width: 50px;
-            "
-            [matTooltip]="getDataOfGroupTxnCode(transaction)[0].batchNo"
+              max-width: 100px;
+            ">
+          <label
+
+            [matTooltip]="getDataOfGroupTxnCode(transaction)[0].batchNo?.replaceAll('#', ' ')"
           >
-            {{ getDataOfGroupTxnCode(transaction)[0].batchNo }}
-          </span>
-          <br />
-          <span
-            style="
-              overflow-wrap: break-word;
-              white-space: nowrap;
-              overflow: hidden;
-              text-overflow: ellipsis;
-              max-width: 50px;
-            "
-            [matTooltip]="getDataOfGroupTxnCode(transaction)[0].traceNo"
+            {{ (getDataOfGroupTxnCode(transaction)[0].batchNo)?.replaceAll('#', ' ') }}
+          </label>
+          <hr />
+          <label
+
+            [matTooltip]="getDataOfGroupTxnCode(transaction)[0].traceNo?.replaceAll('#', ' ')"
           >
-            {{ getDataOfGroupTxnCode(transaction)[0].traceNo }}
-          </span>
+            {{ (getDataOfGroupTxnCode(transaction)[0].traceNo)?.replaceAll('#', ' ') }}
+          </label>
         </td>
       </ng-container>
 
@@ -254,22 +252,20 @@
         </th>
         <td mat-cell fxHide fxShow.gt-md *matCellDef="let transaction">
           {{ getDataOfGroupTxnCode(transaction)[0].customerName }} <br />
-          {{ getDataOfGroupTxnCode(transaction)[0].agencyName }}
+          <label style="color: green;">
+          {{ getDataOfGroupTxnCode(transaction)[0].agencyName != "#" ? getDataOfGroupTxnCode(transaction)[0].agencyName: "" }}
+          </label>
         </td>
       </ng-container>
-
-      <!-- <ng-container matColumnDef="agencyName">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>Đại lý</th>
-        <td mat-cell style="padding: 6px;"
-            *matCellDef="let transaction"> {{ getDataOfGroupTxnCode(transaction)[0].agencyName }} </td>
-      </ng-container> -->
 
       <ng-container matColumnDef="txnAmount">
         <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>Số tiền GD</th>
         <td mat-cell fxHide fxShow.gt-md *matCellDef="let transaction">
-          <ul>
-            <li *ngFor="let tra of getDataOfGroupTxnCode(transaction)" [style]="colorOfType(tra.txnPaymentType)">
-              {{ tra.txnPaymentType }}: {{ tra.txnAmount | money }}
+          <ul *ngIf="getDataOfGroupTxnCode(transaction)">
+            <li >
+              <label style="color: blue;">
+                {{ getDataOfGroupTxnCode(transaction)[0]?.txnAmount | money }}
+              </label>
             </li>
           </ul>
         </td>
@@ -278,9 +274,10 @@
       <ng-container matColumnDef="DEAmount">
         <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>Số tiền cấn trừ</th>
         <td mat-cell fxHide fxShow.gt-md *matCellDef="let transaction">
-          <ul>
-            <li *ngFor="let tra of getDataOfGroupTxnCode(transaction)" [style]="colorOfType(tra.txnPaymentType)">
-              <span *ngIf="tra.txnPaymentType === 'OUT'">
+          <ul *ngFor="let tra of getDataOfGroupTxnCode(transaction)">
+            <li *ngIf="tra.txnPaymentType === 'OUT'"
+            [style]="colorOfType(tra.txnPaymentType)">
+              <span >
                 {{ tra.DEAmount | money }}
               </span>
             </li>
