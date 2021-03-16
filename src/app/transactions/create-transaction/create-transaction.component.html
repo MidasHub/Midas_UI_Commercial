@@ -265,9 +265,9 @@
         fxLayout.xs="column"
         *ngIf="transactionInfo.type == 'cash' || transactionInfo.type == 'rollTermGetCash'"
       >
-        <div fxFlex.gt-sm="30%" fxLayout="row wrap" class="content">
+        <div fxFlex.gt-sm="28%" fxLayout="row wrap" class="content">
           <div fxFlex="100%">
-            <mat-form-field style="width: 80%" appearance="fill">
+            <mat-form-field style="width: 100%" appearance="fill">
               <mat-label>Chọn máy POS làm giao dịch</mat-label>
               <select
                 (change)="this.getFeeByTerminal()"
@@ -282,7 +282,8 @@
             </mat-form-field>
           </div>
         </div>
-        <div fxFlex.gt-sm="16%" fxLayout="row wrap" class="content" *midasHasActiveModule="'billModule'">
+        <div fxFlex.gt-sm="2%" fxLayout="row wrap" class="content"></div>
+        <div fxFlex.gt-sm="15%" fxLayout="row wrap" class="content" *midasHasActiveModule="'billModule'">
           <div fxFlex="100%">
             <mat-form-field>
               <mat-label>Số tiền cần quẹt(VNĐ)</mat-label>
@@ -291,7 +292,7 @@
             </mat-form-field>
           </div>
         </div>
-        <div fxFlex.gt-sm="16%" fxLayout="row wrap" class="content">
+        <div fxFlex.gt-sm="15%" fxLayout="row wrap" class="content">
           <div fxFlex="100%">
             <mat-form-field>
               <mat-label>Số tiền trên bill do POS in ra</mat-label>
@@ -306,7 +307,7 @@
             </mat-form-field>
           </div>
         </div>
-        <div fxFlex.gt-sm="19%" fxLayout="row wrap" class="content">
+        <div fxFlex.gt-sm="20%" fxLayout="row wrap" class="content">
           <div fxFlex="80%">
             <mat-form-field>
               <mat-label> Số batch</mat-label>
@@ -315,7 +316,7 @@
             </mat-form-field>
           </div>
         </div>
-        <div fxFlex.gt-sm="19%" fxLayout="row wrap" class="content">
+        <div fxFlex.gt-sm="20%" fxLayout="row wrap" class="content">
           <div fxFlex="80%">
             <mat-form-field>
               <mat-label> Số trace</mat-label>

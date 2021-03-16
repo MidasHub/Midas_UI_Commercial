@@ -84,7 +84,7 @@
               "extractLicenses": true,
               "vendorChunk": false,
               "buildOptimizer": true,
-              "serviceWorker": true,
+              "serviceWorker": false,
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
@@ -157,7 +157,7 @@
               "src/favicon.ico",
               "src/robots.txt",
               "src/manifest.json",
-              "src/firebase-messaging-sw.js",              
+              "src/firebase-messaging-sw.js",
               "src/assets"
             ]
           }

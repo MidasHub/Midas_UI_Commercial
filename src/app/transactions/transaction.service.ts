@@ -89,8 +89,8 @@ export class TransactionService {
     httpParams = httpParams.set("accountBankId", transactionInfo.identifyClientDto.accountBankId);
     httpParams = httpParams.set("accountTypeId", transactionInfo.identifyClientDto.accountTypeId);
     httpParams = httpParams.set("accountCash", transactionInfo.accountCash);
-    httpParams = httpParams.set("bNo", transactionInfo.traceNo);
-    httpParams = httpParams.set("tid", transactionInfo.batchNo);
+    httpParams = httpParams.set("bNo", transactionInfo.batchNo);
+    httpParams = httpParams.set("tid", transactionInfo.traceNo);
     httpParams = httpParams.set("terminalAmount", String(this.formatLong(transactionInfo.terminalAmount)));
     httpParams = httpParams.set("feeRate", transactionInfo.rate);
     httpParams = httpParams.set("toClientId", transactionInfo.clientId);
@@ -118,8 +118,8 @@ export class TransactionService {
     httpParams = httpParams.set("accountBankId", transactionInfo.identifyClientDto.accountBankId);
     httpParams = httpParams.set("accountTypeId", transactionInfo.identifyClientDto.accountTypeId);
     httpParams = httpParams.set("refid", transactionInfo.refId);
-    httpParams = httpParams.set("bNo", transactionInfo.traceNo);
-    httpParams = httpParams.set("tid", transactionInfo.batchNo);
+    httpParams = httpParams.set("bNo", transactionInfo.batchNo);
+    httpParams = httpParams.set("tid", transactionInfo.traceNo);
     httpParams = httpParams.set("terminalAmount", String(this.formatLong(transactionInfo.terminalAmount)));
     httpParams = httpParams.set("feeRate", transactionInfo.rate);
     httpParams = httpParams.set("feeAmount", transactionInfo.feeAmount);
@@ -425,6 +425,21 @@ export class TransactionService {
     };
 
     return this.http.get(url, httpOptions);
+  }
+
+  exportTransactionForPartner(query: string) {
+    this.accessToken = JSON.parse(
+      sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey)
+    );
+    // tslint:disable-next-line:max-line-length
+    const fileUrl = `${this.environment.GatewayApiUrl}${this.environment.GatewayApiUrlPrefix}/export/pre_export_transaction_partner?ext5=ALL&typeExport=transaction&accessToken=${this.accessToken.base64EncodedAuthenticationKey}&createdBy=${this.accessToken.userId}&${query}`;
+    this.getExportExcelFile(fileUrl).subscribe((data: any) => {
+      const downloadURL = window.URL.createObjectURL(data);
+      const link = document.createElement("a");
+      link.href = downloadURL;
+      link.download = "V_transaction_partner.xlsx";
+      link.click();
+    });
   }
 
   exportTransaction(query: string) {

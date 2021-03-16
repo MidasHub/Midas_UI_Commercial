@@ -57,3 +57,4 @@ yarn.lock
 .vscode/settings.json
 ~/ng.*
 ~/node_modules/*
+src/environments/checkurl.ts
