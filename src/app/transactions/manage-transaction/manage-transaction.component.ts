@@ -100,10 +100,6 @@ export class ManageTransactionComponent implements OnInit {
       label: "Chờ đợi",
       value: "P",
     },
-    // {
-    //   label: 'F',
-    //   value: 'F'
-    // },
     {
       label: "Hủy",
       value: "V",
@@ -130,7 +126,6 @@ export class ManageTransactionComponent implements OnInit {
     private settingsService: SettingsService,
     private authenticationService: AuthenticationService,
     private savingsService: SavingsService,
-    private systemService: SystemService,
     private centersService: CentersService,
     private alertService: AlertService,
     public dialog: MatDialog,
@@ -167,7 +162,6 @@ export class ManageTransactionComponent implements OnInit {
       agencyName: [""],
     });
     this.formFilter.get("officeId").valueChanges.subscribe((value) => {
-      // const office = this.offices.find(v => v.name === value);
       this.centersService.getStaff(value).subscribe((staffs: any) => {
         this.staffs = staffs?.staffOptions;
       });

@@ -117,8 +117,8 @@ export class RollTermScheduleTabComponent implements OnInit {
     private alertService: AlertService,
     private dialog: MatDialog,
     private banksServices: BanksService,
-    private clientServices: ClientsService
-  ) {
+    private clientServices: ClientsService,
+      ) {
     this.formDate = this.formBuilder.group({
       fromDate: [new Date(new Date().setMonth(new Date().getMonth() - 1))],
       toDate: [new Date()],
@@ -131,8 +131,11 @@ export class RollTermScheduleTabComponent implements OnInit {
       this.banks = result;
     });
     this.clientServices.getNameOfStaff().subscribe((result: any) => {
-      this.staffs = result?.result?.listStaff;
+      this.staffs = result?.result?.listStaff.filter((staff:any) => staff.displayName.startsWith("R"));
     });
+    // this.centersService.getStaff(this.currentUser.officeId).subscribe((staffs: any) => {
+    //   this.staffs = staffs?.staffOptions.filter((staff:any) => staff.displayName.startsWith("R"));
+    // });
 
     this.formFilter = this.formBuilder.group({
       createdByFilter: [this.currentUser.userId],
