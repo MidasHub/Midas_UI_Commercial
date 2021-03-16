@@ -22,7 +22,7 @@ a<!-- <div fxLayout="row" fxLayout.lt-md="column" class="fluidcontainer " fxLayo
 
               <mat-form-field fxFlex="48">
                 <mat-label>Nhân viên</mat-label>
-                <mat-select formControlName="staff_id">
+                <mat-select formControlName="staff_id" >
                   <mat-option *ngFor="let option of staffs" [value]="option.staffId">
                     {{option.displayName}}
                   </mat-option>
@@ -118,7 +118,7 @@ a<!-- <div fxLayout="row" fxLayout.lt-md="column" class="fluidcontainer " fxLayo
               <mat-label>Nhân viên</mat-label>
               <mat-select formControlName="staff_id">
                 <mat-option *ngFor="let option of staffs" [value]="option.staffId">
-                  {{option.staffCode}}
+                  {{option.displayName}}
                 </mat-option>
               </mat-select>
             </mat-form-field>

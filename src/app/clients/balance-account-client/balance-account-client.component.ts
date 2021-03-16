@@ -35,6 +35,7 @@ export class BalanceAccountClientComponent implements OnInit {
   accountsShow: any[] = [];
   accountsShow2: any[] = [];
   staffs: any[] = [];
+  currentStaffSelect: number;
   currentUser: any;
   totalAmountDerived:number;
   totalAmountDerived2:number
@@ -49,25 +50,29 @@ export class BalanceAccountClientComponent implements OnInit {
     private formBuilder: FormBuilder,
     private authenticationService: AuthenticationService,
   ) {
+    
     this.currentUser = this.authenticationService.getCredentials();
+    this.currentStaffSelect = this.currentUser.staffId;
+
     this.clientServices.getBalanceAccountOfCustomer().subscribe(result => {
       const {permissions, staffId} = this.currentUser;
-      const permit_userTeller = permissions.includes('TXNOFFICE_CREATE');
-      this.dataSource = result?.result?.listBalanceCustomer.filter((v: any) => Number(v.account_balance_derived) >= 0 && (permit_userTeller || staffId === v.staff_id));
-      this.dataSource2 = result?.result?.listBalanceCustomer.filter((v: any) => Number(v.account_balance_derived) < 0 && (permit_userTeller || staffId === v.staff_id));
-      this.accountFilter = this.dataSource;
-      this.accountFilter2 = this.dataSource2;
+      this.dataSource = result?.result?.listBalanceCustomer.filter((v: any) => Number(v.account_balance_derived) >= 0 ) ;
+      this.dataSource2 = result?.result?.listBalanceCustomer.filter((v: any) => Number(v.account_balance_derived) < 0 );
+      this.accountFilter = this.dataSource.filter((v:any) => staffId == v.staff_id);
+      this.accountFilter2 = this.dataSource2.filter((v:any) => staffId == v.staff_id);
       this.loadData();this.loadData2();
-      this.totalAmountDerived = this.dataSource.reduce( ( sum, { account_balance_derived } ) => sum + account_balance_derived , 0);
-      this.totalAmountDerived2 = this.dataSource2.reduce( ( sum, { account_balance_derived } ) => sum + account_balance_derived , 0)
+      this.totalAmountDerived = this.accountFilter.reduce( ( sum, { account_balance_derived } ) => sum + account_balance_derived , 0);
+      this.totalAmountDerived2 = this.accountFilter.reduce( ( sum, { account_balance_derived } ) => sum + account_balance_derived , 0)
+      
     });
     this.clientServices.getNameOfStaff().subscribe(result => {
       this.staffs = result?.result?.listStaff;
       this.staffs.unshift({
-        staffCode: 'Tất cả',
+        displayName: 'Tất cả',
         staffId: ''
       });
-    });
+    }); 
+
     this.formFilter = this.formBuilder.group({
       'customer_name': [''],
       'staff_id': ['']
@@ -98,8 +103,7 @@ export class BalanceAccountClientComponent implements OnInit {
     this.loadData();
   }
 
-  sortData2(sort: any) {
-    console.log();
+  sortData2(sort: any) { 
     this.accountFilter2 = this.accountFilter2.sort((a, b) => {
       const isAsc = sort.direction === 'asc';
       switch (sort.active) {
@@ -121,13 +125,14 @@ export class BalanceAccountClientComponent implements OnInit {
 
   // tslint:disable-next-line:use-lifecycle-interface
   ngAfterViewInit() {
+    this.formFilter.get('staff_id').setValue(this.currentStaffSelect);
     this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
     merge(this.sort.sortChange, this.paginator.page)
       .pipe(
         tap(() => this.loadData())
       )
       .subscribe();
-    
+    this.formFilter2.get('staff_id').setValue(this.currentStaffSelect);
     this.table2Sort.sortChange.subscribe(() => this.table2Paginator.pageIndex = 0);
     merge(this.table2Sort.sortChange, this.table2Paginator.page)
       .pipe(
