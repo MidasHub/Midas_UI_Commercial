@@ -186,6 +186,7 @@ export class ManageTransactionComponent implements OnInit {
     });
     this.savingsService.getListOfficeCommon().subscribe((offices: any) => {
       this.offices = offices.result.listOffice;
+      this.offices?.unshift({ officeId: "", name: "Tất cả" });
       const officeId = this.currentUser.officeId;
       this.currentUser = this.authenticationService.getCredentials();
       const { permissions } = this.currentUser;
@@ -464,5 +465,43 @@ export class ManageTransactionComponent implements OnInit {
     }
 
     this.transactionService.exportTransaction(query);
+  }
+
+  exportTransactionForPartner() {
+    const dateFormat = this.settingsService.dateFormat;
+    let fromDate = this.formDate.get("fromDate").value;
+    let toDate = this.formDate.get("toDate").value;
+    if (fromDate) {
+      fromDate = this.datePipe.transform(fromDate, dateFormat);
+    }
+    if (toDate) {
+      toDate = this.datePipe.transform(toDate, dateFormat);
+    }
+    const { permissions } = this.currentUser;
+    const permit = permissions.includes("TXN_CREATE");
+    const form = this.formFilter.value;
+    let query = `fromDate=${fromDate}&toDate=${toDate}&permission=${!permit}&officeName=${form.officeId || "ALL"}`;
+    const keys = Object.keys(form);
+    for (const key of keys) {
+      if (key === "staffId") {
+        if (form[key]) {
+          query = query + "&createdByFilter=" + form[key];
+        } else {
+          query = query + "&createdByFilter=ALL";
+        }
+      } else {
+        if (key !== "officeId") {
+          const value =
+            ["productId", "status", "partnerCode", "officeName"].indexOf(key) === -1
+              ? form[key]
+              : form[key] === "" || !form[key]
+              ? "ALL"
+              : form[key];
+          query = query + "&" + key + "=" + value;
+        }
+      }
+    }
+
+    this.transactionService.exportTransactionForPartner(query);
   }
 }
