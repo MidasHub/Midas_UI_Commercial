@@ -36,6 +36,7 @@ export class AddFeeDialogComponent implements OnInit {
   clientId: any;
   clientAccount: any;
   messageNoti: string;
+  isLoading: boolean = false;
 
   constructor(
     private transactionService: TransactionService,
@@ -193,7 +194,9 @@ export class AddFeeDialogComponent implements OnInit {
     };
 
     form.txnCode = this.txnCode;
+    this.isLoading = true;
     this.transactionService.paidFeeForTransaction(form).subscribe((result) => {
+      this.isLoading = false;
       if (result?.result?.status) {
         this.alertServices.alert({
           type: "🎉🎉🎉 Thành công !!!",
@@ -208,7 +211,7 @@ export class AddFeeDialogComponent implements OnInit {
           // message: '🚨🚨 Lỗi thanh toán phí, vui lòng liên hệ IT Support để được hổ trợ 🚨🚨',
           message: result?.error,
         });
-        this.dialogRef.close({ status: false });
+        // this.dialogRef.close({ status: false });
       }
     });
   }

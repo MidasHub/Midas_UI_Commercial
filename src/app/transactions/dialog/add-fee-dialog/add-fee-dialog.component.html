@@ -104,11 +104,15 @@
     </div>
   </div>
 </div>
-<mat-dialog-actions align="end">
-  <button mat-raised-button
+<div *ngIf="isLoading" style="display: flex; justify-content: center; align-items: center; background: white">
+  <mat-progress-spinner color="warn" mode="indeterminate"> </mat-progress-spinner>
+</div>
+<mat-dialog-actions align="end" *ngIf="!isLoading" >
+
+  <button  mat-raised-button
           (click)="dialogRef.close({status:false})"
   >{{'Shared_Component.DeleteDialog.buttonCancel'|translate}}</button>
-  <button mat-raised-button color="warn"
+  <button  mat-raised-button color="warn"
           (click)="submitForm()"
   >{{'Shared_Component.DeleteDialog.buttonConfirm'|translate}}</button>
   <!--  [mat-dialog-close]="{ file: true }"-->
