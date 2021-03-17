@@ -1,8 +1,0 @@
-{
-   "i18n-ally.localesPaths": [
-      "src/assets/i18n",
-      "src/app/core/i18n"
-   ]
-   // "terminal.integrated.shell.windows":"C:\\softwares\\CentOS\\CentOS7.exe",
-   // "terminal.integrated.shellArgs.windows": "runp",
-}

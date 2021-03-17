@@ -16,8 +16,8 @@
 
     <mat-form-field fxFlex="48%">
       <mat-label>Submitted On</mat-label>
-      <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="submittedOnDatePicker" 
-        formControlName="submittedOnDate" required>
+      <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="submittedOnDatePicker"
+             formControlName="submittedOnDate" required>
       <mat-datepicker-toggle matSuffix [for]="submittedOnDatePicker"></mat-datepicker-toggle>
       <mat-datepicker #submittedOnDatePicker></mat-datepicker>
       <mat-error>
@@ -33,11 +33,25 @@
         </mat-option>
       </mat-select>
     </mat-form-field>
+    <mat-form-field *ngIf="isSelectBank" fxFlex="48%">
+      <mat-label>Bank</mat-label>
+      <mat-select formControlName="bank">
+        <mat-option *ngFor="let bank of banks" [value]="bank.bankCode">
+          {{ bank.bankName }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
 
-    <mat-form-field fxFlex="48%">
+    <mat-form-field *ngIf="isSelectBank" fxFlex="48%">
+      <mat-label>Bank No</mat-label>
+      <input matInput formControlName="bankNo">
+    </mat-form-field>
+
+    <mat-form-field *ngIf="!isSelectBank" fxFlex="48%">
       <mat-label>External ID</mat-label>
       <input matInput formControlName="externalId">
     </mat-form-field>
+
 
   </div>
 
