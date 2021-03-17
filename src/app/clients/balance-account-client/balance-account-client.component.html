@@ -4,16 +4,20 @@ a<!-- <div fxLayout="row" fxLayout.lt-md="column" class="fluidcontainer " fxLayo
       <mat-card class="container">
         <mat-card  fxFlex="100" class="m-b-10" >
           <mat-card-header>
-            <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column" [formGroup]="formFilter">
+            <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column" [formGroup]="formFilter" fxFlex="100">
 
-                <div style="margin-top: 15px;" fxLayout="row" fxFlex="100">
-                  <img src="../../../assets/images/icons/account.svg">
+                <div class="fix_header" fxLayout="row" >
+                  <img src="../../../assets/images/icons/transaction_total.svg">
                   <div style="margin: 5px; margin-top: 20px;">
-                    <h3 style="margin: 5px;">Danh sách công nợ phải trả (tạm ứng) của khách hàng</h3>
-                    <span>Tổng cộng: &nbsp;</span> số lượng: {{totalAccOfUser}} || số tiền: <b style="color: green;">{{totalAmountDerivedOfUser | money}}</b>
+                    <h3 style="margin: 5px;">Số lượng giao dịch: {{totalAccOfUser}}</h3>
                   </div>
                 </div>
-
+                <div class="fix_header" fxLayout="row" >
+                  <img src="../../../assets/images/icons/money.svg">
+                  <div style="margin: 5px; margin-top: 20px;">
+                    <h3 style="margin: 5px;">Số tiền giao dich: <b style="color: green;">{{totalAmountDerivedOfUser | money}}</b></h3>
+                  </div>
+                </div>
 
               <mat-form-field fxFlex="48">
                 <mat-label>Tên khách hàng</mat-label>
@@ -101,14 +105,19 @@ a<!-- <div fxLayout="row" fxLayout.lt-md="column" class="fluidcontainer " fxLayo
       <mat-card class="container">
         <mat-card  fxFlex="100" class="m-b-10">
           <mat-card-header>
-            <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column" [formGroup]="formFilter2">
-            <div style="margin-top: 15px;" fxLayout="row" fxFlex="100">
-              <img src="../../../assets/images/icons/account.svg">
-              <div style="margin: 5px; margin-top: 5px;">
-                <h3 style="margin: 5px;">Danh sách công nợ phải thu của khách hàng</h3>
-                <span>Tổng cộng: &nbsp;</span> số lượng: {{totalAccOfUser2}} || số tiền: <b style="color: red;">{{totalAmountDerivedOfUser2 | money}}</b>
+            <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column" [formGroup]="formFilter2" fxFlex="100">
+              <div class="fix_header" fxLayout="row" >
+                <img src="../../../assets/images/icons/transaction_total.svg">
+                <div style="margin: 5px; margin-top: 20px;">
+                  <h3 style="margin: 5px;">Số lượng giao dịch: {{totalAccOfUser2}}</h3>
+                </div>
               </div>
-            </div>
+              <div class="fix_header" fxLayout="row" >
+                <img src="../../../assets/images/icons/money.svg">
+                <div style="margin: 5px; margin-top: 20px;">
+                  <h3 style="margin: 5px;">Số tiền giao dich: <b style="color: red;">{{totalAmountDerivedOfUser2 | money}}</b></h3>
+                </div>
+              </div>
             <mat-form-field fxFlex="48">
               <mat-label>Tên khách hàng</mat-label>
               <input matInput formControlName="customer_name">
