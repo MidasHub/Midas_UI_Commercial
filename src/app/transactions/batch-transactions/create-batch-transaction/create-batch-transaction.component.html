@@ -174,7 +174,7 @@
             <td mat-cell fxHide fxShow.gt-md *matCellDef="let form" [formGroup]="form">
               <mat-form-field *ngIf="form.contains('requestAmount') && !form.contains('saved')" class="input-custom">
                 <mat-label>Số tiền giao dịch</mat-label>
-                <input matInput required currencyMask formControlName="requestAmount" />
+                <input matInput required currencyMask formControlName="requestAmount" (click)="clearRequestAmount()"  />
               </mat-form-field>
               <span *ngIf="form.contains('saved')">{{ form.get("requestAmount").value | money }}</span>
             </td>
@@ -182,16 +182,19 @@
 
           <ng-container matColumnDef="terminalId">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>Máy POS</th>
-            <td mat-cell *matCellDef="let form" [formGroup]="form">
+            <td mat-cell *matCellDef="let form" [formGroup]="form"  >
               <mat-form-field
-                style="width: 100% !important"
+                style="width: 100% !important" appearance="fill"
                 *ngIf="form.contains('terminalId') && !form.contains('saved')"
                 class="select-custom"
               >
                 <mat-label>Chọn máy POS</mat-label>
-                <mat-select [required]="form?.data?.terminals?.length > 0" formControlName="terminalId">
-                  <mat-option *ngFor="let type of form?.data?.terminals" [value]="type.terminalId">
-                    {{ type.terminalName }} &nbsp;-&nbsp; {{ type.limitRemain | money }}
+                <mat-select
+                [required]="form?.data?.terminals?.length > 0"
+                formControlName="terminalId" >
+                  <mat-option style="width: 500px !important;" *ngFor="let type of form?.data?.terminals" [value]="type.terminalId">
+                    {{ type.terminalName }} -
+                    {{ type.limitRemain | money }}
                   </mat-option>
                 </mat-select>
               </mat-form-field>
@@ -294,6 +297,10 @@
           <!--      <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>-->
           <!--[routerLink]="['transactions/view', row.transactionId]"-->
         </table>
+      </div>
+
+      <div *ngIf="isLoading" style="display: flex; justify-content: center; align-items: center; background: white">
+        <mat-progress-spinner color="warn" mode="indeterminate"> </mat-progress-spinner>
       </div>
     </mat-card-content>
   </mat-card-content>

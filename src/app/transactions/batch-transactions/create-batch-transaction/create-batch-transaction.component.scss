@@ -8,6 +8,10 @@ table {
   width: 100%;
 }
 
+::ng-deep #cdk-overlay-1 {
+  width: 500px;
+}
+
 tr.example-detail-row {
   height: 0;
 }

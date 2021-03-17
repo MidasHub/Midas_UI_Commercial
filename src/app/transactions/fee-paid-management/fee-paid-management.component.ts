@@ -402,7 +402,7 @@ export class FeePaidManagementComponent implements OnInit {
   }
 
   checkFeePaid(txnCode: string) {
-    const txn =  this.getDataOfGroupTxnCode(txnCode).find((v: any) => v.status == "C") || false;
+    const txn =  this.getDataOfGroupTxnCode(txnCode).find((v: any) => v.feePaid > 0) || false;
     return txn;
   }
 

@@ -234,6 +234,15 @@ export class CreateBatchTransactionComponent implements OnInit {
     return 2.0;
   }
 
+  clearRequestAmount() {
+    this.dataSource.forEach((element) => {
+      if (element?.get('requestAmount').value == 0){
+        element?.get('requestAmount').setValue(undefined);
+      }
+
+    })
+  }
+
   onChangeTotal() {
     this.totalAmount = this.dataSource.reduce((total: any, num: any) => {
       return total + Math.round(num?.get('requestAmount').value);
@@ -259,6 +268,7 @@ export class CreateBatchTransactionComponent implements OnInit {
       map((value: any) => this._filter(value))
     );
   }
+
 
   generaForm(data: any, member: any) {
     const keys = Object.keys(data);
