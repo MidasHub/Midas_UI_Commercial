@@ -242,7 +242,16 @@
 
       <ng-container matColumnDef="terminalAmount">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Số tiền giao dịch</th>
-        <td mat-cell style="padding: 6px" *matCellDef="let journalEntry">{{ journalEntry.terminalAmount | money }}</td>
+        <td mat-cell style="padding: 6px" *matCellDef="let transaction">
+          {{ transaction.terminalAmount | money }}
+          <br />
+          <span *midasHasPermission="'BILLER_HO'">
+            <button mat-raised-button *midasHasActiveModule="'billModule'"   (click)="downloadVoucher(transaction.refid)">
+              <img src="assets/images/icons/bill.svg" />&nbsp; Tải hóa đơn
+            </button>
+          </span>
+        </td>
+
       </ng-container>
 
       <ng-container matColumnDef="feeAmount">
@@ -265,14 +274,16 @@
 
       <ng-container matColumnDef="pnlAmount">
         <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>PNL</th>
-        <td mat-cell fxHide fxShow.gt-md *matCellDef="let journalEntry">
-          <span *midasHasPermission="'POS_UPDATE'">{{ journalEntry.pnlAmount | money }}</span>
+        <td mat-cell fxHide fxShow.gt-md *matCellDef="let transaction">
+          <span *midasHasPermission="'POS_UPDATE'">{{ transaction.pnlAmount | money }}</span>
+
         </td>
       </ng-container>
 
       <ng-container matColumnDef="actions" style="width: 25px">
         <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
         <td mat-cell *matCellDef="let transaction">
+
           <span
             style="float: right; width: 15px"
             [matMenuTriggerData]="transaction"
@@ -358,15 +369,15 @@
       <button mat-menu-item [routerLink]="['/transaction', 'view']" [queryParams]="{ tranId: refid }">
         <i class="fa fa-eye" aria-hidden="true"></i>&nbsp;Chi tiết
       </button>
-      <button mat-menu-item (click)="addPosInformation(trnRefNo, batchNo, traceNo)">
+      <button *midasHasPermission="'BILLER_HO'" mat-menu-item (click)="addPosInformation(trnRefNo, batchNo, traceNo)">
         <img src="assets/images/icons/add.svg" />&nbsp;Thông tin bill nhiệt
       </button>
       <button *midasHasActiveModule="'billModule'" mat-menu-item  (click)="downloadVoucher(refid)">
         <img *ngIf="status != 'V'" src="assets/images/icons/order.svg" />&nbsp; Tải xuống hóa đơn
       </button>
-      <button mat-menu-item *ngIf="ext7 != null && status != 'V'" (click)="downloadBill(custId, ext7)">
+      <!-- <button mat-menu-item *ngIf="ext7 != null && status != 'V'" (click)="downloadBill(custId, ext7)">
         <img src="assets/images/icons/bill.svg" />&nbsp; Tải xuống bill
-      </button>
+      </button> -->
       <!-- <button *ngIf="ext7 == null && status != 'V'" (click)="uploadBill(refid, trnRefNo)" mat-menu-item>
         <img src="assets/images/icons/upload_bill.svg" />&nbsp; Upload bill
       </button> -->

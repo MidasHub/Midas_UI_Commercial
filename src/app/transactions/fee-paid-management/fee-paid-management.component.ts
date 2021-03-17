@@ -235,7 +235,7 @@ export class FeePaidManagementComponent implements OnInit {
           v.agencyId = "#";
         }
         v.DEAmount = 0;
-        // v.customerNameText = v.customerName;
+
         v.customerName = v.txnType == 'BATCH' ? v.txnCode : v.customerName;
         if (v.txnPaymentType === "OUT") {
           v.DEAmount = v.txnAmount - v.feeSum;
@@ -281,7 +281,7 @@ export class FeePaidManagementComponent implements OnInit {
       this.filterData = this.filterData.filter((v) => {
         const kes = Object.keys(v);
         for (const key of kes) {
-          if (String(v[key]).toLowerCase().includes(this.searchText.toLowerCase())) {
+          if (String(v[key]).toUpperCase().includes(this.searchText.toUpperCase())) {
             return true;
           }
         }
@@ -396,11 +396,14 @@ export class FeePaidManagementComponent implements OnInit {
   }
 
   checkShowButton(txnCode: string) {
-    return this.getDataOfGroupTxnCode(txnCode).find((v: any) => v.status == "A") || false;
+
+    const txn = this.getDataOfGroupTxnCode(txnCode).find((v: any) => v.status == "A") || false;
+    return  txn;
   }
 
   checkFeePaid(txnCode: string) {
-    return this.getDataOfGroupTxnCode(txnCode).find((v: any) => v.status == "C") || false;
+    const txn =  this.getDataOfGroupTxnCode(txnCode).find((v: any) => v.status == "C") || false;
+    return txn;
   }
 
   exportTransactionFeePaid() {

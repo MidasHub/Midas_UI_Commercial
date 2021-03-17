@@ -30,6 +30,7 @@ export class ToolbarComponent implements OnInit {
 
   /** Sets the initial state of sidenav as collapsed. Not collapsed if false. */
   sidenavCollapsed = true;
+  currentUser: any = {};
 
   /** Instance of sidenav. */
   @Input() sidenav: MatSidenav;
@@ -44,12 +45,16 @@ export class ToolbarComponent implements OnInit {
   constructor(private breakpointObserver: BreakpointObserver,
               private router: Router,
               private authenticationService: AuthenticationService,
-              private dialog: MatDialog) { }
+              private dialog: MatDialog) {
+
+               }
 
   /**
    * Subscribes to breakpoint for handset.
    */
   ngOnInit() {
+    this.currentUser = this.authenticationService.getCredentials();
+
     this.isHandset$.subscribe(isHandset => {
       if (isHandset && this.sidenavCollapsed) {
         this.toggleSidenavCollapse(false);

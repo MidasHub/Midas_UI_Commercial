@@ -112,8 +112,11 @@ export class CreateBatchTransactionComponent implements OnInit {
   filteredOptions: Observable<any[]>;
 
   private _filter(value: string): string[] {
-    const filterValue = String(value).toLowerCase();
-    return this.members.filter((option: any) => option.fullName.toLowerCase().indexOf(filterValue) === 0);
+    const filterValue = String(value).toUpperCase().replace(/\s+/g, '');
+    return this.members.filter((option: any) =>  {
+      return option.fullName.toUpperCase().replace(/\s+/g, '').includes(filterValue) ||
+      option.cardNumber.toUpperCase().replace(/\s+/g, '').includes(filterValue)
+    });
   }
 
   constructor(private formBuilder: FormBuilder,
@@ -281,6 +284,7 @@ export class CreateBatchTransactionComponent implements OnInit {
       feeTerminalDto: {},
       member: member
     };
+
     form.get('requestAmount').valueChanges.pipe(
       debounce(() => timer(1000)),
       distinctUntilChanged(
@@ -339,6 +343,12 @@ export class CreateBatchTransactionComponent implements OnInit {
         // @ts-ignore
         form.data.binCodeInfo = result;
       }
+    });
+    form.get('productId').valueChanges.subscribe(result => {
+      const cardNumber = form.get('identitydocumentsId').value ;
+      let newRate = this.getFee(cardNumber, result);
+      form.get('rate').setValue(newRate);
+
     });
     form.get('terminalId').valueChanges.subscribe(result => {
       if (result) {

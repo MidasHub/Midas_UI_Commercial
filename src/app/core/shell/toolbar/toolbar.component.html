@@ -67,13 +67,14 @@
 
   <div fxFlex  fxLayout="row" fxLayoutAlign="end center" >
     <!-- <span ></span> -->
-    <midas-user-account-info fxFlex="85%" fxLayout="row" fxLayoutAlign="center center"></midas-user-account-info>
+    <midas-user-account-info fxFlex="70%" fxLayout="row" fxLayoutAlign="center center"></midas-user-account-info>
     <mifosx-theme-picker fxHide.lt-md fxFlex="5%" fxLayout="row" fxLayoutAlign="center center"></mifosx-theme-picker>
 
     <mifosx-notifications-tray fxHide.lt-md fxFlex="5%" fxLayout="row" fxLayoutAlign="center center"> </mifosx-notifications-tray>
     <!-- <br /> -->
-    <button mat-icon-button class="ml-1 img-button" [matMenuTriggerFor]="applicationMenu" fxFlex="5%" fxLayout="row" fxLayoutAlign="center center">
-      <img src="assets/images/user_placeholder.png" />
+    <button style="text-decoration: underline;" mat-icon-button class="ml-1 img-button" [matMenuTriggerFor]="applicationMenu" fxFlex="10%" fxLayout="row" fxLayoutAlign="center center">
+      <!-- <img src="assets/images/user_placeholder.png" />  -->
+      {{currentUser.username}}
     </button>
 
   </div>
