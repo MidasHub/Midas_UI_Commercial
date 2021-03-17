@@ -99,7 +99,7 @@
 
           <mat-form-field fxFlex="98%">
             <mat-label>{{'Account_Transfer_Component.MakeAccountTransfer.lblAmount'|translate}}</mat-label>
-            <input type="number" matInput required formControlName="transferAmount">
+            <input currencyMask type="text" matInput required formControlName="transferAmount">
             <mat-error *ngIf="makeAccountTransferForm.controls.transferAmount.hasError('required')"
             [innerHTML]="'Account_Transfer_Component.MakeAccountTransfer.msgAmount'|translate"
             >

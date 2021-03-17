@@ -34,7 +34,6 @@
   <mat-card-content style="margin-top: 10px">
     <mat-card>
       <div fxLayout="row swap" fxLayoutAlign.lt-sm="center" fxLayoutGap="2%" fxLayout.lt-md="column">
-
         <div fxLayout="row" fxFlex="18%" class="export-item">
           <img src="assets/images/icons/transaction_total.svg" />
           <div fxLayout="column">
@@ -167,12 +166,12 @@
       <ng-container matColumnDef="txnDate">
         <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>Ngày /<br />Mã giao dịch</th>
         <td mat-cell fxHide fxShow.gt-md *matCellDef="let transaction">
-            <span [ngSwitch]="getDataOfGroupTxnCode(transaction)[0].status">
-              <img *ngSwitchCase="'C'" src="assets/images/icons/check.svg" />
-              <img *ngSwitchCase="'A'" src="assets/images/icons/pending.svg" />
-              <img *ngSwitchCase="'V'" src="assets/images/icons/cancel.svg" />
-              <img *ngSwitchDefault src="assets/images/icons/question.svg" />
-            </span>
+          <span [ngSwitch]="getDataOfGroupTxnCode(transaction)[0].status">
+            <img *ngSwitchCase="'C'" src="assets/images/icons/check.svg" />
+            <img *ngSwitchCase="'A'" src="assets/images/icons/pending.svg" />
+            <img *ngSwitchCase="'V'" src="assets/images/icons/cancel.svg" />
+            <img *ngSwitchDefault src="assets/images/icons/question.svg" />
+          </span>
           {{ getDataOfGroupTxnCode(transaction)[0].txnDate | date: "dd-MM-yyyy HH:mm:ss" }} <br />
           {{ getDataOfGroupTxnCode(transaction)[0].txnCode }}
         </td>
@@ -219,28 +218,25 @@
           <hr />
           Số trace
         </th>
-        <td mat-cell
-        fxHide fxShow.gt-md
-        *matCellDef="let transaction"
-        style=" padding: 5px;
-              overflow-wrap: break-word;
-              white-space: nowrap;
-              overflow: hidden;
-              text-overflow: ellipsis;
-              max-width: 100px;
-            ">
-          <label
-
-            [matTooltip]="getDataOfGroupTxnCode(transaction)[0].batchNo?.replaceAll('#', ' ')"
-          >
-            {{ (getDataOfGroupTxnCode(transaction)[0].batchNo)?.replaceAll('#', ' ') }}
+        <td
+          mat-cell
+          fxHide
+          fxShow.gt-md
+          *matCellDef="let transaction"
+          style="
+            overflow-wrap: break-word;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 100px;
+          "
+        >
+          <label [matTooltip]="getDataOfGroupTxnCode(transaction)[0].batchNo?.replaceAll('#', ' ')">
+            {{ getDataOfGroupTxnCode(transaction)[0].batchNo?.replaceAll("#", " ") }}
           </label>
           <hr />
-          <label
-
-            [matTooltip]="getDataOfGroupTxnCode(transaction)[0].traceNo?.replaceAll('#', ' ')"
-          >
-            {{ (getDataOfGroupTxnCode(transaction)[0].traceNo)?.replaceAll('#', ' ') }}
+          <label [matTooltip]="getDataOfGroupTxnCode(transaction)[0].traceNo?.replaceAll('#', ' ')">
+            {{ getDataOfGroupTxnCode(transaction)[0].traceNo?.replaceAll("#", " ") }}
           </label>
         </td>
       </ng-container>
@@ -252,8 +248,12 @@
         </th>
         <td mat-cell fxHide fxShow.gt-md *matCellDef="let transaction">
           {{ getDataOfGroupTxnCode(transaction)[0].customerName }} <br />
-          <label style="color: green;">
-          {{ getDataOfGroupTxnCode(transaction)[0].agencyName != "#" ? getDataOfGroupTxnCode(transaction)[0].agencyName: "" }}
+          <label style="color: green">
+            {{
+              getDataOfGroupTxnCode(transaction)[0].agencyName != "#"
+                ? getDataOfGroupTxnCode(transaction)[0].agencyName
+                : ""
+            }}
           </label>
         </td>
       </ng-container>
@@ -262,8 +262,8 @@
         <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>Số tiền GD</th>
         <td mat-cell fxHide fxShow.gt-md *matCellDef="let transaction">
           <ul *ngIf="getDataOfGroupTxnCode(transaction)">
-            <li >
-              <label style="color: blue;">
+            <li>
+              <label style="color: blue">
                 {{ getDataOfGroupTxnCode(transaction)[0]?.txnAmount | money }}
               </label>
             </li>
@@ -275,9 +275,8 @@
         <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>Số tiền cấn trừ</th>
         <td mat-cell fxHide fxShow.gt-md *matCellDef="let transaction">
           <ul *ngFor="let tra of getDataOfGroupTxnCode(transaction)">
-            <li *ngIf="tra.txnPaymentType === 'OUT'"
-            [style]="colorOfType(tra.txnPaymentType)">
-              <span >
+            <li *ngIf="tra.txnPaymentType === 'OUT'" [style]="colorOfType(tra.txnPaymentType)">
+              <span>
                 {{ tra.DEAmount | money }}
               </span>
             </li>
@@ -401,18 +400,18 @@
 
   <mat-menu #transactionMenu="matMenu" [overlapTrigger]="false" style="width: 50px">
     <ng-template matMenuContent let-txnCode="txnCode" style="width: 50px">
-      <button
-        (click)="addFeeDialog(txnCode)"
-        mat-menu-item
-        *ngIf="!checkPermissions('ALL_FUNCTIONS') && checkShowButton(txnCode)"
-      >
-        <img src="assets/images/icons/hammer.svg" />
-        &nbsp;Thu, chi tiền
-      </button>
-      <button (click)="viewFeeDialog(txnCode)" *ngIf="checkFeePaid(txnCode)" mat-menu-item>
+      <label *ngIf="checkShowButton(txnCode)" for="">
+        <button (click)="addFeeDialog(txnCode)" mat-menu-item>
+          <img src="assets/images/icons/hammer.svg" />
+          &nbsp;Thu, chi tiền
+        </button>
+      </label>
+      <label *ngIf="checkFeePaid(txnCode)" for="">
+      <button (click)="viewFeeDialog(txnCode)"  mat-menu-item>
         <img src="assets/images/icons/completed-task.svg" />
         &nbsp;Danh sách đã thu/chi tiền
       </button>
+    </label>
     </ng-template>
   </mat-menu>
   <div *ngIf="isLoading" style="display: flex; justify-content: center; align-items: center; background: white">

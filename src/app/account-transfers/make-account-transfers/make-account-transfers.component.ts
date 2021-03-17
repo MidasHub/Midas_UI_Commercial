@@ -162,7 +162,7 @@ export class MakeAccountTransfersComponent implements OnInit, AfterViewInit {
         //     this.clientsData = data.pageItems;
         //   });
 
-        this.clientsData = this.toClientTypeData.filter((item: any) => item.displayName.toLowerCase().includes(value));
+        this.clientsData = this.toClientTypeData.filter((item: any) => item.displayName.toUpperCase().includes(value.toUpperCase()));
         this.changeEvent();
       }
     });
