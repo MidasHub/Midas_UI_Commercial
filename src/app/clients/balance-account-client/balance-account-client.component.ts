@@ -37,10 +37,12 @@ export class BalanceAccountClientComponent implements OnInit {
   staffs: any[] = [];
   currentStaffSelect: number;
   currentUser: any;
-  totalAmountDerived:number;
-  totalAmountDerived2:number;
+  totalAmountDerived:number = 0;
+  totalAmountDerived2:number = 0;
   totalAccOfUser:number  = 0;
   totalAccOfUser2:number = 0;
+  totalAmountDerivedOfUser:number = 0;
+  totalAmountDerivedOfUser2:number = 0;
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   @ViewChild(MatSort, {static: true}) sort: MatSort;
 
@@ -64,10 +66,12 @@ export class BalanceAccountClientComponent implements OnInit {
       this.accountFilter2 = this.dataSource2.filter((v:any) => staffId == v.staff_id);
       this.loadData();this.loadData2();
       this.totalAmountDerived = this.accountFilter.reduce( ( sum, { account_balance_derived } ) => sum + account_balance_derived , 0);
-      this.totalAmountDerived2 = this.accountFilter.reduce( ( sum, { account_balance_derived } ) => sum + account_balance_derived , 0)
+      this.totalAmountDerived2 = this.accountFilter2.reduce( ( sum, { account_balance_derived } ) => sum + account_balance_derived , 0)
       this.totalAccOfUser = this.accountFilter.length;
       this.totalAccOfUser2 = this.accountFilter2.length;
-      
+      this.totalAmountDerivedOfUser  = this.totalAmountDerived;
+      this.totalAmountDerivedOfUser2  = this.totalAmountDerived2;
+
     });
     this.clientServices.getNameOfStaff().subscribe(result => {
       this.staffs = result?.result?.listStaff;
