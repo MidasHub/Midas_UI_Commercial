@@ -14,7 +14,7 @@
     <fa-icon *ngIf="sidenavCollapsed" icon="chevron-right"></fa-icon>
   </button>
 
-  <nav mat-tab-nav-bar backgroundColor="primary" class="ml-1" fxFlex>
+  <nav mat-tab-nav-bar backgroundColor="primary" class="ml-1" fxFlex="70">
     <a mat-tab-link class="tab-link" [matMenuTriggerFor]="institutionMenu" #institutionMenuTrigger="matMenuTrigger">
       <fa-icon class="mr-05" icon="university" size="lg"></fa-icon>
       {{ "Toolbar_Component.labelInstitution" | translate }}
@@ -65,16 +65,16 @@
     </span>
   </nav>
 
-  <div fxFlex  fxLayout="row" fxLayoutAlign="end center" >
+  <div fxFlex  fxLayout="row" fxLayoutAlign="start center"fxLayoutAlign.lt-md="end center" >
     <!-- <span ></span> -->
-    <midas-user-account-info fxFlex="70%" fxLayout="row" fxLayoutAlign="center center"></midas-user-account-info>
-    <mifosx-theme-picker fxHide.lt-md fxFlex="5%" fxLayout="row" fxLayoutAlign="center center"></mifosx-theme-picker>
+    <midas-user-account-info   fxLayout="row" style="min-width: 10rem;"></midas-user-account-info>
+    <midas-theme-picker fxHide.lt-md  ></midas-theme-picker>
 
-    <mifosx-notifications-tray fxHide.lt-md fxFlex="5%" fxLayout="row" fxLayoutAlign="center center"> </mifosx-notifications-tray>
+    <mifosx-notifications-tray fxHide.lt-md   > </mifosx-notifications-tray>
     <!-- <br /> -->
-    <button style="text-decoration: underline;" mat-icon-button class="ml-1 img-button" [matMenuTriggerFor]="applicationMenu" fxFlex="10%" fxLayout="row" fxLayoutAlign="center center">
-      <!-- <img src="assets/images/user_placeholder.png" />  -->
-      {{currentUser.username}}
+    <button  fxHide.lt-md mat-icon-button class="ml-1 img-button" [matMenuTriggerFor]="applicationMenu"  >
+      <img src="assets/images/user_placeholder.png" /> &nbsp;
+      <span style="text-decoration: underline;">{{currentUser.username}}</span>
     </button>
 
   </div>
