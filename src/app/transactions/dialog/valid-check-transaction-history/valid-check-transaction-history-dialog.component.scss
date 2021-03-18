@@ -1,0 +1,22 @@
+.header-booking input{
+  color: blue;
+  font-size: large;
+
+}
+
+.header-booking mat-form-field{
+  text-align: center;
+}
+
+td {
+  padding: 10px 5px !important;
+}
+.errMessage{
+  background: red;
+  border-bottom: none;
+  position: relative;
+  text-align: center;
+  border-radius: 5px 5px 0 0;
+  padding: 10px;
+  color:white;
+}
