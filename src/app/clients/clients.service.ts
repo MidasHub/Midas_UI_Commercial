@@ -490,6 +490,12 @@ export class ClientsService {
     return this.http.post<any>(`${this.GatewayApiUrlPrefix}/common/get_list_staff_of_office`, httpParams);
   }
 
+  getStaffsByOffice(officeId: string): Observable<any> {
+    let httpParams = this.commonHttpParams.getCommonHttpParams();
+    httpParams = httpParams.set("officeIdSelected" , officeId )
+    return this.http.post<any>(`${this.GatewayApiUrlPrefix}/common/get_list_staff_by_office`, httpParams);
+  }
+
   getStaffOfUser(): Observable<any> {
     let httpParams = this.commonHttpParams.getCommonHttpParams();
 

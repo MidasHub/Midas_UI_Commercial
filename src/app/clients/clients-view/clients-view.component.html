@@ -43,11 +43,10 @@
           {{ "Client_Component.ViewClient.lblViewSignature" | translate }}
         </p>
         <p *midasHasActiveModule="'mgmModule'">
-          <button mat-raised-button  [routerLink]="['/clients/create/']" [queryParams]="{'mgmId': clientViewData.id }">
+          <button mat-raised-button [routerLink]="['/clients/create/']" [queryParams]="{ mgmId: clientViewData.id }">
             <i class="fa fa-plus"></i> Thêm MGM
           </button>
         </p>
-
       </div>
 
       <div class="mat-typography client-card-title">
@@ -63,33 +62,33 @@
         </mat-card-title>
 
         <mat-card-subtitle>
+          <label class="signatureStaff">Nhân viên: {{ clientViewData?.staffName || "Chưa phân bổ" }}</label>
+          <br />
           <p>
             {{ "Client_Component.ViewClient.lblCifNo" | translate }}:{{ clientViewData?.accountNo }} |
-            {{ "Client_Component.ViewClient.lblExternalID" | translate }}: {{ clientViewData?.externalId }} | Staff:{{
-              clientViewData?.staffName || "Unassigned"
-            }}<br />
+            {{ "Client_Component.ViewClient.lblExternalID" | translate }}: {{ clientViewData?.externalId }}
+            <br />
             {{ "Client_Component.ViewClient.lblActivationDate" | translate }} :
             {{
               clientViewData?.activationDate
                 ? (clientViewData?.activationDate | date)
                 : ("Client_Component.ViewClient.lblNotActivated" | translate)
             }}<br />
+            <label *ngIf="clientViewData?.groups?.length > 0">
             {{ "Client_Component.ViewClient.lblMemberOf" | translate }} :
             <span *ngFor="let group of clientViewData?.groups">
-              <a [routerLink]="['/groups', group.id, 'general']" >{{ group.name }}</a
+              <a [routerLink]="['/groups', group.id, 'general']">{{ group.name }}</a
               >&nbsp;
             </span>
             <span *ngIf="!clientViewData.groups">{{ "Client_Component.ViewClient.lblUnassigned" | translate }}</span>
+          </label>
             <br />
           </p>
         </mat-card-subtitle>
       </div>
-
     </mat-card-title-group>
 
     <mat-card-actions *ngIf="!this.showViewClient" class="client-actions">
-
-
       <span *midasHasPermission="'UPDATE_CLIENT'">
         <button mat-raised-button [routerLink]="['edit']">
           <i class="fa fa-edit"></i>{{ "Client_Component.ViewClient.btnEdit" | translate }}

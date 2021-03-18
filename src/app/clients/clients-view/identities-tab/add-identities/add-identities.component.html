@@ -13,8 +13,8 @@
 
   <mat-form-field fxFlex="96%">
     <mat-label>{{'Client_Component.ViewClient.TabIdentities.inputUniqueId' |translate}}</mat-label>
-    <input *ngIf="!form.contains('documentCardType')" matInput formControlName="documentKey" >
-    <input *ngIf="form.contains('documentCardType')"
+    <input required *ngIf="!form.contains('documentCardType')" matInput formControlName="documentKey" >
+    <input required *ngIf="form.contains('documentCardType')"
     matInput
     formControlName="documentKey"
     [dropSpecialCharacters]="true" mask="0000-0000-0000-0000" >
@@ -22,7 +22,7 @@
 
   <mat-form-field fxFlex="96%" *ngIf="form.contains('documentCardBank')">
     <mat-label>{{'Client_Component.ViewClient.TabIdentities.selectBank' |translate}}</mat-label>
-    <mat-select [disabled]="isTeller" formControlName="documentCardBank">
+    <mat-select required [disabled]="isTeller" formControlName="documentCardBank">
       <mat-option *ngFor="let sa of documentCardBanks" [value]="sa.bankCode">
         {{ sa.bankName }}
       </mat-option>
@@ -31,7 +31,7 @@
 
   <mat-form-field *ngIf="form.contains('documentCardType')" fxFlex="96%">
     <mat-label>{{'Client_Component.ViewClient.TabIdentities.selectCardType' |translate}}</mat-label>
-    <mat-select disabled formControlName="documentCardType">
+    <mat-select required disabled formControlName="documentCardType">
       <mat-option *ngFor="let sa of documentCardTypes" [value]="sa.code">
         {{ sa.description }}
       </mat-option>
@@ -41,6 +41,7 @@
   <mat-form-field *ngIf="form.contains('dueDay')" fxFlex="48%">
     <mat-label>Ngày đáo hạn thẻ(vd: 03 --> ngày 3):</mat-label>
     <input
+      required
       pattern
       maxlength="2"
       matInput type="number" max="31" min="0" formControlName="dueDay">
@@ -49,6 +50,7 @@
   <mat-form-field *ngIf="form.contains('expiredDate')" fxFlex="48%">
     <mat-label>Ngày hết hạn thẻ(vd: 10/24 --> tháng 10 năm 2024):</mat-label>
     <input
+      required
       matInput
       maxlength="5"
       minlength="5"
@@ -59,7 +61,7 @@
 
   <mat-form-field fxFlex="96%" *ngIf="form.contains('status')">
     <mat-label>{{'Client_Component.ViewClient.TabIdentities.selectStatus' |translate}}</mat-label>
-    <mat-select [disabled]="isTeller" formControlName="status">
+    <mat-select required [disabled]="isTeller" formControlName="status">
       <mat-option *ngFor="let sa of statusOptions" [value]="sa.value">
         {{ sa.value }}
       </mat-option>

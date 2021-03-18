@@ -33,6 +33,32 @@ export class SavingsService {
     this.GatewayApiUrlPrefix = environment.GatewayApiUrlPrefix;
   }
 
+  /**
+   * @param {string} savingAccountId is saving account"s Id.
+   * @returns {Observable<any>}
+   */
+   transferCrossOfficeCashTransaction(info: any): Observable<any> {
+    let httpParams = this.commonHttpParams.getCommonHttpParams();
+    httpParams = httpParams.set("buSavingAccount", info.buSavingAccount);
+    httpParams = httpParams.set("paymentTypeId", info.paymentTypeId);
+    httpParams = httpParams.set("note", info.note);
+    httpParams = httpParams.set("amountAdvanceCash", info.amountAdvanceCash);
+    httpParams = httpParams.set("clientSavingAccount", info.clientSavingAccount);
+
+    return this.http.post(`${this.GatewayApiUrlPrefix}/savingTransaction/transfer_cross_office_transaction`, httpParams);
+  }
+
+  /**
+   * @param {string} savingAccountId is saving account"s Id.
+   * @returns {Observable<any>}
+   */
+   getListClientSavingStaffByOffice(staffId: string): Observable<any> {
+    let httpParams = this.commonHttpParams.getCommonHttpParams();
+    httpParams = httpParams.set("staffId", staffId);
+
+    return this.http.post(`${this.GatewayApiUrlPrefix}/savingTransaction/get_list_client_saving_staff_by_office`, httpParams);
+  }
+
   createGroupSavingsAccount(groupId:string, productId: string, savingsAccount: any): Observable<any> {
     const dateFormat = this.settingsService.dateFormat;
     const locale = this.settingsService.language.code;
@@ -130,6 +156,12 @@ export class SavingsService {
       httpParams
     );
   }
+
+  // getListOfficeCommon() {
+  //   let httpParams = this.commonHttpParams.getCommonHttpParams();
+
+  //   return this.http.post<any>(`${this.GatewayApiUrlPrefix}/common/get_list_office`, httpParams);
+  // }
 
   getListOfficeCommon() {
     let httpParams = this.commonHttpParams.getCommonHttpParams();

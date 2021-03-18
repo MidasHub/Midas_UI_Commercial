@@ -21,6 +21,7 @@ import {ClientsService} from '../../clients/clients.service';
 import {AdvanceComponent} from './form-dialog/advance/advance.component';
 import {PartnerAdvanceCashComponent} from './form-dialog/partner-advance-cash/partner-advance-cash.component';
 import {AlertService} from '../../core/alert/alert.service';
+import { TransferCrossOfficeComponent } from './form-dialog/transfer-cross-office/transfer-cross-office.component';
 
 /**
  * Savings Account View Component
@@ -98,7 +99,17 @@ export class SavingsAccountViewComponent implements OnInit {
           icon: 'fa fa-handshake-o',
           taskPermissionName: 'POSTINTEREST_SAVINGSACCOUNT',
           action: 'advanceCashPartnerTransaction',
-        });
+        },
+        );
+
+        this.buttonConfig.addButton({
+          name: 'Chuyển vốn liên chi nhánh',
+          icon: 'fa fa-arrow-right',
+          taskPermissionName: 'POSTINTEREST_SAVINGSACCOUNT',
+          action: 'transferCrossOfficeCash',
+        },
+        );
+
       }
       if (['FCA0', 'SCA0', 'ACA0'].indexOf(this.savingProduct.shortName) === -1 && savingsProductId !== 2) {
         this.buttonConfig.addButton({
@@ -115,6 +126,24 @@ export class SavingsAccountViewComponent implements OnInit {
       }
     });
     this.setConditionalButtons();
+  }
+
+  displayDescription(type: string) {
+    let typeAdvanceCashes: any[] = [
+      {
+        id: "19",
+        value: "Ứng tiền phí",
+      },
+      {
+        id: "3",
+        value: "Thu hộ",
+      },
+      {
+        id: "37",
+        value: "Chi hộ",
+      },
+    ];
+    return typeAdvanceCashes.find((v) => v.id === type)?.value || "N/A";
   }
 
   advanceCash() {
@@ -158,7 +187,7 @@ export class SavingsAccountViewComponent implements OnInit {
             typeAdvanceCash: typeAdvanceCash,
           })
           .subscribe((result: any) => {
-            const message = `Ứng tiền thành công cho : ${
+            const message = ` ${this.displayDescription(typeAdvanceCash)} thành công cho : ${
               clientAdvanceCash.displayName ? ` khách hàng ${clientAdvanceCash.displayName} ` : ` đại lý ${clientAdvanceCash.name} `
             } với số tiền ${String(amountAdvance).replace(/\\B(?=(\\d{3})+(?!\\d))/g, ',') + ' đ'}`;
             this.alertService.alert({message: message, msgClass: 'cssInfo'});
@@ -166,6 +195,33 @@ export class SavingsAccountViewComponent implements OnInit {
       }
     });
   }
+
+  transferCrossOfficeCash() {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.data = {
+
+    };
+    dialogConfig.minWidth = 400;
+    const refDialog = this.dialog.open(TransferCrossOfficeComponent, dialogConfig);
+    refDialog.afterClosed().subscribe((response: any) => {
+      if (response) {
+        const {typeAdvanceCashes , savingAccountId, note, amount} = response?.data?.value;
+
+        this.savingsService
+          .advanceCashTransaction({
+            buSavingAccount: this.savingsAccountData.id,
+            clientSavingAccount: savingAccountId,
+            note: note,
+            amountAdvanceCash: amount,
+            paymentTypeId: typeAdvanceCashes,
+          })
+          .subscribe((result: any) => {
+            const message = `Thực hiện thành công!`;
+            this.alertService.alert({message: message, msgClass: 'cssInfo'});
+          });
+      }
+    });
+  };
 
   advanceCashPartnerTransaction() {
     const dialogConfig = new MatDialogConfig();
@@ -290,6 +346,9 @@ export class SavingsAccountViewComponent implements OnInit {
         break;
       case 'advanceCashPartnerTransaction':
         this.advanceCashPartnerTransaction();
+        break;
+      case "transferCrossOfficeCash":
+        this.transferCrossOfficeCash();
         break;
       case 'Withdraw':
         this.router.navigate([`actions/Withdrawal`], {relativeTo: this.route});
