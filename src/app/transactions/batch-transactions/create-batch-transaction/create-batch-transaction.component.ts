@@ -161,7 +161,7 @@ export class CreateBatchTransactionComponent implements OnInit {
             this.defaultData.bookingTxnDailyId = bookingTxnDailyId;
           }
 
-          if (batchTxnName && this.batchTxnName !== batchTxnName) {
+          if (batchTxnName) {
             this.batchTxnName = batchTxnName;
             this.defaultData.batchTxnName = batchTxnName;
             this.isLoading = true;
@@ -453,6 +453,7 @@ export class CreateBatchTransactionComponent implements OnInit {
     if (resultCard) {
       this.clientsServices.getClientById(member.clientId).subscribe(result => {
         if (result) {
+          this.defaultData.batchTxnName = this.batchTxnName;
           const batchTransaction = {
             index: `${String(new Date().getMilliseconds())}___${this.dataSource.length}`,
             ...this.defaultData,
@@ -510,7 +511,7 @@ export class CreateBatchTransactionComponent implements OnInit {
         this.transactionServices.onSaveTransactionBatch(formData).subscribe(result => {
           if (result?.status === '200') {
             this.batchTxnName = result?.result?.batchTxnName;
-            this.defaultData.batchTxnName = this.batchTxnName;
+
             const queryParams = {batchTxnName: this.batchTxnName};
             this.router.navigate([],
               {
@@ -537,6 +538,7 @@ export class CreateBatchTransactionComponent implements OnInit {
       const v = result?.result?.detailTransactionDto;
       const member = form.data.member;
       const index = form.get('index').value;
+      this.defaultData.batchTxnName = this.batchTxnName;
       const batchTransaction = {
         index: index,
         ...this.defaultData,

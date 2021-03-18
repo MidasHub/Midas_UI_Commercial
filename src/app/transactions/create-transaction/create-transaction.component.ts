@@ -176,7 +176,8 @@ export class CreateTransactionComponent implements OnInit {
       this.transactionInfo.rate &&
       this.transactionInfo.rate !== 0
     ) {
-      const amount_value = this.transactionInfo.terminalAmount;
+      this.transactionInfo.terminalAmount = this.transactionCreateForm.controls["terminalAmount"].value ;
+      const amount_value = this.transactionInfo.terminalAmount;;
       const rate = this.transactionInfo.rate;
       this.transactionInfo.cogsRate = this.terminalFee.cogsRate;
       this.transactionInfo.feeAmount = (
