@@ -6,17 +6,13 @@
       margin:1% auto;
     }
     table {
-      
-      td,th{
-        text-align: center;
+      width: 100%;
+      .identity-action-button{
+        min-width: 26px;
+        padding: 0 6px;
+        margin: 4px;
+        line-height: 25px;
       }
-      td:first-child{
-        width: 20%;
-      }
-      td:last-child{
-        width: 15%;
-      }
-                 
     }
   }
   

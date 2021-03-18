@@ -1,4 +1,3 @@
-
 <button
   class="aligned-with-icons"
   mat-icon-button
@@ -6,11 +5,11 @@
   matTooltip="Tổng số dư tài khoản ngân hàng"
   [matMenuTriggerFor]="UserSavingMenu"
 >
- 
-  <span> Số dư:{{ totalBalance | money }}</span>
+  Số dư:
+  <span>{{ totalBalance | money }}</span>
 </button>
 
-<mat-menu  class="midas-saving-menu" #UserSavingMenu="matMenu" [overlapTrigger]="false">
+<mat-menu style="min-width: 300px" class="midas-saving-menu" #UserSavingMenu="matMenu" [overlapTrigger]="false">
   <mat-card>
     <mat-card-content>
       <ul class="dropdown-menu" *ngIf="listSaving?.length == 0">
@@ -39,4 +38,3 @@
     </mat-card-content>
   </mat-card>
 </mat-menu>
-

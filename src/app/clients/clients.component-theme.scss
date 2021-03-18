@@ -1,9 +1,0 @@
-@import "~@angular/material/theming";
-
-@mixin clients-component-theme($theme) {
-  $primary: map-get($theme, primary);
-
-  mifosx-clients {
-    background-color: mat-color($primary);
-  }
-}

@@ -1,39 +1,22 @@
 .client-card {
   margin: 0 auto;
-  max-width: 98rem;
-  width: 95%;
+  max-width: 80rem;
+  width: 90%;
   padding: 0;
   .header {
     padding: 1%;
-  }
-  .navigation-tabs {
-    overflow: auto;
-  }
-  i:hover {
-    cursor: pointer;
-  }
-  .leftside{
-    padding: 1rem;
-    flex-direction: column;
-
     .header-title-group {
-      flex-direction: column;
       .client-card-title {
-        flex-direction: column;
         margin-top: 1.4rem;
-        // color: white;
+        color: white;
         width: 90%;
-        // p {
-        //   color: white;
-        // }
+        p {
+          color: white;
+        }
       }
     }
     .profile-image-container {
-      flex-direction: column;
       margin: 1%;
-      div{
-        flex-direction: column;
-      }
       .profile-image {
         object-fit: cover;
         border-radius: 20px;
@@ -45,34 +28,29 @@
         line-height: 25px;
       }
       .signature {
-        // background-color: #0a6aac;
-        //color: white;
+        background-color: #0a6aac;
+        color: white;
         text-align: center;
-        margin-right: 10px;
-        // padding: 2%;
-        // &:hover {
-        //   cursor: pointer;
-        // }
+        margin: 0;
+        padding: 2%;
+        &:hover {
+          cursor: pointer;
+        }
       }
     }
     .client-actions {
-      // align-self: flex-end;
-      width: 100%;
-      margin: 0;
-      button{
-        width: 90%;
-      }
-      span{
-        width: 100%;
-      }
+      align-self: flex-end;
+      margin: 0 1%;
       i {
         margin-bottom: 2px;
         margin-right: 4px;
       }
     }
   }
-  .rightside{
-    padding: 0;
-   
+  .navigation-tabs {
+    overflow: auto;
+  }
+  i:hover {
+    cursor: pointer;
   }
 }

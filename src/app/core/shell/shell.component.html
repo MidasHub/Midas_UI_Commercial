@@ -22,7 +22,10 @@
 
     <!-- Toolbar -->
     <mifosx-toolbar [sidenav]="sidenav" (collapse)="toggleCollapse($event)"
-    class="toolBarCss"
+    [ngClass]="{
+      'toolBarCss-full': sidenavCollapsed,
+      'toolBarCss-compact': !sidenavCollapsed
+    }"
 
     ></mifosx-toolbar>
     <!-- Progress Bar -->

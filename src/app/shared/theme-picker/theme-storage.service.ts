@@ -16,7 +16,7 @@ import { ThemeManagerService } from './theme-manager.service';
 export class ThemeStorageService {
 
   /** Key to store current theme of application in local storage. */
-  private themeStorageKey = 'midasTheme';
+  private themeStorageKey = 'mifosXTheme';
   /** Theme update event. */
   onThemeUpdate: EventEmitter<Theme>;
 
@@ -30,11 +30,11 @@ export class ThemeStorageService {
 
   /**
    * Stores current theme in local storage and emits a theme update event.
-   * @param midasTheme
+   * @param mifosXTheme
    */
-  storeTheme(midasTheme: Theme) {
-    localStorage.setItem(this.themeStorageKey, JSON.stringify(midasTheme));
-    this.onThemeUpdate.emit(midasTheme);
+  storeTheme(mifosXTheme: Theme) {
+    localStorage.setItem(this.themeStorageKey, JSON.stringify(mifosXTheme));
+    this.onThemeUpdate.emit(mifosXTheme);
   }
 
   /**

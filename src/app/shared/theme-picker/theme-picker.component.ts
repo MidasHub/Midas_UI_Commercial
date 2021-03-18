@@ -13,7 +13,7 @@ import { ThemeStorageService } from './theme-storage.service';
  * TODO: Customization of theme for every component and custom background with darker contrast.
  */
 @Component({
-  selector: 'midas-theme-picker',
+  selector: 'mifosx-theme-picker',
   templateUrl: './theme-picker.component.html',
   styleUrls: ['./theme-picker.component.scss'],
   encapsulation: ViewEncapsulation.None

@@ -3,12 +3,11 @@
 @mixin clients-view-component-theme($theme) {
   $primary: map-get($theme, primary);
 
-  mifosx-clients-view {    
+  mifosx-clients-view {
     .client-card {
       .header {
-        background-color: mat-color($primary);
+        background-color: mat-color($primary, 500);
       }
-
     }
   }
 

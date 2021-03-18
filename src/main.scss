@@ -11,11 +11,12 @@
 /* You can add global styles to this file, and also import other style files */
 @import "assets/styles/helper";
 
+
 // 3rd party libraries
 //$fa-font-path: "../node_modules/font-awesome/fonts";
 //@import "../node_modules/font-awesome/scss/font-awesome.scss";
 // don't use fontawesome from node_module
-$fa-font-path: "theme/fontawesome/webfonts";
+$fa-font-path:"theme/fontawesome/webfonts";
 @import "theme/fontawesome/scss/fontawesome.scss";
 @import "theme/fontawesome/scss/brands.scss";
 @import "theme/fontawesome/scss/solid.scss";
@@ -24,47 +25,12 @@ $fa-font-path: "theme/fontawesome/webfonts";
 // add css for angular-calendar lib
 @import "../node_modules/angular-calendar/css/angular-calendar.css";
 
-
-
 // custom disable input style
-.mat-input-element:disabled,
-.mat-form-field-type-mat-native-select.mat-form-field-disabled .mat-form-field-infix::after {
+.mat-input-element:disabled, .mat-form-field-type-mat-native-select.mat-form-field-disabled .mat-form-field-infix::after {
   color: red !important;
   font-weight: bold !important;
 }
 .mat-select-disabled .mat-select-value {
   color: red !important;
   font-weight: bold !important;
-}
-//Custom table color
-table {
-  width: 100%;
-  background-color: #6f6c6c2a;
-  th {
-    text-align: center;
-  }
-
-  .identity-action-button {
-    min-width: 26px;
-    padding: 0 6px;
-    margin: 4px;
-    line-height: 25px;
-  }
-}
-
-.mat-row:nth-child(odd) {
-  background: transparent;
-}
-
-tr.example-element-row:not(.example-expanded-row):hover,
-.mat-row:nth-child(even) {
-  background: rgba(245, 245, 245, 0.507);
-
-  td {
-    color: #000000;
-  }
-}
-
-.cal-cell {
-  background: rgba(86, 85, 85, 0.807);
 }
