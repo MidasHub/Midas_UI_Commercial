@@ -478,7 +478,6 @@ export class CreateBatchTransactionComponent implements OnInit {
 
   async addRow() {
     const member = this.formFilter.value;
-    debugger;
     if (!member) {
       return this.formFilter.markAllAsTouched();
     }

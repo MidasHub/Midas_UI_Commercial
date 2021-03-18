@@ -206,9 +206,8 @@ export class SavingsAccountViewComponent implements OnInit {
     refDialog.afterClosed().subscribe((response: any) => {
       if (response) {
         const {typeAdvanceCashes , savingAccountId, note, amount} = response?.data?.value;
-
         this.savingsService
-          .advanceCashTransaction({
+          .transferCrossOfficeCashTransaction({
             buSavingAccount: this.savingsAccountData.id,
             clientSavingAccount: savingAccountId,
             note: note,
