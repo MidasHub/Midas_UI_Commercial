@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Injectable } from "@angular/core";
-import { HttpClient, HttpParams } from "@angular/common/http";
+import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
 
 /** rxjs Imports */
 import { Observable } from "rxjs";
@@ -20,6 +20,8 @@ export class SavingsService {
   private credentialsStorageKey = "midasCredentials";
   private accessToken: any;
   private GatewayApiUrlPrefix: any;
+  private environment: any;
+
 
   constructor(private http: HttpClient,
      private datePipe: DatePipe,
@@ -31,6 +33,7 @@ export class SavingsService {
       sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey)
     );
     this.GatewayApiUrlPrefix = environment.GatewayApiUrlPrefix;
+    this.environment = environment;
   }
 
   /**
@@ -202,6 +205,17 @@ export class SavingsService {
     );
   }
 
+  getExportExcelFile(url: string) {
+    const httpOptions = {
+      responseType: "blob" as "json",
+      headers: new HttpHeaders({
+        "Gateway-TenantId": this.environment.GatewayTenantId,
+      }),
+    };
+
+    return this.http.get(url, httpOptions);
+  }
+
   downloadReport(
     accountId: string,
     toDate: string,
@@ -215,26 +229,13 @@ export class SavingsService {
       sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey)
     );
     const url = `${environment.GatewayApiUrl}${this.GatewayApiUrlPrefix}/export/download_export_transaction_saving?accessToken=${this.accessToken.base64EncodedAuthenticationKey}&fromDate=${fromDate}&toDate=${toDate}&accountId=${accountId}&note=${note}&txnCode=${txnCode}&paymentDetail=${paymentDetail}&createdBy=${this.accessToken.userId}`;
-    let xhr = new XMLHttpRequest();
-    xhr = new XMLHttpRequest();
-    xhr.onreadystatechange = function () {
-      let a;
-      if (xhr.readyState === 4 && xhr.status === 200) {
-        a = document.createElement("a");
-        a.href = window.URL.createObjectURL(xhr.response);
-        a.download = `export_transaction_${new Date().getTime()}`;
-        a.style.display = "none";
-        document.body.appendChild(a);
-        a.click();
-      }
-    };
-
-    xhr.open("GET", url);
-    if (environment.isNewBillPos) {
-      xhr.setRequestHeader("Gateway-TenantId", environment.GatewayTenantId);
-    }
-    xhr.responseType = "blob";
-    return xhr.send();
+    this.getExportExcelFile(url).subscribe((data: any) => {
+      const downloadURL = window.URL.createObjectURL(data);
+      const link = document.createElement("a");
+      link.href = downloadURL;
+      link.download = "V_saving_transaction.xlsx";
+      link.click();
+    });
   }
 
   /**

@@ -185,7 +185,7 @@ export class TransactionsTabComponent implements OnInit {
     const paymentDetail = this.form.get("paymentDetail").value;
     const isRevert = this.form.get("isRevert").value;
 
-    return this.savingsService.downloadReport(
+    this.savingsService.downloadReport(
       this.savingsAccountData.id,
       toDate,
       fromDate,
