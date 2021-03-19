@@ -1,5 +1,5 @@
 <div fxFlex.lt-md="column" fxLayoutAlign="center start">
-<div fxFlex.gt-md="70" fxFlex.lt-md="100%" fxLayoutAlign="center strech" fxLayoutGap="1%" fxLayout="column" class="tab-container">
+<div fxFlex.gt-md="70" fxFlex.lt-md="100%" fxLayoutAlign="center strech"  fxLayout="column" class="tab-container">
   <mat-card class="card-custom m-b-10" fxFlex="100%">
     <mat-card-header>
       <mat-card-title class="f-left" fxLayout="start center">Danh sách thẻ giao dịch: &nbsp;&nbsp;&nbsp;
@@ -11,7 +11,7 @@
 
     </mat-card-header>
     <mat-card-content>
-      <table mat-table #identifiersTable [dataSource]="clientIdentities">
+      <table mat-table #identifiersTable [dataSource]="clientIdentities" class="mat-elevation-z8">
         <ng-container matColumnDef="id">
           <th fxHide mat-header-cell *matHeaderCellDef>Id</th>
           <td fxHide mat-cell *matCellDef="let identity">{{ identity.id }}</td>
@@ -104,7 +104,7 @@
 
     </mat-card-header>
     <mat-card-content>
-      <table mat-table #identifiersTableOther [dataSource]="clientIdentitiesOther">
+      <table mat-table #identifiersTableOther [dataSource]="clientIdentitiesOther" class="mat-elevation-z8">
         <ng-container matColumnDef="id">
           <th mat-header-cell *matHeaderCellDef>Id</th>
           <td mat-cell *matCellDef="let identity">{{ identity.id }}</td>
@@ -156,15 +156,15 @@
 
 
 </div>
-<div fxFlex.gt-md="30" fxFlex.lt-md="100%" fxLayout="column" fxLayoutGap="1%">
+<div fxFlex.gt-md="30" fxFlex.lt-md="100%" fxLayout="column" class="p-5">
   <mat-card class="card-custom" fxFlex="100%">
     <mat-card-header>
       <h3> Hình ảnh CMND/CCCD/PASSPORT:</h3>
     </mat-card-header>
-    <mat-card-content *ngFor="let identity of clientIdentitiesOther">    
-     <div fxFlex.gt-sm="100%" fxLayout="column" fxLayoutAlign="space-evenly center" *ngIf="identity?.documents">
-        <div fxFlex.gt-sm="100%" class="image-container" *ngFor="let images of identity?.documents[0]?.imageIdentifier">
-          <img width="95%" class="profile-image" [src]="images?.base64data" />
+    <mat-card-content *ngFor="let identity of clientIdentitiesOther" >    
+     <div fxFlex.gt-sm="100%" fxLayout="column" fxLayoutAlign="start center" *ngIf="identity?.documents" >
+        <div fxFlex.gt-sm="100%" class="image-container" fxLayout="column" fxLayoutAlign="start center" *ngFor="let images of identity?.documents[0]?.imageIdentifier" >
+          <img width="95%" class="profile-image mat-elevation-z8 m-b-10" [src]="images?.base64data" />
         </div>
       </div> 
 

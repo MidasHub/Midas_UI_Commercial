@@ -26,45 +26,5 @@ $fa-font-path: "theme/fontawesome/webfonts";
 
 
 
-// custom disable input style
-.mat-input-element:disabled,
-.mat-form-field-type-mat-native-select.mat-form-field-disabled .mat-form-field-infix::after {
-  color: red !important;
-  font-weight: bold !important;
-}
-.mat-select-disabled .mat-select-value {
-  color: red !important;
-  font-weight: bold !important;
-}
-//Custom table color
-table {
-  width: 100%;
-  background-color: #6f6c6c2a;
-  th {
-    text-align: center;
-  }
 
-  .identity-action-button {
-    min-width: 26px;
-    padding: 0 6px;
-    margin: 4px;
-    line-height: 25px;
-  }
-}
 
-.mat-row:nth-child(odd) {
-  background: transparent;
-}
-
-tr.example-element-row:not(.example-expanded-row):hover,
-.mat-row:nth-child(even) {
-  background: rgba(245, 245, 245, 0.507);
-
-  td {
-    color: #000000;
-  }
-}
-
-.cal-cell {
-  background: rgba(86, 85, 85, 0.807);
-}

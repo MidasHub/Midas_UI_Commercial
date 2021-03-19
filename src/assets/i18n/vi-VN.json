@@ -198,7 +198,7 @@
     "inputPlaceholderClosedCIF": "Tìm bằng tên khách hàng",
     "ViewClient": {
       "lblViewSignature": "Xem chữ kí",
-      "lblClientName": "Tên khách hàng",
+      "lblClientName": "Khách hàng",
       "lblExternalID": "CMND/CCCD",
       "lblStaff": "Nhân viên",
       "lblActivationDate": "Ngày kích hoạt",
