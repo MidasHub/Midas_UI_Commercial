@@ -433,10 +433,8 @@ export class ManageTransactionComponent implements OnInit {
     if (toDate) {
       toDate = this.datePipe.transform(toDate, dateFormat);
     }
-    const { permissions } = this.currentUser;
-    const permit = permissions.includes("TXN_CREATE");
     const form = this.formFilter.value;
-    let query = `fromDate=${fromDate}&toDate=${toDate}&permission=${!permit}&officeName=${form.officeId || "ALL"}`;
+    let query = `fromDate=${fromDate}&toDate=${toDate}&officeName=${form.officeId || "ALL"}`;
     const keys = Object.keys(form);
     for (const key of keys) {
       if (key === "staffId") {
@@ -471,10 +469,9 @@ export class ManageTransactionComponent implements OnInit {
     if (toDate) {
       toDate = this.datePipe.transform(toDate, dateFormat);
     }
-    const { permissions } = this.currentUser;
-    const permit = permissions.includes("TXN_CREATE");
+
     const form = this.formFilter.value;
-    let query = `fromDate=${fromDate}&toDate=${toDate}&permission=${!permit}&officeName=${form.officeId || "ALL"}`;
+    let query = `fromDate=${fromDate}&toDate=${toDate}&officeName=${form.officeId || "ALL"}`;
     const keys = Object.keys(form);
     for (const key of keys) {
       if (key === "staffId") {

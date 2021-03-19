@@ -166,15 +166,16 @@
           </mat-checkbox>
         </div>
         <div fxFlex="18%">
-          <button style="margin-top: 8px; height: 40px" (click)="exportTransaction()" color="primary" mat-raised-button>
+          <button style="margin: 5px; height: 40px" (click)="exportTransaction()" color="primary" mat-raised-button>
             Export
           </button>
-        </div>
-        <!-- <div fxFlex="18%">
-          <button style="margin-top: 8px; height: 40px" (click)="exportTransactionForPartner()" color="primary" mat-raised-button>
+
+          <button style="margin: 5px; height: 40px" (click)="exportTransactionForPartner()" color="primary" mat-raised-button>
             Export Cho đối tác
           </button>
-        </div> -->
+
+        </div>
+
       </div>
     </mat-expansion-panel>
   </mat-accordion>
@@ -217,11 +218,6 @@
           <span class="red_text">{{ journalEntry.terminalId }}</span>
         </td>
       </ng-container>
-
-      <!-- <ng-container matColumnDef="agencyName">
-        <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef> Đại lý</th>
-        <td mat-cell fxHide fxShow.gt-md *matCellDef="let journalEntry"> </td>
-      </ng-container> -->
 
       <ng-container matColumnDef="panHolderName">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Khách hàng</th>
