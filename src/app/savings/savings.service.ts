@@ -36,6 +36,13 @@ export class SavingsService {
     this.environment = environment;
   }
 
+  checkValidRevertSavingTransaction(resourceId: string): Observable<any> {
+    let httpParams = this.commonHttpParams.getCommonHttpParams();
+      httpParams = httpParams.set("resourceId", resourceId)
+
+    return this.http.post(`${this.GatewayApiUrlPrefix}/savingTransaction/check_valid_revert_saving_transaction`, httpParams);
+  }
+
   /**
    * @param {string} savingAccountId is saving account"s Id.
    * @returns {Observable<any>}
