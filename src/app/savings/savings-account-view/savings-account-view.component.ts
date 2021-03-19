@@ -88,10 +88,8 @@ export class SavingsAccountViewComponent implements OnInit {
         }
       }
     }
-    console.log('_______________ this.savingsAccountData', this.savingsAccountData);
     this.productsService.getSavingProduct(savingsProductId).subscribe((data: any) => {
       this.savingProduct = data;
-      console.log('_______________savingProduct', this.savingProduct);
 
       if (['CCA0', 'ACA0'].indexOf(this.savingProduct.shortName) === -1) {
         this.buttonConfig.addButton({
