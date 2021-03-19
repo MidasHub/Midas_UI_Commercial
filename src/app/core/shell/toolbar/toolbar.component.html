@@ -1,4 +1,4 @@
-<mat-toolbar fxLayout="row" color="primary" id="mifosx-toolbar" >
+<mat-toolbar fxLayout="row" color="primary" id="mifosx-toolbar">
   <button mat-icon-button *ngIf="!sidenavCollapsed" (click)="toggleSidenav()" matTooltip="Toggle Hide/Open">
     <fa-icon icon="bars" size="lg"></fa-icon>
   </button>
@@ -65,27 +65,27 @@
     </span>
   </nav>
 
-  <div fxFlex  fxLayout="row" fxLayoutAlign="start center"fxLayoutAlign.lt-md="end center" >
+  <div fxFlex fxLayout="row" fxLayoutAlign="start center" fxLayoutAlign.lt-md="end center">
     <!-- <span ></span> -->
-    <midas-user-account-info   fxLayout="row" style="min-width: 10rem;"></midas-user-account-info>
-    <midas-theme-picker fxHide.lt-md  ></midas-theme-picker>
+    <midas-user-account-info fxLayout="row" style="min-width: 10rem"></midas-user-account-info>
+    <midas-theme-picker fxHide.lt-md></midas-theme-picker>
 
-    <mifosx-notifications-tray fxHide.lt-md   > </mifosx-notifications-tray>
+    <mifosx-notifications-tray fxHide.lt-md> </mifosx-notifications-tray>
     <!-- <br /> -->
-    <button  fxHide.lt-md mat-icon-button class="ml-1 img-button" [matMenuTriggerFor]="applicationMenu"  >
-      <img src="assets/images/user_placeholder.png" /> &nbsp;
-      <span style="text-decoration: underline;">{{currentUser.username}}</span>
+    <button fxHide.lt-md mat-icon-button class="ml-1 img-button" [matMenuTriggerFor]="applicationMenu">
+      <img style="position: absolute" src="assets/images/user_placeholder.png" /> <br />
+      <span style="text-decoration: underline; position: relative; top: -20px">{{ currentUser.username }}</span>
     </button>
-
   </div>
-
 </mat-toolbar>
 
 <mat-menu #institutionMenu="matMenu" [overlapTrigger]="false">
   <button mat-menu-item routerLink="/clients">{{ "Toolbar_Component.lblClient" | translate }}</button>
   <button mat-menu-item routerLink="/groups">{{ "Toolbar_Component.lblGroup" | translate }}</button>
   <button mat-menu-item *midasHasPermission="'ALL_FUNCTIONS'" routerLink="/centers">Centers</button>
-  <button mat-menu-item routerLink="/accounts/balance-clients">{{ "Quản lý công nợ khách hàng khách hàng lẻ" | translate }}</button>
+  <button mat-menu-item routerLink="/accounts/balance-clients">
+    {{ "Quản lý công nợ khách hàng khách hàng lẻ" | translate }}
+  </button>
   <button mat-menu-item *midasHasPermission="'POS_UPDATE'" routerLink="/accounts/balance-teller">
     {{ "Quản lý số dư teller" | translate }}
   </button>
