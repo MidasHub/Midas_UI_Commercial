@@ -68,12 +68,12 @@
 
           <div fxLayout="row" fxLayoutAlign="center center">
             <button mat-raised-button (click)="doAction('View Signature')" class="signature">
-              {{ "Client_Component.ViewClient.lblViewSignature" | translate }}
+              <i class="fas fa-file-signature"></i> {{ "Client_Component.ViewClient.lblViewSignature" | translate }}
             </button>
             <p *midasHasActiveModule="'mgmModule'">
               <button mat-raised-button [routerLink]="['/clients/create/']"
                 [queryParams]="{'mgmId': clientViewData.id }">
-                <i class="fa fa-plus"></i> Thêm MGM
+                <i class="fas fa-user-plus"></i> Thêm MGM
               </button>
             </p>
           </div>
@@ -118,12 +118,35 @@
             <i class="fas fa-tasks"></i>{{ "Client_Component.ViewClient.btnAction" | translate }}
           </button>
           <mat-menu #Actions="matMenu">
+            <button mat-menu-item [routerLink]="['savings-accounts', 'create']">
+              {{ "Client_Component.ViewClient.btnNewSaving" | translate }}
+            </button>
+            <button mat-menu-item (click)="doAction('Update Default Savings')"
+              *midasHasPermission="'UPDATESAVINGSACCOUNT_CLIENT'">
+              {{ "Client_Component.ViewClient.btnUpdateDefaultSaving" | translate }}
+            </button>
+            <button mat-menu-item (click)="doAction('Create Self Service User')">
+              {{ "Client_Component.ViewClient.btnCreateSelfService" | translate }}
+            </button>
+            <span *ngIf="!clientViewData.staffId">
+              <button mat-raised-button (click)="doAction('Assign Staff')">
+                <i class="fa fa-user"></i>{{ "Client_Component.ViewClient.btnAssignStaff" | translate }}
+              </button>
+            </span>
+            <span *ngIf="clientViewData.staffId">
+              <button mat-raised-button *midasHasPermission="'UNASSIGNSTAFF_CLIENT'" (click)="doAction('Unassign Staff')">
+                <i class="fa fa-user"></i>{{ "Client_Component.ViewClient.btnUnAssignStaff" | translate }}
+              </button>
+            </span>
+            <mat-divider></mat-divider>
+            
             <button mat-menu-item (click)="doAction('Close')">
               {{ "Client_Component.ViewClient.btnClose" | translate }}
             </button>
             <button mat-menu-item (click)="doAction('Transfer Client')">
               {{ "Client_Component.ViewClient.btnTransferClient" | translate }}
             </button>
+            <mat-divider></mat-divider>
 
             <span *ngIf="clientViewData.status.value === 'Pending'">
               <button mat-menu-item
@@ -165,31 +188,17 @@
                 (click)="doAction('Reject Transfer')">
                 {{ "Client_Component.ViewClient.btnRejectTransfer" | translate }}
               </button></span>
-              <button mat-menu-item (click)="doAction('Update Default Savings')"
-              *midasHasPermission="'UPDATESAVINGSACCOUNT_CLIENT'">
-              {{ "Client_Component.ViewClient.btnUpdateDefaultSaving" | translate }}
-            </button>
+              
             <button mat-menu-item (click)="doAction('Upload Signature')" *midasHasPermission="'CREATE_CLIENTIMAGE'">
               {{ "Client_Component.ViewClient.btnUploadSignature" | translate }}
             </button>
             <button mat-menu-item (click)="doAction('Delete Signature')" *midasHasPermission="'DELETE_CLIENTIMAGE'">
               {{ "Client_Component.ViewClient.btnDeleteSignature" | translate }}
             </button>
-            <button mat-menu-item (click)="doAction('Create Self Service User')">
-              {{ "Client_Component.ViewClient.btnCreateSelfService" | translate }}
-            </button>
+            
           </mat-menu>
 
-          <span *ngIf="!clientViewData.staffId">
-            <button mat-raised-button (click)="doAction('Assign Staff')">
-              <i class="fa fa-user"></i>{{ "Client_Component.ViewClient.btnAssignStaff" | translate }}
-            </button>
-          </span>
-          <span *ngIf="clientViewData.staffId">
-            <button mat-raised-button *midasHasPermission="'UNASSIGNSTAFF_CLIENT'" (click)="doAction('Unassign Staff')">
-              <i class="fa fa-user"></i>{{ "Client_Component.ViewClient.btnUnAssignStaff" | translate }}
-            </button>
-          </span>
+          
 
           <!-- <button mat-raised-button [matMenuTriggerFor]="More">
             <i class="fab fa-buromobelexperte"></i>{{ "Client_Component.ViewClient.btnMoreAction" | translate }}

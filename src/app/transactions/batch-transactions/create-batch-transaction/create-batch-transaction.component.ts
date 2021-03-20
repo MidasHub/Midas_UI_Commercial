@@ -2,15 +2,15 @@ import { Component, OnInit } from "@angular/core";
 import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
 import { animate, state, style, transition, trigger } from "@angular/animations";
 import { MatDialog, MatDialogConfig } from "@angular/material/dialog";
-import { AddFeeDialogComponent } from "../../dialog/add-fee-dialog/add-fee-dialog.component";
-import { AddRowCreateBatchTransactionComponent } from "../../dialog/add-row-create-batch-transaction/add-row-create-batch-transaction.component";
+// import { AddFeeDialogComponent } from "../../dialog/add-fee-dialog/add-fee-dialog.component";
+// import { AddRowCreateBatchTransactionComponent } from "../../dialog/add-row-create-batch-transaction/add-row-create-batch-transaction.component";
 import { CreateCardBatchTransactionComponent } from "../../dialog/create-card-batch-transaction/create-card-batch-transaction.component";
 import { TransactionService } from "../../transaction.service";
 import { ActivatedRoute, ActivatedRouteSnapshot, Router } from "@angular/router";
 import { AlertService } from "../../../core/alert/alert.service";
 import { AuthenticationService } from "../../../core/authentication/authentication.service";
 import { GroupsService } from "../../../groups/groups.service";
-import { AddInformationCardBatchComponent } from "../../dialog/add-information-card-batch/add-information-card-batch.component";
+// import { AddInformationCardBatchComponent } from "../../dialog/add-information-card-batch/add-information-card-batch.component";
 import { AddIdentitiesExtraInfoComponent } from "../../../clients/clients-view/identities-tab/dialog-add-identities-extra-info/add-identities-extra-info.component";
 import { ClientsService } from "../../../clients/clients.service";
 import { debounce, distinctUntilChanged, map, startWith, takeUntil } from "rxjs/operators";
@@ -20,6 +20,8 @@ import { MakeFeeOnAdvanceComponent } from "../../dialog/make-fee-on-advance/make
 import { BanksService } from "../../../banks/banks.service";
 import { ValidCheckTransactionHistoryDialogComponent } from "app/transactions/dialog/valid-check-transaction-history/valid-check-transaction-history-dialog.component";
 
+import {Logger} from "../../../core/logger/logger.service";
+const log = new Logger('Batch Txn');
 @Component({
   selector: "midas-create-batch-transaction",
   templateUrl: "./create-batch-transaction.component.html",
@@ -282,6 +284,7 @@ export class CreateBatchTransactionComponent implements OnInit {
 
   ngOnInit(): void {
     this.init();
+    log.debug(this.group);
     this.filteredOptions = this.formFilter.valueChanges.pipe(
       startWith(""),
       map((value: any) => this._filter(value))

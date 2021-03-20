@@ -51,7 +51,7 @@
               },
               {
                 "inject": false,
-                "input": "src/theme/purple-green.scss",
+                "input": "src/theme/custom/purple-green.scss",
                 "bundleName": "theme/purple-green"
               },
               {
