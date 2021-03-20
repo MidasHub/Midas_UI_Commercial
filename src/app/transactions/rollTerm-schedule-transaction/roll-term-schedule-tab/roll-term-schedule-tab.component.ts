@@ -133,9 +133,7 @@ export class RollTermScheduleTabComponent implements OnInit {
     this.clientServices.getNameOfStaff().subscribe((result: any) => {
       this.staffs = result?.result?.listStaff.filter((staff:any) => staff.displayName.startsWith("R"));
     });
-    // this.centersService.getStaff(this.currentUser.officeId).subscribe((staffs: any) => {
-    //   this.staffs = staffs?.staffOptions.filter((staff:any) => staff.displayName.startsWith("R"));
-    // });
+
 
     this.formFilter = this.formBuilder.group({
       createdByFilter: [this.currentUser.userId],

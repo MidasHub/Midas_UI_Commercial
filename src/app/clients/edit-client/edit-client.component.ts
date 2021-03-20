@@ -7,6 +7,7 @@ import { DatePipe } from '@angular/common';
 /** Custom Services */
 import { ClientsService } from '../clients.service';
 import { SettingsService } from 'app/settings/settings.service';
+import { AuthenticationService } from 'app/core/authentication/authentication.service';
 
 /**
  * Edit Client Component
@@ -44,6 +45,7 @@ export class EditClientComponent implements OnInit {
   constitutionOptions: any;
   /** Gender Options */
   genderOptions: any;
+  currentUser: any;
 
   /**
    * Fetches client template data from `resolve`
@@ -58,6 +60,7 @@ export class EditClientComponent implements OnInit {
               private route: ActivatedRoute,
               private router: Router,
               private clientsService: ClientsService,
+              private authenticationService: AuthenticationService,
               private datePipe: DatePipe,
               private settingsService: SettingsService) {
     this.route.data.subscribe((data: { clientDataAndTemplate: any }) => {
@@ -91,9 +94,12 @@ export class EditClientComponent implements OnInit {
    * Creates the edit client form.
    */
   createEditClientForm() {
+    this.currentUser = this.authenticationService.getCredentials();
+    const { permissions } = this.currentUser;
+    const permit_manager = permissions.includes("POS_UPDATE");
     this.editClientForm = this.formBuilder.group({
       'officeId': [{ value: '', disabled: true }],
-      'staffId': [''],
+      'staffId': [{ value: '', disabled: !permit_manager ? true : false }],
       'legalFormId': [''],
       'isStaff': [false],
       'active': [false],

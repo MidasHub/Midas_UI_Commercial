@@ -22,6 +22,9 @@
     <mat-form-field fxFlex="18%">
       <mat-label>Ngân hàng</mat-label>
       <select matSelect matNativeControl formControlName="bankName">
+        <option value="ALL">
+          Tất cả ngân hàng
+        </option>
         <option *ngFor="let bank of listBank" [value]="bank.bankCode">
           {{ bank.bankName }}
         </option>

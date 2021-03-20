@@ -253,7 +253,7 @@ export class TransactionService {
     httpParams = httpParams.set("amountTransaction", "%%");
     httpParams = httpParams.set("trackingState", payload.statusFilter === "" ? `%%` : `%${payload.statusFilter}%`);
     httpParams = httpParams.set("createdUser", "%%");
-    httpParams = httpParams.set("bankName", payload.bankName === "" ? `%%` : `${payload.bankName}`);
+    httpParams = httpParams.set("bankName", payload.bankName === "ALL" ? `%%` : `${payload.bankName}`);
     httpParams = httpParams.set("fromDate", payload.fromDate);
     httpParams = httpParams.set("toDate", payload.toDate);
 
