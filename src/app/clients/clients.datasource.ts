@@ -41,6 +41,8 @@ export class ClientsDataSource implements DataSource<any> {
     let sqlSearch = '';
     if (clientActive) {
       sqlSearch = `c.status_enum = 300`;
+    } else {
+      sqlSearch = `c.status_enum = 600`;
     }
     this.clientsService.getClientsByOfficeOfUser('', '', pageIndex * limit, limit, sqlSearch)
       .subscribe((clients: any) => {
