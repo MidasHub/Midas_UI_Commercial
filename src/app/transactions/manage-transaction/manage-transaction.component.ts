@@ -266,19 +266,19 @@ export class ManageTransactionComponent implements OnInit {
       }
       return true;
     });
-    this.totalTerminalAmount = this.filterData.reduce((total: any, num: any) => {
+    this.totalTerminalAmount = this.filterData?.reduce((total: any, num: any) => {
       return total + Math.round(num?.terminalAmount);
     }, 0);
-    this.totalFeeAmount = this.filterData.reduce((total: any, num: any) => {
+    this.totalFeeAmount = this.filterData?.reduce((total: any, num: any) => {
       return total + Math.round(num?.feeAmount);
     }, 0);
-    this.totalCogsAmount = this.filterData.reduce((total: any, num: any) => {
+    this.totalCogsAmount = this.filterData?.reduce((total: any, num: any) => {
       return total + Math.round(num?.cogsAmount);
     }, 0);
-    this.totalPnlAmount = this.filterData.reduce((total: any, num: any) => {
+    this.totalPnlAmount = this.filterData?.reduce((total: any, num: any) => {
       return total + Math.round(num?.pnlAmount);
     }, 0);
-    this.dataSource = this.filterData.slice(offset, offset + limit);
+    this.dataSource = this.filterData?.slice(offset, offset + limit);
   }
 
   get fromDateAndToDate() {

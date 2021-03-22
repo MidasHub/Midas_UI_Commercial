@@ -196,6 +196,8 @@ export class AuthenticationService {
    * @param {Credentials} credentials Authenticated user credentials.
    */
   private onLoginSuccess(credentials: Credentials) {
+    // this.getBalanceAndSetting(credentials.userId, credentials.officeId, credentials.base64EncodedAuthenticationKey);
+
     if (environment.oauth.enabled) {
       this.authenticationInterceptor.setAuthorizationToken(credentials.accessToken);
     } else {
@@ -269,43 +271,42 @@ export class AuthenticationService {
 
           this.storage.setItem(this.credentialsStorageKey, JSON.stringify(credentials));
 
-          switch (moduleName) {
-            case "billModule":
-              let isBillModule = credentials.appSettingModule.billModule;
-              return isBillModule == 1;
-
-            case "mgmModule":
-              let isMgmModule = credentials.appSettingModule.mgmModule;
-              return isMgmModule == 1;
-
-            case "checkIdAgencyModule":
-              let isCheckIdAgencyModule = credentials.appSettingModule.checkIdAgencyModule;
-              return isCheckIdAgencyModule == 1;
-
-            ///  ......  another module setting ///
-          }
+          return this.checkAppModuleService(moduleName, credentials);
         });
     } else {
-
-      switch (moduleName) {
-
-        case "billModule":
-          let isBillModule = credentials.appSettingModule.billModule;
-          return isBillModule == 1;
-
-        case "mgmModule":
-            let isMgmModule = credentials.appSettingModule.mgmModule;
-            return isMgmModule == 1;
-
-        case "checkIdAgencyModule":
-            let isCheckIdAgencyModule = credentials.appSettingModule.checkIdAgencyModule;
-            return isCheckIdAgencyModule == 1;
-
-        ///  ......  another module setting ///
-      }
+      return this.checkAppModuleService(moduleName, credentials);
     }
 
     return false;
+  }
+
+  checkAppModuleService(moduleName: string, credentials: any) {
+    switch (moduleName) {
+      case "billModule":
+        let isBillModule = credentials.appSettingModule.billModule;
+        return isBillModule == 1;
+
+      case "mgmModule":
+        let isMgmModule = credentials.appSettingModule.mgmModule;
+        return isMgmModule == 1;
+
+      case "checkIdAgencyModule":
+        let isCheckIdAgencyModule = credentials.appSettingModule.checkIdAgencyModule;
+        return isCheckIdAgencyModule == 1;
+
+      case "sendTransferNotificationBi":
+        let sendTransferNotificationBi = credentials.appSettingModule.sendTransferNotificationBi;
+        return sendTransferNotificationBi == 1;
+
+      case "sendNotificationBi":
+        let sendNotificationBi = credentials.appSettingModule.sendNotificationBi;
+        return sendNotificationBi == 1;
+
+      case "campaignModule":
+        let campaignModule = credentials.appSettingModule.campaignModule;
+        return campaignModule == 1;
+      ///  ......  another module setting ///
+    }
   }
 
   /**

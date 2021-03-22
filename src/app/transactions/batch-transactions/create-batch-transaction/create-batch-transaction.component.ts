@@ -170,6 +170,14 @@ export class CreateBatchTransactionComponent implements OnInit {
     return this.transactionServices.exportTransactionBatch(this.batchTxnName);
   }
 
+  resetAutoComplete() {
+    this.formFilter.setValue("");
+    this.filteredOptions = this.formFilter.valueChanges.pipe(
+      startWith(""),
+      map((value: any) => this._filter(value))
+    );
+  }
+
   getData(reset?: boolean) {
     this.isLoading = true;
     this.transactionServices.getMembersAvailableGroup(this.group.id).subscribe((data) => {
@@ -284,7 +292,7 @@ export class CreateBatchTransactionComponent implements OnInit {
 
   ngOnInit(): void {
     this.init();
-    log.debug(this.group);
+
     this.filteredOptions = this.formFilter.valueChanges.pipe(
       startWith(""),
       map((value: any) => this._filter(value))

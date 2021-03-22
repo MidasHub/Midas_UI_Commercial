@@ -40,9 +40,12 @@
       class="tab-link"
       [matMenuTriggerFor]="Marketing"
       #institutionMenuTrigger="matMenuTrigger"
+    > <label
+    *midasHasActiveModule="'campaignModule'"
     >
       <fa-icon class="mr-05" icon="university" size="lg"></fa-icon>
       Marketing
+    </label>
     </a>
     <!-- Menu danh cho các user Admin -->
     <span *midasHasPermission="'ALL_FUNCTIONS'" fxHide.lt-lg="true">
