@@ -46,6 +46,8 @@ export class ClientCustomerComponent implements OnInit, AfterViewInit {
   */
   clientType: string = '';
   createButtonName: string = '';
+  tabWillView:string = 'identities'
+  tabQueryParams:any={ typeViewClient: 'view'};
   ctype: any;
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
@@ -67,16 +69,19 @@ export class ClientCustomerComponent implements OnInit, AfterViewInit {
     this.route.data.subscribe(v => {
       switch (v.ctype) {
         case 'staff':
-          this.clientType = '22,143'
-          this.createButtonName = 'Thêm nhân viên'
+          this.clientType = '22,143';
+          this.createButtonName = 'Thêm nhân viên';          
           break;
         case 'ic':
           this.clientType = '23'
-          this.createButtonName = 'Thêm đối tác máy'
+          this.createButtonName = 'Thêm đối tác máy';
+          this.tabWillView = 'general';
+          this.tabQueryParams = { typeViewClient: 'view',clientType:'ic'};
+
           break;
         default:
           this.clientType = '21'
-          this.createButtonName = 'Thêm khách hàng'
+          this.createButtonName = 'Thêm khách hàng';
           break;
       }
 

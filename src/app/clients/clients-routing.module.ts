@@ -97,7 +97,7 @@ const routes: Routes = [
             },
             {
               path:'interchange',
-              data: {title: extract('interchange'),  breadcrumb: 'Đối tác máy',routeParamBreadcrumb: false,ctype:'ic'},//filterType:'23'},
+              data: {title: extract('interchange'),  breadcrumb: 'Đối tác Interchange',routeParamBreadcrumb: false,ctype:'ic'},//filterType:'23'},
               component: ClientCustomerComponent
             },
           ]
