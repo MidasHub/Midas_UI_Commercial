@@ -157,7 +157,7 @@
               <mat-form-field>
                 <mat-label>Chi nhánh</mat-label>
                 <mat-select [formControl]="officeSelect">
-                  <mat-option *ngFor="let o of offices" [value]="o.id">
+                  <mat-option *ngFor="let o of offices" [value]="o.officeId">
                     {{ o.name }}
                   </mat-option>
                 </mat-select>
