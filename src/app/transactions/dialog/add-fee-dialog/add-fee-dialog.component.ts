@@ -37,6 +37,7 @@ export class AddFeeDialogComponent implements OnInit {
   clientAccount: any;
   messageNoti: string;
   isLoading: boolean = false;
+  amountPaidBooking: number
 
   constructor(
     private transactionService: TransactionService,
@@ -49,6 +50,7 @@ export class AddFeeDialogComponent implements OnInit {
     private midasClientServices: MidasClientService
   ) {
     this.txnCode = data.data?.txnCode;
+    this.amountPaidBooking = data.data?.amountPaid;
     this.formDialogPaid = this.formBuilder.group({
       paymentCode: [""],
       savingAccountPaid: [""],
@@ -137,6 +139,11 @@ export class AddFeeDialogComponent implements OnInit {
       this.transactionFee = this.transactions.find((v) => v.txnPaymentType === "IN");
       this.transactionPaid = this.transactions.find((v) => v.txnPaymentType === "OUT");
       this.selectedPaymentTypePaid = "FT";
+
+      // check is get amount paid from booking
+      if (this.amountPaidBooking && this.amountPaidBooking > 0) {
+        this.transactionPaid.feeRemain = this.amountPaidBooking;
+      }
 
       if (this.transactionPaid) {
         this.paidAmount = this.transactionPaid?.feeRemain;
