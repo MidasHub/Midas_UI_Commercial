@@ -29,7 +29,7 @@ export class ExecuteLoanDialogComponent implements OnInit {
   ) {
     this.refId = data.refId;
     this.formDialogPaid = this.formBuilder.group({
-      paymentCode: [""],
+      paymentCode: ["AM"],
       amountPaid: [""],
       savingAccountPaid: [""],
       fromClientId: [""],
@@ -42,6 +42,12 @@ export class ExecuteLoanDialogComponent implements OnInit {
       this.paidPaymentType = result.result?.listPayment;
       this.accountsPaid = result.result?.listSavingAccount;
       this.posTransaction = result.result?.posTransaction;
+
+      this.accountsPaid.forEach((result) => {
+          if (result.productId == 12){
+            this.formDialogPaid.get("savingAccountPaid").setValue(result.id);
+          }
+      })
 
       this.formDialogPaid.get('fromClientId').setValue(
         this.posTransaction.custId

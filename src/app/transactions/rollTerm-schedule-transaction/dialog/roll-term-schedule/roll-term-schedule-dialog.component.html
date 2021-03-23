@@ -99,7 +99,7 @@
 
         <ng-container matColumnDef="getAmount">
           <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef>Đã thu hồi</th>
-          <td mat-cell fxHide fxShow.gt-md *matCellDef="let booking">{{ booking.totalGet | money }}</td>
+          <td mat-cell fxHide fxShow.gt-md *matCellDef="let booking">{{ booking?.totalGet | money }}</td>
         </ng-container>
 
         <ng-container matColumnDef="actions" style="width: 25px">
@@ -153,10 +153,10 @@
                     element.createdDate | date: "dd-MM-yyyy HH:ss"
                   }}
                 </div>
-                <div><span style="font-weight: bold"> Số tiền:</span>&nbsp; &nbsp;{{ element.terminalAmount }}</div>
-                <div><span style="font-weight: bold"> Phí thực tế:</span>&nbsp; &nbsp;{{ element.identifierId }}</div>
-                <div><span style="font-weight: bold"> Đã chi :</span>&nbsp; &nbsp;{{ element.officeName | money }}</div>
-                <div><span style="font-weight: bold"> Đã thu hồi :</span>&nbsp; &nbsp;{{ element.agencyName }}</div>
+                <div><span style="font-weight: bold"> Số tiền:</span>&nbsp; &nbsp;{{ element?.terminalAmount }}</div>
+                <div><span style="font-weight: bold"> Phí thực tế:</span>&nbsp; &nbsp;{{ element?.identifierId }}</div>
+                <div><span style="font-weight: bold"> Đã chi :</span>&nbsp; &nbsp;{{ element?.officeName | money }}</div>
+                <div><span style="font-weight: bold"> Đã thu hồi :</span>&nbsp; &nbsp;{{ element?.agencyName }}</div>
               </div>
             </div>
           </td>
