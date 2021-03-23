@@ -58,6 +58,7 @@ export class GeneralTabComponent {
   /** Client Id */
   clientid: any;
   isTeller = true;
+  isInterchangeClient = false;
 
   /**
    * @param {ActivatedRoute} route Activated Route
@@ -79,6 +80,12 @@ export class GeneralTabComponent {
       this.upcomingCharges = data.clientChargesData.pageItems;
       this.clientSummary = data.clientSummary[0];
       this.clientid = this.route.parent.snapshot.params['clientId'];
+      this.route.queryParamMap
+      .subscribe((params) => {
+          if (params.get("clientType") == 'ic') {
+          this.isInterchangeClient = true
+        }
+      });
     });
     const currentUser = this.authenticationService.getCredentials();
     const {roles, staffId} = currentUser;

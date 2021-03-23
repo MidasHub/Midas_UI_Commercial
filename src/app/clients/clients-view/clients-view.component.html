@@ -72,7 +72,7 @@
             </button>
             <p *midasHasActiveModule="'mgmModule'">
               <button mat-raised-button [routerLink]="['/clients/create/']"
-                [queryParams]="{'mgmId': clientViewData.id }">
+                [queryParams]="{'mgmId': clientViewData.id }" *ngIf="!this.isInterchangeClient">
                 <i class="fas fa-user-plus"></i> Thêm MGM
               </button>
             </p>
@@ -81,14 +81,15 @@
 
         </div>
 
-        <mat-card-actions fxLayout="column" fxLayoutAlign="center center" *ngIf="!this.showViewClient"  class="client-actions">
+        <mat-card-actions fxLayout="column" fxLayoutAlign="center center" *ngIf="!this.showViewClient"
+          class="client-actions">
 
-          <span *midasHasPermission="'UPDATE_CLIENT'" class="m-b-10"  fxLayoutAlign="center stretch">
-            <button mat-raised-button [routerLink]="['edit']" >
+          <span *midasHasPermission="'UPDATE_CLIENT'" class="m-b-10" fxLayoutAlign="center stretch">
+            <button mat-raised-button [routerLink]="['edit']">
               <i class="fa fa-edit"></i>{{ "Client_Component.ViewClient.btnEdit" | translate }}
             </button>
           </span>
-          
+
 
           <!-- <button mat-raised-button [matMenuTriggerFor]="Applications">
             <i class="fa fa-file"></i>{{ "Client_Component.ViewClient.btnApplication" | translate }}
@@ -114,91 +115,88 @@
             </button>
           </mat-menu> -->
 
-          <button mat-raised-button [matMenuTriggerFor]="Actions" >
+          <button mat-raised-button [matMenuTriggerFor]="Actions">
             <i class="fas fa-tasks"></i>{{ "Client_Component.ViewClient.btnAction" | translate }}
           </button>
           <mat-menu #Actions="matMenu">
             <button mat-menu-item [routerLink]="['savings-accounts', 'create']">
-              {{ "Client_Component.ViewClient.btnNewSaving" | translate }}
+              <i class="fas fa-file-invoice-dollar"></i> {{ "Client_Component.ViewClient.btnNewSaving" | translate }}
             </button>
             <button mat-menu-item (click)="doAction('Update Default Savings')"
               *midasHasPermission="'UPDATESAVINGSACCOUNT_CLIENT'">
-              {{ "Client_Component.ViewClient.btnUpdateDefaultSaving" | translate }}
+              <i class="fas fa-file-invoice"></i> {{ "Client_Component.ViewClient.btnUpdateDefaultSaving" | translate }}
             </button>
-            <button mat-menu-item (click)="doAction('Create Self Service User')">
-              {{ "Client_Component.ViewClient.btnCreateSelfService" | translate }}
-            </button>
-            <span *ngIf="!clientViewData.staffId">
-              <button mat-raised-button (click)="doAction('Assign Staff')">
-                <i class="fa fa-user"></i>{{ "Client_Component.ViewClient.btnAssignStaff" | translate }}
+            <div *ngIf="!this.isInterchangeClient">
+              <button mat-menu-item (click)="doAction('Create Self Service User')">
+                <i class="fas fa-portrait"></i> {{ "Client_Component.ViewClient.btnCreateSelfService" | translate }}
               </button>
-            </span>
-            <span *ngIf="clientViewData.staffId">
-              <button mat-raised-button *midasHasPermission="'UNASSIGNSTAFF_CLIENT'" (click)="doAction('Unassign Staff')">
-                <i class="fa fa-user"></i>{{ "Client_Component.ViewClient.btnUnAssignStaff" | translate }}
+              <span *ngIf="!clientViewData.staffId">
+                <button mat-menu-item (click)="doAction('Assign Staff')">
+                  <i class="fas fa-hands-helping"></i> {{ "Client_Component.ViewClient.btnAssignStaff" | translate }}
+                </button>
+              </span>
+              <span *ngIf="clientViewData.staffId">
+                <button mat-menu-item *midasHasPermission="'UNASSIGNSTAFF_CLIENT'" (click)="doAction('Unassign Staff')">
+                  <i class="fas fa-user-alt-slash"></i> {{ "Client_Component.ViewClient.btnUnAssignStaff" | translate }}
+                </button>
+              </span>
+              <mat-divider></mat-divider>
+              <button mat-menu-item (click)="doAction('Transfer Client')">
+                <i class="fas fa-exchange-alt"></i> {{ "Client_Component.ViewClient.btnTransferClient" | translate }}
               </button>
-            </span>
-            <mat-divider></mat-divider>
-            
-            <button mat-menu-item (click)="doAction('Close')">
-              {{ "Client_Component.ViewClient.btnClose" | translate }}
-            </button>
-            <button mat-menu-item (click)="doAction('Transfer Client')">
-              {{ "Client_Component.ViewClient.btnTransferClient" | translate }}
-            </button>
-            <mat-divider></mat-divider>
+              <button mat-menu-item (click)="doAction('Close')">
+                <i class="fas fa-user-times"></i> {{ "Client_Component.ViewClient.btnClose" | translate }}
+              </button>
 
-            <span *ngIf="clientViewData.status.value === 'Pending'">
-              <button mat-menu-item
-                (click)="doAction('Activate')">
-                {{ "Client_Component.ViewClient.btnActivate" | translate }}
-              </button></span>
-            <span *ngIf="clientViewData.status.value === 'Pending'">
-              <button mat-menu-item
-                (click)="doAction('Withdraw')">
-                {{ "Client_Component.ViewClient.btnWithdraw" | translate }}
-              </button></span>
-            <span *ngIf="clientViewData.status.value === 'Pending'">
-              <button mat-menu-item (click)="doAction('Reject')">
-                {{ "Client_Component.ViewClient.btnReject" | translate }}
-              </button></span>
-            <span *ngIf="clientViewData.status.value === 'Pending'">
-              <button mat-menu-item
-                *midasHasPermission="'DELETE_CLIENT'" (click)="doAction('Delete')">
-                {{ "Client_Component.ViewClient.btnDelete" | translate }}
-              </button></span>
-            <span *ngIf="clientViewData.status.value === 'Closed'">
-                <button mat-menu-item
-                (click)="doAction('Reactivate')">
-                {{ "Client_Component.ViewClient.btnReactivate" | translate }}
-              </button></span>
-            <span *ngIf="clientViewData.status.value === 'Rejected'"><button mat-menu-item
-                (click)="doAction('Undo Rejection')">
-                {{ "Client_Component.ViewClient.btnUndoReject" | translate }}
-              </button></span>
-            <span *ngIf="clientViewData.status.value === 'Transfer in progress'"><button mat-menu-item
-                (click)="doAction('Undo Transfer')">
-                {{ "Client_Component.ViewClient.btnUndoTransfer" | translate }}r
-              </button></span>
-            <span *ngIf="clientViewData.status.value === 'Transfer in progress'"><button mat-menu-item
-                (click)="doAction('Accept Transfer')">
-                {{ "Client_Component.ViewClient.btnAcceptTransfer" | translate }}
-              </button></span>
-            <span *ngIf="clientViewData.status.value === 'Transfer in progress'"><button mat-menu-item
-                (click)="doAction('Reject Transfer')">
-                {{ "Client_Component.ViewClient.btnRejectTransfer" | translate }}
-              </button></span>
-              
-            <button mat-menu-item (click)="doAction('Upload Signature')" *midasHasPermission="'CREATE_CLIENTIMAGE'">
-              {{ "Client_Component.ViewClient.btnUploadSignature" | translate }}
-            </button>
-            <button mat-menu-item (click)="doAction('Delete Signature')" *midasHasPermission="'DELETE_CLIENTIMAGE'">
-              {{ "Client_Component.ViewClient.btnDeleteSignature" | translate }}
-            </button>
-            
+              <mat-divider></mat-divider>
+
+              <span *ngIf="clientViewData.status.value === 'Pending'">
+                <button mat-menu-item (click)="doAction('Activate')">
+                  {{ "Client_Component.ViewClient.btnActivate" | translate }}
+                </button></span>
+              <span *ngIf="clientViewData.status.value === 'Pending'">
+                <button mat-menu-item (click)="doAction('Withdraw')">
+                  {{ "Client_Component.ViewClient.btnWithdraw" | translate }}
+                </button></span>
+              <span *ngIf="clientViewData.status.value === 'Pending'">
+                <button mat-menu-item (click)="doAction('Reject')">
+                  {{ "Client_Component.ViewClient.btnReject" | translate }}
+                </button></span>
+              <span *ngIf="clientViewData.status.value === 'Pending'">
+                <button mat-menu-item *midasHasPermission="'DELETE_CLIENT'" (click)="doAction('Delete')">
+                  {{ "Client_Component.ViewClient.btnDelete" | translate }}
+                </button></span>
+              <span *ngIf="clientViewData.status.value === 'Closed'">
+                <button mat-menu-item (click)="doAction('Reactivate')">
+                  {{ "Client_Component.ViewClient.btnReactivate" | translate }}
+                </button></span>
+              <span *ngIf="clientViewData.status.value === 'Rejected'"><button mat-menu-item
+                  (click)="doAction('Undo Rejection')">
+                  {{ "Client_Component.ViewClient.btnUndoReject" | translate }}
+                </button></span>
+              <span *ngIf="clientViewData.status.value === 'Transfer in progress'"><button mat-menu-item
+                  (click)="doAction('Undo Transfer')">
+                  {{ "Client_Component.ViewClient.btnUndoTransfer" | translate }}r
+                </button></span>
+              <span *ngIf="clientViewData.status.value === 'Transfer in progress'"><button mat-menu-item
+                  (click)="doAction('Accept Transfer')">
+                  {{ "Client_Component.ViewClient.btnAcceptTransfer" | translate }}
+                </button></span>
+              <span *ngIf="clientViewData.status.value === 'Transfer in progress'"><button mat-menu-item
+                  (click)="doAction('Reject Transfer')">
+                  {{ "Client_Component.ViewClient.btnRejectTransfer" | translate }}
+                </button></span>
+
+              <button mat-menu-item (click)="doAction('Upload Signature')" *midasHasPermission="'CREATE_CLIENTIMAGE'">
+                <i class="fas fa-file-signature"></i> {{ "Client_Component.ViewClient.btnUploadSignature" | translate }}
+              </button>
+              <button mat-menu-item (click)="doAction('Delete Signature')" *midasHasPermission="'DELETE_CLIENTIMAGE'">
+                <i class="fas fa-times"></i> {{ "Client_Component.ViewClient.btnDeleteSignature" | translate }}
+              </button>
+            </div>
           </mat-menu>
 
-          
+
 
           <!-- <button mat-raised-button [matMenuTriggerFor]="More">
             <i class="fab fa-buromobelexperte"></i>{{ "Client_Component.ViewClient.btnMoreAction" | translate }}
@@ -242,8 +240,8 @@
 
 
     </div>
-    <div fxFlex.gt-md="80"  class="rightside">
-      <nav mat-tab-nav-bar class="navigation-tabs m-b-10">
+    <div fxFlex.gt-md="80" class="rightside">
+      <nav mat-tab-nav-bar class="navigation-tabs m-b-10" *ngIf="!this.isInterchangeClient">
         <a mat-tab-link [routerLink]="['./identities']" [queryParams]="{ typeViewClient: this.typeViewClient }"
           routerLinkActive #identities="routerLinkActive" [active]="identities.isActive"
           *midasHasPermission="'READ_CLIENTIDENTIFIER'">
@@ -254,7 +252,7 @@
           routerLinkActive #general="routerLinkActive" [active]="general.isActive">
           {{ "Client_Component.ViewClient.lblGeneral" | translate }}
         </a>
-        
+
         <a mat-tab-link [routerLink]="['./address']" [queryParams]="{ typeViewClient: this.typeViewClient }"
           routerLinkActive #address="routerLinkActive" [active]="address.isActive"
           *ngIf="clientTemplateData.isAddressEnabled">
@@ -274,22 +272,29 @@
           {{ "Client_Component.ViewClient.lblDocument" | translate }}
         </a>
         <ng-container *ngFor="let clientDatatable of clientDatatables">
-            <a mat-tab-link [routerLink]="['./datatables', clientDatatable.registeredTableName]"
-              [queryParams]="{ typeViewClient: this.typeViewClient }" routerLinkActive #datatable="routerLinkActive"
-              [active]="datatable.isActive" *midasHasPermission="'READ_' + clientDatatable.registeredTableName">
-              {{
-              (clientDatatable.registeredTableName.indexOf("Ext") >= 0)
-              ? ("Client_Component.ViewClient.lblExtendInfo" | translate)
-              : clientDatatable.registeredTableName
-              }}
-            </a>
+          <a mat-tab-link [routerLink]="['./datatables', clientDatatable.registeredTableName]"
+            [queryParams]="{ typeViewClient: this.typeViewClient }" routerLinkActive #datatable="routerLinkActive"
+            [active]="datatable.isActive" *midasHasPermission="'READ_' + clientDatatable.registeredTableName">
+            {{
+            (clientDatatable.registeredTableName.indexOf("Ext") >= 0)
+            ? ("Client_Component.ViewClient.lblExtendInfo" | translate)
+            : clientDatatable.registeredTableName
+            }}
+          </a>
         </ng-container>
-        
+
       </nav>
-    
-        <router-outlet></router-outlet>
-    
-      
+      <nav mat-tab-nav-bar class="navigation-tabs m-b-10" *ngIf="this.isInterchangeClient">
+
+        <a mat-tab-link [routerLink]="['./general']" [queryParams]="{ typeViewClient: this.typeViewClient }"
+          routerLinkActive #general="routerLinkActive" [active]="general.isActive">
+          {{ "Client_Component.ViewClient.lblGeneral" | translate }}
+        </a>
+      </nav>
+
+      <router-outlet></router-outlet>
+
+
     </div>
 
   </mat-card-content>

@@ -2,7 +2,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
-import { DatePipe } from '@angular/common';
+import { DatePipe,Location } from '@angular/common';
 
 /** Custom Services */
 import { ClientsService } from '../clients.service';
@@ -62,7 +62,8 @@ export class EditClientComponent implements OnInit {
               private clientsService: ClientsService,
               private authenticationService: AuthenticationService,
               private datePipe: DatePipe,
-              private settingsService: SettingsService) {
+              private settingsService: SettingsService,
+              private location: Location) {
     this.route.data.subscribe((data: { clientDataAndTemplate: any }) => {
       this.clientDataAndTemplate = data.clientDataAndTemplate;
     });
@@ -187,6 +188,10 @@ export class EditClientComponent implements OnInit {
     this.clientsService.updateClient(this.clientDataAndTemplate.id, clientData).subscribe(() => {
       this.router.navigate(['../'], { relativeTo: this.route });
     });
+  }
+
+  goback(){
+    this.location.back()
   }
 
 }
