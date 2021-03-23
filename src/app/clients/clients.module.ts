@@ -64,6 +64,8 @@ import { AddIdentitiesExtraInfoComponent } from './clients-view/identities-tab/d
 import { BalanceAccountClientComponent } from './balance-account-client/balance-account-client.component';
 import { BalanceAccountTellerComponent } from './balance-account-teller/balance-account-teller.component';
 import { AddLimitIdentitiesExtraInfoComponent } from './clients-view/identities-tab/dialog-add-limit-extra-info/dialog-add-limit-extra-info.component';
+import { ClientCustomerComponent } from './client-customer/client-customer.component';
+
 
 /**
  * Clients Module
@@ -132,6 +134,7 @@ import { AddLimitIdentitiesExtraInfoComponent } from './clients-view/identities-
     AddLimitIdentitiesExtraInfoComponent,
     BalanceAccountClientComponent,
     BalanceAccountTellerComponent,
+    ClientCustomerComponent
   ],
   exports: [
   ],

@@ -64,23 +64,23 @@
           <th mat-header-cell *matHeaderCellDef>Hành động</th>
           <td mat-cell *matCellDef="let identity; let i = index">
 
-            <button class="identity-action-button" mat-raised-button color="primary"
+            <button class="action-button" mat-raised-button color="primary"
               (click)="routeToMakeTransaction(identity.id, 'cash', identity.documentKey)"
               *midasHasPermission="'TXN_CREATE'" matTooltip="Rút tiền mặt">
               <i class="fas fa-money-bill-wave"></i>
             </button>
             
-            <button class="identity-action-button" mat-raised-button color="warn" *midasHasPermission="'TXN_CREATE'"
+            <button class="action-button" mat-raised-button color="warn" *midasHasPermission="'TXN_CREATE'"
               (click)="routeToMakeTransaction(identity.id, 'rollTerm', identity.documentKey)" matTooltip="Đáo hạn thẻ">
               <i class="fas fa-hand-holding-usd"></i>
             </button>
             <br />
-            <button class="identity-action-button" mat-raised-button *midasHasPermission="'TXN_CREATE'"
+            <button class="action-button" mat-raised-button *midasHasPermission="'TXN_CREATE'"
               matTooltip="Thu hộ">
               <i class="fas fa-arrow-up"></i>
             </button>
             
-            <button class="identity-action-button" mat-raised-button *midasHasPermission="'TXN_CREATE'"
+            <button class="action-button" mat-raised-button *midasHasPermission="'TXN_CREATE'"
               matTooltip="Chi hộ">
               <i class="fas fa-arrow-down"></i>
             </button>
