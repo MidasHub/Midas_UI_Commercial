@@ -581,7 +581,7 @@ export class CreateBatchTransactionComponent implements OnInit {
             toAccountId: result?.result?.clientInfo?.savingsAccountId,
             rate: this.getFee(member.cardNumber.slice(0, 6), "CA01"),
           };
-          this.dataSource = [...this.dataSource, this.generaForm(batchTransaction, member)];
+          this.dataSource = [ this.generaForm(batchTransaction, member), ...this.dataSource];
         }
       });
     } else {

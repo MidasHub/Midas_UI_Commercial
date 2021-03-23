@@ -1,3 +1,8 @@
+
+::ng-deep .cdk-overlay-pane  {
+  min-width: 500px !important;
+}
+
 .batchTxnCss {
   width: 96%;
   margin: 1rem;
@@ -29,9 +34,6 @@
     }
   }
 
-  ::ng-deep #cdk-overlay-1 {
-    width: 500px;
-  }
 
   .card-info {
     text-decoration: underline;
@@ -72,6 +74,7 @@
 
   .select-custom {
     width: 70px;
+
   }
 
   .input-custom {
