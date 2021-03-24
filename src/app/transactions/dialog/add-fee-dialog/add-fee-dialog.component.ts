@@ -76,7 +76,6 @@ export class AddFeeDialogComponent implements OnInit {
   }
 
   checkAccountAndAmountPaid() {
-
     this.formDialogPaid.value;
     const value = this.formDialogPaid.get("paymentCode").value;
     if (value !== "DE") {
@@ -84,8 +83,18 @@ export class AddFeeDialogComponent implements OnInit {
       this.formDialogPaid.get("amountPaid").enable();
       this.transactionFee = this.transactions.find((v) => v.txnPaymentType === "IN");
       this.transactionPaid = this.transactions.find((v) => v.txnPaymentType === "OUT");
-      this.formDialogPaid.get("amountPaid").setValue(this.transactionPaid?.feeRemain);
-      this.formDialogGet.get("amountGet").setValue(this.transactionFee?.feeRemain);
+
+      if (!this.transactionPaid) {
+        this.formDialogPaid.get("amountPaid").setValue(0);
+      } else {
+        this.formDialogPaid.get("amountPaid").setValue(this.transactionPaid?.feeRemain);
+      }
+
+      if (!this.transactionFee) {
+        this.formDialogGet.get("amountGet").setValue(0);
+      } else {
+        this.formDialogGet.get("amountGet").setValue(this.transactionFee?.feeRemain);
+      }
     } else {
       this.showGet = false;
       this.formDialogPaid.get("amountPaid").setValue(this.transactionPaid?.feeRemain - this.transactionFee?.feeRemain);
@@ -146,6 +155,7 @@ export class AddFeeDialogComponent implements OnInit {
       if (this.transactionPaid) {
         this.paidAmount = this.transactionPaid?.feeRemain;
       }
+
       if (this.transactionFee) {
         this.feeAmount = this.transactionFee?.feeRemain;
       }
@@ -172,27 +182,24 @@ export class AddFeeDialogComponent implements OnInit {
       }
 
       // this.clientService.getClientAccountData()
-    this.transactionService.getPaymentTypes().subscribe((result) => {
+      this.transactionService.getPaymentTypes().subscribe((result) => {
+        this.paidPaymentType = result?.result?.listPayment;
 
-      this.paidPaymentType = result?.result?.listPayment;
-
-      if (this.transactionPaid && this.transactionPaid.txnType === "ROLLTERM") {
-
-        this.paidPaymentType.splice(this.paidPaymentType.findIndex(x => x.code === "DE"), 1);
-      }
-      this.midasClientServices.getListSavingAccountByUserId().subscribe((result) => {
-        this.accountsFee = result?.result?.listSavingAccount;
-        this.accountsPaid = this.accountsFee;
-        this.checkAccountAndAmountPaid();
+        if (this.transactionPaid && this.transactionPaid.txnType === "ROLLTERM") {
+          this.paidPaymentType.splice(
+            this.paidPaymentType.findIndex((x) => x.code === "DE"),
+            1
+          );
+        }
+        this.midasClientServices.getListSavingAccountByUserId().subscribe((result) => {
+          this.accountsFee = result?.result?.listSavingAccount;
+          this.accountsPaid = this.accountsFee;
+          this.checkAccountAndAmountPaid();
+        });
       });
     });
 
-
-
-    });
-
     this.currentUser = this.authenticationService.getCredentials();
-
   }
 
   submitForm() {
@@ -229,7 +236,6 @@ export class AddFeeDialogComponent implements OnInit {
           // message: '🚨🚨 Lỗi thanh toán phí, vui lòng liên hệ IT Support để được hổ trợ 🚨🚨',
           message: result?.error,
         });
-        // this.dialogRef.close({ status: false });
       }
     });
   }
