@@ -90,25 +90,6 @@ export class SavingsAccountViewComponent implements OnInit {
     }
     this.productsService.getSavingProduct(savingsProductId).subscribe((data: any) => {
       this.savingProduct = data;
-
-      if (['CCA0', 'ACA0'].indexOf(this.savingProduct.shortName) === -1) {
-        this.buttonConfig.addButton({
-          name: 'Quản lý vốn đối tác',
-          icon: 'fa fa-handshake-o',
-          taskPermissionName: 'POSTINTEREST_SAVINGSACCOUNT',
-          action: 'advanceCashPartnerTransaction',
-        },
-        );
-
-        this.buttonConfig.addButton({
-          name: 'Chuyển vốn liên chi nhánh',
-          icon: 'fa fa-arrow-right',
-          taskPermissionName: 'POSTINTEREST_SAVINGSACCOUNT',
-          action: 'transferCrossOfficeCash',
-        },
-        );
-
-      }
       if (['FCA0', 'SCA0', 'ACA0'].indexOf(this.savingProduct.shortName) === -1 && savingsProductId !== 2) {
         this.buttonConfig.addButton({
           name: 'Công nợ khách hàng',
@@ -117,6 +98,25 @@ export class SavingsAccountViewComponent implements OnInit {
           action: 'advanceCash',
         });
       }
+      if (['CCA0', 'ACA0'].indexOf(this.savingProduct.shortName) === -1) {
+        this.buttonConfig.addButton({
+          name: 'Quản lý vốn đối tác',
+          icon: 'fas fa-comments-dollar',
+          taskPermissionName: 'POSTINTEREST_SAVINGSACCOUNT',
+          action: 'advanceCashPartnerTransaction',
+        },
+        );
+
+        this.buttonConfig.addButton({
+          name: 'Chuyển tiền nội bộ',
+          icon: 'fas fa-exchange-alt',
+          taskPermissionName: 'POSTINTEREST_SAVINGSACCOUNT',
+          action: 'transferCrossOfficeCash',
+        },
+        );
+
+      }
+      
     });
     roles.map((role: any) => {
       if (role.id !== 3) {
@@ -263,14 +263,14 @@ export class SavingsAccountViewComponent implements OnInit {
   setConditionalButtons() {
     const status = this.savingsAccountData.status.value;
     this.buttonConfig = new SavingsButtonsConfiguration(status);
-    if (this.savingsAccountData.clientId || this.savingsAccountData.groupId) {
-      this.buttonConfig.addButton({
-        name: this.i18n.getTranslate('Saving_Account_Component.ViewSavingAccount.buttonTransferFunds'),
-        taskPermissionName: 'CREATE_ACCOUNTTRANSFER',
-        icon: 'fa fa-paper-plane',
-        action: 'Transfer Funds',
-      });
-    }
+    // if (this.savingsAccountData.clientId || this.savingsAccountData.groupId) {
+    //   this.buttonConfig.addButton({
+    //     name: this.i18n.getTranslate('Saving_Account_Component.ViewSavingAccount.buttonTransferFunds'),
+    //     taskPermissionName: 'CREATE_ACCOUNTTRANSFER',
+    //     icon: 'fa fa-paper-plane',
+    //     action: 'Transfer Funds',
+    //   });
+    // }
     // if (!this.savingsAccountData.fieldOfficerId) {
     //   this.buttonConfig.addOption({
     //     name: 'Assign Staff',

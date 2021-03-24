@@ -46,11 +46,11 @@
 
       <ng-container *ngIf="buttonConfig?.options">
         <button mat-raised-button
-                [matMenuTriggerFor]="More">{{ 'Saving_Account_Component.ViewSavingAccount.buttonMore'| translate}}</button>
+                [matMenuTriggerFor]="More"><i class="fas fa-tasks"></i> {{ 'Saving_Account_Component.ViewSavingAccount.buttonMore'| translate}}</button>
         <mat-menu #More="matMenu">
         <span *ngFor="let option of buttonConfig.options">
           <button mat-menu-item *midasHasPermission="option.taskPermissionName"
-                  (click)="doAction(option.action)">{{option.name | translate}}</button>
+                  (click)="doAction(option.action)"><i class="fas fa-times"></i> {{option.name | translate}}</button>
         </span>
         </mat-menu>
       </ng-container>
@@ -279,7 +279,7 @@
     <nav mat-tab-nav-bar class="navigation-tabs">
       <a mat-tab-link [routerLink]="['./transactions']" routerLinkActive #transactions="routerLinkActive"
          [active]="transactions.isActive">
-        Transactions
+        Chi tiết giao dịch
       </a>
       <!--      <a mat-tab-link [routerLink]="['./charges']" routerLinkActive #charges="routerLinkActive"-->
       <!--      [active]="charges.isActive">-->

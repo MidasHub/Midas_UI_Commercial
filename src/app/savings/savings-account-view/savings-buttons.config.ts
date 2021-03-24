@@ -39,7 +39,7 @@ export class SavingsButtonsConfiguration {
           },
           {
             name: 'Saving_Account_Component.ViewSavingAccount.buttonWithdraw',
-            icon: 'fa fa-money',
+            icon: 'fa fa-arrow-down',
             taskPermissionName: 'POS_UPDATE',
             action: 'Withdraw'
           },
