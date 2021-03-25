@@ -1,12 +1,12 @@
 /** Angular Imports */
-import {CollectionViewer, DataSource} from '@angular/cdk/collections';
+import { CollectionViewer, DataSource } from '@angular/cdk/collections';
 
 /** rxjs Imports */
-import {Observable, BehaviorSubject} from 'rxjs';
+import { Observable, BehaviorSubject } from 'rxjs';
 
 /** Custom Services */
-import {ClientsService} from './clients.service';
-import {MidasClientService} from '../midas-client/midas-client.service';
+import { ClientsService } from './clients.service';
+import { MidasClientService } from '../midas-client/midas-client.service';
 
 /**
  * Clients custom data source to implement server side filtering, pagination and sorting.
@@ -36,11 +36,13 @@ export class ClientsDataSource implements DataSource<any> {
    * @param {number} pageIndex Page number.
    * @param {number} limit Number of clients within the page.
    */
-  getClients(orderBy: string = '', sortOrder: string = '', pageIndex: number = 0, limit: number = 10, clientActive: boolean = true) {
+  getClients(clientType:string='22',orderBy: string = '', sortOrder: string = '', pageIndex: number = 0, limit: number = 10, clientActive: boolean = true) {
     this.clientsSubject.next([]);
     let sqlSearch = '';
     if (clientActive) {
-      sqlSearch = `c.status_enum = 300`;
+      sqlSearch = `c.status_enum = 300 and c.client_type_cv_id IN (${clientType})`;
+    } else {
+      sqlSearch = `c.status_enum = 600 and c.client_type_cv_id IN (${clientType})`;
     }
     this.clientsService.getClientsByOfficeOfUser('', '', pageIndex * limit, limit, sqlSearch)
       .subscribe((clients: any) => {
@@ -72,10 +74,10 @@ export class ClientsDataSource implements DataSource<any> {
    * @param {number} pageIndex Page number.
    * @param {number} limit Number of clients within the page.
    */
-  filterClients(filter: string, orderBy: string = '', sortOrder: string = '', pageIndex: number = 0, limit: number = 10, clientActive: boolean = true) {
+  filterClients(filter: string, orderBy: string = '', sortOrder: string = '', pageIndex: number = 0, limit: number = 10, clientActive: boolean = true,clientType:string='22') {
     this.clientsSubject.next([]);
     if (!filter) {
-      this.getClients();
+      this.getClients(clientType);
     } else {
       filter = String(filter).normalize('NFD')
         .replace(/[\u0300-\u036f]/g, '')
@@ -88,7 +90,7 @@ export class ClientsDataSource implements DataSource<any> {
       let sqlSearch = `(display_name LIKE "%${filter}%" OR c.external_id LIKE "%${filter}%" OR  c.mobile_no LIKE "%${filter}%")`; // searchClientByNameAndExternalIdAndPhoneAndDocumentKey
 
       if (clientActive) {
-        sqlSearch = `${sqlSearch} AND c.status_enum = 300`;
+        sqlSearch = `${sqlSearch} AND c.status_enum = 300 and c.client_type_cv_id IN (${clientType})`;
       }
       this.clientsService.getClientsByOfficeOfUser('', '', pageIndex * limit, limit, sqlSearch)
         .subscribe((clients: any) => {
@@ -107,4 +109,31 @@ export class ClientsDataSource implements DataSource<any> {
 
   }
 
+
+  /** Filter Active Client Data.
+   * @param {string} filterType Filter Value which clients should be filtered by client type:21=Customer,22=Internal,143=Vault
+   * @param {string} orderBy Property by which clients should be sorted.
+   * @param {string} sortOrder Sort order: ascending or descending.
+   * @param {number} pageIndex Page number.
+   * @param {number} limit Number of clients within the page.
+   */
+  // getClientsbyType(orderBy: string = '', sortOrder: string = '', pageIndex: number = 0, limit: number = 10, clientActive: boolean = true,clientType: string = '21', ) {
+
+  //   //let sqlSearch = `(c.client_type_cv_id LIKE "%${filterType}%" )`; // searchClientByNameAndExternalIdAndPhoneAndDocumentKey
+  //   this.clientsSubject.next([]);
+  //   let sqlSearch = '';
+  //   if (clientActive) {
+  //     sqlSearch = `c.status_enum = 300 and c.client_type_cv_id IN (${clientType}) `;
+  //     console.log(sqlSearch)
+  //   } else {
+  //     sqlSearch = `c.status_enum = 600 and c.client_type_cv_id IN (${clientType}) `;
+  //   }
+  //   this.clientsService.getClientsByOfficeOfUser('', '', pageIndex * limit, limit, sqlSearch)
+  //     .subscribe((clients: any) => {
+  //       // clients.pageItems = (clientActive) ? (clients.pageItems.filter((client: any) => client.active)) : (clients.pageItems.filter((client: any) => !client.active));
+  //       this.recordsSubject.next(clients.totalFilteredRecords);
+  //       this.clientsSubject.next(clients.pageItems);
+  //     });
+
+  // }
 }

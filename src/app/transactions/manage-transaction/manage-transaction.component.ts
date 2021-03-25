@@ -266,19 +266,19 @@ export class ManageTransactionComponent implements OnInit {
       }
       return true;
     });
-    this.totalTerminalAmount = this.filterData.reduce((total: any, num: any) => {
+    this.totalTerminalAmount = this.filterData?.reduce((total: any, num: any) => {
       return total + Math.round(num?.terminalAmount);
     }, 0);
-    this.totalFeeAmount = this.filterData.reduce((total: any, num: any) => {
+    this.totalFeeAmount = this.filterData?.reduce((total: any, num: any) => {
       return total + Math.round(num?.feeAmount);
     }, 0);
-    this.totalCogsAmount = this.filterData.reduce((total: any, num: any) => {
+    this.totalCogsAmount = this.filterData?.reduce((total: any, num: any) => {
       return total + Math.round(num?.cogsAmount);
     }, 0);
-    this.totalPnlAmount = this.filterData.reduce((total: any, num: any) => {
+    this.totalPnlAmount = this.filterData?.reduce((total: any, num: any) => {
       return total + Math.round(num?.pnlAmount);
     }, 0);
-    this.dataSource = this.filterData.slice(offset, offset + limit);
+    this.dataSource = this.filterData?.slice(offset, offset + limit);
   }
 
   get fromDateAndToDate() {
@@ -433,10 +433,8 @@ export class ManageTransactionComponent implements OnInit {
     if (toDate) {
       toDate = this.datePipe.transform(toDate, dateFormat);
     }
-    const { permissions } = this.currentUser;
-    const permit = permissions.includes("TXN_CREATE");
     const form = this.formFilter.value;
-    let query = `fromDate=${fromDate}&toDate=${toDate}&permission=${!permit}&officeName=${form.officeId || "ALL"}`;
+    let query = `fromDate=${fromDate}&toDate=${toDate}&officeName=${form.officeId || "ALL"}`;
     const keys = Object.keys(form);
     for (const key of keys) {
       if (key === "staffId") {
@@ -471,10 +469,9 @@ export class ManageTransactionComponent implements OnInit {
     if (toDate) {
       toDate = this.datePipe.transform(toDate, dateFormat);
     }
-    const { permissions } = this.currentUser;
-    const permit = permissions.includes("TXN_CREATE");
+
     const form = this.formFilter.value;
-    let query = `fromDate=${fromDate}&toDate=${toDate}&permission=${!permit}&officeName=${form.officeId || "ALL"}`;
+    let query = `fromDate=${fromDate}&toDate=${toDate}&officeName=${form.officeId || "ALL"}`;
     const keys = Object.keys(form);
     for (const key of keys) {
       if (key === "staffId") {

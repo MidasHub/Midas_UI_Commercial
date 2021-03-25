@@ -13,6 +13,7 @@ import { AlertService } from "app/core/alert/alert.service";
 import { SettingsService } from "app/settings/settings.service";
 import { AddFeeDialogComponent } from "../dialog/add-fee-dialog/add-fee-dialog.component";
 import { CreateSuccessTransactionDialogComponent } from "../dialog/create-success-transaction-dialog/create-success-transaction-dialog.component";
+import { ValidCheckTransactionHistoryDialogComponent } from "../dialog/valid-check-transaction-history/valid-check-transaction-history-dialog.component";
 import { TransactionService } from "../transaction.service";
 
 /**
@@ -176,7 +177,8 @@ export class CreateTransactionComponent implements OnInit {
       this.transactionInfo.rate &&
       this.transactionInfo.rate !== 0
     ) {
-      const amount_value = this.transactionInfo.terminalAmount;
+      this.transactionInfo.terminalAmount = this.transactionCreateForm.controls["terminalAmount"].value ;
+      const amount_value = this.transactionInfo.terminalAmount;;
       const rate = this.transactionInfo.rate;
       this.transactionInfo.cogsRate = this.terminalFee.cogsRate;
       this.transactionInfo.feeAmount = (
@@ -261,7 +263,9 @@ export class CreateTransactionComponent implements OnInit {
           return;
         }
         if (typeof data.result.caution != "undefined" && data.result.caution != "NaN") {
-          this.alertService.alert({ message: data.result.caution, msgClass: "cssDanger", hPosition: "center" });
+          this.showHistoryTransaction(data.result.caution, data.result.listTransaction);
+
+          // this.alertService.alert({ message: data.result.caution, msgClass: "cssDanger", hPosition: "center" });
         }
         this.transactionInfo.invoiceMapping = data.result;
         this.transactionInfo.txnAmount = this.formatCurrency(data.result.amountTransaction);
@@ -271,6 +275,19 @@ export class CreateTransactionComponent implements OnInit {
         this.calculateFeeTransaction();
       });
   }
+
+  showHistoryTransaction(message: string , listTransaction: any) {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.data = {
+      listTransaction: listTransaction,
+      message: message
+    };
+    dialogConfig.minWidth = 400;
+    dialogConfig.maxWidth = 800;
+
+    this.dialog.open(ValidCheckTransactionHistoryDialogComponent, dialogConfig);
+  }
+
   onchangeRate(event: any) {
     this.transactionInfo.rate = event.target.value;
     this.CheckValidRate();

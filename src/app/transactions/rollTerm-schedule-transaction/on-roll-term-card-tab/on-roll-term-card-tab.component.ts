@@ -102,7 +102,7 @@ export class OnRollTermCardTabComponent implements OnInit {
       toDate: [new Date(new Date().setMonth(new Date().getMonth() + 1))],
     });
     this.formFilter = this.formBuilder.group({
-      bankName: [''],
+      bankName: ['ALL'],
       query: [''],
     });
   }
@@ -114,7 +114,6 @@ export class OnRollTermCardTabComponent implements OnInit {
     this.bankService.getBanks().subscribe((data: any) => {
       if (data) {
         this.listBank = data;
-        this.listBank.unshift({bankCode: '', bankName: 'Tất cả ngân hàng'});
       }
     });
   }

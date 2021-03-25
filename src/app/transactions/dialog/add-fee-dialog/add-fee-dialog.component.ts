@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from "@angular/core";
+import { AfterViewInit, Component, Inject, OnInit } from "@angular/core";
 import { TransactionService } from "../../transaction.service";
 import { FormBuilder, FormGroup } from "@angular/forms";
 import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
@@ -37,6 +37,7 @@ export class AddFeeDialogComponent implements OnInit {
   clientAccount: any;
   messageNoti: string;
   isLoading: boolean = false;
+  amountPaidBooking: number;
 
   constructor(
     private transactionService: TransactionService,
@@ -49,6 +50,7 @@ export class AddFeeDialogComponent implements OnInit {
     private midasClientServices: MidasClientService
   ) {
     this.txnCode = data.data?.txnCode;
+    this.amountPaidBooking = data.data?.amountPaid;
     this.formDialogPaid = this.formBuilder.group({
       paymentCode: [""],
       savingAccountPaid: [""],
@@ -74,7 +76,6 @@ export class AddFeeDialogComponent implements OnInit {
   }
 
   checkAccountAndAmountPaid() {
-
     this.formDialogPaid.value;
     const value = this.formDialogPaid.get("paymentCode").value;
     if (value !== "DE") {
@@ -82,9 +83,18 @@ export class AddFeeDialogComponent implements OnInit {
       this.formDialogPaid.get("amountPaid").enable();
       this.transactionFee = this.transactions.find((v) => v.txnPaymentType === "IN");
       this.transactionPaid = this.transactions.find((v) => v.txnPaymentType === "OUT");
-      this.formDialogPaid.get("amountPaid").setValue(this.transactionPaid.feeRemain);
-      this.formDialogGet.get("amountGet").setValue(this.transactionFee.feeRemain);
 
+      if (!this.transactionPaid) {
+        this.formDialogPaid.get("amountPaid").setValue(0);
+      } else {
+        this.formDialogPaid.get("amountPaid").setValue(this.transactionPaid?.feeRemain);
+      }
+
+      if (!this.transactionFee) {
+        this.formDialogGet.get("amountGet").setValue(0);
+      } else {
+        this.formDialogGet.get("amountGet").setValue(this.transactionFee?.feeRemain);
+      }
     } else {
       this.showGet = false;
       this.formDialogPaid.get("amountPaid").setValue(this.transactionPaid?.feeRemain - this.transactionFee?.feeRemain);
@@ -105,7 +115,6 @@ export class AddFeeDialogComponent implements OnInit {
   }
 
   checkAccountFee() {
-
     const value = this.formDialogGet.get("paymentCodeGet").value;
     if (value === "AM") {
       if (!this.clientAccount) {
@@ -138,9 +147,15 @@ export class AddFeeDialogComponent implements OnInit {
       this.transactionPaid = this.transactions.find((v) => v.txnPaymentType === "OUT");
       this.selectedPaymentTypePaid = "FT";
 
+      // check is get amount paid from booking
+      if (this.amountPaidBooking && this.amountPaidBooking > 0) {
+        this.transactionPaid.feeRemain = this.amountPaidBooking;
+      }
+
       if (this.transactionPaid) {
         this.paidAmount = this.transactionPaid?.feeRemain;
       }
+
       if (this.transactionFee) {
         this.feeAmount = this.transactionFee?.feeRemain;
       }
@@ -156,24 +171,35 @@ export class AddFeeDialogComponent implements OnInit {
         this.selectedPaymentTypePaid = "DE";
         this.paidAmount = this.paidAmount - this.feeAmount;
         this.formDialogPaid.get("amountPaid").setValue(this.paidAmount);
-
       }
       this.formDialogGet.get("amountGet").setValue(this.feeAmount);
       this.formDialogPaid.get("paymentCode").setValue(this.selectedPaymentTypePaid);
-      this.formDialogGet.get("paymentCodeGet").setValue("FT");
 
+      if (this.transactionFee && this.transactionFee.txnType === "ROLLTERM") {
+        this.formDialogGet.get("paymentCodeGet").setValue("AM");
+      } else {
+        this.formDialogGet.get("paymentCodeGet").setValue("FT");
+      }
+
+      // this.clientService.getClientAccountData()
+      this.transactionService.getPaymentTypes().subscribe((result) => {
+        this.paidPaymentType = result?.result?.listPayment;
+
+        if (this.transactionPaid && this.transactionPaid.txnType === "ROLLTERM") {
+          this.paidPaymentType.splice(
+            this.paidPaymentType.findIndex((x) => x.code === "DE"),
+            1
+          );
+        }
+        this.midasClientServices.getListSavingAccountByUserId().subscribe((result) => {
+          this.accountsFee = result?.result?.listSavingAccount;
+          this.accountsPaid = this.accountsFee;
+          this.checkAccountAndAmountPaid();
+        });
+      });
     });
-    // this.clientService.getClientAccountData()
-    this.transactionService.getPaymentTypes().subscribe((result) => {
-      this.paidPaymentType = result?.result?.listPayment;
-    });
+
     this.currentUser = this.authenticationService.getCredentials();
-    this.midasClientServices.getListSavingAccountByUserId().subscribe((result) => {
-      this.accountsFee = result?.result?.listSavingAccount;
-      this.accountsPaid = this.accountsFee;
-      this.checkAccountAndAmountPaid();
-    });
-
   }
 
   submitForm() {
@@ -182,11 +208,10 @@ export class AddFeeDialogComponent implements OnInit {
       this.formDialogGet.markAllAsTouched();
       return;
     }
-    if (this.formDialogPaid.get("paymentCode").value == 'DE'){
-        this.formDialogPaid.get("amountPaid").enable();
-        this.formDialogGet.get("amountGet").setValue("");
-    }else{
-
+    if (this.formDialogPaid.get("paymentCode").value == "DE") {
+      this.formDialogPaid.get("amountPaid").enable();
+      this.formDialogGet.get("amountGet").setValue("");
+    } else {
     }
     let form = {
       ...this.formDialogGet.value,
@@ -211,7 +236,6 @@ export class AddFeeDialogComponent implements OnInit {
           // message: '🚨🚨 Lỗi thanh toán phí, vui lòng liên hệ IT Support để được hổ trợ 🚨🚨',
           message: result?.error,
         });
-        // this.dialogRef.close({ status: false });
       }
     });
   }

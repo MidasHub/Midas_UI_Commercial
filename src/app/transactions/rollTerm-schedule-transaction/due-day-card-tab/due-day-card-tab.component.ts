@@ -113,7 +113,7 @@ export class DueDayCardTabComponent implements OnInit {
       toDate: [new Date(new Date().setMonth(new Date().getMonth() + 1))],
     });
     this.formFilter = this.formBuilder.group({
-      bankName: [''],
+      bankName: ['ALL'],
       statusFilter: [''],
       query: [''],
 
@@ -124,6 +124,7 @@ export class DueDayCardTabComponent implements OnInit {
   ngOnInit(): void {
     this.currentUser = this.authenticationService.getCredentials();
     this.getRollTermScheduleAndCardDueDayInfo();
+    this.listBank = [];
     this.bankService.getBanks().subscribe((data: any) => {
       if (data) {
         this.listBank = data;

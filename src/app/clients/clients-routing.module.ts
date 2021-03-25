@@ -24,6 +24,7 @@ import {ViewChargeComponent} from './clients-view/charges/view-charge/view-charg
 import {ClientPayChargesComponent} from './clients-view/charges/client-pay-charges/client-pay-charges.component';
 import {EditClientComponent} from './edit-client/edit-client.component';
 import {CreateClientComponent} from './create-client/create-client.component';
+import {ClientCustomerComponent} from './client-customer/client-customer.component';
 
 /** Custom Resolvers */
 import {ClientViewResolver} from './common-resolvers/client-view.resolver';
@@ -76,14 +77,32 @@ const routes: Routes = [
       path: 'clients',
       data: {
         title: extract('Client_Component.Breadcrumb.labelClient'),
-        breadcrumb: 'Client_Component.Breadcrumb.labelClient',
-        routeParamBreadcrumb: false
+        breadcrumb: 'Danh sách',//'Client_Component.Breadcrumb.labelClient',
+        routeParamBreadcrumb: 'false'
       },
       children: [
         {
           path: '',
-          component: ClientsComponent
+          component: ClientsComponent,
+          children:[
+            {
+              path:'customer',
+              data: {title: extract('customer'),  breadcrumb: 'Khách Hàng',routeParamBreadcrumb: false,ctype:'cus'},//filterType:'21'},
+              component: ClientCustomerComponent
+            },
+            {
+              path:'staff',
+              data: {title: extract('staff'),  breadcrumb: 'Nhân viên',routeParamBreadcrumb: false,ctype:'staff'},//filterType:'22,143'},
+              component: ClientCustomerComponent
+            },
+            {
+              path:'interchange',
+              data: {title: extract('interchange'),  breadcrumb: 'Đối tác Interchange',routeParamBreadcrumb: false,ctype:'ic'},//filterType:'23'},
+              component: ClientCustomerComponent
+            },
+          ]
         },
+
         {
           path: 'create',
           data: {

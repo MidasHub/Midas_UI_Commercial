@@ -19,7 +19,7 @@
               [innerHTML]="'Client_Component.ClientStepper.GeneralStep.labelOfficeMsg' |translate"></mat-error>
           </mat-form-field>
 
-          <mat-form-field fxFlex="48%">
+          <mat-form-field fxFlex="48%" >
             <mat-label>{{'Client_Component.ClientStepper.GeneralStep.labelStaff' |translate}}</mat-label>
             <mat-select formControlName="staffId">
               <mat-option *ngFor="let staff of staffOptions" [value]="staff.id">
@@ -47,7 +47,7 @@
           <mat-form-field *ngIf="editClientForm.contains('firstname')" fxFlex="48%">
             <mat-label>{{'Client_Component.ClientStepper.GeneralStep.labelFirstName' |translate}}</mat-label>
             <input matInput required formControlName="firstname">
-            <mat-error *ngIf="editClientForm.controls.firstname.hasError('required')" 
+            <mat-error *ngIf="editClientForm.controls.firstname.hasError('required')"
               [innerHTML]="'Client_Component.ClientStepper.GeneralStep.labelFirstNameMsg' |translate"></mat-error>
           </mat-form-field>
 
@@ -142,12 +142,12 @@
               <mat-datepicker-toggle matSuffix [for]="incorpValidityTillDateDatePicker"></mat-datepicker-toggle>
               <mat-datepicker #incorpValidityTillDateDatePicker></mat-datepicker>
             </mat-form-field>
-  
+
             <mat-form-field fxFlex="48%">
               <mat-label>{{'Client_Component.ClientStepper.GeneralStep.labelCorpID' |translate}}</mat-label>
               <input matInput formControlName="incorpNumber">
             </mat-form-field>
-  
+
             <mat-form-field fxFlex="48%">
               <mat-label>{{'Client_Component.ClientStepper.GeneralStep.labelCorpMainBiz' |translate}}</mat-label>
               <mat-select formControlName="mainBusinessLineId">
@@ -156,7 +156,7 @@
                 </mat-option>
               </mat-select>
             </mat-form-field>
-  
+
             <mat-form-field fxFlex="48%">
               <mat-label>{{'Client_Component.ClientStepper.GeneralStep.labelCorpConstitution'|translate}}</mat-label>
               <mat-select formControlName="constitutionId">
@@ -165,7 +165,7 @@
                 </mat-option>
               </mat-select>
             </mat-form-field>
-  
+
             <mat-form-field fxFlex="98%">
               <mat-label>{{'Client_Component.ClientStepper.GeneralStep.labelCorpRemark' |translate}}</mat-label>
               <textarea matInput formControlName="remarks"></textarea>
@@ -178,7 +178,8 @@
       </mat-card-content>
 
       <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
-        <button type="button" mat-raised-button [routerLink]="['../']">{{'Client_Component.ClientStepper.buttonCancel' |translate}}</button>
+        <!-- <button type="button" mat-raised-button [routerLink]="['../']">{{'Client_Component.ClientStepper.buttonCancel' |translate}}</button> -->
+        <button type="button" mat-raised-button (click)="goback()">{{'Client_Component.ClientStepper.buttonCancel' |translate}}</button>
         <button mat-raised-button color="primary" [disabled]="!editClientForm.valid" (click)="submit()">{{'Client_Component.ClientStepper.buttonSubmit' |translate}}</button>
       </mat-card-actions>
 

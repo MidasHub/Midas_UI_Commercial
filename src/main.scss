@@ -4,19 +4,18 @@
  */
 
 // Import Default Theme for MIDAS
-@import "theme/custom/denim-yellowgreen";
+@import "theme/custom/default_theme.scss";
 // @import "theme/custom/pictonblue-yellowgreen.scss";
 
 // Global Imports
 /* You can add global styles to this file, and also import other style files */
 @import "assets/styles/helper";
 
-
 // 3rd party libraries
 //$fa-font-path: "../node_modules/font-awesome/fonts";
 //@import "../node_modules/font-awesome/scss/font-awesome.scss";
 // don't use fontawesome from node_module
-$fa-font-path:"theme/fontawesome/webfonts";
+$fa-font-path: "theme/fontawesome/webfonts";
 @import "theme/fontawesome/scss/fontawesome.scss";
 @import "theme/fontawesome/scss/brands.scss";
 @import "theme/fontawesome/scss/solid.scss";
@@ -25,8 +24,7 @@ $fa-font-path:"theme/fontawesome/webfonts";
 // add css for angular-calendar lib
 @import "../node_modules/angular-calendar/css/angular-calendar.css";
 
-// custom disable input style
-.mat-input-element:disabled, .mat-form-field-type-mat-native-select.mat-form-field-disabled .mat-form-field-infix::after {
-  color: red !important;
-  font-weight: bold !important;
-}
+
+
+
+

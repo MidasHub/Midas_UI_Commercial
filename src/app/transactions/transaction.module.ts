@@ -35,6 +35,7 @@ import { AddInformationCardBatchComponent } from './dialog/add-information-card-
 import { CreateSuccessTransactionDialogComponent } from './dialog/create-success-transaction-dialog/create-success-transaction-dialog.component';
 import { MainboardComponent } from 'app/home/mainboard/mainboard.component';
 import { MakeFeeOnAdvanceComponent } from './dialog/make-fee-on-advance/make-fee-on-advance.component';
+import { ValidCheckTransactionHistoryDialogComponent } from './dialog/valid-check-transaction-history/valid-check-transaction-history-dialog.component';
 
 /**
  * Profile Module
@@ -66,7 +67,7 @@ import { MakeFeeOnAdvanceComponent } from './dialog/make-fee-on-advance/make-fee
     AddInformationCardBatchComponent,
     CreateSuccessTransactionDialogComponent,
     MakeFeeOnAdvanceComponent,
-
+    ValidCheckTransactionHistoryDialogComponent,
   ],
 
   imports: [

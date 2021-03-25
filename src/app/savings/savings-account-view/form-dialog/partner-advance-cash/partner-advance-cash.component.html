@@ -30,7 +30,7 @@
   <mat-form-field fxFlex="96%" *ngIf="form.contains('partnerOfficeAdvanceCash')">
     <mat-label>{{'Saving_Account_Component.PartnerAdvanceCash.labelOfficeReciver' |translate}}</mat-label>
     <mat-select required formControlName="partnerOfficeAdvanceCash">
-      <mat-option *ngFor="let type of partnerOfficeAdvanceCashes" [value]="type.id">
+      <mat-option *ngFor="let type of partnerOfficeAdvanceCashes" [value]="type.officeId">
         {{ type.name }}
       </mat-option>
     </mat-select>

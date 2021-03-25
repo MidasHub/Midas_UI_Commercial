@@ -129,7 +129,7 @@ export class CreateCardBatchTransactionComponent implements OnInit {
         const typeDocument = this.formDialog.get('documentTypeId').value;
         const type = this.documents.find(v => v.id === typeDocument);
         if (type && Number(type.id) >= 38 && Number(type.id) <= 57) {
-          this.bankService.getInfoBinCode(value.substring(0,6)).subscribe((res: any) => {
+          this.bankService?.getInfoBinCode(value.substring(0,6)).subscribe((res: any) => {
             if (res) {
               if (res.existBin) {
                 const {bankCode, cardType} = res;

@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Injectable } from "@angular/core";
-import { HttpClient, HttpParams } from "@angular/common/http";
+import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
 
 /** rxjs Imports */
 import { Observable } from "rxjs";
@@ -20,6 +20,8 @@ export class SavingsService {
   private credentialsStorageKey = "midasCredentials";
   private accessToken: any;
   private GatewayApiUrlPrefix: any;
+  private environment: any;
+
 
   constructor(private http: HttpClient,
      private datePipe: DatePipe,
@@ -31,6 +33,40 @@ export class SavingsService {
       sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey)
     );
     this.GatewayApiUrlPrefix = environment.GatewayApiUrlPrefix;
+    this.environment = environment;
+  }
+
+  checkValidRevertSavingTransaction(resourceId: string): Observable<any> {
+    let httpParams = this.commonHttpParams.getCommonHttpParams();
+      httpParams = httpParams.set("resourceId", resourceId)
+
+    return this.http.post(`${this.GatewayApiUrlPrefix}/savingTransaction/check_valid_revert_saving_transaction`, httpParams);
+  }
+
+  /**
+   * @param {string} savingAccountId is saving account"s Id.
+   * @returns {Observable<any>}
+   */
+   transferCrossOfficeCashTransaction(info: any): Observable<any> {
+    let httpParams = this.commonHttpParams.getCommonHttpParams();
+    httpParams = httpParams.set("buSavingAccount", info.buSavingAccount);
+    httpParams = httpParams.set("paymentTypeId", info.paymentTypeId);
+    httpParams = httpParams.set("note", info.note);
+    httpParams = httpParams.set("amountAdvanceCash", info.amountAdvanceCash);
+    httpParams = httpParams.set("clientSavingAccount", info.clientSavingAccount);
+
+    return this.http.post(`${this.GatewayApiUrlPrefix}/savingTransaction/transfer_cross_office_transaction`, httpParams);
+  }
+
+  /**
+   * @param {string} savingAccountId is saving account"s Id.
+   * @returns {Observable<any>}
+   */
+   getListClientSavingStaffByOffice(staffId: string): Observable<any> {
+    let httpParams = this.commonHttpParams.getCommonHttpParams();
+    httpParams = httpParams.set("staffId", staffId);
+
+    return this.http.post(`${this.GatewayApiUrlPrefix}/savingTransaction/get_list_client_saving_staff_by_office`, httpParams);
   }
 
   createGroupSavingsAccount(groupId:string, productId: string, savingsAccount: any): Observable<any> {
@@ -131,6 +167,12 @@ export class SavingsService {
     );
   }
 
+  // getListOfficeCommon() {
+  //   let httpParams = this.commonHttpParams.getCommonHttpParams();
+
+  //   return this.http.post<any>(`${this.GatewayApiUrlPrefix}/common/get_list_office`, httpParams);
+  // }
+
   getListOfficeCommon() {
     let httpParams = this.commonHttpParams.getCommonHttpParams();
 
@@ -141,7 +183,7 @@ export class SavingsService {
     let httpParams = this.commonHttpParams.getCommonHttpParams();
     httpParams = httpParams.set("buSavingAccount", payload.buSavingAccount);
     httpParams = httpParams.set("paymentTypeId", payload.paymentTypeId);
-    httpParams = httpParams.set("note", `${payload.partnerPaymentType} # ${payload.partnerAdvanceCash} # ${payload.notePartnerAdvance}`);
+    httpParams = httpParams.set("note", `${payload.paymentTypeId} # ${payload.partnerAdvanceCash} # ${payload.notePartnerAdvance}`);
     httpParams = httpParams.set("amountAdvanceCash", payload.amountAdvanceCash);
     httpParams = httpParams.set("routingCode", payload.partnerAdvanceCash);
     httpParams = httpParams.set("clientSavingAccount", payload.partnerClientVaultAdvanceCash);
@@ -170,6 +212,17 @@ export class SavingsService {
     );
   }
 
+  getExportExcelFile(url: string) {
+    const httpOptions = {
+      responseType: "blob" as "json",
+      headers: new HttpHeaders({
+        "Gateway-TenantId": this.environment.GatewayTenantId,
+      }),
+    };
+
+    return this.http.get(url, httpOptions);
+  }
+
   downloadReport(
     accountId: string,
     toDate: string,
@@ -183,26 +236,13 @@ export class SavingsService {
       sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey)
     );
     const url = `${environment.GatewayApiUrl}${this.GatewayApiUrlPrefix}/export/download_export_transaction_saving?accessToken=${this.accessToken.base64EncodedAuthenticationKey}&fromDate=${fromDate}&toDate=${toDate}&accountId=${accountId}&note=${note}&txnCode=${txnCode}&paymentDetail=${paymentDetail}&createdBy=${this.accessToken.userId}`;
-    let xhr = new XMLHttpRequest();
-    xhr = new XMLHttpRequest();
-    xhr.onreadystatechange = function () {
-      let a;
-      if (xhr.readyState === 4 && xhr.status === 200) {
-        a = document.createElement("a");
-        a.href = window.URL.createObjectURL(xhr.response);
-        a.download = `export_transaction_${new Date().getTime()}`;
-        a.style.display = "none";
-        document.body.appendChild(a);
-        a.click();
-      }
-    };
-
-    xhr.open("GET", url);
-    if (environment.isNewBillPos) {
-      xhr.setRequestHeader("Gateway-TenantId", environment.GatewayTenantId);
-    }
-    xhr.responseType = "blob";
-    return xhr.send();
+    this.getExportExcelFile(url).subscribe((data: any) => {
+      const downloadURL = window.URL.createObjectURL(data);
+      const link = document.createElement("a");
+      link.href = downloadURL;
+      link.download = "V_saving_transaction.xlsx";
+      link.click();
+    });
   }
 
   /**

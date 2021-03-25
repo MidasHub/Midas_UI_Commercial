@@ -101,26 +101,26 @@ export class CreateClientComponent implements OnInit {
       if (this.mgmId) {
         this.clientsService.getClientCross(this.mgmId).subscribe((response: any) => {
           const client = response?.result?.clientInfo;
-            if (client && client.savingsAccountId) {
-              this.savingsService.getSavingsAccountData(client.savingsAccountId).subscribe((data) => {
-                if (data.status.active){
-                  this.clientMGM = client;
-                } else {
-                  this.alertService.alert({
-                    message: " [MGM] Tài khoản khách hàng không khả dụng, Vui lòng liên hệ IT support để được hộ trợ.",
-                    msgClass: "cssError",
-                  });
-                  return;
-                }
-              })
-            } else {
-              this.alertService.alert({
-                message: " [MGM] Thông tin khách hàng không hợp lệ, Vui lòng liên hệ IT support để được hộ trợ.",
-                msgClass: "cssError",
-              });
-              return;
-            }
-        })
+          if (client && client.savingsAccountId) {
+            this.savingsService.getSavingsAccountData(client.savingsAccountId).subscribe((data) => {
+              if (data.status.active) {
+                this.clientMGM = client;
+              } else {
+                this.alertService.alert({
+                  message: " [MGM] Tài khoản khách hàng không khả dụng, Vui lòng liên hệ IT support để được hộ trợ.",
+                  msgClass: "cssError",
+                });
+                return;
+              }
+            });
+          } else {
+            this.alertService.alert({
+              message: " [MGM] Thông tin khách hàng không hợp lệ, Vui lòng liên hệ IT support để được hộ trợ.",
+              msgClass: "cssError",
+            });
+            return;
+          }
+        });
       }
     });
   }
@@ -244,21 +244,19 @@ export class CreateClientComponent implements OnInit {
       const dataRelation = {
         firstName: data.firstname,
         lastName: data.lastname,
-        maritalStatus: data.maritalStatus
-
-      }
+        maritalStatus: data.maritalStatus,
+      };
       clientFamilyMembers.push(this.createFamilyMember(dataRelation));
     }
 
     if (this.mgmId && this.clientMGM) {
-
-        const dataRelation = {
-          firstName: this.clientMGM.firstname,
-          lastName: `${this.clientMGM.lastname} ${this.clientMGM.middlename}`,
-          mgmRelationId: 142,
-          qualification: `${this.clientMGM.externalId}#${this.clientMGM.id}`
-        }
-        clientFamilyMembers.push(this.createFamilyMember(dataRelation));
+      const dataRelation = {
+        firstName: this.clientMGM.firstname,
+        lastName: `${this.clientMGM.lastname} ${this.clientMGM.middlename}`,
+        mgmRelationId: 142,
+        qualification: `${this.clientMGM.externalId}#${this.clientMGM.id}`,
+      };
+      clientFamilyMembers.push(this.createFamilyMember(dataRelation));
     }
 
     if (clientFamilyMembers.length > 0) {
@@ -285,58 +283,61 @@ export class CreateClientComponent implements OnInit {
     };
     this.clientsService.createClient(clientData).subscribe(async (response: any) => {
       if (response && response.clientId) {
-        const identities_value = {
-          documentTypeId: this.client.documentTypeId,
-          documentKey: this.client.externalId,
-          description: this.client.documentTypeId,
-          status: "Active",
-        };
-        // let done = 0;
-        this.clientsService.addClientIdentifier(response.clientId, identities_value).subscribe(async (res: any) => {
-          const { resourceId } = res;
-          for (const file of this.client.files) {
-            if (file) {
-              console.log("file " , file);
-              const item = await this.resizeImage(file, 500, 600);
-              const formData: FormData = new FormData();
-              formData.append("name", file.name);
-              formData.append("file", item);
-              formData.append("fileName", file.name);
-              this.clientsService.uploadClientIdentifierDocument(resourceId, formData).subscribe((ssss: any) => {
-                // done += 1;
-              });
-            }
-          }
-
-          if (this.groupId) {
-            this.groupsService
-              .executeGroupCommand(this.groupId, "associateClients", { clientMembers: [response.clientId] })
-              .subscribe(() => {
-                this.alertService.alert({
-                  message: "Added Client to group",
-                  msgClass: "cssSuccess",
+        if (this.client.externalId) {
+          const identities_value = {
+            documentTypeId: this.client.documentTypeId,
+            documentKey: this.client.externalId,
+            description: this.client.documentTypeId,
+            status: "Active",
+          };
+          // let done = 0;
+          this.clientsService.addClientIdentifier(response.clientId, identities_value).subscribe(async (res: any) => {
+            const { resourceId } = res;
+            for (const file of this.client.files) {
+              if (file) {
+                console.log("file ", file);
+                const item = await this.resizeImage(file, 500, 600);
+                const formData: FormData = new FormData();
+                formData.append("name", file.name);
+                formData.append("file", item);
+                formData.append("fileName", file.name);
+                this.clientsService.uploadClientIdentifierDocument(resourceId, formData).subscribe((ssss: any) => {
+                  // done += 1;
                 });
-              });
-          }
-        });
+              }
+            }
+          });
+        }
 
-        if (this.mgmId && this.clientMGM) {
-          this.clientsService.makeFundForMGM(this.clientMGM.savingsAccountId, response.displayName).subscribe((mgmResponse) => {
-            if (mgmResponse?.result?.status) {
+        if (this.groupId) {
+          this.groupsService
+            .executeGroupCommand(this.groupId, "associateClients", { clientMembers: [response.clientId] })
+            .subscribe(() => {
               this.alertService.alert({
-                type: "🎉🎉🎉 Thành công !!!",
-                message: "🎉🎉 Áp dụng chương trình MGM thành công!",
+                message: "Added Client to group",
                 msgClass: "cssSuccess",
               });
+            });
+        }
 
-            } else {
-              this.alertService.alert({
-                type: "🚨🚨🚨🚨 Lỗi ",
-                msgClass: "cssDanger",
-                message: mgmResponse?.error,
-              });
-            }
-          })
+        if (this.mgmId && this.clientMGM) {
+          this.clientsService
+            .makeFundForMGM(this.clientMGM.savingsAccountId, response.displayName)
+            .subscribe((mgmResponse) => {
+              if (mgmResponse?.result?.status) {
+                this.alertService.alert({
+                  type: "🎉🎉🎉 Thành công !!!",
+                  message: "🎉🎉 Áp dụng chương trình MGM thành công!",
+                  msgClass: "cssSuccess",
+                });
+              } else {
+                this.alertService.alert({
+                  type: "🚨🚨🚨🚨 Lỗi ",
+                  msgClass: "cssDanger",
+                  message: mgmResponse?.error,
+                });
+              }
+            });
         }
 
         // while (done !== this.client.files.length) {

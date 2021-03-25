@@ -1,14 +1,22 @@
-<mat-card class="mat-elevation-z20 container-custom">
-  <mat-card-content>
-    <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
-      <div fxLayout="row" fxFlex="18%" class="export-item">
-        <img src="assets/images/icons/transaction_total.svg" />
-        <div fxLayout="column">
-          <span class="money-total">{{ dataSource.length }}</span>
-          <span>Tổng giao dịch </span>
-        </div>
+<h1 class="m-l-10">Đại lý: {{ group?.name }}</h1>
+<mat-divider></mat-divider>
+
+<mat-card class="mat-elevation-z2 batchTxnCss">
+  <mat-card-header
+    class="p-10"
+    fxLayout="row wrap"
+    fxLayoutAlign="center center"
+    fxLayoutGap="2%"
+    fxLayout.lt-md="column"
+  >
+    <div fxLayout="row" fxFlex="18%" class="export-item">
+      <img src="assets/images/icons/transaction_total.svg" />
+      <div fxLayout="column">
+        <span class="money-total">{{ dataSource.length }}</span>
+        <span>Tổng giao dịch </span>
       </div>
-      <div fxLayout="row" fxFlex="18%" class="export-item">
+    </div>
+    <!-- <div fxLayout="row" fxFlex="18%" class="export-item">
         <img src="assets/images/icons/trading.svg" />
         <div fxLayout="column">
           <span class="money-total">{{ totalAmount | money }}</span>
@@ -21,45 +29,37 @@
           <span class="money-total">{{ totalRequest | money }}</span>
           <span>Tiền đề xuất</span>
         </div>
-      </div>
-      <!--      <div fxLayout="row" fxFlex="18%" class="export-item">-->
-      <!--        <img src="assets/images/icons/fees.svg">-->
-      <!--        <div fxLayout="column">-->
-      <!--          <span class="money-total">{{totalAmountTransaction | money}}</span>-->
-      <!--          <span>Tiền thực chi</span>-->
-      <!--        </div>-->
-      <!--      </div>-->
-      <div fxLayout="row" fxFlex="18%" class="export-item">
-        <img src="assets/images/icons/fees.svg" />
-        <div fxLayout="column">
-          <span class="money-total">{{ totalFee | money }}</span>
-          <span>Phí thu</span>
-        </div>
-      </div>
-      <div fxLayout="row" fxFlex="18%" class="export-item">
-        <img src="assets/images/icons/invoice.svg" />
-        <div fxLayout="column">
-          <span class="money-total">{{ totalTerminalAmount | money }}</span>
-          <span>Tổng số bill trên POS</span>
-        </div>
+      </div> -->
+    <!--      <div fxLayout="row" fxFlex="18%" class="export-item">-->
+    <!--        <img src="assets/images/icons/fees.svg">-->
+    <!--        <div fxLayout="column">-->
+    <!--          <span class="money-total">{{totalAmountTransaction | money}}</span>-->
+    <!--          <span>Tiền thực chi</span>-->
+    <!--        </div>-->
+    <!--      </div>-->
+    <div fxLayout="row" fxFlex="18%" class="export-item">
+      <img src="assets/images/icons/fees.svg" />
+      <div fxLayout="column">
+        <span class="money-total">{{ totalFee | money }}</span>
+        <span>Phí thu</span>
       </div>
     </div>
-  </mat-card-content>
+    <div fxLayout="row" fxFlex="18%" class="export-item">
+      <img src="assets/images/icons/invoice.svg" />
+      <div fxLayout="column">
+        <span class="money-total">{{ totalTerminalAmount | money }}</span>
+        <span>Tổng số bill trên POS</span>
+      </div>
+    </div>
+  </mat-card-header>
 
   <mat-card-content>
     <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
       <mat-form-field fxFlex="30%">
         <mat-label>Khách hàng</mat-label>
-        <input matInput [formControl]="formFilter" [matAutocomplete]="clientsAutocomplete" />
+        <input matInput [formControl]="formFilter" (click)="this.resetAutoComplete()"
+        [matAutocomplete]="clientsAutocomplete" />
       </mat-form-field>
-
-      <!--      <mat-autocomplete autoActiveFirstOption #clientsAutocomplete="matAutocomplete">-->
-      <!--        <mat-option *ngFor="let client of members" [value]="client.clientId">-->
-      <!--          {{ client.cardNumber.slice(0, 6) }}&nbsp;X&nbsp;{{ client.cardNumber.slice(client.cardNumber.length - 5, client.cardNumber.length) }}&nbsp;-->
-      <!--          - -->
-      <!--          &nbsp;{{client.fullName}}-->
-      <!--        </mat-option>-->
-      <!--      </mat-autocomplete>-->
 
       <mat-autocomplete autoActiveFirstOption #clientsAutocomplete="matAutocomplete" [displayWith]="displayClient">
         <mat-option *ngFor="let client of filteredOptions | async" [value]="client">
@@ -67,20 +67,6 @@
         </mat-option>
       </mat-autocomplete>
 
-      <!--      <mat-form-field fxFlex="30%" *ngIf="formFilter.contains('member')">-->
-      <!--        <mat-label>Khách hàng</mat-label>-->
-      <!--        <mat-select required formControlName="member">-->
-      <!--          <mat-option *ngFor="let type of members"-->
-      <!--                      [value]="type">-->
-      <!--            {{ type.cardNumber.slice(0, 6) }}&nbsp;X&nbsp;{{ type.cardNumber.slice(type.cardNumber.length - 5, type.cardNumber.length) }}&nbsp;-->
-      <!--            - -->
-      <!--            &nbsp;{{type.fullName}}-->
-      <!--          </mat-option>-->
-      <!--        </mat-select>-->
-      <!--        <mat-error *ngIf="formFilter.controls.member.hasError('required')">-->
-      <!--          Vui lòng chọn khách hàng-->
-      <!--        </mat-error>-->
-      <!--      </mat-form-field>-->
       <div fxFlex="10%">
         <button
           mat-button
@@ -124,94 +110,99 @@
         </button>
       </div>
     </div>
-    <mat-card-content>
-      <div class="example-table-container" fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-sm="column">
-        <table mat-table class="mat-elevation-z8 example-table" multiTemplateDataRows [dataSource]="dataSource" matSort>
-          <ng-container matColumnDef="clientName">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Tên khách hàng</th>
-            <td mat-cell *matCellDef="let form" style="max-width: 200px; word-break: break-word; text-align: left">
-              <label>
-                {{ form.get("clientName")?.value }}
-              </label>
-              <br />
-              <label class="card-info">
-                {{ (form.get("identitydocumentsId")?.value).replace("XXX-XXX", "X") }}
-              </label>
-            </td>
-          </ng-container>
 
-          <ng-container matColumnDef="productId">
-            <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>Dịch vụ</th>
-            <td mat-cell fxHide fxShow.gt-md *matCellDef="let form" [formGroup]="form">
-              <mat-form-field *ngIf="form.contains('productId') && !form.contains('saved')" class="select-custom">
-                <mat-label>Dịch vụ</mat-label>
-                <mat-select required formControlName="productId">
-                  <mat-option *ngFor="let type of batchProducts" [value]="type.value">
-                    {{ type.label }}
-                  </mat-option>
-                </mat-select>
-              </mat-form-field>
-              <span *ngIf="form.contains('saved')">{{ getLabelProduct(form.get("productId").value) }}</span>
-            </td>
-          </ng-container>
+    <div class="example-table-container mat-elevation-z8" fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-sm="column">
+      <table mat-table class="mat-elevation-z8 example-table" multiTemplateDataRows [dataSource]="dataSource" matSort>
+        <ng-container matColumnDef="clientName">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Tên khách hàng</th>
+          <td mat-cell *matCellDef="let form" style="max-width: 200px; word-break: break-word; text-align: left">
+            <label>
+              {{ form.get("clientName")?.value }}
+            </label>
+            <br />
+            <label class="card-info">
+              {{ form.get("identitydocumentsId")?.value.replace("XXX-XXX", "X") }}
+            </label>
+          </td>
+        </ng-container>
 
-          <ng-container matColumnDef="rate">
-            <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>Tỉ lệ Phí</th>
-            <td mat-cell fxHide fxShow.gt-md *matCellDef="let form" [formGroup]="form">
-              <mat-form-field
-                *ngIf="form.contains('rate') && !form.contains('saved')"
-                style="width: 60px; padding-right: 8px; padding-left: 8px"
+        <ng-container matColumnDef="productId">
+          <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>Dịch vụ</th>
+          <td mat-cell fxHide fxShow.gt-md *matCellDef="let form" [formGroup]="form">
+            <mat-form-field *ngIf="form.contains('productId') && !form.contains('saved')" class="select-custom">
+              <mat-label>Dịch vụ</mat-label>
+              <mat-select required formControlName="productId">
+                <mat-option *ngFor="let type of batchProducts" [value]="type.value">
+                  {{ type.label }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <span *ngIf="form.contains('saved')">{{ getLabelProduct(form.get("productId").value) }}</span>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="rate">
+          <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>Tỉ lệ Phí</th>
+          <td mat-cell fxHide fxShow.gt-md *matCellDef="let form" [formGroup]="form">
+            <mat-form-field
+              *ngIf="form.contains('rate') && !form.contains('saved')"
+              style="width: 60px; padding-right: 8px; padding-left: 8px"
+            >
+              <mat-label>Tỉ lệ phí</mat-label>
+              <input matInput required formControlName="rate" />
+            </mat-form-field>
+            <span *ngIf="form.contains('saved')">{{ form.get("rate").value }}</span>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="amount">
+          <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>Số tiền giao dịch</th>
+          <td mat-cell fxHide fxShow.gt-md *matCellDef="let form" [formGroup]="form">
+            <mat-form-field *ngIf="form.contains('requestAmount') && !form.contains('saved')" class="input-custom">
+              <mat-label>Số tiền giao dịch</mat-label>
+              <input matInput required currencyMask formControlName="requestAmount" (click)="clearRequestAmount()" />
+            </mat-form-field>
+            <span *ngIf="form.contains('saved')">{{ form.get("requestAmount").value | money }}</span>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="terminalId">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Máy POS</th>
+          <td mat-cell *matCellDef="let form" [formGroup]="form">
+            <mat-form-field
+              style="width: 100% !important"
+              appearance="fill"
+              *ngIf="form.contains('terminalId') && !form.contains('saved')"
+              class="select-custom"
+            >
+              <mat-label>Chọn máy POS</mat-label>
+              <mat-select
+                [required]="form?.data?.terminals?.length > 0"
+                formControlName="terminalId"
               >
-                <mat-label>Tỉ lệ phí</mat-label>
-                <input matInput required formControlName="rate" />
-              </mat-form-field>
-              <span *ngIf="form.contains('saved')">{{ form.get("rate").value }}</span>
-            </td>
-          </ng-container>
+                <mat-option *ngFor="let type of form?.data?.terminals" [value]="type.terminalId">
+                  {{ type.terminalName }} -
+                  {{ type.limitRemain | money }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <span *ngIf="form.contains('saved')">{{ form.get("terminalId").value }}</span>
+          </td>
+        </ng-container>
 
-          <ng-container matColumnDef="amount">
-            <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>Số tiền giao dịch</th>
-            <td mat-cell fxHide fxShow.gt-md *matCellDef="let form" [formGroup]="form">
-              <mat-form-field *ngIf="form.contains('requestAmount') && !form.contains('saved')" class="input-custom">
-                <mat-label>Số tiền giao dịch</mat-label>
-                <input matInput required currencyMask formControlName="requestAmount" />
-              </mat-form-field>
-              <span *ngIf="form.contains('saved')">{{ form.get("requestAmount").value | money }}</span>
-            </td>
-          </ng-container>
+        <ng-container matColumnDef="invoiceAmount">
+          <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>Số tiền đề xuất</th>
+          <td mat-cell fxHide fxShow.gt-md *matCellDef="let form" class="money-cell">
+            <label *midasHasActiveModule="'billModule'"> {{ form.get("invoiceAmount")?.value | money }} </label>
+          </td>
+        </ng-container>
 
-          <ng-container matColumnDef="terminalId">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Máy POS</th>
-            <td mat-cell *matCellDef="let form" [formGroup]="form">
-              <mat-form-field
-                style="width: 100% !important"
-                *ngIf="form.contains('terminalId') && !form.contains('saved')"
-                class="select-custom"
-              >
-                <mat-label>Chọn máy POS</mat-label>
-                <mat-select [required]="form?.data?.terminals?.length > 0" formControlName="terminalId">
-                  <mat-option *ngFor="let type of form?.data?.terminals" [value]="type.terminalId">
-                    {{ type.terminalName }} &nbsp;-&nbsp; {{ type.limitRemain | money }}
-                  </mat-option>
-                </mat-select>
-              </mat-form-field>
-              <span *ngIf="form.contains('saved')">{{ form.get("terminalId").value }}</span>
-            </td>
-          </ng-container>
-
-          <ng-container matColumnDef="invoiceAmount">
-            <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>Số tiền đề xuất</th>
-            <td mat-cell fxHide fxShow.gt-md *matCellDef="let form" class="money-cell" >
-               <label *midasHasActiveModule="'billModule'"> {{ form.get("invoiceAmount")?.value | money }} </label>
-            </td>
-          </ng-container>
-
-          <ng-container matColumnDef="fee">
-            <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>Phí thu</th>
-            <td mat-cell fxHide fxShow.gt-md *matCellDef="let form" class="money-cell">
-              {{ form.get("fee")?.value | money }}
-            </td>
-          </ng-container>
+        <ng-container matColumnDef="fee">
+          <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>Phí thu</th>
+          <td mat-cell fxHide fxShow.gt-md *matCellDef="let form" class="money-cell">
+            {{ form.get("fee")?.value | money }}
+          </td>
+        </ng-container>
 
         <!--            <ng-container matColumnDef="CM">-->
         <!--              <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>C/M</th>-->
@@ -223,44 +214,46 @@
         <!--              </td>-->
         <!--            </ng-container>-->
 
-          <ng-container matColumnDef="batchNo">
-            <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header style="text-align: center;">Batch No</th>
-            <td mat-cell fxHide fxShow.gt-md *matCellDef="let form" [formGroup]="form" style="text-align: center;">
-              <mat-form-field *ngIf="form.contains('batchNo') && !form.contains('saved')" class="no-input">
-                <mat-label>Batch No</mat-label>
-                <input  matInput formControlName="batchNo" />
-              </mat-form-field>
-              <span  *ngIf="form.contains('saved')" >{{ form.get("batchNo").value }}</span>
-            </td>
-          </ng-container>
+        <ng-container matColumnDef="batchNo">
+          <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header style="text-align: center">
+            Batch No
+          </th>
+          <td mat-cell fxHide fxShow.gt-md *matCellDef="let form" [formGroup]="form" style="text-align: center">
+            <mat-form-field *ngIf="form.contains('batchNo') && !form.contains('saved')" class="no-input">
+              <mat-label>Batch No</mat-label>
+              <input required matInput formControlName="batchNo" />
+            </mat-form-field>
+            <span *ngIf="form.contains('saved')">{{ form.get("batchNo").value }}</span>
+          </td>
+        </ng-container>
 
-          <ng-container matColumnDef="tid" style="text-align: center;">
-            <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header >Trace No</th>
-            <td mat-cell fxHide fxShow.gt-md *matCellDef="let form" [formGroup]="form" style="text-align: center;" >
-              <mat-form-field *ngIf="form.contains('tid') && !form.contains('saved')" class="no-input">
-                <mat-label>Trace No</mat-label>
-                <input  matInput formControlName="tid" />
-              </mat-form-field>
-              <span  *ngIf="form.contains('saved')">{{ form.get("tid").value }}</span>
-            </td>
-          </ng-container>
+        <ng-container matColumnDef="tid" style="text-align: center">
+          <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>Trace No</th>
+          <td mat-cell fxHide fxShow.gt-md *matCellDef="let form" [formGroup]="form" style="text-align: center">
+            <mat-form-field *ngIf="form.contains('tid') && !form.contains('saved')" class="no-input">
+              <mat-label>Trace No</mat-label>
+              <input required matInput formControlName="tid" />
+            </mat-form-field>
+            <span *ngIf="form.contains('saved')">{{ form.get("tid").value }}</span>
+          </td>
+        </ng-container>
 
-          <ng-container matColumnDef="terminalAmount">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Số tiền trên bill</th>
-            <td mat-cell *matCellDef="let form" [formGroup]="form">
-              <mat-form-field *ngIf="form.contains('terminalAmount') && !form.contains('saved')" class="input-custom">
-                <mat-label>Số tiền trên bill</mat-label>
-                <input matInput currencyMask formControlName="terminalAmount" />
-              </mat-form-field>
-              <span *ngIf="form.contains('saved')" style="text-align: right">{{
-                form.get("terminalAmount").value | money
-              }}</span>
-            </td>
-          </ng-container>
-          <ng-container matColumnDef="actions" style="width: 25px">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
-            <td mat-cell *matCellDef="let form">
-              <span
+        <ng-container matColumnDef="terminalAmount">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Số tiền trên bill</th>
+          <td mat-cell *matCellDef="let form" [formGroup]="form">
+            <mat-form-field *ngIf="form.contains('terminalAmount') && !form.contains('saved')" class="input-custom">
+              <mat-label>Số tiền trên bill</mat-label>
+              <input matInput required currencyMask formControlName="terminalAmount" />
+            </mat-form-field>
+            <span *ngIf="form.contains('saved')" style="text-align: right">{{
+              form.get("terminalAmount").value | money
+            }}</span>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="actions" style="width: 25px">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
+          <td mat-cell *matCellDef="let form">
+            <!-- <span
                 style="float: right; width: 15px"
                 [matMenuTriggerData]="{ form: form }"
                 [matMenuTriggerFor]="transactionMenu"
@@ -268,36 +261,57 @@
                 matTooltip="Menu"
                 #tooltip="matTooltip"
                 ><img src="assets/images/icons/more.svg"
-              /></span>
-            </td>
-          </ng-container>
-          <ng-container matColumnDef="expandedDetail">
-            <td mat-cell fxShow fxHide.gt-md *matCellDef="let element" [attr.colspan]="displayedColumns.length">
-              <div
-                class="example-element-detail"
-                [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'"
-              >
-                <div class="example-element-description" fxLayout="column"></div>
-              </div>
-            </td>
-          </ng-container>
-          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-          <tr
-            mat-row
-            *matRowDef="let element; columns: displayedColumns"
-            [formGroup]="element"
-            class="example-element-row"
-            [class.example-expanded-row]="expandedElement === element"
-            (click)="expandedElement = expandedElement === element ? null : element"
-          ></tr>
-          <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
-          <!--      <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>-->
-          <!--[routerLink]="['transactions/view', row.transactionId]"-->
-        </table>
-      </div>
-    </mat-card-content>
+              /></span> -->
+            <button
+              class="action-button"
+              mat-raised-button
+              color="primary"
+              (click)="onSave(form)"
+              *ngIf="!form.contains('saved')"
+              matTooltip="Lưu giao dịch"
+            >
+              <i class="fas fa-save"></i>
+            </button>
+
+            <button
+              class="action-button"
+              mat-raised-button
+              color="warn"
+              *ngIf="!form.contains('saved')"
+              (click)="deleteRow(form)"
+              matTooltip="Xóa giao dịch"
+            >
+              <i class="fas fa-trash-alt"></i>
+            </button>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="expandedDetail">
+          <td mat-cell fxShow fxHide.gt-md *matCellDef="let element" [attr.colspan]="displayedColumns.length">
+            <div class="example-element-detail" [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
+              <div class="example-element-description" fxLayout="column"></div>
+            </div>
+          </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr
+          mat-row
+          *matRowDef="let element; columns: displayedColumns"
+          [formGroup]="element"
+          class="example-element-row"
+          [class.example-expanded-row]="expandedElement === element"
+          (click)="expandedElement = expandedElement === element ? null : element"
+        ></tr>
+        <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
+        <!--      <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>-->
+        <!--[routerLink]="['transactions/view', row.transactionId]"-->
+      </table>
+    </div>
+
+    <div *ngIf="isLoading" style="display: flex; justify-content: center; align-items: center; background: white">
+      <mat-progress-spinner color="warn" mode="indeterminate"> </mat-progress-spinner>
+    </div>
   </mat-card-content>
-  <mat-menu #transactionMenu="matMenu" [overlapTrigger]="false" style="width: 50px">
+  <!-- <mat-menu #transactionMenu="matMenu" [overlapTrigger]="false" style="width: 50px">
     <ng-template matMenuContent let-form="form" style="width: 50px">
       <button mat-menu-item (click)="onSave(form)" *ngIf="!form.contains('saved')">
         <img style="margin-top: 5px" src="assets/images/icons/save.svg" />
@@ -309,7 +323,7 @@
         &nbsp;Xóa
       </button>
     </ng-template>
-  </mat-menu>
+  </mat-menu> -->
   <div *ngIf="isLoading" style="display: flex; justify-content: center; align-items: center; background: white">
     <mat-progress-spinner color="warn" mode="indeterminate"> </mat-progress-spinner>
   </div>

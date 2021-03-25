@@ -36,6 +36,11 @@
               "src/main.scss",
               {
                 "inject": false,
+                "input": "src/theme/custom/default_theme.scss",
+                "bundleName": "theme/default-theme"
+              },
+              {
+                "inject": false,
                 "input": "src/theme/deeppurple-amber.scss",
                 "bundleName": "theme/deeppurple-amber"
               },
@@ -51,7 +56,7 @@
               },
               {
                 "inject": false,
-                "input": "src/theme/purple-green.scss",
+                "input": "src/theme/custom/purple-green.scss",
                 "bundleName": "theme/purple-green"
               },
               {
@@ -84,7 +89,7 @@
               "extractLicenses": true,
               "vendorChunk": false,
               "buildOptimizer": true,
-              "serviceWorker": false,
+              "serviceWorker": true,
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",

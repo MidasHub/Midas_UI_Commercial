@@ -201,6 +201,7 @@
           <button *ngSwitchCase="'BATCH'" style="background: #e74c3c; color: white" mat-button class="btn btn-success">
             Lô
           </button>
+
           <button *ngSwitchDefault class="btn btn-success">
             <i class="fa fa-info-circle"></i>
           </button></td
@@ -247,13 +248,12 @@
           Đại lý
         </th>
         <td mat-cell fxHide fxShow.gt-md *matCellDef="let transaction">
-          {{ getDataOfGroupTxnCode(transaction)[0].customerName }} <br />
-          <label style="color: green">
-            {{
-              getDataOfGroupTxnCode(transaction)[0].agencyName != "#"
-                ? getDataOfGroupTxnCode(transaction)[0].agencyName
-                : ""
-            }}
+          {{ getDataOfGroupTxnCode(transaction)[0].customerName }}
+
+          <br />
+
+          <label *ngIf="getDataOfGroupTxnCode(transaction)[0].agencyName != '#'" style="color: green">
+            {{ getDataOfGroupTxnCode(transaction)[0].agencyName }}
           </label>
         </td>
       </ng-container>
@@ -321,15 +321,15 @@
         <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
         <td mat-cell *matCellDef="let transaction">
           <span
-            style="float: right; width: 15px"
+            style="width: 40px"
             [matMenuTriggerData]="{ txnCode: transaction }"
             [matMenuTriggerFor]="transactionMenu"
             matTooltip="Menu"
             #tooltip="matTooltip"
             (menuOpened)="menuOpened()"
             (menuClosed)="menuClosed()"
-            ><img src="assets/images/icons/settings.svg"
-          /></span>
+            ><i class="fa fa-ellipsis-v" aria-hidden="true"></i
+              ></span>
         </td>
       </ng-container>
       <ng-container matColumnDef="expandedDetail">
@@ -406,12 +406,23 @@
           &nbsp;Thu, chi tiền
         </button>
       </label>
+
       <label *ngIf="checkFeePaid(txnCode)" for="">
-      <button (click)="viewFeeDialog(txnCode)"  mat-menu-item>
-        <img src="assets/images/icons/completed-task.svg" />
-        &nbsp;Danh sách đã thu/chi tiền
-      </button>
-    </label>
+        <button (click)="viewFeeDialog(txnCode)" mat-menu-item>
+          <img src="assets/images/icons/completed-task.svg" />
+          &nbsp;Danh sách đã thu/chi tiền
+        </button>
+      </label>
+      <label>
+        <button
+          mat-menu-item
+          *ngIf="getDataOfGroupTxnCode(txnCode)[0].txnType == 'BATCH'"
+          [routerLink]="['/transaction/batch-transaction/', getDataOfGroupTxnCode(txnCode)[0].agencyId]"
+          [queryParams]="{ batchTxnName: getDataOfGroupTxnCode(txnCode)[0].txnCode }"
+        >
+          <img src="assets/images/icons/next.svg" />&nbsp;Chi tiết/tiếp tục giao dịch lô
+        </button>
+      </label>
     </ng-template>
   </mat-menu>
   <div *ngIf="isLoading" style="display: flex; justify-content: center; align-items: center; background: white">

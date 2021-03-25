@@ -1,0 +1,56 @@
+<mat-card-content>
+  <h3 class="errMessage" mat-dialog-title>
+    {{ message }}
+  </h3>
+
+  <table
+    *ngIf="dataSource.length !== 0"
+    mat-table
+    multiTemplateDataRows
+    class="mat-elevation-z8"
+    [dataSource]="dataSource"
+    matSort
+  >
+    <ng-container matColumnDef="no">
+      <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>No.</th>
+      <td mat-cell fxHide fxShow.gt-md
+      *matCellDef="let transaction;
+      let i = dataIndex"
+      style="text-align: center;"
+      >
+        {{ i + 1 }}
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="amount">
+      <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>Số tiền</th>
+      <td mat-cell fxHide fxShow.gt-md *matCellDef="let transaction; let i = dataIndex">
+        {{ transaction.terminalAmount | money }}
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="terminal">
+      <th mat-header-cell *matHeaderCellDef>Máy giao dịch</th>
+      <td mat-cell *matCellDef="let transaction">
+        {{ transaction.terminalId }}
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="txnDate">
+      <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>Ngày giao dịch</th>
+      <td mat-cell fxHide fxShow.gt-md *matCellDef="let transaction">
+        {{ transaction.txnDate | date: "dd-MM-yyyy HH:mm:ss" }}
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="createdBy" style="width: 25px">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Người tạo</th>
+      <td mat-cell *matCellDef="let transaction">
+        {{ transaction.createdByName }}
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let element; columns: displayedColumns" class="example-element-row"></tr>
+  </table>
+</mat-card-content>
+
+<mat-dialog-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="2%">
+  <button mat-raised-button mat-dialog-close color="primary">Đóng</button>
+</mat-dialog-actions>

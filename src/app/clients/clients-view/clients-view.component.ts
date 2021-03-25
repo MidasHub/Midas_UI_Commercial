@@ -16,6 +16,7 @@ import { CaptureImageDialogComponent } from './custom-dialogs/capture-image-dial
 /** Custom Services */
 import { ClientsService } from '../clients.service';
 
+
 @Component({
   selector: 'mifosx-clients-view',
   templateUrl: './clients-view.component.html',
@@ -29,12 +30,13 @@ export class ClientsViewComponent implements OnInit {
   clientTemplateData: any;
   showViewClient: boolean;
   typeViewClient: string;
+  isInterchangeClient: boolean = false
 
   constructor(private route: ActivatedRoute,
-              private router: Router,
-              private clientsService: ClientsService,
-              private _sanitizer: DomSanitizer,
-              public dialog: MatDialog) {
+    private router: Router,
+    private clientsService: ClientsService,
+    private _sanitizer: DomSanitizer,
+    public dialog: MatDialog) {
     this.route.data.subscribe((data: {
       clientViewData: any,
       clientTemplateData: any,
@@ -50,15 +52,20 @@ export class ClientsViewComponent implements OnInit {
 
   ngOnInit() {
     this.route.queryParamMap
-    .subscribe((params) => {
-      this.typeViewClient = params.get("typeViewClient") ;
-      this.showViewClient = this.typeViewClient  == 'transaction';
-    });
+      .subscribe((params) => {
+        this.typeViewClient = params.get("typeViewClient");
+        this.showViewClient = this.typeViewClient == 'transaction';
+        if (params.get("clientType") == 'ic') {
+          this.isInterchangeClient = true
+        }
+      });
     this.clientsService.getClientProfileImage(this.clientViewData.id).subscribe(
       (base64Image: any) => {
         this.clientImage = this._sanitizer.bypassSecurityTrustResourceUrl(base64Image);
-      }, (error: any) => {}
+      }, (error: any) => { }
     );
+   
+    
   }
 
   /**
@@ -85,7 +92,7 @@ export class ClientsViewComponent implements OnInit {
       case 'Client Screen Reports':
         this.router.navigate([`actions/${name}`], { relativeTo: this.route });
         break;
-       case 'Unassign Staff':
+      case 'Unassign Staff':
         this.unassignStaff();
         break;
       case 'Delete':
@@ -127,7 +134,7 @@ export class ClientsViewComponent implements OnInit {
    */
   reload() {
     const url: string = this.router.url;
-    this.router.navigateByUrl(`/clients`, {skipLocationChange: true})
+    this.router.navigateByUrl(`/clients`, { skipLocationChange: true })
       .then(() => this.router.navigate([url]));
   }
 

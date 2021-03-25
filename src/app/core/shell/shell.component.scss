@@ -32,19 +32,21 @@
     top:64px;
   }
 
-  .toolBarCss-full{
+  .toolBarCss{
     position: fixed;
     top: 0px;
     z-index: 9999;
-    width: calc(100vw - 4rem);
+    width:100%;
   }
 
-  .toolBarCss-compact{
-    position: fixed;
-    top: 0px;
-    z-index: 9999;
-    width: calc(100vw - 15rem);
-  }
+  // .toolBarCss-compact{
+  //   position: fixed;
+  //   top: 0px;
+  //   z-index: 9999;
+  //   width: 100%;
+  // }
+ 
+  
 
   .footerCss{
     position:fixed;

@@ -161,7 +161,7 @@ export class BanksService {
     //   this.getData();
     // }
     log.debug("This Card:", this.cards);
-    this.cards.subscribe((values: any) => {
+    this.cards?.subscribe((values: any) => {
       if (values) {
         log.debug("Value is: ", values);
         let have = false;

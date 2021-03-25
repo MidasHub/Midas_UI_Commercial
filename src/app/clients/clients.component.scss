@@ -9,14 +9,25 @@ table {
 
 tr.example-detail-row {
   height: 0;
+
 }
 
-tr.example-element-row:not(.example-expanded-row):hover {
+
+.mat-row:nth-child(odd){
+  background: transparent;
+}
+
+tr.example-element-row:not(.example-expanded-row):hover, .mat-row:nth-child(even) {
   background: whitesmoke;
+ 
+  td{
+    color:#000000
+  }
+  
 }
 
 tr.example-element-row:not(.example-expanded-row):active {
-  background: #efefef;
+  background:whitesmoke;
 }
 
 .example-element-row td {

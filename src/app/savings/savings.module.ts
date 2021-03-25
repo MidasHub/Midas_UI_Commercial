@@ -50,6 +50,7 @@ import {TranslatePipe} from '@ngx-translate/core';
 import { AdvanceComponent } from './savings-account-view/form-dialog/advance/advance.component';
 import { PartnerAdvanceCashComponent } from './savings-account-view/form-dialog/partner-advance-cash/partner-advance-cash.component';
 import {UpdateSavingAccountComponent} from './savings-account-view/form-dialog/update-saving-account/update-saving-account.component'
+import { TransferCrossOfficeComponent } from './savings-account-view/form-dialog/transfer-cross-office/transfer-cross-office.component';
 
 /**
  * Savings Module
@@ -104,7 +105,8 @@ import {UpdateSavingAccountComponent} from './savings-account-view/form-dialog/u
     ApplyAnnualFeesSavingsAccountComponent,
     AdvanceComponent,
     PartnerAdvanceCashComponent,
-    UpdateSavingAccountComponent
+    UpdateSavingAccountComponent,
+    TransferCrossOfficeComponent
   ],
   providers: [DatePipe]
 })

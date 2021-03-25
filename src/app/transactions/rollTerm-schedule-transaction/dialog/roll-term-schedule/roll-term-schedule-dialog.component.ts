@@ -125,16 +125,18 @@ export class RollTermScheduleDialogComponent implements OnInit {
     });
   }
 
-  addFeeDialogByTransactionId(isTrnRefNo: boolean, transactionId: string) {
+  addFeeDialogByTransactionId(isTrnRefNo: boolean, transactionId: string, amountPaid: number) {
 
     if (isTrnRefNo) {
       this.addFeeDialog(transactionId);
     } else {
       this.transactionService.getTransactionDetail(transactionId).subscribe((result) => {
         const dialogConfig = new MatDialogConfig();
+
         dialogConfig.data = {
           data: {
             txnCode: result?.result?.detailTransactionDto?.trnRefNo,
+            amountPaid:  amountPaid
           },
         };
         // dialogConfig.minWidth = 400;

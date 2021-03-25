@@ -65,6 +65,17 @@ export class TransactionService {
     return this.http.post<any>(`${this.GatewayApiUrlPrefix}/transaction/get_list_transaction_by_client`, httpParams);
   }
 
+  /**
+   * @params : expiredDate
+   * @params : refId
+   * @params : note
+   * @params : state
+   * @params : state
+   * @params : dueDay
+   * @params : limit
+   * @params : classCard
+   * @params : isHold
+   */
   updateCardTrackingState(updateData: any): Observable<any> {
     const expiredDateString = `${updateData.dueDay}/${updateData.expiredDateString?.substring(
       0,
@@ -253,7 +264,7 @@ export class TransactionService {
     httpParams = httpParams.set("amountTransaction", "%%");
     httpParams = httpParams.set("trackingState", payload.statusFilter === "" ? `%%` : `%${payload.statusFilter}%`);
     httpParams = httpParams.set("createdUser", "%%");
-    httpParams = httpParams.set("bankName", payload.bankName === "" ? `%%` : `${payload.bankName}`);
+    httpParams = httpParams.set("bankName", payload.bankName === "ALL" ? `%%` : `${payload.bankName}`);
     httpParams = httpParams.set("fromDate", payload.fromDate);
     httpParams = httpParams.set("toDate", payload.toDate);
 
@@ -432,7 +443,7 @@ export class TransactionService {
       sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey)
     );
     // tslint:disable-next-line:max-line-length
-    const fileUrl = `${this.environment.GatewayApiUrl}${this.environment.GatewayApiUrlPrefix}/export/pre_export_transaction_partner?ext5=ALL&typeExport=transaction&accessToken=${this.accessToken.base64EncodedAuthenticationKey}&createdBy=${this.accessToken.userId}&${query}`;
+    const fileUrl = `${this.environment.GatewayApiUrl}${this.environment.GatewayApiUrlPrefix}/export/export_transaction_partner?ext5=ALL&typeExport=transaction&accessToken=${this.accessToken.base64EncodedAuthenticationKey}&createdBy=${this.accessToken.userId}&${query}`;
     this.getExportExcelFile(fileUrl).subscribe((data: any) => {
       const downloadURL = window.URL.createObjectURL(data);
       const link = document.createElement("a");

@@ -86,6 +86,12 @@ export class ClientsService {
     limit: number,
     sqlSearch?: string
   ): Observable<any> {
+    this.accessToken = JSON.parse(
+      sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey)
+    );
+    if (!this.accessToken.permissions.includes("POS_UPDATE")){
+      sqlSearch += ` AND c.staff_id = ${this.accessToken.staffId} `;
+    }
     let httpParams = new HttpParams()
       // .set('fields', 'displayName,mobileNo,accountNo,externalId,active,mobileNo,gender,officeName,staffName')
       .set("offset", offset.toString())
@@ -101,6 +107,7 @@ export class ClientsService {
     if (!this.accessToken.permissions.includes("ALL_FUNCTIONS")) {
       httpParams = httpParams.set("officeId", this.accessToken.officeId);
     }
+
 
     return this.http.get("/clients", { params: httpParams });
   }
@@ -488,6 +495,12 @@ export class ClientsService {
     let httpParams = this.commonHttpParams.getCommonHttpParams();
 
     return this.http.post<any>(`${this.GatewayApiUrlPrefix}/common/get_list_staff_of_office`, httpParams);
+  }
+
+  getStaffsByOffice(officeId: string): Observable<any> {
+    let httpParams = this.commonHttpParams.getCommonHttpParams();
+    httpParams = httpParams.set("officeIdSelected" , officeId )
+    return this.http.post<any>(`${this.GatewayApiUrlPrefix}/common/get_list_staff_by_office`, httpParams);
   }
 
   getStaffOfUser(): Observable<any> {

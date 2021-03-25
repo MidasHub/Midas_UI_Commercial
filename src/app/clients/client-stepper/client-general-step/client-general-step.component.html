@@ -156,7 +156,7 @@
 
           <mat-form-field fxFlex="48%">
             <mat-label>{{ "Client_Component.ClientStepper.GeneralStep.labelExternalID" | translate }}</mat-label>
-            <input matInput required formControlName="externalId" />
+            <input matInput  formControlName="externalId" />
           </mat-form-field>
 
           <div fxFlex="48%" fxLayout="column" class="custom-files-input">
@@ -188,7 +188,7 @@
             <mat-label>{{ "Client_Component.ClientStepper.GeneralStep.labelClientType" | translate }}</mat-label>
             <mat-select [disabled]="isTeller" formControlName="clientTypeId">
               <mat-option *ngFor="let clientType of clientTypeOptions" [value]="clientType.id">
-                {{ clientType.name }}
+                {{ clientType.description }}
               </mat-option>
             </mat-select>
           </mat-form-field>

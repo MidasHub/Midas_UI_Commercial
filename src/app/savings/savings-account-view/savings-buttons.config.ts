@@ -34,13 +34,13 @@ export class SavingsButtonsConfiguration {
           {
             name: 'Saving_Account_Component.ViewSavingAccount.buttonDeposit',
             icon: 'fa fa-arrow-up',
-            taskPermissionName: 'DEPOSIT_SAVINGSACCOUNT',
+            taskPermissionName: 'POS_UPDATE',
             action: 'Deposit'
           },
           {
             name: 'Saving_Account_Component.ViewSavingAccount.buttonWithdraw',
-            icon: 'fa fa-money',
-            taskPermissionName: 'WITHDRAW_SAVINGSACCOUNT',
+            icon: 'fa fa-arrow-down',
+            taskPermissionName: 'POS_UPDATE',
             action: 'Withdraw'
           },
         ];

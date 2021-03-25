@@ -52,7 +52,18 @@ export class ViewTransactionComponent {
    * Undo the savings transaction
    */
   undoTransaction() {
-    const accountId = this.route.parent.snapshot.params['savingAccountId'];
+
+    this.savingsService.checkValidRevertSavingTransaction(this.transactionData.id).subscribe(data => {
+        if (!data.result.isValid) {
+          this.alertService.alert({
+            message: `${data.result.message}`,
+            msgClass: "cssDanger",
+            hPosition: "center",
+          });
+
+          return;
+        }else{
+          const accountId = this.route.parent.snapshot.params['savingAccountId'];
     const undoTransactionAccountDialogRef = this.dialog.open(UndoTransactionDialogComponent);
     undoTransactionAccountDialogRef.afterClosed().subscribe((response: any) => {
       if (response.confirm) {
@@ -77,6 +88,10 @@ export class ViewTransactionComponent {
         });
       }
     });
+        }
+    })
+
+
   }
 
 }

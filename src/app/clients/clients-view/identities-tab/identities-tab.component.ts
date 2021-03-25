@@ -21,6 +21,7 @@ import { AlertService } from "app/core/alert/alert.service";
 import { analyzeAndValidateNgModules } from "@angular/compiler";
 import { AddIdentitiesExtraInfoComponent } from "./dialog-add-identities-extra-info/add-identities-extra-info.component";
 import { BanksService } from "../../../banks/banks.service";
+
 import { Logger } from "app/core/logger/logger.service";
 const log = new Logger("-IDENTIFIER TAB-");
 
@@ -33,6 +34,8 @@ const log = new Logger("-IDENTIFIER TAB-");
   styleUrls: ["./identities-tab.component.scss"],
 })
 export class IdentitiesTabComponent {
+
+
   searchKey: string;
   /** Client Identities */
   clientIdentities: any = [];
@@ -429,8 +432,8 @@ export class IdentitiesTabComponent {
           const showIdentifierDialogRef = this.dialog.open(AddIdentitiesExtraInfoComponent, dialogConfig);
           showIdentifierDialogRef.afterClosed().subscribe((response: any) => {
             this.alertService.alert({
-              message: "Khoa xử lý cập nhật thông tin bổ sung cho thẻ giúp anh.",
-              msgClass: "cssWarning",
+              message: "Đã cập nhật thông tin thẻ.",
+              msgClass: "cssInfo",
               hPosition: "right",
               vPosition: "bottom",
             });

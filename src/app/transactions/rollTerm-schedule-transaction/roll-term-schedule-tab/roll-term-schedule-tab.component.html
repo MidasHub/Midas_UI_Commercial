@@ -25,19 +25,20 @@
         <mat-option *ngFor="let option of staffs" [value]="option.userId">
           {{ option.displayName }}
         </mat-option>
-        <!-- <mat-option *ngFor="let type of staffs" [value]="type.id">
-          {{ type.displayName }}
-        </mat-option> -->
+
       </mat-select>
     </mat-form-field>
 
     <mat-form-field fxFlex="18%">
       <mat-label>Ngân hàng</mat-label>
-      <mat-select formControlName="bankFilter">
-        <mat-option *ngFor="let bank of banks" [value]="bank.bankCode">
+      <select matSelect matNativeControl formControlName="bankFilter">
+        <option value="ALL">
+          Tất cả ngân hàng
+        </option>
+        <option *ngFor="let bank of banks" [value]="bank.bankCode">
           {{ bank.bankName }}
-        </mat-option>
-      </mat-select>
+        </option>
+      </select>
     </mat-form-field>
 
     <mat-form-field fxFlex="18%">
