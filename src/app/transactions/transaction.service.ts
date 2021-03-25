@@ -65,6 +65,17 @@ export class TransactionService {
     return this.http.post<any>(`${this.GatewayApiUrlPrefix}/transaction/get_list_transaction_by_client`, httpParams);
   }
 
+  /**
+   * @params : expiredDate
+   * @params : refId
+   * @params : note
+   * @params : state
+   * @params : state
+   * @params : dueDay
+   * @params : limit
+   * @params : classCard
+   * @params : isHold
+   */
   updateCardTrackingState(updateData: any): Observable<any> {
     const expiredDateString = `${updateData.dueDay}/${updateData.expiredDateString?.substring(
       0,

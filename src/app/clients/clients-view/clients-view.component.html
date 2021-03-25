@@ -66,10 +66,12 @@
             </mat-card-subtitle>
           </div>
 
-          <div fxLayout="row" fxLayoutAlign="center center">
-            <button mat-raised-button (click)="doAction('View Signature')" class="signature">
-              <i class="fas fa-file-signature"></i> {{ "Client_Component.ViewClient.lblViewSignature" | translate }}
-            </button>
+          <div fxLayout="row" fxLayoutAlign="space-evenly center" >
+            <p>
+              <button mat-raised-button (click)="doAction('View Signature')">
+                <i class="fas fa-file-signature"></i> {{ "Client_Component.ViewClient.lblViewSignature" | translate }}
+              </button>
+            </p>
             <p *midasHasActiveModule="'mgmModule'">
               <button mat-raised-button [routerLink]="['/clients/create/']"
                 [queryParams]="{'mgmId': clientViewData.id }" *ngIf="!this.isInterchangeClient">

@@ -432,8 +432,8 @@ export class IdentitiesTabComponent {
           const showIdentifierDialogRef = this.dialog.open(AddIdentitiesExtraInfoComponent, dialogConfig);
           showIdentifierDialogRef.afterClosed().subscribe((response: any) => {
             this.alertService.alert({
-              message: "Khoa xử lý cập nhật thông tin bổ sung cho thẻ giúp anh.",
-              msgClass: "cssWarning",
+              message: "Đã cập nhật thông tin thẻ.",
+              msgClass: "cssInfo",
               hPosition: "right",
               vPosition: "bottom",
             });

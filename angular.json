@@ -36,6 +36,11 @@
               "src/main.scss",
               {
                 "inject": false,
+                "input": "src/theme/custom/default_theme.scss",
+                "bundleName": "theme/default-theme"
+              },
+              {
+                "inject": false,
                 "input": "src/theme/deeppurple-amber.scss",
                 "bundleName": "theme/deeppurple-amber"
               },

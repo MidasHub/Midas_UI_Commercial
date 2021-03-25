@@ -75,9 +75,9 @@
 
     <mifosx-notifications-tray fxHide.lt-md> </mifosx-notifications-tray>
     <!-- <br /> -->
-    <button fxHide.lt-md mat-icon-button class="ml-1 img-button" [matMenuTriggerFor]="applicationMenu">
-      <img style="position: absolute" src="assets/images/user_placeholder.png" /> <br />
-      <span style="text-decoration: underline; position: relative; top: -20px;  left: -5px">{{ currentUser.username }}</span>
+    <button fxHide.lt-md  mat-icon-button  [matMenuTriggerFor]="applicationMenu">
+      <div fxLayout="column" fxLayoutAlign="center center" style="margin:0;padding:0"><i class="fas fa-user-cog" style="font-size:larger;margin:0;padding:0"></i> 
+      <span style="font-size:0.7rem;line-height:1rem">{{ currentUser.username }}</span></div>
     </button>
   </div>
 </mat-toolbar>
