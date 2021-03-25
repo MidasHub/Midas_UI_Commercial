@@ -44,11 +44,13 @@
 
             <mat-form-field *ngIf="createTerminalForm.contains('limitAmount')" fxFlex="48%">
               <mat-label>{{'Terminal_Component.FormTerminal.labelLimitPerDay' |translate}}</mat-label>
-              <input currencyMask matInput required formControlName="limitAmount">
+              <input  currencyMask matInput required formControlName="limitAmount">
               <mat-error *ngIf="createTerminalForm.controls.limitAmount.hasError('required')"
                 [innerHTML]="'Terminal_Component.FormTerminal.labelRequired' |translate"></mat-error>
               <mat-error *ngIf="createTerminalForm.controls.limitAmount.hasError('min')"
-                [innerHTML]="'Terminal_Component.FormTerminal.labelMsgMin0' |translate"></mat-error>
+                [innerHTML]="'Tối thiểu là 1,000,000'"></mat-error>
+              <mat-error *ngIf="createTerminalForm.controls.limitAmount.hasError('max')"
+                [innerHTML]="'Số tiền vượt hạn mức 100 Tỷ/ngày'"></mat-error>
             </mat-form-field>
 
             <mat-form-field *ngIf="createTerminalForm.contains('officeId')" fxFlex="48%">
@@ -75,13 +77,11 @@
 
           <mat-form-field *ngIf="createTerminalForm.contains('timeChargeValid')" fxFlex="48%">
             <mat-label>Số lần cà/ngày</mat-label>
-            <input  matInput required formControlName="timeChargeValid">
+            <input  matInput type="number" formControlName="timeChargeValid">
             <mat-error *ngIf="createTerminalForm.controls.timeChargeValid.hasError('required')"
               [innerHTML]="'Terminal_Component.FormTerminal.labelRequired' |translate"></mat-error>
             <mat-error *ngIf="createTerminalForm.controls.timeChargeValid.hasError('min')"
               [innerHTML]="'Terminal_Component.FormTerminal.labelMsgMin0' |translate"></mat-error>
-              <mat-error *ngIf="createTerminalForm.controls.timeChargeValid.hasError('max')"
-                  [innerHTML]="'Terminal_Component.FormTerminal.labelMsgOutOffMax' |translate"></mat-error>
           </mat-form-field>
 
             <mat-form-field *ngIf="createTerminalForm.contains('minFeeDefault')" fxFlex="48%">
@@ -91,11 +91,22 @@
                   [innerHTML]="'Terminal_Component.FormTerminal.labelRequired' |translate"></mat-error>
                 <mat-error *ngIf="createTerminalForm.controls.minFeeDefault.hasError('min')"
                   [innerHTML]="'Terminal_Component.FormTerminal.labelMsgMin0' |translate"></mat-error>
+                <mat-error *ngIf="editTerminalForm.controls.minFeeDefault.hasError('min')"
+                  [innerHTML]="'Phí phải nhỏ hơn 1,000,000'"></mat-error>
             </mat-form-field>
 
-            <mat-checkbox fxFlex="48%" labelPosition="before" formControlName="status" class="activeCheckBox">
+            <mat-form-field *ngIf="createTerminalForm.contains('typeOfTransaction')" fxFlex="25%">
+              <mat-label>Thực hiện cho giao dịch:</mat-label>
+              <mat-select  formControlName="typeOfTransaction">
+                  <mat-option *ngFor="let t of typeOfTransactions" [value]="t.value">
+                    {{ t.valueDesc }}
+                  </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <mat-checkbox fxFlex="20%" labelPosition="before" formControlName="status" class="activeCheckBox">
                 {{'Terminal_Component.FormTerminal.checkboxIsActive' |translate}}
             </mat-checkbox>
+              
           </div>
           <br/>
           <h3 class="mat-h3" fxFlexFill>{{'Terminal_Component.FormTerminal.labelGeneral'|translate}}</h3>
@@ -153,10 +164,35 @@
               </svg>
               {{'Terminal_Component.FormTerminal.buttonSetupAll' |translate}}
             </button>
+ 
+                <mat-form-field *ngIf="createTerminalForm.contains('officeSelect')" fxFlex="48%">
+                  <mat-label>{{'Terminal_Component.FormTerminal.labelOffice' |translate}}</mat-label>
+                  <mat-select formControlName="officeSelect" [disabled]="!applyFeeForOffice">
+                      <mat-option *ngFor="let o of offices" [value]="o.officeId">
+                        {{ o.name }}
+                      </mat-option>
+                  </mat-select>
+              </mat-form-field>
+
+              <button mat-raised-button color="primary" [disabled]="!applyFeeForOffice" (click)="setDefaultFeeSettingPosForOffice()">
+                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-box-arrow-in-down-left" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                  <path fill-rule="evenodd" d="M9.636 2.5a.5.5 0 0 0-.5-.5H2.5A1.5 1.5 0 0 0 1 3.5v10A1.5 1.5 0 0 0 2.5 15h10a1.5 1.5 0 0 0 1.5-1.5V6.864a.5.5 0 0 0-1 0V13.5a.5.5 0 0 1-.5.5h-10a.5.5 0 0 1-.5-.5v-10a.5.5 0 0 1 .5-.5h6.636a.5.5 0 0 0 .5-.5z"/>
+                  <path fill-rule="evenodd" d="M5 10.5a.5.5 0 0 0 .5.5h5a.5.5 0 0 0 0-1H6.707l8.147-8.146a.5.5 0 0 0-.708-.708L6 9.293V5.5a.5.5 0 0 0-1 0v5z"/>
+                </svg>
+                Áp dụng cho chi nhánh
+              </button>
+              <button mat-raised-button (click)="reset()">
+                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-arrow-repeat" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M11.534 7h3.932a.25.25 0 0 1 .192.41l-1.966 2.36a.25.25 0 0 1-.384 0l-1.966-2.36a.25.25 0 0 1 .192-.41zm-11 2h3.932a.25.25 0 0 0 .192-.41L2.692 6.23a.25.25 0 0 0-.384 0L.342 8.59A.25.25 0 0 0 .534 9z"/>
+                  <path fill-rule="evenodd" d="M8 3c-1.552 0-2.94.707-3.857 1.818a.5.5 0 1 1-.771-.636A6.002 6.002 0 0 1 13.917 7H12.9A5.002 5.002 0 0 0 8 3zM3.1 9a5.002 5.002 0 0 0 8.757 2.182.5.5 0 1 1 .771.636A6.002 6.002 0 0 1 2.083 9H3.1z"/>
+                </svg>
+                {{'Terminal_Component.FormTerminal.buttonResetDefault' |translate}}
+              </button>
+             
           </div>
         </mat-card-content>
 
-        <div class="example-container mat-elevation-z8">
+        <div class="mat-elevation-z8">
             <mat-form-field class="filter">
               <input matInput #filter (keyup)="applyFilter($event.target.value)" placeholder="Filter">
               <button mat-icon-button matSuffix aria-label="clear" *ngIf="filter.value" (click)="filter.value=''; applyFilter('');">
@@ -175,10 +211,10 @@
             </ng-container>
 
             <ng-container matColumnDef="FeePOS">
-              <mat-header-cell *matHeaderCellDef>{{'Terminal_Component.FormTerminal.tableFee.FeePOS'|translate}}</mat-header-cell>
+              <mat-header-cell *matHeaderCellDef>{{'Terminal_Component.FormTerminal.tableFee.FeeCogs'|translate}}</mat-header-cell>
               <mat-cell *matCellDef="let element, let i = index">
                 <mat-form-field  >
-                  <input type="number" matInput (keyup)="validateNumber($event, element)" id="{{i}}_cogsPercentage" [value]="element.cogsPercentage" [(ngModel)]="element.cogsPercentage" [ngModelOptions]="{standalone: true}">
+                  <input type="number" matInput [value]="element.cogsPercentage" [(ngModel)]="element.cogsPercentage" [ngModelOptions]="{standalone: true}">
                 </mat-form-field>
               </mat-cell>
             </ng-container>
@@ -187,7 +223,7 @@
               <mat-header-cell *matHeaderCellDef>{{'Terminal_Component.FormTerminal.tableFee.FeeCost'|translate}}</mat-header-cell>
               <mat-cell *matCellDef="let element , let i = index">
                 <mat-form-field floatLabel="never">
-                  <input matInput (keyup)="validateNumber($event, element)" id="{{i}}_costPercentage" [value]="element.costPercentage" [(ngModel)]="element.costPercentage" [ngModelOptions]="{standalone: true}">
+                  <input type="number" matInput    [value]="element.costPercentage" [(ngModel)]="element.costPercentage" [ngModelOptions]="{standalone: true}">
                 </mat-form-field>
               </mat-cell>
             </ng-container>
@@ -196,7 +232,7 @@
               <mat-header-cell *matHeaderCellDef>{{'Terminal_Component.FormTerminal.tableFee.FeeMin'|translate}}</mat-header-cell>
               <mat-cell *matCellDef="let element, let i = index">
                 <mat-form-field floatLabel="never">
-                  <input matInput (keyup)="validateNumber($event, element)" [value]="element.txnRateMin" id="{{i}}_txnRateMin" [(ngModel)]="element.txnRateMin" [ngModelOptions]="{standalone: true}">
+                  <input type="number" matInput  [value]="element.txnRateMin"   [(ngModel)]="element.txnRateMin" [ngModelOptions]="{standalone: true}">
                 </mat-form-field>
               </mat-cell>
             </ng-container>
@@ -205,7 +241,7 @@
               <mat-header-cell *matHeaderCellDef>{{'Terminal_Component.FormTerminal.tableFee.FeeMax'|translate}}</mat-header-cell>
               <mat-cell *matCellDef="let element, let i = index">
                 <mat-form-field floatLabel="never">
-                  <input matInput (keyup)="validateNumber($event, element)" id="{{i}}_txnRateMax" [value]="element.txnRateMax" [(ngModel)]="element.txnRateMax" [ngModelOptions]="{standalone: true}">
+                  <input matInput  type="number"   [value]="element.txnRateMax" [(ngModel)]="element.txnRateMax" [ngModelOptions]="{standalone: true}">
                 </mat-form-field>
               </mat-cell>
             </ng-container>
@@ -214,7 +250,7 @@
               <mat-header-cell *matHeaderCellDef>{{'Terminal_Component.FormTerminal.tableFee.MaxLimitAmountTransaction'|translate}} ({{'labelCurrency'|translate}})</mat-header-cell>
               <mat-cell *matCellDef="let element, let i = index">
                 <mat-form-field floatLabel="never">
-                  <input matInput  (keyup)="validateNumber($event, element)" id="{{i}}_maxLimitAmount" [value]="element.maxLimitAmount" [(ngModel)]="element.maxLimitAmount" [ngModelOptions]="{standalone: true}">
+                  <input matInput   currencyMask  [value]="element.maxLimitAmount" [(ngModel)]="element.maxLimitAmount" [ngModelOptions]="{standalone: true}">
                 </mat-form-field>
               </mat-cell>
             </ng-container>
@@ -223,7 +259,7 @@
               <mat-header-cell *matHeaderCellDef>{{'Terminal_Component.FormTerminal.tableFee.LevelTransactionCard'|translate}}</mat-header-cell>
               <mat-cell *matCellDef="let element, let i = index">
                 <mat-form-field floatLabel="never">
-                  <input matInput (keyup)="validateNumber($event, element)" id="{{i}}_levelLimit" [value]="element.levelLimit" [(ngModel)]="element.levelLimit" [ngModelOptions]="{standalone: true}">
+                  <input matInput type="number"   [value]="element.levelLimit" [(ngModel)]="element.levelLimit" [ngModelOptions]="{standalone: true}">
                 </mat-form-field>
               </mat-cell>
             </ng-container>

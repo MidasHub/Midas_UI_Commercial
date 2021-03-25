@@ -360,7 +360,7 @@ export class ClientsService {
   }
 
   uploadClientDocumenttenantIdentifier(clientId: string, documentData: any): Observable<any> {
-    return this.http.post(`/clients/${clientId}/documents?tenantIdentifier=tiktik`, documentData);
+    return this.http.post(`/clients/${clientId}/documents?tenantIdentifier=${environment.fineractPlatformTenantId}`, documentData);
   }
 
   deleteClientDocument(parentEntityId: string, documentId: string) {

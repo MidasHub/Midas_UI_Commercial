@@ -47,6 +47,13 @@ export class EditTerminalsComponent implements OnInit, AfterViewInit {
   dataSource = new MatTableDataSource();
   displayedColumns: string[] = ['officeName', 'CardType', 'FeePOS',
     'FeeCost', 'FeeMin', 'FeeMax', 'MaxLimitAmountTransaction', 'LevelTransactionCard'];
+  
+  typeOfTransactions : typeOfTransaction[] = [
+    {value:'ALL', valueDesc:'khách hàng Sỉ & Lẻ'},
+    {value:'SI', valueDesc:'khách hàng Sỉ'},
+    {value:'LE', valueDesc:'khách hàng Lẻ'}
+  ];
+
 
   constructor(private route: ActivatedRoute,
     private formBuilder: FormBuilder,
@@ -89,7 +96,9 @@ export class EditTerminalsComponent implements OnInit, AfterViewInit {
       'txnRateMax': this.ItemPosLimitList[0].txnRateMax,
       'maxLimitAmount': this.ItemPosLimitList[0].maxLimitAmount,
       'levelLimit': this.ItemPosLimitList[0].levelLimit,
+      'typeOfTransaction': this.ItemPos.typeOfTransaction
     });
+    debugger
   }
 
   createEditTerminalForm() {
@@ -99,17 +108,18 @@ export class EditTerminalsComponent implements OnInit, AfterViewInit {
       'terminalName': ['', [Validators.required, ]],
       'merchantId': ['', [Validators.required]],
       'officeId': ['', [Validators.required]],
-      'bankCode': ["", [Validators.required]],
-      'timeChargeValid': ["", [Validators.required, Validators.max(99), Validators.min(1)]],
+      'bankCode': ['', [Validators.required]],
+      'timeChargeValid': ['', [Validators.required, Validators.min(1)]],
       'status': [true],
-      'minFeeDefault': ['', [Validators.required, Validators.min(0)]],
+      'minFeeDefault': ['', [Validators.required, Validators.min(0), Validators.max(1000000)]],
       'costPercentage': ['', [Validators.max(100), Validators.min(0)]],
       'cogsPercentage': ['', [Validators.max(100), Validators.min(0)]],
       'txnRateMin': ['', [Validators.max(100), Validators.min(0)]],
       'txnRateMax': ['', [Validators.max(100), Validators.min(0)]],
-      'maxLimitAmount': ['', [Validators.required, Validators.min(1000000)]],
+      'maxLimitAmount': ["", [Validators.required, Validators.min(1000000),Validators.max(100000000000)]],
       'levelLimit': ['', [Validators.required, Validators.min(1)]],
-      'limitAmount': ['', [Validators.required, Validators.min(0)]],
+      'limitAmount': ['', [Validators.required,Validators.min(1000000),Validators.max(100000000000)]],
+      'typeOfTransaction':[''],
     });
   }
   ngAfterViewInit() {
@@ -161,8 +171,8 @@ export class EditTerminalsComponent implements OnInit, AfterViewInit {
     const levelLimit      = this.editTerminalForm.value.levelLimit;
     const limitAmount  = this.editTerminalForm.value.limitAmount;
     this.posLimits = this.dataSource.data;
-    const limits = [];
-    const office = this.offices.find((i: any) => i.id === officeId);
+    
+    const office = this.offices.find((i: any) => i.officeId === officeId);
     this.cardTypes.forEach((card: any) => {
       const limit = {
         officeId : office.officeId,
@@ -247,9 +257,12 @@ export class EditTerminalsComponent implements OnInit, AfterViewInit {
         e[key] = Number(value_input);
       }
     });
-    dataCopy.splice(index, 1);
-    dataCopy.splice(index, 0, e);
+    dataCopy.splice( index -1, 1, e);
     this.dataSource.data = dataCopy;
   }
 
+}
+interface typeOfTransaction{
+  value:string;
+  valueDesc:string;
 }

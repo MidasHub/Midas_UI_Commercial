@@ -630,6 +630,7 @@
     "labelTerminalMsgPattern": "<strong>Không</strong> Nhập ký tự đặc biệt",
     "labelFilter": "Bộ lọc",
     "labelAction": "Thao tác",
+    "labelShowClosedTerminal":"Hiển thị máy POS đã đóng",
     "tableTerminal": {
       "terminalNo": "Mã máy POS",
       "terminalCode": "Code máy POS",
