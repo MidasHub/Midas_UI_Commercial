@@ -17,7 +17,8 @@ const httpOptions = {
 
 const httpOptionsGateway = {
   headers: {
-    'Gateway-TenantId': environment.GatewayTenantId
+    'Ic-Tenantid': 'default',
+    'Gateway-Tenantid': environment.GatewayTenantId
   }
 };
 

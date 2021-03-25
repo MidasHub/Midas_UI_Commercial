@@ -21,7 +21,7 @@ export const environment = {
   apiVersion: te.apiVersion,
   serverUrl: '',
   GatewayApiUrl: JSON.parse(localStorage.getItem('midasBillposServerURL')) || te.defaultbillposURL,
-  GatewayApiUrlPrefix: '/billpos',
+  GatewayApiUrlPrefix: '/ic-app',
   GatewayServerUrl: '',
   GatewayTenantId: te.billposT,
   oauth: {

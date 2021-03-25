@@ -171,6 +171,7 @@ export class WebAppComponent implements OnInit {
         'https://staging.midascore.net',
         'https://uat.tekcompay.com:8443',
         'https://training.kiotthe.com',
+        'https://ic.kiotthe.com',
         'https://midas.kiotthe.com',
         'https://localhost:9443',
         'https://localhost:7443'
@@ -182,6 +183,7 @@ export class WebAppComponent implements OnInit {
         'https://staging.midascore.net',
         'https://training.kiotthe.com',
         'https://midas.kiotthe.com',
+        'https://ic.kiotthe.com',
         'https://uat.tekcompay.com:8088',
         'http://localhost:8088'
       ]);
