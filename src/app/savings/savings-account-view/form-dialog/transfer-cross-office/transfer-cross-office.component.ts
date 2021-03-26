@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit } from "@angular/core";
 import { ClientsService } from "../../../../clients/clients.service";
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
 import { MAT_DIALOG_DATA } from "@angular/material/dialog";
 import { GroupsService } from "app/groups/groups.service";
 import { SavingsService } from "app/savings/savings.service";
@@ -15,16 +15,19 @@ export class TransferCrossOfficeComponent implements OnInit {
   currentUser: any;
   disable = false;
   savingsAccountData: any;
-  isLoading:boolean = false;
+  isLoading: boolean = false;
   offices: any[] = [];
+  partners: any[] = [];
+  transferIc: boolean = false;
 
   constructor(
     private serviceClient: ClientsService,
-    private groupService: GroupsService,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private formBuilder: FormBuilder,
-    private savingsService: SavingsService,
+    private savingsService: SavingsService
   ) {
+    this.transferIc = data.transferIc;
+
     this.form = this.formBuilder.group({
       typeAdvanceCashes: ["", Validators.required],
       office: ["", Validators.required],
@@ -43,7 +46,7 @@ export class TransferCrossOfficeComponent implements OnInit {
   typeAdvanceCashes: any[] = [
     {
       id: "6",
-      name: "Chuyển tiền liên chi nhánh",
+      name: "Chuyển tiền đối tác",
     },
     {
       id: "7",
@@ -54,30 +57,94 @@ export class TransferCrossOfficeComponent implements OnInit {
       name: "Chuyển quỹ cuối ngày",
     },
   ];
+
   form: FormGroup;
   clients: any;
   staffs: any[];
   accounts: any[];
 
-  ngOnInit(): void {
-    this.savingsService.getListOfficeCommon().subscribe((offices: any) => {
-      this.offices = offices.result.listOffice;
-    })
+  modifiedForm() {
+    const value = this.form.get("typeAdvanceCashes").value;
+    if (value == 58) {
+      this.form.removeControl("office");
+      this.form.removeControl("client");
+      this.form.addControl("partner", new FormControl("", Validators.required));
+      this.form.get("partner").valueChanges.subscribe((value) => {
+        this.savingsService.getListICSavingAccountByPartner(value).subscribe((result) => {
+          this.accounts = result.result.listClientSavingVault;
+        });
+      });
+    } else {
+      if (value == 59) {
+        this.form.removeControl("partner");
+        this.form.removeControl("office");
+        this.form.removeControl("client");
 
-    this.form.get("office").valueChanges.subscribe((value) => {
-      this.serviceClient.getStaffsByOffice(value).subscribe(result => {
-        this.staffs = result.result.listStaff;
-      })
+        this.savingsService.getListICSavingAccountByPartner(this.savingsAccountData.clientId).subscribe((result) => {
+          this.accounts = result.result.listClientSavingVault;
+        });
 
-    });
+      } else {
+        if (value == 60) {
+          this.form.removeControl("partner");
+          this.form.addControl("office", new FormControl("", Validators.required));
+          this.form.addControl("client", new FormControl("", Validators.required));
 
-    this.form.get("client").valueChanges.subscribe((value) => {
-      this.savingsService.getListClientSavingStaffByOffice(value).subscribe(result => {
-        this.accounts = result.result.listClientSavingVault;
-      })
-    })
+          this.form.get("office").valueChanges.subscribe((value) => {
+            this.serviceClient.getStaffsByOffice(value).subscribe((result) => {
+              this.staffs = result.result.listStaff;
+            });
+          });
 
+          this.form.get("client").valueChanges.subscribe((value) => {
+            this.savingsService.getListClientSavingStaffByOffice(value).subscribe((result) => {
+              this.accounts = result.result.listClientSavingVault;
+            });
+          });
+        }
+      }
+    }
   }
 
+  ngOnInit(): void {
+    if (this.transferIc) {
+      this.typeAdvanceCashes = [
+        {
+          id: "58",
+          name: "Interchange: Chuyển tiền toàn cầu",
+        },
+        {
+          id: "59",
+          name: "Interchange: Chuyển tiền nội bộ IC",
+        },
+        {
+          id: "60",
+          name: "Interchange: Chuyển tiền về Chi nhánh",
+        },
+      ];
 
+      this.form = this.formBuilder.group({
+        typeAdvanceCashes: ["58", Validators.required],
+        partner: ["", Validators.required],
+        office: ["", Validators.required],
+        client: ["", Validators.required],
+        savingAccountId: ["", Validators.required],
+        amount: ["", Validators.required],
+        note: [""],
+      });
+      this.modifiedForm();
+
+      this.form.get("typeAdvanceCashes").valueChanges.subscribe((value) => {
+        this.modifiedForm();
+      });
+
+      this.savingsService.getListIcPartner().subscribe((response: any) => {
+        this.partners = response.result.listClient;
+      });
+    }
+
+    this.savingsService.getListOfficeCommon().subscribe((offices: any) => {
+      this.offices = offices.result.listOffice;
+    });
+  }
 }

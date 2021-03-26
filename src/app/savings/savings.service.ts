@@ -23,13 +23,13 @@ export class SavingsService {
   private IcGatewayApiUrlPrefix: string;
   private environment: any;
 
-
-  constructor(private http: HttpClient,
-     private datePipe: DatePipe,
-     private settingsService: SettingsService,
-     private formBuilder: FormBuilder,
-     private commonHttpParams: CommonHttpParams
-    ) {
+  constructor(
+    private http: HttpClient,
+    private datePipe: DatePipe,
+    private settingsService: SettingsService,
+    private formBuilder: FormBuilder,
+    private commonHttpParams: CommonHttpParams
+  ) {
     this.accessToken = JSON.parse(
       sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey)
     );
@@ -38,60 +38,76 @@ export class SavingsService {
     this.environment = environment;
   }
 
-  executeIcSavingsAccountTransactionsCommand(
-    accountId: string,
-    command: string,
-    data: any,
-  ): Observable<any> {
-    let httpParams = this.commonHttpParams.getCommonHttpParams()
-    .set("command", command)
-    .set("accountId", accountId)
-    .set("accountNumber", data.accountNumber)
-    .set("bankNumber", data.bankNumber)
-    .set("checkNumber", data.checkNumber)
-    .set("note", data.note)
-    .set("paymentTypeId", data.paymentTypeId)
-    .set("receiptNumber", data.receiptNumber)
-    .set("routingCode", data.routingCode)
-    .set("transactionAmount", data.transactionAmount)
-    .set("transactionDate", data.transactionDate)
-    .set("locale", data.locale)
-    .set("dateFormat", data.dateFormat);
+  /**
+   * @param {string} savingAccountId is saving account"s Id.
+   * @returns {Observable<any>}
+   */
+  getListICSavingAccountByPartner(partnerId: string): Observable<any> {
+    let httpParams = this.commonHttpParams.getCommonHttpParams();
+    httpParams = httpParams.set("partnerId", partnerId);
 
-    return this.http.post(`${this.IcGatewayApiUrlPrefix}/savingTransaction/execute_ic_account_saving_action`,  httpParams);
+    return this.http.post(`${this.IcGatewayApiUrlPrefix}/savingTransaction/get_list_ic_account_by_partner`, httpParams);
+  }
+
+  executeIcSavingsAccountTransactionsCommand(accountId: string, command: string, data: any): Observable<any> {
+    let httpParams = this.commonHttpParams
+      .getCommonHttpParams()
+      .set("command", command)
+      .set("accountId", accountId)
+      .set("accountNumber", data.accountNumber)
+      .set("bankNumber", data.bankNumber)
+      .set("checkNumber", data.checkNumber)
+      .set("note", data.note)
+      .set("paymentTypeId", data.paymentTypeId)
+      .set("receiptNumber", data.receiptNumber)
+      .set("routingCode", data.routingCode)
+      .set("transactionAmount", data.transactionAmount)
+      .set("transactionDate", data.transactionDate)
+      .set("locale", data.locale)
+      .set("dateFormat", data.dateFormat);
+
+    return this.http.post(
+      `${this.IcGatewayApiUrlPrefix}/savingTransaction/execute_ic_account_saving_action`,
+      httpParams
+    );
   }
 
   getIcSavingsAccountNoTransactions(accountId: string): Observable<any> {
     let httpParams = this.commonHttpParams.getCommonHttpParams();
-    httpParams = httpParams.set("accountId", accountId)
+    httpParams = httpParams.set("accountId", accountId);
 
     return this.http.post(`${this.IcGatewayApiUrlPrefix}/savingTransaction/get_ic_account_Saving`, httpParams);
-  }
-
-   /**
-   * @param {string} savingAccountId is saving account"s Id.
-   * @returns {Observable<any>}
-   */
-    getIcSavingsTransactionTemplateResource(savingAccountId: string): Observable<any> {
-
-      let httpParams = this.commonHttpParams.getCommonHttpParams();
-      httpParams = httpParams.set("accountId", savingAccountId)
-
-      return this.http.post(`${this.IcGatewayApiUrlPrefix}/savingTransaction/get_ic_account_Saving_transaction_template`, httpParams);
-    }
-
-  checkValidRevertSavingTransaction(resourceId: string): Observable<any> {
-    let httpParams = this.commonHttpParams.getCommonHttpParams();
-      httpParams = httpParams.set("resourceId", resourceId)
-
-    return this.http.post(`${this.GatewayApiUrlPrefix}/savingTransaction/check_valid_revert_saving_transaction`, httpParams);
   }
 
   /**
    * @param {string} savingAccountId is saving account"s Id.
    * @returns {Observable<any>}
    */
-   transferCrossOfficeCashTransaction(info: any): Observable<any> {
+  getIcSavingsTransactionTemplateResource(savingAccountId: string): Observable<any> {
+    let httpParams = this.commonHttpParams.getCommonHttpParams();
+    httpParams = httpParams.set("accountId", savingAccountId);
+
+    return this.http.post(
+      `${this.IcGatewayApiUrlPrefix}/savingTransaction/get_ic_account_Saving_transaction_template`,
+      httpParams
+    );
+  }
+
+  checkValidRevertSavingTransaction(resourceId: string): Observable<any> {
+    let httpParams = this.commonHttpParams.getCommonHttpParams();
+    httpParams = httpParams.set("resourceId", resourceId);
+
+    return this.http.post(
+      `${this.GatewayApiUrlPrefix}/savingTransaction/check_valid_revert_saving_transaction`,
+      httpParams
+    );
+  }
+
+  /**
+   * @param {string} savingAccountId is saving account"s Id.
+   * @returns {Observable<any>}
+   */
+  transferCrossOfficeCashTransaction(info: any): Observable<any> {
     let httpParams = this.commonHttpParams.getCommonHttpParams();
     httpParams = httpParams.set("buSavingAccount", info.buSavingAccount);
     httpParams = httpParams.set("paymentTypeId", info.paymentTypeId);
@@ -99,33 +115,54 @@ export class SavingsService {
     httpParams = httpParams.set("amountAdvanceCash", info.amountAdvanceCash);
     httpParams = httpParams.set("clientSavingAccount", info.clientSavingAccount);
 
-    return this.http.post(`${this.GatewayApiUrlPrefix}/savingTransaction/transfer_cross_office_transaction`, httpParams);
+    return this.http.post(
+      `${this.GatewayApiUrlPrefix}/savingTransaction/transfer_cross_office_transaction`,
+      httpParams
+    );
+  }
+
+  transferIcTransaction(info: any): Observable<any> {
+    let httpParams = this.commonHttpParams.getCommonHttpParams();
+    httpParams = httpParams.set("buSavingAccount", info.buSavingAccount);
+    httpParams = httpParams.set("paymentTypeId", info.paymentTypeId);
+    httpParams = httpParams.set("note", info.note);
+    httpParams = httpParams.set("amountAdvanceCash", info.amountAdvanceCash);
+    httpParams = httpParams.set("clientSavingAccount", info.clientSavingAccount);
+
+    return this.http.post(
+      `${this.IcGatewayApiUrlPrefix}/savingTransaction/transfer_ic_transaction`,
+      httpParams
+    );
   }
 
   /**
    * @param {string} savingAccountId is saving account"s Id.
    * @returns {Observable<any>}
    */
-   getListClientSavingStaffByOffice(staffId: string): Observable<any> {
+  getListClientSavingStaffByOffice(staffId: string): Observable<any> {
     let httpParams = this.commonHttpParams.getCommonHttpParams();
     httpParams = httpParams.set("staffId", staffId);
 
-    return this.http.post(`${this.GatewayApiUrlPrefix}/savingTransaction/get_list_client_saving_staff_by_office`, httpParams);
+    return this.http.post(
+      `${this.GatewayApiUrlPrefix}/savingTransaction/get_list_client_saving_staff_by_office`,
+      httpParams
+    );
   }
 
-  createGroupSavingsAccount(groupId:string, productId: string, savingsAccount: any): Observable<any> {
+  createGroupSavingsAccount(groupId: string, productId: string, savingsAccount: any): Observable<any> {
     const dateFormat = this.settingsService.dateFormat;
     const locale = this.settingsService.language.code;
     const savingGroupForm = this.formBuilder.group({
-    "productId": [productId],
-    "groupId": [groupId],
-    "submittedOnDate": [this.datePipe.transform(new Date(), dateFormat)],
-    "locale": [locale],
-    "dateFormat": [dateFormat],
+      productId: [productId],
+      groupId: [groupId],
+      submittedOnDate: [this.datePipe.transform(new Date(), dateFormat)],
+      locale: [locale],
+      dateFormat: [dateFormat],
     });
 
     const savingsAccountInfo = {
-      ...savingGroupForm.value }
+      ...savingGroupForm.value,
+    };
     return this.http.post("/savingsaccounts", savingsAccountInfo);
   }
 
@@ -138,7 +175,6 @@ export class SavingsService {
 
     httpParams = httpParams.set("paymentTypeId", paymentTypeId);
     httpParams = httpParams.set("staffId", staffId ? staffId : "");
-
 
     return this.http.post(`${this.GatewayApiUrlPrefix}/config/get_limit_withdrawal_config_amount`, httpParams);
   }
@@ -169,11 +205,11 @@ export class SavingsService {
 
   advanceCashTransaction(payload: any) {
     let httpParams = this.commonHttpParams.getCommonHttpParams();
-    httpParams= httpParams.set("buSavingAccount", payload.buSavingAccount);
-    httpParams= httpParams.set("clientSavingAccount", payload.clientSavingAccount);
-    httpParams= httpParams.set("note", payload.noteAdvance);
-    httpParams= httpParams.set("amountAdvanceCash", payload.amountAdvanceCash);
-    httpParams= httpParams.set("paymentTypeId", payload.typeAdvanceCash);
+    httpParams = httpParams.set("buSavingAccount", payload.buSavingAccount);
+    httpParams = httpParams.set("clientSavingAccount", payload.clientSavingAccount);
+    httpParams = httpParams.set("note", payload.noteAdvance);
+    httpParams = httpParams.set("amountAdvanceCash", payload.amountAdvanceCash);
+    httpParams = httpParams.set("paymentTypeId", payload.typeAdvanceCash);
 
     return this.http.post<any>(
       `${this.GatewayApiUrlPrefix}/savingTransaction/deposit_advance_cash_transaction`,
@@ -183,12 +219,12 @@ export class SavingsService {
 
   advanceCashForDueDayCardTransaction(payload: any) {
     let httpParams = this.commonHttpParams.getCommonHttpParams();
-    httpParams= httpParams.set("cardId", payload.cardId);
-    httpParams= httpParams.set("buSavingAccount", payload.buSavingAccount);
-    httpParams= httpParams.set("clientSavingAccount", payload.clientSavingAccount);
-    httpParams= httpParams.set("note", `${payload.clientSavingAccount} - ${payload.noteAdvance}`);
-    httpParams= httpParams.set("amountAdvanceCash", payload.amountAdvanceCash)
-    httpParams= httpParams.set("paymentTypeId", payload.typeAdvanceCash);
+    httpParams = httpParams.set("cardId", payload.cardId);
+    httpParams = httpParams.set("buSavingAccount", payload.buSavingAccount);
+    httpParams = httpParams.set("clientSavingAccount", payload.clientSavingAccount);
+    httpParams = httpParams.set("note", `${payload.clientSavingAccount} - ${payload.noteAdvance}`);
+    httpParams = httpParams.set("amountAdvanceCash", payload.amountAdvanceCash);
+    httpParams = httpParams.set("paymentTypeId", payload.typeAdvanceCash);
 
     return this.http.post<any>(
       `${this.GatewayApiUrlPrefix}/savingTransaction/deposit_advance_cash_transaction_for_due_day_card`,
@@ -223,11 +259,19 @@ export class SavingsService {
     return this.http.post<any>(`${this.GatewayApiUrlPrefix}/common/get_list_office`, httpParams);
   }
 
+  getListIcPartner() {
+    let httpParams = this.commonHttpParams.getCommonHttpParams();
+    return this.http.post<any>(`${this.IcGatewayApiUrlPrefix}/client/get_ic_client_connection`, httpParams);
+  }
+
   advanceCashPartnerTransaction(payload: any) {
     let httpParams = this.commonHttpParams.getCommonHttpParams();
     httpParams = httpParams.set("buSavingAccount", payload.buSavingAccount);
     httpParams = httpParams.set("paymentTypeId", payload.paymentTypeId);
-    httpParams = httpParams.set("note", `${payload.paymentTypeId} # ${payload.partnerAdvanceCash} # ${payload.notePartnerAdvance}`);
+    httpParams = httpParams.set(
+      "note",
+      `${payload.paymentTypeId} # ${payload.partnerAdvanceCash} # ${payload.notePartnerAdvance}`
+    );
     httpParams = httpParams.set("amountAdvanceCash", payload.amountAdvanceCash);
     httpParams = httpParams.set("routingCode", payload.partnerAdvanceCash);
     httpParams = httpParams.set("clientSavingAccount", payload.partnerClientVaultAdvanceCash);
@@ -240,15 +284,15 @@ export class SavingsService {
 
   getIcSearchTransactionCustom(payload: any) {
     let httpParams = this.commonHttpParams.getCommonHttpParams();
-    httpParams= httpParams.set("fromDate", payload.fromDate);
-    httpParams= httpParams.set("toDate", payload.toDate);
-    httpParams= httpParams.set("accountId", payload.accountId);
-    httpParams= httpParams.set("note", payload.note);
-    httpParams= httpParams.set("isRevert", payload.isRevert);
-    httpParams= httpParams.set("txnCode", payload.txnCode);
-    httpParams= httpParams.set("paymentDetail", payload.paymentDetail);
-    httpParams= httpParams.set("limit", payload.limit);
-    httpParams= httpParams.set("offset", payload.offset);
+    httpParams = httpParams.set("fromDate", payload.fromDate);
+    httpParams = httpParams.set("toDate", payload.toDate);
+    httpParams = httpParams.set("accountId", payload.accountId);
+    httpParams = httpParams.set("note", payload.note);
+    httpParams = httpParams.set("isRevert", payload.isRevert);
+    httpParams = httpParams.set("txnCode", payload.txnCode);
+    httpParams = httpParams.set("paymentDetail", payload.paymentDetail);
+    httpParams = httpParams.set("limit", payload.limit);
+    httpParams = httpParams.set("offset", payload.offset);
 
     return this.http.post<any>(
       `${this.IcGatewayApiUrlPrefix}/savingTransaction/get_list_transaction_detail_of_account`,
@@ -258,15 +302,15 @@ export class SavingsService {
 
   getSearchTransactionCustom(payload: any) {
     let httpParams = this.commonHttpParams.getCommonHttpParams();
-    httpParams= httpParams.set("fromDate", payload.fromDate);
-    httpParams= httpParams.set("toDate", payload.toDate);
-    httpParams= httpParams.set("accountId", payload.accountId);
-    httpParams= httpParams.set("note", payload.note);
-    httpParams= httpParams.set("isRevert", payload.isRevert);
-    httpParams= httpParams.set("txnCode", payload.txnCode);
-    httpParams= httpParams.set("paymentDetail", payload.paymentDetail);
-    httpParams= httpParams.set("limit", payload.limit);
-    httpParams= httpParams.set("offset", payload.offset);
+    httpParams = httpParams.set("fromDate", payload.fromDate);
+    httpParams = httpParams.set("toDate", payload.toDate);
+    httpParams = httpParams.set("accountId", payload.accountId);
+    httpParams = httpParams.set("note", payload.note);
+    httpParams = httpParams.set("isRevert", payload.isRevert);
+    httpParams = httpParams.set("txnCode", payload.txnCode);
+    httpParams = httpParams.set("paymentDetail", payload.paymentDetail);
+    httpParams = httpParams.set("limit", payload.limit);
+    httpParams = httpParams.set("offset", payload.offset);
 
     return this.http.post<any>(
       `${this.GatewayApiUrlPrefix}/savingTransaction/get_list_transaction_detail_of_account`,
@@ -294,7 +338,6 @@ export class SavingsService {
     txnCode: string,
     paymentDetail: string
   ) {
-
     this.accessToken = JSON.parse(
       sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey)
     );
@@ -316,7 +359,6 @@ export class SavingsService {
     txnCode: string,
     paymentDetail: string
   ) {
-
     this.accessToken = JSON.parse(
       sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey)
     );
@@ -538,11 +580,16 @@ export class SavingsService {
     return this.http.post(`/savingsaccounts/${accountId}/transactions`, data, { params: httpParams });
   }
 
-  updateAccountTransactions(accountId: string, transactionId: string, paymentTypeId: string, note: string): Observable<any> {
+  updateAccountTransactions(
+    accountId: string,
+    transactionId: string,
+    paymentTypeId: string,
+    note: string
+  ): Observable<any> {
     let httpParams = this.commonHttpParams.getCommonHttpParams();
-      httpParams = httpParams.set("txnId", transactionId)
-      httpParams = httpParams.set("paymentTypeId", paymentTypeId)
-      httpParams = httpParams.set("note", note)
+    httpParams = httpParams.set("txnId", transactionId);
+    httpParams = httpParams.set("paymentTypeId", paymentTypeId);
+    httpParams = httpParams.set("note", note);
     return this.http.post(`${this.GatewayApiUrlPrefix}/savingTransaction/modified_payment_type`, httpParams);
   }
 

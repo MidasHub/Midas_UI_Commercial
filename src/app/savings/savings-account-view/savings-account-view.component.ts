@@ -96,7 +96,7 @@ export class SavingsAccountViewComponent implements OnInit {
     }
     this.productsService.getSavingProduct(savingsProductId).subscribe((data: any) => {
       this.savingProduct = data;
-      if (["FCA0", "SCA0", "ACA0"].indexOf(this.savingProduct.shortName) === -1 && savingsProductId !== 2) {
+      if (["FCA0", "ICA0", "ACA0"].indexOf(this.savingProduct.shortName) === -1 && savingsProductId !== 2) {
         this.buttonConfig.addButton({
           name: "Công nợ khách hàng",
           icon: "fa fa-recycle",
@@ -104,7 +104,7 @@ export class SavingsAccountViewComponent implements OnInit {
           action: "advanceCash",
         });
       }
-      if (["CCA0", "SCA0", "ACA0"].indexOf(this.savingProduct.shortName) === -1) {
+      if (["CCA0", "ICA0", "ACA0"].indexOf(this.savingProduct.shortName) === -1) {
         this.buttonConfig.addButton({
           name: "Quản lý vốn đối tác",
           icon: "fas fa-comments-dollar",
@@ -113,12 +113,12 @@ export class SavingsAccountViewComponent implements OnInit {
         });
       }
 
-      if ("SCA0" === this.savingProduct.shortName) {
+      if ("ICA0" === this.savingProduct.shortName) {
         this.buttonConfig.addButton({
-          name: "Chuyển tiền nội bộ",
+          name: "Điều chuyển vốn",
           icon: "fas fa-exchange-alt",
           taskPermissionName: "POSTINTEREST_SAVINGSACCOUNT",
-          action: "transferCrossOfficeCash",
+          action: "transferIc",
         });
       }
     });
@@ -202,9 +202,59 @@ export class SavingsAccountViewComponent implements OnInit {
     });
   }
 
+  transferIc() {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.data = {
+      transferIc: true,
+      savingsAccountData: this.savingsAccountData,
+    };
+    dialogConfig.minWidth = 400;
+    const refDialog = this.dialog.open(TransferCrossOfficeComponent, dialogConfig);
+    refDialog.afterClosed().subscribe((response: any) => {
+      if (response) {
+        const { typeAdvanceCashes, savingAccountId, note, amount } = response?.data?.value;
+
+        if (typeAdvanceCashes != 60) {
+          this.savingsService
+            .transferIcTransaction({
+              buSavingAccount: this.savingsAccountData.id,
+              clientSavingAccount: savingAccountId,
+              note: note,
+              amountAdvanceCash: amount,
+              paymentTypeId: typeAdvanceCashes,
+            })
+            .subscribe((res: any) => {
+              let responseT = res?.result?.resultCommand;
+              if (responseT.statusCodeValue == 200 && !responseT?.body?.errors) {
+                const message = `Thực hiện thành công!`;
+                this.alertService.alert({ message: message, msgClass: "cssInfo" });
+                this.router.navigate(["../../transactions"], { relativeTo: this.route });
+              } else {
+                let response = res?.result?.resultCommand.body;
+                let errorMessage = response.defaultUserMessage || response.developerMessage;
+                if (response.errors) {
+                  if (response.errors[0]) {
+                    errorMessage = response.errors[0].defaultUserMessage || response.errors[0].developerMessage;
+                  }
+                }
+                this.alertService.alert({
+                  message: `Lỗi: ${errorMessage}, Vui lòng liên hệ IT support!`,
+                  msgClass: "cssDanger",
+                  hPosition: "right",
+                });
+              }
+            });
+        }
+      }
+    });
+  }
+
   transferCrossOfficeCash() {
     const dialogConfig = new MatDialogConfig();
-    dialogConfig.data = {};
+    dialogConfig.data = {
+      transferIc: false,
+      savingsAccountData: this.savingsAccountData,
+    };
     dialogConfig.minWidth = 400;
     const refDialog = this.dialog.open(TransferCrossOfficeComponent, dialogConfig);
     refDialog.afterClosed().subscribe((response: any) => {
@@ -356,6 +406,9 @@ export class SavingsAccountViewComponent implements OnInit {
         break;
       case "transferCrossOfficeCash":
         this.transferCrossOfficeCash();
+        break;
+      case "transferIc":
+        this.transferIc();
         break;
       case "Withdraw":
         if (this.isIcAccount) {

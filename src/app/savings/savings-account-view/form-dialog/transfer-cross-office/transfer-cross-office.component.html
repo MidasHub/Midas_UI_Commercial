@@ -1,5 +1,5 @@
-<h1 mat-dialog-title>
-  Điều chuyển tiền liên chi nhánh
+<h1 mat-dialog-title style="text-align: center">
+  ĐIỀU CHUYỂN TIỀN
 </h1>
 
 <div mat-dialog-content [formGroup]="form" [fxLayout]="'column'" fxLayout.lt-md="column" [fxLayoutGap]="'1%'"
@@ -8,7 +8,7 @@
      <mat-form-field fxFlex="96%" *ngIf="form.contains('typeAdvanceCashes')">
       <mat-label>Loại </mat-label>
       <mat-select required formControlName="typeAdvanceCashes">
-        <mat-option *ngFor="let type of typeAdvanceCashes" [value]="type.id">
+        <mat-option  *ngFor="let type of typeAdvanceCashes" [value]="type.id">
           {{ type.name }}
         </mat-option>
       </mat-select>
@@ -21,7 +21,7 @@
         </mat-option>
       </mat-select>
     </mat-form-field>
-  <mat-form-field class="select-book">
+  <mat-form-field class="select-book" *ngIf="form.contains('client')">
     <mat-label>Nhân viên</mat-label>
     <mat-select required formControlName="client">
       <mat-option *ngFor="let staff of staffs" [value]="staff.staffId">
@@ -29,7 +29,15 @@
       </mat-option>
     </mat-select>
   </mat-form-field>
-  <mat-form-field class="select-book">
+  <mat-form-field class="select-book" *ngIf="form.contains('partner')">
+    <mat-label>Đối tác</mat-label>
+    <mat-select required formControlName="partner">
+      <mat-option *ngFor="let partner of partners" [value]="partner.id">
+        {{ partner.externalId }} - {{ partner.displayName }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field class="select-book" *ngIf="form.contains('savingAccountId')">
     <mat-label>Tài khoản</mat-label>
     <mat-select required formControlName="savingAccountId">
       <mat-option *ngFor="let account of accounts" [value]="account.id">
@@ -38,7 +46,7 @@
     </mat-select>
   </mat-form-field>
 
-  <mat-form-field fxFlex="96%">
+  <mat-form-field fxFlex="96%" *ngIf="form.contains('amount')">
     <mat-label>Số tiền</mat-label>
     <input required
            currencyMask
