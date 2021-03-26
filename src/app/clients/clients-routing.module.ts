@@ -52,6 +52,8 @@ import {ClientDataAndTemplateResolver} from './common-resolvers/client-and-templ
 import {UsersResolver} from 'app/users/users.resolver';
 import {BalanceAccountClientComponent} from './balance-account-client/balance-account-client.component';
 import {BalanceAccountTellerComponent} from './balance-account-teller/balance-account-teller.component';
+import { ClientIcAccountsResolver } from './common-resolvers/client-ic-accounts.resolver';
+import { ClientIcViewResolver } from './common-resolvers/client-ic-view.resolver';
 
 const routes: Routes = [
   Route.withShell([
@@ -117,6 +119,27 @@ const routes: Routes = [
             clientIdentifierTemplate: ClientIdentifierTemplateResolver,
           }
         },
+
+        {
+          path: 'ic-client',
+          component: ClientsViewComponent,
+          resolve: {
+            clientViewData: ClientIcViewResolver,
+            // clientTemplateData: ClientTemplateResolver,
+            // clientDatatables: ClientDatatablesResolver
+          },
+          children: [
+            {
+              path: 'general',
+              component: GeneralTabComponent,
+              data: {title: extract('General'), breadcrumb: 'General', routeParamBreadcrumb: false},
+              resolve: {
+                clientAccountsData: ClientIcAccountsResolver,
+              }
+            }
+          ]
+        },
+
         {
           path: ':clientId',
           component: ClientsViewComponent,
@@ -333,7 +356,10 @@ const routes: Routes = [
     ClientActionsResolver,
     ClientChargeViewResolver,
     ClientTransactionPayResolver,
-    ClientDataAndTemplateResolver
+    ClientDataAndTemplateResolver,
+
+    ClientIcAccountsResolver,
+    ClientIcViewResolver
   ]
 })
 export class ClientsRoutingModule {

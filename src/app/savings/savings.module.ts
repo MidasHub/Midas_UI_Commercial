@@ -51,6 +51,8 @@ import { AdvanceComponent } from './savings-account-view/form-dialog/advance/adv
 import { PartnerAdvanceCashComponent } from './savings-account-view/form-dialog/partner-advance-cash/partner-advance-cash.component';
 import {UpdateSavingAccountComponent} from './savings-account-view/form-dialog/update-saving-account/update-saving-account.component'
 import { TransferCrossOfficeComponent } from './savings-account-view/form-dialog/transfer-cross-office/transfer-cross-office.component';
+import { TransactionsIcTabComponent } from './savings-account-view/transactions-ic-tab/transactions-ic-tab.component';
+import { ExportTransactionsIcComponent } from './savings-account-view/transactions-ic-tab/export-transactions-ic/export-transactions-ic.component';
 
 /**
  * Savings Module
@@ -106,7 +108,9 @@ import { TransferCrossOfficeComponent } from './savings-account-view/form-dialog
     AdvanceComponent,
     PartnerAdvanceCashComponent,
     UpdateSavingAccountComponent,
-    TransferCrossOfficeComponent
+    TransferCrossOfficeComponent,
+    TransactionsIcTabComponent,
+    ExportTransactionsIcComponent
   ],
   providers: [DatePipe]
 })

@@ -64,7 +64,7 @@ export class SavingsAccountViewComponent implements OnInit {
     private alertService: AlertService
   ) {
     this.route.data.subscribe((data: { savingsAccountData: any; savingsDatatables: any }) => {
-      this.savingsAccountData = data.savingsAccountData;
+      this.savingsAccountData = !data.savingsAccountData.result ? data.savingsAccountData : data.savingsAccountData.result.savingInfo ;
       this.savingsDatatables = data.savingsDatatables;
     });
     if (this.router.url.includes('clients')) {
@@ -116,7 +116,7 @@ export class SavingsAccountViewComponent implements OnInit {
         );
 
       }
-      
+
     });
     roles.map((role: any) => {
       if (role.id !== 3) {

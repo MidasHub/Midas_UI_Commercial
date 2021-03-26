@@ -36,6 +36,13 @@ export class SavingsService {
     this.environment = environment;
   }
 
+  getIcSavingsAccountNoTransactions(accountId: string): Observable<any> {
+    let httpParams = this.commonHttpParams.getCommonHttpParams();
+      httpParams = httpParams.set("accountId", accountId)
+
+    return this.http.post(`/ic-app/savingTransaction/get_ic_account_Saving`, httpParams);
+  }
+
   checkValidRevertSavingTransaction(resourceId: string): Observable<any> {
     let httpParams = this.commonHttpParams.getCommonHttpParams();
       httpParams = httpParams.set("resourceId", resourceId)
@@ -194,6 +201,24 @@ export class SavingsService {
     );
   }
 
+  getIcSearchTransactionCustom(payload: any) {
+    let httpParams = this.commonHttpParams.getCommonHttpParams();
+    httpParams= httpParams.set("fromDate", payload.fromDate);
+    httpParams= httpParams.set("toDate", payload.toDate);
+    httpParams= httpParams.set("accountId", payload.accountId);
+    httpParams= httpParams.set("note", payload.note);
+    httpParams= httpParams.set("isRevert", payload.isRevert);
+    httpParams= httpParams.set("txnCode", payload.txnCode);
+    httpParams= httpParams.set("paymentDetail", payload.paymentDetail);
+    httpParams= httpParams.set("limit", payload.limit);
+    httpParams= httpParams.set("offset", payload.offset);
+
+    return this.http.post<any>(
+      `/ic-app/savingTransaction/get_list_transaction_detail_of_account`,
+      httpParams
+    );
+  }
+
   getSearchTransactionCustom(payload: any) {
     let httpParams = this.commonHttpParams.getCommonHttpParams();
     httpParams= httpParams.set("fromDate", payload.fromDate);
@@ -217,6 +242,7 @@ export class SavingsService {
       responseType: "blob" as "json",
       headers: new HttpHeaders({
         "Gateway-TenantId": this.environment.GatewayTenantId,
+        "Ic-TenantId": "default",
       }),
     };
 
@@ -236,6 +262,28 @@ export class SavingsService {
       sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey)
     );
     const url = `${environment.GatewayApiUrl}${this.GatewayApiUrlPrefix}/export/download_export_transaction_saving?accessToken=${this.accessToken.base64EncodedAuthenticationKey}&fromDate=${fromDate}&toDate=${toDate}&accountId=${accountId}&note=${note}&txnCode=${txnCode}&paymentDetail=${paymentDetail}&createdBy=${this.accessToken.userId}`;
+    this.getExportExcelFile(url).subscribe((data: any) => {
+      const downloadURL = window.URL.createObjectURL(data);
+      const link = document.createElement("a");
+      link.href = downloadURL;
+      link.download = "V_saving_transaction.xlsx";
+      link.click();
+    });
+  }
+
+  downloadIcReport(
+    accountId: string,
+    toDate: string,
+    fromDate: string,
+    note: string,
+    txnCode: string,
+    paymentDetail: string
+  ) {
+
+    this.accessToken = JSON.parse(
+      sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey)
+    );
+    const url = `http://localhost:8088/ic-app/export/download_export_transaction_saving?accessToken=${this.accessToken.base64EncodedAuthenticationKey}&fromDate=${fromDate}&toDate=${toDate}&accountId=${accountId}&note=${note}&txnCode=${txnCode}&paymentDetail=${paymentDetail}&createdBy=${this.accessToken.userId}`;
     this.getExportExcelFile(url).subscribe((data: any) => {
       const downloadURL = window.URL.createObjectURL(data);
       const link = document.createElement("a");

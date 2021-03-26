@@ -89,7 +89,7 @@ export class ClientsService {
     this.accessToken = JSON.parse(
       sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey)
     );
-    if (!this.accessToken.permissions.includes("POS_UPDATE")){
+    if (!this.accessToken.permissions.includes("POS_UPDATE")) {
       sqlSearch += ` AND c.staff_id = ${this.accessToken.staffId} `;
     }
     let httpParams = new HttpParams()
@@ -108,8 +108,19 @@ export class ClientsService {
       httpParams = httpParams.set("officeId", this.accessToken.officeId);
     }
 
-
     return this.http.get("/clients", { params: httpParams });
+  }
+
+  getICClient(): Observable<any> {
+    let httpParams = this.commonHttpParams.getCommonHttpParams();
+
+    return this.http.post<any>(`/ic-app/client/get_ic_client`, httpParams);
+  }
+
+  getICClientAccount(): Observable<any> {
+    let httpParams = this.commonHttpParams.getCommonHttpParams();
+
+    return this.http.post<any>(`/ic-app/client/get_ic_client_account`, httpParams);
   }
 
   getClientTemplate(): Observable<any> {
@@ -499,7 +510,7 @@ export class ClientsService {
 
   getStaffsByOffice(officeId: string): Observable<any> {
     let httpParams = this.commonHttpParams.getCommonHttpParams();
-    httpParams = httpParams.set("officeIdSelected" , officeId )
+    httpParams = httpParams.set("officeIdSelected", officeId);
     return this.http.post<any>(`${this.GatewayApiUrlPrefix}/common/get_list_staff_by_office`, httpParams);
   }
 

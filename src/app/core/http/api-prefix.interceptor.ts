@@ -32,8 +32,18 @@ export class ApiPrefixInterceptor implements HttpInterceptor {
         if (request.url.startsWith(environment.GatewayApiUrlPrefix)) {
 
           request = request.clone({url: environment.GatewayServerUrl + request.url});
+
         } else {
-          request = request.clone({url: environment.serverUrl + request.url});
+
+          if (request.url.startsWith('/ic-app')) {
+
+            request = request.clone({url: "http://localhost:8088" + request.url});
+
+          }else{
+
+            request = request.clone({url: environment.serverUrl + request.url});
+
+          }
         }
       } else {
         request = request.clone({url: request.url});

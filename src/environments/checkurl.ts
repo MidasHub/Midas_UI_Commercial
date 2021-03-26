@@ -12,6 +12,11 @@ const subdomain = window.location.hostname.split('.')[0];
 // let defaultbaseURL = 'https://training.kiotthe.com';
 // let defaultbillposURL = 'https://training.kiotthe.com';
 
+// let tenant = 'hdcredit';
+// let billpostenant = 'hdcredit';
+// let defaultbaseURL = 'https://hdcredit.kiotthe.com';
+// let defaultbillposURL = 'https://hdcredit.kiotthe.com';
+
 let tenant = 'staging';
 let billpostenant = 'staging';
 let defaultbaseURL = 'https://staging.midascore.net';

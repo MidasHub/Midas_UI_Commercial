@@ -76,7 +76,7 @@
     <mifosx-notifications-tray fxHide.lt-md> </mifosx-notifications-tray>
     <!-- <br /> -->
     <button fxHide.lt-md  mat-icon-button  [matMenuTriggerFor]="applicationMenu">
-      <div fxLayout="column" fxLayoutAlign="center center" style="margin:0;padding:0"><i class="fas fa-user-cog" style="font-size:larger;margin:0;padding:0"></i> 
+      <div fxLayout="column" fxLayoutAlign="center center" style="margin:0;padding:0"><i class="fas fa-user-cog" style="font-size:larger;margin:0;padding:0"></i>
       <span style="font-size:0.7rem;line-height:1rem">{{ currentUser.username }}</span></div>
     </button>
   </div>
@@ -86,6 +86,8 @@
   <button mat-menu-item routerLink="/clients/customer">{{ "Toolbar_Component.lblClient" | translate }}</button>
   <button mat-menu-item routerLink="/clients/staff">Nhân viên</button>
   <button mat-menu-item routerLink="/clients/interchange">Đối tác Interchange</button>
+  <button mat-menu-item routerLink="/clients/ic-client/general"
+  [queryParams]="{typeViewClient:'view' ,clientType:'ic' }" >Quản lý Interchange</button>
   <button mat-menu-item routerLink="/groups">{{ "Toolbar_Component.lblGroup" | translate }}</button>
   <button mat-menu-item *midasHasPermission="'ALL_FUNCTIONS'" routerLink="/centers">Centers</button>
   <button mat-menu-item routerLink="/accounts/balance-clients">

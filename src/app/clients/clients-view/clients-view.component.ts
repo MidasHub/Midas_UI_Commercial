@@ -45,8 +45,8 @@ export class ClientsViewComponent implements OnInit {
 
       this.clientViewData = data.clientViewData.result.clientInfo;
       // this.clientViewData = data.clientViewData;
-      this.clientDatatables = data.clientDatatables;
-      this.clientTemplateData = data.clientTemplateData;
+      this.clientDatatables = data.clientDatatables ? data.clientDatatables : {};
+      this.clientTemplateData = data.clientTemplateData ? data.clientTemplateData : {};
     });
   }
 
@@ -57,6 +57,7 @@ export class ClientsViewComponent implements OnInit {
         this.showViewClient = this.typeViewClient == 'transaction';
         if (params.get("clientType") == 'ic') {
           this.isInterchangeClient = true
+
         }
       });
     this.clientsService.getClientProfileImage(this.clientViewData.id).subscribe(
@@ -64,8 +65,8 @@ export class ClientsViewComponent implements OnInit {
         this.clientImage = this._sanitizer.bypassSecurityTrustResourceUrl(base64Image);
       }, (error: any) => { }
     );
-   
-    
+
+
   }
 
   /**

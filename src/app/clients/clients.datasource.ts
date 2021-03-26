@@ -44,12 +44,24 @@ export class ClientsDataSource implements DataSource<any> {
     } else {
       sqlSearch = `c.status_enum = 600 and c.client_type_cv_id IN (${clientType})`;
     }
-    this.clientsService.getClientsByOfficeOfUser('', '', pageIndex * limit, limit, sqlSearch)
+
+    // if (Number(clientType) == 23) {
+
+    //   this.clientsService.getICClients('', '', pageIndex * limit, limit, sqlSearch)
+    //   .subscribe((clients: any) => {
+    //     // clients.pageItems = (clientActive) ? (clients.pageItems.filter((client: any) => client.active)) : (clients.pageItems.filter((client: any) => !client.active));
+    //     this.recordsSubject.next(clients.totalFilteredRecords);
+    //     this.clientsSubject.next(clients.pageItems);
+    //   });
+    // } else {
+      this.clientsService.getClientsByOfficeOfUser('', '', pageIndex * limit, limit, sqlSearch)
       .subscribe((clients: any) => {
         // clients.pageItems = (clientActive) ? (clients.pageItems.filter((client: any) => client.active)) : (clients.pageItems.filter((client: any) => !client.active));
         this.recordsSubject.next(clients.totalFilteredRecords);
         this.clientsSubject.next(clients.pageItems);
       });
+    // }
+
   }
 
   /**

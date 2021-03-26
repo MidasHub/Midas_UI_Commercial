@@ -14,7 +14,7 @@
       {{'Client_Component.ViewClient.TabGeneral.lblLastLoanAmount'| translate }} :{{clientSummary?.lastLoanAmount |
       money}} <br />
     </p>
-    
+
   </div>
 
   <div *ngIf="!this.isInterchangeClient">
@@ -166,7 +166,7 @@
 
     <tr mat-header-row *matHeaderRowDef="openSavingsColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: openSavingsColumns;"
-      [routerLink]="['../', 'savings-accounts', row.id, 'transactions']"></tr>
+      [routerLink]="['../', routingSavingAccountUrl, 'ic' , row.id, 'transactions']"></tr>
 
   </table>
   <!-- Closed Saving Accounts -->
@@ -194,7 +194,7 @@
 
     <tr mat-header-row *matHeaderRowDef="closedSavingsColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: closedSavingsColumns;"
-      [routerLink]="['../', 'savings-accounts', row.id, 'transactions']"></tr>
+      [routerLink]="['../', routingSavingAccountUrl , 'ic', row.id, 'transactions']"></tr>
 
   </table>
 

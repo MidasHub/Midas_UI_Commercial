@@ -173,6 +173,7 @@ export class WebAppComponent implements OnInit {
         'https://training.kiotthe.com',
         'https://midas.kiotthe.com',
         'https://localhost:9443',
+        'https://ic.kiotthe.com',
         'https://localhost:7443'
       ]);
     }

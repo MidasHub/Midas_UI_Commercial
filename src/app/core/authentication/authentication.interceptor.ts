@@ -1,42 +1,47 @@
 /** Angular Imports */
-import { Injectable } from '@angular/core';
-import { HttpEvent, HttpInterceptor, HttpHandler, HttpRequest } from '@angular/common/http';
+import { Injectable } from "@angular/core";
+import { HttpEvent, HttpInterceptor, HttpHandler, HttpRequest } from "@angular/common/http";
 
 /** rxjs Imports */
-import { Observable } from 'rxjs';
+import { Observable } from "rxjs";
 
 /** Environment Configuration */
-import { environment } from '../../../environments/environment';
+import { environment } from "../../../environments/environment";
 
 /** Http request options headers. */
 const httpOptions = {
   headers: {
-    'Fineract-Platform-TenantId': environment.fineractPlatformTenantId
-  }
+    "Fineract-Platform-TenantId": environment.fineractPlatformTenantId,
+  },
 };
 
 const httpOptionsGateway = {
   headers: {
-    'Gateway-TenantId': environment.GatewayTenantId
-  }
+    "Gateway-TenantId": environment.GatewayTenantId,
+  },
+};
+
+const httpOptionsIcGateway = {
+  headers: {
+    "Gateway-TenantId": environment.GatewayTenantId,
+    "IC-TenantId": "default",
+  },
 };
 
 /** Logger */
-import {Logger} from '../logger/logger.service'
-const log = new Logger('Authen-interceptor');
-
+import { Logger } from "../logger/logger.service";
+const log = new Logger("Authen-interceptor");
 
 /** Authorization header. */
-const authorizationHeader = 'Authorization';
+const authorizationHeader = "Authorization";
 /** Two factor access token header. */
-const twoFactorAccessTokenHeader = 'Fineract-Platform-TFA-Token';
+const twoFactorAccessTokenHeader = "Fineract-Platform-TFA-Token";
 
 /**
  * Http Request interceptor to set the request headers.
  */
 @Injectable()
 export class AuthenticationInterceptor implements HttpInterceptor {
-
   constructor() {}
 
   /**
@@ -44,17 +49,18 @@ export class AuthenticationInterceptor implements HttpInterceptor {
    */
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
-     if (!request.url.includes(environment.GatewayApiUrlPrefix)){
-
-      request = request.clone({ setHeaders: httpOptions.headers });
-
-     } else{
-      if(environment.isNewBillPos){
+    if (request.url.includes(environment.GatewayApiUrlPrefix)) {
       request = request.clone({ setHeaders: httpOptionsGateway.headers });
-      }
-     }
+    } else {
 
-     log.debug("Authen Step: ", request)
+      if (request.url.includes("ic-app")) {
+        request = request.clone({ setHeaders: httpOptionsIcGateway.headers });
+      } else {
+        request = request.clone({ setHeaders: httpOptions.headers });
+      }
+    }
+
+    log.debug("Authen Step: ", request);
     return next.handle(request);
   }
 
@@ -91,5 +97,4 @@ export class AuthenticationInterceptor implements HttpInterceptor {
   removeTwoFactorAuthorization() {
     delete httpOptions.headers[twoFactorAccessTokenHeader];
   }
-
 }

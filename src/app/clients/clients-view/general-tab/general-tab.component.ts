@@ -59,6 +59,8 @@ export class GeneralTabComponent {
   clientid: any;
   isTeller = true;
   isInterchangeClient = false;
+  routingSavingAccountUrl: string = "savings-accounts";
+
 
   /**
    * @param {ActivatedRoute} route Activated Route
@@ -77,13 +79,14 @@ export class GeneralTabComponent {
       this.savingAccounts = data.clientAccountsData.result.clientAccount.savingsAccounts.sort((v: any) => ['SCA0', 'CCA0', 'ACA0', 'FCA0'].indexOf(v.shortProductName) === -1);
       this.loanAccounts = data.clientAccountsData.result.clientAccount.loanAccounts;
       this.shareAccounts = data.clientAccountsData.result.clientAccount.codeshareAccounts;
-      this.upcomingCharges = data.clientChargesData.pageItems;
-      this.clientSummary = data.clientSummary[0];
+      this.upcomingCharges = data.clientChargesData ? data.clientChargesData.pageItems : [];
+      this.clientSummary = data.clientSummary ? data.clientSummary[0] :  {};
       this.clientid = this.route.parent.snapshot.params['clientId'];
       this.route.queryParamMap
       .subscribe((params) => {
           if (params.get("clientType") == 'ic') {
-          this.isInterchangeClient = true
+          this.isInterchangeClient = true ;
+          // this.routingSavingAccountUrl = "savings-accounts-ic"
         }
       });
     });
