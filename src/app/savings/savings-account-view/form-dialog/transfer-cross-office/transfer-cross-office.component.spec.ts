@@ -1,11 +1,11 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { TransferCrossOfficeComponent } from './transfer-cross-office.component';
 
 describe('TransferCrossOfficeComponent', () => {
   let component: TransferCrossOfficeComponent;
   let fixture: ComponentFixture<TransferCrossOfficeComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ TransferCrossOfficeComponent ]
     })

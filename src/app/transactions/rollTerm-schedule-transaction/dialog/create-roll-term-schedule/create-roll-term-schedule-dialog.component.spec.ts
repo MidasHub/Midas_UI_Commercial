@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { CreateRollTermScheduleDialogComponent } from './create-roll-term-schedule-dialog.component';
 
 
@@ -6,7 +6,7 @@ describe('CreateRollTermScheduleDialogComponent', () => {
   let component: CreateRollTermScheduleDialogComponent;
   let fixture: ComponentFixture<CreateRollTermScheduleDialogComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ CreateRollTermScheduleDialogComponent ]
     })

@@ -1,11 +1,11 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { MerchantTabComponent } from './merchant-tab.component';
 
 describe('MerchantTabComponent', () => {
   let component: MerchantTabComponent;
   let fixture: ComponentFixture<MerchantTabComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ MerchantTabComponent ]
     })

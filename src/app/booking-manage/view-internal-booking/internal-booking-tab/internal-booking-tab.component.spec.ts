@@ -1,11 +1,11 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { InternalBookingTabComponent } from './internal-booking-tab.component';
 
 describe('InternalBookingTabComponent', () => {
   let component: InternalBookingTabComponent;
   let fixture: ComponentFixture<InternalBookingTabComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ InternalBookingTabComponent ]
     })

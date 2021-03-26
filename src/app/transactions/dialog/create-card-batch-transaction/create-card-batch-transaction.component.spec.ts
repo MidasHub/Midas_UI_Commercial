@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { CreateCardBatchTransactionComponent } from './create-card-batch-transaction.component';
 
@@ -6,7 +6,7 @@ describe('CreateCardBatchTransactionComponent', () => {
   let component: CreateCardBatchTransactionComponent;
   let fixture: ComponentFixture<CreateCardBatchTransactionComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ CreateCardBatchTransactionComponent ]
     })

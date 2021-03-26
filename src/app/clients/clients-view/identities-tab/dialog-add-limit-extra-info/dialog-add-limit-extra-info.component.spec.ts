@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { AddLimitIdentitiesExtraInfoComponent } from './dialog-add-limit-extra-info.component';
 
 
@@ -6,7 +6,7 @@ describe('AddLimitIdentitiesExtraInfoComponent', () => {
   let component: AddLimitIdentitiesExtraInfoComponent;
   let fixture: ComponentFixture<AddLimitIdentitiesExtraInfoComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ AddLimitIdentitiesExtraInfoComponent ]
     })
