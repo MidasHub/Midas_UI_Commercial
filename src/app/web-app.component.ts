@@ -173,6 +173,7 @@ export class WebAppComponent implements OnInit {
         'https://training.kiotthe.com',
         'https://midas.kiotthe.com',
         'https://localhost:9443',
+        'https://hdcredit.kiotthe.com',
         'https://localhost:7443'
       ]);
     }
@@ -183,6 +184,7 @@ export class WebAppComponent implements OnInit {
         'https://training.kiotthe.com',
         'https://midas.kiotthe.com',
         'https://uat.tekcompay.com:8088',
+        'https://hdcredit.kiotthe.com',
         'http://localhost:8088'
       ]);
     }
