@@ -166,7 +166,7 @@
 
     <tr mat-header-row *matHeaderRowDef="openSavingsColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: openSavingsColumns;"
-      [routerLink]="['../', routingSavingAccountUrl, 'ic' , row.id, 'transactions']"></tr>
+      [routerLink]="isInterchangeClient ? ['../', routingSavingAccountUrl, 'ic' , row.id, 'transactions'] : ['../', routingSavingAccountUrl , row.id, 'transactions']"></tr>
 
   </table>
   <!-- Closed Saving Accounts -->

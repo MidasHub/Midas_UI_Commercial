@@ -22,6 +22,11 @@ let billpostenant = 'staging';
 let defaultbaseURL = 'https://staging.midascore.net';
 let defaultbillposURL = 'https://staging.midascore.net';
 
+let ictenant = 'default';
+// let defaultIcURL = 'https://ic.kiotthe.com';
+let defaultIcURL = 'http://localhost:8088';
+
+
 let apiProvider = '/midas/api';
 const apiVersion = '/v1';
 
@@ -44,6 +49,8 @@ export default {
   billposT: billpostenant,
   defaultbaseURL: defaultbaseURL,
   defaultbillposURL: defaultbillposURL,
+  icT: ictenant,
+  icBaseUrl: defaultIcURL,
   apiProvider: apiProvider,
   apiVersion: apiVersion
 

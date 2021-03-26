@@ -90,7 +90,7 @@ export class TransactionsIcTabComponent implements OnInit {
     private alterServices: AlertService
   ) {
 
-    this.route.parent.parent.data.subscribe((data: { savingsAccountData: any }) => {
+    this.route.parent.data.subscribe((data: { savingsAccountData: any }) => {
       this.savingsAccountData = data.savingsAccountData.result.savingInfo;
       // .transactions?.filter((transaction: any) => !transaction.reversed);
       this.status = data.savingsAccountData.status.value;

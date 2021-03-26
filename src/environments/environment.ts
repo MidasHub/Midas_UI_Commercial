@@ -21,6 +21,9 @@ export const environment = {
   GatewayApiUrlPrefix: '/billpos',
   GatewayServerUrl: '',
   GatewayTenantId: te.billposT,
+  IcGatewayApiUrl: te.icBaseUrl,
+  IcGatewayApiUrlPrefix: '/ic-app',
+  IcGatewayTenantId: te.icT,
   oauth: {
     enabled: false,  // For connecting to Midas using OAuth2 Authentication change the value to true
     serverUrl: ''

@@ -34,6 +34,7 @@ import { SavingsAccountTransactionTemplateResolver } from "./common-resolvers/sa
 import { SavingsAccountIcViewResolver } from "./common-resolvers/savings-account-ic-view.resolver";
 import { TransactionsIcTabComponent } from "./savings-account-view/transactions-ic-tab/transactions-ic-tab.component";
 import { ExportTransactionsIcComponent } from "./savings-account-view/transactions-ic-tab/export-transactions-ic/export-transactions-ic.component";
+import { IcSavingsAccountActionsResolver } from "./common-resolvers/ic-savings-account-actions.resolver";
 
 /** Savings Routes */
 const routes: Routes = [
@@ -49,42 +50,6 @@ const routes: Routes = [
           savingsAccountTemplate: SavingsAccountTemplateResolver,
         },
       },
-
-      {
-        path: "ic",
-        data: { title: extract("Saving Account View"), routeParamBreadcrumb: "savingAccountId" },
-        children: [
-          {
-            path: ":savingAccountId",
-            component: SavingsAccountViewComponent,
-            resolve: {
-              savingsAccountData: SavingsAccountIcViewResolver,
-              // savingsDatatables: SavingsDatatablesResolver,
-            },
-            children: [
-              {
-                path: "transactions",
-                data: {
-                  title: extract("Saving_Account_Component.Breadcrumb.labelSavingsAccountTransactions"),
-                  breadcrumb: "Saving_Account_Component.Breadcrumb.labelTransactions",
-                  routeParamBreadcrumb: false,
-                },
-                children: [
-                  {
-                    path: "",
-                    component: TransactionsIcTabComponent,
-                  },
-                  {
-                    path: "export",
-                    component: ExportTransactionsIcComponent,
-                  },
-                ],
-              },
-            ],
-          },
-        ],
-      },
-
       {
         path: ":savingAccountId",
         data: { title: extract("Saving Account View"), routeParamBreadcrumb: "savingAccountId" },
@@ -238,6 +203,50 @@ const routes: Routes = [
       },
     ],
   },
+  {
+    path: "ic",
+    data: { title: extract("Saving Account View"), routeParamBreadcrumb: "savingAccountId" },
+    children: [
+      {
+        path: ":savingAccountId",
+
+        children: [
+          {
+            path: "transactions",
+            component: SavingsAccountViewComponent,
+            resolve: {
+              savingsAccountData: SavingsAccountIcViewResolver,
+              // savingsDatatables: SavingsDatatablesResolver,
+            },
+            data: {
+              title: extract("Saving_Account_Component.Breadcrumb.labelSavingsAccountTransactions"),
+              breadcrumb: "Saving_Account_Component.Breadcrumb.labelTransactions",
+              routeParamBreadcrumb: false,
+            },
+
+            children: [
+              {
+                path: "",
+                component: TransactionsIcTabComponent,
+              },
+              {
+                path: "export",
+                component: ExportTransactionsIcComponent,
+              },
+            ],
+          },
+          {
+            path: "actions/:name",
+            data: { title: extract("Savings Account Actions"), routeParamBreadcrumb: "name" },
+            component: SavingAccountActionsComponent,
+            resolve: {
+              savingsAccountActionData: IcSavingsAccountActionsResolver,
+            },
+          },
+        ],
+      },
+    ],
+  },
 ];
 @NgModule({
   imports: [RouterModule.forChild(routes)],
@@ -254,7 +263,8 @@ const routes: Routes = [
     SavingsAccountActionsResolver,
     SavingsTransactionRecieptResolver,
     SavingsAccountTransactionTemplateResolver,
-    SavingsAccountIcViewResolver
+    SavingsAccountIcViewResolver,
+    IcSavingsAccountActionsResolver,
   ],
 })
 export class SavingsRoutingModule {}

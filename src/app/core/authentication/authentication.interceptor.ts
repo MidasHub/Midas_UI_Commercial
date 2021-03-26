@@ -53,7 +53,7 @@ export class AuthenticationInterceptor implements HttpInterceptor {
       request = request.clone({ setHeaders: httpOptionsGateway.headers });
     } else {
 
-      if (request.url.includes("ic-app")) {
+      if (request.url.includes(environment.IcGatewayApiUrlPrefix)) {
         request = request.clone({ setHeaders: httpOptionsIcGateway.headers });
       } else {
         request = request.clone({ setHeaders: httpOptions.headers });

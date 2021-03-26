@@ -20,6 +20,7 @@ export class SavingsService {
   private credentialsStorageKey = "midasCredentials";
   private accessToken: any;
   private GatewayApiUrlPrefix: any;
+  private IcGatewayApiUrlPrefix: string;
   private environment: any;
 
 
@@ -33,15 +34,51 @@ export class SavingsService {
       sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey)
     );
     this.GatewayApiUrlPrefix = environment.GatewayApiUrlPrefix;
+    this.IcGatewayApiUrlPrefix = environment.IcGatewayApiUrlPrefix;
     this.environment = environment;
+  }
+
+  executeIcSavingsAccountTransactionsCommand(
+    accountId: string,
+    command: string,
+    data: any,
+  ): Observable<any> {
+    let httpParams = this.commonHttpParams.getCommonHttpParams()
+    .set("command", command)
+    .set("accountId", accountId)
+    .set("accountNumber", data.accountNumber)
+    .set("bankNumber", data.bankNumber)
+    .set("checkNumber", data.checkNumber)
+    .set("note", data.note)
+    .set("paymentTypeId", data.paymentTypeId)
+    .set("receiptNumber", data.receiptNumber)
+    .set("routingCode", data.routingCode)
+    .set("transactionAmount", data.transactionAmount)
+    .set("transactionDate", data.transactionDate)
+    .set("locale", data.locale)
+    .set("dateFormat", data.dateFormat);
+
+    return this.http.post(`${this.IcGatewayApiUrlPrefix}/savingTransaction/execute_ic_account_saving_action`,  httpParams);
   }
 
   getIcSavingsAccountNoTransactions(accountId: string): Observable<any> {
     let httpParams = this.commonHttpParams.getCommonHttpParams();
-      httpParams = httpParams.set("accountId", accountId)
+    httpParams = httpParams.set("accountId", accountId)
 
-    return this.http.post(`/ic-app/savingTransaction/get_ic_account_Saving`, httpParams);
+    return this.http.post(`${this.IcGatewayApiUrlPrefix}/savingTransaction/get_ic_account_Saving`, httpParams);
   }
+
+   /**
+   * @param {string} savingAccountId is saving account"s Id.
+   * @returns {Observable<any>}
+   */
+    getIcSavingsTransactionTemplateResource(savingAccountId: string): Observable<any> {
+
+      let httpParams = this.commonHttpParams.getCommonHttpParams();
+      httpParams = httpParams.set("accountId", savingAccountId)
+
+      return this.http.post(`${this.IcGatewayApiUrlPrefix}/savingTransaction/get_ic_account_Saving_transaction_template`, httpParams);
+    }
 
   checkValidRevertSavingTransaction(resourceId: string): Observable<any> {
     let httpParams = this.commonHttpParams.getCommonHttpParams();
@@ -214,7 +251,7 @@ export class SavingsService {
     httpParams= httpParams.set("offset", payload.offset);
 
     return this.http.post<any>(
-      `/ic-app/savingTransaction/get_list_transaction_detail_of_account`,
+      `${this.IcGatewayApiUrlPrefix}/savingTransaction/get_list_transaction_detail_of_account`,
       httpParams
     );
   }
@@ -283,7 +320,7 @@ export class SavingsService {
     this.accessToken = JSON.parse(
       sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey)
     );
-    const url = `http://localhost:8088/ic-app/export/download_export_transaction_saving?accessToken=${this.accessToken.base64EncodedAuthenticationKey}&fromDate=${fromDate}&toDate=${toDate}&accountId=${accountId}&note=${note}&txnCode=${txnCode}&paymentDetail=${paymentDetail}&createdBy=${this.accessToken.userId}`;
+    const url = `${environment.IcGatewayApiUrl}${this.IcGatewayApiUrlPrefix}/export/download_export_transaction_saving?accessToken=${this.accessToken.base64EncodedAuthenticationKey}&fromDate=${fromDate}&toDate=${toDate}&accountId=${accountId}&note=${note}&txnCode=${txnCode}&paymentDetail=${paymentDetail}&createdBy=${this.accessToken.userId}`;
     this.getExportExcelFile(url).subscribe((data: any) => {
       const downloadURL = window.URL.createObjectURL(data);
       const link = document.createElement("a");

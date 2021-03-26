@@ -21,6 +21,7 @@ export class ClientsService {
   private credentialsStorageKey = "midasCredentials";
   private accessToken: any;
   private GatewayApiUrlPrefix: any;
+  private IcGatewayApiUrlPrefix: string;
   private cacheClientRequest = {};
 
   /**
@@ -31,6 +32,7 @@ export class ClientsService {
       sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey)
     );
     this.GatewayApiUrlPrefix = environment.GatewayApiUrlPrefix;
+    this.IcGatewayApiUrlPrefix = environment.IcGatewayApiUrlPrefix;
   }
 
   loadImageIdentifier(identifierId: string, imageId: string): Observable<any> {
@@ -114,13 +116,13 @@ export class ClientsService {
   getICClient(): Observable<any> {
     let httpParams = this.commonHttpParams.getCommonHttpParams();
 
-    return this.http.post<any>(`/ic-app/client/get_ic_client`, httpParams);
+    return this.http.post<any>(`${this.IcGatewayApiUrlPrefix}/client/get_ic_client`, httpParams);
   }
 
   getICClientAccount(): Observable<any> {
     let httpParams = this.commonHttpParams.getCommonHttpParams();
 
-    return this.http.post<any>(`/ic-app/client/get_ic_client_account`, httpParams);
+    return this.http.post<any>(`${this.IcGatewayApiUrlPrefix}/client/get_ic_client_account`, httpParams);
   }
 
   getClientTemplate(): Observable<any> {

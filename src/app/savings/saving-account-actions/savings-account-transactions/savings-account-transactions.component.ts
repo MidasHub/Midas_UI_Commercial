@@ -7,6 +7,7 @@ import { DatePipe } from "@angular/common";
 /** Custom Services */
 import { SavingsService } from "../../savings.service";
 import { AlertService } from "app/core/alert/alert.service";
+import { SettingsService } from "app/settings/settings.service";
 
 /**
  * Create savings account transactions component.
@@ -45,6 +46,7 @@ export class SavingsAccountTransactionsComponent implements OnInit {
   showStaffChoose: boolean = false;
   filteredOptions: any = [];
   paymentTypeDescription: string;
+  isInterchangeClient: boolean = false;
   /**
    * Retrieves the Saving Account transaction template data from `resolve`.
    * @param {FormBuilder} formBuilder Form Builder.
@@ -59,10 +61,16 @@ export class SavingsAccountTransactionsComponent implements OnInit {
     private router: Router,
     private datePipe: DatePipe,
     private alertService: AlertService,
-    private savingsService: SavingsService
+    private savingsService: SavingsService,
+    private settingsService: SettingsService
   ) {
     this.route.data.subscribe((data: { savingsAccountActionData: any }) => {
-      this.paymentTypeOptions = data.savingsAccountActionData.paymentTypeOptions;
+      if (data.savingsAccountActionData.result) {
+        this.isInterchangeClient = true;
+        this.paymentTypeOptions = data.savingsAccountActionData.result.savingTemplate.paymentTypeOptions;
+      } else {
+        this.paymentTypeOptions = data.savingsAccountActionData.paymentTypeOptions;
+      }
     });
     this.transactionCommand = this.route.snapshot.params["name"].toLowerCase();
     this.transactionType[this.transactionCommand] = true;
@@ -104,12 +112,15 @@ export class SavingsAccountTransactionsComponent implements OnInit {
   filterPaymentType() {
     this.paymentTypeDescription = "";
     let groupId = String(this.savingAccountTransactionForm.get("paymentTypeGroup").value);
-    if (groupId == "Expense-Equity") {
-      this.showStaffChoose = true;
-      this.savingAccountTransactionForm.get("accountNumber").setValue("51");
-    } else {
-      this.showStaffChoose = false;
-      this.savingAccountTransactionForm.get("accountNumber").setValue(null);
+
+    if (!this.isInterchangeClient) {
+      if (groupId == "Expense-Equity") {
+        this.showStaffChoose = true;
+        this.savingAccountTransactionForm.get("accountNumber").setValue("51");
+      } else {
+        this.showStaffChoose = false;
+        this.savingAccountTransactionForm.get("accountNumber").setValue(null);
+      }
     }
 
     this.filteredOptions = this.paymentTypeOptions.filter((item) => {
@@ -134,9 +145,8 @@ export class SavingsAccountTransactionsComponent implements OnInit {
       }
     });
     this.paymentTypeDescription = paymentTypeDescription;
-    if (this.transactionCommand == "withdrawal") {
+    if (this.transactionCommand == "withdrawal" && !this.isInterchangeClient) {
       if (this.showStaffChoose) {
-
         let staffId = this.savingAccountTransactionForm.get("accountNumber").value;
         this.checkValidAmountWithdrawalTransaction(paymentTypeId, staffId);
       } else {
@@ -180,7 +190,7 @@ export class SavingsAccountTransactionsComponent implements OnInit {
    * Method to submit the transaction details.
    */
   submit() {
-    if (this.limitInfo && this.limitInfo.limitConfig > 0) {
+    if (this.limitInfo && this.limitInfo.limitConfig > 0 && !this.isInterchangeClient) {
       if (
         this.limitInfo.limitUsed >= this.limitInfo.limitConfig ||
         this.limitInfo.limitConfig - this.limitInfo.limitUsed <
@@ -200,17 +210,48 @@ export class SavingsAccountTransactionsComponent implements OnInit {
 
     const prevTransactionDate: Date = this.savingAccountTransactionForm.value.transactionDate;
     // TODO: Update once language and date settings are setup
-    const dateFormat = "dd-MM-yyyy";
+    const dateFormat = this.settingsService.dateFormat;
+    const locale = this.settingsService.language.code;
     this.savingAccountTransactionForm.patchValue({
       transactionDate: this.datePipe.transform(prevTransactionDate, dateFormat),
     });
     const transactionData = this.savingAccountTransactionForm.value;
-    transactionData.locale = "en";
+    transactionData.locale = locale;
     transactionData.dateFormat = dateFormat;
-    this.savingsService
-      .executeSavingsAccountTransactionsCommand(this.savingAccountId, this.transactionCommand, transactionData)
-      .subscribe((res) => {
-        this.router.navigate(["../../"], { relativeTo: this.route });
-      });
+    if (!this.isInterchangeClient) {
+      this.savingsService
+        .executeSavingsAccountTransactionsCommand(this.savingAccountId, this.transactionCommand, transactionData)
+        .subscribe((res) => {
+          this.router.navigate(["../../"], { relativeTo: this.route });
+        });
+    } else {
+
+      this.savingsService
+        .executeIcSavingsAccountTransactionsCommand(this.savingAccountId, this.transactionCommand, transactionData)
+        .subscribe((res) => {
+          let responseT = res?.result?.resultCommand ;
+          if ( responseT.statusCodeValue == 200
+            &&  !responseT?.body?.errors){
+
+            this.router.navigate(["../../transactions"], { relativeTo: this.route });
+
+          } else {
+
+            let response = res?.result?.resultCommand.body;
+            let errorMessage = (response.defaultUserMessage || response.developerMessage);
+            if (response.errors) {
+              if (response.errors[0]) {
+                errorMessage = response.errors[0].defaultUserMessage || response.errors[0].developerMessage;
+              }
+            }
+            this.alertService.alert({
+              message: `Lỗi: ${errorMessage}, Vui lòng liên hệ IT support!`,
+              msgClass: "cssDanger",
+              hPosition: "right",
+            });
+
+          }
+        });
+    }
   }
 }

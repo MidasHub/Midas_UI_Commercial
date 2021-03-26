@@ -25,7 +25,7 @@ export class SavingsAccountIcViewResolver implements Resolve<Object> {
    * @returns {Observable<any>}
    */
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
-    const savingAccountId = route.paramMap.get('savingAccountId');
+    const savingAccountId = route.parent.paramMap.get('savingAccountId');
     return this.savingsService.getIcSavingsAccountNoTransactions(savingAccountId);
   }
 
