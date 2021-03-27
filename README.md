@@ -118,3 +118,15 @@ Use "Alert Interface" for popup Alert Msg
                   ng build --prod --output-hashing=all --base-href="/"  --serviceWorker=true --deleteOutputPath=true --outputPath="/usr/share/nginx/html/staging/" 
       ```
   - **Step 3:** Submit the deployment YML file to Github and done
+
+### Update to Angular 10: 
+Now, we can only upgrade to Angular 10 due to incompatible dependencies: @busacca/ng-pick-datetime, ng2-smart-table  and @stomp/ng2-stompjs only supported angular 10
+To upgrade to Angular 10 do as following:
+  - **Step 1:** Upgrade Angular core: ng update @angular/core@10 @angular/cli@10
+  - **Step 2:** Upgrade Angular material: ng update @angular/material@10 --force
+  - **Step 3:** Upgrade Angular flex Layput: ng update @angular/flex-layout@10.0.0-beta.32
+  - **Step 4:** Upgrade dependencies: yarn add @akveo/ng2-completer@9.0.1 @angular/fire@6.0.4 @busacca/ng-pick-datetime@10.0.0 @ngx-translate/core@13.0.0 @ngx-translate/http-loader@6.0.0 ngx-mask@10.0.4 ngx-mat-select-search@3.2.0 ngx-pagination@5.0.0 @fortawesome/angular-fontawesome@0.7.0 @fortawesome/fontawesome-svg-core@1.2.35 @fortawesome/free-solid-svg-icons@5.15.3 @ckeditor/ckeditor5-build-classic@27.0.0 @ckeditor/ckeditor5-angular @ckeditor/ckeditor5-angular@2.0.1
+  - **Step 5:** Upgrade dev dependencies: yarn add codelyzer@6.0.1
+  - **Step 6:** Fix typo error of Firebase lib. Use VScode find function to find string "__spreadArray" in node_module/@firebase and replace by "__spreadArrays"
+
+**Next**: find another lib to replace @busacca/ng-pick-datetime, ng2-smart-table  and @stomp/ng2-stompjs for Angular 11 upgrading
