@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { EditOfficeComponent } from './edit-office.component';
 
@@ -6,7 +6,7 @@ describe('EditOfficeComponent', () => {
   let component: EditOfficeComponent;
   let fixture: ComponentFixture<EditOfficeComponent>;
 
-  beforeEach(waitForAsync(() => {
+  beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ EditOfficeComponent ]
     })

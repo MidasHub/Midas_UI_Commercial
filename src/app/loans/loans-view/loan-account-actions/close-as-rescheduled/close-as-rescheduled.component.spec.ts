@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { CloseAsRescheduledComponent } from './close-as-rescheduled.component';
 
@@ -6,7 +6,7 @@ describe('CloseAsRescheduledComponent', () => {
   let component: CloseAsRescheduledComponent;
   let fixture: ComponentFixture<CloseAsRescheduledComponent>;
 
-  beforeEach(waitForAsync(() => {
+  beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ CloseAsRescheduledComponent ]
     })

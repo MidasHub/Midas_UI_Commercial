@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { TwoFactorAuthenticationComponent } from './two-factor-authentication.component';
 
@@ -6,7 +6,7 @@ describe('TwoFactorAuthenticationComponent', () => {
   let component: TwoFactorAuthenticationComponent;
   let fixture: ComponentFixture<TwoFactorAuthenticationComponent>;
 
-  beforeEach(waitForAsync(() => {
+  beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ TwoFactorAuthenticationComponent ]
     })

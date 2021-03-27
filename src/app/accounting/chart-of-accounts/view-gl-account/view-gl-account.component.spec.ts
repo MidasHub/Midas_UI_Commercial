@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ViewGlAccountComponent } from './view-gl-account.component';
 
@@ -6,7 +6,7 @@ describe('ViewGlAccountComponent', () => {
   let component: ViewGlAccountComponent;
   let fixture: ComponentFixture<ViewGlAccountComponent>;
 
-  beforeEach(waitForAsync(() => {
+  beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ ViewGlAccountComponent ]
     })

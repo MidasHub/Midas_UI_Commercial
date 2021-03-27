@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ThirdPartyComponent } from './third-party.component';
 
@@ -6,7 +6,7 @@ describe('ThirdPartyComponent', () => {
   let component: ThirdPartyComponent;
   let fixture: ComponentFixture<ThirdPartyComponent>;
 
-  beforeEach(waitForAsync(() => {
+  beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ ThirdPartyComponent ]
     })

@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { KeyboardShortcutsDialogComponent } from './keyboard-shortcuts-dialog.component';
 
@@ -6,7 +6,7 @@ describe('KeyboardShortcutsDialogComponent', () => {
   let component: KeyboardShortcutsDialogComponent;
   let fixture: ComponentFixture<KeyboardShortcutsDialogComponent>;
 
-  beforeEach(waitForAsync(() => {
+  beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ KeyboardShortcutsDialogComponent ]
     })

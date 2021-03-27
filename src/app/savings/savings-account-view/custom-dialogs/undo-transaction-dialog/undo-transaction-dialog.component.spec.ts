@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { UndoTransactionDialogComponent } from './undo-transaction-dialog.component';
 
@@ -6,7 +6,7 @@ describe('UndoTransactionDialogComponent', () => {
   let component: UndoTransactionDialogComponent;
   let fixture: ComponentFixture<UndoTransactionDialogComponent>;
 
-  beforeEach(waitForAsync(() => {
+  beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ UndoTransactionDialogComponent ]
     })

@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ViewAccountTransferComponent } from './view-account-transfer.component';
 
@@ -6,7 +6,7 @@ describe('ViewAccountTransferComponent', () => {
   let component: ViewAccountTransferComponent;
   let fixture: ComponentFixture<ViewAccountTransferComponent>;
 
-  beforeEach(waitForAsync(() => {
+  beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ ViewAccountTransferComponent ]
     })

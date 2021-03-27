@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { GeneralTabComponent } from './general-tab.component';
 
@@ -6,7 +6,7 @@ describe('GeneralTabComponent', () => {
   let component: GeneralTabComponent;
   let fixture: ComponentFixture<GeneralTabComponent>;
 
-  beforeEach(waitForAsync(() => {
+  beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ GeneralTabComponent ]
     })

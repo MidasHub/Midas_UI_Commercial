@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { EntityToEntityMappingComponent } from './entity-to-entity-mapping.component';
 
@@ -6,7 +6,7 @@ describe('EntityToEntityMappingComponent', () => {
   let component: EntityToEntityMappingComponent;
   let fixture: ComponentFixture<EntityToEntityMappingComponent>;
 
-  beforeEach(waitForAsync(() => {
+  beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ EntityToEntityMappingComponent ]
     })

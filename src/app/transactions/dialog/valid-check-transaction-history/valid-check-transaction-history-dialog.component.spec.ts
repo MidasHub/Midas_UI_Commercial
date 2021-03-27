@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ValidCheckTransactionHistoryDialogComponent } from './valid-check-transaction-history-dialog.component';
 
 
@@ -6,7 +6,7 @@ describe('ValidCheckTransactionHistoryDialogComponent', () => {
   let component: ValidCheckTransactionHistoryDialogComponent;
   let fixture: ComponentFixture<ValidCheckTransactionHistoryDialogComponent>;
 
-  beforeEach(waitForAsync(() => {
+  beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ ValidCheckTransactionHistoryDialogComponent ]
     })

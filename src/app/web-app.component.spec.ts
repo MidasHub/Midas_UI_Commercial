@@ -1,4 +1,4 @@
-import { TestBed, waitForAsync } from '@angular/core/testing';
+import { TestBed, async } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { TranslateModule } from '@ngx-translate/core';
 
@@ -6,7 +6,7 @@ import { CoreModule } from './core/core.module';
 import { WebAppComponent } from './web-app.component';
 
 describe('AppComponent', () => {
-  beforeEach(waitForAsync(() => {
+  beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
         RouterTestingModule,
@@ -18,7 +18,7 @@ describe('AppComponent', () => {
     TestBed.compileComponents();
   }));
 
-  it('should create the app', waitForAsync(() => {
+  it('should create the app', async(() => {
     const fixture = TestBed.createComponent(WebAppComponent);
     const app = fixture.debugElement.componentInstance;
     expect(app).toBeTruthy();

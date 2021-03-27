@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { AddCollateralComponent } from './add-collateral.component';
 
@@ -6,7 +6,7 @@ describe('AddCollateralComponent', () => {
   let component: AddCollateralComponent;
   let fixture: ComponentFixture<AddCollateralComponent>;
 
-  beforeEach(waitForAsync(() => {
+  beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ AddCollateralComponent ]
     })

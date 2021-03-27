@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ShareAccountTableComponent } from './share-account-table.component';
 
@@ -6,7 +6,7 @@ describe('ShareAccountTableComponent', () => {
   let component: ShareAccountTableComponent;
   let fixture: ComponentFixture<ShareAccountTableComponent>;
 
-  beforeEach(waitForAsync(() => {
+  beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ ShareAccountTableComponent ]
     })

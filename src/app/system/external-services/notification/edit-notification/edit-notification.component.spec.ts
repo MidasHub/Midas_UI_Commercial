@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { EditNotificationComponent } from './edit-notification.component';
 
@@ -6,7 +6,7 @@ describe('EditNotificationComponent', () => {
   let component: EditNotificationComponent;
   let fixture: ComponentFixture<EditNotificationComponent>;
 
-  beforeEach(waitForAsync(() => {
+  beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ EditNotificationComponent ]
     })

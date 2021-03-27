@@ -23,6 +23,7 @@
             "main": "src/main.ts",
             "tsConfig": "src/tsconfig.app.json",
             "polyfills": "src/polyfills.ts",
+            "extractCss": true,
             "assets": [
               "src/favicon.ico",
               "src/robots.txt",
@@ -34,37 +35,37 @@
             "styles": [
               "src/main.scss",
               {
-                "inject": true,
+                "inject": false,
                 "input": "src/theme/custom/default_theme.scss",
                 "bundleName": "theme/default-theme"
               },
               {
-                "inject": true,
+                "inject": false,
                 "input": "src/theme/deeppurple-amber.scss",
                 "bundleName": "theme/deeppurple-amber"
               },
               {
-                "inject": true,
+                "inject": false,
                 "input": "src/theme/indigo-pink.scss",
                 "bundleName": "theme/indigo-pink"
               },
               {
-                "inject": true,
+                "inject": false,
                 "input": "src/theme/pink-bluegrey.scss",
                 "bundleName": "theme/pink-bluegrey"
               },
               {
-                "inject": true,
+                "inject": false,
                 "input": "src/theme/custom/purple-green.scss",
                 "bundleName": "theme/purple-green"
               },
               {
-                "inject": true,
+                "inject": false,
                 "input": "src/theme/custom/denim-yellowgreen.scss",
                 "bundleName": "theme/denim-yellowgreen"
               },
               {
-                "inject": true,
+                "inject": false,
                 "input": "src/theme/custom/pictonblue-yellowgreen.scss",
                 "bundleName": "theme/pictonblue-yellowgreen"
               }
@@ -82,6 +83,7 @@
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
+              "extractCss": true,
               "namedChunks": false,
               "aot": true,
               "extractLicenses": true,
@@ -126,32 +128,32 @@
             "styles": [
               "src/main.scss",
               {
-                "inject": true,
+                "inject": false,
                 "input": "src/theme/deeppurple-amber.scss",
                 "bundleName": "theme/deeppurple-amber"
               },
               {
-                "inject": true,
+                "inject": false,
                 "input": "src/theme/indigo-pink.scss",
                 "bundleName": "theme/indigo-pink"
               },
               {
-                "inject": true,
+                "inject": false,
                 "input": "src/theme/pink-bluegrey.scss",
                 "bundleName": "theme/pink-bluegrey"
               },
               {
-                "inject": true,
+                "inject": false,
                 "input": "src/theme/purple-green.scss",
                 "bundleName": "theme/purple-green"
               },
               {
-                "inject": true,
+                "inject": false,
                 "input": "src/theme/custom/denim-yellowgreen.scss",
                 "bundleName": "theme/denim-yellowgreen"
               },
               {
-                "inject": true,
+                "inject": false,
                 "input": "src/theme/custom/pictonblue-yellowgreen.scss",
                 "bundleName": "theme/pictonblue-yellowgreen"
               }

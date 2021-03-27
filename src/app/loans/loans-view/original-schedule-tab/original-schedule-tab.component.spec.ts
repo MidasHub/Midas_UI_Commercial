@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { OriginalScheduleTabComponent } from './original-schedule-tab.component';
 
@@ -6,7 +6,7 @@ describe('OriginalScheduleTabComponent', () => {
   let component: OriginalScheduleTabComponent;
   let fixture: ComponentFixture<OriginalScheduleTabComponent>;
 
-  beforeEach(waitForAsync(() => {
+  beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ OriginalScheduleTabComponent ]
     })

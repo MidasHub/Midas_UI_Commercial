@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { EditGlAccountComponent } from './edit-gl-account.component';
 
@@ -6,7 +6,7 @@ describe('EditGlAccountComponent', () => {
   let component: EditGlAccountComponent;
   let fixture: ComponentFixture<EditGlAccountComponent>;
 
-  beforeEach(waitForAsync(() => {
+  beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ EditGlAccountComponent ]
     })
