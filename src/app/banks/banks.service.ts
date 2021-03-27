@@ -162,6 +162,7 @@ export class BanksService {
     // }
     log.debug("This Card:", this.cards);
     this.cards?.subscribe((values: any) => {
+      log.debug("Card subscribe is running...")
       if (values) {
         log.debug("Value is: ", values);
         let have = false;
