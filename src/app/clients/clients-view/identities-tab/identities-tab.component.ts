@@ -35,7 +35,7 @@ const log = new Logger("-IDENTIFIER TAB-");
 })
 export class IdentitiesTabComponent {
 
-
+  isLoading: boolean = false;
   searchKey: string;
   /** Client Identities */
   clientIdentities: any = [];
@@ -392,6 +392,18 @@ export class IdentitiesTabComponent {
     });
   }
 
+  updateCardInfo(cardExtraInfoEntity: any) {
+
+    this.isLoading = true;
+    this.transactionService.updateCardInfo(cardExtraInfoEntity)
+      .subscribe((result) => {
+        this.isLoading = false;
+        const message = `Cập nhật thành công cho thẻ: ${cardExtraInfoEntity.refid} `;
+        this.alertService.alert({message: message, msgClass: 'cssInfo'});
+
+      });
+  }
+
   addEditExtraInfo(
     clientId: string,
     identifierId: string,
@@ -423,12 +435,7 @@ export class IdentitiesTabComponent {
         dialogConfig.minWidth = 400;
 
         if (yExpired > ySystem) {
-          this.alertService.alert({
-            message: "Card có thông tin",
-            msgClass: "cssSuccess",
-            hPosition: "center",
-            vPosition: "top",
-          });
+
           const showIdentifierDialogRef = this.dialog.open(AddIdentitiesExtraInfoComponent, dialogConfig);
           showIdentifierDialogRef.afterClosed().subscribe((response: any) => {
             this.alertService.alert({
@@ -437,7 +444,9 @@ export class IdentitiesTabComponent {
               hPosition: "right",
               vPosition: "bottom",
             });
+
             log.debug("After close dialog box, response is ", response);
+            this.updateCardInfo();
             // Khoa xử lý cập nhật thong tin g
           });
         } else {
@@ -472,7 +481,6 @@ export class IdentitiesTabComponent {
           }
         }
       } else {
-        log.debug("Card không có thông tin: ", checkResult);
         this.addIdentifierExtraInfo(identifierId, cardNumber);
       }
     });
