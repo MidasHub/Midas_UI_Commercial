@@ -214,7 +214,6 @@ export class SavingsAccountViewComponent implements OnInit {
       if (response) {
         const { typeAdvanceCashes, savingAccountId, note, amount } = response?.data?.value;
 
-        if (typeAdvanceCashes != 60) {
           this.savingsService
             .transferIcTransaction({
               buSavingAccount: this.savingsAccountData.id,
@@ -244,7 +243,6 @@ export class SavingsAccountViewComponent implements OnInit {
                 });
               }
             });
-        }
       }
     });
   }
