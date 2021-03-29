@@ -305,11 +305,11 @@ export class TransactionService {
     return this.http.post<any>(`${this.GatewayApiUrlPrefix}/transaction/check_valid_rollTerm_transaction`, httpParams);
   }
 
-  getListTerminalAvailable(amount: number): Observable<any> {
+  getListTerminalAvailable(amount: number, transactionType:string): Observable<any> {
     let httpParams = this.commonHttpParams.getCommonHttpParams();
-    httpParams = httpParams.set("amountTransaction", amount.toString());
+    httpParams = httpParams.set("amountTransaction", amount.toString()).set("transactionType",transactionType);
 
-    return this.http.post<any>(`${this.GatewayApiUrlPrefix}/pos/get_list_terminal_by_office`, httpParams);
+    return this.http.post<any>(`${this.GatewayApiUrlPrefix}/pos/get_list_terminal_by_office_sl`, httpParams);
   }
 
   getTransactionTemplate(clientId: string, identifierId: string, transactionId?: string): Observable<any> {

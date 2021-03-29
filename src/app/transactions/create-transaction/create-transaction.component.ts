@@ -165,7 +165,7 @@ export class CreateTransactionComponent implements OnInit {
 
   getTerminalListEnoughBalance(amountTransaction: string) {
     const amount = this.transactionService.formatLong(amountTransaction);
-    this.transactionService.getListTerminalAvailable(amount).subscribe((data: any) => {
+    this.transactionService.getListTerminalAvailable(amount, 'LE').subscribe((data: any) => {
       this.transactionInfo.listTerminal = data.result.listTerminal;
     });
   }

@@ -335,7 +335,7 @@ export class CreateBatchTransactionComponent implements OnInit {
       )
       .subscribe((value) => {
         if (value && value > 0) {
-          this.transactionServices.getListTerminalAvailable(value).subscribe((result) => {
+          this.transactionServices.getListTerminalAvailable(value, 'SI').subscribe((result) => {
             // @ts-ignore
             form?.data.terminals = result?.result?.listTerminal;
             form.get("terminalId").setValidators([Validators.required]);
