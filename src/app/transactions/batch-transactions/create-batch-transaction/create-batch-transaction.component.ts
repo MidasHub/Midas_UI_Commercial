@@ -257,6 +257,8 @@ export class CreateBatchTransactionComponent implements OnInit {
           return card?.minValue;
         case "AL01":
           return card?.maxValue;
+        case "AL02":
+          return card?.maxValue;  
         default:
           return 2.0;
       }
@@ -754,16 +756,20 @@ export class CreateBatchTransactionComponent implements OnInit {
       const dialog = this.dialog.open(AddIdentitiesExtraInfoComponent, dialogConfig);
       dialog.afterClosed().subscribe((response) => {
         if (response.data) {
-          const { dueDay, expiredDate } = response.data.value;
+          const { dueDay, expiredDate, limitCard, classCard } = response.data.value;
 
-          this.bankServices
-            .storeExtraCardInfo({
-              userId: member.clientId,
-              userIdentifyId: member.documentId,
-              dueDay: dueDay,
-              expireDate: expiredDate,
-            })
-            .subscribe((res2: any) => {});
+            this.bankServices
+              .storeExtraCardInfo({
+                userId: member.clientId,
+                userIdentifyId: member.documentId,
+                dueDay: dueDay,
+                expireDate: expiredDate,
+                limitCard: limitCard,
+                classCard: classCard
+              })
+              .subscribe((res2: any) => {
+              });
+
         }
       });
     });

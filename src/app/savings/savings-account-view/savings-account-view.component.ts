@@ -42,6 +42,9 @@ export class SavingsAccountViewComponent implements OnInit {
   entityType: string;
   iconBank = 'assets/images/savings_account_placeholder.png';
   isTeller = true;
+  isBankAcccount = false;
+  isCCA = false;
+  isCash = false;
 
   currentUser: any;
 
@@ -80,13 +83,22 @@ export class SavingsAccountViewComponent implements OnInit {
     this.currentUser = this.authenticationService.getCredentials();
     const {roles} = this.currentUser;
     const {savingsProductId, externalId} = this.savingsAccountData;
+
+    if (savingsProductId === 2) {
+      this.isCCA = true;
+    }
+    if (savingsProductId === 9) {
+      this.isCash = true;
+    }
     if (savingsProductId === 8) {
+      this.isBankAcccount = true;
       if (externalId.indexOf('#') !== -1) {
         const name = externalId.split('#')[0];
         if (name) {
           this.iconBank = `assets/images/banks/${name}.png`;
         }
       }
+      console.log('----------' +  this.isBankAcccount);
     }
     this.productsService.getSavingProduct(savingsProductId).subscribe((data: any) => {
       this.savingProduct = data;

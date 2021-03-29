@@ -28,7 +28,7 @@ export class ClientsViewComponent implements OnInit {
   clientDatatables: any;
   clientImage: any;
   clientTemplateData: any;
-  showViewClient: boolean;
+  showViewClient: boolean = false;
   typeViewClient: string;
   isInterchangeClient: boolean = false
 
@@ -54,9 +54,10 @@ export class ClientsViewComponent implements OnInit {
     this.route.queryParamMap
       .subscribe((params) => {
         this.typeViewClient = params.get("typeViewClient");
-        this.showViewClient = this.typeViewClient == 'transaction';
+        this.showViewClient = (this.typeViewClient == 'transaction');
         if (params.get("clientType") == 'ic') {
           this.isInterchangeClient = true
+          this.showViewClient = true
         }
       });
     this.clientsService.getClientProfileImage(this.clientViewData.id).subscribe(

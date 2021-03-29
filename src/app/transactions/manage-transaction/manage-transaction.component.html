@@ -371,8 +371,8 @@
       <button mat-menu-item [routerLink]="['/transaction', 'view']" [queryParams]="{ tranId: refid }">
         <i class="fa fa-eye" aria-hidden="true"></i>&nbsp;Chi tiết
       </button>
-      <button *midasHasPermission="'BILLER_HO'" mat-menu-item (click)="addPosInformation(trnRefNo, batchNo, traceNo)">
-        <img src="assets/images/icons/add.svg" />&nbsp;Thông tin bill nhiệt
+      <button *midasHasPermission="'TRACE_BATCH_NO_UPDATE'" mat-menu-item (click)="addPosInformation(trnRefNo, batchNo, traceNo)">
+        <img src="assets/images/icons/add.svg" /> Cập nhật Thông tin bill nhiệt
       </button>
       <button *midasHasActiveModule="'billModule'" mat-menu-item (click)="downloadVoucher(refid)">
         <img *ngIf="status != 'V'" src="assets/images/icons/order.svg" />&nbsp; Tải xuống hóa đơn

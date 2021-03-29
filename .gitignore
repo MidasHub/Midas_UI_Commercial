@@ -59,3 +59,4 @@ yarn.lock
 ~/ng.*
 ~/node_modules/*
 src/environments/checkurl.ts
+src/app/core/constants/enum_constants.ts

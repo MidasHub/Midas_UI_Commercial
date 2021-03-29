@@ -37,6 +37,10 @@ import { FireBaseMessagingService } from './firebase/fire-base-messaging.service
 import { Logger } from './core/logger/logger.service';
 const log = new Logger('Midas');
 
+/** Device detector */
+import { DeviceDetectorService } from 'ngx-device-detector';
+
+
 /**
  * Main web app component.
  */
@@ -49,6 +53,9 @@ const log = new Logger('Midas');
 export class WebAppComponent implements OnInit {
 
   buttonConfig: KeyboardShortcutsConfiguration;
+  deviceInfo: any;
+  public lat: String;
+  public lng: String;
 
   /**
    * @param {Router} router Router for navigation.
@@ -72,7 +79,23 @@ export class WebAppComponent implements OnInit {
     private settingsService: SettingsService,
     private authenticationService: AuthenticationService,
     private bankService: BanksService,
-    private messagingService: FireBaseMessagingService) { }
+    private messagingService: FireBaseMessagingService,
+    private deviceService: DeviceDetectorService) {
+   
+  }
+
+
+  epicFunction() {
+    this.deviceInfo = this.deviceService.getDeviceInfo();
+    const isMobile = this.deviceService.isMobile();
+    const isTablet = this.deviceService.isTablet();
+    const isDesktopDevice = this.deviceService.isDesktop();
+    log.debug(JSON.stringify(this.deviceInfo));
+    log.debug("is Mobile: " + isMobile);  // returns if the device is a mobile device (android / iPhone / windows-phone etc)
+    log.debug("is Tablet: ", isTablet);  // returns if the device us a tablet (iPad etc)
+    log.debug("is Desktop: ", isDesktopDevice); // returns if the app is running on a Desktop browser.
+
+  }
 
   //Variables for Firebase messsage
   message: any
@@ -173,6 +196,7 @@ export class WebAppComponent implements OnInit {
         'https://training.kiotthe.com',
         'https://midas.kiotthe.com',
         'https://localhost:9443',
+        'https://hdcredit.kiotthe.com',
         'https://localhost:7443'
       ]);
     }
@@ -183,6 +207,7 @@ export class WebAppComponent implements OnInit {
         'https://training.kiotthe.com',
         'https://midas.kiotthe.com',
         'https://uat.tekcompay.com:8088',
+        'https://hdcredit.kiotthe.com',
         'http://localhost:8088'
       ]);
     }
@@ -196,7 +221,25 @@ export class WebAppComponent implements OnInit {
     this.messagingService.receiveMessage()
     this.message = this.messagingService.currentMessage
 
+    // Get client location
+    this.getLocation();
+    this.epicFunction();
     // ----- End ngOnInit
+  }
+
+  getLocation() {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (pos: any) => {
+          if (pos) {
+            log.debug("Latitude: " + pos.coords.latitude + " - Longitude: " +   pos.coords.longitude );
+          }
+        },
+        (error: any) => console.log(error)
+      );
+    } else {
+      alert("Geolocation is not supported by this browser.");
+    }
   }
 
   logout() {
