@@ -98,10 +98,10 @@ export class TransactionService {
   updateCardInfo(updateData: any): Observable<any> {
 
     let httpParams = this.commonHttpParams.getCommonHttpParams();
-    httpParams = httpParams.set("expiredDate", updateData.expiredDateString );
-    httpParams = httpParams.set("refId", updateData.refId);
+    httpParams = httpParams.set("expiredDate", `${updateData.dueDay}/${updateData.expiredDateString}`);
+    httpParams = httpParams.set("refId", updateData.refid);
     httpParams = httpParams.set("dueDay", updateData.dueDay );
-    httpParams = httpParams.set("limit", updateData.limitCard );
+    httpParams = httpParams.set("limit", updateData.limit );
     httpParams = httpParams.set("classCard", updateData.classCard);
 
     return this.http.put<any>(`${this.GatewayApiUrlPrefix}/card/update_card_day_info`, httpParams);

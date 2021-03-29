@@ -23,6 +23,23 @@
       [dropSpecialCharacters]="false" mask="00/00"
       formControlName="expiredDate">
   </mat-form-field>
+
+  <mat-form-field  fxFlex="48%">
+    <mat-label>Hạn mức thẻ:</mat-label>
+    <input
+      currencyMask
+      required
+      matInput type="text"  formControlName="limitCard">
+  </mat-form-field>
+
+  <mat-form-field  fxFlex="48%">
+    <mat-label>Hạng thẻ:</mat-label>
+    <input
+      matInput
+      type="text"
+      required
+      formControlName="classCard">
+  </mat-form-field>
 </div>
 
 <mat-dialog-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="2%">
