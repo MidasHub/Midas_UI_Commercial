@@ -21,6 +21,7 @@ import { BanksService } from "../../../banks/banks.service";
 import { ValidCheckTransactionHistoryDialogComponent } from "app/transactions/dialog/valid-check-transaction-history/valid-check-transaction-history-dialog.component";
 
 import {Logger} from "../../../core/logger/logger.service";
+import { TerminalsService } from "app/terminals/terminals.service";
 const log = new Logger('Batch Txn');
 @Component({
   selector: "midas-create-batch-transaction",
@@ -142,7 +143,7 @@ export class CreateBatchTransactionComponent implements OnInit {
     private route: ActivatedRoute,
     private alertService: AlertService,
     private authenticationService: AuthenticationService,
-    private groupServices: GroupsService,
+    private terminalsService: TerminalsService,
     private clientsServices: ClientsService,
     private bankServices: BanksService,
     private router: Router
@@ -335,7 +336,7 @@ export class CreateBatchTransactionComponent implements OnInit {
       )
       .subscribe((value) => {
         if (value && value > 0) {
-          this.transactionServices.getListTerminalAvailable(value).subscribe((result) => {
+          this.terminalsService.getListTerminalAvailable(value).subscribe((result: any) => {
             // @ts-ignore
             form?.data.terminals = result?.result?.listTerminal;
             form.get("terminalId").setValidators([Validators.required]);

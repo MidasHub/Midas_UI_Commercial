@@ -98,4 +98,18 @@ export class TerminalsService {
     return this.http.post<any>(`${this.GatewayApiUrlPrefix}/pos/assignterminal`,  httpParams );
   }
 
+  getListTerminalAvailable(amount: number): Observable<any> {
+    let httpParams = this.commonHttpParams.getCommonHttpParams();
+    httpParams = httpParams.set("amountTransaction", amount.toString());
+
+    return this.http.post<any>(`${this.GatewayApiUrlPrefix}/pos/get_list_terminal_by_office`, httpParams);
+  }
+
+  getFeeByTerminal(accountTypeCode: string, terminalId: string): Observable<any> {
+    let httpParams = this.commonHttpParams.getCommonHttpParams();
+    httpParams = httpParams.set("accountTypeId", accountTypeCode);
+    httpParams = httpParams.set("terminalId", terminalId);
+
+    return this.http.post<any>(`${this.GatewayApiUrlPrefix}/pos/get_fee_by_terminal`, httpParams);
+  }
 }

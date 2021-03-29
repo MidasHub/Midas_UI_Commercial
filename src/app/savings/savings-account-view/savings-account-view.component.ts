@@ -103,6 +103,13 @@ export class SavingsAccountViewComponent implements OnInit {
           taskPermissionName: "POSTINTEREST_SAVINGSACCOUNT",
           action: "advanceCash",
         });
+
+        this.buttonConfig.addButton({
+          name: "Công nợ IC",
+          icon: "fa fa-recycle",
+          taskPermissionName: "POSTINTEREST_SAVINGSACCOUNT",
+          action: "transferToIc",
+        });
       }
       if (["CCA0", "ICA0", "ACA0"].indexOf(this.savingProduct.shortName) === -1) {
         this.buttonConfig.addButton({
@@ -202,10 +209,11 @@ export class SavingsAccountViewComponent implements OnInit {
     });
   }
 
-  transferIc() {
+  transferIc(ToIc: boolean) {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.data = {
       transferIc: true,
+      transferToIc: ToIc,
       savingsAccountData: this.savingsAccountData,
     };
     dialogConfig.minWidth = 400;
@@ -214,16 +222,23 @@ export class SavingsAccountViewComponent implements OnInit {
       if (response) {
         const { typeAdvanceCashes, savingAccountId, note, amount } = response?.data?.value;
 
-          this.savingsService
-            .transferIcTransaction({
-              buSavingAccount: this.savingsAccountData.id,
-              clientSavingAccount: savingAccountId,
-              note: note,
-              amountAdvanceCash: amount,
-              paymentTypeId: typeAdvanceCashes,
-            })
-            .subscribe((res: any) => {
-              let responseT = res?.result?.resultCommand;
+        this.savingsService
+          .transferIcTransaction({
+            buSavingAccount: this.savingsAccountData.id,
+            clientSavingAccount: savingAccountId,
+            note: note,
+            amountAdvanceCash: amount,
+            paymentTypeId: typeAdvanceCashes,
+          })
+          .subscribe((res: any) => {
+            let responseT = res?.result?.resultCommand;
+            if (!responseT) {
+              this.alertService.alert({
+                message: `Internal server error, Vui lòng liên hệ IT support!`,
+                msgClass: "cssDanger",
+                hPosition: "right",
+              });
+            } else {
               if (responseT.statusCodeValue == 200 && !responseT?.body?.errors) {
                 const message = `Thực hiện thành công!`;
                 this.alertService.alert({ message: message, msgClass: "cssInfo" });
@@ -242,7 +257,8 @@ export class SavingsAccountViewComponent implements OnInit {
                   hPosition: "right",
                 });
               }
-            });
+            }
+        });
       }
     });
   }
@@ -406,7 +422,10 @@ export class SavingsAccountViewComponent implements OnInit {
         this.transferCrossOfficeCash();
         break;
       case "transferIc":
-        this.transferIc();
+        this.transferIc(false);
+        break;
+      case "transferToIc":
+        this.transferIc(true);
         break;
       case "Withdraw":
         if (this.isIcAccount) {

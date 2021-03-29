@@ -11,6 +11,7 @@ import { BanksService } from "app/banks/banks.service";
 import { AddLimitIdentitiesExtraInfoComponent } from "app/clients/clients-view/identities-tab/dialog-add-limit-extra-info/dialog-add-limit-extra-info.component";
 import { AlertService } from "app/core/alert/alert.service";
 import { SettingsService } from "app/settings/settings.service";
+import { TerminalsService } from "app/terminals/terminals.service";
 import { AddFeeDialogComponent } from "../dialog/add-fee-dialog/add-fee-dialog.component";
 import { CreateSuccessTransactionDialogComponent } from "../dialog/create-success-transaction-dialog/create-success-transaction-dialog.component";
 import { ValidCheckTransactionHistoryDialogComponent } from "../dialog/valid-check-transaction-history/valid-check-transaction-history-dialog.component";
@@ -52,7 +53,7 @@ export class CreateTransactionComponent implements OnInit {
     private datePipe: DatePipe,
     private settingsService: SettingsService,
     private formBuilder: FormBuilder,
-    private bankService: BanksService
+    private terminalsService: TerminalsService
   ) {
     this.dataSource = new MatTableDataSource();
     this.transactionCreateForm = new FormGroup({
@@ -165,7 +166,7 @@ export class CreateTransactionComponent implements OnInit {
 
   getTerminalListEnoughBalance(amountTransaction: string) {
     const amount = this.transactionService.formatLong(amountTransaction);
-    this.transactionService.getListTerminalAvailable(amount).subscribe((data: any) => {
+    this.terminalsService.getListTerminalAvailable(amount).subscribe((data: any) => {
       this.transactionInfo.listTerminal = data.result.listTerminal;
     });
   }
@@ -313,7 +314,7 @@ export class CreateTransactionComponent implements OnInit {
   }
 
   getFeeByTerminal(): any {
-    this.transactionService
+    this.terminalsService
       .getFeeByTerminal(this.transactionInfo.identifyClientDto.accountTypeId, this.transactionInfo.terminalId)
       .subscribe((data: any) => {
         this.terminalFee = data.result.feeTerminalDto;

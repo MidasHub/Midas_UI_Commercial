@@ -36,6 +36,10 @@ export class PartnerAdvanceCashComponent implements OnInit {
       id: "1",
       name: "Thanh toán khoản phải trả ngày trước",
     },
+    {
+      id: "60",
+      name: "Interchange: Chuyển tiền về IC",
+    },
   ];
   partnerAdvanceCashes: any[];
   filteredPartner: any[];

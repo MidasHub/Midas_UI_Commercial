@@ -236,8 +236,8 @@ export class TransactionService {
     offset: number;
   }): Observable<any> {
     let httpParams = this.commonHttpParams.getCommonHttpParams();
-    httpParams = httpParams.set("bankFilter", payload.bankFilter == 'ALL' ? "%%" : payload.bankFilter);
-    httpParams = httpParams.set("createdByFilter", payload.createdByFilter == 'ALL' ? "%%" : payload.createdByFilter);
+    httpParams = httpParams.set("bankFilter", payload.bankFilter == "ALL" ? "%%" : payload.bankFilter);
+    httpParams = httpParams.set("createdByFilter", payload.createdByFilter == "ALL" ? "%%" : payload.createdByFilter);
     httpParams = httpParams.set("customerSearch", !payload.query ? "%%" : `%${payload.query}%`);
     httpParams = httpParams.set("limit", String(payload.limit));
     httpParams = httpParams.set("offset", String(payload.offset));
@@ -271,14 +271,6 @@ export class TransactionService {
     return this.http.post(`${this.GatewayApiUrlPrefix}/card/get_list_card_on_due_day`, httpParams);
   }
 
-  getFeeByTerminal(accountTypeCode: string, terminalId: string): Observable<any> {
-    let httpParams = this.commonHttpParams.getCommonHttpParams();
-    httpParams = httpParams.set("accountTypeId", accountTypeCode);
-    httpParams = httpParams.set("terminalId", terminalId);
-
-    return this.http.post<any>(`${this.GatewayApiUrlPrefix}/pos/get_fee_by_terminal`, httpParams);
-  }
-
   checkValidRetailCashTransaction(clientId: string): Observable<any> {
     let httpParams = this.commonHttpParams.getCommonHttpParams();
 
@@ -303,13 +295,6 @@ export class TransactionService {
     httpParams = httpParams.set("documentId", identifierId);
 
     return this.http.post<any>(`${this.GatewayApiUrlPrefix}/transaction/check_valid_rollTerm_transaction`, httpParams);
-  }
-
-  getListTerminalAvailable(amount: number): Observable<any> {
-    let httpParams = this.commonHttpParams.getCommonHttpParams();
-    httpParams = httpParams.set("amountTransaction", amount.toString());
-
-    return this.http.post<any>(`${this.GatewayApiUrlPrefix}/pos/get_list_terminal_by_office`, httpParams);
   }
 
   getTransactionTemplate(clientId: string, identifierId: string, transactionId?: string): Observable<any> {
@@ -656,7 +641,7 @@ export class TransactionService {
 
   getIdentifierTypeCC(clientId: string): Observable<any> {
     let httpParams = this.commonHttpParams.getCommonHttpParams();
-      httpParams = httpParams.set("clientId", clientId);
+    httpParams = httpParams.set("clientId", clientId);
 
     return this.http.post<any>(`${this.GatewayApiUrlPrefix}/client/get_identifier_midas_by_client_group`, httpParams);
   }

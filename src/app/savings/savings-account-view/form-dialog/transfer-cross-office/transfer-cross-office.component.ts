@@ -1,3 +1,4 @@
+import { filter } from 'rxjs/operators';
 import { Component, Inject, OnInit } from "@angular/core";
 import { ClientsService } from "../../../../clients/clients.service";
 import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
@@ -19,15 +20,17 @@ export class TransferCrossOfficeComponent implements OnInit {
   offices: any[] = [];
   partners: any[] = [];
   transferIc: boolean = false;
+  transferToIc: boolean = false;
 
   constructor(
     private serviceClient: ClientsService,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private formBuilder: FormBuilder,
-    private savingsService: SavingsService
+    private savingsService: SavingsService,
+    private clientsService: ClientsService,
   ) {
     this.transferIc = data.transferIc;
-
+    this.transferToIc = data.transferToIc;
     this.form = this.formBuilder.group({
       typeAdvanceCashes: ["", Validators.required],
       office: ["", Validators.required],
@@ -40,7 +43,6 @@ export class TransferCrossOfficeComponent implements OnInit {
     this.currentUser = data.currentUser;
     this.disable = data.disableUser;
     this.savingsAccountData = data.savingsAccountData;
-
   }
 
   typeAdvanceCashes: any[] = [
@@ -83,7 +85,6 @@ export class TransferCrossOfficeComponent implements OnInit {
         this.savingsService.getListICSavingAccountByPartner(this.savingsAccountData.clientId).subscribe((result) => {
           this.accounts = result.result.listClientSavingVault;
         });
-
       } else {
         if (value == 60) {
           this.form.removeControl("partner");
@@ -107,7 +108,7 @@ export class TransferCrossOfficeComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    if (this.transferIc) {
+    if (this.transferIc && !this.transferToIc) {
       this.typeAdvanceCashes = [
         {
           id: "58",
@@ -141,10 +142,32 @@ export class TransferCrossOfficeComponent implements OnInit {
       this.savingsService.getListIcPartner().subscribe((response: any) => {
         this.partners = response.result.listClient;
       });
-    }
+    } else {
+      if (this.transferIc && this.transferToIc) {
+        this.typeAdvanceCashes = [
+          {
+            id: "61",
+            name: "Interchange: Chuyển tiền về Ic",
+          },
+        ];
 
+        this.form = this.formBuilder.group({
+          typeAdvanceCashes: ["61", Validators.required],
+          savingAccountId: ["", Validators.required],
+          amount: ["", Validators.required],
+          note: [""],
+        });
+
+        this.clientsService.getICClientAccount().subscribe((res) => {
+          this.accounts = res.result.clientAccount.savingsAccounts;
+          this.accounts = this.accounts.filter(account => account.status.id == 300);
+        });
+      }
+    }
     this.savingsService.getListOfficeCommon().subscribe((offices: any) => {
       this.offices = offices.result.listOffice;
     });
   }
+
+
 }
