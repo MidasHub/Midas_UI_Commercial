@@ -257,6 +257,8 @@ export class CreateBatchTransactionComponent implements OnInit {
           return card?.minValue;
         case "AL01":
           return card?.maxValue;
+        case "AL02":
+          return card?.maxValue;  
         default:
           return 2.0;
       }
