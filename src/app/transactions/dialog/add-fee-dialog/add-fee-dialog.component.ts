@@ -195,6 +195,7 @@ export class AddFeeDialogComponent implements OnInit {
           this.accountsFee = result?.result?.listSavingAccount;
           this.accountsPaid = this.accountsFee;
           this.checkAccountAndAmountPaid();
+          this.checkAccountFee();
         });
       });
     });

@@ -107,7 +107,7 @@
   <!-- <button *midasHasPermission="'POS_UPDATE'" mat-menu-item routerLink="/terminals">
     Điều chuyển máy POS
   </button> -->
-  <button mat-menu-item routerLink="/terminals/limit">{{ "Quản lý hạn mức POS" | translate }}</button>
+  <button mat-menu-item *midasHasPermission="'POS_READ'" routerLink="/terminals/limit">{{ "Quản lý hạn mức POS" | translate }}</button>
   <button mat-menu-item *midasHasPermission="'POS_UPDATE'" routerLink="/terminals">
     {{ "Quản lý máy POS" | translate }}
   </button>
