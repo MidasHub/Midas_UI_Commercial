@@ -21,7 +21,7 @@
     <mat-form-field fxFlex="20%" *ngIf="formDialog.contains('documentTypeId')" class="input_custom">
       <mat-label>Chọn thông tin cần thêm</mat-label>
       <mat-select required formControlName="documentTypeId">
-        <mat-option *ngFor="let type of documents" [fxHide]="documentView(type)" [value]="type.id">
+        <mat-option *ngFor="let type of documents"  [value]="type.id">
           {{ type.name }}
         </mat-option>
       </mat-select>

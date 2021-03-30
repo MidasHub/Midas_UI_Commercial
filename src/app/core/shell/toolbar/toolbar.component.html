@@ -35,14 +35,12 @@
       Booking
     </a>
     <a
-      *midasHasPermission="'POS_UPDATE'"
+      *midasHasActiveModule="'campaignModule'"
       mat-tab-link
       class="tab-link"
       [matMenuTriggerFor]="Marketing"
       #institutionMenuTrigger="matMenuTrigger"
-    > <label
-    *midasHasActiveModule="'campaignModule'"
-    >
+    > <label *midasHasPermission="'POS_UPDATE'" >
       <fa-icon class="mr-05" icon="university" size="lg"></fa-icon>
       Marketing
     </label>
@@ -76,7 +74,7 @@
     <mifosx-notifications-tray fxHide.lt-md> </mifosx-notifications-tray>
     <!-- <br /> -->
     <button fxHide.lt-md  mat-icon-button  [matMenuTriggerFor]="applicationMenu">
-      <div fxLayout="column" fxLayoutAlign="center center" style="margin:0;padding:0"><i class="fas fa-user-cog" style="font-size:larger;margin:0;padding:0"></i> 
+      <div fxLayout="column" fxLayoutAlign="center center" style="margin:0;padding:0"><i class="fas fa-user-cog" style="font-size:larger;margin:0;padding:0"></i>
       <span style="font-size:0.7rem;line-height:1rem">{{ currentUser.username }}</span></div>
     </button>
   </div>
