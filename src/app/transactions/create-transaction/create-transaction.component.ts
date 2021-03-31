@@ -12,6 +12,7 @@ import { AddLimitIdentitiesExtraInfoComponent } from "app/clients/clients-view/i
 import { AlertService } from "app/core/alert/alert.service";
 import { SettingsService } from "app/settings/settings.service";
 import { AddFeeDialogComponent } from "../dialog/add-fee-dialog/add-fee-dialog.component";
+import { ConfirmDialogComponent } from "../dialog/coifrm-dialog/confirm-dialog.component";
 import { CreateSuccessTransactionDialogComponent } from "../dialog/create-success-transaction-dialog/create-success-transaction-dialog.component";
 import { ValidCheckTransactionHistoryDialogComponent } from "../dialog/valid-check-transaction-history/valid-check-transaction-history-dialog.component";
 import { TransactionService } from "../transaction.service";
@@ -63,7 +64,6 @@ export class CreateTransactionComponent implements OnInit {
       batchNo: new FormControl(),
       traceNo: new FormControl(),
     });
-
   }
 
   ngOnInit() {
@@ -177,8 +177,8 @@ export class CreateTransactionComponent implements OnInit {
       this.transactionInfo.rate &&
       this.transactionInfo.rate !== 0
     ) {
-      this.transactionInfo.terminalAmount = this.transactionCreateForm.controls["terminalAmount"].value ;
-      const amount_value = this.transactionInfo.terminalAmount;;
+      this.transactionInfo.terminalAmount = this.transactionCreateForm.controls["terminalAmount"].value;
+      const amount_value = this.transactionInfo.terminalAmount;
       const rate = this.transactionInfo.rate;
       this.transactionInfo.cogsRate = this.terminalFee.cogsRate;
       this.transactionInfo.feeAmount = (
@@ -224,7 +224,6 @@ export class CreateTransactionComponent implements OnInit {
   }
 
   mappingBillForTransaction() {
-
     this.transactionService
       .mappingInvoiceWithTransaction(
         this.transactionInfo.identifyClientDto.accountTypeId,
@@ -276,11 +275,11 @@ export class CreateTransactionComponent implements OnInit {
       });
   }
 
-  showHistoryTransaction(message: string , listTransaction: any) {
+  showHistoryTransaction(message: string, listTransaction: any) {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.data = {
       listTransaction: listTransaction,
-      message: message
+      message: message,
     };
     dialogConfig.minWidth = 400;
     dialogConfig.maxWidth = 800;
@@ -340,23 +339,32 @@ export class CreateTransactionComponent implements OnInit {
       return;
     }
 
-    this.transactionInfo.batchNo = this.transactionCreateForm.value.batchNo;
-    this.transactionInfo.traceNo = this.transactionCreateForm.value.traceNo;
-    this.transactionInfo.terminalAmount = this.transactionCreateForm.value.terminalAmount;
-    if (this.transactionInfo.type == "cash") {
-      this.transactionService.submitTransactionCash(this.transactionInfo).subscribe((data: any) => {
-        this.afterSuccessCreateCashTransaction(data);
-      });
-    } else {
-      if (this.transactionInfo.type == "rollTermGetCash") {
-
-        this.transactionService
-          .submitTransactionCashFromRollTermTransaction(this.transactionInfo)
-          .subscribe((data: any) => {
+    const dialog = this.dialog.open(ConfirmDialogComponent, {
+      data: {
+        message: "Bạn chắc chắn muốn lưu giao dịch",
+        title: "Hoàn thành giao dịch",
+      },
+    });
+    dialog.afterClosed().subscribe((data) => {
+      if (data) {
+        this.transactionInfo.batchNo = this.transactionCreateForm.value.batchNo;
+        this.transactionInfo.traceNo = this.transactionCreateForm.value.traceNo;
+        this.transactionInfo.terminalAmount = this.transactionCreateForm.value.terminalAmount;
+        if (this.transactionInfo.type == "cash") {
+          this.transactionService.submitTransactionCash(this.transactionInfo).subscribe((data: any) => {
             this.afterSuccessCreateCashTransaction(data);
           });
+        } else {
+          if (this.transactionInfo.type == "rollTermGetCash") {
+            this.transactionService
+              .submitTransactionCashFromRollTermTransaction(this.transactionInfo)
+              .subscribe((data: any) => {
+                this.afterSuccessCreateCashTransaction(data);
+              });
+          }
+        }
       }
-    }
+    });
   }
 
   addIdentifierExtraInfo() {
@@ -409,31 +417,42 @@ export class CreateTransactionComponent implements OnInit {
     if (this.transactionCreateForm.invalid) {
       return;
     }
-    this.listRollTermBooking.forEach((booking: any) => {
-      booking.amountBooking = this.transactionService.formatLong(booking.amountBooking);
-      booking.txnDate = this.datePipe.transform(booking.txnDate, "dd/MM/yyyy");
-    });
-    var listBookingRollTerm = JSON.stringify(this.listRollTermBooking, function (key, value) {
-      if (key === "$$hashKey") {
-        return undefined;
-      }
-      return value;
-    });
-    this.transactionInfo.BookingInternalDtoListString = listBookingRollTerm;
-    this.transactionService.submitTransactionRollTerm(this.transactionInfo).subscribe((data: any) => {
-      this.listRollTermBooking = [];
-      this.transactionInfo.transactionRefNo = data.result.tranRefNo;
-      this.transactionInfo.transactionId = data.result.id;
-      // this.transactionInfo.isDone = true;
 
-      this.alertService.alert({
-        message: `Tạo giao dịch ${this.transactionInfo.transactionRefNo} thành công!`,
-        msgClass: "cssSuccess",
-        hPosition: "center",
-      });
-      setTimeout(() => {
-        this.router.navigate(["/transaction/rollTermSchedule"]);
-      }, 2000); //5s
+    const dialog = this.dialog.open(ConfirmDialogComponent, {
+      data: {
+        message: "Bạn chắc chắn muốn lưu giao dịch",
+        title: "Hoàn thành giao dịch",
+      },
+    });
+    dialog.afterClosed().subscribe((data) => {
+      if (data) {
+        this.listRollTermBooking.forEach((booking: any) => {
+          booking.amountBooking = this.transactionService.formatLong(booking.amountBooking);
+          booking.txnDate = this.datePipe.transform(booking.txnDate, "dd/MM/yyyy");
+        });
+        var listBookingRollTerm = JSON.stringify(this.listRollTermBooking, function (key, value) {
+          if (key === "$$hashKey") {
+            return undefined;
+          }
+          return value;
+        });
+        this.transactionInfo.BookingInternalDtoListString = listBookingRollTerm;
+        this.transactionService.submitTransactionRollTerm(this.transactionInfo).subscribe((data: any) => {
+          this.listRollTermBooking = [];
+          this.transactionInfo.transactionRefNo = data.result.tranRefNo;
+          this.transactionInfo.transactionId = data.result.id;
+          // this.transactionInfo.isDone = true;
+
+          this.alertService.alert({
+            message: `Tạo giao dịch ${this.transactionInfo.transactionRefNo} thành công!`,
+            msgClass: "cssSuccess",
+            hPosition: "center",
+          });
+          setTimeout(() => {
+            this.router.navigate(["/transaction/rollTermSchedule"]);
+          }, 2000); //5s
+        });
+      }
     });
   }
 
