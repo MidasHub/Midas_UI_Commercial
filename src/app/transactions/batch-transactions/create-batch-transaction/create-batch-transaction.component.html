@@ -61,13 +61,13 @@
         [matAutocomplete]="clientsAutocomplete" />
       </mat-form-field>
 
-      <mat-autocomplete autoActiveFirstOption #clientsAutocomplete="matAutocomplete" [displayWith]="displayClient">
+      <mat-autocomplete  #clientsAutocomplete="matAutocomplete" [displayWith]="displayClient">
         <mat-option *ngFor="let client of filteredOptions | async" [value]="client">
           {{ displayClient(client) }}
         </mat-option>
       </mat-autocomplete>
 
-      <div fxFlex="10%">
+      <div fxFlex="10%" *ngIf="(today | date: 'dd/MM/yyyy') == (txnDate | date: 'dd/MM/yyyy')">
         <button
           mat-button
           type="button"

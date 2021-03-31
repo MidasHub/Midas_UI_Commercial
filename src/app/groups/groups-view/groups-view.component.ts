@@ -1,25 +1,24 @@
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { MatDialog } from '@angular/material/dialog';
+import { Component, OnInit } from "@angular/core";
+import { ActivatedRoute, Router } from "@angular/router";
+import { MatDialog } from "@angular/material/dialog";
 
 /** Custom Dialogs */
-import { UnassignStaffDialogComponent } from './custom-dialogs/unassign-staff-dialog/unassign-staff-dialog.component';
-import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.component';
+import { UnassignStaffDialogComponent } from "./custom-dialogs/unassign-staff-dialog/unassign-staff-dialog.component";
+import { DeleteDialogComponent } from "app/shared/delete-dialog/delete-dialog.component";
 
 /** Custom Services */
-import { GroupsService } from '../groups.service';
+import { GroupsService } from "../groups.service";
 
 /**
  * Groups View Component.
  */
 @Component({
-  selector: 'mifosx-groups-view',
-  templateUrl: './groups-view.component.html',
-  styleUrls: ['./groups-view.component.scss']
+  selector: "mifosx-groups-view",
+  templateUrl: "./groups-view.component.html",
+  styleUrls: ["./groups-view.component.scss"],
 })
 export class GroupsViewComponent {
-
   /** Group view data */
   groupViewData: any;
   /** Group datatables data */
@@ -34,15 +33,17 @@ export class GroupsViewComponent {
    * @param {Router} router Router
    * @param {MatDialog} dialog Dialog
    */
-  constructor(private route: ActivatedRoute,
-              private groupsService: GroupsService,
-              private router: Router,
-              public dialog: MatDialog) {
-    this.route.data.subscribe((data: { groupViewData: any, groupDatatables: any }) => {
+  constructor(
+    private route: ActivatedRoute,
+    private groupsService: GroupsService,
+    private router: Router,
+    public dialog: MatDialog
+  ) {
+    this.route.data.subscribe((data: { groupViewData: any; groupDatatables: any }) => {
       this.groupViewData = data.groupViewData;
       this.groupDatatables = data.groupDatatables;
     });
-      this.groupsService.getLastTransaction(this.groupViewData.id).subscribe((response: any) => {
+    this.groupsService.getLastTransaction(this.groupViewData.id).subscribe((response: any) => {
       this.lastTransaction = response.result.result;
     });
     this.groupsService.getSalesLast3months(this.groupViewData.id).subscribe((response: any) => {
@@ -51,7 +52,7 @@ export class GroupsViewComponent {
   }
 
   // ngOnInit(): void {
-    
+
   //   // this.lastTransaction = this.groupsService.getLastTransaction(this.groupViewData.id);
   //   // this.salesLast3months = this.groupsService.getSalesLast3months(this.groupViewData.id);
 
@@ -62,26 +63,26 @@ export class GroupsViewComponent {
    */
   doAction(name: string) {
     switch (name) {
-      case 'Assign Staff':
-      case 'Close':
-      case 'Activate':
-      case 'Attach Meeting':
-      case 'Attendance':
-      case 'Manage Members':
-      case 'Transfer Clients':
+      case "Assign Staff":
+      case "Close":
+      case "Activate":
+      case "Attach Meeting":
+      case "Attendance":
+      case "Manage Members":
+      case "Transfer Clients":
         this.router.navigate([`actions/${name}`], { relativeTo: this.route });
         break;
-      case 'Edit Meeting':
+      case "Edit Meeting":
         const queryParams: any = { calendarId: this.groupViewData.collectionMeetingCalendar.id };
         this.router.navigate([`actions/${name}`], { relativeTo: this.route, queryParams: queryParams });
         break;
-      case 'Edit':
-        this.router.navigate(['edit'], { relativeTo: this.route });
+      case "Edit":
+        this.router.navigate(["edit"], { relativeTo: this.route });
         break;
-      case 'Unassign Staff':
+      case "Unassign Staff":
         this.unassignStaff();
         break;
-      case 'Delete':
+      case "Delete":
         this.deleteGroup();
         break;
     }
@@ -93,7 +94,7 @@ export class GroupsViewComponent {
   get editMeeting() {
     if (this.groupViewData.collectionMeetingCalendar) {
       const entityType = this.groupViewData.collectionMeetingCalendar.entityType.value;
-      if (entityType === 'GROUPS' && this.groupViewData.hierarchy === '.' + this.groupViewData.id + '.' ) {
+      if (entityType === "GROUPS" && this.groupViewData.hierarchy === "." + this.groupViewData.id + ".") {
         return true;
       }
     }
@@ -106,8 +107,7 @@ export class GroupsViewComponent {
    */
   reload() {
     const url: string = this.router.url;
-    this.router.navigateByUrl(`/groups`, {skipLocationChange: true})
-      .then(() => this.router.navigate([url]));
+    this.router.navigateByUrl(`/groups`, { skipLocationChange: true }).then(() => this.router.navigate([url]));
   }
 
   /**
@@ -117,7 +117,8 @@ export class GroupsViewComponent {
     const unAssignStaffDialogRef = this.dialog.open(UnassignStaffDialogComponent);
     unAssignStaffDialogRef.afterClosed().subscribe((response: { confirm: any }) => {
       if (response.confirm) {
-        this.groupsService.executeGroupCommand(this.groupViewData.id, 'unassignStaff', { staffId: this.groupViewData.staffId })
+        this.groupsService
+          .executeGroupCommand(this.groupViewData.id, "unassignStaff", { staffId: this.groupViewData.staffId })
           .subscribe(() => {
             this.reload();
           });
@@ -130,15 +131,14 @@ export class GroupsViewComponent {
    */
   private deleteGroup() {
     const deleteGroupDialogRef = this.dialog.open(DeleteDialogComponent, {
-      data: { deleteContext: `group with id: ${this.groupViewData.id}` }
+      data: { deleteContext: `group with id: ${this.groupViewData.id}` },
     });
     deleteGroupDialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {
         this.groupsService.deleteGroup(this.groupViewData.id).subscribe(() => {
-          this.router.navigate(['/groups'], { relativeTo: this.route });
+          this.router.navigate(["/groups"], { relativeTo: this.route });
         });
       }
     });
   }
-
 }

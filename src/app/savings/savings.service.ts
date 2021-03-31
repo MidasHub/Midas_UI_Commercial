@@ -132,7 +132,7 @@ export class SavingsService {
     httpParams= httpParams.set("paymentTypeId", payload.typeAdvanceCash);
 
     return this.http.post<any>(
-      `${this.GatewayApiUrlPrefix}/savingTransaction/deposit_advance_cash_transaction`,
+      `${this.GatewayApiUrlPrefix}/savingTransaction/make_advance_cash_transaction`,
       httpParams
     );
   }

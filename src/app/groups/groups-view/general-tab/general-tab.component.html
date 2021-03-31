@@ -60,7 +60,7 @@
       <ng-container matColumnDef="Balance">
         <!-- <th mat-header-cell *matHeaderCellDef> Balance </th> -->
         <th mat-header-cell *matHeaderCellDef matTooltip="Nếu số dư >0 là phải thu, nếu số dư <0 là phải trả"> Số dư </th>
-        <td mat-cell *matCellDef="let element"> {{element.accountBalance}} </td>
+        <td mat-cell *matCellDef="let element"> {{element.accountBalance | money}} </td>
       </ng-container>
 
       <ng-container matColumnDef="Actions">
@@ -128,7 +128,7 @@
 
   <!-- Client Members Table -->
   <div *ngIf="groupClientMembersSameOffice">
-     
+
     <h3>{{'Group_Component.General_tab.ClientMembers' |translate}}</h3>
     <div class="fix-table-client">
       <div fxLayout fxLayoutAlign="start center">
@@ -359,6 +359,6 @@
 
   </div>
 
-  
+
 
 </div>

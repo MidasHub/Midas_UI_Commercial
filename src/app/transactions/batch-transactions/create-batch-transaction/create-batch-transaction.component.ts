@@ -123,7 +123,9 @@ export class CreateBatchTransactionComponent implements OnInit {
   isLoading: Boolean = false;
   bookingTxnDailyId: any;
   private destroy$ = new Subject<void>();
-  filteredOptions: Observable<any[]>;
+  filteredOptions: any;
+  today: any = new Date();
+  txnDate: any = new Date();
 
   private _filter(value: string): string[] {
     const filterValue = String(value).toUpperCase().replace(/\s+/g, "");
@@ -156,7 +158,7 @@ export class CreateBatchTransactionComponent implements OnInit {
   displayClient(client: any): string | undefined {
     return client
       ? `${client.cardNumber.slice(0, 6)} X ${client.cardNumber.slice(
-          client.cardNumber.length - 5,
+          client.cardNumber.length - 4,
           client.cardNumber.length
         )} - ${client.fullName}`
       : undefined;
@@ -198,6 +200,7 @@ export class CreateBatchTransactionComponent implements OnInit {
               this.isLoading = false;
               this.dataSource = [];
               result?.result?.listBatchTransaction?.forEach((v: any) => {
+                this.txnDate = v.createdDate ;
                 const member = this.members.find((f) => String(f.clientId) === String(v.custId));
                 const batchTransaction = {
                   index: `${String(new Date().getMilliseconds())}___${this.dataSource.length}`,
@@ -258,7 +261,7 @@ export class CreateBatchTransactionComponent implements OnInit {
         case "AL01":
           return card?.maxValue;
         case "AL02":
-          return card?.maxValue;  
+          return card?.maxValue;
         default:
           return 2.0;
       }
@@ -294,7 +297,7 @@ export class CreateBatchTransactionComponent implements OnInit {
 
   ngOnInit(): void {
     this.init();
-
+    this.filteredOptions = new Observable<any[]>();
     this.filteredOptions = this.formFilter.valueChanges.pipe(
       startWith(""),
       map((value: any) => this._filter(value))
@@ -456,6 +459,8 @@ export class CreateBatchTransactionComponent implements OnInit {
   }
 
   mappingInvoiceWithTransactionAction(form: any, documentKey: string, documentId: string, amount: number, result: any) {
+
+    if (amount && amount > 0){
     // @ts-ignore
     this.transactionServices
       .mappingInvoiceWithTransaction(form.data.binCodeInfo.cardType, documentKey, documentId, amount, result)
@@ -502,6 +507,7 @@ export class CreateBatchTransactionComponent implements OnInit {
         // @ts-ignore
         form.get("bills").setValue(result2.result.listInvoice);
       });
+    }
   }
 
   showHistoryTransaction(message: string , listTransaction: any) {
