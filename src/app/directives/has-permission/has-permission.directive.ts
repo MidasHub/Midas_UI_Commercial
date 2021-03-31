@@ -8,15 +8,13 @@ import { AuthenticationService } from '../../core/authentication/authentication.
  * Has Permission Directive
  */
 @Directive({
-  selector: '[midasHasPermission], [midasHasPermissions]'
+  selector: '[midasHasPermission]'
 })
 export class HasPermissionDirective {
 
   /** User Permissions */
   private userPermissions: any[];
-  private permissions: any[]; 
-  private logicalOp = 'AND';
-  private isHidden = true;
+
   /**
    * Extracts User Permissions from User Credentials
    * @param {TemplateRef} templateRef Template Reference
@@ -46,22 +44,9 @@ export class HasPermissionDirective {
     }
   }
 
-  @Input()
-  set midasHasPermissions(permission: any[]) {
-    this.permissions = permission;
-    this.updateView();
-  }
-
-  @Input()
-  set midasHasPermissionsOp(permop: string) {
-    this.logicalOp = permop;
-    this.updateView();
-  }
-
   /**
    * Checks if user is permitted.
-   * @param {string} permission
-   * Permission
+   * @param {string} permission Permission
    * @returns {true}
    * -`ALL_FUNCTIONS`: user is a Super user.
    * -`ALL_FUNCTIONS_READ`: user has all read permissions and passed permission is 'read' type.
@@ -85,40 +70,6 @@ export class HasPermissionDirective {
     } else {
       return false;
     }
-  }
-
-
-  private updateView() {
-    if (this.checkPermissions()) {
-      if(this.isHidden) {
-        this.viewContainer.createEmbeddedView(this.templateRef);
-        this.isHidden = false;
-      }
-    } else {
-      this.isHidden = true;
-      this.viewContainer.clear();
-    }
-  }
-
-  private checkPermissions() { 
-    let hasPermission = false; 
-    if (this.permissions && this.userPermissions) {
-      for (const checkPermission of this.permissions) {
-        const permissionFound = this.userPermissions.find(x => x.toUpperCase() === checkPermission.toUpperCase());
-        if (permissionFound) {
-          hasPermission = true;
-          if (this.logicalOp === 'OR') {
-            break;
-          }
-        } else {
-          hasPermission = false;
-          if (this.logicalOp === 'AND') {
-            break;
-          }
-        }
-      }
-    }
-    return hasPermission; 
   }
 
 }
