@@ -124,6 +124,8 @@ export class CreateBatchTransactionComponent implements OnInit {
   bookingTxnDailyId: any;
   private destroy$ = new Subject<void>();
   filteredOptions: any;
+  today: any = new Date();
+  txnDate: any = new Date();
 
   private _filter(value: string): string[] {
     const filterValue = String(value).toUpperCase().replace(/\s+/g, "");
@@ -198,6 +200,7 @@ export class CreateBatchTransactionComponent implements OnInit {
               this.isLoading = false;
               this.dataSource = [];
               result?.result?.listBatchTransaction?.forEach((v: any) => {
+                this.txnDate = v.createdDate ;
                 const member = this.members.find((f) => String(f.clientId) === String(v.custId));
                 const batchTransaction = {
                   index: `${String(new Date().getMilliseconds())}___${this.dataSource.length}`,

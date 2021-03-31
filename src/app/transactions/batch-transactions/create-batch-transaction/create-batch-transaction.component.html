@@ -67,7 +67,7 @@
         </mat-option>
       </mat-autocomplete>
 
-      <div fxFlex="10%">
+      <div fxFlex="10%" *ngIf="(today | date: 'dd/MM/yyyy') == (txnDate | date: 'dd/MM/yyyy')">
         <button
           mat-button
           type="button"
