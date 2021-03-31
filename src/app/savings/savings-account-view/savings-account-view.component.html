@@ -1,6 +1,6 @@
 <mat-card class="savings-account-card">
 
-  <mat-card-header fxLayout="column" class="header" 
+  <mat-card-header fxLayout="column" class="header"
   [ngClass]="{'bankType': this.isBankAcccount,
               'CCAType': this.isCCA,
               'cashType': this.isCash }">
@@ -30,9 +30,9 @@
             | {{entityType}} Name: {{savingsAccountData.clientName || savingsAccountData.groupName}}<br/>
             <span *ngIf="!savingsAccountData.status.rejected && !savingsAccountData.status.submittedAndPendingApproval">
               {{'Saving_Account_Component.ViewSavingAccount.labelCurrencyBalance'|translate}}
-              : {{savingsAccountData.currency.displaySymbol}}&nbsp;{{savingsAccountData.summary.accountBalance | money }}<br/>
+              : {{savingsAccountData.summary.accountBalance | money }}<br/>
               {{'Saving_Account_Component.ViewSavingAccount.labelAvailableBalance'|translate}}
-              : {{savingsAccountData.currency.displaySymbol}}&nbsp;{{savingsAccountData.summary.availableBalance | money }}<br/>
+              : {{savingsAccountData.summary.availableBalance | money }}<br/>
             </span>
           </p>
         </mat-card-subtitle>
@@ -70,7 +70,7 @@
       <div fxFlex="49%"
            *ngIf="!savingsAccountData.status.rejected && !savingsAccountData.status.submittedAndPendingApproval;" >
 <!--        // else alternateSummary">-->
-        <h4 class="table-headers" 
+        <h4 class="table-headers"
         [ngClass]="{'bankType': this.isBankAcccount,
                     'CCAType': this.isCCA,
                     'cashType': this.isCash  }">{{'Saving_Account_Component.ViewSavingAccount.labelAccountSummary'|translate}}</h4>
@@ -215,7 +215,7 @@
         <div
           *ngIf="!savingsAccountData.status.rejected && !savingsAccountData.status.submittedAndPendingApproval;">
 <!--          // else alternateDetails">-->
-          <h4 class="table-headers" 
+          <h4 class="table-headers"
           [ngClass]="{'bankType': this.isBankAcccount,
                       'CCAType': this.isCCA,
                       'cashType': this.isCash}">{{'Saving_Account_Component.ViewSavingAccount.labelSavingsDetails'|translate}}</h4>
@@ -264,7 +264,7 @@
 <!--        </ng-template>-->
 
         <div *ngIf="!savingsAccountData.status.rejected && !savingsAccountData.status.submittedAndPendingApproval">
-          <h4 class="table-headers" 
+          <h4 class="table-headers"
               [ngClass]="{'bankType': this.isBankAcccount,
                           'CCAType': this.isCCA ,
                           'cashType': this.isCash}">{{'Saving_Account_Component.ViewSavingAccount.labelPerformanceHistory'|translate}}</h4>

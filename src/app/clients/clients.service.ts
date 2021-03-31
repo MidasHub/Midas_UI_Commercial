@@ -79,6 +79,16 @@ export class ClientsService {
     return this.http.get("/clients", { params: httpParams });
   }
 
+  getClientsByStaff(orderBy: string, sortOrder: string, offset: number, limit: number,  sqlSearch?: string): Observable<any> {
+    const httpParams = new HttpParams()
+      .set("offset", offset.toString())
+      .set("limit", limit.toString())
+      .set("sortOrder", sortOrder)
+      .set("orderBy", orderBy)
+      .set("sqlSearch", sqlSearch ? sqlSearch : "");
+    return this.http.get("/clients", { params: httpParams });
+  }
+
   getClientsByOfficeOfUser(
     orderBy: string,
     sortOrder: string,

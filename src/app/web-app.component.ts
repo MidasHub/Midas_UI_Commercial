@@ -81,7 +81,7 @@ export class WebAppComponent implements OnInit {
     private bankService: BanksService,
     private messagingService: FireBaseMessagingService,
     private deviceService: DeviceDetectorService) {
-   
+
   }
 
 
@@ -191,8 +191,7 @@ export class WebAppComponent implements OnInit {
 
     if (!sessionStorage.getItem('midasServers')) {
       this.settingsService.setServers([
-        'https://staging.midascore.net',
-        'https://uat.tekcompay.com:8443',
+        'https://staging.kiotthe.com',
         'https://training.kiotthe.com',
         'https://midas.kiotthe.com',
         'https://localhost:9443',
@@ -203,10 +202,9 @@ export class WebAppComponent implements OnInit {
 
     if (!sessionStorage.getItem('midasBillposServers')) {
       this.settingsService.setBillposServers([
-        'https://staging.midascore.net',
+        'https://staging.kiotthe.com',
         'https://training.kiotthe.com',
         'https://midas.kiotthe.com',
-        'https://uat.tekcompay.com:8088',
         'https://hdcredit.kiotthe.com',
         'http://localhost:8088'
       ]);
