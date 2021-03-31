@@ -24,6 +24,7 @@ export class AddIdentitiesComponent implements OnInit {
   currentUser: any;
   isTeller = true;
   existBin = false;
+  classCardEnum=["CLASSIC","GOLD","PLATINUM","SIGNATURE","INFINITY"];
 
   constructor(private formBuilder: FormBuilder,
               @Inject(MAT_DIALOG_DATA) public data: any,

@@ -21,6 +21,7 @@ export class AddIdentitiesExtraInfoComponent implements OnInit {
   currentUser: any;
   isTeller = true;
   existBin = false;
+  classCardEnum=["CLASSIC","GOLD","PLATINUM","SIGNATURE","INFINITY"];
 
   constructor(
     private formBuilder: FormBuilder,

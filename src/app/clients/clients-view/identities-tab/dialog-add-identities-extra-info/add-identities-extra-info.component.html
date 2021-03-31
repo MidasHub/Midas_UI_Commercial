@@ -34,11 +34,18 @@
 
   <mat-form-field  fxFlex="48%">
     <mat-label>Hạng thẻ:</mat-label>
-    <input
+    <!-- <input
       matInput
       type="text"
       required
-      formControlName="classCard">
+      formControlName="classCard"> -->
+      
+    <mat-select matNativeControl formControlName="classCard" name="car">
+      <mat-option value="" selected>-----Chọn hạng thẻ-----</mat-option>
+      <mat-option *ngFor="let cCARD of classCardEnum" [value]="cCARD">
+        {{cCARD}}
+      </mat-option>
+    </mat-select>
   </mat-form-field>
 </div>
 
