@@ -160,7 +160,7 @@ export class SavingsService {
 
   getListSavingAdvanceCashFromPartner(officeId: any) {
     let httpParams = this.commonHttpParams.getCommonHttpParams();
-
+    httpParams = httpParams.set("officeTo", officeId);
     return this.http.post<any>(
       `${this.GatewayApiUrlPrefix}/savingTransaction/get_list_client_saving_vault_by_office`,
       httpParams
