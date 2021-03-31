@@ -114,6 +114,8 @@
   <button mat-menu-item *midasHasPermissions="['ALL_FUNCTIONS', 'POS_CREATE']; op 'AND'" routerLink="/third-party">
     {{ "Toolbar_Component.lblThirdParty" | translate }}
   </button>
+  <button mat-menu-item routerLink="/groups/spending-limit">Hạn mức chi tiêu</button>
+
 </mat-menu>
 <mat-menu #transactionMenu="matMenu" [overlapTrigger]="false">
   <button mat-menu-item routerLink="/transaction">Quản lý giao dịch</button>
