@@ -30,6 +30,7 @@ import { GroupDatatablesResolver } from './common-resolvers/group-datatables.res
 import { GroupDatatableResolver } from './common-resolvers/group-datatable.resolver';
 import { GroupDataAndTemplateResolver } from './common-resolvers/group-data-and-template.resolver';
 import { GroupActionsResolver } from './common-resolvers/group-actions.resolver';
+import { SpendingLimitComponent } from './spending-limit/spending-limit.component';
 
 /** Groups Routes */
 const routes: Routes = [
@@ -41,6 +42,10 @@ const routes: Routes = [
         {
           path: '',
           component: GroupsComponent,
+        },
+        {
+          path: 'spending-limit',
+          component: SpendingLimitComponent,
         },
         {
           path: 'create',
