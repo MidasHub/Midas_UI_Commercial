@@ -6,6 +6,7 @@ import { ClientsService } from "../../../clients/clients.service";
 import { AuthenticationService } from "../../../core/authentication/authentication.service";
 import { AlertService } from "../../../core/alert/alert.service";
 import { MidasClientService } from "../../../midas-client/midas-client.service";
+import { GroupsService } from "app/groups/groups.service";
 
 @Component({
   selector: "midas-add-fee-dialog",
@@ -47,7 +48,8 @@ export class AddFeeDialogComponent implements OnInit {
     private clientService: ClientsService,
     private authenticationService: AuthenticationService,
     private alertServices: AlertService,
-    private midasClientServices: MidasClientService
+    private midasClientServices: MidasClientService,
+    private groupsService: GroupsService
   ) {
     this.txnCode = data.data?.txnCode;
     this.amountPaidBooking = data.data?.amountPaid;
@@ -104,39 +106,83 @@ export class AddFeeDialogComponent implements OnInit {
     }
     this.formDialogPaid.get("savingAccountPaid").setValue("");
     const AC = value === "CA" ? 9 : 8;
+    let NoAccount = 0;
     this.accountsPaid.map((v) => {
       if (v.productId !== AC) {
         v.hide = true;
       } else {
         v.hide = false;
+        if (NoAccount == 0){
+          this.formDialogPaid.get("savingAccountPaid").setValue(v.id);
+
+        }
+        NoAccount += 1;
       }
     });
+
     this.formDialogPaid.value;
   }
 
   checkAccountFee() {
     const value = this.formDialogGet.get("paymentCodeGet").value;
-    if (value === "AM") {
-      if (!this.clientAccount) {
+    this.formDialogGet.get("savingAccountGet").setValue("");
+
+    if (value === "AM" || value === "AR") {
+      if (value === "AM") {
         this.midasClientServices.getListSavingAccountByClientId(this.clientId).subscribe((result) => {
           this.clientAccount = result?.result?.listSavingAccount;
           this.accountsFee = this.clientAccount;
+          if (this.clientAccount.length > 0) {
+            this.formDialogGet.get("savingAccountGet").setValue(this.clientAccount[0].id);
+          }
         });
       } else {
-        this.accountsFee = this.clientAccount;
+        if (value === "AR") {
+          let groupId = this.transactions[0].agencyId;
+          this.groupsService.getGroupAccountsData(groupId).subscribe((savings) => {
+            this.clientAccount = savings?.savingsAccounts;
+            this.clientAccount.filter((account: any) => {
+              return (account.status.id = 300);
+            });
+            this.accountsFee = this.clientAccount;
+            if (this.clientAccount.length > 0) {
+              this.formDialogGet.get("savingAccountGet").setValue(this.clientAccount[0].id);
+            }
+          });
+        }
       }
     } else {
       const AC = value === "CA" ? 9 : 8;
       this.accountsFee = this.accountsPaid;
+      let NoAccount = 0;
       this.accountsFee.map((v) => {
         if (v.productId !== AC) {
           v.hide = true;
         } else {
           v.hide = false;
+          if (NoAccount == 0){
+            this.formDialogGet.get("savingAccountGet").setValue(v.id);
+
+          }
+          NoAccount += 1;
         }
       });
     }
-    this.formDialogGet.get("savingAccountGet").setValue("");
+  }
+
+  displaySavingAccount(externalId: string, accountNo: string) {
+    let result = "";
+    if (!accountNo) {
+      result = externalId;
+    } else {
+      if (!externalId) {
+        result = accountNo;
+      } else {
+        result = externalId;
+      }
+    }
+
+    return `${result} `;
   }
 
   ngOnInit(): void {
