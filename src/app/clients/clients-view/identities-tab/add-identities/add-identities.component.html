@@ -1,7 +1,7 @@
 <h1 mat-dialog-title>{{'Client_Component.ViewClient.TabIdentities.dialogIdentifierTitle' |translate}}</h1>
 
 <div mat-dialog-content [formGroup]="form" [fxLayout]="'column'" fxLayout.lt-md="column" [fxLayoutGap]="'1%'"
-     fxLayoutGap.lt-md="0%">
+  fxLayoutGap.lt-md="0%">
   <mat-form-field fxFlex="96%">
     <mat-label>{{'Client_Component.ViewClient.TabIdentities.selectDocumentType' |translate}}</mat-label>
     <mat-select formControlName="documentTypeId">
@@ -13,11 +13,9 @@
 
   <mat-form-field fxFlex="96%">
     <mat-label>{{'Client_Component.ViewClient.TabIdentities.inputUniqueId' |translate}}</mat-label>
-    <input required *ngIf="!form.contains('documentCardType')" matInput formControlName="documentKey" >
-    <input required *ngIf="form.contains('documentCardType')"
-    matInput
-    formControlName="documentKey"
-    [dropSpecialCharacters]="true" mask="0000-0000-0000-0000" >
+    <input required *ngIf="!form.contains('documentCardType')" matInput formControlName="documentKey">
+    <input required *ngIf="form.contains('documentCardType')" matInput formControlName="documentKey"
+      [dropSpecialCharacters]="true" mask="0000-0000-0000-0000">
   </mat-form-field>
 
   <mat-form-field fxFlex="96%" *ngIf="form.contains('documentCardBank')">
@@ -40,40 +38,33 @@
 
   <mat-form-field *ngIf="form.contains('dueDay')" fxFlex="48%">
     <mat-label>Ngày đáo hạn thẻ(vd: 03 --> ngày 3):</mat-label>
-    <input
-      required
-      pattern
-      maxlength="2"
-      matInput type="number" max="31" min="0" formControlName="dueDay">
+    <input required pattern maxlength="2" matInput type="number" max="31" min="0" formControlName="dueDay">
   </mat-form-field>
 
   <mat-form-field *ngIf="form.contains('expiredDate')" fxFlex="48%">
     <mat-label>Ngày hết hạn thẻ(vd: 10/24 --> tháng 10 năm 2024):</mat-label>
-    <input
-      required
-      matInput
-      maxlength="5"
-      minlength="5"
-      type="text"
-      [dropSpecialCharacters]="false" mask="00/00"
+    <input required matInput maxlength="5" minlength="5" type="text" [dropSpecialCharacters]="false" mask="00/00"
       formControlName="expiredDate">
   </mat-form-field>
 
-  <mat-form-field *ngIf="form.contains('limitCard')"  fxFlex="48%">
+  <mat-form-field *ngIf="form.contains('limitCard')" fxFlex="48%">
     <mat-label>Hạn mức thẻ:</mat-label>
-    <input
-      currencyMask
-      required
-      matInput type="text"  formControlName="limitCard">
+    <input currencyMask required matInput type="text" formControlName="limitCard">
   </mat-form-field>
 
-  <mat-form-field  *ngIf="form.contains('classCard')" fxFlex="48%">
+  <mat-form-field *ngIf="form.contains('classCard')" fxFlex="48%">
     <mat-label>Hạng thẻ:</mat-label>
-    <input
+    <!-- <input
       matInput
       type="text"
       required
-      formControlName="classCard">
+      formControlName="classCard"> -->
+    <mat-select matNativeControl formControlName="classCard" >
+      <mat-option value="" selected>-----Chọn hạng thẻ-----</mat-option>
+      <mat-option *ngFor="let cCARD of classCardEnum" [value]="cCARD">
+        {{cCARD}}
+      </mat-option>
+    </mat-select>
   </mat-form-field>
 
   <mat-form-field fxFlex="96%" *ngIf="form.contains('status')">
@@ -94,6 +85,6 @@
 <mat-dialog-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="2%">
   <button mat-raised-button mat-dialog-close>{{ 'Shared_Component.FormDialog.btnCancel' | translate }}</button>
   <button mat-raised-button color="primary"
-          [mat-dialog-close]="{ data: form,documentTypes:documentTypes,existBin:existBin }"
-          [disabled]="!form.valid || form.pristine">{{ 'Shared_Component.FormDialog.btnAdd' |translate }}</button>
+    [mat-dialog-close]="{ data: form,documentTypes:documentTypes,existBin:existBin }"
+    [disabled]="!form.valid || form.pristine">{{ 'Shared_Component.FormDialog.btnAdd' |translate }}</button>
 </mat-dialog-actions>
