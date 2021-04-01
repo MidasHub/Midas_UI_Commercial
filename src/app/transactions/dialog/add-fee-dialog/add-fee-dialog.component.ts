@@ -36,7 +36,7 @@ export class AddFeeDialogComponent implements OnInit {
   disableAmountPaid = false;
   clientId: any;
   clientAccount: any;
-  messageNoti: string;
+  messageError: string;
   isLoading: boolean = false;
   amountPaidBooking: number;
 
@@ -45,7 +45,6 @@ export class AddFeeDialogComponent implements OnInit {
     private formBuilder: FormBuilder,
     public dialogRef: MatDialogRef<AddFeeDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
-    private clientService: ClientsService,
     private authenticationService: AuthenticationService,
     private alertServices: AlertService,
     private midasClientServices: MidasClientService,
@@ -79,8 +78,8 @@ export class AddFeeDialogComponent implements OnInit {
 
   checkAccountAndAmountPaid() {
     this.formDialogPaid.value;
-    const value = this.formDialogPaid.get("paymentCode").value;
-    if (value !== "DE") {
+    const paymentCode = this.formDialogPaid.get("paymentCode").value;
+    if (paymentCode !== "DE") {
       this.showGet = true;
       this.formDialogPaid.get("amountPaid").enable();
       this.transactionFee = this.transactions.find((v) => v.txnPaymentType === "IN");
@@ -101,20 +100,33 @@ export class AddFeeDialogComponent implements OnInit {
       this.showGet = false;
       this.formDialogPaid.get("amountPaid").setValue(this.transactionPaid?.feeRemain - this.transactionFee?.feeRemain);
       if (!this.isBATCH) {
+
         this.formDialogPaid.get("amountPaid").disable();
+      } else {
+
+        let groupId = this.transactions[0].agencyId;
+        this.groupsService.getGroupAccountsData(groupId).subscribe((savings) => {
+          this.clientAccount = savings?.savingsAccounts;
+          this.clientAccount.filter((account: any) => {
+            return (account.status.id = 300);
+          });
+          this.accountsPaid = this.clientAccount;
+          if (this.accountsPaid.length > 0) {
+            this.formDialogPaid.get("savingAccountPaid").setValue(this.accountsPaid[0].id);
+          }
+        });
       }
     }
     this.formDialogPaid.get("savingAccountPaid").setValue("");
-    const AC = value === "CA" ? 9 : 8;
+    const AC = paymentCode === "CA" ? 9 : 8;
     let NoAccount = 0;
     this.accountsPaid.map((v) => {
       if (v.productId !== AC) {
         v.hide = true;
       } else {
         v.hide = false;
-        if (NoAccount == 0){
+        if (NoAccount == 0 && paymentCode === "DE") {
           this.formDialogPaid.get("savingAccountPaid").setValue(v.id);
-
         }
         NoAccount += 1;
       }
@@ -132,8 +144,9 @@ export class AddFeeDialogComponent implements OnInit {
         this.midasClientServices.getListSavingAccountByClientId(this.clientId).subscribe((result) => {
           this.clientAccount = result?.result?.listSavingAccount;
           this.accountsFee = this.clientAccount;
-          if (this.clientAccount.length > 0) {
-            this.formDialogGet.get("savingAccountGet").setValue(this.clientAccount[0].id);
+
+          if (this.accountsFee.length > 0) {
+            this.formDialogGet.get("savingAccountGet").setValue(this.accountsFee[0].id);
           }
         });
       } else {
@@ -145,8 +158,9 @@ export class AddFeeDialogComponent implements OnInit {
               return (account.status.id = 300);
             });
             this.accountsFee = this.clientAccount;
-            if (this.clientAccount.length > 0) {
-              this.formDialogGet.get("savingAccountGet").setValue(this.clientAccount[0].id);
+
+            if (this.accountsFee.length > 0) {
+              this.formDialogGet.get("savingAccountGet").setValue(this.accountsFee[0].id);
             }
           });
         }
@@ -160,9 +174,8 @@ export class AddFeeDialogComponent implements OnInit {
           v.hide = true;
         } else {
           v.hide = false;
-          if (NoAccount == 0){
+          if (NoAccount == 0) {
             this.formDialogGet.get("savingAccountGet").setValue(v.id);
-
           }
           NoAccount += 1;
         }
@@ -207,7 +220,7 @@ export class AddFeeDialogComponent implements OnInit {
       }
 
       if (this.feeAmount <= 0 && this.paidAmount <= 0) {
-        this.messageNoti = "Tài khoản không khả dụng";
+        this.messageError = "Tài khoản không khả dụng";
       }
 
       if (this.transactionPaid && this.transactionPaid.txnType === "BATCH") {

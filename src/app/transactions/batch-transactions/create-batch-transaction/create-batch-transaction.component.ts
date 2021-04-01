@@ -20,8 +20,9 @@ import { MakeFeeOnAdvanceComponent } from "../../dialog/make-fee-on-advance/make
 import { BanksService } from "../../../banks/banks.service";
 import { ValidCheckTransactionHistoryDialogComponent } from "app/transactions/dialog/valid-check-transaction-history/valid-check-transaction-history-dialog.component";
 
-import {Logger} from "../../../core/logger/logger.service";
-const log = new Logger('Batch Txn');
+import { Logger } from "../../../core/logger/logger.service";
+import { AddFeeDialogComponent } from "app/transactions/dialog/add-fee-dialog/add-fee-dialog.component";
+const log = new Logger("Batch Txn");
 @Component({
   selector: "midas-create-batch-transaction",
   templateUrl: "./create-batch-transaction.component.html",
@@ -200,7 +201,7 @@ export class CreateBatchTransactionComponent implements OnInit {
               this.isLoading = false;
               this.dataSource = [];
               result?.result?.listBatchTransaction?.forEach((v: any) => {
-                this.txnDate = v.createdDate ;
+                this.txnDate = v.createdDate;
                 const member = this.members.find((f) => String(f.clientId) === String(v.custId));
                 const batchTransaction = {
                   index: `${String(new Date().getMilliseconds())}___${this.dataSource.length}`,
@@ -278,9 +279,17 @@ export class CreateBatchTransactionComponent implements OnInit {
   }
 
   onChangeTotal() {
-    this.totalAmount = this.dataSource.reduce((total: any, num: any) => {
-      return total + Math.round(num?.get("requestAmount").value);
-    }, 0);
+    if (this.batchTxnName) {
+      this.transactionServices.getListFeeSavingTransaction(this.batchTxnName).subscribe((result) => {
+        const listTransactionAdvance = result?.result?.listTransactionAlready;
+        this.totalAmount = listTransactionAdvance.reduce((total: any, num: any) => {
+          return total + Math.round(num.paidAmount);
+        }, 0);
+      });
+    }
+    // this.totalAmount = this.dataSource.reduce((total: any, num: any) => {
+    //   return total + Math.round(num?.get("requestAmount").value);
+    // }, 0);
     // this.totalAmountTransaction = this.dataSource.reduce((total: any, num: any) => {
     //     return total + Math.round(num?.get('amountTransaction').value);
     // }, 0);
@@ -340,7 +349,7 @@ export class CreateBatchTransactionComponent implements OnInit {
       )
       .subscribe((value) => {
         if (value && value > 0) {
-          this.transactionServices.getListTerminalAvailable(value, 'SI').subscribe((result) => {
+          this.transactionServices.getListTerminalAvailable(value, "SI").subscribe((result) => {
             // @ts-ignore
             form?.data.terminals = result?.result?.listTerminal;
             form.get("terminalId").setValidators([Validators.required]);
@@ -412,7 +421,10 @@ export class CreateBatchTransactionComponent implements OnInit {
       // tslint:disable-next-line:no-shadowed-variable
       const { documentId } = form.data.member;
       if (amount && rate !== 0 && terminalId) {
-        let cardNumber = `${member.cardNumber.slice(0, 6)}-X-${member.cardNumber.slice(member.cardNumber.length - 4, member.cardNumber.length)} `;
+        let cardNumber = `${member.cardNumber.slice(0, 6)}-X-${member.cardNumber.slice(
+          member.cardNumber.length - 4,
+          member.cardNumber.length
+        )} `;
         // @ts-ignore
         if (!form.data.binCodeInfo) {
           this.bankServices?.getInfoBinCode(member.cardNumber.slice(0, 6)).subscribe((binCodeInfo) => {
@@ -459,68 +471,65 @@ export class CreateBatchTransactionComponent implements OnInit {
   }
 
   mappingInvoiceWithTransactionAction(form: any, documentKey: string, documentId: string, amount: number, result: any) {
+    if (amount && amount > 0) {
+      // @ts-ignore
+      this.transactionServices
+        .mappingInvoiceWithTransaction(form.data.binCodeInfo.cardType, documentKey, documentId, amount, result)
+        .subscribe((result2) => {
+          if (result2.status != 200) {
+            if (result2.status == 401) {
+              if (result2.error == "Unauthorize with Midas") {
+                this.alertService.alert({
+                  message: "Phiên làm việc hết hạn vui lòng đăng nhập lại để tiếp tục",
+                  msgClass: "cssDanger",
+                  hPosition: "center",
+                });
+              }
+            }
 
-    if (amount && amount > 0){
-    // @ts-ignore
-    this.transactionServices
-      .mappingInvoiceWithTransaction(form.data.binCodeInfo.cardType, documentKey, documentId, amount, result)
-      .subscribe((result2) => {
-
-        if (result2.status != 200) {
-          if (result2.status == 401) {
-            if (result2.error == "Unauthorize with Midas") {
+            if (result2.statusCode == 666) {
+              if (typeof result2.error !== "undefined" && result2.error !== "") {
+                this.alertService.alert({
+                  message: `Chú Ý: Giao dịch không vượt hạn mức : ${this.formatCurrency(result2.error)} VNĐ`,
+                  msgClass: "cssDanger",
+                  hPosition: "center",
+                });
+              }
+            } else {
               this.alertService.alert({
-                message: "Phiên làm việc hết hạn vui lòng đăng nhập lại để tiếp tục",
+                message: `Lỗi xảy ra : Vui lòng liên hệ ITSupport. ERROR: ${result2}`,
                 msgClass: "cssDanger",
                 hPosition: "center",
               });
             }
+            return;
           }
+          if (typeof result2.result.caution != "undefined" && result2.result.caution != "NaN") {
+            this.showHistoryTransaction(result2.result.caution, result2.result.listTransaction);
 
-          if (result2.statusCode == 666) {
-            if (typeof result2.error !== "undefined" && result2.error !== "") {
-              this.alertService.alert({
-                message: `Chú Ý: Giao dịch không vượt hạn mức : ${this.formatCurrency(result2.error)} VNĐ`,
-                msgClass: "cssDanger",
-                hPosition: "center",
-              });
-            }
-          } else {
-            this.alertService.alert({
-              message: `Lỗi xảy ra : Vui lòng liên hệ ITSupport. ERROR: ${result2}`,
-              msgClass: "cssDanger",
-              hPosition: "center",
-            });
+            // this.alertService.alert({ message: data.result.caution, msgClass: "cssDanger", hPosition: "center" });
           }
-          return;
-        }
-        if (typeof result2.result.caution != "undefined" && result2.result.caution != "NaN") {
-          this.showHistoryTransaction(result2.result.caution, result2.result.listTransaction);
+          const value = result2?.result.amountTransaction;
+          // form.get('amountTransaction').setValue(value);
+          form.get("invoiceAmount").setValue(value);
 
-          // this.alertService.alert({ message: data.result.caution, msgClass: "cssDanger", hPosition: "center" });
-        }
-        const value = result2?.result.amountTransaction;
-        // form.get('amountTransaction').setValue(value);
-        form.get("invoiceAmount").setValue(value);
-
-        form.get("terminalAmount").setValue(value);
-        // @ts-ignore
-        form.get("bills").setValue(result2.result.listInvoice);
-      });
+          form.get("terminalAmount").setValue(value);
+          // @ts-ignore
+          form.get("bills").setValue(result2.result.listInvoice);
+        });
     }
   }
 
-  showHistoryTransaction(message: string , listTransaction: any) {
+  showHistoryTransaction(message: string, listTransaction: any) {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.data = {
       listTransaction: listTransaction,
-      message: message
+      message: message,
     };
     dialogConfig.minWidth = 400;
     dialogConfig.maxWidth = 800;
     this.dialog.open(ValidCheckTransactionHistoryDialogComponent, dialogConfig);
   }
-
 
   getFeeByTerminalAction(form: any, terminalId: string) {
     // @ts-ignore
@@ -589,7 +598,7 @@ export class CreateBatchTransactionComponent implements OnInit {
             toAccountId: result?.result?.clientInfo?.savingsAccountId,
             rate: this.getFee(member.cardNumber.slice(0, 6), "CA01"),
           };
-          this.dataSource = [ this.generaForm(batchTransaction, member), ...this.dataSource];
+          this.dataSource = [this.generaForm(batchTransaction, member), ...this.dataSource];
         }
       });
     } else {
@@ -609,7 +618,21 @@ export class CreateBatchTransactionComponent implements OnInit {
     // dialogConfig.minWidth = 400;
     const dialog = this.dialog.open(MakeFeeOnAdvanceComponent, dialogConfig);
     dialog.afterClosed().subscribe((data) => {
-      if (data && data.status) {
+
+    });
+  }
+
+  addFeeDialog() {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.data = {
+      data: {
+        txnCode: this.batchTxnName,
+      },
+    };
+    // dialogConfig.minWidth = 400;
+    const dialog = this.dialog.open(AddFeeDialogComponent, dialogConfig);
+    dialog.afterClosed().subscribe((data) => {
+      if (data) {
       }
     });
   }
@@ -764,18 +787,16 @@ export class CreateBatchTransactionComponent implements OnInit {
         if (response.data) {
           const { dueDay, expiredDate, limitCard, classCard } = response.data.value;
 
-            this.bankServices
-              .storeExtraCardInfo({
-                userId: member.clientId,
-                userIdentifyId: member.documentId,
-                dueDay: dueDay,
-                expireDate: expiredDate,
-                limitCard: limitCard,
-                classCard: classCard
-              })
-              .subscribe((res2: any) => {
-              });
-
+          this.bankServices
+            .storeExtraCardInfo({
+              userId: member.clientId,
+              userIdentifyId: member.documentId,
+              dueDay: dueDay,
+              expireDate: expiredDate,
+              limitCard: limitCard,
+              classCard: classCard,
+            })
+            .subscribe((res2: any) => {});
         }
       });
     });

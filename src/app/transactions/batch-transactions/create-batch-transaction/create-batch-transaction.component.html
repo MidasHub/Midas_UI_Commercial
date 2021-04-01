@@ -16,13 +16,27 @@
         <span>Tổng giao dịch </span>
       </div>
     </div>
-    <!-- <div fxLayout="row" fxFlex="18%" class="export-item">
+   <div fxLayout="row" fxFlex="30%" class="export-item">
         <img src="assets/images/icons/trading.svg" />
         <div fxLayout="column">
           <span class="money-total">{{ totalAmount | money }}</span>
-          <span>Tiền giao dịch</span>
+          <span>Tiền đã ứng trước</span>
+          <div fxLayout="row">
+            <button
+              mat-button
+              (click)="makeFeeOnAdvance()"
+              type="button"
+              *ngIf="batchTxnName"
+              style="background: hsl(0, 66%, 47%); color: white; max-height: 50px; width: 100%; margin-top: 8px"
+              color="warn"
+            >
+              <img src="assets/images/icons/money.svg" width="25" height="25" />&nbsp; Ứng tiền trước
+            </button>
+          </div>
         </div>
-      </div>
+
+    </div>
+     <!--
       <div fxLayout="row" fxFlex="18%" class="export-item" *midasHasActiveModule="'billModule'">
         <img src="assets/images/icons/bank.svg" />
         <div fxLayout="column">
@@ -87,15 +101,17 @@
           <img src="assets/images/icons/credit-card-while.svg" />&nbsp; Thêm thẻ
         </button>
       </div>
+
       <div fxFlex="15%">
         <button
           mat-button
-          (click)="makeFeeOnAdvance()"
+          (click)="addFeeDialog()"
           type="button"
           *ngIf="batchTxnName"
           style="background: #3b74ff; color: white; max-height: 50px; width: 100%; margin-top: 8px"
         >
-          <img src="assets/images/icons/money.svg" width="25" height="25" />&nbsp; Ứng tiền trước
+          <img src="assets/images/icons/money.svg" width="25" height="25" />
+          &nbsp; Kết lô thu/chi
         </button>
       </div>
       <div fxFlex="15%">
