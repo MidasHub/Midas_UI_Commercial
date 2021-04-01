@@ -60,3 +60,5 @@ yarn.lock
 ~/node_modules/*
 src/environments/checkurl.ts
 src/app/core/constants/enum_constants.ts
+src/app/transactions/create-transaction/create-transaction.component.html
+src/app/transactions/create-transaction/create-transaction.component.html
