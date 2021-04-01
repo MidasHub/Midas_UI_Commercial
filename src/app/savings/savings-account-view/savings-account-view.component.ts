@@ -287,29 +287,8 @@ export class SavingsAccountViewComponent implements OnInit {
             ? ` khách hàng ${clientAdvanceCash.displayName} `
             : ` đại lý ${clientAdvanceCash.name} `
         } với số tiền ${String(amountAdvance).replace(/\\B(?=(\\d{3})+(?!\\d))/g, ",") + " đ"}`;
-        this.handleResponseApiSavingTransaction(result, message);
+        this.savingsService.handleResponseApiSavingTransaction(result, message, null);
       });
-  }
-
-  handleResponseApiSavingTransaction(res: any, messageReceived: string) {
-    let responseT = res?.result?.resultCommand;
-    if (responseT.statusCodeValue == 200 && !responseT?.body?.errors) {
-      this.alertService.alert({ message: messageReceived, msgClass: "cssInfo" });
-      this.router.navigate(["../../transactions"], { relativeTo: this.route });
-    } else {
-      let response = res?.result?.resultCommand.body;
-      let errorMessage = response.defaultUserMessage || response.developerMessage;
-      if (response.errors) {
-        if (response.errors[0]) {
-          errorMessage = response.errors[0].defaultUserMessage || response.errors[0].developerMessage;
-        }
-      }
-      this.alertService.alert({
-        message: `Lỗi: ${errorMessage}, Vui lòng liên hệ IT support!`,
-        msgClass: "cssDanger",
-        hPosition: "right",
-      });
-    }
   }
 
   transferCrossOfficeCash() {

@@ -9,6 +9,8 @@ import { DatePipe } from "@angular/common";
 import { SettingsService } from "app/settings/settings.service";
 import { FormBuilder, FormControl } from "@angular/forms";
 import { CommonHttpParams } from "app/shared/CommonHttpParams";
+import { ActivatedRoute, Router } from "@angular/router";
+import { AlertService } from "app/core/alert/alert.service";
 
 /**
  * Savings Service.
@@ -27,13 +29,53 @@ export class SavingsService {
      private datePipe: DatePipe,
      private settingsService: SettingsService,
      private formBuilder: FormBuilder,
-     private commonHttpParams: CommonHttpParams
+     private commonHttpParams: CommonHttpParams,
+     private router: Router,
+     private route: ActivatedRoute,
+     private alertService: AlertService,
     ) {
     this.accessToken = JSON.parse(
       sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey)
     );
     this.GatewayApiUrlPrefix = environment.GatewayApiUrlPrefix;
     this.environment = environment;
+  }
+
+  makeFeeOnAdvanceExecute(form: any): Observable<any> {
+    let httpParams = this.commonHttpParams.getCommonHttpParams();
+
+    const keys = Object.keys(form);
+    for (const key of keys) {
+      httpParams = httpParams.set(key, form[key]);
+    }
+    return this.http.post<any>(
+      `${this.GatewayApiUrlPrefix}/savingTransaction/make_fee_advance_transaction`,
+      httpParams
+    );
+  }
+
+  handleResponseApiSavingTransaction(res: any, messageReceived: string, RouteUrl: string) {
+    let responseT = res?.result?.resultCommand;
+    if (responseT.statusCodeValue == 200 && !responseT?.body?.errors) {
+      this.alertService.alert({ message: messageReceived, msgClass: "cssSuccess" });
+      if (RouteUrl) {
+        this.router.navigate([RouteUrl], { relativeTo: this.route });
+
+      }
+    } else {
+      let response = res?.result?.resultCommand.body;
+      let errorMessage = response.defaultUserMessage || response.developerMessage;
+      if (response.errors) {
+        if (response.errors[0]) {
+          errorMessage = response.errors[0].defaultUserMessage || response.errors[0].developerMessage;
+        }
+      }
+      this.alertService.alert({
+        message: `Lỗi: ${errorMessage}, Vui lòng liên hệ IT support!`,
+        msgClass: "cssDanger",
+        hPosition: "right",
+      });
+    }
   }
 
   checkValidRevertSavingTransaction(resourceId: string): Observable<any> {
