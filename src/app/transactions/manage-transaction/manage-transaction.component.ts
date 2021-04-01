@@ -181,6 +181,15 @@ export class ManageTransactionComponent implements OnInit {
       // @ts-ignore
       this.partners?.unshift({ code: "", desc: "Tất cả" });
     });
+
+    this.clientsService.getListUserTeller(this.currentUser.officeId).subscribe((result: any) => {
+      this.staffs = result?.result?.listStaff.filter((staff:any) => staff.displayName.startsWith("R"));
+      this.staffs.unshift({
+        id: "",
+        displayName: "Tất cả",
+      });
+    });
+
     this.savingsService.getListOfficeCommon().subscribe((offices: any) => {
       this.offices = offices.result.listOffice;
       this.offices?.unshift({ officeId: "", name: "Tất cả" });
