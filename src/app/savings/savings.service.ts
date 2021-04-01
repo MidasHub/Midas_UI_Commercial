@@ -56,11 +56,19 @@ export class SavingsService {
 
   handleResponseApiSavingTransaction(res: any, messageReceived: string, RouteUrl: string) {
     let responseT = res?.result?.resultCommand;
-    if (responseT.statusCodeValue == 200 && !responseT?.body?.errors) {
+    if (!responseT){
+      this.alertService.alert({
+        message: `Lỗi: INTERNAL SERVER ERROR, Vui lòng liên hệ IT support!`,
+        msgClass: "cssDanger",
+        hPosition: "right",
+      });
+      return ;
+    }
+
+    if (responseT && responseT.statusCodeValue == 200 && !responseT?.body?.errors) {
       this.alertService.alert({ message: messageReceived, msgClass: "cssSuccess" });
       if (RouteUrl) {
         this.router.navigate([RouteUrl], { relativeTo: this.route });
-
       }
     } else {
       let response = res?.result?.resultCommand.body;

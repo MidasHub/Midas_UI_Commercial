@@ -31,6 +31,8 @@ export class HomeComponent implements OnInit {
   filteredActivities: Observable<any[]>;
   /** All User Activities. */
   allActivities: any[] = activities;
+  //** Show banner */
+  show62bBanner:boolean= false
 
   /**
    * @param {AuthenticationService} authenticationService Authentication Service.
@@ -49,6 +51,8 @@ export class HomeComponent implements OnInit {
   ngOnInit() {
     const credentials = this.authenticationService.getCredentials();
     this.username = credentials.username;
+    console.log(credentials);
+    if (credentials.officeId === 5){this.show62bBanner = true };
     this.setFilteredActivities();
   }
 

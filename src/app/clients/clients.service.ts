@@ -501,10 +501,11 @@ export class ClientsService {
     return this.http.post<any>(`${this.GatewayApiUrlPrefix}/savingTransaction/get_list_balance_customer`, httpParams);
   }
 
-  getNameOfStaff(): Observable<any> {
+  getListUserTeller(officeId: string): Observable<any> {
     let httpParams = this.commonHttpParams.getCommonHttpParams();
+    httpParams = httpParams.set("officeIdFilter", officeId);
 
-    return this.http.post<any>(`${this.GatewayApiUrlPrefix}/common/get_list_staff_of_office`, httpParams);
+    return this.http.post<any>(`${this.GatewayApiUrlPrefix}/common/get_list_user_off_office`, httpParams);
   }
 
   getStaffsByOffice(officeId: string): Observable<any> {

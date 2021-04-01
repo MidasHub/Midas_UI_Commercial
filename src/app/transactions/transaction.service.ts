@@ -22,7 +22,11 @@ export class TransactionService {
   /**
    * @param {HttpClient} http Http Client to send requests.
    */
-  constructor(private http: HttpClient, private commonHttpParams: CommonHttpParams) {
+  constructor(private http: HttpClient,
+    private commonHttpParams: CommonHttpParams,
+
+
+    ) {
     this.accessToken = JSON.parse(
       sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey)
     );
@@ -633,18 +637,7 @@ export class TransactionService {
       httpParams
     );
   }
-  makeFeeOnAdvanceExecute(form: any): Observable<any> {
-    let httpParams = this.commonHttpParams.getCommonHttpParams();
 
-    const keys = Object.keys(form);
-    for (const key of keys) {
-      httpParams = httpParams.set(key, form[key]);
-    }
-    return this.http.post<any>(
-      `${this.GatewayApiUrlPrefix}/savingTransaction/paid_fee_advance_transaction`,
-      httpParams
-    );
-  }
   getListTransExistingOfBatch(batchTxnName: string): Observable<any> {
     let httpParams = this.commonHttpParams.getCommonHttpParams();
 

@@ -126,7 +126,6 @@ export class ManageTransactionComponent implements OnInit {
     private settingsService: SettingsService,
     private authenticationService: AuthenticationService,
     private savingsService: SavingsService,
-    private centersService: CentersService,
     private alertService: AlertService,
     public dialog: MatDialog,
     private clientsService: ClientsService
@@ -155,15 +154,19 @@ export class ManageTransactionComponent implements OnInit {
       traceNo: [""],
       batchNo: [""],
       terminalAmount: [""],
-      staffId: [""],
+      createdBy: [""],
       trnRefNo: [""],
       RetailsChoose: [true],
       wholesaleChoose: [true],
       agencyName: [""],
     });
     this.formFilter.get("officeId").valueChanges.subscribe((value) => {
-      this.centersService.getStaff(value).subscribe((staffs: any) => {
-        this.staffs = staffs?.staffOptions;
+      this.clientsService.getListUserTeller(value).subscribe((result: any) => {
+        this.staffs = result?.result?.listStaff.filter((staff:any) => staff.displayName.startsWith("R"));
+        this.staffs.unshift({
+          id: "",
+          displayName: "Tất cả",
+        });
       });
     });
     this.formFilter.valueChanges.subscribe((value) => {
@@ -178,6 +181,15 @@ export class ManageTransactionComponent implements OnInit {
       // @ts-ignore
       this.partners?.unshift({ code: "", desc: "Tất cả" });
     });
+
+    this.clientsService.getListUserTeller(this.currentUser.officeId).subscribe((result: any) => {
+      this.staffs = result?.result?.listStaff.filter((staff:any) => staff.displayName.startsWith("R"));
+      this.staffs.unshift({
+        id: "",
+        displayName: "Tất cả",
+      });
+    });
+
     this.savingsService.getListOfficeCommon().subscribe((offices: any) => {
       this.offices = offices.result.listOffice;
       this.offices?.unshift({ officeId: "", name: "Tất cả" });
