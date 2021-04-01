@@ -10,7 +10,7 @@ import { activities } from './activities';
 
 /** Custom Services */
 import { AuthenticationService } from '../core/authentication/authentication.service';
-
+import { bannerData,ChildBannerData} from './banner_data';
 /**
  * Home component.
  */
@@ -19,10 +19,10 @@ import { AuthenticationService } from '../core/authentication/authentication.ser
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
+
+
 export class HomeComponent implements OnInit {
 
-  /** Username of authenticated user. */
-  username: string;
   /** Activity Form. */
   activityForm: any;
   /** Search Text. */
@@ -31,8 +31,10 @@ export class HomeComponent implements OnInit {
   filteredActivities: Observable<any[]>;
   /** All User Activities. */
   allActivities: any[] = activities;
-  //** Show banner */
-  show62bBanner:boolean= false
+  //** Data for banner  */
+  showBanner: boolean = false
+  title:string;
+  childBannerData= new ChildBannerData()
 
   /**
    * @param {AuthenticationService} authenticationService Authentication Service.
@@ -50,9 +52,14 @@ export class HomeComponent implements OnInit {
    */
   ngOnInit() {
     const credentials = this.authenticationService.getCredentials();
-    this.username = credentials.username;
-    console.log(credentials);
-    if (credentials.officeId === 5){this.show62bBanner = true };
+ 
+    this.childBannerData.userName =  credentials.username;
+    
+    bannerData.some(d => {
+      if (d.office === credentials.officeId){
+        this.showBanner = true;
+        this.childBannerData.title = d.title;
+      }})
     this.setFilteredActivities();
   }
 
@@ -76,5 +83,5 @@ export class HomeComponent implements OnInit {
     return this.allActivities.filter(activity => activity.activity.toLowerCase().indexOf(filterValue) === 0);
   }
 
-  
+
 }

@@ -3,7 +3,7 @@
   <div fxLayout="row" fxLayout.lt-md="column" fxLayoutAlign="start start" fxLayoutGap="2%"
     class="fluidcontainer m-b-10 p-10" fxFlex="100" >
     <!-- banner default  -->
-    <div  fxLayout="column" *ngIf="!this.show62bBanner">
+    <div  fxLayout="column" *ngIf="!this.showBanner">
       <!-- <button mat-raised-button color="primary" [routerLink]="['/dashboard']">
         <fa-icon icon="tachometer-alt"></fa-icon>&nbsp;&nbsp;
         {{'Home_Component.btnDashboard'| translate}}
@@ -18,44 +18,13 @@
           {{'Home_Component.btnNewGroup'| translate}}
         </button>
       </div>
-      <h1 class=" p-l-20">{{'Home_Component.welcome'| translate}} <strong>{{username}}</strong>! </h1>
+      <h1 class=" p-l-20">{{'Home_Component.welcome'| translate}} <strong>{{childBannerData.userName}}</strong>! </h1>
     </div>
     <!-- <div fxFlex fxLayout="row"> -->
 
     <!-- Banner dành riêng cho 62B -->
-    <mat-card class="mat-elevation-z8" style="padding: 0px;width:100%" *ngIf="this.show62bBanner">
-      <mat-card-content class="p-0 bannerbg" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10%">
-        <div>
-
-          <div class="sign">
-            <span class="sign__word  p-l-20" style="font-size: 1rem;">
-              <h1>{{'Home_Component.welcome'| translate}} <strong>{{username}}</strong>! </h1>
-            </span>
-
-          </div>
-          <div fxLayout="row" fxLayout.lt-md="column" fxLayoutAlign="center center" fxLayoutGap="2%"
-            class=" p-l-20 p-t-15">
-
-            <a class="link" [routerLink]="['/clients/create']" [queryParams]="{go_back:'home'}">
-              <i class="fas fa-user-plus"></i>&nbsp;
-              {{'Home_Component.btnNewCustomer'| translate}}
-            </a>
-            <a class="link" [routerLink]="['/groups/create']" [queryParams]="{go_back:'home'}">
-              <i class="fab fa-google-plus-g"></i>&nbsp;
-              {{'Home_Component.btnNewGroup'| translate}}
-            </a>
-          </div>
-
-
-        </div>
-        <div class="sign">
-          <span class="sign__word">200</span>
-          <!-- <span class="sign__word">festival</span>
-        <span class="sign__word">today</span> -->
-        </div>
-      </mat-card-content>
-    </mat-card>
-    <!-- </div> -->
+    <midas-customerbanner [childBannerData]="this.childBannerData"  *ngIf="this.showBanner" style="padding: 0px;width:100%"></midas-customerbanner>
+   
 
   </div>
 
