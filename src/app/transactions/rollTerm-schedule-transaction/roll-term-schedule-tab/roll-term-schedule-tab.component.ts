@@ -130,7 +130,7 @@ export class RollTermScheduleTabComponent implements OnInit {
     this.banksServices.getBanks().subscribe((result) => {
       this.banks = result;
     });
-    this.clientServices.getNameOfStaff().subscribe((result: any) => {
+    this.clientServices.getListUserTeller(this.currentUser.officeId).subscribe((result: any) => {
       this.staffs = result?.result?.listStaff.filter((staff:any) => staff.displayName.startsWith("R"));
     });
 
