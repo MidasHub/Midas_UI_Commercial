@@ -47,7 +47,7 @@ export class EditTerminalsComponent implements OnInit, AfterViewInit {
   dataSource = new MatTableDataSource();
   displayedColumns: string[] = ['officeName', 'CardType', 'FeePOS',
     'FeeCost', 'FeeMin', 'FeeMax', 'MaxLimitAmountTransaction', 'LevelTransactionCard'];
-  
+
   typeOfTransactions : typeOfTransaction[] = [
     {value:'ALL', valueDesc:'khách hàng Sỉ & Lẻ'},
     {value:'SI', valueDesc:'khách hàng Sỉ'},
@@ -98,7 +98,6 @@ export class EditTerminalsComponent implements OnInit, AfterViewInit {
       'levelLimit': this.ItemPosLimitList[0].levelLimit,
       'typeOfTransaction': this.ItemPos.typeOfTransaction
     });
-    debugger
   }
 
   createEditTerminalForm() {
@@ -171,7 +170,7 @@ export class EditTerminalsComponent implements OnInit, AfterViewInit {
     const levelLimit      = this.editTerminalForm.value.levelLimit;
     const limitAmount  = this.editTerminalForm.value.limitAmount;
     this.posLimits = this.dataSource.data;
-    
+
     const office = this.offices.find((i: any) => i.officeId === officeId);
     this.cardTypes.forEach((card: any) => {
       const limit = {
