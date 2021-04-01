@@ -20,3 +20,85 @@ a{
 .bigNumber{
   font-size: larger;
 }
+
+/*-- Sign Styles --*/
+
+.sign {
+
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  &__word {
+    font-size: 10rem;
+    text-align: center;
+    line-height: 1;
+    color: #c6e2ff;
+    animation: neon .08s ease-in-out infinite alternate;
+  }
+
+}
+
+/*-- Animation Keyframes --*/
+
+// animation
+
+@keyframes neon {
+  from {
+    text-shadow:
+    0 0 6px rgba(202,228,225,0.92),
+    0 0 30px rgba(202,228,225,0.34),
+    0 0 12px rgba(242, 30, 30, 0.52),
+    0 0 21px rgba(242, 30, 30,0.92),
+    0 0 34px rgba(242, 30, 30,0.78),
+    0 0 54px rgba(242, 30, 30,0.92);
+  }
+  to {
+    text-shadow:
+    0 0 6px rgba(202,228,225,0.98),
+    0 0 30px rgba(202,228,225,0.42),
+    0 0 12px rgba(242, 30, 30,0.58),
+    0 0 22px rgba(242, 30, 30,0.84),
+    0 0 38px rgba(242, 30, 30,0.88),
+    0 0 60px rgba(242, 30, 30,1);
+  }
+}
+
+.bannerbg{
+  background:linear-gradient(90deg, rgba(0, 0, 0, 0.9), rgba(28, 0, 138, 0.5)), url(assets/images/banner/62b.png);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-color: #141414;
+  height: 250px;
+  width: 100%;
+  border-radius: 5px;
+}
+
+// Link
+.link {
+	// position: absolute;
+	// bottom: 10px; left: 10px;
+	color: #A2A2A2;
+	text-decoration: none;
+  border-color: #A2A2A2;
+  border-radius: 15px;
+  border: 2px solid;
+  padding: 6px;
+  width: 165px;
+  text-align: center;
+	
+	&:focus,
+	&:hover {
+    color: #c6e2ff;
+		text-shadow:
+    0 0 2px rgba(202,228,225,0.92),
+    0 0 10px rgba(202,228,225,0.34),
+    0 0 4px rgba(30,132,242,0.52),
+    0 0 7px rgba(30,132,242,0.92),
+    0 0 11px rgba(30,132,242,0.78),
+    0 0 16px rgba(30,132,242,0.92);
+	}
+}
