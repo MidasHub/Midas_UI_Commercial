@@ -80,7 +80,9 @@ export class AddFeeDialogComponent implements OnInit {
     this.formDialogPaid.value;
     const paymentCode = this.formDialogPaid.get("paymentCode").value;
     if (paymentCode !== "DE") {
-      this.showGet = true;
+      this.midasClientServices.getListSavingAccountByUserId().subscribe((result) => {
+        this.accountsPaid = result?.result?.listSavingAccount;
+        this.showGet = true;
       this.formDialogPaid.get("amountPaid").enable();
       this.transactionFee = this.transactions.find((v) => v.txnPaymentType === "IN");
       this.transactionPaid = this.transactions.find((v) => v.txnPaymentType === "OUT");
@@ -96,43 +98,60 @@ export class AddFeeDialogComponent implements OnInit {
       } else {
         this.formDialogGet.get("amountGet").setValue(this.transactionFee?.feeRemain);
       }
+
+      const AC = paymentCode === "CA" ? 9 : 8;
+      let NoAccount = 0;
+      this.accountsPaid.map((v) => {
+        if (v.productId !== AC) {
+          v.hide = true;
+        } else {
+          v.hide = false;
+          if (NoAccount == 0) {
+            this.formDialogPaid.get("savingAccountPaid").setValue(v.id);
+          }
+          NoAccount += 1;
+        }
+      });
+      });
+
     } else {
       this.showGet = false;
       this.formDialogPaid.get("amountPaid").setValue(this.transactionPaid?.feeRemain - this.transactionFee?.feeRemain);
       if (!this.isBATCH) {
-
         this.formDialogPaid.get("amountPaid").disable();
       } else {
-
+        this.accountsPaid = [];
         let groupId = this.transactions[0].agencyId;
         this.groupsService.getGroupAccountsData(groupId).subscribe((savings) => {
           this.clientAccount = savings?.savingsAccounts;
-          this.clientAccount.filter((account: any) => {
-            return (account.status.id = 300);
-          });
-          this.accountsPaid = this.clientAccount;
-          if (this.accountsPaid.length > 0) {
-            this.formDialogPaid.get("savingAccountPaid").setValue(this.accountsPaid[0].id);
+          let savingAccountId = null;
+          if (this.clientAccount) {
+            for (let index = 0; index < this.clientAccount.length; index++) {
+              if (this.clientAccount[index].status.id == 300) {
+                savingAccountId = this.clientAccount[index].id;
+              }
+            }
+
+            if (savingAccountId != null) {
+              this.accountsPaid = this.clientAccount;
+              this.formDialogPaid.get("savingAccountPaid").setValue(savingAccountId);
+            } else {
+              this.alertServices.alert({
+                message: "Đại lý hưa có tài khoản thanh toán còn hoạt động, vui lòng thêm tài khoản trước!",
+                msgClass: "cssWarning",
+              });
+            }
+          } else {
+            this.alertServices.alert({
+              message: "Đại lý chưa có tài khoản thanh toán, vui lòng thêm tài khoản trước!",
+              msgClass: "cssWarning",
+            });
           }
         });
       }
     }
-    this.formDialogPaid.get("savingAccountPaid").setValue("");
-    const AC = paymentCode === "CA" ? 9 : 8;
-    let NoAccount = 0;
-    this.accountsPaid.map((v) => {
-      if (v.productId !== AC) {
-        v.hide = true;
-      } else {
-        v.hide = false;
-        if (NoAccount == 0 && paymentCode === "DE") {
-          this.formDialogPaid.get("savingAccountPaid").setValue(v.id);
-        }
-        NoAccount += 1;
-      }
-    });
 
-    this.formDialogPaid.value;
+
   }
 
   checkAccountFee() {
@@ -166,19 +185,23 @@ export class AddFeeDialogComponent implements OnInit {
         }
       }
     } else {
-      const AC = value === "CA" ? 9 : 8;
-      this.accountsFee = this.accountsPaid;
-      let NoAccount = 0;
-      this.accountsFee.map((v) => {
-        if (v.productId !== AC) {
-          v.hide = true;
-        } else {
-          v.hide = false;
-          if (NoAccount == 0) {
-            this.formDialogGet.get("savingAccountGet").setValue(v.id);
+      this.midasClientServices.getListSavingAccountByUserId().subscribe((result) => {
+        this.accountsFee = result?.result?.listSavingAccount;
+
+        const AC = value === "CA" ? 9 : 8;
+        // this.accountsFee = this.accountsPaid;
+        let NoAccount = 0;
+        this.accountsFee.map((v) => {
+          if (v.productId !== AC) {
+            v.hide = true;
+          } else {
+            v.hide = false;
+            if (NoAccount == 0) {
+              this.formDialogGet.get("savingAccountGet").setValue(v.id);
+            }
+            NoAccount += 1;
           }
-          NoAccount += 1;
-        }
+        });
       });
     }
   }

@@ -7,7 +7,7 @@
       <div fxLayout="row swap" fxLayoutAlign.lt-sm="center" fxLayoutGap="2%" fxLayout.lt-sm="column">
         <mat-form-field fxFlex="30%" *ngIf="formDialogPaid.contains('paymentCode')" class="input_custom">
           <mat-label>Lựa chọn phương thức</mat-label>
-          <mat-select required formControlName="paymentCode">
+          <mat-select [disabled]="isBATCH" required formControlName="paymentCode">
             <mat-option
               *ngFor="let type of paidPaymentType"
               [fxHide]="type.code === 'AM' || type.code === 'AR'"
@@ -86,8 +86,7 @@
   <button mat-raised-button (click)="dialogRef.close({ status: false })">
     {{ "Shared_Component.DeleteDialog.buttonCancel" | translate }}
   </button>
-  <button mat-raised-button color="warn" (click)="submitForm()">
+  <button  mat-raised-button color="warn" (click)="submitForm()">
     {{ "Shared_Component.DeleteDialog.buttonConfirm" | translate }}
   </button>
-  <!--  [mat-dialog-close]="{ file: true }"-->
 </mat-dialog-actions>
