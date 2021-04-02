@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { NgModule } from '@angular/core';
-import { BrowserModule, HammerModule } from '@angular/platform-browser';
+import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule, HttpClient } from '@angular/common/http'; //Jean
 import { ServiceWorkerModule } from '@angular/service-worker';
@@ -91,7 +91,6 @@ import { AsyncPipe } from '../../node_modules/@angular/common';
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
-    HammerModule,
     HttpClientModule,
     ServiceWorkerModule.register('./ngsw-worker.js', { enabled: environment.production }),
     TranslateModule.forRoot({
