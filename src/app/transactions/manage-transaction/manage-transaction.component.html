@@ -150,7 +150,7 @@
 
         <mat-form-field fxFlex="18%">
           <mat-label>Nhân viên</mat-label>
-          <mat-select formControlName="createdBy">
+          <mat-select formControlName="userId">
             <mat-option *ngFor="let type of staffs" [value]="type.userId">
               {{ type.displayName }}
             </mat-option>

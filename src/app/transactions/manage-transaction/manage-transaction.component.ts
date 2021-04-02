@@ -154,7 +154,7 @@ export class ManageTransactionComponent implements OnInit {
       traceNo: [""],
       batchNo: [""],
       terminalAmount: [""],
-      createdBy: [""],
+      userId: [""],
       trnRefNo: [""],
       RetailsChoose: [true],
       wholesaleChoose: [true],
@@ -449,7 +449,7 @@ export class ManageTransactionComponent implements OnInit {
     let query = `fromDate=${fromDate}&toDate=${toDate}&officeName=${form.officeId || "ALL"}`;
     const keys = Object.keys(form);
     for (const key of keys) {
-      if (key === "staffId") {
+      if (key === "userId") {
         if (form[key]) {
           query = query + "&createdByFilter=" + form[key];
         } else {
