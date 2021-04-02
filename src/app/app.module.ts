@@ -79,6 +79,9 @@ import { AngularFireModule } from '@angular/fire';
 import { FireBaseMessagingService } from './firebase/fire-base-messaging.service';
 import { AsyncPipe } from '../../node_modules/@angular/common';
 
+
+
+
 /**
  * App Module
  *
@@ -103,7 +106,6 @@ import { AsyncPipe } from '../../node_modules/@angular/common';
     AngularFireAuthModule,
     AngularFireMessagingModule,
     AngularFireModule.initializeApp(environment.firebase),
-
     CoreModule,
     HomeModule,
     LoginModule,
@@ -133,7 +135,8 @@ import { AsyncPipe } from '../../node_modules/@angular/common';
     BillsManageModule,
     MarketingModule,
     BanksModule,
-    AppRoutingModule],
+    AppRoutingModule
+    ],
   declarations: [WebAppComponent, NotFoundComponent],
   providers: [CommonHttpParams,
     {

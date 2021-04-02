@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { startWith, map } from 'rxjs/operators';
@@ -10,7 +10,11 @@ import { activities } from './activities';
 
 /** Custom Services */
 import { AuthenticationService } from '../core/authentication/authentication.service';
-import { bannerData,ChildBannerData} from './banner_data';
+import { bannerData, ChildBannerData } from './banner_data';
+/** Device detector */
+import { DeviceDetectorService, OrientationType, DeviceType } from 'ngx-device-detector';
+
+import * as ScreenEnum from '../core/constants/screen_constant';
 /**
  * Home component.
  */
@@ -33,8 +37,12 @@ export class HomeComponent implements OnInit {
   allActivities: any[] = activities;
   //** Data for banner  */
   showBanner: boolean = false
-  title:string;
-  childBannerData= new ChildBannerData()
+  title: string;
+  childBannerData = new ChildBannerData()
+
+  /** Screem size check */
+  screenSize: any;
+  isDesktop: boolean;
 
   /**
    * @param {AuthenticationService} authenticationService Authentication Service.
@@ -44,7 +52,22 @@ export class HomeComponent implements OnInit {
 
 
 
-  constructor(private authenticationService: AuthenticationService) { }
+  constructor(private authenticationService: AuthenticationService,
+    private detectDevice: DeviceDetectorService) {
+    this.isDesktop = this.detectDevice.isDesktop();
+  }
+
+
+  // @HostListener('window:resize', ['$event'])
+  // onResize(event:any) {
+  //   this.screenSize = window.innerWidth;
+
+
+  //   console.log('Screen Size:', this.screenSize)
+  //   console.log('Screen Orientation:', window.screen.orientation)
+
+
+  // };
 
   /**
    * Sets the username of the authenticated user.
@@ -52,15 +75,18 @@ export class HomeComponent implements OnInit {
    */
   ngOnInit() {
     const credentials = this.authenticationService.getCredentials();
- 
-    this.childBannerData.userName =  credentials.username;
-    
+
+    this.childBannerData.userName = credentials.username;
+
     bannerData.some(d => {
-      if (d.office === credentials.officeId){
+      if (d.office === credentials.officeId) {
         this.showBanner = true;
         this.childBannerData.title = d.title;
-      }})
+      }
+    })
     this.setFilteredActivities();
+    this.screenSize = window.innerWidth
+    console.log('Screen size: ', this.screenSize)
   }
 
   /**

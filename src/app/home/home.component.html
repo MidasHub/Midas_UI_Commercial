@@ -2,8 +2,9 @@
 
   <div fxLayout="row" fxLayout.lt-md="column" fxLayoutAlign="start start" fxLayoutGap="2%"
     class="fluidcontainer m-b-10 p-10" fxFlex="100" >
+
     <!-- banner default  -->
-    <div  fxLayout="column" *ngIf="!this.showBanner">
+    <div  fxLayout="column" *ngIf="!this.showBanner|| !this.isDesktop">
       <!-- <button mat-raised-button color="primary" [routerLink]="['/dashboard']">
         <fa-icon icon="tachometer-alt"></fa-icon>&nbsp;&nbsp;
         {{'Home_Component.btnDashboard'| translate}}
@@ -20,10 +21,10 @@
       </div>
       <h1 class=" p-l-20">{{'Home_Component.welcome'| translate}} <strong>{{childBannerData.userName}}</strong>! </h1>
     </div>
-    <!-- <div fxFlex fxLayout="row"> -->
+    
 
-    <!-- Banner dành riêng cho 62B -->
-    <midas-customerbanner [childBannerData]="this.childBannerData"  *ngIf="this.showBanner" style="padding: 0px;width:100%"></midas-customerbanner>
+    <!-- Banner dành riêng cho đơn vị theo yêu cầu không hiện ở màn hình điện thoại -->
+    <midas-customerbanner [childBannerData]="this.childBannerData"  *ngIf="this.showBanner && this.isDesktop" style="padding: 0px;width:100%"></midas-customerbanner>
    
 
   </div>
@@ -31,7 +32,7 @@
 
 
   <!-- Màn hình chính -->
-  <div fxLayout="row" fxLayout.lt-md="column" fxLayoutAlign="space-around start " class="fluidcontainer  m-b-10"
+  <div fxLayout="row" fxLayout.lt-md="column" fxLayoutAlign="space-around start " class="fluidcontainer  m-b-15"
     fxFlex="100">
 
     <div fxLayout="row" fxLayout.lt-md="column" class="fluidcontainer p-10 m-b-20" fxFlex="100" fxLayoutGap="1%">

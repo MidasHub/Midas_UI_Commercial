@@ -1,0 +1,248 @@
+<button mat-fab class="mat-elevation-z8" [matMenuTriggerFor]="MainMenu" matTooltip="Menu chính"><i class="fas fa-cog"></i></button>
+
+<mat-menu #MainMenu="matMenu">
+  <!-- <button mat-menu-item [matMenuTriggerFor]="vertebrates">Vertebrates</button>
+  <button mat-menu-item [matMenuTriggerFor]="invertebrates">Invertebrates</button> -->
+  <button mat-menu-item [matMenuTriggerFor]="institutionMenu">
+    <fa-icon class="mr-05" icon="university" size="lg"></fa-icon>
+    {{ "Toolbar_Component.labelInstitution" | translate }}
+  </button>
+
+  <button mat-menu-item [matMenuTriggerFor]="transactionMenu">
+    <fa-icon class="mr-05" icon="university" size="lg"></fa-icon>
+    Giao dịch
+  </button>
+
+  <button mat-menu-item [matMenuTriggerFor]="BookingMenu">
+    <fa-icon class="mr-05" icon="university" size="lg"></fa-icon>
+    Booking
+  </button>
+
+  <button *midasHasActiveModule="'campaignModule'" mat-menu-item [matMenuTriggerFor]="Marketing"> <label
+      *midasHasPermission="'POS_UPDATE'">
+      <fa-icon class="mr-05" icon="university" size="lg"></fa-icon>
+      Marketing
+    </label>
+  </button>
+</mat-menu>
+
+<!-- Plain Menu -->
+<!-- <mat-menu #vertebrates="matMenu">
+  <button mat-menu-item [matMenuTriggerFor]="fish">Fishes</button>
+  <button mat-menu-item [matMenuTriggerFor]="amphibians">Amphibians</button>
+  <button mat-menu-item [matMenuTriggerFor]="reptiles">Reptiles</button>
+  <button mat-menu-item>Birds</button>
+  <button mat-menu-item>Mammals</button>
+</mat-menu>
+
+<mat-menu #invertebrates="matMenu">
+  <button mat-menu-item>Insects</button>
+  <button mat-menu-item>Molluscs</button>
+  <button mat-menu-item>Crustaceans</button>
+  <button mat-menu-item>Corals</button>
+  <button mat-menu-item>Arachnids</button>
+  <button mat-menu-item>Velvet worms</button>
+  <button mat-menu-item>Horseshoe crabs</button>
+</mat-menu>
+
+<mat-menu #fish="matMenu">
+  <button mat-menu-item>Baikal oilfish</button>
+  <button mat-menu-item>Bala shark</button>
+  <button mat-menu-item>Ballan wrasse</button>
+  <button mat-menu-item>Bamboo shark</button>
+  <button mat-menu-item>Banded killifish</button>
+</mat-menu>
+
+<mat-menu #amphibians="matMenu">
+  <button mat-menu-item>Sonoran desert toad</button>
+  <button mat-menu-item>Western toad</button>
+  <button mat-menu-item>Arroyo toad</button>
+  <button mat-menu-item>Yosemite toad</button>
+</mat-menu>
+
+<mat-menu #reptiles="matMenu">
+  <button mat-menu-item>Banded Day Gecko</button>
+  <button mat-menu-item>Banded Gila Monster</button>
+  <button mat-menu-item>Black Tree Monitor</button>
+  <button mat-menu-item>Blue Spiny Lizard</button>
+  <button mat-menu-item disabled>Velociraptor</button>
+</mat-menu> -->
+<!-- end  -->
+
+
+<!-- 
+<button mat-menu-item  [matMenuTriggerFor]="institutionMenu" >
+    <fa-icon class="mr-05" icon="university" size="lg"></fa-icon>
+    {{ "Toolbar_Component.labelInstitution" | translate }}
+  </button> -->
+
+<!-- Menu danh cho các user Admin -->
+<!-- <button mat-menu-item [matMenuTriggerFor]="POSPartnerMenu">
+    <fa-icon class="mr-05" icon="university" size="lg"></fa-icon>
+    Máy POS và đối tác
+  </button>
+  <button mat-menu-item  [matMenuTriggerFor]="transactionMenu" >
+    <fa-icon class="mr-05" icon="university" size="lg"></fa-icon>
+    Giao dịch
+  </button>
+
+  <button mat-menu-item  [matMenuTriggerFor]="BookingMenu" >
+    <fa-icon class="mr-05" icon="university" size="lg"></fa-icon>
+    Booking
+  </button>
+  <button
+    *midasHasActiveModule="'campaignModule'"
+   mat-menu-item
+    
+    [matMenuTriggerFor]="Marketing"
+    
+  > <label *midasHasPermission="'POS_UPDATE'" >
+    <fa-icon class="mr-05" icon="university" size="lg"></fa-icon>
+    Marketing
+  </label>
+  </button> -->
+
+<!-- Menu danh cho các user Admin -->
+<!-- <span *midasHasPermission="'ALL_FUNCTIONS'" fxHide.lt-lg="true">
+    <button mat-menu-item  [routerLink]="['/accounting']">
+      <fa-icon class="mr-05" icon="money-bill-alt" size="lg"></fa-icon>
+      {{ "Toolbar_Component.lblAccounting" | translate }}
+    </button>
+    <button mat-menu-item  [matMenuTriggerFor]="reportsMenu" #reportsMenuTrigger="matMenuTrigger">
+      <fa-icon class="mr-05" icon="chart-bar" size="lg"></fa-icon>
+      {{ "Toolbar_Component.lblReport" | translate }}
+    </button>
+    <button mat-menu-item  [matMenuTriggerFor]="adminMenu" #adminMenuTrigger="matMenuTrigger">
+      <fa-icon class="mr-05" icon="shield-alt" size="lg"></fa-icon>
+      {{ "Toolbar_Component.lblAdmin" | translate }}
+    </button>
+    <button mat-menu-item  [matMenuTriggerFor]="selfServiceMenu" #selfServiceMenuTrigger="matMenuTrigger">
+      <fa-icon class="mr-05" icon="users" size="lg"></fa-icon>
+      {{ "Toolbar_Component.lblSelfService" | translate }}
+    </button>
+  </span> -->
+
+<!-- Menu con -->
+<mat-menu #institutionMenu="matMenu" [overlapTrigger]="false">
+  <button mat-menu-item routerLink="/clients/customer">{{ "Toolbar_Component.lblClient" | translate }}</button>
+  <button mat-menu-item routerLink="/clients/staff">Nhân viên</button>
+  <button mat-menu-item routerLink="/clients/interchange">Đối tác Interchange</button>
+  <button mat-menu-item routerLink="/groups">{{ "Toolbar_Component.lblGroup" | translate }}</button>
+  <button mat-menu-item *midasHasPermission="'ALL_FUNCTIONS'" routerLink="/centers">Centers</button>
+  <button mat-menu-item routerLink="/accounts/balance-clients">
+    {{ "Quản lý công nợ khách hàng khách hàng lẻ" | translate }}
+  </button>
+  <button mat-menu-item *midasHasPermission="'POS_UPDATE'" routerLink="/accounts/balance-teller">
+    {{ "Quản lý số dư teller" | translate }}
+  </button>
+
+  <!-- <span fxHide.lg>
+      <button mat-menu-item [routerLink]="['/accounting']">{{ "Toolbar_Component.lblAccounting" | translate }}</button>
+      <button mat-menu-item [matMenuTriggerFor]="reportsMenu">{{ "Toolbar_Component.lblReport" | translate }}</button>
+      <button mat-menu-item [matMenuTriggerFor]="adminMenu">{{ "Toolbar_Component.lblAdmin" | translate }}</button>
+      <button mat-menu-item [matMenuTriggerFor]="selfServiceMenu">
+        {{ "Toolbar_Component.lblSelfService" | translate }}
+      </button>
+    </span> -->
+</mat-menu>
+
+<mat-menu #POSPartnerMenu="matMenu" [overlapTrigger]="false">
+<button *midasHasPermission="'POS_UPDATE'" mat-menu-item routerLink="/terminals">
+  Điều chuyển máy POS
+</button>
+<button mat-menu-item *midasHasPermission="'POS_READ'" routerLink="/terminals/limit">{{ "Quản lý hạn mức POS" |
+  translate }}</button>
+<button mat-menu-item *midasHasPermission="'POS_UPDATE'" routerLink="/terminals">
+  {{ "Quản lý máy POS" | translate }}
+</button>
+<button mat-menu-item *midasHasPermission="'POS_CREATE'" routerLink="/third-party">
+  {{ "Toolbar_Component.lblThirdParty" | translate }}
+</button>
+<button mat-menu-item routerLink="/groups/spending-limit">Hạn mức chi tiêu</button>
+
+</mat-menu>
+
+<mat-menu #transactionMenu="matMenu" [overlapTrigger]="false">
+  <button mat-menu-item routerLink="/transaction">Quản lý giao dịch</button>
+  <button mat-menu-item routerLink="/transaction/rollTermSchedule">Quản lý đáo hạn thẻ</button>
+  <button mat-menu-item routerLink="/transaction/fee-paid-management">Quản lý phí giao dịch</button>
+</mat-menu>
+
+<mat-menu #BookingMenu="matMenu" [overlapTrigger]="false">
+  <button mat-menu-item routerLink="/booking/agency">Đại lý</button>
+  <button mat-menu-item routerLink="/booking/create">Tạo booking nội bộ</button>
+  <button *midasHasPermission="'POS_UPDATE'" mat-menu-item routerLink="/booking/view">Quản lý booking nội bộ</button>
+</mat-menu>
+
+<mat-menu #Marketing="matMenu" [overlapTrigger]="false">
+  <button mat-menu-item routerLink="/marketing/create">Tạo chiển dịch</button>
+  <button mat-menu-item routerLink="/marketing/booking">Booking</button>
+</mat-menu>
+
+<!-- Old Toolbar Menus -->
+<mat-menu #reportsMenu="matMenu" [overlapTrigger]="false">
+  <button mat-menu-item [routerLink]="['/reports']">{{ "Toolbar_Component.lblAll" | translate }}</button>
+  <button mat-menu-item [routerLink]="['/reports', 'Client']">{{ "Toolbar_Component.lblClient" | translate }}</button>
+  <button mat-menu-item [routerLink]="['/reports', 'Loan']">{{ "Toolbar_Component.lblLoan" | translate }}</button>
+  <button mat-menu-item [routerLink]="['/reports', 'Savings']">{{ "Toolbar_Component.lblSaving" | translate }}</button>
+  <button mat-menu-item [routerLink]="['/reports', 'Fund']">{{ "Toolbar_Component.lblFund" | translate }}</button>
+  <button mat-menu-item [routerLink]="['/reports', 'Accounting']">
+    {{ "Toolbar_Component.lblAccounting" | translate }}
+  </button>
+  <button mat-menu-item [routerLink]="['/xbrl']">{{ "Toolbar_Component.lblXBRL" | translate }}</button>
+</mat-menu>
+
+<mat-menu #adminMenu="matMenu" [overlapTrigger]="false">
+  <button mat-menu-item [routerLink]="['/users']">{{ "Toolbar_Component.lblUser" | translate }}</button>
+  <button mat-menu-item [routerLink]="['/organization']">{{ "Toolbar_Component.lblOrg" | translate }}</button>
+  <button mat-menu-item [routerLink]="['/system']">{{ "Toolbar_Component.lblSys" | translate }}</button>
+  <button mat-menu-item [routerLink]="['/products']">{{ "Toolbar_Component.lblProduct" | translate }}</button>
+  <button mat-menu-item [routerLink]="['/templates']">{{ "Toolbar_Component.lblTemplate" | translate }}</button>
+</mat-menu>
+
+<mat-menu #selfServiceMenu="matMenu" [overlapTrigger]="false">
+  <button mat-menu-item [routerLink]="['/self-service/users']">
+    {{ "Toolbar_Component.lblUserManagement" | translate }}
+  </button>
+  <button mat-menu-item [routerLink]="['/self-service/app-configuration']">
+    {{ "Toolbar_Component.lblAppConfig" | translate }}
+  </button>
+  <button mat-menu-item [routerLink]="['/self-service/task-management']">
+    {{ "Toolbar_Component.lblTaskManagement" | translate }}
+  </button>
+</mat-menu>
+
+<!-- Application User Help Menu -->
+<mat-menu #applicationMenu="matMenu" [overlapTrigger]="false">
+  <button mat-menu-item (click)="help()">
+    <mat-icon matListIcon>
+      <fa-icon icon="question-circle" size="sm"></fa-icon>
+    </mat-icon>
+    <span>{{ "Toolbar_Component.lblHelp" | translate }}</span>
+  </button>
+  <button mat-menu-item [routerLink]="['/profile']">
+    <mat-icon>
+      <fa-icon icon="user" size="sm"></fa-icon>
+    </mat-icon>
+    <span>{{ "Toolbar_Component.lblProfile" | translate }}</span>
+  </button>
+  <button mat-menu-item [routerLink]="['/settings']">
+    <mat-icon>
+      <fa-icon icon="cog" size="sm"></fa-icon>
+    </mat-icon>
+    <span>{{ "Toolbar_Component.lblSetting" | translate }}</span>
+  </button>
+  <button mat-menu-item>
+    <mat-icon>
+      <fa-icon icon="cog" size="sm"></fa-icon>
+    </mat-icon>
+    <mifosx-language-selector class="ml-1 language" fxHide.lt-md></mifosx-language-selector>
+  </button>
+
+  <button mat-menu-item (click)="logout()" id="logout">
+    <mat-icon>
+      <fa-icon icon="sign-out-alt" size="sm"></fa-icon>
+    </mat-icon>
+    <span>{{ "Toolbar_Component.lblSignOut" | translate }}</span>
+  </button>
+</mat-menu>

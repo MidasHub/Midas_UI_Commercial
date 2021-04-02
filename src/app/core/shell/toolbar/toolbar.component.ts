@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter, Output, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSidenav } from '@angular/material/sidenav';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
@@ -11,6 +11,10 @@ import { map } from 'rxjs/operators';
 
 /** Custom Services */
 import { AuthenticationService } from '../../authentication/authentication.service';
+
+/** Device detect */
+
+import { DeviceDetectorService } from 'ngx-device-detector'
 
 /**
  * Toolbar component.
@@ -31,6 +35,7 @@ export class ToolbarComponent implements OnInit {
   /** Sets the initial state of sidenav as collapsed. Not collapsed if false. */
   sidenavCollapsed = true;
   currentUser: any = {};
+  isDesktop: boolean;
 
   /** Instance of sidenav. */
   @Input() sidenav: MatSidenav;
@@ -43,11 +48,12 @@ export class ToolbarComponent implements OnInit {
    * @param {AuthenticationService} authenticationService Authentication service.
    */
   constructor(private breakpointObserver: BreakpointObserver,
-              private router: Router,
-              private authenticationService: AuthenticationService,
-              private dialog: MatDialog) {
-
-               }
+    private router: Router,
+    private authenticationService: AuthenticationService,
+    private dialog: MatDialog,
+    private detectDevice: DeviceDetectorService) {
+    this.isDesktop = this.detectDevice.isDesktop()
+  }
 
   /**
    * Subscribes to breakpoint for handset.

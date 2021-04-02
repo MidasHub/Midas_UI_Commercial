@@ -1,20 +1,15 @@
 <mat-toolbar fxLayout="row" color="primary" id="mifosx-toolbar">
-  <button mat-icon-button *ngIf="!sidenavCollapsed" (click)="toggleSidenav()" matTooltip="Toggle Hide/Open">
+  <button mat-icon-button *ngIf="!sidenavCollapsed" (click)="toggleSidenav()" matTooltip="Bật menu">
     <fa-icon icon="bars" size="lg"></fa-icon>
   </button>
 
-  <button
-    mat-icon-button
-    *ngIf="sidenav.opened"
-    (click)="toggleSidenavCollapse()"
-    matTooltip="Toggle Collapse"
-    fxHide.lt-md="true"
-  >
+  <button mat-icon-button *ngIf="sidenav.opened" (click)="toggleSidenavCollapse()" matTooltip="Toggle Collapse"
+    fxHide.lt-md="true">
     <fa-icon *ngIf="!sidenavCollapsed" icon="chevron-left"></fa-icon>
     <fa-icon *ngIf="sidenavCollapsed" icon="chevron-right"></fa-icon>
   </button>
 
-  <nav mat-tab-nav-bar backgroundColor="primary" class="ml-1" fxFlex="70">
+  <nav mat-tab-nav-bar backgroundColor="primary" class="ml-1" fxFlex="70" *ngIf="this.isDesktop">
     <a mat-tab-link class="tab-link" [matMenuTriggerFor]="institutionMenu" #institutionMenuTrigger="matMenuTrigger">
       <fa-icon class="mr-05" icon="university" size="lg"></fa-icon>
       {{ "Toolbar_Component.labelInstitution" | translate }}
@@ -34,16 +29,11 @@
       <fa-icon class="mr-05" icon="university" size="lg"></fa-icon>
       Booking
     </a>
-    <a
-      *midasHasActiveModule="'campaignModule'"
-      mat-tab-link
-      class="tab-link"
-      [matMenuTriggerFor]="Marketing"
-      #institutionMenuTrigger="matMenuTrigger"
-    > <label *midasHasPermission="'POS_UPDATE'" >
-      <fa-icon class="mr-05" icon="university" size="lg"></fa-icon>
-      Marketing
-    </label>
+    <a *midasHasActiveModule="'campaignModule'" mat-tab-link class="tab-link" [matMenuTriggerFor]="Marketing"
+      #institutionMenuTrigger="matMenuTrigger"> <label *midasHasPermission="'POS_UPDATE'">
+        <fa-icon class="mr-05" icon="university" size="lg"></fa-icon>
+        Marketing
+      </label>
     </a>
     <!-- Menu danh cho các user Admin -->
     <span *midasHasPermission="'ALL_FUNCTIONS'" fxHide.lt-lg="true">
@@ -66,18 +56,22 @@
     </span>
   </nav>
 
-  <div fxFlex fxLayout="row" fxLayoutAlign="start center" fxLayoutAlign.lt-md="end center">
+  <div fxFlex fxLayout="row" fxLayoutAlign="start center" fxLayoutAlign.lt-md="end center" *ngIf="this.isDesktop">
     <!-- <span ></span> -->
     <midas-user-account-info fxLayout="row" style="min-width: 10rem"></midas-user-account-info>
     <midas-theme-picker fxHide.lt-md></midas-theme-picker>
 
     <mifosx-notifications-tray fxHide.lt-md> </mifosx-notifications-tray>
     <!-- <br /> -->
-    <button fxHide.lt-md  mat-icon-button  [matMenuTriggerFor]="applicationMenu">
-      <div fxLayout="column" fxLayoutAlign="center center" style="margin:0;padding:0"><i class="fas fa-user-cog" style="font-size:larger;margin:0;padding:0"></i>
-      <span style="font-size:0.7rem;line-height:1rem">{{ currentUser.username }}</span></div>
+    <button fxHide.lt-md mat-icon-button [matMenuTriggerFor]="applicationMenu">
+      <div fxLayout="column" fxLayoutAlign="center center" style="margin:0;padding:0"><i class="fas fa-user-cog"
+          style="font-size:larger;margin:0;padding:0"></i>
+        <span style="font-size:0.7rem;line-height:1rem">{{ currentUser.username }}</span>
+      </div>
     </button>
   </div>
+
+
 </mat-toolbar>
 
 <mat-menu #institutionMenu="matMenu" [overlapTrigger]="false">
@@ -107,7 +101,8 @@
   <!-- <button *midasHasPermission="'POS_UPDATE'" mat-menu-item routerLink="/terminals">
     Điều chuyển máy POS
   </button> -->
-  <button mat-menu-item *midasHasPermission="'POS_READ'" routerLink="/terminals/limit">{{ "Quản lý hạn mức POS" | translate }}</button>
+  <button mat-menu-item *midasHasPermission="'POS_READ'" routerLink="/terminals/limit">{{ "Quản lý hạn mức POS" |
+    translate }}</button>
   <button mat-menu-item *midasHasPermission="'POS_UPDATE'" routerLink="/terminals">
     {{ "Quản lý máy POS" | translate }}
   </button>
@@ -198,3 +193,20 @@
     <span>{{ "Toolbar_Component.lblSignOut" | translate }}</span>
   </button>
 </mat-menu>
+
+<!-- Floating Menu -->
+<!-- <button *ngIf="!isDesktop" mat-fab style="
+    position: fixed;
+    bottom: 1%;
+    right: 3%;"
+    [matMenuTriggerFor]="MyMenu" #institutionMenuTrigger="matMenuTrigger"
+    >
+    <i class="fas fa-cogs"></i>
+</button>
+<mat-menu #MyMenu="matMenu" > -->
+ <midas-menu  *ngIf="!isDesktop" style="
+ position: fixed;
+ bottom: 1%;
+ right: 3%;"></midas-menu>
+
+<!-- </mat-menu> -->

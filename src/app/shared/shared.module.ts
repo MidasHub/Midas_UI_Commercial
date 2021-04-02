@@ -39,7 +39,6 @@ import {DirectivesModule} from '../directives/directives.module';
 import { UserAccountInfoComponent } from './user-account-info/user-account-info.component';
 import { MainboardComponent } from 'app/home/mainboard/mainboard.component';
 import { RouterModule } from '@angular/router';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 const maskConfig: Partial<IConfig> = {
   validation: false,
