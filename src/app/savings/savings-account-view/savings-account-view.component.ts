@@ -309,7 +309,7 @@ export class SavingsAccountViewComponent implements OnInit {
           })
           .subscribe((result: any) => {
             const message = `Thực hiện thành công!`;
-            this.alertService.alert({ message: message, msgClass: "cssInfo" });
+            this.savingsService.handleResponseApiSavingTransaction(result, message, null);
           });
       }
     });
