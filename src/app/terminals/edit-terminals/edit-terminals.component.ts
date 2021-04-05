@@ -96,7 +96,9 @@ export class EditTerminalsComponent implements OnInit, AfterViewInit {
       'txnRateMax': this.ItemPosLimitList[0].txnRateMax,
       'maxLimitAmount': this.ItemPosLimitList[0].maxLimitAmount,
       'levelLimit': this.ItemPosLimitList[0].levelLimit,
-      'typeOfTransaction': this.ItemPos.typeOfTransaction
+      'typeOfTransaction': this.ItemPos.typeOfTransaction,
+      'banksCheck': this.terminalData.bankCheckEntitys.map((bank: any) => bank.bankCode),
+      'cardsCheck': this.terminalData.cardCheckEntitys.map((card: any) => card.cardType),
     });
   }
 
@@ -119,6 +121,8 @@ export class EditTerminalsComponent implements OnInit, AfterViewInit {
       'levelLimit': ['', [Validators.required, Validators.min(1)]],
       'limitAmount': ['', [Validators.required,Validators.min(1000000),Validators.max(100000000000)]],
       'typeOfTransaction':[''],
+      'banksCheck': [this.terminalData.bankCheckEntitys.map((bank: any) => bank.bankCode)],
+      'cardsCheck': [this.terminalData.cardCheckEntitys.map((card: any) => card.cardType)],
     });
   }
   ngAfterViewInit() {
