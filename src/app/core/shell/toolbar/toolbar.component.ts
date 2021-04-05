@@ -20,7 +20,7 @@ import { DeviceDetectorService } from 'ngx-device-detector'
  * Toolbar component.
  */
 @Component({
-  selector: 'mifosx-toolbar',
+  selector: 'midas-toolbar',
   templateUrl: './toolbar.component.html',
   styleUrls: ['./toolbar.component.scss']
 })
@@ -60,12 +60,15 @@ export class ToolbarComponent implements OnInit {
    */
   ngOnInit() {
     this.currentUser = this.authenticationService.getCredentials();
-
-    this.isHandset$.subscribe(isHandset => {
-      if (isHandset && this.sidenavCollapsed) {
-        this.toggleSidenavCollapse(false);
-      }
-    });
+    this.toggleSidenavCollapse(false);
+    this.sidenav.toggle(false);
+    
+    //
+    // this.isHandset$.subscribe(isHandset => {
+    //   if (isHandset && this.sidenavCollapsed) {
+    //     this.toggleSidenavCollapse(false);
+    //   }
+    // });
   }
 
   /**

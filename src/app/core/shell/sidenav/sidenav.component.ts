@@ -16,7 +16,7 @@ import { frequentActivities } from './frequent-activities';
  * Sidenav component.
  */
 @Component({
-  selector: 'mifosx-sidenav',
+  selector: 'midas-sidenav',
   templateUrl: './sidenav.component.html',
   styleUrls: ['./sidenav.component.scss']
 })

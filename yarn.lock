@@ -1780,6 +1780,13 @@
     "@ckeditor/ckeditor5-utils" "^27.0.0"
     lodash-es "^4.17.15"
 
+"@ecodev/fab-speed-dial@6.0.1":
+  version "6.0.1"
+  resolved "https://registry.yarnpkg.com/@ecodev/fab-speed-dial/-/fab-speed-dial-6.0.1.tgz#da493d6ec0b88083a076afe1bb135aa220f096f4"
+  integrity sha512-22ob76WdZEnkUN+YibjulF82z7uFVNXKK9+/KBv9zSeRfHpYNwxtjixybmIjeh3H952/CPStxsbF5jXfSN1POQ==
+  dependencies:
+    tslib "^2.0.0"
+
 "@eslint/eslintrc@^0.3.0":
   version "0.3.0"
   resolved "https://registry.yarnpkg.com/@eslint/eslintrc/-/eslintrc-0.3.0.tgz#d736d6963d7003b6514e6324bec9c602ac340318"
@@ -8698,12 +8705,13 @@ ng2-completer@^9.0.1:
   resolved "https://registry.yarnpkg.com/ng2-completer/-/ng2-completer-9.0.1.tgz#5ba97fd978bfcef746f5ed71d965f65d280de4de"
   integrity sha512-zEKehHdCK8E/k4Y0HepprGdYBHr2AOsaq4QpeqoCyUElOOC5M3qi3ZEHV1VF54I7heBQktswwXe5UyWduJ0Xeg==
 
-ng2-smart-table@1.6.0:
-  version "1.6.0"
-  resolved "https://registry.yarnpkg.com/ng2-smart-table/-/ng2-smart-table-1.6.0.tgz#b18c1ab29b1c04a0186d489b591ad665e5a06c85"
-  integrity sha512-ejAIcVgEznsMD79xg+HfCha804KyGEiX9KH5BnmVzQZFzpC782I5W2wn4zackp4Gi9km1H6pKf3+MXLCF8IRXQ==
+ng2-smart-table@^1.7.2:
+  version "1.7.2"
+  resolved "https://registry.yarnpkg.com/ng2-smart-table/-/ng2-smart-table-1.7.2.tgz#227efacc243c6d0ba0281281c0841282a604d201"
+  integrity sha512-TwREaaTtgaPyxxocoxH4W4BQEpiuYhOhPxDOgR/+O36i7m61c0O+OWx2u7wSHU9UabdQDWwgWU6Eus2tOT3RJA==
   dependencies:
     lodash "^4.17.10"
+    tslib "^2.0.0"
 
 ngx-currency@^2.5.1:
   version "2.5.1"
