@@ -1,12 +1,13 @@
 import { AfterViewInit, Component, Inject, OnInit } from "@angular/core";
 import { TransactionService } from "../../transaction.service";
 import { FormBuilder, FormGroup } from "@angular/forms";
-import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
+import { MAT_DIALOG_DATA, MatDialogRef, MatDialog } from "@angular/material/dialog";
 import { ClientsService } from "../../../clients/clients.service";
 import { AuthenticationService } from "../../../core/authentication/authentication.service";
 import { AlertService } from "../../../core/alert/alert.service";
 import { MidasClientService } from "../../../midas-client/midas-client.service";
 import { GroupsService } from "app/groups/groups.service";
+import { ConfirmDialogComponent } from "../coifrm-dialog/confirm-dialog.component";
 
 @Component({
   selector: "midas-add-fee-dialog",
@@ -25,6 +26,7 @@ export class AddFeeDialogComponent implements OnInit {
   transactionFee: any;
   transactionPaid: any;
   showPaid = false;
+
   showGet = true;
   showCashAccountPaid = true;
   selectedPaymentTypePaid = "";
@@ -48,7 +50,8 @@ export class AddFeeDialogComponent implements OnInit {
     private authenticationService: AuthenticationService,
     private alertServices: AlertService,
     private midasClientServices: MidasClientService,
-    private groupsService: GroupsService
+    private groupsService: GroupsService,
+    private dialog: MatDialog,
   ) {
     this.txnCode = data.data?.txnCode;
     this.amountPaidBooking = data.data?.amountPaid;
@@ -301,6 +304,15 @@ export class AddFeeDialogComponent implements OnInit {
       ...this.formDialogPaid.value,
     };
 
+    const dialog = this.dialog.open(ConfirmDialogComponent, {
+      data: {
+        message: "Bạn chắc chắn muốn lưu giao dịch",
+        title: "Hoàn thành giao dịch",
+      },
+    });
+    dialog.afterClosed().subscribe((data) => {
+      if (data) {
+
     form.txnCode = this.txnCode;
     this.isLoading = true;
     this.transactionService.paidFeeForTransaction(form).subscribe((result) => {
@@ -321,5 +333,7 @@ export class AddFeeDialogComponent implements OnInit {
         });
       }
     });
+    }
+  });
   }
 }
