@@ -1,21 +1,23 @@
 
+<div id="midas-user-account-info">
 <button
-  class="aligned-with-icons"
-  mat-icon-button
-  class="ml-1"
+  mat-raised-button
+  class=" aligned-with-icons "
+  color="primary"
+  mat-stroked-button
   matTooltip="Tổng số dư tài khoản ngân hàng"
   [matMenuTriggerFor]="UserSavingMenu"
 >
  
-  <span> Số dư:{{ totalBalance | money }}</span>
+<i class="fas fa-dollar-sign"></i><span>: {{ totalBalance | money }}</span>
 </button>
 
-<mat-menu  class="midas-saving-menu" #UserSavingMenu="matMenu" [overlapTrigger]="false">
+<mat-menu  backdropClass="userAccInfo" class="midas-saving-menu" #UserSavingMenu="matMenu" [overlapTrigger]="false">
   <mat-card>
     <mat-card-content>
       <ul class="dropdown-menu" *ngIf="listSaving?.length == 0">
         <li style="padding: 10px 0; margin: 2px 0 0; pointer-events: auto ">
-          <strong style="color: red;">(NOT AVAILABLE)</strong>
+          <strong style="color: red;">(Không có tài khoản)</strong>
         </li>
       </ul>
       <ul class="dropdown-menu" *ngIf="listSaving?.length > 0">
@@ -39,4 +41,5 @@
     </mat-card-content>
   </mat-card>
 </mat-menu>
+</div>
 

@@ -1,22 +1,27 @@
-.midas-saving-menu {
-
-  mat-nav-list >  mat-list-item{
-   border-bottom: 1px solid black;
+#midas-user-account-info {
+  .mat-nav-list > .mat-list-item {
+    border-bottom: 1px solid black;
   }
   .mat-menu-content {
     padding: 0 !important;
   }
-}
-.aligned-with-icons{
-  font-size: medium;
+  .aligned-with-icons {
+    font-size: medium;
+    border-radius: 25px;
+    margin-right: 15px;
+    // color: white;
+    // background: #ff4081;
+  }
   
 }
-.mat-menu-panel{
-  max-width: none !important;
+.userAccInfo + * > .cdk-overlay-pane {  
+  // .cdk-overlay-pane {
+    min-width: 350px;
+    height: auto;
+    .mat-menu-panel {
+      // width: 100%;
+      min-width: 350px;
+      // max-width: none !important;
+    }
+  // }
 }
-::ng-deep .midas-saving-menu {
-  width: 300px;
-  height: auto;
-}
-
-

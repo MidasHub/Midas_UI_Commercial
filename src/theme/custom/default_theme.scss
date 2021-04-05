@@ -141,8 +141,24 @@ $midas-app-theme: create-midas-theme($midas-app-primary, $midas-app-accent, $mid
 @include recurring-deposits-account-view-component-theme($midas-app-theme);
 
 //Component SCSS
-$drawer-background-color:#f1f1f1;
+$drawer-background-color:rgba(198, 40, 40, 1);
 
 .mat-drawer {
-  background-color: $drawer-background-color
+  background-color: $drawer-background-color;
+  border: 0px;
+  color:white;
+  .navigation-panel{
+    background:transparent;
+    color: white;
+  };
+  .mat-list-item{
+    color: white;
+  };
+  .app-brand,.app-user{
+    color: black;
+    background-color: white;
+  }
+
+  
 }
+

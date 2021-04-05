@@ -39,6 +39,7 @@ import {DirectivesModule} from '../directives/directives.module';
 import { UserAccountInfoComponent } from './user-account-info/user-account-info.component';
 import { MainboardComponent } from 'app/home/mainboard/mainboard.component';
 import { RouterModule } from '@angular/router';
+import { EcoFabSpeedDialModule} from "@ecodev/fab-speed-dial";
 
 const maskConfig: Partial<IConfig> = {
   validation: false,
@@ -79,7 +80,8 @@ const customCurrencyMaskConfig = {
     NgxMaskModule.forRoot(maskConfig),
     NgxCurrencyModule.forRoot(customCurrencyMaskConfig),
     DirectivesModule,
-    PipesModule
+    PipesModule,
+    EcoFabSpeedDialModule
   ],
   declarations: [
     FormfieldComponent,
@@ -126,7 +128,8 @@ const customCurrencyMaskConfig = {
     NgxMaskModule,
     NgxCurrencyModule,
     DirectivesModule,
-    PipesModule
+    PipesModule,
+    EcoFabSpeedDialModule
   ]
 })
 export class SharedModule {
