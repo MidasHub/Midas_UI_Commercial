@@ -15,6 +15,8 @@ import { AuthenticationService } from '../../authentication/authentication.servi
 /** Device detect */
 
 import { DeviceDetectorService } from 'ngx-device-detector'
+import {environment} from 'environments/environment'
+import { split } from 'lodash';
 
 /**
  * Toolbar component.
@@ -35,7 +37,10 @@ export class ToolbarComponent implements OnInit {
   /** Sets the initial state of sidenav as collapsed. Not collapsed if false. */
   sidenavCollapsed = true;
   currentUser: any = {};
+  userFullname:string;
+
   isDesktop: boolean;
+  isCommercial:boolean = environment.isCommercial;
 
   /** Instance of sidenav. */
   @Input() sidenav: MatSidenav;
@@ -60,15 +65,17 @@ export class ToolbarComponent implements OnInit {
    */
   ngOnInit() {
     this.currentUser = this.authenticationService.getCredentials();
+    this.userFullname = split(this.currentUser.staffDisplayName,',')[1].trim();
     this.toggleSidenavCollapse(false);
     this.sidenav.toggle(false);
-    
+
     //
     // this.isHandset$.subscribe(isHandset => {
     //   if (isHandset && this.sidenavCollapsed) {
     //     this.toggleSidenavCollapse(false);
     //   }
     // });
+    
   }
 
   /**
@@ -99,6 +106,10 @@ export class ToolbarComponent implements OnInit {
    */
   help() {
     window.open('https://drive.google.com/drive/folders/1-J4JQyaaxBz2QSfZMzC4bPrPwWlksFWw?usp=sharing', '_blank');
+  }
+
+  daily(){
+    alert("Tính năng này đang được phát triển !")
   }
 
 }

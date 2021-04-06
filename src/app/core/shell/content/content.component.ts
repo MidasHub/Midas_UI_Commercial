@@ -5,7 +5,7 @@ import { Component, OnInit } from '@angular/core';
  * Content component.
  */
 @Component({
-  selector: 'mifosx-content',
+  selector: 'midas-content',
   templateUrl: './content.component.html',
   styleUrls: ['./content.component.scss']
 })

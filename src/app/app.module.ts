@@ -79,6 +79,9 @@ import { AngularFireModule } from '@angular/fire';
 import { FireBaseMessagingService } from './firebase/fire-base-messaging.service';
 import { AsyncPipe } from '../../node_modules/@angular/common';
 
+/**Tour guide for self study */
+import { TourMatMenuModule } from 'ngx-tour-md-menu';
+
 
 
 
@@ -101,6 +104,7 @@ import { AsyncPipe } from '../../node_modules/@angular/common';
       },
       isolate: true,
     }),
+    TourMatMenuModule.forRoot(),
     AngularFireDatabaseModule,
     AngularFireAuthModule,
     AngularFireMessagingModule,
