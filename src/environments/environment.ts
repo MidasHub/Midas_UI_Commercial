@@ -10,7 +10,6 @@ import te from './checkurl';
 export const environment = {
   production: false,
   isNewBillPos: true,
-  isCommercial:false, //Phiên bản cung cấp cho khách hàng Commercial thì set biến này thành true
   version: env?.midas_version + '-dev',
   fineractPlatformTenantId: te.coreT,  // For connecting to server running elsewhere update the tenant identifier
   baseApiUrl: JSON.parse(sessionStorage.getItem('midasServerURL')) || te.defaultbaseURL,

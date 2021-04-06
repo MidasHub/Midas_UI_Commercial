@@ -68,8 +68,6 @@
     "ngx-mask": "10.0.4",
     "ngx-mat-select-search": "3.2.0",
     "ngx-pagination": "5.0.0",
-    "ngx-tour-core": "^4.2.0",
-    "ngx-tour-md-menu": "^4.2.0",
     "rxjs": "6.6.2",
     "tslib": "^2.0.0",
     "zone.js": "0.10.3"
