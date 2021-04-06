@@ -40,7 +40,7 @@ export class ClientsDataSource implements DataSource<any> {
     this.clientsSubject.next([]);
     let sqlSearch = '';
     if (clientActive) {
-      sqlSearch = `c.status_enum = 300 and c.client_type_cv_id IN (${clientType})`;
+      sqlSearch = `c.status_enum LIKE '3%' and c.client_type_cv_id IN (${clientType})`;
     } else {
       sqlSearch = `c.status_enum = 600 and c.client_type_cv_id IN (${clientType})`;
     }

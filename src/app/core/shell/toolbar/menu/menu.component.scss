@@ -1,0 +1,31 @@
+.midas-menu {
+  .open {
+    height: 205px !important;
+    opacity: 1 !important;
+    z-index: 1 !important;
+  }
+  .close {
+    height: 0px;
+    opacity: 0;
+    transition: height ease 0.6s, opacity ease 0.6s, z-index ease 0.6s;
+    z-index: -1;
+  }
+
+  // .mat-menu-panel.mypanel {
+  //   max-width: none !important;
+  //   right: 50px !important;
+  //   bottom: -25px;
+  //   position: relative !important;
+  // }
+
+  // ::ng-deep.cdk-overlay-pane > :has(.mypanel){
+
+  // }
+  .mymenu{
+    background: #000000;
+  }
+  
+}
+.mymenu + * .cdk-overlay-pane {
+  transform: translate(-4rem, 2rem);
+}

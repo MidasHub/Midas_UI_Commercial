@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { NgModule } from '@angular/core';
-import { BrowserModule, HammerModule } from '@angular/platform-browser';
+import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule, HttpClient } from '@angular/common/http'; //Jean
 import { ServiceWorkerModule } from '@angular/service-worker';
@@ -79,6 +79,9 @@ import { AngularFireModule } from '@angular/fire';
 import { FireBaseMessagingService } from './firebase/fire-base-messaging.service';
 import { AsyncPipe } from '../../node_modules/@angular/common';
 
+
+
+
 /**
  * App Module
  *
@@ -88,7 +91,6 @@ import { AsyncPipe } from '../../node_modules/@angular/common';
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
-    HammerModule,
     HttpClientModule,
     ServiceWorkerModule.register('./ngsw-worker.js', { enabled: environment.production }),
     TranslateModule.forRoot({
@@ -103,7 +105,6 @@ import { AsyncPipe } from '../../node_modules/@angular/common';
     AngularFireAuthModule,
     AngularFireMessagingModule,
     AngularFireModule.initializeApp(environment.firebase),
-
     CoreModule,
     HomeModule,
     LoginModule,
@@ -133,7 +134,8 @@ import { AsyncPipe } from '../../node_modules/@angular/common';
     BillsManageModule,
     MarketingModule,
     BanksModule,
-    AppRoutingModule],
+    AppRoutingModule
+    ],
   declarations: [WebAppComponent, NotFoundComponent],
   providers: [CommonHttpParams,
     {

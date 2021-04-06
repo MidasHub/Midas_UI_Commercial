@@ -1,54 +1,59 @@
 /** Angular Imports */
-import { Component, OnInit, HostListener } from '@angular/core';
-import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
-import { Title } from '@angular/platform-browser';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { Component, OnInit, HostListener } from "@angular/core";
+import { Router, NavigationEnd, ActivatedRoute } from "@angular/router";
+import { Title } from "@angular/platform-browser";
+import { MatSnackBar } from "@angular/material/snack-bar";
 
 /** rxjs Imports */
-import { merge } from 'rxjs';
-import { filter, map, mergeMap } from 'rxjs/operators';
+import { merge } from "rxjs";
+import { filter, map, mergeMap } from "rxjs/operators";
 
 /** Translation Imports */
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService } from "@ngx-translate/core";
 
 /** Environment Configuration */
-import { environment } from 'environments/environment';
+import { environment } from "environments/environment";
 
 /** Custom Services */
 
-import { I18nService } from './core/i18n/i18n.service';
-import { ThemeStorageService } from './shared/theme-picker/theme-storage.service';
-import { AlertService } from './core/alert/alert.service';
-import { AuthenticationService } from './core/authentication/authentication.service';
-import { SettingsService } from './settings/settings.service';
-import { BanksService } from "./banks/banks.service"
+import { I18nService } from "./core/i18n/i18n.service";
+import { ThemeStorageService } from "./shared/theme-picker/theme-storage.service";
+import { AlertService } from "./core/alert/alert.service";
+import { AuthenticationService } from "./core/authentication/authentication.service";
+import { SettingsService } from "./settings/settings.service";
+import { BanksService } from "./banks/banks.service";
 
 /** Custom Items */
-import { Alert } from './core/alert/alert.model';
-import { KeyboardShortcutsConfiguration } from './keyboards-shortcut-config';
+import { Alert } from "./core/alert/alert.model";
+import { KeyboardShortcutsConfiguration } from "./keyboards-shortcut-config";
 
 /**
  * Firebase Messaging
  */
 
-import { FireBaseMessagingService } from './firebase/fire-base-messaging.service';
+import { FireBaseMessagingService } from "./firebase/fire-base-messaging.service";
 
 /** Initialize Logger */
-import { Logger } from './core/logger/logger.service';
-const log = new Logger('Midas');
+import { Logger } from "./core/logger/logger.service";
+const log = new Logger("Midas");
+
+/** Device detector */
+import { DeviceDetectorService } from "ngx-device-detector";
 
 /**
  * Main web app component.
  */
 @Component({
   // tslint:disable-next-line:component-selector
-  selector: 'midas-web-app',
-  templateUrl: './web-app.component.html',
-  styleUrls: ['./web-app.component.scss']
+  selector: "midas-web-app",
+  templateUrl: "./web-app.component.html",
+  styleUrls: ["./web-app.component.scss"],
 })
 export class WebAppComponent implements OnInit {
-
   buttonConfig: KeyboardShortcutsConfiguration;
+  deviceInfo: any;
+  public lat: String;
+  public lng: String;
 
   /**
    * @param {Router} router Router for navigation.
@@ -61,7 +66,8 @@ export class WebAppComponent implements OnInit {
    * @param {AlertService} alertService Alert Service.
    * @param {AuthenticationService} authenticationService Authentication service.
    */
-  constructor(private router: Router,
+  constructor(
+    private router: Router,
     private activatedRoute: ActivatedRoute,
     private titleService: Title,
     private translateService: TranslateService,
@@ -72,10 +78,12 @@ export class WebAppComponent implements OnInit {
     private settingsService: SettingsService,
     private authenticationService: AuthenticationService,
     private bankService: BanksService,
-    private messagingService: FireBaseMessagingService) { }
+    private messagingService: FireBaseMessagingService,
+    private deviceService: DeviceDetectorService
+  ) {}
 
   //Variables for Firebase messsage
-  message: any
+  message: any;
 
   /**
    * Initial Setup:
@@ -95,13 +103,13 @@ export class WebAppComponent implements OnInit {
     if (environment.production) {
       Logger.enableProductionMode();
     }
-    log.debug('init');
+    log.debug("init");
 
     // Setup translations
     this.i18nService.init(environment.defaultLanguage, environment.supportedLanguages);
 
     // Change page title on navigation or language change, based on route data
-    const onNavigationEnd = this.router.events.pipe(filter(event => event instanceof NavigationEnd));
+    const onNavigationEnd = this.router.events.pipe(filter((event) => event instanceof NavigationEnd));
     merge(this.translateService.onLangChange, onNavigationEnd)
       .pipe(
         map(() => {
@@ -111,11 +119,11 @@ export class WebAppComponent implements OnInit {
           }
           return route;
         }),
-        filter(route => route.outlet === 'primary'),
-        mergeMap(route => route.data)
+        filter((route) => route.outlet === "primary"),
+        mergeMap((route) => route.data)
       )
-      .subscribe(event => {
-        const title = event['title'];
+      .subscribe((event) => {
+        const title = event["title"];
         if (title) {
           this.titleService.setTitle(`${this.translateService.instant(title)} | MIDAS`);
         }
@@ -123,15 +131,15 @@ export class WebAppComponent implements OnInit {
 
     // Stores top 100 user activites as local storage object.
     let activities: string[] = [];
-    if (sessionStorage.getItem('midasLocation')) {
-      const activitiesArray: string[] = JSON.parse(sessionStorage.getItem('midasLocation'));
+    if (sessionStorage.getItem("midasLocation")) {
+      const activitiesArray: string[] = JSON.parse(sessionStorage.getItem("midasLocation"));
       const length = activitiesArray.length;
       activities = length > 100 ? activitiesArray.slice(length - 100) : activitiesArray;
     }
     // Store route URLs array in local storage on navigation end.
     onNavigationEnd.subscribe(() => {
       activities.push(this.router.url);
-      sessionStorage.setItem('midasLocation', JSON.stringify(activities));
+      sessionStorage.setItem("midasLocation", JSON.stringify(activities));
     });
 
     // Setup theme
@@ -142,49 +150,53 @@ export class WebAppComponent implements OnInit {
 
     // Setup alerts
     this.alertService.alertEvent.subscribe((alertEvent: Alert) => {
-      this.snackBar.open(`${alertEvent.message}`, this.i18nService.getTranslate('Client_Component.ClientStepper.lblClose'), {
-        duration: (alertEvent.msgDuration) ? alertEvent.msgDuration : 5000,
-        horizontalPosition: (alertEvent.hPosition) ? alertEvent.hPosition : 'right',
-        verticalPosition: (alertEvent.vPosition) ? alertEvent.vPosition : 'top',
-        panelClass: [alertEvent.msgClass],
-      });
+      this.snackBar.open(
+        `${alertEvent.message}`,
+        this.i18nService.getTranslate("Client_Component.ClientStepper.lblClose"),
+        {
+          duration: alertEvent.msgDuration ? alertEvent.msgDuration : 5000,
+          horizontalPosition: alertEvent.hPosition ? alertEvent.hPosition : "right",
+          verticalPosition: alertEvent.vPosition ? alertEvent.vPosition : "top",
+          panelClass: [alertEvent.msgClass],
+        }
+      );
     });
     this.buttonConfig = new KeyboardShortcutsConfiguration();
 
     // initialize language and date format if they are null.
-    if (!localStorage.getItem('midasLanguageCode')) {
-      const langCode = environment.defaultLanguage.split('-')[0];
-      console.log('[WEB-APP]LangCode:', langCode, ' - name:', environment.languagesName[langCode]);
+    if (!localStorage.getItem("midasLanguageCode")) {
+      const langCode = environment.defaultLanguage.split("-")[0];
+      console.log("[WEB-APP]LangCode:", langCode, " - name:", environment.languagesName[langCode]);
 
       this.settingsService.setLanguage({
         name: environment.languagesName[langCode],
-        code: langCode
+        code: langCode,
       });
     }
-    if (!localStorage.getItem('midasDateFormat')) {
+    if (!localStorage.getItem("midasDateFormat")) {
       // this.settingsService.setDateFormat('dd MMMM yyyy');
-      this.settingsService.setDateFormat('dd/MM/yyyy');
+      this.settingsService.setDateFormat("dd/MM/yyyy");
     }
 
-    if (!sessionStorage.getItem('midasServers')) {
+    if (!sessionStorage.getItem("midasServers")) {
       this.settingsService.setServers([
-        'https://staging.midascore.net',
-        'https://uat.tekcompay.com:8443',
-        'https://training.kiotthe.com',
-        'https://midas.kiotthe.com',
-        'https://localhost:9443',
-        'https://ic.kiotthe.com',
-        'https://localhost:7443'
+        "https://staging.kiotthe.com",
+        "https://training.kiotthe.com",
+        "https://midas.kiotthe.com",
+        "https://localhost:9443",
+        "https://ic.kiotthe.com",
+        "https://hdcredit.kiotthe.com",
+        "https://localhost:7443",
       ]);
     }
 
-    if (!sessionStorage.getItem('midasBillposServers')) {
+    if (!sessionStorage.getItem("midasBillposServers")) {
       this.settingsService.setBillposServers([
-        'https://staging.midascore.net',
-        'https://training.kiotthe.com',
-        'https://midas.kiotthe.com',
-        'https://uat.tekcompay.com:8088',
-        'http://localhost:8088'
+        "https://staging.kiotthe.com",
+        "https://training.kiotthe.com",
+        "https://midas.kiotthe.com",
+        "https://hdcredit.kiotthe.com",
+        "http://localhost:8088",
       ]);
     }
 
@@ -193,51 +205,82 @@ export class WebAppComponent implements OnInit {
 
     // Firebase Message
 
-    this.messagingService.requestPermission()
-    this.messagingService.receiveMessage()
-    this.message = this.messagingService.currentMessage
+    this.messagingService.requestPermission();
+    this.messagingService.receiveMessage();
+    this.message = this.messagingService.currentMessage;
 
+    // Get client location
+    this.getLocation();
+    this.loadDeviceData();
     // ----- End ngOnInit
   }
 
+  loadDeviceData() {
+    this.deviceInfo = this.deviceService.getDeviceInfo();
+    if (!sessionStorage.getItem("midasDevice")) {
+      this.settingsService.setDeviceData(this.deviceInfo);
+    }
+
+    // sessionStorage.setItem('isMobile', JSON.stringify(this.deviceService.isMobile()));
+    // sessionStorage.setItem('isTablet', JSON.stringify(this.deviceService.isTablet()));
+    // sessionStorage.setItem('isDesktop', JSON.stringify(this.deviceService.isDesktop()));
+  }
+
+  getLocation() {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (pos: any) => {
+          if (pos) {
+            log.debug("Latitude: " + pos.coords.latitude + " - Longitude: " + pos.coords.longitude);
+          }
+        },
+        (error: any) => console.log(error)
+      );
+    } else {
+      alert("Geolocation is not supported by this browser.");
+    }
+  }
+
   logout() {
-    this.authenticationService.logout()
-      .subscribe(() => this.router.navigate(['/login'], { replaceUrl: true }));
+    this.authenticationService.logout().subscribe(() => this.router.navigate(["/login"], { replaceUrl: true }));
   }
 
   help() {
-    window.open('https://drive.google.com/drive/folders/1-J4JQyaaxBz2QSfZMzC4bPrPwWlksFWw?usp=sharing', '_blank');
+    window.open("https://drive.google.com/drive/folders/1-J4JQyaaxBz2QSfZMzC4bPrPwWlksFWw?usp=sharing", "_blank");
     // window.open('https://mifosforge.jira.com/wiki/spaces/docs/pages/52035622/User+Manual', '_blank');ng
   }
 
   // Monitor all keyboard events and excute keyboard shortcuts
-  @HostListener('window:keydown', ['$event'])
+  @HostListener("window:keydown", ["$event"])
   onKeydownHandler(event: KeyboardEvent) {
-    const routeD = this.buttonConfig.buttonCombinations.find(x => (x.ctrlKey === event.ctrlKey && x.shiftKey === event.shiftKey && x.altKey === event.altKey && x.key === event.key));
+    const routeD = this.buttonConfig.buttonCombinations.find(
+      (x) =>
+        x.ctrlKey === event.ctrlKey && x.shiftKey === event.shiftKey && x.altKey === event.altKey && x.key === event.key
+    );
     if (!(routeD === undefined)) {
       switch (routeD.id) {
-        case 'logout':
+        case "logout":
           this.logout();
           break;
-        case 'help':
+        case "help":
           this.help();
           break;
-        case 'runReport':
-          document.getElementById('runReport').click();
+        case "runReport":
+          document.getElementById("runReport").click();
           break;
-        case 'cancel':
-          const cancelButtons = document.querySelectorAll('button');
+        case "cancel":
+          const cancelButtons = document.querySelectorAll("button");
           const filteredcancelButtons = Array.prototype.filter.call(cancelButtons, function (el: any) {
-            return el.textContent.trim() === 'Cancel';
+            return el.textContent.trim() === "Cancel";
           });
           if (filteredcancelButtons.length > 0) {
             filteredcancelButtons[0].click();
           }
           break;
-        case 'submit':
-          const submitButton = document.querySelectorAll('button');
+        case "submit":
+          const submitButton = document.querySelectorAll("button");
           const filteredSubmitButton = Array.prototype.filter.call(submitButton, function (el: any) {
-            return el.textContent.trim() === 'Submit';
+            return el.textContent.trim() === "Submit";
           });
           if (filteredSubmitButton.length > 0) {
             filteredSubmitButton[0].click();

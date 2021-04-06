@@ -54,7 +54,7 @@ export class BalanceAccountClientComponent implements OnInit {
     private formBuilder: FormBuilder,
     private authenticationService: AuthenticationService,
   ) {
-    
+
     this.currentUser = this.authenticationService.getCredentials();
     this.currentStaffSelect = this.currentUser.staffId;
 
@@ -73,13 +73,13 @@ export class BalanceAccountClientComponent implements OnInit {
       this.totalAmountDerivedOfUser2  = this.totalAmountDerived2;
 
     });
-    this.clientServices.getNameOfStaff().subscribe(result => {
+    this.clientServices.getListUserTeller(this.currentUser.officeId).subscribe(result => {
       this.staffs = result?.result?.listStaff;
       this.staffs.unshift({
         displayName: 'Tất cả',
         staffId: ''
       });
-    }); 
+    });
 
     this.formFilter = this.formBuilder.group({
       'customer_name': [''],
@@ -111,7 +111,7 @@ export class BalanceAccountClientComponent implements OnInit {
     this.loadData();
   }
 
-  sortData2(sort: any) { 
+  sortData2(sort: any) {
     this.accountFilter2 = this.accountFilter2.sort((a, b) => {
       const isAsc = sort.direction === 'asc';
       switch (sort.active) {

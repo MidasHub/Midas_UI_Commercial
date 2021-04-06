@@ -1,4 +1,22 @@
 <mat-card class="mat-elevation-z20 container-custom">
+  <mat-card-header>
+    <div fxLayout="row wrap" fxLayoutAlign="center" fxLayoutGap="2%" fxLayout.lt-md="column" [formGroup]="formFilter" fxFlex="100">
+
+        <div class="fix_header" fxLayout="row" >
+          <img src="../../../assets/images/icons/transaction_total.svg">
+          <div style="margin: 5px; margin-top: 20px;">
+            <h3 style="margin: 5px;">Số tài khoản: {{accountFilter.length}}</h3>
+          </div>
+        </div>
+        <div class="fix_header" fxLayout="row" >
+          <img src="../../../assets/images/icons/money.svg">
+          <div style="margin: 5px; margin-top: 20px;">
+            <h3 style="margin: 5px;">Số dư: <b style="color: green;">{{totalBalanceAmount | money}}</b></h3>
+          </div>
+        </div>
+
+    </div>
+  </mat-card-header>
   <mat-card-content>
     <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column" [formGroup]="formFilter">
       <mat-form-field fxFlex="31%">
@@ -10,14 +28,14 @@
         <mat-label>Tên tài khoản</mat-label>
         <input matInput formControlName="sourceInfo">
       </mat-form-field>
-      <div>
+      <!-- <div>
         <div style="margin-top: 15px;" fxLayout="row">
           <img src="../../../assets/images/icons/account.svg">
           <div style="margin: 5px; margin-top: 20px;">
             <span>Tổng cộng: &nbsp;</span> {{dataSource.length}}
           </div>
         </div>
-      </div>
+      </div> -->
     </div>
   </mat-card-content>
   <mat-card-content>

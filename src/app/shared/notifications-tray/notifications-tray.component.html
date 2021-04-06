@@ -1,4 +1,5 @@
 <button 
+  mat-mini-fab
   mat-icon-button class="ml-1" matTooltip="Notifications"
   [matMenuTriggerFor]="notificationsMenu" (menuClosed)="menuClosed()"
   [matBadge]="unreadNotifications.length" [matBadgeHidden]="!unreadNotifications.length" matBadgeColor="warn"  matBadgeSize="medium"
@@ -6,7 +7,7 @@
   <fa-icon icon="bell" size="lg"></fa-icon>
 </button>
 
-<mat-menu class="mifosx-notifications-menu" #notificationsMenu="matMenu" [overlapTrigger]="false">
+<mat-menu class="midas-notifications-menu" #notificationsMenu="matMenu" [overlapTrigger]="false">
 
   <button mat-menu-item class="unread" *ngFor="let notification of unreadNotifications" [routerLink]="[routeMap[notification.objectType], notification.objectId]">
     {{ notification.content }}*<br> 

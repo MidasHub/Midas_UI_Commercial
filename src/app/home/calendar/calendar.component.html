@@ -1,25 +1,34 @@
 <!-- Phần calendar -->
 <div fxLayout="column" class="midascalendar">
-  <div fxLayout="row" fxLayout.lt-md="column" fxLayoutAlign="space-around start" fxLayoutGap="1%">
+  <div fxLayout="row" fxLayout.lt-md="column" fxLayoutAlign="space-around center" fxLayoutAlign.lt-md="center center" fxLayoutGap="2%">
+    <div fxFlex="55" fxLayout.lt-md="column" fxLayoutAlign.lt-md="center center" >
+      <mat-button-toggle-group name="fontStyle" aria-label="Font Style" style="width: 300px;">
+        <mat-button-toggle  (click)="setView(CalendarView.Month)" [class.active]="view === CalendarView.Month"
+          style="width: 100px;"><i class="fas fa-calendar"></i> Lịch tháng
+        </mat-button-toggle>
+        <mat-button-toggle (click)="setView(CalendarView.Week)" [class.active]="view === CalendarView.Week"
+          style="width: 100px;"><i class="fas fa-calendar-week"></i> Lịch tuần
+        </mat-button-toggle>
+        <mat-button-toggle (click)="setView(CalendarView.Day)" [class.active]="view === CalendarView.Day"
+          style="width: 100px;"><i class="fas fa-calendar-day"></i> Lịch ngày
+        </mat-button-toggle>
+      </mat-button-toggle-group>
+      <mat-button-toggle-group name="fontStyle" aria-label="Font Style" style="width: 300px;">
+        <mat-button-toggle mwlCalendarPreviousView [view]="view" [(viewDate)]="viewDate"
+          (viewDateChange)="closeOpenMonthViewDay()" style="width: 100px;"> <i class="fas fa-angle-double-left"></i> Trước</mat-button-toggle>
+        <mat-button-toggle mwlCalendarToday [(viewDate)]="viewDate" style="width: 100px;">Hiện tại</mat-button-toggle>
+        <mat-button-toggle mwlCalendarNextView [view]="view" [(viewDate)]="viewDate"
+          (viewDateChange)="closeOpenMonthViewDay()" style="width: 100px;">Sau <i class="fas fa-angle-double-right"></i></mat-button-toggle>
+      </mat-button-toggle-group>
+    </div>
+    <div fxFlex fxFlexAlign="center center">
+      <h3 style="text-align: center;">
+        <span style="border: 2px solid; border-radius:5px; padding:0.5rem"><i class="fas fa-calendar-alt"></i> {{ viewDate | calendarDate:(view + 'ViewTitle'):'vi' }}</span>
+      </h3>
+    </div>
 
-    <mat-button-toggle-group  color="primary" appearance="legacy" name="fontStyle" aria-label="Font Style">
-      <mat-button-toggle color="primary" mwlCalendarPreviousView [view]="view" [(viewDate)]="viewDate"
-        (viewDateChange)="closeOpenMonthViewDay()">Tháng trước</mat-button-toggle>
-      <mat-button-toggle mwlCalendarToday [(viewDate)]="viewDate">Tháng này</mat-button-toggle>
-      <mat-button-toggle mwlCalendarNextView [view]="view" [(viewDate)]="viewDate"
-        (viewDateChange)="closeOpenMonthViewDay()">Tháng sau</mat-button-toggle>
-    </mat-button-toggle-group>
 
-    <h3>{{ viewDate | calendarDate:(view + 'ViewTitle'):'en' }}</h3>
 
-    <mat-button-toggle-group appearance="legacy" name="fontStyle" aria-label="Font Style">
-      <mat-button-toggle (click)="setView(CalendarView.Month)" [class.active]="view === CalendarView.Month">Lịch tháng
-      </mat-button-toggle>
-      <mat-button-toggle (click)="setView(CalendarView.Week)" [class.active]="view === CalendarView.Week">Lịch tuần
-      </mat-button-toggle>
-      <mat-button-toggle (click)="setView(CalendarView.Day)" [class.active]="view === CalendarView.Day">Lịch ngày
-      </mat-button-toggle>
-    </mat-button-toggle-group>
 
   </div>
   <br />
@@ -37,8 +46,8 @@
     </mwl-calendar-day-view>
   </div>
 </div>
-  <!-- Phần bảng danh sách công việc -->
-  <!-- <h3>
+<!-- Phần bảng danh sách công việc -->
+<!-- <h3>
   Thêm công việc mới:
   <button  mat-mini-fab  color="primary" (click)="addEvent()">
     <fa-icon icon="plus"></fa-icon>
@@ -102,8 +111,8 @@
     </tbody>
   </table>
 </div> -->
-  <!-- ------------------------- -->
-  <!-- <ng-template #modalContent let-close="close">
+<!-- ------------------------- -->
+<!-- <ng-template #modalContent let-close="close">
   <div class="modal-header">
     <h5 class="modal-title">Event action occurred</h5>
     <button type="button" class="close" (click)="close()">

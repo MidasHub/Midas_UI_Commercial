@@ -1,16 +1,14 @@
-
-
-const subdomain = window.location.hostname.split('.')[0];
+const subdomain = window.location.hostname.split(".")[0];
 
 // let tenant = 'tiktik';
 // let billpostenant = 'tiktik';
 // let defaultbaseURL = 'https://midas.kiotthe.com';
 // let defaultbillposURL = 'https://midas.kiotthe.com';
 
-let tenant = 'default';
-let billpostenant = 'default';
-let defaultbaseURL = 'https://training.kiotthe.com';
-let defaultbillposURL = 'https://training.kiotthe.com';
+let tenant = "default";
+let billpostenant = "default";
+let defaultbaseURL = "https://training.kiotthe.com";
+let defaultbillposURL = "https://training.kiotthe.com";
 
 // let tenant = 'hdcredit';
 // let billpostenant = 'hdcredit';
@@ -22,13 +20,12 @@ let defaultbillposURL = 'https://training.kiotthe.com';
 // let defaultbaseURL = 'https://staging.midascore.net';
 // let defaultbillposURL = 'https://staging.midascore.net';
 
-let ictenant = 'default';
+let ictenant = "default";
 // let defaultIcURL = 'https://ic.kiotthe.com';
-let defaultIcURL = 'http://localhost:8088';
+let defaultIcURL = "http://localhost:8088";
 
-
-let apiProvider = '/midas/api';
-const apiVersion = '/v1';
+let apiProvider = "/midas/api";
+const apiVersion = "/v1";
 
 // if (subdomain === 'staging-hn') {
 //   tenant = 'hanoi';
@@ -52,6 +49,5 @@ export default {
   icT: ictenant,
   icBaseUrl: defaultIcURL,
   apiProvider: apiProvider,
-  apiVersion: apiVersion
-
+  apiVersion: apiVersion,
 };

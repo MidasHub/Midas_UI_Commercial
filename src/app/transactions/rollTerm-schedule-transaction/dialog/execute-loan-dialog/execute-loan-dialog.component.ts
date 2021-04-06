@@ -4,6 +4,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
 import { ClientsService } from "app/clients/clients.service";
 import { AlertService } from "app/core/alert/alert.service";
 import { MidasClientService } from "app/midas-client/midas-client.service";
+import { SavingsService } from "app/savings/savings.service";
 import { TransactionService } from "app/transactions/transaction.service";
 
 @Component({
@@ -22,6 +23,7 @@ export class ExecuteLoanDialogComponent implements OnInit {
 
   constructor(
     private transactionService: TransactionService,
+    private savingsService: SavingsService,
     private formBuilder: FormBuilder,
     public dialogRef: MatDialogRef<ExecuteLoanDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -68,21 +70,10 @@ export class ExecuteLoanDialogComponent implements OnInit {
     };
     form.txnCode = this.refId;
     this.transactionService.ExecuteRollTermTransactionByTrnRefNo(form).subscribe((result) => {
-      if (result?.result?.status) {
-        this.alertServices.alert({
-          type: "🎉🎉🎉 Thành công !!!",
-          message: "🎉🎉 Xử lý thành công",
-          msgClass: "cssSuccess",
-        });
-        this.dialogRef.close({ status: true });
-      } else {
-        this.alertServices.alert({
-          type: "🚨🚨🚨🚨 Lỗi ",
-          msgClass: "cssBig",
-          message: "🚨🚨 Lỗi thanh toán phí, vui lòng liên hệ IT Support để được hổ trợ 🚨🚨",
-        });
-        this.dialogRef.close({ status: false });
-      }
+
+      let message = "🎉🎉 Xử lý thành công" ;
+      this.savingsService.handleResponseApiSavingTransaction(result, message, null);
+      this.dialogRef.close({ status: true });
     });
   }
 }

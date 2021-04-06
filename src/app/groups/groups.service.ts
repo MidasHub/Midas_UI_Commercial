@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from 'environments/environment';
 /** rxjs Imports */
-import { Observable } from 'rxjs';
+import { Observable,BehaviorSubject } from 'rxjs';
 import { CommonHttpParams } from 'app/shared/CommonHttpParams';
 
 /**
@@ -20,6 +20,7 @@ export class GroupsService {
   private credentialsStorageKey = 'midasCredentials';
   private accessToken: any;
   private GatewayApiUrlPrefix: any;
+  public pending_limit: any;
   constructor(private http: HttpClient, private commonHttpParams: CommonHttpParams) {
     this.accessToken = JSON.parse(
       sessionStorage.getItem(this.credentialsStorageKey)
@@ -367,19 +368,87 @@ export class GroupsService {
         .set('staffInSelectedOfficeOnly', 'true');
     return this.http.get('/groups/template', { params: httpParams });
   }
-
+  getStaffs(officeId: string): Observable<any> {
+    const httpParams = new HttpParams()
+      .set('createdBy', this.accessToken.userId)
+      .set('accessToken', this.accessToken.base64EncodedAuthenticationKey)
+      .set('officeId', officeId);
+    return this.http.post<any>(`${this.GatewayApiUrlPrefix}/common/get_list_staffName_of_office`, httpParams);
+  }
   getLastTransaction(groupId:any): Observable<any> {
     const httpParams = new HttpParams()
-    .set('createdBy', this.accessToken.userId)
-    .set('accessToken', this.accessToken.base64EncodedAuthenticationKey);
+      .set('createdBy', this.accessToken.userId)
+      .set('accessToken', this.accessToken.base64EncodedAuthenticationKey);
     return this.http.post<any>(`${this.GatewayApiUrlPrefix}/groups/${groupId}/last_transaction`,  httpParams );
   }
 
   getSalesLast3months(groupId:any): Observable<any> {
     const httpParams = new HttpParams()
-    .set('createdBy', this.accessToken.userId)
-    .set('accessToken', this.accessToken.base64EncodedAuthenticationKey);
+      .set('createdBy', this.accessToken.userId)
+      .set('accessToken', this.accessToken.base64EncodedAuthenticationKey);
     return this.http.post<any>(`${this.GatewayApiUrlPrefix}/groups/${groupId}/sales_last_3_months`,  httpParams );
   }
 
+  storeSpendingLimit(data: any): Observable<any> {
+    let httpParams = new HttpParams()
+      .set('createdBy', this.accessToken.userId)
+      .set('accessToken', this.accessToken.base64EncodedAuthenticationKey);
+    const keys = Object.keys(data);
+    for (const key of keys) {
+      httpParams = httpParams.set(key, data[key]);
+    }
+    return this.http.post<any>(`${this.GatewayApiUrlPrefix}/config/store_limit_config_info`, httpParams);
+  }
+  getConfigSpendingLimit(year: number, month: number): BehaviorSubject<any> {
+    if (!this.pending_limit) {
+      this.pending_limit = new BehaviorSubject(null);
+    }
+    const data = this.pending_limit.getValue();
+    if (!data || data.year !== year || data.month !== month) {
+      const httpParams = new HttpParams()
+        .set('createdBy', this.accessToken.userId)
+        .set('accessToken', this.accessToken.base64EncodedAuthenticationKey)
+        .set('year', String(year))
+        .set('month', String(month));
+      this.http.post<any>(`${this.GatewayApiUrlPrefix}/config/get_limit_config_info`, httpParams).subscribe(response => {
+        this.pending_limit.next({
+          year: year,
+          month: month,
+          data: response?.result
+        });
+      });
+    }
+    return this.pending_limit;
+  }
+  addLimitRow(row: any) {
+    const value = this.pending_limit.getValue();
+    if (value.year === row.year && value.month === row.month) {
+      const newData = {
+        ...value,
+        data: {
+          ...value.data,
+          listSavingLimitConfig: [row, ...value.data.listSavingLimitConfig]
+        }
+      };
+      this.pending_limit.next(newData);
+    }
+  }
+  updateLimitRow(row: any) {
+    const value = this.pending_limit.getValue();
+    if (value.year === row.year && value.month === row.month) {
+      const newData = {
+        ...value,
+        data: {
+          ...value.data,
+          listSavingLimitConfig: value.data.listSavingLimitConfig.map( (item: any) => {
+            if (item.refid === row.refid) {
+              return row;
+            }
+            return item;
+          })
+        }
+      };
+      this.pending_limit.next(newData);
+    }
+  }
 }

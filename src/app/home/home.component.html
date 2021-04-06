@@ -1,27 +1,44 @@
 <div fxLayout="column">
- 
-  <div fxLayout="row" fxLayout.lt-md="column" fxLayoutAlign="start" fxLayoutGap="1%" class="fluidcontainer m-b-10 p-10"
-    fxFlex="100">
 
-    <!-- <button mat-raised-button color="primary" [routerLink]="['/dashboard']">
-      <fa-icon icon="tachometer-alt"></fa-icon>&nbsp;&nbsp;
-      {{'Home_Component.btnDashboard'| translate}}
-    </button> -->
-    <button mat-raised-button color="primary" [routerLink]="['/clients/create']" [queryParams]="{go_back:'home'}">
-      <fa-icon icon="user-plus"></fa-icon> &nbsp;&nbsp;
-      {{'Home_Component.btnNewCustomer'| translate}}
-    </button>
-    <button mat-raised-button color="primary" [routerLink]="['/groups/create']" [queryParams]="{go_back:'home'}">
-      <i class="fab fa-google-plus-g"></i> &nbsp;&nbsp;
-      {{'Home_Component.btnNewGroup'| translate}}
-    </button>
+  <div fxLayout="row" fxLayout.lt-md="column" fxLayoutAlign="start start" fxLayoutGap="2%"
+    class="fluidcontainer m-b-10 p-10" fxFlex="100" >
+
+    <!-- banner default  -->
+    <div  fxLayout="column" *ngIf="!this.showBanner|| !this.isDesktop">
+      <!-- <button mat-raised-button color="primary" [routerLink]="['/dashboard']">
+        <fa-icon icon="tachometer-alt"></fa-icon>&nbsp;&nbsp;
+        {{'Home_Component.btnDashboard'| translate}}
+      </button> -->
+      <div fxLayout="row" fxLayout.lt-md="column" fxLayoutAlign="start start" fxLayoutGap="1%" class=" p-l-20">
+        <button mat-raised-button color="primary" [routerLink]="['/clients/create']" [queryParams]="{go_back:'home'}" style="width:185px">
+          <fa-icon icon="user-plus"></fa-icon> &nbsp;&nbsp;
+          {{'Home_Component.btnNewCustomer'| translate}}
+        </button>
+        <button mat-raised-button color="primary" [routerLink]="['/groups/create']" [queryParams]="{go_back:'home'}" style="width:185px">
+          <i class="fab fa-google-plus-g"></i> &nbsp;&nbsp;
+          {{'Home_Component.btnNewGroup'| translate}}
+        </button>
+      </div>
+      <h1 class=" p-l-20">{{'Home_Component.welcome'| translate}} <strong>{{childBannerData.userName}}</strong>! </h1>
+    </div>
+    
+
+    <!-- Banner dành riêng cho đơn vị theo yêu cầu không hiện ở màn hình điện thoại -->
+    <midas-customerbanner [childBannerData]="this.childBannerData"  *ngIf="this.showBanner && this.isDesktop" style="padding: 0px;width:100%"></midas-customerbanner>
+   
+
   </div>
-  <h1 class=" p-l-20">{{'Home_Component.welcome'| translate}} <strong>{{username}}</strong>! </h1>
-  <div fxLayout="row" fxLayout.lt-md="column" fxLayoutAlign="space-around start " class="fluidcontainer  m-b-10"
+
+
+
+  <!-- Màn hình chính -->
+  <div fxLayout="row" fxLayout.lt-md="column" fxLayoutAlign="space-around start " class="fluidcontainer  m-b-15"
     fxFlex="100">
 
-    <div fxLayout="column" fxLayout.lt-md="column" class="fluidcontainer p-10 m-b-20" fxFlex="100">
-      <mat-card class=" m-b-10" fxFlex="100">
+    <div fxLayout="row" fxLayout.lt-md="column" class="fluidcontainer p-10 m-b-20" fxFlex="100" fxLayoutGap="1%">
+
+      <!-- Ô tìm kiếm KH -->
+      <mat-card class=" m-b-10" fxFlex="59" fxFlex.lt-md="95">
         <mat-card-header>
           <mat-card-title class="title">
             <h3>Tìm thẻ để thực hiện giao dịch cho khách hàng:</h3>
@@ -42,26 +59,31 @@
             <span>{{activity.activity}}</span>
           </mat-option>
         </mat-autocomplete> -->
-        
+
           <midas-mainboard></midas-mainboard>
         </mat-card-content>
 
       </mat-card>
-      <mat-card class=" m-b-10" fxFlex="100">
-        <mat-card-header>
-          <mat-card-title class="title">
-            <!-- {{'Home_Component.Card'| translate}} <strong>{{username}}</strong>! -->
-            Lịch đáo hạn thẻ và công việc cần làm:
-          </mat-card-title>
-        </mat-card-header>
+      <div fxLayout="column" fxFlex="39" fxFlex.lt-md="95">
 
-        <mat-card-content>
-          <midas-calendar></midas-calendar>
-        </mat-card-content>
+        <!-- Ô calendar -->
+        <mat-card class="" fxFlex="100">
+          <mat-card-header>
+            <mat-card-title class="title">
+              <!-- {{'Home_Component.Card'| translate}} <strong>{{username}}</strong>! -->
+              Lịch đáo hạn thẻ và công việc cần làm:
+            </mat-card-title>
+          </mat-card-header>
+
+          <mat-card-content>
+            <midas-calendar></midas-calendar>
+          </mat-card-content>
 
 
 
-      </mat-card>
+        </mat-card>
+      </div>
+
 
     </div>
 

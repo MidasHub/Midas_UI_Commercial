@@ -1,0 +1,55 @@
+<h1 mat-dialog-title> {{ editData ? 'Cập nhập hạn mức chi tiêu' : 'Thêm hạn mức chi tiêu'}}</h1>
+
+<div mat-dialog-content [formGroup]="formDialog" [fxLayout]="'column'" fxLayout.lt-md="column" [fxLayoutGap]="'1%'" fxLayoutGap.lt-md="0%">
+    <mat-form-field>
+        <mat-label>Ngân hàng</mat-label>
+        <select matSelect required matNativeControl formControlName="officeId">
+          <option *ngFor="let office of data?.listOffice" [value]="office.id">
+            {{ office.name }}
+          </option>
+        </select>
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label>Loại chi tiêu</mat-label>
+        <select matSelect required matNativeControl formControlName="paymentTypeId">
+          <option *ngFor="let office of data?.listPaymentType" [value]="office.id">
+            {{ office.value }}
+          </option>
+        </select>
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label>Nhân viên</mat-label>
+        <select matSelect required matNativeControl formControlName="staffId">
+          <option *ngFor="let staff of staffs" [value]="staff.staffId">
+            {{  staff.displayName }}
+          </option>
+        </select>
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label>Loại hạn mức</mat-label>
+        <select matSelect required matNativeControl formControlName="limitType">
+        <option *ngFor="let type of limitTypes" [value]="type.id">
+          {{  type.value }}
+        </option>
+      </select>
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label>Hạn mức mặc định</mat-label>
+        <input required currencyMask matInput formControlName="limitDefault" />
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label>Năm</mat-label>
+        <input required matInput formControlName="year" />
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label>Tháng</mat-label>
+        <input required matInput formControlName="month" />
+    </mat-form-field>
+</div>
+
+<mat-dialog-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="2%">
+    <button mat-raised-button mat-dialog-close>{{ "Shared_Component.FormDialog.btnCancel" | translate }}</button>
+    <button mat-raised-button color="primary" [mat-dialog-close]="{ data: formDialog.value}" [disabled]="!formDialog.valid || formDialog.pristine">
+    Lưu
+  </button>
+</mat-dialog-actions>

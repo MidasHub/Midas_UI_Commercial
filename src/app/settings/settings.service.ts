@@ -65,6 +65,23 @@ export class SettingsService {
   }
 
   /**
+   * Set device type
+   */
+
+  setDeviceData(deviceData:string){
+    sessionStorage.setItem('midasDeviceType', JSON.stringify(deviceData));
+  }
+
+  /**
+   * Set device type
+   */
+
+  //  setDeviceOrientation(orientation:string){
+  //   sessionStorage.setItem('midasDeviceOrientation', JSON.stringify(orientation));
+  // }
+
+  
+  /**
    * Returns date format setting.
    * TẠM THÒI HARDCODE PHẦN DATEFORMAT = 'dd MMMM yyyy' VÀ LOCALE = 'en' DO CÓ LỖI KHI GỌI API
    */

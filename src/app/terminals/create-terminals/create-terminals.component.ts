@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectorRef, ViewChild } from "@angular/core";
+import { Component, OnInit, ViewChild } from "@angular/core";
 import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
 import { MatTableDataSource } from "@angular/material/table";
 import { MatPaginator } from "@angular/material/paginator";
@@ -8,7 +8,6 @@ import { TerminalsService } from "../terminals.service";
 import { ErrorDialogComponent } from "app/shared/error-dialog/error-dialog.component";
 import { MatDialog } from "@angular/material/dialog";
 import { Location } from "@angular/common";
-import { BanksService } from "app/banks/banks.service";
 export interface PeriodicElements {
   officeId: number;
   officeName: string;
@@ -44,7 +43,7 @@ const initialData: PeriodicElements[] = [
 })
 export class CreateTerminalsComponent implements OnInit {
   @ViewChild(MatSort) sort: MatSort;
-  @ViewChild(MatPaginator) paginator: MatPaginator;
+  // @ViewChild(MatPaginator) paginator: MatPaginator;
 
   displayedColumns: string[] = [
     "Office",
@@ -69,6 +68,13 @@ export class CreateTerminalsComponent implements OnInit {
   data: any;
   banks: any[] = [];
   posLimits: PeriodicElements[] = [];
+  typeOfTransactions : typeOfTransaction[] = [
+    {value:'ALL', valueDesc:'khách hàng Sỉ & Lẻ'},
+    {value:'SI', valueDesc:'khách hàng Sỉ'},
+    {value:'LE', valueDesc:'khách hàng Lẻ'}
+  ];
+  // officeSelect = new FormControl();
+  applyFeeForOffice:boolean = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -76,7 +82,7 @@ export class CreateTerminalsComponent implements OnInit {
     private terminalsService: TerminalsService,
     private router: Router,
     private dialog: MatDialog,
-    private _location: Location
+    private _location: Location,
   ) {
     this.route.data.subscribe((data: { terminalData: any }) => {
       this.terminalData = data.terminalData.result;
@@ -100,18 +106,21 @@ export class CreateTerminalsComponent implements OnInit {
       merchantId: ["", [Validators.required]],
       officeId: ["", [Validators.required]],
       bankCode: ["", [Validators.required]],
-      timeChargeValid: ["", [Validators.required, Validators.max(99), Validators.min(1)]],
+      timeChargeValid: ["", [Validators.required, Validators.min(1)]],
       status: [true],
-      minFeeDefault: ["", [Validators.required, Validators.min(0)]],
+      minFeeDefault: ["", [Validators.required, Validators.min(0),Validators.max(1000000)]],
       costPercentage: ["", [Validators.max(100), Validators.min(0)]],
       cogsPercentage: ["", [Validators.max(100), Validators.min(0)]],
       txnRateMin: ["", [Validators.max(100), Validators.min(0)]],
       txnRateMax: ["", [Validators.max(100), Validators.min(0)]],
-      maxLimitAmount: ["", [Validators.required, Validators.min(1000000)]],
+      maxLimitAmount: ["", [Validators.required, Validators.min(1000000),Validators.max(100000000000)]],
       levelLimit: ["", [Validators.required, Validators.min(1)]],
-      limitAmount: ["", [Validators.required, Validators.min(0)]],
+      limitAmount: ["", [Validators.required,Validators.min(1000000),Validators.max(100000000000)]],
+      officeSelect:[""],
+      typeOfTransaction:["ALL"],
+      banksCheck: [[]],
+      cardsCheck: [[]],
     });
-
     this.createTerminalForm.get("terminalId").valueChanges.subscribe(data => {
       this.createTerminalForm.get("terminalCode").setValue(data);
     })
@@ -121,6 +130,7 @@ export class CreateTerminalsComponent implements OnInit {
     // if (!this.createTerminalForm.valid) {
     //   return false;
     // }
+    this.applyFeeForOffice = true;
     const costPercentage = this.createTerminalForm.value.costPercentage;
     const cogsPercentage = this.createTerminalForm.value.cogsPercentage;
     const txnRateMin = this.createTerminalForm.value.txnRateMin;
@@ -150,7 +160,6 @@ export class CreateTerminalsComponent implements OnInit {
     this.dataSource.data = this.posLimits;
     //this.cdr.detectChanges();
     this.dataSource.sort = this.sort;
-    this.dataSource.paginator = this.paginator;
   }
 
   applyFilter(filterValue: string) {
@@ -201,12 +210,61 @@ export class CreateTerminalsComponent implements OnInit {
         e[key] = Number(value_input);
       }
     });
-    dataCopy.splice(index, 1);
-    dataCopy.splice(index, 0, e);
+    dataCopy.splice(index -1, 1, e);
     this.dataSource.data = dataCopy;
   }
 
   backClicked() {
     this._location.back();
   }
+
+  setDefaultFeeSettingPosForOffice(){
+    const officeId =this.createTerminalForm.value.officeSelect;
+    const costPercentage  = this.createTerminalForm.value.costPercentage;
+    const cogsPercentage  = this.createTerminalForm.value.cogsPercentage;
+    const txnRateMin      = this.createTerminalForm.value.txnRateMin;
+    const txnRateMax      = this.createTerminalForm.value.txnRateMax;
+    const maxLimitAmount  = this.createTerminalForm.value.maxLimitAmount;
+    const levelLimit      = this.createTerminalForm.value.levelLimit;
+    const limitAmount  = this.createTerminalForm.value.limitAmount;
+    this.posLimits = this.dataSource.data;
+    const office = this.offices.find((i: any) => i.officeId === officeId);
+
+    this.cardTypes.forEach((card: any) => {
+      const limit = {
+        officeId : office.officeId,
+        officeName : office.name,
+        cardCode : card.code,
+        cardDescription : card.description,
+        costPercentage : costPercentage,
+        cogsPercentage :  cogsPercentage,
+        txnRateMin :  txnRateMin,
+        txnRateMax :  txnRateMax,
+        maxLimitAmount : maxLimitAmount,
+        levelLimit : levelLimit,
+        limitAmount : limitAmount,
+      };
+      const item = this.posLimits.findIndex((l: any) => l.officeId === limit.officeId && l.cardCode === limit.cardCode);
+      if (item === -1) {
+        this.posLimits.push(limit);
+      } else {
+        this.posLimits[item] = limit;
+      }
+    });
+    this.dataSource.data = this.posLimits;
+    this.dataSource.sort = this.sort;
+  }
+  reset() {
+      this.dataSource.data = [];
+      this.createTerminalForm.reset();
+      this.applyFeeForOffice = false;
+      // this.cdr.detectChanges();
+      // this.dataSource.sort = this.sort;
+      // this.dataSource.paginator = this.paginator;
+    }
+}
+
+interface typeOfTransaction{
+  value:string;
+  valueDesc:string;
 }

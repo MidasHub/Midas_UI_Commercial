@@ -34,8 +34,7 @@ const log = new Logger("-IDENTIFIER TAB-");
   styleUrls: ["./identities-tab.component.scss"],
 })
 export class IdentitiesTabComponent {
-
-
+  isLoading: boolean = false;
   searchKey: string;
   /** Client Identities */
   clientIdentities: any = [];
@@ -208,7 +207,7 @@ export class IdentitiesTabComponent {
       clientIdentifierTemplate: this.clientIdentifierTemplate,
     };
 
-    dialogConfig.minWidth = 400;
+    dialogConfig.minWidth = 500;
     // init data for opening
     const addIdentifierDialogRef = this.dialog.open(AddIdentitiesComponent, dialogConfig);
 
@@ -224,6 +223,8 @@ export class IdentitiesTabComponent {
           dueDay,
           expiredDate,
           status,
+          limitCard,
+          classCard,
         } = response.data.value;
         const documentTypes = response.documentTypes;
         const document = documentTypes.find((v: any) => v.id === documentTypeId);
@@ -264,11 +265,11 @@ export class IdentitiesTabComponent {
                   documentType: this.clientIdentifierTemplate.allowedDocumentTypes.filter(
                     (doc: any) => doc.id === response.data.value.documentTypeId
                   )[0],
-                  documentKey: `${response.data.value.documentKey
-                    .substring(0, 6)}-X-
-                    ${response.data.value.documentKey
-                      .substring(response.data.value.documentKey.length - 4,
-                      response.data.value.documentKey.length)}` ,
+                  documentKey: `${response.data.value.documentKey.substring(0, 6)}-X-
+                    ${response.data.value.documentKey.substring(
+                      response.data.value.documentKey.length - 4,
+                      response.data.value.documentKey.length
+                    )}`,
                   documents: [],
                   clientId: this.clientId,
                   status:
@@ -278,6 +279,9 @@ export class IdentitiesTabComponent {
                 });
                 this.identifiersTable.renderRows();
               }
+
+              const message = `Thực hiện thành công!`;
+              this.alertService.alert({ message: message, msgClass: "cssInfo" });
             };
 
             if (document && Number(document.id) >= 38 && Number(document.id) <= 57) {
@@ -287,8 +291,11 @@ export class IdentitiesTabComponent {
                   userIdentifyId: res.resourceId,
                   dueDay: dueDay,
                   expireDate: expiredDate,
+                  limitCard: limitCard,
+                  classCard: classCard,
                 })
                 .subscribe((res2: any) => {
+
                   return call_return();
                 });
             } else {
@@ -377,18 +384,30 @@ export class IdentitiesTabComponent {
     const addIdentifierDialogRef = this.dialog.open(AddIdentitiesExtraInfoComponent, dialogConfig);
     addIdentifierDialogRef.afterClosed().subscribe((response: any) => {
       if (response.data) {
-        const { dueDay, expiredDate } = response.data.value;
-        this.clientService.getClientCross(this.clientId).subscribe((client: any) => {
-          this.bankService
-            .storeExtraCardInfo({
-              userId: this.clientId,
-              userIdentifyId: userIdentifyId,
-              dueDay: dueDay,
-              expireDate: expiredDate,
-            })
-            .subscribe((res2: any) => {});
-        });
+        const { dueDay, expiredDate, limitCard, classCard } = response.data.value;
+
+        this.bankService
+          .storeExtraCardInfo({
+            userId: this.clientId,
+            userIdentifyId: userIdentifyId,
+            dueDay: dueDay,
+            expireDate: expiredDate,
+            limitCard: limitCard,
+            classCard: classCard,
+          })
+          .subscribe((res2: any) => {
+
+          });
       }
+    });
+  }
+
+  updateCardInfo(cardExtraInfoEntity: any) {
+    this.isLoading = true;
+    this.transactionService.updateCardInfo(cardExtraInfoEntity).subscribe((result) => {
+      this.isLoading = false;
+      const message = `Cập nhật thành công cho thẻ: ${cardExtraInfoEntity.refid} `;
+      this.alertService.alert({ message: message, msgClass: "cssInfo" });
     });
   }
 
@@ -399,7 +418,7 @@ export class IdentitiesTabComponent {
     index: number,
     addOther: boolean = false
   ) {
-    log.debug("oki", clientId, identifierId, cardNumber, index, addOther);
+    log.debug("cardInfo: ", clientId, identifierId, cardNumber, index, addOther);
     //Jean : đang sửa tới đây
     this.transactionService.checkExtraCardInfo(this.clientId, identifierId).subscribe((resExtraCardCheck: any) => {
       const checkResult = resExtraCardCheck.result;
@@ -418,27 +437,22 @@ export class IdentitiesTabComponent {
         dialogConfig.data = {
           title: "Thông tin bổ sung cho thẻ",
           clientIdentifierTemplate: this.clientIdentifierTemplate,
-          cardinfo: checkResult,
+          cardInfo: checkResult,
         };
         dialogConfig.minWidth = 400;
 
         if (yExpired > ySystem) {
-          this.alertService.alert({
-            message: "Card có thông tin",
-            msgClass: "cssSuccess",
-            hPosition: "center",
-            vPosition: "top",
-          });
           const showIdentifierDialogRef = this.dialog.open(AddIdentitiesExtraInfoComponent, dialogConfig);
           showIdentifierDialogRef.afterClosed().subscribe((response: any) => {
-            this.alertService.alert({
-              message: "Đã cập nhật thông tin thẻ.",
-              msgClass: "cssInfo",
-              hPosition: "right",
-              vPosition: "bottom",
-            });
-            log.debug("After close dialog box, response is ", response);
-            // Khoa xử lý cập nhật thong tin g
+            if (response) {
+              const { dueDay, expiredDate, limitCard, classCard } = response.data.value;
+              checkResult.cardExtraInfoEntity.limit = limitCard;
+              checkResult.cardExtraInfoEntity.classCard = classCard;
+              checkResult.cardExtraInfoEntity.expiredDateString = expiredDate;
+              checkResult.cardExtraInfoEntity.dueDay = dueDay;
+
+              this.updateCardInfo(checkResult.cardExtraInfoEntity);
+            }
           });
         } else {
           if (yExpired === ySystem) {
@@ -472,7 +486,6 @@ export class IdentitiesTabComponent {
           }
         }
       } else {
-        log.debug("Card không có thông tin: ", checkResult);
         this.addIdentifierExtraInfo(identifierId, cardNumber);
       }
     });

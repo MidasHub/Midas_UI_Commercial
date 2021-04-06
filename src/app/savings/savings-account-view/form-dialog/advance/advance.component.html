@@ -11,7 +11,14 @@
         </mat-option>
       </mat-select>
     </mat-form-field>
-
+  <mat-form-field class="select-book" *ngIf="form.contains('staff')">
+    <mat-label>Nhân viên</mat-label>
+    <mat-select required formControlName="staff">
+      <mat-option *ngFor="let staff of staffs" [value]="staff.staffId">
+        {{ staff.displayName }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
   <mat-form-field *ngIf="!disable" class="select-book">
     <mat-label>{{'Saving_Account_Component.clientAdvanceCash.labelClientCash' |translate}}</mat-label>
     <div *ngIf="isLoading" style="display: flex; justify-content: center; align-items: center; background: white">
@@ -26,7 +33,7 @@
       </mat-option>
     </mat-autocomplete>
   </mat-form-field>
-  <mat-form-field *ngIf="disable" class="select-book">
+  <mat-form-field *ngIf="disable" class="select-book" >
     <mat-label>{{'Saving_Account_Component.clientAdvanceCash.labelClientCash' |translate}}</mat-label>
     <input [readonly]="disable" type="text"
            placeholder="{{'Saving_Account_Component.clientAdvanceCash.labelClientCash' |translate}}" matInput
@@ -35,7 +42,7 @@
 
   <mat-form-field fxFlex="96%" *ngIf="form.contains('typeAdvanceCash')">
     <mat-label>{{'Saving_Account_Component.clientAdvanceCash.labelTypes' |translate}}</mat-label>
-    <mat-select required formControlName="typeAdvanceCash">
+    <mat-select  required formControlName="typeAdvanceCash">
       <mat-option *ngFor="let type of typeAdvanceCashes" [value]="type.id">
         {{ type.value }}
       </mat-option>

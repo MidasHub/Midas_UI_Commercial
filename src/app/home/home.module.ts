@@ -18,6 +18,7 @@ import { OndueCardComponent } from './ondue-card/ondue-card.component';
 import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { CalendarComponent } from './calendar/calendar.component';
+import { CustomerbannerComponent } from './customerbanner/customerbanner.component';
 /**
  * Home Component
  *
@@ -43,6 +44,7 @@ import { CalendarComponent } from './calendar/calendar.component';
     RolltermListComponent,
     OndueCardComponent,
     CalendarComponent,
+    CustomerbannerComponent,
   ],
   providers: [
     DatePipe

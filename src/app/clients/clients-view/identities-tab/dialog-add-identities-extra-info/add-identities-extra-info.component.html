@@ -23,6 +23,30 @@
       [dropSpecialCharacters]="false" mask="00/00"
       formControlName="expiredDate">
   </mat-form-field>
+
+  <mat-form-field  fxFlex="48%">
+    <mat-label>Hạn mức thẻ:</mat-label>
+    <input
+      currencyMask
+      required
+      matInput type="text"  formControlName="limitCard">
+  </mat-form-field>
+
+  <mat-form-field  fxFlex="48%">
+    <mat-label>Hạng thẻ:</mat-label>
+    <!-- <input
+      matInput
+      type="text"
+      required
+      formControlName="classCard"> -->
+      
+    <mat-select matNativeControl formControlName="classCard" name="car">
+      <mat-option value="" selected>-----Chọn hạng thẻ-----</mat-option>
+      <mat-option *ngFor="let cCARD of classCardEnum" [value]="cCARD">
+        {{cCARD}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
 </div>
 
 <mat-dialog-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="2%">

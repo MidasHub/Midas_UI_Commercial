@@ -1,12 +1,12 @@
-<div
-  [ngClass]="{
+<div [ngClass]="{
     'sidebar-full': !sidenavCollapsed,
     'sidebar-compact': sidenavCollapsed
-  }"
+    }" 
 >
-  <div class="navigation-panel" fxLayout="column">
+  <div class="navigation-panel" fxLayout="column" >
     <!-- TODO: Allow customization by organization -->
-    <div class="app-brand" [routerLink]="['/home']">
+  <div class="mat-elevation-z8">
+    <div class="app-brand p-10" [routerLink]="['/home']">
       <img src="../../../../assets/images/Midas-logo.png" alt="app-logo" class="app-logo" />
       <span class="app-logo-text text-muted">MIDAS</span>
     </div>
@@ -29,7 +29,7 @@
         </button>
       </div>
     </div>
-
+  </div>
     <div class="app-sidenav">
       <!-- <div class="mt-1 mb-1 nav-item-sep">
         <mat-divider></mat-divider>
@@ -47,6 +47,7 @@
         <mat-divider></mat-divider>
         <span class="text-muted">Main Items</span>
       </div>
+      <!-- mat menu -->
       <mat-menu #adminMenu="matMenu" [overlapTrigger]="false">
         <button mat-menu-item [routerLink]="['/users']">{{ "Toolbar_Component.lblUser" | translate }}</button>
         <button mat-menu-item [routerLink]="['/organization']">{{ "Toolbar_Component.lblOrg" | translate }}</button>
@@ -68,17 +69,15 @@
       </mat-menu>
 
       <mat-menu #accountingMenu="matMenu" [overlapTrigger]="false">
-
-        <button mat-menu-item [routerLink]="['/accounting']">{{ "Toolbar_Component.lblAccounting" | translate }}</button>
+        <button mat-menu-item [routerLink]="['/accounting']">{{ "Toolbar_Component.lblAccounting" | translate
+          }}</button>
         <button mat-menu-item [matMenuTriggerFor]="reportsMenu">{{ "Toolbar_Component.lblReport" | translate }}</button>
         <button mat-menu-item [matMenuTriggerFor]="adminMenu">{{ "Toolbar_Component.lblAdmin" | translate }}</button>
         <button mat-menu-item [matMenuTriggerFor]="selfServiceMenu">
           {{ "Toolbar_Component.lblSelfService" | translate }}
         </button>
-
       </mat-menu>
 
-      <!-- Toolbar Menus -->
       <mat-menu #reportsMenu="matMenu" [overlapTrigger]="false">
         <button mat-menu-item [routerLink]="['/reports']">{{ "Toolbar_Component.lblAll" | translate }}</button>
         <button mat-menu-item [routerLink]="['/reports', 'Client']">
@@ -94,73 +93,182 @@
         </button>
         <button mat-menu-item [routerLink]="['/xbrl']">{{ "Toolbar_Component.lblXBRL" | translate }}</button>
       </mat-menu>
+
+
+      <mat-menu #institutionMenu="matMenu" [overlapTrigger]="false">
+        <button mat-menu-item routerLink="/clients/customer">{{ "Toolbar_Component.lblClient" | translate }}</button>
+        <button mat-menu-item routerLink="/clients/staff">Nhân viên</button>
+        <button mat-menu-item routerLink="/clients/interchange">Đối tác Interchange</button>
+        <button mat-menu-item routerLink="/groups">{{ "Toolbar_Component.lblGroup" | translate }}</button>
+        <button mat-menu-item *midasHasPermission="'ALL_FUNCTIONS'" routerLink="/centers">Centers</button>
+        <button mat-menu-item routerLink="/accounts/balance-clients">
+          {{ "Quản lý công nợ khách hàng khách hàng lẻ" | translate }}
+        </button>
+        <button mat-menu-item *midasHasPermission="'POS_UPDATE'" routerLink="/accounts/balance-teller">
+          {{ "Quản lý số dư teller" | translate }}
+        </button>
+
+        <!-- <span fxHide.lg>
+          <button mat-menu-item [routerLink]="['/accounting']">{{ "Toolbar_Component.lblAccounting" | translate }}</button>
+          <button mat-menu-item [matMenuTriggerFor]="reportsMenu">{{ "Toolbar_Component.lblReport" | translate }}</button>
+          <button mat-menu-item [matMenuTriggerFor]="adminMenu">{{ "Toolbar_Component.lblAdmin" | translate }}</button>
+          <button mat-menu-item [matMenuTriggerFor]="selfServiceMenu">
+            {{ "Toolbar_Component.lblSelfService" | translate }}
+          </button>
+        </span> -->
+      </mat-menu>
+
+      <mat-menu #POSPartnerMenu="matMenu" [overlapTrigger]="false">
+        <!-- <button *midasHasPermission="'POS_UPDATE'" mat-menu-item routerLink="/terminals">
+          Điều chuyển máy POS
+        </button> -->
+        <button mat-menu-item *midasHasPermission="'POS_READ'" routerLink="/terminals/limit">{{ "Quản lý hạn mức POS" |
+          translate }}</button>
+        <button mat-menu-item *midasHasPermission="'POS_UPDATE'" routerLink="/terminals">
+          {{ "Quản lý máy POS" | translate }}
+        </button>
+        <button mat-menu-item *midasHasPermission="'POS_CREATE'" routerLink="/third-party">
+          {{ "Toolbar_Component.lblThirdParty" | translate }}
+        </button>
+        <!-- <button mat-menu-item routerLink="/groups/spending-limit">Hạn mức chi tiêu</button> -->
+
+      </mat-menu>
+
+      <mat-menu #transactionMenu="matMenu" [overlapTrigger]="false">
+        <button mat-menu-item routerLink="/transaction">Quản lý giao dịch</button>
+        <button mat-menu-item routerLink="/transaction/rollTermSchedule">Quản lý đáo hạn thẻ</button>
+        <button mat-menu-item routerLink="/transaction/fee-paid-management">Quản lý phí giao dịch</button>
+      </mat-menu>
+
+      <mat-menu #BookingMenu="matMenu" [overlapTrigger]="false">
+        <button mat-menu-item routerLink="/booking/agency">Đại lý</button>
+        <button mat-menu-item routerLink="/booking/create">Tạo booking nội bộ</button>
+        <button *midasHasPermission="'POS_UPDATE'" mat-menu-item routerLink="/booking/view">Quản lý booking nội
+          bộ</button>
+      </mat-menu>
+
+      <mat-menu #Marketing="matMenu" [overlapTrigger]="false">
+        <button mat-menu-item routerLink="/marketing/create">Tạo chiển dịch</button>
+        <button mat-menu-item routerLink="/marketing/booking">Booking</button>
+      </mat-menu>
+
+
+      <!-- Application User Help Menu -->
+      <mat-menu #applicationMenu="matMenu" [overlapTrigger]="false">
+        <button mat-menu-item (click)="help()">
+          <mat-icon matListIcon>
+            <fa-icon icon="question-circle" size="sm"></fa-icon>
+          </mat-icon>
+          <span>{{ "Toolbar_Component.lblHelp" | translate }}</span>
+        </button>
+        <button mat-menu-item [routerLink]="['/profile']">
+          <mat-icon>
+            <fa-icon icon="user" size="sm"></fa-icon>
+          </mat-icon>
+          <span>{{ "Toolbar_Component.lblProfile" | translate }}</span>
+        </button>
+        <button mat-menu-item [routerLink]="['/settings']">
+          <mat-icon>
+            <fa-icon icon="cog" size="sm"></fa-icon>
+          </mat-icon>
+          <span>{{ "Toolbar_Component.lblSetting" | translate }}</span>
+        </button>
+        <button mat-menu-item>
+          <mat-icon>
+            <fa-icon icon="cog" size="sm"></fa-icon>
+          </mat-icon>
+          <mifosx-language-selector class="ml-1 language" fxHide.lt-md></mifosx-language-selector>
+        </button>
+
+        <button mat-menu-item (click)="logout()" id="logout">
+          <mat-icon>
+            <fa-icon icon="sign-out-alt" size="sm"></fa-icon>
+          </mat-icon>
+          <span>{{ "Toolbar_Component.lblSignOut" | translate }}</span>
+        </button>
+      </mat-menu>
+
+      <!-- end mat Menu -->
       <mat-nav-list>
-        <mat-list-item
-          *midasHasPermission="'ALL_FUNCTIONS'"
-          class="tab-link"
-          [matMenuTriggerFor]="reportsMenu"
-          #reportsMenuTrigger="matMenuTrigger"
-        >
-          <mat-icon matListIcon>
-            <fa-icon matListIcon size="sm" icon="chart-bar" ></fa-icon>
+        <!-- new -->
+        <mat-list-item class="tab-link" [matMenuTriggerFor]="institutionMenu" #institutionMenuTrigger="matMenuTrigger">
+          <mat-icon matListIcon><i class="fas fa-list-ol"></i>
           </mat-icon>
-          <a matLine> {{ "Toolbar_Component.lblReport" | translate }}</a>
+          <a matLine>{{ "Toolbar_Component.labelInstitution" | translate }}</a>
         </mat-list-item>
 
-        <mat-list-item
-          *midasHasPermission="'ALL_FUNCTIONS'"
-          class="tab-link"
-          [matMenuTriggerFor]="accountingMenu"
-          #accountingMenuTrigger="matMenuTrigger"
-        >
-          <mat-icon matListIcon>
-            <fa-icon matListIcon size="sm" icon="money-bill-alt" ></fa-icon>
-          </mat-icon>
-          <a matLine> {{ "Toolbar_Component.lblAccounting" | translate }}</a>
+        <!-- Menu danh cho các user Admin -->
+        <mat-list-item class="tab-link" [matMenuTriggerFor]="POSPartnerMenu" #institutionMenuTrigger="matMenuTrigger">
+          <mat-icon matListIcon><i class="fas fa-hands-helping"></i></mat-icon>
+          <a matLine>Máy POS và đối tác</a>
+        </mat-list-item>
+        <mat-list-item class="tab-link" [matMenuTriggerFor]="transactionMenu" #institutionMenuTrigger="matMenuTrigger">
+          <mat-icon matListIcon><i class="fas fa-money-check-alt"></i></mat-icon>
+          <a matLine>Giao dịch</a>
         </mat-list-item>
 
-        <mat-list-item
-          *midasHasPermission="'ALL_FUNCTIONS'"
-          class="tab-link"
-          [matMenuTriggerFor]="adminMenu"
-          #adminMenuTrigger="matMenuTrigger"
-        >
-          <mat-icon matListIcon>
-            <fa-icon matListIcon size="sm" icon="shield-alt" ></fa-icon>
-          </mat-icon>
-          <a matLine>  {{ "Toolbar_Component.lblAdmin" | translate }}</a>
+        <mat-list-item class="tab-link" [matMenuTriggerFor]="BookingMenu" #institutionMenuTrigger="matMenuTrigger">
+          <mat-icon matListIcon><i class="fas fa-book-medical"></i></mat-icon>
+          <a matLine>Booking</a>
         </mat-list-item>
 
-        <mat-list-item
-          *midasHasPermission="'ALL_FUNCTIONS'"
-          class="tab-link"
-          [matMenuTriggerFor]="selfServiceMenu"
-          #selfServiceMenuTrigger="matMenuTrigger"
-        >
-          <mat-icon matListIcon>
-            <fa-icon matListIcon size="sm" icon="users" ></fa-icon>
-          </mat-icon>
-          <a matLine> {{ "Toolbar_Component.lblSelfService" | translate }}</a>
+        <mat-list-item *midasHasActiveModule="'campaignModule'" class="tab-link" [matMenuTriggerFor]="Marketing"
+          #institutionMenuTrigger="matMenuTrigger"> <label *midasHasPermission="'POS_UPDATE'">
+            <mat-icon matListIcon><i class="fas fa-ad"></i></mat-icon>
+            <a matLine>Marketing</a>
+          </label>
         </mat-list-item>
 
-        <mat-list-item [routerLink]="['/dashboard']">
+        <div *midasHasPermission="'ALL_FUNCTIONS'">
+        <mat-list-item class="tab-link" [matMenuTriggerFor]="accountingMenu"
+          #accountingMenuTrigger="matMenuTrigger">
+          <mat-icon matListIcon>
+            <i class="fas fa-users-cog"></i>
+          </mat-icon>
+          <a matLine> {{ "Toolbar_Component.lblAdmin" | translate }}</a>
+        </mat-list-item>       
+
+        <mat-list-item *midasHasActiveModule="'billModule'" [routerLink]="['/bills']">
+          <mat-icon  matListIcon>
+            <i class="fas fa-receipt"></i>
+          </mat-icon>
+          <a  matLine>Hóa đơn đầu vào</a>
+        </mat-list-item>
+
+        <mat-list-item  [routerLink]="['/banks']">
+          <mat-icon matListIcon>
+            <fa-icon icon="university" size="sm"></fa-icon>
+          </mat-icon>
+          <a matLine>Ngân hàng</a>
+        </mat-list-item>
+      </div>
+        <mat-list-item [routerLink]="['/checker-inbox-and-tasks/checker-inbox']">
+          <mat-icon matListIcon>
+            <i class="fa fa-check"></i>
+          </mat-icon>
+          <a matLine>Phê duyệt</a>
+        </mat-list-item>
+        
+        <mat-list-item [routerLink]="['/notifications']">
+          <mat-icon matListIcon>
+            <fa-icon icon="bell" size="sm"></fa-icon>
+          </mat-icon>
+          <a matLine>Thông báo</a>
+        </mat-list-item>
+
+        <mat-list-item>
+          <mat-icon matListIcon (click)="help()">
+            <fa-icon icon="question-circle" size="sm"></fa-icon>
+          </mat-icon>
+          <a matLine>Hỗ trợ</a>
+        </mat-list-item>
+        
+        <!-- <mat-list-item [routerLink]="['/dashboard']">
           <mat-icon matListIcon>
             <fa-icon icon="tachometer-alt" size="sm"></fa-icon>
           </mat-icon>
           <a matLine>Dashboard</a>
-        </mat-list-item>
-        <mat-list-item *midasHasActiveModule="'billModule'"  [routerLink]="['/bills']">
-            <mat-icon *midasHasPermission="'ALL_FUNCTIONS'" matListIcon>
-              <fa-icon icon="random" size="sm"></fa-icon>
-            </mat-icon>
-            <a *midasHasPermission="'ALL_FUNCTIONS'" matLine>Quản lý hóa đơn</a>
-        </mat-list-item>
-        <mat-list-item *midasHasPermission="'ALL_FUNCTIONS'" [routerLink]="['/banks']">
-          <mat-icon matListIcon>
-            <fa-icon  icon="university" size="sm"></fa-icon>
-          </mat-icon>
-          <a matLine>Quản lý Banks</a>
-        </mat-list-item>
+        </mat-list-item> -->
 
         <!-- <mat-list-item [routerLink]="['/navigation']">
           <mat-icon matListIcon>
@@ -168,24 +276,12 @@
           </mat-icon>
           <a matLine>Navigation</a>
         </mat-list-item> -->
-        <mat-list-item [routerLink]="['/checker-inbox-and-tasks/checker-inbox']">
-          <mat-icon matListIcon>
-            <i class="fa fa-check"></i>
-          </mat-icon>
-          <a matLine>Checker Inbox and Tasks</a>
-        </mat-list-item>
         <!-- <mat-list-item [routerLink]="['/collections/individual-collection-sheet']">
           <mat-icon matListIcon>
             <i class="fas fa-tasks"></i>
           </mat-icon>
           <a matLine>Individual Collection Sheet</a>
         </mat-list-item> -->
-        <mat-list-item [routerLink]="['/notifications']">
-          <mat-icon matListIcon>
-            <fa-icon icon="bell" size="sm"></fa-icon>
-          </mat-icon>
-          <a matLine>Notifications</a>
-        </mat-list-item>
         <!-- <mat-list-item [routerLink]="['/accounting/journal-entries/frequent-postings']">
           <mat-icon matListIcon>
             <fa-icon icon="sync" size="sm"></fa-icon>
@@ -210,12 +306,7 @@
           </mat-icon>
           <a matLine>Keyboard Shortcuts</a>
         </mat-list-item> -->
-        <mat-list-item>
-          <mat-icon matListIcon (click)="help()">
-            <fa-icon icon="question-circle" size="sm"></fa-icon>
-          </mat-icon>
-          <a matLine>Help</a>
-        </mat-list-item>
+        
       </mat-nav-list>
     </div>
   </div>

@@ -126,7 +126,7 @@
         <mat-form-field fxFlex="18%">
           <mat-label>Nhân viên</mat-label>
           <mat-select formControlName="createdBy">
-            <mat-option *ngFor="let type of staffs" [value]="type.id">
+            <mat-option *ngFor="let type of staffs" [value]="type.userId">
               {{ type.displayName }}
             </mat-option>
           </mat-select>
@@ -178,9 +178,16 @@
       </ng-container>
 
       <ng-container matColumnDef="officeName">
-        <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>Chi nhánh</th>
+        <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>
+          <label>
+            Chi nhánh
+            <hr />
+            Người tạo
+          </label>
+        </th>
         <td mat-cell fxHide fxShow.gt-md *matCellDef="let transaction">
-          {{ getDataOfGroupTxnCode(transaction)[0].officeName }}
+          {{ getDataOfGroupTxnCode(transaction)[0].officeName }} <br />
+          <span style="color: blue; font-weight: bold">{{ getDataOfGroupTxnCode(transaction)[0].createdByName }}</span>
         </td>
       </ng-container>
 
@@ -329,7 +336,7 @@
             (menuOpened)="menuOpened()"
             (menuClosed)="menuClosed()"
             ><i class="fa fa-ellipsis-v" aria-hidden="true"></i
-              ></span>
+          ></span>
         </td>
       </ng-container>
       <ng-container matColumnDef="expandedDetail">
