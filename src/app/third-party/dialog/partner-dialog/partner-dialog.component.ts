@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { AlertService } from 'app/core/alert/alert.service';
 import { ThirdPartyService } from 'app/third-party/third-party.service';
- 
+
 
 @Component({
   selector: 'midas-partner-dialog',
@@ -13,6 +13,7 @@ import { ThirdPartyService } from 'app/third-party/third-party.service';
 export class PartnerDialogComponent implements OnInit {
   partnerForm: FormGroup;
   dataFrom: any;
+  editable: boolean = false;
   action:string
   constructor(
     private formBuilder: FormBuilder,
@@ -35,14 +36,16 @@ export class PartnerDialogComponent implements OnInit {
     });
 
     if(this.dataFrom.action ==="edit"){
-      
+
       this.partnerForm.patchValue({
         'code': this.dataFrom.code,
         'desc': this.dataFrom.desc,
-        'typeCheckValid': this.dataFrom.typeCheckValid,
+        'typeCheckValid': this.dataFrom.typeCheckValid == '1' ? true : false,
         'limit': this.dataFrom.limit,
-        'active': this.dataFrom.status,
+        'active': this.dataFrom.status == 'O' ? true : false,
       });
+    } else {
+      this.editable = true;
     }
   }
 
@@ -56,7 +59,7 @@ export class PartnerDialogComponent implements OnInit {
     const payload = {
       ...this.partnerForm.value
     };
-  
+
     this.thirdPartyService.savePartner(payload).subscribe((response: any) => {
       if (response.statusCode === 'success') {
         this.alertServices.alert({
@@ -75,7 +78,7 @@ export class PartnerDialogComponent implements OnInit {
       }
     });
 
-  } 
+  }
 
   update(){
     if (!this.partnerForm.valid) {
@@ -85,7 +88,7 @@ export class PartnerDialogComponent implements OnInit {
     const payload = {
       ...this.partnerForm.value
     };
-    
+
     this.thirdPartyService.updatePartner(payload).subscribe((response: any) => {
       if (response.statusCode === 'success') {
         this.alertServices.alert({
@@ -103,5 +106,5 @@ export class PartnerDialogComponent implements OnInit {
         this.dialogRef.close(payload);
       }
     });
-  } 
+  }
 }
