@@ -3,12 +3,13 @@
 <button
   mat-raised-button
   class=" aligned-with-icons "
-  
+  color="primary"
   mat-stroked-button
   matTooltip="Tổng số dư tài khoản ngân hàng"
   [matMenuTriggerFor]="UserSavingMenu"
-> 
-<i class="fas fa-donate " style="font-size: 1.5rem;"></i><span> : {{ totalBalance | money }}</span>
+>
+ 
+<i class="fas fa-dollar-sign"></i><span>: {{ totalBalance | money }}</span>
 </button>
 
 <mat-menu  backdropClass="userAccInfo" class="midas-saving-menu" #UserSavingMenu="matMenu" [overlapTrigger]="false">

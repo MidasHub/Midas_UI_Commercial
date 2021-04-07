@@ -21,7 +21,7 @@ let tenant = 'staging';
 let billpostenant = 'staging';
 let defaultbaseURL = 'https://staging.kiotthe.com';
 let defaultbillposURL = 'https://staging.kiotthe.com';
-let defaultNotificationURL="https://staging.kiotthe.com"
+// let defaultNotificationURL="https://staging.kiotthe.com"
 
 let apiProvider = '/midas/api';
 const apiVersion = '/v1';
@@ -39,6 +39,8 @@ const apiVersion = '/v1';
 //   apiProvider = '/fineract-provider/api';
 
 // }
+
+let defaultNotificationURL="https://staging.kiotthe.com"
 
 export default {
   coreT: tenant,
