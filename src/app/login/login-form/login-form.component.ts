@@ -9,7 +9,11 @@ import { finalize } from 'rxjs/operators';
 /** Custom Services */
 import { AuthenticationService } from '../../core/authentication/authentication.service';
 import { TranslateService } from '@ngx-translate/core';
+import { HttpParams } from '@angular/common/http';
+import { split } from 'lodash';
 
+import { Logger } from '../../core/logger/logger.service';
+const log = new Logger('Login Page')
 /**
  * Login form component.
  */
@@ -46,6 +50,24 @@ export class LoginFormComponent implements OnInit {
     this.passwordInputType = 'password';
   }
 
+  //** Register Firebase to Noti Server */
+  sendFireBaseKeyToServer() {
+    if (localStorage.getItem('MidasFirebase') && sessionStorage.getItem('midasCredentials')) {
+
+      let currentuser = JSON.parse(sessionStorage.getItem('midasCredentials'));
+      const body = {
+        officeID: currentuser.officeId,
+        staffAppID: currentuser.staffId,
+        staffUsername: currentuser.username,
+        staffName: split(currentuser.staffDisplayName, ",")[1].trim(),
+        staffCode: split(currentuser.staffDisplayName, ",")[0].trim(),
+        tokens: "[{'token':" + localStorage.getItem('MidasFirebase') + "}]"
+      };
+      console.log(body);
+      //return this.http.post(environment.NotiGatewayURL + `/users`, body);
+    }
+  }
+
   /**
    * Authenticates the user if the credentials are valid.
    */
@@ -59,7 +81,9 @@ export class LoginFormComponent implements OnInit {
         // Angular Material Bug: Validation errors won't get removed on reset.
         this.loginForm.enable();
         this.loading = false;
-      })).subscribe();
+      })).subscribe(() => {
+        this.sendFireBaseKeyToServer();
+      });
   }
 
   /**

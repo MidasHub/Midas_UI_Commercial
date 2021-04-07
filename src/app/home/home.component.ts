@@ -60,7 +60,6 @@ export class HomeComponent implements OnInit {
     this.isDesktop = this.detectDevice.isDesktop();
   }
 
-
   // @HostListener('window:resize', ['$event'])
   // onResize(event:any) {
   //   this.screenSize = window.innerWidth;
@@ -90,7 +89,7 @@ export class HomeComponent implements OnInit {
     })
     this.setFilteredActivities();
     this.screenSize = window.innerWidth
-    console.log('Screen size: ', this.screenSize)
+    // console.log('Screen size: ', this.screenSize)
 
     
   }

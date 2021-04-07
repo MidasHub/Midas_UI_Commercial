@@ -54,7 +54,7 @@ export class AuthenticationInterceptor implements HttpInterceptor {
       }
      }
 
-     log.debug("Authen Step: ", request)
+    //  log.debug("Authen Step: ", request)
     return next.handle(request);
   }
 
