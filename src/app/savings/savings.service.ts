@@ -55,16 +55,6 @@ export class SavingsService {
   }
 
   handleResponseApiSavingTransaction(res: any, messageReceived: string, RouteUrl: string) {
-
-    if (res.error) {
-      this.alertService.alert({
-        message: `Lỗi: ${res.error}, Vui lòng liên hệ IT support!`,
-        msgClass: "cssDanger",
-        hPosition: "right",
-      });
-      return false;
-    }
-
     let responseT = res?.result?.resultCommand;
     if (!responseT) {
       this.alertService.alert({
@@ -72,7 +62,7 @@ export class SavingsService {
         msgClass: "cssDanger",
         hPosition: "right",
       });
-      return false;
+      return;
     }
 
     if (responseT && responseT.statusCodeValue == 200 && !responseT?.body?.errors) {
@@ -86,7 +76,6 @@ export class SavingsService {
           this.router.navigate([currentUrl]);
         });
       }
-      return true;
     } else {
       let response = res?.result?.resultCommand.body;
       let errorMessage = response.defaultUserMessage || response.developerMessage;
@@ -100,9 +89,7 @@ export class SavingsService {
         msgClass: "cssDanger",
         hPosition: "right",
       });
-      return true;
     }
-
   }
 
   checkValidRevertSavingTransaction(resourceId: string): Observable<any> {
