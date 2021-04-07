@@ -17,8 +17,7 @@ const httpOptions = {
 const accessToken = JSON.parse( sessionStorage.getItem('midasCredentials') || localStorage.getItem('midasCredentials'));
 const httpOptionsGateway = {
   headers: {
-    'Gateway-TenantId': environment.GatewayTenantId,
-    'Authorization':'Basic '+ accessToken.base64EncodedAuthenticationKey
+    'Gateway-TenantId': environment.GatewayTenantId
   }
 };
 
@@ -68,6 +67,7 @@ export class AuthenticationInterceptor implements HttpInterceptor {
       httpOptions.headers[authorizationHeader] = `Bearer ${authenticationKey}`;
     } else {
       httpOptions.headers[authorizationHeader] = `Basic ${authenticationKey}`;
+      httpOptionsGateway.headers[authorizationHeader] = `Basic ${authenticationKey}`;
     }
   }
 
