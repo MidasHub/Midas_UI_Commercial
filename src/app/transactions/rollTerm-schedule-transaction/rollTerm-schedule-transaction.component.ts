@@ -36,14 +36,16 @@ export class RollTermScheduleTransactionComponent implements OnInit {
   changeTabTransaction(event: MatTabChangeEvent): void {
     if(event.index == 0)
     {
-        this.dueDayCardTabComponent.getRollTermScheduleAndCardDueDayInfo();//Or whatever name the method is called
+      this.rollTermScheduleTabComponent.getRollTermScheduleAndCardDueDayInfo(); //Or whatever name the method is called
+
     }
     else
     {  if(event.index == 1)
       {
-          this.onRollTermCardTabComponent.getOnCardDueDayInfo();//Or whatever name the method is called
+        this.dueDayCardTabComponent.getRollTermScheduleAndCardDueDayInfo();//Or whatever name the method is called
+
       }else{
-        this.rollTermScheduleTabComponent.getRollTermScheduleAndCardDueDayInfo(); //Or whatever name the method is called
+        this.onRollTermCardTabComponent.getOnCardDueDayInfo();//Or whatever name the method is called
 
       }
     }
