@@ -1,13 +1,13 @@
 import { Component, OnInit, ViewChild } from "@angular/core";
-import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { MatTableDataSource } from "@angular/material/table";
-import { MatPaginator } from "@angular/material/paginator";
 import { MatSort } from "@angular/material/sort";
 import { ActivatedRoute, Router } from "@angular/router";
 import { TerminalsService } from "../terminals.service";
 import { ErrorDialogComponent } from "app/shared/error-dialog/error-dialog.component";
 import { MatDialog } from "@angular/material/dialog";
 import { Location } from "@angular/common";
+import { BanksService } from "app/banks/banks.service";
 export interface PeriodicElements {
   officeId: number;
   officeName: string;
@@ -73,7 +73,9 @@ export class CreateTerminalsComponent implements OnInit {
     {value:'SI', valueDesc:'khách hàng Sỉ'},
     {value:'LE', valueDesc:'khách hàng Lẻ'}
   ];
-  // officeSelect = new FormControl();
+  commonCardBanks: any[] = this.bankService.documentCardBanks;
+  commonCardTypes: any[] = this.bankService.documentCardTypes;
+  commonOffices: any[] = this.bankService.documentOffices;
   applyFeeForOffice:boolean = false;
 
   constructor(
@@ -83,14 +85,13 @@ export class CreateTerminalsComponent implements OnInit {
     private router: Router,
     private dialog: MatDialog,
     private _location: Location,
+    private bankService: BanksService,
   ) {
     this.route.data.subscribe((data: { terminalData: any }) => {
-      this.terminalData = data.terminalData.result;
-      this.merchants = data.terminalData.result.hollhouses;
-      this.offices = data.terminalData.result.listOffices;
-      this.cardTypes = data.terminalData.result.listCardType;
-      this.posGroups = data.terminalData.result.posGroups;
-      this.banks =  data.terminalData.result.listBank;
+      this.merchants = data.terminalData.result.listMerchant;
+      this.offices = this.commonOffices;
+      this.cardTypes = this.commonCardTypes;
+      this.banks =  this.commonCardBanks;
     });
   }
 

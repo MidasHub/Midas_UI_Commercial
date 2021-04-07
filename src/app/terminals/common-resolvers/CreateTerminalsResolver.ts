@@ -8,9 +8,9 @@ import { TerminalsService } from '../terminals.service';
 export class CreateTerminalsResolver implements Resolve<Object> {
 
   constructor(private terminalsService: TerminalsService) { }
- 
-  resolve(route: ActivatedRouteSnapshot): Observable<any> { 
-    return this.terminalsService.getGroupAndHouseHolds();
+
+  resolve(route: ActivatedRouteSnapshot): Observable<any> {
+    return this.terminalsService.getListMerchant();
   }
 
 }

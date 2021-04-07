@@ -17,12 +17,14 @@ export class TerminalsService {
   private credentialsStorageKey = 'midasCredentials';
   private accessToken: any;
   private GatewayApiUrlPrefix: any;
+  private IcGatewayApiUrlPrefix: any;
   constructor(private http: HttpClient, private commonHttpParams: CommonHttpParams) {
     this.accessToken = JSON.parse(
       sessionStorage.getItem(this.credentialsStorageKey)
       || localStorage.getItem(this.credentialsStorageKey)
     );
     this.GatewayApiUrlPrefix = environment.GatewayApiUrlPrefix ;
+    this.IcGatewayApiUrlPrefix = environment.IcGatewayApiUrlPrefix ;
   }
 
   getLimitTerminals(): Observable<any> {
@@ -51,10 +53,10 @@ export class TerminalsService {
     return this.http.post<any>(`${this.GatewayApiUrlPrefix}/pos/edit`, httpParams);
   }
 
-  getGroupAndHouseHolds(): Observable<any> {
+  getListMerchant(): Observable<any> {
     let httpParams = this.commonHttpParams.getCommonHttpParams();
 
-    return this.http.get<any>(`${this.GatewayApiUrlPrefix}/pos/groupandhouseholds`, { params: httpParams });
+    return this.http.get<any>(`${this.IcGatewayApiUrlPrefix}/pos/get_list_merchant`, { params: httpParams });
   }
 
   save(data:any): Observable<any> {
