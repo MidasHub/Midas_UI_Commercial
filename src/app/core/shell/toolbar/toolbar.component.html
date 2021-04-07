@@ -9,6 +9,8 @@
     <fa-icon icon="bars" size="lg"></fa-icon>
   </button>
 
+  <button mat-menu-item routerLink="/clients/ic-client/general"
+  [queryParams]="{typeViewClient:'view' ,clientType:'ic' }" >Quản lý Interchange</button>
 
 
   <!-- <button mat-mini-fab *ngIf="sidenav.opened" (click)="toggleSidenavCollapse()" matTooltip="Toggle Collapse"
