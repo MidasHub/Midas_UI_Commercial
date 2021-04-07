@@ -16,8 +16,10 @@ export class BanksService {
   private GatewayApiUrlPrefix: any;
   public cards: any;
   public banks: any;
+  public offices: any;
   public cardTypes: any;
   public documentCardBanks: any[];
+  public documentOffices: any[];
   public documentCardTypes: any[];
 
   constructor(private http: HttpClient, private commonHttpParams: CommonHttpParams) {
@@ -77,6 +79,13 @@ export class BanksService {
     this.banks.next(banks);
   }
 
+  getOffices(): BehaviorSubject<any> {
+    if (!this.offices) {
+      this.getOfficesCommon();
+    }
+    return this.offices;
+  }
+
   getBanks(): BehaviorSubject<any> {
     if (!this.banks) {
       this.getData();
@@ -96,6 +105,22 @@ export class BanksService {
     httpParams = httpParams.set("bankCode", bankCode);
     httpParams = httpParams.set("bankName", bankName);
     return this.http.post<any>(`${this.GatewayApiUrlPrefix}/common/store_bank_info`, httpParams);
+  }
+
+  getOfficesCommon() {
+    if (!this.offices) {
+      this.offices = new BehaviorSubject(null);
+    }
+    let httpParams = this.commonHttpParams.getCommonHttpParams();
+
+    this.http.post<any>(`${this.GatewayApiUrlPrefix}/common/get_list_office`, httpParams).subscribe((result) => {
+      if (result?.result) {
+        const { listOffice = [] } = result.result;
+
+        this.offices.next(listOffice);
+
+      }
+    });
   }
 
   getData() {
@@ -222,6 +247,11 @@ export class BanksService {
       this.getCardTypes().subscribe((result: any) => {
         if (result) {
           this.documentCardTypes = result;
+        }
+      });
+      this.getOffices().subscribe((result: any) => {
+        if (result) {
+          this.documentOffices = result;
         }
       });
     }
