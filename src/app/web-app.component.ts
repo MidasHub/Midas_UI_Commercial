@@ -26,6 +26,7 @@ import { BanksService } from "./banks/banks.service"
 /** Custom Items */
 import { Alert } from './core/alert/alert.model';
 import { KeyboardShortcutsConfiguration } from './keyboards-shortcut-config';
+import {TourService} from 'ngx-tour-core'
 
 
 /**
@@ -81,7 +82,8 @@ export class WebAppComponent implements OnInit {
     private authenticationService: AuthenticationService,
     private bankService: BanksService,
     private messagingService: FireBaseMessagingService,
-    private deviceService: DeviceDetectorService) {
+    private deviceService: DeviceDetectorService,
+    private tourService:TourService) {
 
   }
 
@@ -295,5 +297,11 @@ export class WebAppComponent implements OnInit {
     window.scroll(0, 0);
     //or document.body.scrollTop = 0;
     //or document.querySelector('body').scrollTo(0,0)
+  }
+
+  /**End Tour */
+  endTour(){
+    console.log('End tour');
+    this.tourService.end()
   }
 }

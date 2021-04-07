@@ -2,6 +2,7 @@
     'sidebar-full': !sidenavCollapsed,
     'sidebar-compact': sidenavCollapsed
     }" 
+    tourAnchor="id1-1"
 >
   <div class="navigation-panel" fxLayout="column" >
     <!-- TODO: Allow customization by organization -->
@@ -94,7 +95,7 @@
         <button mat-menu-item [routerLink]="['/xbrl']">{{ "Toolbar_Component.lblXBRL" | translate }}</button>
       </mat-menu>
 
-
+      <!-- Mat-menu của billpos -->
       <mat-menu #institutionMenu="matMenu" [overlapTrigger]="false">
         <button mat-menu-item routerLink="/clients/customer">{{ "Toolbar_Component.lblClient" | translate }}</button>
         <button mat-menu-item routerLink="/clients/staff">Nhân viên</button>
@@ -147,11 +148,11 @@
           bộ</button>
       </mat-menu>
 
-      <mat-menu #Marketing="matMenu" [overlapTrigger]="false">
+      <mat-menu #MarketingMenu="matMenu" [overlapTrigger]="false">
         <button mat-menu-item routerLink="/marketing/create">Tạo chiển dịch</button>
         <button mat-menu-item routerLink="/marketing/booking">Booking</button>
       </mat-menu>
-
+    <!-- end -->
 
       <!-- Application User Help Menu -->
       <mat-menu #applicationMenu="matMenu" [overlapTrigger]="false">
@@ -190,30 +191,30 @@
 
       <!-- end mat Menu -->
       <mat-nav-list>
-        <!-- new -->
+        <!-- new: Billpos Item -->
         <mat-list-item class="tab-link" [matMenuTriggerFor]="institutionMenu" #institutionMenuTrigger="matMenuTrigger">
           <mat-icon matListIcon><i class="fas fa-list-ol"></i>
           </mat-icon>
           <a matLine>{{ "Toolbar_Component.labelInstitution" | translate }}</a>
         </mat-list-item>
 
-        <!-- Menu danh cho các user Admin -->
-        <mat-list-item class="tab-link" [matMenuTriggerFor]="POSPartnerMenu" #institutionMenuTrigger="matMenuTrigger">
+        
+        <mat-list-item class="tab-link" [matMenuTriggerFor]="POSPartnerMenu" #POSPartnerMenuTrigger="matMenuTrigger">
           <mat-icon matListIcon><i class="fas fa-hands-helping"></i></mat-icon>
           <a matLine>Máy POS và đối tác</a>
         </mat-list-item>
-        <mat-list-item class="tab-link" [matMenuTriggerFor]="transactionMenu" #institutionMenuTrigger="matMenuTrigger">
+        <mat-list-item class="tab-link" [matMenuTriggerFor]="transactionMenu" #transactionMenuTrigger="matMenuTrigger">
           <mat-icon matListIcon><i class="fas fa-money-check-alt"></i></mat-icon>
           <a matLine>Giao dịch</a>
         </mat-list-item>
 
-        <mat-list-item class="tab-link" [matMenuTriggerFor]="BookingMenu" #institutionMenuTrigger="matMenuTrigger">
+        <mat-list-item class="tab-link" [matMenuTriggerFor]="BookingMenu" #BookingMenuTrigger="matMenuTrigger">
           <mat-icon matListIcon><i class="fas fa-book-medical"></i></mat-icon>
           <a matLine>Booking</a>
         </mat-list-item>
 
-        <mat-list-item *midasHasActiveModule="'campaignModule'" class="tab-link" [matMenuTriggerFor]="Marketing"
-          #institutionMenuTrigger="matMenuTrigger"> <label *midasHasPermission="'POS_UPDATE'">
+        <mat-list-item *midasHasActiveModule="'campaignModule'" class="tab-link" [matMenuTriggerFor]="MarketingMenu"
+          #MarketingMenuTrigger="matMenuTrigger"> <label *midasHasPermission="'POS_UPDATE'">
             <mat-icon matListIcon><i class="fas fa-ad"></i></mat-icon>
             <a matLine>Marketing</a>
           </label>
