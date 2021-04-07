@@ -14,10 +14,11 @@ const httpOptions = {
     'Fineract-Platform-TenantId': environment.fineractPlatformTenantId
   }
 };
-
+const accessToken = JSON.parse( sessionStorage.getItem('midasCredentials') || localStorage.getItem('midasCredentials'));
 const httpOptionsGateway = {
   headers: {
-    'Gateway-TenantId': environment.GatewayTenantId
+    'Gateway-TenantId': environment.GatewayTenantId,
+    'Authorization':'Basic '+ accessToken.base64EncodedAuthenticationKey
   }
 };
 
