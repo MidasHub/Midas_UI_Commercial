@@ -1,5 +1,4 @@
 <mat-toolbar fxLayout="row" color="primary" id="midas-toolbar">
-
   <div class="app-brand m-r-20" [routerLink]="['/home']" *ngIf="!this.sidenav.opened">
     <img src="../../../../assets/images/Midas-logo.png" alt="app-logo" class="app-logo" />
     <span class="app-logo-text text-muted">MIDAS</span>
@@ -8,35 +7,47 @@
   <button mat-mini-fab *ngIf="!sidenavCollapsed" (click)="toggleSidenav()" matTooltip="Bật menu">
     <fa-icon icon="bars" size="lg"></fa-icon>
   </button>
+  <div class="m-l-15">
+    <button
+      matTooltip="Quản lý Interchange"
+      mat-mini-fab
+      routerLink="/clients/ic-client/general"
+      [queryParams]="{ typeViewClient: 'view', clientType: 'ic' }"
+    >
+      <fa-icon icon="network-wired" size="lg"></fa-icon>
+    </button>
+  </div>
 
-  <button mat-menu-item routerLink="/clients/ic-client/general"
-  [queryParams]="{typeViewClient:'view' ,clientType:'ic' }" >Quản lý Interchange</button>
-
-
-  <!-- <button mat-mini-fab *ngIf="sidenav.opened" (click)="toggleSidenavCollapse()" matTooltip="Toggle Collapse"
-    fxHide.lt-md="true">
-    <fa-icon *ngIf="!sidenavCollapsed" icon="chevron-left"></fa-icon>
-    <fa-icon *ngIf="sidenavCollapsed" icon="chevron-right"></fa-icon>
-  </button> -->
-  <div fxFlex fxLayout="row" fxLayoutAlign="end around" fxLayoutAlign.lt-md="end center" *ngIf="this.isDesktop" class = "m-r-15">
+  <div
+    fxFlex
+    fxLayout="row"
+    fxLayoutAlign="end around"
+    fxLayoutAlign.lt-md="end center"
+    *ngIf="this.isDesktop"
+    class="m-r-15"
+  >
     <!-- <span ></span> -->
 
+    <midas-theme-picker fxHide.lt-md class="m-r-15"></midas-theme-picker>
 
-    <midas-theme-picker fxHide.lt-md class = "m-r-15"></midas-theme-picker>
-
-    <midas-notifications-tray fxHide.lt-md class = "m-r-15"> </midas-notifications-tray >
+    <midas-notifications-tray fxHide.lt-md class="m-r-15"> </midas-notifications-tray>
     <!-- <br /> -->
-    <button mat-mini-fab fxHide.lt-md mat-icon-button [matMenuTriggerFor]="applicationMenu" class = "m-r-15" matTooltip="{{ currentUser.username }}">
-      <div fxLayout="column" fxLayoutAlign="center center" style="margin:0;padding:0"><i class="fas fa-user-cog"
-          style="font-size:larger;margin:0;padding:0"></i>
+    <button
+      mat-mini-fab
+      fxHide.lt-md
+      mat-icon-button
+      [matMenuTriggerFor]="applicationMenu"
+      class="m-r-15"
+      matTooltip="{{ currentUser.username }}"
+    >
+      <div fxLayout="column" fxLayoutAlign="center center" style="margin: 0; padding: 0">
+        <i class="fas fa-user-cog" style="font-size: larger; margin: 0; padding: 0"></i>
         <!-- <span style="font-size:0.7rem;line-height:1rem">{{ currentUser.username }}</span> -->
       </div>
     </button>
-    </div>
+  </div>
 
-    <midas-user-account-info fxLayout="row" style="min-width: 10rem"></midas-user-account-info>
-
-
+  <midas-user-account-info fxLayout="row" style="min-width: 10rem"></midas-user-account-info>
 </mat-toolbar>
 
 <!-- Application User Help Menu -->
@@ -73,5 +84,3 @@
     <span>{{ "Toolbar_Component.lblSignOut" | translate }}</span>
   </button>
 </mat-menu>
-
-
