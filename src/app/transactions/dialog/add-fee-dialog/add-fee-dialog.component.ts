@@ -7,6 +7,7 @@ import { AlertService } from "../../../core/alert/alert.service";
 import { MidasClientService } from "../../../midas-client/midas-client.service";
 import { GroupsService } from "app/groups/groups.service";
 import { ConfirmDialogComponent } from "../coifrm-dialog/confirm-dialog.component";
+import { SavingsService } from "app/savings/savings.service";
 
 @Component({
   selector: "midas-add-fee-dialog",
@@ -51,6 +52,7 @@ export class AddFeeDialogComponent implements OnInit {
     private midasClientServices: MidasClientService,
     private groupsService: GroupsService,
     private dialog: MatDialog,
+    private savingsService: SavingsService
   ) {
     this.txnCode = data.data?.txnCode;
     this.amountPaidBooking = data.data?.amountPaid;
@@ -86,37 +88,36 @@ export class AddFeeDialogComponent implements OnInit {
       this.midasClientServices.getListSavingAccountByUserId().subscribe((result) => {
         this.accountsPaid = result?.result?.listSavingAccount;
         this.showGet = true;
-      this.formDialogPaid.get("amountPaid").enable();
-      this.transactionFee = this.transactions.find((v) => v.txnPaymentType === "IN");
-      this.transactionPaid = this.transactions.find((v) => v.txnPaymentType === "OUT");
+        this.formDialogPaid.get("amountPaid").enable();
+        this.transactionFee = this.transactions.find((v) => v.txnPaymentType === "IN");
+        this.transactionPaid = this.transactions.find((v) => v.txnPaymentType === "OUT");
 
-      if (!this.transactionPaid) {
-        this.formDialogPaid.get("amountPaid").setValue(0);
-      } else {
-        this.formDialogPaid.get("amountPaid").setValue(this.transactionPaid?.feeRemain);
-      }
-
-      if (!this.transactionFee) {
-        this.formDialogGet.get("amountGet").setValue(0);
-      } else {
-        this.formDialogGet.get("amountGet").setValue(this.transactionFee?.feeRemain);
-      }
-
-      const AC = paymentCode === "CA" ? 9 : 8;
-      let NoAccount = 0;
-      this.accountsPaid.map((v) => {
-        if (v.productId !== AC) {
-          v.hide = true;
+        if (!this.transactionPaid) {
+          this.formDialogPaid.get("amountPaid").setValue(0);
         } else {
-          v.hide = false;
-          if (NoAccount == 0) {
-            this.formDialogPaid.get("savingAccountPaid").setValue(v.id);
-          }
-          NoAccount += 1;
+          this.formDialogPaid.get("amountPaid").setValue(this.transactionPaid?.feeRemain);
         }
-      });
-      });
 
+        if (!this.transactionFee) {
+          this.formDialogGet.get("amountGet").setValue(0);
+        } else {
+          this.formDialogGet.get("amountGet").setValue(this.transactionFee?.feeRemain);
+        }
+
+        const AC = paymentCode === "CA" ? 9 : 8;
+        let NoAccount = 0;
+        this.accountsPaid.map((v) => {
+          if (v.productId !== AC) {
+            v.hide = true;
+          } else {
+            v.hide = false;
+            if (NoAccount == 0) {
+              this.formDialogPaid.get("savingAccountPaid").setValue(v.id);
+            }
+            NoAccount += 1;
+          }
+        });
+      });
     } else {
       this.showGet = false;
       this.formDialogPaid.get("amountPaid").setValue(this.transactionPaid?.feeRemain - this.transactionFee?.feeRemain);
@@ -153,8 +154,6 @@ export class AddFeeDialogComponent implements OnInit {
         });
       }
     }
-
-
   }
 
   checkAccountFee() {
@@ -312,28 +311,18 @@ export class AddFeeDialogComponent implements OnInit {
     });
     dialog.afterClosed().subscribe((data) => {
       if (data) {
+        form.txnCode = this.txnCode;
+        this.isLoading = true;
+        this.transactionService.paidFeeForTransaction(form).subscribe((result) => {
+          this.isLoading = false;
+          const message = "🎉🎉 Thanh toán phí thành công";
+          const resCheck = this.savingsService.handleResponseApiSavingTransaction(result, message, null);
 
-    form.txnCode = this.txnCode;
-    this.isLoading = true;
-    this.transactionService.paidFeeForTransaction(form).subscribe((result) => {
-      this.isLoading = false;
-      if (result?.result?.status) {
-        this.alertServices.alert({
-          type: "🎉🎉🎉 Thành công !!!",
-          message: "🎉🎉 Thanh toán phí thành công",
-          msgClass: "cssSuccess",
-        });
-        this.dialogRef.close({ status: true });
-      } else {
-        this.alertServices.alert({
-          type: "🚨🚨🚨🚨 Lỗi ",
-          msgClass: "cssDanger",
-          // message: '🚨🚨 Lỗi thanh toán phí, vui lòng liên hệ IT Support để được hổ trợ 🚨🚨',
-          message: result?.error,
+          if (resCheck) {
+            this.dialogRef.close({ status: true });
+          }
         });
       }
     });
-    }
-  });
   }
 }

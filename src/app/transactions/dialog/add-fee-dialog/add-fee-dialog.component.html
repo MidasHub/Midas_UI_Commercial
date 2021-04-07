@@ -2,7 +2,7 @@
 <div mat-dialog-content>
   <span style="color: #e74c3c">{{ messageError }}</span>
   <div class="custom-files-input" fxLayout="column">
-    <div fxLayout="column" *ngIf="transactionPaid" [formGroup]="formDialogPaid">
+    <div fxLayout="column" *ngIf="transactionPaid && transactionPaid.status == 'A' " [formGroup]="formDialogPaid">
       <h3>Tài khoản chi</h3>
       <div fxLayout="row swap" fxLayoutAlign.lt-sm="center" fxLayoutGap="2%" fxLayout.lt-sm="column">
         <mat-form-field fxFlex="30%" *ngIf="formDialogPaid.contains('paymentCode')" class="input_custom">
@@ -41,7 +41,7 @@
         </mat-form-field>
       </div>
     </div>
-    <div fxLayout="column" *ngIf="transactionFee && showGet" [formGroup]="formDialogGet">
+    <div fxLayout="column" *ngIf="transactionFee && showGet && transactionFee.status == 'A'" [formGroup]="formDialogGet">
       <h3>Tài khoản nhận</h3>
       <div fxLayout="row swap" fxLayoutAlign.lt-sm="center" fxLayoutGap="2%" fxLayout.lt-sm="column">
         <mat-form-field fxFlex="30%" *ngIf="formDialogGet.contains('paymentCodeGet')" class="input_custom">
