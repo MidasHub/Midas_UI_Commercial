@@ -22,6 +22,8 @@ export const environment = {
   GatewayApiUrlPrefix: '/billpos',
   GatewayServerUrl: '',
   GatewayTenantId: te.billposT,
+  NotiGatewayURL: te.defaultNotiURL,
+  NotiGatewayPrefix: '/notification',
   oauth: {
     enabled: false,  // For connecting to Midas using OAuth2 Authentication change the value to true
     serverUrl: ''
@@ -52,4 +54,5 @@ export const environment = {
 environment.serverUrl = `${environment.baseApiUrl}${environment.apiProvider}${environment.apiVersion}`;
 environment.oauth.serverUrl = `${environment.baseApiUrl}${environment.apiProvider}`;
 environment.GatewayServerUrl = `${environment.GatewayApiUrl}`;
+environment.NotiGatewayURL = `${environment.NotiGatewayURL}${environment.NotiGatewayPrefix}`
 

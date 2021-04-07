@@ -11,7 +11,7 @@ export class CustomerbannerComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    console.log('--------', this.childBannerData)
+
   }
 
 }

@@ -21,6 +21,7 @@ let tenant = 'staging';
 let billpostenant = 'staging';
 let defaultbaseURL = 'https://staging.kiotthe.com';
 let defaultbillposURL = 'https://staging.kiotthe.com';
+let defaultNotificationURL="https://staging.kiotthe.com"
 
 let apiProvider = '/midas/api';
 const apiVersion = '/v1';
@@ -44,6 +45,7 @@ export default {
   billposT: billpostenant,
   defaultbaseURL: defaultbaseURL,
   defaultbillposURL: defaultbillposURL,
+  defaultNotiURL:defaultNotificationURL,
   apiProvider: apiProvider,
   apiVersion: apiVersion
 

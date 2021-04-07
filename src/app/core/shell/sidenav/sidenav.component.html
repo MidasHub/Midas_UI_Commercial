@@ -1,36 +1,34 @@
 <div [ngClass]="{
     'sidebar-full': !sidenavCollapsed,
     'sidebar-compact': sidenavCollapsed
-    }" 
-    tourAnchor="id1-1"
->
-  <div class="navigation-panel" fxLayout="column" >
+    }" tourAnchor="id1-1">
+  <div class="navigation-panel" fxLayout="column">
     <!-- TODO: Allow customization by organization -->
-  <div class="mat-elevation-z8">
-    <div class="app-brand p-10" [routerLink]="['/home']">
-      <img src="../../../../assets/images/Midas-logo.png" alt="app-logo" class="app-logo" />
-      <span class="app-logo-text text-muted">MIDAS</span>
-    </div>
+    <div class="mat-elevation-z8">
+      <div class="app-brand p-10" [routerLink]="['/home']">
+        <img src="../../../../assets/images/Midas-logo.png" alt="app-logo" class="app-logo" />
+        <span class="app-logo-text text-muted">MIDAS</span>
+      </div>
 
-    <div class="app-user">
-      <div class="app-user-photo">
-        <!-- TODO: Decision to be taken on providing this feature -->
-        <img src="assets/images/user_placeholder.png" alt="app-user-photo" />
-      </div>
-      <span class="app-user-name mb-05">
-        {{ username }}
-      </span>
-      <div class="app-user-controls">
-        <mifosx-search-tool *midasHasPermission="'ALL_FUNCTIONS'"></mifosx-search-tool>
-        <button class="xs-button" mat-icon-button matTooltip="Settings" [routerLink]="['/settings']">
-          <fa-icon icon="cog"></fa-icon>
-        </button>
-        <button class="xs-button" mat-icon-button matTooltip="Sign Out" (click)="logout()">
-          <fa-icon icon="sign-out-alt"></fa-icon>
-        </button>
+      <div class="app-user">
+        <div class="app-user-photo">
+          <!-- TODO: Decision to be taken on providing this feature -->
+          <img src="assets/images/user_placeholder.png" alt="app-user-photo" />
+        </div>
+        <span class="app-user-name mb-05">
+          {{ username }}
+        </span>
+        <div class="app-user-controls">
+          <mifosx-search-tool *midasHasPermission="'ALL_FUNCTIONS'"></mifosx-search-tool>
+          <button class="xs-button" mat-icon-button matTooltip="Settings" [routerLink]="['/settings']">
+            <fa-icon icon="cog"></fa-icon>
+          </button>
+          <button class="xs-button" mat-icon-button matTooltip="Sign Out" (click)="logout()">
+            <fa-icon icon="sign-out-alt"></fa-icon>
+          </button>
+        </div>
       </div>
     </div>
-  </div>
     <div class="app-sidenav">
       <!-- <div class="mt-1 mb-1 nav-item-sep">
         <mat-divider></mat-divider>
@@ -48,7 +46,7 @@
         <mat-divider></mat-divider>
         <span class="text-muted">Main Items</span>
       </div>
-      <!-- mat menu -->
+      <!-- mat Admin menu -->
       <mat-menu #adminMenu="matMenu" [overlapTrigger]="false">
         <button mat-menu-item [routerLink]="['/users']">{{ "Toolbar_Component.lblUser" | translate }}</button>
         <button mat-menu-item [routerLink]="['/organization']">{{ "Toolbar_Component.lblOrg" | translate }}</button>
@@ -94,7 +92,7 @@
         </button>
         <button mat-menu-item [routerLink]="['/xbrl']">{{ "Toolbar_Component.lblXBRL" | translate }}</button>
       </mat-menu>
-
+      <!-- end admin -->
       <!-- Mat-menu của billpos -->
       <mat-menu #institutionMenu="matMenu" [overlapTrigger]="false">
         <button mat-menu-item routerLink="/clients/customer">{{ "Toolbar_Component.lblClient" | translate }}</button>
@@ -152,7 +150,7 @@
         <button mat-menu-item routerLink="/marketing/create">Tạo chiển dịch</button>
         <button mat-menu-item routerLink="/marketing/booking">Booking</button>
       </mat-menu>
-    <!-- end -->
+      <!-- end -->
 
       <!-- Application User Help Menu -->
       <mat-menu #applicationMenu="matMenu" [overlapTrigger]="false">
@@ -198,7 +196,7 @@
           <a matLine>{{ "Toolbar_Component.labelInstitution" | translate }}</a>
         </mat-list-item>
 
-        
+
         <mat-list-item class="tab-link" [matMenuTriggerFor]="POSPartnerMenu" #POSPartnerMenuTrigger="matMenuTrigger">
           <mat-icon matListIcon><i class="fas fa-hands-helping"></i></mat-icon>
           <a matLine>Máy POS và đối tác</a>
@@ -221,35 +219,34 @@
         </mat-list-item>
 
         <div *midasHasPermission="'ALL_FUNCTIONS'">
-        <mat-list-item class="tab-link" [matMenuTriggerFor]="accountingMenu"
-          #accountingMenuTrigger="matMenuTrigger">
-          <mat-icon matListIcon>
-            <i class="fas fa-users-cog"></i>
-          </mat-icon>
-          <a matLine> {{ "Toolbar_Component.lblAdmin" | translate }}</a>
-        </mat-list-item>       
+          <mat-list-item class="tab-link" [matMenuTriggerFor]="accountingMenu" #accountingMenuTrigger="matMenuTrigger">
+            <mat-icon matListIcon>
+              <i class="fas fa-users-cog"></i>
+            </mat-icon>
+            <a matLine> {{ "Toolbar_Component.lblAdmin" | translate }}</a>
+          </mat-list-item>
 
-        <mat-list-item *midasHasActiveModule="'billModule'" [routerLink]="['/bills']">
-          <mat-icon  matListIcon>
-            <i class="fas fa-receipt"></i>
-          </mat-icon>
-          <a  matLine>Hóa đơn đầu vào</a>
-        </mat-list-item>
+          <mat-list-item *midasHasActiveModule="'billModule'" [routerLink]="['/bills']">
+            <mat-icon matListIcon>
+              <i class="fas fa-receipt"></i>
+            </mat-icon>
+            <a matLine>Hóa đơn đầu vào</a>
+          </mat-list-item>
 
-        <mat-list-item  [routerLink]="['/banks']">
-          <mat-icon matListIcon>
-            <fa-icon icon="university" size="sm"></fa-icon>
-          </mat-icon>
-          <a matLine>Ngân hàng</a>
-        </mat-list-item>
-      </div>
+          <mat-list-item [routerLink]="['/banks']">
+            <mat-icon matListIcon>
+              <fa-icon icon="university" size="sm"></fa-icon>
+            </mat-icon>
+            <a matLine>Ngân hàng</a>
+          </mat-list-item>
+        </div>
         <mat-list-item [routerLink]="['/checker-inbox-and-tasks/checker-inbox']">
           <mat-icon matListIcon>
             <i class="fa fa-check"></i>
           </mat-icon>
           <a matLine>Phê duyệt</a>
         </mat-list-item>
-        
+
         <mat-list-item [routerLink]="['/notifications']">
           <mat-icon matListIcon>
             <fa-icon icon="bell" size="sm"></fa-icon>
@@ -263,7 +260,7 @@
           </mat-icon>
           <a matLine>Hỗ trợ</a>
         </mat-list-item>
-        
+
         <!-- <mat-list-item [routerLink]="['/dashboard']">
           <mat-icon matListIcon>
             <fa-icon icon="tachometer-alt" size="sm"></fa-icon>
@@ -307,7 +304,7 @@
           </mat-icon>
           <a matLine>Keyboard Shortcuts</a>
         </mat-list-item> -->
-        
+
       </mat-nav-list>
     </div>
   </div>

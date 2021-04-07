@@ -1,14 +1,17 @@
 <mat-card>
-  <!-- <mat-label>Thực hiện giao dịch</mat-label> -->
+ 
 
   <div class="example-container " >
     <mat-form-field style="width: 100%; "  >
-      <mat-label>Tìm kiếm khách hàng, đại lý thực hiện giao dịch</mat-label>
+      <mat-label>Tìm kiếm khách hàng lẻ thực hiện giao dịch</mat-label>
       <input type="text" matInput #querySearchAll (change)=" this.searchClientAndGroup(querySearchAll.value);"
              placeholder="Tìm kiếm theo tên, số CMND/CCCD ,số thẻ, số điện thoại">
 
     </mat-form-field>
   </div>
+
+
+
   <div class="example-container " *ngIf="showSearchTable">
 
     <mat-table   [dataSource]="dataSource" matSort>
