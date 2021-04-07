@@ -43,7 +43,7 @@ const initialData: PeriodicElements[] = [
 })
 export class CreateTerminalsComponent implements OnInit {
   @ViewChild(MatSort) sort: MatSort;
-  @ViewChild(MatPaginator) paginator: MatPaginator;
+  // @ViewChild(MatPaginator) paginator: MatPaginator;
 
   displayedColumns: string[] = [
     "Office",
@@ -118,6 +118,8 @@ export class CreateTerminalsComponent implements OnInit {
       limitAmount: ["", [Validators.required,Validators.min(1000000),Validators.max(100000000000)]],
       officeSelect:[""],
       typeOfTransaction:["ALL"],
+      banksCheck: [[]],
+      cardsCheck: [[]],
     });
     this.createTerminalForm.get("terminalId").valueChanges.subscribe(data => {
       this.createTerminalForm.get("terminalCode").setValue(data);
@@ -158,7 +160,6 @@ export class CreateTerminalsComponent implements OnInit {
     this.dataSource.data = this.posLimits;
     //this.cdr.detectChanges();
     this.dataSource.sort = this.sort;
-    this.dataSource.paginator = this.paginator;
   }
 
   applyFilter(filterValue: string) {
@@ -178,7 +179,7 @@ export class CreateTerminalsComponent implements OnInit {
       dateFormat: "dd/MM/yyyy",
       listLimit: JSON.stringify(this.dataSource.data),
     };
-    
+
     this.terminalsService.save(data).subscribe((response: any) => {
       if (response.statusCode != "success") {
         const openErrorLogDialog = this.dialog.open(ErrorDialogComponent, {
@@ -228,7 +229,7 @@ export class CreateTerminalsComponent implements OnInit {
     const limitAmount  = this.createTerminalForm.value.limitAmount;
     this.posLimits = this.dataSource.data;
     const office = this.offices.find((i: any) => i.officeId === officeId);
-    
+
     this.cardTypes.forEach((card: any) => {
       const limit = {
         officeId : office.officeId,
@@ -252,7 +253,6 @@ export class CreateTerminalsComponent implements OnInit {
     });
     this.dataSource.data = this.posLimits;
     this.dataSource.sort = this.sort;
-    this.dataSource.paginator = this.paginator;
   }
   reset() {
       this.dataSource.data = [];

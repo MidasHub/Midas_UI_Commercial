@@ -1,12 +1,13 @@
-import { AfterViewInit, Component, Inject, OnInit } from "@angular/core";
+import { Component, Inject, OnInit } from "@angular/core";
 import { TransactionService } from "../../transaction.service";
 import { FormBuilder, FormGroup } from "@angular/forms";
-import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
-import { ClientsService } from "../../../clients/clients.service";
+import { MAT_DIALOG_DATA, MatDialogRef, MatDialog } from "@angular/material/dialog";
 import { AuthenticationService } from "../../../core/authentication/authentication.service";
 import { AlertService } from "../../../core/alert/alert.service";
 import { MidasClientService } from "../../../midas-client/midas-client.service";
 import { GroupsService } from "app/groups/groups.service";
+import { ConfirmDialogComponent } from "../coifrm-dialog/confirm-dialog.component";
+import { SavingsService } from "app/savings/savings.service";
 
 @Component({
   selector: "midas-add-fee-dialog",
@@ -25,6 +26,7 @@ export class AddFeeDialogComponent implements OnInit {
   transactionFee: any;
   transactionPaid: any;
   showPaid = false;
+
   showGet = true;
   showCashAccountPaid = true;
   selectedPaymentTypePaid = "";
@@ -48,7 +50,9 @@ export class AddFeeDialogComponent implements OnInit {
     private authenticationService: AuthenticationService,
     private alertServices: AlertService,
     private midasClientServices: MidasClientService,
-    private groupsService: GroupsService
+    private groupsService: GroupsService,
+    private dialog: MatDialog,
+    private savingsService: SavingsService
   ) {
     this.txnCode = data.data?.txnCode;
     this.amountPaidBooking = data.data?.amountPaid;
@@ -77,62 +81,79 @@ export class AddFeeDialogComponent implements OnInit {
   }
 
   checkAccountAndAmountPaid() {
+    debugger;
     this.formDialogPaid.value;
     const paymentCode = this.formDialogPaid.get("paymentCode").value;
     if (paymentCode !== "DE") {
-      this.showGet = true;
-      this.formDialogPaid.get("amountPaid").enable();
-      this.transactionFee = this.transactions.find((v) => v.txnPaymentType === "IN");
-      this.transactionPaid = this.transactions.find((v) => v.txnPaymentType === "OUT");
+      this.midasClientServices.getListSavingAccountByUserId().subscribe((result) => {
+        this.accountsPaid = result?.result?.listSavingAccount;
+        this.showGet = true;
+        this.formDialogPaid.get("amountPaid").enable();
+        this.transactionFee = this.transactions.find((v) => v.txnPaymentType === "IN");
+        this.transactionPaid = this.transactions.find((v) => v.txnPaymentType === "OUT");
 
-      if (!this.transactionPaid) {
-        this.formDialogPaid.get("amountPaid").setValue(0);
-      } else {
-        this.formDialogPaid.get("amountPaid").setValue(this.transactionPaid?.feeRemain);
-      }
+        if (!this.transactionPaid) {
+          this.formDialogPaid.get("amountPaid").setValue(0);
+        } else {
+          this.formDialogPaid.get("amountPaid").setValue(this.transactionPaid?.feeRemain);
+        }
 
-      if (!this.transactionFee) {
-        this.formDialogGet.get("amountGet").setValue(0);
-      } else {
-        this.formDialogGet.get("amountGet").setValue(this.transactionFee?.feeRemain);
-      }
+        if (!this.transactionFee) {
+          this.formDialogGet.get("amountGet").setValue(0);
+        } else {
+          this.formDialogGet.get("amountGet").setValue(this.transactionFee?.feeRemain);
+        }
+
+        const AC = paymentCode === "CA" ? 9 : 8;
+        let NoAccount = 0;
+        this.accountsPaid.map((v) => {
+          if (v.productId !== AC) {
+            v.hide = true;
+          } else {
+            v.hide = false;
+            if (NoAccount == 0) {
+              this.formDialogPaid.get("savingAccountPaid").setValue(v.id);
+            }
+            NoAccount += 1;
+          }
+        });
+      });
     } else {
       this.showGet = false;
       this.formDialogPaid.get("amountPaid").setValue(this.transactionPaid?.feeRemain - this.transactionFee?.feeRemain);
       if (!this.isBATCH) {
-
         this.formDialogPaid.get("amountPaid").disable();
       } else {
-
+        this.accountsPaid = [];
         let groupId = this.transactions[0].agencyId;
         this.groupsService.getGroupAccountsData(groupId).subscribe((savings) => {
           this.clientAccount = savings?.savingsAccounts;
-          this.clientAccount.filter((account: any) => {
-            return (account.status.id = 300);
-          });
-          this.accountsPaid = this.clientAccount;
-          if (this.accountsPaid.length > 0) {
-            this.formDialogPaid.get("savingAccountPaid").setValue(this.accountsPaid[0].id);
+          let savingAccountId = null;
+          if (this.clientAccount) {
+            for (let index = 0; index < this.clientAccount.length; index++) {
+              if (this.clientAccount[index].status.id == 300) {
+                savingAccountId = this.clientAccount[index].id;
+              }
+            }
+
+            if (savingAccountId != null) {
+              this.accountsPaid = this.clientAccount;
+              this.formDialogPaid.get("savingAccountPaid").setValue(savingAccountId);
+            } else {
+              this.alertServices.alert({
+                message: "Đại lý hưa có tài khoản thanh toán còn hoạt động, vui lòng thêm tài khoản trước!",
+                msgClass: "cssWarning",
+              });
+            }
+          } else {
+            this.alertServices.alert({
+              message: "Đại lý chưa có tài khoản thanh toán, vui lòng thêm tài khoản trước!",
+              msgClass: "cssWarning",
+            });
           }
         });
       }
     }
-    this.formDialogPaid.get("savingAccountPaid").setValue("");
-    const AC = paymentCode === "CA" ? 9 : 8;
-    let NoAccount = 0;
-    this.accountsPaid.map((v) => {
-      if (v.productId !== AC) {
-        v.hide = true;
-      } else {
-        v.hide = false;
-        if (NoAccount == 0 && paymentCode === "DE") {
-          this.formDialogPaid.get("savingAccountPaid").setValue(v.id);
-        }
-        NoAccount += 1;
-      }
-    });
-
-    this.formDialogPaid.value;
   }
 
   checkAccountFee() {
@@ -166,19 +187,23 @@ export class AddFeeDialogComponent implements OnInit {
         }
       }
     } else {
-      const AC = value === "CA" ? 9 : 8;
-      this.accountsFee = this.accountsPaid;
-      let NoAccount = 0;
-      this.accountsFee.map((v) => {
-        if (v.productId !== AC) {
-          v.hide = true;
-        } else {
-          v.hide = false;
-          if (NoAccount == 0) {
-            this.formDialogGet.get("savingAccountGet").setValue(v.id);
+      this.midasClientServices.getListSavingAccountByUserId().subscribe((result) => {
+        this.accountsFee = result?.result?.listSavingAccount;
+
+        const AC = value === "CA" ? 9 : 8;
+        // this.accountsFee = this.accountsPaid;
+        let NoAccount = 0;
+        this.accountsFee.map((v) => {
+          if (v.productId !== AC) {
+            v.hide = true;
+          } else {
+            v.hide = false;
+            if (NoAccount == 0) {
+              this.formDialogGet.get("savingAccountGet").setValue(v.id);
+            }
+            NoAccount += 1;
           }
-          NoAccount += 1;
-        }
+        });
       });
     }
   }
@@ -278,23 +303,24 @@ export class AddFeeDialogComponent implements OnInit {
       ...this.formDialogPaid.value,
     };
 
-    form.txnCode = this.txnCode;
-    this.isLoading = true;
-    this.transactionService.paidFeeForTransaction(form).subscribe((result) => {
-      this.isLoading = false;
-      if (result?.result?.status) {
-        this.alertServices.alert({
-          type: "🎉🎉🎉 Thành công !!!",
-          message: "🎉🎉 Thanh toán phí thành công",
-          msgClass: "cssSuccess",
-        });
-        this.dialogRef.close({ status: true });
-      } else {
-        this.alertServices.alert({
-          type: "🚨🚨🚨🚨 Lỗi ",
-          msgClass: "cssDanger",
-          // message: '🚨🚨 Lỗi thanh toán phí, vui lòng liên hệ IT Support để được hổ trợ 🚨🚨',
-          message: result?.error,
+    const dialog = this.dialog.open(ConfirmDialogComponent, {
+      data: {
+        message: "Bạn chắc chắn muốn lưu giao dịch",
+        title: "Hoàn thành giao dịch",
+      },
+    });
+    dialog.afterClosed().subscribe((data) => {
+      if (data) {
+        form.txnCode = this.txnCode;
+        this.isLoading = true;
+        this.transactionService.paidFeeForTransaction(form).subscribe((result) => {
+          this.isLoading = false;
+          const message = "🎉🎉 Thanh toán phí thành công";
+          const resCheck = this.savingsService.handleResponseApiSavingTransaction(result, message, null);
+
+          if (resCheck) {
+            this.dialogRef.close({ status: true });
+          }
         });
       }
     });

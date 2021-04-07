@@ -1,74 +1,53 @@
-<div fxLayout="column">
+<div fxLayout="column"  tourAnchor="id4">
 
   <div fxLayout="row" fxLayout.lt-md="column" fxLayoutAlign="start start" fxLayoutGap="2%"
-    class="fluidcontainer m-b-10 p-10" fxFlex="100" >
+    class="fluidcontainer m-b-10 p-10" fxFlex="100"  tourAnchor="id5">
+
     <!-- banner default  -->
-    <div  fxLayout="column" *ngIf="!this.show62bBanner">
+    <div  fxLayout="column" *ngIf="!this.showBanner|| !this.isDesktop">
       <!-- <button mat-raised-button color="primary" [routerLink]="['/dashboard']">
         <fa-icon icon="tachometer-alt"></fa-icon>&nbsp;&nbsp;
         {{'Home_Component.btnDashboard'| translate}}
       </button> -->
-      <div fxLayout="row" fxLayout.lt-md="column" fxLayoutAlign="start start" fxLayoutGap="1%" class=" p-l-20">
-        <button mat-raised-button color="primary" [routerLink]="['/clients/create']" [queryParams]="{go_back:'home'}" style="width:185px">
+      <div fxLayout="row" fxLayout.lt-md="column" fxLayoutAlign="start start" fxLayoutGap="1%" class=" p-l-20"  >
+        <button mat-raised-button color="primary" [routerLink]="['/clients/create']" 
+        [queryParams]="{go_back:'home'}" style="width:185px" 
+       >
           <fa-icon icon="user-plus"></fa-icon> &nbsp;&nbsp;
           {{'Home_Component.btnNewCustomer'| translate}}
         </button>
-        <button mat-raised-button color="primary" [routerLink]="['/groups/create']" [queryParams]="{go_back:'home'}" style="width:185px">
+        <button mat-raised-button color="primary" [routerLink]="['/groups/create']" 
+        [queryParams]="{go_back:'home'}" style="width:185px"
+       >
           <i class="fab fa-google-plus-g"></i> &nbsp;&nbsp;
           {{'Home_Component.btnNewGroup'| translate}}
         </button>
       </div>
-      <h1 class=" p-l-20">{{'Home_Component.welcome'| translate}} <strong>{{username}}</strong>! </h1>
+      <h1 class=" p-l-20">{{'Home_Component.welcome'| translate}} <strong>{{childBannerData.userName}}</strong>! </h1>
     </div>
-    <!-- <div fxFlex fxLayout="row"> -->
+    
 
-    <!-- Banner dành riêng cho 62B -->
-    <mat-card class="mat-elevation-z8" style="padding: 0px;width:100%" *ngIf="this.show62bBanner">
-      <mat-card-content class="p-0 bannerbg" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10%">
-        <div>
-
-          <div class="sign">
-            <span class="sign__word  p-l-20" style="font-size: 1rem;">
-              <h1>{{'Home_Component.welcome'| translate}} <strong>{{username}}</strong>! </h1>
-            </span>
-
-          </div>
-          <div fxLayout="row" fxLayout.lt-md="column" fxLayoutAlign="center center" fxLayoutGap="2%"
-            class=" p-l-20 p-t-15">
-
-            <a class="link" [routerLink]="['/clients/create']" [queryParams]="{go_back:'home'}">
-              <i class="fas fa-user-plus"></i>&nbsp;
-              {{'Home_Component.btnNewCustomer'| translate}}
-            </a>
-            <a class="link" [routerLink]="['/groups/create']" [queryParams]="{go_back:'home'}">
-              <i class="fab fa-google-plus-g"></i>&nbsp;
-              {{'Home_Component.btnNewGroup'| translate}}
-            </a>
-          </div>
-
-
-        </div>
-        <div class="sign">
-          <span class="sign__word">200</span>
-          <!-- <span class="sign__word">festival</span>
-        <span class="sign__word">today</span> -->
-        </div>
-      </mat-card-content>
-    </mat-card>
-    <!-- </div> -->
+    <!-- Banner dành riêng cho đơn vị theo yêu cầu không hiện ở màn hình điện thoại -->
+    <midas-customerbanner 
+      [childBannerData]="this.childBannerData"  
+      *ngIf="this.showBanner && this.isDesktop" 
+      style="padding: 0px;width:100%" 
+      
+      ></midas-customerbanner>
+   
 
   </div>
 
 
 
   <!-- Màn hình chính -->
-  <div fxLayout="row" fxLayout.lt-md="column" fxLayoutAlign="space-around start " class="fluidcontainer  m-b-10"
-    fxFlex="100">
+  <div fxLayout="row" fxLayout.lt-md="column" fxLayoutAlign="space-around start " class="fluidcontainer  m-b-15"
+    fxFlex="100" >
 
-    <div fxLayout="row" fxLayout.lt-md="column" class="fluidcontainer p-10 m-b-20" fxFlex="100" fxLayoutGap="1%">
+    <div fxLayout="row" fxLayout.lt-md="column" class="fluidcontainer p-10 m-b-20" fxFlex="100" fxLayoutGap="1%" >
 
       <!-- Ô tìm kiếm KH -->
-      <mat-card class=" m-b-10" fxFlex="59" fxFlex.lt-md="95">
+      <mat-card class=" m-b-10" fxFlex="59" fxFlex.lt-md="95"  tourAnchor="id6">
         <mat-card-header>
           <mat-card-title class="title">
             <h3>Tìm thẻ để thực hiện giao dịch cho khách hàng:</h3>
@@ -94,7 +73,7 @@
         </mat-card-content>
 
       </mat-card>
-      <div fxLayout="column" fxFlex="39" fxFlex.lt-md="95">
+      <div fxLayout="column" fxFlex="39" fxFlex.lt-md="95"  tourAnchor="id7">
 
         <!-- Ô calendar -->
         <mat-card class="" fxFlex="100">

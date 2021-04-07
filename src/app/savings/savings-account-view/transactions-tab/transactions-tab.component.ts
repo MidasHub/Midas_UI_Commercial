@@ -1,6 +1,5 @@
 /** Angular Imports */
-import { AfterViewInit, Component, OnInit, ViewChild } from "@angular/core";
-import { MatTableDataSource } from "@angular/material/table";
+import {  Component, OnInit, ViewChild } from "@angular/core";
 import { ActivatedRoute, Params, Router } from "@angular/router";
 import { FormBuilder, FormControl, FormGroup } from "@angular/forms";
 import { SavingsService } from "../../savings.service";
@@ -9,7 +8,6 @@ import { DatePipe } from "@angular/common";
 import * as moment from "moment";
 import { animate, state, style, transition, trigger } from "@angular/animations";
 import { MatDialog } from "@angular/material/dialog";
-import { ConfirmDialogComponent } from "../../../transactions/dialog/coifrm-dialog/confirm-dialog.component";
 import { UpdateSavingAccountComponent } from "../form-dialog/update-saving-account/update-saving-account.component";
 import { AlertService } from "../../../core/alert/alert.service";
 import { MatPaginator } from "@angular/material/paginator";
@@ -135,10 +133,10 @@ export class TransactionsTabComponent implements OnInit {
       txnCode: txnCode,
       paymentDetail: paymentDetail,
     };
-    this.router.navigate([], {
-      queryParams: queryParams,
-      queryParamsHandling: "merge", // remove to replace all query params by provided
-    });
+    // this.router.navigate([], {
+    //   queryParams: queryParams,
+    //   queryParamsHandling: "merge", // remove to replace all query params by provided
+    // });
     this.dataSource = [];
     this.isLoading = true;
 

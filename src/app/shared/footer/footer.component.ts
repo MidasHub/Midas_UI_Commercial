@@ -8,7 +8,7 @@ import { environment } from 'environments/environment';
  *  Footer component.
  */
 @Component({
-  selector: 'mifosx-footer',
+  selector: 'midas-footer',
   templateUrl: './footer.component.html',
   styleUrls: ['./footer.component.scss']
 })

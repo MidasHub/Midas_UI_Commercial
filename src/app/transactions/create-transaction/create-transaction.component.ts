@@ -165,7 +165,7 @@ export class CreateTransactionComponent implements OnInit {
 
   getTerminalListEnoughBalance(amountTransaction: string) {
     const amount = this.transactionService.formatLong(amountTransaction);
-    this.transactionService.getListTerminalAvailable(amount, 'LE').subscribe((data: any) => {
+    this.transactionService.getListTerminalAvailable(amount, "LE").subscribe((data: any) => {
       this.transactionInfo.listTerminal = data.result.listTerminal;
     });
   }
@@ -247,7 +247,7 @@ export class CreateTransactionComponent implements OnInit {
           if (data.statusCode == 666) {
             if (typeof data.error !== "undefined" && data.error !== "") {
               this.alertService.alert({
-                message: `Chú Ý: Giao dịch không vượt hạn mức : ${this.formatCurrency(data.error)} VNĐ`,
+                message: `${data.error}`,
                 msgClass: "cssDanger",
                 hPosition: "center",
               });

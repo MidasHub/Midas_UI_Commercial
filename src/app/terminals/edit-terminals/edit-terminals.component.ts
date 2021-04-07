@@ -47,7 +47,7 @@ export class EditTerminalsComponent implements OnInit, AfterViewInit {
   dataSource = new MatTableDataSource();
   displayedColumns: string[] = ['officeName', 'CardType', 'FeePOS',
     'FeeCost', 'FeeMin', 'FeeMax', 'MaxLimitAmountTransaction', 'LevelTransactionCard'];
-  
+
   typeOfTransactions : typeOfTransaction[] = [
     {value:'ALL', valueDesc:'khách hàng Sỉ & Lẻ'},
     {value:'SI', valueDesc:'khách hàng Sỉ'},
@@ -96,9 +96,10 @@ export class EditTerminalsComponent implements OnInit, AfterViewInit {
       'txnRateMax': this.ItemPosLimitList[0].txnRateMax,
       'maxLimitAmount': this.ItemPosLimitList[0].maxLimitAmount,
       'levelLimit': this.ItemPosLimitList[0].levelLimit,
-      'typeOfTransaction': this.ItemPos.typeOfTransaction
+      'typeOfTransaction': this.ItemPos.typeOfTransaction,
+      'banksCheck': this.terminalData.bankCheckEntitys.map((bank: any) => bank.bankCode),
+      'cardsCheck': this.terminalData.cardCheckEntitys.map((card: any) => card.cardType),
     });
-    debugger
   }
 
   createEditTerminalForm() {
@@ -120,6 +121,8 @@ export class EditTerminalsComponent implements OnInit, AfterViewInit {
       'levelLimit': ['', [Validators.required, Validators.min(1)]],
       'limitAmount': ['', [Validators.required,Validators.min(1000000),Validators.max(100000000000)]],
       'typeOfTransaction':[''],
+      'banksCheck': [this.terminalData.bankCheckEntitys.map((bank: any) => bank.bankCode)],
+      'cardsCheck': [this.terminalData.cardCheckEntitys.map((card: any) => card.cardType)],
     });
   }
   ngAfterViewInit() {
@@ -171,7 +174,7 @@ export class EditTerminalsComponent implements OnInit, AfterViewInit {
     const levelLimit      = this.editTerminalForm.value.levelLimit;
     const limitAmount  = this.editTerminalForm.value.limitAmount;
     this.posLimits = this.dataSource.data;
-    
+
     const office = this.offices.find((i: any) => i.officeId === officeId);
     this.cardTypes.forEach((card: any) => {
       const limit = {

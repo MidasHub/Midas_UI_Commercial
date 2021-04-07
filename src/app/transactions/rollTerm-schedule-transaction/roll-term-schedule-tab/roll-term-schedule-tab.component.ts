@@ -10,6 +10,7 @@ import { CentersService } from "app/centers/centers.service";
 import { ClientsService } from "app/clients/clients.service";
 import { AlertService } from "app/core/alert/alert.service";
 import { AuthenticationService } from "app/core/authentication/authentication.service";
+import { SavingsService } from "app/savings/savings.service";
 import { SettingsService } from "app/settings/settings.service";
 import { ConfirmDialogComponent } from "app/transactions/dialog/coifrm-dialog/confirm-dialog.component";
 import { TransactionService } from "app/transactions/transaction.service";
@@ -114,9 +115,9 @@ export class RollTermScheduleTabComponent implements OnInit {
     private datePipe: DatePipe,
     private settingsService: SettingsService,
     private authenticationService: AuthenticationService,
-    private alertService: AlertService,
     private dialog: MatDialog,
     private banksServices: BanksService,
+    private savingsService: SavingsService,
     private clientServices: ClientsService,
       ) {
     this.formDate = this.formBuilder.group({
@@ -219,24 +220,14 @@ export class RollTermScheduleTabComponent implements OnInit {
       },
     });
     dialog.afterClosed().subscribe((data) => {
+
       if (data) {
         this.transactionService
           .RepaymentRolltermManualTransactionCloseLoan(transactionId, amountPaid)
           .subscribe((result) => {
-            if (result.status === "200") {
-              const message = "Hủy giao dịch " + transactionId + " thành công";
-              this.alertService.alert({
-                msgClass: "cssInfo",
-                message: message,
-              });
-              this.getRollTermScheduleAndCardDueDayInfo();
-            } else {
-              const message = result.error;
-              this.alertService.alert({
-                msgClass: "cssDanger",
-                message: message,
-              });
-            }
+            const message = "Hủy giao dịch " + transactionId + " thành công";
+            this.savingsService.handleResponseApiSavingTransaction(result, message, null);
+            this.getRollTermScheduleAndCardDueDayInfo();
           });
       }
     });

@@ -1,5 +1,5 @@
 <!-- Application Shell -->
-<mat-sidenav-container id="mifosx-shell-container" autosize>
+<mat-sidenav-container id="midas-shell-container" autosize>
 
   <!-- Sidenav -->
   <mat-sidenav
@@ -10,30 +10,33 @@
       'sidebar-compact': sidenavCollapsed
     }"
     [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
-    [mode]="(isHandset$ | async) ? 'over' : 'side'"
+    [mode]="(isHandset$ | async) ? 'over' : 'over'"
     [opened]="!(isHandset$ | async)">
 
-    <mifosx-sidenav [sidenavCollapsed]="sidenavCollapsed"></mifosx-sidenav>
+    <midas-sidenav [sidenavCollapsed]="sidenavCollapsed"></midas-sidenav>
 
   </mat-sidenav>
 
   <!-- Content -->
   <mat-sidenav-content>
 
-    <!-- Toolbar -->
-    <mifosx-toolbar [sidenav]="sidenav" (collapse)="toggleCollapse($event)"
-    class="toolBarCss"
-
-    ></mifosx-toolbar>
     <!-- Progress Bar -->
     <mat-progress-bar [mode]="progressBarMode" class="progressBarCss"></mat-progress-bar>
 
+    
+    <!-- Toolbar -->
+    <midas-toolbar [sidenav]="sidenav" (collapse)="toggleCollapse($event)"
+    class="toolBarCss"
+
+    ></midas-toolbar>
     <!-- Breadcrumb -->
-    <mifosx-breadcrumb class="breadcrumbCss"></mifosx-breadcrumb>
+    <midas-breadcrumb class="breadcrumbCss"></midas-breadcrumb>
+    
+    
     <!-- Content -->
-    <mifosx-content class="contentCss"></mifosx-content>
+    <midas-content class="contentCss"></midas-content>
     <!-- Footer -->
-    <mifosx-footer class="footerCss"></mifosx-footer>
+    <midas-footer class="footerCss"></midas-footer>
 
   </mat-sidenav-content>
 

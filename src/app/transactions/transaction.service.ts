@@ -46,7 +46,7 @@ export class TransactionService {
       }
     }
     return this.http.post<any>(
-      `${this.GatewayApiUrlPrefix}/transaction/repayment_rollterm_manual_transaction`,
+      `${this.GatewayApiUrlPrefix}/transaction/repayment_roll_term_manual_transaction`,
       httpParams
     );
   }
@@ -423,7 +423,7 @@ export class TransactionService {
     httpParams = httpParams.set("amountPaid", amountPaid);
 
     return this.http.post<any>(
-      `${this.GatewayApiUrlPrefix}/transaction/repayment_rollterm_manual_transaction_close_loan`,
+      `${this.GatewayApiUrlPrefix}/transaction/repayment_roll_term_manual_transaction_close_loan`,
       httpParams
     );
   }

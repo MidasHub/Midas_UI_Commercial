@@ -63,8 +63,11 @@ export class SavingsAccountTermsStepComponent implements OnChanges {
         'allowOverdraft': this.savingsAccountProductTemplate.allowOverdraft,
         'enforceMinRequiredBalance': this.savingsAccountProductTemplate.enforceMinRequiredBalance,
         'minRequiredBalance': this.savingsAccountProductTemplate.minRequiredBalance,
-      });
+        'minOverdraftForInterestCalculation': this.savingsAccountProductTemplate.minOverdraftForInterestCalculation || 0,
+        'nominalAnnualInterestRateOverdraft':  this.savingsAccountProductTemplate.nominalAnnualInterestRateOverdraft || 0,
+        'overdraftLimit': this.savingsAccountProductTemplate.overdraftLimit,
 
+      });
       this.setOptions();
     }
 
@@ -75,7 +78,6 @@ export class SavingsAccountTermsStepComponent implements OnChanges {
    * Creates savings account terms form.
    */
   createSavingsAccountTermsForm() {
-
     this.savingsAccountTermsForm = this.formBuilder.group({
       'currencyCode': [{value: '', disabled: true}],
       'decimal': [{value: '',  disabled: true}],

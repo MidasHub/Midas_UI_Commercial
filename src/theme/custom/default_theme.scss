@@ -1,14 +1,14 @@
-@import '~@angular/material/theming';
+@import "~@angular/material/theming";
 // Plus imports for other components in your app.
-@import '../../app/clients/clients-view/clients-view.component-theme.scss';
-@import '../../app/groups/groups-view/groups-view.component-theme.scss';
-@import '../../app/centers/centers-view/centers-view.component-theme.scss';
-@import '../../app/home/dashboard/dashboard.component-theme.scss';
-@import '../../app/loans/loans-view/loans-view.component-theme.scss';
-@import '../../app/savings/savings-account-view/savings-account-view.component-theme.scss';
-@import '../../app/shares/shares-account-view/shares-account-view.component-theme.scss';
-@import '../../app/deposits/fixed-deposits/fixed-deposit-account-view/fixed-deposit-account-view.component-theme.scss';
-@import '../../app/deposits/recurring-deposits/recurring-deposits-account-view/recurring-deposits-account-view.component-theme.scss';
+@import "../../app/clients/clients-view/clients-view.component-theme.scss";
+@import "../../app/groups/groups-view/groups-view.component-theme.scss";
+@import "../../app/centers/centers-view/centers-view.component-theme.scss";
+@import "../../app/home/dashboard/dashboard.component-theme.scss";
+@import "../../app/loans/loans-view/loans-view.component-theme.scss";
+@import "../../app/savings/savings-account-view/savings-account-view.component-theme.scss";
+@import "../../app/shares/shares-account-view/shares-account-view.component-theme.scss";
+@import "../../app/deposits/fixed-deposits/fixed-deposit-account-view/fixed-deposit-account-view.component-theme.scss";
+@import "../../app/deposits/recurring-deposits/recurring-deposits-account-view/recurring-deposits-account-view.component-theme.scss";
 
 // Custom material palette
 $mat-primary: (
@@ -18,8 +18,8 @@ $mat-primary: (
   contrast: (
     100: $dark-primary-text,
     500: $light-primary-text,
-    700: $light-primary-text
-  )
+    700: $light-primary-text,
+  ),
 );
 
 $mat-secondary: (
@@ -29,19 +29,19 @@ $mat-secondary: (
   contrast: (
     100: $dark-primary-text,
     500: $light-primary-text,
-    700: $light-primary-text
-  )
+    700: $light-primary-text,
+  ),
 );
 
 $mat-warn: (
-  100: #FFCDD2,
-  500: #F44336,
-  700: #D32F2F,
+  100: #ffcdd2,
+  500: #f44336,
+  700: #d32f2f,
   contrast: (
     100: $dark-primary-text,
     500: $dark-primary-text,
-    700: $light-primary-text
-  )
+    700: $light-primary-text,
+  ),
 );
 
 $mat-back: (
@@ -51,34 +51,33 @@ $mat-back: (
   contrast: (
     100: $dark-primary-text,
     500: $dark-primary-text,
-    700: $dark-primary-text
-  )
+    700: $dark-primary-text,
+  ),
 );
-
 
 // Include the common styles for Angular Material. We include this here so that you only
 // have to load a single css file for Angular Material in your app.
 // Be sure that you only ever include this mixin once!
 @include mat-core();
 
-
 // Define the palettes for your theme using the Material Design palettes available in palette.scss
 // (imported above). For each palette, you can optionally specify a default, lighter, and darker
 // hue. Available color palettes: https://material.io/design/color/
 $midas-app-primary: mat-palette($mat-primary);
-$midas-app-accent:  mat-palette($mat-secondary);
+$midas-app-accent: mat-palette($mat-secondary);
 
 // The warn palette is optional (defaults to red).
-$midas-app-warn:    mat-palette($mat-warn);
+$midas-app-warn: mat-palette($mat-warn);
 
 // custom background and foreground palettes
 $my-dark-theme-background: (
   status-bar: map_get($mat-blue-grey, 300),
-  app-bar:    map_get($mat-blue-grey, 100),
+  app-bar: map_get($mat-blue-grey, 100),
   background: map_get($mat-blue-grey, 50),
-  hover:      rgba(black, 0.04), // TODO(kara): check style with Material Design UX
-  card:       #f8f8f8,
-  dialog:     white,
+  hover: rgba(black, 0.04),
+  // TODO(kara): check style with Material Design UX
+  card: #f8f8f8,
+  dialog: white,
   disabled-button: rgba(black, 0.12),
   raised-button: map_get($mat-blue-grey, 100),
   focused-button: $dark-focused,
@@ -91,20 +90,20 @@ $my-dark-theme-background: (
 );
 
 $my-dark-theme-foreground: (
-  base:              black,
-  divider:           $dark-dividers,
-  dividers:          $dark-dividers,
-  disabled:          $dark-disabled-text,
-  disabled-button:   rgba(black, 0.26),
-  disabled-text:     $dark-disabled-text,
-  elevation:         black,
-  hint-text:         $dark-disabled-text,
-  secondary-text:    $dark-secondary-text,
-  icon:              rgba(black, 0.54),
-  icons:             rgba(black, 0.54),
-  text:              rgba(black, 1),
-  slider-min:        rgba(black, 0.87),
-  slider-off:        rgba(black, 0.26),
+  base: black,
+  divider: $dark-dividers,
+  dividers: $dark-dividers,
+  disabled: $dark-disabled-text,
+  disabled-button: rgba(black, 0.26),
+  disabled-text: $dark-disabled-text,
+  elevation: black,
+  hint-text: $dark-disabled-text,
+  secondary-text: $dark-secondary-text,
+  icon: rgba(black, 0.54),
+  icons: rgba(black, 0.54),
+  text: rgba(black, 1),
+  slider-min: rgba(black, 0.87),
+  slider-off: rgba(black, 0.26),
   slider-off-active: rgba(black, 0.38),
 );
 
@@ -120,11 +119,9 @@ $my-dark-theme-foreground: (
   );
 }
 
-
 // Create the theme object (a Sass map containing all of the palettes).
 // $midas-app-theme: mat-light-theme($midas-app-primary, $midas-app-accent, $midas-app-warn);
 $midas-app-theme: create-midas-theme($midas-app-primary, $midas-app-accent, $midas-app-warn);
-
 
 // Include theme styles for core and each component used in your app.
 // Alternatively, you can import and @include the theme mixins for each component
@@ -141,8 +138,32 @@ $midas-app-theme: create-midas-theme($midas-app-primary, $midas-app-accent, $mid
 @include recurring-deposits-account-view-component-theme($midas-app-theme);
 
 //Component SCSS
-$drawer-background-color:#f1f1f1;
+$drawer-background-color: rgba(198, 40, 40, 1);
+$background-color: #ececec;
 
-.mat-drawer {
-  background-color: $drawer-background-color
+.mat-sidenav-container {
+  background: $background-color;
+  color: black;
+  .toolBarCss {
+    background: $background-color;
+    color: black;
+  }
+
+  .mat-drawer {
+    background-color: $drawer-background-color;
+    border: 0px;
+    color: white;
+    .navigation-panel {
+      background: $background-color;
+      color: black;
+    }
+    .mat-list-item {
+      color: white;
+    }
+    .app-brand,
+    .app-user {
+      color: black;
+      background-color: white;
+    }
+  }
 }

@@ -26,6 +26,8 @@ import { BanksService } from "./banks/banks.service"
 /** Custom Items */
 import { Alert } from './core/alert/alert.model';
 import { KeyboardShortcutsConfiguration } from './keyboards-shortcut-config';
+import {TourService} from 'ngx-tour-core'
+
 
 /**
  * Firebase Messaging
@@ -80,22 +82,11 @@ export class WebAppComponent implements OnInit {
     private authenticationService: AuthenticationService,
     private bankService: BanksService,
     private messagingService: FireBaseMessagingService,
-    private deviceService: DeviceDetectorService) {
+    private deviceService: DeviceDetectorService,
+    private tourService:TourService) {
 
   }
 
-
-  epicFunction() {
-    this.deviceInfo = this.deviceService.getDeviceInfo();
-    const isMobile = this.deviceService.isMobile();
-    const isTablet = this.deviceService.isTablet();
-    const isDesktopDevice = this.deviceService.isDesktop();
-    log.debug(JSON.stringify(this.deviceInfo));
-    log.debug("is Mobile: " + isMobile);  // returns if the device is a mobile device (android / iPhone / windows-phone etc)
-    log.debug("is Tablet: ", isTablet);  // returns if the device us a tablet (iPad etc)
-    log.debug("is Desktop: ", isDesktopDevice); // returns if the app is running on a Desktop browser.
-
-  }
 
   //Variables for Firebase messsage
   message: any
@@ -221,8 +212,20 @@ export class WebAppComponent implements OnInit {
 
     // Get client location
     this.getLocation();
-    this.epicFunction();
+    this.loadDeviceData();
     // ----- End ngOnInit
+  }
+
+  loadDeviceData() {
+    this.deviceInfo = this.deviceService.getDeviceInfo();
+    if (!sessionStorage.getItem('midasDevice')) {
+      this.settingsService.setDeviceData(this.deviceInfo);
+    }
+  
+    // sessionStorage.setItem('isMobile', JSON.stringify(this.deviceService.isMobile()));
+    // sessionStorage.setItem('isTablet', JSON.stringify(this.deviceService.isTablet()));
+    // sessionStorage.setItem('isDesktop', JSON.stringify(this.deviceService.isDesktop()));
+    
   }
 
   getLocation() {
@@ -294,5 +297,11 @@ export class WebAppComponent implements OnInit {
     window.scroll(0, 0);
     //or document.body.scrollTop = 0;
     //or document.querySelector('body').scrollTo(0,0)
+  }
+
+  /**End Tour */
+  endTour(){
+    console.log('End tour');
+    this.tourService.end()
   }
 }

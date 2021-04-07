@@ -490,7 +490,7 @@ export class CreateBatchTransactionComponent implements OnInit {
             if (result2.statusCode == 666) {
               if (typeof result2.error !== "undefined" && result2.error !== "") {
                 this.alertService.alert({
-                  message: `Chú Ý: Giao dịch không vượt hạn mức : ${this.formatCurrency(result2.error)} VNĐ`,
+                  message: `${result2.error}`,
                   msgClass: "cssDanger",
                   hPosition: "center",
                 });

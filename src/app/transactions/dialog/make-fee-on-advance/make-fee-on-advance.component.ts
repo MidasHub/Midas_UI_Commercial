@@ -1,11 +1,12 @@
 import { Component, Inject, OnInit } from "@angular/core";
 import { animate, state, style, transition, trigger } from "@angular/animations";
-import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
+import { MAT_DIALOG_DATA, MatDialogRef, MatDialog } from "@angular/material/dialog";
 import { FormBuilder, FormGroup } from "@angular/forms";
 import { TransactionService } from "../../transaction.service";
 import { AlertService } from "../../../core/alert/alert.service";
 import { ClientsService } from "../../../clients/clients.service";
 import { SavingsService } from "app/savings/savings.service";
+import { ConfirmDialogComponent } from "../coifrm-dialog/confirm-dialog.component";
 
 @Component({
   selector: "midas-make-fee-on-advance",
@@ -48,6 +49,7 @@ export class MakeFeeOnAdvanceComponent implements OnInit {
     private transactionService: TransactionService,
     private savingsService: SavingsService,
     private clientService: ClientsService,
+    private dialog: MatDialog,
   ) {
     this.batchTxnName = this.data.batchTxnName;
     this.formDialog = this.formBuilder.group({
@@ -77,11 +79,21 @@ export class MakeFeeOnAdvanceComponent implements OnInit {
       txnCode: this.batchTxnName,
       ...form,
     };
-    this.savingsService.makeFeeOnAdvanceExecute(formData).subscribe((result: any) => {
 
-      const message = "Ứng tiền thành công";
-      this.savingsService.handleResponseApiSavingTransaction(result, message, null);
-      return this.dialogRef.close({status: true});
+    const dialog = this.dialog.open(ConfirmDialogComponent, {
+      data: {
+        message: "Bạn chắc chắn muốn lưu giao dịch",
+        title: "Hoàn thành giao dịch",
+      },
+    });
+    dialog.afterClosed().subscribe((data: any) => {
+      if (data) {
+        this.savingsService.makeFeeOnAdvanceExecute(formData).subscribe((result: any) => {
+          const message = "Ứng tiền thành công";
+          this.savingsService.handleResponseApiSavingTransaction(result, message, null);
+          return this.dialogRef.close({ status: true });
+        });
+      }
     });
   }
 

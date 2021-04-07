@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { startWith, map } from 'rxjs/operators';
@@ -10,7 +10,13 @@ import { activities } from './activities';
 
 /** Custom Services */
 import { AuthenticationService } from '../core/authentication/authentication.service';
+import { bannerData, ChildBannerData } from './banner_data';
+import { TourService } from 'ngx-tour-md-menu';
+/** Device detector */
+import { DeviceDetectorService, OrientationType, DeviceType } from 'ngx-device-detector';
 
+import * as ScreenEnum from '../core/constants/screen_constant';
+import { split } from 'lodash';
 /**
  * Home component.
  */
@@ -19,10 +25,10 @@ import { AuthenticationService } from '../core/authentication/authentication.ser
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
+
+
 export class HomeComponent implements OnInit {
 
-  /** Username of authenticated user. */
-  username: string;
   /** Activity Form. */
   activityForm: any;
   /** Search Text. */
@@ -31,8 +37,14 @@ export class HomeComponent implements OnInit {
   filteredActivities: Observable<any[]>;
   /** All User Activities. */
   allActivities: any[] = activities;
-  //** Show banner */
-  show62bBanner:boolean= false
+  //** Data for banner  */
+  showBanner: boolean = false
+  title: string;
+  childBannerData = new ChildBannerData()
+
+  /** Screem size check */
+  screenSize: any;
+  isDesktop: boolean;
 
   /**
    * @param {AuthenticationService} authenticationService Authentication Service.
@@ -42,7 +54,22 @@ export class HomeComponent implements OnInit {
 
 
 
-  constructor(private authenticationService: AuthenticationService) { }
+  constructor(private authenticationService: AuthenticationService,
+    private detectDevice: DeviceDetectorService,
+    private tourService: TourService) {
+    this.isDesktop = this.detectDevice.isDesktop();
+  }
+
+  // @HostListener('window:resize', ['$event'])
+  // onResize(event:any) {
+  //   this.screenSize = window.innerWidth;
+
+
+  //   console.log('Screen Size:', this.screenSize)
+  //   console.log('Screen Orientation:', window.screen.orientation)
+
+
+  // };
 
   /**
    * Sets the username of the authenticated user.
@@ -50,10 +77,21 @@ export class HomeComponent implements OnInit {
    */
   ngOnInit() {
     const credentials = this.authenticationService.getCredentials();
-    this.username = credentials.username;
-    console.log(credentials);
-    if (credentials.officeId === 5){this.show62bBanner = true };
+
+    this.childBannerData.userName = split(credentials.staffDisplayName,',')[1].trim();
+    
+
+    bannerData.some(d => {
+      if (d.office === credentials.officeId) {
+        this.showBanner = true;
+        this.childBannerData.title = d.title;
+      }
+    })
     this.setFilteredActivities();
+    this.screenSize = window.innerWidth
+    // console.log('Screen size: ', this.screenSize)
+
+    
   }
 
   /**
@@ -76,5 +114,5 @@ export class HomeComponent implements OnInit {
     return this.allActivities.filter(activity => activity.activity.toLowerCase().indexOf(filterValue) === 0);
   }
 
-  
+
 }
