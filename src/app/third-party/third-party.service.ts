@@ -56,9 +56,9 @@ export class ThirdPartyService {
 
     httpParams = httpParams.set('partnerCode', data.code);
     httpParams = httpParams.set('partnerName', data.desc);
-    httpParams = httpParams.set('typeCheckValid', data.typeCheckValid);
+    httpParams = httpParams.set('typeCheckValid', data.typeCheckValid ? '1' : '0');
     httpParams = httpParams.set('limit', data.limit);
-    httpParams = httpParams.set('active', data.active);
+    httpParams = httpParams.set('active', data.active ? 'O' : 'D');
 
     return this.http.post<any>(`${this.GatewayApiUrlPrefix}/partner/savePartner`, httpParams);
   }
@@ -68,9 +68,9 @@ export class ThirdPartyService {
 
     httpParams = httpParams.set('partnerCode', data.code);
     httpParams = httpParams.set('partnerName', data.desc);
-    httpParams = httpParams.set('typeCheckValid', data.typeCheckValid);
+    httpParams = httpParams.set('typeCheckValid', data.typeCheckValid ? '1' : '0');
     httpParams = httpParams.set('limit', data.limit);
-    httpParams = httpParams.set('active', data.active);
+    httpParams = httpParams.set('active', data.active ? 'O' : 'D');
 
     return this.http.post<any>(`${this.GatewayApiUrlPrefix}/partner/updatePartner`, httpParams);
   }
