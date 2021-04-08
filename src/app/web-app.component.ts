@@ -154,7 +154,7 @@ export class WebAppComponent implements OnInit {
         `${alertEvent.message}`,
         this.i18nService.getTranslate("Client_Component.ClientStepper.lblClose"),
         {
-          duration: alertEvent.msgDuration ? alertEvent.msgDuration : 5000,
+          duration: alertEvent.msgDuration ? alertEvent.msgDuration : 10000,
           horizontalPosition: alertEvent.hPosition ? alertEvent.hPosition : "right",
           verticalPosition: alertEvent.vPosition ? alertEvent.vPosition : "top",
           panelClass: [alertEvent.msgClass],
