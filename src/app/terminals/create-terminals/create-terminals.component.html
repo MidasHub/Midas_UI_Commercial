@@ -139,7 +139,7 @@
 
               <mat-form-field *ngIf="createTerminalForm.contains('banksCheck')" fxFlex="30%">
                 <mat-label>Không giao dịch thẻ thuộc ngân hàng</mat-label>
-                <mat-select multiple required formControlName="banksCheck">
+                <mat-select multiple  formControlName="banksCheck">
                   <mat-option *ngFor="let bank of banks" [value]="bank.bankCode">
                     {{ bank.bankName }}
                   </mat-option>
@@ -148,7 +148,7 @@
 
               <mat-form-field *ngIf="createTerminalForm.contains('cardsCheck')" fxFlex="30%">
                 <mat-label>Không giao dịch thẻ thuộc loại</mat-label>
-                <mat-select multiple required formControlName="cardsCheck">
+                <mat-select multiple  formControlName="cardsCheck">
                   <mat-option *ngFor="let type of cardTypes" [value]="type.code">
                     {{ type.description }}
                   </mat-option>
