@@ -156,12 +156,16 @@ export class WebAppComponent implements OnInit {
 
     // Setup alerts
     this.alertService.alertEvent.subscribe((alertEvent: Alert) => {
-      this.snackBar.open(`${alertEvent.message}`, this.i18nService.getTranslate('Client_Component.ClientStepper.lblClose'), {
-        duration: (alertEvent.msgDuration) ? alertEvent.msgDuration : 5000,
-        horizontalPosition: (alertEvent.hPosition) ? alertEvent.hPosition : 'right',
-        verticalPosition: (alertEvent.vPosition) ? alertEvent.vPosition : 'top',
-        panelClass: [alertEvent.msgClass],
-      });
+      this.snackBar.open(
+        `${alertEvent.message}`,
+        this.i18nService.getTranslate("Client_Component.ClientStepper.lblClose"),
+        {
+          duration: alertEvent.msgDuration ? alertEvent.msgDuration : 10000,
+          horizontalPosition: alertEvent.hPosition ? alertEvent.hPosition : "right",
+          verticalPosition: alertEvent.vPosition ? alertEvent.vPosition : "top",
+          panelClass: [alertEvent.msgClass],
+        }
+      );
     });
     this.buttonConfig = new KeyboardShortcutsConfiguration();
 
@@ -221,11 +225,11 @@ export class WebAppComponent implements OnInit {
     if (!sessionStorage.getItem('midasDevice')) {
       this.settingsService.setDeviceData(this.deviceInfo);
     }
-  
+
     // sessionStorage.setItem('isMobile', JSON.stringify(this.deviceService.isMobile()));
     // sessionStorage.setItem('isTablet', JSON.stringify(this.deviceService.isTablet()));
     // sessionStorage.setItem('isDesktop', JSON.stringify(this.deviceService.isDesktop()));
-    
+
   }
 
   getLocation() {
