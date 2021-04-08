@@ -48,7 +48,7 @@ export class ThirdPartyService {
 
     httpParams = httpParams.set("partnerCode", data.code);
     httpParams = httpParams.set("partnerName", data.desc);
-    httpParams = httpParams.set("typeCheckValid", data.typeCheckValid ? "1" : "0");
+    httpParams = httpParams.set("typeCheckValid", data.typeCheckValid );
     httpParams = httpParams.set("limit", data.limit);
     httpParams = httpParams.set("active", data.active ? "O" : "D");
 
@@ -60,7 +60,7 @@ export class ThirdPartyService {
 
     httpParams = httpParams.set("partnerCode", data.code);
     httpParams = httpParams.set("partnerName", data.desc);
-    httpParams = httpParams.set("typeCheckValid", data.typeCheckValid ? "1" : "0");
+    httpParams = httpParams.set("typeCheckValid", data.typeCheckValid);
     httpParams = httpParams.set("limit", data.limit);
     httpParams = httpParams.set("active", data.active ? "O" : "D");
 

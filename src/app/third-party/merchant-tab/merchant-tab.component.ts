@@ -97,7 +97,7 @@ export class MerchantTabComponent implements OnInit {
     dialog.afterClosed().subscribe((payload: any) => {
       console.log("payload", payload);
       if (payload) {
-        this.dataSource.data.push(payload);
+        this.ngOnInit();
       }
     });
   }
@@ -121,7 +121,7 @@ export class MerchantTabComponent implements OnInit {
 
   changeShowClosedMerchants(isActive: boolean) {
     this.merchantsStatus = isActive;
-    let status = this.merchantsStatus ? "A" : "C";
+    let status = this.merchantsStatus ? "C" : "A";
     this.thirdPartyService.getMerchants(status).subscribe((data: any) => {
       this.merchants = data.result.merchants;
       this.dataSource.data = this.merchants;

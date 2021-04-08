@@ -21,18 +21,18 @@
     <table mat-table [dataSource]="dataSource" matSort>
 
       <ng-container matColumnDef="code">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> code  </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Mã đối tác  </th>
         <td mat-cell *matCellDef="let partner"> {{ partner.code}} </td>
       </ng-container>
 
       <ng-container matColumnDef="desc">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> desc </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Mô tả </th>
         <td mat-cell *matCellDef="let partner"> {{ partner.desc }} </td>
       </ng-container>
 
       <ng-container matColumnDef="typeCheckValid">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>Check Valid</th>
-        <td mat-cell *matCellDef="let partner"> {{partner.typeCheckValid == 1 ? 'kích hoạt' : 'Chưa kích hoạt'}} </td>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Kiểm tra giao dịch thuộc</th>
+        <td mat-cell *matCellDef="let partner"> {{partner.typeCheckValid == 1 ? 'HKD' : 'Đối tác'}} </td>
       </ng-container>
 
       <ng-container matColumnDef="limit">
