@@ -54,7 +54,7 @@ export class SavingsService {
     );
   }
 
-  handleResponseApiSavingTransaction(res: any, messageReceived: string, RouteUrl: string) {
+  handleResponseApiSavingTransaction(res: any, messageReceived: string, refresh: boolean) {
 
     if (res.error) {
       this.alertService.alert({
@@ -78,9 +78,8 @@ export class SavingsService {
     if (responseT && responseT.statusCodeValue == 200 && !responseT?.body?.errors) {
       this.alertService.alert({ message: messageReceived, msgClass: "cssSuccess" });
 
-      if (RouteUrl) {
-        this.router.navigate([RouteUrl], { relativeTo: this.route });
-      } else {
+      if (refresh) {
+
         let currentUrl = this.router.url;
         this.router.navigateByUrl("/", { skipLocationChange: true }).then(() => {
           this.router.navigate([currentUrl]);

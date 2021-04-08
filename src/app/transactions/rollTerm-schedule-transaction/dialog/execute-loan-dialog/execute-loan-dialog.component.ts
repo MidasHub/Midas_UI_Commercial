@@ -72,7 +72,7 @@ export class ExecuteLoanDialogComponent implements OnInit {
     this.transactionService.ExecuteRollTermTransactionByTrnRefNo(form).subscribe((result) => {
 
       let message = "🎉🎉 Xử lý thành công" ;
-      this.savingsService.handleResponseApiSavingTransaction(result, message, null);
+      this.savingsService.handleResponseApiSavingTransaction(result, message, false);
       this.dialogRef.close({ status: true });
     });
   }

@@ -90,7 +90,7 @@ export class MakeFeeOnAdvanceComponent implements OnInit {
       if (data) {
         this.savingsService.makeFeeOnAdvanceExecute(formData).subscribe((result: any) => {
           const message = "Ứng tiền thành công";
-          this.savingsService.handleResponseApiSavingTransaction(result, message, null);
+          this.savingsService.handleResponseApiSavingTransaction(result, message, true);
           return this.dialogRef.close({ status: true });
         });
       }

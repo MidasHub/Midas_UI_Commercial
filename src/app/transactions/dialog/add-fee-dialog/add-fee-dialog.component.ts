@@ -316,7 +316,7 @@ export class AddFeeDialogComponent implements OnInit {
         this.transactionService.paidFeeForTransaction(form).subscribe((result) => {
           this.isLoading = false;
           const message = "🎉🎉 Thanh toán phí thành công";
-          const resCheck = this.savingsService.handleResponseApiSavingTransaction(result, message, null);
+          const resCheck = this.savingsService.handleResponseApiSavingTransaction(result, message, false);
 
           if (resCheck) {
             this.dialogRef.close({ status: true });
