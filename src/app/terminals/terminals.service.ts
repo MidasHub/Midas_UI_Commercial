@@ -30,13 +30,13 @@ export class TerminalsService {
   getLimitTerminals(): Observable<any> {
     let httpParams = this.commonHttpParams.getCommonHttpParams();
 
-    return this.http.post<any>(`${this.GatewayApiUrlPrefix}/pos/get_list_limit_pos`, httpParams);
+    return this.http.post<any>(`${this.IcGatewayApiUrlPrefix}/pos/get_list_limit_pos`, httpParams);
   }
 
   getTerminals(): Observable<any> {
     let httpParams = this.commonHttpParams.getCommonHttpParams();
 
-    return this.http.post<any>(`${this.GatewayApiUrlPrefix}/pos`, httpParams);
+    return this.http.post<any>(`${this.IcGatewayApiUrlPrefix}/pos`, httpParams);
   }
 
   getTerminalInfo(terminalId:string): Observable<any> {
@@ -69,7 +69,7 @@ export class TerminalsService {
       'accessToken': this.accessToken.base64EncodedAuthenticationKey,
       ...data
     }
-    return this.http.post<any>(`${this.GatewayApiUrlPrefix}/pos/save`,  httpParams );
+    return this.http.post<any>(`${this.IcGatewayApiUrlPrefix}/pos/save`,  httpParams );
   }
 
   update(data:any): Observable<any> {
@@ -82,7 +82,7 @@ export class TerminalsService {
       'accessToken': this.accessToken.base64EncodedAuthenticationKey,
       ...data
     }
-    return this.http.post<any>(`${this.GatewayApiUrlPrefix}/pos/update`,  httpParams );
+    return this.http.post<any>(`${this.IcGatewayApiUrlPrefix}/pos/update`,  httpParams );
   }
 
   getByTerminalNo(TerminalNo: string): Observable<any> {
