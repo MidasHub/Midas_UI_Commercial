@@ -56,7 +56,7 @@ export class ThirdPartyService {
 
     httpParams = httpParams.set('partnerCode', data.code);
     httpParams = httpParams.set('partnerName', data.desc);
-    httpParams = httpParams.set('typeCheckValid', data.typeCheckValid ? '1' : '0');
+    httpParams = httpParams.set('typeCheckValid', data.typeCheckValid);
     httpParams = httpParams.set('limit', data.limit);
     httpParams = httpParams.set('active', data.active ? 'O' : 'D');
 
@@ -75,7 +75,7 @@ export class ThirdPartyService {
 
     httpParams = httpParams.set('partnerCode', data.code);
     httpParams = httpParams.set('partnerName', data.desc);
-    httpParams = httpParams.set('typeCheckValid', data.typeCheckValid ? '1' : '0');
+    httpParams = httpParams.set('typeCheckValid', data.typeCheckValid);
     httpParams = httpParams.set('limit', data.limit);
     httpParams = httpParams.set('active', data.active ? 'O' : 'D');
 
@@ -101,6 +101,7 @@ export class ThirdPartyService {
     let httpParams = this.commonHttpParams.getCommonHttpParams();
 
     httpParams = httpParams.set('merchantName', data.name)
+    httpParams = httpParams.set('unitType', data.unitType)
     httpParams = httpParams.set('rangeDays', data.rangeDay)
     httpParams = httpParams.set('merchantPartner', data.partner);
     return this.http.post<any>(`${this.GatewayApiUrlPrefix}/partner/add_merchant`, httpParams);
@@ -111,6 +112,7 @@ export class ThirdPartyService {
 
     httpParams = httpParams.set('merchantName', data.name);
     httpParams = httpParams.set('status', data.active);
+    httpParams = httpParams.set('unitType', data.unitType)
     httpParams = httpParams.set('rangeDays', data.rangeDay);
     httpParams = httpParams.set('merchantPartner', data.partner);
     return this.http.post<any>(`${this.GatewayApiUrlPrefix}/partner/update_merchant`, httpParams);

@@ -30,8 +30,8 @@ export class PartnerDialogComponent implements OnInit {
     this.partnerForm = this.formBuilder.group({
       'code': ['', [Validators.required, Validators.pattern('^([^!@#$%^&*()+=<>,.?\/\]*)$')]],
       'desc': ['', Validators.required],
-      'typeCheckValid': [''],
-      'limit': [0],
+      'typeCheckValid': ['0'],
+      'limit': [-1],
       'active': [true],
     });
 
@@ -40,7 +40,7 @@ export class PartnerDialogComponent implements OnInit {
       this.partnerForm.patchValue({
         'code': this.dataFrom.code,
         'desc': this.dataFrom.desc,
-        'typeCheckValid': this.dataFrom.typeCheckValid == '1' ? true : false,
+        'typeCheckValid': this.dataFrom.typeCheckValid ,
         'limit': this.dataFrom.limit,
         'active': this.dataFrom.status == 'O' ? true : false,
       });

@@ -36,8 +36,7 @@ export class PartnerTabComponent implements OnInit {
     private alertServices: AlertService,
     private thirdPartyService: ThirdPartyService,
     public dialog : MatDialog,
-    public thirdPartyComponent : ThirdPartyComponent ,  
-  //  private  merchantTabComponent : MerchantTabComponent
+    public thirdPartyComponent : ThirdPartyComponent ,
     ){
 
   }
@@ -61,15 +60,13 @@ export class PartnerTabComponent implements OnInit {
     const dialog = this.dialog.open(PartnerDialogComponent, { height: "auto", width: "30%" , data });
     dialog.afterClosed().subscribe((payload: any) => {
         if(payload){
-          this.dataSource.data.push(payload);
+          this.ngOnInit();
         }
     });
   }
 
   editPartner(partner:any, index:number){
-    // if(partner){
-    //   partner.status === 'O' ? partner['status']=true : partner['status']=false; 
-    // }
+
     const data = {
       action: 'edit',
       ... partner
@@ -77,10 +74,9 @@ export class PartnerTabComponent implements OnInit {
     const dialog = this.dialog.open(PartnerDialogComponent, { height: "auto", width: "30%" , data });
     dialog.afterClosed().subscribe((payload: any) => {
       if(payload){
-        // this.dataSource.data.slice(index,1);
-        // this.dataSource.data.push(payload);
+
         this.ngOnInit()
-      } 
+      }
     });
   }
 
@@ -113,7 +109,7 @@ export class PartnerTabComponent implements OnInit {
     // }
     this.thirdPartyService.setInputFilter(partner.desc);
     this.thirdPartyComponent.changeTab(1);
-    
+
   }
 
   onChange(value: MatSlideToggleChange, partner : any) {
@@ -123,23 +119,23 @@ export class PartnerTabComponent implements OnInit {
     const payload = {
       ...  partner
     };
-    
+
     this.thirdPartyService.updatePartnerStatus(payload).subscribe((response: any) => {
       if (response.result.status === 'success') {
         this.alertServices.alert({
           type: "🎉🎉🎉 Thành công !!!",
           message: "🎉🎉 Xử lý thành công",
           msgClass: "cssSuccess",
-        }); 
+        });
+        this.ngOnInit();
+
       } else {
         this.alertServices.alert({
           type: "🚨🚨🚨🚨 Lỗi ",
           msgClass: "cssBig",
           message: "🚨🚨 Lỗi cập nhật trạng thái đối tác, kiểm tra tất cả hộ khinh doanh liên kết với đối tác phải đóng hoặc vui lòng liên hệ IT Support để được hổ trợ 🚨🚨",
         });
-        this.ngOnInit();
       }
-      //this.ngOnInit();
     });
 
   }
