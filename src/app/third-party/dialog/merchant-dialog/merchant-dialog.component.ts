@@ -16,7 +16,24 @@ export class MerchantDialogComponent implements OnInit {
   action:string;
   partners:any[];
   merchant:any;
-
+  timeTypes: any[] = [
+    {
+    code: 'DAY',
+    desc: 'Ngày',
+    },
+    {
+      code: 'HOUR',
+      desc: 'Giờ',
+      },
+      {
+        code: 'MINUTE',
+        desc: 'Phút',
+        },
+        {
+          code: 'SECOND',
+          desc: 'Giây',
+          }
+  ]
   constructor(
     private formBuilder: FormBuilder,
     private thirdPartyService: ThirdPartyService,
@@ -36,6 +53,7 @@ export class MerchantDialogComponent implements OnInit {
       'name': ['', [Validators.required, Validators.pattern('^([^!@#$%^&*()+=<>,.?\/\]*)$')]],
       'partner': ['', Validators.required],
       'rangeDay': [''],
+      'unitType': ['DAY'],
       'active': [true],
     });
 
@@ -44,6 +62,7 @@ export class MerchantDialogComponent implements OnInit {
           'name': this.dataFrom.name,
           'partner': this.dataFrom.partnerCode,
           'rangeDay': this.dataFrom.rangeDay,
+          'unitType': [this.dataFrom.unitType],
           'active': this.dataFrom.status,
         });
     }else{

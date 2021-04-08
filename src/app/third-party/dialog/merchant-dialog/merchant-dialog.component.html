@@ -24,11 +24,20 @@
                 [innerHTML]="'Terminal_Component.FormTerminal.labelRequired' |translate"></mat-error>
             </mat-form-field>
 
-            <mat-form-field  fxFlex="98%">
+            <mat-form-field  fxFlex="48%">
                 <mat-label>Thời gian giữa 2 giao dịch cho phép</mat-label>
                 <input matInput  required formControlName="rangeDay" type="number">
             </mat-form-field>
-
+            <mat-form-field fxFlex="48%">
+              <mat-label>Đơn vị</mat-label>
+              <mat-select required formControlName="unitType">
+                  <mat-option *ngFor="let type of timeTypes" [value]="type.code">
+                    {{ type.desc }}
+                  </mat-option>
+              </mat-select>
+              <mat-error *ngIf="merchantForm.controls.partner.hasError('required')"
+                [innerHTML]="'Terminal_Component.FormTerminal.labelRequired' |translate"></mat-error>
+            </mat-form-field>
 
             <mat-checkbox labelPosition="before" *ngIf="merchantForm.contains('active')" formControlName="active" class="entries">
                 kích hoạt đối tác
