@@ -19,6 +19,7 @@ let tenant = 'staging';
 let billpostenant = 'staging';
 let defaultbaseURL = 'https://staging.kiotthe.com';
 let defaultbillposURL = 'https://staging.kiotthe.com';
+// let defaultNotificationURL="https://staging.kiotthe.com"
 
 let ictenant = "default";
 // let defaultIcURL = 'https://ic.kiotthe.com';
@@ -41,6 +42,8 @@ const apiVersion = "/v1";
 
 // }
 
+let defaultNotificationURL="https://staging.kiotthe.com"
+
 export default {
   coreT: tenant,
   billposT: billpostenant,
@@ -48,6 +51,7 @@ export default {
   defaultbillposURL: defaultbillposURL,
   icT: ictenant,
   icBaseUrl: defaultIcURL,
+  defaultNotiURL:defaultNotificationURL,
   apiProvider: apiProvider,
   apiVersion: apiVersion,
 };

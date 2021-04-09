@@ -45,8 +45,8 @@ export class EditTerminalsComponent implements OnInit, AfterViewInit {
   posLimits: any;
   posLimitDefault: PeriodicElements[] = [];
   dataSource = new MatTableDataSource();
-  displayedColumns: string[] = ['officeName', 'CardType', 'FeePOS',
-    'FeeCost', 'FeeMin', 'FeeMax', 'MaxLimitAmountTransaction', 'LevelTransactionCard'];
+  displayedColumns: string[] = ['officeName', 'CardType', 'FeeCost','FeeCOGS',
+     'FeeMin', 'FeeMax', 'MaxLimitAmountTransaction', 'LevelTransactionCard'];
 
   typeOfTransactions : typeOfTransaction[] = [
     {value:'ALL', valueDesc:'khách hàng Sỉ & Lẻ'},

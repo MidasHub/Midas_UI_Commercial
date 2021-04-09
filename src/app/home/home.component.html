@@ -1,7 +1,7 @@
-<div fxLayout="column">
+<div fxLayout="column"  tourAnchor="id4">
 
   <div fxLayout="row" fxLayout.lt-md="column" fxLayoutAlign="start start" fxLayoutGap="2%"
-    class="fluidcontainer m-b-10 p-10" fxFlex="100" >
+    class="fluidcontainer m-b-10 p-10" fxFlex="100"  tourAnchor="id5">
 
     <!-- banner default  -->
     <div  fxLayout="column" *ngIf="!this.showBanner|| !this.isDesktop">
@@ -9,12 +9,16 @@
         <fa-icon icon="tachometer-alt"></fa-icon>&nbsp;&nbsp;
         {{'Home_Component.btnDashboard'| translate}}
       </button> -->
-      <div fxLayout="row" fxLayout.lt-md="column" fxLayoutAlign="start start" fxLayoutGap="1%" class=" p-l-20">
-        <button mat-raised-button color="primary" [routerLink]="['/clients/create']" [queryParams]="{go_back:'home'}" style="width:185px">
+      <div fxLayout="row" fxLayout.lt-md="column" fxLayoutAlign="start start" fxLayoutGap="1%" class=" p-l-20"  >
+        <button mat-raised-button color="primary" [routerLink]="['/clients/create']" 
+        [queryParams]="{go_back:'home'}" style="width:185px" 
+       >
           <fa-icon icon="user-plus"></fa-icon> &nbsp;&nbsp;
           {{'Home_Component.btnNewCustomer'| translate}}
         </button>
-        <button mat-raised-button color="primary" [routerLink]="['/groups/create']" [queryParams]="{go_back:'home'}" style="width:185px">
+        <button mat-raised-button color="primary" [routerLink]="['/groups/create']" 
+        [queryParams]="{go_back:'home'}" style="width:185px"
+       >
           <i class="fab fa-google-plus-g"></i> &nbsp;&nbsp;
           {{'Home_Component.btnNewGroup'| translate}}
         </button>
@@ -24,7 +28,12 @@
     
 
     <!-- Banner dành riêng cho đơn vị theo yêu cầu không hiện ở màn hình điện thoại -->
-    <midas-customerbanner [childBannerData]="this.childBannerData"  *ngIf="this.showBanner && this.isDesktop" style="padding: 0px;width:100%"></midas-customerbanner>
+    <midas-customerbanner 
+      [childBannerData]="this.childBannerData"  
+      *ngIf="this.showBanner && this.isDesktop" 
+      style="padding: 0px;width:100%" 
+      
+      ></midas-customerbanner>
    
 
   </div>
@@ -33,12 +42,12 @@
 
   <!-- Màn hình chính -->
   <div fxLayout="row" fxLayout.lt-md="column" fxLayoutAlign="space-around start " class="fluidcontainer  m-b-15"
-    fxFlex="100">
+    fxFlex="100" >
 
-    <div fxLayout="row" fxLayout.lt-md="column" class="fluidcontainer p-10 m-b-20" fxFlex="100" fxLayoutGap="1%">
+    <div fxLayout="row" fxLayout.lt-md="column" class="fluidcontainer p-10 m-b-20" fxFlex="100" fxLayoutGap="1%" >
 
       <!-- Ô tìm kiếm KH -->
-      <mat-card class=" m-b-10" fxFlex="59" fxFlex.lt-md="95">
+      <mat-card class=" m-b-10" fxFlex="59" fxFlex.lt-md="95"  tourAnchor="id6">
         <mat-card-header>
           <mat-card-title class="title">
             <h3>Tìm thẻ để thực hiện giao dịch cho khách hàng:</h3>
@@ -64,7 +73,7 @@
         </mat-card-content>
 
       </mat-card>
-      <div fxLayout="column" fxFlex="39" fxFlex.lt-md="95">
+      <div fxLayout="column" fxFlex="39" fxFlex.lt-md="95"  tourAnchor="id7">
 
         <!-- Ô calendar -->
         <mat-card class="" fxFlex="100">

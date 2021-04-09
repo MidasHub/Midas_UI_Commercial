@@ -40,6 +40,7 @@ import { UserAccountInfoComponent } from './user-account-info/user-account-info.
 import { MainboardComponent } from 'app/home/mainboard/mainboard.component';
 import { RouterModule } from '@angular/router';
 import { EcoFabSpeedDialModule} from "@ecodev/fab-speed-dial";
+import { TourMatMenuModule } from 'ngx-tour-md-menu';
 
 const maskConfig: Partial<IConfig> = {
   validation: false,
@@ -81,7 +82,8 @@ const customCurrencyMaskConfig = {
     NgxCurrencyModule.forRoot(customCurrencyMaskConfig),
     DirectivesModule,
     PipesModule,
-    EcoFabSpeedDialModule
+    EcoFabSpeedDialModule,
+    TourMatMenuModule
   ],
   declarations: [
     FormfieldComponent,
@@ -129,7 +131,8 @@ const customCurrencyMaskConfig = {
     NgxCurrencyModule,
     DirectivesModule,
     PipesModule,
-    EcoFabSpeedDialModule
+    EcoFabSpeedDialModule,
+    TourMatMenuModule
   ]
 })
 export class SharedModule {

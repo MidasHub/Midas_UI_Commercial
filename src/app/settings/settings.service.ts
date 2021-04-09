@@ -80,13 +80,14 @@ export class SettingsService {
   //   sessionStorage.setItem('midasDeviceOrientation', JSON.stringify(orientation));
   // }
 
-  
+
   /**
    * Returns date format setting.
    * TẠM THÒI HARDCODE PHẦN DATEFORMAT = 'dd MMMM yyyy' VÀ LOCALE = 'en' DO CÓ LỖI KHI GỌI API
    */
   get dateFormat() {
-    return JSON.parse( localStorage.getItem('midasDateFormat'));
+    // return JSON.parse( localStorage.getItem('midasDateFormat'));
+    return 'dd/MM/yyyy';
   }
 
   /**

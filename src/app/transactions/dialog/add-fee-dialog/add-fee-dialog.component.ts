@@ -1,8 +1,7 @@
-import { AfterViewInit, Component, Inject, OnInit } from "@angular/core";
+import { Component, Inject, OnInit } from "@angular/core";
 import { TransactionService } from "../../transaction.service";
 import { FormBuilder, FormGroup } from "@angular/forms";
 import { MAT_DIALOG_DATA, MatDialogRef, MatDialog } from "@angular/material/dialog";
-import { ClientsService } from "../../../clients/clients.service";
 import { AuthenticationService } from "../../../core/authentication/authentication.service";
 import { AlertService } from "../../../core/alert/alert.service";
 import { MidasClientService } from "../../../midas-client/midas-client.service";
@@ -82,6 +81,7 @@ export class AddFeeDialogComponent implements OnInit {
   }
 
   checkAccountAndAmountPaid() {
+    debugger;
     this.formDialogPaid.value;
     const paymentCode = this.formDialogPaid.get("paymentCode").value;
     if (paymentCode !== "DE") {
@@ -316,7 +316,7 @@ export class AddFeeDialogComponent implements OnInit {
         this.transactionService.paidFeeForTransaction(form).subscribe((result) => {
           this.isLoading = false;
           const message = "🎉🎉 Thanh toán phí thành công";
-          const resCheck = this.savingsService.handleResponseApiSavingTransaction(result, message, null);
+          const resCheck = this.savingsService.handleResponseApiSavingTransaction(result, message, false);
 
           if (resCheck) {
             this.dialogRef.close({ status: true });

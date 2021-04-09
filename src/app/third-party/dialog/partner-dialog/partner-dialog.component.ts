@@ -36,7 +36,7 @@ export class PartnerDialogComponent implements OnInit {
     });
 
     if(this.dataFrom.action ==="edit"){
-
+      this.editable = true;
       this.partnerForm.patchValue({
         'code': this.dataFrom.code,
         'desc': this.dataFrom.desc,
@@ -44,8 +44,6 @@ export class PartnerDialogComponent implements OnInit {
         'limit': this.dataFrom.limit,
         'active': this.dataFrom.status == 'O' ? true : false,
       });
-    } else {
-      this.editable = true;
     }
   }
 

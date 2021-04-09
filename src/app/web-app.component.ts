@@ -24,8 +24,9 @@ import { SettingsService } from "./settings/settings.service";
 import { BanksService } from "./banks/banks.service";
 
 /** Custom Items */
-import { Alert } from "./core/alert/alert.model";
-import { KeyboardShortcutsConfiguration } from "./keyboards-shortcut-config";
+import { Alert } from './core/alert/alert.model';
+import { KeyboardShortcutsConfiguration } from './keyboards-shortcut-config';
+
 
 /**
  * Firebase Messaging
@@ -39,6 +40,7 @@ const log = new Logger("Midas");
 
 /** Device detector */
 import { DeviceDetectorService } from "ngx-device-detector";
+import { TourService } from "ngx-tour-core";
 
 /**
  * Main web app component.
@@ -79,8 +81,11 @@ export class WebAppComponent implements OnInit {
     private authenticationService: AuthenticationService,
     private bankService: BanksService,
     private messagingService: FireBaseMessagingService,
-    private deviceService: DeviceDetectorService
-  ) {}
+    private deviceService: DeviceDetectorService,
+    private tourService:TourService) {
+
+  }
+
 
   //Variables for Firebase messsage
   message: any;
@@ -297,5 +302,11 @@ export class WebAppComponent implements OnInit {
     window.scroll(0, 0);
     //or document.body.scrollTop = 0;
     //or document.querySelector('body').scrollTo(0,0)
+  }
+
+  /**End Tour */
+  endTour(){
+    console.log('End tour');
+    this.tourService.end()
   }
 }

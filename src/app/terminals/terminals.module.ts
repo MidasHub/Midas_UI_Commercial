@@ -14,7 +14,7 @@ import { EditTerminalsComponent } from './edit-terminals/edit-terminals.componen
 import { CreateTerminalsComponent } from './create-terminals/create-terminals.component';
 import { TransferTerminalComponent } from './transfer-terminal/transfer-terminal.component';
 import { ViewLimitTerminalComponent } from './view-limit-terminal/view-limit-terminal.component';
-//import { TableModule } from 'ngx-easy-table';
+
 
 @NgModule({
   imports: [

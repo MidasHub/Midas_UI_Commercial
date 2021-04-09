@@ -514,6 +514,7 @@ export class CreateTransactionComponent implements OnInit {
       clientName: this.transactionInfo.clientDto.displayName,
       clientId: this.transactionInfo.clientId,
       identifierId: this.transactionInfo.identifierId,
+      type: this.transactionInfo.type,
     };
     const dialog = this.dialog.open(CreateSuccessTransactionDialogComponent, {
       height: "80%",

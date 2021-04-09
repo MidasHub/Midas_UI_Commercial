@@ -50,7 +50,7 @@ export class ApiPrefixInterceptor implements HttpInterceptor {
       }
     }
 
-    log.debug("Add Url Step: ", request)
+    // log.debug("Add Url Step: ", request)
     return next.handle(request);
   }
 

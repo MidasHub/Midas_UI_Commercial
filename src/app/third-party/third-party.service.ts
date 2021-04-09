@@ -46,23 +46,23 @@ export class ThirdPartyService {
   savePartner(data: any): Observable<any> {
     let httpParams = this.commonHttpParams.getCommonHttpParams();
 
-    httpParams = httpParams.set("partnerCode", data.code);
-    httpParams = httpParams.set("partnerName", data.desc);
-    httpParams = httpParams.set("typeCheckValid", data.typeCheckValid );
-    httpParams = httpParams.set("limit", data.limit);
-    httpParams = httpParams.set("active", data.active ? "O" : "D");
+    httpParams = httpParams.set('partnerCode', data.code);
+    httpParams = httpParams.set('partnerName', data.desc);
+    httpParams = httpParams.set('typeCheckValid', data.typeCheckValid);
+    httpParams = httpParams.set('limit', data.limit);
+    httpParams = httpParams.set('active', data.active ? 'O' : 'D');
 
     return this.http.post<any>(`${this.IcGatewayApiUrlPrefix}/partner/savePartner`, httpParams);
   }
 
-  updatePartner(data: any): Observable<any> {
+  updatePartner(data:any): Observable<any> {
     let httpParams = this.commonHttpParams.getCommonHttpParams();
 
-    httpParams = httpParams.set("partnerCode", data.code);
-    httpParams = httpParams.set("partnerName", data.desc);
-    httpParams = httpParams.set("typeCheckValid", data.typeCheckValid);
-    httpParams = httpParams.set("limit", data.limit);
-    httpParams = httpParams.set("active", data.active ? "O" : "D");
+    httpParams = httpParams.set('partnerCode', data.code);
+    httpParams = httpParams.set('partnerName', data.desc);
+    httpParams = httpParams.set('typeCheckValid', data.typeCheckValid);
+    httpParams = httpParams.set('limit', data.limit);
+    httpParams = httpParams.set('active', data.active ? 'O' : 'D');
 
     return this.http.post<any>(`${this.IcGatewayApiUrlPrefix}/partner/updatePartner`, httpParams);
   }

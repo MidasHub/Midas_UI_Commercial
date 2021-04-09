@@ -34,9 +34,6 @@ export class MerchantTabComponent implements OnInit {
   merchantsActive: any[];
   merchantsInActive: any[];
   merchantsStatus: any;
-
-  // funcListener :any ;
-
   filterSearch: string;
 
   constructor(
@@ -68,9 +65,9 @@ export class MerchantTabComponent implements OnInit {
       },
     });
     dialog.afterClosed().subscribe((data) => {
-      if (data?.result?.status) {
+      if (data) {
         this.thirdPartyService.inactiveBillsMerchant(merchantName).subscribe((response: any) => {
-          if (response.statusCode === "success") {
+          if (response.result.status) {
             this.alertServices.alert({
               type: "🎉🎉🎉 Thành công !!!",
               message: "🎉🎉 Xử lý thành công",
@@ -141,7 +138,7 @@ export class MerchantTabComponent implements OnInit {
   }
 
   onChange(value: MatSlideToggleChange, merchant: any) {
-    merchant.status = value.checked ? "true" : "false";
+    merchant.status = value.checked ? "A" : "C";
     const payload = {
       ...merchant,
     };

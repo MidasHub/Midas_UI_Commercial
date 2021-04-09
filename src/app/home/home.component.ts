@@ -11,10 +11,12 @@ import { activities } from './activities';
 /** Custom Services */
 import { AuthenticationService } from '../core/authentication/authentication.service';
 import { bannerData, ChildBannerData } from './banner_data';
+import { TourService } from 'ngx-tour-md-menu';
 /** Device detector */
 import { DeviceDetectorService, OrientationType, DeviceType } from 'ngx-device-detector';
 
 import * as ScreenEnum from '../core/constants/screen_constant';
+import { split } from 'lodash';
 /**
  * Home component.
  */
@@ -53,10 +55,10 @@ export class HomeComponent implements OnInit {
 
 
   constructor(private authenticationService: AuthenticationService,
-    private detectDevice: DeviceDetectorService) {
+    private detectDevice: DeviceDetectorService,
+    private tourService: TourService) {
     this.isDesktop = this.detectDevice.isDesktop();
   }
-
 
   // @HostListener('window:resize', ['$event'])
   // onResize(event:any) {
@@ -76,7 +78,8 @@ export class HomeComponent implements OnInit {
   ngOnInit() {
     const credentials = this.authenticationService.getCredentials();
 
-    this.childBannerData.userName = credentials.username;
+    this.childBannerData.userName = split(credentials.staffDisplayName,',')[1].trim();
+    
 
     bannerData.some(d => {
       if (d.office === credentials.officeId) {
@@ -86,7 +89,9 @@ export class HomeComponent implements OnInit {
     })
     this.setFilteredActivities();
     this.screenSize = window.innerWidth
-    console.log('Screen size: ', this.screenSize)
+    // console.log('Screen size: ', this.screenSize)
+
+    
   }
 
   /**

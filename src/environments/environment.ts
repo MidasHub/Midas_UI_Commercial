@@ -10,6 +10,7 @@ import te from './checkurl';
 export const environment = {
   production: false,
   isNewBillPos: true,
+  isCommercial:false, //Phiên bản cung cấp cho khách hàng Commercial thì set biến này thành true
   version: env?.midas_version + '-dev',
   fineractPlatformTenantId: te.coreT,  // For connecting to server running elsewhere update the tenant identifier
   baseApiUrl: JSON.parse(sessionStorage.getItem('midasServerURL')) || te.defaultbaseURL,
@@ -24,6 +25,8 @@ export const environment = {
   IcGatewayApiUrl: te.icBaseUrl,
   IcGatewayApiUrlPrefix: '/ic-app',
   IcGatewayTenantId: te.icT,
+  NotiGatewayURL: te.defaultNotiURL,
+  NotiGatewayPrefix: '/notification',
   oauth: {
     enabled: false,  // For connecting to Midas using OAuth2 Authentication change the value to true
     serverUrl: ''
@@ -54,4 +57,5 @@ export const environment = {
 environment.serverUrl = `${environment.baseApiUrl}${environment.apiProvider}${environment.apiVersion}`;
 environment.oauth.serverUrl = `${environment.baseApiUrl}${environment.apiProvider}`;
 environment.GatewayServerUrl = `${environment.GatewayApiUrl}`;
+environment.NotiGatewayURL = `${environment.NotiGatewayURL}${environment.NotiGatewayPrefix}`
 

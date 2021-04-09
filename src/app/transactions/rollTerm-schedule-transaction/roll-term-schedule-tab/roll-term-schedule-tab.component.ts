@@ -134,13 +134,13 @@ export class RollTermScheduleTabComponent implements OnInit {
     this.clientServices.getListUserTeller(this.currentUser.officeId).subscribe((result: any) => {
       this.staffs = result?.result?.listStaff.filter((staff:any) => staff.displayName.startsWith("R"));
     });
-
-
     this.formFilter = this.formBuilder.group({
       createdByFilter: [this.currentUser.userId],
       bankFilter: ["ALL"],
       query: [""],
     });
+
+    this.getRollTermScheduleAndCardDueDayInfo();
   }
 
   // tslint:disable-next-line:use-lifecycle-interface
@@ -226,7 +226,7 @@ export class RollTermScheduleTabComponent implements OnInit {
           .RepaymentRolltermManualTransactionCloseLoan(transactionId, amountPaid)
           .subscribe((result) => {
             const message = "Hủy giao dịch " + transactionId + " thành công";
-            this.savingsService.handleResponseApiSavingTransaction(result, message, null);
+            this.savingsService.handleResponseApiSavingTransaction(result, message, false);
             this.getRollTermScheduleAndCardDueDayInfo();
           });
       }

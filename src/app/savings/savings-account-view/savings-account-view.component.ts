@@ -347,7 +347,7 @@ export class SavingsAccountViewComponent implements OnInit {
             ? ` khách hàng ${clientAdvanceCash.displayName} `
             : ` đại lý ${clientAdvanceCash.name} `
         } với số tiền ${String(amountAdvance).replace(/\\B(?=(\\d{3})+(?!\\d))/g, ",") + " đ"}`;
-        this.savingsService.handleResponseApiSavingTransaction(result, message, null);
+        this.savingsService.handleResponseApiSavingTransaction(result, message, true);
       });
   }
 
@@ -369,7 +369,7 @@ export class SavingsAccountViewComponent implements OnInit {
           })
           .subscribe((result: any) => {
             const message = `Thực hiện thành công!`;
-            this.savingsService.handleResponseApiSavingTransaction(result, message, null);
+            this.savingsService.handleResponseApiSavingTransaction(result, message, true);
           });
       }
     });
