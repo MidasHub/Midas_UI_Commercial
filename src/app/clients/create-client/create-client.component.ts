@@ -340,18 +340,13 @@ export class CreateClientComponent implements OnInit {
             });
         }
 
-        // while (done !== this.client.files.length) {
-        // }
-        if (this.go_back === "home") {
-          this.alertService.alert({
-            message:
-              this.i18n.getTranslate("Client_Component.ClientStepper.lblCustomerCreated") + response.resourceId + "!",
-            msgClass: "cssSuccess",
-          });
-          this.router.navigate(["/home"]);
-        } else {
-          this.router.navigate(["../", response.resourceId], { relativeTo: this.route });
-        }
+        this.alertService.alert({
+          message:
+            this.i18n.getTranslate("Client_Component.ClientStepper.lblCustomerCreated") + response.resourceId + "!",
+          msgClass: "cssSuccess",
+        });
+        this.router.navigate(["../", response.resourceId, 'identities'], { relativeTo: this.route });
+
       }
     });
   }
@@ -359,7 +354,6 @@ export class CreateClientComponent implements OnInit {
   /** do Cancel */
   doCancel() {
     this.alertService.alert({ message: "Bạn vừa hủy tạo khách hàng.", msgClass: "cssInfo" });
-
     if (this.go_back === "home") {
       this.router.navigate(["/home"]);
     } else {
