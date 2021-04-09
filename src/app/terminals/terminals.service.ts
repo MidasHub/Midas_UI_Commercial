@@ -1,34 +1,41 @@
 /** Angular Imports */
-import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
-import { environment } from 'environments/environment';
-import { Observable } from 'rxjs';
-import { CommonHttpParams } from 'app/shared/CommonHttpParams';
+import { Injectable } from "@angular/core";
+import { HttpClient, HttpParams } from "@angular/common/http";
+import { environment } from "environments/environment";
+import { Observable } from "rxjs";
+import { CommonHttpParams } from "app/shared/CommonHttpParams";
+import { AuthenticationService } from "app/core/authentication/authentication.service";
 
 /**
  * Terminal service.
  */
 @Injectable({
-    providedIn: 'root'
+  providedIn: "root",
 })
 export class TerminalsService {
-
-
-  private credentialsStorageKey = 'midasCredentials';
+  private credentialsStorageKey = "midasCredentials";
   private accessToken: any;
   private GatewayApiUrlPrefix: any;
   private IcGatewayApiUrlPrefix: any;
-  constructor(private http: HttpClient, private commonHttpParams: CommonHttpParams) {
+  constructor(
+    private http: HttpClient,
+    private commonHttpParams: CommonHttpParams,
+    private authenticationService: AuthenticationService
+  ) {
     this.accessToken = JSON.parse(
-      sessionStorage.getItem(this.credentialsStorageKey)
-      || localStorage.getItem(this.credentialsStorageKey)
+      sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey)
     );
-    this.GatewayApiUrlPrefix = environment.GatewayApiUrlPrefix ;
-    this.IcGatewayApiUrlPrefix = environment.IcGatewayApiUrlPrefix ;
+    this.GatewayApiUrlPrefix = environment.GatewayApiUrlPrefix;
+    this.IcGatewayApiUrlPrefix = environment.IcGatewayApiUrlPrefix;
   }
 
   getLimitTerminals(): Observable<any> {
+    const currentUser = this.authenticationService.getCredentials();
+    const { permissions } = currentUser;
+    const isHavePermission = permissions.includes("ALL_FUNCTIONS");
+
     let httpParams = this.commonHttpParams.getCommonHttpParams();
+    httpParams = httpParams.set("queryOffice", isHavePermission ? `%%` : `${currentUser.officeId}`);
 
     return this.http.post<any>(`${this.IcGatewayApiUrlPrefix}/pos/get_list_limit_pos`, httpParams);
   }
@@ -39,17 +46,17 @@ export class TerminalsService {
     return this.http.post<any>(`${this.IcGatewayApiUrlPrefix}/pos`, httpParams);
   }
 
-  getTerminalInfo(terminalId:string): Observable<any> {
+  getTerminalInfo(terminalId: string): Observable<any> {
     let httpParams = this.commonHttpParams.getCommonHttpParams();
 
-    httpParams = httpParams.set('terminalId', terminalId);
+    httpParams = httpParams.set("terminalId", terminalId);
     return this.http.post<any>(`${this.GatewayApiUrlPrefix}/pos/info`, httpParams);
   }
 
-  getTerminalByID(terminalId:string): Observable<any> {
+  getTerminalByID(terminalId: string): Observable<any> {
     let httpParams = this.commonHttpParams.getCommonHttpParams();
 
-    httpParams = httpParams.set('terminalId', terminalId);
+    httpParams = httpParams.set("terminalId", terminalId);
     return this.http.post<any>(`${this.IcGatewayApiUrlPrefix}/pos/edit`, httpParams);
   }
 
@@ -59,45 +66,43 @@ export class TerminalsService {
     return this.http.get<any>(`${this.IcGatewayApiUrlPrefix}/pos/get_list_merchant`, { params: httpParams });
   }
 
-  save(data:any): Observable<any> {
+  save(data: any): Observable<any> {
     this.accessToken = JSON.parse(
-      sessionStorage.getItem(this.credentialsStorageKey)
-      || localStorage.getItem(this.credentialsStorageKey)
+      sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey)
     );
     const httpParams = {
-      'createdBy': this.accessToken.userId,
-      'accessToken': this.accessToken.base64EncodedAuthenticationKey,
-      ...data
-    }
-    return this.http.post<any>(`${this.IcGatewayApiUrlPrefix}/pos/save`,  httpParams );
+      createdBy: this.accessToken.userId,
+      accessToken: this.accessToken.base64EncodedAuthenticationKey,
+      ...data,
+    };
+    return this.http.post<any>(`${this.IcGatewayApiUrlPrefix}/pos/save`, httpParams);
   }
 
-  update(data:any): Observable<any> {
+  update(data: any): Observable<any> {
     this.accessToken = JSON.parse(
-      sessionStorage.getItem(this.credentialsStorageKey)
-      || localStorage.getItem(this.credentialsStorageKey)
+      sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey)
     );
     const httpParams = {
-      'createdBy': this.accessToken.userId,
-      'accessToken': this.accessToken.base64EncodedAuthenticationKey,
-      ...data
-    }
-    return this.http.post<any>(`${this.IcGatewayApiUrlPrefix}/pos/update`,  httpParams );
+      createdBy: this.accessToken.userId,
+      accessToken: this.accessToken.base64EncodedAuthenticationKey,
+      ...data,
+    };
+    return this.http.post<any>(`${this.IcGatewayApiUrlPrefix}/pos/update`, httpParams);
   }
 
   getByTerminalNo(TerminalNo: string): Observable<any> {
     let httpParams = this.commonHttpParams.getCommonHttpParams();
-    httpParams = httpParams.set('posterminaid', TerminalNo);
+    httpParams = httpParams.set("posterminaid", TerminalNo);
 
-    return this.http.post<any>(`${this.GatewayApiUrlPrefix}/pos/getpos`,  httpParams );
+    return this.http.post<any>(`${this.GatewayApiUrlPrefix}/pos/getpos`, httpParams);
     //return of(user).pipe(delay(500));
   }
 
-  transfer(terminalId:string, officeId:string): Observable<any> {
+  transfer(terminalId: string, officeId: string): Observable<any> {
     let httpParams = this.commonHttpParams.getCommonHttpParams();
-    httpParams = httpParams.set("terminalId",terminalId).set("str_toOfficeId",officeId);
+    httpParams = httpParams.set("terminalId", terminalId).set("str_toOfficeId", officeId);
 
-    return this.http.post<any>(`${this.GatewayApiUrlPrefix}/pos/assignterminal`,  httpParams );
+    return this.http.post<any>(`${this.GatewayApiUrlPrefix}/pos/assignterminal`, httpParams);
   }
 
   getListTerminalAvailable(amount: number): Observable<any> {

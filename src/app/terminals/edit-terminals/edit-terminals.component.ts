@@ -85,6 +85,11 @@ export class EditTerminalsComponent implements OnInit, AfterViewInit {
       this.banks =  this.commonCardBanks;
       this.ItemPosLimitList = data.terminalData.result.ItemPosLimitList;
 
+      this.ItemPosLimitList.forEach ((item: any) => {
+          item.officeName = this.showOfficeName(item.officeId);
+          item.cardDescription = this.showCardName(item.cardCode);
+      })
+
       this.dataSource.data = this.ItemPosLimitList;
       this.posLimitDefault = this.ItemPosLimitList;
       this.dataSource.paginator = this.paginator;
@@ -101,7 +106,7 @@ export class EditTerminalsComponent implements OnInit, AfterViewInit {
       'timeChargeValid': this.ItemPos.timeChargeValid,
       'minFeeDefault': this.ItemPos.minFeeDefault,
       'merchantId': this.ItemPosBranch.merchantId,
-      'status': this.ItemPos.status === 'A' ? true : false,
+      'status': this.ItemPos.status == 'A' ? true : false,
       'costPercentage': this.ItemPosLimitList[0].costPercentage,
       'cogsPercentage': this.ItemPosLimitList[0].cogsPercentage,
       'txnRateMin': this.ItemPosLimitList[0].txnRateMin,
@@ -231,7 +236,7 @@ export class EditTerminalsComponent implements OnInit, AfterViewInit {
       return false;
     }
     const formData = this.editTerminalForm.value;
-    formData.status = formData.status === true ? 'A' : 'D';
+    formData.status = formData.status == true ? 'A' : 'D';
     const data = {
         ...this.editTerminalForm.value,
       'dateFormat': 'dd/MM/yyyy',

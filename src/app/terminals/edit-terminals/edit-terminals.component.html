@@ -340,7 +340,7 @@
                 {{ "Terminal_Component.FormTerminal.tableFee.Office" | translate }}
               </th>
               <td mat-cell *matCellDef="let element">
-                {{ showOfficeName(element.officeId) }}
+                {{ element.officeName }}
               </td>
             </ng-container>
 
@@ -348,7 +348,7 @@
               <th mat-header-cell *matHeaderCellDef>
                 {{ "Terminal_Component.FormTerminal.tableFee.CardType" | translate }}
               </th>
-              <td mat-cell *matCellDef="let element">{{ showCardName(element.cardCode) }}</td>
+              <td mat-cell *matCellDef="let element">{{ element.cardDescription }}</td>
             </ng-container>
 
             <ng-container matColumnDef="FeeCost">

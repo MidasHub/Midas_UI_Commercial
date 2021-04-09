@@ -3,6 +3,7 @@ import {FormBuilder, FormGroup} from '@angular/forms';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
 import { ActivatedRoute, Router } from '@angular/router';
+import { BanksService } from 'app/banks/banks.service';
 import {merge} from 'rxjs';
 import {tap} from 'rxjs/operators';
 
@@ -21,16 +22,30 @@ export class ViewLimitTerminalComponent implements OnInit {
   formFilter: FormGroup;
   terminalFilter: any[] = [];
   terminalList: any[] = [];
+  offices: any[] = [];
   staffs: any[] = [];
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   @ViewChild(MatSort, {static: true}) sort: MatSort;
+  commonOffices: any[] = this.bankService.documentOffices;
+
+
+  showOfficeName(officeId: number) {
+    let officeInfo =  this.offices?.filter((o: any) => o.officeId == officeId) ;
+    return officeInfo[0]?.name;
+  }
 
   constructor(
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
+    private bankService: BanksService,
+
   ) {
     this.route.data.subscribe((data: { terminalData: any }) => {
       this.dataSource = data?.terminalData?.result?.listLimitPos;
+      this.offices = this.commonOffices;
+      this.dataSource.forEach((data: any) => {
+        data.officeName = this.showOfficeName(data.officeId);
+      })
       this.terminalFilter = this.dataSource;
       this.loadData();
 
