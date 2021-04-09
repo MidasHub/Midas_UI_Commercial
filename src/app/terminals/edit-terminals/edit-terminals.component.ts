@@ -1,8 +1,6 @@
 import {Component, OnInit, ChangeDetectorRef, ViewChild, AfterViewInit} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { SettingsService } from 'app/settings/settings.service';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
-import { DatePipe } from '@angular/common';
 import { TerminalsService } from '../terminals.service';
 import { ErrorDialogComponent } from 'app/shared/error-dialog/error-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
@@ -10,6 +8,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import {MatSort, Sort} from '@angular/material/sort';
+import { BanksService } from 'app/banks/banks.service';
 export interface PeriodicElements {
   officeId: number;
   officeName: string;
@@ -37,7 +36,6 @@ export class EditTerminalsComponent implements OnInit, AfterViewInit {
   terminalData: any;
   merchants: any;
   cardTypes: any;
-  posStatus: any;
   ItemPosLimitList: any;
   ItemPosBranch: any;
   ItemPos: any;
@@ -53,26 +51,40 @@ export class EditTerminalsComponent implements OnInit, AfterViewInit {
     {value:'SI', valueDesc:'khách hàng Sỉ'},
     {value:'LE', valueDesc:'khách hàng Lẻ'}
   ];
-
+  commonCardBanks: any[] = this.bankService.documentCardBanks;
+  commonCardTypes: any[] = this.bankService.documentCardTypes;
+  commonOffices: any[] = this.bankService.documentOffices;
 
   constructor(private route: ActivatedRoute,
     private formBuilder: FormBuilder,
     private router: Router,
     private terminalsService: TerminalsService,
     private cdr: ChangeDetectorRef,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private bankService: BanksService,
     ) {}
+
+  showOfficeName(officeId: number) {
+    let officeInfo =  this.offices?.filter((o: any) => o.officeId == officeId) ;
+    return officeInfo[0]?.name;
+  }
+
+  showCardName(cardCode: number) {
+    let cardInfo =  this.cardTypes?.filter((c: any) => c.code == cardCode) ;
+    return cardInfo[0]?.description;
+  }
+
   ngOnInit() {
     this.route.data.subscribe((data: { terminalData: any }) => {
       this.terminalData     = data.terminalData.result;
       this.merchants        = data.terminalData.result.Merchants;
-      this.offices          = data.terminalData.result.listOffices;
-      this.cardTypes        = data.terminalData.result.listCardType;
-      this.posStatus        =  data.terminalData.result.posStatus;
-      this.ItemPosLimitList = data.terminalData.result.ItemPosLimitList;
+      this.offices          = this.commonOffices;
+      this.cardTypes        = this.commonCardTypes;
       this.ItemPos          = data.terminalData.result.ItemPos;
       this.ItemPosBranch    = data.terminalData.result.ItemPosBranch;
-      this.banks =  data.terminalData.result.listBank;
+      this.banks =  this.commonCardBanks;
+      this.ItemPosLimitList = data.terminalData.result.ItemPosLimitList;
+
       this.dataSource.data = this.ItemPosLimitList;
       this.posLimitDefault = this.ItemPosLimitList;
       this.dataSource.paginator = this.paginator;
@@ -139,6 +151,7 @@ export class EditTerminalsComponent implements OnInit, AfterViewInit {
     this.posLimits = [];
      this.offices.forEach ((office: any) => {
       this.cardTypes.forEach((card: any) => {
+
             const limit = {
                 officeId : office.officeId,
                 officeName : office.name,
@@ -154,11 +167,10 @@ export class EditTerminalsComponent implements OnInit, AfterViewInit {
             };
             this.posLimits.push(limit);
         });
-      // this.dataSource.data = this.posLimits;
-      // this.dataSource.sort = this.sort;
-      // this.dataSource.paginator = this.paginator;
+
     });
     this.dataSource.data = this.posLimits;
+
     // this.cdr.detectChanges();
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
@@ -177,6 +189,7 @@ export class EditTerminalsComponent implements OnInit, AfterViewInit {
 
     const office = this.offices.find((i: any) => i.officeId === officeId);
     this.cardTypes.forEach((card: any) => {
+
       const limit = {
         officeId : office.officeId,
         officeName : office.name,

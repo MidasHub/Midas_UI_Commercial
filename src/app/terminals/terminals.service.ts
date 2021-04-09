@@ -50,7 +50,7 @@ export class TerminalsService {
     let httpParams = this.commonHttpParams.getCommonHttpParams();
 
     httpParams = httpParams.set('terminalId', terminalId);
-    return this.http.post<any>(`${this.GatewayApiUrlPrefix}/pos/edit`, httpParams);
+    return this.http.post<any>(`${this.IcGatewayApiUrlPrefix}/pos/edit`, httpParams);
   }
 
   getListMerchant(): Observable<any> {

@@ -150,7 +150,7 @@
               </mat-form-field>
               <mat-form-field *ngIf="editTerminalForm.contains('banksCheck')" fxFlex>
                 <mat-label>Không giao dịch thẻ thuộc ngân hàng</mat-label>
-                <mat-select   formControlName="banksCheck" multiple 
+                <mat-select   formControlName="banksCheck" multiple
                 matTooltip="Đây là ô chọn các ngân hàng mà thẻ của nó sẽ không được phép thực hiện giao dịch trên máy POS này">
                   <mat-option *ngFor="let bank of banks" [value]="bank.bankCode">
                     {{ bank.bankName }}
@@ -160,7 +160,7 @@
 
               <mat-form-field *ngIf="editTerminalForm.contains('cardsCheck')" fxFlex>
                 <mat-label>Không giao dịch thẻ thuộc loại</mat-label>
-                <mat-select multiple  formControlName="cardsCheck" 
+                <mat-select multiple  formControlName="cardsCheck"
                 matTooltip="Đây là ô chọn các loại thẻ sẽ không được phép thực hiện giao dịch trên máy POS này">
                   <mat-option *ngFor="let type of cardTypes" [value]="type.code">
                     {{ type.description }}
@@ -241,7 +241,7 @@
             ></mat-error>
           </mat-form-field>
 
-          <button mat-raised-button color="primary" (click)="setDefaultFeeSettingPos()" 
+          <button mat-raised-button color="primary" (click)="setDefaultFeeSettingPos()"
           matTooltip="Khi phần bấm nút này, phần phí được thiết lập bên trái ngay lập tức sẽ được áp dụng cho tất cả các chi nhánh">
             <svg
               width="1em"
@@ -339,14 +339,16 @@
               <th mat-header-cell *matHeaderCellDef mat-sort-header>
                 {{ "Terminal_Component.FormTerminal.tableFee.Office" | translate }}
               </th>
-              <td mat-cell *matCellDef="let element">{{ element.officeName }}</td>
+              <td mat-cell *matCellDef="let element">
+                {{ showOfficeName(element.officeId) }}
+              </td>
             </ng-container>
 
             <ng-container matColumnDef="CardType">
               <th mat-header-cell *matHeaderCellDef>
                 {{ "Terminal_Component.FormTerminal.tableFee.CardType" | translate }}
               </th>
-              <td mat-cell *matCellDef="let element">{{ element.cardDescription }}</td>
+              <td mat-cell *matCellDef="let element">{{ showCardName(element.cardCode) }}</td>
             </ng-container>
 
             <ng-container matColumnDef="FeeCost">
@@ -366,7 +368,7 @@
                 </mat-form-field>
               </td>
             </ng-container>
-            
+
             <ng-container matColumnDef="FeeCOGS">
               <th mat-header-cell *matHeaderCellDef matTooltip="Phí áp dụng cho các chi nhánh">
                 {{ "Terminal_Component.FormTerminal.tableFee.FeeCogs" | translate }}
@@ -385,7 +387,7 @@
               </td>
             </ng-container>
 
-           
+
 
             <ng-container matColumnDef="FeeMin">
               <th mat-header-cell *matHeaderCellDef matTooltip="Phí thấp nhất được phép áp dụng cho khách hàng">
