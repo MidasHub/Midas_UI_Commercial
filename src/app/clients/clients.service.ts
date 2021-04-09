@@ -108,8 +108,8 @@ export class ClientsService {
       // .set('fields', 'displayName,mobileNo,accountNo,externalId,active,mobileNo,gender,officeName,staffName')
       .set("offset", offset.toString())
       .set("limit", limit.toString())
-      .set("sortOrder", sortOrder)
-      .set("orderBy", orderBy)
+      .set("sortOrder", "DESC")
+      .set("orderBy", 'id')
       .set("sqlSearch", sqlSearch ? sqlSearch : "");
 
     this.accessToken = JSON.parse(
