@@ -30,7 +30,7 @@
               "src/manifest.json",
               "src/firebase-messaging-sw.js",
               "src/assets",
-              "src/assets/i8n"
+              "src/assets/i18n"
             ],
             "styles": [
               "src/main.scss",
