@@ -21,6 +21,7 @@ import { PartnerAdvanceCashComponent } from "./form-dialog/partner-advance-cash/
 import { AlertService } from "../../core/alert/alert.service";
 import { TransferCrossOfficeComponent } from "./form-dialog/transfer-cross-office/transfer-cross-office.component";
 import { GroupsService } from "app/groups/groups.service";
+import { ConfirmDialogComponent } from "app/transactions/dialog/coifrm-dialog/confirm-dialog.component";
 
 /**
  * Savings Account View Component
@@ -299,18 +300,43 @@ export class SavingsAccountViewComponent implements OnInit {
     refDialog.afterClosed().subscribe((response: any) => {
       if (response) {
         const { typeAdvanceCashes, savingAccountId, note, amount } = response?.data?.value;
-        this.savingsService
-          .transferCrossOfficeCashTransaction({
-            buSavingAccount: this.savingsAccountData.id,
-            clientSavingAccount: savingAccountId,
-            note: note,
-            amountAdvanceCash: amount,
-            paymentTypeId: typeAdvanceCashes,
-          })
-          .subscribe((result: any) => {
-            const message = `Thực hiện thành công!`;
-            this.savingsService.handleResponseApiSavingTransaction(result, message, true);
+        if (this.savingsAccountData.id == savingAccountId) {
+          const dialog = this.dialog.open(ConfirmDialogComponent, {
+            data: {
+              message: "Giao dịch chọn không hợp lệ (tài khoản nguồn và đích trùng nhau!), tiếp tục thực hiện",
+              title: "Hủy giao dịch",
+            },
           });
+          dialog.afterClosed().subscribe((data) => {
+            if (data) {
+              this.savingsService
+                .transferCrossOfficeCashTransaction({
+                  buSavingAccount: this.savingsAccountData.id,
+                  clientSavingAccount: savingAccountId,
+                  note: note,
+                  amountAdvanceCash: amount,
+                  paymentTypeId: typeAdvanceCashes,
+                })
+                .subscribe((result: any) => {
+                  const message = `Thực hiện thành công!`;
+                  this.savingsService.handleResponseApiSavingTransaction(result, message, true);
+                });
+            }
+          });
+        } else {
+          this.savingsService
+            .transferCrossOfficeCashTransaction({
+              buSavingAccount: this.savingsAccountData.id,
+              clientSavingAccount: savingAccountId,
+              note: note,
+              amountAdvanceCash: amount,
+              paymentTypeId: typeAdvanceCashes,
+            })
+            .subscribe((result: any) => {
+              const message = `Thực hiện thành công!`;
+              this.savingsService.handleResponseApiSavingTransaction(result, message, true);
+            });
+        }
       }
     });
   }

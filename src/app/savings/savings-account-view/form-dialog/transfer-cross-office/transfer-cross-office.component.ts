@@ -20,7 +20,6 @@ export class TransferCrossOfficeComponent implements OnInit {
 
   constructor(
     private serviceClient: ClientsService,
-    private groupService: GroupsService,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private formBuilder: FormBuilder,
     private savingsService: SavingsService,

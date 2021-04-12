@@ -207,10 +207,7 @@ export class CreateBatchTransactionComponent implements OnInit {
                   index: `${String(new Date().getMilliseconds())}___${this.dataSource.length}`,
                   ...this.defaultData,
                   ...v,
-                  identitydocumentsId: `${member.cardNumber.slice(0, 6)}-XXX-XXX-${member.cardNumber.slice(
-                    member.cardNumber.length - 4,
-                    member.cardNumber.length
-                  )} `,
+                  identitydocumentsId: `${v.panNumber} `,
                   customerName: member.fullName,
                   clientId: member.clientId,
                   toClientId: member.clientId,
