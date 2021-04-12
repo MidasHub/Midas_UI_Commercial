@@ -19,6 +19,16 @@ export class ThirdPartyService {
     this.IcGatewayApiUrlPrefix = environment.IcGatewayApiUrlPrefix;
   }
 
+  formatLong(value: string) {
+    value = String(value);
+    const neg = value.startsWith("-");
+    value = value.replace(/[^0-9]+/g, "");
+    if (neg) {
+      value = "-".concat(value);
+    }
+    return Number(value);
+  }
+
   getInputFilter(): BehaviorSubject<any> {
     if (!this.filterSearch) {
       this.filterSearch = new BehaviorSubject("");

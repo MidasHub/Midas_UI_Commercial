@@ -12,6 +12,7 @@ import { AddLimitIdentitiesExtraInfoComponent } from "app/clients/clients-view/i
 import { AlertService } from "app/core/alert/alert.service";
 import { SettingsService } from "app/settings/settings.service";
 import { TerminalsService } from "app/terminals/terminals.service";
+import { ThirdPartyService } from "app/third-party/third-party.service";
 import { AddFeeDialogComponent } from "../dialog/add-fee-dialog/add-fee-dialog.component";
 import { ConfirmDialogComponent } from "../dialog/coifrm-dialog/confirm-dialog.component";
 import { CreateSuccessTransactionDialogComponent } from "../dialog/create-success-transaction-dialog/create-success-transaction-dialog.component";
@@ -52,7 +53,7 @@ export class CreateTransactionComponent implements OnInit {
     public dialog: MatDialog,
     private alertService: AlertService,
     private datePipe: DatePipe,
-    private settingsService: SettingsService,
+    private thirdPartyService: ThirdPartyService,
     private formBuilder: FormBuilder,
     private terminalsService: TerminalsService
   ) {
@@ -166,7 +167,7 @@ export class CreateTransactionComponent implements OnInit {
 
   getTerminalListEnoughBalance(amountTransaction: string) {
     const amount = this.transactionService.formatLong(amountTransaction);
-    this.transactionService.getListTerminalAvailable(amount, "LE").subscribe((data: any) => {
+    this.terminalsService.getListTerminalAvailable(amount, "LE").subscribe((data: any) => {
       this.transactionInfo.listTerminal = data.result.listTerminal;
     });
   }

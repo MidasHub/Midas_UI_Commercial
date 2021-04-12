@@ -23,6 +23,7 @@ import { FormfieldBase } from "../../shared/form-dialog/formfield/model/formfiel
 import { SelectBase } from "../../shared/form-dialog/formfield/model/select-base";
 import { FormDialogComponent } from "../../shared/form-dialog/form-dialog.component";
 import { InputBase } from "../../shared/form-dialog/formfield/model/input-base";
+import { TerminalsService } from "app/terminals/terminals.service";
 
 @Component({
   selector: "midas-manage-transaction",
@@ -108,6 +109,7 @@ export class ManageTransactionComponent implements OnInit {
   partners: any[];
   staffs: any[];
   offices: any[];
+  terminals: any;
   totalTerminalAmount = 0;
   totalFeeAmount = 0;
   totalCogsAmount = 0;
@@ -127,8 +129,9 @@ export class ManageTransactionComponent implements OnInit {
     private authenticationService: AuthenticationService,
     private savingsService: SavingsService,
     private alertService: AlertService,
-    public dialog: MatDialog,
-    private clientsService: ClientsService
+    private dialog: MatDialog,
+    private clientsService: ClientsService,
+    private terminalsService: TerminalsService,
   ) {
     this.formDate = this.formBuilder.group({
       fromDate: [new Date()],
@@ -174,12 +177,19 @@ export class ManageTransactionComponent implements OnInit {
     });
   }
 
+displayTerminalName(terminalId: string){
+  const terminalInfo =  this.terminals?.filter((terminal: any) => terminal.terminalId == terminalId);
+  return terminalInfo ? terminalInfo[0]?.terminalName : terminalId;
+}
+
   ngOnInit(): void {
     this.dataSource = this.transactionsData;
-    this.savingsService.getListPartner().subscribe((partner) => {
-      this.partners = partner?.result?.listPartner;
+    this.terminalsService.getPartnersTerminalTemplate().subscribe((partner) => {
+      this.partners = partner?.result?.partners;
+      this.terminals = partner?.result?.listTerminal;
       // @ts-ignore
       this.partners?.unshift({ code: "", desc: "Tất cả" });
+      this.terminals?.unshift({ terminalId: "", terminalName: "Tất cả" });
     });
 
     this.clientsService.getListUserTeller(this.currentUser.officeId).subscribe((result: any) => {

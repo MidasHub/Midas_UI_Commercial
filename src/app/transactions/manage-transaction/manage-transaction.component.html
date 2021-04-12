@@ -125,7 +125,12 @@
 
         <mat-form-field fxFlex="18%">
           <mat-label>Mã máy</mat-label>
-          <input matInput formControlName="terminalId" />
+          <!-- <input matInput formControlName="terminalId" /> -->
+          <mat-select formControlName="terminalId">
+            <mat-option *ngFor="let terminal of terminals" [value]="terminal.terminalId">
+              {{ terminal.terminalName }}
+            </mat-option>
+          </mat-select>
         </mat-form-field>
 
         <mat-form-field fxFlex="18%">
@@ -215,7 +220,7 @@
         <td mat-cell *matCellDef="let journalEntry" style="word-wrap: break-word; width: 200px">
           <!-- {{ journalEntry.officeName }} <br /> -->
           <span class="blue_text">{{ journalEntry.createdByName }} </span><br />
-          <span class="red_text">{{ journalEntry.terminalId }}</span>
+          <span class="red_text">{{ displayTerminalName(journalEntry.terminalId) }}</span>
         </td>
       </ng-container>
 

@@ -29,6 +29,19 @@ export class TerminalsService {
     this.IcGatewayApiUrlPrefix = environment.IcGatewayApiUrlPrefix;
   }
 
+
+  getPartnersTerminalTemplate(): Observable<any> {
+    let httpParams = this.commonHttpParams.getCommonHttpParams();
+    return this.http.post<any>(`${this.IcGatewayApiUrlPrefix}/pos/get_show_transaction_info_template`, httpParams);
+  }
+
+  getListTerminalAvailable(amount: number, transactionType:string): Observable<any> {
+    let httpParams = this.commonHttpParams.getCommonHttpParams();
+    httpParams = httpParams.set("amountTransaction", amount.toString()).set("transactionType",transactionType);
+    debugger;
+    return this.http.post<any>(`${this.IcGatewayApiUrlPrefix}/pos/get_list_terminal_by_office_sl`, httpParams);
+  }
+
   getLimitTerminals(): Observable<any> {
     const currentUser = this.authenticationService.getCredentials();
     const { permissions } = currentUser;
@@ -103,13 +116,6 @@ export class TerminalsService {
     httpParams = httpParams.set("terminalId", terminalId).set("str_toOfficeId", officeId);
 
     return this.http.post<any>(`${this.GatewayApiUrlPrefix}/pos/assignterminal`, httpParams);
-  }
-
-  getListTerminalAvailable(amount: number): Observable<any> {
-    let httpParams = this.commonHttpParams.getCommonHttpParams();
-    httpParams = httpParams.set("amountTransaction", amount.toString());
-
-    return this.http.post<any>(`${this.GatewayApiUrlPrefix}/pos/get_list_terminal_by_office`, httpParams);
   }
 
   getFeeByTerminal(accountTypeCode: string, terminalId: string): Observable<any> {

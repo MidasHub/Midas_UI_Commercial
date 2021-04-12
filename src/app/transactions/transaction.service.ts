@@ -18,6 +18,7 @@ export class TransactionService {
   private accessToken: any;
   private GatewayApiUrlPrefix: any;
   private environment: any;
+  private IcGatewayApiUrlPrefix: any;
 
   /**
    * @param {HttpClient} http Http Client to send requests.
@@ -31,7 +32,26 @@ export class TransactionService {
       sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey)
     );
     this.GatewayApiUrlPrefix = environment.GatewayApiUrlPrefix;
+    this.IcGatewayApiUrlPrefix = environment.IcGatewayApiUrlPrefix;
+
     this.environment = environment;
+  }
+
+  mappingInvoiceWithTransaction(
+    accountTypeCode: string,
+    accountNumber: string,
+    identifierId: string,
+    amountTransaction: number,
+    terminalId: string
+  ): Observable<any> {
+    let httpParams = this.commonHttpParams.getCommonHttpParams();
+    httpParams = httpParams.set("accountNumber", accountNumber);
+    httpParams = httpParams.set("ext4", identifierId);
+    httpParams = httpParams.set("AmountMappingInvoice", String(this.formatLong(String(amountTransaction))));
+    httpParams = httpParams.set("accountTypeId", accountTypeCode);
+    httpParams = httpParams.set("terminalId", terminalId);
+
+    return this.http.post<any>(`${this.GatewayApiUrlPrefix}/transaction/mapping_invoice_transaction`, httpParams);
   }
 
   ExecuteRollTermTransactionByTrnRefNo(form: any): Observable<any> {
@@ -217,23 +237,6 @@ export class TransactionService {
     );
   }
 
-  mappingInvoiceWithTransaction(
-    accountTypeCode: string,
-    accountNumber: string,
-    identifierId: string,
-    amountTransaction: number,
-    terminalId: string
-  ): Observable<any> {
-    let httpParams = this.commonHttpParams.getCommonHttpParams();
-    httpParams = httpParams.set("accountNumber", accountNumber);
-    httpParams = httpParams.set("ext4", identifierId);
-    httpParams = httpParams.set("AmountMappingInvoice", String(this.formatLong(String(amountTransaction))));
-    httpParams = httpParams.set("accountTypeId", accountTypeCode);
-    httpParams = httpParams.set("terminalId", terminalId);
-
-    return this.http.post<any>(`${this.GatewayApiUrlPrefix}/transaction/mapping_invoice_transaction`, httpParams);
-  }
-
   getTransaction(payload: { fromDate: string; toDate: string }): Observable<any> {
     let httpParams = this.commonHttpParams.getCommonHttpParams();
 
@@ -312,13 +315,6 @@ export class TransactionService {
     httpParams = httpParams.set("documentId", identifierId);
 
     return this.http.post<any>(`${this.GatewayApiUrlPrefix}/transaction/check_valid_rollTerm_transaction`, httpParams);
-  }
-
-  getListTerminalAvailable(amount: number, transactionType:string): Observable<any> {
-    let httpParams = this.commonHttpParams.getCommonHttpParams();
-    httpParams = httpParams.set("amountTransaction", amount.toString()).set("transactionType",transactionType);
-
-    return this.http.post<any>(`${this.GatewayApiUrlPrefix}/pos/get_list_terminal_by_office_sl`, httpParams);
   }
 
   getTransactionTemplate(clientId: string, identifierId: string, transactionId?: string): Observable<any> {
