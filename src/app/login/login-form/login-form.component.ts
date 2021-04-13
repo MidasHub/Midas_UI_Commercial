@@ -9,8 +9,9 @@ import { finalize } from 'rxjs/operators';
 /** Custom Services */
 import { AuthenticationService } from '../../core/authentication/authentication.service';
 import { TranslateService } from '@ngx-translate/core';
-import { HttpParams } from '@angular/common/http';
+import { HttpParams, HttpClient } from '@angular/common/http';
 import { split } from 'lodash';
+import {environment} from '../../../environments/environment';
 
 import { Logger } from '../../core/logger/logger.service';
 const log = new Logger('Login Page')
@@ -37,8 +38,8 @@ export class LoginFormComponent implements OnInit {
    */
   constructor(private formBuilder: FormBuilder,
     private authenticationService: AuthenticationService,
-    private translate: TranslateService
-  ) { }
+    private translate: TranslateService,
+    private http:HttpClient  ) { }
 
   /**
    * Creates login form.
@@ -58,13 +59,16 @@ export class LoginFormComponent implements OnInit {
       const body = {
         officeID: currentuser.officeId,
         staffAppID: currentuser.staffId,
+        staffUserID: currentuser.userId,
         staffUsername: currentuser.username,
         staffName: split(currentuser.staffDisplayName, ",")[1].trim(),
         staffCode: split(currentuser.staffDisplayName, ",")[0].trim(),
-        tokens: "[{'token':" + localStorage.getItem('MidasFirebase') + "}]"
+        fbToken: localStorage.getItem('MidasFirebase'),
+        userAgent: navigator.userAgent
       };
-      console.log(body);
-      //return this.http.post(environment.NotiGatewayURL + `/users`, body);
+      
+      log.debug(body);
+      return this.http.post(environment.NotiGatewayURL + `/users/subscribe`, body);
     }
   }
 

@@ -26,7 +26,7 @@ import { BanksService } from "./banks/banks.service"
 /** Custom Items */
 import { Alert } from './core/alert/alert.model';
 import { KeyboardShortcutsConfiguration } from './keyboards-shortcut-config';
-import {TourService} from 'ngx-tour-core'
+import { TourService } from 'ngx-tour-core'
 
 
 /**
@@ -83,7 +83,7 @@ export class WebAppComponent implements OnInit {
     private bankService: BanksService,
     private messagingService: FireBaseMessagingService,
     private deviceService: DeviceDetectorService,
-    private tourService:TourService) {
+    private tourService: TourService) {
 
   }
 
@@ -217,6 +217,11 @@ export class WebAppComponent implements OnInit {
     // Get client location
     this.getLocation();
     this.loadDeviceData();
+
+    log.debug("UserAgent is: ", navigator.userAgent);
+    log.debug("maxTouchPoints is : ", navigator.maxTouchPoints);
+    log.debug("navigator is:", navigator);
+
     // ----- End ngOnInit
   }
 
@@ -237,7 +242,7 @@ export class WebAppComponent implements OnInit {
       navigator.geolocation.getCurrentPosition(
         (pos: any) => {
           if (pos) {
-            log.debug("Latitude: " + pos.coords.latitude + " - Longitude: " +   pos.coords.longitude );
+            log.debug("Latitude: " + pos.coords.latitude + " - Longitude: " + pos.coords.longitude);
           }
         },
         (error: any) => console.log(error)
@@ -304,7 +309,7 @@ export class WebAppComponent implements OnInit {
   }
 
   /**End Tour */
-  endTour(){
+  endTour() {
     console.log('End tour');
     this.tourService.end()
   }

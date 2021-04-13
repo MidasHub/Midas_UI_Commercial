@@ -40,7 +40,9 @@ const apiVersion = '/v1';
 
 // }
 
-let defaultNotificationURL="https://staging.kiotthe.com"
+// let defaultNotificationURL="https://staging.kiotthe.com";
+let defaultNotificationURL="http://localhost:8080";
+
 
 export default {
   coreT: tenant,
