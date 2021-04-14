@@ -202,7 +202,7 @@
                 </mat-option>
               </mat-select>
             </mat-form-field>
-            <span *ngIf="form.contains('saved')">{{ form.get("terminalId").value }}</span>
+            <span *ngIf="form.contains('saved')">{{ displayTerminalName(form.get("terminalId").value) }}</span>
           </td>
         </ng-container>
 

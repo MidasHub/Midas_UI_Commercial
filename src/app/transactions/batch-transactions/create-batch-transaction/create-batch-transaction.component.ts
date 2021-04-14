@@ -22,6 +22,7 @@ import { ValidCheckTransactionHistoryDialogComponent } from "app/transactions/di
 import { TerminalsService } from "app/terminals/terminals.service";
 import { Logger } from "../../../core/logger/logger.service";
 import { AddFeeDialogComponent } from "app/transactions/dialog/add-fee-dialog/add-fee-dialog.component";
+import { ThirdPartyService } from "app/third-party/third-party.service";
 const log = new Logger("Batch Txn");
 @Component({
   selector: "midas-create-batch-transaction",
@@ -125,6 +126,7 @@ export class CreateBatchTransactionComponent implements OnInit {
   bookingTxnDailyId: any;
   private destroy$ = new Subject<void>();
   filteredOptions: any;
+  terminalsMasters: any;
   today: any = new Date();
   txnDate: any = new Date();
 
@@ -148,7 +150,7 @@ export class CreateBatchTransactionComponent implements OnInit {
     private terminalsService: TerminalsService,
     private clientsServices: ClientsService,
     private bankServices: BanksService,
-    private router: Router
+    private router: Router,
   ) {
     this.currentUser = this.authenticationService.getCredentials();
     if (!this.authenticationService.checkAppModuleSetting("billModule")) {
@@ -246,8 +248,17 @@ export class CreateBatchTransactionComponent implements OnInit {
         this.transactionServices.getTransactionGroupFee(this.group.id).subscribe((data) => {
           this.feeGroup = data?.result.listFeeGroup;
         });
+
+        this.terminalsService.getPartnersTerminalTemplate().subscribe((partner) => {
+          this.terminalsMasters = partner?.result?.listTerminal;
+        });
       });
     });
+  }
+
+  displayTerminalName(terminalId: string){
+    const terminalInfo =  this.terminalsMasters?.filter((terminal: any) => terminal.terminalId == terminalId);
+    return terminalInfo ? terminalInfo[0]?.terminalName : terminalId;
   }
 
   getFee(panNumber: string, productId: string): number {
@@ -349,7 +360,7 @@ export class CreateBatchTransactionComponent implements OnInit {
       )
       .subscribe((value) => {
         if (value && value > 0) {
-          this.transactionServices.getListTerminalAvailable(value, "SI").subscribe((result) => {
+          this.terminalsService.getListTerminalAvailable(value, "SI").subscribe((result) => {
             // @ts-ignore
             form?.data.terminals = result?.result?.listTerminal;
             form.get("terminalId").setValidators([Validators.required]);
@@ -475,7 +486,7 @@ export class CreateBatchTransactionComponent implements OnInit {
       // @ts-ignore
       this.transactionServices
         .mappingInvoiceWithTransaction(form.data.binCodeInfo.cardType, documentKey, documentId, amount, result)
-        .subscribe((result2) => {
+        .subscribe((result2: any) => {
           if (result2.status != 200) {
             if (result2.status == 401) {
               if (result2.error == "Unauthorize with Midas") {
@@ -510,12 +521,22 @@ export class CreateBatchTransactionComponent implements OnInit {
             // this.alertService.alert({ message: data.result.caution, msgClass: "cssDanger", hPosition: "center" });
           }
           const value = result2?.result.amountTransaction;
+          if (value > 0) {
           // form.get('amountTransaction').setValue(value);
           form.get("invoiceAmount").setValue(value);
 
           form.get("terminalAmount").setValue(value);
           // @ts-ignore
           form.get("bills").setValue(result2.result.listInvoice);
+          } else {
+            this.alertService.alert({
+              message: `Lỗi truy xuất số tiền đề xuất giao dịch, vui lòng liên hệ IT support! `,
+              msgClass: "cssDanger",
+              hPosition: "center",
+            });
+
+            return;
+          }
         });
     }
   }
@@ -533,7 +554,7 @@ export class CreateBatchTransactionComponent implements OnInit {
 
   getFeeByTerminalAction(form: any, terminalId: string) {
     // @ts-ignore
-    this.transactionServices.getFeeByTerminal(form.data.binCodeInfo.cardType, terminalId).subscribe((result1) => {
+    this.terminalsService.getFeeByTerminal(form.data.binCodeInfo.cardType, terminalId).subscribe((result1) => {
       // @ts-ignore
       form.data.feeTerminalDto = result1?.result?.feeTerminalDto;
       const { minRate, maxRate, cogsRate } = result1?.result?.feeTerminalDto;

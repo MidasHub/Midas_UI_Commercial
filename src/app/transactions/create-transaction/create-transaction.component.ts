@@ -53,7 +53,6 @@ export class CreateTransactionComponent implements OnInit {
     public dialog: MatDialog,
     private alertService: AlertService,
     private datePipe: DatePipe,
-    private thirdPartyService: ThirdPartyService,
     private formBuilder: FormBuilder,
     private terminalsService: TerminalsService
   ) {
@@ -263,17 +262,29 @@ export class CreateTransactionComponent implements OnInit {
           }
           return;
         }
-        if (typeof data.result.caution != "undefined" && data.result.caution != "NaN") {
+        if (
+          typeof data.result.caution != "undefined" &&
+          data.result.caution != "NaN" &&
+          data.result.amountTransaction > 0
+        ) {
           this.showHistoryTransaction(data.result.caution, data.result.listTransaction);
-
-          // this.alertService.alert({ message: data.result.caution, msgClass: "cssDanger", hPosition: "center" });
         }
         this.transactionInfo.invoiceMapping = data.result;
-        this.transactionInfo.txnAmount = this.formatCurrency(data.result.amountTransaction);
-        this.transactionInfo.terminalAmount = this.formatCurrency(data.result.amountTransaction);
-        this.transactionCreateForm.controls["terminalAmount"].setValue(this.transactionInfo.terminalAmount);
-        this.transactionCreateForm.controls["txnAmount"].setValue(this.transactionInfo.txnAmount);
-        this.calculateFeeTransaction();
+        if (data.result.amountTransaction > 0) {
+          this.transactionInfo.txnAmount = this.formatCurrency(data.result.amountTransaction);
+          this.transactionInfo.terminalAmount = this.formatCurrency(data.result.amountTransaction);
+          this.transactionCreateForm.controls["terminalAmount"].setValue(this.transactionInfo.terminalAmount);
+          this.transactionCreateForm.controls["txnAmount"].setValue(this.transactionInfo.txnAmount);
+          this.calculateFeeTransaction();
+        } else {
+          this.alertService.alert({
+            message: `Lỗi truy xuất số tiền đề xuất giao dịch, vui lòng liên hệ IT support! `,
+            msgClass: "cssDanger",
+            hPosition: "center",
+          });
+
+          return;
+        }
       });
   }
 

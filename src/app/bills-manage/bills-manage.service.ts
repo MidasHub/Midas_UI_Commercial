@@ -14,12 +14,12 @@ import { CommonHttpParams } from "app/shared/CommonHttpParams";
 export class BillsService {
   private credentialsStorageKey = "midasCredentials";
   private accessToken: any;
-  private GatewayApiUrlPrefix: any;
+  private IcGatewayApiUrlPrefix: any;
   constructor(private http: HttpClient, private commonHttpParams: CommonHttpParams) {
     this.accessToken = JSON.parse(
       sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey)
     );
-    this.GatewayApiUrlPrefix = environment.GatewayApiUrlPrefix;
+    this.IcGatewayApiUrlPrefix = environment.IcGatewayApiUrlPrefix;
   }
 
   uploadBills(formData: any): Observable<any> {
@@ -31,7 +31,7 @@ export class BillsService {
     formData.append("createdBy", this.accessToken.userId);
     formData.append("accessToken", this.accessToken.base64EncodedAuthenticationKey);
 
-    return this.http.post<any>(`${this.GatewayApiUrlPrefix}/invoice/upload_invoice_asyn_new`, formData, {
+    return this.http.post<any>(`${this.IcGatewayApiUrlPrefix}/invoice/upload_invoice_asyn_new`, formData, {
       reportProgress: true,
       observe: "events",
     });
@@ -40,7 +40,7 @@ export class BillsService {
   getBillsResource(): Observable<any> {
     let httpParams = this.commonHttpParams.getCommonHttpParams();
 
-    return this.http.post<any>(`${this.GatewayApiUrlPrefix}/invoice/get_list_doc_invoice`, httpParams);
+    return this.http.post<any>(`${this.IcGatewayApiUrlPrefix}/invoice/get_list_doc_invoice`, httpParams);
   }
 
   getListInvoiceByBatchCode(batchCode: string,
@@ -53,20 +53,20 @@ export class BillsService {
       httpParams = httpParams.set("limit", String(limit));
       httpParams = httpParams.set("offset", String(offset));
 
-    return this.http.post<any>(`${this.GatewayApiUrlPrefix}/invoice/get_list_invoice_batchcode`, httpParams);
+    return this.http.post<any>(`${this.IcGatewayApiUrlPrefix}/invoice/get_list_invoice_batchcode`, httpParams);
   }
 
 
   getListMerchant(): Observable<any> {
     let httpParams = this.commonHttpParams.getCommonHttpParams();
 
-    return this.http.post<any>(`${this.GatewayApiUrlPrefix}/invoice/get_list_merchant`, httpParams);
+    return this.http.get<any>(`${this.IcGatewayApiUrlPrefix}/pos/get_list_merchant`, { params: httpParams });
   }
 
   getListPartnerByMerchant(merchantId: string): Observable<any> {
     let httpParams = this.commonHttpParams.getCommonHttpParams();
     httpParams = httpParams.set("merchantId", merchantId);
 
-    return this.http.post<any>(`${this.GatewayApiUrlPrefix}/invoice/get_list_partner_by_merchant`, httpParams);
+    return this.http.post<any>(`${this.IcGatewayApiUrlPrefix}/invoice/get_list_partner_by_merchant`, httpParams);
   }
 }
