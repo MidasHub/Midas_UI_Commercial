@@ -81,7 +81,6 @@ export class AddFeeDialogComponent implements OnInit {
   }
 
   checkAccountAndAmountPaid() {
-    debugger;
     this.formDialogPaid.value;
     const paymentCode = this.formDialogPaid.get("paymentCode").value;
     if (paymentCode !== "DE") {

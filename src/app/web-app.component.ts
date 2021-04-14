@@ -202,6 +202,9 @@ export class WebAppComponent implements OnInit {
         "https://midas.kiotthe.com",
         "https://hdcredit.kiotthe.com",
         "http://localhost:8088",
+        "http://119.82.141.26:8088",
+        "http://localhost:8087",
+
       ]);
     }
 

@@ -22,8 +22,8 @@ let defaultbillposURL = 'https://staging.kiotthe.com';
 // let defaultNotificationURL="https://staging.kiotthe.com"
 
 let ictenant = "default";
-// let defaultIcURL = 'https://ic.kiotthe.com';
-let defaultIcURL = "http://localhost:8088";
+let defaultIcURL = 'https://ic.kiotthe.com';
+// let defaultIcURL = "http://localhost:8087";
 
 let apiProvider = "/midas/api";
 const apiVersion = "/v1";
