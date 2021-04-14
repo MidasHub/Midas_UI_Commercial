@@ -9,7 +9,7 @@ import { finalize } from 'rxjs/operators';
 /** Custom Services */
 import { AuthenticationService } from '../../core/authentication/authentication.service';
 import { TranslateService } from '@ngx-translate/core';
-import { HttpParams, HttpClient } from '@angular/common/http';
+import { HttpParams, HttpClient, HttpHeaders } from '@angular/common/http';
 import { split } from 'lodash';
 import {environment} from '../../../environments/environment';
 
@@ -66,9 +66,14 @@ export class LoginFormComponent implements OnInit {
         fbToken: localStorage.getItem('MidasFirebase'),
         userAgent: navigator.userAgent
       };
-      
+      const httpOptions = {
+        responseType: "blob" as "json",
+        headers: new HttpHeaders({
+          "corehost": environment.serverUrl,
+        }),
+      };
       log.debug(body);
-      return this.http.post(environment.NotiGatewayURL + `/users/subscribe`, body);
+      return this.http.post(environment.NotiGatewayURL + `/users/subscribe`, body,httpOptions).subscribe(e => log.debug(e));
     }
   }
 

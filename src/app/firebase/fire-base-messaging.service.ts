@@ -45,7 +45,7 @@ export class FireBaseMessagingService {
     this.angularFireMessaging.messages.subscribe(
       (payload: any) => {
         log.debug("new message received. ", payload);
-        this.alertService.alert({ message: '[Firebase-Notification]: \n' + payload.notification.title + ": " + payload.notification.body, msgClass: 'cssInfo' })
+        this.alertService.alert({ message: '[Firebase-Notification]: \n' + payload.notification.title + ": " + payload.notification.body+ '\n'+ payload.notification.image, msgClass: 'cssInfo' })
         this.currentMessage.next(payload);
       })
   }

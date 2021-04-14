@@ -41,7 +41,8 @@ const apiVersion = '/v1';
 // }
 
 // let defaultNotificationURL="https://staging.kiotthe.com";
-let defaultNotificationURL="http://localhost:8080";
+// let defaultNotificationURL="https://noti.kiotthe.com";
+let defaultNotificationURL="https://localhost:9442";
 
 
 export default {
