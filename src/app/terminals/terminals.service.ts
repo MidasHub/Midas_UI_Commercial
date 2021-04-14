@@ -29,15 +29,14 @@ export class TerminalsService {
     this.IcGatewayApiUrlPrefix = environment.IcGatewayApiUrlPrefix;
   }
 
-
   getPartnersTerminalTemplate(): Observable<any> {
     let httpParams = this.commonHttpParams.getCommonHttpParams();
     return this.http.post<any>(`${this.IcGatewayApiUrlPrefix}/pos/get_show_transaction_info_template`, httpParams);
   }
 
-  getListTerminalAvailable(amount: number, transactionType:string): Observable<any> {
+  getListTerminalAvailable(amount: number, transactionType: string): Observable<any> {
     let httpParams = this.commonHttpParams.getCommonHttpParams();
-    httpParams = httpParams.set("amountTransaction", amount.toString()).set("transactionType",transactionType);
+    httpParams = httpParams.set("amountTransaction", amount.toString()).set("transactionType", transactionType);
     return this.http.post<any>(`${this.IcGatewayApiUrlPrefix}/pos/get_list_terminal_by_office_sl`, httpParams);
   }
 
@@ -62,7 +61,7 @@ export class TerminalsService {
     let httpParams = this.commonHttpParams.getCommonHttpParams();
 
     httpParams = httpParams.set("terminalId", terminalId);
-    return this.http.post<any>(`${this.GatewayApiUrlPrefix}/pos/info`, httpParams);
+    return this.http.post<any>(`${this.IcGatewayApiUrlPrefix}/pos/transfer_info`, httpParams);
   }
 
   getTerminalByID(terminalId: string): Observable<any> {
@@ -102,19 +101,13 @@ export class TerminalsService {
     return this.http.post<any>(`${this.IcGatewayApiUrlPrefix}/pos/update`, httpParams);
   }
 
-  getByTerminalNo(TerminalNo: string): Observable<any> {
+  transfer(terminalId: string, transferToTarget: string, transferType: string): Observable<any> {
     let httpParams = this.commonHttpParams.getCommonHttpParams();
-    httpParams = httpParams.set("posterminaid", TerminalNo);
+    httpParams = httpParams.set("terminalId", terminalId);
+    httpParams = httpParams.set("transferType", transferType);
+    httpParams = httpParams.set("transferToTarget", transferToTarget);
 
-    return this.http.post<any>(`${this.GatewayApiUrlPrefix}/pos/getpos`, httpParams);
-    //return of(user).pipe(delay(500));
-  }
-
-  transfer(terminalId: string, officeId: string): Observable<any> {
-    let httpParams = this.commonHttpParams.getCommonHttpParams();
-    httpParams = httpParams.set("terminalId", terminalId).set("str_toOfficeId", officeId);
-
-    return this.http.post<any>(`${this.GatewayApiUrlPrefix}/pos/assignterminal`, httpParams);
+    return this.http.post<any>(`${this.IcGatewayApiUrlPrefix}/pos/transfer_terminal`, httpParams);
   }
 
   getFeeByTerminal(accountTypeCode: string, terminalId: string): Observable<any> {
