@@ -19,7 +19,7 @@
 
           <mat-form-field *ngIf="editTerminalForm.contains('terminalCode')" fxFlex="48%">
             <mat-label>{{ "Terminal_Component.FormTerminal.labelTerminalCode" | translate }}</mat-label>
-            <input matInput required formControlName="terminalCode" />
+            <input matInput required [readonly]="!isOwner" formControlName="terminalCode" />
             <mat-error
               *ngIf="editTerminalForm.controls.terminalCode.hasError('required')"
               [innerHTML]="'Terminal_Component.FormTerminal.labelRequired' | translate"
@@ -37,7 +37,7 @@
 
           <mat-form-field *ngIf="editTerminalForm.contains('limitAmount')" fxFlex="48%">
             <mat-label>{{ "Terminal_Component.FormTerminal.labelLimitPerDay" | translate }}</mat-label>
-            <input currencyMask matInput required formControlName="limitAmount" />
+            <input currencyMask matInput [readonly]="!isOwner" required formControlName="limitAmount" />
             <mat-error
               *ngIf="editTerminalForm.controls.limitAmount.hasError('required')"
               [innerHTML]="'Terminal_Component.FormTerminal.labelRequired' | translate"
@@ -52,7 +52,7 @@
             ></mat-error>
           </mat-form-field>
 
-          <mat-form-field *ngIf="editTerminalForm.contains('merchantId')" fxFlex="48%">
+          <mat-form-field *ngIf="editTerminalForm.contains('merchantId') && isOwner " fxFlex="48%">
             <mat-label>{{ "Terminal_Component.FormTerminal.labelMerchantId" | translate }}</mat-label>
             <mat-select required formControlName="merchantId">
               <mat-option *ngFor="let type of merchants" [value]="type.name">
@@ -78,9 +78,9 @@
             ></mat-error>
           </mat-form-field>
 
-          <mat-form-field *ngIf="editTerminalForm.contains('bankCode')" fxFlex="48%">
+          <mat-form-field *ngIf="editTerminalForm.contains('bankCode') " fxFlex="48%">
             <mat-label>Ngân hàng</mat-label>
-            <mat-select required formControlName="bankCode">
+            <mat-select required [disabled]="!isOwner" formControlName="bankCode">
               <mat-option *ngFor="let bank of banks" [value]="bank.bankCode">
                 {{ bank.bankName }}
               </mat-option>
@@ -124,16 +124,16 @@
           >
             {{ "Terminal_Component.FormTerminal.checkboxIsActive" | translate }}
           </mat-checkbox>
-          <mat-card class="card-custom" fxFlex="100%">
+          <mat-card class="card-custom" fxFlex="100%" *ngIf="isOwner ">
             <mat-card-header>
               <mat-card-title
                 ><span class="material-icons">perm_contact_calendar</span>&nbsp; Rule giao dịch:
               </mat-card-title>
             </mat-card-header>
             <mat-card-content fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
-              <mat-form-field *ngIf="editTerminalForm.contains('timeChargeValid')" fxFlex>
+              <mat-form-field *ngIf="editTerminalForm.contains('timeChargeValid' )" fxFlex>
                 <mat-label>Số lần giao dịch cùng ngân hàng/ngày</mat-label>
-                <input matInput type="number" formControlName="timeChargeValid"
+                <input matInput type="number" [readonly]="!isOwner" formControlName="timeChargeValid"
                 matTooltip="Đây là cài đặt số mà thẻ được phép cà vào máy POS này và các máy POS khác có cùng một ngân hàng phát hàng" />
                 <mat-error
                   *ngIf="editTerminalForm.controls.timeChargeValid.hasError('required')"
@@ -150,7 +150,7 @@
               </mat-form-field>
               <mat-form-field *ngIf="editTerminalForm.contains('banksCheck')" fxFlex>
                 <mat-label>Không giao dịch thẻ thuộc ngân hàng</mat-label>
-                <mat-select   formControlName="banksCheck" multiple
+                <mat-select [disabled]="!isOwner"  formControlName="banksCheck" multiple
                 matTooltip="Đây là ô chọn các ngân hàng mà thẻ của nó sẽ không được phép thực hiện giao dịch trên máy POS này">
                   <mat-option *ngFor="let bank of banks" [value]="bank.bankCode">
                     {{ bank.bankName }}
@@ -160,7 +160,7 @@
 
               <mat-form-field *ngIf="editTerminalForm.contains('cardsCheck')" fxFlex>
                 <mat-label>Không giao dịch thẻ thuộc loại</mat-label>
-                <mat-select multiple  formControlName="cardsCheck"
+                <mat-select [disabled]="!isOwner" multiple  formControlName="cardsCheck"
                 matTooltip="Đây là ô chọn các loại thẻ sẽ không được phép thực hiện giao dịch trên máy POS này">
                   <mat-option *ngFor="let type of cardTypes" [value]="type.code">
                     {{ type.description }}
@@ -177,7 +177,7 @@
 
           <mat-form-field *ngIf="editTerminalForm.contains('costPercentage')" fxFlex="10%">
             <mat-label>{{ "Terminal_Component.FormTerminal.labelCostPercentage" | translate }}</mat-label>
-            <input matInput required formControlName="costPercentage" type="number" matTooltip="Phí phải trả cho Đối tác máy"/>
+            <input matInput required [readonly]="!isOwner" formControlName="costPercentage" type="number" matTooltip="Phí phải trả cho Đối tác máy"/>
             <mat-error
               *ngIf="editTerminalForm.controls.costPercentage.hasError('min')"
               [innerHTML]="'Terminal_Component.FormTerminal.labelMsgOutOffMin' | translate"
@@ -226,7 +226,7 @@
           </mat-form-field>
           <mat-form-field *ngIf="editTerminalForm.contains('maxLimitAmount')" fxFlex="10%">
             <mat-label>{{ "Terminal_Component.FormTerminal.labelMaxLimitAmount" | translate }}</mat-label>
-            <input currencyMask matInput required formControlName="maxLimitAmount" matTooltip="Hạn mức giao dịch tối đa cho 1 lần cà"/>
+            <input currencyMask [readonly]="!isOwner" matInput required formControlName="maxLimitAmount" matTooltip="Hạn mức giao dịch tối đa cho 1 lần cà"/>
             <mat-error
               *ngIf="editTerminalForm.controls.maxLimitAmount.hasError('min')"
               [innerHTML]="'Terminal_Component.FormTerminal.labelMsgMin100000' | translate"
@@ -234,7 +234,7 @@
           </mat-form-field>
           <mat-form-field *ngIf="editTerminalForm.contains('levelLimit')" fxFlex="15%">
             <mat-label>{{ "Terminal_Component.FormTerminal.labelLevelLimit" | translate }}</mat-label>
-            <input matInput required formControlName="levelLimit" matTooltip="Số lần mà một thẻ tín dụng được phép cà lên máy POS này trong 1 ngày"/>
+            <input matInput required [readonly]="!isOwner" formControlName="levelLimit" matTooltip="Số lần mà một thẻ tín dụng được phép cà lên máy POS này trong 1 ngày"/>
             <mat-error
               *ngIf="editTerminalForm.controls.levelLimit.hasError('min')"
               [innerHTML]="'Terminal_Component.FormTerminal.labelMsgMin0' | translate"

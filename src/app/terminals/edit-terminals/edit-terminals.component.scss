@@ -26,11 +26,11 @@ th, td {
 
 .mat-column-Office{
   flex: none;
-  width: 20%;
+  width: 15%;
 }
 .mat-column-CardType{
   flex: none;
-  width: 20%;
+  padding: 0 20px;
 }
 .mat-column-FeePOS{
   flex: none;
@@ -38,19 +38,19 @@ th, td {
 }
 .mat-column-FeeCost{
   flex: none;
-  width: 7%; 
+  width: 7%;
 }
 .mat-column-FeeMin{
   flex: none;
-  width: 7%; 
+  width: 7%;
 }
 .mat-column-FeeMax{
   flex: none;
-  width: 7%; 
+  width: 7%;
 }
 .mat-column-MaxLimitAmountTransaction{
   flex: none;
-  width: 20%; 
+  width: 20%;
 }
 .mat-column-LevelTransactionCard{
   flex: none;

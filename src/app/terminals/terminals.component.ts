@@ -19,7 +19,7 @@ export class TerminalsComponent implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   viewTerminals = new FormControl('viewTerminals');
-  displayedColumns =  ['terminalNo', 'terminalCode', 'terminalName', 'minFeeDefault', 'status', 'createdBy','createdDate','updatedDate','action'];
+  displayedColumns =  ['terminalNo', 'terminalName',  'status', 'createdBy','createdDate','updatedDate','action'];
 
 
   dataSource = new MatTableDataSource<TerminalObj>();
@@ -41,7 +41,9 @@ export class TerminalsComponent implements OnInit, AfterViewInit {
             i.createdBy,
             i.createdDate,
             i.updatedDate,
-            i.minFeeDefault);
+            i.minFeeDefault,
+            i.owner,
+            i.ownerName);
           this.terminalsData.push(terminalObj);
         });
       this.terminalsDataActive = this.terminalsData.filter(function(item) {

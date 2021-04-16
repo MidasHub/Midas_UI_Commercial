@@ -35,6 +35,7 @@ export class EditTerminalsComponent implements OnInit, AfterViewInit {
   offices: any;
   terminalData: any;
   merchants: any;
+  isOwner: boolean = false;
   cardTypes: any;
   ItemPosLimitList: any;
   ItemPosBranch: any;
@@ -77,6 +78,7 @@ export class EditTerminalsComponent implements OnInit, AfterViewInit {
   ngOnInit() {
     this.route.data.subscribe((data: { terminalData: any }) => {
       this.terminalData     = data.terminalData.result;
+      this.isOwner          = this.terminalData.isOwner;
       this.merchants        = data.terminalData.result.Merchants;
       this.offices          = this.commonOffices;
       this.cardTypes        = this.commonCardTypes;
@@ -85,7 +87,7 @@ export class EditTerminalsComponent implements OnInit, AfterViewInit {
       this.banks =  this.commonCardBanks;
       this.ItemPosLimitList = data.terminalData.result.ItemPosLimitList;
 
-      this.ItemPosLimitList.forEach ((item: any) => {
+      this.ItemPosLimitList?.forEach ((item: any) => {
           item.officeName = this.showOfficeName(item.officeId);
           item.cardDescription = this.showCardName(item.cardCode);
       })
@@ -100,22 +102,22 @@ export class EditTerminalsComponent implements OnInit, AfterViewInit {
       'terminalId': this.ItemPos.terminalId,
       'terminalCode': this.ItemPos.terminalCode,
       'terminalName': this.ItemPos.terminalName,
-      'limitAmount': this.ItemPosLimitList[0].limitAmount,
+      'limitAmount': this.ItemPos.limitAmount,
       'officeId': this.ItemPosBranch.officeId,
       'bankCode': this.ItemPos.bankCode,
       'timeChargeValid': this.ItemPos.timeChargeValid,
       'minFeeDefault': this.ItemPos.minFeeDefault,
       'merchantId': this.ItemPosBranch.merchantId,
       'status': this.ItemPos.status == 'A' ? true : false,
-      'costPercentage': this.ItemPosLimitList[0].costPercentage,
-      'cogsPercentage': this.ItemPosLimitList[0].cogsPercentage,
-      'txnRateMin': this.ItemPosLimitList[0].txnRateMin,
-      'txnRateMax': this.ItemPosLimitList[0].txnRateMax,
-      'maxLimitAmount': this.ItemPosLimitList[0].maxLimitAmount,
-      'levelLimit': this.ItemPosLimitList[0].levelLimit,
+      'costPercentage': this.ItemPos.rate,
+      'cogsPercentage': this.ItemPosLimitList ? this.ItemPosLimitList[0]?.cogsPercentage : '',
+      'txnRateMin': this.ItemPosLimitList ? this.ItemPosLimitList[0]?.txnRateMin: '',
+      'txnRateMax': this.ItemPosLimitList ? this.ItemPosLimitList[0]?.txnRateMax: '',
+      'maxLimitAmount': this.ItemPos.maxLimitAmount ,
+      'levelLimit': this.ItemPos.levelLimit,
       'typeOfTransaction': this.ItemPos.typeOfTransaction,
-      'banksCheck': this.terminalData.bankCheckEntitys.map((bank: any) => bank.bankCode),
-      'cardsCheck': this.terminalData.cardCheckEntitys.map((card: any) => card.cardType),
+      'banksCheck': this.terminalData?.bankCheckEntitys?.map((bank: any) => bank.bankCode),
+      'cardsCheck': this.terminalData?.cardCheckEntitys?.map((card: any) => card.cardType),
     });
   }
 
@@ -192,8 +194,8 @@ export class EditTerminalsComponent implements OnInit, AfterViewInit {
     const limitAmount  = this.editTerminalForm.value.limitAmount;
     this.posLimits = this.dataSource.data;
 
-    const office = this.offices.find((i: any) => i.officeId === officeId);
-    this.cardTypes.forEach((card: any) => {
+    const office = this.offices?.find((i: any) => i.officeId === officeId);
+    this.cardTypes?.forEach((card: any) => {
 
       const limit = {
         officeId : office.officeId,

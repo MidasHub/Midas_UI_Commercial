@@ -36,7 +36,9 @@ export class TerminalsService {
 
   getListTerminalAvailable(amount: number, transactionType: string): Observable<any> {
     let httpParams = this.commonHttpParams.getCommonHttpParams();
-    httpParams = httpParams.set("amountTransaction", amount.toString()).set("transactionType", transactionType);
+    httpParams = httpParams.set("amountTransaction", amount.toString());
+    httpParams = httpParams.set("transactionType", transactionType);
+
     return this.http.post<any>(`${this.IcGatewayApiUrlPrefix}/pos/get_list_terminal_by_office_sl`, httpParams);
   }
 
