@@ -5,7 +5,6 @@ import { HttpClient, HttpParams } from "@angular/common/http";
 /** rxjs Imports */
 import { Observable } from "rxjs";
 import { CommonHttpParams } from "app/shared/CommonHttpParams";
-import { environment } from "environments/environment";
 
 /**
  * System service.
@@ -17,19 +16,7 @@ export class SystemService {
   /**
    * @param {HttpClient} http Http Client to send requests.
    */
-   private IcGatewayApiUrlPrefix: any;
-
-  constructor(private http: HttpClient, private commonHttpParams: CommonHttpParams) {
-    this.IcGatewayApiUrlPrefix = environment.IcGatewayApiUrlPrefix;
-
-  }
-
-
-  getTenantInfo(subdomain: string): Observable<any> {
-    let httpParams = new HttpParams();
-    httpParams = httpParams.set('subdomain', subdomain);
-    return this.http.post(`${this.IcGatewayApiUrlPrefix}/config/get_ic_config`, httpParams);
-  }
+  constructor(private http: HttpClient, private commonHttpParams: CommonHttpParams) {}
 
   /**
    * @returns {Observable<any>} Data tables.
