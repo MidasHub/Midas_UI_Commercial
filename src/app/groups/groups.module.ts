@@ -31,6 +31,8 @@ import { ManageGroupMembersComponent } from './groups-view/group-actions/manage-
 import { EditGroupMeetingComponent } from './groups-view/group-actions/edit-group-meeting/edit-group-meeting.component';
 import { EditGroupMeetingScheduleComponent } from './groups-view/group-actions/edit-group-meeting-schedule/edit-group-meeting-schedule.component';
 import { GroupTransferClientsComponent } from './groups-view/group-actions/group-transfer-clients/group-transfer-clients.component';
+import { SpendingLimitComponent } from './spending-limit/spending-limit.component';
+import { CreateEditSpendingComponent } from './dialogs/create-edit-spending/create-edit-spending.component';
 
 /**
  * Groups Module
@@ -66,7 +68,9 @@ import { GroupTransferClientsComponent } from './groups-view/group-actions/group
     ManageGroupMembersComponent,
     EditGroupMeetingComponent,
     EditGroupMeetingScheduleComponent,
-    GroupTransferClientsComponent
+    GroupTransferClientsComponent,
+    SpendingLimitComponent,
+    CreateEditSpendingComponent,
   ],
   providers: [DatePipe]
 })

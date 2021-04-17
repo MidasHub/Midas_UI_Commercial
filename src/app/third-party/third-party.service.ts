@@ -58,9 +58,16 @@ export class ThirdPartyService {
     httpParams = httpParams.set('partnerName', data.desc);
     httpParams = httpParams.set('typeCheckValid', data.typeCheckValid);
     httpParams = httpParams.set('limit', data.limit);
-    httpParams = httpParams.set('active', data.active);
+    httpParams = httpParams.set('active', data.active ? 'O' : 'D');
 
     return this.http.post<any>(`${this.GatewayApiUrlPrefix}/partner/savePartner`, httpParams);
+  }
+
+  inactiveBillsMerchant(merchantCode: string): Observable<any> {
+    let httpParams = this.commonHttpParams.getCommonHttpParams();
+    httpParams = httpParams.set("merchantCode", merchantCode);
+
+    return this.http.post<any>(`${this.GatewayApiUrlPrefix}/partner/inactive_bills_available`, httpParams);
   }
 
   updatePartner(data:any): Observable<any> {
@@ -70,7 +77,7 @@ export class ThirdPartyService {
     httpParams = httpParams.set('partnerName', data.desc);
     httpParams = httpParams.set('typeCheckValid', data.typeCheckValid);
     httpParams = httpParams.set('limit', data.limit);
-    httpParams = httpParams.set('active', data.active);
+    httpParams = httpParams.set('active', data.active ? 'O' : 'D');
 
     return this.http.post<any>(`${this.GatewayApiUrlPrefix}/partner/updatePartner`, httpParams);
   }
@@ -94,9 +101,10 @@ export class ThirdPartyService {
     let httpParams = this.commonHttpParams.getCommonHttpParams();
 
     httpParams = httpParams.set('merchantName', data.name)
+    httpParams = httpParams.set('unitType', data.unitType)
     httpParams = httpParams.set('rangeDays', data.rangeDay)
     httpParams = httpParams.set('merchantPartner', data.partner);
-    return this.http.post<any>(`${this.GatewayApiUrlPrefix}/partner/merchant/save`, httpParams);
+    return this.http.post<any>(`${this.GatewayApiUrlPrefix}/partner/add_merchant`, httpParams);
   }
 
   updateMerchant(data:any): Observable<any> {
@@ -104,9 +112,10 @@ export class ThirdPartyService {
 
     httpParams = httpParams.set('merchantName', data.name);
     httpParams = httpParams.set('status', data.active);
+    httpParams = httpParams.set('unitType', data.unitType)
     httpParams = httpParams.set('rangeDays', data.rangeDay);
     httpParams = httpParams.set('merchantPartner', data.partner);
-    return this.http.post<any>(`${this.GatewayApiUrlPrefix}/partner/merchant/update`, httpParams);
+    return this.http.post<any>(`${this.GatewayApiUrlPrefix}/partner/update_merchant`, httpParams);
   }
 
   updateMerchantStatus(data:any): Observable<any> {

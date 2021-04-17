@@ -41,7 +41,7 @@ const routeAddBreadcrumbLink = 'addBreadcrumbLink';
  * Generate breadcrumbs dynamically via route configuration.
  */
 @Component({
-  selector: 'mifosx-breadcrumb',
+  selector: 'midas-breadcrumb',
   templateUrl: './breadcrumb.component.html',
   styleUrls: ['./breadcrumb.component.scss']
 })

@@ -38,7 +38,7 @@
                     class="input_custom">
       <mat-label>Loại chi</mat-label>
       <mat-select formControlName="isAdvance">
-        <mat-option *ngFor="let type of typeAdvanceCashFees"
+        <mat-option *ngFor="let type of advanceCashPaidFees"
                     [value]="type.value">
           {{type.label}}
         </mat-option>
@@ -50,7 +50,7 @@
       <mat-label>Tài khoản chi</mat-label>
       <mat-select formControlName="savingAccountPaid">
         <mat-option *ngFor="let account of clientAccountsTeller"
-                    [value]="account.id">
+                    [value]="account.id" [fxHide]="account.productId != 8">
           {{account.externalId}}  -
           {{account.accountBalance == null ? '0' :
           account.accountBalance | money }}
@@ -121,6 +121,7 @@
   </mat-card-content>
 </div>
 <mat-dialog-actions align="end">
+
   <button mat-raised-button
           (click)="dialogRef.close({status:false})"
   >{{'Shared_Component.DeleteDialog.buttonCancel'|translate}}</button>

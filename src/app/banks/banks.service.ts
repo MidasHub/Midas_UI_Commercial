@@ -157,26 +157,36 @@ export class BanksService {
 
   getInfoBinCode(binCode: string): BehaviorSubject<any> {
     const result = new BehaviorSubject(null);
-    // if (!this.cards) {
-    //   this.getData();
-    // }
-    log.debug("This Card:", this.cards);
-    this.cards?.subscribe((values: any) => {
-      if (values) {
-        log.debug("Value is: ", values);
-        let have = false;
-        for (const v of values) {
-          if (v.binCode == binCode) {
-            have = true;
-            result.next({ ...v, existBin: true });
-            break;
+    if (this.cards) {
+      log.debug("This Card:", this.cards);
+      this.cards?.subscribe((values: any) => {
+        if (values) {
+          log.debug("Value is: ", values);
+          let have = false;
+          for (const v of values) {
+            if (v.binCode == binCode) {
+              have = true;
+              result.next({ ...v, existBin: true });
+              break;
+            }
+          }
+          if (!have) {
+            result.next({ existBin: false });
           }
         }
-        if (!have) {
-          result.next({ existBin: false });
+      });
+    } else {
+      this.getCardInfo(binCode).subscribe((res: any) => {
+
+        if (res?.result?.bankBinCode) {
+          result.next({ ...res.result.bankBinCode, existBin: true });
+        } else {
+          result.next({ ...res, existBin: false });
         }
-      }
-    });
+
+        this.getData();
+      });
+    }
     return result;
   }
 
@@ -196,6 +206,8 @@ export class BanksService {
     httpParams = httpParams.set("userIdentifyId", body.userIdentifyId);
     httpParams = httpParams.set("dueDay", body.dueDay);
     httpParams = httpParams.set("expireDate", `${body.dueDay}/${body.expireDate}`);
+    httpParams = httpParams.set("limit", body.limitCard);
+    httpParams = httpParams.set("classCard", body.classCard);
 
     return this.http.post(`${this.GatewayApiUrlPrefix}/card/store_extra_card_info`, httpParams);
   }

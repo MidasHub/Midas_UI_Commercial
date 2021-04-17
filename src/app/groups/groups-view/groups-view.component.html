@@ -77,7 +77,7 @@
       <!-- <button mat-raised-button *midasHasPermission="'CREATE_CLIENT'" [routerLink]="['/clients/create/']" [queryParams]="{'group': groupViewData.id }">
         <i class="fa fa-plus"></i>Add Clients
       </button>
-      
+
       <button mat-raised-button *midasHasPermission="'ASSOCIATECLIENTS_GROUP'" (click)="doAction('Transfer Clients')">
         <i class="fa fa-exchange"></i>Chuyển thành viên
       </button>
@@ -97,6 +97,9 @@
         <button mat-menu-item *midasHasPermission="'CREATE_LOAN'">Group Loan Application</button>
       </mat-menu> -->
       <button mat-raised-button [matMenuTriggerFor]="Member">Thành viên</button>
+      <button mat-raised-button *ngIf="groupViewData.active" [matMenuTriggerFor]="AccountApplications">
+        <i class="fa fa-file"></i>Tài khoản
+      </button>
       <mat-menu #Member="matMenu">
         <button mat-menu-item *midasHasPermission="'CREATE_CLIENT'" [routerLink]="['/clients/create/']" [queryParams]="{'group': groupViewData.id }">
           <i class="fa fa-plus"></i>Thêm thành viên
@@ -106,9 +109,14 @@
         </button>
         <button mat-menu-item *midasHasPermission="'TRANSFERCLIENTS_GROUP'" (click)="doAction('Manage Members')">
           <i class="fa fa-user"></i>Quản lý thành viên
-        </button> 
-      </mat-menu>
+        </button>
 
+      </mat-menu>
+      <mat-menu #AccountApplications="matMenu">
+        <button mat-menu-item *midasHasPermission="'CREATE_SAVINGSACCOUNT'"
+              [routerLink]="['savings-accounts', 'create']">Tạo tài khoản đại lý
+      </button>
+    </mat-menu>
       <button mat-raised-button [matMenuTriggerFor]="More">Tính năng khác</button>
       <mat-menu #More="matMenu">
         <!-- <span *ngIf="groupViewData.collectionMeetingCalendar">

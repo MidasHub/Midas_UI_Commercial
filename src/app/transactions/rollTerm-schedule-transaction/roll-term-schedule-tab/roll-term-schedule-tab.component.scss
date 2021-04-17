@@ -16,6 +16,15 @@
   min-height: 64px;
 }
 
+.on_hold {
+  color: red;
+  font-weight: bold;
+}
+
+.on_success {
+  color: green;
+  font-weight: bold;
+}
 
 tr.example-detail-row {
   height: 0;

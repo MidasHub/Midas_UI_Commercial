@@ -1,249 +1,460 @@
 <div class="container">
+  <mat-card>
+    <form [formGroup]="createTerminalForm">
+      <mat-card-content>
+        <h3 class="mat-h3" fxFlexFill>{{ "Terminal_Component.FormTerminal.labelEdit" | translate }}</h3>
+        <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
+          <mat-form-field *ngIf="createTerminalForm.contains('terminalId')" fxFlex="25%">
+            <mat-label>{{ "Terminal_Component.FormTerminal.labelTerminalId" | translate }}</mat-label>
+            <input matInput required formControlName="terminalId" />
+            <mat-error
+              *ngIf="createTerminalForm.controls.terminalId.hasError('required')"
+              [innerHTML]="'Terminal_Component.FormTerminal.labelRequired' | translate"
+            ></mat-error>
+            <mat-error
+              *ngIf="createTerminalForm.controls.terminalId.hasError('pattern')"
+              [innerHTML]="'Terminal_Component.FormTerminal.labelTerminalNameMsgPattern' | translate"
+            ></mat-error>
+          </mat-form-field>
 
-    <mat-card>
+          <mat-form-field *ngIf="createTerminalForm.contains('terminalCode')" fxFlex="25%">
+            <mat-label>{{ "Terminal_Component.FormTerminal.labelTerminalCode" | translate }}</mat-label>
+            <input matInput required formControlName="terminalCode" />
+            <mat-error
+              *ngIf="createTerminalForm.controls.terminalCode.hasError('required')"
+              [innerHTML]="'Terminal_Component.FormTerminal.labelRequired' | translate"
+            ></mat-error>
+          </mat-form-field>
 
-      <form [formGroup]="createTerminalForm">
+          <mat-form-field *ngIf="createTerminalForm.contains('terminalName')" fxFlex="44%">
+            <mat-label>{{ "Terminal_Component.FormTerminal.labelTerminalName" | translate }}</mat-label>
+            <input matInput required formControlName="terminalName" />
+            <mat-error
+              *ngIf="createTerminalForm.controls.terminalName.hasError('required')"
+              [innerHTML]="'Terminal_Component.FormTerminal.labelRequired' | translate"
+            ></mat-error>
+          </mat-form-field>
 
-        <mat-card-content>
-          <h3 class="mat-h3" fxFlexFill>{{'Terminal_Component.FormTerminal.labelEdit'|translate}}</h3>
-          <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
+          <mat-form-field *ngIf="createTerminalForm.contains('merchantId')" fxFlex="48%">
+            <mat-label>Hộ kinh doanh</mat-label>
+            <mat-select required formControlName="merchantId">
+              <mat-option *ngFor="let type of merchants" [value]="type.name">
+                {{ type.name }}
+              </mat-option>
+            </mat-select>
+            <mat-error
+              *ngIf="createTerminalForm.controls.merchantId.hasError('required')"
+              [innerHTML]="'Terminal_Component.FormTerminal.labelRequired' | translate"
+            ></mat-error>
+          </mat-form-field>
+          <mat-form-field *ngIf="createTerminalForm.contains('officeId')" fxFlex="48%">
+            <mat-label>{{ "Terminal_Component.FormTerminal.labelOffice" | translate }}</mat-label>
+            <mat-select required formControlName="officeId">
+              <mat-option *ngFor="let o of offices" [value]="o.officeId">
+                {{ o.name }}
+              </mat-option>
+            </mat-select>
+            <mat-error
+              *ngIf="createTerminalForm.controls.officeId.hasError('required')"
+              [innerHTML]="'Terminal_Component.FormTerminal.labelRequired' | translate"
+            ></mat-error>
+          </mat-form-field>
+          <mat-form-field *ngIf="createTerminalForm.contains('limitAmount')" fxFlex="48%">
+            <mat-label>{{ "Terminal_Component.FormTerminal.labelLimitPerDay" | translate }}</mat-label>
+            <input currencyMask matInput required formControlName="limitAmount" />
+            <mat-error
+              *ngIf="createTerminalForm.controls.limitAmount.hasError('required')"
+              [innerHTML]="'Terminal_Component.FormTerminal.labelRequired' | translate"
+            ></mat-error>
+            <mat-error
+              *ngIf="createTerminalForm.controls.limitAmount.hasError('min')"
+              [innerHTML]="'Tối thiểu là 1,000,000'"
+            ></mat-error>
+            <mat-error
+              *ngIf="createTerminalForm.controls.limitAmount.hasError('max')"
+              [innerHTML]="'Số tiền vượt hạn mức 100 Tỷ/ngày'"
+            ></mat-error>
+          </mat-form-field>
 
-            <mat-form-field *ngIf="createTerminalForm.contains('terminalId')" fxFlex="48%">
-                <mat-label>{{'Terminal_Component.FormTerminal.labelTerminalId' |translate}}</mat-label>
-                <input matInput required formControlName="terminalId">
-                <mat-error *ngIf="createTerminalForm.controls.terminalId.hasError('required')"
-                  [innerHTML]="'Terminal_Component.FormTerminal.labelRequired' |translate"></mat-error>
-                <mat-error *ngIf="createTerminalForm.controls.terminalId.hasError('pattern')"
-                  [innerHTML]="'Terminal_Component.FormTerminal.labelTerminalNameMsgPattern' |translate"></mat-error>
-            </mat-form-field>
+          <mat-form-field *ngIf="createTerminalForm.contains('minFeeDefault')" fxFlex="48%">
+            <mat-label>{{ "Terminal_Component.FormTerminal.labelMinFeeDefault" | translate }}</mat-label>
+            <input currencyMask matInput required formControlName="minFeeDefault" />
+            <mat-error
+              *ngIf="createTerminalForm.controls.minFeeDefault.hasError('required')"
+              [innerHTML]="'Terminal_Component.FormTerminal.labelRequired' | translate"
+            ></mat-error>
+            <mat-error
+              *ngIf="createTerminalForm.controls.minFeeDefault.hasError('min')"
+              [innerHTML]="'Terminal_Component.FormTerminal.labelMsgMin0' | translate"
+            ></mat-error>
+            <mat-error
+              *ngIf="createTerminalForm.controls.minFeeDefault.hasError('max')"
+              [innerHTML]="'Phí phải nhỏ hơn 1,000,000'"
+            ></mat-error>
+          </mat-form-field>
+          <mat-form-field *ngIf="createTerminalForm.contains('bankCode')" fxFlex="45%">
+            <mat-label>Ngân hàng</mat-label>
+            <mat-select required formControlName="bankCode">
+              <mat-option *ngFor="let bank of banks" [value]="bank.bankCode">
+                {{ bank.bankName }}
+              </mat-option>
+            </mat-select>
+            <mat-error
+              *ngIf="createTerminalForm.controls.officeId.hasError('required')"
+              [innerHTML]="'Terminal_Component.FormTerminal.labelRequired' | translate"
+            ></mat-error>
+          </mat-form-field>
+          <mat-form-field *ngIf="createTerminalForm.contains('typeOfTransaction')" fxFlex="25%">
+            <mat-label>Thực hiện cho giao dịch:</mat-label>
+            <mat-select formControlName="typeOfTransaction">
+              <mat-option *ngFor="let t of typeOfTransactions" [value]="t.value">
+                {{ t.valueDesc }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-checkbox fxFlex="20%" labelPosition="before" formControlName="status" class="activeCheckBox">
+            {{ "Terminal_Component.FormTerminal.checkboxIsActive" | translate }}
+          </mat-checkbox>
 
-            <mat-form-field *ngIf="createTerminalForm.contains('terminalCode')" fxFlex="48%">
-                <mat-label>{{'Terminal_Component.FormTerminal.labelTerminalCode' |translate}}</mat-label>
-                <input matInput required formControlName="terminalCode">
-                <mat-error *ngIf="createTerminalForm.controls.terminalCode.hasError('required')"
-                  [innerHTML]="'Terminal_Component.FormTerminal.labelRequired' |translate"></mat-error>
-            </mat-form-field>
+          <mat-card class="card-custom" fxFlex="100%">
+            <mat-card-header>
+              <mat-card-title
+                ><span class="material-icons">perm_contact_calendar</span>&nbsp; Rule giao dịch:
+              </mat-card-title>
+            </mat-card-header>
+            <mat-card-content fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
 
-            <mat-form-field *ngIf="createTerminalForm.contains('terminalName')" fxFlex="48%">
-                <mat-label>{{'Terminal_Component.FormTerminal.labelTerminalName' |translate}}</mat-label>
-                <input matInput required formControlName="terminalName">
-                <mat-error *ngIf="createTerminalForm.controls.terminalName.hasError('required')"
-                  [innerHTML]="'Terminal_Component.FormTerminal.labelRequired' |translate"></mat-error>
-            </mat-form-field>
+              <mat-form-field *ngIf="createTerminalForm.contains('timeChargeValid')" fxFlex="30%">
+                <mat-label>Số lần giao dịch cùng ngân hàng/ngày</mat-label>
+                <input matInput type="number" formControlName="timeChargeValid" 
+                matTooltip="Đây là cài đặt số mà thẻ được phép cà vào máy POS này và các máy POS khác có cùng một ngân hàng phát hàng"/>
+                <mat-error
+                  *ngIf="createTerminalForm.controls.timeChargeValid.hasError('required')"
+                  [innerHTML]="'Terminal_Component.FormTerminal.labelRequired' | translate"
+                ></mat-error>
+                <mat-error
+                  *ngIf="createTerminalForm.controls.timeChargeValid.hasError('min')"
+                  [innerHTML]="'Terminal_Component.FormTerminal.labelMsgMin0' | translate"
+                ></mat-error>
+              </mat-form-field>
 
-            <mat-form-field *ngIf="createTerminalForm.contains('merchantId')" fxFlex="48%">
-                <mat-label>{{'Terminal_Component.FormTerminal.labelMerchantId' |translate}}</mat-label>
-                <mat-select required formControlName="merchantId">
-                    <mat-option *ngFor="let type of merchants" [value]="type.name">
-                      {{ type.name }}
-                    </mat-option>
-                </mat-select>
-                <mat-error *ngIf="createTerminalForm.controls.merchantId.hasError('required')"
-                  [innerHTML]="'Terminal_Component.FormTerminal.labelRequired' |translate"></mat-error>
-            </mat-form-field>
-
-            <mat-form-field *ngIf="createTerminalForm.contains('limitAmount')" fxFlex="48%">
-              <mat-label>{{'Terminal_Component.FormTerminal.labelLimitPerDay' |translate}}</mat-label>
-              <input currencyMask matInput required formControlName="limitAmount">
-              <mat-error *ngIf="createTerminalForm.controls.limitAmount.hasError('required')"
-                [innerHTML]="'Terminal_Component.FormTerminal.labelRequired' |translate"></mat-error>
-              <mat-error *ngIf="createTerminalForm.controls.limitAmount.hasError('min')"
-                [innerHTML]="'Terminal_Component.FormTerminal.labelMsgMin0' |translate"></mat-error>
-            </mat-form-field>
-
-            <mat-form-field *ngIf="createTerminalForm.contains('officeId')" fxFlex="48%">
-                <mat-label>{{'Terminal_Component.FormTerminal.labelOffice' |translate}}</mat-label>
-                <mat-select required formControlName="officeId">
-                    <mat-option *ngFor="let o of offices" [value]="o.officeId">
-                      {{ o.name }}
-                    </mat-option>
-                </mat-select>
-                <mat-error *ngIf="createTerminalForm.controls.officeId.hasError('required')"
-                  [innerHTML]="'Terminal_Component.FormTerminal.labelRequired' |translate"></mat-error>
-            </mat-form-field>
-
-            <mat-form-field *ngIf="createTerminalForm.contains('bankCode')" fxFlex="48%">
-              <mat-label>Ngân hàng</mat-label>
-              <mat-select required formControlName="bankCode">
+              <mat-form-field *ngIf="createTerminalForm.contains('banksCheck')" fxFlex="30%">
+                <mat-label>Không giao dịch thẻ thuộc ngân hàng</mat-label>
+                <mat-select multiple  formControlName="banksCheck"
+                matTooltip="Đây là ô chọn các ngân hàng mà thẻ của nó sẽ không được phép thực hiện giao dịch trên máy POS này">
                   <mat-option *ngFor="let bank of banks" [value]="bank.bankCode">
                     {{ bank.bankName }}
                   </mat-option>
-              </mat-select>
-              <mat-error *ngIf="createTerminalForm.controls.officeId.hasError('required')"
-                [innerHTML]="'Terminal_Component.FormTerminal.labelRequired' |translate"></mat-error>
+                </mat-select>
+              </mat-form-field>
+
+              <mat-form-field *ngIf="createTerminalForm.contains('cardsCheck')" fxFlex="30%">
+                <mat-label>Không giao dịch thẻ thuộc loại</mat-label>
+                <mat-select multiple  formControlName="cardsCheck" 
+                matTooltip="Đây là ô chọn các loại thẻ sẽ không được phép thực hiện giao dịch trên máy POS này">
+                  <mat-option *ngFor="let type of cardTypes" [value]="type.code">
+                    {{ type.description }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </mat-card-content>
+          </mat-card>
+        </div>
+
+        <h3 class="mat-h3" fxFlexFill>{{ "Terminal_Component.FormTerminal.labelGeneral" | translate }}</h3>
+
+        <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
+          <mat-form-field *ngIf="createTerminalForm.contains('costPercentage')" fxFlex="10%">
+            <mat-label>{{ "Terminal_Component.FormTerminal.labelCostPercentage" | translate }}</mat-label>
+            <input matInput required formControlName="costPercentage" type="number" matTooltip="Phí phải trả cho Đối tác máy"/>
+            <mat-error
+              *ngIf="createTerminalForm.controls.costPercentage.hasError('min')"
+              [innerHTML]="'Terminal_Component.FormTerminal.labelMsgOutOffMin' | translate"
+            ></mat-error>
+            <mat-error
+              *ngIf="createTerminalForm.controls.costPercentage.hasError('max')"
+              [innerHTML]="'Terminal_Component.FormTerminal.labelMsgOutOffMax' | translate"
+            ></mat-error>
+          </mat-form-field>
+          <mat-form-field *ngIf="createTerminalForm.contains('cogsPercentage')" fxFlex="10%">
+            <mat-label>{{ "Terminal_Component.FormTerminal.labelCogsPercentage" | translate }}</mat-label>
+            <input matInput required formControlName="cogsPercentage" type="number" matTooltip="Phí áp dụng cho các chi nhánh" />
+            <mat-error
+              *ngIf="createTerminalForm.controls.cogsPercentage.hasError('min')"
+              [innerHTML]="'Terminal_Component.FormTerminal.labelMsgOutOffMin' | translate"
+            ></mat-error>
+            <mat-error
+              *ngIf="createTerminalForm.controls.cogsPercentage.hasError('max')"
+              [innerHTML]="'Terminal_Component.FormTerminal.labelMsgOutOffMax' | translate"
+            ></mat-error>
+          </mat-form-field>
+          <mat-form-field *ngIf="createTerminalForm.contains('txnRateMin')" fxFlex="10%">
+            <mat-label>{{ "Terminal_Component.FormTerminal.labelMinPercentage" | translate }}</mat-label>
+            <input matInput required formControlName="txnRateMin" type="number" matTooltip="Phí thấp nhất được phép áp dụng cho khách hàng"/>
+            <mat-error
+              *ngIf="createTerminalForm.controls.txnRateMin.hasError('min')"
+              [innerHTML]="'Terminal_Component.FormTerminal.labelMsgOutOffMin' | translate"
+            ></mat-error>
+            <mat-error
+              *ngIf="createTerminalForm.controls.txnRateMin.hasError('max')"
+              [innerHTML]="'Terminal_Component.FormTerminal.labelMsgOutOffMax' | translate"
+            ></mat-error>
+          </mat-form-field>
+          <mat-form-field *ngIf="createTerminalForm.contains('txnRateMax')" fxFlex="10%">
+            <mat-label>{{ "Terminal_Component.FormTerminal.labelMaxPercentage" | translate }}</mat-label>
+            <input matInput required formControlName="txnRateMax" type="number"matTooltip="Phí cao nhất được phép áp dụng cho khách hàng" />
+            <mat-error
+              *ngIf="createTerminalForm.controls.txnRateMax.hasError('min')"
+              [innerHTML]="'Terminal_Component.FormTerminal.labelMsgOutOffMin' | translate"
+            ></mat-error>
+            <mat-error
+              *ngIf="createTerminalForm.controls.txnRateMax.hasError('max')"
+              [innerHTML]="'Terminal_Component.FormTerminal.labelMsgOutOffMax' | translate"
+            ></mat-error>
+          </mat-form-field>
+          <mat-form-field *ngIf="createTerminalForm.contains('maxLimitAmount')" fxFlex="12%">
+            <mat-label>Hạn mức 1 giao dịch</mat-label>
+            <input currencyMask matInput required formControlName="maxLimitAmount" />
+            <mat-error
+              *ngIf="createTerminalForm.controls.maxLimitAmount.hasError('min')"
+              [innerHTML]="'Terminal_Component.FormTerminal.labelMsgMin100000' | translate"
+            ></mat-error>
+          </mat-form-field>
+          <mat-form-field *ngIf="createTerminalForm.contains('levelLimit')" fxFlex="12%">
+            <mat-label>Số lần cà/thẻ </mat-label>
+            <input currencyMask matInput required formControlName="levelLimit" />
+            <mat-error
+              *ngIf="createTerminalForm.controls.levelLimit.hasError('min')"
+              [innerHTML]="'Terminal_Component.FormTerminal.labelMsgMin0' | translate"
+            ></mat-error>
           </mat-form-field>
 
-          <mat-form-field *ngIf="createTerminalForm.contains('timeChargeValid')" fxFlex="48%">
-            <mat-label>Số lần cà/ngày</mat-label>
-            <input  matInput required formControlName="timeChargeValid">
-            <mat-error *ngIf="createTerminalForm.controls.timeChargeValid.hasError('required')"
-              [innerHTML]="'Terminal_Component.FormTerminal.labelRequired' |translate"></mat-error>
-            <mat-error *ngIf="createTerminalForm.controls.timeChargeValid.hasError('min')"
-              [innerHTML]="'Terminal_Component.FormTerminal.labelMsgMin0' |translate"></mat-error>
-              <mat-error *ngIf="createTerminalForm.controls.timeChargeValid.hasError('max')"
-                  [innerHTML]="'Terminal_Component.FormTerminal.labelMsgOutOffMax' |translate"></mat-error>
+          <button mat-raised-button color="primary" (click)="setDefaultFeeSettingPos()">
+            <svg
+              width="1em"
+              height="1em"
+              viewBox="0 0 16 16"
+              class="bi bi-box-arrow-in-down-left"
+              fill="currentColor"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M9.636 2.5a.5.5 0 0 0-.5-.5H2.5A1.5 1.5 0 0 0 1 3.5v10A1.5 1.5 0 0 0 2.5 15h10a1.5 1.5 0 0 0 1.5-1.5V6.864a.5.5 0 0 0-1 0V13.5a.5.5 0 0 1-.5.5h-10a.5.5 0 0 1-.5-.5v-10a.5.5 0 0 1 .5-.5h6.636a.5.5 0 0 0 .5-.5z"
+              />
+              <path
+                fill-rule="evenodd"
+                d="M5 10.5a.5.5 0 0 0 .5.5h5a.5.5 0 0 0 0-1H6.707l8.147-8.146a.5.5 0 0 0-.708-.708L6 9.293V5.5a.5.5 0 0 0-1 0v5z"
+              />
+            </svg>
+            {{ "Terminal_Component.FormTerminal.buttonSetupAll" | translate }}
+          </button>
+
+          <mat-form-field *ngIf="createTerminalForm.contains('officeSelect')" fxFlex="48%">
+            <mat-label>{{ "Terminal_Component.FormTerminal.labelOffice" | translate }}</mat-label>
+            <mat-select formControlName="officeSelect" [disabled]="!applyFeeForOffice">
+              <mat-option *ngFor="let o of offices" [value]="o.officeId">
+                {{ o.name }}
+              </mat-option>
+            </mat-select>
           </mat-form-field>
 
-            <mat-form-field *ngIf="createTerminalForm.contains('minFeeDefault')" fxFlex="48%">
-                <mat-label>{{'Terminal_Component.FormTerminal.labelMinFeeDefault' |translate}}</mat-label>
-                <input currencyMask matInput required formControlName="minFeeDefault" >
-                <mat-error *ngIf="createTerminalForm.controls.minFeeDefault.hasError('required')"
-                  [innerHTML]="'Terminal_Component.FormTerminal.labelRequired' |translate"></mat-error>
-                <mat-error *ngIf="createTerminalForm.controls.minFeeDefault.hasError('min')"
-                  [innerHTML]="'Terminal_Component.FormTerminal.labelMsgMin0' |translate"></mat-error>
-            </mat-form-field>
-
-            <mat-checkbox fxFlex="48%" labelPosition="before" formControlName="status" class="activeCheckBox">
-                {{'Terminal_Component.FormTerminal.checkboxIsActive' |translate}}
-            </mat-checkbox>
-          </div>
-          <br/>
-          <h3 class="mat-h3" fxFlexFill>{{'Terminal_Component.FormTerminal.labelGeneral'|translate}}</h3>
-
-          <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
-            <mat-form-field *ngIf="createTerminalForm.contains('costPercentage')" fxFlex="10%">
-                <mat-label>{{'Terminal_Component.FormTerminal.labelCostPercentage' |translate}}</mat-label>
-                <input matInput required formControlName="costPercentage" type="number"  >
-                <mat-error *ngIf="createTerminalForm.controls.costPercentage.hasError('min')"
-                  [innerHTML]="'Terminal_Component.FormTerminal.labelMsgOutOffMin' |translate"></mat-error>
-                <mat-error *ngIf="createTerminalForm.controls.costPercentage.hasError('max')"
-                  [innerHTML]="'Terminal_Component.FormTerminal.labelMsgOutOffMax' |translate"></mat-error>
-            </mat-form-field>
-            <mat-form-field *ngIf="createTerminalForm.contains('cogsPercentage')" fxFlex="10%">
-                <mat-label>{{'Terminal_Component.FormTerminal.labelCogsPercentage' |translate}}</mat-label>
-                <input  matInput required formControlName="cogsPercentage" type="number">
-                <mat-error *ngIf="createTerminalForm.controls.cogsPercentage.hasError('min')"
-                  [innerHTML]="'Terminal_Component.FormTerminal.labelMsgOutOffMin' |translate"></mat-error>
-                <mat-error *ngIf="createTerminalForm.controls.cogsPercentage.hasError('max')"
-                  [innerHTML]="'Terminal_Component.FormTerminal.labelMsgOutOffMax' |translate"></mat-error>
-            </mat-form-field>
-            <mat-form-field *ngIf="createTerminalForm.contains('txnRateMin')" fxFlex="10%">
-                <mat-label>{{'Terminal_Component.FormTerminal.labelMinPercentage' |translate}}</mat-label>
-                <input  matInput required formControlName="txnRateMin" type="number">
-                <mat-error *ngIf="createTerminalForm.controls.txnRateMin.hasError('min')"
-                  [innerHTML]="'Terminal_Component.FormTerminal.labelMsgOutOffMin' |translate"></mat-error>
-                <mat-error *ngIf="createTerminalForm.controls.txnRateMin.hasError('max')"
-                  [innerHTML]="'Terminal_Component.FormTerminal.labelMsgOutOffMax' |translate"></mat-error>
-            </mat-form-field>
-            <mat-form-field *ngIf="createTerminalForm.contains('txnRateMax')" fxFlex="10%">
-                <mat-label>{{'Terminal_Component.FormTerminal.labelMaxPercentage' |translate}}</mat-label>
-                <input  matInput required formControlName="txnRateMax" type="number">
-                <mat-error *ngIf="createTerminalForm.controls.txnRateMax.hasError('min')"
-                  [innerHTML]="'Terminal_Component.FormTerminal.labelMsgOutOffMin' |translate"></mat-error>
-                <mat-error *ngIf="createTerminalForm.controls.txnRateMax.hasError('max')"
-                  [innerHTML]="'Terminal_Component.FormTerminal.labelMsgOutOffMax' |translate"></mat-error>
-            </mat-form-field>
-            <mat-form-field *ngIf="createTerminalForm.contains('maxLimitAmount')" fxFlex="12%">
-                <mat-label>{{'Terminal_Component.FormTerminal.labelMaxLimitAmount' |translate}}</mat-label>
-                <input currencyMask matInput required formControlName="maxLimitAmount" >
-                <mat-error *ngIf="createTerminalForm.controls.maxLimitAmount.hasError('min')"
-                  [innerHTML]="'Terminal_Component.FormTerminal.labelMsgMin100000' |translate"></mat-error>
-            </mat-form-field>
-            <mat-form-field *ngIf="createTerminalForm.contains('levelLimit')" fxFlex="12%">
-                <mat-label>{{'Terminal_Component.FormTerminal.labelLevelLimit' |translate}}</mat-label>
-                <input currencyMask matInput required formControlName="levelLimit" >
-                <mat-error *ngIf="createTerminalForm.controls.levelLimit.hasError('min')"
-                  [innerHTML]="'Terminal_Component.FormTerminal.labelMsgMin0' |translate"></mat-error>
-            </mat-form-field>
-
-            <button mat-raised-button color="primary" (click)="setDefaultFeeSettingPos()">
-              <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-box-arrow-in-down-left" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                <path fill-rule="evenodd" d="M9.636 2.5a.5.5 0 0 0-.5-.5H2.5A1.5 1.5 0 0 0 1 3.5v10A1.5 1.5 0 0 0 2.5 15h10a1.5 1.5 0 0 0 1.5-1.5V6.864a.5.5 0 0 0-1 0V13.5a.5.5 0 0 1-.5.5h-10a.5.5 0 0 1-.5-.5v-10a.5.5 0 0 1 .5-.5h6.636a.5.5 0 0 0 .5-.5z"/>
-                <path fill-rule="evenodd" d="M5 10.5a.5.5 0 0 0 .5.5h5a.5.5 0 0 0 0-1H6.707l8.147-8.146a.5.5 0 0 0-.708-.708L6 9.293V5.5a.5.5 0 0 0-1 0v5z"/>
-              </svg>
-              {{'Terminal_Component.FormTerminal.buttonSetupAll' |translate}}
-            </button>
-          </div>
-        </mat-card-content>
-
-        <div class="example-container mat-elevation-z8">
-            <mat-form-field class="filter">
-              <input matInput #filter (keyup)="applyFilter($event.target.value)" placeholder="Filter">
-              <button mat-icon-button matSuffix aria-label="clear" *ngIf="filter.value" (click)="filter.value=''; applyFilter('');">
-                <mat-icon>close</mat-icon>
-              </button>
-            </mat-form-field>
-          <mat-table #table [dataSource]="dataSource">
-            <ng-container matColumnDef="Office">
-              <mat-header-cell *matHeaderCellDef>{{'Terminal_Component.FormTerminal.tableFee.Office'|translate}} </mat-header-cell>
-              <mat-cell *matCellDef="let element">{{element.officeName}} </mat-cell>
-            </ng-container>
-
-            <ng-container matColumnDef="CardType">
-              <mat-header-cell *matHeaderCellDef>{{'Terminal_Component.FormTerminal.tableFee.CardType'|translate}} </mat-header-cell>
-              <mat-cell *matCellDef="let element">{{element.cardCode}} </mat-cell>
-            </ng-container>
-
-            <ng-container matColumnDef="FeePOS">
-              <mat-header-cell *matHeaderCellDef>{{'Terminal_Component.FormTerminal.tableFee.FeePOS'|translate}}</mat-header-cell>
-              <mat-cell *matCellDef="let element, let i = index">
-                <mat-form-field  >
-                  <input type="number" matInput (keyup)="validateNumber($event, element)" id="{{i}}_cogsPercentage" [value]="element.cogsPercentage" [(ngModel)]="element.cogsPercentage" [ngModelOptions]="{standalone: true}">
-                </mat-form-field>
-              </mat-cell>
-            </ng-container>
-
-            <ng-container matColumnDef="FeeCost">
-              <mat-header-cell *matHeaderCellDef>{{'Terminal_Component.FormTerminal.tableFee.FeeCost'|translate}}</mat-header-cell>
-              <mat-cell *matCellDef="let element , let i = index">
-                <mat-form-field floatLabel="never">
-                  <input matInput (keyup)="validateNumber($event, element)" id="{{i}}_costPercentage" [value]="element.costPercentage" [(ngModel)]="element.costPercentage" [ngModelOptions]="{standalone: true}">
-                </mat-form-field>
-              </mat-cell>
-            </ng-container>
-
-            <ng-container matColumnDef="FeeMin">
-              <mat-header-cell *matHeaderCellDef>{{'Terminal_Component.FormTerminal.tableFee.FeeMin'|translate}}</mat-header-cell>
-              <mat-cell *matCellDef="let element, let i = index">
-                <mat-form-field floatLabel="never">
-                  <input matInput (keyup)="validateNumber($event, element)" [value]="element.txnRateMin" id="{{i}}_txnRateMin" [(ngModel)]="element.txnRateMin" [ngModelOptions]="{standalone: true}">
-                </mat-form-field>
-              </mat-cell>
-            </ng-container>
-
-            <ng-container matColumnDef="FeeMax">
-              <mat-header-cell *matHeaderCellDef>{{'Terminal_Component.FormTerminal.tableFee.FeeMax'|translate}}</mat-header-cell>
-              <mat-cell *matCellDef="let element, let i = index">
-                <mat-form-field floatLabel="never">
-                  <input matInput (keyup)="validateNumber($event, element)" id="{{i}}_txnRateMax" [value]="element.txnRateMax" [(ngModel)]="element.txnRateMax" [ngModelOptions]="{standalone: true}">
-                </mat-form-field>
-              </mat-cell>
-            </ng-container>
-
-            <ng-container matColumnDef="MaxLimitAmountTransaction">
-              <mat-header-cell *matHeaderCellDef>{{'Terminal_Component.FormTerminal.tableFee.MaxLimitAmountTransaction'|translate}} ({{'labelCurrency'|translate}})</mat-header-cell>
-              <mat-cell *matCellDef="let element, let i = index">
-                <mat-form-field floatLabel="never">
-                  <input matInput  (keyup)="validateNumber($event, element)" id="{{i}}_maxLimitAmount" [value]="element.maxLimitAmount" [(ngModel)]="element.maxLimitAmount" [ngModelOptions]="{standalone: true}">
-                </mat-form-field>
-              </mat-cell>
-            </ng-container>
-
-            <ng-container matColumnDef="LevelTransactionCard">
-              <mat-header-cell *matHeaderCellDef>{{'Terminal_Component.FormTerminal.tableFee.LevelTransactionCard'|translate}}</mat-header-cell>
-              <mat-cell *matCellDef="let element, let i = index">
-                <mat-form-field floatLabel="never">
-                  <input matInput (keyup)="validateNumber($event, element)" id="{{i}}_levelLimit" [value]="element.levelLimit" [(ngModel)]="element.levelLimit" [ngModelOptions]="{standalone: true}">
-                </mat-form-field>
-              </mat-cell>
-            </ng-container>
-            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-            <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
-          </mat-table>
-          <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
-        </div>
-        <div class="mat-elevation-z8" style="text-align: center;">
-
-          <button  mat-raised-button color="primary" (click)="backClicked()">
-            <i class="fa fa-arrow-left" aria-hidden="true">{{'Terminal_Component.FormTerminal.buttonBackClicked'|translate}}</i>
+          <button
+            mat-raised-button
+            color="primary"
+            [disabled]="!applyFeeForOffice"
+            (click)="setDefaultFeeSettingPosForOffice()"
+          >
+            <svg
+              width="1em"
+              height="1em"
+              viewBox="0 0 16 16"
+              class="bi bi-box-arrow-in-down-left"
+              fill="currentColor"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M9.636 2.5a.5.5 0 0 0-.5-.5H2.5A1.5 1.5 0 0 0 1 3.5v10A1.5 1.5 0 0 0 2.5 15h10a1.5 1.5 0 0 0 1.5-1.5V6.864a.5.5 0 0 0-1 0V13.5a.5.5 0 0 1-.5.5h-10a.5.5 0 0 1-.5-.5v-10a.5.5 0 0 1 .5-.5h6.636a.5.5 0 0 0 .5-.5z"
+              />
+              <path
+                fill-rule="evenodd"
+                d="M5 10.5a.5.5 0 0 0 .5.5h5a.5.5 0 0 0 0-1H6.707l8.147-8.146a.5.5 0 0 0-.708-.708L6 9.293V5.5a.5.5 0 0 0-1 0v5z"
+              />
+            </svg>
+            Áp dụng cho chi nhánh
           </button>
-
-          <button  mat-raised-button color="primary" (click)="submit()" style="margin-left: 20px;">
-            <i class="fa fa-floppy-o" aria-hidden="true">{{'Terminal_Component.FormTerminal.buttonSubmit'|translate}}</i>
+          <button mat-raised-button (click)="reset()">
+            <svg
+              width="1em"
+              height="1em"
+              viewBox="0 0 16 16"
+              class="bi bi-arrow-repeat"
+              fill="currentColor"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M11.534 7h3.932a.25.25 0 0 1 .192.41l-1.966 2.36a.25.25 0 0 1-.384 0l-1.966-2.36a.25.25 0 0 1 .192-.41zm-11 2h3.932a.25.25 0 0 0 .192-.41L2.692 6.23a.25.25 0 0 0-.384 0L.342 8.59A.25.25 0 0 0 .534 9z"
+              />
+              <path
+                fill-rule="evenodd"
+                d="M8 3c-1.552 0-2.94.707-3.857 1.818a.5.5 0 1 1-.771-.636A6.002 6.002 0 0 1 13.917 7H12.9A5.002 5.002 0 0 0 8 3zM3.1 9a5.002 5.002 0 0 0 8.757 2.182.5.5 0 1 1 .771.636A6.002 6.002 0 0 1 2.083 9H3.1z"
+              />
+            </svg>
+            {{ "Terminal_Component.FormTerminal.buttonResetDefault" | translate }}
           </button>
-
         </div>
-      </form>
-    </mat-card>
+      </mat-card-content>
 
-  </div>
+      <div class="mat-elevation-z8">
+        <mat-form-field class="filter">
+          <input matInput #filter (keyup)="applyFilter($event.target.value)" placeholder="Filter" />
+          <button
+            mat-icon-button
+            matSuffix
+            aria-label="clear"
+            *ngIf="filter.value"
+            (click)="filter.value = ''; applyFilter('')"
+          >
+            <mat-icon>close</mat-icon>
+          </button>
+        </mat-form-field>
+        <mat-table #table [dataSource]="dataSource" style="overflow: auto; max-height: 500px">
+          <ng-container matColumnDef="Office">
+            <mat-header-cell *matHeaderCellDef
+              >{{ "Terminal_Component.FormTerminal.tableFee.Office" | translate }}
+            </mat-header-cell>
+            <mat-cell *matCellDef="let element">{{ element.officeName }} </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="CardType">
+            <mat-header-cell *matHeaderCellDef
+              >{{ "Terminal_Component.FormTerminal.tableFee.CardType" | translate }}
+            </mat-header-cell>
+            <mat-cell *matCellDef="let element">{{ element.cardCode }} </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="FeeCost">
+            <mat-header-cell *matHeaderCellDef>{{
+              "Terminal_Component.FormTerminal.tableFee.FeeCost" | translate
+            }}</mat-header-cell>
+            <mat-cell *matCellDef="let element; let i = index">
+              <mat-form-field floatLabel="never">
+                <input
+                  type="text"
+                  matInput
+                  [value]="element.costPercentage"
+                  [(ngModel)]="element.costPercentage"
+                  [ngModelOptions]="{ standalone: true }"
+                />
+              </mat-form-field>
+            </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="FeePOS">
+            <mat-header-cell *matHeaderCellDef>{{
+              "Terminal_Component.FormTerminal.tableFee.FeeCogs" | translate
+            }}</mat-header-cell>
+            <mat-cell *matCellDef="let element; let i = index">
+              <mat-form-field>
+                <input
+                  type="text"
+                  matInput
+                  [value]="element.cogsPercentage"
+                  [(ngModel)]="element.cogsPercentage"
+                  [ngModelOptions]="{ standalone: true }"
+                />
+              </mat-form-field>
+            </mat-cell>
+          </ng-container>
+          
+          <ng-container matColumnDef="FeeMin">
+            <mat-header-cell *matHeaderCellDef>{{
+              "Terminal_Component.FormTerminal.tableFee.FeeMin" | translate
+            }}</mat-header-cell>
+            <mat-cell *matCellDef="let element; let i = index">
+              <mat-form-field floatLabel="never">
+                <input
+                  type="text"
+                  matInput
+                  [value]="element.txnRateMin"
+                  [(ngModel)]="element.txnRateMin"
+                  [ngModelOptions]="{ standalone: true }"
+                />
+              </mat-form-field>
+            </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="FeeMax">
+            <mat-header-cell *matHeaderCellDef>{{
+              "Terminal_Component.FormTerminal.tableFee.FeeMax" | translate
+            }}</mat-header-cell>
+            <mat-cell *matCellDef="let element; let i = index">
+              <mat-form-field floatLabel="never">
+                <input
+                  matInput
+                  type="text"
+                  [value]="element.txnRateMax"
+                  [(ngModel)]="element.txnRateMax"
+                  [ngModelOptions]="{ standalone: true }"
+                />
+              </mat-form-field>
+            </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="MaxLimitAmountTransaction">
+            <mat-header-cell *matHeaderCellDef
+              >{{ "Terminal_Component.FormTerminal.tableFee.MaxLimitAmountTransaction" | translate }} ({{
+                "labelCurrency" | translate
+              }})</mat-header-cell
+            >
+            <mat-cell *matCellDef="let element; let i = index">
+              <mat-form-field floatLabel="never">
+                <input
+                  matInput
+                  currencyMask
+                  [value]="element.maxLimitAmount"
+                  [(ngModel)]="element.maxLimitAmount"
+                  [ngModelOptions]="{ standalone: true }"
+                />
+              </mat-form-field>
+            </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="LevelTransactionCard">
+            <mat-header-cell *matHeaderCellDef>{{
+              "Terminal_Component.FormTerminal.tableFee.LevelTransactionCard" | translate
+            }}</mat-header-cell>
+            <mat-cell *matCellDef="let element; let i = index">
+              <mat-form-field floatLabel="never">
+                <input
+                  matInput
+                  type="number"
+                  [value]="element.levelLimit"
+                  [(ngModel)]="element.levelLimit"
+                  [ngModelOptions]="{ standalone: true }"
+                />
+              </mat-form-field>
+            </mat-cell>
+          </ng-container>
+          <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+          <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+        </mat-table>
+        <!-- <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator> -->
+      </div>
+      <div class="mat-elevation-z8" style="text-align: center">
+        <button mat-raised-button color="primary" (click)="backClicked()">
+          <i class="fa fa-arrow-left" aria-hidden="true">{{
+            "Terminal_Component.FormTerminal.buttonBackClicked" | translate
+          }}</i>
+        </button>
+
+        <button mat-raised-button color="primary" (click)="submit()" style="margin-left: 20px">
+          <i class="fa fa-floppy-o" aria-hidden="true">{{
+            "Terminal_Component.FormTerminal.buttonSubmit" | translate
+          }}</i>
+        </button>
+      </div>
+    </form>
+  </mat-card>
+</div>

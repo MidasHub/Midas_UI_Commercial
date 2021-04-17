@@ -630,6 +630,7 @@
     "labelTerminalMsgPattern": "<strong>Không</strong> Nhập ký tự đặc biệt",
     "labelFilter": "Bộ lọc",
     "labelAction": "Thao tác",
+    "labelShowClosedTerminal":"Hiển thị máy POS đã đóng",
     "tableTerminal": {
       "terminalNo": "Mã máy POS",
       "terminalCode": "Code máy POS",
@@ -657,10 +658,10 @@
       "labelOffice": "Chi nhánh",
       "labelMinFeeDefault": "Phí tối thiểu mặc định",
       "checkboxIsActive": "Hoạt động",
-      "labelCostPercentage": "Phí Cost(%)",
-      "labelCogsPercentage": "Phí Cogs(%)",
-      "labelMinPercentage": "Phí thấp nhất(%)",
-      "labelMaxPercentage": "Phí cao nhất(%)",
+      "labelCostPercentage": "Phí trả Đối tác(%)",
+      "labelCogsPercentage": "Phí Chi nhánh(%)",
+      "labelMinPercentage": "Phí KH thấp nhất(%)",
+      "labelMaxPercentage": "Phí KH cao nhất(%)",
       "labelMaxLimitAmount": "Hạn mức máy POS",
       "labelLevelLimit": "Số lần giao dịch trong ngày",
       "buttonSetupAll": "Áp dụng cho toàn hệ thống",
@@ -671,10 +672,10 @@
       "tableFee": {
         "Office": "Chi nhánh",
         "CardType": "Loại thẻ",
-        "FeeCogs": "Phí POS(%)",
-        "FeeCost": "Phí Cost(%)",
-        "FeeMin": "Phí thấp nhất(%)",
-        "FeeMax": "Phí cao nhất(%)",
+        "FeeCogs": "Phí Chi nhánh(%)",
+        "FeeCost": "Phí trả Đối tác(%)",
+        "FeeMin": "Phí KH thấp nhất(%)",
+        "FeeMax": "Phí KH cao nhất(%)",
         "MaxLimitAmountTransaction": "Hạn mức tối giao dịch",
         "LevelTransactionCard": "Số lần giao dịch"
       }

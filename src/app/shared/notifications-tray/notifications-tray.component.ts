@@ -11,7 +11,7 @@ import { NotificationsService } from 'app/notifications/notifications.service';
  * Notifications Tray Component
  */
 @Component({
-  selector: 'mifosx-notifications-tray',
+  selector: 'midas-notifications-tray',
   templateUrl: './notifications-tray.component.html',
   styleUrls: ['./notifications-tray.component.scss'],
   encapsulation: ViewEncapsulation.None

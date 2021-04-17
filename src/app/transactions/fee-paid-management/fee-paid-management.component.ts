@@ -8,9 +8,6 @@ import { DatePipe } from "@angular/common";
 import { SettingsService } from "../../settings/settings.service";
 import { AuthenticationService } from "../../core/authentication/authentication.service";
 import { SavingsService } from "../../savings/savings.service";
-import { SystemService } from "../../system/system.service";
-import { CentersService } from "../../centers/centers.service";
-import { AlertService } from "../../core/alert/alert.service";
 import { MatDialog, MatDialogConfig } from "@angular/material/dialog";
 import { ClientsService } from "../../clients/clients.service";
 import { merge } from "rxjs";
@@ -108,10 +105,6 @@ export class FeePaidManagementComponent implements OnInit {
       label: "Đã xong",
       value: "C",
     },
-    // {
-    //   label: 'F',
-    //   value: 'F'
-    // },
     {
       label: "Đã hủy",
       value: "V",
@@ -138,7 +131,8 @@ export class FeePaidManagementComponent implements OnInit {
     private settingsService: SettingsService,
     private authenticationService: AuthenticationService,
     private savingsService: SavingsService,
-    private centersService: CentersService,
+    private clientServices: ClientsService,
+
     public dialog: MatDialog,
   ) {
     this.formDate = this.formBuilder.group({
@@ -158,9 +152,7 @@ export class FeePaidManagementComponent implements OnInit {
       wholesaleChoose: [true],
       createdBy: [""],
     });
-    // this.formFilter.get('officeId').valueChanges.subscribe((value => {
-    //   // const office = this.offices.find(v => v.name === value);
-    // }));
+
     this.formFilter.valueChanges.subscribe((value) => {
       this.filterTransaction();
     });
@@ -184,12 +176,14 @@ export class FeePaidManagementComponent implements OnInit {
       // @ts-ignore
       this.partners.unshift({ code: "", desc: "Tất cả" });
     });
-    // this.systemService.getOffices().subscribe(offices => {
-    //   this.offices = offices;
-    //   this.offices.unshift({
-    //
-    //   })
-    // });
+    this.clientServices.getListUserTeller(this.currentUser.officeId).subscribe((result: any) => {
+      this.staffs = result?.result?.listStaff.filter((staff:any) => staff.displayName.startsWith("R"));
+      this.staffs.unshift({
+        id: "",
+        displayName: "Tất cả",
+      });
+    });
+
     this.transactionService.getPaymentTypes().subscribe((result) => {
       this.paidPaymentType = result?.result?.listPayment;
       this.paidPaymentType.unshift({
@@ -197,13 +191,7 @@ export class FeePaidManagementComponent implements OnInit {
         desc: "Tất cả",
       });
     });
-    this.centersService.getStaff(this.currentUser.officeId).subscribe((staffs: any) => {
-      this.staffs = staffs?.staffOptions;
-      this.staffs.unshift({
-        id: "",
-        displayName: "Tất cả",
-      });
-    });
+
     this.getTransaction();
   }
 
@@ -251,6 +239,7 @@ export class FeePaidManagementComponent implements OnInit {
   }
 
   filterTransaction() {
+
     const limit = this.paginator.pageSize;
     const offset = this.paginator.pageIndex * limit;
     const form = this.formFilter.value;
@@ -264,7 +253,7 @@ export class FeePaidManagementComponent implements OnInit {
             if (!v[key]) {
               return false;
             }
-            if (!String(v[key]).toLowerCase().includes(form[key].toLowerCase())) {
+            if (!String(v[key])?.toLowerCase().includes(String(form[key])?.toLowerCase())) {
               return false;
             }
           }

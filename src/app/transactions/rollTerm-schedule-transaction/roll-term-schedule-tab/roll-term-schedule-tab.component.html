@@ -180,11 +180,11 @@
       </ng-container>
 
       <ng-container matColumnDef="paidAmount">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header class="on_hold">
           Đã chi <br />
           (b)
         </th>
-        <td mat-cell style="padding: 6px" *matCellDef="let journalEntry">{{ journalEntry.paidAmount | money }}</td>
+        <td class="on_hold" mat-cell style="padding: 6px" *matCellDef="let journalEntry">{{ journalEntry.paidAmount | money }}</td>
       </ng-container>
 
       <ng-container matColumnDef="remainAmount">
@@ -198,19 +198,23 @@
       </ng-container>
 
       <ng-container matColumnDef="txnAmount">
-        <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>
+        <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header
+        class="on_success">
           Đã thu hồi <br />
           (d)
         </th>
-        <td mat-cell fxHide fxShow.gt-md *matCellDef="let journalEntry">{{ journalEntry.amountPaid | money }}</td>
+        <td class="on_success" mat-cell fxHide fxShow.gt-md *matCellDef="let journalEntry">{{ journalEntry.amountPaid | money }}</td>
       </ng-container>
 
       <ng-container matColumnDef="waitGetAmount">
-        <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>
+        <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header
+        class="on_hold">
           Cần thu hồi <br />
           (d)
         </th>
-        <td mat-cell fxHide fxShow.gt-md *matCellDef="let journalEntry">
+        <td mat-cell fxHide fxShow.gt-md *matCellDef="let journalEntry"
+        class="on_hold"
+        >
           {{ journalEntry.paidAmount - journalEntry.amountPaid | money }}
         </td>
       </ng-container>
@@ -331,7 +335,7 @@
       </button>
 
       <hr />
-      <button mat-menu-item (click)="undoRollTermTransaction(refid, principal - paidAmount)">
+      <button mat-menu-item (click)="undoRollTermTransaction(refid,  (principal - paidAmount))">
         <i class="fa fa-eye" aria-hidden="true"></i>&nbsp;Hủy ĐHT
       </button>
     </ng-template>

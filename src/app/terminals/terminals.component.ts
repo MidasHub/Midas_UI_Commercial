@@ -16,7 +16,6 @@ import { TransferTerminalComponent } from './transfer-terminal/transfer-terminal
   styleUrls: ['./terminals.component.scss']
 })
 export class TerminalsComponent implements OnInit, AfterViewInit {
-  //@ViewChild('showClosedTerminals', { static: true }) showClosedTerminals: MatCheckbox;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   viewTerminals = new FormControl('viewTerminals');

@@ -10,7 +10,6 @@ import { extract } from '../core/i18n/i18n.service';
 
 /** Custom Imports */
 import { TerminalsComponent } from './terminals.component';
-//import { CreateTerminalsComponent } from './terminals.component';
 import { EditTerminalsComponent } from './edit-terminals/edit-terminals.component';
 import { CreateTerminalsComponent } from './create-terminals/create-terminals.component';
 import { TerminalsResolver } from './common-resolvers/terminals.resolver';

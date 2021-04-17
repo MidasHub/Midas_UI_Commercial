@@ -22,8 +22,10 @@
       margin: 1%;
 
       .profile-image {
-        object-fit: cover;
+        object-fit: contain;
         border-radius: 20px;
+        max-height: 5rem;
+        max-width: 7rem;
       }
     }
 
@@ -67,4 +69,16 @@
 .iconBank {
   height: 256px;
   width: 256px;
+}
+
+.cashType{
+  background:#3b5998!important;
+}
+
+.bankType{
+  background:#2980b9!important;
+}
+
+.CCAType{
+  background:#8e44ad!important;
 }

@@ -79,6 +79,16 @@ export class ClientsService {
     return this.http.get("/clients", { params: httpParams });
   }
 
+  getClientsByStaff(orderBy: string, sortOrder: string, offset: number, limit: number,  sqlSearch?: string): Observable<any> {
+    const httpParams = new HttpParams()
+      .set("offset", offset.toString())
+      .set("limit", limit.toString())
+      .set("sortOrder", sortOrder)
+      .set("orderBy", orderBy)
+      .set("sqlSearch", sqlSearch ? sqlSearch : "");
+    return this.http.get("/clients", { params: httpParams });
+  }
+
   getClientsByOfficeOfUser(
     orderBy: string,
     sortOrder: string,
@@ -96,8 +106,8 @@ export class ClientsService {
       // .set('fields', 'displayName,mobileNo,accountNo,externalId,active,mobileNo,gender,officeName,staffName')
       .set("offset", offset.toString())
       .set("limit", limit.toString())
-      .set("sortOrder", sortOrder)
-      .set("orderBy", orderBy)
+      .set("sortOrder", "DESC")
+      .set("orderBy", 'id')
       .set("sqlSearch", sqlSearch ? sqlSearch : "");
 
     this.accessToken = JSON.parse(
@@ -367,7 +377,7 @@ export class ClientsService {
   }
 
   uploadClientDocumenttenantIdentifier(clientId: string, documentData: any): Observable<any> {
-    return this.http.post(`/clients/${clientId}/documents?tenantIdentifier=tiktik`, documentData);
+    return this.http.post(`/clients/${clientId}/documents?tenantIdentifier=${environment.fineractPlatformTenantId}`, documentData);
   }
 
   deleteClientDocument(parentEntityId: string, documentId: string) {
@@ -491,10 +501,11 @@ export class ClientsService {
     return this.http.post<any>(`${this.GatewayApiUrlPrefix}/savingTransaction/get_list_balance_customer`, httpParams);
   }
 
-  getNameOfStaff(): Observable<any> {
+  getListUserTeller(officeId: string): Observable<any> {
     let httpParams = this.commonHttpParams.getCommonHttpParams();
+    httpParams = httpParams.set("officeIdFilter", officeId);
 
-    return this.http.post<any>(`${this.GatewayApiUrlPrefix}/common/get_list_staff_of_office`, httpParams);
+    return this.http.post<any>(`${this.GatewayApiUrlPrefix}/common/get_list_user_off_office`, httpParams);
   }
 
   getStaffsByOffice(officeId: string): Observable<any> {

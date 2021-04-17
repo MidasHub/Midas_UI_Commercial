@@ -36,6 +36,7 @@ import { SidenavComponent } from './shell/sidenav/sidenav.component';
 import { ToolbarComponent } from './shell/toolbar/toolbar.component';
 import { BreadcrumbComponent } from './shell/breadcrumb/breadcrumb.component';
 import { ContentComponent } from './shell/content/content.component';
+import { MenuComponent } from './shell/toolbar/menu/menu.component';
 
 /**
  * Core Module
@@ -53,7 +54,8 @@ import { ContentComponent } from './shell/content/content.component';
     ToolbarComponent,
     SidenavComponent,
     BreadcrumbComponent,
-    ContentComponent
+    ContentComponent,
+    MenuComponent
   ],
   exports: [
     SharedModule // TO BE REMOVED: Once all components have replaced the core module import by shared module.

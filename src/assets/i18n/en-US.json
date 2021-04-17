@@ -628,6 +628,7 @@
     "labelRequired": "<strong>required</strong>",
     "labelTerminalMsgPattern": "<strong>cannot</strong> begin with a special character or number",
     "labelFilter": "Filter",
+    "labelShowClosedTerminal":"Show POS closed",
     "tableTerminal": {
       "terminalNo": "Terminal No",
       "terminalCode": "Terminal Code",

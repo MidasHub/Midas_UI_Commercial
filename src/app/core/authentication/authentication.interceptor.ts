@@ -14,7 +14,7 @@ const httpOptions = {
     'Fineract-Platform-TenantId': environment.fineractPlatformTenantId
   }
 };
-
+const accessToken = JSON.parse( sessionStorage.getItem('midasCredentials') || localStorage.getItem('midasCredentials'));
 const httpOptionsGateway = {
   headers: {
     'Ic-Tenantid': 'default',
@@ -55,7 +55,7 @@ export class AuthenticationInterceptor implements HttpInterceptor {
       }
      }
 
-     log.debug("Authen Step: ", request)
+    //  log.debug("Authen Step: ", request)
     return next.handle(request);
   }
 
@@ -68,6 +68,7 @@ export class AuthenticationInterceptor implements HttpInterceptor {
       httpOptions.headers[authorizationHeader] = `Bearer ${authenticationKey}`;
     } else {
       httpOptions.headers[authorizationHeader] = `Basic ${authenticationKey}`;
+      httpOptionsGateway.headers[authorizationHeader] = `Basic ${authenticationKey}`;
     }
   }
 

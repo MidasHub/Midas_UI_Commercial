@@ -24,6 +24,7 @@ export class AddIdentitiesComponent implements OnInit {
   currentUser: any;
   isTeller = true;
   existBin = false;
+  classCardEnum=["CLASSIC","GOLD","PLATINUM","SIGNATURE","INFINITY"];
 
   constructor(private formBuilder: FormBuilder,
               @Inject(MAT_DIALOG_DATA) public data: any,
@@ -65,33 +66,24 @@ export class AddIdentitiesComponent implements OnInit {
       'description': ['']
     });
 
-    // this.bankService.getBanks().subscribe((result: any) => {
-    //   log.debug(result);
-    //   if (result) {
-    //     this.documentCardBanks = result;
-    //   }
-    // });
-
-    // this.bankService.getCardTypes().subscribe((result: any) => {
-    //   log.debug(result);
-    //   if (result) {
-    //     this.documentCardTypes = result;
-    //   }
-    // });
     log.debug('The data import from bankService: ', this.documentCardBanks,this.documentCardTypes);
 
     this.form.get('documentTypeId').valueChanges.subscribe((value: any) => {
       const type = this.documentTypes.find(v => v.id === value);
       if (type && Number(type.id) >= 38 && Number(type.id) <= 57) {
-        this.form.addControl('documentCardBank', new FormControl());
-        this.form.addControl('documentCardType', new FormControl());
-        this.form.addControl('dueDay', new FormControl('', [Validators.max(31), Validators.min(0)]));
-        this.form.addControl('expiredDate', new FormControl(''));
+        this.form.addControl('documentCardBank', new FormControl('', [Validators.required]));
+        this.form.addControl('documentCardType', new FormControl('', [Validators.required]));
+        this.form.addControl('dueDay', new FormControl('', [Validators.required, Validators.max(31), Validators.min(1)]));
+        this.form.addControl('expiredDate', new FormControl('', [Validators.required]));
+        this.form.addControl('limitCard', new FormControl(0, [Validators.required]));
+        this.form.addControl('classCard', new FormControl('', [Validators.required]));
       } else {
         this.form.removeControl('documentCardBank');
         this.form.removeControl('documentCardType');
         this.form.removeControl('dueDay');
         this.form.removeControl('expiredDate');
+        this.form.removeControl('limitCard');
+        this.form.removeControl('classCard');
       }
     });
 

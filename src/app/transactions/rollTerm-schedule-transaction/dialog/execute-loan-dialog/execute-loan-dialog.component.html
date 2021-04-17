@@ -16,7 +16,7 @@
           <mat-label>Lựa chọn tài khoản</mat-label>
           <mat-select required formControlName="savingAccountPaid">
             <mat-option *ngFor="let type of accountsPaid" [value]="type.id">
-              {{ type.externalId ? type.externalId + " - " : "" }} {{ type.balance | money }}
+              {{ type.externalId }} ( {{ type.balance | money }} )
             </mat-option>
           </mat-select>
         </mat-form-field>

@@ -1,6 +1,7 @@
 <mat-card class="container">
-    
+
     <div fxLayout="row" fxLayoutAlign="start center">
+
       <div class="search-box">
         <mat-form-field class="filter">
           <input matInput #filter (keyup)="applyFilter($event.target.value)" placeholder="{{ 'Terminal_Component.labelFilter'| translate}}">
@@ -12,6 +13,9 @@
         <mat-checkbox labelPosition="after" (change)="changeShowClosedMerchants($event.checked)">Hiển thị đại lý đã đóng</mat-checkbox>
       </div>
       <div class="action-button" fxLayoutGap="25px">
+        <button mat-raised-button title="Quay lại trang đối tác" color="primary" (click)="previousStep()">
+          <fa-icon icon="backward"></fa-icon>
+        </button>
         <button mat-raised-button color="primary" (click)="createMerchant()">
           <fa-icon icon="plus"></fa-icon>&nbsp;&nbsp;Tạo Hộ kinh doanh
         </button>
@@ -21,17 +25,17 @@
     <table mat-table [dataSource]="dataSource" matSort>
 
       <ng-container matColumnDef="name">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> name  </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Tên HKD  </th>
         <td mat-cell *matCellDef="let partner"> {{ partner.name}} </td>
       </ng-container>
 
       <ng-container matColumnDef="partner">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> partner </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Đối tác </th>
         <td mat-cell *matCellDef="let partner"> {{ partner.partnerName }} </td>
       </ng-container>
 
       <ng-container matColumnDef="rangeDay">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>rangeDay</th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Thời gian kiểm tra giao dịch/ thẻ</th>
         <td mat-cell *matCellDef="let partner"> {{partner.rangeDay}} </td>
       </ng-container>
 
@@ -45,40 +49,26 @@
               <mat-slide-toggle
                 (change)="onChange($event, partner)"
                 class="example-margin"
-                [color]="primary"
                 [checked]="partner.status === 'A' ? true : false ">
               </mat-slide-toggle>
             </section>
         </td>
       </ng-container>
-<!--       
-      <ng-container matColumnDef="createdBy">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>createdBy</th>
-        <td mat-cell *matCellDef="let partner"> {{ partner.createdBy }} </td>
-      </ng-container>
 
-      <ng-container matColumnDef="createdDate">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>createdDate</th>
-        <td mat-cell *matCellDef="let partner"> {{ partner.createdDate | date:'dd/MM/yyyy'}} </td>
-      </ng-container>
-
-      <ng-container matColumnDef="updatedDate">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>updatedDate</th>
-        <td mat-cell *matCellDef="let partner"> {{ partner.updatedDate | date:'dd/MM/yyyy'}} </td>
-      </ng-container> -->
 
       <ng-container matColumnDef="action">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'Terminal_Component.labelAction'| translate}} </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+          {{ 'Terminal_Component.labelAction'| translate}}
+
+        </th>
         <td mat-cell *matCellDef="let partner,let i = index">
-          <button mat-raised-button title="Cập nhật thông tin" color="primary" (click)="editMerchant(partner, i)">
+          <button  mat-raised-button matTooltip="Cập nhật thông tin HKD" color="primary" (click)="editMerchant(partner, i)">
             <fa-icon icon="edit"></fa-icon>
           </button>
-          <!-- <button mat-raised-button color="primary" (click)="banPartner(partner.code)">
+          <button matTooltip="Xóa bill chưa sử dụng" mat-raised-button color="primary" (click)="inactiveBillsMerchant(partner.name)">
             <fa-icon icon="ban"></fa-icon>
-          </button> -->
-          <button mat-raised-button title="Quay lại trang đối tác" color="primary" (click)="previousStep()">
-            <fa-icon icon="backward"></fa-icon>  
           </button>
+
         </td>
       </ng-container>
 

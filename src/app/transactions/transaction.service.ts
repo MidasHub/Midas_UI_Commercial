@@ -22,7 +22,11 @@ export class TransactionService {
   /**
    * @param {HttpClient} http Http Client to send requests.
    */
-  constructor(private http: HttpClient, private commonHttpParams: CommonHttpParams) {
+  constructor(private http: HttpClient,
+    private commonHttpParams: CommonHttpParams,
+
+
+    ) {
     this.accessToken = JSON.parse(
       sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey)
     );
@@ -42,7 +46,7 @@ export class TransactionService {
       }
     }
     return this.http.post<any>(
-      `${this.GatewayApiUrlPrefix}/transaction/repayment_rollterm_manual_transaction`,
+      `${this.GatewayApiUrlPrefix}/transaction/repayment_roll_term_manual_transaction`,
       httpParams
     );
   }
@@ -65,6 +69,17 @@ export class TransactionService {
     return this.http.post<any>(`${this.GatewayApiUrlPrefix}/transaction/get_list_transaction_by_client`, httpParams);
   }
 
+  /**
+   * @params : expiredDate
+   * @params : refId
+   * @params : note
+   * @params : state
+   * @params : state
+   * @params : dueDay
+   * @params : limit
+   * @params : classCard
+   * @params : isHold
+   */
   updateCardTrackingState(updateData: any): Observable<any> {
     const expiredDateString = `${updateData.dueDay}/${updateData.expiredDateString?.substring(
       0,
@@ -81,6 +96,19 @@ export class TransactionService {
     httpParams = httpParams.set("isHold", updateData.isHold ? "1" : "0");
 
     return this.http.put<any>(`${this.GatewayApiUrlPrefix}/card/update_card_on_due_day`, httpParams);
+  }
+
+
+  updateCardInfo(updateData: any): Observable<any> {
+
+    let httpParams = this.commonHttpParams.getCommonHttpParams();
+    httpParams = httpParams.set("expiredDate", `${updateData.dueDay}/${updateData.expiredDateString}`);
+    httpParams = httpParams.set("refId", updateData.refid);
+    httpParams = httpParams.set("dueDay", updateData.dueDay );
+    httpParams = httpParams.set("limit", updateData.limit );
+    httpParams = httpParams.set("classCard", updateData.classCard);
+
+    return this.http.put<any>(`${this.GatewayApiUrlPrefix}/card/update_card_day_info`, httpParams);
   }
 
   submitTransactionCash(transactionInfo: any): Observable<any> {
@@ -294,11 +322,11 @@ export class TransactionService {
     return this.http.post<any>(`${this.GatewayApiUrlPrefix}/transaction/check_valid_rollTerm_transaction`, httpParams);
   }
 
-  getListTerminalAvailable(amount: number): Observable<any> {
+  getListTerminalAvailable(amount: number, transactionType:string): Observable<any> {
     let httpParams = this.commonHttpParams.getCommonHttpParams();
-    httpParams = httpParams.set("amountTransaction", amount.toString());
+    httpParams = httpParams.set("amountTransaction", amount.toString()).set("transactionType",transactionType);
 
-    return this.http.post<any>(`${this.GatewayApiUrlPrefix}/pos/get_list_terminal_by_office`, httpParams);
+    return this.http.post<any>(`${this.GatewayApiUrlPrefix}/pos/get_list_terminal_by_office_sl`, httpParams);
   }
 
   getTransactionTemplate(clientId: string, identifierId: string, transactionId?: string): Observable<any> {
@@ -395,7 +423,7 @@ export class TransactionService {
     httpParams = httpParams.set("amountPaid", amountPaid);
 
     return this.http.post<any>(
-      `${this.GatewayApiUrlPrefix}/transaction/repayment_rollterm_manual_transaction_close_loan`,
+      `${this.GatewayApiUrlPrefix}/transaction/repayment_roll_term_manual_transaction_close_loan`,
       httpParams
     );
   }
@@ -609,18 +637,7 @@ export class TransactionService {
       httpParams
     );
   }
-  makeFeeOnAdvanceExecute(form: any): Observable<any> {
-    let httpParams = this.commonHttpParams.getCommonHttpParams();
 
-    const keys = Object.keys(form);
-    for (const key of keys) {
-      httpParams = httpParams.set(key, form[key]);
-    }
-    return this.http.post<any>(
-      `${this.GatewayApiUrlPrefix}/savingTransaction/paid_fee_advance_transaction`,
-      httpParams
-    );
-  }
   getListTransExistingOfBatch(batchTxnName: string): Observable<any> {
     let httpParams = this.commonHttpParams.getCommonHttpParams();
 

@@ -1,8 +1,13 @@
 <div mat-dialog-content>
-  <h1 style="color: green;">Chúc mừng! Bạn đã thực hiện giao dịch [{{transactionInfo.trnRefNo}}] thành công</h1>
+  <h1 style="color: green">Chúc mừng! Bạn đã thực hiện giao dịch [{{ transactionInfo.trnRefNo }}] thành công</h1>
   <h2>Bạn sẽ</h2>
   <mat-dialog-actions align="center">
-    <button *midasHasActiveModule="'billModule'" (click)="this.downloadVoucherTransaction()" mat-raised-button color="primary">
+    <button
+      *midasHasActiveModule="'billModule'"
+      (click)="this.downloadVoucherTransaction()"
+      mat-raised-button
+      color="primary"
+    >
       <fa-icon icon="download"></fa-icon>&nbsp;&nbsp; Tải hóa đơn
     </button>
     <button (click)="this.addFeeDialog()" mat-raised-button color="warn">
@@ -13,34 +18,41 @@
   <h2>Hay là</h2>
   <ul>
     <li>
-      Tiếp tục giao dịch với thẻ {{transactionInfo.panNumber}} của khách hàng {{transactionInfo.clientName}}.
-      <a mat-dialog-close mat-mini-fab  color="primary">
+      Tiếp tục giao dịch với thẻ {{ transactionInfo.panNumber }} của khách hàng {{ transactionInfo.clientName }}.
+      <a mat-dialog-close mat-mini-fab color="primary">
         <fa-icon icon="arrow-alt-circle-left"> </fa-icon>
       </a>
     </li>
-    <li>Chọn thẻ khác của khách hàng {{transactionInfo.clientName}} để tiếp tục thực hiện giao dịch.
-
-          <a mat-dialog-close
-          mat-mini-fab href="#/clients/{{transactionInfo.clientId}}/identities?typeViewClient=transaction">
-          <fa-icon icon="arrow-alt-circle-right"> </fa-icon>
-        </a>
-
+    <li>
+      Chọn thẻ khác của khách hàng {{ transactionInfo.clientName }} để tiếp tục thực hiện giao dịch.
+      <a
+        mat-dialog-close
+        mat-mini-fab
+        href="#/clients/{{ transactionInfo.clientId }}/identities?typeViewClient=transaction"
+      >
+        <fa-icon icon="arrow-alt-circle-right"> </fa-icon>
+      </a>
+    </li>
+    <li *ngIf="transactionInfo.type != 'cash'">
+      Trở về màn hình ĐHT
+      <a mat-dialog-close mat-mini-fab href="#/transaction/rollTermSchedule">
+        <fa-icon icon="arrow-alt-circle-down"> </fa-icon>
+      </a>
     </li>
   </ul>
 
   <br />
-
 
   <h2>Tìm kiếm khách hàng khác đề tiếp tục giao dịch</h2>
   <midas-mainboard> </midas-mainboard>
 </div>
 <mat-dialog-actions align="center">
   <p>
- <a mat-dialog-close mat-mini-fab href="#/" (click)="dialogRef.close({ status: false })">
-    <!-- <button mat-raised-button  color="warn">Quay lại trang chủ</button> -->
-    <fa-icon icon="home"></fa-icon>
-    </a
-  >
-  <br/>
- <span>Quay lại trang chủ</span></p>
+    <a mat-dialog-close mat-mini-fab href="#/">
+      <!-- <button mat-raised-button  color="warn">Quay lại trang chủ</button> -->
+      <fa-icon icon="home"></fa-icon>
+    </a>
+    <br />
+    <span>Quay lại trang chủ</span>
+  </p>
 </mat-dialog-actions>
