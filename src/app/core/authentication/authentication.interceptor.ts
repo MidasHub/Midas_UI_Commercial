@@ -8,13 +8,21 @@ import { Observable } from "rxjs";
 /** Environment Configuration */
 import { environment } from "../../../environments/environment";
 
+/** Logger */
+import { Logger } from "../logger/logger.service";
+import { SystemService } from "app/system/system.service";
+const log = new Logger("Authen-interceptor");
+
+/** Authorization header. */
+const authorizationHeader = "Authorization";
+/** Two factor access token header. */
+const twoFactorAccessTokenHeader = "Fineract-Platform-TFA-Token";
 /** Http request options headers. */
 const httpOptions = {
   headers: {
     "Fineract-Platform-TenantId": environment.fineractPlatformTenantId,
   },
 };
-const accessToken = JSON.parse( sessionStorage.getItem('midasCredentials') || localStorage.getItem('midasCredentials'));
 const httpOptionsGateway = {
   headers: {
     "Gateway-TenantId": environment.GatewayTenantId,
@@ -27,32 +35,35 @@ const httpOptionsIcGateway = {
     "IC-TenantId": "default",
   },
 };
-
-/** Logger */
-import { Logger } from "../logger/logger.service";
-const log = new Logger("Authen-interceptor");
-
-/** Authorization header. */
-const authorizationHeader = "Authorization";
-/** Two factor access token header. */
-const twoFactorAccessTokenHeader = "Fineract-Platform-TFA-Token";
-
 /**
  * Http Request interceptor to set the request headers.
  */
 @Injectable()
 export class AuthenticationInterceptor implements HttpInterceptor {
-  constructor() {}
+
+
+  constructor(private systemService: SystemService) {
+    const subdomain = window.location.hostname.split(".")[0];
+    this.systemService.getTenantInfo(subdomain).subscribe((data) => {
+
+      const tenantId = data.result.tenantIdentifier;
+      localStorage.setItem("Fineract-Platform-TenantId", tenantId);
+      localStorage.setItem("Gateway-TenantId", tenantId);
+      /** Http request options headers. */
+      httpOptions.headers["Fineract-Platform-TenantId"] = localStorage.getItem("Fineract-Platform-TenantId");
+      httpOptionsGateway.headers["Gateway-TenantId"] = localStorage.getItem("Gateway-TenantId");
+      httpOptionsIcGateway.headers["Gateway-TenantId"] = localStorage.getItem("Gateway-TenantId");
+      httpOptionsIcGateway.headers["IC-TenantId"] = "default";
+    });
+  }
 
   /**
    * Intercepts a Http request and sets the request headers.
    */
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-
     if (request.url.includes(environment.GatewayApiUrlPrefix)) {
       request = request.clone({ setHeaders: httpOptionsGateway.headers });
     } else {
-
       if (request.url.includes(environment.IcGatewayApiUrlPrefix)) {
         request = request.clone({ setHeaders: httpOptionsIcGateway.headers });
       } else {
