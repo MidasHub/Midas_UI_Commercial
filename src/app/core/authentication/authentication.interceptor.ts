@@ -20,18 +20,18 @@ const twoFactorAccessTokenHeader = "Fineract-Platform-TFA-Token";
 /** Http request options headers. */
 const httpOptions = {
   headers: {
-    "Fineract-Platform-TenantId": environment.fineractPlatformTenantId,
+    "Fineract-Platform-TenantId": localStorage.getItem("Fineract-Platform-TenantId") ? localStorage.getItem("Fineract-Platform-TenantId") : environment.fineractPlatformTenantId,
   },
 };
 const httpOptionsGateway = {
   headers: {
-    "Gateway-TenantId": environment.GatewayTenantId,
+    "Gateway-TenantId": localStorage.getItem("Gateway-TenantId") ? localStorage.getItem("Gateway-TenantId") : environment.GatewayTenantId,
   },
 };
 
 const httpOptionsIcGateway = {
   headers: {
-    "Gateway-TenantId": environment.GatewayTenantId,
+    "Gateway-TenantId": localStorage.getItem("Gateway-TenantId") ? localStorage.getItem("Gateway-TenantId") : environment.GatewayTenantId,
     "IC-TenantId": "default",
   },
 };

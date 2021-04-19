@@ -7,8 +7,8 @@ const subdomain = window.location.hostname.split(".")[0];
 
 let tenant = "default";
 let billpostenant = "default";
-let defaultbaseURL = "https://training.kiotthe.com";
-let defaultbillposURL = "https://training.kiotthe.com";
+// let defaultbaseURL = "https://training.kiotthe.com";
+// let defaultbillposURL = "https://training.kiotthe.com";
 
 // let tenant = 'hdcredit';
 // let billpostenant = 'hdcredit';
@@ -24,7 +24,12 @@ let defaultbillposURL = "https://training.kiotthe.com";
 let ictenant = "default";
 let defaultIcURL = "https://ic.kiotthe.com";
 // let defaultIcURL = "http://localhost:8088";
-defaultbillposURL = "http://119.82.141.26:8088";
+let defaultbaseURL = "https://api.kiotthe.com";
+let defaultbillposURL = "https://api.kiotthe.com";
+
+// let defaultbaseURL = "https://midas.kiotthe.com";
+// let defaultbillposURL = "https://midas.kiotthe.com";
+
 let apiProvider = "/midas/api";
 const apiVersion = "/v1";
 
