@@ -182,36 +182,16 @@ export class BanksService {
 
   getInfoBinCode(binCode: string): BehaviorSubject<any> {
     const result = new BehaviorSubject(null);
-    if (this.cards) {
-      log.debug("This Card:", this.cards);
-      this.cards?.subscribe((values: any) => {
-        if (values) {
-          log.debug("Value is: ", values);
-          let have = false;
-          for (const v of values) {
-            if (v.binCode == binCode) {
-              have = true;
-              result.next({ ...v, existBin: true });
-              break;
-            }
-          }
-          if (!have) {
-            result.next({ existBin: false });
-          }
-        }
-      });
-    } else {
-      this.getCardInfo(binCode).subscribe((res: any) => {
+    this.getCardInfo(binCode).subscribe((res: any) => {
 
-        if (res?.result?.bankBinCode) {
-          result.next({ ...res.result.bankBinCode, existBin: true });
-        } else {
-          result.next({ ...res, existBin: false });
-        }
+      if (res?.result?.bankBinCode) {
+        result.next({ ...res.result.bankBinCode, existBin: true });
+      } else {
+        result.next({ ...res, existBin: false });
+      }
 
-        this.getData();
-      });
-    }
+      this.getData();
+    });
     return result;
   }
 
