@@ -20,18 +20,18 @@ const twoFactorAccessTokenHeader = "Fineract-Platform-TFA-Token";
 /** Http request options headers. */
 const httpOptions = {
   headers: {
-    "Fineract-Platform-TenantId": localStorage.getItem("Fineract-Platform-TenantId") ? localStorage.getItem("Fineract-Platform-TenantId") : environment.fineractPlatformTenantId,
+    "Fineract-Platform-TenantId": window.localStorage.getItem("Fineract-Platform-TenantId") ? window.localStorage.getItem("Fineract-Platform-TenantId") : environment.fineractPlatformTenantId,
   },
 };
 const httpOptionsGateway = {
   headers: {
-    "Gateway-TenantId": localStorage.getItem("Gateway-TenantId") ? localStorage.getItem("Gateway-TenantId") : environment.GatewayTenantId,
+    "Gateway-TenantId": window.localStorage.getItem("Gateway-TenantId") ? window.localStorage.getItem("Gateway-TenantId") : environment.GatewayTenantId,
   },
 };
 
 const httpOptionsIcGateway = {
   headers: {
-    "Gateway-TenantId": localStorage.getItem("Gateway-TenantId") ? localStorage.getItem("Gateway-TenantId") : environment.GatewayTenantId,
+    "Gateway-TenantId": window.localStorage.getItem("Gateway-TenantId") ? window.localStorage.getItem("Gateway-TenantId") : environment.GatewayTenantId,
     "IC-TenantId": "default",
   },
 };
@@ -47,12 +47,12 @@ export class AuthenticationInterceptor implements HttpInterceptor {
     this.systemService.getTenantInfo(subdomain).subscribe((data) => {
 
       const tenantId = data.result.tenantIdentifier;
-      localStorage.setItem("Fineract-Platform-TenantId", tenantId);
-      localStorage.setItem("Gateway-TenantId", tenantId);
+      window.localStorage.setItem("Fineract-Platform-TenantId", tenantId);
+      window.localStorage.setItem("Gateway-TenantId", tenantId);
       /** Http request options headers. */
-      httpOptions.headers["Fineract-Platform-TenantId"] = localStorage.getItem("Fineract-Platform-TenantId");
-      httpOptionsGateway.headers["Gateway-TenantId"] = localStorage.getItem("Gateway-TenantId");
-      httpOptionsIcGateway.headers["Gateway-TenantId"] = localStorage.getItem("Gateway-TenantId");
+      httpOptions.headers["Fineract-Platform-TenantId"] = window.localStorage.getItem("Fineract-Platform-TenantId");
+      httpOptionsGateway.headers["Gateway-TenantId"] = window.localStorage.getItem("Gateway-TenantId");
+      httpOptionsIcGateway.headers["Gateway-TenantId"] = window.localStorage.getItem("Gateway-TenantId");
       httpOptionsIcGateway.headers["IC-TenantId"] = "default";
     });
   }

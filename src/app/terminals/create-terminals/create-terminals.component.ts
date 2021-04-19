@@ -88,7 +88,7 @@ export class CreateTerminalsComponent implements OnInit {
     private bankService: BanksService,
   ) {
     this.route.data.subscribe((data: { terminalData: any }) => {
-      this.merchants = data.terminalData.result.listMerchant;
+      this.merchants = data.terminalData.result.merchants;
       this.offices = this.commonOffices;
       this.cardTypes = this.commonCardTypes;
       this.banks =  this.commonCardBanks;
