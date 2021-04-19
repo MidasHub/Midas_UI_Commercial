@@ -5,8 +5,10 @@
 
 //** Banner data */
 export const bannerData: BannerData[] = [
-    { office: 5, title: "200" }, 
-    { office: 6, title: "80" }
+    { office: 1, title: "Sở hữu đặc quyền +++ Giải pháp toàn diện" }, 
+    { office: 2, title: "Sở hữu đặc quyền +++ Giải pháp toàn diện" }, 
+    { office: 5, title: "Sở hữu đặc quyền +++ Giải pháp toàn diện" }, 
+    // { office: 6, title: "80" }
 ]
 
 /** Class for Banner Data */
