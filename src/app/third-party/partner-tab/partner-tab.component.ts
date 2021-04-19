@@ -114,14 +114,14 @@ export class PartnerTabComponent implements OnInit {
 
   onChange(value: MatSlideToggleChange, partner : any) {
 
-    partner.status = value.checked ? 'true' : 'false' ;
+    partner.status = value.checked ? 'O' : 'D' ;
 
     const payload = {
       ...  partner
     };
 
     this.thirdPartyService.updatePartnerStatus(payload).subscribe((response: any) => {
-      if (response.result.status === 'success') {
+      if (response.result.status === '200') {
         this.alertServices.alert({
           type: "🎉🎉🎉 Thành công !!!",
           message: "🎉🎉 Xử lý thành công",
