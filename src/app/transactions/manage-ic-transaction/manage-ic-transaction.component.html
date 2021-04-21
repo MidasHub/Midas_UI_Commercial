@@ -28,6 +28,38 @@
           Vui lòng chọn thời gian &nbsp; <i class="fa fa-calendar" style="align-self: center" aria-hidden="true"></i>
         </h3>
       </div>
+
+    </div>
+    <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column" [formGroup]="formFilterPartner">
+      <mat-form-field fxFlex="18%">
+        <mat-label>Đối tác</mat-label>
+        <mat-select formControlName="partnerCode">
+          <mat-option *ngFor="let partner of partnersMapping" [value]="partner.code">
+            {{ partner.desc }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field fxFlex="18%">
+        <mat-label>Ngân hàng</mat-label>
+        <mat-select required formControlName="bankCode">
+          <mat-option *ngFor="let bank of banks" [value]="bank.bankCode">
+            {{ bank.bankName }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field fxFlex="36%">
+        <mat-label>Mã máy</mat-label>
+        <mat-select formControlName="terminalId">
+          <mat-option *ngFor="let terminal of terminals" [value]="terminal.terminalId">
+            {{ terminal.terminalName }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+
+
     </div>
     <div class="container" fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column"></div>
   </mat-card-content>
@@ -77,7 +109,8 @@
       <mat-expansion-panel-header>
         <mat-panel-title> Xem theo </mat-panel-title>
       </mat-expansion-panel-header>
-      <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column" [formGroup]="formFilter">
+
+      <!-- <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column" [formGroup]="formFilter">
         <mat-form-field fxFlex="18%" *midasHasPermission="'ALL_FUNCTIONS'">
           <mat-label>Chi nhánh</mat-label>
           <mat-select formControlName="officeId">
@@ -173,28 +206,27 @@
           <button style="margin: 5px; height: 40px" (click)="exportTransaction()" color="primary" mat-raised-button>
             Export
           </button>
-
           <button style="margin: 5px; height: 40px" (click)="exportTransactionForPartner()" color="primary" mat-raised-button>
             Export Cho đối tác
           </button>
-
         </div>
 
-      </div>
+      </div> -->
     </mat-expansion-panel>
   </mat-accordion>
   <mat-card-content>
     <table mat-table multiTemplateDataRows class="mat-elevation-z8" [dataSource]="dataSource" matSort>
-      <ng-container matColumnDef="productId">
+      <!-- <ng-container matColumnDef="productId">
         <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>Loại giao dịch</th>
         <td mat-cell fxHide fxShow.gt-md *matCellDef="let transaction" style="width: 80px">
           <span class="productId">{{ displayProductId(transaction.productId) }}</span>
         </td>
       </ng-container>
-
+      -->
       <ng-container matColumnDef="txnDate">
         <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>Ngày giao dịch</th>
-        <td mat-cell fxHide fxShow.gt-md style="word-wrap: break-word; width: 150px" *matCellDef="let journalEntry">
+
+        <td mat-cell fxHide fxShow.gt-md style="word-wrap: break-word;" *matCellDef="let journalEntry">
           <span [ngSwitch]="journalEntry.status">
             <img *ngSwitchCase="'C'" src="assets/images/icons/check.svg" />
             <img *ngSwitchCase="'P'" src="assets/images/icons/pending.svg" />
@@ -202,24 +234,23 @@
             <img *ngSwitchDefault src="assets/images/icons/question.svg" />
           </span>
           {{ journalEntry.txnDate | date: "dd-MM-yyyy HH:mm:ss" }}
-          <br />
+          <!-- <br />
           <span class="green_text">{{ journalEntry.trnRefNo }}</span>
           <br />
           <label class="red_text" *ngIf="checkB(journalEntry.type)">
             {{ journalEntry.type }}
-          </label>
+          </label> -->
         </td>
+
       </ng-container>
 
-      <ng-container matColumnDef="officeName">
+      <ng-container matColumnDef="terminalName">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>
-          Người tạo / <br />
+
           Máy Pos
         </th>
         <td mat-cell *matCellDef="let journalEntry" style="word-wrap: break-word; width: 200px">
-          <!-- {{ journalEntry.officeName }} <br /> -->
-          <span class="blue_text">{{ journalEntry.createdByName }} </span><br />
-          <span class="red_text">{{ displayTerminalName(journalEntry.terminalId) }}</span>
+          <span class="red_text">{{ journalEntry.terminalId }}</span>
         </td>
       </ng-container>
 
@@ -227,11 +258,11 @@
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Khách hàng</th>
         <td mat-cell *matCellDef="let journalEntry">
           {{ journalEntry.panHolderName }} <br />
-          <span class="green_text">{{ journalEntry.agencyName == "#" ? "" : journalEntry.agencyName }}</span>
+          <!-- <span class="green_text">{{ journalEntry.agencyName == "#" ? "" : journalEntry.agencyName }}</span> -->
         </td>
       </ng-container>
 
-      <ng-container matColumnDef="panBank">
+      <!-- <ng-container matColumnDef="panBank">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>
           Thẻ /<br />
           Ngân hàng
@@ -240,7 +271,7 @@
           {{ journalEntry.panNumber.replace("XXX-XXX", "X") }} <br />
           <span class="blue_text">({{ journalEntry.panBank }})</span>
         </td>
-      </ng-container>
+      </ng-container> -->
 
       <ng-container matColumnDef="terminalAmount">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Số tiền giao dịch</th>
@@ -261,33 +292,32 @@
         </td>
       </ng-container>
 
-      <ng-container matColumnDef="feeAmount">
-        <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>Phí thu được</th>
+      <ng-container matColumnDef="traceNo">
+        <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>
+          Số hóa đơn
+        </th>
         <td mat-cell fxHide fxShow.gt-md *matCellDef="let journalEntry">
-          <label>{{ journalEntry.feeAmount | money }}</label>
+          <label>{{ journalEntry.traceNo }}</label>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="batchNo">
+        <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>
+          Số lô
+        </th>
+        <td mat-cell fxHide fxShow.gt-md *matCellDef="let journalEntry">
+          <label>{{ journalEntry.batchNo }}</label>
         </td>
       </ng-container>
 
       <ng-container matColumnDef="terminalAmount_feeAmount">
-        <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>Tỉ lệ phí</th>
+        <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>Phí POs</th>
         <td mat-cell fxHide fxShow.gt-md *matCellDef="let journalEntry">
-          {{ journalEntry.terminalAmount_feeAmount | number }}
+          {{ journalEntry.feeAmount | number }}
         </td>
       </ng-container>
 
-      <!-- <ng-container matColumnDef="cogsAmount">
-        <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>SP vốn</th>
-        <td mat-cell fxHide fxShow.gt-md *matCellDef="let journalEntry">{{ journalEntry.cogsAmount | money }}</td>
-      </ng-container> -->
-
-      <ng-container matColumnDef="pnlAmount">
-        <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>PNL</th>
-        <td mat-cell fxHide fxShow.gt-md *matCellDef="let transaction">
-          <span *midasHasPermission="'POS_UPDATE'">{{ transaction.pnlAmount | money }}</span>
-        </td>
-      </ng-container>
-
-      <ng-container matColumnDef="actions" style="width: 25px">
+      <!-- <ng-container matColumnDef="actions" style="width: 25px">
         <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
         <td mat-cell *matCellDef="let transaction">
           <span
@@ -299,18 +329,18 @@
             ><i class="fa fa-ellipsis-v" aria-hidden="true"></i
           ></span>
         </td>
-      </ng-container>
+      </ng-container> -->
       <ng-container matColumnDef="expandedDetail">
         <td mat-cell fxShow fxHide.gt-md *matCellDef="let element" [attr.colspan]="displayedColumns.length">
           <div class="example-element-detail" [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
             <div class="example-element-description" fxLayout="column">
-              <div><span style="font-weight: bold"> Loại giao dịch :</span>&nbsp;{{ element.productId }}</div>
+              <!-- <div><span style="font-weight: bold"> Loại giao dịch :</span>&nbsp;{{ element.productId }}</div> -->
               <div>
                 <span style="font-weight: bold"> Ngày giao dịch :</span>&nbsp; &nbsp;{{
                   element.txnDate | date: "dd-MM-yyyy HH:ss"
                 }}
               </div>
-              <div><span style="font-weight: bold"> Số giao dịch :</span>&nbsp; &nbsp;{{ element.trnRefNo }}</div>
+              <!-- <div><span style="font-weight: bold"> Số giao dịch :</span>&nbsp; &nbsp;{{ element.trnRefNo }}</div> -->
               <div>
                 <span style="font-weight: bold"> Trạng thái:</span>&nbsp; &nbsp;
                 <span [ngSwitch]="element.status">

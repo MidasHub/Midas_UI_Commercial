@@ -34,6 +34,12 @@ export class TerminalsService {
     return this.http.post<any>(`${this.IcGatewayApiUrlPrefix}/pos/get_show_transaction_info_template`, httpParams);
   }
 
+  getTerminalsByAccountBankId(accountBankId: string): Observable<any> {
+    let httpParams = this.commonHttpParams.getCommonHttpParams();
+    httpParams = httpParams.set("accountBankId", accountBankId);
+    return this.http.post<any>(`${this.IcGatewayApiUrlPrefix}/pos/get_list_pos_by_bank_code`, httpParams);
+  }
+
   getListTerminalAvailable(amount: number, transactionType: string): Observable<any> {
     let httpParams = this.commonHttpParams.getCommonHttpParams();
     httpParams = httpParams.set("amountTransaction", amount.toString());

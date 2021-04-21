@@ -39,10 +39,12 @@ export class ApiPrefixInterceptor implements HttpInterceptor {
 
             request = request.clone({url: environment.IcGatewayApiUrl + request.url});
 
-          }else{
-
-            request = request.clone({url: environment.serverUrl + request.url});
-
+          } else {
+            if (request.url.includes('ic-billpos')) {
+              request = request.clone({url: environment.IcGatewayApiUrl + request.url});
+            } else {
+              request = request.clone({url: environment.serverUrl + request.url});
+            }
           }
         }
       } else {

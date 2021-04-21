@@ -246,6 +246,16 @@ export class TransactionService {
     return this.http.post(`${this.GatewayApiUrlPrefix}/transaction/get_list_pos_transaction`, httpParams);
   }
 
+  getTransactionIc(payload: { fromDate: string; toDate: string, terminalId: string }): Observable<any> {
+    let httpParams = this.commonHttpParams.getCommonHttpParams();
+
+    httpParams = httpParams.set("fromDate", payload.fromDate);
+    httpParams = httpParams.set("toDate", payload.toDate);
+    httpParams = httpParams.set("terminalId", payload.terminalId);
+
+    return this.http.post(`/ic-billpos/transaction/get_list_pos_transaction_ic`, httpParams);
+  }
+
   getListRollTermTransactionOpenByUserId(payload: {
     fromDate: string;
     toDate: string;

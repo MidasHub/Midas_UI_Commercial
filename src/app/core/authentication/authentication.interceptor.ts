@@ -29,6 +29,12 @@ const httpOptionsGateway = {
   },
 };
 
+const httpOptionsGatewayBillposIc = {
+  headers: {
+    "Gateway-TenantId": "tiktik",
+  },
+};
+
 const httpOptionsIcGateway = {
   headers: {
     "Gateway-TenantId": window.localStorage.getItem("Gateway-TenantId") ? window.localStorage.getItem("Gateway-TenantId") : environment.GatewayTenantId,
@@ -67,7 +73,13 @@ export class AuthenticationInterceptor implements HttpInterceptor {
       if (request.url.includes(environment.IcGatewayApiUrlPrefix)) {
         request = request.clone({ setHeaders: httpOptionsIcGateway.headers });
       } else {
-        request = request.clone({ setHeaders: httpOptions.headers });
+        if (request.url.includes('ic-billpos')) {
+
+          request = request.clone({ setHeaders: httpOptionsGatewayBillposIc.headers });
+        } else {
+          request = request.clone({ setHeaders: httpOptions.headers });
+
+        }
       }
     }
 

@@ -24,11 +24,12 @@ import { SelectBase } from "../../shared/form-dialog/formfield/model/select-base
 import { FormDialogComponent } from "../../shared/form-dialog/form-dialog.component";
 import { InputBase } from "../../shared/form-dialog/formfield/model/input-base";
 import { TerminalsService } from "app/terminals/terminals.service";
+import { BanksService } from "app/banks/banks.service";
 
 @Component({
-  selector: "midas-manage-transaction",
-  templateUrl: "./manage-transaction.component.html",
-  styleUrls: ["./manage-transaction.component.scss"],
+  selector: "midas-manage-ic-transaction",
+  templateUrl: "./manage-ic-transaction.component.html",
+  styleUrls: ["./manage-ic-transaction.component.scss"],
   animations: [
     trigger("detailExpand", [
       state("collapsed", style({ height: "0px", minHeight: "0" })),
@@ -37,17 +38,17 @@ import { TerminalsService } from "app/terminals/terminals.service";
     ]),
   ],
 })
-export class ManageTransactionComponent implements OnInit {
+export class ManageIcTransactionComponent implements OnInit {
   expandedElement: any;
   displayedColumns: string[] = [
-    "productId",
+    // "productId",
     "txnDate",
-    "officeName",
+    "terminalName",
     "panHolderName",
-    "panBank",
+    // "panBank",
     "terminalAmount",
-    "feeAmount",
-    // "cogsAmount",
+    "traceNo",
+    "batchNo",
     "terminalAmount_feeAmount",
   ]; // pnlAmount
   formDate: FormGroup;
@@ -117,8 +118,10 @@ export class ManageTransactionComponent implements OnInit {
   totalPnlAmount = 0;
   panelOpenState = true;
   filterData: any[];
+  banks: any[];
   partnersMapping: any[];
   today = new Date();
+  commonCardBanks: any[] = this.bankService.documentCardBanks;
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
@@ -134,24 +137,38 @@ export class ManageTransactionComponent implements OnInit {
     private dialog: MatDialog,
     private clientsService: ClientsService,
     private terminalsService: TerminalsService,
+    private bankService: BanksService,
+
   ) {
+    this.banks =  this.commonCardBanks;
     this.formDate = this.formBuilder.group({
       fromDate: [new Date()],
       toDate: [new Date()],
     });
-    this.partnersMapping?.unshift(
+    this.partnersMapping = [];
+    this.partnersMapping.push(
       { code: "", desc: "Tekcompay" },
-      { code: "", desc: "Tất cả" }
+      // { code: "", desc: "Tất cả" }
       );
     this.currentUser = this.authenticationService.getCredentials();
     const { permissions } = this.currentUser;
     const permit_userTeller = permissions.includes("POS_UPDATE");
-    if (permit_userTeller) {
-      this.displayedColumns.push("pnlAmount");
-      this.displayedColumns.push("actions");
-    } else {
-      this.displayedColumns.push("actions");
-    }
+    // if (permit_userTeller) {
+    //   this.displayedColumns.push("pnlAmount");
+    //   this.displayedColumns.push("actions");
+    // } else {
+    //   this.displayedColumns.push("actions");
+    // }
+    this.formFilterPartner = this.formBuilder.group({
+
+      partnerCode: [""],
+      terminalId: [""],
+      traceNo: [""],
+      batchNo: [""],
+      terminalAmount: [""],
+      bankCode: [""],
+    });
+
     this.formFilter = this.formBuilder.group({
       productId: [""],
       status: [""],
@@ -177,9 +194,20 @@ export class ManageTransactionComponent implements OnInit {
         });
       });
     });
-    this.formFilter.valueChanges.subscribe((value) => {
+    this.formFilterPartner.valueChanges.subscribe((value) => {
+
       this.filterTransaction();
     });
+
+    this.formFilterPartner.get('bankCode').valueChanges.subscribe((value) => {
+      this.terminalsService.getTerminalsByAccountBankId(value).subscribe((partner) => {
+
+        this.terminals = partner?.result?.listTerminal;
+        // @ts-ignore
+        this.terminals?.unshift({ terminalId: "", terminalName: "Chọn máy Pos" });
+      });
+    });
+
   }
 
 displayTerminalName(terminalId: string){
@@ -194,7 +222,7 @@ displayTerminalName(terminalId: string){
       this.terminals = partner?.result?.listTerminal;
       // @ts-ignore
       this.partners?.unshift({ code: "", desc: "Tất cả" });
-      this.terminals?.unshift({ terminalId: "", terminalName: "Tất cả" });
+      this.terminals?.unshift({ terminalId: "", terminalName: "Chọn máy Pos" });
     });
 
     this.clientsService.getListUserTeller(this.currentUser.officeId).subscribe((result: any) => {
@@ -250,7 +278,7 @@ displayTerminalName(terminalId: string){
     }
     this.dataSource = [];
     this.isLoading = true;
-    let terminalId = this.formFilter.get("terminalId").value;
+    let terminalId = this.formFilterPartner.get("terminalId").value;
     if (window.localStorage.getItem("Gateway-TenantId") == 'st99'){
       terminalId = terminalId.replace("MIDAS", "");
       this.transactionService.getTransactionIc({ fromDate, toDate, terminalId }).subscribe((result) => {
@@ -259,11 +287,11 @@ displayTerminalName(terminalId: string){
         this.transactionsData = listPosTransaction.map((v: any) => {
           return {
             ...v,
-            terminalAmount_feeAmount: Number(v.feePercentage),
+            // terminalAmount_feeAmount: Number(v.feePercentage),
           };
         });
 
-        // this.filterTransaction();
+        this.filterTransaction();
       });
     } else  {
       this.transactionService.getTransaction({ fromDate, toDate }).subscribe((result) => {
@@ -271,7 +299,7 @@ displayTerminalName(terminalId: string){
         this.transactionsData = result?.result?.listPosTransaction.map((v: any) => {
           return {
             ...v,
-            terminalAmount_feeAmount: Number(v.feePercentage),
+            // terminalAmount_feeAmount: Number(v.feePercentage),
           };
         });
         this.filterTransaction();
@@ -291,25 +319,26 @@ displayTerminalName(terminalId: string){
     const wholesaleChoose = form.wholesaleChoose;
     const RetailsChoose = form.RetailsChoose;
     const keys = Object.keys(form);
-    this.filterData = this.transactionsData?.filter((v) => {
-      for (const key of keys) {
-        if (["wholesaleChoose", "RetailsChoose"].indexOf(key) === -1) {
-          if (form[key]) {
-            if (!v[key]) {
-              return false;
-            }
-            if (!String(v[key]).toUpperCase().includes(String(form[key]).toUpperCase())) {
-              return false;
-            }
-          }
-        }
-      }
-      const check_wholesaleChoose = wholesaleChoose ? v.type.startsWith("B") : false;
-      const check_RetailsChoose = RetailsChoose ? v.type === "cash" || v.type === "rollTerm" : false;
-      if (!check_wholesaleChoose && !check_RetailsChoose) {
-        return false;
-      }
-      return true;
+
+     this.filterData = this.transactionsData?.filter((v) => {
+    //   for (const key of keys) {
+    //     if (["wholesaleChoose", "RetailsChoose"].indexOf(key) === -1) {
+    //       if (form[key]) {
+    //         if (!v[key]) {
+    //           return false;
+    //         }
+    //         if (!String(v[key]).toUpperCase().includes(String(form[key]).toUpperCase())) {
+    //           return false;
+    //         }
+    //       }
+    //     }
+    //   }
+    //   const check_wholesaleChoose = wholesaleChoose ? v.type.startsWith("B") : false;
+    //   const check_RetailsChoose = RetailsChoose ? v.type === "cash" || v.type === "rollTerm" : false;
+    //   if (!check_wholesaleChoose && !check_RetailsChoose) {
+    //     return false;
+    //   }
+       return true;
     });
     this.totalTerminalAmount = this.filterData?.reduce((total: any, num: any) => {
       return total + Math.round(num?.terminalAmount);
