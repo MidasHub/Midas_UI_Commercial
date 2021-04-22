@@ -133,10 +133,7 @@ export class TransactionsTabComponent implements OnInit {
       txnCode: txnCode,
       paymentDetail: paymentDetail,
     };
-    // this.router.navigate([], {
-    //   queryParams: queryParams,
-    //   queryParamsHandling: "merge", // remove to replace all query params by provided
-    // });
+
     this.dataSource = [];
     this.isLoading = true;
 

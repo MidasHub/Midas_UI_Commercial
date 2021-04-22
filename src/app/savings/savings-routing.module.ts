@@ -35,6 +35,7 @@ import { SavingsAccountIcViewResolver } from "./common-resolvers/savings-account
 import { TransactionsIcTabComponent } from "./savings-account-view/transactions-ic-tab/transactions-ic-tab.component";
 import { ExportTransactionsIcComponent } from "./savings-account-view/transactions-ic-tab/export-transactions-ic/export-transactions-ic.component";
 import { IcSavingsAccountActionsResolver } from "./common-resolvers/ic-savings-account-actions.resolver";
+import { SavingsAccountIcTemplateResolver } from "./common-resolvers/savings-account-ic-template.resolver";
 
 /** Savings Routes */
 const routes: Routes = [
@@ -48,6 +49,14 @@ const routes: Routes = [
         component: CreateSavingsAccountComponent,
         resolve: {
           savingsAccountTemplate: SavingsAccountTemplateResolver,
+        },
+      },
+      {
+        path: "createIcAccount",
+        data: { title: extract("Create Ic Savings Account"), breadcrumb: "Create Ic Savings Account" },
+        component: CreateSavingsAccountComponent,
+        resolve: {
+          savingsAccountTemplate: SavingsAccountIcTemplateResolver,
         },
       },
       {
@@ -265,6 +274,7 @@ const routes: Routes = [
     SavingsAccountTransactionTemplateResolver,
     SavingsAccountIcViewResolver,
     IcSavingsAccountActionsResolver,
+    SavingsAccountIcTemplateResolver,
   ],
 })
 export class SavingsRoutingModule {}

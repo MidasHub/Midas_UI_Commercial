@@ -96,6 +96,20 @@ export class SavingsAccountDetailsStepComponent implements OnInit {
 
         const entityId = this.savingsAccountTemplate.clientId || this.savingsAccountTemplate.groupId;
         this.savingsAccountDetailsForm.get('productId').valueChanges.subscribe((productId: string) => {
+          if (this.savingsAccountTemplate.isIcClient){
+            this.savingsService.getSavingsAccountIcTemplate(productId)
+            .subscribe((response: any) => {
+              const template = response.result.clientAccountTemplate;
+              this.savingsAccountProductTemplate.emit(template);
+              this.fieldOfficerData = template.fieldOfficerOptions;
+              if (!this.isFieldOfficerPatched && this.savingsAccountTemplate.fieldOfficerId) {
+                  this.savingsAccountDetailsForm.get('fieldOfficerId').patchValue(this.savingsAccountTemplate.fieldOfficerId);
+                  this.isFieldOfficerPatched = true;
+              } else {
+                  this.savingsAccountDetailsForm.get('fieldOfficerId').patchValue('');
+              }
+          });
+          } else {
             this.savingsService.getSavingsAccountTemplate(entityId, productId, this.savingsAccountTemplate.groupId ? true : false)
                 .subscribe((response: any) => {
                     this.savingsAccountProductTemplate.emit(response);
@@ -107,6 +121,9 @@ export class SavingsAccountDetailsStepComponent implements OnInit {
                         this.savingsAccountDetailsForm.get('fieldOfficerId').patchValue('');
                     }
                 });
+          }
+
+
         });
     }
 

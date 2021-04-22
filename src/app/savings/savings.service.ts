@@ -552,6 +552,27 @@ export class SavingsService {
    * @param entityId Entity Id assosciated with savings account.
    * @returns {Observable<any>} Savings account template.
    */
+   getSavingsAccountIcTemplate( productId?: string): Observable<any> {
+    let httpParams = this.commonHttpParams.getCommonHttpParams();
+    httpParams = productId ? httpParams.set("productId", productId) : httpParams;
+    return this.http.post(`${this.IcGatewayApiUrlPrefix}/client/get_ic_client_account_template`, httpParams);
+  }
+
+  /**
+   * @param entityId Entity Id assosciated with savings account.
+   * @returns {Observable<any>} Savings account template.
+   */
+   createSavingsAccountIc( productId?: string): Observable<any> {
+    let httpParams = this.commonHttpParams.getCommonHttpParams();
+    httpParams = productId ? httpParams.set("productId", productId) : httpParams;
+    return this.http.post(`${this.IcGatewayApiUrlPrefix}/client/create_ic_client_account`, httpParams);
+  }
+
+
+  /**
+   * @param entityId Entity Id assosciated with savings account.
+   * @returns {Observable<any>} Savings account template.
+   */
   getSavingsAccountTemplate(entityId: string, productId?: string, isGroup?: boolean): Observable<any> {
     let httpParams = new HttpParams().set(isGroup ? "groupId" : "clientId", entityId);
     httpParams = productId ? httpParams.set("productId", productId) : httpParams;

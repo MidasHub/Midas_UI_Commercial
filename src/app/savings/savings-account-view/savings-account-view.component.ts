@@ -289,33 +289,8 @@ export class SavingsAccountViewComponent implements OnInit {
             paymentTypeId: typeAdvanceCashes,
           })
           .subscribe((res: any) => {
-            let responseT = res?.result?.resultCommand;
-            if (!responseT) {
-              this.alertService.alert({
-                message: `Internal server error, Vui lòng liên hệ IT support!`,
-                msgClass: "cssDanger",
-                hPosition: "right",
-              });
-            } else {
-              if (responseT.statusCodeValue == 200 && !responseT?.body?.errors) {
-                const message = `Thực hiện thành công!`;
-                this.alertService.alert({ message: message, msgClass: "cssInfo" });
-                this.router.navigate(["../../transactions"], { relativeTo: this.route });
-              } else {
-                let response = res?.result?.resultCommand.body;
-                let errorMessage = response.defaultUserMessage || response.developerMessage;
-                if (response.errors) {
-                  if (response.errors[0]) {
-                    errorMessage = response.errors[0].defaultUserMessage || response.errors[0].developerMessage;
-                  }
-                }
-                this.alertService.alert({
-                  message: `Lỗi: ${errorMessage}, Vui lòng liên hệ IT support!`,
-                  msgClass: "cssDanger",
-                  hPosition: "right",
-                });
-              }
-            }
+            const message = `Thực hiện thành công!`;
+            this.savingsService.handleResponseApiSavingTransaction(res, message, true );
         });
       }
     });
