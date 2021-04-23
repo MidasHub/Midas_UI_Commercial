@@ -126,14 +126,14 @@
         </td>
       </ng-container>
       <ng-container matColumnDef="actions" style="width: 25px">
-        <th mat-header-cell *matHeaderCellDef>Actions</th>
+        <th mat-header-cell *matHeaderCellDef></th>
         <td mat-cell *matCellDef="let transaction">
-          <span
+          <!-- <span
             style="float: right; width: 15px"
             [matMenuTriggerData]="transaction"
             [matMenuTriggerFor]="transactionMenu"
             ><i class="fa fa-ellipsis-v" aria-hidden="true"></i
-          ></span>
+          ></span> -->
         </td>
       </ng-container>
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
@@ -144,7 +144,7 @@
         <button mat-menu-item (click)="showTransactions(transferId, txnId)">
           <i class="fa fa-eye" aria-hidden="true"></i>&nbsp;Chi tiết
         </button>
-        <button mat-menu-item (click)="updateTransaction(transferId, txnId)">
+        <button mat-menu-item (click)="updateTransaction(txnId)">
           <i class="fa fa-pencil-square-o" aria-hidden="true"></i>&nbsp;Sửa giao dịch
         </button>
       </ng-template>

@@ -14,8 +14,8 @@ export class SavingsButtonsConfiguration {
     action: string
   }[];
 
-  constructor(status: string) {
-    this.setOptions(status);
+  constructor(status: string, isIcAccount: boolean) {
+    this.setOptions(status, isIcAccount);
     this.setButtons(status);
   }
 
@@ -88,25 +88,45 @@ export class SavingsButtonsConfiguration {
     }
   }
 
-  setOptions(status: string) {
+  setOptions(status: string, isIcAccount: boolean) {
     switch (status) {
       case 'Active':
-        this.optionArray = [
-          // {
-          //   name: 'Post Interest',
-          //   taskPermissionName: 'POSTINTEREST_SAVINGSACCOUNT'
-          // },
-          // {
-          //   name: 'Add Charge',
-          //   taskPermissionName: 'CREATE_SAVINGSACCOUNTCHARGE'
-          // },
-          {
-            name: 'Close',
-            taskPermissionName: 'CLOSE_SAVINGSACCOUNT',
-            action: 'Close'
-          }
-        ];
-        break;
+        if (isIcAccount){
+          this.optionArray = [
+            // {
+            //   name: 'Post Interest',
+            //   taskPermissionName: 'POSTINTEREST_SAVINGSACCOUNT'
+            // },
+            // {
+            //   name: 'Add Charge',
+            //   taskPermissionName: 'CREATE_SAVINGSACCOUNTCHARGE'
+            // },
+            // {
+            //   name: 'Close',
+            //   taskPermissionName: 'CLOSE_SAVINGSACCOUNT',
+            //   action: 'Close'
+            // }
+          ];
+          break;
+        } else {
+          this.optionArray = [
+            // {
+            //   name: 'Post Interest',
+            //   taskPermissionName: 'POSTINTEREST_SAVINGSACCOUNT'
+            // },
+            // {
+            //   name: 'Add Charge',
+            //   taskPermissionName: 'CREATE_SAVINGSACCOUNTCHARGE'
+            // },
+            {
+              name: 'Close',
+              taskPermissionName: 'CLOSE_SAVINGSACCOUNT',
+              action: 'Close'
+            }
+          ];
+          break;
+        }
+
       // case 'Submitted and pending approval':
       //   this.optionArray = [
       //     {

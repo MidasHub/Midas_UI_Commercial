@@ -45,7 +45,7 @@
     <button  mat-mini-fab [routerLink]="['/checker-inbox-and-tasks/checker-inbox']" matTooltip="Phê duyệt">
         <i class="fa fa-check"></i>
     </button>
-    <button
+    <button *midasHasPermission="'ALL_FUNCTIONS'"
       matTooltip="Quản lý Interchange"
       mat-mini-fab
       routerLink="/clients/ic-client/general"
@@ -53,17 +53,16 @@
     >
       <fa-icon icon="network-wired" size="lg"></fa-icon>
     </button>
-    <div *midasHasPermission="'POS_UPDATE'">
+    <!-- <div *midasHasPermission="'POS_UPDATE'">
       <button mat-mini-fab *midasHasActiveModule="'campaignModule'"
        [matMenuTriggerFor]="MarketingMenu"
         #MarketingMenuTrigger="matMenuTrigger"
         >
 
         <i class="fas fa-ad"></i>
-        <!-- <a matLine>Marketing</a> -->
 
       </button>
-    </div>
+    </div> -->
     <!-- <div fxLayout="row" *midasHasPermission="'ALL_FUNCTIONS'" fxLayoutGap.gt-md="1rem" fxLayoutGap.lt-md="0.75rem">
 
       <button mat-mini-fab color="basic" *midasHasActiveModule="'billModule'" [routerLink]="['/bills']"
@@ -82,15 +81,8 @@
     </div> -->
   </div>
 
-  <!-- <button mat-mini-fab *ngIf="sidenav.opened" (click)="toggleSidenavCollapse()" matTooltip="Toggle Collapse"
-    fxHide.lt-md="true">
-    <fa-icon *ngIf="!sidenavCollapsed" icon="chevron-left"></fa-icon>
-    <fa-icon *ngIf="sidenavCollapsed" icon="chevron-right"></fa-icon>
-  </button> -->
-
   <div fxFlex fxLayout="row" fxLayoutAlign="end around" fxLayoutAlign.lt-md="end center" *ngIf="this.isDesktop"
   fxLayoutGap="0.5rem">
-    <!-- <span ></span> -->
     <div fxLayout="row"  fxLayoutAlign="end center" fxLayoutGap="0.5rem">
      <span style="color:black">{{userFullname }}</span>
       <button mat-mini-fab fxHide.lt-md mat-icon-button [matMenuTriggerFor]="applicationMenu" class="m-r-15"

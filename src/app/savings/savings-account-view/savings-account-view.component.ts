@@ -110,7 +110,7 @@ export class SavingsAccountViewComponent implements OnInit {
     }
     this.productsService.getSavingProduct(savingsProductId).subscribe((data: any) => {
       this.savingProduct = data;
-      if (["FCA0", "ICA0", "ACA0"].indexOf(this.savingProduct.shortName) === -1 && savingsProductId !== 2) {
+      if (["FCA0", "ICA1", "ACA0"].indexOf(this.savingProduct.shortName) === -1 && savingsProductId !== 2) {
         this.buttonConfig.addButton({
           name: "Công nợ khách hàng",
           icon: "fa fa-recycle",
@@ -125,7 +125,7 @@ export class SavingsAccountViewComponent implements OnInit {
           action: "transferToIc",
         });
       }
-      if (["CCA0", "ICA0", "ACA0"].indexOf(this.savingProduct.shortName) === -1) {
+      if (["CCA0", "ICA1", "ACA0"].indexOf(this.savingProduct.shortName) === -1) {
         this.buttonConfig.addButton({
           name: "Quản lý vốn đối tác",
           icon: "fas fa-comments-dollar",
@@ -134,13 +134,17 @@ export class SavingsAccountViewComponent implements OnInit {
         });
       }
 
-      if ("ICA0" === this.savingProduct.shortName) {
+      if ("ICA1" === this.savingProduct.shortName) {
         this.buttonConfig.addButton({
           name: "Điều chuyển vốn",
           icon: "fas fa-exchange-alt",
           taskPermissionName: "POSTINTEREST_SAVINGSACCOUNT",
           action: "transferIc",
         });
+      }
+
+      if ("ICA0" === this.savingProduct.shortName) {
+        this.buttonConfig = new SavingsButtonsConfiguration("NAN", this.isIcAccount);
       }
     });
     roles.map((role: any) => {
@@ -418,7 +422,7 @@ export class SavingsAccountViewComponent implements OnInit {
    */
   setConditionalButtons() {
     const status = this.savingsAccountData.status.value;
-    this.buttonConfig = new SavingsButtonsConfiguration(status);
+    this.buttonConfig = new SavingsButtonsConfiguration(status, this.isIcAccount);
     // if (this.savingsAccountData.clientId || this.savingsAccountData.groupId) {
     //   this.buttonConfig.addButton({
     //     name: this.i18n.getTranslate('Saving_Account_Component.ViewSavingAccount.buttonTransferFunds'),

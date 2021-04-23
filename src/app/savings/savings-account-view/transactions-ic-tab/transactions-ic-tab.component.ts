@@ -266,7 +266,7 @@ export class TransactionsIcTabComponent implements OnInit {
     }
   }
 
-  updateTransaction(transferId: any, txnId: any) {
+  updateTransaction(txnId: any) {
     const transaction = this.transactionsData.find((v: any) => v.txnId === txnId);
     const dialog = this.dialog.open(UpdateSavingAccountComponent, {
       data: transaction,
