@@ -110,7 +110,7 @@ export class EditTerminalsComponent implements OnInit, AfterViewInit {
       'minFeeDefault': this.ItemPos.minFeeDefault,
       'merchantId': this.ItemPosBranch.merchantId,
       'status': this.ItemPos.status == 'A' ? true : false,
-      'costPercentage': this.ItemPos.rate,
+      'costPercentage': this.terminalData.isOwner ? this.ItemPos.rate : this.terminalData.reqTransfer.rate,
       'cogsPercentage': this.ItemPosLimitList ? this.ItemPosLimitList[0]?.cogsPercentage : '',
       'txnRateMin': this.ItemPosLimitList ? this.ItemPosLimitList[0]?.txnRateMin: '',
       'txnRateMax': this.ItemPosLimitList ? this.ItemPosLimitList[0]?.txnRateMax: '',
