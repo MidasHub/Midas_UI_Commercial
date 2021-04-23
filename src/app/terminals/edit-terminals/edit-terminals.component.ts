@@ -9,6 +9,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import {MatSort, Sort} from '@angular/material/sort';
 import { BanksService } from 'app/banks/banks.service';
+import { AlertService } from 'app/core/alert/alert.service';
 export interface PeriodicElements {
   officeId: number;
   officeName: string;
@@ -61,7 +62,7 @@ export class EditTerminalsComponent implements OnInit, AfterViewInit {
     private router: Router,
     private terminalsService: TerminalsService,
     private cdr: ChangeDetectorRef,
-    private dialog: MatDialog,
+    private alertService: AlertService,
     private bankService: BanksService,
     ) {}
 
@@ -246,13 +247,11 @@ export class EditTerminalsComponent implements OnInit, AfterViewInit {
     };
 
     this.terminalsService.update(data).subscribe((response: any) => {
-        if (response.statusCode !== 'success' ) {
-          const openErrorLogDialog = this.dialog.open(ErrorDialogComponent, {
-            width: '600px',
-            data: response.error
-          });
-          openErrorLogDialog.afterClosed().subscribe((resp: any) => {
-            // this.router.navigate(['']);
+        if (response.status != '200' ) {
+          this.alertService.alert({
+            message: `Lỗi xảy ra : ${response.error}`,
+            msgClass: "cssDanger",
+            hPosition: "center",
           });
         } else {
           this.router.navigate(['terminals']);

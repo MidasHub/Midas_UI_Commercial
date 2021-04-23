@@ -8,6 +8,8 @@ import { ErrorDialogComponent } from "app/shared/error-dialog/error-dialog.compo
 import { MatDialog } from "@angular/material/dialog";
 import { Location } from "@angular/common";
 import { BanksService } from "app/banks/banks.service";
+import { AlertService } from "app/core/alert/alert.service";
+import { SavingsService } from "app/savings/savings.service";
 export interface PeriodicElements {
   officeId: number;
   officeName: string;
@@ -73,9 +75,7 @@ export class CreateTerminalsComponent implements OnInit {
     {value:'SI', valueDesc:'khách hàng Sỉ'},
     {value:'LE', valueDesc:'khách hàng Lẻ'}
   ];
-  commonCardBanks: any[] = this.bankService.documentCardBanks;
-  commonCardTypes: any[] = this.bankService.documentCardTypes;
-  commonOffices: any[] = this.bankService.documentOffices;
+
   applyFeeForOffice:boolean = false;
 
   constructor(
@@ -83,16 +83,31 @@ export class CreateTerminalsComponent implements OnInit {
     private formBuilder: FormBuilder,
     private terminalsService: TerminalsService,
     private router: Router,
-    private dialog: MatDialog,
+    private alertService: AlertService,
     private _location: Location,
     private bankService: BanksService,
+    private savingsService: SavingsService,
+
   ) {
+
     this.route.data.subscribe((data: { terminalData: any }) => {
       this.merchants = data.terminalData.result.merchants;
-      this.offices = this.commonOffices;
-      this.cardTypes = this.commonCardTypes;
-      this.banks =  this.commonCardBanks;
     });
+
+    this.savingsService.getListOfficeCommon().subscribe((offices: any) => {
+      this.offices = offices.result.listOffice;
+    });
+
+    this.bankService.gerListBank().subscribe(result => {
+      this.banks = result?.result?.listBank;
+
+    });
+
+    this.bankService.getCardType().subscribe(result => {
+      this.cardTypes = result?.result?.listCardType;
+
+    });
+
   }
 
   ngOnInit(): void {
@@ -182,14 +197,14 @@ export class CreateTerminalsComponent implements OnInit {
     };
 
     this.terminalsService.save(data).subscribe((response: any) => {
-      if (response.statusCode != "success") {
-        const openErrorLogDialog = this.dialog.open(ErrorDialogComponent, {
-          width: "600px",
-          data: response.error,
+      if (response.status != "200") {
+
+        this.alertService.alert({
+          message: `Lỗi xảy ra : ${response.error}`,
+          msgClass: "cssDanger",
+          hPosition: "center",
         });
-        openErrorLogDialog.afterClosed().subscribe((response: any) => {
-          //this.router.navigate(['']);
-        });
+
       } else {
         this.router.navigate(["terminals"]);
       }

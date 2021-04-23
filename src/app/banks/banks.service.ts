@@ -173,6 +173,19 @@ export class BanksService {
     return this.http.post<any>(`${this.GatewayApiUrlPrefix}/card/store_bincode_info`, httpParams);
   }
 
+  getCardType(): Observable<any> {
+    let httpParams = this.commonHttpParams.getCommonHttpParams();
+
+    return this.http.post<any>(`${this.GatewayApiUrlPrefix}/common/get_list_card_type`, httpParams);
+  }
+
+  gerListBank(): Observable<any> {
+    let httpParams = this.commonHttpParams.getCommonHttpParams();
+
+    return this.http.post<any>(`${this.GatewayApiUrlPrefix}/common/get_list_bank`, httpParams);
+  }
+
+
   getCardTypes(): BehaviorSubject<any> {
     if (!this.cardTypes) {
       this.getData();
