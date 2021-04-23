@@ -39,6 +39,14 @@
             <input matInput currencyMask disabled formControlName="limitRemain" type="text" />
           </mat-form-field>
 
+          <mat-form-field fxFlex="98%" *ngIf="transferTerminalForm.contains('rate')">
+            <mat-label>Phí máy</mat-label>
+            <input type="number" step="0.001"  matInput required  formControlName="rate" />
+            <mat-error *ngIf="transferTerminalForm.controls.rate.hasError('required')"
+              >Nhập Phí Pos áp dụng cho đơn vị nhận máy!</mat-error
+            >
+          </mat-form-field>
+
           <mat-form-field *ngIf="transferTerminalForm.contains('officeId')" fxFlex="98%">
             <mat-label>{{ "Terminal_Component.FormTransfer.labelOfficeToTransfer" | translate }}</mat-label>
             <mat-select required formControlName="officeId">

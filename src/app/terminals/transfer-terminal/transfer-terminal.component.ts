@@ -19,6 +19,7 @@ export class TransferTerminalComponent implements OnInit {
   officeName: string;
   terminalName: string;
   terminalId: string;
+  rate: string;
   itemPos: any;
   officeId: number;
   isTF: boolean = true;
@@ -53,10 +54,13 @@ export class TransferTerminalComponent implements OnInit {
     this.transferTerminalForm.get("transferType").valueChanges.subscribe((value) => {
       if (value == 0) {
         this.transferTerminalForm.removeControl("transferTarget");
-        this.transferTerminalForm.addControl("officeId", new FormControl(["", Validators.required]));
+        this.transferTerminalForm.removeControl("rate");
+        this.transferTerminalForm.addControl("officeId", new FormControl("", [Validators.required]));
       } else {
         this.transferTerminalForm.removeControl("officeId");
-        this.transferTerminalForm.addControl("transferTarget", new FormControl(["", Validators.required]));
+        this.transferTerminalForm.addControl("transferTarget", new FormControl("", [Validators.required]));
+        this.transferTerminalForm.addControl("rate", new FormControl("", [Validators.required]));
+
       }
     });
 
@@ -80,7 +84,7 @@ export class TransferTerminalComponent implements OnInit {
 
   submit() {
     if (!this.transferTerminalForm.valid) {
-      return false;
+      return ;
     }
 
     let transferType = this.transferTerminalForm.value.transferType;
@@ -92,10 +96,11 @@ export class TransferTerminalComponent implements OnInit {
         msgClass: "cssBig",
         message: "🚨🚨 Chi nhánh không thay đổi  🚨🚨",
       });
-      return false;
+      return ;
     }
+    const rate = this.transferTerminalForm.get("rate").value ;
 
-    this.terminalsService.transfer(this.terminalId, officeIdSelect, transferType).subscribe((response: any) => {
+    this.terminalsService.transfer(this.terminalId, rate , officeIdSelect, transferType).subscribe((response: any) => {
       if (response.statusCode === "success") {
         this.alertServices.alert({
           type: "🎉🎉🎉 Thành công !!!",

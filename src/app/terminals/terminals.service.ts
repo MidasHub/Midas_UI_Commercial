@@ -103,9 +103,10 @@ export class TerminalsService {
     return this.http.post<any>(`${this.IcGatewayApiUrlPrefix}/pos/update`, httpParams);
   }
 
-  transfer(terminalId: string, transferToTarget: string, transferType: string): Observable<any> {
+  transfer(terminalId: string, rate: string,  transferToTarget: string, transferType: string): Observable<any> {
     let httpParams = this.commonHttpParams.getCommonHttpParams();
     httpParams = httpParams.set("terminalId", terminalId);
+    httpParams = httpParams.set("rate", rate);
     httpParams = httpParams.set("transferType", transferType);
     httpParams = httpParams.set("transferToTarget", transferToTarget);
 
