@@ -1,5 +1,6 @@
 // custom disable input style
 .mat-input-element:disabled,
+.mat-input-element:read-only,
 .mat-form-field-type-mat-native-select.mat-form-field-disabled .mat-form-field-infix::after {
   color: red !important;
   font-weight: bold !important;
@@ -8,3 +9,4 @@
   color: red !important;
   font-weight: bold !important;
 }
+

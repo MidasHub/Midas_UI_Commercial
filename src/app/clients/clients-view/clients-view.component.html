@@ -68,7 +68,7 @@
           </div>
 
           <div fxLayout="row" fxLayoutAlign="space-evenly center" >
-            <p>
+            <p *ngIf="!this.isInterchangeClient">
               <button mat-raised-button (click)="doAction('View Signature')">
                 <i class="fas fa-file-signature"></i> {{ "Client_Component.ViewClient.lblViewSignature" | translate }}
               </button>
@@ -302,6 +302,11 @@
           routerLinkActive #general="routerLinkActive" [active]="general.isActive">
           {{ "Client_Component.ViewClient.lblGeneral" | translate }}
         </a>
+        <a mat-tab-link [routerLink]="['./ic-partner']" [queryParams]="{ typeViewClient: this.typeViewClient }"
+          routerLinkActive #icPartner="routerLinkActive" [active]="icPartner.isActive">
+          Danh sách đối tác
+        </a>
+
       </nav>
 
       <router-outlet></router-outlet>

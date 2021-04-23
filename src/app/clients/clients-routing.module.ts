@@ -54,6 +54,7 @@ import {BalanceAccountClientComponent} from './balance-account-client/balance-ac
 import {BalanceAccountTellerComponent} from './balance-account-teller/balance-account-teller.component';
 import { ClientIcAccountsResolver } from './common-resolvers/client-ic-accounts.resolver';
 import { ClientIcViewResolver } from './common-resolvers/client-ic-view.resolver';
+import { IcPartnerTabComponent } from './clients-view/ic-partner/ic-partner-tab.component';
 
 const routes: Routes = [
   Route.withShell([
@@ -136,6 +137,14 @@ const routes: Routes = [
               resolve: {
                 clientAccountsData: ClientIcAccountsResolver,
               }
+            },
+            {
+              path: 'ic-partner',
+              component: IcPartnerTabComponent,
+              data: {title: extract('ic-partner'), breadcrumb: 'ic-partner', routeParamBreadcrumb: false},
+              // resolve: {
+              //   clientAccountsData: ClientIcAccountsResolver,
+              // }
             }
           ]
         },
