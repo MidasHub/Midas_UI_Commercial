@@ -42,6 +42,12 @@ export class TerminalsService {
     return this.http.post<any>(`${this.IcGatewayApiUrlPrefix}/pos/get_list_terminal_by_office_sl`, httpParams);
   }
 
+  getTerminalsByAccountBankId(accountBankId: string): Observable<any> {
+    let httpParams = this.commonHttpParams.getCommonHttpParams();
+    httpParams = httpParams.set("accountBankId", accountBankId);
+    return this.http.post<any>(`${this.IcGatewayApiUrlPrefix}/pos/get_list_pos_by_bank_code`, httpParams);
+  }
+
   getLimitTerminals(): Observable<any> {
     const currentUser = this.authenticationService.getCredentials();
     const { permissions } = currentUser;
