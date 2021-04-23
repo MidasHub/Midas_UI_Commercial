@@ -59,7 +59,7 @@ export class PartnerDialogComponent implements OnInit {
     };
 
     this.thirdPartyService.savePartner(payload).subscribe((response: any) => {
-      if (response.statusCode === 'success') {
+      if (response.statusCode == '200') {
         this.alertServices.alert({
           type: "🎉🎉🎉 Thành công !!!",
           message: "🎉🎉 Xử lý thành công",

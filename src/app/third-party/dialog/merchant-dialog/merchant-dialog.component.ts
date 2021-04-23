@@ -80,7 +80,7 @@ export class MerchantDialogComponent implements OnInit {
     };
 
     this.thirdPartyService.saveMerchant(payload).subscribe((response: any) => {
-      if (response.statusCode === "success") {
+      if (response.statusCode == "200") {
         this.alertServices.alert({
           type: "🎉🎉🎉 Thành công !!!",
           message: "🎉🎉 Xử lý thành công",
@@ -91,7 +91,7 @@ export class MerchantDialogComponent implements OnInit {
         this.alertServices.alert({
           type: "🚨🚨🚨🚨 Lỗi ",
           msgClass: "cssBig",
-          message: "🚨🚨 Lỗi vui lòng liên hệ IT Support để được hổ trợ 🚨🚨",
+          message: response.error,
         });
         this.dialogRef.close(payload);
       }
