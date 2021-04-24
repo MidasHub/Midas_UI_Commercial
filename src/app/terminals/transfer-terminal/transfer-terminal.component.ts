@@ -98,7 +98,8 @@ export class TransferTerminalComponent implements OnInit {
       });
       return ;
     }
-    const rate = this.transferTerminalForm.get("rate").value ;
+
+    const rate = this.transferTerminalForm.get("rate") ? this.transferTerminalForm.get("rate").value : 0 ;
 
     this.terminalsService.transfer(this.terminalId, rate , officeIdSelect, transferType).subscribe((response: any) => {
       if (response.statusCode === "success") {

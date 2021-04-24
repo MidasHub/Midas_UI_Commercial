@@ -9,6 +9,7 @@ export class TerminalObj {
     minFeeDefault:number;
     owner:boolean;
     ownerName:string;
+    isTransferAble:boolean;
 
     constructor(
         terminalId: string,
@@ -20,6 +21,7 @@ export class TerminalObj {
         updatedDate:string,
         minFeeDefault:number,
         owner:boolean,
+        isTransferAble:boolean,
         ownerName:string) {
             this.terminalId=terminalId;
             this.terminalCode=terminalCode;
@@ -30,6 +32,7 @@ export class TerminalObj {
             this.updatedDate=updatedDate;
             this.minFeeDefault= minFeeDefault;
             this.owner= owner;
+            this.isTransferAble= isTransferAble;
             this.ownerName= ownerName;
     }
   }

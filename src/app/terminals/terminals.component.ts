@@ -43,6 +43,7 @@ export class TerminalsComponent implements OnInit, AfterViewInit {
             i.updatedDate,
             i.minFeeDefault,
             i.owner,
+            i.isTransferAble,
             i.ownerName);
           this.terminalsData.push(terminalObj);
         });
