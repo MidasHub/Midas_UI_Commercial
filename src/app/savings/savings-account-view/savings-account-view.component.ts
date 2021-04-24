@@ -132,6 +132,17 @@ export class SavingsAccountViewComponent implements OnInit {
           taskPermissionName: "POSTINTEREST_SAVINGSACCOUNT",
           action: "advanceCashPartnerTransaction",
         });
+
+      }
+
+      if (["CCA0", "ACA0"].indexOf(this.savingProduct.shortName) === -1) {
+
+        this.buttonConfig.addButton({
+          name: "Chuyển tiền nội bộ",
+          icon: "fas fa-exchange-alt",
+          taskPermissionName: "POSTINTEREST_SAVINGSACCOUNT",
+          action: "transferCrossOfficeCash",
+        });
       }
 
       if ("ICA1" === this.savingProduct.shortName) {
