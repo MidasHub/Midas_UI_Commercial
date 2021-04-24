@@ -1,4 +1,4 @@
-import { filter } from 'rxjs/operators';
+import { filter } from "rxjs/operators";
 import { Component, Inject, OnInit } from "@angular/core";
 import { ClientsService } from "../../../../clients/clients.service";
 import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
@@ -27,7 +27,7 @@ export class TransferCrossOfficeComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: any,
     private formBuilder: FormBuilder,
     private savingsService: SavingsService,
-    private clientsService: ClientsService,
+    private clientsService: ClientsService
   ) {
     this.transferIc = data.transferIc;
     this.transferToIc = data.transferToIc;
@@ -160,14 +160,24 @@ export class TransferCrossOfficeComponent implements OnInit {
 
         this.clientsService.getICClientAccount().subscribe((res) => {
           this.accounts = res.result.clientAccount.savingsAccounts;
-          this.accounts = this.accounts.filter(account => account.status.id == 300);
+          this.accounts = this.accounts.filter((account) => account.status.id == 300);
         });
       }
     }
     this.savingsService.getListOfficeCommon().subscribe((offices: any) => {
       this.offices = offices.result.listOffice;
     });
+
+    this.form.get("office").valueChanges.subscribe((value) => {
+      this.serviceClient.getStaffsByOffice(value).subscribe((result) => {
+        this.staffs = result.result.listStaff;
+      });
+    });
+
+    this.form.get("client").valueChanges.subscribe((value) => {
+      this.savingsService.getListClientSavingStaffByOffice(value).subscribe((result) => {
+        this.accounts = result.result.listClientSavingVault;
+      });
+    });
   }
-
-
 }
