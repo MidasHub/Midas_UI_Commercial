@@ -387,7 +387,7 @@ export class SavingsService {
     const httpOptions = {
       responseType: "blob" as "json",
       headers: new HttpHeaders({
-        "Gateway-TenantId": this.environment.GatewayTenantId,
+        "Gateway-TenantId": window.localStorage.getItem("Gateway-TenantId"),
         "Ic-TenantId": "default",
       }),
     };

@@ -23,11 +23,7 @@ export class TransactionService {
   /**
    * @param {HttpClient} http Http Client to send requests.
    */
-  constructor(private http: HttpClient,
-    private commonHttpParams: CommonHttpParams,
-
-
-    ) {
+  constructor(private http: HttpClient, private commonHttpParams: CommonHttpParams) {
     this.accessToken = JSON.parse(
       sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey)
     );
@@ -35,6 +31,24 @@ export class TransactionService {
     this.IcGatewayApiUrlPrefix = environment.IcGatewayApiUrlPrefix;
 
     this.environment = environment;
+  }
+
+  getTransactionIc(payload: {
+    fromDate: string;
+    toDate: string;
+    terminalId: string;
+    bankCode: string;
+    partner: string;
+  }): Observable<any> {
+    let httpParams = this.commonHttpParams.getCommonHttpParams();
+
+    httpParams = httpParams.set("fromDate", payload.fromDate);
+    httpParams = httpParams.set("toDate", payload.toDate);
+    httpParams = httpParams.set("terminalId", payload.terminalId);
+    httpParams = httpParams.set("bankCode", payload.bankCode);
+    httpParams = httpParams.set("partner", payload.partner);
+
+    return this.http.post(`${this.IcGatewayApiUrlPrefix}/transaction/get_list_pos_transaction_cross`, httpParams);
   }
 
   mappingInvoiceWithTransaction(
@@ -118,14 +132,12 @@ export class TransactionService {
     return this.http.put<any>(`${this.GatewayApiUrlPrefix}/card/update_card_on_due_day`, httpParams);
   }
 
-
   updateCardInfo(updateData: any): Observable<any> {
-
     let httpParams = this.commonHttpParams.getCommonHttpParams();
     httpParams = httpParams.set("expiredDate", `${updateData.dueDay}/${updateData.expiredDateString}`);
     httpParams = httpParams.set("refId", updateData.refid);
-    httpParams = httpParams.set("dueDay", updateData.dueDay );
-    httpParams = httpParams.set("limit", updateData.limit );
+    httpParams = httpParams.set("dueDay", updateData.dueDay);
+    httpParams = httpParams.set("limit", updateData.limit);
     httpParams = httpParams.set("classCard", updateData.classCard);
 
     return this.http.put<any>(`${this.GatewayApiUrlPrefix}/card/update_card_day_info`, httpParams);
@@ -363,7 +375,7 @@ export class TransactionService {
 
     xhr.open("GET", url);
     if (this.environment.isNewBillPos) {
-      xhr.setRequestHeader("Gateway-TenantId", this.environment.GatewayTenantId);
+      xhr.setRequestHeader("Gateway-TenantId", window.localStorage.getItem("Gateway-TenantId"));
     }
     xhr.responseType = "blob";
     xhr.send();
@@ -436,7 +448,7 @@ export class TransactionService {
     const httpOptions = {
       responseType: "blob" as "json",
       headers: new HttpHeaders({
-        "Gateway-TenantId": this.environment.GatewayTenantId,
+        "Gateway-TenantId": window.localStorage.getItem("Gateway-TenantId"),
       }),
     };
 
