@@ -17,6 +17,7 @@ import {FeePaidManagementComponent} from './fee-paid-management/fee-paid-managem
 import {CreateBatchTransactionComponent} from './batch-transactions/create-batch-transaction/create-batch-transaction.component';
 import {MemberInGroupResolver} from './resolver/member-in-group.resolver';
 import {MemberAvailableInGroupResolver} from './resolver/member-available-in-group.resolver';
+import { ManageIcTransactionComponent } from './manage-ic-transaction/manage-ic-transaction.component';
 
 /** Transaction Routes */
 const routes: Routes = [
@@ -29,6 +30,11 @@ const routes: Routes = [
           path: '',
           component: ManageTransactionComponent,
           data: {title: extract('Quản lý giao dịch'), breadcrumb: 'Quản lý giao dịch'}
+        },
+        {
+          path: 'ic',
+          component: ManageIcTransactionComponent,
+          data: {title: extract('Quản lý giao dịch Ic'), breadcrumb: 'Quản lý giao dịch IC'}
         },
         {
           path: 'create',

@@ -42,10 +42,17 @@ export class TerminalsService {
     return this.http.post<any>(`${this.IcGatewayApiUrlPrefix}/pos/get_list_terminal_by_office_sl`, httpParams);
   }
 
-  getTerminalsByAccountBankId(accountBankId: string): Observable<any> {
+  getTerminalsByAccountBankId(accountBankId: string, partnerCode:  string): Observable<any> {
     let httpParams = this.commonHttpParams.getCommonHttpParams();
     httpParams = httpParams.set("accountBankId", accountBankId);
+    httpParams = httpParams.set("partnerExternalId", partnerCode);
     return this.http.post<any>(`${this.IcGatewayApiUrlPrefix}/pos/get_list_pos_by_bank_code`, httpParams);
+  }
+
+  getBanksByPartnerPos(partnerExternalId: string): Observable<any> {
+    let httpParams = this.commonHttpParams.getCommonHttpParams();
+    httpParams = httpParams.set("partnerExternalId", partnerExternalId);
+    return this.http.post<any>(`${this.IcGatewayApiUrlPrefix}/pos/get_list_bank_pos_by_partner`, httpParams);
   }
 
   getLimitTerminals(): Observable<any> {

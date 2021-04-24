@@ -36,6 +36,7 @@ import { CreateSuccessTransactionDialogComponent } from './dialog/create-success
 import { MainboardComponent } from 'app/home/mainboard/mainboard.component';
 import { MakeFeeOnAdvanceComponent } from './dialog/make-fee-on-advance/make-fee-on-advance.component';
 import { ValidCheckTransactionHistoryDialogComponent } from './dialog/valid-check-transaction-history/valid-check-transaction-history-dialog.component';
+import { ManageIcTransactionComponent } from './manage-ic-transaction/manage-ic-transaction.component';
 
 /**
  * Profile Module
@@ -68,6 +69,7 @@ import { ValidCheckTransactionHistoryDialogComponent } from './dialog/valid-chec
     CreateSuccessTransactionDialogComponent,
     MakeFeeOnAdvanceComponent,
     ValidCheckTransactionHistoryDialogComponent,
+    ManageIcTransactionComponent,
   ],
 
   imports: [
