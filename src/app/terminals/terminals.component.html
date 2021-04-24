@@ -22,9 +22,9 @@
 
       <ng-container matColumnDef="terminalNo">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>
-          {{ 'Terminal_Component.tableTerminal.terminalCode'| translate}}
+        ({{ 'Terminal_Component.tableTerminal.terminalNo'| translate}}
           <br />
-          ({{ 'Terminal_Component.tableTerminal.terminalNo'| translate}})
+          (TID)
         </th>
         <td mat-cell *matCellDef="let terminal">
           {{ terminal.terminalId }}
