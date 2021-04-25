@@ -565,4 +565,10 @@ export class ClientsService {
     return this.http.post<any>(`${this.IcGatewayApiUrlPrefix}/client/togglestatusicpartner`, httpParams);
   }
 
+  DeleteICPartner(id:any): Observable<any> {
+    let httpParams = this.commonHttpParams.getCommonHttpParams(); 
+    httpParams = httpParams.set("externalPartnerId", id);
+    return this.http.post<any>(`${this.IcGatewayApiUrlPrefix}/client/deleteicpartner`, httpParams);
+  }
+
 }

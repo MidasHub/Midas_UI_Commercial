@@ -11,7 +11,7 @@ import { ConfirmDialogComponent } from "app/transactions/dialog/coifrm-dialog/co
 import { SavingsService } from "app/savings/savings.service";
 import { AddPartnerDialogComponent } from "./add-partner-dialog/add-partner-dialog.component";
 import {ClientsService} from '../../clients.service';
-
+import { ConfirmationDialogComponent } from 'app/shared/confirmation-dialog/confirmation-dialog.component';
 @Component({
   selector: "midas-ic-partner-tab",
   templateUrl: "./ic-partner-tab.component.html",
@@ -77,5 +77,32 @@ export class IcPartnerTabComponent implements OnInit {
       }
     });
   }
+  deletePartner(  externalId: string){
+    const disburseLoanDialogRef = this.dialog.open(ConfirmationDialogComponent, {
+      data: { heading: 'Xóa Đối Tác', dialogContext: 'Are you sure you want to delete partner' }
+    });
+    disburseLoanDialogRef.afterClosed().subscribe((response: { confirm: any }) => {
+      if (response.confirm) {
+        this.clientsService.DeleteICPartner(externalId).subscribe((data: any) => { 
+            if (data.result.status === "success") {
+              this.alertServices.alert({
+                type: "🎉🎉🎉 Thành công !!!",
+                message: "🎉🎉 Xử lý thành công",
+                msgClass: "cssSuccess",
+              });
+              this.ngOnInit();
+            } else {
+              this.alertServices.alert({
+                type: "🚨🚨🚨🚨 Lỗi ",
+                msgClass: "cssBig",
+                message: data?.result?.message,
+              }); 
+          }
+        });
+      }
+    });
+     
+  }
+  
  
 }
