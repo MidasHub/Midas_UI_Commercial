@@ -161,6 +161,9 @@ export class ManageIcTransactionComponent implements OnInit {
     });
 
     this.formFilterPartner.get("partnerCode").valueChanges.subscribe((value) => {
+      this.formFilterPartner.get("terminalId").setValue("");
+      this.formFilterPartner.get("bankCode").setValue("");
+
       this.terminalsService.getBanksByPartnerPos(value).subscribe((partner) => {
         this.banks = partner?.result?.listBank;
         if ( this.banks?.length > 0) {
@@ -172,6 +175,7 @@ export class ManageIcTransactionComponent implements OnInit {
     });
 
     this.formFilterPartner.get("bankCode").valueChanges.subscribe((value) => {
+      this.formFilterPartner.get("terminalId").setValue("");
       const partnerCode = this.formFilterPartner.get("partnerCode").value ;
       this.terminalsService.getTerminalsByAccountBankId(value, partnerCode).subscribe((partner) => {
         this.terminals = partner?.result?.listTerminal;
