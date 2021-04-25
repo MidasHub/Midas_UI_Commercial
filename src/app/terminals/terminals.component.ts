@@ -44,7 +44,8 @@ export class TerminalsComponent implements OnInit, AfterViewInit {
             i.minFeeDefault,
             i.owner,
             i.isTransferAble,
-            i.ownerName);
+            i.ownerName,
+            i.usingName);
           this.terminalsData.push(terminalObj);
         });
       this.terminalsDataActive = this.terminalsData.filter(function(item) {

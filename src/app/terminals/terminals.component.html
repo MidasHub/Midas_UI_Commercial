@@ -59,13 +59,17 @@
 
       <ng-container matColumnDef="createdBy">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>
-           Đang dùng
+          Người tạo <br />
+          (Đang dùng)
            </th>
         <td mat-cell *matCellDef="let terminal">
           <!-- {{ terminal.createdBy }}
           <br /> -->
           <label style="text-align: center; color: red;">
             {{ terminal.owner ? 'Nội bộ' : terminal.ownerName  }}</label>
+            <br />
+            <label style="text-align: center; color: green;">
+              ({{ terminal.usingName  }})</label>
         </td>
       </ng-container>
 
