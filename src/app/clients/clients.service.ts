@@ -546,4 +546,23 @@ export class ClientsService {
 
     return this.http.post<any>(`${this.GatewayApiUrlPrefix}/savingTransaction/make_fund_for_mgm`, httpParams);
   }
+
+  SearchPartner(partner_name: string): Observable<any> {
+    let httpParams = this.commonHttpParams.getCommonHttpParams(); 
+    httpParams = httpParams.set("sqlSearch", partner_name);
+    return this.http.post<any>(`${this.IcGatewayApiUrlPrefix}/client/search_ic_parner`, httpParams);
+  }
+
+  AddICPartner(partner_name: string): Observable<any> {
+    let httpParams = this.commonHttpParams.getCommonHttpParams(); 
+    httpParams = httpParams.set("externalPartner", partner_name);
+    return this.http.post<any>(`${this.IcGatewayApiUrlPrefix}/client/add_ic_partner`, httpParams);
+  }
+
+  ToggleStatusICPartner(id:any , status: any): Observable<any> {
+    let httpParams = this.commonHttpParams.getCommonHttpParams(); 
+    httpParams = httpParams.set("externalPartnerId", id).set("toggleStatus", status);
+    return this.http.post<any>(`${this.IcGatewayApiUrlPrefix}/client/togglestatusicpartner`, httpParams);
+  }
+
 }

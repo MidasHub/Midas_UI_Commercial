@@ -9,6 +9,8 @@ import { share } from "rxjs/operators";
 import { MatSlideToggleChange } from "@angular/material/slide-toggle";
 import { ConfirmDialogComponent } from "app/transactions/dialog/coifrm-dialog/confirm-dialog.component";
 import { SavingsService } from "app/savings/savings.service";
+import { AddPartnerDialogComponent } from "./add-partner-dialog/add-partner-dialog.component";
+import {ClientsService} from '../../clients.service';
 
 @Component({
   selector: "midas-ic-partner-tab",
@@ -26,7 +28,7 @@ export class IcPartnerTabComponent implements OnInit {
 
   partners: any[];
   dataSource: MatTableDataSource<any>;
-  displayedColumns = ["name", "partner", "rangeDay"];
+  displayedColumns = ["name", "partner", "rangeDay", "Action"];
   merchantsActive: any[];
   merchantsInActive: any[];
   merchantsStatus: any;
@@ -35,7 +37,7 @@ export class IcPartnerTabComponent implements OnInit {
   constructor(
     private alertServices: AlertService,
     private  dialog: MatDialog,
-    private savingsService: SavingsService) {}
+    private savingsService: SavingsService, private clientsService: ClientsService) {}
 
   ngOnInit(): void {
     this.savingsService.getListIcPartner().subscribe((data: any) => {
@@ -46,16 +48,34 @@ export class IcPartnerTabComponent implements OnInit {
     });
   }
 
-  // createMerchant() {
-  //   const data = {
-  //     action: "create",
-  //   };
-  //   const dialog = this.dialog.open(MerchantDialogComponent, { height: "auto", width: "30%", data });
-  //   dialog.afterClosed().subscribe((payload: any) => {
-  //     console.log("payload", payload);
-  //     if (payload) {
-  //       this.ngOnInit();
-  //     }
-  //   });
-  // }
+  addPartner() {
+     
+    const addPartnerDialogRef = this.dialog.open(AddPartnerDialogComponent, { height: "auto", width:"550px"
+    });
+    addPartnerDialogRef.afterClosed().subscribe((payloads: any[]) => {
+       this.ngOnInit();
+    });
+  }
+
+  onToggle(event: MatSlideToggleChange, externalId: string){
+    
+    this.clientsService.ToggleStatusICPartner(externalId, event.checked).subscribe((data: any) => {
+
+        if (data.result.status === "success") {
+          this.alertServices.alert({
+            type: "🎉🎉🎉 Thành công !!!",
+            message: "🎉🎉 Xử lý thành công",
+            msgClass: "cssSuccess",
+          });
+          
+        } else {
+          this.alertServices.alert({
+            type: "🚨🚨🚨🚨 Lỗi ",
+            msgClass: "cssBig",
+            message: data?.result?.message,
+          }); 
+      }
+    });
+  }
+ 
 }
