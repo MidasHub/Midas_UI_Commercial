@@ -13,10 +13,10 @@
         <mat-checkbox labelPosition="after" (change)="changeShowClosedMerchants($event.checked)">Hiển thị đại lý đã đóng</mat-checkbox>
       </div> -->
       <div class="action-button" fxLayoutGap="25px">
-        <!-- <button mat-raised-button title="Quay lại trang đối tác" color="primary" (click)="previousStep()">
+        <button mat-raised-button title="Quay lại trang đối tác" color="primary" (click)="previousStep()">
           <fa-icon icon="backward"></fa-icon>
-        </button> -->
-        <button mat-raised-button color="primary" (click)="addPartner()">
+        </button>
+        <button mat-raised-button color="primary" >
           <fa-icon icon="plus"></fa-icon>&nbsp;&nbsp;Thêm đối tác
         </button>
       </div>
@@ -39,15 +39,36 @@
         <td mat-cell *matCellDef="let partner"> {{partner.createdDate | date: "dd-MM-yyyy HH:mm:ss"}} </td>
       </ng-container>
 
-      <ng-container matColumnDef="Action">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>Thao tác</th>
-        <td mat-cell *matCellDef="let partner">
-           <mat-slide-toggle [checked]="partner.isBad" (change)="onToggle($event, partner.externalId)">
-            Slide to update status
-          </mat-slide-toggle> 
+      <!-- <ng-container matColumnDef="status">
+        <th mat-header-cell *matHeaderCellDef class="fixStatus">  {{ 'Terminal_Component.tableTerminal.status'| translate}} </th>
+        <td mat-cell *matCellDef="let partner" class="fixStatus">
+
+            <section class="example-section">
+              <mat-slide-toggle
+                (change)="onChange($event, partner)"
+                class="example-margin"
+                [checked]="partner.status === '1' ? true : false ">
+              </mat-slide-toggle>
+            </section>
         </td>
-      </ng-container>
- 
+      </ng-container> -->
+
+
+      <!-- <ng-container matColumnDef="action">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+          {{ 'Terminal_Component.labelAction'| translate}}
+
+        </th>
+        <td mat-cell *matCellDef="let partner,let i = index">
+          <button  mat-raised-button matTooltip="Cập nhật thông tin HKD" color="primary" (click)="editMerchant(partner, i)">
+            <fa-icon icon="edit"></fa-icon>
+          </button>
+          <button matTooltip="Xóa bill chưa sử dụng" mat-raised-button color="primary" (click)="inactiveBillsMerchant(partner.name)">
+            <fa-icon icon="ban"></fa-icon>
+          </button>
+
+        </td>
+      </ng-container> -->
 
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let partner; columns: displayedColumns;" class="select-row"></tr>
