@@ -68,6 +68,11 @@ export class TransferTerminalComponent implements OnInit {
       if (data.status === "200") {
         this.itemPos = data.result.limitPos;
         this.offices = this.commonOffices;
+        if (!this.offices){
+          this.bankService.getListOfficeCommon().subscribe((offices: any) => {
+            this.offices = offices.result.listOffice;
+          });
+        }
         this.listPartner = data.result.listPartner;
 
         this.transferTerminalForm.patchValue({

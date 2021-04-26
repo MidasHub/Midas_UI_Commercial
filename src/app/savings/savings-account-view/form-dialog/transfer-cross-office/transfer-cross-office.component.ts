@@ -5,6 +5,7 @@ import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms"
 import { MAT_DIALOG_DATA } from "@angular/material/dialog";
 import { GroupsService } from "app/groups/groups.service";
 import { SavingsService } from "app/savings/savings.service";
+import { BanksService } from "app/banks/banks.service";
 
 @Component({
   // tslint:disable-next-line:component-selector
@@ -26,6 +27,7 @@ export class TransferCrossOfficeComponent implements OnInit {
     private serviceClient: ClientsService,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private formBuilder: FormBuilder,
+    private bankService: BanksService,
     private savingsService: SavingsService,
     private clientsService: ClientsService
   ) {
@@ -164,7 +166,7 @@ export class TransferCrossOfficeComponent implements OnInit {
         });
       }
     }
-    this.savingsService.getListOfficeCommon().subscribe((offices: any) => {
+    this.bankService.getListOfficeCommon().subscribe((offices: any) => {
       this.offices = offices.result.listOffice;
     });
 

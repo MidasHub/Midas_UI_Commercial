@@ -24,6 +24,7 @@ import { SelectBase } from "../../shared/form-dialog/formfield/model/select-base
 import { FormDialogComponent } from "../../shared/form-dialog/form-dialog.component";
 import { InputBase } from "../../shared/form-dialog/formfield/model/input-base";
 import { TerminalsService } from "app/terminals/terminals.service";
+import { BanksService } from "app/banks/banks.service";
 
 @Component({
   selector: "midas-manage-transaction",
@@ -132,6 +133,8 @@ export class ManageTransactionComponent implements OnInit {
     private dialog: MatDialog,
     private clientsService: ClientsService,
     private terminalsService: TerminalsService,
+    private bankService: BanksService,
+
   ) {
     this.formDate = this.formBuilder.group({
       fromDate: [new Date()],
@@ -200,7 +203,7 @@ displayTerminalName(terminalId: string){
       });
     });
 
-    this.savingsService.getListOfficeCommon().subscribe((offices: any) => {
+    this.bankService.getListOfficeCommon().subscribe((offices: any) => {
       this.offices = offices.result.listOffice;
       this.offices?.unshift({ officeId: "", name: "Tất cả" });
       const officeId = this.currentUser.officeId;

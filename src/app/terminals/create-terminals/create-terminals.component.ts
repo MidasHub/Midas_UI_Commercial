@@ -86,7 +86,7 @@ export class CreateTerminalsComponent implements OnInit {
     private alertService: AlertService,
     private _location: Location,
     private bankService: BanksService,
-    private savingsService: SavingsService,
+
 
   ) {
 
@@ -94,7 +94,7 @@ export class CreateTerminalsComponent implements OnInit {
       this.merchants = data.terminalData.result.merchants;
     });
 
-    this.savingsService.getListOfficeCommon().subscribe((offices: any) => {
+    this.bankService.getListOfficeCommon().subscribe((offices: any) => {
       this.offices = offices.result.listOffice;
     });
 
