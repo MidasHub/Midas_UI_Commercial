@@ -61,9 +61,11 @@
 
           <mat-form-field *ngIf="transferTerminalForm.contains('transferTarget')" fxFlex="98%">
             <mat-label>Đối tác chuyển đến</mat-label>
-            <mat-select required formControlName="transferTarget">
-              <mat-option *ngFor="let partner of listPartner" [value]="partner.externalId">
-                {{ partner.displayName }}
+            <mat-select
+            [disabled]="!isChoosePartner"
+            required formControlName="transferTarget">
+              <mat-option  *ngFor="let partner of listPartner" [value]="partner.externalId">
+                {{ showOptionPartnerTransfer(partner.externalId,  partner.displayName) }}
               </mat-option>
             </mat-select>
             <mat-error *ngIf="transferTerminalForm.controls.transferTarget.hasError('required')"
