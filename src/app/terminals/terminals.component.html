@@ -68,8 +68,8 @@
           <label style="text-align: center; color: red;">
             {{ terminal.owner ? 'Nội bộ' : terminal.ownerName  }}</label>
             <br />
-            <label style="text-align: center; color: green;">
-              ({{ terminal.usingName  }})</label>
+            <label *ngIf="terminal.usingName" style="text-align: center; color: green;">
+              ({{ terminal.usingName   }})</label>
         </td>
       </ng-container>
 
