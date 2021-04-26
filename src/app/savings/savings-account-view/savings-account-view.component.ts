@@ -125,6 +125,16 @@ export class SavingsAccountViewComponent implements OnInit {
           action: "transferToIc",
         });
       }
+
+      if (["CCA0"].indexOf(this.savingProduct.shortName) !== -1) {
+        this.buttonConfig.addButton({
+          name: this.i18n.getTranslate("Saving_Account_Component.ViewSavingAccount.buttonTransferFunds"),
+          taskPermissionName: "CREATE_ACCOUNTTRANSFER",
+          icon: "fa fa-paper-plane",
+          action: "Transfer Funds",
+        });
+      }
+
       if (["CCA0", "ICA1", "ACA0"].indexOf(this.savingProduct.shortName) === -1) {
         this.buttonConfig.addButton({
           name: "Quản lý vốn đối tác",
