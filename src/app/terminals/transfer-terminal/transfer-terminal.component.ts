@@ -22,6 +22,7 @@ export class TransferTerminalComponent implements OnInit {
   rate: string;
   itemPos: any;
   isChoosePartner: boolean = true;
+  isTransferBack: boolean = false;
   transferRequest: any;
   officeId: number;
   isTF: boolean = true;
@@ -67,7 +68,7 @@ export class TransferTerminalComponent implements OnInit {
           this.transferTerminalForm.addControl("rate", new FormControl("", [Validators.required]));
 
           this.transferTerminalForm.get("transferTarget").valueChanges.subscribe((value) => {
-            if (this.transferRequest.isTransferBack &&
+            if (this.isTransferBack &&
                this.transferRequest.senderExternalId == value) {
                 this.transferTerminalForm.get("transferType").setValue(2);
             }
@@ -79,7 +80,7 @@ export class TransferTerminalComponent implements OnInit {
             this.transferTerminalForm.removeControl("transferTarget");
             this.transferTerminalForm.addControl(
               "transferTarget",
-              new FormControl(this.transferRequest.isTransferBack ? this.transferRequest.senderExternalId : "", [Validators.required])
+              new FormControl(this.isTransferBack ? this.transferRequest.senderExternalId : "", [Validators.required])
             );
             this.transferTerminalForm.removeControl("rate");
             this.transferTerminalForm.removeControl("officeId");
@@ -94,9 +95,9 @@ export class TransferTerminalComponent implements OnInit {
         this.offices = this.commonOffices;
         this.transferRequest = data.result.requestTransfer;
         if (!this.transferRequest || this.transferRequest.status == 1) {
-          this.transferRequest.isTransferBack = false;
+          this.isTransferBack = false;
         } else {
-          this.transferRequest.isTransferBack = true;
+          this.isTransferBack = true;
           this.transferOptions.push({ code: 2, value: "Trả máy" })
         };
 
@@ -120,7 +121,7 @@ export class TransferTerminalComponent implements OnInit {
   }
 
   showOptionPartnerTransfer(partnerId: string, partnerName: string) {
-    if (!this.transferRequest.isTransferBack) {
+    if (!this.isTransferBack) {
       return partnerName;
     } else {
       if (partnerId == this.transferRequest.senderExternalId) {
