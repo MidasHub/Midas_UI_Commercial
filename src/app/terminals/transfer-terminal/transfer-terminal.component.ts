@@ -21,12 +21,15 @@ export class TransferTerminalComponent implements OnInit {
   terminalId: string;
   rate: string;
   itemPos: any;
+  isChoosePartner: boolean = true;
+  isTransferBack: boolean = false;
+  transferRequest: any;
   officeId: number;
   isTF: boolean = true;
   commonOffices: any[] = this.bankService.documentOffices;
   transferOptions: any[] = [
     { code: 0, value: "Nội bộ" },
-    { code: 1, value: "Liên đối tác" },
+    { code: 1, value: "Liên đối tác" }
   ];
   constructor(
     private formBuilder: FormBuilder,
@@ -57,10 +60,32 @@ export class TransferTerminalComponent implements OnInit {
         this.transferTerminalForm.removeControl("rate");
         this.transferTerminalForm.addControl("officeId", new FormControl("", [Validators.required]));
       } else {
-        this.transferTerminalForm.removeControl("officeId");
-        this.transferTerminalForm.addControl("transferTarget", new FormControl("", [Validators.required]));
-        this.transferTerminalForm.addControl("rate", new FormControl("", [Validators.required]));
+        if (value == 1) {
+          this.isChoosePartner = true;
+          this.transferTerminalForm.removeControl("transferTarget");
+          this.transferTerminalForm.removeControl("officeId");
+          this.transferTerminalForm.addControl("transferTarget", new FormControl("", [Validators.required]));
+          this.transferTerminalForm.addControl("rate", new FormControl("", [Validators.required]));
 
+          this.transferTerminalForm.get("transferTarget").valueChanges.subscribe((value) => {
+            if (this.isTransferBack &&
+               this.transferRequest.senderExternalId == value) {
+                this.transferTerminalForm.get("transferType").setValue(2);
+            }
+          });
+
+        } else {
+          if (value == 2) {
+            this.isChoosePartner = false;
+            this.transferTerminalForm.removeControl("transferTarget");
+            this.transferTerminalForm.addControl(
+              "transferTarget",
+              new FormControl(this.isTransferBack ? this.transferRequest.senderExternalId : "", [Validators.required])
+            );
+            this.transferTerminalForm.removeControl("rate");
+            this.transferTerminalForm.removeControl("officeId");
+          }
+        }
       }
     });
 
@@ -68,6 +93,19 @@ export class TransferTerminalComponent implements OnInit {
       if (data.status === "200") {
         this.itemPos = data.result.limitPos;
         this.offices = this.commonOffices;
+        this.transferRequest = data.result.requestTransfer;
+        if (!this.transferRequest || this.transferRequest.status == 1) {
+          this.isTransferBack = false;
+        } else {
+          this.isTransferBack = true;
+          this.transferOptions.push({ code: 2, value: "Trả máy" })
+        };
+
+        if (!this.offices) {
+          this.bankService.getListOfficeCommon().subscribe((offices: any) => {
+            this.offices = offices.result.listOffice;
+          });
+        }
         this.listPartner = data.result.listPartner;
 
         this.transferTerminalForm.patchValue({
@@ -82,9 +120,21 @@ export class TransferTerminalComponent implements OnInit {
     });
   }
 
+  showOptionPartnerTransfer(partnerId: string, partnerName: string) {
+    if (!this.isTransferBack) {
+      return partnerName;
+    } else {
+      if (partnerId == this.transferRequest.senderExternalId) {
+        return `${partnerName} (Trả máy)`;
+      } else {
+        return `${partnerName}`;
+      }
+    }
+  }
+
   submit() {
     if (!this.transferTerminalForm.valid) {
-      return ;
+      return;
     }
 
     let transferType = this.transferTerminalForm.value.transferType;
@@ -96,12 +146,12 @@ export class TransferTerminalComponent implements OnInit {
         msgClass: "cssBig",
         message: "🚨🚨 Chi nhánh không thay đổi  🚨🚨",
       });
-      return ;
+      return;
     }
 
-    const rate = this.transferTerminalForm.get("rate") ? this.transferTerminalForm.get("rate").value : 0 ;
+    const rate = this.transferTerminalForm.get("rate") ? this.transferTerminalForm.get("rate").value : 0;
 
-    this.terminalsService.transfer(this.terminalId, rate , officeIdSelect, transferType).subscribe((response: any) => {
+    this.terminalsService.transfer(this.terminalId, rate, officeIdSelect, transferType).subscribe((response: any) => {
       if (response.statusCode === "success") {
         this.alertServices.alert({
           type: "🎉🎉🎉 Thành công !!!",

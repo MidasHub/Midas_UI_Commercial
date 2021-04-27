@@ -133,9 +133,12 @@ export class ClientsViewComponent implements OnInit {
    * TODO: Replace by a custom reload component instead of hard-coded back-routing.
    */
   reload() {
-    const url: string = this.router.url;
-    this.router.navigateByUrl(`/clients`, { skipLocationChange: true })
-      .then(() => this.router.navigate([url]));
+    // const url: string = this.router.url;
+    this.router.navigateByUrl(`/`, { skipLocationChange: true })
+      .then(() =>  {
+        // this.router.navigate([url]);
+        this.router.navigate([`/clients/${this.clientViewData.id}/identities`], {queryParams: {typeViewClient: this.typeViewClient}})
+      });
   }
 
   /**
@@ -158,6 +161,7 @@ export class ClientsViewComponent implements OnInit {
    * Unassign's the client's staff.
    */
   private unassignStaff() {
+
     const unAssignStaffDialogRef = this.dialog.open(UnassignStaffDialogComponent);
     unAssignStaffDialogRef.afterClosed().subscribe((response: { confirm: any }) => {
       if (response.confirm) {

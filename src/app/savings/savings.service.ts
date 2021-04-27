@@ -312,17 +312,7 @@ export class SavingsService {
     );
   }
 
-  // getListOfficeCommon() {
-  //   let httpParams = this.commonHttpParams.getCommonHttpParams();
 
-  //   return this.http.post<any>(`${this.GatewayApiUrlPrefix}/common/get_list_office`, httpParams);
-  // }
-
-  getListOfficeCommon() {
-    let httpParams = this.commonHttpParams.getCommonHttpParams();
-
-    return this.http.post<any>(`${this.GatewayApiUrlPrefix}/common/get_list_office`, httpParams);
-  }
 
   getListIcPartner() {
     let httpParams = this.commonHttpParams.getCommonHttpParams();

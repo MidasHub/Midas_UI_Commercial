@@ -2,6 +2,7 @@ import { Component, Inject, OnInit } from "@angular/core";
 import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
 import { SavingsService } from "../../../savings.service";
 import { MAT_DIALOG_DATA } from "@angular/material/dialog";
+import { BanksService } from "app/banks/banks.service";
 
 @Component({
   // tslint:disable-next-line:component-selector
@@ -48,6 +49,7 @@ export class PartnerAdvanceCashComponent implements OnInit {
 
   constructor(
     private savingService: SavingsService,
+    private bankService: BanksService,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private formBuilder: FormBuilder
   ) {}
@@ -84,7 +86,7 @@ export class PartnerAdvanceCashComponent implements OnInit {
         this.filteredPartner = this.filterPartner(value).slice(0, 30);
       });
     });
-    this.savingService.getListOfficeCommon().subscribe((result) => {
+    this.bankService.getListOfficeCommon().subscribe((result) => {
       this.partnerOfficeAdvanceCashes = result?.result?.listOffice;
     });
   }
