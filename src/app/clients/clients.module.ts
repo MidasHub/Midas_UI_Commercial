@@ -66,6 +66,7 @@ import { BalanceAccountTellerComponent } from './balance-account-teller/balance-
 import { AddLimitIdentitiesExtraInfoComponent } from './clients-view/identities-tab/dialog-add-limit-extra-info/dialog-add-limit-extra-info.component';
 import { ClientCustomerComponent } from './client-customer/client-customer.component';
 import { IcPartnerTabComponent } from './clients-view/ic-partner/ic-partner-tab.component';
+import { AddPartnerDialogComponent } from './clients-view/ic-partner/add-partner-dialog/add-partner-dialog.component';
 
 
 /**
@@ -137,6 +138,7 @@ import { IcPartnerTabComponent } from './clients-view/ic-partner/ic-partner-tab.
     BalanceAccountTellerComponent,
     ClientCustomerComponent,
     IcPartnerTabComponent,
+    AddPartnerDialogComponent
   ],
   exports: [
   ],
