@@ -79,7 +79,7 @@ export class IcPartnerTabComponent implements OnInit {
   }
   deletePartner(  externalId: string){
     const disburseLoanDialogRef = this.dialog.open(ConfirmationDialogComponent, {
-      data: { heading: 'Xóa Đối Tác', dialogContext: 'Are you sure you want to delete partner' }
+      data: { heading: 'Xóa Đối Tác', dialogContext: 'Bạn có chắc chắn xóa đối tác ?' }
     });
     disburseLoanDialogRef.afterClosed().subscribe((response: { confirm: any }) => {
       if (response.confirm) {
