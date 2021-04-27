@@ -42,6 +42,9 @@ const log = new Logger("Midas");
 import { DeviceDetectorService } from "ngx-device-detector";
 import { TourService } from "ngx-tour-core";
 
+/** Google Analytics */
+declare const gtag: Function;
+
 /**
  * Main web app component.
  */
@@ -83,6 +86,18 @@ export class WebAppComponent implements OnInit {
     private messagingService: FireBaseMessagingService,
     private deviceService: DeviceDetectorService,
     private tourService:TourService) {
+      /** Activate GoogleAnalytic */
+    this.addGAScript();
+
+    this.router.events.pipe(
+      filter(event => event instanceof NavigationEnd)
+    ).subscribe((event: NavigationEnd) => {
+      /** START : Code to Track Page View  */
+       gtag('event', 'page_view', {
+          page_path: event.urlAfterRedirects
+       })
+      /** END */
+    })
 
   }
 
@@ -223,6 +238,26 @@ export class WebAppComponent implements OnInit {
     // ----- End ngOnInit
   }
 
+  /** Add Google Analytics Script Dynamically */
+  addGAScript() {
+    let gtagScript: HTMLScriptElement = document.createElement('script');
+    gtagScript.async = true;
+    gtagScript.src = 'https://www.googletagmanager.com/gtag/js?id=' + environment.GA_TRACKING_ID;
+    document.head.appendChild(gtagScript);
+    /** Disable automatic page view hit to fix duplicate page view count  **/
+    //gtag('config', environment.GA_TRACKING_ID, { send_page_view: false });
+
+    // register google analytics
+    const gaScript = document.createElement('script');
+    gaScript.innerHTML = `
+      window.dataLayer = window.dataLayer || [];
+      function gtag() { dataLayer.push(arguments); }
+      gtag('js', new Date());
+      gtag('config', '${environment.GA_TRACKING_ID}',{ send_page_view: false });
+    `;
+    document.head.appendChild(gaScript);
+  }
+
   loadDeviceData() {
     this.deviceInfo = this.deviceService.getDeviceInfo();
     if (!sessionStorage.getItem("midasDevice")) {
@@ -312,4 +347,7 @@ export class WebAppComponent implements OnInit {
     console.log('End tour');
     this.tourService.end()
   }
+
+  
+  
 }

@@ -50,7 +50,8 @@ export const environment = {
     messagingSenderId: "83286799966",
     appId: "1:83286799966:web:b46ce89fcbbdf4c0f2e6cf",
     measurementId: "G-866JPR188B"
-  }
+  },
+  GA_TRACKING_ID:"G-KB2X04MJ2S",
 };
 
 // Server URL
