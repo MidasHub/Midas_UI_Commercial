@@ -44,8 +44,8 @@ export class ManageIcTransactionComponent implements OnInit {
     // "productId",
     "txnDate",
     "terminalName",
+    "bankName",
     "panHolderName",
-    // "panBank",
     "terminalAmount",
     "traceNo",
     "batchNo",
@@ -110,8 +110,9 @@ export class ManageIcTransactionComponent implements OnInit {
   ];
   partners: any[];
   staffs: any[];
-  offices: any[];
   terminals: any;
+  terminalsCommon: any;
+  banksCommon: any;
   totalTerminalAmount = 0;
   totalFeeAmount = 0;
   totalCogsAmount = 0;
@@ -138,6 +139,15 @@ export class ManageIcTransactionComponent implements OnInit {
     private terminalsService: TerminalsService,
     private bankService: BanksService
   ) {
+     // get list common data
+     this.terminalsService.getTerminals().subscribe((data: any) => {
+      this.terminalsCommon = data.result.listPos;
+    })
+    this.bankService.gerListBank().subscribe((result) => {
+      this.banksCommon = result?.result?.listBank;
+
+    });
+
     this.formDate = this.formBuilder.group({
       fromDate: [new Date()],
       toDate: [new Date()],
@@ -188,6 +198,9 @@ export class ManageIcTransactionComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
+
+
     this.dataSource = this.transactionsData;
     this.savingsService.getListIcPartner().subscribe((data: any) => {
       this.partners = data?.result?.listClient;
@@ -284,6 +297,16 @@ export class ManageIcTransactionComponent implements OnInit {
 
   displayProductId(type: string) {
     return this.transactionType.find((v) => v.value === type)?.shortName || "N/A";
+  }
+
+  displayBankPos(terminalId: string) {
+    const bankCode = this.terminalsCommon?.find((v: any) => v.terminalId == terminalId)?.bankCode || "N/A";
+    return this.banksCommon?.find((v: any) => v.bankCode == bankCode)?.bankName || bankCode;
+  }
+
+  displayPartnerPos(externalId: string) {
+    const usingExternalId = this.terminalsCommon?.find((v: any) => v.terminalId == externalId)?.usingName || "N/A";
+    return usingExternalId ;
   }
 
   menuOpened() {
