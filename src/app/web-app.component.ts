@@ -93,9 +93,11 @@ export class WebAppComponent implements OnInit {
       filter(event => event instanceof NavigationEnd)
     ).subscribe((event: NavigationEnd) => {
       /** START : Code to Track Page View  */
-       gtag('event', 'page_view', {
-          page_path: event.urlAfterRedirects
-       })
+      log.info('GA: ',event.urlAfterRedirects);
+      gtag('event', 'page_view_' + event.urlAfterRedirects.replace('/','#'), {page_path: event.urlAfterRedirects})
+      //gtag('config', environment.GA_TRACKING_ID, {'page_path': event.urlAfterRedirects});
+      /** Multi GA testing */
+      //gtag('config', environment.firebase.measurementId, {'page_path': event.urlAfterRedirects});
       /** END */
     })
 
@@ -240,12 +242,11 @@ export class WebAppComponent implements OnInit {
 
   /** Add Google Analytics Script Dynamically */
   addGAScript() {
-    let gtagScript: HTMLScriptElement = document.createElement('script');
-    gtagScript.async = true;
-    gtagScript.src = 'https://www.googletagmanager.com/gtag/js?id=' + environment.GA_TRACKING_ID;
-    document.head.appendChild(gtagScript);
-    /** Disable automatic page view hit to fix duplicate page view count  **/
-    //gtag('config', environment.GA_TRACKING_ID, { send_page_view: false });
+    // register google tag manager
+    const gTagManagerScript = document.createElement('script');
+    gTagManagerScript.async = true;
+    gTagManagerScript.src = `https://www.googletagmanager.com/gtag/js?id=${environment.GA_TRACKING_ID}`;
+    document.head.appendChild(gTagManagerScript);
 
     // register google analytics
     const gaScript = document.createElement('script');
@@ -253,7 +254,8 @@ export class WebAppComponent implements OnInit {
       window.dataLayer = window.dataLayer || [];
       function gtag() { dataLayer.push(arguments); }
       gtag('js', new Date());
-      gtag('config', '${environment.GA_TRACKING_ID}',{ send_page_view: false });
+      gtag('config', '${environment.GA_TRACKING_ID}');
+      gtag('config', '${environment.firebase.measurementId}', {'page_path': event.urlAfterRedirects});
     `;
     document.head.appendChild(gaScript);
   }
