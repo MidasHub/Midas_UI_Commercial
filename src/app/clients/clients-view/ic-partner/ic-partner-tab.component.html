@@ -42,9 +42,12 @@
       <ng-container matColumnDef="Action">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Thao tác</th>
         <td mat-cell *matCellDef="let partner">
-           <mat-slide-toggle [checked]="partner.isBad" (change)="onToggle($event, partner.externalId)">
+           <!-- <mat-slide-toggle [checked]="partner.isBad" (change)="onToggle($event, partner.externalId)">
             Slide to update status
-          </mat-slide-toggle>
+          </mat-slide-toggle>  -->
+          <button mat-raised-button color="primary" (click)="deletePartner(partner.externalId)">
+            <fa-icon icon="trash-alt"></fa-icon> &nbsp;Xóa
+          </button>
         </td>
       </ng-container>
 

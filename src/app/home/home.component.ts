@@ -78,7 +78,7 @@ export class HomeComponent implements OnInit {
   ngOnInit() {
     const credentials = this.authenticationService.getCredentials();
 
-    this.childBannerData.userName = split(credentials.staffDisplayName,',')[1].trim();
+    this.childBannerData.userName = split("credentials.staffDisplayName",',')[1].trim();
     
 
     bannerData.some(d => {
