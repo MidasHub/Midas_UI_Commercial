@@ -50,8 +50,8 @@ export class CreateTerminalsComponent implements OnInit {
   displayedColumns: string[] = [
     "Office",
     "CardType",
-    "FeePOS",
     "FeeCost",
+    "FeePOS",
     "FeeMin",
     "FeeMax",
     "MaxLimitAmountTransaction",
@@ -174,7 +174,6 @@ export class CreateTerminalsComponent implements OnInit {
       });
     });
     this.dataSource.data = this.posLimits;
-    //this.cdr.detectChanges();
     this.dataSource.sort = this.sort;
   }
 
