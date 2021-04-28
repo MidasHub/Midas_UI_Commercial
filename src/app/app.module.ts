@@ -82,7 +82,8 @@ import { AsyncPipe } from '../../node_modules/@angular/common';
 /**Tour guide for self study */
 import { TourMatMenuModule } from 'ngx-tour-md-menu';
 
-
+/** Google Analytics  */
+import {GoogleAnalyticsService} from './firebase/google-analytics.service';
 
 
 /**
@@ -146,7 +147,9 @@ import { TourMatMenuModule } from 'ngx-tour-md-menu';
       provide: LOCALE_ID,
       useValue: 'vi'
     },
-    FireBaseMessagingService,AsyncPipe
+    FireBaseMessagingService,
+    GoogleAnalyticsService,
+    AsyncPipe
   ],
   bootstrap: [WebAppComponent]
 })

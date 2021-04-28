@@ -85,17 +85,19 @@ export class WebAppComponent implements OnInit {
     private bankService: BanksService,
     private messagingService: FireBaseMessagingService,
     private deviceService: DeviceDetectorService,
-    private tourService:TourService) {
-      /** Activate GoogleAnalytic */
+    private tourService: TourService) {
+    /** Activate GoogleAnalytic */
     this.addGAScript();
 
     this.router.events.pipe(
       filter(event => event instanceof NavigationEnd)
     ).subscribe((event: NavigationEnd) => {
       /** START : Code to Track Page View  */
-       gtag('event', 'page_view', {
-          page_path: event.urlAfterRedirects
-       })
+      log.info('GA: ', event.urlAfterRedirects);
+      gtag('event', 'page_view_'+window.location.hostname + event.urlAfterRedirects.replace('/', '#'), { page_path: event.urlAfterRedirects })
+      //gtag('config', environment.GA_TRACKING_ID, {'page_path': event.urlAfterRedirects});
+      /** Multi GA testing */
+      //gtag('config', environment.firebase.measurementId, {'page_path': event.urlAfterRedirects});
       /** END */
     })
 
@@ -123,7 +125,8 @@ export class WebAppComponent implements OnInit {
     if (environment.production) {
       Logger.enableProductionMode();
     }
-    log.debug("init");
+    log.debug("init in Dev Env: ", environment.production);
+    log.debug("path:",window.location.hostname);
 
     // Setup translations
     this.i18nService.init(environment.defaultLanguage, environment.supportedLanguages);
@@ -198,31 +201,33 @@ export class WebAppComponent implements OnInit {
       this.settingsService.setDateFormat("dd/MM/yyyy");
     }
 
-    if (!sessionStorage.getItem("midasServers")) {
-      this.settingsService.setServers([
-        "https://staging.kiotthe.com",
-        "https://training.kiotthe.com",
-        "https://midas.kiotthe.com",
-        "https://localhost:9443",
-        "https://ic.kiotthe.com",
-        "https://hdcredit.kiotthe.com",
-        "https://localhost:7443",
-      ]);
+    /** check if not in Production will do the following code */
+    if (!environment.production) {
+      if (!sessionStorage.getItem("midasServers")) {
+        this.settingsService.setServers([
+          "https://staging.kiotthe.com",
+          "https://training.kiotthe.com",
+          "https://midas.kiotthe.com",
+          "https://localhost:9443",
+          "https://ic.kiotthe.com",
+          "https://hdcredit.kiotthe.com",
+          "https://localhost:7443",
+        ]);
+      }
+
+      if (!sessionStorage.getItem("midasBillposServers")) {
+        this.settingsService.setBillposServers([
+          "https://staging.kiotthe.com",
+          "https://training.kiotthe.com",
+          "https://midas.kiotthe.com",
+          "https://hdcredit.kiotthe.com",
+          "http://localhost:8088",
+          "http://119.82.141.26:8088",
+          "http://localhost:8087",
+
+        ]);
+      }
     }
-
-    if (!sessionStorage.getItem("midasBillposServers")) {
-      this.settingsService.setBillposServers([
-        "https://staging.kiotthe.com",
-        "https://training.kiotthe.com",
-        "https://midas.kiotthe.com",
-        "https://hdcredit.kiotthe.com",
-        "http://localhost:8088",
-        "http://119.82.141.26:8088",
-        "http://localhost:8087",
-
-      ]);
-    }
-
     // load card and bank data
     this.bankService.bankCardDataInit();
 
@@ -240,12 +245,11 @@ export class WebAppComponent implements OnInit {
 
   /** Add Google Analytics Script Dynamically */
   addGAScript() {
-    let gtagScript: HTMLScriptElement = document.createElement('script');
-    gtagScript.async = true;
-    gtagScript.src = 'https://www.googletagmanager.com/gtag/js?id=' + environment.GA_TRACKING_ID;
-    document.head.appendChild(gtagScript);
-    /** Disable automatic page view hit to fix duplicate page view count  **/
-    //gtag('config', environment.GA_TRACKING_ID, { send_page_view: false });
+    // register google tag manager
+    const gTagManagerScript = document.createElement('script');
+    gTagManagerScript.async = true;
+    gTagManagerScript.src = `https://www.googletagmanager.com/gtag/js?id=${environment.GA_TRACKING_ID}`;
+    document.head.appendChild(gTagManagerScript);
 
     // register google analytics
     const gaScript = document.createElement('script');
@@ -253,7 +257,8 @@ export class WebAppComponent implements OnInit {
       window.dataLayer = window.dataLayer || [];
       function gtag() { dataLayer.push(arguments); }
       gtag('js', new Date());
-      gtag('config', '${environment.GA_TRACKING_ID}',{ send_page_view: false });
+      gtag('config', '${environment.GA_TRACKING_ID}');
+      gtag('config', '${environment.firebase.measurementId}', {'page_path': event.urlAfterRedirects});
     `;
     document.head.appendChild(gaScript);
   }
@@ -343,11 +348,11 @@ export class WebAppComponent implements OnInit {
   }
 
   /**End Tour */
-  endTour(){
+  endTour() {
     console.log('End tour');
     this.tourService.end()
   }
 
-  
-  
+
+
 }
