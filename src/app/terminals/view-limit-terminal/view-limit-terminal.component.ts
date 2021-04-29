@@ -42,10 +42,14 @@ export class ViewLimitTerminalComponent implements OnInit {
   ) {
     this.route.data.subscribe((data: { terminalData: any }) => {
       this.dataSource = data?.terminalData?.result?.listLimitPos;
-      this.offices = this.commonOffices;
-      this.dataSource.forEach((data: any) => {
-        data.officeName = this.showOfficeName(data.officeId);
-      })
+
+      this.bankService.getListOfficeCommon().subscribe((offices: any) => {
+        this.offices = offices.result.listOffice;
+        this.dataSource?.forEach((data: any) => {
+          data.officeName = this.showOfficeName(data.officeId);
+        })
+      });
+
       this.terminalFilter = this.dataSource;
       this.loadData();
 
