@@ -21,7 +21,7 @@ export class TerminalsComponent implements OnInit, AfterViewInit {
   viewTerminals = new FormControl('viewTerminals');
   displayedColumns =  ['terminalNo', 'terminalName',  'status', 'createdBy','createdDate','updatedDate','action'];
 
-
+  searchQuery: string;
   dataSource = new MatTableDataSource<TerminalObj>();
   dataSourceDefault:any;
   terminalsData: TerminalObj[] = [];
@@ -30,7 +30,7 @@ export class TerminalsComponent implements OnInit, AfterViewInit {
   constructor(private terminalsService: TerminalsService,public dialog: MatDialog) {}
 
   ngOnInit(): void {
-
+    this.terminalsData = [];
     this.terminalsService.getTerminals().subscribe((data: any) => {
       data.result.listPos.forEach((i: any) =>{
           let terminalObj = new TerminalObj(
@@ -77,14 +77,15 @@ export class TerminalsComponent implements OnInit, AfterViewInit {
     }
 
   }
-  addTransferDialogByTransactionId(terminalId:string,terminalName:string){
+  addTransferDialogByTransactionId(terminalId:string,terminalName:string, searchQuery: string){
     const data = {
       terminalId: terminalId,
       terminalName: terminalName,
     };
     const dialog = this.dialog.open(TransferTerminalComponent, { height: "auto", width: "50%", data });
     dialog.afterClosed().subscribe((response: any) => {
-
+      this.ngOnInit();
+      this.applyFilter(searchQuery);
     });
   }
 
