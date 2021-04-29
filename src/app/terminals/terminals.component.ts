@@ -82,7 +82,7 @@ export class TerminalsComponent implements OnInit, AfterViewInit {
       terminalId: terminalId,
       terminalName: terminalName,
     };
-    const dialog = this.dialog.open(TransferTerminalComponent, { height: "auto", width: "30%", data });
+    const dialog = this.dialog.open(TransferTerminalComponent, { height: "auto", width: "50%", data });
     dialog.afterClosed().subscribe((response: any) => {
 
     });

@@ -52,8 +52,8 @@ export class EditTerminalsComponent implements OnInit, AfterViewInit {
     "FeeCOGS",
     "FeeMin",
     "FeeMax",
-    "MaxLimitAmountTransaction",
-    "LevelTransactionCard",
+    // "MaxLimitAmountTransaction",
+    // "LevelTransactionCard",
   ];
 
   typeOfTransactions: typeOfTransaction[] = [
@@ -132,7 +132,7 @@ export class EditTerminalsComponent implements OnInit, AfterViewInit {
       minFeeDefault: this.ItemPos.minFeeDefault,
       merchantId: this.ItemPosBranch.merchantId,
       status: this.ItemPos.status == "A" ? true : false,
-      costPercentage: this.terminalData.isOwner ? this.ItemPos.rate : this.terminalData.reqTransfer.rate,
+      costPercentage: "",
       cogsPercentage: this.ItemPosLimitList ? this.ItemPosLimitList[0]?.cogsPercentage : "",
       txnRateMin: this.ItemPosLimitList ? this.ItemPosLimitList[0]?.txnRateMin : "",
       txnRateMax: this.ItemPosLimitList ? this.ItemPosLimitList[0]?.txnRateMax : "",
@@ -171,7 +171,7 @@ export class EditTerminalsComponent implements OnInit, AfterViewInit {
     this.dataSource.sort = this.sort;
   }
   setDefaultFeeSettingPos() {
-    const costPercentage = this.editTerminalForm.value.costPercentage;
+    // const costPercentage = this.editTerminalForm.value.costPercentage;
     const cogsPercentage = this.editTerminalForm.value.cogsPercentage;
     const txnRateMin = this.editTerminalForm.value.txnRateMin;
     const txnRateMax = this.editTerminalForm.value.txnRateMax;
@@ -181,12 +181,24 @@ export class EditTerminalsComponent implements OnInit, AfterViewInit {
     this.posLimits = [];
     this.offices.forEach((office: any) => {
       this.cardTypes.forEach((card: any) => {
+        let rateCardType = this.terminalData.reqTransfer.listDefaultRate.filter((rateCard: any) => {
+          return rateCard.cardType == card.code
+        })
+        if (rateCardType.length == 0) {
+          this.alertService.alert({
+            message: `Lỗi truy xuất phí gốc từ đối tác`,
+            msgClass: "cssDanger",
+            hPosition: "center",
+          });
+          return;
+        }
+
         const limit = {
           officeId: office.officeId,
           officeName: office.name,
           cardCode: card.code,
           cardDescription: card.description,
-          costPercentage: costPercentage,
+          costPercentage: rateCardType[0].rate,
           cogsPercentage: cogsPercentage,
           txnRateMin: txnRateMin,
           txnRateMax: txnRateMax,
@@ -217,12 +229,23 @@ export class EditTerminalsComponent implements OnInit, AfterViewInit {
 
     const office = this.offices?.find((i: any) => i.officeId === officeId);
     this.cardTypes?.forEach((card: any) => {
+      let rateCardType = this.terminalData.reqTransfer.listDefaultRate.filter((rateCard: any) => {
+        return rateCard.cardType == card.code
+      })
+      if (rateCardType.length == 0) {
+        this.alertService.alert({
+          message: `Lỗi truy xuất phí gốc từ đối tác`,
+          msgClass: "cssDanger",
+          hPosition: "center",
+        });
+        return;
+      }
       const limit = {
         officeId: office.officeId,
         officeName: office.name,
         cardCode: card.code,
         cardDescription: card.description,
-        costPercentage: costPercentage,
+        costPercentage: rateCardType[0].rate,
         cogsPercentage: cogsPercentage,
         txnRateMin: txnRateMin,
         txnRateMax: txnRateMax,

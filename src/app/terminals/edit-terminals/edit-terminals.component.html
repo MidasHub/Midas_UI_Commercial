@@ -175,7 +175,7 @@
 
         <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
 
-          <mat-form-field *ngIf="editTerminalForm.contains('costPercentage')" fxFlex="10%">
+          <!-- <mat-form-field *ngIf="editTerminalForm.contains('costPercentage')" fxFlex="10%">
             <mat-label>{{ "Terminal_Component.FormTerminal.labelCostPercentage" | translate }}</mat-label>
             <input matInput required [readonly]="!isOwner" formControlName="costPercentage" type="number" matTooltip="Phí phải trả cho Đối tác máy"/>
             <mat-error
@@ -186,7 +186,7 @@
               *ngIf="editTerminalForm.controls.costPercentage.hasError('max')"
               [innerHTML]="'Terminal_Component.FormTerminal.labelMsgOutOffMax' | translate"
             ></mat-error>
-          </mat-form-field>
+          </mat-form-field> -->
 
           <mat-form-field *ngIf="editTerminalForm.contains('cogsPercentage')" fxFlex="10%">
             <mat-label>{{ "Terminal_Component.FormTerminal.labelCogsPercentage" | translate }}</mat-label>
@@ -426,7 +426,7 @@
               </td>
             </ng-container>
 
-            <ng-container matColumnDef="MaxLimitAmountTransaction">
+            <!-- <ng-container matColumnDef="MaxLimitAmountTransaction">
               <th mat-header-cell *matHeaderCellDef>
                 {{ "Terminal_Component.FormTerminal.tableFee.MaxLimitAmountTransaction" | translate }} ({{
                   "labelCurrency" | translate
@@ -465,7 +465,7 @@
                   />
                 </mat-form-field>
               </td>
-            </ng-container>
+            </ng-container> -->
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
             <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
           </table>
