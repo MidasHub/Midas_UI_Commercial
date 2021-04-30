@@ -4,6 +4,9 @@ import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
 import { TerminalsService } from "../terminals.service";
 import { AlertService } from "app/core/alert/alert.service";
 import { BanksService } from "app/banks/banks.service";
+import { MatTableDataSource } from "@angular/material/table";
+import { ReturnStatement } from "@angular/compiler";
+import { forEach } from "lodash";
 
 @Component({
   selector: "midas-transfer-terminal",
@@ -26,10 +29,19 @@ export class TransferTerminalComponent implements OnInit {
   transferRequest: any;
   officeId: number;
   isTF: boolean = true;
+  cardTypes: any[] = [];
+  listRateDefault: any[] = [];
+  dataSourceRateDefault :any;
   commonOffices: any[] = this.bankService.documentOffices;
   transferOptions: any[] = [
     { code: 0, value: "Nội bộ" },
     { code: 1, value: "Liên đối tác" }
+  ];
+  displayedColumns: string[] = [
+
+    "CardType",
+    "FeeCost",
+
   ];
   constructor(
     private formBuilder: FormBuilder,
@@ -41,6 +53,25 @@ export class TransferTerminalComponent implements OnInit {
   ) {
     this.terminalId = data.terminalId;
     this.terminalName = data.terminalName;
+    this.dataSourceRateDefault = new MatTableDataSource();
+    this.bankService.getCardType().subscribe((result) => {
+      this.cardTypes = result?.result?.listCardType;
+
+      this.listRateDefault = [];
+      this.cardTypes.forEach((card: any) => {
+        let limit = {
+
+          cardCode: card.code,
+          cardDescription: card.description,
+          costPercentage: "",
+
+        };
+        this.listRateDefault.push(limit);
+      });
+    this.dataSourceRateDefault.data = this.listRateDefault;
+
+    });
+
   }
 
   ngOnInit() {
@@ -65,7 +96,7 @@ export class TransferTerminalComponent implements OnInit {
           this.transferTerminalForm.removeControl("transferTarget");
           this.transferTerminalForm.removeControl("officeId");
           this.transferTerminalForm.addControl("transferTarget", new FormControl("", [Validators.required]));
-          this.transferTerminalForm.addControl("rate", new FormControl("", [Validators.required]));
+          this.transferTerminalForm.addControl("rate", new FormControl("",));
 
           this.transferTerminalForm.get("transferTarget").valueChanges.subscribe((value) => {
             if (this.isTransferBack &&
@@ -133,6 +164,7 @@ export class TransferTerminalComponent implements OnInit {
   }
 
   submit() {
+
     if (!this.transferTerminalForm.valid) {
       return;
     }
@@ -143,13 +175,33 @@ export class TransferTerminalComponent implements OnInit {
     if (this.itemPos.officeId === officeIdSelect && transferType == 0) {
       this.alertServices.alert({
         type: "🚨🚨🚨🚨 Lỗi ",
-        msgClass: "cssBig",
+        msgClass: "cssDanger",
         message: "🚨🚨 Chi nhánh không thay đổi  🚨🚨",
       });
       return;
     }
 
-    const rate = this.transferTerminalForm.get("rate") ? this.transferTerminalForm.get("rate").value : 0;
+    const rates = this.listRateDefault;
+    let isValidRateSetup = true;
+    // check valid list default rate on case transfer to partner global
+    if (transferType == 1){
+     for (let i = 0; i < rates.length; i++) {
+       let rate = rates[i];
+      if (!rate.costPercentage || rate.costPercentage < 0) {
+        this.alertServices.alert({
+          type: "🚨🚨🚨🚨 Lỗi ",
+          msgClass: "cssDanger",
+          message: `🚨🚨🚨🚨 Lỗi cài đặt phí cho loại thẻ ${rate.cardDescription}`,
+        });
+        isValidRateSetup = false;
+        return;
+      }
+     }
+    }
+    if (!isValidRateSetup){
+      return;
+    }
+    const rate = this.transferTerminalForm.get("rate") ? JSON.stringify(rates) : "";
 
     this.terminalsService.transfer(this.terminalId, rate, officeIdSelect, transferType).subscribe((response: any) => {
       if (response.statusCode === "success") {
@@ -162,7 +214,7 @@ export class TransferTerminalComponent implements OnInit {
       } else {
         this.alertServices.alert({
           type: "🚨🚨🚨🚨 Lỗi ",
-          msgClass: "cssBig",
+          msgClass: "cssDanger",
           message: "🚨🚨 Lỗi dịch vụ vui lòng liên hệ IT Support để được hổ trợ 🚨🚨",
         });
         this.dialogRef.close({ status: false });

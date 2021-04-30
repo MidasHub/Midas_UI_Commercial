@@ -39,13 +39,25 @@
             <input matInput currencyMask disabled formControlName="limitRemain" type="text" />
           </mat-form-field>
 
-          <mat-form-field fxFlex="98%" *ngIf="transferTerminalForm.contains('rate')">
-            <mat-label>Phí máy</mat-label>
-            <input type="number" step="0.001"  matInput required  formControlName="rate" />
-            <mat-error *ngIf="transferTerminalForm.controls.rate.hasError('required')"
+          <!-- <mat-form-field fxFlex="98%" *ngIf="transferTerminalForm.contains('rate')"> -->
+
+          <!-- <input type="number" step="0.001"  matInput required  formControlName="rate" /> -->
+          <!-- <mat-error *ngIf="transferTerminalForm.controls.rate.hasError('required')"
               >Nhập Phí Pos áp dụng cho đơn vị nhận máy!</mat-error
-            >
-          </mat-form-field>
+            > -->
+          <mat-card fxFlex="98%" *ngIf="transferTerminalForm.contains('rate')">
+            <label> Phí máy theo loại thẻ </label>
+            <mat-card-content>
+              <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
+                <mat-form-field fxFlex="23%" *ngFor="let rateObject of listRateDefault">
+                  <mat-label>{{ rateObject.cardDescription }}</mat-label>
+                  <input matInput type="number" step="0.001"
+                   [(ngModel)]="rateObject.costPercentage" [ngModelOptions]="{standalone: true}" required />
+                </mat-form-field>
+              </div>
+            </mat-card-content>
+          </mat-card>
+          <!-- </mat-form-field> -->
 
           <mat-form-field *ngIf="transferTerminalForm.contains('officeId')" fxFlex="98%">
             <mat-label>{{ "Terminal_Component.FormTransfer.labelOfficeToTransfer" | translate }}</mat-label>
@@ -61,11 +73,9 @@
 
           <mat-form-field *ngIf="transferTerminalForm.contains('transferTarget')" fxFlex="98%">
             <mat-label>Đối tác chuyển đến</mat-label>
-            <mat-select
-            [disabled]="!isChoosePartner"
-            required formControlName="transferTarget">
-              <mat-option  *ngFor="let partner of listPartner" [value]="partner.externalId">
-                {{ showOptionPartnerTransfer(partner.externalId,  partner.displayName) }}
+            <mat-select [disabled]="!isChoosePartner" required formControlName="transferTarget">
+              <mat-option *ngFor="let partner of listPartner" [value]="partner.externalId">
+                {{ showOptionPartnerTransfer(partner.externalId, partner.displayName) }}
               </mat-option>
             </mat-select>
             <mat-error *ngIf="transferTerminalForm.controls.transferTarget.hasError('required')"
