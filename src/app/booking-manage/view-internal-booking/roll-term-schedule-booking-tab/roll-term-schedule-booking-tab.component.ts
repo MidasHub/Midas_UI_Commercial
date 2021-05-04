@@ -49,7 +49,7 @@ export class RollTermScheduleBookingTabComponent implements OnInit {
       staffName: [''],
       clientName: [''],
     });
-    this.getBookingInternal();
+    // this.getBookingInternal();
   }
 
   textDecorateBooking(status: string) {

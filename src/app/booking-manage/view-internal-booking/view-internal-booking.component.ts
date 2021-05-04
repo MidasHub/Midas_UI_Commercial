@@ -1,4 +1,7 @@
-import { Component } from "@angular/core";
+import { Component, ViewChild } from "@angular/core";
+import { MatTabChangeEvent } from "@angular/material/tabs";
+import { InternalBookingTabComponent } from "./internal-booking-tab/internal-booking-tab.component";
+import { RollTermScheduleBookingTabComponent } from "./roll-term-schedule-booking-tab/roll-term-schedule-booking-tab.component";
 
 @Component({
   selector: "midas-view-internal-booking",
@@ -6,11 +9,19 @@ import { Component } from "@angular/core";
   styleUrls: ["./view-internal-booking.component.scss"],
 })
 export class ViewInternalBookingComponent {
+  @ViewChild(InternalBookingTabComponent) private internalBookingTabComponent: InternalBookingTabComponent;
+  @ViewChild(RollTermScheduleBookingTabComponent)
+  private rollTermScheduleBookingTabComponent: RollTermScheduleBookingTabComponent;
 
-  constructor(
+  constructor() {}
 
-  ) {
-
+  changeTabTransaction(event: MatTabChangeEvent): void {
+    if (event.index == 0) {
+      this.internalBookingTabComponent.getBookingInternal();
+    } else {
+      if (event.index == 1) {
+        this.rollTermScheduleBookingTabComponent.getBookingInternal();
+      }
+    }
   }
-
 }

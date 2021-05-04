@@ -1,5 +1,5 @@
 <mat-card class="mat-elevation-z20 container-custom">
-  <mat-tab-group>
+  <mat-tab-group  (selectedTabChange)="changeTabTransaction($event)">
     <mat-tab label="Danh sách booking nội bộ">
       <midas-internal-booking-tab></midas-internal-booking-tab>
     </mat-tab>
