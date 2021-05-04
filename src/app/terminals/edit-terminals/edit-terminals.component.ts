@@ -1,3 +1,4 @@
+import { filter } from "rxjs/operators";
 import { Component, OnInit, ChangeDetectorRef, ViewChild, AfterViewInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { FormBuilder, FormGroup, Validators, FormControl } from "@angular/forms";
@@ -52,8 +53,8 @@ export class EditTerminalsComponent implements OnInit, AfterViewInit {
     "FeeCOGS",
     "FeeMin",
     "FeeMax",
-    // "MaxLimitAmountTransaction",
-    // "LevelTransactionCard",
+    "MaxLimitAmountTransaction",
+    "LevelTransactionCard",
   ];
 
   typeOfTransactions: typeOfTransaction[] = [
@@ -90,11 +91,8 @@ export class EditTerminalsComponent implements OnInit, AfterViewInit {
       this.terminalData = data.terminalData.result;
       this.isOwner = this.terminalData.isOwner;
       this.merchants = data.terminalData.result.Merchants;
-      // this.offices          = this.commonOffices;
-      // this.cardTypes        = this.commonCardTypes;
       this.ItemPos = data.terminalData.result.ItemPos;
       this.ItemPosBranch = data.terminalData.result.ItemPosBranch;
-      // this.banks =  this.commonCardBanks;
       this.ItemPosLimitList = data.terminalData.result.ItemPosLimitList;
 
       this.bankService.getListOfficeCommon().subscribe((offices: any) => {
@@ -132,7 +130,7 @@ export class EditTerminalsComponent implements OnInit, AfterViewInit {
       minFeeDefault: this.ItemPos.minFeeDefault,
       merchantId: this.ItemPosBranch.merchantId,
       status: this.ItemPos.status == "A" ? true : false,
-      costPercentage: "",
+      costPercentage: this.ItemPosLimitList ? this.ItemPosLimitList[0]?.costPercentage : "",
       cogsPercentage: this.ItemPosLimitList ? this.ItemPosLimitList[0]?.cogsPercentage : "",
       txnRateMin: this.ItemPosLimitList ? this.ItemPosLimitList[0]?.txnRateMin : "",
       txnRateMax: this.ItemPosLimitList ? this.ItemPosLimitList[0]?.txnRateMax : "",
@@ -171,7 +169,7 @@ export class EditTerminalsComponent implements OnInit, AfterViewInit {
     this.dataSource.sort = this.sort;
   }
   setDefaultFeeSettingPos() {
-    // const costPercentage = this.editTerminalForm.value.costPercentage;
+    const costPercentage = this.editTerminalForm.value.costPercentage;
     const cogsPercentage = this.editTerminalForm.value.cogsPercentage;
     const txnRateMin = this.editTerminalForm.value.txnRateMin;
     const txnRateMax = this.editTerminalForm.value.txnRateMax;
@@ -181,24 +179,26 @@ export class EditTerminalsComponent implements OnInit, AfterViewInit {
     this.posLimits = [];
     this.offices.forEach((office: any) => {
       this.cardTypes.forEach((card: any) => {
-        let rateCardType = this.terminalData.reqTransfer.listDefaultRate.filter((rateCard: any) => {
-          return rateCard.cardType == card.code
-        })
-        if (rateCardType.length == 0) {
-          this.alertService.alert({
-            message: `Lỗi truy xuất phí gốc từ đối tác`,
-            msgClass: "cssDanger",
-            hPosition: "center",
+        let rateCardType: any[] = [];
+        if (!this.isOwner) {
+          rateCardType = this.terminalData.reqTransfer.listDefaultRate.filter((rateCard: any) => {
+            return rateCard.cardType == card.code;
           });
-          return;
+          if (rateCardType.length == 0) {
+            this.alertService.alert({
+              message: `Lỗi truy xuất phí gốc từ đối tác`,
+              msgClass: "cssDanger",
+              hPosition: "center",
+            });
+            return;
+          }
         }
-
         const limit = {
           officeId: office.officeId,
           officeName: office.name,
           cardCode: card.code,
           cardDescription: card.description,
-          costPercentage: rateCardType[0].rate,
+          costPercentage: this.isOwner ? costPercentage : rateCardType[0]?.rate,
           cogsPercentage: cogsPercentage,
           txnRateMin: txnRateMin,
           txnRateMax: txnRateMax,
@@ -229,23 +229,26 @@ export class EditTerminalsComponent implements OnInit, AfterViewInit {
 
     const office = this.offices?.find((i: any) => i.officeId === officeId);
     this.cardTypes?.forEach((card: any) => {
-      let rateCardType = this.terminalData.reqTransfer.listDefaultRate.filter((rateCard: any) => {
-        return rateCard.cardType == card.code
-      })
-      if (rateCardType.length == 0) {
-        this.alertService.alert({
-          message: `Lỗi truy xuất phí gốc từ đối tác`,
-          msgClass: "cssDanger",
-          hPosition: "center",
+      let rateCardType: any[] = [];
+      if (!this.isOwner) {
+        rateCardType = this.terminalData.reqTransfer.listDefaultRate.filter((rateCard: any) => {
+          return rateCard.cardType == card.code;
         });
-        return;
+        if (rateCardType.length == 0) {
+          this.alertService.alert({
+            message: `Lỗi truy xuất phí gốc từ đối tác`,
+            msgClass: "cssDanger",
+            hPosition: "center",
+          });
+          return;
+        }
       }
       const limit = {
         officeId: office.officeId,
         officeName: office.name,
         cardCode: card.code,
         cardDescription: card.description,
-        costPercentage: rateCardType[0].rate,
+        costPercentage: this.isOwner ? costPercentage : rateCardType[0]?.rate,
         cogsPercentage: cogsPercentage,
         txnRateMin: txnRateMin,
         txnRateMax: txnRateMax,
