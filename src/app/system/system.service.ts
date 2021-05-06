@@ -27,7 +27,7 @@ export class SystemService {
 
   getTenantInfo(subdomain: string): Observable<any> {
     let httpParams = new HttpParams();
-    httpParams = httpParams.set('subdomain', subdomain);
+    httpParams = httpParams.set('subdomain', "staging");
     return this.http.post(`${this.IcGatewayApiUrlPrefix}/config/get_ic_config`, httpParams);
   }
 
