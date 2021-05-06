@@ -188,7 +188,7 @@
     <table mat-table multiTemplateDataRows class="mat-elevation-z8" [dataSource]="dataSource" matSort>
       <ng-container matColumnDef="productId">
         <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>Loại giao dịch</th>
-        <td mat-cell fxHide fxShow.gt-md *matCellDef="let transaction" style="width: 80px">
+        <td mat-cell fxHide fxShow.gt-md *matCellDef="let transaction" style="width: 100px">
           <span class="productId">{{ displayProductId(transaction.productId) }}</span>
         </td>
       </ng-container>

@@ -88,6 +88,11 @@ export class ManageTransactionComponent implements OnInit {
       shortName: "lô lẻ",
       value: "CA02",
     },
+    {
+      label: "Giao dịch RTM - tiền chờ",
+      shortName: "RTM-chờ",
+      value: "CA03",
+    },
   ];
   statusOption: any[] = [
     {

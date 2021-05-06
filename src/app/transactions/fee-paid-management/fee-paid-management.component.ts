@@ -74,6 +74,10 @@ export class FeePaidManagementComponent implements OnInit {
       label: "Giao dịch lô lẻ",
       value: "CA02",
     },
+    {
+      label: "Giao dịch RTM-tiền chờ",
+      value: "CA03",
+    },
   ];
 
   paidPaymentType: any[] = [];
