@@ -510,4 +510,30 @@ export class ManageIcTransactionComponent implements OnInit {
 
     this.transactionService.exportTransactionForPartner(query);
   }
+
+  exportAsXLSX():void {
+    console.log("data ", this.dataSource);
+    let dataCopy = [];
+    let i = -1;
+    while (++i < this.dataSource.length) { 
+      let element = this.dataSource[i];
+      let e:any = {
+        'createdDate':element.createdDate,
+        'terminalId':element.terminalId,  
+        'partnerName':this.displayPartnerPos(element.terminalId),
+        'bankName':this.displayBankPos(element.terminalId),
+        'customerName':element.panHolderName,
+        'terminalAmount':element.terminalAmount,
+        'traceNo':element.traceNo,
+        'batchNo':element.batchNo,
+        'feeAmount':element.feeAmount,
+    };
+      dataCopy.push(e);
+    }
+
+    this.transactionService.exportAsExcelFile('TransactionIC', dataCopy);
+  }
+
+
+  
 }
