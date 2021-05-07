@@ -518,8 +518,8 @@ export class ManageIcTransactionComponent implements OnInit {
     while (++i < this.dataSource.length) { 
       let element = this.dataSource[i];
       let e:any = {
-        'createdDate':element.createdDate,
-        'terminalId':element.terminalId,  
+        'createdDate': element.createdDate,
+        'terminalId':element.terminalId,
         'partnerName':this.displayPartnerPos(element.terminalId),
         'bankName':this.displayBankPos(element.terminalId),
         'customerName':element.panHolderName,
