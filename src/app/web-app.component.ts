@@ -260,7 +260,7 @@ export class WebAppComponent implements OnInit {
       gtag('config', '${environment.GA_TRACKING_ID}');
       gtag('config', '${environment.firebase.measurementId}', {'page_path': event.urlAfterRedirects});
     `;
-    document.head.appendChild(gaScript);
+    document?.head?.appendChild(gaScript);
   }
 
   loadDeviceData() {
