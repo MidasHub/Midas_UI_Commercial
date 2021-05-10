@@ -97,9 +97,7 @@
       <mat-menu #institutionMenu="matMenu" [overlapTrigger]="false">
         <button mat-menu-item routerLink="/clients/customer">{{ "Toolbar_Component.lblClient" | translate }}</button>
         <button mat-menu-item routerLink="/clients/staff">Nhân viên</button>
-        <button mat-menu-item routerLink="/clients/interchange">Đối tác Interchange</button>
         <button mat-menu-item routerLink="/groups">{{ "Toolbar_Component.lblGroup" | translate }}</button>
-        <button mat-menu-item *midasHasPermission="'ALL_FUNCTIONS'" routerLink="/centers">Centers</button>
         <button mat-menu-item routerLink="/accounts/balance-clients">
           {{ "Quản lý công nợ khách hàng khách hàng lẻ" | translate }}
         </button>
