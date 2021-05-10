@@ -39,4 +39,5 @@ export default {
   defaultNotiURL: defaultNotificationURL,
   apiProvider: apiProvider,
   apiVersion: apiVersion,
+  documentURL: documentURL,
 };
