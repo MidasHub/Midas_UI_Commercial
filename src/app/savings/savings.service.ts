@@ -43,6 +43,14 @@ export class SavingsService {
     this.environment = environment;
   }
 
+  makeFunForMarketing(accountSavingIdFrom: string, clientName: string): Observable<any> {
+    let httpParams = this.commonHttpParams.getCommonHttpParams();
+    httpParams = httpParams.set("accountSavingIdFrom", accountSavingIdFrom);
+    httpParams = httpParams.set("clientName", clientName);
+
+    return this.http.post(`${this.GatewayApiUrlPrefix}/savingTransaction/make_fund_for_marketing`, httpParams);
+  }
+
   /**
    * @param {string} savingAccountId is saving account"s Id.
    * @returns {Observable<any>}
@@ -220,6 +228,23 @@ export class SavingsService {
     const savingGroupForm = this.formBuilder.group({
       productId: [productId],
       groupId: [groupId],
+      submittedOnDate: [this.datePipe.transform(new Date(), dateFormat)],
+      locale: [locale],
+      dateFormat: [dateFormat],
+    });
+
+    const savingsAccountInfo = {
+      ...savingGroupForm.value,
+    };
+    return this.http.post("/savingsaccounts", savingsAccountInfo);
+  }
+
+  createClientSavingsAccount(clientId: string, productId: string, savingsAccount: any): Observable<any> {
+    const dateFormat = this.settingsService.dateFormat;
+    const locale = this.settingsService.language.code;
+    const savingGroupForm = this.formBuilder.group({
+      productId: [productId],
+      clientId: [clientId],
       submittedOnDate: [this.datePipe.transform(new Date(), dateFormat)],
       locale: [locale],
       dateFormat: [dateFormat],

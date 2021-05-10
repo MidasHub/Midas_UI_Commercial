@@ -143,6 +143,7 @@
           Máy Pos / <br />
           Đối tác
         </th>
+
         <td mat-cell *matCellDef="let journalEntry" style="word-wrap: break-word; width: 200px">
           <span class="red_text">{{ journalEntry.terminalId }}</span> <br />
           <span class="blue_text" >{{ displayPartnerPos(journalEntry.terminalId) }}</span>
@@ -162,37 +163,14 @@
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Khách hàng</th>
         <td mat-cell *matCellDef="let journalEntry">
           {{ journalEntry.panHolderName }} <br />
-          <!-- <span class="green_text">{{ journalEntry.agencyName == "#" ? "" : journalEntry.agencyName }}</span> -->
         </td>
       </ng-container>
 
-      <!-- <ng-container matColumnDef="panBank">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>
-          Thẻ /<br />
-          Ngân hàng
-        </th>
-        <td mat-cell *matCellDef="let journalEntry">
-          {{ journalEntry.panNumber.replace("XXX-XXX", "X") }} <br />
-          <span class="blue_text">({{ journalEntry.panBank }})</span>
-        </td>
-      </ng-container> -->
 
       <ng-container matColumnDef="terminalAmount">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Số tiền giao dịch</th>
         <td mat-cell style="padding: 6px" *matCellDef="let transaction">
           {{ transaction.terminalAmount | money }}
-
-          <!-- <span *midasHasPermission="'BILLER_HO'">
-            <button
-              title="Tải hóa đơn"
-              mat-mini-fab
-              *midasHasActiveModule="'billModule'"
-              (click)="downloadVoucher(transaction.refid)"
-              color="basic"
-            >
-              <img src="assets/images/icons/bill.svg" />
-            </button>
-          </span> -->
         </td>
       </ng-container>
 
