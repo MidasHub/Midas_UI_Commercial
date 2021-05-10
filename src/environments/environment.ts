@@ -27,6 +27,7 @@ export const environment = {
   IcGatewayTenantId: te.icT,
   NotiGatewayURL: te.defaultNotiURL,
   NotiGatewayPrefix: '/notification',
+  ICDocumentURL:te.documentURL,
   oauth: {
     enabled: false,  // For connecting to Midas using OAuth2 Authentication change the value to true
     serverUrl: ''

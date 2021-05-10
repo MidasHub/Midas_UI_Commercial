@@ -506,11 +506,11 @@ export class ManageIcTransactionComponent implements OnInit {
   }
 
   exportAsXLSX():void {
-    console.log("data ", this.dataSource);
+    console.log("data ", this.transactionsData);
     let dataCopy = [];
     let i = -1;
-    while (++i < this.dataSource.length) { 
-      let element = this.dataSource[i];
+    while (++i < this.transactionsData.length) { 
+      let element = this.transactionsData[i];
       let e:any = {
         'createdDate': element.createdDate,
         'terminalId':element.terminalId,
