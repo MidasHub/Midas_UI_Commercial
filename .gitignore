@@ -61,3 +61,5 @@ yarn.lock
 src/environments/checkurl.ts
 src/app/core/constants/enum_constants.ts
 .vscode/settings.json
+yarn.lock
+.vscode/settings.json

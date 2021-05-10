@@ -50,7 +50,7 @@ export class IcPartnerTabComponent implements OnInit {
 
   addPartner() {
      
-    const addPartnerDialogRef = this.dialog.open(AddPartnerDialogComponent, { height: "auto", width:"550px"
+    const addPartnerDialogRef = this.dialog.open(AddPartnerDialogComponent, { height: "500px", width:"550px"
     });
     addPartnerDialogRef.afterClosed().subscribe((payloads: any[]) => {
        this.ngOnInit();

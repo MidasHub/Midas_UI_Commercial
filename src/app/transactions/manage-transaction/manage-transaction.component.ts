@@ -24,7 +24,7 @@ import { SelectBase } from "../../shared/form-dialog/formfield/model/select-base
 import { FormDialogComponent } from "../../shared/form-dialog/form-dialog.component";
 import { InputBase } from "../../shared/form-dialog/formfield/model/input-base";
 import { TerminalsService } from "app/terminals/terminals.service";
-import { BanksService } from "app/banks/banks.service";
+import { BanksService } from "app/banks/banks.service"; 
 
 @Component({
   selector: "midas-manage-transaction",
@@ -139,7 +139,6 @@ export class ManageTransactionComponent implements OnInit {
     private clientsService: ClientsService,
     private terminalsService: TerminalsService,
     private bankService: BanksService,
-
   ) {
     this.formDate = this.formBuilder.group({
       fromDate: [new Date()],
@@ -490,6 +489,7 @@ displayTerminalName(terminalId: string){
   }
 
   exportTransactionForPartner() {
+
     const dateFormat = this.settingsService.dateFormat;
     let fromDate = this.formDate.get("fromDate").value;
     let toDate = this.formDate.get("toDate").value;
@@ -522,7 +522,58 @@ displayTerminalName(terminalId: string){
         }
       }
     }
-
     this.transactionService.exportTransactionForPartner(query);
+  }
+
+
+  title = 'exportExcelInAngular';
+  dataOfFootballers: any = [{
+    playerName: 'Cristiano Ronaldo',
+    playerCountry: 'Pourtgal',
+    playerClub: 'Juventus'
+  },
+  {
+    playerName: 'Lionel Messi',
+    playerCountry: 'Argentina',
+    playerClub: 'Barcelona'
+  },
+  {
+    playerName: 'Neymar Junior',
+    playerCountry: 'Brazil',
+    playerClub: 'PSG'
+  },
+  {
+  playerName: 'Tonni Kroos',
+  playerCountry: 'Germany',
+  playerClub: 'Real Madrid'
+  },
+  {
+    playerName: 'Paul Pogba',
+    playerCountry: 'France',
+    playerClub: 'Manchester United'
+  }];
+   
+  exportAsXLSX():void {
+
+    let dataCopy = [];
+    let i = -1;
+    while (++i < this.dataSource.length) { 
+      let element = this.dataSource[i];
+      let e:any = {'createdDate':element.createdDate,
+        'terminalId':element.terminalId,  
+        'batchNo':element.batchNo,
+        'traceNo':element.traceNo,
+        'panHolderName':element.panHolderName,
+        'panNumber':element.panNumber,
+        'cardType':element.cardType,
+        'panBank':element.panBank,
+        'staffName':element.createdByName,
+        'terminalAmount':element.terminalAmount,
+      };
+      dataCopy.push(e);
+    }
+    console.log("dataCopy",dataCopy);
+    this.transactionService.exportAsExcelFile('TransactionIC',dataCopy);
+    
   }
 }

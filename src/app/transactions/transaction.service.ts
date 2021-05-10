@@ -19,7 +19,6 @@ export class TransactionService {
   private GatewayApiUrlPrefix: any;
   private environment: any;
   private IcGatewayApiUrlPrefix: any;
-
   /**
    * @param {HttpClient} http Http Client to send requests.
    */
@@ -29,7 +28,6 @@ export class TransactionService {
     );
     this.GatewayApiUrlPrefix = environment.GatewayApiUrlPrefix;
     this.IcGatewayApiUrlPrefix = environment.IcGatewayApiUrlPrefix;
-
     this.environment = environment;
   }
 
@@ -666,4 +664,48 @@ export class TransactionService {
 
     return this.http.post<any>(`${this.GatewayApiUrlPrefix}/client/get_identifier_midas_by_client_group`, httpParams);
   }
+
+  exportAsExcelFile(exportType: string , data: any) {
+    this.accessToken = JSON.parse(
+      sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey)
+    );
+    
+    // tslint:disable-next-line:max-line-length
+    // const fileUrl = `${this.environment.GatewayApiUrl}${this.environment.GatewayApiUrlPrefix}/export/export_transaction?ext5=ALL&typeExport=transaction&accessToken=${this.accessToken.base64EncodedAuthenticationKey}&createdBy=${this.accessToken.userId}&${query}`;
+    //const fileUrl = 'http://localhost:8001/document/export/';
+    const fileUrl = `${this.environment.GatewayApiUrl}/document/export/`;
+    this.getExportExcelFiles(fileUrl, exportType ,data).subscribe((data_response: any) => {
+      this.downloadFile(data_response.result.fileName);
+    });
+  }
+
+  getExportExcelFiles(url: string, exportType: string ,data:any) {
+    let httpParams = this.commonHttpParams.getCommonHttpParams();
+    httpParams = httpParams.set("filterData", JSON.stringify(data)).set("exportType", exportType);
+    return this.http.post<any>(url, httpParams);
+  }
+
+  downloadFile(fileName: string) {
+
+    //const url = `http://localhost:8001/document/export/download?fileName=${fileName}`;
+    const url = `${this.environment.GatewayApiUrl}/document/export/download?fileName=${fileName}`;
+    const xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function () {
+      let a;
+      if (xhr.readyState === 4 && xhr.status === 200) {
+        a = document.createElement("a");
+        a.href = window.URL.createObjectURL(xhr.response);
+        a.download = `V_${fileName}`;
+        a.style.display = "none";
+        document.body.appendChild(a);
+        a.click();
+      }
+    };
+    xhr.open("GET", url);
+    if (this.environment.isNewBillPos) {
+      xhr.setRequestHeader("Gateway-TenantId", window.localStorage.getItem("Gateway-TenantId"));
+    }
+    xhr.responseType = "blob";
+    xhr.send();
+  } 
 }
