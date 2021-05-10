@@ -139,13 +139,12 @@ export class ManageIcTransactionComponent implements OnInit {
     private terminalsService: TerminalsService,
     private bankService: BanksService
   ) {
-     // get list common data
-     this.terminalsService.getTerminals().subscribe((data: any) => {
+    // get list common data
+    this.terminalsService.getTerminals().subscribe((data: any) => {
       this.terminalsCommon = data.result.listPos;
-    })
+    });
     this.bankService.gerListBank().subscribe((result) => {
       this.banksCommon = result?.result?.listBank;
-
     });
 
     this.formDate = this.formBuilder.group({
@@ -176,20 +175,19 @@ export class ManageIcTransactionComponent implements OnInit {
 
       this.terminalsService.getBanksByPartnerPos(value).subscribe((partner) => {
         this.banks = partner?.result?.listBank;
-        if ( this.banks?.length > 0) {
+        if (this.banks?.length > 0) {
           // @ts-ignore
           this.banks?.unshift({ bankCode: "", bankName: "Tất cả ngân hàng" });
         }
-
       });
     });
 
     this.formFilterPartner.get("bankCode").valueChanges.subscribe((value) => {
       this.formFilterPartner.get("terminalId").setValue("");
-      const partnerCode = this.formFilterPartner.get("partnerCode").value ;
+      const partnerCode = this.formFilterPartner.get("partnerCode").value;
       this.terminalsService.getTerminalsByAccountBankId(value, partnerCode).subscribe((partner) => {
         this.terminals = partner?.result?.listTerminal;
-        if ( this.terminals?.length > 0) {
+        if (this.terminals?.length > 0) {
           // @ts-ignore
           this.terminals?.unshift({ terminalId: "", terminalName: "Tất cả máy Pos" });
         }
@@ -198,9 +196,6 @@ export class ManageIcTransactionComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
-
-
     this.dataSource = this.transactionsData;
     this.savingsService.getListIcPartner().subscribe((data: any) => {
       this.partners = data?.result?.listClient;
@@ -268,7 +263,6 @@ export class ManageIcTransactionComponent implements OnInit {
     const offset = this.paginator.pageIndex * limit;
 
     this.filterData = this.transactionsData?.filter((v) => {
-
       return true;
     });
     this.totalTerminalAmount = this.filterData?.reduce((total: any, num: any) => {
@@ -306,7 +300,7 @@ export class ManageIcTransactionComponent implements OnInit {
 
   displayPartnerPos(externalId: string) {
     const usingExternalId = this.terminalsCommon?.find((v: any) => v.terminalId == externalId)?.usingName || "N/A";
-    return usingExternalId ;
+    return usingExternalId;
   }
 
   menuOpened() {

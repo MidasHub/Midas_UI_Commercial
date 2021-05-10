@@ -9,7 +9,9 @@ import { MatTable, MatTableDataSource } from "@angular/material/table";
 import { ActivatedRoute, Router } from "@angular/router";
 import { BanksService } from "app/banks/banks.service";
 import { AddLimitIdentitiesExtraInfoComponent } from "app/clients/clients-view/identities-tab/dialog-add-limit-extra-info/dialog-add-limit-extra-info.component";
+import { ClientsService } from "app/clients/clients.service";
 import { AlertService } from "app/core/alert/alert.service";
+import { SavingsService } from "app/savings/savings.service";
 import { SettingsService } from "app/settings/settings.service";
 import { TerminalsService } from "app/terminals/terminals.service";
 import { ThirdPartyService } from "app/third-party/third-party.service";
@@ -36,9 +38,9 @@ export class CreateTransactionComponent implements OnInit {
   listRollTermBooking: any = [];
   isLoading = false;
   transactionCreateForm: FormGroup;
+  activateAndApproveAccountForm: FormGroup;
   totalBookingAmount: number;
   @ViewChild("listBookingRollTermTable") listBookingRollTermTable: MatTable<Element>;
-
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   /**
@@ -54,7 +56,10 @@ export class CreateTransactionComponent implements OnInit {
     private alertService: AlertService,
     private datePipe: DatePipe,
     private formBuilder: FormBuilder,
-    private terminalsService: TerminalsService
+    private terminalsService: TerminalsService,
+    private settingsService: SettingsService,
+    private savingsService: SavingsService,
+    private clientsService: ClientsService
   ) {
     this.dataSource = new MatTableDataSource();
     this.transactionCreateForm = new FormGroup({
@@ -260,6 +265,7 @@ export class CreateTransactionComponent implements OnInit {
               hPosition: "center",
             });
           }
+
           return;
         }
         if (
@@ -338,6 +344,8 @@ export class CreateTransactionComponent implements OnInit {
   afterSuccessCreateCashTransaction(data: any) {
     this.transactionInfo.transactionId = data.result.id;
     this.transactionInfo.transactionRefNo = data.result.tranRefNo;
+    let numOfTransaction = data.result.numTransaction;
+
     this.transactionInfo.isDone = true;
     this.alertService.alert({
       message: `Tạo giao dịch ${this.transactionInfo.transactionRefNo} thành công!`,
@@ -345,6 +353,52 @@ export class CreateTransactionComponent implements OnInit {
       hPosition: "center",
     });
     this.showSuccessCreateTransactionDialog();
+
+    if (numOfTransaction == 1) {
+      let savingAccountId: string = null;
+      this.clientsService.getClientAccountDataCross(this.transactionInfo.clientId).subscribe((savings) => {
+        let ListAccount = savings?.result?.clientAccount?.savingsAccounts;
+        let isHaveActiveSavingsAccount = true;
+        if (!ListAccount || ListAccount.length == 0) {
+          isHaveActiveSavingsAccount = false;
+        } else {
+          for (let index = 0; index < ListAccount.length; index++) {
+            if (ListAccount[index].status.id == 300) {
+              savingAccountId = ListAccount[index].id;
+              isHaveActiveSavingsAccount = true;
+            }
+          }
+          if (!savingAccountId) {
+            isHaveActiveSavingsAccount = false;
+          }
+        }
+
+        if (!isHaveActiveSavingsAccount) {
+          this.createClientSavingAccountTemplate(
+            this.transactionInfo.clientId,
+            "2",
+            this.transactionInfo.clientDto.displayName
+          );
+        } else {
+          this.savingsService
+            .makeFunForMarketing(savingAccountId, this.transactionInfo.clientDto.displayName)
+            .subscribe((res: any) => {
+              const message = `Thực hiện thành công!`;
+              this.savingsService.handleResponseApiSavingTransaction(res, message, false);
+            });
+        }
+      });
+    } else {
+      if (numOfTransaction == 2) {
+        this.alertService.alert({
+          message: `Đây là khách hàng mới đã giao dịch lần 2!`,
+          msgClass: "cssSuccess",
+          hPosition: "center",
+          vPosition: "center"
+        });
+        return;
+      }
+    }
   }
 
   submitTransactionCash() {
@@ -358,6 +412,7 @@ export class CreateTransactionComponent implements OnInit {
         title: "Hoàn thành giao dịch",
       },
     });
+
     dialog.afterClosed().subscribe((data) => {
       if (data) {
         this.transactionInfo.batchNo = this.transactionCreateForm.value.batchNo;
@@ -538,6 +593,47 @@ export class CreateTransactionComponent implements OnInit {
       this.ngOnInit();
     });
   }
+
+  createClientSavingAccountTemplate(clientId: string, productId: string, clientName: string) {
+    const locale = this.settingsService.language.code;
+    const dateFormat = this.settingsService.dateFormat;
+
+    this.savingsService.getSavingsAccountTemplate(clientId, productId, false).subscribe((response: any) => {
+      this.savingsService.createClientSavingsAccount(clientId, productId, response).subscribe((savingsAccount: any) => {
+        this.activateAndApproveAccountForm = this.formBuilder.group({
+          approvedOnDate: [new Date(), Validators.required],
+        });
+        this.activateAndApproveAccountForm.patchValue({
+          approvedOnDate: this.datePipe.transform(new Date(), dateFormat),
+        });
+        const data = {
+          ...this.activateAndApproveAccountForm.value,
+          dateFormat,
+          locale,
+        };
+        this.savingsService.executeSavingsAccountCommand(savingsAccount.savingsId, "approve", data).subscribe(() => {
+          this.activateAndApproveAccountForm = this.formBuilder.group({
+            activatedOnDate: [new Date(), Validators.required],
+          });
+          this.activateAndApproveAccountForm.patchValue({
+            activatedOnDate: this.datePipe.transform(new Date(), dateFormat),
+          });
+          const data = {
+            ...this.activateAndApproveAccountForm.value,
+            dateFormat,
+            locale,
+          };
+          this.savingsService.executeSavingsAccountCommand(savingsAccount.savingsId, "activate", data).subscribe(() => {
+            this.savingsService.makeFunForMarketing(savingsAccount.savingsId, clientName).subscribe((res: any) => {
+              const message = `Thực hiện thành công!`;
+              this.savingsService.handleResponseApiSavingTransaction(res, message, false);
+            });
+          });
+        });
+      });
+    });
+  }
+
   formatCurrency(value: string) {
     value = String(value);
     const neg = value.startsWith("-");
