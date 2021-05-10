@@ -525,40 +525,12 @@ displayTerminalName(terminalId: string){
     this.transactionService.exportTransactionForPartner(query);
   }
 
-
-  title = 'exportExcelInAngular';
-  dataOfFootballers: any = [{
-    playerName: 'Cristiano Ronaldo',
-    playerCountry: 'Pourtgal',
-    playerClub: 'Juventus'
-  },
-  {
-    playerName: 'Lionel Messi',
-    playerCountry: 'Argentina',
-    playerClub: 'Barcelona'
-  },
-  {
-    playerName: 'Neymar Junior',
-    playerCountry: 'Brazil',
-    playerClub: 'PSG'
-  },
-  {
-  playerName: 'Tonni Kroos',
-  playerCountry: 'Germany',
-  playerClub: 'Real Madrid'
-  },
-  {
-    playerName: 'Paul Pogba',
-    playerCountry: 'France',
-    playerClub: 'Manchester United'
-  }];
-   
   exportAsXLSX():void {
 
     let dataCopy = [];
     let i = -1;
-    while (++i < this.dataSource.length) { 
-      let element = this.dataSource[i];
+    while (++i < this.transactionsData.length) { 
+      let element = this.transactionsData[i];
       let e:any = {'createdDate':element.createdDate,
         'terminalId':element.terminalId,  
         'batchNo':element.batchNo,

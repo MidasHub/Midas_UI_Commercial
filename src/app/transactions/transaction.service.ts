@@ -671,9 +671,8 @@ export class TransactionService {
     );
     
     // tslint:disable-next-line:max-line-length
-    // const fileUrl = `${this.environment.GatewayApiUrl}${this.environment.GatewayApiUrlPrefix}/export/export_transaction?ext5=ALL&typeExport=transaction&accessToken=${this.accessToken.base64EncodedAuthenticationKey}&createdBy=${this.accessToken.userId}&${query}`;
-    //const fileUrl = 'http://localhost:8001/document/export/';
-    const fileUrl = `${this.environment.GatewayApiUrl}/document/export/`;
+    //const fileUrl = 'http://119.82.135.181:8001/document/export/';
+    const fileUrl = `${this.environment.ICDocumentURL}/document/export/`;
     this.getExportExcelFiles(fileUrl, exportType ,data).subscribe((data_response: any) => {
       this.downloadFile(data_response.result.fileName);
     });
@@ -687,8 +686,8 @@ export class TransactionService {
 
   downloadFile(fileName: string) {
 
-    //const url = `http://localhost:8001/document/export/download?fileName=${fileName}`;
-    const url = `${this.environment.GatewayApiUrl}/document/export/download?fileName=${fileName}`;
+    //const url = `http://119.82.135.181:8001/document/export/download?fileName=${fileName}`;
+    const url = `${this.environment.ICDocumentURL}/document/export/download?fileName=${fileName}`;
     const xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function () {
       let a;
