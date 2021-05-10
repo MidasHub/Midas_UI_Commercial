@@ -62,10 +62,7 @@ export class ClientsComponent  {
       path:'./staff',
       label:'Nhân viên'
     },
-    {
-      path:'./interchange',
-      label:'Đối tác Interchange'
-    },
+
   ]
 
   // ngOnInit() {
@@ -115,7 +112,7 @@ export class ClientsComponent  {
   //         queryParams: queryParams,
   //         queryParamsHandling: 'merge', // remove to replace all query params by provided
   //       });
-      
+
   //     this.dataSource.getClients(this.sort.active, this.sort.direction, this.paginator.pageIndex, this.paginator.pageSize, !this.showClosedAccounts.checked);
   //   }
   // }
