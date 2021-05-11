@@ -383,7 +383,7 @@ export class CreateTransactionComponent implements OnInit {
           this.savingsService
             .makeFunForMarketing(savingAccountId, this.transactionInfo.clientDto.displayName)
             .subscribe((res: any) => {
-              const message = `Thực hiện thành công!`;
+              const message = `Áp dụng khuyến mãi từ chương trình marketing thành công cho khách hàng ${this.transactionInfo.clientDto.displayName}!`;
               this.savingsService.handleResponseApiSavingTransaction(res, message, false);
             });
         }
