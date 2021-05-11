@@ -532,7 +532,7 @@ displayTerminalName(terminalId: string){
     while (++i < this.transactionsData.length) { 
       let element = this.transactionsData[i];
       let e:any = {'createdDate':element.createdDate,
-        'terminalId':element.terminalId,  
+        'terminalId':this.displayTerminalName(element.terminalId)+ ' ('+element.terminalId+')',
         'batchNo':element.batchNo,
         'traceNo':element.traceNo,
         'panHolderName':element.panHolderName,
@@ -545,7 +545,7 @@ displayTerminalName(terminalId: string){
       dataCopy.push(e);
     }
     console.log("dataCopy",dataCopy);
-    this.transactionService.exportAsExcelFile('TransactionIC',dataCopy);
+    this.transactionService.exportAsExcelFile('Transaction',dataCopy);
     
   }
 }
