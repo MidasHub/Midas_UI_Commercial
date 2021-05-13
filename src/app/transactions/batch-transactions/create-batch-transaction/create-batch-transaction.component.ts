@@ -15,7 +15,7 @@ import { AddIdentitiesExtraInfoComponent } from "../../../clients/clients-view/i
 import { ClientsService } from "../../../clients/clients.service";
 import { debounce, distinctUntilChanged, map, startWith, takeUntil } from "rxjs/operators";
 import { Observable, Subject, timer } from "rxjs";
-import { ConfirmDialogComponent } from "../../dialog/coifrm-dialog/confirm-dialog.component";
+import { ConfirmDialogComponent } from "../../dialog/confirm-dialog/confirm-dialog.component";
 import { MakeFeeOnAdvanceComponent } from "../../dialog/make-fee-on-advance/make-fee-on-advance.component";
 import { BanksService } from "../../../banks/banks.service";
 import { ValidCheckTransactionHistoryDialogComponent } from "app/transactions/dialog/valid-check-transaction-history/valid-check-transaction-history-dialog.component";
@@ -68,6 +68,7 @@ export class CreateBatchTransactionComponent implements OnInit {
   totalFee = 0;
   totalAmountTransaction = 0;
   totalTerminalAmount = 0;
+  isRequiredTraceBatchNo: boolean = true ;
   expandedElement: any;
   accountFilter: any[] = [];
   accountsShow: any[] = [];
@@ -153,6 +154,12 @@ export class CreateBatchTransactionComponent implements OnInit {
     private router: Router,
   ) {
     this.currentUser = this.authenticationService.getCredentials();
+    const { permissions } = this.currentUser;
+    const permit_manager = permissions.includes("POS_UPDATE");
+    if (permit_manager){
+      this.isRequiredTraceBatchNo = false;
+    }
+
     if (!this.authenticationService.checkAppModuleSetting("billModule")) {
       this.displayedColumns.splice(this.displayedColumns.indexOf("invoiceAmount"), 1);
     }
@@ -515,7 +522,6 @@ export class CreateBatchTransactionComponent implements OnInit {
           if (typeof result2.result.caution != "undefined" && result2.result.caution != "NaN") {
             this.showHistoryTransaction(result2.result.caution, result2.result.listTransaction);
 
-            // this.alertService.alert({ message: data.result.caution, msgClass: "cssDanger", hPosition: "center" });
           }
           const value = result2?.result.amountTransaction;
           if (value > 0) {
@@ -662,9 +668,19 @@ export class CreateBatchTransactionComponent implements OnInit {
         msgClass: "cssDanger",
       });
     }
+
+    let messageConfirm = `Bạn chắc chắn muốn lưu giao dịch?`;
+    let traceNo = form.get("tid").value;
+    let batchNo = form.get("batchNo").value;
+
+    if  ( !traceNo || !batchNo || traceNo.trim().length == 0 || batchNo.trim().length == 0  ){
+
+      messageConfirm = `Hệ thống ghi nhận đây là giao dịch treo (do không có mã lô và mã hóa đơn), bạn chắc chắn muốn lưu giao dịch?`;
+    }
+
     const dialog = this.dialog.open(ConfirmDialogComponent, {
       data: {
-        message: "Bạn chắc chắn muốn lưu giao dịch",
+        message: messageConfirm,
         title: "Hoàn thành giao dịch",
       },
     });
