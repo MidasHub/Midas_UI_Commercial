@@ -8,7 +8,7 @@ import {TransactionRoutingModule} from './transaction-routing.module';
 /** Custom Components */
 import {CreateTransactionComponent} from './create-transaction/create-transaction.component';
 import {ManageTransactionComponent} from './manage-transaction/manage-transaction.component';
-import {ConfirmDialogComponent} from './dialog/coifrm-dialog/confirm-dialog.component';
+import {ConfirmDialogComponent} from './dialog/confirm-dialog/confirm-dialog.component';
 import {UploadBillComponent} from './dialog/upload-bill/upload-bill.component';
 // import { UploadPosInformationComponent } from './dialog/upload-pos-information/upload-pos-information.component';
 import {DatePipe} from '@angular/common';
@@ -37,6 +37,7 @@ import { MainboardComponent } from 'app/home/mainboard/mainboard.component';
 import { MakeFeeOnAdvanceComponent } from './dialog/make-fee-on-advance/make-fee-on-advance.component';
 import { ValidCheckTransactionHistoryDialogComponent } from './dialog/valid-check-transaction-history/valid-check-transaction-history-dialog.component';
 import { ManageIcTransactionComponent } from './manage-ic-transaction/manage-ic-transaction.component';
+import { ConfirmHoldTransactionDialogComponent } from './dialog/confirm-hold-transaction-dialog/confirm-hold-transaction-dialog.component';
 
 /**
  * Profile Module
@@ -70,6 +71,7 @@ import { ManageIcTransactionComponent } from './manage-ic-transaction/manage-ic-
     MakeFeeOnAdvanceComponent,
     ValidCheckTransactionHistoryDialogComponent,
     ManageIcTransactionComponent,
+    ConfirmHoldTransactionDialogComponent,
   ],
 
   imports: [

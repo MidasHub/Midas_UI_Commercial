@@ -12,7 +12,7 @@ import { Subject } from "rxjs";
 import { share } from "rxjs/operators";
 import { MatSlideToggleChange } from "@angular/material/slide-toggle";
 import { ConfirmationDialogComponent } from "../../shared/confirmation-dialog/confirmation-dialog.component";
-import { ConfirmDialogComponent } from "app/transactions/dialog/coifrm-dialog/confirm-dialog.component";
+import { ConfirmDialogComponent } from "app/transactions/dialog/confirm-dialog/confirm-dialog.component";
 
 @Component({
   selector: "midas-merchant-tab",

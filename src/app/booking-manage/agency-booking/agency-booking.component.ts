@@ -6,7 +6,7 @@ import { MatPaginator } from "@angular/material/paginator";
 import { MatSort } from "@angular/material/sort";
 import { AlertService } from "app/core/alert/alert.service";
 import { SettingsService } from "app/settings/settings.service";
-import { ConfirmDialogComponent } from "app/transactions/dialog/coifrm-dialog/confirm-dialog.component";
+import { ConfirmDialogComponent } from "app/transactions/dialog/confirm-dialog/confirm-dialog.component";
 import { merge } from "rxjs";
 import { tap } from "rxjs/operators";
 import { BookingService } from "../booking.service";

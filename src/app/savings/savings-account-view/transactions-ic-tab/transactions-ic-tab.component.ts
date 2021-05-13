@@ -9,7 +9,7 @@ import { DatePipe } from "@angular/common";
 import * as moment from "moment";
 import { animate, state, style, transition, trigger } from "@angular/animations";
 import { MatDialog } from "@angular/material/dialog";
-import { ConfirmDialogComponent } from "../../../transactions/dialog/coifrm-dialog/confirm-dialog.component";
+import { ConfirmDialogComponent } from "../../../transactions/dialog/confirm-dialog/confirm-dialog.component";
 import { UpdateSavingAccountComponent } from "../form-dialog/update-saving-account/update-saving-account.component";
 import { AlertService } from "../../../core/alert/alert.service";
 import { MatPaginator } from "@angular/material/paginator";

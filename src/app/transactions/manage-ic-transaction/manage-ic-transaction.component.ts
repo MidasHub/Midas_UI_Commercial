@@ -16,7 +16,7 @@ import { CentersService } from "../../centers/centers.service";
 import { AlertService } from "../../core/alert/alert.service";
 import { MatDialog } from "@angular/material/dialog";
 import { UploadDocumentDialogComponent } from "../../clients/clients-view/custom-dialogs/upload-document-dialog/upload-document-dialog.component";
-import { ConfirmDialogComponent } from "../dialog/coifrm-dialog/confirm-dialog.component";
+import { ConfirmDialogComponent } from "../dialog/confirm-dialog/confirm-dialog.component";
 import { UploadBillComponent } from "../dialog/upload-bill/upload-bill.component";
 import { ClientsService } from "../../clients/clients.service";
 import { FormfieldBase } from "../../shared/form-dialog/formfield/model/formfield-base";
@@ -509,7 +509,7 @@ export class ManageIcTransactionComponent implements OnInit {
     console.log("data ", this.transactionsData);
     let dataCopy = [];
     let i = -1;
-    while (++i < this.transactionsData.length) { 
+    while (++i < this.transactionsData.length) {
       let element = this.transactionsData[i];
       let e:any = {
         'createdDate': element.createdDate,
@@ -529,5 +529,5 @@ export class ManageIcTransactionComponent implements OnInit {
   }
 
 
-  
+
 }

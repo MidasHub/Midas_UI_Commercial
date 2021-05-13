@@ -12,7 +12,7 @@ import { AlertService } from "app/core/alert/alert.service";
 import { AuthenticationService } from "app/core/authentication/authentication.service";
 import { SavingsService } from "app/savings/savings.service";
 import { SettingsService } from "app/settings/settings.service";
-import { ConfirmDialogComponent } from "app/transactions/dialog/coifrm-dialog/confirm-dialog.component";
+import { ConfirmDialogComponent } from "app/transactions/dialog/confirm-dialog/confirm-dialog.component";
 import { TransactionService } from "app/transactions/transaction.service";
 import { merge } from "rxjs";
 import { tap } from "rxjs/operators";

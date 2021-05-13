@@ -6,7 +6,7 @@ import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
 import {AddFeeDialogComponent} from '../../transactions/dialog/add-fee-dialog/add-fee-dialog.component';
 import {CreateTransactionBookingComponent} from '../dialog/create-transaction-booking/create-transaction-booking.component';
 import {AlertService} from '../../core/alert/alert.service';
-import {ConfirmDialogComponent} from '../../transactions/dialog/coifrm-dialog/confirm-dialog.component';
+import {ConfirmDialogComponent} from '../../transactions/dialog/confirm-dialog/confirm-dialog.component';
 import {MoneyPipe} from '../../pipes/money.pipe';
 
 @Component({

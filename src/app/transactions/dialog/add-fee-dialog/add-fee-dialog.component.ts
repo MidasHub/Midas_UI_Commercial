@@ -6,7 +6,7 @@ import { AuthenticationService } from "../../../core/authentication/authenticati
 import { AlertService } from "../../../core/alert/alert.service";
 import { MidasClientService } from "../../../midas-client/midas-client.service";
 import { GroupsService } from "app/groups/groups.service";
-import { ConfirmDialogComponent } from "../coifrm-dialog/confirm-dialog.component";
+import { ConfirmDialogComponent } from "../confirm-dialog/confirm-dialog.component";
 import { SavingsService } from "app/savings/savings.service";
 
 @Component({

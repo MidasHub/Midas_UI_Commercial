@@ -4,7 +4,7 @@ import {AuthenticationService} from '../../../core/authentication/authentication
 import {AlertService} from '../../../core/alert/alert.service';
 import {TransactionService} from '../../transaction.service';
 import {animate, state, style, transition, trigger} from '@angular/animations';
-import {ConfirmDialogComponent} from '../coifrm-dialog/confirm-dialog.component';
+import {ConfirmDialogComponent} from '../confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'midas-view-fee-paid-transaction-dialog',

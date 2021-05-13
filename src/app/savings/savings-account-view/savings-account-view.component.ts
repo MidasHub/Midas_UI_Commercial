@@ -21,7 +21,7 @@ import { PartnerAdvanceCashComponent } from "./form-dialog/partner-advance-cash/
 import { AlertService } from "../../core/alert/alert.service";
 import { TransferCrossOfficeComponent } from "./form-dialog/transfer-cross-office/transfer-cross-office.component";
 import { GroupsService } from "app/groups/groups.service";
-import { ConfirmDialogComponent } from "app/transactions/dialog/coifrm-dialog/confirm-dialog.component";
+import { ConfirmDialogComponent } from "app/transactions/dialog/confirm-dialog/confirm-dialog.component";
 
 /**
  * Savings Account View Component

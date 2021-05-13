@@ -6,7 +6,7 @@ import { TransactionService } from "../../transaction.service";
 import { AlertService } from "../../../core/alert/alert.service";
 import { ClientsService } from "../../../clients/clients.service";
 import { SavingsService } from "app/savings/savings.service";
-import { ConfirmDialogComponent } from "../coifrm-dialog/confirm-dialog.component";
+import { ConfirmDialogComponent } from "../confirm-dialog/confirm-dialog.component";
 
 @Component({
   selector: "midas-make-fee-on-advance",

@@ -1,0 +1,13 @@
+<h1 mat-dialog-title>{{data.title|translate}}</h1>
+<div mat-dialog-content align="center">
+  <p>{{ data.message }} ?</p>
+  <button mat-raised-button
+  [mat-dialog-close]="{ isSuccess: false }">
+  {{'Shared_Component.DeleteDialog.buttonCancel'|translate}}
+</button>
+  <button mat-raised-button color="primary"
+  [mat-dialog-close]="{ isSuccess: true }">Thành công</button>
+</div>
+<mat-dialog-actions align="end">
+  <button mat-raised-button mat-dialog-close>Đóng</button>
+</mat-dialog-actions>

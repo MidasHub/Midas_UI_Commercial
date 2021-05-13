@@ -12,7 +12,7 @@ import { MatDialog, MatDialogConfig } from "@angular/material/dialog";
 import { ClientsService } from "../../clients/clients.service";
 import { merge } from "rxjs";
 import { tap } from "rxjs/operators";
-import { ConfirmDialogComponent } from "../dialog/coifrm-dialog/confirm-dialog.component";
+import { ConfirmDialogComponent } from "../dialog/confirm-dialog/confirm-dialog.component";
 import { UploadBillComponent } from "../dialog/upload-bill/upload-bill.component";
 import { FormfieldBase } from "../../shared/form-dialog/formfield/model/formfield-base";
 import { InputBase } from "../../shared/form-dialog/formfield/model/input-base";

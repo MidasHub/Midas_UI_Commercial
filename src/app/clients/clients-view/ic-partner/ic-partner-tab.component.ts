@@ -7,7 +7,7 @@ import { AlertService } from "app/core/alert/alert.service";
 import { Subject } from "rxjs";
 import { share } from "rxjs/operators";
 import { MatSlideToggleChange } from "@angular/material/slide-toggle";
-import { ConfirmDialogComponent } from "app/transactions/dialog/coifrm-dialog/confirm-dialog.component";
+import { ConfirmDialogComponent } from "app/transactions/dialog/confirm-dialog/confirm-dialog.component";
 import { SavingsService } from "app/savings/savings.service";
 import { AddPartnerDialogComponent } from "./add-partner-dialog/add-partner-dialog.component";
 import {ClientsService} from '../../clients.service';
@@ -49,7 +49,7 @@ export class IcPartnerTabComponent implements OnInit {
   }
 
   addPartner() {
-     
+
     const addPartnerDialogRef = this.dialog.open(AddPartnerDialogComponent, { height: "500px", width:"550px"
     });
     addPartnerDialogRef.afterClosed().subscribe((payloads: any[]) => {
@@ -58,7 +58,7 @@ export class IcPartnerTabComponent implements OnInit {
   }
 
   onToggle(event: MatSlideToggleChange, externalId: string){
-    
+
     this.clientsService.ToggleStatusICPartner(externalId, event.checked).subscribe((data: any) => {
 
         if (data.result.status === "success") {
@@ -67,13 +67,13 @@ export class IcPartnerTabComponent implements OnInit {
             message: "🎉🎉 Xử lý thành công",
             msgClass: "cssSuccess",
           });
-          
+
         } else {
           this.alertServices.alert({
             type: "🚨🚨🚨🚨 Lỗi ",
             msgClass: "cssBig",
             message: data?.result?.message,
-          }); 
+          });
       }
     });
   }
@@ -83,7 +83,7 @@ export class IcPartnerTabComponent implements OnInit {
     });
     disburseLoanDialogRef.afterClosed().subscribe((response: { confirm: any }) => {
       if (response.confirm) {
-        this.clientsService.DeleteICPartner(externalId).subscribe((data: any) => { 
+        this.clientsService.DeleteICPartner(externalId).subscribe((data: any) => {
             if (data.result.status === "success") {
               this.alertServices.alert({
                 type: "🎉🎉🎉 Thành công !!!",
@@ -96,13 +96,13 @@ export class IcPartnerTabComponent implements OnInit {
                 type: "🚨🚨🚨🚨 Lỗi ",
                 msgClass: "cssBig",
                 message: data?.result?.message,
-              }); 
+              });
           }
         });
       }
     });
-     
+
   }
-  
- 
+
+
 }
