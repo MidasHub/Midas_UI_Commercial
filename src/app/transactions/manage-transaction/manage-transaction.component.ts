@@ -16,7 +16,7 @@ import { CentersService } from "../../centers/centers.service";
 import { AlertService } from "../../core/alert/alert.service";
 import { MatDialog } from "@angular/material/dialog";
 import { UploadDocumentDialogComponent } from "../../clients/clients-view/custom-dialogs/upload-document-dialog/upload-document-dialog.component";
-import { ConfirmDialogComponent } from "../dialog/coifrm-dialog/confirm-dialog.component";
+import { ConfirmDialogComponent } from "../dialog/confirm-dialog/confirm-dialog.component";
 import { UploadBillComponent } from "../dialog/upload-bill/upload-bill.component";
 import { ClientsService } from "../../clients/clients.service";
 import { FormfieldBase } from "../../shared/form-dialog/formfield/model/formfield-base";
@@ -24,7 +24,8 @@ import { SelectBase } from "../../shared/form-dialog/formfield/model/select-base
 import { FormDialogComponent } from "../../shared/form-dialog/form-dialog.component";
 import { InputBase } from "../../shared/form-dialog/formfield/model/input-base";
 import { TerminalsService } from "app/terminals/terminals.service";
-import { BanksService } from "app/banks/banks.service"; 
+import { BanksService } from "app/banks/banks.service";
+import { ConfirmHoldTransactionDialogComponent } from "../dialog/confirm-hold-transaction-dialog/confirm-hold-transaction-dialog.component";
 
 @Component({
   selector: "midas-manage-transaction",
@@ -133,12 +134,11 @@ export class ManageTransactionComponent implements OnInit {
     private datePipe: DatePipe,
     private settingsService: SettingsService,
     private authenticationService: AuthenticationService,
-    private savingsService: SavingsService,
     private alertService: AlertService,
     private dialog: MatDialog,
     private clientsService: ClientsService,
     private terminalsService: TerminalsService,
-    private bankService: BanksService,
+    private bankService: BanksService
   ) {
     this.formDate = this.formBuilder.group({
       fromDate: [new Date()],
@@ -168,11 +168,12 @@ export class ManageTransactionComponent implements OnInit {
       trnRefNo: [""],
       RetailsChoose: [true],
       wholesaleChoose: [true],
+      holdTransaction: [false],
       agencyName: [""],
     });
     this.formFilter.get("officeId").valueChanges.subscribe((value) => {
       this.clientsService.getListUserTeller(value).subscribe((result: any) => {
-        this.staffs = result?.result?.listStaff.filter((staff:any) => staff.displayName.startsWith("R"));
+        this.staffs = result?.result?.listStaff.filter((staff: any) => staff.displayName.startsWith("R"));
         this.staffs.unshift({
           id: "",
           displayName: "Tất cả",
@@ -184,10 +185,10 @@ export class ManageTransactionComponent implements OnInit {
     });
   }
 
-displayTerminalName(terminalId: string){
-  const terminalInfo =  this.terminals?.filter((terminal: any) => terminal.terminalId == terminalId);
-  return terminalInfo ? terminalInfo[0]?.terminalName : terminalId;
-}
+  displayTerminalName(terminalId: string) {
+    const terminalInfo = this.terminals?.filter((terminal: any) => terminal.terminalId == terminalId);
+    return terminalInfo ? terminalInfo[0]?.terminalName : terminalId;
+  }
 
   ngOnInit(): void {
     this.dataSource = this.transactionsData;
@@ -200,7 +201,7 @@ displayTerminalName(terminalId: string){
     });
 
     this.clientsService.getListUserTeller(this.currentUser.officeId).subscribe((result: any) => {
-      this.staffs = result?.result?.listStaff.filter((staff:any) => staff.displayName.startsWith("R"));
+      this.staffs = result?.result?.listStaff.filter((staff: any) => staff.displayName.startsWith("R"));
       this.staffs.unshift({
         id: "",
         displayName: "Tất cả",
@@ -274,10 +275,12 @@ displayTerminalName(terminalId: string){
     const form = this.formFilter.value;
     const wholesaleChoose = form.wholesaleChoose;
     const RetailsChoose = form.RetailsChoose;
+    const holdTransaction = form.holdTransaction;
+
     const keys = Object.keys(form);
     this.filterData = this.transactionsData?.filter((v) => {
       for (const key of keys) {
-        if (["wholesaleChoose", "RetailsChoose"].indexOf(key) === -1) {
+        if (["wholesaleChoose", "RetailsChoose", "holdTransaction"].indexOf(key) === -1) {
           if (form[key]) {
             if (!v[key]) {
               return false;
@@ -290,9 +293,14 @@ displayTerminalName(terminalId: string){
       }
       const check_wholesaleChoose = wholesaleChoose ? v.type.startsWith("B") : false;
       const check_RetailsChoose = RetailsChoose ? v.type === "cash" || v.type === "rollTerm" : false;
-      if (!check_wholesaleChoose && !check_RetailsChoose) {
+      if (!check_wholesaleChoose && !check_RetailsChoose ) {
         return false;
       }
+
+      if (  ( !holdTransaction && v.isHold == 1 ) || (holdTransaction && v.isHold == 0) ) {
+        return false;
+      }
+
       return true;
     });
     this.totalTerminalAmount = this.filterData?.reduce((total: any, num: any) => {
@@ -339,10 +347,28 @@ displayTerminalName(terminalId: string){
     this.transactionService.downloadBill(clientId, documentId);
   }
 
-  revertTransaction(transactionId: string) {
+  updateIsHoldTransaction(tranRefNo: string, transactionId: string) {
+    const dialog = this.dialog.open(ConfirmHoldTransactionDialogComponent, {
+      data: {
+        message: "Cập nhật trạng thái cho giao dịch bị treo với mã " + tranRefNo,
+        title: "Giao dịch treo",
+      },
+    });
+    dialog.afterClosed().subscribe((data) => {
+      if (data.isSuccess) {
+        this.addPosInformation(tranRefNo, "", "");
+      } else {
+        if (!data.isSuccess && data) {
+          this.revertTransaction(transactionId, tranRefNo);
+        }
+      }
+    });
+  }
+
+  revertTransaction(transactionId: string, tranRefNo: string) {
     const dialog = this.dialog.open(ConfirmDialogComponent, {
       data: {
-        message: "Bạn chắc chắn muốn hủy giao dịch " + transactionId,
+        message: "Bạn chắc chắn muốn hủy giao dịch " + tranRefNo,
         title: "Hủy giao dịch",
       },
     });
@@ -439,7 +465,7 @@ displayTerminalName(terminalId: string){
       }),
     ];
     const data = {
-      title: "Thêm thông tin máy POS",
+      title: "Cập nhật thông tin hóa đơn",
       layout: { addButtonText: "Xác nhận" },
       formfields: formfields,
     };
@@ -447,7 +473,9 @@ displayTerminalName(terminalId: string){
     dialog.afterClosed().subscribe((response: any) => {
       if (response.data) {
         const value = response.data.value;
-        this.transactionService.uploadBosInformation(trnRefNo, value).subscribe((reslut) => {});
+        this.transactionService.uploadBosInformation(trnRefNo, value).subscribe((result) => {
+          this.getTransaction();
+        });
       }
     });
   }
@@ -463,6 +491,7 @@ displayTerminalName(terminalId: string){
       toDate = this.datePipe.transform(toDate, dateFormat);
     }
     const form = this.formFilter.value;
+    debugger;
     let query = `fromDate=${fromDate}&toDate=${toDate}&officeName=${form.officeId || "ALL"}`;
     const keys = Object.keys(form);
     for (const key of keys) {
@@ -489,7 +518,6 @@ displayTerminalName(terminalId: string){
   }
 
   exportTransactionForPartner() {
-
     const dateFormat = this.settingsService.dateFormat;
     let fromDate = this.formDate.get("fromDate").value;
     let toDate = this.formDate.get("toDate").value;
@@ -525,27 +553,25 @@ displayTerminalName(terminalId: string){
     this.transactionService.exportTransactionForPartner(query);
   }
 
-  exportAsXLSX():void {
-
+  exportAsXLSX(): void {
     let dataCopy = [];
     let i = -1;
-    while (++i < this.transactionsData.length) { 
+    while (++i < this.transactionsData.length) {
       let element = this.transactionsData[i];
-      let e:any = {'createdDate':element.createdDate,
-        'terminalId':this.displayTerminalName(element.terminalId)+ ' ('+element.terminalId+')',
-        'batchNo':element.batchNo,
-        'traceNo':element.traceNo,
-        'panHolderName':element.panHolderName,
-        'panNumber':element.panNumber,
-        'cardType':element.cardType,
-        'panBank':element.panBank,
-        'staffName':element.createdByName,
-        'terminalAmount':element.terminalAmount,
+      let e: any = {
+        createdDate: element.createdDate,
+        terminalId: this.displayTerminalName(element.terminalId),
+        batchNo: element.batchNo,
+        traceNo: element.traceNo,
+        panHolderName: element.panHolderName,
+        panNumber: element.panNumber,
+        cardType: element.cardType,
+        panBank: element.panBank,
+        staffName: element.createdByName,
+        terminalAmount: element.terminalAmount,
       };
       dataCopy.push(e);
     }
-    console.log("dataCopy",dataCopy);
-    this.transactionService.exportAsExcelFile('Transaction',dataCopy);
-    
+    this.transactionService.exportAsExcelFile("Transaction", dataCopy);
   }
 }

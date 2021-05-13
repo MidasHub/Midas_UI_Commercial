@@ -169,21 +169,27 @@
           <mat-checkbox fxFlex="100%" labelPosition="before" formControlName="wholesaleChoose" class="margin-v">
             Giao dịch lô
           </mat-checkbox>
+          <mat-checkbox fxFlex="100%" labelPosition="before" formControlName="holdTransaction" class="margin-v">
+            Giao dịch treo
+          </mat-checkbox>
         </div>
         <div fxFlex="18%">
           <button style="margin: 5px; height: 40px" (click)="exportTransaction()" color="primary" mat-raised-button>
             Export
           </button>
 
-          <button style="margin: 5px; height: 40px" (click)="exportTransactionForPartner()" color="primary" mat-raised-button>
+          <button
+            style="margin: 5px; height: 40px"
+            (click)="exportTransactionForPartner()"
+            color="primary"
+            mat-raised-button
+          >
             Export Cho đối tác
           </button>
           <!-- <button style="margin: 5px; height: 40px" (click)="exportAsXLSX()" color="primary" mat-raised-button>
             Tải danh sách giao dịch
           </button> -->
-
         </div>
-
       </div>
     </mat-expansion-panel>
   </mat-accordion>
@@ -192,7 +198,17 @@
       <ng-container matColumnDef="productId">
         <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>Loại giao dịch</th>
         <td mat-cell fxHide fxShow.gt-md *matCellDef="let transaction" style="width: 100px">
-          <span class="productId">{{ displayProductId(transaction.productId) }}</span>
+          <span
+            *ngIf="transaction.isHold != '0'"
+            matBadge="Treo"
+            matBadgePosition="after"
+            matBadgeColor="accent"
+            matBadgeSize="small"
+          >
+          </span>
+          <span class="productId">
+            {{ displayProductId(transaction.productId) }}
+          </span>
         </td>
       </ng-container>
 
@@ -279,11 +295,6 @@
         </td>
       </ng-container>
 
-      <!-- <ng-container matColumnDef="cogsAmount">
-        <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>SP vốn</th>
-        <td mat-cell fxHide fxShow.gt-md *matCellDef="let journalEntry">{{ journalEntry.cogsAmount | money }}</td>
-      </ng-container> -->
-
       <ng-container matColumnDef="pnlAmount">
         <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>PNL</th>
         <td mat-cell fxHide fxShow.gt-md *matCellDef="let transaction">
@@ -344,7 +355,6 @@
         (click)="expandedElement = expandedElement === element ? null : element"
       ></tr>
       <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
-      <!--[routerLink]="['transactions/view', row.transactionId]"-->
     </table>
   </mat-card-content>
 
@@ -361,43 +371,73 @@
       let-trnRefNo="trnRefNo"
       let-batchNo="batchNo"
       let-traceNo="traceNo"
+      let-isHold="isHold"
       style="width: 50px"
     >
-      <button
-        mat-menu-item
-        [routerLink]="['/transaction/batch-transaction/', agencyId]"
-        [queryParams]="{ batchTxnName: type }"
-        *ngIf="
-          type != 'rollTerm' &&
-          type != 'cash' &&
-          status == 'C' &&
-          (today | date: 'dd/MM/yyyy') == (txnDate | date: 'dd/MM/yyyy')
-        "
-      >
-        <img src="assets/images/icons/next.svg" />&nbsp;Tiếp tục giao dịch
-      </button>
-      <button mat-menu-item [routerLink]="['/transaction', 'view']" [queryParams]="{ tranId: refid }">
-        <i class="fa fa-eye" aria-hidden="true"></i>&nbsp;Chi tiết
-      </button>
-      <button *midasHasPermission="'TRACE_BATCH_NO_UPDATE'" mat-menu-item (click)="addPosInformation(trnRefNo, batchNo, traceNo)">
-        <img src="assets/images/icons/add.svg" /> Cập nhật Thông tin bill nhiệt
-      </button>
-      <button *midasHasActiveModule="'billModule'" mat-menu-item (click)="downloadVoucher(refid)">
-        <img *ngIf="status != 'V'" src="assets/images/icons/order.svg" />&nbsp; Tải xuống hóa đơn
-      </button>
-      <!-- <button mat-menu-item *ngIf="ext7 != null && status != 'V'" (click)="downloadBill(custId, ext7)">
-        <img src="assets/images/icons/bill.svg" />&nbsp; Tải xuống bill
-      </button> -->
-      <!-- <button *ngIf="ext7 == null && status != 'V'" (click)="uploadBill(refid, trnRefNo)" mat-menu-item>
-        <img src="assets/images/icons/upload_bill.svg" />&nbsp; Upload bill
-      </button> -->
-      <hr />
-      <button mat-menu-item *ngIf="status == 'V' && type != 'rollTerm'" (click)="undoRevertTransaction(refid)">
-        <i class="fa fa-undo" aria-hidden="true"></i> &nbsp;Hoàn tác giao dịch
-      </button>
-      <button mat-menu-item *ngIf="status != 'V'" (click)="revertTransaction(refid)">
-        <i class="fa fa-ban" aria-hidden="true"></i> &nbsp;Hủy giao dịch
-      </button>
+      <div *ngIf="isHold != '0'">
+        <div *midasHasPermission="'POS_UPDATE'">
+          <button *ngIf="status == 'C'" mat-menu-item (click)="updateIsHoldTransaction(trnRefNo, refid)">
+            <i class="fa fa-anchor" aria-hidden="true"></i> &nbsp;Cập nhật tra soát
+          </button>
+        </div>
+        <button
+          mat-menu-item
+          [routerLink]="['/transaction/batch-transaction/', agencyId]"
+          [queryParams]="{ batchTxnName: type }"
+          *ngIf="
+            type != 'rollTerm' &&
+            type != 'cash' &&
+            status == 'C' &&
+            (today | date: 'dd/MM/yyyy') == (txnDate | date: 'dd/MM/yyyy')
+          "
+        >
+          <img src="assets/images/icons/next.svg" />&nbsp;Tiếp tục giao dịch
+        </button>
+        <button mat-menu-item [routerLink]="['/transaction', 'view']" [queryParams]="{ tranId: refid }">
+          <i class="fa fa-eye" aria-hidden="true"></i>&nbsp;Chi tiết
+        </button>
+      </div>
+      <div *ngIf="isHold == '0'">
+        <button
+          mat-menu-item
+          [routerLink]="['/transaction/batch-transaction/', agencyId]"
+          [queryParams]="{ batchTxnName: type }"
+          *ngIf="
+            type != 'rollTerm' &&
+            type != 'cash' &&
+            status == 'C' &&
+            (today | date: 'dd/MM/yyyy') == (txnDate | date: 'dd/MM/yyyy')
+          "
+        >
+          <img src="assets/images/icons/next.svg" />&nbsp;Tiếp tục giao dịch
+        </button>
+        <button mat-menu-item [routerLink]="['/transaction', 'view']" [queryParams]="{ tranId: refid }">
+          <i class="fa fa-eye" aria-hidden="true"></i>&nbsp;Chi tiết
+        </button>
+        <button
+          *midasHasPermission="'TRACE_BATCH_NO_UPDATE'"
+          mat-menu-item
+          (click)="addPosInformation(trnRefNo, batchNo, traceNo)"
+        >
+          <img src="assets/images/icons/add.svg" /> Cập nhật Thông tin bill nhiệt
+        </button>
+        <button *midasHasActiveModule="'billModule'" mat-menu-item (click)="downloadVoucher(refid)">
+          <img *ngIf="status != 'V'" src="assets/images/icons/order.svg" />&nbsp; Tải xuống hóa đơn
+        </button>
+        <hr />
+        <button mat-menu-item *ngIf="status == 'V' && type != 'rollTerm' &&
+        (today | date: 'dd/MM/yyyy') == (txnDate | date: 'dd/MM/yyyy')" (click)="undoRevertTransaction(refid)">
+          <i class="fa fa-undo" aria-hidden="true"></i> &nbsp;Hoàn tác giao dịch
+        </button>
+        <button
+          mat-menu-item
+          *ngIf="status != 'V' &&
+          (today | date: 'dd/MM/yyyy') == (txnDate | date: 'dd/MM/yyyy')"
+          (click)="revertTransaction(refid, trnRefNo)"
+        >
+          <i class="fa fa-ban" aria-hidden="true"></i> &nbsp;Hủy giao dịch
+        </button>
+      </div>
     </ng-template>
   </mat-menu>
   <div *ngIf="isLoading" style="display: flex; justify-content: center; align-items: center; background: white">
