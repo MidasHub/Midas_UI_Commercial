@@ -2,12 +2,7 @@
   <h1 style="color: green">Chúc mừng! Bạn đã thực hiện giao dịch [{{ transactionInfo.trnRefNo }}] thành công</h1>
   <h2>Bạn sẽ</h2>
   <mat-dialog-actions align="center">
-    <button
-      *midasHasActiveModule="'billModule'"
-      (click)="this.downloadVoucherTransaction()"
-      mat-raised-button
-      color="primary"
-    >
+    <button (click)="this.downloadVoucherTransaction()" mat-raised-button color="primary">
       <fa-icon icon="download"></fa-icon>&nbsp;&nbsp; Tải hóa đơn
     </button>
     <button (click)="this.addFeeDialog()" mat-raised-button color="warn">
