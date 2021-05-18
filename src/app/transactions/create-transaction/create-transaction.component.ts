@@ -486,7 +486,7 @@ export class CreateTransactionComponent implements OnInit {
             } else {
               this.alertService.alert({
                 message: res2.result.message ? res2.result.message : "Lỗi thêm thông tin hạn mức, hạng thẻ!",
-                msgClass: "cssError",
+                msgClass: "cssDanger",
                 hPosition: "center",
               });
               return;
@@ -566,6 +566,11 @@ export class CreateTransactionComponent implements OnInit {
     this.listRollTermBooking.forEach((booking: any) => {
       if (index < this.listRollTermBooking.length - 1) {
         if (this.transactionService.formatLong(booking.amountBooking) > maxAmount) {
+          this.alertService.alert({
+            message: `Số tiền không được vuợt quá ${this.formatCurrency(String(maxAmount))}đ`,
+            msgClass: "cssDanger",
+            hPosition: "center",
+          });
           booking.amountBooking = this.formatCurrency(String(maxAmount));
         }
         lastBookingAmountExceptLast +=
