@@ -41,6 +41,7 @@ export class AddFeeDialogComponent implements OnInit {
   messageError: string;
   isLoading: boolean = false;
   amountPaidBooking: number;
+  maxAmount: number = 0;
 
   constructor(
     private transactionService: TransactionService,
@@ -273,6 +274,7 @@ export class AddFeeDialogComponent implements OnInit {
             this.paidPaymentType.findIndex((x) => x.code === "DE"),
             1
           );
+          this.maxAmount = 30000000;
         }
         this.midasClientServices.getListSavingAccountByUserId().subscribe((result) => {
           this.accountsFee = result?.result?.listSavingAccount;
@@ -292,6 +294,16 @@ export class AddFeeDialogComponent implements OnInit {
       this.formDialogGet.markAllAsTouched();
       return;
     }
+    let amountPaidFee = this.formDialogPaid.get("amountPaid").value;
+    if (this.maxAmount > 0 && this.maxAmount < amountPaidFee) {
+      this.alertServices.alert({
+        message: `Số tiền chi ĐHT không được vuợt quá 30,000,000 1 lần`,
+        msgClass: "cssDanger",
+        hPosition: "center",
+      });
+      return;
+    }
+
     if (this.formDialogPaid.get("paymentCode").value == "DE") {
       this.formDialogPaid.get("amountPaid").enable();
       this.formDialogGet.get("amountGet").setValue("");
