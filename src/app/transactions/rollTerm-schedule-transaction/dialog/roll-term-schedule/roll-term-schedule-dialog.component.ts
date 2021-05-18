@@ -44,7 +44,7 @@ export class RollTermScheduleDialogComponent implements OnInit {
     private transactionService: TransactionService,
     private authenticationService: AuthenticationService,
     public dialog: MatDialog,
-    @Inject(MAT_DIALOG_DATA) public data: any,
+    @Inject(MAT_DIALOG_DATA) public data: any
   ) {
     this.rollTermId = data.rollTermId;
     this.getRollTermScheduleAndCardDueDayInfo(data.rollTermId);
@@ -56,7 +56,6 @@ export class RollTermScheduleDialogComponent implements OnInit {
   }
 
   checkPermissionMakeRepayment() {
-
     const permitREFINANCE_MAKE_PAYMENT = this.currentUser.permissions.includes("REFINANCE_MAKE_PAYMENT");
     const permitREFINANCE_EXECUTIVE = this.currentUser.permissions.includes("REFINANCE_EXECUTIVE");
 
@@ -126,7 +125,6 @@ export class RollTermScheduleDialogComponent implements OnInit {
   }
 
   addFeeDialogByTransactionId(isTrnRefNo: boolean, transactionId: string, amountPaid: number) {
-
     if (isTrnRefNo) {
       this.addFeeDialog(transactionId);
     } else {
@@ -136,14 +134,14 @@ export class RollTermScheduleDialogComponent implements OnInit {
         dialogConfig.data = {
           data: {
             txnCode: result?.result?.detailTransactionDto?.trnRefNo,
-            amountPaid:  amountPaid
+            amountPaid: amountPaid,
           },
         };
         // dialogConfig.minWidth = 400;
         const dialog = this.dialog.open(AddFeeDialogComponent, dialogConfig);
         dialog.afterClosed().subscribe((data) => {
           if (data) {
-            this.getRollTermScheduleAndCardDueDayInfo(data.rollTermId);
+            this.getRollTermScheduleAndCardDueDayInfo(transactionId);
           }
         });
       });
