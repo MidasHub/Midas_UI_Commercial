@@ -4,8 +4,9 @@ import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms"
 import { MAT_DIALOG_DATA } from "@angular/material/dialog";
 import { GroupsService } from "app/groups/groups.service";
 import { SavingsService } from "app/savings/savings.service";
-import { MatInputModule } from '@angular/material/input';
+import { MatInputModule } from "@angular/material/input";
 import { MatFormFieldModule } from "@angular/material/form-field";
+import { BanksService } from "app/banks/banks.service";
 @Component({
   // tslint:disable-next-line:component-selector
   selector: "midas-advance",
@@ -54,6 +55,7 @@ export class AdvanceComponent implements OnInit {
     private groupService: GroupsService,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private formBuilder: FormBuilder,
+    private bankService: BanksService
   ) {
     this.currentUser = data.currentUser;
     this.disable = data.disableUser;
@@ -61,13 +63,13 @@ export class AdvanceComponent implements OnInit {
     if (this.disable) {
       this.form.get("clientAdvanceCash").setValue(data.savingsAccountData.clientName);
     }
-
-    this.serviceClient.getStaffsByOffice(this.currentUser.officeId).subscribe((result) => {
-      this.staffs = result.result.listStaff;
-    });
   }
 
   ngOnInit(): void {
+    this.bankService.getListOfficeCommon().subscribe((offices: any) => {
+      this.offices = offices.result.listOffice;
+    });
+
     this.form = this.formBuilder.group({
       entityAdvanceCash: ["", Validators.required],
       clientAdvanceCash: ["", Validators.required],
@@ -79,13 +81,25 @@ export class AdvanceComponent implements OnInit {
     this.form.get("entityAdvanceCash").valueChanges.subscribe((value) => {
       if (value == "C") {
         this.form.addControl("staff", new FormControl(this.currentUser.staffId));
+        this.form.addControl("office", new FormControl(this.currentUser.officeId));
+
         this.form.get("staff").valueChanges.subscribe((value) => {
-          this.getClientAgencyFilter();
+          this.getClientAgencyFilter(value);
         });
+
+        this.form.get("office").valueChanges.subscribe((value) => {
+          this.serviceClient.getStaffsByOffice(value).subscribe((result) => {
+            this.staffs = result.result.listStaff;
+          });
+        });
+        this.serviceClient.getStaffsByOffice(this.currentUser.officeId).subscribe((result) => {
+          this.staffs = result.result.listStaff;
+        });
+        // this.getClientAgencyFilter(this.currentUser.staffId);
       } else {
         this.form.removeControl("staff");
+        this.form.removeControl("office");
       }
-      this.getClientAgencyFilter();
     });
   }
 
@@ -95,9 +109,8 @@ export class AdvanceComponent implements OnInit {
       : this.form.get("clientAdvanceCash");
   }
 
-  getClientAgencyFilter() {
+  getClientAgencyFilter(staffId: string) {
     let entityType = this.form.get("entityAdvanceCash").value;
-    let staffId = this.form.get("staff")?.value;
     this.clients = [];
     this.filteredClient = [];
     this.isLoading = true;
