@@ -1,9 +1,15 @@
-<h1 mat-dialog-title>{{'Client_Component.ViewClient.TabIdentities.dialogIdentifierTitle' |translate}}</h1>
+<h1 mat-dialog-title>{{ "Client_Component.ViewClient.TabIdentities.dialogIdentifierTitle" | translate }}</h1>
 
-<div mat-dialog-content [formGroup]="form" [fxLayout]="'column'" fxLayout.lt-md="column" [fxLayoutGap]="'1%'"
-  fxLayoutGap.lt-md="0%">
+<div
+  mat-dialog-content
+  [formGroup]="form"
+  [fxLayout]="'column'"
+  fxLayout.lt-md="column"
+  [fxLayoutGap]="'1%'"
+  fxLayoutGap.lt-md="0%"
+>
   <mat-form-field fxFlex="96%">
-    <mat-label>{{'Client_Component.ViewClient.TabIdentities.selectDocumentType' |translate}}</mat-label>
+    <mat-label>{{ "Client_Component.ViewClient.TabIdentities.selectDocumentType" | translate }}</mat-label>
     <mat-select formControlName="documentTypeId">
       <mat-option *ngFor="let documentType of documentTypes" [value]="documentType.id">
         {{ documentType.name }}
@@ -12,14 +18,20 @@
   </mat-form-field>
 
   <mat-form-field fxFlex="96%">
-    <mat-label>{{'Client_Component.ViewClient.TabIdentities.inputUniqueId' |translate}}</mat-label>
-    <input required *ngIf="!form.contains('documentCardType')" matInput formControlName="documentKey">
-    <input required *ngIf="form.contains('documentCardType')" matInput formControlName="documentKey"
-      [dropSpecialCharacters]="true" mask="0000-0000-0000-0000">
+    <mat-label>{{ "Client_Component.ViewClient.TabIdentities.inputUniqueId" | translate }}</mat-label>
+    <input required *ngIf="!form.contains('documentCardType')" matInput formControlName="documentKey" />
+    <input
+      required
+      *ngIf="form.contains('documentCardType')"
+      matInput
+      formControlName="documentKey"
+      [dropSpecialCharacters]="true"
+      mask="0000-0000-0000-0000"
+    />
   </mat-form-field>
 
   <mat-form-field fxFlex="96%" *ngIf="form.contains('documentCardBank')">
-    <mat-label>{{'Client_Component.ViewClient.TabIdentities.selectBank' |translate}}</mat-label>
+    <mat-label>{{ "Client_Component.ViewClient.TabIdentities.selectBank" | translate }}</mat-label>
     <mat-select required [disabled]="isTeller" formControlName="documentCardBank">
       <mat-option *ngFor="let sa of documentCardBanks" [value]="sa.bankCode">
         {{ sa.bankName }}
@@ -28,7 +40,7 @@
   </mat-form-field>
 
   <mat-form-field *ngIf="form.contains('documentCardType')" fxFlex="96%">
-    <mat-label>{{'Client_Component.ViewClient.TabIdentities.selectCardType' |translate}}</mat-label>
+    <mat-label>{{ "Client_Component.ViewClient.TabIdentities.selectCardType" | translate }}</mat-label>
     <mat-select required disabled formControlName="documentCardType">
       <mat-option *ngFor="let sa of documentCardTypes" [value]="sa.code">
         {{ sa.description }}
@@ -37,19 +49,27 @@
   </mat-form-field>
 
   <mat-form-field *ngIf="form.contains('dueDay')" fxFlex="48%">
-    <mat-label>Ngày đáo hạn thẻ(vd: 03 --> ngày 3):</mat-label>
-    <input required pattern maxlength="2" matInput type="number" max="31" min="0" formControlName="dueDay">
+    <mat-label>Ngày Advance(vd: 03 --> ngày 3):</mat-label>
+    <input required pattern maxlength="2" matInput type="number" max="31" min="0" formControlName="dueDay" />
   </mat-form-field>
 
   <mat-form-field *ngIf="form.contains('expiredDate')" fxFlex="48%">
     <mat-label>Ngày hết hạn thẻ(vd: 10/24 --> tháng 10 năm 2024):</mat-label>
-    <input required matInput maxlength="5" minlength="5" type="text" [dropSpecialCharacters]="false" mask="00/00"
-      formControlName="expiredDate">
+    <input
+      required
+      matInput
+      maxlength="5"
+      minlength="5"
+      type="text"
+      [dropSpecialCharacters]="false"
+      mask="00/00"
+      formControlName="expiredDate"
+    />
   </mat-form-field>
 
   <mat-form-field *ngIf="form.contains('limitCard')" fxFlex="48%">
     <mat-label>Hạn mức thẻ:</mat-label>
-    <input currencyMask required matInput type="text" formControlName="limitCard">
+    <input currencyMask required matInput type="text" formControlName="limitCard" />
   </mat-form-field>
 
   <mat-form-field *ngIf="form.contains('classCard')" fxFlex="48%">
@@ -59,16 +79,16 @@
       type="text"
       required
       formControlName="classCard"> -->
-    <mat-select matNativeControl formControlName="classCard" >
+    <mat-select matNativeControl formControlName="classCard">
       <mat-option value="" selected>-----Chọn hạng thẻ-----</mat-option>
       <mat-option *ngFor="let cCARD of classCardEnum" [value]="cCARD">
-        {{cCARD}}
+        {{ cCARD }}
       </mat-option>
     </mat-select>
   </mat-form-field>
 
   <mat-form-field fxFlex="96%" *ngIf="form.contains('status')">
-    <mat-label>{{'Client_Component.ViewClient.TabIdentities.selectStatus' |translate}}</mat-label>
+    <mat-label>{{ "Client_Component.ViewClient.TabIdentities.selectStatus" | translate }}</mat-label>
     <mat-select required [disabled]="isTeller" formControlName="status">
       <mat-option *ngFor="let sa of statusOptions" [value]="sa.value">
         {{ sa.value }}
@@ -77,14 +97,19 @@
   </mat-form-field>
 
   <mat-form-field fxFlex="96%">
-    <mat-label>{{'Client_Component.ViewClient.TabIdentities.inputDescription' |translate}}</mat-label>
-    <input matInput formControlName="description">
+    <mat-label>{{ "Client_Component.ViewClient.TabIdentities.inputDescription" | translate }}</mat-label>
+    <input matInput formControlName="description" />
   </mat-form-field>
 </div>
 
 <mat-dialog-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="2%">
-  <button mat-raised-button mat-dialog-close>{{ 'Shared_Component.FormDialog.btnCancel' | translate }}</button>
-  <button mat-raised-button color="primary"
-    [mat-dialog-close]="{ data: form,documentTypes:documentTypes,existBin:existBin }"
-    [disabled]="!form.valid || form.pristine">{{ 'Shared_Component.FormDialog.btnAdd' |translate }}</button>
+  <button mat-raised-button mat-dialog-close>{{ "Shared_Component.FormDialog.btnCancel" | translate }}</button>
+  <button
+    mat-raised-button
+    color="primary"
+    [mat-dialog-close]="{ data: form, documentTypes: documentTypes, existBin: existBin }"
+    [disabled]="!form.valid || form.pristine"
+  >
+    {{ "Shared_Component.FormDialog.btnAdd" | translate }}
+  </button>
 </mat-dialog-actions>

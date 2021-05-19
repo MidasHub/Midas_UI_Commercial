@@ -27,9 +27,9 @@ export class ValidCheckTransactionHistoryDialogComponent implements OnInit {
     if (type.startsWith("B")) return "Lô";
     switch (type) {
       case "cash":
-        return "RTM";
+        return "Cash";
       case "rollTerm":
-        return "ĐHT";
+        return "Advance";
       default:
         return "";
     }

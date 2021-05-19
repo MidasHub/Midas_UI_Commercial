@@ -62,18 +62,18 @@ export class ManageTransactionComponent implements OnInit {
       value: "",
     },
     {
-      label: "Giao dịch RTM",
-      shortName: "RTM",
+      label: "Giao dịch Cash",
+      shortName: "Cash",
       value: "CA01",
     },
     {
-      label: "Giao dịch ĐHT lẻ",
-      shortName: "ĐHT lẻ",
+      label: "Giao dịch Advance lẻ",
+      shortName: "Advance lẻ",
       value: "AL01",
     },
     {
-      label: "Giao dịch ĐHT sỉ",
-      shortName: "ĐHT sỉ",
+      label: "Giao dịch Advance sỉ",
+      shortName: "Advance sỉ",
       value: "AL02",
     },
     {
@@ -85,6 +85,11 @@ export class ManageTransactionComponent implements OnInit {
       label: "Giao dịch lô lẻ",
       shortName: "lô lẻ",
       value: "CA02",
+    },
+    {
+      label: "Giao dịch Cash - tiền chờ",
+      shortName: "Cash-chờ",
+      value: "CA03",
     },
   ];
   statusOption: any[] = [
@@ -162,7 +167,7 @@ export class ManageTransactionComponent implements OnInit {
     });
     this.formFilter.get("officeId").valueChanges.subscribe((value) => {
       this.clientsService.getListUserTeller(value).subscribe((result: any) => {
-        this.staffs = result?.result?.listStaff.filter((staff:any) => staff.displayName.startsWith("R"));
+        this.staffs = result?.result?.listStaff.filter((staff: any) => staff.displayName.startsWith("R"));
         this.staffs.unshift({
           id: "",
           displayName: "Tất cả",
@@ -183,7 +188,7 @@ export class ManageTransactionComponent implements OnInit {
     });
 
     this.clientsService.getListUserTeller(this.currentUser.officeId).subscribe((result: any) => {
-      this.staffs = result?.result?.listStaff.filter((staff:any) => staff.displayName.startsWith("R"));
+      this.staffs = result?.result?.listStaff.filter((staff: any) => staff.displayName.startsWith("R"));
       this.staffs.unshift({
         id: "",
         displayName: "Tất cả",

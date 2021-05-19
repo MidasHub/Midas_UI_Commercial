@@ -413,6 +413,20 @@ export class CreateTransactionComponent implements OnInit {
       this.addIdentifierExtraInfo();
       return;
     }
+    let totalBooking = 0;
+    for (let i = 0; i < this.listRollTermBooking.length; i++) {
+      let booking = this.listRollTermBooking[i];
+      totalBooking += this.transactionService.formatLong(booking.amountBooking);
+    }
+
+    if (this.transactionService.formatLong(this.transactionInfo.requestAmount) != totalBooking) {
+      this.alertService.alert({
+        message: `Tổng số tiền trong lịch Advance không bằng số tiền cần làm Advance (${this.transactionInfo.requestAmount}) `,
+        msgClass: "cssDanger",
+        hPosition: "center",
+      });
+      return;
+    }
 
     if (this.transactionCreateForm.invalid) {
       return;

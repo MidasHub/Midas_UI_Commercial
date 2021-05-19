@@ -1,7 +1,10 @@
-<div [ngClass]="{
+<div
+  [ngClass]="{
     'sidebar-full': !sidenavCollapsed,
     'sidebar-compact': sidenavCollapsed
-    }" tourAnchor="id1-1">
+  }"
+  tourAnchor="id1-1"
+>
   <div class="navigation-panel" fxLayout="column">
     <!-- TODO: Allow customization by organization -->
     <div class="mat-elevation-z8">
@@ -68,8 +71,9 @@
       </mat-menu>
 
       <mat-menu #accountingMenu="matMenu" [overlapTrigger]="false">
-        <button mat-menu-item [routerLink]="['/accounting']">{{ "Toolbar_Component.lblAccounting" | translate
-          }}</button>
+        <button mat-menu-item [routerLink]="['/accounting']">
+          {{ "Toolbar_Component.lblAccounting" | translate }}
+        </button>
         <button mat-menu-item [matMenuTriggerFor]="reportsMenu">{{ "Toolbar_Component.lblReport" | translate }}</button>
         <button mat-menu-item [matMenuTriggerFor]="adminMenu">{{ "Toolbar_Component.lblAdmin" | translate }}</button>
         <button mat-menu-item [matMenuTriggerFor]="selfServiceMenu">
@@ -121,8 +125,9 @@
         <!-- <button *midasHasPermission="'POS_UPDATE'" mat-menu-item routerLink="/terminals">
           Điều chuyển máy POS
         </button> -->
-        <button mat-menu-item *midasHasPermission="'POS_READ'" routerLink="/terminals/limit">{{ "Quản lý hạn mức POS" |
-          translate }}</button>
+        <button mat-menu-item *midasHasPermission="'POS_READ'" routerLink="/terminals/limit">
+          {{ "Quản lý hạn mức POS" | translate }}
+        </button>
         <button mat-menu-item *midasHasPermission="'POS_UPDATE'" routerLink="/terminals">
           {{ "Quản lý máy POS" | translate }}
         </button>
@@ -130,20 +135,20 @@
           {{ "Toolbar_Component.lblThirdParty" | translate }}
         </button>
         <!-- <button mat-menu-item routerLink="/groups/spending-limit">Hạn mức chi tiêu</button> -->
-
       </mat-menu>
 
       <mat-menu #transactionMenu="matMenu" [overlapTrigger]="false">
         <button mat-menu-item routerLink="/transaction">Quản lý giao dịch</button>
-        <button mat-menu-item routerLink="/transaction/rollTermSchedule">Quản lý đáo hạn thẻ</button>
+        <button mat-menu-item routerLink="/transaction/rollTermSchedule">Quản lý Advance</button>
         <button mat-menu-item routerLink="/transaction/fee-paid-management">Quản lý phí giao dịch</button>
       </mat-menu>
 
       <mat-menu #BookingMenu="matMenu" [overlapTrigger]="false">
         <button mat-menu-item routerLink="/booking/agency">Đại lý</button>
         <button mat-menu-item routerLink="/booking/create">Tạo booking nội bộ</button>
-        <button *midasHasPermission="'POS_UPDATE'" mat-menu-item routerLink="/booking/view">Quản lý booking nội
-          bộ</button>
+        <button *midasHasPermission="'POS_UPDATE'" mat-menu-item routerLink="/booking/view">
+          Quản lý booking nội bộ
+        </button>
       </mat-menu>
 
       <mat-menu #MarketingMenu="matMenu" [overlapTrigger]="false">
@@ -191,11 +196,9 @@
       <mat-nav-list>
         <!-- new: Billpos Item -->
         <mat-list-item class="tab-link" [matMenuTriggerFor]="institutionMenu" #institutionMenuTrigger="matMenuTrigger">
-          <mat-icon matListIcon><i class="fas fa-list-ol"></i>
-          </mat-icon>
+          <mat-icon matListIcon><i class="fas fa-list-ol"></i> </mat-icon>
           <a matLine>{{ "Toolbar_Component.labelInstitution" | translate }}</a>
         </mat-list-item>
-
 
         <mat-list-item class="tab-link" [matMenuTriggerFor]="POSPartnerMenu" #POSPartnerMenuTrigger="matMenuTrigger">
           <mat-icon matListIcon><i class="fas fa-hands-helping"></i></mat-icon>
@@ -211,8 +214,13 @@
           <a matLine>Booking</a>
         </mat-list-item>
 
-        <mat-list-item *midasHasActiveModule="'campaignModule'" class="tab-link" [matMenuTriggerFor]="MarketingMenu"
-          #MarketingMenuTrigger="matMenuTrigger"> <label *midasHasPermission="'POS_UPDATE'">
+        <mat-list-item
+          *midasHasActiveModule="'campaignModule'"
+          class="tab-link"
+          [matMenuTriggerFor]="MarketingMenu"
+          #MarketingMenuTrigger="matMenuTrigger"
+        >
+          <label *midasHasPermission="'POS_UPDATE'">
             <mat-icon matListIcon><i class="fas fa-ad"></i></mat-icon>
             <a matLine>Marketing</a>
           </label>
@@ -304,7 +312,6 @@
           </mat-icon>
           <a matLine>Keyboard Shortcuts</a>
         </mat-list-item> -->
-
       </mat-nav-list>
     </div>
   </div>
