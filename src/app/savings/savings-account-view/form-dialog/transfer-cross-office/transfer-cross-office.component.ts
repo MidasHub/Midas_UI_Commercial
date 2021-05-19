@@ -50,7 +50,7 @@ export class TransferCrossOfficeComponent implements OnInit {
   typeAdvanceCashes: any[] = [
     {
       id: "6",
-      name: "Chuyển tiền đối tác",
+      name: "Chuyển tiền liên chi nhánh",
     },
     {
       id: "7",
