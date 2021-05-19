@@ -95,11 +95,12 @@ export class AdvanceComponent implements OnInit {
         this.serviceClient.getStaffsByOffice(this.currentUser.officeId).subscribe((result) => {
           this.staffs = result.result.listStaff;
         });
-        this.getClientAgencyFilter(this.currentUser.staffId);
       } else {
         this.form.removeControl("staff");
         this.form.removeControl("office");
       }
+
+      this.getClientAgencyFilter(this.currentUser.staffId);
     });
   }
 
