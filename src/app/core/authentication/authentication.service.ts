@@ -20,6 +20,7 @@ import { LoginContext } from "./login-context.model";
 import { Credentials } from "./credentials.model";
 import { OAuth2Token } from "./o-auth2-token.model";
 import { MidasClientService } from "app/midas-client/midas-client.service";
+import { BanksService } from "app/banks/banks.service";
 
 /**
  * Authentication workflow.
@@ -72,6 +73,7 @@ export class AuthenticationService {
     private http: HttpClient,
     private alertService: AlertService,
     private midasClientService: MidasClientService,
+    private bankService: BanksService,
     private authenticationInterceptor: AuthenticationInterceptor
   ) {
     this.rememberMe = false;
@@ -262,19 +264,20 @@ export class AuthenticationService {
    */
   checkAppModuleSetting(moduleName: string): boolean {
     const credentials = this.getCredentials();
+    if (credentials) {
+      if (!credentials.appSettingModule) {
+        this.midasClientService
+          .getInfoModuleActive(credentials.userId, credentials.officeId, credentials.base64EncodedAuthenticationKey)
+          .subscribe((response: any) => {
+            credentials.appSettingModule = response?.result?.appSettingModule;
 
-    if (!credentials.appSettingModule) {
-      this.midasClientService
-        .getInfoModuleActive(credentials.userId, credentials.officeId, credentials.base64EncodedAuthenticationKey)
-        .subscribe((response: any) => {
-          credentials.appSettingModule = response?.result?.appSettingModule;
+            this.storage.setItem(this.credentialsStorageKey, JSON.stringify(credentials));
 
-          this.storage.setItem(this.credentialsStorageKey, JSON.stringify(credentials));
-
-          return this.checkAppModuleService(moduleName, credentials);
-        });
-    } else {
-      return this.checkAppModuleService(moduleName, credentials);
+            return this.checkAppModuleService(moduleName, credentials);
+          });
+      } else {
+        return this.checkAppModuleService(moduleName, credentials);
+      }
     }
 
     return false;
@@ -353,6 +356,11 @@ export class AuthenticationService {
     if (credentials) {
       credentials.rememberMe = this.rememberMe;
       this.storage.setItem(this.credentialsStorageKey, JSON.stringify(credentials));
+      // load card and bank data
+      this.bankService.bankCardDataInit();
+
+      // init check module active value
+      this.checkAppModuleSetting(null);
     } else {
       this.storage.removeItem(this.credentialsStorageKey);
       this.storage.removeItem(this.oAuthTokenDetailsStorageKey);
