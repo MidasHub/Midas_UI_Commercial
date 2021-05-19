@@ -65,8 +65,8 @@ export class ManageTransactionComponent implements OnInit {
       value: "",
     },
     {
-      label: "Giao dịch RTM",
-      shortName: "RTM",
+      label: "Giao dịch BHTM",
+      shortName: "BHTM",
       value: "CA01",
     },
     {
@@ -90,8 +90,8 @@ export class ManageTransactionComponent implements OnInit {
       value: "CA02",
     },
     {
-      label: "Giao dịch RTM - tiền chờ",
-      shortName: "RTM-chờ",
+      label: "Giao dịch BHTM - tiền chờ",
+      shortName: "BHTM-chờ",
       value: "CA03",
     },
   ];

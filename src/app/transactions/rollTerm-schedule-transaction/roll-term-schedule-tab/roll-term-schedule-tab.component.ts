@@ -60,7 +60,7 @@ export class RollTermScheduleTabComponent implements OnInit {
       value: "",
     },
     {
-      label: "Giao dịch RTM",
+      label: "Giao dịch BHTM",
       value: "CA01",
     },
     {

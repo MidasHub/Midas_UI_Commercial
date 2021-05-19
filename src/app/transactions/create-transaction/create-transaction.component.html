@@ -13,7 +13,9 @@
         <div fxFlex.gt-sm="50%" fxLayout="row wrap" class="content">
           <div fxFlex="100%">
             Loại giao dịch :
-            <span style="color: green; font-weight: bold" *ngIf="transactionInfo.type == 'cash'">RÚT TIỀN MẶT</span>
+            <span style="color: green; font-weight: bold" *ngIf="transactionInfo.type == 'cash'"
+              >BÁN HÀNG TIỀN MĂT</span
+            >
             <span style="color: green; font-weight: bold" *ngIf="transactionInfo.type == 'rollTerm'"
               >BÁN HÀNG CÔNG NỢ</span
             >
@@ -70,8 +72,8 @@
                   [ngModelOptions]="{ standalone: true }"
                   (change)="this.calculateFeeTransaction()"
                 >
-                  <option value="CA01">RTM thông thường</option>
-                  <option value="CA03">RTM - tiền chờ</option>
+                  <option value="CA01">BHTM thông thường</option>
+                  <option value="CA03">BHTM - tiền chờ</option>
                   <option value="TEST">Test thẻ</option>
                   <option value="CA02">Lô lẻ</option>
                 </select>

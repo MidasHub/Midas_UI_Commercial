@@ -65,8 +65,8 @@ export class ManageIcTransactionComponent implements OnInit {
       value: "",
     },
     {
-      label: "Giao dịch RTM",
-      shortName: "RTM",
+      label: "Giao dịch BHTM",
+      shortName: "BHTM",
       value: "CA01",
     },
     {

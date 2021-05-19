@@ -12,7 +12,7 @@ export class AddRowCreateBatchTransactionComponent implements OnInit {
   optionsProducts: any[] = [
     {
       value: "CA01",
-      label: "RTM",
+      label: "BHTM",
     },
     {
       value: "AL01",

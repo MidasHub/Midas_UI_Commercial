@@ -59,7 +59,7 @@ export class FeePaidManagementComponent implements OnInit {
       value: "",
     },
     {
-      label: "Giao dịch RTM",
+      label: "Giao dịch BHTM",
       value: "CA01",
     },
     {
@@ -75,7 +75,7 @@ export class FeePaidManagementComponent implements OnInit {
       value: "CA02",
     },
     {
-      label: "Giao dịch RTM-tiền chờ",
+      label: "Giao dịch BHTM-tiền chờ",
       value: "CA03",
     },
   ];

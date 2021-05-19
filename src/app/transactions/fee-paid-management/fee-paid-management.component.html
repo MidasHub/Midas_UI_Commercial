@@ -195,7 +195,7 @@
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Loại GD</th>
         <td mat-cell *matCellDef="let transaction" [ngSwitch]="getDataOfGroupTxnCode(transaction)[0].txnType">
           <button *ngSwitchCase="'CASH'" style="background: green; color: white" mat-button class="btn btn-success">
-            RTM
+            BHTM
           </button>
           <button
             *ngSwitchCase="'ROLLTERM'"

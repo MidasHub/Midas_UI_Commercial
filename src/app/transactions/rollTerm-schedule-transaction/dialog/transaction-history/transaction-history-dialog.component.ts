@@ -72,7 +72,7 @@ export class TransactionHistoryDialogComponent implements OnInit {
     if (type.startsWith("B")) return "Lô";
     switch (type) {
       case "cash":
-        return "RTM";
+        return "BHTM";
       case "rollTerm":
         return "BHCN";
       default:
