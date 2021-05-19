@@ -55,11 +55,11 @@ export class CreateBatchTransactionComponent implements OnInit {
   terminals: any[] = [];
   batchProducts: any[] = [
     {
-      label: "RTM",
+      label: "Cash",
       value: "CA01",
     },
     {
-      label: "ĐHT",
+      label: "Advance",
       value: "AL02",
     },
   ];

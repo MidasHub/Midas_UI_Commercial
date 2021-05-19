@@ -22,9 +22,7 @@
     <mat-form-field fxFlex="18%">
       <mat-label>Ngân hàng</mat-label>
       <select matSelect matNativeControl formControlName="bankName">
-        <option value="ALL">
-          Tất cả ngân hàng
-        </option>
+        <option value="ALL">Tất cả ngân hàng</option>
         <option *ngFor="let bank of listBank" [value]="bank.bankCode">
           {{ bank.bankName }}
         </option>
@@ -148,7 +146,7 @@
       <ng-container matColumnDef="actions">
         <th mat-header-cell *matHeaderCellDef>Hành động</th>
         <td mat-cell *matCellDef="let card; let i = dataIndex" style="width: 10%; text-align: center">
-          <mat-icon style="color: red" title="Lên lịch đáo hạn thẻ" (click)="showCreateRollTermScheduleDialog(card)"
+          <mat-icon style="color: red" title="Lên lịch Advance" (click)="showCreateRollTermScheduleDialog(card)"
             >format_list_numbered_rtl</mat-icon
           >
           <mat-icon style="color: green" title="Cập nhật" (click)="updateCardTrackingState(i)">save</mat-icon>
@@ -162,41 +160,37 @@
           <div class="example-element-detail" [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
             <div class="example-element-description" fxLayout="column">
               <div>
-                <span
-                style="font-weight: bold">
-                 Tên khách hàng :
-                </span>
+                <span style="font-weight: bold"> Tên khách hàng : </span>
                 <a href="/#/clients/{{ element.clientId }}/general?typeViewClient=view">
                   <mat-icon style="color: black" title="Chi tiết">person</mat-icon>
                   {{ element.clientName }}<br />
                 </a>
                 <mat-label style="font-size: small" title="Số dư tài khoản">
-                  <mat-icon style="color: green" >monetization_on</mat-icon>
+                  <mat-icon style="color: green">monetization_on</mat-icon>
 
-                  {{element.accountBalanceDerived | money }}
-                </mat-label> <br />
+                  {{ element.accountBalanceDerived | money }}
+                </mat-label>
+                <br />
                 <mat-label style="font-size: small" *ngIf="element.groupName">
                   <a href="#/groups/{{ element.groupId }}/general">
-                    <mat-icon style="color: black; " title="Thuộc đại lý">groups</mat-icon>
+                    <mat-icon style="color: black" title="Thuộc đại lý">groups</mat-icon>
                     {{ element.groupName }}
                   </a>
                   <br />
                 </mat-label>
-                <mat-label (click)="showHistoryTransaction(element.clientId)" title="Xem lịch sử giao dịch 90 ngày gần nhất">
+                <mat-label
+                  (click)="showHistoryTransaction(element.clientId)"
+                  title="Xem lịch sử giao dịch 90 ngày gần nhất"
+                >
                   <mat-icon style="color: black">fact_check</mat-icon>
-                  <a style="color: black;" href="javascript:void(0)">
-                    Lịch sử giao dịch
-                  </a>
+                  <a style="color: black" href="javascript:void(0)"> Lịch sử giao dịch </a>
                 </mat-label>
               </div>
               <div>
-                <span
-                style="font-weight: bold"
-                > Số điện thoại :</span>
+                <span style="font-weight: bold"> Số điện thoại :</span>
                 &nbsp; &nbsp;{{ element.clientPhone }}
               </div>
-              <div>
-                <span style="font-weight: bold"> Số thẻ:</span>&nbsp; &nbsp;{{ element.identifierId }}</div>
+              <div><span style="font-weight: bold"> Số thẻ:</span>&nbsp; &nbsp;{{ element.identifierId }}</div>
             </div>
           </div>
         </td>

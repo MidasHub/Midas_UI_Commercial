@@ -1,9 +1,9 @@
-<h1 mat-dialog-title>Danh sách Booking đáo hạn thẻ [{{ bookingRefNo }}]</h1>
+<h1 mat-dialog-title>Danh sách Booking Advance [{{ bookingRefNo }}]</h1>
 <div mat-dialog-content>
   <table mat-table multiTemplateDataRows class="mat-elevation-z8" [dataSource]="transactions" matSort>
     <ng-container matColumnDef="bookingRefNo">
       <th mat-header-cell class="mat-cell-custom" *matHeaderCellDef>Loại</th>
-      <td mat-cell class="mat-cell-custom" *matCellDef="let transaction ; let i = dataIndex">
+      <td mat-cell class="mat-cell-custom" *matCellDef="let transaction; let i = dataIndex">
         <mat-label>
           {{ i == 0 ? "Test thẻ" : "Lần " + i }}
         </mat-label>
