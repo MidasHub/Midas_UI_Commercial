@@ -63,7 +63,7 @@ export class FeePaidManagementComponent implements OnInit {
       value: "CA01",
     },
     {
-      label: "Giao dịch ĐHT",
+      label: "Giao dịch BHCN",
       value: "AL01",
     },
     {
@@ -137,7 +137,7 @@ export class FeePaidManagementComponent implements OnInit {
     private savingsService: SavingsService,
     private clientServices: ClientsService,
 
-    public dialog: MatDialog,
+    public dialog: MatDialog
   ) {
     this.formDate = this.formBuilder.group({
       fromDate: [new Date()],
@@ -181,7 +181,7 @@ export class FeePaidManagementComponent implements OnInit {
       this.partners.unshift({ code: "", desc: "Tất cả" });
     });
     this.clientServices.getListUserTeller(this.currentUser.officeId).subscribe((result: any) => {
-      this.staffs = result?.result?.listStaff.filter((staff:any) => staff.displayName.startsWith("R"));
+      this.staffs = result?.result?.listStaff.filter((staff: any) => staff.displayName.startsWith("R"));
       this.staffs.unshift({
         id: "",
         displayName: "Tất cả",
@@ -228,7 +228,7 @@ export class FeePaidManagementComponent implements OnInit {
         }
         v.DEAmount = 0;
 
-        v.customerName = v.txnType == 'BATCH' ? v.txnCode : v.customerName;
+        v.customerName = v.txnType == "BATCH" ? v.txnCode : v.customerName;
         if (v.txnPaymentType === "OUT") {
           v.DEAmount = v.txnAmount - v.feeSum;
         }
@@ -243,7 +243,6 @@ export class FeePaidManagementComponent implements OnInit {
   }
 
   filterTransaction() {
-
     const limit = this.paginator.pageSize;
     const offset = this.paginator.pageIndex * limit;
     const form = this.formFilter.value;
@@ -389,13 +388,12 @@ export class FeePaidManagementComponent implements OnInit {
   }
 
   checkShowButton(txnCode: string) {
-
     const txn = this.getDataOfGroupTxnCode(txnCode).find((v: any) => v.status == "A") || false;
-    return  txn;
+    return txn;
   }
 
   checkFeePaid(txnCode: string) {
-    const txn =  this.getDataOfGroupTxnCode(txnCode).find((v: any) => v.feePaid > 0) || false;
+    const txn = this.getDataOfGroupTxnCode(txnCode).find((v: any) => v.feePaid > 0) || false;
     return txn;
   }
 

@@ -70,13 +70,13 @@ export class ManageTransactionComponent implements OnInit {
       value: "CA01",
     },
     {
-      label: "Giao dịch ĐHT lẻ",
-      shortName: "ĐHT lẻ",
+      label: "Giao dịch BHCN lẻ",
+      shortName: "BHCN lẻ",
       value: "AL01",
     },
     {
-      label: "Giao dịch ĐHT sỉ",
-      shortName: "ĐHT sỉ",
+      label: "Giao dịch BHCN sỉ",
+      shortName: "BHCN sỉ",
       value: "AL02",
     },
     {

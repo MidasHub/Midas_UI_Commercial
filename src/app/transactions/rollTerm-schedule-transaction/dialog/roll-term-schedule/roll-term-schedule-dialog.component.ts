@@ -215,7 +215,8 @@ export class RollTermScheduleDialogComponent implements OnInit {
 
     // check valid amount change
     if (totalBookingAmountTmp > this.transactionInfo.reqAmount + lastAmountBooking) {
-      const message = "Tổng số tiền lịch đáo hạn sau điều chỉnh không thể vượt quá giá trị khoản đáo hạn! ";
+      const message =
+        "Tổng số tiền lịch bán hàng công nợ sau điều chỉnh không thể vượt quá giá trị khoản bán hàng công nợ! ";
       this.alertService.alert({
         msgClass: "cssDanger",
         message: message,

@@ -59,7 +59,7 @@ export class CreateBatchTransactionComponent implements OnInit {
       value: "CA01",
     },
     {
-      label: "ĐHT",
+      label: "BHCN",
       value: "AL02",
     },
   ];

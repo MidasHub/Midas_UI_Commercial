@@ -70,13 +70,13 @@ export class ManageIcTransactionComponent implements OnInit {
       value: "CA01",
     },
     {
-      label: "Giao dịch ĐHT lẻ",
-      shortName: "ĐHT lẻ",
+      label: "Giao dịch BHCN lẻ",
+      shortName: "BHCN lẻ",
       value: "AL01",
     },
     {
-      label: "Giao dịch ĐHT sỉ",
-      shortName: "ĐHT sỉ",
+      label: "Giao dịch BHCN sỉ",
+      shortName: "BHCN sỉ",
       value: "AL02",
     },
     {
@@ -505,29 +505,26 @@ export class ManageIcTransactionComponent implements OnInit {
     this.transactionService.exportTransactionForPartner(query);
   }
 
-  exportAsXLSX():void {
+  exportAsXLSX(): void {
     console.log("data ", this.transactionsData);
     let dataCopy = [];
     let i = -1;
     while (++i < this.transactionsData.length) {
       let element = this.transactionsData[i];
-      let e:any = {
-        'createdDate': element.createdDate,
-        'terminalId':element.terminalId,
-        'partnerName':this.displayPartnerPos(element.terminalId),
-        'bankName':this.displayBankPos(element.terminalId),
-        'customerName':element.panHolderName,
-        'terminalAmount':element.terminalAmount,
-        'traceNo':element.traceNo,
-        'batchNo':element.batchNo,
-        'feeAmount':element.feeAmount,
-    };
+      let e: any = {
+        createdDate: element.createdDate,
+        terminalId: element.terminalId,
+        partnerName: this.displayPartnerPos(element.terminalId),
+        bankName: this.displayBankPos(element.terminalId),
+        customerName: element.panHolderName,
+        terminalAmount: element.terminalAmount,
+        traceNo: element.traceNo,
+        batchNo: element.batchNo,
+        feeAmount: element.feeAmount,
+      };
       dataCopy.push(e);
     }
 
-    this.transactionService.exportAsExcelFile('TransactionIC', dataCopy);
+    this.transactionService.exportAsExcelFile("TransactionIC", dataCopy);
   }
-
-
-
 }

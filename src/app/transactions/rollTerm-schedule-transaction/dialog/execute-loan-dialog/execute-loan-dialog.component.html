@@ -1,4 +1,4 @@
-<h1 mat-dialog-title>Xử lý chênh lệch đáo hạn giao dịch - {{ refId }}</h1>
+<h1 mat-dialog-title>Xử lý chênh lệch bán hàng công nợ - {{ refId }}</h1>
 <div mat-dialog-content>
   <div class="custom-files-input" fxLayout="column">
     <div fxLayout="column" [formGroup]="formDialogPaid">
@@ -23,7 +23,6 @@
         <mat-form-field fxFlex="30%">
           <mat-label>Số tiền</mat-label>
           <input matInput disabled [value]="this.posTransaction.principal - this.posTransaction.amountPaid | money" />
-
         </mat-form-field>
       </div>
     </div>

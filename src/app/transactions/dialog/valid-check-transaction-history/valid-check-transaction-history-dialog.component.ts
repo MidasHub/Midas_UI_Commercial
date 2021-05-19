@@ -29,7 +29,7 @@ export class ValidCheckTransactionHistoryDialogComponent implements OnInit {
       case "cash":
         return "RTM";
       case "rollTerm":
-        return "ĐHT";
+        return "BHCN";
       default:
         return "";
     }

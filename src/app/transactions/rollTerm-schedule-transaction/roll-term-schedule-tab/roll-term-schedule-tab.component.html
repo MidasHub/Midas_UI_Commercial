@@ -25,16 +25,13 @@
         <mat-option *ngFor="let option of staffs" [value]="option.userId">
           {{ option.displayName }}
         </mat-option>
-
       </mat-select>
     </mat-form-field>
 
     <mat-form-field fxFlex="18%">
       <mat-label>Ngân hàng</mat-label>
       <select matSelect matNativeControl formControlName="bankFilter">
-        <option value="ALL">
-          Tất cả ngân hàng
-        </option>
+        <option value="ALL">Tất cả ngân hàng</option>
         <option *ngFor="let bank of banks" [value]="bank.bankCode">
           {{ bank.bankName }}
         </option>
@@ -90,7 +87,7 @@
               transactionsData?.totalRollTermAnalyticsRespone?.totalPrincipal -
                 transactionsData?.totalRollTermAnalyticsRespone?.totalFeePaid | money
             }}</span>
-            <span>&nbsp; Tổng đáo hạn còn lại</span>
+            <span>&nbsp; Tổng bán hàng công nợ còn lại</span>
           </div>
         </div>
         <div fxLayout="row wrap" fxFlex="16%" class="container m-b-20">
@@ -173,7 +170,7 @@
 
       <ng-container matColumnDef="requestAmount">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>
-          Số tiền đáo hạn <br />
+          Số tiền bán hàng công nợ <br />
           (a)
         </th>
         <td mat-cell *matCellDef="let journalEntry">{{ journalEntry?.principal | money }}</td>
@@ -184,12 +181,14 @@
           Đã chi <br />
           (b)
         </th>
-        <td class="on_hold" mat-cell style="padding: 6px" *matCellDef="let journalEntry">{{ journalEntry.paidAmount | money }}</td>
+        <td class="on_hold" mat-cell style="padding: 6px" *matCellDef="let journalEntry">
+          {{ journalEntry.paidAmount | money }}
+        </td>
       </ng-container>
 
       <ng-container matColumnDef="remainAmount">
         <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>
-          Còn phải đáo hạn <br />
+          Còn phải bán hàng công nợ <br />
           (c) = (a) - (b)
         </th>
         <td mat-cell fxHide fxShow.gt-md *matCellDef="let journalEntry">
@@ -198,23 +197,21 @@
       </ng-container>
 
       <ng-container matColumnDef="txnAmount">
-        <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header
-        class="on_success">
+        <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header class="on_success">
           Đã thu hồi <br />
           (d)
         </th>
-        <td class="on_success" mat-cell fxHide fxShow.gt-md *matCellDef="let journalEntry">{{ journalEntry.amountPaid | money }}</td>
+        <td class="on_success" mat-cell fxHide fxShow.gt-md *matCellDef="let journalEntry">
+          {{ journalEntry.amountPaid | money }}
+        </td>
       </ng-container>
 
       <ng-container matColumnDef="waitGetAmount">
-        <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header
-        class="on_hold">
+        <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header class="on_hold">
           Cần thu hồi <br />
           (d)
         </th>
-        <td mat-cell fxHide fxShow.gt-md *matCellDef="let journalEntry"
-        class="on_hold"
-        >
+        <td mat-cell fxHide fxShow.gt-md *matCellDef="let journalEntry" class="on_hold">
           {{ journalEntry.paidAmount - journalEntry.amountPaid | money }}
         </td>
       </ng-container>
@@ -268,7 +265,7 @@
               <div><span style="font-weight: bold"> Chi nhánh :</span>&nbsp; &nbsp;{{ element.officeName }}</div>
               <div>
                 <span style="font-weight: bold">
-                  Số tiền đáo hạn <br />
+                  Số tiền bán hàng công nợ <br />
                   (a) :</span
                 >&nbsp; &nbsp;{{ element?.principal }}
               </div>
@@ -280,7 +277,7 @@
               </div>
               <div>
                 <span style="font-weight: bold">
-                  Còn phải đáo hạn <br />
+                  Còn phải bán hàng công nợ <br />
                   (c) = (a) - (b) :</span
                 >&nbsp; &nbsp;{{ element?.principal - element?.paidAmount | money }}
               </div>
@@ -328,15 +325,15 @@
       style="width: 50px"
     >
       <button (click)="showRollTermScheduleDialog(refid)" mat-menu-item>
-        <img src="assets/images/icons/add.svg" />&nbsp;Lịch ĐHT
+        <img src="assets/images/icons/add.svg" />&nbsp;Lịch BHCN
       </button>
       <button mat-menu-item (click)="executeLoanManualDialog(refid)">
-        <img src="assets/images/icons/order.svg" />&nbsp;Xử lý ĐHT
+        <img src="assets/images/icons/order.svg" />&nbsp;Xử lý BHCN
       </button>
 
       <hr />
-      <button mat-menu-item (click)="undoRollTermTransaction(refid,  (principal - paidAmount))">
-        <i class="fa fa-eye" aria-hidden="true"></i>&nbsp;Hủy ĐHT
+      <button mat-menu-item (click)="undoRollTermTransaction(refid, principal - paidAmount)">
+        <i class="fa fa-eye" aria-hidden="true"></i>&nbsp;Hủy BHCN
       </button>
     </ng-template>
   </mat-menu>

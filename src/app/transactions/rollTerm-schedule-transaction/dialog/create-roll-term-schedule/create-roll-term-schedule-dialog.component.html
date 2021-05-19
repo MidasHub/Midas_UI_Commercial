@@ -1,7 +1,7 @@
 <mat-card>
   <mat-card-content>
     <h1 mat-dialog-title uppercase>
-      Tạo lịch đáo hạn thẻ của {{ info?.panNumber }} - {{ info?.panHolderName | uppercase }}
+      Tạo lịch bán hàng công nợ của {{ info?.panNumber }} - {{ info?.panHolderName | uppercase }}
     </h1>
     <div
       [formGroup]="form"
@@ -14,16 +14,16 @@
       <mat-form-field fxFlex="20%">
         <input type="text" matInput required currencyMask formControlName="requestAmount" />
         <mat-error>Thông tin bắt buộc!</mat-error>
-        <span matPrefix>Số tiền đáo hạn:&nbsp;</span>
+        <span matPrefix>Số tiền :&nbsp;</span>
       </mat-form-field>
       <mat-form-field fxFlex="10%">
-        <input matInput type="text" required formControlName="feeRate"  />
+        <input matInput type="text" required formControlName="feeRate" />
         <mat-error>Thông tin bắt buộc!</mat-error>
         <span matPrefix> - Phí:&nbsp;</span>
         <span matSuffix>%</span>
       </mat-form-field>
       <mat-form-field fxFlex="20%">
-        <input matInput  disabled  [value]="info?.feeAmount | money"  />
+        <input matInput disabled [value]="info?.feeAmount | money" />
         <span matPrefix> - Tiền phí cần thu:&nbsp;</span>
       </mat-form-field>
     </div>
@@ -62,11 +62,11 @@
           <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>
             Số tiền - Tổng: {{ totalBookingAmount | money }}
           </th>
-          <td mat-cell fxHide fxShow.gt-md *matCellDef="let booking ; let i = dataIndex">
+          <td mat-cell fxHide fxShow.gt-md *matCellDef="let booking; let i = dataIndex">
             <mat-form-field>
               <input
                 matInput
-                [disabled]="i == (this.dataSource.data.length - 1)"
+                [disabled]="i == this.dataSource.data.length - 1"
                 type="text"
                 currencyMask
                 [(ngModel)]="booking.amountBooking"
@@ -133,6 +133,5 @@
 <div class="container" fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column"></div>
 <mat-dialog-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="2%">
   <button mat-raised-button mat-dialog-close>Đóng</button>
-  <button mat-raised-button [mat-dialog-close]="{ data: form  }"
-  [disabled]="!form.valid || form.pristine">Tạo</button>
+  <button mat-raised-button [mat-dialog-close]="{ data: form }" [disabled]="!form.valid || form.pristine">Tạo</button>
 </mat-dialog-actions>

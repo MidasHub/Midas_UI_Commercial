@@ -14,9 +14,11 @@
           <div fxFlex="100%">
             Loại giao dịch :
             <span style="color: green; font-weight: bold" *ngIf="transactionInfo.type == 'cash'">RÚT TIỀN MẶT</span>
-            <span style="color: green; font-weight: bold" *ngIf="transactionInfo.type == 'rollTerm'">ĐÁO HẠN THẺ</span>
+            <span style="color: green; font-weight: bold" *ngIf="transactionInfo.type == 'rollTerm'"
+              >BÁN HÀNG CÔNG NỢ</span
+            >
             <span style="color: green; font-weight: bold" *ngIf="transactionInfo.type == 'rollTermGetCash'"
-              >THU HỒI ĐÁO HẠN THẺ</span
+              >THU HỒI BÁN HÀNG CÔNG NỢ</span
             >
           </div>
           <div fxFlex="100%" fxLayout="row wrap" fxLayout.sm="column" fxLayout.xs="column">
@@ -187,7 +189,7 @@
         align="center"
         style="color: blue; font-weight: bold"
       >
-        Lịch thực hiện đáo hạn thẻ (Tổng: {{ this.transactionInfo.requestAmount }})
+        Lịch thực hiện bán hàng công nợ (Tổng: {{ this.transactionInfo.requestAmount }})
       </h3>
       <div
         fxFlex="100%"

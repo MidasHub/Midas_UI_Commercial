@@ -314,7 +314,7 @@ export class AddFeeDialogComponent implements OnInit {
     let amountPaidFee = this.formDialogPaid.get("amountPaid").value;
     if (this.maxAmount > 0 && this.maxAmount < amountPaidFee) {
       this.alertServices.alert({
-        message: `Số tiền chi ĐHT không được vuợt quá ${this.formatCurrency(String(this.maxAmount))} /1 lần`,
+        message: `Số tiền chi BHCN không được vuợt quá ${this.formatCurrency(String(this.maxAmount))} /1 lần`,
         msgClass: "cssDanger",
         hPosition: "center",
       });

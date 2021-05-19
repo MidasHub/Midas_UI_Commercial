@@ -1,4 +1,4 @@
-import { TransactionService } from 'app/transactions/transaction.service';
+import { TransactionService } from "app/transactions/transaction.service";
 import { Component, Inject, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup } from "@angular/forms";
 import { animate, state, style, transition, trigger } from "@angular/animations";
@@ -22,74 +22,61 @@ export class TransactionHistoryDialogComponent implements OnInit {
   expandedElement: any;
   transactionInfo: any;
   dataSource: any[];
-  displayedColumns: string[] = [
-    "cardNumber",
-    "type",
-    "amount",
-    "txnDate",
-    "actions",
-  ];
+  displayedColumns: string[] = ["cardNumber", "type", "amount", "txnDate", "actions"];
 
   form: FormGroup;
   pristine: boolean;
 
   constructor(
     private router: Router,
-    private transactionService : TransactionService,
+    private transactionService: TransactionService,
     @Inject(MAT_DIALOG_DATA) public data: any,
-    private formBuilder: FormBuilder) {
+    private formBuilder: FormBuilder
+  ) {
     this.getTransactionHistoryByClientId(data.clientId);
-}
-
-  ngOnInit() {
-
   }
 
-routeToViewDetail(tranId: string, remainValue: string){
-  this.router.navigate(["/transaction/create"], {
-    queryParams: {
-      tranId: tranId,
-      remainValue: remainValue,
-      type: 'rollTermGetCash',
-    },
-  });
-}
+  ngOnInit() {}
 
-formatCurrency(value: string) {
-  value = String(value);
-  const neg = value.startsWith("-");
-  value = value.replace(/[-\D]/g, "");
-  value = value.replace(/(\d{3})$/, ",$1");
-  value = value.replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
-  value = value !== "" ? "" + value : "";
-  if (neg) {
-    value = "-".concat(value);
+  routeToViewDetail(tranId: string, remainValue: string) {
+    this.router.navigate(["/transaction/create"], {
+      queryParams: {
+        tranId: tranId,
+        remainValue: remainValue,
+        type: "rollTermGetCash",
+      },
+    });
   }
 
-  return value;
-}
+  formatCurrency(value: string) {
+    value = String(value);
+    const neg = value.startsWith("-");
+    value = value.replace(/[-\D]/g, "");
+    value = value.replace(/(\d{3})$/, ",$1");
+    value = value.replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
+    value = value !== "" ? "" + value : "";
+    if (neg) {
+      value = "-".concat(value);
+    }
+
+    return value;
+  }
 
   getTransactionHistoryByClientId(clientId: string) {
-
-    this.transactionService
-      .getTransactionHistoryByClientId(clientId)
-      .subscribe((result) => {
-
-        this.dataSource = result?.result.listTransaction;
-
-      });
+    this.transactionService.getTransactionHistoryByClientId(clientId).subscribe((result) => {
+      this.dataSource = result?.result.listTransaction;
+    });
   }
 
   displayTransactionType(type: string) {
-    if (type.startsWith("B")) return "Lô" ;
+    if (type.startsWith("B")) return "Lô";
     switch (type) {
-      case 'cash':
-        return 'RTM';
-      case 'rollTerm':
-        return 'ĐHT';
+      case "cash":
+        return "RTM";
+      case "rollTerm":
+        return "BHCN";
       default:
-        return '';
+        return "";
     }
   }
-
 }

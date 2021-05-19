@@ -509,7 +509,7 @@ export class CreateTransactionComponent implements OnInit {
 
     if (this.transactionService.formatLong(this.transactionInfo.requestAmount) != totalBooking) {
       this.alertService.alert({
-        message: `Tổng số tiền trong lịch đáo hạn thẻ không bằng số tiền cần làm ĐHT (${this.transactionInfo.requestAmount}) `,
+        message: `Tổng số tiền trong lịch bán hàng công nợ không bằng số tiền cần làm BHCN (${this.transactionInfo.requestAmount}) `,
         msgClass: "cssDanger",
         hPosition: "center",
       });

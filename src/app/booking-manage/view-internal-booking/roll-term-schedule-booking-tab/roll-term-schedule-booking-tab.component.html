@@ -1,5 +1,5 @@
 <mat-card class="mat-elevation-z20 container-custom">
-  <mat-card-title align="center">MÀN HÌNH QUẢN LÝ BOOKING DỊCH VỤ ĐÁO HẠN THẺ</mat-card-title>
+  <mat-card-title align="center">MÀN HÌNH QUẢN LÝ BOOKING DỊCH VỤ BÁN HÀNG CÔNG NỢ</mat-card-title>
   <mat-card-subtitle align="center" style="color: blue; font-weight: bold">
     Chi nhánh: {{ staffBookingInfo?.officeName }}
     <br />
@@ -38,7 +38,13 @@
     </div>
     <div class="container" fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column"></div>
   </mat-card-content>
-  <div *midasHasPermission="'POS_UPDATE'" fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column" [formGroup]="formFilter">
+  <div
+    *midasHasPermission="'POS_UPDATE'"
+    fxLayout="row wrap"
+    fxLayoutGap="2%"
+    fxLayout.lt-md="column"
+    [formGroup]="formFilter"
+  >
     <mat-form-field fxFlex="18%" *midasHasPermission="'ALL_FUNCTIONS'">
       <mat-label>Chi nhánh</mat-label>
       <input matInput type="text" (blur)="getBookingInternal()" formControlName="officeName" />
@@ -46,16 +52,13 @@
 
     <mat-form-field fxFlex="18%">
       <mat-label>Nhân viên</mat-label>
-      <input matInput type="text" (blur)="getBookingInternal()" formControlName="staffName"  />
-
+      <input matInput type="text" (blur)="getBookingInternal()" formControlName="staffName" />
     </mat-form-field>
 
     <mat-form-field fxFlex="18%">
       <mat-label>Khách hàng</mat-label>
-      <input matInput type="text" (blur)="getBookingInternal()" formControlName="clientName"  />
-
+      <input matInput type="text" (blur)="getBookingInternal()" formControlName="clientName" />
     </mat-form-field>
-
   </div>
   <mat-card-content style="margin-top: 10px">
     <mat-card>
@@ -142,7 +145,6 @@
       <ng-container matColumnDef="actions">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Hành động</th>
         <td mat-cell *matCellDef="let booking">
-
           <button mat-mini-fab color="default" (click)="viewBookingInternal(booking)">
             <mat-icon title="Xem chi tiết booking "> remove_red_eye </mat-icon>
           </button>

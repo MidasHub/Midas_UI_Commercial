@@ -172,7 +172,7 @@ export class IdentitiesTabComponent {
                     });
                   } else {
                     this.alertService.alert({
-                      message: `CẢNH BÁO: Đã tồn tại khoản đáo hạn với thẻ ${cardNumber} \n vui lòng tất toán trước khi thực hiện khởi tạo khoản đáo hạn mới !`,
+                      message: `CẢNH BÁO: Đã tồn tại khoản bán hàng công nợ với thẻ ${cardNumber} \n vui lòng tất toán trước khi thực hiện khởi tạo khoản bán hàng công nợ mới !`,
                       msgClass: "cssDanger",
                       hPosition: "center",
                       vPosition: "top",
@@ -295,7 +295,6 @@ export class IdentitiesTabComponent {
                   classCard: classCard,
                 })
                 .subscribe((res2: any) => {
-
                   return call_return();
                 });
             } else {
@@ -395,9 +394,7 @@ export class IdentitiesTabComponent {
             limitCard: limitCard,
             classCard: classCard,
           })
-          .subscribe((res2: any) => {
-
-          });
+          .subscribe((res2: any) => {});
       }
     });
   }
