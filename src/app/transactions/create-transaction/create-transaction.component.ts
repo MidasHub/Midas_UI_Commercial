@@ -559,7 +559,12 @@ export class CreateTransactionComponent implements OnInit {
   }
 
   calculateTotalBookingAmount() {
-    const maxAmount = 30000000;
+    // input max transfer amount accept for rollterm transaction
+    // if null or max amount is -1 , set max amount to ignore ( set this value to 1 trillion)
+    const maxAmount =
+      this.currentUser?.appSettingModule?.maxAmountTransferRollTerm > 0
+        ? this.currentUser.appSettingModule.maxAmountTransferRollTerm
+        : 1000000000;
     let lastBookingAmountExceptLast = 0;
     let index = 0;
 
@@ -567,7 +572,7 @@ export class CreateTransactionComponent implements OnInit {
       if (index < this.listRollTermBooking.length - 1) {
         if (this.transactionService.formatLong(booking.amountBooking) > maxAmount) {
           this.alertService.alert({
-            message: `Số tiền không được vuợt quá ${this.formatCurrency(String(maxAmount))}đ`,
+            message: `Số tiền không được vuợt quá ${this.formatCurrency(String(maxAmount))} đ`,
             msgClass: "cssDanger",
             hPosition: "center",
           });

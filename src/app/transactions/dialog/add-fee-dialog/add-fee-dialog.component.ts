@@ -274,7 +274,10 @@ export class AddFeeDialogComponent implements OnInit {
             this.paidPaymentType.findIndex((x) => x.code === "DE"),
             1
           );
-          this.maxAmount = 30000000;
+          this.maxAmount =
+            this.currentUser?.appSettingModule?.maxAmountTransferRollTerm > 0
+              ? this.currentUser.appSettingModule.maxAmountTransferRollTerm
+              : 1000000000;
         }
         this.midasClientServices.getListSavingAccountByUserId().subscribe((result) => {
           this.accountsFee = result?.result?.listSavingAccount;
@@ -288,6 +291,20 @@ export class AddFeeDialogComponent implements OnInit {
     this.currentUser = this.authenticationService.getCredentials();
   }
 
+  formatCurrency(value: string) {
+    value = String(value);
+    const neg = value.startsWith("-");
+    value = value.replace(/[-\D]/g, "");
+    value = value.replace(/(\d{3})$/, ",$1");
+    value = value.replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
+    value = value !== "" ? "" + value : "";
+    if (neg) {
+      value = "-".concat(value);
+    }
+
+    return value;
+  }
+
   submitForm() {
     if (this.formDialogGet.invalid && this.formDialogPaid.invalid) {
       this.formDialogPaid.markAllAsTouched();
@@ -297,7 +314,7 @@ export class AddFeeDialogComponent implements OnInit {
     let amountPaidFee = this.formDialogPaid.get("amountPaid").value;
     if (this.maxAmount > 0 && this.maxAmount < amountPaidFee) {
       this.alertServices.alert({
-        message: `Số tiền chi ĐHT không được vuợt quá 30,000,000 1 lần`,
+        message: `Số tiền chi ĐHT không được vuợt quá ${this.formatCurrency(String(this.maxAmount))} /1 lần`,
         msgClass: "cssDanger",
         hPosition: "center",
       });
