@@ -70,8 +70,6 @@ commenting:
   name: comment-dots
 compass:
   prefix: far
-compress:
-  name: compress-alt
 copyright:
   prefix: far
 creative-commons:
@@ -92,8 +90,6 @@ eur:
   name: euro-sign
 exchange:
   name: exchange-alt
-expand:
-  name: expand-alt
 external-link:
   name: external-link-alt
 external-link-square:
@@ -232,11 +228,11 @@ sliders:
 sort-alpha-asc:
   name: sort-alpha-down
 sort-alpha-desc:
-  name: sort-alpha-down-alt
+  name: sort-alpha-up
 sort-amount-asc:
   name: sort-amount-down
 sort-amount-desc:
-  name: sort-amount-down-alt
+  name: sort-amount-up
 sort-asc:
   name: sort-up
 sort-desc:
@@ -244,7 +240,7 @@ sort-desc:
 sort-numeric-asc:
   name: sort-numeric-down
 sort-numeric-desc:
-  name: sort-numeric-down-alt
+  name: sort-numeric-up
 spoon:
   name: utensil-spoon
 star-half-empty:
