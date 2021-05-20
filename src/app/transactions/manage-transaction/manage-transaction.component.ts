@@ -1,3 +1,4 @@
+import { forEach, includes } from 'lodash';
 import { Component, OnInit, ViewChild } from "@angular/core";
 import { TransactionDatasource } from "../transaction.datasource";
 import { FormBuilder, FormGroup } from "@angular/forms";
@@ -574,4 +575,58 @@ export class ManageTransactionComponent implements OnInit {
     }
     this.transactionService.exportAsExcelFile("Transaction", dataCopy);
   }
+
+  //tratt
+  exportData(): void {
+    let dataCopy = [];
+    let i = -1;
+
+    while (++i < this.transactionsData.length) {
+      let element = this.transactionsData[i];
+      let e: any = {
+        createdDate: this.datePipe.transform(element.createdDate, 'dd-MM-yyyy HH:mm:ss'),
+        terminalId: this.displayTerminalCode(element.terminalId),
+        batchNo: element.batchNo,
+        traceNo: element.traceNo,
+        panHolderName: element.panHolderName,
+        agencyName: element.agencyName,
+        invoiceAmount: element.invoiceAmount,
+        terminalAmount: element.terminalAmount,
+        panNumber: element.panNumber,
+        cardType: element.cardType,
+        panBank: element.panBank,
+        merchantNo: element.merchantNo,
+        trnRefNo: element.trnRefNo,
+        status: this.displayStatus(element.status),
+        officeName: element.officeName,
+        ext5: element.ext5,
+        partnerCode: this.displayPartnerDesc(element.partnerCode),
+        feeAmount: element.feeAmount,
+        cogsAmount: element.cogsAmount,
+        staffName: this.displayStaffName(element.createdBy),
+        terminalFeeAmount: element.terminalFeeAmount,
+      };
+      dataCopy.push(e);
+    }
+    this.transactionService.exportDataFile("TransactionDaily", dataCopy);
+  }
+
+  displayTerminalCode(terminalId: string) {
+    const terminalInfo = this.terminals?.filter((terminal: any) => terminal.terminalId == terminalId);
+    return terminalInfo ? terminalInfo[0]?.terminalCode : terminalId;
+  }
+
+  displayPartnerDesc(partnerCode: string) {
+    const partneInfo = this.partners?.filter((partner: any) => partner.code == partnerCode);
+    return partneInfo ? partneInfo[0]?.desc : partnerCode;
+  }
+
+  displayStaffName(createdBy: string) {
+    for (const staff of this.staffs){
+      if (staff.staffCode==createdBy) {
+        return staff.displayName;
+      }
+    }
+  }
+  //end tratt
 }

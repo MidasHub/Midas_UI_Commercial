@@ -253,6 +253,7 @@ export class TransactionService {
     httpParams = httpParams.set("fromDate", payload.fromDate);
     httpParams = httpParams.set("toDate", payload.toDate);
 
+    console.log("this: ", this);
     return this.http.post(`${this.GatewayApiUrlPrefix}/transaction/get_list_pos_transaction`, httpParams);
   }
 
@@ -669,7 +670,7 @@ export class TransactionService {
     this.accessToken = JSON.parse(
       sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey)
     );
-    
+
     // tslint:disable-next-line:max-line-length
     //const fileUrl = 'http://119.82.135.181:8001/document/export/';
     const fileUrl = `${this.environment.ICDocumentURL}/document/export/`;
@@ -706,5 +707,20 @@ export class TransactionService {
     }
     xhr.responseType = "blob";
     xhr.send();
-  } 
+  }
+
+  //tratt
+  exportDataFile(exportType: string , data: any) {
+    this.accessToken = JSON.parse(
+      sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey)
+    );
+
+    // tslint:disable-next-line:max-line-length
+    //const fileUrl = 'http://119.82.135.181:8001/document/export/';
+    const fileUrl = `${this.environment.ICDocumentURL}/document/export/`;
+    this.getExportExcelFiles(fileUrl, exportType ,data).subscribe((data_response: any) => {
+      this.downloadFile(data_response.result.fileName);
+    });
+  }
+  //end tratt
 }
