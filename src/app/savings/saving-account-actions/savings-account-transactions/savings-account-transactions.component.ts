@@ -8,6 +8,8 @@ import { DatePipe } from "@angular/common";
 import { SavingsService } from "../../savings.service";
 import { AlertService } from "app/core/alert/alert.service";
 import { SettingsService } from "app/settings/settings.service";
+import { ClientsService } from "app/clients/clients.service";
+import { AuthenticationService } from "app/core/authentication/authentication.service";
 
 /**
  * Create savings account transactions component.
@@ -45,8 +47,10 @@ export class SavingsAccountTransactionsComponent implements OnInit {
   savingAccountId: string;
   showStaffChoose: boolean = false;
   filteredOptions: any = [];
+  offices: any = [];
   paymentTypeDescription: string;
   isInterchangeClient: boolean = false;
+  currentUser: any;
   /**
    * Retrieves the Saving Account transaction template data from `resolve`.
    * @param {FormBuilder} formBuilder Form Builder.
@@ -62,8 +66,12 @@ export class SavingsAccountTransactionsComponent implements OnInit {
     private datePipe: DatePipe,
     private alertService: AlertService,
     private savingsService: SavingsService,
-    private settingsService: SettingsService
+    private clientService: ClientsService,
+    private settingsService: SettingsService,
+    private authenticationService: AuthenticationService
   ) {
+    this.currentUser = this.authenticationService.getCredentials();
+
     this.route.data.subscribe((data: { savingsAccountActionData: any }) => {
       if (data.savingsAccountActionData.result) {
         this.isInterchangeClient = true;
@@ -75,6 +83,9 @@ export class SavingsAccountTransactionsComponent implements OnInit {
     this.transactionCommand = this.route.snapshot.params["name"].toLowerCase();
     this.transactionType[this.transactionCommand] = true;
     this.savingAccountId = this.route.parent.snapshot.params["savingAccountId"];
+    this.clientService.getOffices().subscribe((offices: any) => {
+      this.offices = offices;
+    });
   }
 
   /**
@@ -172,7 +183,7 @@ export class SavingsAccountTransactionsComponent implements OnInit {
       this.savingAccountTransactionForm.addControl("checkNumber", new FormControl(""));
       this.savingAccountTransactionForm.addControl("routingCode", new FormControl(""));
       this.savingAccountTransactionForm.addControl("receiptNumber", new FormControl(""));
-      this.savingAccountTransactionForm.addControl("bankNumber", new FormControl(""));
+      this.savingAccountTransactionForm.addControl("bankNumber", new FormControl(String(this.currentUser.officeId)));
 
       this.savingAccountTransactionForm.get("accountNumber").valueChanges.subscribe((value) => {
         this.changePaymentType();
@@ -228,11 +239,9 @@ export class SavingsAccountTransactionsComponent implements OnInit {
       this.savingsService
         .executeIcSavingsAccountTransactionsCommand(this.savingAccountId, this.transactionCommand, transactionData)
         .subscribe((res) => {
-
           const message = `Thực hiện thành công!`;
-          this.savingsService.handleResponseApiSavingTransaction(res, message, false );
+          this.savingsService.handleResponseApiSavingTransaction(res, message, false);
           this.router.navigate([`/clients/ic-client/savings-accounts/ic`, this.savingAccountId, "transactions"]);
-
         });
     }
   }
