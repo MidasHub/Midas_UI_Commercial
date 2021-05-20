@@ -55,11 +55,11 @@ export class CreateBatchTransactionComponent implements OnInit {
   terminals: any[] = [];
   batchProducts: any[] = [
     {
-      label: "RTM",
+      label: "Cash",
       value: "CA01",
     },
     {
-      label: "ĐHT",
+      label: "Advance",
       value: "AL02",
     },
   ];
@@ -68,7 +68,7 @@ export class CreateBatchTransactionComponent implements OnInit {
   totalFee = 0;
   totalAmountTransaction = 0;
   totalTerminalAmount = 0;
-  isRequiredTraceBatchNo: boolean = true ;
+  isRequiredTraceBatchNo: boolean = true;
   expandedElement: any;
   accountFilter: any[] = [];
   accountsShow: any[] = [];
@@ -151,18 +151,18 @@ export class CreateBatchTransactionComponent implements OnInit {
     private terminalsService: TerminalsService,
     private clientsServices: ClientsService,
     private bankServices: BanksService,
-    private router: Router,
+    private router: Router
   ) {
     this.currentUser = this.authenticationService.getCredentials();
     const { permissions } = this.currentUser;
     const permit_manager = permissions.includes("POS_UPDATE");
-    if (permit_manager){
+    if (permit_manager) {
       this.isRequiredTraceBatchNo = false;
     }
 
-    if (!this.authenticationService.checkAppModuleSetting("billModule")) {
-      this.displayedColumns.splice(this.displayedColumns.indexOf("invoiceAmount"), 1);
-    }
+    // if (!this.authenticationService.checkAppModuleSetting("billModule")) {
+    //   this.displayedColumns.splice(this.displayedColumns.indexOf("invoiceAmount"), 1);
+    // }
   }
 
   displayClient(client: any): string | undefined {
@@ -260,8 +260,8 @@ export class CreateBatchTransactionComponent implements OnInit {
     });
   }
 
-  displayTerminalName(terminalId: string){
-    const terminalInfo =  this.terminalsMasters?.filter((terminal: any) => terminal.terminalId == terminalId);
+  displayTerminalName(terminalId: string) {
+    const terminalInfo = this.terminalsMasters?.filter((terminal: any) => terminal.terminalId == terminalId);
     return terminalInfo ? terminalInfo[0]?.terminalName : terminalId;
   }
 
@@ -521,16 +521,15 @@ export class CreateBatchTransactionComponent implements OnInit {
           }
           if (typeof result2.result.caution != "undefined" && result2.result.caution != "NaN") {
             this.showHistoryTransaction(result2.result.caution, result2.result.listTransaction);
-
           }
           const value = result2?.result.amountTransaction;
           if (value > 0) {
-          // form.get('amountTransaction').setValue(value);
-          form.get("invoiceAmount").setValue(value);
+            // form.get('amountTransaction').setValue(value);
+            form.get("invoiceAmount").setValue(value);
 
-          form.get("terminalAmount").setValue(value);
-          // @ts-ignore
-          form.get("bills").setValue(result2.result.listInvoice);
+            form.get("terminalAmount").setValue(value);
+            // @ts-ignore
+            form.get("bills").setValue(result2.result.listInvoice);
           } else {
             this.alertService.alert({
               message: `Lỗi truy xuất số tiền đề xuất giao dịch, vui lòng liên hệ IT support! `,
@@ -641,9 +640,7 @@ export class CreateBatchTransactionComponent implements OnInit {
     };
     // dialogConfig.minWidth = 400;
     const dialog = this.dialog.open(MakeFeeOnAdvanceComponent, dialogConfig);
-    dialog.afterClosed().subscribe((data) => {
-
-    });
+    dialog.afterClosed().subscribe((data) => {});
   }
 
   addFeeDialog() {
@@ -673,8 +670,7 @@ export class CreateBatchTransactionComponent implements OnInit {
     let traceNo = form.get("tid").value;
     let batchNo = form.get("batchNo").value;
 
-    if  ( !traceNo || !batchNo || traceNo.trim().length == 0 || batchNo.trim().length == 0  ){
-
+    if (!traceNo || !batchNo || traceNo.trim().length == 0 || batchNo.trim().length == 0) {
       messageConfirm = `Hệ thống ghi nhận đây là giao dịch treo (do không có mã lô và mã hóa đơn), bạn chắc chắn muốn lưu giao dịch?`;
     }
 

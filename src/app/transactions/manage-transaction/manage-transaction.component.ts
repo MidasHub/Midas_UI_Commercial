@@ -66,18 +66,18 @@ export class ManageTransactionComponent implements OnInit {
       value: "",
     },
     {
-      label: "Giao dịch RTM",
-      shortName: "RTM",
+      label: "Giao dịch Cash",
+      shortName: "Cash",
       value: "CA01",
     },
     {
-      label: "Giao dịch ĐHT lẻ",
-      shortName: "ĐHT lẻ",
+      label: "Giao dịch Advance lẻ",
+      shortName: "Advance lẻ",
       value: "AL01",
     },
     {
-      label: "Giao dịch ĐHT sỉ",
-      shortName: "ĐHT sỉ",
+      label: "Giao dịch Advance sỉ",
+      shortName: "Advance sỉ",
       value: "AL02",
     },
     {
@@ -91,8 +91,8 @@ export class ManageTransactionComponent implements OnInit {
       value: "CA02",
     },
     {
-      label: "Giao dịch RTM - tiền chờ",
-      shortName: "RTM-chờ",
+      label: "Giao dịch Cash - tiền chờ",
+      shortName: "Cash-chờ",
       value: "CA03",
     },
   ];
@@ -294,11 +294,11 @@ export class ManageTransactionComponent implements OnInit {
       }
       const check_wholesaleChoose = wholesaleChoose ? v.type.startsWith("B") : false;
       const check_RetailsChoose = RetailsChoose ? v.type === "cash" || v.type === "rollTerm" : false;
-      if (!check_wholesaleChoose && !check_RetailsChoose ) {
+      if (!check_wholesaleChoose && !check_RetailsChoose) {
         return false;
       }
 
-      if (  ( !holdTransaction && v.isHold == 1 ) || (holdTransaction && v.isHold == 0) ) {
+      if ((!holdTransaction && v.isHold == 1) || (holdTransaction && v.isHold == 0)) {
         return false;
       }
 
@@ -492,7 +492,6 @@ export class ManageTransactionComponent implements OnInit {
       toDate = this.datePipe.transform(toDate, dateFormat);
     }
     const form = this.formFilter.value;
-    debugger;
     let query = `fromDate=${fromDate}&toDate=${toDate}&officeName=${form.officeId || "ALL"}`;
     const keys = Object.keys(form);
     for (const key of keys) {

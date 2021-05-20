@@ -31,7 +31,6 @@
           Vui lòng chọn thời gian &nbsp; <i class="fa fa-calendar" style="align-self: center" aria-hidden="true"></i>
         </h3>
       </div>
-
     </div>
     <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column" [formGroup]="formFilterPartner">
       <mat-form-field fxFlex="18%">
@@ -60,9 +59,6 @@
           </mat-option>
         </mat-select>
       </mat-form-field>
-
-
-
     </div>
     <div class="container" fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column"></div>
   </mat-card-content>
@@ -120,7 +116,7 @@
       <ng-container matColumnDef="txnDate">
         <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>Ngày giao dịch</th>
 
-        <td mat-cell fxHide fxShow.gt-md style="word-wrap: break-word;" *matCellDef="let journalEntry">
+        <td mat-cell fxHide fxShow.gt-md style="word-wrap: break-word" *matCellDef="let journalEntry">
           <span [ngSwitch]="journalEntry.status">
             <img *ngSwitchCase="'C'" src="assets/images/icons/check.svg" />
             <img *ngSwitchCase="'P'" src="assets/images/icons/pending.svg" />
@@ -135,7 +131,6 @@
             {{ journalEntry.type }}
           </label> -->
         </td>
-
       </ng-container>
 
       <ng-container matColumnDef="terminalName">
@@ -146,26 +141,21 @@
 
         <td mat-cell *matCellDef="let journalEntry" style="word-wrap: break-word; width: 200px">
           <span class="red_text">{{ journalEntry.terminalId }}</span> <br />
-          <span class="blue_text" >{{ displayPartnerPos(journalEntry.terminalId) }}</span>
+          <span class="blue_text">{{ displayPartnerPos(journalEntry.terminalId) }}</span>
         </td>
       </ng-container>
 
       <ng-container matColumnDef="bankName">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>
-          Ngân hàng
-        </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Ngân hàng</th>
         <td mat-cell *matCellDef="let journalEntry" style="word-wrap: break-word; width: 200px">
-          <span class="green_text" >{{ displayBankPos(journalEntry.terminalId) }}</span>
+          <span class="green_text">{{ displayBankPos(journalEntry.terminalId) }}</span>
         </td>
       </ng-container>
 
       <ng-container matColumnDef="panHolderName">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Khách hàng</th>
-        <td mat-cell *matCellDef="let journalEntry">
-          {{ journalEntry.panHolderName }} <br />
-        </td>
+        <td mat-cell *matCellDef="let journalEntry">{{ journalEntry.panHolderName }} <br /></td>
       </ng-container>
-
 
       <ng-container matColumnDef="terminalAmount">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Số tiền giao dịch</th>
@@ -175,18 +165,14 @@
       </ng-container>
 
       <ng-container matColumnDef="traceNo">
-        <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>
-          Số hóa đơn
-        </th>
+        <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>Số hóa đơn</th>
         <td mat-cell fxHide fxShow.gt-md *matCellDef="let journalEntry">
           <label>{{ journalEntry.traceNo }}</label>
         </td>
       </ng-container>
 
       <ng-container matColumnDef="batchNo">
-        <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>
-          Số lô
-        </th>
+        <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>Số lô</th>
         <td mat-cell fxHide fxShow.gt-md *matCellDef="let journalEntry">
           <label>{{ journalEntry.batchNo }}</label>
         </td>
@@ -287,18 +273,14 @@
       <button mat-menu-item [routerLink]="['/transaction', 'view']" [queryParams]="{ tranId: refid }">
         <i class="fa fa-eye" aria-hidden="true"></i>&nbsp;Chi tiết
       </button>
-      <button *midasHasPermission="'TRACE_BATCH_NO_UPDATE'" mat-menu-item (click)="addPosInformation(trnRefNo, batchNo, traceNo)">
+      <button
+        *midasHasPermission="'TRACE_BATCH_NO_UPDATE'"
+        mat-menu-item
+        (click)="addPosInformation(trnRefNo, batchNo, traceNo)"
+      >
         <img src="assets/images/icons/add.svg" /> Cập nhật Thông tin bill nhiệt
       </button>
-      <button *midasHasActiveModule="'billModule'" mat-menu-item (click)="downloadVoucher(refid)">
-        <img *ngIf="status != 'V'" src="assets/images/icons/order.svg" />&nbsp; Tải xuống hóa đơn
-      </button>
-      <!-- <button mat-menu-item *ngIf="ext7 != null && status != 'V'" (click)="downloadBill(custId, ext7)">
-        <img src="assets/images/icons/bill.svg" />&nbsp; Tải xuống bill
-      </button> -->
-      <!-- <button *ngIf="ext7 == null && status != 'V'" (click)="uploadBill(refid, trnRefNo)" mat-menu-item>
-        <img src="assets/images/icons/upload_bill.svg" />&nbsp; Upload bill
-      </button> -->
+
       <hr />
       <button mat-menu-item *ngIf="status == 'V' && type != 'rollTerm'" (click)="undoRevertTransaction(refid)">
         <i class="fa fa-undo" aria-hidden="true"></i> &nbsp;Hoàn tác giao dịch

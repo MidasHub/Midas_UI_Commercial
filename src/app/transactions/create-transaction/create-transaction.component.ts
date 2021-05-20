@@ -62,8 +62,7 @@ export class CreateTransactionComponent implements OnInit {
     private settingsService: SettingsService,
     private savingsService: SavingsService,
     private clientsService: ClientsService,
-    private authenticationService: AuthenticationService,
-
+    private authenticationService: AuthenticationService
   ) {
     this.dataSource = new MatTableDataSource();
     this.transactionCreateForm = new FormGroup({
@@ -77,7 +76,6 @@ export class CreateTransactionComponent implements OnInit {
   }
 
   ngOnInit() {
-
     this.currentUser = this.authenticationService.getCredentials();
     const { permissions } = this.currentUser;
     const permit_manager = permissions.includes("POS_UPDATE");
@@ -112,7 +110,6 @@ export class CreateTransactionComponent implements OnInit {
 
         if (this.transactionInfo.type == "cash") {
           this.transactionInfo.accountCash = data.result.listAccAccount[0].documentKey;
-
         } else {
           if (this.transactionInfo.type == "rollTerm") {
             this.transactionCreateForm = this.formBuilder.group({
@@ -123,20 +120,16 @@ export class CreateTransactionComponent implements OnInit {
             this.transactionInfo.rate = this.transactionInfo.posTransaction.feePercentage;
             this.transactionInfo.refId = tranId;
             this.transactionCreateForm.get("rate").setValue(this.transactionInfo.rate);
-
           }
         }
 
-        if (this.transactionCreateForm.get("batchNo") &&
-            this.transactionCreateForm.get("traceNo")){
-
-          if (permit_manager){
-
+        if (this.transactionCreateForm.get("batchNo") && this.transactionCreateForm.get("traceNo")) {
+          if (permit_manager) {
             // remove validator required for batchNo, traceNo on hold transaction
-            this.transactionCreateForm.get('batchNo').clearValidators();
-            this.transactionCreateForm.get('batchNo').updateValueAndValidity();
-            this.transactionCreateForm.get('traceNo').clearValidators();
-            this.transactionCreateForm.get('traceNo').updateValueAndValidity();
+            this.transactionCreateForm.get("batchNo").clearValidators();
+            this.transactionCreateForm.get("batchNo").updateValueAndValidity();
+            this.transactionCreateForm.get("traceNo").clearValidators();
+            this.transactionCreateForm.get("traceNo").updateValueAndValidity();
           }
         }
       });
@@ -414,7 +407,7 @@ export class CreateTransactionComponent implements OnInit {
           message: `Đây là khách hàng mới đã giao dịch lần 2!`,
           msgClass: "cssSuccess",
           hPosition: "center",
-          vPosition: "center"
+          vPosition: "center",
         });
         return;
       }
@@ -429,7 +422,7 @@ export class CreateTransactionComponent implements OnInit {
     let traceNo = this.transactionCreateForm.get("traceNo").value;
     let batchNo = this.transactionCreateForm.get("batchNo").value;
 
-    if  ( !traceNo || !batchNo || traceNo.trim().length == 0 || batchNo.trim().length == 0  ){
+    if (!traceNo || !batchNo || traceNo.trim().length == 0 || batchNo.trim().length == 0) {
       messageConfirm = `Hệ thống ghi nhận đây là giao dịch treo (do không có mã lô và mã hóa đơn), bạn chắc chắn muốn lưu giao dịch?`;
     }
 
@@ -493,7 +486,7 @@ export class CreateTransactionComponent implements OnInit {
             } else {
               this.alertService.alert({
                 message: res2.result.message ? res2.result.message : "Lỗi thêm thông tin hạn mức, hạng thẻ!",
-                msgClass: "cssError",
+                msgClass: "cssDanger",
                 hPosition: "center",
               });
               return;
@@ -506,6 +499,20 @@ export class CreateTransactionComponent implements OnInit {
   submitTransactionRollTerm() {
     if (!this.transactionInfo.cardExtraInfo.limit || !this.transactionInfo.cardExtraInfo.classCard) {
       this.addIdentifierExtraInfo();
+      return;
+    }
+    let totalBooking = 0;
+    for (let i = 0; i < this.listRollTermBooking.length; i++) {
+      let booking = this.listRollTermBooking[i];
+      totalBooking += this.transactionService.formatLong(booking.amountBooking);
+    }
+
+    if (this.transactionService.formatLong(this.transactionInfo.requestAmount) != totalBooking) {
+      this.alertService.alert({
+        message: `Tổng số tiền trong lịch Advance không bằng số tiền cần làm Advance (${this.transactionInfo.requestAmount}) `,
+        msgClass: "cssDanger",
+        hPosition: "center",
+      });
       return;
     }
 
@@ -552,12 +559,29 @@ export class CreateTransactionComponent implements OnInit {
   }
 
   calculateTotalBookingAmount() {
-    let totalBookingAmountTmp = 0;
+    // input max transfer amount accept for rollterm transaction
+    // if null or max amount is -1 , set max amount to ignore ( set this value to 1 trillion)
+    const maxAmount =
+      this.currentUser?.appSettingModule?.maxAmountTransferRollTerm > 0
+        ? this.currentUser.appSettingModule.maxAmountTransferRollTerm
+        : 1000000000;
     let lastBookingAmountExceptLast = 0;
     let index = 0;
+
     this.listRollTermBooking.forEach((booking: any) => {
       if (index < this.listRollTermBooking.length - 1) {
-        lastBookingAmountExceptLast += this.transactionService.formatLong(booking.amountBooking);
+        if (this.transactionService.formatLong(booking.amountBooking) > maxAmount) {
+          this.alertService.alert({
+            message: `Số tiền không được vuợt quá ${this.formatCurrency(String(maxAmount))} đ`,
+            msgClass: "cssDanger",
+            hPosition: "center",
+          });
+          booking.amountBooking = this.formatCurrency(String(maxAmount));
+        }
+        lastBookingAmountExceptLast +=
+          this.transactionService.formatLong(booking.amountBooking) > maxAmount
+            ? maxAmount
+            : this.transactionService.formatLong(booking.amountBooking);
         index++;
       }
     });
@@ -565,11 +589,23 @@ export class CreateTransactionComponent implements OnInit {
     this.listRollTermBooking[this.listRollTermBooking.length - 1].amountBooking = this.formatCurrency(
       String(this.transactionService.formatLong(this.transactionInfo.requestAmount) - lastBookingAmountExceptLast)
     );
-    this.listRollTermBooking.forEach((booking: any) => {
-      totalBookingAmountTmp += this.transactionService.formatLong(booking.amountBooking);
-    });
 
-    this.totalBookingAmount = totalBookingAmountTmp;
+    if (
+      this.transactionService.formatLong(this.listRollTermBooking[this.listRollTermBooking.length - 1].amountBooking) >
+      maxAmount
+    ) {
+      this.addBookingRow();
+    } else {
+      if (
+        this.transactionService.formatLong(
+          this.listRollTermBooking[this.listRollTermBooking.length - 1].amountBooking
+        ) < 1
+      ) {
+        this.removeBookingRow(String(this.listRollTermBooking.length - 1));
+        this.calculateTotalBookingAmount();
+      }
+    }
+
     this.listBookingRollTermTable.renderRows();
   }
 
@@ -583,16 +619,13 @@ export class CreateTransactionComponent implements OnInit {
   };
 
   removeBookingRow(index: string) {
-    this.listRollTermBooking.forEach((rollTerm: any) => {
-      let indexMember = this.listRollTermBooking.findIndex((elementIdex: any) => elementIdex === rollTerm);
+    let rollTerm = this.listRollTermBooking[index];
 
-      if (indexMember == index) {
-        this.listRollTermBooking.splice(
-          this.listRollTermBooking.findIndex((item: any) => item == rollTerm),
-          1
-        );
-      }
-    });
+    this.listRollTermBooking.splice(
+      this.listRollTermBooking.findIndex((item: any) => item == rollTerm),
+      1
+    );
+
     this.calculateTotalBookingAmount();
   }
 

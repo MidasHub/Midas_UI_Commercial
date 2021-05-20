@@ -60,11 +60,11 @@ export class RollTermScheduleTabComponent implements OnInit {
       value: "",
     },
     {
-      label: "Giao dịch RTM",
+      label: "Giao dịch Cash",
       value: "CA01",
     },
     {
-      label: "Giao dịch ĐHT",
+      label: "Giao dịch Advance",
       value: "AL01",
     },
     {
@@ -118,8 +118,8 @@ export class RollTermScheduleTabComponent implements OnInit {
     private dialog: MatDialog,
     private banksServices: BanksService,
     private savingsService: SavingsService,
-    private clientServices: ClientsService,
-      ) {
+    private clientServices: ClientsService
+  ) {
     this.formDate = this.formBuilder.group({
       fromDate: [new Date(new Date().setMonth(new Date().getMonth() - 1))],
       toDate: [new Date()],
@@ -132,7 +132,7 @@ export class RollTermScheduleTabComponent implements OnInit {
       this.banks = result;
     });
     this.clientServices.getListUserTeller(this.currentUser.officeId).subscribe((result: any) => {
-      this.staffs = result?.result?.listStaff.filter((staff:any) => staff.displayName.startsWith("R"));
+      this.staffs = result?.result?.listStaff.filter((staff: any) => staff.displayName.startsWith("R"));
     });
     this.formFilter = this.formBuilder.group({
       createdByFilter: [this.currentUser.userId],
@@ -159,8 +159,8 @@ export class RollTermScheduleTabComponent implements OnInit {
     let bankFilter = this.formFilter.get("bankFilter").value;
     let createdByFilter = this.formFilter.get("createdByFilter").value;
 
-    const limit = this.paginator.pageSize  ? this.paginator.pageSize : 10;
-    const offset = ((this.paginator.pageIndex) * limit);
+    const limit = this.paginator.pageSize ? this.paginator.pageSize : 10;
+    const offset = this.paginator.pageIndex * limit;
     if (fromDate) {
       fromDate = this.datePipe.transform(fromDate, dateFormat);
     }
@@ -215,12 +215,11 @@ export class RollTermScheduleTabComponent implements OnInit {
   undoRollTermTransaction(transactionId: string, amountPaid: string) {
     const dialog = this.dialog.open(ConfirmDialogComponent, {
       data: {
-        message: "Bạn chắc chắn muốn hủy khoản đáo hạn " + transactionId,
+        message: "Bạn chắc chắn muốn hủy khoản Advance " + transactionId,
         title: "Hủy giao dịch",
       },
     });
     dialog.afterClosed().subscribe((data) => {
-
       if (data) {
         this.transactionService
           .RepaymentRolltermManualTransactionCloseLoan(transactionId, amountPaid)

@@ -41,6 +41,7 @@ export class AddFeeDialogComponent implements OnInit {
   messageError: string;
   isLoading: boolean = false;
   amountPaidBooking: number;
+  maxAmount: number = 0;
 
   constructor(
     private transactionService: TransactionService,
@@ -273,6 +274,10 @@ export class AddFeeDialogComponent implements OnInit {
             this.paidPaymentType.findIndex((x) => x.code === "DE"),
             1
           );
+          this.maxAmount =
+            this.currentUser?.appSettingModule?.maxAmountTransferRollTerm > 0
+              ? this.currentUser.appSettingModule.maxAmountTransferRollTerm
+              : 1000000000;
         }
         this.midasClientServices.getListSavingAccountByUserId().subscribe((result) => {
           this.accountsFee = result?.result?.listSavingAccount;
@@ -286,12 +291,36 @@ export class AddFeeDialogComponent implements OnInit {
     this.currentUser = this.authenticationService.getCredentials();
   }
 
+  formatCurrency(value: string) {
+    value = String(value);
+    const neg = value.startsWith("-");
+    value = value.replace(/[-\D]/g, "");
+    value = value.replace(/(\d{3})$/, ",$1");
+    value = value.replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
+    value = value !== "" ? "" + value : "";
+    if (neg) {
+      value = "-".concat(value);
+    }
+
+    return value;
+  }
+
   submitForm() {
     if (this.formDialogGet.invalid && this.formDialogPaid.invalid) {
       this.formDialogPaid.markAllAsTouched();
       this.formDialogGet.markAllAsTouched();
       return;
     }
+    let amountPaidFee = this.formDialogPaid.get("amountPaid").value;
+    if (this.maxAmount > 0 && this.maxAmount < amountPaidFee) {
+      this.alertServices.alert({
+        message: `Số tiền chi Advance không được vuợt quá ${this.formatCurrency(String(this.maxAmount))} /1 lần`,
+        msgClass: "cssDanger",
+        hPosition: "center",
+      });
+      return;
+    }
+
     if (this.formDialogPaid.get("paymentCode").value == "DE") {
       this.formDialogPaid.get("amountPaid").enable();
       this.formDialogGet.get("amountGet").setValue("");
