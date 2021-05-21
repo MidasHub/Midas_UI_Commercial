@@ -79,7 +79,7 @@ export class HomeComponent implements OnInit {
     const credentials = this.authenticationService.getCredentials();
 
     this.childBannerData.userName = split("credentials.staffDisplayName",',')[1]?.trim();
-
+    console.log(split("credentials.staffDisplayName",',')[1]?.trim());
 
     bannerData.some(d => {
       if (d.office === credentials.officeId) {

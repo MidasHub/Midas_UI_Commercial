@@ -99,7 +99,7 @@ export class PartnerDialogComponent implements OnInit {
         this.alertServices.alert({
           type: "🚨🚨🚨🚨 Lỗi ",
           msgClass: "cssBig",
-          message: "🚨🚨 Lỗi Điều chuyển máy POS, vui lòng liên hệ IT Support để được hổ trợ 🚨🚨",
+          message: "🚨🚨 Lỗi Điều chuyển máy bán hàng, vui lòng liên hệ IT Support để được hổ trợ 🚨🚨",
         });
         this.dialogRef.close(payload);
       }

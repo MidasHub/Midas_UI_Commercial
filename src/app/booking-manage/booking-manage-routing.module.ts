@@ -34,7 +34,7 @@ const routes: Routes = [
         {
           path: 'create',
           component: CreateInternalBookingComponent,
-          data: { title: extract(''), breadcrumb: 'Tạo booking nội bộ', routeParamBreadcrumb: false },
+          data: { title: extract(''), breadcrumb: 'Tạo booking ', routeParamBreadcrumb: false },
 
         },
         {

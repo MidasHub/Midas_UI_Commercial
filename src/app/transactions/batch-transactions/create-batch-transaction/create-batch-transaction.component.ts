@@ -340,7 +340,7 @@ export class CreateBatchTransactionComponent implements OnInit {
     //   if (!terminalId || terminalId === '--') {
     //     form.get('CM').setValue(false);
     //     return this.alertService.alert({
-    //       message: 'Vui lòng chọn máy POS trước khi thưc hiện',
+    //       message: 'Vui lòng chọn máy bán hàng trước khi thưc hiện',
     //       msgClass: 'cssWarning'
     //     });
     //   }

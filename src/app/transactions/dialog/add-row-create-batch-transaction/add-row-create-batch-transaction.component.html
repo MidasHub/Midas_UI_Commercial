@@ -39,7 +39,7 @@
     </mat-form-field>
 
     <mat-form-field fxFlex="30%" *ngIf="formDialog.contains('terminalId')" class="input_custom">
-      <mat-label>Chọn máy POS</mat-label>
+      <mat-label>Chọn máy bán hàng</mat-label>
       <mat-select required formControlName="terminalId">
         <mat-option *ngFor="let type of terminals"
                     [value]="type.terminalId">
