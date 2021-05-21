@@ -58,9 +58,9 @@ export class SearchJournalEntryComponent implements OnInit, AfterViewInit {
       value: false  // Bug: unable to implement from server side
     }
   ];
-  /** Transaction date from form control. */
+  /** Từ ngày form control. */
   transactionDateFrom = new FormControl(new Date(new Date().setMonth(new Date().getMonth() - 1)));
-  /** Transaction date to form control. */
+  /** Đến ngày form control. */
   transactionDateTo = new FormControl(new Date());
   /** Transaction ID form control. */
   transactionId = new FormControl();
@@ -136,7 +136,7 @@ export class SearchJournalEntryComponent implements OnInit, AfterViewInit {
 
   /**
    * Subscribes to all search filters:
-   * Office Name, GL Account, Transaction ID, Transaction Date From, Transaction Date To,
+   * Office Name, GL Account, Transaction ID, Từ ngày, Đến ngày,
    * sort change and page change.
    */
   ngAfterViewInit() {

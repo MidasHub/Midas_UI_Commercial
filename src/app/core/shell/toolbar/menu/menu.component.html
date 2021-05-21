@@ -24,11 +24,11 @@
       mat-mini-fab
       [matMenuTriggerFor]="POSPartnerMenu"
       #POSPartnerMenuTrigger="matMenuTrigger"
-      matTooltip="May POS"
+      matTooltip="Máy bàn hàng"
       matTooltipPosition="before"
     >
       <i class="fas fa-sim-card"></i>
-      <!-- Máy POS và đối tác -->
+      <!-- máy bán hàng và đối tác -->
     </button>
 
     <button
@@ -152,12 +152,12 @@
   xPosition="before"
   backdropClass="mymenu"
 >
-  <button *midasHasPermission="'POS_UPDATE'" mat-menu-item routerLink="/terminals">Điều chuyển máy POS</button>
+  <button *midasHasPermission="'POS_UPDATE'" mat-menu-item routerLink="/terminals">Điều chuyển máy bán hàng</button>
   <button mat-menu-item *midasHasPermission="'POS_READ'" routerLink="/terminals/limit">
-    {{ "Quản lý hạn mức POS" | translate }}
+    {{ "Thông tin máy bán hàng" | translate }}
   </button>
   <button mat-menu-item *midasHasPermission="'POS_UPDATE'" routerLink="/terminals">
-    {{ "Quản lý máy POS" | translate }}
+    {{ "Quản lý máy bán hàng" | translate }}
   </button>
   <button mat-menu-item *midasHasPermission="'POS_CREATE'" routerLink="/third-party">
     {{ "Toolbar_Component.lblThirdParty" | translate }}

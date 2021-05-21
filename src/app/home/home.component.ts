@@ -1,34 +1,30 @@
 /** Angular Imports */
-import { Component, HostListener, OnInit } from '@angular/core';
-import { FormControl } from '@angular/forms';
-import { Observable } from 'rxjs';
-import { startWith, map } from 'rxjs/operators';
-
+import { Component, HostListener, OnInit } from "@angular/core";
+import { FormControl } from "@angular/forms";
+import { Observable } from "rxjs";
+import { startWith, map } from "rxjs/operators";
 
 /** Custom Imports. */
-import { activities } from './activities';
+import { activities } from "./activities";
 
 /** Custom Services */
-import { AuthenticationService } from '../core/authentication/authentication.service';
-import { bannerData, ChildBannerData } from './banner_data';
-import { TourService } from 'ngx-tour-md-menu';
+import { AuthenticationService } from "../core/authentication/authentication.service";
+import { bannerData, ChildBannerData } from "./banner_data";
+import { TourService } from "ngx-tour-md-menu";
 /** Device detector */
-import { DeviceDetectorService, OrientationType, DeviceType } from 'ngx-device-detector';
+import { DeviceDetectorService, OrientationType, DeviceType } from "ngx-device-detector";
 
-import * as ScreenEnum from '../core/constants/screen_constant';
-import { split } from 'lodash';
+import * as ScreenEnum from "../core/constants/screen_constant";
+import { split } from "lodash";
 /**
  * Home component.
  */
 @Component({
-  selector: 'midas-home',
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss']
+  selector: "midas-home",
+  templateUrl: "./home.component.html",
+  styleUrls: ["./home.component.scss"],
 })
-
-
 export class HomeComponent implements OnInit {
-
   /** Activity Form. */
   activityForm: any;
   /** Search Text. */
@@ -38,9 +34,9 @@ export class HomeComponent implements OnInit {
   /** All User Activities. */
   allActivities: any[] = activities;
   //** Data for banner  */
-  showBanner: boolean = false
+  showBanner: boolean = false;
   title: string;
-  childBannerData = new ChildBannerData()
+  childBannerData = new ChildBannerData();
 
   /** Screem size check */
   screenSize: any;
@@ -51,12 +47,11 @@ export class HomeComponent implements OnInit {
    * @param {FormBuilder} formBuilder Form Builder.
    */
 
-
-
-
-  constructor(private authenticationService: AuthenticationService,
+  constructor(
+    private authenticationService: AuthenticationService,
     private detectDevice: DeviceDetectorService,
-    private tourService: TourService) {
+    private tourService: TourService
+  ) {
     this.isDesktop = this.detectDevice.isDesktop();
   }
 
@@ -64,10 +59,8 @@ export class HomeComponent implements OnInit {
   // onResize(event:any) {
   //   this.screenSize = window.innerWidth;
 
-
   //   console.log('Screen Size:', this.screenSize)
   //   console.log('Screen Orientation:', window.screen.orientation)
-
 
   // };
 
@@ -78,30 +71,28 @@ export class HomeComponent implements OnInit {
   ngOnInit() {
     const credentials = this.authenticationService.getCredentials();
 
-    this.childBannerData.userName = split(credentials.staffDisplayName,',')[1].trim();
-    
+    this.childBannerData.userName = split("credentials.staffDisplayName", ",")[1]?.trim();
+    console.log(split("credentials.staffDisplayName", ",")[1]?.trim());
 
-    bannerData.some(d => {
+    bannerData.some((d) => {
       if (d.office === credentials.officeId) {
         this.showBanner = true;
         this.childBannerData.title = d.title;
       }
-    })
+    });
     this.setFilteredActivities();
-    this.screenSize = window.innerWidth
+    this.screenSize = window.innerWidth;
     // console.log('Screen size: ', this.screenSize)
-
-    
   }
 
   /**
    * Sets filtered activities for autocomplete.
    */
   setFilteredActivities() {
-    this.filteredActivities = this.searchText.valueChanges
-      .pipe(
-        map((activity: any) => typeof activity === 'string' ? activity : activity.activity),
-        map((activityName: string) => activityName ? this.filterActivity(activityName) : this.allActivities));
+    this.filteredActivities = this.searchText.valueChanges.pipe(
+      map((activity: any) => (typeof activity === "string" ? activity : activity.activity)),
+      map((activityName: string) => (activityName ? this.filterActivity(activityName) : this.allActivities))
+    );
   }
 
   /**
@@ -111,8 +102,6 @@ export class HomeComponent implements OnInit {
    */
   private filterActivity(activityName: string): any {
     const filterValue = activityName.toLowerCase();
-    return this.allActivities.filter(activity => activity.activity.toLowerCase().indexOf(filterValue) === 0);
+    return this.allActivities.filter((activity) => activity.activity.toLowerCase().indexOf(filterValue) === 0);
   }
-
-
 }

@@ -47,7 +47,7 @@ export class TransactionsTabComponent implements OnInit {
   /** Data source for transactions table. */
   dataSource: any;
   transactionDateFrom = new FormControl(new Date());
-  /** Transaction date to form control. */
+  /** Đến ngày form control. */
   transactionDateTo = new FormControl(new Date());
   form: FormGroup;
   isLoading: boolean = false;

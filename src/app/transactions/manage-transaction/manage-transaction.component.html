@@ -2,14 +2,14 @@
   <mat-card-content>
     <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column" [formGroup]="formDate">
       <mat-form-field fxFlex="31%">
-        <mat-label>Transaction Date From</mat-label>
+        <mat-label>Từ ngày</mat-label>
         <input matInput [matDatepicker]="transactionDateFromPicker" formControlName="fromDate" />
         <mat-datepicker-toggle matSuffix [for]="transactionDateFromPicker"></mat-datepicker-toggle>
         <mat-datepicker #transactionDateFromPicker></mat-datepicker>
       </mat-form-field>
 
       <mat-form-field fxFlex="31%">
-        <mat-label>Transaction Date To</mat-label>
+        <mat-label>Đến ngày</mat-label>
         <input matInput [matDatepicker]="transactionDateToPicker" formControlName="toDate" />
         <mat-datepicker-toggle matSuffix [for]="transactionDateToPicker"></mat-datepicker-toggle>
         <mat-datepicker #transactionDateToPicker></mat-datepicker>
@@ -162,7 +162,7 @@
             Giao dịch lẻ
           </mat-checkbox>
           <mat-checkbox fxFlex="100%" labelPosition="before" formControlName="wholesaleChoose" class="margin-v">
-            Giao dịch lô
+            Giao dịch sỉ
           </mat-checkbox>
         </div>
         <div fxFlex="18%">
@@ -210,7 +210,7 @@
       <ng-container matColumnDef="officeName">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>
           Người tạo / <br />
-          Máy Pos
+          máy bán hàng
         </th>
         <td mat-cell *matCellDef="let journalEntry" style="word-wrap: break-word; width: 200px">
           <!-- {{ journalEntry.officeName }} <br /> -->

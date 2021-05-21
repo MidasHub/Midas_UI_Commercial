@@ -25,7 +25,7 @@
       mat-mini-fab
       [matMenuTriggerFor]="ListMenu"
       #ListMenuTrigger="matMenuTrigger"
-      matTooltip="Danh sách công nợ khách hàng/ tài khoản nhân viên"
+      matTooltip="Quản lý tài khoản khách hàng/ nhân viên"
       tourAnchor="toolbar-2-2"
     >
       <i class="fas fa-list-ol"></i>
@@ -57,7 +57,7 @@
       mat-mini-fab
       [matMenuTriggerFor]="POSPartnerMenu"
       #POSPartnerMenuTrigger="matMenuTrigger"
-      matTooltip="Danh sách máy POS - hạn mức còn lại"
+      matTooltip="Quản lý máy bán hàng"
       tourAnchor="toolbar-2-5"
     >
       <i class="fas fa-hands-helping"></i>
@@ -85,7 +85,7 @@
         color="basic"
         *midasHasActiveModule="'billModule'"
         [routerLink]="['/bills']"
-        matTooltip="Quản lý hóa đơn đầu vào"
+        matTooltip="Quản lý bill"
       >
         <i class="fas fa-receipt"></i>
       </button>
@@ -196,9 +196,9 @@
 </mat-menu>
 
 <mat-menu #POSPartnerMenu="matMenu" [overlapTrigger]="false">
-  <button mat-menu-item routerLink="/terminals/limit">{{ "Quản lý hạn mức POS" | translate }}</button>
+  <button mat-menu-item routerLink="/terminals/limit">{{ "Thông tin máy bán hàng" | translate }}</button>
   <button mat-menu-item *midasHasPermission="'POS_UPDATE'" routerLink="/terminals">
-    {{ "Quản lý máy POS" | translate }}
+    {{ "Quản lý máy bán hàng" | translate }}
   </button>
   <button mat-menu-item *midasHasPermission="'POS_CREATE'" routerLink="/third-party">
     {{ "Toolbar_Component.lblThirdParty" | translate }}
@@ -208,8 +208,8 @@
 
 <mat-menu #transactionMenu="matMenu" [overlapTrigger]="false">
   <button mat-menu-item routerLink="/transaction">Quản lý giao dịch</button>
-  <button mat-menu-item routerLink="/transaction/rollTermSchedule">Quản lý Advance</button>
-  <button mat-menu-item routerLink="/transaction/fee-paid-management">Quản lý phí giao dịch</button>
+  <button mat-menu-item routerLink="/transaction/rollTermSchedule">Quản lý chi tiết công nợ</button>
+  <button mat-menu-item routerLink="/transaction/fee-paid-management">Quản lý phí</button>
   <button mat-menu-item routerLink="/booking/agency">Quản lý booking của Đại lý</button>
 </mat-menu>
 
