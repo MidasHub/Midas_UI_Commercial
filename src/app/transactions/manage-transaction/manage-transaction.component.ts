@@ -1,6 +1,6 @@
-import { forEach, includes } from 'lodash';
-import { Component, OnInit, ViewChild } from "@angular/core";
+import { forEach, includes } from "lodash";
 import { TransactionDatasource } from "../transaction.datasource";
+import { Component, ElementRef, OnInit, ViewChild } from "@angular/core";
 import { FormBuilder, FormGroup } from "@angular/forms";
 import { TransactionService } from "../transaction.service";
 import { MatPaginator } from "@angular/material/paginator";
@@ -11,23 +11,19 @@ import { MatSort } from "@angular/material/sort";
 import { merge } from "rxjs";
 import { tap } from "rxjs/operators";
 import { animate, state, style, transition, trigger } from "@angular/animations";
-import { SavingsService } from "../../savings/savings.service";
-import { SystemService } from "../../system/system.service";
-import { CentersService } from "../../centers/centers.service";
 import { AlertService } from "../../core/alert/alert.service";
 import { MatDialog } from "@angular/material/dialog";
-import { UploadDocumentDialogComponent } from "../../clients/clients-view/custom-dialogs/upload-document-dialog/upload-document-dialog.component";
 import { ConfirmDialogComponent } from "../dialog/confirm-dialog/confirm-dialog.component";
 import { UploadBillComponent } from "../dialog/upload-bill/upload-bill.component";
 import { ClientsService } from "../../clients/clients.service";
 import { FormfieldBase } from "../../shared/form-dialog/formfield/model/formfield-base";
-import { SelectBase } from "../../shared/form-dialog/formfield/model/select-base";
 import { FormDialogComponent } from "../../shared/form-dialog/form-dialog.component";
 import { InputBase } from "../../shared/form-dialog/formfield/model/input-base";
 import { TerminalsService } from "app/terminals/terminals.service";
 import { BanksService } from "app/banks/banks.service";
 import { ConfirmHoldTransactionDialogComponent } from "../dialog/confirm-hold-transaction-dialog/confirm-hold-transaction-dialog.component";
-
+import jsPDF from "jspdf";
+import html2canvas from "html2canvas";
 @Component({
   selector: "midas-manage-transaction",
   templateUrl: "./manage-transaction.component.html",
@@ -128,6 +124,20 @@ export class ManageTransactionComponent implements OnInit {
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
+  @ViewChild("htmlData") htmlData: ElementRef;
+
+  public openPDF(): void {
+    let DATA = document.getElementById("transactionData");
+    html2canvas(DATA).then((canvas) => {
+      let fileWidth = 208;
+      let fileHeight = (canvas.height * fileWidth) / canvas.width;
+      const FILEURI = canvas.toDataURL("image/png");
+      let pdf = new jsPDF("p", "mm", "a4");
+      let position = 0;
+      pdf.addImage(FILEURI, "PNG", 0, position, fileWidth, fileHeight);
+      pdf.save("angular-demo.pdf");
+    });
+  }
 
   constructor(
     private formBuilder: FormBuilder,
@@ -583,7 +593,7 @@ export class ManageTransactionComponent implements OnInit {
     while (++i < this.transactionsData.length) {
       let element = this.transactionsData[i];
       let e: any = {
-        createdDate: this.datePipe.transform(element.createdDate, 'dd-MM-yyyy HH:mm:ss'),
+        createdDate: this.datePipe.transform(element.createdDate, "dd-MM-yyyy HH:mm:ss"),
         terminalId: this.displayTerminalCode(element.terminalId),
         batchNo: element.batchNo,
         traceNo: element.traceNo,
@@ -621,8 +631,8 @@ export class ManageTransactionComponent implements OnInit {
   }
 
   displayStaffName(createdBy: string) {
-    for (const staff of this.staffs){
-      if (staff.staffCode==createdBy) {
+    for (const staff of this.staffs) {
+      if (staff.staffCode == createdBy) {
         return staff.displayName;
       }
     }

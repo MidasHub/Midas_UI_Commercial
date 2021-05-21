@@ -24,6 +24,11 @@
         >
           Tìm kiếm &nbsp;<i class="fa fa-search" aria-hidden="true"></i>
         </button>
+        <div fxFlex="18%">
+          <button style="margin: 5px; height: 40px" (click)="openPDF()" color="primary" mat-raised-button>
+            open PDF
+          </button>
+        </div>
         <h3 *ngIf="!fromDateAndToDate">
           Vui lòng chọn thời gian &nbsp; <i class="fa fa-calendar" style="align-self: center" aria-hidden="true"></i>
         </h3>
@@ -173,6 +178,7 @@
             Giao dịch treo
           </mat-checkbox>
         </div>
+
         <div fxFlex="18%">
           <!-- <button style="margin: 5px; height: 40px" (click)="exportTransaction()" color="primary" mat-raised-button>
             Export
@@ -198,7 +204,14 @@
     </mat-expansion-panel>
   </mat-accordion>
   <mat-card-content>
-    <table mat-table multiTemplateDataRows class="mat-elevation-z8" [dataSource]="dataSource" matSort>
+    <table
+      id="transactionData"
+      mat-table
+      multiTemplateDataRows
+      class="mat-elevation-z8"
+      [dataSource]="dataSource"
+      matSort
+    >
       <ng-container matColumnDef="productId">
         <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>Loại giao dịch</th>
         <td mat-cell fxHide fxShow.gt-md *matCellDef="let transaction" style="width: 100px">

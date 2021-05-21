@@ -55,6 +55,17 @@
 
     <button
       mat-mini-fab
+      [matMenuTriggerFor]="CardTransferMenu"
+      #CardTransferMenuTrigger="matMenuTrigger"
+      matTooltip="Quản lý giao/nhận thẻ"
+      tourAnchor="toolbar-2-4"
+    >
+      <i class="fas fa-clipboard-list"></i>
+      <!-- <a matLine>Booking</a> -->
+    </button>
+
+    <button
+      mat-mini-fab
       [matMenuTriggerFor]="POSPartnerMenu"
       #POSPartnerMenuTrigger="matMenuTrigger"
       matTooltip="Quản lý máy bán hàng"
@@ -74,7 +85,7 @@
       matTooltip="Quản lý Interchange"
       tourAnchor="toolbar-2-6"
     >
-      <fa-icon icon="network-wired" size="lg"></fa-icon>
+      <i class="fas fa-exchange-alt"></i>
     </button>
 
     <!-- <div *midasHasPermission="'POS_UPDATE'">
@@ -236,6 +247,10 @@
 <mat-menu #BookingMenu="matMenu" [overlapTrigger]="false">
   <button mat-menu-item routerLink="/booking/create">Tạo booking nội bộ</button>
   <button *midasHasPermission="'POS_UPDATE'" mat-menu-item routerLink="/booking/view">Quản lý booking nội bộ</button>
+</mat-menu>
+
+<mat-menu #CardTransferMenu="matMenu" [overlapTrigger]="false">
+  <button mat-menu-item routerLink="/card-transfer/create">Tạo biên bản giao/nhận thẻ</button>
 </mat-menu>
 
 <mat-menu #Marketing="matMenu" [overlapTrigger]="false">
