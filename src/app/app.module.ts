@@ -57,6 +57,7 @@ import { BookingManageModule } from "./booking-manage/booking-manage.module";
 import { BillsManageModule } from "./bills-manage/bills-manage.module";
 import { MarketingModule } from "./marketing/marketing.module";
 import { BanksModule } from "./banks/banks.module";
+import { CardTransferModule } from "./card-transfer/card-transfer.module";
 import { CommonHttpParams } from "./shared/CommonHttpParams";
 
 /**
@@ -84,7 +85,7 @@ import { TourMatMenuModule } from "ngx-tour-md-menu";
 
 /** Google Analytics  */
 import { GoogleAnalyticsService } from "./firebase/google-analytics.service";
-import { CardTransferModule } from "./card-transfer/card-transfer.module";
+
 
 /**
  * App Module

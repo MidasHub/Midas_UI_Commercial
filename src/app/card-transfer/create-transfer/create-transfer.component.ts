@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { FormBuilder, FormControl } from "@angular/forms";
+import { FormBuilder, FormControl, FormsModule } from "@angular/forms";
 import { animate, state, style, transition, trigger } from "@angular/animations";
 import { MatDialog, MatDialogConfig } from "@angular/material/dialog";
 import { ActivatedRoute, Router } from "@angular/router";
@@ -11,6 +11,11 @@ import { Logger } from "app/core/logger/logger.service";
 import { AlertService } from "app/core/alert/alert.service";
 import { AuthenticationService } from "app/core/authentication/authentication.service";
 import { ConfirmDialogComponent } from "app/transactions/dialog/confirm-dialog/confirm-dialog.component";
+import { TransactionService } from "../../transactions/transaction.service";
+import { MidasClientService } from "app/midas-client/midas-client.service";
+import { MatTableDataSource } from "@angular/material/table";
+import { FormGroup } from "@angular/forms";
+
 const log = new Logger("Batch Txn");
 @Component({
   selector: "midas-create-transfer-transaction",
@@ -26,7 +31,13 @@ const log = new Logger("Batch Txn");
 })
 export class CreateTransferComponent implements OnInit {
   dataSource: any[] = [];
-  formFilter = new FormControl("");
+  profileForm = new FormGroup({
+    cardFilter: new FormControl(''),
+    shipperFilter: new FormControl(''),
+    deliverFilter: new FormControl(''),
+    staffFilter: new FormControl(''),
+  });
+  //formFilter = new FormControl("");
   displayedColumns: any[] = ["transferDate", "customerName", "cardNumber", "actions"];
   terminals: any[] = [];
 
@@ -39,7 +50,10 @@ export class CreateTransferComponent implements OnInit {
   expandedElement: any;
   accountFilter: any[] = [];
   accountsShow: any[] = [];
+  clients: any[] = [];
   members: any[] = [];
+  shippers: any[] = [];
+  group: any;
 
   currentUser: any;
   feeGroup: any;
@@ -47,16 +61,29 @@ export class CreateTransferComponent implements OnInit {
   isLoading: Boolean = false;
   bookingTxnDailyId: any;
   filteredOptions: any;
+  staffFilteredptions: any;
   terminalsMasters: any;
   today: any = new Date();
   txnDate: any = new Date();
 
   private _filter(value: string): string[] {
     const filterValue = String(value).toUpperCase().replace(/\s+/g, "");
+    return this.clients.filter((option: any) => {
+      return (
+        //option.fullName.toUpperCase().replace(/\s+/g, "").includes(filterValue) ||
+        //option.cardNumber.toUpperCase().replace(/\s+/g, "").includes(filterValue)
+        option.id.toUpperCase().replace(/\s+/g, "").includes(filterValue) ||
+        option.displayName.toUpperCase().replace(/\s+/g, "").includes(filterValue) ||
+        option.documentKey.toUpperCase().replace(/\s+/g, "").includes(filterValue)
+      );
+    });
+  }
+
+  private _filterStaff(value: string): string[] {
+    const filterValue = String(value).toUpperCase().replace(/\s+/g, "");
     return this.members.filter((option: any) => {
       return (
-        option.fullName.toUpperCase().replace(/\s+/g, "").includes(filterValue) ||
-        option.cardNumber.toUpperCase().replace(/\s+/g, "").includes(filterValue)
+        option.fullName.toUpperCase().replace(/\s+/g, "").includes(filterValue)
       );
     });
   }
@@ -67,7 +94,9 @@ export class CreateTransferComponent implements OnInit {
     private route: ActivatedRoute,
     private alertService: AlertService,
     private authenticationService: AuthenticationService,
-    private terminalsService: TerminalsService
+    private transactionServices: TransactionService,
+    private midasClientService: MidasClientService,
+    private terminalsService: TerminalsService,
   ) {
     this.currentUser = this.authenticationService.getCredentials();
     const { permissions } = this.currentUser;
@@ -79,27 +108,37 @@ export class CreateTransferComponent implements OnInit {
 
   displayClient(client: any): string | undefined {
     return client
-      ? `${client.cardNumber.slice(0, 6)} X ${client.cardNumber.slice(
-          client.cardNumber.length - 4,
-          client.cardNumber.length
-        )} - ${client.fullName}`
+      ? `${client.id} ~ ${client.displayName} ~ ${client.documentKey}`
       : undefined;
   }
 
-  resetAutoComplete() {
-    this.formFilter.setValue("");
-    this.filteredOptions = this.formFilter.valueChanges.pipe(
+  displayStaff(staff: any): string | undefined {
+    return staff
+      ? `${staff.fullName}`
+      : undefined;
+  }
+
+  resetAutoCompleteClients() {
+    this.profileForm.controls.cardFilter.setValue("");
+    this.filteredOptions = this.profileForm.controls.cardFilter.valueChanges.pipe(
       startWith(""),
       map((value: any) => this._filter(value))
+    );
+  }
+  resetAutoCompleteStaff() {
+    this.profileForm.controls.staffFilter.setValue("");
+    this.staffFilteredptions = this.profileForm.controls.staffFilter.valueChanges.pipe(
+      startWith(""),
+      map((value: any) => this._filterStaff(value))
     );
   }
 
   ngOnInit(): void {
+    this.profileForm.controls.deliverFilter.setValue(this.currentUser.staffDisplayName);
     this.filteredOptions = new Observable<any[]>();
-    this.filteredOptions = this.formFilter.valueChanges.pipe(
-      startWith(""),
-      map((value: any) => this._filter(value))
-    );
+    this.staffFilteredptions = new Observable<any[]>();
+    this.getShipperInfo();
+    this.getStaffInfo();
   }
 
   formatLong(value: any) {
@@ -120,9 +159,9 @@ export class CreateTransferComponent implements OnInit {
     return value;
   }
 
-  deleteRow(form: any) {
-    this.dataSource = this.dataSource.filter((v) => v.get("index").value !== form.get("index").value);
-  }
+  // deleteRow(form: any) {
+  //   this.dataSource = this.dataSource.filter((v) => v.get("index").value !== form.get("index").value);
+  // }
 
   addFeeDialog() {
     const dialogConfig = new MatDialogConfig();
@@ -180,4 +219,31 @@ export class CreateTransferComponent implements OnInit {
   compare(a: number | string, b: number | string, isAsc: boolean) {
     return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
   }
+
+  getStaffInfo() {
+    console.log("currentUser: ",this.currentUser);
+    console.log("currentUser: ",this.currentUser.staffDisplayName);
+    console.log("officeId: ",this.currentUser.officeId);
+    this.group = `${this.currentUser.officeId+7}`;
+    this.transactionServices.getMembersAvailableGroup(this.group).subscribe((data) => {
+      //this.members = data?.result?.listMemberGroupWithIdentifier;
+      this.members = data.result.listMemberGroupWithIdentifier;
+    });
+  }
+
+  getShipperInfo() {
+    this.transactionServices.getShippersCardTransfer().subscribe((data: any) => {
+      //this.members = data?.result?.listMemberGroupWithIdentifier;
+      this.shippers = data.result.listShipper;
+      console.log("shippers: ", this.shippers);
+    });
+  }
+
+  searchClientAndGroup(query: string): void {
+    this.midasClientService.searchClientByNameAndExternalIdAndPhoneAndDocumentKey(query).subscribe((data: any) =>{
+      this.clients = data.result.listClientSearch;
+      this.resetAutoCompleteClients();
+    });
+  }
+
 }

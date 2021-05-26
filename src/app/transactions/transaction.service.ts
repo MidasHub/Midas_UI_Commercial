@@ -599,6 +599,12 @@ export class TransactionService {
     return this.http.post<any>(`${this.GatewayApiUrlPrefix}/groups/get_list_member_group_with_identifier`, httpParams);
   }
 
+  getShippersCardTransfer(): Observable<any> {
+    let httpParams = this.commonHttpParams.getCommonHttpParams();
+    console.log("url: ", `${this.GatewayApiUrlPrefix}/card-transfer/get_shippers_staff`);
+    return this.http.post<any>(`${this.GatewayApiUrlPrefix}/card-transfer/get_shippers_staff`, httpParams);
+  }
+
   checkValidTransactionBtach(clientId: string): Observable<any> {
     let httpParams = this.commonHttpParams.getCommonHttpParams();
     httpParams = httpParams.set("clientId", clientId);
