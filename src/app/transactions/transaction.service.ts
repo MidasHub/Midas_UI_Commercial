@@ -601,8 +601,11 @@ export class TransactionService {
 
   getShippersCardTransfer(): Observable<any> {
     let httpParams = this.commonHttpParams.getCommonHttpParams();
+    const Params = {
+      ...httpParams,
+    };
     console.log("url: ", `${this.GatewayApiUrlPrefix}/card-transfer/get_shippers_staff`);
-    return this.http.post<any>(`${this.GatewayApiUrlPrefix}/card-transfer/get_shippers_staff`, httpParams);
+    return this.http.post<any>(`${this.GatewayApiUrlPrefix}/card-transfer/get_shippers_staff`, Params);
   }
 
   checkValidTransactionBtach(clientId: string): Observable<any> {
@@ -672,7 +675,7 @@ export class TransactionService {
     return this.http.post<any>(`${this.GatewayApiUrlPrefix}/client/get_identifier_midas_by_client_group`, httpParams);
   }
 
-  exportAsExcelFile(exportType: string , data: any) {
+  exportAsExcelFile(exportType: string, data: any) {
     this.accessToken = JSON.parse(
       sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey)
     );
@@ -680,19 +683,18 @@ export class TransactionService {
     // tslint:disable-next-line:max-line-length
     //const fileUrl = 'http://119.82.135.181:8001/document/export/';
     const fileUrl = `${this.environment.ICDocumentURL}/document/export/`;
-    this.getExportExcelFiles(fileUrl, exportType ,data).subscribe((data_response: any) => {
+    this.getExportExcelFiles(fileUrl, exportType, data).subscribe((data_response: any) => {
       this.downloadFile(data_response.result.fileName);
     });
   }
 
-  getExportExcelFiles(url: string, exportType: string ,data:any) {
+  getExportExcelFiles(url: string, exportType: string, data: any) {
     let httpParams = this.commonHttpParams.getCommonHttpParams();
     httpParams = httpParams.set("filterData", JSON.stringify(data)).set("exportType", exportType);
     return this.http.post<any>(url, httpParams);
   }
 
   downloadFile(fileName: string) {
-
     //const url = `http://119.82.135.181:8001/document/export/download?fileName=${fileName}`;
     const url = `${this.environment.ICDocumentURL}/document/export/download?fileName=${fileName}`;
     const xhr = new XMLHttpRequest();
@@ -716,7 +718,7 @@ export class TransactionService {
   }
 
   //tratt
-  exportDataFile(exportType: string , data: any) {
+  exportDataFile(exportType: string, data: any) {
     this.accessToken = JSON.parse(
       sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey)
     );
@@ -724,7 +726,7 @@ export class TransactionService {
     // tslint:disable-next-line:max-line-length
     //const fileUrl = 'http://119.82.135.181:8001/document/export/';
     const fileUrl = `${this.environment.ICDocumentURL}/document/export/`;
-    this.getExportExcelFiles(fileUrl, exportType ,data).subscribe((data_response: any) => {
+    this.getExportExcelFiles(fileUrl, exportType, data).subscribe((data_response: any) => {
       this.downloadFile(data_response.result.fileName);
     });
   }
