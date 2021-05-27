@@ -600,10 +600,15 @@ export class TransactionService {
   }
 
   getShippersCardTransfer(): Observable<any> {
-    let httpParams = this.commonHttpParams.getCommonHttpParams();
+    // let httpParams = this.commonHttpParams.getCommonHttpParams();
+    this.accessToken = JSON.parse(
+      sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey)
+    );
     const Params = {
-      ...httpParams,
+      createdBy: this.accessToken.userId,
+      accessToken: this.accessToken.base64EncodedAuthenticationKey,
     };
+
     console.log("url: ", `${this.GatewayApiUrlPrefix}/card-transfer/get_shippers_staff`);
     return this.http.post<any>(`${this.GatewayApiUrlPrefix}/card-transfer/get_shippers_staff`, Params);
   }
