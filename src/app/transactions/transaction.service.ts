@@ -608,9 +608,25 @@ export class TransactionService {
       createdBy: this.accessToken.userId,
       accessToken: this.accessToken.base64EncodedAuthenticationKey,
     };
-
-    console.log("url: ", `${this.GatewayApiUrlPrefix}/card-transfer/get_shippers_staff`);
     return this.http.post<any>(`${this.GatewayApiUrlPrefix}/card-transfer/get_shippers_staff`, Params);
+  }
+
+  saveCardTransfer(data: any) {
+    // let httpParams = this.commonHttpParams.getCommonHttpParams();
+    this.accessToken = JSON.parse(
+      sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey)
+    );
+    const Params = {
+      createdBy: this.accessToken.userId,
+      accessToken: this.accessToken.base64EncodedAuthenticationKey,
+      transferRefNo: data.transferRefNo,
+      senderStaffId: data.senderStaffId,
+      actionStaffId: data.actionStaffId,
+      receiverStaffId: data.receiverStaffId,
+      listCardId: data.listCardId,
+    };
+    console.log("Params: ", Params);
+    return this.http.post<any>(`${this.GatewayApiUrlPrefix}/card-transfer/store_card_transfer_info`, Params);
   }
 
   checkValidTransactionBtach(clientId: string): Observable<any> {

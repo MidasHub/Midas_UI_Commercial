@@ -13,7 +13,7 @@
             [matAutocomplete]="clientsAutocomplete"
           /> -->
           <!-- <input type="text" matInput #querySearchAll (change)=" this.searchClientAndGroup(querySearchAll.value);" -->
-          <input type="text" formControlName="cardFilter" matInput #querySearchAll (change)=" this.searchClientAndGroup(querySearchAll.value);"
+          <input type="text" formControlName="cardFilter" matInput #querySearchAll (ngModelChange)=" this.searchClientAndGroup(querySearchAll.value);"
           (click)="this.resetAutoCompleteClients()"
           [matAutocomplete]="clientsAutocomplete">
         </mat-form-field>
@@ -24,23 +24,18 @@
           </mat-option>
         </mat-autocomplete>
 
-        <!-- <mat-autocomplete #clientsAutocomplete="matAutocomplete" [displayWith]="displayClient">
-          <mat-option *ngFor="let client of filteredOptions | async" [value]="client">
-            {{ displayClient(client) }}
-          </mat-option>
-        </mat-autocomplete> -->
-
         <mat-form-field fxFlex="20%">
           <mat-label>Shipper</mat-label>
           <input formControlName="shipperFilter"
             matInput
-            [matAutocomplete]="clientsAutocomplete"
+            (click)="this.resetAutoCompleteShipper()"
+            [matAutocomplete]="shippersAutocomplete"
           />
         </mat-form-field>
 
-        <mat-autocomplete #clientsAutocomplete="matAutocomplete" [displayWith]="displayClient">
-          <mat-option *ngFor="let client of filteredOptions | async" [value]="client">
-            {{ displayClient(client) }}
+        <mat-autocomplete #shippersAutocomplete="matAutocomplete" [displayWith]="displayShipper">
+          <mat-option *ngFor="let shipper of shipperFilteredptions | async" [value]="shipper">
+            {{ displayShipper(shipper) }}
           </mat-option>
         </mat-autocomplete>
 
@@ -68,7 +63,9 @@
         </mat-autocomplete>
 
         <div fxFlex="10%">
-          <button mat-button type="button" style="background: #3b74ff; color: white; max-height: 50px; margin: 8px">
+          <button mat-button type="button" style="background: #3b74ff; color: white; max-height: 50px; margin: 8px"
+          (click)="addWaitingList()"
+          >
             <img src="assets/images/icons/add-while.svg" />&nbsp; Thêm
           </button>
         </div>
@@ -80,7 +77,7 @@
             <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>Ngày giao dịch</th>
             <td mat-cell fxHide fxShow.gt-md style="word-wrap: break-word; width: 150px" *matCellDef="let value">
               <label>
-                {{ value.txnDate | date: "dd-MM-yyyy" }}
+                {{ value.transferDate | date: "dd-MM-yyyy" }}
               </label>
             </td>
           </ng-container>
@@ -104,10 +101,11 @@
             </td>
           </ng-container>
 
-          <ng-container matColumnDef="actions" style="width: 25px">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>#</th>
+          <ng-container matColumnDef="documentId" style="width: 25px">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Hành động</th>
             <td mat-cell *matCellDef="let form">
-              <button class="action-button" mat-raised-button color="warn" matTooltip="Xóa dòng này">
+              <button class="action-button" mat-raised-button color="warn" matTooltip="Xóa dòng này"
+              (click)="deleteRow(form)">
                 <i class="fas fa-trash-alt"></i>
               </button>
             </td>
@@ -131,6 +129,20 @@
           <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
         </table>
       </div>
+      <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column" style="display: flex; justify-content: center; margin: 15px">
+        <button mat-button type="button" style="background: rgba(0, 0, 0, 0.4);; color: white; max-height: 50px; margin: 8px"
+        (click)="addWaitingList()"
+        > Hủy
+        </button>
+        <button mat-button type="button" style="background: #C3291C; color: white; max-height: 50px; margin: 8px"
+        (click)="save()"
+        > Lưu
+        </button>
+        <button mat-button type="button" style="background: #A5A6F6; color: white; max-height: 50px; margin: 8px"
+        (click)="addWaitingList()"
+        > Tải biên bản
+        </button>
+      </div>
 
       <div *ngIf="isLoading" style="display: flex; justify-content: center; align-items: center; background: white">
         <mat-progress-spinner color="warn" mode="indeterminate"> </mat-progress-spinner>
@@ -148,4 +160,5 @@
       <mat-progress-spinner color="warn" mode="indeterminate"> </mat-progress-spinner>
     </div>
   </mat-card>
+
 </form>
