@@ -94,8 +94,9 @@ export class CreateTransactionComponent implements OnInit {
         this.transactionInfo.isDone = false;
         this.transactionInfo.productId = type == "cash" ? "CA01" : "AL01";
         this.transactionInfo.type = type;
-        this.transactionInfo.identifierId = identifierId;
-        this.transactionInfo.clientId = clientId;
+        this.transactionInfo.identifierId =
+          type != "rollTermGetCash" ? identifierId : data.result.posTransaction.identifierId;
+        this.transactionInfo.clientId = type != "rollTermGetCash" ? clientId : data.result.posTransaction.custId;
         this.transactionInfo.bookingId = bookingId;
         this.transactionInfo.remainValue = this.formatCurrency(remainValue);
 
