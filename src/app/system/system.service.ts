@@ -17,17 +17,15 @@ export class SystemService {
   /**
    * @param {HttpClient} http Http Client to send requests.
    */
-   private IcGatewayApiUrlPrefix: any;
+  private IcGatewayApiUrlPrefix: any;
 
   constructor(private http: HttpClient, private commonHttpParams: CommonHttpParams) {
     this.IcGatewayApiUrlPrefix = environment.IcGatewayApiUrlPrefix;
-
   }
-
 
   getTenantInfo(subdomain: string): Observable<any> {
     let httpParams = new HttpParams();
-    httpParams = httpParams.set('subdomain', "staging");
+    httpParams = httpParams.set("subdomain", subdomain);
     return this.http.post(`${this.IcGatewayApiUrlPrefix}/config/get_ic_config`, httpParams);
   }
 
@@ -558,8 +556,6 @@ export class SystemService {
   getOffices(): Observable<any> {
     return this.http.get("/office");
   }
-
-
 
   /**
    * @returns {Observable<any>} Loan products data.
