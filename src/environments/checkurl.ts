@@ -5,10 +5,6 @@ let billpostenant = "default";
 let ictenant = "default";
 let defaultIcURL = "https://ic.kiotthe.com";
 
-// prod 160
-// let defaultbaseURL = "https://api.kiotthe.com";
-// let defaultbillposURL = "https://api.kiotthe.com";
-
 // prod TEKCOMPAY, HDCREDIT
 let defaultbaseURL = "https://midas.kiotthe.com";
 let defaultbillposURL = "https://midas.kiotthe.com";
