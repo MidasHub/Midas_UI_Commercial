@@ -224,8 +224,9 @@
           </label>
         </mat-list-item>
 
-        <div *midasHasPermission="'ALL_FUNCTIONS'">
-          <mat-list-item class="tab-link" [matMenuTriggerFor]="accountingMenu" #accountingMenuTrigger="matMenuTrigger">
+        <div >
+          <mat-list-item         *midasHasPermissions="'SYSTEM_CONFIG'"
+          class="tab-link" [matMenuTriggerFor]="accountingMenu" #accountingMenuTrigger="matMenuTrigger">
             <mat-icon matListIcon>
               <i class="fas fa-users-cog"></i>
             </mat-icon>
@@ -239,7 +240,8 @@
             <a matLine>Hóa đơn đầu vào</a>
           </mat-list-item>
 
-          <mat-list-item [routerLink]="['/banks']">
+          <mat-list-item         *midasHasPermissions="'SYSTEM_CONFIG'"
+          [routerLink]="['/banks']">
             <mat-icon matListIcon>
               <fa-icon icon="university" size="sm"></fa-icon>
             </mat-icon>
