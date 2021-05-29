@@ -98,11 +98,12 @@
         <i class="fas fa-receipt"></i>
       </button>
 
-      <button mat-mini-fab color="basic" [routerLink]="['/banks']" matTooltip="Quản lý thông tin ngân hàng">
+      <button *midasHasPermissions="'SYSTEM_CONFIG'" mat-mini-fab color="basic" [routerLink]="['/banks']" matTooltip="Quản lý thông tin ngân hàng">
         <i class="fas fa-university"></i>
       </button>
 
       <button
+        *midasHasPermissions="'SYSTEM_CONFIG'"
         mat-mini-fab
         color="basic"
         [matMenuTriggerFor]="accountingMenu"
