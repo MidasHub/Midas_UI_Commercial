@@ -24,14 +24,25 @@
         >
           Tìm kiếm &nbsp;<i class="fa fa-search" aria-hidden="true"></i>
         </button>
-        <div fxFlex="18%">
+        <!-- <div fxFlex="18%">
           <button style="margin: 5px; height: 40px" (click)="openPDF()" color="primary" mat-raised-button>
             open PDF
           </button>
-        </div>
+        </div> -->
         <h3 *ngIf="!fromDateAndToDate">
           Vui lòng chọn thời gian &nbsp; <i class="fa fa-calendar" style="align-self: center" aria-hidden="true"></i>
         </h3>
+
+        <button
+        *midasHasPermission="'POS_UPDATE'"
+        (click)="submitTransactionUpToNow()"
+        style="align-self: center; margin-left: 20px;"
+        color=""
+        mat-raised-button
+      >
+        Chốt số &nbsp;<i class="fa fa-archive" aria-hidden="true"></i>
+      </button>
+
       </div>
     </div>
     <div class="container" fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column"></div>
@@ -384,6 +395,7 @@
       let-traceNo="traceNo"
       let-isHold="isHold"
       style="width: 50px"
+      let-isSubmit="isSubmit"
     >
       <div *ngIf="isHold != '0'">
         <div *midasHasPermission="'POS_UPDATE'">
@@ -438,14 +450,14 @@
         <hr />
         <button
           mat-menu-item
-          *ngIf="status == 'V' && type != 'rollTerm' && (today | date: 'dd/MM/yyyy') == (txnDate | date: 'dd/MM/yyyy')"
+          *ngIf="status == 'V' && type != 'rollTerm' && (today | date: 'dd/MM/yyyy') == (txnDate | date: 'dd/MM/yyyy') && isSubmit == 0 "
           (click)="undoRevertTransaction(refid)"
         >
           <i class="fa fa-undo" aria-hidden="true"></i> &nbsp;Hoàn tác giao dịch
         </button>
         <button
           mat-menu-item
-          *ngIf="status != 'V' && (today | date: 'dd/MM/yyyy') == (txnDate | date: 'dd/MM/yyyy')"
+          *ngIf="status != 'V' && (today | date: 'dd/MM/yyyy') == (txnDate | date: 'dd/MM/yyyy') && isSubmit == 0"
           (click)="revertTransaction(refid, trnRefNo)"
         >
           <i class="fa fa-ban" aria-hidden="true"></i> &nbsp;Hủy giao dịch

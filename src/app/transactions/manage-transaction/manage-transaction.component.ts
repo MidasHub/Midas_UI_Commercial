@@ -358,6 +358,30 @@ export class ManageTransactionComponent implements OnInit {
     this.transactionService.downloadBill(clientId, documentId);
   }
 
+  submitTransactionUpToNow() {
+    const dialog = this.dialog.open(ConfirmDialogComponent, {
+      data: {
+        message: "Bạn chắc chắn muốn chốt số giao dịch đến thời điểm hiện tại ",
+        title: "Xác nhận",
+      },
+    });
+    dialog.afterClosed().subscribe((data) => {
+      if (data) {
+        this.transactionService.submitTransactionUpToiNow().subscribe((result) => {
+          if (result.status === "200") {
+            this.getTransaction();
+            const message = "Chốt số giao dịch thành công";
+            this.alertService.alert({
+              msgClass: "cssInfo",
+              message: message,
+            });
+            this.getTransaction();
+          }
+        });
+      }
+    });
+  }
+
   updateIsHoldTransaction(tranRefNo: string, transactionId: string) {
     const dialog = this.dialog.open(ConfirmHoldTransactionDialogComponent, {
       data: {

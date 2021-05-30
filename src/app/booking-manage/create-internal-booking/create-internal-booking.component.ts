@@ -138,6 +138,8 @@ export class CreateInternalBookingComponent implements OnInit {
 
         txnDate: this.datePipe.transform(data.data.value.txnDate , dateFormat),
         amountBooking: data.data.value.bookingAmount,
+        note: data.data.value.note,
+
       }
       if (data) {
         this.bookingService.addBookingInternal(bookingInfo).subscribe((result) => {

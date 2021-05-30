@@ -1,5 +1,6 @@
 import { Component, ViewChild } from "@angular/core";
 import { MatTabChangeEvent } from "@angular/material/tabs";
+import { BranchBookingTabComponent } from "./branch-booking-tab/branch-booking-tab.component";
 import { InternalBookingTabComponent } from "./internal-booking-tab/internal-booking-tab.component";
 import { RollTermScheduleBookingTabComponent } from "./roll-term-schedule-booking-tab/roll-term-schedule-booking-tab.component";
 
@@ -12,6 +13,8 @@ export class ViewInternalBookingComponent {
   @ViewChild(InternalBookingTabComponent) private internalBookingTabComponent: InternalBookingTabComponent;
   @ViewChild(RollTermScheduleBookingTabComponent)
   private rollTermScheduleBookingTabComponent: RollTermScheduleBookingTabComponent;
+  @ViewChild(BranchBookingTabComponent)
+  private branchBookingTabComponent: BranchBookingTabComponent;
 
   constructor() {}
 
@@ -21,7 +24,13 @@ export class ViewInternalBookingComponent {
     } else {
       if (event.index == 1) {
         this.rollTermScheduleBookingTabComponent.getBookingInternal();
+      } else {
+        if (event.index == 2) {
+          this.branchBookingTabComponent.getBookingInternal();
+        }
       }
+
+
     }
   }
 }

@@ -13,11 +13,11 @@ import { merge } from "rxjs";
 import { tap } from "rxjs/operators";
 
 @Component({
-  selector: "midas-internal-booking-tab",
-  templateUrl: "./internal-booking-tab.component.html",
-  styleUrls: ["./internal-booking-tab.component.scss"],
+  selector: "midas-branch-booking-tab",
+  templateUrl: "./branch-booking-tab.component.html",
+  styleUrls: ["./branch-booking-tab.component.scss"],
 })
-export class InternalBookingTabComponent implements OnInit {
+export class BranchBookingTabComponent implements OnInit {
   expandedElement: any;
   displayedColumns: any[] =
   ["bookingRefNo", "officeName", "staffName",
@@ -52,7 +52,6 @@ export class InternalBookingTabComponent implements OnInit {
       staffName: [''],
     });
 
-    this.getBookingInternal();
   }
 
   textDecorateBooking(status: string) {
@@ -64,15 +63,14 @@ export class InternalBookingTabComponent implements OnInit {
     const dateFormat = this.settingsService.dateFormat;
     let fromDate = this.formDate.get("fromDate").value;
     let toDate = this.formDate.get("toDate").value;
-    let staffName = this.formFilter.get("staffName").value;
-    let officeName = this.formFilter.get("officeName").value ;
+    // let officeName = this.formFilter.get("officeName").value ;
     if (fromDate) {
       fromDate = this.datePipe.transform(fromDate, dateFormat);
     }
     if (toDate) {
       toDate = this.datePipe.transform(toDate, dateFormat);
     }
-    this.bookingService.getManageBookingInternal(officeName, staffName, fromDate, toDate).subscribe((data: any) => {
+    this.bookingService.getManageBookingBranch( fromDate, toDate).subscribe((data: any) => {
       this.staffBookingInfo = data?.result?.bookingInternalResponseDto;
       this.dataSource = data?.result?.bookingInternalResponseDto?.lisBookingManagementDtos;
       this.BookingFilter = this.dataSource;
@@ -115,7 +113,7 @@ export class InternalBookingTabComponent implements OnInit {
       };
 
       if (data) {
-        this.bookingService.transferBookingAmount(transferInfo, "BI").subscribe((result) => {
+        this.bookingService.transferBookingAmount(transferInfo,  "BB").subscribe((result) => {
           if (result?.result?.status) {
             const message = `Chi tiền cho booking ${transferInfo.bookingRefNo} thành công`;
 
@@ -129,7 +127,6 @@ export class InternalBookingTabComponent implements OnInit {
             this.alertService.alert({
               type: '🚨🚨🚨🚨 Lỗi ',
               msgClass: 'cssDanger',
-              // message: '🚨🚨 Lỗi thanh toán phí, vui lòng liên hệ IT Support để được hổ trợ 🚨🚨',
               message: result?.error,
             });
           }
