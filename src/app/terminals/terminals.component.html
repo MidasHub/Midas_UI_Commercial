@@ -87,12 +87,12 @@
         <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'Terminal_Component.labelAction'| translate}} </th>
         <td mat-cell *matCellDef="let terminal">
           <label *midasHasPermission="'POS_UPDATE'">
-            <button title="Điều chuyển máy POS" *ngIf="terminal.isTransferAble"  mat-raised-button color="primary" (click)="addTransferDialogByTransactionId(terminal.terminalId, terminal.terminalName,  filter.value)">
+            <button title="Điều chuyển máy bán hàng" *ngIf="terminal.isTransferAble"  mat-raised-button color="primary" (click)="addTransferDialogByTransactionId(terminal.terminalId, terminal.terminalName,  filter.value)">
               <fa-icon icon="sync"></fa-icon>
             </button>
           </label>
           <label *midasHasPermission="'POS_CREATE'" >
-          <button title="Chỉnh sửa thông tin máy POS" mat-raised-button color="primary" [routerLink]="[terminal.terminalId,'edit']">
+          <button title="Chỉnh sửa thông tin máy bán hàng" mat-raised-button color="primary" [routerLink]="[terminal.terminalId,'edit']">
             <fa-icon icon="edit"></fa-icon>
           </button>
           </label>

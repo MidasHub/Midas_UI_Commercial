@@ -138,7 +138,7 @@
                   type="number"
                   [readonly]="!isOwner"
                   formControlName="timeChargeValid"
-                  matTooltip="Đây là cài đặt số mà thẻ được phép cà vào máy POS này và các máy POS khác có cùng một ngân hàng phát hàng"
+                  matTooltip="Đây là cài đặt số mà thẻ được phép cà vào máy bán hàng này và các máy bán hàng khác có cùng một ngân hàng phát hàng"
                 />
                 <mat-error
                   *ngIf="editTerminalForm.controls.timeChargeValid.hasError('required')"
@@ -159,7 +159,7 @@
                   [disabled]="!isOwner"
                   formControlName="banksCheck"
                   multiple
-                  matTooltip="Đây là ô chọn các ngân hàng mà thẻ của nó sẽ không được phép thực hiện giao dịch trên máy POS này"
+                  matTooltip="Đây là ô chọn các ngân hàng mà thẻ của nó sẽ không được phép thực hiện giao dịch trên máy bán hàng này"
                 >
                   <mat-option *ngFor="let bank of banks" [value]="bank.bankCode">
                     {{ bank.bankName }}
@@ -173,7 +173,7 @@
                   [disabled]="!isOwner"
                   multiple
                   formControlName="cardsCheck"
-                  matTooltip="Đây là ô chọn các loại thẻ sẽ không được phép thực hiện giao dịch trên máy POS này"
+                  matTooltip="Đây là ô chọn các loại thẻ sẽ không được phép thực hiện giao dịch trên máy bán hàng này"
                 >
                   <mat-option *ngFor="let type of cardTypes" [value]="type.code">
                     {{ type.description }}
@@ -276,7 +276,7 @@
               required
               [readonly]="!isOwner"
               formControlName="levelLimit"
-              matTooltip="Số lần mà một thẻ tín dụng được phép cà lên máy POS này trong 1 ngày"
+              matTooltip="Số lần mà một thẻ được phép cà lên máy bán hàng này trong 1 ngày"
             />
             <mat-error
               *ngIf="editTerminalForm.controls.levelLimit.hasError('min')"

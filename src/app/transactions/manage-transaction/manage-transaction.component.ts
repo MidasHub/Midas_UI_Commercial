@@ -1,5 +1,6 @@
-import { Component, OnInit, ViewChild } from "@angular/core";
+import { forEach, includes } from "lodash";
 import { TransactionDatasource } from "../transaction.datasource";
+import { Component, ElementRef, OnInit, ViewChild } from "@angular/core";
 import { FormBuilder, FormGroup } from "@angular/forms";
 import { TransactionService } from "../transaction.service";
 import { MatPaginator } from "@angular/material/paginator";
@@ -10,23 +11,19 @@ import { MatSort } from "@angular/material/sort";
 import { merge } from "rxjs";
 import { tap } from "rxjs/operators";
 import { animate, state, style, transition, trigger } from "@angular/animations";
-import { SavingsService } from "../../savings/savings.service";
-import { SystemService } from "../../system/system.service";
-import { CentersService } from "../../centers/centers.service";
 import { AlertService } from "../../core/alert/alert.service";
 import { MatDialog } from "@angular/material/dialog";
-import { UploadDocumentDialogComponent } from "../../clients/clients-view/custom-dialogs/upload-document-dialog/upload-document-dialog.component";
 import { ConfirmDialogComponent } from "../dialog/confirm-dialog/confirm-dialog.component";
 import { UploadBillComponent } from "../dialog/upload-bill/upload-bill.component";
 import { ClientsService } from "../../clients/clients.service";
 import { FormfieldBase } from "../../shared/form-dialog/formfield/model/formfield-base";
-import { SelectBase } from "../../shared/form-dialog/formfield/model/select-base";
 import { FormDialogComponent } from "../../shared/form-dialog/form-dialog.component";
 import { InputBase } from "../../shared/form-dialog/formfield/model/input-base";
 import { TerminalsService } from "app/terminals/terminals.service";
 import { BanksService } from "app/banks/banks.service";
 import { ConfirmHoldTransactionDialogComponent } from "../dialog/confirm-hold-transaction-dialog/confirm-hold-transaction-dialog.component";
-
+import jsPDF from "jspdf";
+import html2canvas from "html2canvas";
 @Component({
   selector: "midas-manage-transaction",
   templateUrl: "./manage-transaction.component.html",
@@ -127,6 +124,20 @@ export class ManageTransactionComponent implements OnInit {
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
+  @ViewChild("htmlData") htmlData: ElementRef;
+
+  public openPDF(): void {
+    let DATA = document.getElementById("transactionData");
+    html2canvas(DATA).then((canvas) => {
+      let fileWidth = 208;
+      let fileHeight = (canvas.height * fileWidth) / canvas.width;
+      const FILEURI = canvas.toDataURL("image/png");
+      let pdf = new jsPDF("p", "mm", "a4");
+      let position = 0;
+      pdf.addImage(FILEURI, "PNG", 0, position, fileWidth, fileHeight);
+      pdf.save("angular-demo.pdf");
+    });
+  }
 
   constructor(
     private formBuilder: FormBuilder,
@@ -345,6 +356,30 @@ export class ManageTransactionComponent implements OnInit {
 
   downloadBill(clientId: string, documentId: string) {
     this.transactionService.downloadBill(clientId, documentId);
+  }
+
+  submitTransactionUpToNow() {
+    const dialog = this.dialog.open(ConfirmDialogComponent, {
+      data: {
+        message: "Bạn chắc chắn muốn chốt số giao dịch đến thời điểm hiện tại ",
+        title: "Xác nhận",
+      },
+    });
+    dialog.afterClosed().subscribe((data) => {
+      if (data) {
+        this.transactionService.submitTransactionUpToiNow().subscribe((result) => {
+          if (result.status === "200") {
+            this.getTransaction();
+            const message = "Chốt số giao dịch thành công";
+            this.alertService.alert({
+              msgClass: "cssInfo",
+              message: message,
+            });
+            this.getTransaction();
+          }
+        });
+      }
+    });
   }
 
   updateIsHoldTransaction(tranRefNo: string, transactionId: string) {
@@ -573,4 +608,58 @@ export class ManageTransactionComponent implements OnInit {
     }
     this.transactionService.exportAsExcelFile("Transaction", dataCopy);
   }
+
+  //tratt
+  exportData(): void {
+    let dataCopy = [];
+    let i = -1;
+
+    while (++i < this.transactionsData.length) {
+      let element = this.transactionsData[i];
+      let e: any = {
+        createdDate: this.datePipe.transform(element.createdDate, "dd-MM-yyyy HH:mm:ss"),
+        terminalId: this.displayTerminalCode(element.terminalId),
+        batchNo: element.batchNo,
+        traceNo: element.traceNo,
+        panHolderName: element.panHolderName,
+        agencyName: element.agencyName,
+        invoiceAmount: element.invoiceAmount,
+        terminalAmount: element.terminalAmount,
+        panNumber: element.panNumber,
+        cardType: element.cardType,
+        panBank: element.panBank,
+        merchantNo: element.merchantNo,
+        trnRefNo: element.trnRefNo,
+        status: this.displayStatus(element.status),
+        officeName: element.officeName,
+        ext5: element.ext5,
+        partnerCode: this.displayPartnerDesc(element.partnerCode),
+        feeAmount: element.feeAmount,
+        cogsAmount: element.cogsAmount,
+        staffName: this.displayStaffName(element.createdBy),
+        terminalFeeAmount: element.terminalFeeAmount,
+      };
+      dataCopy.push(e);
+    }
+    this.transactionService.exportDataFile("TransactionDaily", dataCopy);
+  }
+
+  displayTerminalCode(terminalId: string) {
+    const terminalInfo = this.terminals?.filter((terminal: any) => terminal.terminalId == terminalId);
+    return terminalInfo ? terminalInfo[0]?.terminalCode : terminalId;
+  }
+
+  displayPartnerDesc(partnerCode: string) {
+    const partneInfo = this.partners?.filter((partner: any) => partner.code == partnerCode);
+    return partneInfo ? partneInfo[0]?.desc : partnerCode;
+  }
+
+  displayStaffName(createdBy: string) {
+    for (const staff of this.staffs) {
+      if (staff.staffCode == createdBy) {
+        return staff.displayName;
+      }
+    }
+  }
+  //end tratt
 }

@@ -566,8 +566,8 @@
     },
     "tabTransactions": {
       "labelBalance": "Balance",
-      "labelTransactionDateFrom": "Transaction Date From",
-      "labelTransactionDateTo": "Transaction Date To",
+      "labelTransactionDateFrom": "Từ ngày",
+      "labelTransactionDateTo": "Đến ngày",
       "msgIncrease": "Increase",
       "msgDecrease": "Decrease",
       "lblTransactionType": "Transaction type",

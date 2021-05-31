@@ -2,14 +2,14 @@
   <mat-card-content>
     <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column" [formGroup]="formDate">
       <mat-form-field fxFlex="31%">
-        <mat-label>Transaction Date From</mat-label>
+        <mat-label>Từ ngày</mat-label>
         <input matInput [matDatepicker]="transactionDateFromPicker" formControlName="fromDate" />
         <mat-datepicker-toggle matSuffix [for]="transactionDateFromPicker"></mat-datepicker-toggle>
         <mat-datepicker #transactionDateFromPicker></mat-datepicker>
       </mat-form-field>
 
       <mat-form-field fxFlex="31%">
-        <mat-label>Transaction Date To</mat-label>
+        <mat-label>Đến ngày</mat-label>
         <input matInput [matDatepicker]="transactionDateToPicker" formControlName="toDate" />
         <mat-datepicker-toggle matSuffix [for]="transactionDateToPicker"></mat-datepicker-toggle>
         <mat-datepicker #transactionDateToPicker></mat-datepicker>
@@ -24,9 +24,24 @@
         >
           Tìm kiếm &nbsp;<i class="fa fa-search" aria-hidden="true"></i>
         </button>
+        <!-- <div fxFlex="18%">
+          <button style="margin: 5px; height: 40px" (click)="openPDF()" color="primary" mat-raised-button>
+            open PDF
+          </button>
+        </div> -->
         <h3 *ngIf="!fromDateAndToDate">
           Vui lòng chọn thời gian &nbsp; <i class="fa fa-calendar" style="align-self: center" aria-hidden="true"></i>
         </h3>
+
+        <button
+          *midasHasPermission="'POS_UPDATE'"
+          (click)="submitTransactionUpToNow()"
+          style="align-self: center; margin-left: 20px"
+          color=""
+          mat-raised-button
+        >
+          Chốt số &nbsp;<i class="fa fa-archive" aria-hidden="true"></i>
+        </button>
       </div>
     </div>
     <div class="container" fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column"></div>
@@ -167,14 +182,18 @@
             Giao dịch lẻ
           </mat-checkbox>
           <mat-checkbox fxFlex="100%" labelPosition="before" formControlName="wholesaleChoose" class="margin-v">
-            Giao dịch lô
+            Giao dịch sỉ
           </mat-checkbox>
           <mat-checkbox fxFlex="100%" labelPosition="before" formControlName="holdTransaction" class="margin-v">
             Giao dịch treo
           </mat-checkbox>
         </div>
+
         <div fxFlex="18%">
-          <button style="margin: 5px; height: 40px" (click)="exportTransaction()" color="primary" mat-raised-button>
+          <!-- <button style="margin: 5px; height: 40px" (click)="exportTransaction()" color="primary" mat-raised-button>
+            Export
+          </button>-->
+          <button style="margin: 5px; height: 40px" (click)="exportData()" color="primary" mat-raised-button>
             Export
           </button>
 
@@ -186,6 +205,7 @@
           >
             Export Cho đối tác
           </button>
+
           <!-- <button style="margin: 5px; height: 40px" (click)="exportAsXLSX()" color="primary" mat-raised-button>
             Tải danh sách giao dịch
           </button> -->
@@ -194,7 +214,14 @@
     </mat-expansion-panel>
   </mat-accordion>
   <mat-card-content>
-    <table mat-table multiTemplateDataRows class="mat-elevation-z8" [dataSource]="dataSource" matSort>
+    <table
+      id="transactionData"
+      mat-table
+      multiTemplateDataRows
+      class="mat-elevation-z8"
+      [dataSource]="dataSource"
+      matSort
+    >
       <ng-container matColumnDef="productId">
         <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>Loại giao dịch</th>
         <td mat-cell fxHide fxShow.gt-md *matCellDef="let transaction" style="width: 100px">
@@ -206,6 +233,7 @@
             matBadgeSize="small"
           >
           </span>
+
           <span class="productId">
             {{ displayProductId(transaction.productId) }}
           </span>
@@ -234,7 +262,7 @@
       <ng-container matColumnDef="officeName">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>
           Người tạo / <br />
-          Máy Pos
+          máy bán hàng
         </th>
         <td mat-cell *matCellDef="let journalEntry" style="word-wrap: break-word; width: 200px">
           <!-- {{ journalEntry.officeName }} <br /> -->
@@ -271,6 +299,14 @@
             <button title="Tải hóa đơn" mat-mini-fab (click)="downloadVoucher(transaction.refid)" color="basic">
               <img src="assets/images/icons/bill.svg" />
             </button>
+          </span>
+          <br />
+          <span
+            *ngIf="transaction.isSubmit == 1"
+            style="color: white; font-weight: bold; background-color: black;"
+
+          >
+          Đã chốt số
           </span>
         </td>
       </ng-container>
@@ -367,6 +403,7 @@
       let-traceNo="traceNo"
       let-isHold="isHold"
       style="width: 50px"
+      let-isSubmit="isSubmit"
     >
       <div *ngIf="isHold != '0'">
         <div *midasHasPermission="'POS_UPDATE'">
@@ -421,14 +458,19 @@
         <hr />
         <button
           mat-menu-item
-          *ngIf="status == 'V' && type != 'rollTerm' && (today | date: 'dd/MM/yyyy') == (txnDate | date: 'dd/MM/yyyy')"
+          *ngIf="
+            status == 'V' &&
+            type != 'rollTerm' &&
+            (today | date: 'dd/MM/yyyy') == (txnDate | date: 'dd/MM/yyyy') &&
+            isSubmit == 0
+          "
           (click)="undoRevertTransaction(refid)"
         >
           <i class="fa fa-undo" aria-hidden="true"></i> &nbsp;Hoàn tác giao dịch
         </button>
         <button
           mat-menu-item
-          *ngIf="status != 'V' && (today | date: 'dd/MM/yyyy') == (txnDate | date: 'dd/MM/yyyy')"
+          *ngIf="status != 'V' && (today | date: 'dd/MM/yyyy') == (txnDate | date: 'dd/MM/yyyy') && isSubmit == 0"
           (click)="revertTransaction(refid, trnRefNo)"
         >
           <i class="fa fa-ban" aria-hidden="true"></i> &nbsp;Hủy giao dịch

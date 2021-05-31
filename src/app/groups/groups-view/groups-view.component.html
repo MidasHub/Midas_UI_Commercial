@@ -65,7 +65,7 @@
 
     <mat-card-actions class="group-actions" *ngIf="!(groupViewData.status.value==='Closed')">
       <button mat-raised-button [routerLink]="['/transaction/batch-transaction',groupViewData.id]">
-        <img src="assets/images/icons/transaction%20_batch.svg" style="margin: 5px;">Giao dịch lô
+        <img src="assets/images/icons/transaction%20_batch.svg" style="margin: 5px;">Giao dịch sỉ
       </button>
       <span *ngIf="!(groupViewData.status.value==='Active')">
           <button mat-raised-button *midasHasPermission="'UPDATE_GROUP'" (click)="doAction('Activate')">

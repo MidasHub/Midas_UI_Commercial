@@ -121,13 +121,13 @@
 
       <mat-menu #POSPartnerMenu="matMenu" [overlapTrigger]="false">
         <!-- <button *midasHasPermission="'POS_UPDATE'" mat-menu-item routerLink="/terminals">
-          Điều chuyển máy POS
+          Điều chuyển máy bán hàng
         </button> -->
         <button mat-menu-item *midasHasPermission="'POS_READ'" routerLink="/terminals/limit">
-          {{ "Quản lý hạn mức POS" | translate }}
+          {{ "Thông tin máy bán hàng" | translate }}
         </button>
         <button mat-menu-item *midasHasPermission="'POS_UPDATE'" routerLink="/terminals">
-          {{ "Quản lý máy POS" | translate }}
+          {{ "Quản lý máy bán hàng" | translate }}
         </button>
         <button mat-menu-item *midasHasPermission="'POS_CREATE'" routerLink="/third-party">
           {{ "Toolbar_Component.lblThirdParty" | translate }}
@@ -200,7 +200,7 @@
 
         <mat-list-item class="tab-link" [matMenuTriggerFor]="POSPartnerMenu" #POSPartnerMenuTrigger="matMenuTrigger">
           <mat-icon matListIcon><i class="fas fa-hands-helping"></i></mat-icon>
-          <a matLine>Máy POS và đối tác</a>
+          <a matLine>máy bán hàng và đối tác</a>
         </mat-list-item>
         <mat-list-item class="tab-link" [matMenuTriggerFor]="transactionMenu" #transactionMenuTrigger="matMenuTrigger">
           <mat-icon matListIcon><i class="fas fa-money-check-alt"></i></mat-icon>

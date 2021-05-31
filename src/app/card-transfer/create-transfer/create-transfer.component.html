@@ -1,0 +1,153 @@
+<mat-divider></mat-divider>
+  <mat-card class="mat-elevation-z2 batchTxnCss">
+    <h1 class="m-l-10" align="center">BIÊN BẢN GIAO NHẬN THẺ</h1>
+    <hr>
+    <mat-card-content>
+      <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
+        <mat-form-field fxFlex="20%">
+          <mat-label>Thông tin thẻ để giao/nhận</mat-label>
+          <input type="text" placeholder="Tìm thẻ bằng SĐT/Tên KH/Số thẻ" [formControl]="cardFilter" matInput #querySearchAll
+          (ngModelChange)=" this.searchClientAndGroup(querySearchAll.value);"
+          (click)="this.resetAutoCompleteClients()"
+          [matAutocomplete]="clientsAutocomplete">
+        </mat-form-field>
+
+        <mat-autocomplete #clientsAutocomplete="matAutocomplete" [displayWith]="displayClient">
+          <mat-option *ngFor="let client of filteredOptions | async" [value]="client">
+            {{ displayClient(client) }}
+          </mat-option>
+        </mat-autocomplete>
+
+        <mat-form-field fxFlex="20%">
+          <mat-label>Shipper</mat-label>
+          <input placeholder="Chọn tên Shipper" [formControl]="shipperFilter"
+            matInput
+            (click)="this.resetAutoCompleteShipper()"
+            [matAutocomplete]="shippersAutocomplete"
+          />
+        </mat-form-field>
+
+        <mat-autocomplete #shippersAutocomplete="matAutocomplete" [displayWith]="displayShipper">
+          <mat-option *ngFor="let shipper of shipperFilteredptions | async" [value]="shipper">
+            {{ displayShipper(shipper) }}
+          </mat-option>
+        </mat-autocomplete>
+
+        <mat-form-field fxFlex="20%">
+          <mat-label>Nhân viên giao</mat-label>
+          <input [formControl]="deliverFilter"
+            matInput
+            [readonly]="true"
+          />
+        </mat-form-field>
+
+        <mat-form-field fxFlex="20%">
+          <mat-label>Nhân viên nhận</mat-label>
+          <input placeholder="Chọn nhân viên nhận thẻ" [formControl]="staffFilter"
+            matInput
+            (click)="this.resetAutoCompleteStaff()"
+            [matAutocomplete]="staffsAutocomplete"
+          />
+        </mat-form-field>
+
+        <mat-autocomplete #staffsAutocomplete="matAutocomplete" [displayWith]="displayStaff">
+          <mat-option *ngFor="let staff of staffFilteredptions | async" [value]="staff">
+            {{ displayStaff(staff) }}
+          </mat-option>
+        </mat-autocomplete>
+
+        <div fxFlex="10%">
+          <button mat-button type="button" style="background: #3b74ff; color: white; max-height: 50px; margin: 8px"
+          (click)="addWaitingList()"
+          >
+            <img src="assets/images/icons/add-while.svg" />&nbsp; Thêm
+          </button>
+        </div>
+      </div>
+
+      <div class="example-table-container mat-elevation-z8" fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-sm="column">
+        <table mat-table class="mat-elevation-z8 example-table" multiTemplateDataRows [dataSource]="dataSource" matSort>
+          <ng-container matColumnDef="transferDate">
+            <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>NGÀY GIAO</th>
+            <td mat-cell fxHide fxShow.gt-md style="word-wrap: break-word; width: 150px" *matCellDef="let value">
+              <label>
+                {{ value.transferDate | date: "dd-MM-yyyy" }}
+              </label>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="customerName">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>TÊN KHÁCH HÀNG</th>
+            <td mat-cell *matCellDef="let value" style="max-width: 200px; word-break: break-word; text-align: left">
+              <label>
+                {{ value.customerName }}
+              </label>
+              <br />
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="cardNumber">
+            <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>SỐ THẺ</th>
+            <td mat-cell fxHide fxShow.gt-md *matCellDef="let value">
+              <label class="card-info">
+                {{ value.cardNumber.replace("XXX-XXX", "X") }}
+              </label>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="documentId" style="width: 25px">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>HÀNH ĐỘNG</th>
+            <td mat-cell *matCellDef="let form">
+              <button class="action-button" mat-raised-button color="warn" matTooltip="Xóa dòng này"
+              (click)="deleteRow(form)">
+                <i class="fas fa-trash-alt"></i>
+              </button>
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="expandedDetail">
+            <td mat-cell fxShow fxHide.gt-md *matCellDef="let element" [attr.colspan]="displayedColumns.length">
+              <div class="example-element-detail" [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
+                <div class="example-element-description" fxLayout="column"></div>
+              </div>
+            </td>
+          </ng-container>
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr
+            mat-row
+            *matRowDef="let element; columns: displayedColumns"
+            class="example-element-row"
+            [class.example-expanded-row]="expandedElement === element"
+            (click)="expandedElement = expandedElement === element ? null : element"
+          ></tr>
+          <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
+        </table>
+      </div>
+      <div class="buttonTransfer" fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column" style="display: flex; justify-content: center; margin: 15px">
+        <button mat-button type="button" style="background: rgba(0, 0, 0, 0.4);"
+        (click)="reset()"
+        > Hủy
+        </button>
+        <button mat-button type="button" style="background: #C3291C;"
+        (click)="save()"
+        > Lưu
+        </button>
+        <button mat-button type="button" style="background: #A5A6F6;"
+        (click)="doAction()"
+        > Tải biên bản
+        </button>
+      </div>
+
+
+    </mat-card-content>
+    <mat-menu #transactionMenu="matMenu" [overlapTrigger]="false" style="width: 50px">
+      <ng-template matMenuContent let-form="form" style="width: 50px">
+        <button (click)="deleteRow(form)" mat-menu-item>
+          <img style="margin-top: 5px" src="assets/images/icons/remove.svg" />
+          &nbsp;Xóa
+        </button>
+      </ng-template>
+    </mat-menu>
+    <!-- <div *ngIf="isLoading" style="display: flex; justify-content: center; align-items: center; background: white">
+      <mat-progress-spinner color="warn" mode="indeterminate"> </mat-progress-spinner>
+    </div> -->
+  </mat-card>
