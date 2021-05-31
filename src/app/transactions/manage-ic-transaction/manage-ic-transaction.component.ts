@@ -189,7 +189,7 @@ export class ManageIcTransactionComponent implements OnInit {
         this.terminals = partner?.result?.listTerminal;
         if (this.terminals?.length > 0) {
           // @ts-ignore
-          this.terminals?.unshift({ terminalId: "", terminalName: "Tất cả máy Pos" });
+          this.terminals?.unshift({ terminalId: "", terminalName: "Tất cả máy bán hàng" });
         }
       });
     });
@@ -419,7 +419,7 @@ export class ManageIcTransactionComponent implements OnInit {
       }),
     ];
     const data = {
-      title: "Thêm thông tin máy POS",
+      title: "Thêm thông tin máy bán hàng",
       layout: { addButtonText: "Xác nhận" },
       formfields: formfields,
     };

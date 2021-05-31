@@ -91,8 +91,8 @@ export class ShellComponent implements OnInit, OnDestroy {
           },
           {
             anchorId: "toolbar-2-5",
-            content: "Nút này dùng để xem danh sách các máy POS có thể sử dụng và hạn mức còn lại của nó",
-            title: 'NÚT "HẠN MỨC MÁY POS "',
+            content: "Nút này dùng để xem danh sách các máy bán hàng có thể sử dụng và hạn mức còn lại của nó",
+            title: 'NÚT "HẠN MỨC máy bán hàng "',
           },
           {
             anchorId: "toolbar-3",

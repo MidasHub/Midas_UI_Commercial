@@ -115,7 +115,7 @@ export class InternalBookingTabComponent implements OnInit {
       };
 
       if (data) {
-        this.bookingService.transferBookingAmount(transferInfo).subscribe((result) => {
+        this.bookingService.transferBookingAmount(transferInfo, "BI").subscribe((result) => {
           if (result?.result?.status) {
             const message = `Chi tiền cho booking ${transferInfo.bookingRefNo} thành công`;
 

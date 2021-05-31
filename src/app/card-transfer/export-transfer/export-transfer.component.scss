@@ -1,0 +1,83 @@
+::ng-deep .mat-sort-header-container {
+  display:flex;
+  justify-content:center;
+}
+
+h1{
+  padding-top: 20px;
+  font-family: Roboto;
+  font-style: Bold;
+  font-size: 24px;
+  line-height: 16px;
+  line-height: 57%;
+  letter-spacing: 1.25px;
+  fill: Solid;
+  color: #000000;
+  text-align: center;
+}
+
+hr{
+  border-bottom: 1px !important;
+  border-color: #909090;
+  stroke: Solid;
+}
+
+.headTable {
+  background-color: white !important;
+  width: 65%;
+  border: none !important;
+  text-align: center !important;
+  padding: 30px;
+}
+
+.headTable th{
+  background-color: white !important;
+  font-family: Roboto;
+  font-style: Medium;
+  font-size: 16px;
+  line-height: 16px;
+  line-height: 85%;
+  letter-spacing: 1.25px;
+  padding-bottom: 15px;
+}
+
+.headTable td{
+  background-color: white !important;
+  font-family: Roboto;
+  font-style: Light;
+  font-size: 16px;
+  line-height: 16px;
+  line-height: 85%;
+  letter-spacing: 1.25px;
+}
+
+.headTable tr {
+  //background-color: #f8f8f8 !important;
+  border: none !important;
+}
+
+.mat-elevation-z8 {
+  border: 1px !important;
+  box-shadow: none !important;
+  border-width: 1px !important;
+  background-color: white !important;
+}
+
+mat-row, mat-header-row, mat-footer-row, th.mat-header-cell, td.mat-cell, td.mat-footer-cell {
+  background-color: white !important;
+  border-width: 1px !important;
+  border-style: solid !important;
+  color: black !important;
+  border-collapse: seperate !important;
+  font-family: Roboto;
+  font-style: Medium;
+  font-size: 16px;
+  line-height: 16px;
+  line-height: 85%;
+  border-bottom-color: black !important;
+}
+
+.mat-card {
+  background: #FFFFFF !important;
+}
+

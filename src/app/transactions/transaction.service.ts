@@ -253,6 +253,7 @@ export class TransactionService {
     httpParams = httpParams.set("fromDate", payload.fromDate);
     httpParams = httpParams.set("toDate", payload.toDate);
 
+    console.log("this: ", this);
     return this.http.post(`${this.GatewayApiUrlPrefix}/transaction/get_list_pos_transaction`, httpParams);
   }
 
@@ -413,6 +414,12 @@ export class TransactionService {
     httpParams = httpParams.set("transactionId", transactionId);
 
     return this.http.post<any>(`${this.GatewayApiUrlPrefix}/transaction/revert_transaction`, httpParams);
+  }
+
+  submitTransactionUpToiNow(): Observable<any> {
+    let httpParams = this.commonHttpParams.getCommonHttpParams();
+
+    return this.http.post<any>(`${this.GatewayApiUrlPrefix}/transaction/submit_transaction_by_office`, httpParams);
   }
 
   RepaymentRolltermManualTransactionCloseLoan(refId: string, amountPaid: string): Observable<any> {
@@ -598,6 +605,65 @@ export class TransactionService {
     return this.http.post<any>(`${this.GatewayApiUrlPrefix}/groups/get_list_member_group_with_identifier`, httpParams);
   }
 
+  getShippersCardTransfer(): Observable<any> {
+    // let httpParams = this.commonHttpParams.getCommonHttpParams();
+    this.accessToken = JSON.parse(
+      sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey)
+    );
+    const Params = {
+      createdBy: this.accessToken.userId,
+      accessToken: this.accessToken.base64EncodedAuthenticationKey,
+    };
+    return this.http.post<any>(`${this.GatewayApiUrlPrefix}/card-transfer/get_shippers_staff`, Params);
+  }
+
+  saveCardTransfer(data: any) {
+    // let httpParams = this.commonHttpParams.getCommonHttpParams();
+    this.accessToken = JSON.parse(
+      sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey)
+    );
+    const Params = {
+      createdBy: this.accessToken.userId,
+      accessToken: this.accessToken.base64EncodedAuthenticationKey,
+      transferRefNo: data.transferRefNo,
+      senderStaffId: data.senderStaffId,
+      actionStaffId: data.actionStaffId,
+      receiverStaffId: data.receiverStaffId,
+      listCardId: data.listCardId,
+    };
+    return this.http.post<any>(`${this.GatewayApiUrlPrefix}/card-transfer/store_card_transfer_info`, Params);
+  }
+
+  getDetailByTransferRefNo(transferRefNo: any, officeId: any) {
+    // let httpParams = this.commonHttpParams.getCommonHttpParams();
+    this.accessToken = JSON.parse(
+      sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey)
+    );
+    const Params = {
+      createdBy: this.accessToken.userId,
+      accessToken: this.accessToken.base64EncodedAuthenticationKey,
+      staffId: "",
+      transferRefNo: transferRefNo,
+      officeId: officeId
+    };
+    return this.http.post<any>(`${this.GatewayApiUrlPrefix}/card-transfer/get_detail_by_transfer_ref_no`, Params);
+  }
+
+  exportCardTransferRequest(transferRefNo: any, officeId: any) {
+    // let httpParams = this.commonHttpParams.getCommonHttpParams();
+    this.accessToken = JSON.parse(
+      sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey)
+    );
+    const Params = {
+      createdBy: this.accessToken.userId,
+      accessToken: this.accessToken.base64EncodedAuthenticationKey,
+      staffId: "",
+      transferRefNo: transferRefNo,
+      officeId: officeId
+    };
+    return this.http.post<any>(`${this.GatewayApiUrlPrefix}/card-transfer/export_card_transfer_request`, Params);
+  }
+
   checkValidTransactionBtach(clientId: string): Observable<any> {
     let httpParams = this.commonHttpParams.getCommonHttpParams();
     httpParams = httpParams.set("clientId", clientId);
@@ -665,27 +731,26 @@ export class TransactionService {
     return this.http.post<any>(`${this.GatewayApiUrlPrefix}/client/get_identifier_midas_by_client_group`, httpParams);
   }
 
-  exportAsExcelFile(exportType: string , data: any) {
+  exportAsExcelFile(exportType: string, data: any) {
     this.accessToken = JSON.parse(
       sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey)
     );
-    
+
     // tslint:disable-next-line:max-line-length
     //const fileUrl = 'http://119.82.135.181:8001/document/export/';
     const fileUrl = `${this.environment.ICDocumentURL}/document/export/`;
-    this.getExportExcelFiles(fileUrl, exportType ,data).subscribe((data_response: any) => {
+    this.getExportExcelFiles(fileUrl, exportType, data).subscribe((data_response: any) => {
       this.downloadFile(data_response.result.fileName);
     });
   }
 
-  getExportExcelFiles(url: string, exportType: string ,data:any) {
+  getExportExcelFiles(url: string, exportType: string, data: any) {
     let httpParams = this.commonHttpParams.getCommonHttpParams();
     httpParams = httpParams.set("filterData", JSON.stringify(data)).set("exportType", exportType);
     return this.http.post<any>(url, httpParams);
   }
 
   downloadFile(fileName: string) {
-
     //const url = `http://119.82.135.181:8001/document/export/download?fileName=${fileName}`;
     const url = `${this.environment.ICDocumentURL}/document/export/download?fileName=${fileName}`;
     const xhr = new XMLHttpRequest();
@@ -706,5 +771,20 @@ export class TransactionService {
     }
     xhr.responseType = "blob";
     xhr.send();
-  } 
+  }
+
+  //tratt
+  exportDataFile(exportType: string, data: any) {
+    this.accessToken = JSON.parse(
+      sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey)
+    );
+
+    // tslint:disable-next-line:max-line-length
+    //const fileUrl = 'http://119.82.135.181:8001/document/export/';
+    const fileUrl = `${this.environment.ICDocumentURL}/document/export/`;
+    this.getExportExcelFiles(fileUrl, exportType, data).subscribe((data_response: any) => {
+      this.downloadFile(data_response.result.fileName);
+    });
+  }
+  //end tratt
 }

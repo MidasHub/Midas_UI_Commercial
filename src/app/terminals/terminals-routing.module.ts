@@ -22,7 +22,7 @@ const routes: Routes = [
   Route.withShell([
     {
       path: 'terminals',
-      data: { title: extract('POS Terminals'), breadcrumb: 'POS Terminals', routeParamBreadcrumb: false },
+      data: { title: extract('Danh sách máy bán hàng'), breadcrumb: 'Danh sách máy bán hàng', routeParamBreadcrumb: false },
       children: [
         {
           path: '',
@@ -31,7 +31,7 @@ const routes: Routes = [
         {
           path: 'create',
           component: CreateTerminalsComponent,
-          data: { title: extract('Create Terminal'), breadcrumb: 'Create', routeParamBreadcrumb: false },
+          data: { title: extract('Tạo máy bán hàng'), breadcrumb: 'Tạo máy bán hàng', routeParamBreadcrumb: false },
           resolve:{
             terminalData: CreateTerminalsResolver,
           }
@@ -46,7 +46,7 @@ const routes: Routes = [
         },
         {
           path: ':terminalId',
-          data: { title: extract('View Terminal'), routeParamBreadcrumb: 'terminalId' },
+          data: { title: extract('Xem máy bán hàng'), breadcrumb:'Xem máy bán hàng',routeParamBreadcrumb: 'terminalId' },
           children: [{
             path: '',
             children: [

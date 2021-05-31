@@ -13,7 +13,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { AmountCollectedPieComponent } from './dashboard/amount-collected-pie/amount-collected-pie.component';
 import { AmountDisbursedPieComponent } from './dashboard/amount-disbursed-pie/amount-disbursed-pie.component';
 import { ClientTrendsBarComponent } from './dashboard/client-trends-bar/client-trends-bar.component';
-import { RolltermListComponent } from './rollterm-list/rollterm-list.component';
+// import { RolltermListComponent } from './rollterm-list/rollterm-list.component';
 import { OndueCardComponent } from './ondue-card/ondue-card.component';
 import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
@@ -41,7 +41,7 @@ import { CustomerbannerComponent } from './customerbanner/customerbanner.compone
     AmountCollectedPieComponent,
     AmountDisbursedPieComponent,
     ClientTrendsBarComponent,
-    RolltermListComponent,
+    // RolltermListComponent,
     OndueCardComponent,
     CalendarComponent,
     CustomerbannerComponent,

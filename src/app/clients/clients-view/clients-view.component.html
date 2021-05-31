@@ -156,7 +156,7 @@
               <button mat-menu-item (click)="doAction('Transfer Client')">
                 <i class="fas fa-exchange-alt"></i> {{ "Client_Component.ViewClient.btnTransferClient" | translate }}
               </button>
-              <button mat-menu-item (click)="doAction('Close')">
+              <button mat-menu-item (click)="doAction('Close')" *midasHasPermission="'CLOSE_CLIENT'" >
                 <i class="fas fa-user-times"></i> {{ "Client_Component.ViewClient.btnClose" | translate }}
               </button>
 
@@ -179,7 +179,7 @@
                   {{ "Client_Component.ViewClient.btnDelete" | translate }}
                 </button></span>
               <span *ngIf="clientViewData.status.value === 'Closed'">
-                <button mat-menu-item (click)="doAction('Reactivate')">
+                <button mat-menu-item (click)="doAction('Reactivate')" *midasHasPermission="'REACTIVATE_CLIENT'">
                   {{ "Client_Component.ViewClient.btnReactivate" | translate }}
                 </button></span>
               <span *ngIf="clientViewData.status.value === 'Rejected'"><button mat-menu-item

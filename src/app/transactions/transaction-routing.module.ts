@@ -49,7 +49,7 @@ const routes: Routes = [
         {
           path: "rollTermSchedule",
           component: RollTermScheduleTransactionComponent,
-          data: { title: extract("Lịch trình Advance"), breadcrumb: "Lịch trình Advance" },
+          data: { title: extract("Quản lý chi tiết công nợ"), breadcrumb: "Quản lý chi tiết công nợ" },
         },
         {
           path: "fee-paid-management",
@@ -58,7 +58,7 @@ const routes: Routes = [
         },
         {
           path: "batch-transaction",
-          data: { title: extract("Giao dịch lô"), breadcrumb: "Giao dịch lô" },
+          data: { title: extract("Giao dịch sỉ"), breadcrumb: "Giao dịch sỉ" },
           children: [
             {
               path: ":groupId",

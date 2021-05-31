@@ -15,7 +15,7 @@ import { AlertService } from 'app/core/alert/alert.service';
   styleUrls: ['./mainboard.component.scss']
 })
 export class MainboardComponent implements OnInit {
-  displayedColumns: string[] = ['id', 'officeName', 'displayName' , 'mobileNo', 'documentKey', 'bankName'];
+  displayedColumns: string[] = ['id', 'status', 'officeName', 'displayName' , 'mobileNo', 'documentKey', 'bankName'];
   dataSource: MatTableDataSource<any>;
   emailFormControl = new FormControl('', [
     Validators.required,
@@ -29,8 +29,7 @@ export class MainboardComponent implements OnInit {
   @ViewChild(MatSort) sort: MatSort;
   constructor(
     private midasClientService: MidasClientService,
-    private alertService: AlertService,
-    private router: Router,
+
     ) {
     this.dataSource = new MatTableDataSource();
 
@@ -58,7 +57,7 @@ export class MainboardComponent implements OnInit {
     );
   // }else{
   //   this.alertService.alert({message:'Từ khóa tìm kiếm phải có tối thiểu 3 kí tự.',msgClass:'cssWarning'})
-  // } 
+  // }
   }
 
 }

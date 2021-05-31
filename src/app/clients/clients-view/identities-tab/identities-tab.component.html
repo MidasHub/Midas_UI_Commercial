@@ -10,7 +10,7 @@
             (click)="addIdentifier(false)"
             color="accent"
             *midasHasPermission="'CREATE_CLIENTIDENTIFIER'"
-            matTooltip="Tạo thêm thẻ tín dụng"
+            matTooltip="Tạo thêm thông tin thẻ"
           >
             <fa-icon icon="plus"></fa-icon>&nbsp;<fa-icon icon="credit-card"></fa-icon>
           </button>
@@ -32,7 +32,7 @@
                 (click)="deleteIdentifier(identity.clientId, identity.id, i, false)"
                 *midasHasPermission="'DELETE_CLIENTIDENTIFIER'"
                 icon="times"
-                matTooltip="Hủy thẻ tín dụng"
+                matTooltip="Hủy thông tin thẻ"
               ></fa-icon>
               &nbsp;
               <fa-icon
