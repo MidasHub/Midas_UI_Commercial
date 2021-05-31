@@ -625,8 +625,37 @@ export class TransactionService {
       receiverStaffId: data.receiverStaffId,
       listCardId: data.listCardId,
     };
-    console.log("Params: ", Params);
     return this.http.post<any>(`${this.GatewayApiUrlPrefix}/card-transfer/store_card_transfer_info`, Params);
+  }
+
+  getDetailByTransferRefNo(transferRefNo: any, officeId: any) {
+    // let httpParams = this.commonHttpParams.getCommonHttpParams();
+    this.accessToken = JSON.parse(
+      sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey)
+    );
+    const Params = {
+      createdBy: this.accessToken.userId,
+      accessToken: this.accessToken.base64EncodedAuthenticationKey,
+      staffId: "",
+      transferRefNo: transferRefNo,
+      officeId: officeId
+    };
+    return this.http.post<any>(`${this.GatewayApiUrlPrefix}/card-transfer/get_detail_by_transfer_ref_no`, Params);
+  }
+
+  exportCardTransferRequest(transferRefNo: any, officeId: any) {
+    // let httpParams = this.commonHttpParams.getCommonHttpParams();
+    this.accessToken = JSON.parse(
+      sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey)
+    );
+    const Params = {
+      createdBy: this.accessToken.userId,
+      accessToken: this.accessToken.base64EncodedAuthenticationKey,
+      staffId: "",
+      transferRefNo: transferRefNo,
+      officeId: officeId
+    };
+    return this.http.post<any>(`${this.GatewayApiUrlPrefix}/card-transfer/export_card_transfer_request`, Params);
   }
 
   checkValidTransactionBtach(clientId: string): Observable<any> {

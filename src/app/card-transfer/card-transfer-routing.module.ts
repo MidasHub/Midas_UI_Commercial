@@ -8,6 +8,8 @@ import { Route } from "../core/route/route.service";
 /** Translation Imports */
 import { extract } from "../core/i18n/i18n.service";
 import { CreateTransferComponent } from "./create-transfer/create-transfer.component";
+import { ExportTransferComponent } from "./export-transfer/export-transfer.component";
+import { ManageTransferComponent } from "./manage-transfer/manage-transfer.component";
 
 /** Groups Routes */
 const routes: Routes = [
@@ -35,6 +37,21 @@ const routes: Routes = [
           // resolve: {
           //   BillsResourceData: ViewBillsBatchUploadResolver,
           // },
+        },
+
+        {
+          path: "export",
+          data: { title: extract(""), breadcrumb: "In biên bản", routeParamBreadcrumb: "" },
+          component: ExportTransferComponent,
+          // resolve: {
+          //   BillsResourceData: ViewBillsBatchUploadResolver,
+          // },
+        },
+
+        {
+          path: "manage",
+          data: { title: extract(""), breadcrumb: "In biên bản", routeParamBreadcrumb: "" },
+          component: ManageTransferComponent,
         },
       ],
     },

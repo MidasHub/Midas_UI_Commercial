@@ -8,6 +8,8 @@ import { PipesModule } from "../pipes/pipes.module";
 import { DirectivesModule } from "../directives/directives.module";
 import { CardTransferRoutingModule } from "./card-transfer-routing.module";
 import { CreateTransferComponent } from "./create-transfer/create-transfer.component";
+import { ExportTransferComponent } from './export-transfer/export-transfer.component';
+import { ManageTransferComponent } from './manage-transfer/manage-transfer.component';
 
 /** Custom Components */
 
@@ -20,7 +22,7 @@ import { CreateTransferComponent } from "./create-transfer/create-transfer.compo
 
     // TableModule,
   ],
-  declarations: [CreateTransferComponent],
+  declarations: [CreateTransferComponent, ExportTransferComponent, ManageTransferComponent],
   providers: [DatePipe],
 })
 export class CardTransferModule {}

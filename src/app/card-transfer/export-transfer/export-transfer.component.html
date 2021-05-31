@@ -1,0 +1,124 @@
+
+<mat-divider></mat-divider>
+<mat-card class="mat-elevation-z2">
+  <mat-card-content id="contentToConvert">
+    <h1 class="m-l-10" align="center">BIÊN BẢN GIAO NHẬN THẺ</h1>
+  <hr>
+    <div>
+      <table class="headTable">
+        <tr>
+          <th>NHÂN VIÊN GIAO</th>
+          <th>NHÂN VIÊN NHẬN</th>
+          <th>SHIPPER</th>
+        </tr>
+        <tr>
+          <td>{{ shipper }}</td>
+          <td>{{ senderStaffName }}</td>
+          <td>{{ receiverStaffName }}</td>
+        </tr>
+      </table>
+    </div>
+    <div class="example-table-container mat-elevation-z8" fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-sm="column">
+      <table mat-table class="mat-elevation-z8 example-table" multiTemplateDataRows [dataSource]="dataSource" matSort>
+        <tr>
+
+        </tr>
+        <ng-container matColumnDef="transferDate">
+          <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>NGÀY GIAO</th>
+          <td mat-cell fxHide fxShow.gt-md style="word-wrap: break-word; width: 150px; text-align: center" *matCellDef="let value">
+            <label>
+              {{ today | date: "dd-MM-yyyy" }}
+            </label>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="customerName">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>TÊN KHÁCH HÀNG</th>
+          <td mat-cell *matCellDef="let value" style="max-width: 150px; word-break: break-word; text-align: center">
+            <label>
+              {{ value.customerName }}
+            </label>
+            <br />
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="cardNumber">
+          <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>SỐ THẺ</th>
+          <td mat-cell fxHide fxShow.gt-md *matCellDef="let value" style="max-width: 150px; word-break: break-word; text-align: center">
+            <label class="card-info">
+              {{ value.cardNumber.replace("XXX-XXX", "X") }}
+            </label>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="senderStaff">
+          <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>BÊN GIAO</th>
+          <td mat-cell fxHide fxShow.gt-md *matCellDef="let value" style="max-width: 50px; word-break: break-word; text-align: center">
+            <label class="card-info">
+              ..................
+            </label>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="shipper">
+          <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>SHIPPER</th>
+          <td mat-cell fxHide fxShow.gt-md *matCellDef="let value" style="max-width: 50px; word-break: break-word; text-align: center">
+            <label class="card-info">
+              ..................
+            </label>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="receiverStaff">
+          <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>BÊN NHẬN</th>
+          <td mat-cell fxHide fxShow.gt-md *matCellDef="let value" style="max-width: 50px; word-break: break-word; text-align: center">
+            <label class="card-info">
+              ..................
+            </label>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="note">
+          <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>GHI CHÚ</th>
+          <td mat-cell fxHide fxShow.gt-md *matCellDef="let value" style="max-width: 50px; word-break: break-word; text-align: center">
+            <label class="card-info">
+              ..................
+            </label>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="expandedDetail">
+          <td mat-cell fxShow fxHide.gt-md *matCellDef="let element" [attr.colspan]="displayedColumns.length">
+            <div class="example-element-detail" [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
+              <div class="example-element-description" fxLayout="column"></div>
+            </div>
+          </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr
+          mat-row
+          *matRowDef="let element; columns: displayedColumns"
+          class="example-element-row"
+          [class.example-expanded-row]="expandedElement === element"
+          (click)="expandedElement = expandedElement === element ? null : element"
+        ></tr>
+        <!-- <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr> -->
+        <tr mat-footer-row></tr>
+      </table>
+    </div>
+
+  </mat-card-content>
+  <div *ngIf="isLoading" style="display: flex; justify-content: center; align-items: center; background: white">
+    <mat-progress-spinner color="warn" mode="indeterminate"> </mat-progress-spinner>
+  </div>
+  <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column" style="display: flex; justify-content: center; margin: 15px">
+    <button mat-button type="button" [routerLink]="['../create']" style="background: rgba(0, 0, 0, 0.4);; color: white; max-height: 50px; margin: 8px"
+    > Hủy
+    </button>
+    <button mat-button type="button" style="background: #C3291C; color: white; max-height: 50px; margin: 8px"
+    (click)="openPdf()"
+    > In
+    </button>
+  </div>
+</mat-card>
+

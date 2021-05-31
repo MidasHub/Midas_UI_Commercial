@@ -3,6 +3,24 @@
   min-width: 500px !important;
 }
 
+h1{
+  font-family: Roboto;
+  font-style: Bold;
+  font-size: 24px;
+  line-height: 16px;
+  line-height: 57%;
+  letter-spacing: 1.25px;
+  fill: Solid;
+  color: #000000;
+  text-align: center;
+}
+
+hr{
+  border-bottom: 1px !important;
+  border-color: #909090;
+  stroke: Solid;
+}
+
 .batchTxnCss {
   width: 96%;
   margin: 1rem;
@@ -99,4 +117,58 @@
   .no-input {
     max-width: 70px;
   }
+
+  //tratt
+  .mat-elevation-z8 {
+    box-shadow: none !important;
+    border: none !important;
+  }
+
+  mat-header-row, th.mat-header-cell{
+    color: #000000 !important;
+    font-family: Roboto;
+    font-style: Medium;
+    font-size: 16px;
+    line-height: 16px;
+    line-height: 85%;
+
+  }
+
+  .mat-input-element:read-only, .mat-form-field-type-mat-native-select.mat-form-field-disabled .mat-form-field-infix::after {
+    color: rgba(0, 0, 0, 0.87) !important;
+    font-weight: normal !important;
+    background-image: none !important;
+    font-family: Roboto !important;
+    font-style: Regular !important;
+    font-size: 16px !important;
+    line-height: 24px !important;
+    line-height: 128% !important;
+    text-align: left !important;
+    letter-spacing: 0.15px !important;
+    //fill: Solid rgba(0, 0, 0, 0.87) !important;
+  }
+
+  mat-table{
+    max-height: 1000px !important;
+  }
+
+  // .mat-form-field-infix {
+  //   display: block;
+  //   position: relative;
+  //   flex: auto;
+  //   min-width: 0;
+  //   width: 180px;
+  // }
+
+  .mat-form-field-infix {
+    padding: 0.5em 0 !important;
+    border-top: 0.84375em solid transparent !important;
+  }
+
+  .buttonTransfer{
+    color: white;
+    max-height: 50px;
+    margin: 8px
+  }
+
 }
