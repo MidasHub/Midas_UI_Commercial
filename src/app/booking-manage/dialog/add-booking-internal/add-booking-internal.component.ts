@@ -20,6 +20,7 @@ export class AddBookingInternalComponent implements OnInit {
     this.formDialog = this.formBuilder.group({
       txnDate: [new Date(), Validators.required],
       bookingAmount: [0, Validators.required],
+      note: [""],
     });
   }
 

@@ -416,6 +416,12 @@ export class TransactionService {
     return this.http.post<any>(`${this.GatewayApiUrlPrefix}/transaction/revert_transaction`, httpParams);
   }
 
+  submitTransactionUpToiNow(): Observable<any> {
+    let httpParams = this.commonHttpParams.getCommonHttpParams();
+
+    return this.http.post<any>(`${this.GatewayApiUrlPrefix}/transaction/submit_transaction_by_office`, httpParams);
+  }
+
   RepaymentRolltermManualTransactionCloseLoan(refId: string, amountPaid: string): Observable<any> {
     let httpParams = this.commonHttpParams.getCommonHttpParams();
     httpParams = httpParams.set("txnCode", refId);

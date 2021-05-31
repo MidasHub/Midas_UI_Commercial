@@ -40,13 +40,15 @@ export class BookingService {
     );
   }
 
-  transferBookingAmount(transferInfo: any): Observable<any> {
+  transferBookingAmount(transferInfo: any, typeTransferBooking: string): Observable<any> {
     let httpParams = this.commonHttpParams.getCommonHttpParams();
 
     httpParams = httpParams.set("txnCode", transferInfo.bookingRefNo);
     httpParams = httpParams.set("amountPaid", transferInfo.amountPaid);
     httpParams = httpParams.set("savingAccountPaid", transferInfo.savingAccountPaid);
     httpParams = httpParams.set("savingAccountGet", transferInfo.savingAccountGet);
+    httpParams = httpParams.set("typeTransferBooking", typeTransferBooking);
+
 
     return this.http.post<any>(`${this.GatewayApiUrlPrefix}/bookingInternal/transfer_booking_amount`, httpParams);
   }
@@ -81,6 +83,8 @@ export class BookingService {
     let httpParams = this.commonHttpParams.getCommonHttpParams();
     httpParams = httpParams.set("txnDate", bookingInfo.txnDate);
     httpParams = httpParams.set("amountBooking", bookingInfo.amountBooking);
+    httpParams = httpParams.set("note", bookingInfo.note);
+
 
     return this.http.post<any>(`${this.GatewayApiUrlPrefix}/bookingInternal/save_booking_internal`, httpParams);
   }
@@ -176,6 +180,23 @@ export class BookingService {
 
     return this.http.post<any>(
       `${this.GatewayApiUrlPrefix}/bookingInternal/remove_booking_internal_roll_term`,
+      httpParams
+    );
+  }
+
+  getManageBookingBranch( fromDate: string, toDate: string): Observable<any> {
+
+    this.accessToken = JSON.parse(
+      sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey)
+    );
+    // officeName = officeName === "" ? "%%" : `%${officeName}%`;
+    let httpParams = this.commonHttpParams.getCommonHttpParams();
+    httpParams = httpParams.set("fromDate", fromDate);
+    httpParams = httpParams.set("toDate", toDate);
+
+
+    return this.http.post<any>(
+      `${this.GatewayApiUrlPrefix}/bookingInternal/management_booking_internal_by_branch`,
       httpParams
     );
   }
