@@ -101,7 +101,6 @@ export class ExportTransferComponent implements OnInit {
     //let str = this.route.snapshot.queryParams['dataSource'];
 
     this.transactionServices.getDetailByTransferRefNo(this.transferRefNo, this.officeId).subscribe((data) => {
-      let statusCode = data.statusCode;
       this.dataSource = data.result.listDetailRequest;
       console.log("this.dataSource: ", this.dataSource);
     });
