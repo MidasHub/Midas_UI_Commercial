@@ -20,7 +20,7 @@ export interface Element {
   transferDate: Date;
   cardNumber: string;
   customerName: string;
-  documentId: string;
+  cardId: string;
 }
 
 @Component({
@@ -37,12 +37,15 @@ export interface Element {
 })
 
 export class CreateTransferComponent implements OnInit {
-  dataSource: any[] = [];
+  dataSource: any[] = [];//reset
   cardFilter = new FormControl("");
   shipperFilter = new FormControl("");
   deliverFilter = new FormControl("");
   staffFilter = new FormControl("");
-  displayedColumns: any[] = ["transferDate", "customerName", "cardNumber", "documentId"];
+  displayedColumns: any[] = ["transferDate", "customerName", "cardNumber", "cardId"];
+
+  editAddNew: any[] = [];//reset
+  ediDelete: any[] = [];//reset
 
   clients: any[] = [];
   members: any[] = [];
@@ -50,11 +53,13 @@ export class CreateTransferComponent implements OnInit {
   queryParams: any;
   group: any;
   currentUser: any;
-
+  officeId: any;
   filteredOptions: any;
   staffFilteredptions: any;
   shipperFilteredptions: any
-  transferRefNo = "";
+  transferRefNo = "";//reset
+  flagEditTransfer = 0; // 0-> create new; 1 -> edit
+  today = new Date();
 
   private _filter(value: string): string[] {
     const filterValue = String(value).toUpperCase().replace(/\s+/g, "");
@@ -87,7 +92,7 @@ export class CreateTransferComponent implements OnInit {
 
   constructor(
     private router: Router,
-    public dialog: MatDialog,
+    public  dialog: MatDialog,
     private route: ActivatedRoute,
     private alertService: AlertService,
     private authenticationService: AuthenticationService,
@@ -97,6 +102,7 @@ export class CreateTransferComponent implements OnInit {
     private changeDetectorRefs: ChangeDetectorRef
   ) {
     this.currentUser = this.authenticationService.getCredentials();
+    this.officeId = this.currentUser.officeId;
   }
 
   displayClient(client: any): string | undefined {
@@ -142,12 +148,27 @@ export class CreateTransferComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.initDataSource();
+    console.log("this.transferRefNo: ", this.transferRefNo);
     this.deliverFilter.setValue(this.currentUser.staffDisplayName);
     this.filteredOptions = new Observable<any[]>();
     this.shipperFilteredptions = new Observable<any[]>();
     this.staffFilteredptions = new Observable<any[]>();
     this.getShipperInfo();
     this.getStaffInfo();
+  }
+
+  initDataSource(){
+    //rout from manage transfer page
+    this.transferRefNo = this.route.snapshot.queryParams['transferRefNo'];
+    this.transactionServices.getDetailByTransferRefNo(this.transferRefNo, this.officeId).subscribe((data) => {
+      if (data.result.listDetailRequest.length>0) {
+        this.flagEditTransfer = 1;
+        this.dataSource = data.result.listDetailRequest;
+        this.table.renderRows();
+        this.changeDetectorRefs.detectChanges();
+      }
+    });
   }
 
   formatLong(value: any) {
@@ -164,16 +185,18 @@ export class CreateTransferComponent implements OnInit {
     if (neg) {
       value = "-".concat(value);
     }
-
     return value;
   }
 
   deleteRow(form: any) {
-    this.dataSource = this.dataSource.filter((v) => v.documentId !== form.documentId);
+    if (this.flagEditTransfer==1) {
+      this.ediDelete.push(form.cardId);
+    }
+    this.dataSource = this.dataSource.filter((v) => v.cardId !== form.cardId);
   }
 
   getStaffInfo() {
-    this.group = `${this.currentUser.officeId}`;
+    this.group = this.officeId;
     this.clientService.getStaffsByOffice(this.group).subscribe((data) => {
       this.members = data.result.listStaff;
     });
@@ -194,23 +217,57 @@ export class CreateTransferComponent implements OnInit {
 
   @ViewChild(MatTable) table: MatTable<Element>;
   addWaitingList() {
+    if (this.flagEditTransfer==1) {
+      this.editAddNew.push(this.updateTable().cardId);
+    }
     this.dataSource.push(this.updateTable());
     this.table.renderRows();
     this.changeDetectorRefs.detectChanges();
   }
 
   save() {
-    this.queryParams = this.getData();
-    this.transactionServices.saveCardTransfer(this.queryParams).subscribe((data) => {
-      let statusCode = data.statusCode;
-      this.transferRefNo = data.result.cardTransfer;
-      if (statusCode=="success") {
-        this.alertService.alert({message: 'Biên bản giao nhận lưu thành công.', msgClass: 'cssSuccess'});
+    console.log("flagEditTransfer: ", this.flagEditTransfer);
+    //create new
+    if (this.flagEditTransfer==0) {
+      console.log("Create new!!!");
+      this.queryParams = this.getData();
+      console.log("queryParams: ", this.queryParams);
+      this.transactionServices.saveCardTransfer(this.queryParams).subscribe((data) => {
+        let statusCode = data.statusCode;
+        this.transferRefNo = data.result.cardTransfer;
+        if (statusCode=="success") {
+          this.alertService.alert({message: 'Biên bản giao nhận lưu thành công.', msgClass: 'cssSuccess'});
+        }
+        else{
+          this.alertService.alert({message: 'Biên bản giao nhận lưu thất bại.', msgClass: 'cssError'});
+        }
+      });
+    }
+
+    //edit from manage page
+    else{
+      console.log("Edit from manage page!!!");
+      //add detail
+      if (this.editAddNew.length>0) {
+        this.transactionServices.addDetailCardTransfer(this.transferRefNo, this.officeId, this.editAddNew).subscribe((data) => {
+          let statusCode = data.statusCode;
+          console.log("Result add detail: ", statusCode);
+          this.editAddNew = [];
+          this.dataSource = this.dataSource.filter((v) => v.cardId !== this.editAddNew);
+        });
       }
-      else{
-        this.alertService.alert({message: 'Biên bản giao nhận lưu thất bại.', msgClass: 'cssError'});
+
+      //delete detail
+      if (this.ediDelete.length>0) {
+        this.transactionServices.deleteDetailCardTransfer(this.transferRefNo, this.officeId, this.ediDelete).subscribe((data) => {
+          let statusCode = data.statusCode;
+          console.log("Result delete detail: ", statusCode);
+          this.ediDelete = [];
+          this.dataSource = this.dataSource.filter((v) => v.cardId !== this.ediDelete);
+        });
       }
-    });
+      this.alertService.alert({message: 'Biên bản giao nhận đã cập nhật.', msgClass: 'cssSuccess'});
+    }
   }
 
   updateTable(): Element {
@@ -218,7 +275,7 @@ export class CreateTransferComponent implements OnInit {
       transferDate: new Date(),
       cardNumber: this.cardFilter.value.documentKey,
       customerName: this.cardFilter.value.displayName,
-      documentId: this.cardFilter.value.documentId
+      cardId: this.cardFilter.value.documentId
     };
   }
 
@@ -227,7 +284,7 @@ export class CreateTransferComponent implements OnInit {
     let i = -1;
     while (++i < this.dataSource.length) {
       let element = this.dataSource[i];
-      listCardId.push(element.documentId);
+      listCardId.push(element.cardId);
     }
     return {
       transferRefNo: "",
@@ -245,7 +302,6 @@ export class CreateTransferComponent implements OnInit {
       return;
     }
     const queryParams: any = {
-      // dataSource: JSON.stringify(this.dataSource),
       shipper: this.shipperFilter.value.displayName,
       senderStaffName: this.currentUser.staffDisplayName,
       receiverStaffName: this.staffFilter.value.displayName,
@@ -257,6 +313,7 @@ export class CreateTransferComponent implements OnInit {
   reset(){
     this.dataSource = [];
     this.transferRefNo = "";
+    this.flagEditTransfer = 0;
   }
 
 }

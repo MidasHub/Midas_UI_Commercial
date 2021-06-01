@@ -1,1 +1,154 @@
-<p>manage-transfer works!</p>
+<mat-divider></mat-divider>
+  <mat-card class="mat-elevation-z2 batchTxnCss">
+    <h1 class="m-l-10" align="center">QUẢN LÝ BIÊN BẢN GIAO NHẬN THẺ</h1>
+    <hr>
+    <h2>Điều kiện tìm kiếm</h2>
+    <mat-card-content>
+      <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
+        <mat-form-field fxFlex="22%">
+          <mat-label>Tìm theo mã biên bản</mat-label>
+          <input type="text" placeholder="Nhập mã biên bản" [formControl]="cardFilter"
+          (ngModelChange)="this.searchByTransferRefNo(querySearchAll.value);"
+          matInput #querySearchAll
+          >
+        </mat-form-field>
+
+        <mat-form-field fxFlex="22%">
+          <mat-label>Tìm theo Shipper</mat-label>
+          <input placeholder="Nhập tên Shipper" [formControl]="shipperFilter"
+          (ngModelChange)="this.searchByShipper(querySearchShipper.value);"
+          matInput #querySearchShipper
+          />
+        </mat-form-field>
+
+        <mat-form-field fxFlex="22%">
+          <mat-label>Tìm theo nhân viên giao</mat-label>
+          <input placeholder="Nhập tên nhân viên giao" [formControl]="deliverFilter"
+          (ngModelChange)="this.searchByDeliver(querySearchDeliver.value);"
+          matInput #querySearchDeliver
+          />
+        </mat-form-field>
+
+        <mat-form-field fxFlex="22%">
+          <mat-label>Tìm theo nhân viên nhận</mat-label>
+          <input placeholder="Nhập nhân viên nhận thẻ" [formControl]="staffFilter"
+          (ngModelChange)="this.searchByStaff(querySearchStaff.value);"
+          matInput #querySearchStaff
+          />
+        </mat-form-field>
+      </div>
+
+      <div class="example-table-container mat-elevation-z8" fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-sm="column">
+        <table mat-table class="mat-elevation-z8 example-table" multiTemplateDataRows [dataSource]="dataSource" matSort>
+          <ng-container matColumnDef="transferDate">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>NGÀY GIAO</th>
+            <td mat-cell fxHide fxShow.gt-md style="word-wrap: break-word;" *matCellDef="let value">
+              <label>
+                {{ value.transferDate | date: "dd-MM-yyyy" }}
+              </label>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="transferRefNo">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>MÃ BIÊN BẢN</th>
+            <td mat-cell *matCellDef="let value" style="word-break: break-word;">
+              <label>
+                {{ value.transferRefNo }}
+              </label>
+              <br />
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="senderStaffName">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>NGƯỜI GIAO</th>
+            <td mat-cell fxHide fxShow.gt-md *matCellDef="let value" style="word-break: break-word;">
+              <label class="card-info">
+                {{ value.senderStaffName }}
+              </label>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="actionStaffName" style="width: 25px">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>SHIPPER</th>
+            <td mat-cell *matCellDef="let value" style="word-break: break-word;">
+              <label class="card-info">
+                {{ value.actionStaffName }}
+              </label>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="receiverStaffName" style="width: 25px">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>NGƯỜI NHẬN</th>
+            <td mat-cell *matCellDef="let value" style="word-break: break-word;">
+              <label class="card-info">
+                {{ value.receiverStaffName }}
+              </label>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="action" style="width: 25px">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>HÀNH ĐỘNG</th>
+            <td *matCellDef="let form" style="word-break: break-word; text-align: center;">
+              <table style="width: 100%; background-color: white;">
+                <tr>
+                  <td style="text-align: center; padding-left: 50px;">
+                    <button class="action-button" mat-raised-button style="color: #FFFFFF; background-color: #c53225;" matTooltip="Chỉnh sửa biên bản này"
+                    (click)="editCardTransferRequest(form)">
+                      <i class="fas fa-pen"></i>
+                    </button>
+                  </td>
+
+                  <td style="text-align: center; padding-right: 84px;">
+                    <button class="action-button" mat-raised-button style="color: #FFFFFF; background-color: #646464;" matTooltip="Xóa biên bản này"
+                    (click)="deleteCardTransferRequest(form)">
+                      <i class="fas fa-trash-alt"></i>
+                    </button>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="expandedDetail">
+            <td mat-cell fxShow fxHide.gt-md *matCellDef="let element" [attr.colspan]="displayedColumns.length">
+              <div class="example-element-detail" [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
+                <div class="example-element-description" fxLayout="column"></div>
+              </div>
+            </td>
+          </ng-container>
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr
+            mat-row
+            *matRowDef="let element; columns: displayedColumns"
+            class="example-element-row"
+            [class.example-expanded-row]="expandedElement === element"
+            (click)="expandedElement = expandedElement === element ? null : element"
+          ></tr>
+          <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
+        </table>
+      </div>
+
+      <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column" style="display: flex; justify-content: center; margin: 15px">
+        <button mat-button type="button" style="background: #646464; color: #FFFFFF;"
+        (click)="reset()"
+        > Hủy
+        </button>
+        <button mat-button type="button" style="background: #C3291C; color: #FFFFFF;"
+        (click)="createTransfer()"
+        > Tạo biên bản
+        </button>
+      </div>
+
+    </mat-card-content>
+    <mat-menu #transactionMenu="matMenu" [overlapTrigger]="false" style="width: 50px">
+      <ng-template matMenuContent let-form="form" style="width: 50px">
+        <button (click)="deleteRow(form)" mat-menu-item>
+          <img style="margin-top: 5px" src="assets/images/icons/remove.svg" />
+          &nbsp;Xóa
+        </button>
+      </ng-template>
+    </mat-menu>
+    <!-- <div *ngIf="isLoading" style="display: flex; justify-content: center; align-items: center; background: white">
+      <mat-progress-spinner color="warn" mode="indeterminate"> </mat-progress-spinner>
+    </div> -->
+  </mat-card>
