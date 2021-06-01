@@ -115,7 +115,7 @@
               </mat-option>
             </mat-select>
           </mat-form-field>
-          <mat-checkbox
+          <mat-checkbox  *ngIf="isOwner"
             fxFlex="20%"
             labelPosition="before"
             formControlName="status"
@@ -124,7 +124,7 @@
           >
             {{ "Terminal_Component.FormTerminal.checkboxIsActive" | translate }}
           </mat-checkbox>
-          <mat-card class="card-custom" fxFlex="100%" *ngIf="isOwner">
+          <mat-card class="card-custom" fxFlex="100%" >
             <mat-card-header>
               <mat-card-title
                 ><span class="material-icons">perm_contact_calendar</span>&nbsp; Rule giao dịch:
