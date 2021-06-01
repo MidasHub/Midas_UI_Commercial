@@ -673,6 +673,69 @@ export class TransactionService {
     return this.http.post<any>(`${this.GatewayApiUrlPrefix}/card-transfer/export_card_transfer_request`, Params);
   }
 
+  getListTransfer(fromDate: any, toDate: any, officeId: any) {
+    this.accessToken = JSON.parse(
+      sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey)
+    );
+    const Params = {
+      createdBy: this.accessToken.userId,
+      accessToken: this.accessToken.base64EncodedAuthenticationKey,
+      staffId: "",
+      fromDate: fromDate,
+      toDate: toDate,
+      officeId: officeId
+    };
+    console.log("Params", Params);
+    return this.http.post<any>(`${this.GatewayApiUrlPrefix}/card-transfer/get_list_request`, Params);
+  }
+
+  deleteCardTransferRequest(transferRefNo: any, officeId: any) {
+    this.accessToken = JSON.parse(
+      sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey)
+    );
+    const Params = {
+      createdBy: this.accessToken.userId,
+      accessToken: this.accessToken.base64EncodedAuthenticationKey,
+      staffId: "",
+      transferRefNo: transferRefNo,
+      officeId: officeId
+    };
+    console.log("Params", Params);
+    return this.http.post<any>(`${this.GatewayApiUrlPrefix}/card-transfer/delete_card_transfer_request`, Params);
+  }
+
+  addDetailCardTransfer(transferRefNo: any, officeId: any, listCardId: any) {
+    this.accessToken = JSON.parse(
+      sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey)
+    );
+    const Params = {
+      createdBy: this.accessToken.userId,
+      accessToken: this.accessToken.base64EncodedAuthenticationKey,
+      staffId: "",
+      transferRefNo: transferRefNo,
+      officeId: officeId,
+      listCardId: listCardId
+    };
+    console.log("Params", Params);
+    return this.http.post<any>(`${this.GatewayApiUrlPrefix}/card-transfer/add_detail_card_transfer`, Params);
+  }
+
+  deleteDetailCardTransfer(transferRefNo: any, officeId: any, listCardId: any) {
+    this.accessToken = JSON.parse(
+      sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey)
+    );
+    const Params = {
+      createdBy: this.accessToken.userId,
+      accessToken: this.accessToken.base64EncodedAuthenticationKey,
+      staffId: "",
+      transferRefNo: transferRefNo,
+      officeId: officeId,
+      listCardId: listCardId
+    };
+    console.log("Params", Params);
+    return this.http.post<any>(`${this.GatewayApiUrlPrefix}/card-transfer/delete_detail_card_transfer`, Params);
+  }
+
   checkValidTransactionBtach(clientId: string): Observable<any> {
     let httpParams = this.commonHttpParams.getCommonHttpParams();
     httpParams = httpParams.set("clientId", clientId);

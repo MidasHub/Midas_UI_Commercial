@@ -1,10 +1,10 @@
 <mat-divider></mat-divider>
-  <mat-card class="mat-elevation-z2 batchTxnCss">
+  <mat-card class="mat-elevation-z2 batchTxnCss" style="background-color: #FFFFFF;">
     <h1 class="m-l-10" align="center">BIÊN BẢN GIAO NHẬN THẺ</h1>
     <hr>
     <mat-card-content>
-      <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
-        <mat-form-field fxFlex="20%">
+      <div fxLayout="row wrap" fxLayoutGap="1%" fxLayout.lt-md="column">
+        <mat-form-field fxFlex="23%">
           <mat-label>Thông tin thẻ để giao/nhận</mat-label>
           <input type="text" placeholder="Tìm thẻ bằng SĐT/Tên KH/Số thẻ" [formControl]="cardFilter" matInput #querySearchAll
           (ngModelChange)=" this.searchClientAndGroup(querySearchAll.value);"
@@ -18,7 +18,7 @@
           </mat-option>
         </mat-autocomplete>
 
-        <mat-form-field fxFlex="20%">
+        <mat-form-field fxFlex="23%">
           <mat-label>Shipper</mat-label>
           <input placeholder="Chọn tên Shipper" [formControl]="shipperFilter"
             matInput
@@ -33,7 +33,7 @@
           </mat-option>
         </mat-autocomplete>
 
-        <mat-form-field fxFlex="20%">
+        <mat-form-field fxFlex="23%">
           <mat-label>Nhân viên giao</mat-label>
           <input [formControl]="deliverFilter"
             matInput
@@ -41,7 +41,7 @@
           />
         </mat-form-field>
 
-        <mat-form-field fxFlex="20%">
+        <mat-form-field fxFlex="23%">
           <mat-label>Nhân viên nhận</mat-label>
           <input placeholder="Chọn nhân viên nhận thẻ" [formControl]="staffFilter"
             matInput
@@ -56,13 +56,11 @@
           </mat-option>
         </mat-autocomplete>
 
-        <div fxFlex="10%">
-          <button mat-button type="button" style="background: #3b74ff; color: white; max-height: 50px; margin: 8px"
+        <button mat-button type="button" style="background: #3b74ff; color: white; max-height: 50px; margin: 8px"
           (click)="addWaitingList()"
           >
             <img src="assets/images/icons/add-while.svg" />&nbsp; Thêm
           </button>
-        </div>
       </div>
 
       <div class="example-table-container mat-elevation-z8" fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-sm="column">
@@ -71,7 +69,7 @@
             <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>NGÀY GIAO</th>
             <td mat-cell fxHide fxShow.gt-md style="word-wrap: break-word; width: 150px" *matCellDef="let value">
               <label>
-                {{ value.transferDate | date: "dd-MM-yyyy" }}
+                {{ today | date: "dd-MM-yyyy" }}
               </label>
             </td>
           </ng-container>
@@ -88,20 +86,30 @@
 
           <ng-container matColumnDef="cardNumber">
             <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>SỐ THẺ</th>
-            <td mat-cell fxHide fxShow.gt-md *matCellDef="let value">
+            <td mat-cell *matCellDef="let value">
               <label class="card-info">
                 {{ value.cardNumber.replace("XXX-XXX", "X") }}
               </label>
             </td>
           </ng-container>
 
-          <ng-container matColumnDef="documentId" style="width: 25px">
+          <ng-container matColumnDef="cardId" style="width: 25px">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>HÀNH ĐỘNG</th>
-            <td mat-cell *matCellDef="let form">
-              <button class="action-button" mat-raised-button color="warn" matTooltip="Xóa dòng này"
+            <td *matCellDef="let form">
+              <!-- <button class="action-button" mat-raised-button color="warn" matTooltip="Xóa dòng này"
               (click)="deleteRow(form)">
                 <i class="fas fa-trash-alt"></i>
-              </button>
+              </button> -->
+              <table style="background-color: white;">
+                <tr>
+                  <td style="text-align: center; padding-right: 20px;">
+                    <button class="action-button" mat-raised-button style="color: #FFFFFF; background-color: #646464;" matTooltip="Xóa dòng này"
+                    (click)="deleteRow(form)">
+                      <i class="fas fa-trash-alt"></i>
+                    </button>
+                  </td>
+                </tr>
+              </table>
             </td>
           </ng-container>
           <ng-container matColumnDef="expandedDetail">
@@ -122,16 +130,16 @@
           <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
         </table>
       </div>
-      <div class="buttonTransfer" fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column" style="display: flex; justify-content: center; margin: 15px">
-        <button mat-button type="button" style="background: rgba(0, 0, 0, 0.4);"
+      <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column" style="display: flex; justify-content: center; margin: 15px">
+        <button mat-button type="button" style="color: #FFFFFF; background: rgba(0, 0, 0, 0.4);"
         (click)="reset()"
         > Hủy
         </button>
-        <button mat-button type="button" style="background: #C3291C;"
+        <button mat-button type="button" style="color: #FFFFFF; background: #C3291C;"
         (click)="save()"
         > Lưu
         </button>
-        <button mat-button type="button" style="background: #A5A6F6;"
+        <button mat-button type="button" style="color: #FFFFFF; background: #A5A6F6;"
         (click)="doAction()"
         > Tải biên bản
         </button>

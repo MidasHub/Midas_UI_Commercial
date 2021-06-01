@@ -1,6 +1,10 @@
+::ng-deep .mat-sort-header-container {
+  display:flex;
+  justify-content:center;
+}
 
-::ng-deep .cdk-overlay-pane  {
-  min-width: 500px !important;
+::ng-deep .mat-form-field-wrapper{
+  margin-bottom: -1.25em;
 }
 
 h1{
@@ -21,6 +25,110 @@ hr{
   stroke: Solid;
 }
 
+h2{
+  font-family: Roboto;
+  font-style: Bold;
+  font-size: 18px;
+  line-height: 16px;
+  line-height: 76%;
+  letter-spacing: 1.25px;
+  color: #000000;
+  text-align: left;
+}
+
+.mat-input-element:read-only {
+  font-family: Roboto !important;
+  font-style: normal !important;
+  font-weight: normal !important;
+  font-size: 16px !important;
+  line-height: 24px !important;
+  letter-spacing: 0.15px !important;
+  color: rgba(0, 0, 0, 0.25) !important;
+
+}
+
+.mat-input-element {
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: 0.15px;
+  color: rgba(0, 0, 0, 0.87);
+}
+
+.mat-raised-button {
+  border-radius: 28px !important;
+  width: 40px !important;
+  height: 40px !important;
+}
+
+.mat-button{
+  width: 125px !important;
+  height: 48px !important;
+  left: 0% !important;
+  right: 0% !important;
+  margin-top: 10px !important;
+  //top: calc(80% - 48px/2 - 0.14px) !important;
+  box-shadow: 0px 4px 5px rgba(0, 0, 0, 0.14), 0px 1px 10px rgba(0, 0, 0, 0.12), 0px 2px 4px rgba(0, 0, 0, 0.2) !important;
+  border-radius: 28px !important;
+}
+
+th.mat-header-cell{
+  width: 16.66% !important;
+  border-bottom-width: 0px !important;
+  text-align: center !important;
+  font-family: Roboto !important;
+  font-style: normal !important;
+  font-weight: 500 !important;
+  font-size: 16px !important;
+  line-height: 16px !important;
+  align-items: center !important;
+  letter-spacing: 1.25px !important;
+  color: #000000 !important;
+}
+
+td.mat-cell{
+  color: rgba(0, 0, 0, 0.6) !important;
+  border-top-style: solid !important;
+  border-right-style: solid !important;
+  border-left-style: solid !important;
+  border-top-width: 1px !important;
+  border-right-width: 1px !important;
+  border-left-width: 1px !important;
+  border-width: 1px !important;
+  border-color: rgba(0, 0, 0, 0.6) !important;
+  border-spacing: 0px !important;
+  border-radius: 4px !important;
+  text-align: center !important;
+  font-family: Roboto !important;
+  font-style: normal !important;
+  font-weight: normal !important;
+  font-size: 16px !important;
+  align-items: center !important;
+  text-align: center !important;
+  letter-spacing: 0.15px !important;
+}
+
+.mat-card {
+  background: #FFFFFF !important;
+}
+
+.mat-elevation-z8 {
+  border: 0px !important;
+  box-shadow: none !important;
+  border-width: 0px !important;
+  background-color: white !important;
+}
+
+table {
+  border: 0px !important;
+}
+
+
+
+
+
 .batchTxnCss {
   width: 96%;
   margin: 1rem;
@@ -33,6 +141,7 @@ hr{
 
     .example-element-row td {
       border-bottom-width: 0;
+      background-color: white;
     }
 
     .example-element-detail {
@@ -51,124 +160,4 @@ hr{
       overflow: auto;
     }
   }
-
-
-  .card-info {
-    text-decoration: underline;
-    color: green;
-    font-weight: bold;
-  }
-
-  .example-element-diagram {
-    min-width: 80px;
-    border: 2px solid black;
-    padding: 8px;
-    font-weight: lighter;
-    margin: 8px 0;
-    height: 104px;
-  }
-
-  .example-element-symbol {
-    font-weight: bold;
-    font-size: 40px;
-    line-height: normal;
-  }
-
-  .example-element-description {
-    padding: 10px;
-    margin-top: 5px;
-    margin-bottom: 5px;
-  }
-
-  .example-element-description-attribution {
-    opacity: 0.5;
-  }
-
-  .money-total {
-    font-size: 18px;
-    font-weight: bold;
-    margin: 6px;
-  }
-
-  .select-custom {
-    width: 70px;
-
-  }
-
-  .input-custom {
-    width: 80%;
-    padding-right: 8px;
-    padding-left: 8px;
-    max-width: 150px;
-  }
-
-  .money-cell {
-    text-align: center;
-  }
-
-  .actions {
-    width: 30px;
-  }
-
-  .export-item {
-    margin-top: 10px;
-  }
-
-  .no-input {
-    max-width: 70px;
-  }
-
-  //tratt
-  .mat-elevation-z8 {
-    box-shadow: none !important;
-    border: none !important;
-  }
-
-  mat-header-row, th.mat-header-cell{
-    color: #000000 !important;
-    font-family: Roboto;
-    font-style: Medium;
-    font-size: 16px;
-    line-height: 16px;
-    line-height: 85%;
-
-  }
-
-  .mat-input-element:read-only, .mat-form-field-type-mat-native-select.mat-form-field-disabled .mat-form-field-infix::after {
-    color: rgba(0, 0, 0, 0.87) !important;
-    font-weight: normal !important;
-    background-image: none !important;
-    font-family: Roboto !important;
-    font-style: Regular !important;
-    font-size: 16px !important;
-    line-height: 24px !important;
-    line-height: 128% !important;
-    text-align: left !important;
-    letter-spacing: 0.15px !important;
-    //fill: Solid rgba(0, 0, 0, 0.87) !important;
-  }
-
-  mat-table{
-    max-height: 1000px !important;
-  }
-
-  // .mat-form-field-infix {
-  //   display: block;
-  //   position: relative;
-  //   flex: auto;
-  //   min-width: 0;
-  //   width: 180px;
-  // }
-
-  .mat-form-field-infix {
-    padding: 0.5em 0 !important;
-    border-top: 0.84375em solid transparent !important;
-  }
-
-  .buttonTransfer{
-    color: white;
-    max-height: 50px;
-    margin: 8px
-  }
-
 }

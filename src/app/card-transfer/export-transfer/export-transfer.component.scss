@@ -81,3 +81,19 @@ mat-row, mat-header-row, mat-footer-row, th.mat-header-cell, td.mat-cell, td.mat
   background: #FFFFFF !important;
 }
 
+.mat-raised-button {
+  border-radius: 28px !important;
+  width: 40px !important;
+  height: 40px !important;
+}
+
+.mat-button{
+  width: 125px !important;
+  height: 48px !important;
+  left: 0% !important;
+  right: 0% !important;
+  //top: calc(80% - 48px/2 - 0.14px) !important;
+  box-shadow: 0px 4px 5px rgba(0, 0, 0, 0.14), 0px 1px 10px rgba(0, 0, 0, 0.12), 0px 2px 4px rgba(0, 0, 0, 0.2) !important;
+  border-radius: 28px !important;
+}
+
