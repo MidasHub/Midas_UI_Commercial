@@ -97,9 +97,11 @@ export class EditClientComponent implements OnInit {
   createEditClientForm() {
     this.currentUser = this.authenticationService.getCredentials();
     const { permissions } = this.currentUser;
-    const permit_manager = permissions.includes("POS_UPDATE");
+    const permit_manager = permissions.includes("ASSIGNSTAFF_CLIENT") || permissions.includes("ALL_FUNCTIONS");
+    const permit_IT = permissions.includes("SYSTEM_CONFIG") ;
+
     this.editClientForm = this.formBuilder.group({
-      'officeId': [{ value: '', disabled: true }],
+      'officeId': [{ value: '', disabled: !permit_IT ? true : false }],
       'staffId': [{ value: '', disabled: !permit_manager ? true : false }],
       'legalFormId': [''],
       'isStaff': [false],
