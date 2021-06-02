@@ -359,15 +359,37 @@ export class ManageTransactionComponent implements OnInit {
   }
 
   submitTransactionUpToNow() {
-    const dialog = this.dialog.open(ConfirmDialogComponent, {
-      data: {
-        message: "Bạn chắc chắn muốn chốt số giao dịch đến thời điểm hiện tại ",
-        title: "Xác nhận",
-      },
-    });
+    const formfields: FormfieldBase[] = [
+      new InputBase({
+        controlName: "amountSubmit",
+        label: "Số tiền",
+        value: "",
+        type: "text",
+        required: true,
+        mask: "0000-0000-0000-0000",
+      }),
+      new InputBase({
+        controlName: "batchNo",
+        label: "Mã lô",
+        value: "",
+        type: "text",
+        required: true,
+      }),
+    ];
+    const data = {
+      title: "Thêm thông tin chốt số giao dịch đến thời điểm hiện tại",
+      layout: { addButtonText: "Xác nhận" },
+      formfields: formfields,
+    };
+    const dialog = this.dialog.open(FormDialogComponent, { data });
     dialog.afterClosed().subscribe((data) => {
       if (data) {
-        this.transactionService.submitTransactionUpToiNow().subscribe((result) => {
+        const value = data.data.value;
+
+        let batchNo = value.batchNo;
+        let amountSubmit = value.amountSubmit;
+        debugger;
+        this.transactionService.submitTransactionUpToiNow(batchNo, amountSubmit).subscribe((result) => {
           if (result.status === "200") {
             this.getTransaction();
             const message = "Chốt số giao dịch thành công";
@@ -376,6 +398,11 @@ export class ManageTransactionComponent implements OnInit {
               message: message,
             });
             this.getTransaction();
+          } else {
+            this.alertService.alert({
+              msgClass: "cssDanger",
+              message: result.error,
+            });
           }
         });
       }
