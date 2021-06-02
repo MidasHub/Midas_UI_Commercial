@@ -416,8 +416,10 @@ export class TransactionService {
     return this.http.post<any>(`${this.GatewayApiUrlPrefix}/transaction/revert_transaction`, httpParams);
   }
 
-  submitTransactionUpToiNow(): Observable<any> {
+  submitTransactionUpToiNow(batchNo: string, amountSubmit: string): Observable<any> {
     let httpParams = this.commonHttpParams.getCommonHttpParams();
+    httpParams = httpParams.set("batchNo", batchNo);
+    httpParams = httpParams.set("amountSubmit", amountSubmit);
 
     return this.http.post<any>(`${this.GatewayApiUrlPrefix}/transaction/submit_transaction_by_office`, httpParams);
   }
