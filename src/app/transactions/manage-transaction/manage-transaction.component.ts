@@ -24,6 +24,7 @@ import { BanksService } from "app/banks/banks.service";
 import { ConfirmHoldTransactionDialogComponent } from "../dialog/confirm-hold-transaction-dialog/confirm-hold-transaction-dialog.component";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
+import { SelectBase } from "app/shared/form-dialog/formfield/model/select-base";
 @Component({
   selector: "midas-manage-transaction",
   templateUrl: "./manage-transaction.component.html",
@@ -121,6 +122,7 @@ export class ManageTransactionComponent implements OnInit {
   panelOpenState = true;
   filterData: any[];
   today = new Date();
+  transactionTerminals: any[];
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
@@ -272,6 +274,15 @@ export class ManageTransactionComponent implements OnInit {
           terminalAmount_feeAmount: Number(v.feePercentage),
         };
       });
+
+      this.transactionTerminals = [];
+      this.transactionsData.forEach((element) => {
+        if (element.isSubmit == 0) {
+          const terminalInfo = this.terminals?.filter((terminal: any) => terminal.terminalId == element.terminalId);
+          this.transactionTerminals.push(terminalInfo[0]);
+        }
+      });
+
       this.filterTransaction();
     });
   }
@@ -360,6 +371,13 @@ export class ManageTransactionComponent implements OnInit {
 
   submitTransactionUpToNow() {
     const formfields: FormfieldBase[] = [
+      new SelectBase({
+        controlName: "terminalSubmit",
+        label: "Máy bán hàng",
+        value: "",
+        options: { label: "terminalName", value: "terminalId", data: this.transactionTerminals },
+        required: true,
+      }),
       new InputBase({
         controlName: "amountSubmit",
         label: "Số tiền",
@@ -376,10 +394,12 @@ export class ManageTransactionComponent implements OnInit {
         required: true,
       }),
     ];
+    debugger;
     const data = {
       title: "Thêm thông tin chốt số giao dịch đến thời điểm hiện tại",
       layout: { addButtonText: "Xác nhận" },
       formfields: formfields,
+      listTerminalTransaction: this.transactionTerminals,
     };
     const dialog = this.dialog.open(FormDialogComponent, { data });
     dialog.afterClosed().subscribe((data) => {
@@ -388,23 +408,34 @@ export class ManageTransactionComponent implements OnInit {
 
         let batchNo = value.batchNo;
         let amountSubmit = value.amountSubmit;
-        debugger;
-        this.transactionService.submitTransactionUpToiNow(batchNo, amountSubmit).subscribe((result) => {
-          if (result.status === "200") {
-            this.getTransaction();
-            const message = "Chốt số giao dịch thành công";
-            this.alertService.alert({
-              msgClass: "cssInfo",
-              message: message,
-            });
-            this.getTransaction();
-          } else {
-            this.alertService.alert({
-              msgClass: "cssDanger",
-              message: result.error,
-            });
+        let terminalSubmit = value.terminalSubmit;
+        let terminalNameSubmit = value.terminalSubmit;
+
+        // get terminal name submit to server
+        for (let index = 0; index < this.transactionTerminals.length; index++) {
+          if (terminalSubmit == this.transactionTerminals[index].terminalId) {
+            terminalNameSubmit = this.transactionTerminals[index].terminalName;
           }
-        });
+        }
+
+        this.transactionService
+          .submitTransactionUpToiNow(batchNo, amountSubmit, terminalSubmit, terminalNameSubmit)
+          .subscribe((result) => {
+            if (result.status === "200") {
+              this.getTransaction();
+              const message = "Chốt số giao dịch thành công";
+              this.alertService.alert({
+                msgClass: "cssInfo",
+                message: message,
+              });
+              this.getTransaction();
+            } else {
+              this.alertService.alert({
+                msgClass: "cssDanger",
+                message: result.error,
+              });
+            }
+          });
       }
     });
   }
