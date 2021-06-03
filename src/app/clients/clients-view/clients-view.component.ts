@@ -2,7 +2,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DomSanitizer } from '@angular/platform-browser';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 
 /** Custom Dialogs */
 import { UnassignStaffDialogComponent } from './custom-dialogs/unassign-staff-dialog/unassign-staff-dialog.component';
@@ -15,6 +15,7 @@ import { CaptureImageDialogComponent } from './custom-dialogs/capture-image-dial
 
 /** Custom Services */
 import { ClientsService } from '../clients.service';
+import { TransactionHistoryDialogComponent } from 'app/transactions/rollTerm-schedule-transaction/dialog/transaction-history/transaction-history-dialog.component';
 
 
 @Component({
@@ -66,6 +67,15 @@ export class ClientsViewComponent implements OnInit {
     );
 
 
+  }
+
+  showHistoryTransaction(clientId: string) {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.data = {
+      clientId: clientId,
+    };
+    dialogConfig.minWidth = 800;
+    this.dialog.open(TransactionHistoryDialogComponent, dialogConfig);
   }
 
   /**
