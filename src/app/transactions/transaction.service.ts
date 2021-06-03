@@ -416,10 +416,17 @@ export class TransactionService {
     return this.http.post<any>(`${this.GatewayApiUrlPrefix}/transaction/revert_transaction`, httpParams);
   }
 
-  submitTransactionUpToiNow(batchNo: string, amountSubmit: string): Observable<any> {
+  submitTransactionUpToiNow(
+    batchNo: string,
+    amountSubmit: string,
+    terminalSubmit: string,
+    terminalNameSubmit: string
+  ): Observable<any> {
     let httpParams = this.commonHttpParams.getCommonHttpParams();
     httpParams = httpParams.set("batchNo", batchNo);
     httpParams = httpParams.set("amountSubmit", amountSubmit);
+    httpParams = httpParams.set("terminalSubmit", terminalSubmit);
+    httpParams = httpParams.set("terminalNameSubmit", terminalNameSubmit);
 
     return this.http.post<any>(`${this.GatewayApiUrlPrefix}/transaction/submit_transaction_by_office`, httpParams);
   }
@@ -646,7 +653,7 @@ export class TransactionService {
       accessToken: this.accessToken.base64EncodedAuthenticationKey,
       staffId: "",
       transferRefNo: transferRefNo,
-      officeId: officeId
+      officeId: officeId,
     };
     return this.http.post<any>(`${this.GatewayApiUrlPrefix}/card-transfer/get_detail_by_transfer_ref_no`, Params);
   }
@@ -661,7 +668,7 @@ export class TransactionService {
       accessToken: this.accessToken.base64EncodedAuthenticationKey,
       staffId: "",
       transferRefNo: transferRefNo,
-      officeId: officeId
+      officeId: officeId,
     };
     return this.http.post<any>(`${this.GatewayApiUrlPrefix}/card-transfer/export_card_transfer_request`, Params);
   }
