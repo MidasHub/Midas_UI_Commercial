@@ -86,6 +86,12 @@
 
         <mat-card-actions fxLayout="column" fxLayoutAlign="center center" *ngIf="!this.showViewClient"
           class="client-actions">
+          <span  class="m-b-10" fxLayoutAlign="center stretch">
+            <button mat-raised-button (click)="showHistoryTransaction(clientViewData.id)" *ngIf="!this.isInterchangeClient">
+              <i class="fa fa-list-alt "></i>
+              Lịch sử giao dịch
+            </button>
+          </span>
 
           <span *midasHasPermission="'UPDATE_CLIENT'" class="m-b-10" fxLayoutAlign="center stretch">
             <button mat-raised-button [routerLink]="['edit']" *ngIf="!this.isInterchangeClient">
