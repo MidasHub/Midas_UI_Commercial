@@ -416,10 +416,17 @@ export class TransactionService {
     return this.http.post<any>(`${this.GatewayApiUrlPrefix}/transaction/revert_transaction`, httpParams);
   }
 
-  submitTransactionUpToiNow(batchNo: string, amountSubmit: string): Observable<any> {
+  submitTransactionUpToiNow(
+    batchNo: string,
+    amountSubmit: string,
+    terminalSubmit: string,
+    terminalNameSubmit: string
+  ): Observable<any> {
     let httpParams = this.commonHttpParams.getCommonHttpParams();
     httpParams = httpParams.set("batchNo", batchNo);
     httpParams = httpParams.set("amountSubmit", amountSubmit);
+    httpParams = httpParams.set("terminalSubmit", terminalSubmit);
+    httpParams = httpParams.set("terminalNameSubmit", terminalNameSubmit);
 
     return this.http.post<any>(`${this.GatewayApiUrlPrefix}/transaction/submit_transaction_by_office`, httpParams);
   }
@@ -646,7 +653,7 @@ export class TransactionService {
       accessToken: this.accessToken.base64EncodedAuthenticationKey,
       staffId: "",
       transferRefNo: transferRefNo,
-      officeId: officeId
+      officeId: officeId,
     };
     return this.http.post<any>(`${this.GatewayApiUrlPrefix}/card-transfer/get_detail_by_transfer_ref_no`, Params);
   }
@@ -661,7 +668,7 @@ export class TransactionService {
       accessToken: this.accessToken.base64EncodedAuthenticationKey,
       staffId: "",
       transferRefNo: transferRefNo,
-      officeId: officeId
+      officeId: officeId,
     };
     return this.http.post<any>(`${this.GatewayApiUrlPrefix}/card-transfer/export_card_transfer_request`, Params);
   }
@@ -676,7 +683,7 @@ export class TransactionService {
       staffId: "",
       fromDate: fromDate,
       toDate: toDate,
-      officeId: officeId
+      officeId: officeId,
     };
     console.log("Params", Params);
     return this.http.post<any>(`${this.GatewayApiUrlPrefix}/card-transfer/get_list_request`, Params);
@@ -691,7 +698,7 @@ export class TransactionService {
       accessToken: this.accessToken.base64EncodedAuthenticationKey,
       staffId: "",
       transferRefNo: transferRefNo,
-      officeId: officeId
+      officeId: officeId,
     };
     console.log("Params", Params);
     return this.http.post<any>(`${this.GatewayApiUrlPrefix}/card-transfer/delete_card_transfer_request`, Params);
@@ -707,7 +714,7 @@ export class TransactionService {
       staffId: "",
       transferRefNo: transferRefNo,
       officeId: officeId,
-      listCardId: listCardId
+      listCardId: listCardId,
     };
     console.log("Params", Params);
     return this.http.post<any>(`${this.GatewayApiUrlPrefix}/card-transfer/add_detail_card_transfer`, Params);
@@ -723,7 +730,7 @@ export class TransactionService {
       staffId: "",
       transferRefNo: transferRefNo,
       officeId: officeId,
-      listCardId: listCardId
+      listCardId: listCardId,
     };
     console.log("Params", Params);
     return this.http.post<any>(`${this.GatewayApiUrlPrefix}/card-transfer/delete_detail_card_transfer`, Params);
