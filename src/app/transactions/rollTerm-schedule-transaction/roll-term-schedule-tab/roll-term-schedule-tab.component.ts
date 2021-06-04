@@ -106,9 +106,9 @@ export class RollTermScheduleTabComponent implements OnInit {
   permitFee = false;
   filterData: any[];
   today = new Date();
+
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
-
   constructor(
     private formBuilder: FormBuilder,
     private transactionService: TransactionService,
