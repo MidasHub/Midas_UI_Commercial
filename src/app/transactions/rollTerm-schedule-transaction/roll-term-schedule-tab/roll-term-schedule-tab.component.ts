@@ -106,9 +106,9 @@ export class RollTermScheduleTabComponent implements OnInit {
   permitFee = false;
   filterData: any[];
   today = new Date();
+
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
-
   constructor(
     private formBuilder: FormBuilder,
     private transactionService: TransactionService,
@@ -176,6 +176,35 @@ export class RollTermScheduleTabComponent implements OnInit {
         this.transactionsData = result?.result;
         this.dataSource = result?.result?.listPosTransaction;
       });
+  }
+
+  ExportExcel() {
+    let dataCopy = [];
+    let i = -1;
+
+    while (++i < this.dataSource.length) {
+      let custIdNo: any[] = [];
+      let element = this.dataSource[i];
+      this.clientServices.getClientById(element.custId).subscribe((data) => {
+        console.log("clientServices data: ", data);
+      });
+      let e: any = {
+        panHolderName: element.panHolderName,//Tên khách hàng
+        feeReceive: ((element.feePercentage / 100) * element.reqAmount).toFixed(0),//phi thu
+        createdDate: this.datePipe.transform(element.createdDate, "dd-MM-yyyy HH:mm:ss"),//Ngày tạo
+        panNumber: element.panNumber,//the
+        officeName: element.officeName,//Chi nhánh
+        principal: element.principal,// Số tiền Tạm ứng
+        paidAmount: element.paidAmount,//Đã tạm ứng
+        unPaydAmount: element.principal - element.paidAmount,//Còn phải Tạm ứng
+        amountPaid: element.amountPaid,//Đã thu hồi
+        needToGetAmount: element.paidAmount - element.amountPaid,//Cần thu hồi
+        //idCard: element.cardType,
+
+      };
+      dataCopy.push(e);
+    }
+    this.transactionService.exportRollTermScheduleTab("RollTermScheduleTab", dataCopy);
   }
 
   get fromDateAndToDate() {

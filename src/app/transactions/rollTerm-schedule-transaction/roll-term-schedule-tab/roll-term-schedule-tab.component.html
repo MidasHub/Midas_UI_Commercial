@@ -53,6 +53,14 @@
       >
         Tìm kiếm &nbsp;<i class="fa fa-search" aria-hidden="true"></i>
       </button>
+      <button
+        (click)="ExportExcel()"
+        style="align-self: center"
+        color="primary"
+        mat-raised-button
+      >
+        Xuất Excel &nbsp;<i class="fa fa-search" aria-hidden="true"></i>
+      </button>
       <h3 *ngIf="!fromDateAndToDate">
         Vui lòng chọn thời gian &nbsp; <i class="fa fa-calendar" style="align-self: center" aria-hidden="true"></i>
       </h3>
