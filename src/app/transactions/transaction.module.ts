@@ -38,6 +38,7 @@ import { MakeFeeOnAdvanceComponent } from './dialog/make-fee-on-advance/make-fee
 import { ValidCheckTransactionHistoryDialogComponent } from './dialog/valid-check-transaction-history/valid-check-transaction-history-dialog.component';
 import { ManageIcTransactionComponent } from './manage-ic-transaction/manage-ic-transaction.component';
 import { ConfirmHoldTransactionDialogComponent } from './dialog/confirm-hold-transaction-dialog/confirm-hold-transaction-dialog.component';
+import { AddSubmitTransactionDialogComponent } from './dialog/add-submit-transaction-dialog/add-submit-transaction-dialog.component';
 
 /**
  * Profile Module
@@ -72,6 +73,7 @@ import { ConfirmHoldTransactionDialogComponent } from './dialog/confirm-hold-tra
     ValidCheckTransactionHistoryDialogComponent,
     ManageIcTransactionComponent,
     ConfirmHoldTransactionDialogComponent,
+    AddSubmitTransactionDialogComponent
   ],
 
   imports: [

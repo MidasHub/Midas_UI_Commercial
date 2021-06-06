@@ -25,6 +25,7 @@ import { ConfirmHoldTransactionDialogComponent } from "../dialog/confirm-hold-tr
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 import { SelectBase } from "app/shared/form-dialog/formfield/model/select-base";
+import { AddSubmitTransactionDialogComponent } from "../dialog/add-submit-transaction-dialog/add-submit-transaction-dialog.component";
 @Component({
   selector: "midas-manage-transaction",
   templateUrl: "./manage-transaction.component.html",
@@ -123,6 +124,7 @@ export class ManageTransactionComponent implements OnInit {
   filterData: any[];
   today = new Date();
   transactionTerminals: any[];
+  transactionTotalByBatchNo: any[];
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
@@ -276,10 +278,35 @@ export class ManageTransactionComponent implements OnInit {
       });
 
       this.transactionTerminals = [];
+      this.transactionTotalByBatchNo = [];
       this.transactionsData.forEach((element) => {
         if (element.isSubmit == 0) {
-          const terminalInfo = this.terminals?.filter((terminal: any) => terminal.terminalId == element.terminalId);
-          this.transactionTerminals.push(terminalInfo[0]);
+        const terminalInfo = this.terminals?.filter((terminal: any) => terminal.terminalId == element.terminalId);
+        this.transactionTerminals.push(terminalInfo[0]);
+
+        let transaction = {
+          batchNo: element.batchNo,
+          amount: element.terminalAmount,
+          terminalId: element.terminalId,
+        };
+
+        if (this.transactionTotalByBatchNo.length == 0) {
+          this.transactionTotalByBatchNo.push(transaction);
+        } else {
+          let isExisting = false;
+          for (let index = 0; index < this.transactionTotalByBatchNo.length; index++) {
+            const transaction = this.transactionTotalByBatchNo[index];
+            if (transaction.batchNo == element.batchNo && transaction.terminalId == element.terminalId) {
+              transaction.amount += element.terminalAmount;
+              isExisting = true;
+            }
+          }
+
+          if (!isExisting) {
+            this.transactionTotalByBatchNo.push(transaction);
+          }
+        }
+
         }
       });
 
@@ -370,56 +397,47 @@ export class ManageTransactionComponent implements OnInit {
   }
 
   submitTransactionUpToNow() {
-    const formfields: FormfieldBase[] = [
-      new SelectBase({
-        controlName: "terminalSubmit",
-        label: "Máy bán hàng",
-        value: "",
-        options: { label: "terminalName", value: "terminalId", data: this.transactionTerminals },
-        required: true,
-      }),
-      new InputBase({
-        controlName: "amountSubmit",
-        label: "Số tiền",
-        value: "",
-        type: "text",
-        required: true,
-        mask: "0000-0000-0000-0000",
-      }),
-      new InputBase({
-        controlName: "batchNo",
-        label: "Mã lô",
-        value: "",
-        type: "text",
-        required: true,
-      }),
-    ];
-    debugger;
     const data = {
       title: "Thêm thông tin chốt số giao dịch đến thời điểm hiện tại",
-      layout: { addButtonText: "Xác nhận" },
-      formfields: formfields,
+      btnTitle: "Xác nhận",
       listTerminalTransaction: this.transactionTerminals,
+      transactionTotalByBatchNo: this.transactionTotalByBatchNo,
     };
-    const dialog = this.dialog.open(FormDialogComponent, { data });
+    const dialog = this.dialog.open(AddSubmitTransactionDialogComponent, { data });
     dialog.afterClosed().subscribe((data) => {
+
       if (data) {
         const value = data.data.value;
 
-        let batchNo = value.batchNo;
-        let amountSubmit = value.amountSubmit;
+        let listObjectTransactionSubmit = data.listObjectTransactionSubmit;
+        // check equal amount from cross check value
+          for (let index = 0; index < listObjectTransactionSubmit.length; index++) {
+          const transaction = listObjectTransactionSubmit[index];
+          if (transaction.amountSubmitSuggest != transaction.amountSubmit) {
+
+            let messageCheckSameAmountCrossCheck = `Số tiền chốt lô ${transaction.batchNoSubmit} nhập vào chưa đúng, vui lòng thử lại!`
+            this.alertService.alert({
+              msgClass: "cssDanger",
+              message: messageCheckSameAmountCrossCheck,
+            });
+
+            return;
+          }
+        }
+
+        let note = value.note;
         let terminalSubmit = value.terminalSubmit;
         let terminalNameSubmit = value.terminalSubmit;
 
         // get terminal name submit to server
         for (let index = 0; index < this.transactionTerminals.length; index++) {
-          if (terminalSubmit == this.transactionTerminals[index].terminalId) {
+          if (value.terminalSubmit == this.transactionTerminals[index].terminalId) {
             terminalNameSubmit = this.transactionTerminals[index].terminalName;
           }
         }
 
         this.transactionService
-          .submitTransactionUpToiNow(batchNo, amountSubmit, terminalSubmit, terminalNameSubmit)
+          .submitTransactionUpToiNow(listObjectTransactionSubmit, note, terminalSubmit, terminalNameSubmit)
           .subscribe((result) => {
             if (result.status === "200") {
               this.getTransaction();

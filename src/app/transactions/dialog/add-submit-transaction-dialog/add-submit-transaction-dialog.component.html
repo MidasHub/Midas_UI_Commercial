@@ -1,0 +1,82 @@
+<h1 mat-dialog-title>{{ data.title }}</h1>
+
+<div
+  mat-dialog-content
+  [formGroup]="formDialog"
+  [fxLayout]="'column'"
+  fxLayout.lt-md="column"
+  [fxLayoutGap]="'1%'"
+  fxLayoutGap.lt-md="0%"
+>
+  <mat-form-field fxFlex="48%">
+    <mat-label>Máy bán hàng:</mat-label>
+    <mat-select required formControlName="terminalSubmit">
+      <mat-option *ngFor="let terminal of listTerminalTransaction" [value]="terminal.terminalId">
+        {{ terminal.terminalName }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <div fxFlex="48%" *ngIf="listObjectTransactionSubmit.length > 0">
+    <mat-label>Thông tin chốt số:</mat-label>
+    <table mat-table #bookingBranchSubmit [dataSource]="listObjectTransactionSubmit">
+      <ng-container matColumnDef="no">
+        <th mat-header-cell *matHeaderCellDef>No.</th>
+        <td mat-cell *matCellDef="let booking; let i = index">{{ i + 1 }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="batchNoSubmit">
+        <th mat-header-cell *matHeaderCellDef>Số lô</th>
+        <td mat-cell *matCellDef="let booking">
+          <mat-form-field>
+            <mat-label>Số lô</mat-label>
+            <input
+              matInput
+              type="text"
+              disabled
+              [(ngModel)]="booking.batchNoSubmit"
+              [ngModelOptions]="{ standalone: true }"
+              required
+            />
+          </mat-form-field>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="amountSubmit">
+        <th mat-header-cell *matHeaderCellDef>Số tiền</th>
+        <td mat-cell *matCellDef="let booking; let i = index">
+          <mat-form-field>
+            <mat-label>Số tiền ({{ booking.amountSubmitSuggest | money }})</mat-label>
+            <input
+              matInput
+              type="text"
+              currencyMask
+              [(ngModel)]="booking.amountSubmit"
+              [ngModelOptions]="{ standalone: true }"
+              required
+            />
+          </mat-form-field>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
+  </div>
+  <!-- <mat-form-field fxFlex="48%">
+    <mat-label>Ghi chú:</mat-label>
+    <input matInput  formControlName="note" />
+  </mat-form-field> -->
+</div>
+
+<mat-dialog-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="2%">
+  <button mat-raised-button mat-dialog-close>{{ "Shared_Component.FormDialog.btnCancel" | translate }}</button>
+  <button
+    mat-raised-button
+    color="primary"
+    [mat-dialog-close]="{ data: formDialog, listObjectTransactionSubmit : listObjectTransactionSubmit }"
+    [disabled]="!formDialog.valid || formDialog.pristine"
+  >
+    {{ data.btnTitle }}
+  </button>
+</mat-dialog-actions>

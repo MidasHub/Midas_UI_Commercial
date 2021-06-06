@@ -1,0 +1,49 @@
+<mat-card-content>
+  <h1 mat-dialog-title>Chi tiết thông tin chốt số</h1>
+</mat-card-content>
+<div mat-dialog-content>
+  <mat-card>
+    <mat-card-content>
+      <table
+        *ngIf="dataSource?.length !== 0"
+        mat-table
+        multiTemplateDataRows
+        class="mat-elevation-z8"
+        [dataSource]="dataSource"
+        matSort
+      >
+        <ng-container matColumnDef="terminal">
+          <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>Máy bán hàng</th>
+          <td mat-cell fxHide fxShow.gt-md *matCellDef="let transaction; let i = dataIndex">
+            {{ transaction.terminalName }}
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="batchNo">
+          <th mat-header-cell *matHeaderCellDef>Số lô</th>
+          <td mat-cell *matCellDef="let transaction">
+            {{ transaction.batchNo }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="amount">
+          <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>Số tiền</th>
+          <td mat-cell fxHide fxShow.gt-md *matCellDef="let transaction">{{ transaction.amount | money }}</td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr
+          mat-row
+          *matRowDef="let element; columns: displayedColumns"
+          class="example-element-row"
+          [class.example-expanded-row]="expandedElement === element"
+          (click)="expandedElement = expandedElement === element ? null : element"
+        ></tr>
+      </table>
+      <h3 style="color: red; text-align: center" *ngIf="dataSource.length === 0">Chưa có giao dịch!</h3>
+    </mat-card-content>
+  </mat-card>
+</div>
+<div class="container" fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column"></div>
+<mat-dialog-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="2%">
+  <button mat-raised-button mat-dialog-close>Đóng</button>
+</mat-dialog-actions>

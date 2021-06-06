@@ -30,6 +30,16 @@ export class BookingService {
     this.environment = environment;
   }
 
+  getDetailBranchBookingByRefNo(bookingRefNo: string): Observable<any> {
+    let httpParams = this.commonHttpParams.getCommonHttpParams();
+    httpParams = httpParams.set("bookingRefNo", bookingRefNo);
+
+    return this.http.post<any>(
+      `${this.GatewayApiUrlPrefix}/bookingInternal/get_detail_branch_booking_by_booking_ref_no`,
+      httpParams
+    );
+  }
+
   getDetailRollTermScheduleBookingByRefNo(bookingRefNo: string): Observable<any> {
     let httpParams = this.commonHttpParams.getCommonHttpParams();
     httpParams = httpParams.set("refNo", bookingRefNo);
