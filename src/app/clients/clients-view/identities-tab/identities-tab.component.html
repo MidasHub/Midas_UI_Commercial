@@ -95,6 +95,7 @@
               </button>
 
               <button
+              disabled
                 class="action-button"
                 mat-raised-button
                 color="warn"
@@ -105,11 +106,11 @@
                 <i class="fas fa-hand-holding-usd"></i>
               </button>
               <br />
-              <button class="action-button" mat-raised-button *midasHasPermission="'TXN_CREATE'" matTooltip="Thu hộ">
+              <button disabled class="action-button" mat-raised-button *midasHasPermission="'TXN_CREATE'" matTooltip="Thu hộ">
                 <i class="fas fa-arrow-up"></i>
               </button>
 
-              <button class="action-button" mat-raised-button *midasHasPermission="'TXN_CREATE'" matTooltip="Chi hộ">
+              <button disabled class="action-button" mat-raised-button *midasHasPermission="'TXN_CREATE'" matTooltip="Chi hộ">
                 <i class="fas fa-arrow-down"></i>
               </button>
             </td>

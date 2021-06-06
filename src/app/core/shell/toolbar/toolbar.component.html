@@ -53,7 +53,7 @@
       <!-- <a matLine>Booking</a> -->
     </button>
 
-    <button
+    <!-- <button
       mat-mini-fab
       [matMenuTriggerFor]="CardTransferMenu"
       #CardTransferMenuTrigger="matMenuTrigger"
@@ -61,8 +61,7 @@
       tourAnchor="toolbar-2-4"
     >
       <i class="fas fa-clipboard-list"></i>
-      <!-- <a matLine>Booking</a> -->
-    </button>
+    </button> -->
 
     <button
       mat-mini-fab
@@ -199,16 +198,16 @@
 <mat-menu #institutionMenu="matMenu" [overlapTrigger]="false">
   <button mat-menu-item routerLink="/clients/customer">{{ "Toolbar_Component.lblClient" | translate }}</button>
   <button mat-menu-item routerLink="/clients/staff">Nhân viên</button>
-  <button mat-menu-item routerLink="/groups">{{ "Toolbar_Component.lblGroup" | translate }}</button>
+  <!-- <button mat-menu-item routerLink="/groups">{{ "Toolbar_Component.lblGroup" | translate }}</button> -->
 </mat-menu>
 
 <mat-menu #ListMenu="matMenu" [overlapTrigger]="false">
   <button mat-menu-item routerLink="/accounts/balance-clients">
     {{ "Quản lý công nợ khách lẻ" | translate }}
   </button>
-  <button mat-menu-item (click)="daily()">
+  <!-- <button mat-menu-item (click)="daily()">
     {{ "Quản lý công nợ đại lý" | translate }}
-  </button>
+  </button> -->
   <button mat-menu-item *midasHasPermission="'POS_UPDATE'" routerLink="/accounts/balance-teller">
     {{ "Quản lý số dư teller" | translate }}
   </button>
@@ -240,19 +239,19 @@
 
 <mat-menu #transactionMenu="matMenu" [overlapTrigger]="false">
   <button mat-menu-item routerLink="/transaction">Quản lý giao dịch</button>
-  <button mat-menu-item routerLink="/transaction/rollTermSchedule">Quản lý chi tiết công nợ</button>
+  <button disabled mat-menu-item routerLink="/transaction/rollTermSchedule">Quản lý chi tiết công nợ</button>
   <button mat-menu-item routerLink="/transaction/fee-paid-management">Quản lý phí</button>
-  <button mat-menu-item routerLink="/booking/agency">Quản lý booking của Đại lý</button>
+  <!-- <button  mat-menu-item routerLink="/booking/agency">Quản lý booking của Đại lý</button> -->
 </mat-menu>
 
 <mat-menu #BookingMenu="matMenu" [overlapTrigger]="false">
-  <button mat-menu-item routerLink="/booking/create">Tạo booking nội bộ</button>
+  <button disabled mat-menu-item routerLink="/booking/create">Tạo booking nội bộ</button>
   <button *midasHasPermission="'POS_UPDATE'" mat-menu-item routerLink="/booking/view">Quản lý booking nội bộ</button>
 </mat-menu>
 
 <mat-menu #CardTransferMenu="matMenu" [overlapTrigger]="false">
-  <button mat-menu-item routerLink="/card-transfer/create">Tạo biên bản giao/nhận thẻ</button>
-  <button mat-menu-item routerLink="/card-transfer/manage">Danh sách biên bản bàn giao</button>
+  <button disabled mat-menu-item routerLink="/card-transfer/create">Tạo biên bản giao/nhận thẻ</button>
+  <button disabled mat-menu-item routerLink="/card-transfer/manage">Danh sách biên bản bàn giao</button>
 </mat-menu>
 
 <mat-menu #Marketing="matMenu" [overlapTrigger]="false">
