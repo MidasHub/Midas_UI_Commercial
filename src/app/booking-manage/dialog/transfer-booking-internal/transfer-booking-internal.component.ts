@@ -28,7 +28,7 @@ export class TransferBookingInternalComponent implements OnInit {
     this.form = this.formBuilder.group({
       clientSavingAccount: [""],
       buSavingAccount: [""],
-      amountTransfer: [""],
+      amountTransfer: [this.bookingInfo.amount],
     });
     this.bookingService.getTransferBookingAmountTemplate(this.bookingInfo.createdBy).subscribe((cl: any) => {
       this.listSavingAccount = cl.result.listSavingAccountStaff;

@@ -13,6 +13,7 @@ import { RollTermScheduleBookingTabComponent } from './view-internal-booking/rol
 import { TransferBookingInternalComponent } from './dialog/transfer-booking-internal/transfer-booking-internal.component';
 import { DetailBookingRollTermScheduleComponent } from './dialog/detail-booking-roll-term-schedule/detail-booking-roll-term-schedule.component';
 import { BranchBookingTabComponent } from './view-internal-booking/branch-booking-tab/branch-booking-tab.component';
+import { DetailBranchBookingDialogComponent } from './dialog/detail-branch-booking/detail-branch-booking.component';
 
 
 
@@ -29,6 +30,7 @@ import { BranchBookingTabComponent } from './view-internal-booking/branch-bookin
     BranchBookingTabComponent,
     TransferBookingInternalComponent,
     DetailBookingRollTermScheduleComponent,
+    DetailBranchBookingDialogComponent,
   ],
   imports: [
     SharedModule,
