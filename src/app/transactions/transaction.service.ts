@@ -417,16 +417,16 @@ export class TransactionService {
   }
 
   submitTransactionUpToiNow(
-    batchNo: string,
-    amountSubmit: string,
+    listTransactionSubmitInfo: any[],
+    note: string,
     terminalSubmit: string,
     terminalNameSubmit: string
   ): Observable<any> {
     let httpParams = this.commonHttpParams.getCommonHttpParams();
-    httpParams = httpParams.set("batchNo", batchNo);
-    httpParams = httpParams.set("amountSubmit", amountSubmit);
+    httpParams = httpParams.set("note", note);
     httpParams = httpParams.set("terminalSubmit", terminalSubmit);
     httpParams = httpParams.set("terminalNameSubmit", terminalNameSubmit);
+    httpParams = httpParams.set("listTransactionSubmitInfo", JSON.stringify(listTransactionSubmitInfo));
 
     return this.http.post<any>(`${this.GatewayApiUrlPrefix}/transaction/submit_transaction_by_office`, httpParams);
   }

@@ -1,10 +1,11 @@
 import { DatePipe } from "@angular/common";
 import { Component, OnInit, ViewChild } from "@angular/core";
 import { FormBuilder, FormGroup } from "@angular/forms";
-import { MatDialog } from "@angular/material/dialog";
+import { MatDialog, MatDialogConfig } from "@angular/material/dialog";
 import { MatPaginator } from "@angular/material/paginator";
 import { MatSort } from "@angular/material/sort";
 import { BookingService } from "app/booking-manage/booking.service";
+import { DetailBranchBookingDialogComponent } from "app/booking-manage/dialog/detail-branch-booking/detail-branch-booking.component";
 import { EditBookingInternalComponent } from "app/booking-manage/dialog/edit-booking-internal/edit-booking-internal.component";
 import { TransferBookingInternalComponent } from "app/booking-manage/dialog/transfer-booking-internal/transfer-booking-internal.component";
 import { AlertService } from "app/core/alert/alert.service";
@@ -21,7 +22,7 @@ export class BranchBookingTabComponent implements OnInit {
   expandedElement: any;
   displayedColumns: any[] =
   ["bookingRefNo", "officeName", "staffName",
-   "bookingAmount", "getBookedAmount", "txnDate",
+   "bookingAmount", "getBookedAmount", "needBookedAmount", "txnDate",
     "actions"];
   totalBooking: any;
   staffBookingInfo: any;
@@ -52,6 +53,14 @@ export class BranchBookingTabComponent implements OnInit {
       staffName: [''],
     });
 
+  }
+  showDetailBooking(bookingRefNo: string) {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.data = {
+      bookingRefNo: bookingRefNo,
+    };
+    dialogConfig.minWidth = 800;
+    this.dialog.open(DetailBranchBookingDialogComponent, dialogConfig);
   }
 
   textDecorateBooking(status: string) {
@@ -102,6 +111,7 @@ export class BranchBookingTabComponent implements OnInit {
       data: {
         createdBy: bookingInternal.createdBy,
         staffName: bookingInternal.userName,
+        amount: bookingInternal.totalBooking - bookingInternal.totalPaid,
       },
     });
     dialog.afterClosed().subscribe((data) => {

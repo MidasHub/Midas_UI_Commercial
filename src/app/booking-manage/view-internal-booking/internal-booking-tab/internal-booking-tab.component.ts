@@ -104,6 +104,7 @@ export class InternalBookingTabComponent implements OnInit {
       data: {
         createdBy: bookingInternal.createdBy,
         staffName: bookingInternal.userName,
+        amount: 0,
       },
     });
     dialog.afterClosed().subscribe((data) => {
