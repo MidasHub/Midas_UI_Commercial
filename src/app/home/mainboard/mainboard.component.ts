@@ -15,7 +15,9 @@ import { AlertService } from 'app/core/alert/alert.service';
   styleUrls: ['./mainboard.component.scss']
 })
 export class MainboardComponent implements OnInit {
-  displayedColumns: string[] = ['id', 'status', 'officeName', 'displayName' , 'mobileNo', 'documentKey', 'bankName'];
+  // displayedColumns: string[] = ['id', 'status', 'officeName', 'displayName' , 'mobileNo', 'documentKey', 'bankName'];
+  displayedColumns: string[] = ['id', 'status', 'displayName' ,  'documentKey', 'bankName'];
+
   dataSource: MatTableDataSource<any>;
   emailFormControl = new FormControl('', [
     Validators.required,

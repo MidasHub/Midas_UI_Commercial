@@ -73,12 +73,12 @@
                 <i class="fas fa-file-signature"></i> {{ "Client_Component.ViewClient.lblViewSignature" | translate }}
               </button>
             </p>
-            <p *midasHasActiveModule="'mgmModule'">
+            <!-- <p *midasHasActiveModule="'mgmModule'">
               <button mat-raised-button [routerLink]="['/clients/create/']"
                 [queryParams]="{'mgmId': clientViewData.id }" *ngIf="!this.isInterchangeClient">
                 <i class="fas fa-user-plus"></i> Thêm MGM
               </button>
-            </p>
+            </p> -->
           </div>
 
 
@@ -94,7 +94,9 @@
           </span>
 
           <span *midasHasPermission="'UPDATE_CLIENT'" class="m-b-10" fxLayoutAlign="center stretch">
-            <button mat-raised-button [routerLink]="['edit']" *ngIf="!this.isInterchangeClient">
+            <button mat-raised-button [routerLink]="['edit']"
+            *ngIf="!this.isInterchangeClient && currentUser.officeId == clientViewData.officeId"
+            >
               <i class="fa fa-edit"></i>{{ "Client_Component.ViewClient.btnEdit" | translate }}
             </button>
           </span>
@@ -139,17 +141,23 @@
               </button>
             </div>
             <div *ngIf="!this.isInterchangeClient">
+            <!-- <button mat-menu-item  (click)="doAction('Update Default Savings')"
+              *midasHasPermission="'UPDATESAVINGSACCOUNT_CLIENT'"
+              >
+              <i class="fas fa-file-invoice"></i> {{ "Client_Component.ViewClient.btnUpdateDefaultSaving" | translate }}
+            </button> -->
             <button mat-menu-item  (click)="doAction('Update Default Savings')"
-              *midasHasPermission="'UPDATESAVINGSACCOUNT_CLIENT'">
+              *midasHasPermission="'ALL_FUNCTIONS'"
+              >
               <i class="fas fa-file-invoice"></i> {{ "Client_Component.ViewClient.btnUpdateDefaultSaving" | translate }}
             </button>
           </div>
             <div *ngIf="!this.isInterchangeClient">
-              <button mat-menu-item (click)="doAction('Create Self Service User')">
+              <button mat-menu-item (click)="doAction('Create Self Service User')" *midasHasPermission="'ALL_FUNCTIONS'">
                 <i class="fas fa-portrait"></i> {{ "Client_Component.ViewClient.btnCreateSelfService" | translate }}
               </button>
               <span *ngIf="!clientViewData.staffId">
-                <button mat-menu-item (click)="doAction('Assign Staff')">
+                <button mat-menu-item (click)="doAction('Assign Staff')" *midasHasPermission="'ALL_FUNCTIONS'">
                   <i class="fas fa-hands-helping"></i> {{ "Client_Component.ViewClient.btnAssignStaff" | translate }}
                 </button>
               </span>
@@ -159,7 +167,7 @@
                 </button>
               </span>
               <mat-divider></mat-divider>
-              <button mat-menu-item (click)="doAction('Transfer Client')">
+              <button mat-menu-item (click)="doAction('Transfer Client')" *midasHasPermission="'ALL_FUNCTIONS'">
                 <i class="fas fa-exchange-alt"></i> {{ "Client_Component.ViewClient.btnTransferClient" | translate }}
               </button>
               <button mat-menu-item (click)="doAction('Close')" *midasHasPermission="'CLOSE_CLIENT'" >

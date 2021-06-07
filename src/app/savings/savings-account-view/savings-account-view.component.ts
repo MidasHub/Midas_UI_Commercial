@@ -114,14 +114,16 @@ export class SavingsAccountViewComponent implements OnInit {
         this.buttonConfig.addButton({
           name: "Công nợ khách hàng",
           icon: "fa fa-recycle",
-          taskPermissionName: "POSTINTEREST_SAVINGSACCOUNT",
+          // taskPermissionName: "POSTINTEREST_SAVINGSACCOUNT",
+          taskPermissionName: "ALL_FUNCTIONS",
           action: "advanceCash",
         });
 
         this.buttonConfig.addButton({
           name: "Công nợ IC",
           icon: "fa fa-recycle",
-          taskPermissionName: "POSTINTEREST_SAVINGSACCOUNT",
+          // taskPermissionName: "POSTINTEREST_SAVINGSACCOUNT",
+          taskPermissionName: "ALL_FUNCTIONS",
           action: "transferToIc",
         });
       }
@@ -139,7 +141,8 @@ export class SavingsAccountViewComponent implements OnInit {
         this.buttonConfig.addButton({
           name: "Quản lý vốn đối tác",
           icon: "fas fa-comments-dollar",
-          taskPermissionName: "POSTINTEREST_SAVINGSACCOUNT",
+          // taskPermissionName: "POSTINTEREST_SAVINGSACCOUNT",
+          taskPermissionName: "ALL_FUNCTIONS",
           action: "advanceCashPartnerTransaction",
         });
 
@@ -150,7 +153,8 @@ export class SavingsAccountViewComponent implements OnInit {
         this.buttonConfig.addButton({
           name: "Chuyển tiền nội bộ",
           icon: "fas fa-exchange-alt",
-          taskPermissionName: "POSTINTEREST_SAVINGSACCOUNT",
+          // taskPermissionName: "POSTINTEREST_SAVINGSACCOUNT",
+          taskPermissionName: "ALL_FUNCTIONS",
           action: "transferCrossOfficeCash",
         });
       }
@@ -159,7 +163,8 @@ export class SavingsAccountViewComponent implements OnInit {
         this.buttonConfig.addButton({
           name: "Điều chuyển vốn",
           icon: "fas fa-exchange-alt",
-          taskPermissionName: "POSTINTEREST_SAVINGSACCOUNT",
+          // taskPermissionName: "POSTINTEREST_SAVINGSACCOUNT",
+          taskPermissionName: "ALL_FUNCTIONS",
           action: "transferIc",
         });
       }
