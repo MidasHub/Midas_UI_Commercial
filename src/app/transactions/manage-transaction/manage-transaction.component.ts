@@ -282,7 +282,10 @@ export class ManageTransactionComponent implements OnInit {
       this.transactionsData.forEach((element) => {
         if (element.isSubmit == 0) {
         const terminalInfo = this.terminals?.filter((terminal: any) => terminal.terminalId == element.terminalId);
-        this.transactionTerminals.push(terminalInfo[0]);
+        if (terminalInfo){
+          this.transactionTerminals.push(terminalInfo[0]);
+
+        }
 
         let transaction = {
           batchNo: element.batchNo,
