@@ -277,42 +277,6 @@ export class ManageTransactionComponent implements OnInit {
         };
       });
 
-      this.transactionTerminals = [];
-      this.transactionTotalByBatchNo = [];
-      this.transactionsData.forEach((element) => {
-        if (element.isSubmit == 0) {
-        const terminalInfo = this.terminals?.filter((terminal: any) => terminal.terminalId == element.terminalId);
-        if (terminalInfo){
-          this.transactionTerminals.push(terminalInfo[0]);
-
-        }
-
-        let transaction = {
-          batchNo: element.batchNo,
-          amount: element.terminalAmount,
-          terminalId: element.terminalId,
-        };
-
-        if (this.transactionTotalByBatchNo.length == 0) {
-          this.transactionTotalByBatchNo.push(transaction);
-        } else {
-          let isExisting = false;
-          for (let index = 0; index < this.transactionTotalByBatchNo.length; index++) {
-            const transaction = this.transactionTotalByBatchNo[index];
-            if (transaction.batchNo == element.batchNo && transaction.terminalId == element.terminalId) {
-              transaction.amount += element.terminalAmount;
-              isExisting = true;
-            }
-          }
-
-          if (!isExisting) {
-            this.transactionTotalByBatchNo.push(transaction);
-          }
-        }
-
-        }
-      });
-
       this.filterTransaction();
     });
   }
@@ -400,6 +364,53 @@ export class ManageTransactionComponent implements OnInit {
   }
 
   submitTransactionUpToNow() {
+    this.transactionTerminals = [];
+    this.transactionTotalByBatchNo = [];
+    this.transactionsData.forEach((element) => {
+      if (element.isSubmit == 0) {
+        const terminalInfo = this.terminals?.filter((terminal: any) => terminal.terminalId == element.terminalId);
+        if (terminalInfo) {
+          let isExisting = false;
+          for (let index = 0; index < this.transactionTerminals.length; index++) {
+            const transaction = this.transactionTerminals[index];
+            if (transaction.terminalId == terminalInfo[0].terminalId) {
+              isExisting = true;
+            }
+          }
+
+          if (!isExisting) {
+            this.transactionTerminals.push(terminalInfo[0]);
+          }
+
+          // this.transactionTerminals.push(terminalInfo[0]);
+        }
+
+        let transaction = {
+          batchNo: element.batchNo,
+          amount: element.terminalAmount,
+          terminalId: element.terminalId,
+        };
+
+        if (this.transactionTotalByBatchNo.length == 0) {
+          this.transactionTotalByBatchNo.push(transaction);
+        } else {
+          let isExisting = false;
+          for (let index = 0; index < this.transactionTotalByBatchNo.length; index++) {
+            const transaction = this.transactionTotalByBatchNo[index];
+            if (transaction.batchNo == element.batchNo && transaction.terminalId == element.terminalId) {
+              transaction.amount += element.terminalAmount;
+              isExisting = true;
+            }
+          }
+
+          if (!isExisting) {
+            this.transactionTotalByBatchNo.push(transaction);
+          }
+        }
+      }
+
+      return;
+    });
     const data = {
       title: "Thêm thông tin chốt số giao dịch đến thời điểm hiện tại",
       btnTitle: "Xác nhận",
@@ -408,17 +419,15 @@ export class ManageTransactionComponent implements OnInit {
     };
     const dialog = this.dialog.open(AddSubmitTransactionDialogComponent, { data });
     dialog.afterClosed().subscribe((data) => {
-
       if (data) {
         const value = data.data.value;
 
         let listObjectTransactionSubmit = data.listObjectTransactionSubmit;
         // check equal amount from cross check value
-          for (let index = 0; index < listObjectTransactionSubmit.length; index++) {
+        for (let index = 0; index < listObjectTransactionSubmit.length; index++) {
           const transaction = listObjectTransactionSubmit[index];
           if (transaction.amountSubmitSuggest != transaction.amountSubmit) {
-
-            let messageCheckSameAmountCrossCheck = `Số tiền chốt lô ${transaction.batchNoSubmit} nhập vào chưa đúng, vui lòng thử lại!`
+            let messageCheckSameAmountCrossCheck = `Số tiền chốt lô ${transaction.batchNoSubmit} nhập vào chưa đúng, vui lòng thử lại!`;
             this.alertService.alert({
               msgClass: "cssDanger",
               message: messageCheckSameAmountCrossCheck,
