@@ -28,6 +28,11 @@
         <mat-label>Tên tài khoản</mat-label>
         <input matInput formControlName="sourceInfo">
       </mat-form-field>
+
+      <mat-form-field fxFlex="31">
+        <mat-label>Chi nhánh</mat-label>
+        <input matInput formControlName="officeName">
+      </mat-form-field>
       <!-- <div>
         <div style="margin-top: 15px;" fxLayout="row">
           <img src="../../../assets/images/icons/account.svg">
@@ -45,6 +50,12 @@
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Tên teller</th>
         <td mat-cell
             *matCellDef="let account"> {{ account.tellerSourceName}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="officeName">
+        <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>Chi nhánh</th>
+        <td mat-cell fxHide fxShow.gt-md
+            *matCellDef="let account"> {{ account.officeName}} </td>
       </ng-container>
 
       <ng-container matColumnDef="accountNo">

@@ -24,8 +24,10 @@ import {AuthenticationService} from '../../core/authentication/authentication.se
 export class BalanceAccountClientComponent implements OnInit {
   expandedElement: any;
   expandedElement2: any;
-  displayedColumns: any[] = ['customer_name', 'staff_name', 'account_no', 'account_balance_derived'];
-  displayedColumns2: any[] = ['customer_name', 'staff_name', 'account_no', 'account_balance_derived'];
+  //displayedColumns: any[] = ['customer_name', 'staff_name', 'account_no', 'account_balance_derived'];
+  //displayedColumns2: any[] = ['customer_name', 'staff_name', 'account_no', 'account_balance_derived'];
+  displayedColumns: any[] = ['customer_name', 'staff_name', 'officeName', 'account_no', 'account_balance_derived'];
+  displayedColumns2: any[] = ['customer_name', 'staff_name', 'officeName', 'account_no', 'account_balance_derived'];
   dataSource: any[] = [];
   dataSource2: any[] = [];
   formFilter: FormGroup;
@@ -35,7 +37,7 @@ export class BalanceAccountClientComponent implements OnInit {
   accountsShow: any[] = [];
   accountsShow2: any[] = [];
   staffs: any[] = [];
-  currentStaffSelect: number;
+  //currentStaffSelect: number;
   currentUser: any;
   totalAmountDerived:number = 0;
   totalAmountDerived2:number = 0;
@@ -56,14 +58,16 @@ export class BalanceAccountClientComponent implements OnInit {
   ) {
 
     this.currentUser = this.authenticationService.getCredentials();
-    this.currentStaffSelect = this.currentUser.staffId;
+    //this.currentStaffSelect = this.currentUser.staffId;
 
     this.clientServices.getBalanceAccountOfCustomer().subscribe(result => {
       const {permissions, staffId} = this.currentUser;
       this.dataSource = result?.result?.listBalanceCustomer.filter((v: any) => Number(v.account_balance_derived) >= 0 ) ;
       this.dataSource2 = result?.result?.listBalanceCustomer.filter((v: any) => Number(v.account_balance_derived) < 0 );
-      this.accountFilter = this.dataSource.filter((v:any) => staffId == v.staff_id);
-      this.accountFilter2 = this.dataSource2.filter((v:any) => staffId == v.staff_id);
+      //this.accountFilter = this.dataSource.filter((v:any) => staffId == v.staff_id);
+      this.accountFilter = this.dataSource;
+     // this.accountFilter2 = this.dataSource2.filter((v:any) => staffId == v.staff_id);
+      this.accountFilter2 = this.dataSource2;
       this.loadData();this.loadData2();
       this.totalAmountDerived = this.accountFilter.reduce( ( sum, { account_balance_derived } ) => sum + account_balance_derived , 0);
       this.totalAmountDerived2 = this.accountFilter2.reduce( ( sum, { account_balance_derived } ) => sum + account_balance_derived , 0)
@@ -83,11 +87,15 @@ export class BalanceAccountClientComponent implements OnInit {
 
     this.formFilter = this.formBuilder.group({
       'customer_name': [''],
-      'staff_id': ['']
+      'staff_name': [''],
+      'officeName': ['']
+      //'staff_id': ['']
     });
     this.formFilter2 = this.formBuilder.group({
       'customer_name': [''],
-      'staff_id': ['']
+      'staff_name': [''],
+      'officeName': ['']
+      //'staff_id': ['']
     });
   }
 
@@ -99,6 +107,8 @@ export class BalanceAccountClientComponent implements OnInit {
           return this.compare(a.customer_name, b.customer_name, isAsc);
         case 'staff_name':
           return this.compare(a.staff_name, b.staff_name, isAsc);
+        case 'officeName':
+          return this.compare(a.officeName, b.officeName, isAsc);
         case 'account_no':
           return this.compare(a.account_no, b.account_no, isAsc);
         case 'account_balance_derived':
@@ -119,6 +129,8 @@ export class BalanceAccountClientComponent implements OnInit {
           return this.compare(a.customer_name, b.customer_name, isAsc);
         case 'staff_name':
           return this.compare(a.staff_name, b.staff_name, isAsc);
+        case 'officeName':
+          return this.compare(a.officeName, b.officeName, isAsc);
         case 'account_no':
           return this.compare(a.account_no, b.account_no, isAsc);
         case 'account_balance_derived':
@@ -133,14 +145,14 @@ export class BalanceAccountClientComponent implements OnInit {
 
   // tslint:disable-next-line:use-lifecycle-interface
   ngAfterViewInit() {
-    this.formFilter.get('staff_id').setValue(this.currentStaffSelect);
+    //this.formFilter.get('staff_id').setValue(this.currentStaffSelect);
     this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
     merge(this.sort.sortChange, this.paginator.page)
       .pipe(
         tap(() => this.loadData())
       )
       .subscribe();
-    this.formFilter2.get('staff_id').setValue(this.currentStaffSelect);
+    //this.formFilter2.get('staff_id').setValue(this.currentStaffSelect);
     this.table2Sort.sortChange.subscribe(() => this.table2Paginator.pageIndex = 0);
     merge(this.table2Sort.sortChange, this.table2Paginator.page)
       .pipe(
