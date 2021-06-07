@@ -110,7 +110,9 @@ export class CreateTransactionComponent implements OnInit {
         });
 
         if (this.transactionInfo.type == "cash") {
-          this.transactionInfo.accountCash = data.result.listAccAccount[0].documentKey;
+          if (data.result.listAccAccount.length > 0) {
+            this.transactionInfo.accountCash = data.result.listAccAccount[0].documentKey;
+          }
         } else {
           if (this.transactionInfo.type == "rollTerm") {
             this.transactionCreateForm = this.formBuilder.group({
