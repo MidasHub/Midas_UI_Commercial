@@ -151,10 +151,10 @@
   backdropClass="mymenu"
 >
   <button *midasHasPermission="'POS_UPDATE'" mat-menu-item routerLink="/terminals">Điều chuyển máy bán hàng</button>
-  <button mat-menu-item *midasHasPermission="'POS_READ'" routerLink="/terminals/limit">
+  <button mat-menu-item  routerLink="/terminals/limit">
     {{ "Thông tin máy bán hàng" | translate }}
   </button>
-  <button mat-menu-item *midasHasPermission="'POS_UPDATE'" routerLink="/terminals">
+  <button mat-menu-item *midasHasPermission="'POS_CREATE'" routerLink="/terminals">
     {{ "Quản lý máy bán hàng" | translate }}
   </button>
   <button mat-menu-item *midasHasPermission="'POS_CREATE'" routerLink="/third-party">
