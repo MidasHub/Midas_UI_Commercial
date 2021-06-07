@@ -19,18 +19,24 @@ a<!-- <div fxLayout="row" fxLayout.lt-md="column" class="fluidcontainer " fxLayo
                   </div>
                 </div>
 
-              <mat-form-field fxFlex="48">
+              <mat-form-field fxFlex="32">
                 <mat-label>Tên khách hàng</mat-label>
                 <input matInput formControlName="customer_name">
               </mat-form-field>
 
-              <mat-form-field fxFlex="48">
+              <mat-form-field fxFlex="32">
                 <mat-label>Nhân viên</mat-label>
-                <mat-select formControlName="staff_id" >
+                <input matInput formControlName="staff_name">
+                <!-- <mat-select formControlName="staff_id" >
                   <mat-option *ngFor="let option of staffs" [value]="option.staffId">
                     {{option.displayName}}
                   </mat-option>
-                </mat-select>
+                </mat-select> -->
+              </mat-form-field>
+
+              <mat-form-field fxFlex="32">
+                <mat-label>Chi nhánh</mat-label>
+                <input matInput formControlName="officeName">
               </mat-form-field>
             </div>
           </mat-card-header>
@@ -49,6 +55,12 @@ a<!-- <div fxLayout="row" fxLayout.lt-md="column" class="fluidcontainer " fxLayo
                 <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>Nhân viên phụ trách</th>
                 <td mat-cell fxHide fxShow.gt-md
                     *matCellDef="let account"> {{ account.staff_name}} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="officeName">
+                <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>Chi nhánh</th>
+                <td mat-cell fxHide fxShow.gt-md
+                    *matCellDef="let account"> {{ account.officeName}} </td>
               </ng-container>
 
               <ng-container matColumnDef="account_no">
@@ -118,18 +130,24 @@ a<!-- <div fxLayout="row" fxLayout.lt-md="column" class="fluidcontainer " fxLayo
                   <h3 style="margin: 5px;">Số tiền giao dich: <b style="color: red;">{{totalAmountDerivedOfUser2 | money}}</b></h3>
                 </div>
               </div>
-            <mat-form-field fxFlex="48">
+            <mat-form-field fxFlex="32">
               <mat-label>Tên khách hàng</mat-label>
               <input matInput formControlName="customer_name">
             </mat-form-field>
 
-            <mat-form-field fxFlex="48">
+            <mat-form-field fxFlex="32">
               <mat-label>Nhân viên</mat-label>
-              <mat-select formControlName="staff_id">
+              <input matInput formControlName="staff_name">
+              <!-- <mat-select formControlName="staff_id">
                 <mat-option *ngFor="let option of staffs" [value]="option.staffId">
                   {{option.displayName}}
                 </mat-option>
-              </mat-select>
+              </mat-select> -->
+            </mat-form-field>
+
+            <mat-form-field fxFlex="32">
+              <mat-label>Chi nhánh</mat-label>
+              <input matInput formControlName="officeName">
             </mat-form-field>
           </div>
           </mat-card-header>
@@ -150,6 +168,12 @@ a<!-- <div fxLayout="row" fxLayout.lt-md="column" class="fluidcontainer " fxLayo
                 <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef>Nhân viên phụ trách</th>
                 <td mat-cell fxHide fxShow.gt-md
                     *matCellDef="let account"> {{ account.staff_name}} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="officeName">
+                <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>Chi nhánh</th>
+                <td mat-cell fxHide fxShow.gt-md
+                    *matCellDef="let account"> {{ account.officeName}} </td>
               </ng-container>
 
               <ng-container matColumnDef="account_no">
