@@ -13,7 +13,7 @@ import { tap } from "rxjs/operators";
 })
 export class BalanceAccountTellerComponent implements OnInit {
   expandedElement: any;
-  displayedColumns: any[] = ["tellerSourceName", "accountNo", "sourceInfo", "balance"];
+  displayedColumns: any[] = ["tellerSourceName", "officeName", "accountNo", "sourceInfo", "balance"];
   dataSource: any[] = [];
   formFilter: FormGroup;
   accountFilter: any[] = [];
@@ -36,6 +36,7 @@ export class BalanceAccountTellerComponent implements OnInit {
     this.formFilter = this.formBuilder.group({
       tellerSourceName: [""],
       sourceInfo: [""],
+      officeName: [""]
     });
   }
 
@@ -45,6 +46,8 @@ export class BalanceAccountTellerComponent implements OnInit {
       switch (sort.active) {
         case "tellerSourceName":
           return this.compare(a.tellerSourceName, b.tellerSourceName, isAsc);
+        case "officeName":
+          return this.compare(a.officeName, b.officeName, isAsc);
         case "accountNo":
           return this.compare(a.accountNo, b.accountNo, isAsc);
         case "sourceInfo":
