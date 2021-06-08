@@ -4,7 +4,7 @@
     <hr>
     <mat-card-content>
       <div fxLayout="row wrap" fxLayoutGap="1%" fxLayout.lt-md="column">
-        <mat-form-field fxFlex="23%">
+        <mat-form-field fxFlex="18%">
           <mat-label>Thông tin thẻ để giao/nhận</mat-label>
           <input type="text" placeholder="Tìm thẻ bằng SĐT/Tên KH/Số thẻ" [formControl]="cardFilter" matInput #querySearchAll
           (ngModelChange)=" this.searchClientAndGroup(querySearchAll.value);"
@@ -18,7 +18,7 @@
           </mat-option>
         </mat-autocomplete>
 
-        <mat-form-field fxFlex="23%">
+        <mat-form-field fxFlex="18%">
           <mat-label>Shipper</mat-label>
           <input placeholder="Chọn tên Shipper" [formControl]="shipperFilter"
             matInput
@@ -33,7 +33,7 @@
           </mat-option>
         </mat-autocomplete>
 
-        <mat-form-field fxFlex="23%">
+        <mat-form-field fxFlex="18%">
           <mat-label>Nhân viên giao</mat-label>
           <input [formControl]="deliverFilter"
             matInput
@@ -41,11 +41,19 @@
           />
         </mat-form-field>
 
-        <mat-form-field fxFlex="23%">
+        <mat-form-field fxFlex="18%">
+          <mat-label>Chi nhánh</mat-label>
+          <mat-select [formControl]="officeFilter" >
+            <mat-option *ngFor="let option of offices" [value]="option.officeId">
+              {{option.name}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field fxFlex="18%">
           <mat-label>Nhân viên nhận</mat-label>
           <input placeholder="Chọn nhân viên nhận thẻ" [formControl]="staffFilter"
             matInput
-            (click)="this.resetAutoCompleteStaff()"
             [matAutocomplete]="staffsAutocomplete"
           />
         </mat-form-field>

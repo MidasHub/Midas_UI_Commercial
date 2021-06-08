@@ -13,6 +13,7 @@ import { MidasClientService } from "app/midas-client/midas-client.service";
 import { MatTable } from "@angular/material/table";
 import { ClientsService } from "app/clients/clients.service";
 import { isThisSecond } from "date-fns";
+import { BanksService } from "app/banks/banks.service";
 
 const log = new Logger("Batch Txn");
 
@@ -41,6 +42,7 @@ export class CreateTransferComponent implements OnInit {
   cardFilter = new FormControl("");
   shipperFilter = new FormControl("");
   deliverFilter = new FormControl("");
+  officeFilter = new FormControl("");
   staffFilter = new FormControl("");
   displayedColumns: any[] = ["transferDate", "customerName", "cardNumber", "cardId"];
 
@@ -49,12 +51,14 @@ export class CreateTransferComponent implements OnInit {
 
   clients: any[] = [];
   members: any[] = [];
+  offices: any[] = [];
   shippers: any[] = [];
   queryParams: any;
   group: any;
   currentUser: any;
   officeId: any;
   filteredOptions: any;
+  officeFilteredptions: any;
   staffFilteredptions: any;
   shipperFilteredptions: any
   transferRefNo = "";//reset
@@ -99,7 +103,8 @@ export class CreateTransferComponent implements OnInit {
     private transactionServices: TransactionService,
     private midasClientService: MidasClientService,
     private clientService: ClientsService,
-    private changeDetectorRefs: ChangeDetectorRef
+    private changeDetectorRefs: ChangeDetectorRef,
+    private bankService: BanksService
   ) {
     this.currentUser = this.authenticationService.getCredentials();
     this.officeId = this.currentUser.officeId;
@@ -155,7 +160,14 @@ export class CreateTransferComponent implements OnInit {
     this.shipperFilteredptions = new Observable<any[]>();
     this.staffFilteredptions = new Observable<any[]>();
     this.getShipperInfo();
-    this.getStaffInfo();
+    this.getOffices();
+    this.officeFilter.setValue(this.officeId);
+    this.getStaffInfo(this.officeId);
+    this.resetAutoCompleteStaff();
+
+    this.officeFilter.valueChanges.subscribe(e => [
+      this.getStaffInfo(this.officeFilter.value)
+    ]);
   }
 
   initDataSource(){
@@ -195,10 +207,18 @@ export class CreateTransferComponent implements OnInit {
     this.dataSource = this.dataSource.filter((v) => v.cardId !== form.cardId);
   }
 
-  getStaffInfo() {
-    this.group = this.officeId;
-    this.clientService.getStaffsByOffice(this.group).subscribe((data) => {
+  getStaffInfo(officeId: any) {
+    this.clientService.getStaffsByOffice(officeId).subscribe((data) => {
       this.members = data.result.listStaff;
+      this.resetAutoCompleteStaff();
+    });
+  }
+
+  getOffices() {
+    this.group = this.officeId;
+    this.bankService.getListOfficeCommon().subscribe((offices: any) => {
+      this.offices = offices.result.listOffice;
+      console.log("this.offices: ", this.offices);
     });
   }
 
