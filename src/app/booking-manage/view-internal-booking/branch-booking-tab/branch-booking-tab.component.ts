@@ -59,7 +59,7 @@ export class BranchBookingTabComponent implements OnInit {
     dialogConfig.data = {
       bookingRefNo: bookingRefNo,
     };
-    dialogConfig.minWidth = 800;
+    dialogConfig.minWidth = 1200;
     this.dialog.open(DetailBranchBookingDialogComponent, dialogConfig);
   }
 
