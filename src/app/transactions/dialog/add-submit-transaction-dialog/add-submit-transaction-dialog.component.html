@@ -31,6 +31,7 @@
           <mat-form-field>
             <mat-label>Số lô</mat-label>
             <input
+              style="text-align: center"
               matInput
               type="text"
               disabled
@@ -48,6 +49,7 @@
           <mat-form-field>
             <mat-label>Số tiền ({{ booking.amountSubmitSuggest | money }})</mat-label>
             <input
+              style="text-align: center"
               matInput
               type="text"
               currencyMask
@@ -56,6 +58,19 @@
               required
             />
           </mat-form-field>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="fileSubmit">
+        <th mat-header-cell *matHeaderCellDef>Hình bill tổng</th>
+        <td mat-cell *matCellDef="let booking; let i = index">
+          <div>
+            <input
+              type="file"
+              (change)="changeListener($event, booking.batchNoSubmit)"
+              accept="image/png, image/jpeg"
+            />
+          </div>
         </td>
       </ng-container>
 
@@ -74,7 +89,7 @@
   <button
     mat-raised-button
     color="primary"
-    [mat-dialog-close]="{ data: formDialog, listObjectTransactionSubmit : listObjectTransactionSubmit }"
+    [mat-dialog-close]="{ data: formDialog, listObjectTransactionSubmit: listObjectTransactionSubmit }"
     [disabled]="!formDialog.valid || formDialog.pristine"
   >
     {{ data.btnTitle }}

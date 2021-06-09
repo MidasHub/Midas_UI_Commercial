@@ -6,7 +6,7 @@
     <mat-tab label="Booking tạm ứng">
       <midas-roll-term-schedule-booking-tab></midas-roll-term-schedule-booking-tab>
     </mat-tab>
-    <mat-tab label="Booking chi nhánh">
+    <mat-tab *midasHasPermission="'ALL_FUNCTIONS'" label="Booking chi nhánh">
       <midas-branch-booking-tab></midas-branch-booking-tab>
     </mat-tab>
   </mat-tab-group>

@@ -416,19 +416,43 @@ export class TransactionService {
     return this.http.post<any>(`${this.GatewayApiUrlPrefix}/transaction/revert_transaction`, httpParams);
   }
 
+  uploadBillForBranchBooking(
+    bookingRefNo: string,
+    base64Image: string,
+  ): Observable<any> {
+    let httpParams = this.commonHttpParams.getCommonHttpParams();
+    const Params = {
+      createdBy: httpParams.get("createdBy"),
+      accessToken: httpParams.get("accessToken"),
+      officeId: httpParams.get("officeId"),
+      staffId: httpParams.get("staffId"),
+      bookingRefNo: bookingRefNo,
+      fileSubmitBase64: base64Image,
+
+    };
+
+    return this.http.post<any>(`${this.GatewayApiUrlPrefix}/transaction/upload_bill_file_branch_booking`, Params);
+  }
+
   submitTransactionUpToiNow(
-    listTransactionSubmitInfo: any[],
+    listTransactionSubmitInfo: any,
     note: string,
     terminalSubmit: string,
     terminalNameSubmit: string
   ): Observable<any> {
     let httpParams = this.commonHttpParams.getCommonHttpParams();
-    httpParams = httpParams.set("note", note);
-    httpParams = httpParams.set("terminalSubmit", terminalSubmit);
-    httpParams = httpParams.set("terminalNameSubmit", terminalNameSubmit);
-    httpParams = httpParams.set("listTransactionSubmitInfo", JSON.stringify(listTransactionSubmitInfo));
+    const Params = {
+      createdBy: httpParams.get("createdBy"),
+      accessToken: httpParams.get("accessToken"),
+      officeId: httpParams.get("officeId"),
+      staffId: httpParams.get("staffId"),
+      note: note,
+      terminalSubmit: terminalSubmit,
+      terminalNameSubmit: terminalNameSubmit,
+      listTransactionSubmitInfo: listTransactionSubmitInfo,
+    };
 
-    return this.http.post<any>(`${this.GatewayApiUrlPrefix}/transaction/submit_transaction_by_office`, httpParams);
+    return this.http.post<any>(`${this.GatewayApiUrlPrefix}/transaction/submit_transaction_by_office`, Params);
   }
 
   RepaymentRolltermManualTransactionCloseLoan(refId: string, amountPaid: string): Observable<any> {

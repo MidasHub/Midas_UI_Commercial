@@ -2,6 +2,7 @@ import { Component, Inject, OnInit, ViewChild } from "@angular/core";
 import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { MatTable, MatTableDataSource } from "@angular/material/table";
+import { promise } from "selenium-webdriver";
 
 @Component({
   selector: "midas-add-submit-transaction-dialog",
@@ -14,10 +15,9 @@ export class AddSubmitTransactionDialogComponent implements OnInit {
   listTerminalTransaction: any[];
   transactionTotalByBatchNo: any[];
   listObjectTransactionSubmit: any[];
-  displayedColumns: string[] = ["no", "amountSubmit", "batchNoSubmit"];
+  displayedColumns: string[] = ["no", "amountSubmit", "batchNoSubmit", "fileSubmit"];
   dataSource: MatTableDataSource<any>;
   @ViewChild("bookingBranchSubmit") bookingBranchSubmit: MatTable<Element>;
-
 
   constructor(
     public dialogRef: MatDialogRef<AddSubmitTransactionDialogComponent>,
@@ -31,7 +31,6 @@ export class AddSubmitTransactionDialogComponent implements OnInit {
 
     this.formDialog = this.formBuilder.group({
       terminalSubmit: ["", Validators.required],
-      // note: [""],
     });
   }
 
@@ -45,16 +44,39 @@ export class AddSubmitTransactionDialogComponent implements OnInit {
             batchNoSubmit: element.batchNo,
             amountSubmitSuggest: element.amount,
             amountSubmit: "",
+            fileSubmitBase64: "",
           };
           this.listObjectTransactionSubmit.push(objectSubmitTransaction);
         }
       });
 
       return;
-
     });
   }
 
+  async changeListener($event: any, batchNo: string) {
+     await this.readThis($event.target, batchNo);
+  }
 
+  async readThis(inputValue: any, batchNo: string) {
+    var file: File = inputValue.files[0];
+    if (!file) {
+      this.listObjectTransactionSubmit.forEach((transaction) => {
+        if (transaction.batchNoSubmit == batchNo) {
+          transaction.fileSubmitBase64 = "";
+        }
+      });
+    }
+    var myReader: FileReader = new FileReader();
 
+    myReader.onloadend = (e) => {
+      this.listObjectTransactionSubmit.forEach((transaction) => {
+        if (transaction.batchNoSubmit == batchNo) {
+          transaction.fileSubmitBase64 = myReader.result;
+        }
+      });
+      // return myReader.result;
+    };
+    myReader.readAsDataURL(file);
+  }
 }
