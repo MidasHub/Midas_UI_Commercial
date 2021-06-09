@@ -452,7 +452,7 @@
         >
           <img src="assets/images/icons/add.svg" /> Cập nhật Thông tin bill nhiệt
         </button>
-        <button mat-menu-item (click)="downloadVoucher(refid)">
+        <button *midasHasPermission="'BILLER_HO'" mat-menu-item (click)="downloadVoucher(refid)">
           <img *ngIf="status != 'V'" src="assets/images/icons/order.svg" />&nbsp; Tải xuống hóa đơn
         </button>
         <hr />
