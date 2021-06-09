@@ -78,6 +78,9 @@ export class DetailBranchBookingDialogComponent implements OnInit {
     if (!file) {
       return;
     }
+
+    file = await this.transactionService.resizeImage(file, 1920, 1080 );
+
     var myReader: FileReader = new FileReader();
 
     myReader.onloadend = (e) => {
