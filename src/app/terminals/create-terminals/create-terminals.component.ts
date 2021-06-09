@@ -124,6 +124,7 @@ export class CreateTerminalsComponent implements OnInit {
       bankCode: ["", [Validators.required]],
       timeChargeValid: ["", [Validators.required, Validators.min(1)]],
       status: [true],
+      isMappingBill: [true],
       minFeeDefault: ["", [Validators.required, Validators.min(0),Validators.max(1000000)]],
       costPercentage: ["", [Validators.max(100), Validators.min(0)]],
       cogsPercentage: ["", [Validators.max(100), Validators.min(0)]],
@@ -189,6 +190,8 @@ export class CreateTerminalsComponent implements OnInit {
     }
     var formData = this.createTerminalForm.value;
     formData.status = formData.status == true ? "A" : "D";
+    formData.isMappingBill = formData.isMappingBill == true ? 1 : 0;
+
     const data = {
       ...this.createTerminalForm.value,
       dateFormat: "dd/MM/yyyy",
