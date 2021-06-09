@@ -434,6 +434,45 @@ export class TransactionService {
     return this.http.post<any>(`${this.GatewayApiUrlPrefix}/transaction/upload_bill_file_branch_booking`, Params);
   }
 
+  resizeImage(file: File, maxWidth: number, maxHeight: number): Promise<File> {
+    return new Promise((resolve, reject) => {
+      const image = new Image();
+      image.src = URL.createObjectURL(file);
+      image.onload = () => {
+        const width = image.width;
+        const height = image.height;
+
+        if (width <= maxWidth && height <= maxHeight) {
+          resolve(file);
+        }
+
+        let newWidth;
+        let newHeight;
+
+        if (width > height) {
+          newHeight = height * (maxWidth / width);
+          newWidth = maxWidth;
+        } else {
+          newWidth = width * (maxHeight / height);
+          newHeight = maxHeight;
+        }
+
+        const canvas = document.createElement("canvas");
+        canvas.width = newWidth;
+        canvas.height = newHeight;
+
+        const context = canvas.getContext("2d");
+
+        context.drawImage(image, 0, 0, newWidth, newHeight);
+
+        canvas.toBlob((b) => {
+          return resolve(<File>b);
+        }, file.type);
+      };
+      image.onerror = reject;
+    });
+  }
+
   submitTransactionUpToiNow(
     listTransactionSubmitInfo: any,
     note: string,

@@ -3,6 +3,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { MatTable, MatTableDataSource } from "@angular/material/table";
 import { promise } from "selenium-webdriver";
+import { TransactionService } from "app/transactions/transaction.service";
 
 @Component({
   selector: "midas-add-submit-transaction-dialog",
@@ -22,7 +23,8 @@ export class AddSubmitTransactionDialogComponent implements OnInit {
   constructor(
     public dialogRef: MatDialogRef<AddSubmitTransactionDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private transactionService: TransactionService,
   ) {
     this.dataSource = new MatTableDataSource();
     this.transactionTotalByBatchNo = data.transactionTotalByBatchNo;
@@ -67,6 +69,9 @@ export class AddSubmitTransactionDialogComponent implements OnInit {
         }
       });
     }
+
+    file = await this.transactionService.resizeImage(file, 1920, 1080 );
+
     var myReader: FileReader = new FileReader();
 
     myReader.onloadend = (e) => {
