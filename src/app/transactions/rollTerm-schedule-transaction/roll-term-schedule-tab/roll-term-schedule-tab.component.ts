@@ -178,6 +178,35 @@ export class RollTermScheduleTabComponent implements OnInit {
       });
   }
 
+  ExportExcel() {
+    let dataCopy = [];
+    let i = -1;
+
+    while (++i < this.dataSource.length) {
+      let custIdNo: any[] = [];
+      let element = this.dataSource[i];
+      this.clientServices.getClientById(element.custId).subscribe((data) => {
+        console.log("clientServices data: ", data);
+      });
+      console.log("element: ", element);
+      let e: any = {
+        panHolderName: element.panHolderName,//Tên khách hàng
+        externalId: element.externalId,//externalId
+        feeReceive: ((element.feePercentage / 100) * element.reqAmount).toFixed(0),//phi thu
+        createdDate: this.datePipe.transform(element.createdDate, "dd-MM-yyyy HH:mm:ss"),//Ngày tạo
+        panNumber: element.panNumber,//the
+        officeName: element.officeName,//Chi nhánh
+        principal: element.principal,// Số tiền Tạm ứng
+        paidAmount: element.paidAmount,//Đã tạm ứng
+        unPaydAmount: element.principal - element.paidAmount,//Còn phải Tạm ứng
+        amountPaid: element.amountPaid,//Đã thu hồi
+        needToGetAmount: element.paidAmount - element.amountPaid//Cần thu hồi
+      };
+      dataCopy.push(e);
+    }
+    this.transactionService.exportRollTermScheduleTab("RollTermScheduleTab", dataCopy);
+  }
+
   get fromDateAndToDate() {
     const fromDate = this.formDate.get("fromDate").value;
     const toDate = this.formDate.get("toDate").value;
