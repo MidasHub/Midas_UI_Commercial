@@ -188,8 +188,10 @@ export class RollTermScheduleTabComponent implements OnInit {
       this.clientServices.getClientById(element.custId).subscribe((data) => {
         console.log("clientServices data: ", data);
       });
+      console.log("element: ", element);
       let e: any = {
         panHolderName: element.panHolderName,//Tên khách hàng
+        externalId: element.externalId,//externalId
         feeReceive: ((element.feePercentage / 100) * element.reqAmount).toFixed(0),//phi thu
         createdDate: this.datePipe.transform(element.createdDate, "dd-MM-yyyy HH:mm:ss"),//Ngày tạo
         panNumber: element.panNumber,//the
@@ -198,9 +200,7 @@ export class RollTermScheduleTabComponent implements OnInit {
         paidAmount: element.paidAmount,//Đã tạm ứng
         unPaydAmount: element.principal - element.paidAmount,//Còn phải Tạm ứng
         amountPaid: element.amountPaid,//Đã thu hồi
-        needToGetAmount: element.paidAmount - element.amountPaid,//Cần thu hồi
-        //idCard: element.cardType,
-
+        needToGetAmount: element.paidAmount - element.amountPaid//Cần thu hồi
       };
       dataCopy.push(e);
     }
