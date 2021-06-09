@@ -13,7 +13,7 @@ let apiProvider = "/midas/api";
 const apiVersion = "/v1";
 
 let defaultNotificationURL = "https://staging.kiotthe.com";
-let documentURL = "https://document.kiotthe.com";
+let documentURL = "http://119.82.135.181:8001";
 export default {
   coreT: tenant,
   billposT: billpostenant,
