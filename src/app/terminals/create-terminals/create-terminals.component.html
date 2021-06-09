@@ -119,12 +119,18 @@
           <mat-card class="card-custom" fxFlex="100%">
             <mat-card-header>
               <mat-card-title
-                ><span class="material-icons">perm_contact_calendar</span>&nbsp; Rule giao dịch:
+                >
+                <div fxFlex="80%">
+                <span class="material-icons">perm_contact_calendar</span>&nbsp; Rule giao dịch:
+                </div>
+
               </mat-card-title>
             </mat-card-header>
             <mat-card-content fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
-
-              <mat-form-field *ngIf="createTerminalForm.contains('timeChargeValid')" fxFlex="30%">
+              <mat-checkbox fxFlex="20%" labelPosition="before" formControlName="isMappingBill" class="activeCheckBox">
+                Tự động nhập hoá đơn
+              </mat-checkbox>
+              <mat-form-field *ngIf="createTerminalForm.contains('timeChargeValid')" fxFlex>
                 <mat-label>Số lần giao dịch cùng ngân hàng/ngày</mat-label>
                 <input matInput type="number" formControlName="timeChargeValid"
                 matTooltip="Đây là cài đặt số mà thẻ được phép cà vào máy bán hàng này và các máy bán hàng khác có cùng một ngân hàng phát hàng"/>
@@ -138,7 +144,7 @@
                 ></mat-error>
               </mat-form-field>
 
-              <mat-form-field *ngIf="createTerminalForm.contains('banksCheck')" fxFlex="30%">
+              <mat-form-field *ngIf="createTerminalForm.contains('banksCheck')" fxFlex>
                 <mat-label>Không giao dịch thẻ thuộc ngân hàng</mat-label>
                 <mat-select multiple  formControlName="banksCheck"
                 matTooltip="Đây là ô chọn các ngân hàng mà thẻ của nó sẽ không được phép thực hiện giao dịch trên máy bán hàng này">
@@ -148,7 +154,7 @@
                 </mat-select>
               </mat-form-field>
 
-              <mat-form-field *ngIf="createTerminalForm.contains('cardsCheck')" fxFlex="30%">
+              <mat-form-field *ngIf="createTerminalForm.contains('cardsCheck')" fxFlex>
                 <mat-label>Không giao dịch thẻ thuộc loại</mat-label>
                 <mat-select multiple  formControlName="cardsCheck"
                 matTooltip="Đây là ô chọn các loại thẻ sẽ không được phép thực hiện giao dịch trên máy bán hàng này">

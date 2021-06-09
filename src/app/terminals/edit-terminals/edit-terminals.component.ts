@@ -130,6 +130,7 @@ export class EditTerminalsComponent implements OnInit, AfterViewInit {
       minFeeDefault: this.ItemPos.minFeeDefault,
       merchantId: this.ItemPosBranch.merchantId,
       status: this.ItemPos.status == "A" ? true : false,
+      isMappingBill: this.ItemPos.isMappingBill == 1 ? true : false,
       costPercentage: this.ItemPosLimitList ? this.ItemPosLimitList[0]?.costPercentage : "",
       cogsPercentage: this.ItemPosLimitList ? this.ItemPosLimitList[0]?.cogsPercentage : "",
       txnRateMin: this.ItemPosLimitList ? this.ItemPosLimitList[0]?.txnRateMin : "",
@@ -152,6 +153,7 @@ export class EditTerminalsComponent implements OnInit, AfterViewInit {
       bankCode: ["", [Validators.required]],
       timeChargeValid: ["", [Validators.required, Validators.min(1)]],
       status: [true],
+      isMappingBill: [true],
       minFeeDefault: ["", [Validators.required, Validators.min(0), Validators.max(1000000)]],
       costPercentage: ["", [Validators.max(100), Validators.min(0)]],
       cogsPercentage: ["", [Validators.max(100), Validators.min(0)]],
@@ -285,6 +287,7 @@ export class EditTerminalsComponent implements OnInit, AfterViewInit {
     }
     const formData = this.editTerminalForm.value;
     formData.status = formData.status == true ? "A" : "D";
+    formData.isMappingBill = formData.isMappingBill == true ? 1 : 0;
     const data = {
       ...this.editTerminalForm.value,
       dateFormat: "dd/MM/yyyy",
