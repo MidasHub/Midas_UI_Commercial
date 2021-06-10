@@ -126,15 +126,15 @@ export class CreateTransactionComponent implements OnInit {
           }
         }
 
-        if (this.transactionCreateForm.get("batchNo") && this.transactionCreateForm.get("traceNo")) {
-          if (permit_manager) {
-            // remove validator required for batchNo, traceNo on hold transaction
-            this.transactionCreateForm.get("batchNo").clearValidators();
-            this.transactionCreateForm.get("batchNo").updateValueAndValidity();
-            this.transactionCreateForm.get("traceNo").clearValidators();
-            this.transactionCreateForm.get("traceNo").updateValueAndValidity();
-          }
-        }
+        // if (this.transactionCreateForm.get("batchNo") && this.transactionCreateForm.get("traceNo")) {
+        //   if (permit_manager) {
+        //     // remove validator required for batchNo, traceNo on hold transaction
+        //     this.transactionCreateForm.get("batchNo").clearValidators();
+        //     this.transactionCreateForm.get("batchNo").updateValueAndValidity();
+        //     this.transactionCreateForm.get("traceNo").clearValidators();
+        //     this.transactionCreateForm.get("traceNo").updateValueAndValidity();
+        //   }
+        // }
       });
     });
   }
