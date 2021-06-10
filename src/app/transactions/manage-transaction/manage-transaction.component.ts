@@ -733,6 +733,8 @@ export class ManageTransactionComponent implements OnInit {
         cogsAmount: element.cogsAmount,
         staffName: this.displayStaffName(element.createdBy),
         terminalFeeAmount: element.terminalFeeAmount,
+        staffOwnerName: element.staffOwnerName,
+        externalId: element.externalId
       };
       dataCopy.push(e);
     }
