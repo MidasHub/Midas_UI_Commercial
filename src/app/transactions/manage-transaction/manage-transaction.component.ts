@@ -400,7 +400,11 @@ export class ManageTransactionComponent implements OnInit {
           let isExisting = false;
           for (let index = 0; index < this.transactionTotalByBatchNo.length; index++) {
             const transaction = this.transactionTotalByBatchNo[index];
-            if (transaction.batchNo == element.batchNo && transaction.terminalId == element.terminalId) {
+            if (
+              transaction.batchNo == element.batchNo &&
+              transaction.terminalId == element.terminalId &&
+              transaction.status == "C"
+            ) {
               transaction.amount += element.terminalAmount;
               isExisting = true;
             }
