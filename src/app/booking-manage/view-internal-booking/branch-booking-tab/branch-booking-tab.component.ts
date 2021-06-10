@@ -32,6 +32,9 @@ export class BranchBookingTabComponent implements OnInit {
   BookingFilter: any[] = [];
   BookingList: any[] = [];
   staffs: any[] = [];
+  totalAmountBooking = 0;
+  totalAmountFromBooking = 0;
+
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
@@ -50,7 +53,7 @@ export class BranchBookingTabComponent implements OnInit {
 
     this.formFilter = this.formBuilder.group({
       officeName: [''],
-      staffName: [''],
+      userName: [''],
     });
 
   }
@@ -95,13 +98,39 @@ export class BranchBookingTabComponent implements OnInit {
       .subscribe();
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.formFilter.valueChanges.subscribe(e => [
+      this.filterData()
+    ]);
+  }
+
+  filterData() {
+    this.BookingFilter = [];
+    const form = this.formFilter.value;
+    const keys = Object.keys(form);
+    this.BookingFilter = this.dataSource.filter(v => {
+      for (const key of keys) {
+        if (form[key] && !String(v[key]).trim().toLowerCase().includes(String(form[key]).trim().toLowerCase())) {
+          return false;
+        }
+      }
+      return true;
+    });
+    this.paginator.pageIndex = 0;
+    this.loadData();
+  }
 
   loadData() {
     setTimeout(() => {
       const pageIndex = this.paginator.pageIndex;
       const pageSize = this.paginator.pageSize;
       this.BookingList = this.BookingFilter?.slice(pageIndex * pageSize, pageIndex * pageSize + pageSize);
+      this.totalAmountBooking = this.BookingFilter?.reduce((total: any, num: any) => {
+        return total + Math.round(num?.totalBooking);
+      }, 0);
+      this.totalAmountFromBooking = this.BookingFilter?.reduce((total: any, num: any) => {
+        return total + Math.round(num?.totalPaid);
+      }, 0);
     });
   }
 
