@@ -304,6 +304,9 @@ export class ManageTransactionComponent implements OnInit {
             if (!String(v[key]).toUpperCase().includes(String(form[key]).toUpperCase())) {
               return false;
             }
+            if (("officeId".indexOf(key) != -1) && (String(v[key]).toUpperCase() != String(form[key]).toUpperCase())) {
+              return false;
+            }
           }
         }
       }
