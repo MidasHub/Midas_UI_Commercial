@@ -24,8 +24,10 @@
         </ng-container>
 
         <ng-container matColumnDef="amount">
-          <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>Số tiền</th>
-          <td mat-cell fxHide fxShow.gt-md *matCellDef="let transaction">{{ transaction.amount | money }}</td>
+          <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>Số tiền / Số bill con</th>
+          <td mat-cell fxHide fxShow.gt-md *matCellDef="let transaction">
+            {{ transaction.amount | money }} / <label style="color: green; font-weight: bold;">{{ transaction.numOfBill }} </label>
+          </td>
         </ng-container>
 
         <ng-container matColumnDef="bill">
