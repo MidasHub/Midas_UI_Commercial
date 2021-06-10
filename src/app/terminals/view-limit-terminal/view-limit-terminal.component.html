@@ -19,6 +19,42 @@
       </div>
     </div>
   </mat-card-content>
+
+  <mat-card-content style="margin-top: 10px">
+    <mat-card>
+      <div fxLayout="row swap" fxLayoutAlign.lt-sm="center" fxLayoutGap="2%" fxLayout.lt-md="column">
+        <div fxLayout="row" fxFlex="18%" class="export-item">
+          <img src="assets/images/icons/transaction_total.svg" />
+          <div style="display: flex" fxLayout="column">
+            <span style="font-size: 20px; margin-top: 8px; padding-top: 5px">{{ terminalFilter.length }}</span>
+            <span>&nbsp;Tổng cộng</span>
+          </div>
+        </div>
+        <div fxLayout="row" fxFlex="15%" class="export-item">
+          <img src="assets/images/icons/pnlAmount.svg" />
+          <div style="display: flex" fxLayout="column">
+            <span style="font-size: 20px; margin-top: 8px; padding-top: 5px">{{ totalLimitAmount | money }}</span>
+            <span>&nbsp;Tổng hạn mức</span>
+          </div>
+        </div>
+        <div fxLayout="row wrap" fxFlex="18%" class="container m-b-20">
+          <img src="assets/images/icons/money.svg" />
+          <div style="display: flex" fxLayout="column">
+            <span style="font-size: 20px; margin-top: 8px; padding-top: 5px">{{ totalUsedAmount | money }}</span>
+            <span>&nbsp;Tổng đã dùng</span>
+          </div>
+        </div>
+        <div fxLayout="row wrap" fxFlex="18%" class="container m-b-20">
+          <img src="assets/images/icons/transaction.svg" />
+          <div style="display: flex" fxLayout="column">
+            <span style="font-size: 20px; margin-top: 8px; padding-top: 5px">{{ totalBalanceAmount | money }}</span>
+            <span>&nbsp;Tổng khả dụng</span>
+          </div>
+        </div>
+      </div>
+    </mat-card>
+  </mat-card-content>
+
   <mat-card-content>
     <table mat-table class="mat-elevation-z8" (matSortChange)="sortData($event)" [dataSource]="terminalList" matSort>
 
