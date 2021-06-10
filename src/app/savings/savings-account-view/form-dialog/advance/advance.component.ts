@@ -41,11 +41,11 @@ export class AdvanceComponent implements OnInit {
       value: "Ứng tiền phí",
     },
     {
-      id: "58",
+      id: "3",
       value: "Thu hộ",
     },
     {
-      id: "58",
+      id: "37",
       value: "Chi hộ",
     },
   ];
