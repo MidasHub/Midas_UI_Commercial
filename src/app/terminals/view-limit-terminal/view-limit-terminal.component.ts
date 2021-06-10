@@ -24,6 +24,10 @@ export class ViewLimitTerminalComponent implements OnInit {
   terminalList: any[] = [];
   offices: any[] = [];
   staffs: any[] = [];
+  totalLimitAmount = 0;
+  totalUsedAmount = 0;
+  totalBalanceAmount = 0;
+
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   @ViewChild(MatSort, {static: true}) sort: MatSort;
   commonOffices: any[] = this.bankService.documentOffices;
@@ -100,7 +104,15 @@ export class ViewLimitTerminalComponent implements OnInit {
     const pageIndex = this.paginator.pageIndex;
     const pageSize = this.paginator.pageSize;
     this.terminalList = this.terminalFilter.slice(pageIndex * pageSize, pageIndex * pageSize + pageSize);
-
+    this.totalLimitAmount = this.terminalList?.reduce((total: any, num: any) => {
+      return total + Math.round(num?.limitAmountDefault);
+    }, 0);
+    this.totalUsedAmount = this.terminalList?.reduce((total: any, num: any) => {
+      return total + Math.round(num?.limitAmountMovement);
+    }, 0);
+    this.totalBalanceAmount = this.terminalList?.reduce((total: any, num: any) => {
+      return total + Math.round(num?.limitRemain);
+    }, 0);
     });
   }
 
@@ -109,7 +121,7 @@ export class ViewLimitTerminalComponent implements OnInit {
     const keys = Object.keys(form);
     this.terminalFilter = this.dataSource.filter(v => {
       for (const key of keys) {
-        if (form[key] && !String(v[key]).toLowerCase().includes(String(form[key]).toLowerCase())) {
+        if (form[key] && !String(v[key]).toLowerCase().includes(String(form[key]).trim().toLowerCase())) {
           return false;
         }
       }
