@@ -36,7 +36,7 @@ export class ClientsService {
   }
 
   loadImageIdentifier(identifierId: string, imageId: string): Observable<any> {
-    const url = `/client_identifiers/${identifierId}/documents/${imageId}/attachment?tenantIdentifier=${environment.fineractPlatformTenantId}`;
+    const url = `/client_identifiers/${identifierId}/documents/${imageId}/attachment?tenantIdentifier=${window.localStorage.getItem("Fineract-Platform-TenantId")}`;
     return this.http.get(url, { responseType: "blob" });
   }
 
@@ -320,7 +320,7 @@ export class ClientsService {
   }
 
   getClientSignatureImage(clientId: string, documentId: string) {
-    const httpParams = new HttpParams().set("tenantIdentifier", environment.fineractPlatformTenantId);
+    const httpParams = new HttpParams().set("tenantIdentifier", window.localStorage.getItem("Fineract-Platform-TenantId"));
     return this.http.get(`/clients/${clientId}/documents/${documentId}/attachment`, {
       params: httpParams,
       responseType: "blob",
@@ -390,7 +390,7 @@ export class ClientsService {
   }
 
   uploadClientDocumenttenantIdentifier(clientId: string, documentData: any): Observable<any> {
-    return this.http.post(`/clients/${clientId}/documents?tenantIdentifier=${environment.fineractPlatformTenantId}`, documentData);
+    return this.http.post(`/clients/${clientId}/documents?tenantIdentifier=${window.localStorage.getItem("Fineract-Platform-TenantId")}`, documentData);
   }
 
   deleteClientDocument(parentEntityId: string, documentId: string) {
@@ -548,25 +548,25 @@ export class ClientsService {
   }
 
   SearchPartner(partner_name: string): Observable<any> {
-    let httpParams = this.commonHttpParams.getCommonHttpParams(); 
+    let httpParams = this.commonHttpParams.getCommonHttpParams();
     httpParams = httpParams.set("sqlSearch", partner_name);
     return this.http.post<any>(`${this.IcGatewayApiUrlPrefix}/client/search_ic_parner`, httpParams);
   }
 
   AddICPartner(partner_name: string): Observable<any> {
-    let httpParams = this.commonHttpParams.getCommonHttpParams(); 
+    let httpParams = this.commonHttpParams.getCommonHttpParams();
     httpParams = httpParams.set("externalPartner", partner_name);
     return this.http.post<any>(`${this.IcGatewayApiUrlPrefix}/client/add_ic_partner`, httpParams);
   }
 
   ToggleStatusICPartner(id:any , status: any): Observable<any> {
-    let httpParams = this.commonHttpParams.getCommonHttpParams(); 
+    let httpParams = this.commonHttpParams.getCommonHttpParams();
     httpParams = httpParams.set("externalPartnerId", id).set("toggleStatus", status);
     return this.http.post<any>(`${this.IcGatewayApiUrlPrefix}/client/togglestatusicpartner`, httpParams);
   }
 
   DeleteICPartner(id:any): Observable<any> {
-    let httpParams = this.commonHttpParams.getCommonHttpParams(); 
+    let httpParams = this.commonHttpParams.getCommonHttpParams();
     httpParams = httpParams.set("externalPartnerId", id);
     return this.http.post<any>(`${this.IcGatewayApiUrlPrefix}/client/deleteicpartner`, httpParams);
   }

@@ -402,7 +402,7 @@ export class TransactionService {
       clientId +
       "/documents/" +
       documentId +
-      `/attachment?tenantIdentifier=${this.environment.fineractPlatformTenantId}`;
+      `/attachment?tenantIdentifier=${window.localStorage.getItem("Fineract-Platform-TenantId")}`;
     xhttp.open("GET", fileUrl);
     xhttp.setRequestHeader("Authorization", "Bearer " + this.accessToken.base64EncodedAuthenticationKey);
     xhttp.responseType = "blob";
