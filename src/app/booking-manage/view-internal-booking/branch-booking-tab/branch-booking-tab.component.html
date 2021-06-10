@@ -39,47 +39,49 @@
     <div class="container" fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column"></div>
   </mat-card-content>
 
+  <div
+    fxLayout="row wrap"
+    fxLayoutGap="2%"
+    fxLayout.lt-md="column"
+    [formGroup]="formFilter"
+  >
+    <mat-form-field fxFlex="18%">
+      <mat-label>Chi nhánh</mat-label>
+      <input matInput type="text" formControlName="officeName" />
+    </mat-form-field>
+
+    <mat-form-field fxFlex="18%">
+      <mat-label>Nhân viên</mat-label>
+      <input matInput type="text" formControlName="userName" />
+    </mat-form-field>
+  </div>
+
   <mat-card-content style="margin-top: 10px">
     <mat-card>
       <div fxLayout="row swap" fxLayoutAlign.lt-sm="center" fxLayoutGap="2%" fxLayout.lt-md="column">
         <div fxLayout="row wrap" fxFlex="20%" class="container m-b-20">
           <img src="assets/images/icons/money.svg" />
           <div style="display: flex" fxLayout="column">
-            <span style="font-size: 20px; margin-top: 8px; padding-top: 5px">{{
-              staffBookingInfo?.totalAmountBooking | money
-            }}</span>
+            <span style="font-size: 20px; margin-top: 8px; padding-top: 5px">{{ totalAmountBooking | money }}</span>
             <span>&nbsp;Tiền booking</span>
           </div>
         </div>
         <div fxLayout="row wrap" fxFlex="20%" class="container m-b-20">
           <img src="assets/images/icons/transaction.svg" />
           <div style="display: flex" fxLayout="column">
-            <span style="font-size: 20px; margin-top: 8px; padding-top: 5px">{{
-              staffBookingInfo?.totalAmountFromBooking | money
-            }}</span>
+            <span style="font-size: 20px; margin-top: 8px; padding-top: 5px">{{ totalAmountFromBooking | money }}</span>
             <span>&nbsp;Đã chi</span>
           </div>
         </div>
-        <!-- <div fxLayout="row wrap" fxFlex="20%" class="container m-b-20">
-          <img src="assets/images/icons/capital.svg" />
-          <div style="display: flex" fxLayout="column">
-            <span style="font-size: 20px; margin-top: 8px; padding-top: 5px">{{
-              staffBookingInfo?.totalAmountPaidTransaction | money
-            }}</span>
-            <span>&nbsp;Đã giao dịch</span>
-          </div>
-        </div> -->
         <div fxLayout="row wrap" fxFlex="20%" class="container m-b-20">
           <img src="assets/images/icons/pnlAmount.svg" />
           <div style="display: flex" fxLayout="column">
-            <span style="font-size: 20px; margin-top: 8px; padding-top: 5px">
-              <!-- {{ staffBookingInfo?.totalAmountRemain | money }} -->
-              {{ staffBookingInfo?.totalAmountBooking - staffBookingInfo?.totalAmountFromBooking | money }}
-            </span>
+            <span style="font-size: 20px; margin-top: 8px; padding-top: 5px">{{ totalAmountBooking - totalAmountFromBooking | money }}</span>
             <span>&nbsp;Còn lại</span>
           </div>
         </div>
       </div>
+
     </mat-card>
   </mat-card-content>
 
