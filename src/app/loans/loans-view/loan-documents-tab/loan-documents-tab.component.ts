@@ -72,7 +72,7 @@ export class LoanDocumentsTabComponent implements OnInit {
   getLoanDocumentsData(data: any) {
     data.forEach((ele: any) => {
       let loandocs = {};
-      loandocs = environment.serverUrl + '/loans/' + ele.parentEntityId + '/documents/' + ele.id + '/attachment?tenantIdentifier=' + environment.fineractPlatformTenantId;
+      loandocs = environment.serverUrl + '/loans/' + ele.parentEntityId + '/documents/' + ele.id + '/attachment?tenantIdentifier=' + window.localStorage.getItem("Fineract-Platform-TenantId");
       ele.docUrl = loandocs;
       if (ele.fileName) {
         if (ele.fileName.toLowerCase().indexOf('.jpg') !== -1 || ele.fileName.toLowerCase().indexOf('.jpeg') !== -1 || ele.fileName.toLowerCase().indexOf('.png') !== -1) {
