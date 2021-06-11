@@ -370,7 +370,7 @@ export class ManageTransactionComponent implements OnInit {
     this.transactionTerminals = [];
     this.transactionTotalByBatchNo = [];
     this.transactionsData.forEach((element) => {
-      if (element.isSubmit == 0) {
+      if (element.isSubmit == 0 && element.status == "C" ) {
         const terminalInfo = this.terminals?.filter((terminal: any) => terminal.terminalId == element.terminalId);
         if (terminalInfo) {
           let isExisting = false;
@@ -385,7 +385,6 @@ export class ManageTransactionComponent implements OnInit {
             this.transactionTerminals.push(terminalInfo[0]);
           }
 
-          // this.transactionTerminals.push(terminalInfo[0]);
         }
 
         let transaction = {
@@ -395,17 +394,15 @@ export class ManageTransactionComponent implements OnInit {
         };
 
         if (this.transactionTotalByBatchNo.length == 0) {
-          if (element.status == "C") {
             this.transactionTotalByBatchNo.push(transaction);
-          }
+
         } else {
           let isExisting = false;
           for (let index = 0; index < this.transactionTotalByBatchNo.length; index++) {
             const transaction = this.transactionTotalByBatchNo[index];
             if (
               transaction.batchNo == element.batchNo &&
-              transaction.terminalId == element.terminalId &&
-              element.status == "C"
+              transaction.terminalId == element.terminalId
             ) {
               transaction.amount += element.terminalAmount;
               isExisting = true;
