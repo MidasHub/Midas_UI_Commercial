@@ -487,4 +487,21 @@ export class IdentitiesTabComponent {
       }
     });
   }
+
+  onToggleCardStatus(e:any, identifyId: string){
+    this.clientService.updateStatusIdentify(identifyId, e.checked); 
+    if(confirm("Are you sure ?")) {
+      this.clientService.updateStatusIdentify(identifyId, e.checked).subscribe((res: any) => {
+        console.log(res);
+        if (res.result.Row_affected === 1) {
+          this.alertService.alert({ message: "Thực hiện thành công", msgClass: "cssInfo" });
+        }
+     });
+    }
+
+    
+
+
+
+  }
 }
