@@ -22,9 +22,10 @@ import { analyzeAndValidateNgModules } from '@angular/compiler';
 import { AddIdentitiesExtraInfoComponent } from './dialog-add-identities-extra-info/add-identities-extra-info.component';
 import { BanksService } from '../../../banks/banks.service';
 
-import { Logger } from 'app/core/logger/logger.service';
 import {animate, state, style, transition, trigger} from '@angular/animations';
-const log = new Logger('-IDENTIFIER TAB-');
+import { Logger } from "app/core/logger/logger.service";
+import { ConfirmDialogComponent } from "app/transactions/dialog/confirm-dialog/confirm-dialog.component";
+const log = new Logger("-IDENTIFIER TAB-");
 
 /**
  * Identities Tab Component
@@ -500,19 +501,23 @@ export class IdentitiesTabComponent {
   }
 
   onToggleCardStatus(e: any, identifyId: string) {
-    this.clientService.updateStatusIdentify(identifyId, e.checked);
-    if (confirm('Are you sure ?')) {
-      this.clientService.updateStatusIdentify(identifyId, e.checked).subscribe((res: any) => {
-        console.log(res);
-        if (res.result.Row_affected === 1) {
-          this.alertService.alert({ message: 'Thực hiện thành công', msgClass: 'cssInfo' });
-        }
-     });
-    }
-
-
-
-
-
+    // this.clientService.updateStatusIdentify(identifyId, e.checked);
+    const dialog = this.dialog.open(ConfirmDialogComponent, {
+      data: {
+        message: `Xác nhận ${e.checked ? 'giữ thẻ' : 'bỏ giữ thẻ'}`,
+        title: "Trạng thái giữ thẻ",
+      },
+    });
+    dialog.afterClosed().subscribe((data) => {
+      if (data) {
+        this.clientService.updateStatusIdentify(identifyId, e.checked).subscribe((res: any) => {
+          if (res.result.Row_affected === 1) {
+            this.alertService.alert({ message: "Thực hiện thành công", msgClass: "cssInfo" });
+          }
+        });
+      } else {
+        location.reload()
+       }
+    });
   }
 }
