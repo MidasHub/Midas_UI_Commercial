@@ -403,7 +403,7 @@ export class ManageTransactionComponent implements OnInit {
             if (
               transaction.batchNo == element.batchNo &&
               transaction.terminalId == element.terminalId &&
-              transaction.status == "C"
+              element.status == "C"
             ) {
               transaction.amount += element.terminalAmount;
               isExisting = true;
