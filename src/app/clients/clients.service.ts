@@ -35,6 +35,12 @@ export class ClientsService {
     this.IcGatewayApiUrlPrefix = environment.IcGatewayApiUrlPrefix;
   }
 
+  updateStatusIdentify(identifyId: string, status: string): Observable<any> {
+    let httpParams = this.commonHttpParams.getCommonHttpParams();
+    httpParams = httpParams.set("identifyId", identifyId).set("status",status);
+    return this.http.post<any>(`${this.GatewayApiUrlPrefix}/client/client_identifier_status`, httpParams);
+  }
+
   loadImageIdentifier(identifierId: string, imageId: string): Observable<any> {
     const url = `/client_identifiers/${identifierId}/documents/${imageId}/attachment?tenantIdentifier=${window.localStorage.getItem("Fineract-Platform-TenantId")}`;
     return this.http.get(url, { responseType: "blob" });
