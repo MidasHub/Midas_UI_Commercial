@@ -24,9 +24,8 @@ import { SettingsService } from "./settings/settings.service";
 import { BanksService } from "./banks/banks.service";
 
 /** Custom Items */
-import { Alert } from './core/alert/alert.model';
-import { KeyboardShortcutsConfiguration } from './keyboards-shortcut-config';
-
+import { Alert } from "./core/alert/alert.model";
+import { KeyboardShortcutsConfiguration } from "./keyboards-shortcut-config";
 
 /**
  * Firebase Messaging
@@ -85,24 +84,23 @@ export class WebAppComponent implements OnInit {
     private bankService: BanksService,
     private messagingService: FireBaseMessagingService,
     private deviceService: DeviceDetectorService,
-    private tourService: TourService) {
+    private tourService: TourService
+  ) {
     /** Activate GoogleAnalytic */
     this.addGAScript();
 
-    this.router.events.pipe(
-      filter(event => event instanceof NavigationEnd)
-    ).subscribe((event: NavigationEnd) => {
+    this.router.events.pipe(filter((event) => event instanceof NavigationEnd)).subscribe((event: NavigationEnd) => {
       /** START : Code to Track Page View  */
-      log.info('GA: ', event.urlAfterRedirects);
-      gtag('event', 'page_view_'+window.location.hostname + event.urlAfterRedirects.replace('/', '#'), { page_path: event.urlAfterRedirects })
+      log.info("GA: ", event?.urlAfterRedirects);
+      gtag("event", "page_view_" + window.location.hostname + event?.urlAfterRedirects.replace("/", "#"), {
+        page_path: event?.urlAfterRedirects,
+      });
       //gtag('config', environment.GA_TRACKING_ID, {'page_path': event.urlAfterRedirects});
       /** Multi GA testing */
       //gtag('config', environment.firebase.measurementId, {'page_path': event.urlAfterRedirects});
       /** END */
-    })
-
+    });
   }
-
 
   //Variables for Firebase messsage
   message: any;
@@ -126,7 +124,7 @@ export class WebAppComponent implements OnInit {
       Logger.enableProductionMode();
     }
     log.debug("init in Dev Env: ", environment.production);
-    log.debug("path:",window.location.hostname);
+    log.debug("path:", window.location.hostname);
 
     // Setup translations
     this.i18nService.init(environment.defaultLanguage, environment.supportedLanguages);
@@ -224,7 +222,6 @@ export class WebAppComponent implements OnInit {
           "http://localhost:8088",
           "http://119.82.141.26:8088",
           "http://localhost:8087",
-
         ]);
       }
     }
@@ -246,21 +243,23 @@ export class WebAppComponent implements OnInit {
   /** Add Google Analytics Script Dynamically */
   addGAScript() {
     // register google tag manager
-    const gTagManagerScript = document.createElement('script');
+    const gTagManagerScript = document.createElement("script");
     gTagManagerScript.async = true;
     gTagManagerScript.src = `https://www.googletagmanager.com/gtag/js?id=${environment.GA_TRACKING_ID}`;
     document.head.appendChild(gTagManagerScript);
 
     // register google analytics
-    const gaScript = document.createElement('script');
+    const gaScript = document.createElement("script");
     gaScript.innerHTML = `
       window.dataLayer = window.dataLayer || [];
       function gtag() { dataLayer.push(arguments); }
       gtag('js', new Date());
       gtag('config', '${environment.GA_TRACKING_ID}');
-      gtag('config', '${environment.firebase.measurementId}', {'page_path': event.urlAfterRedirects});
+      gtag('config', '${environment.firebase.measurementId}', {'page_path': ''});
     `;
-    document?.head?.appendChild(gaScript);
+    if (gaScript) {
+      document?.head?.appendChild(gaScript);
+    }
   }
 
   loadDeviceData() {
@@ -349,10 +348,7 @@ export class WebAppComponent implements OnInit {
 
   /**End Tour */
   endTour() {
-    console.log('End tour');
-    this.tourService.end()
+    console.log("End tour");
+    this.tourService.end();
   }
-
-
-
 }
