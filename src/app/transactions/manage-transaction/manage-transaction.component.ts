@@ -304,7 +304,7 @@ export class ManageTransactionComponent implements OnInit {
             if (!String(v[key]).toUpperCase().includes(String(form[key]).toUpperCase())) {
               return false;
             }
-            if (("officeId".indexOf(key) != -1) && (String(v[key]).toUpperCase() != String(form[key]).toUpperCase())) {
+            if ("officeId".indexOf(key) != -1 && String(v[key]).toUpperCase() != String(form[key]).toUpperCase()) {
               return false;
             }
           }
@@ -395,7 +395,9 @@ export class ManageTransactionComponent implements OnInit {
         };
 
         if (this.transactionTotalByBatchNo.length == 0) {
-          this.transactionTotalByBatchNo.push(transaction);
+          if (element.status == "C") {
+            this.transactionTotalByBatchNo.push(transaction);
+          }
         } else {
           let isExisting = false;
           for (let index = 0; index < this.transactionTotalByBatchNo.length; index++) {
