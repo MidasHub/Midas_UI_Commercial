@@ -1,3 +1,5 @@
+
+
 @import "~@angular/material/theming";
 // Plus imports for other components in your app.
 @import "../../app/clients/clients-view/clients-view.component-theme.scss";
@@ -45,7 +47,7 @@ $mat-warn: (
 );
 
 $mat-back: (
-  100: #ffffff,
+  100: #fff,
   500: #cfd8dc,
   700: #9ea7aa,
   contrast: (
@@ -59,6 +61,7 @@ $mat-back: (
 // have to load a single css file for Angular Material in your app.
 // Be sure that you only ever include this mixin once!
 @include mat-core();
+
 
 // Define the palettes for your theme using the Material Design palettes available in palette.scss
 // (imported above). For each palette, you can optionally specify a default, lighter, and darker
@@ -144,6 +147,7 @@ $background-color: #ececec;
 .mat-sidenav-container {
   background: $background-color;
   color: black;
+
   .toolBarCss {
     background: $background-color;
     color: black;
@@ -151,15 +155,18 @@ $background-color: #ececec;
 
   .mat-drawer {
     background-color: $drawer-background-color;
-    border: 0px;
+    border: 0;
     color: white;
+
     .navigation-panel {
       background: $background-color;
       color: black;
     }
+
     .mat-list-item {
       color: white;
     }
+
     .app-brand,
     .app-user {
       color: black;
@@ -167,3 +174,5 @@ $background-color: #ececec;
     }
   }
 }
+
+

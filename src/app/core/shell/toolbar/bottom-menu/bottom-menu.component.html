@@ -1,0 +1,31 @@
+
+<div id="bottom-menu">
+  <mat-toolbar class="toolbarNav">
+    <div class="bottom-item" [routerLink]="['/home']">
+      <i class="fad fa-home"></i>
+      <span> Trang chủ</span>
+    </div>
+    <div class="bottom-item" [routerLink]="['/clients/customer']">
+      <i class="fad fa-address-card"></i>
+      <span> Khách hàng</span>
+    </div>
+    <div class="bottom-item">
+
+      <button mat-fab color="warn"
+              [routerLink]="['/clients/create']"
+              [queryParams]="{ go_back: 'home' }" >
+        <i class="fad fa-user-plus"></i>
+      </button>
+      <span style="position:relative;top:-16px"> Thêm khách hàng </span>
+    </div>
+    <div class="bottom-item" [routerLink]="['/transaction']">
+      <i class="fad fa-th-list"></i>
+      <span> Giao dịch</span>
+    </div>
+    <div class="bottom-item">
+      <i class="fad fa-user"></i>
+      <span> Tôi</span>
+    </div>
+  </mat-toolbar>
+</div>
+

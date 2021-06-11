@@ -3,8 +3,8 @@
     <h3> Thông tin khách hàng </h3>
   </mat-card-header> -->
 
-  <mat-card-content fxLayout.lt-md="column">
-    <div fxFlex.gt-md="20" class="leftside ">
+  <mat-card-content fxLayout="row" fxLayout.lt-sm="column">
+    <div fxFlex.gt-sm="20" class="leftside ">
       <mat-card-title-group class="header-title-group">
         <h3> Thông tin khách hàng </h3>
         <div class="profile-image-container mat-elevation-z8 p-10 m-b-10">
@@ -67,18 +67,18 @@
             </mat-card-subtitle>
           </div>
 
-          <div fxLayout="row" fxLayoutAlign="space-evenly center" >
-            <p *ngIf="!this.isInterchangeClient">
+          <div fxLayout="row" fxLayout.lt-lg="column" fxLayoutAlign="center center" >
+            <div *ngIf="!this.isInterchangeClient" class="p-5">
               <button mat-raised-button (click)="doAction('View Signature')">
                 <i class="fas fa-file-signature"></i> {{ "Client_Component.ViewClient.lblViewSignature" | translate }}
               </button>
-            </p>
-            <p *midasHasActiveModule="'mgmModule'">
+            </div>
+            <div *midasHasActiveModule="'mgmModule'" class="p-5">
               <button mat-raised-button [routerLink]="['/clients/create/']"
                 [queryParams]="{'mgmId': clientViewData.id }" *ngIf="!this.isInterchangeClient">
                 <i class="fas fa-user-plus"></i> Thêm MGM
               </button>
-            </p>
+            </div>
           </div>
 
 
@@ -258,7 +258,7 @@
 
 
     </div>
-    <div fxFlex.gt-md="80" class="rightside">
+    <div fxFlex.gt-sm="80" class="rightside">
       <nav mat-tab-nav-bar class="navigation-tabs m-b-10" *ngIf="!this.isInterchangeClient">
         <a mat-tab-link [routerLink]="['./identities']" [queryParams]="{ typeViewClient: this.typeViewClient }"
           routerLinkActive #identities="routerLinkActive" [active]="identities.isActive"

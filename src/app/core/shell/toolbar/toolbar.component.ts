@@ -11,11 +11,12 @@ import { map } from 'rxjs/operators';
 
 /** Custom Services */
 import { AuthenticationService } from '../../authentication/authentication.service';
+import {BottomMenuComponent} from './bottom-menu/bottom-menu.component';
 
 /** Device detect */
 
-import { DeviceDetectorService } from 'ngx-device-detector'
-import {environment} from 'environments/environment'
+import { DeviceDetectorService } from 'ngx-device-detector';
+import {environment} from 'environments/environment';
 import { split } from 'lodash';
 
 /**
@@ -33,14 +34,19 @@ export class ToolbarComponent implements OnInit {
     .pipe(
       map(result => result.matches)
     );
-
+  // isTablet$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Tablet)
+  //   .pipe(
+  //     map(result => result.matches)
+  //   );
   /** Sets the initial state of sidenav as collapsed. Not collapsed if false. */
   sidenavCollapsed = true;
   currentUser: any = {};
-  userFullname:string;
+  userFullname: string;
 
-  isDesktop: boolean;
-  isCommercial:boolean = environment.isCommercial;
+  isHandset: boolean;
+  isDesktop: boolean ;
+  isTablet: boolean ;
+  isCommercial: boolean = environment.isCommercial;
 
   /** Instance of sidenav. */
   @Input() sidenav: MatSidenav;
@@ -55,27 +61,37 @@ export class ToolbarComponent implements OnInit {
   constructor(private breakpointObserver: BreakpointObserver,
     private router: Router,
     private authenticationService: AuthenticationService,
-    private dialog: MatDialog,
-    private detectDevice: DeviceDetectorService) {
-    this.isDesktop = this.detectDevice.isDesktop()
-  }
+    private dialog: MatDialog) {}
+  //   private detectDevice: DeviceDetectorService) {
+  //   this.isDesktop = false; //this.detectDevice.isDesktop();
+  // }
 
   /**
    * Subscribes to breakpoint for handset.
    */
   ngOnInit() {
     this.currentUser = this.authenticationService.getCredentials();
-    this.userFullname = split(this.currentUser.staffDisplayName,',')[1].trim();
+    this.userFullname = split(this.currentUser.staffDisplayName, ',')[1].trim();
     this.toggleSidenavCollapse(false);
     this.sidenav.toggle(false);
 
-    //
-    // this.isHandset$.subscribe(isHandset => {
-    //   if (isHandset && this.sidenavCollapsed) {
-    //     this.toggleSidenavCollapse(false);
-    //   }
+
+    this.isHandset$.subscribe(isHandset => {
+      this.isHandset = isHandset;
+      this.isDesktop = !isHandset;
+      // console.log('isHandset check:',  this.isDesktop );
+      if (isHandset && this.sidenavCollapsed) {
+        this.toggleSidenavCollapse(true);
+
+      }
+    });
+    // this.isTablet$.subscribe(isTablet => {
+    //   console.log('tablet', isTablet);
+    //   console.log('isHandset check for isDesktop:',  this.isDesktop );
+    //   this.isTablet = isTablet;
+    //   this.isDesktop = !isTablet;
     // });
-    
+
   }
 
   /**
@@ -108,8 +124,8 @@ export class ToolbarComponent implements OnInit {
     window.open('https://drive.google.com/drive/folders/1-J4JQyaaxBz2QSfZMzC4bPrPwWlksFWw?usp=sharing', '_blank');
   }
 
-  daily(){
-    alert("Tính năng này đang được phát triển !")
+  daily() {
+    alert('Tính năng này đang được phát triển !');
   }
 
 }

@@ -1,41 +1,51 @@
 /** Angular Imports */
-import { Component, ViewChild } from "@angular/core";
-import { ActivatedRoute, NavigationExtras, Router } from "@angular/router";
-import { MatTable } from "@angular/material/table";
-import { MatDialog, MatDialogConfig } from "@angular/material/dialog";
+import { Component, ViewChild } from '@angular/core';
+import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
+import { MatTable } from '@angular/material/table';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 
 /** Custom Models */
-import { FormfieldBase } from "app/shared/form-dialog/formfield/model/formfield-base";
-import { InputBase } from "app/shared/form-dialog/formfield/model/input-base";
-import { SelectBase } from "app/shared/form-dialog/formfield/model/select-base";
+import { FormfieldBase } from 'app/shared/form-dialog/formfield/model/formfield-base';
+import { InputBase } from 'app/shared/form-dialog/formfield/model/input-base';
+import { SelectBase } from 'app/shared/form-dialog/formfield/model/select-base';
 
 /** Custom Components */
-import { UploadDocumentDialogComponent } from "../custom-dialogs/upload-document-dialog/upload-document-dialog.component";
-import { DeleteDialogComponent } from "../../../shared/delete-dialog/delete-dialog.component";
-import { FormDialogComponent } from "app/shared/form-dialog/form-dialog.component";
-import { AddIdentitiesComponent } from "./add-identities/add-identities.component";
+import { UploadDocumentDialogComponent } from '../custom-dialogs/upload-document-dialog/upload-document-dialog.component';
+import { DeleteDialogComponent } from '../../../shared/delete-dialog/delete-dialog.component';
+import { FormDialogComponent } from 'app/shared/form-dialog/form-dialog.component';
+import { AddIdentitiesComponent } from './add-identities/add-identities.component';
 /** Custom Services */
-import { ClientsService } from "../../clients.service";
-import { TransactionService } from "../../../transactions/transaction.service";
-import { AlertService } from "app/core/alert/alert.service";
-import { analyzeAndValidateNgModules } from "@angular/compiler";
-import { AddIdentitiesExtraInfoComponent } from "./dialog-add-identities-extra-info/add-identities-extra-info.component";
-import { BanksService } from "../../../banks/banks.service";
+import { ClientsService } from '../../clients.service';
+import { TransactionService } from '../../../transactions/transaction.service';
+import { AlertService } from 'app/core/alert/alert.service';
+import { analyzeAndValidateNgModules } from '@angular/compiler';
+import { AddIdentitiesExtraInfoComponent } from './dialog-add-identities-extra-info/add-identities-extra-info.component';
+import { BanksService } from '../../../banks/banks.service';
 
-import { Logger } from "app/core/logger/logger.service";
-const log = new Logger("-IDENTIFIER TAB-");
+import { Logger } from 'app/core/logger/logger.service';
+import {animate, state, style, transition, trigger} from '@angular/animations';
+const log = new Logger('-IDENTIFIER TAB-');
 
 /**
  * Identities Tab Component
  */
 @Component({
-  selector: "mifosx-identities-tab",
-  templateUrl: "./identities-tab.component.html",
-  styleUrls: ["./identities-tab.component.scss"],
+  selector: 'mifosx-identities-tab',
+  templateUrl: './identities-tab.component.html',
+  styleUrls: ['./identities-tab.component.scss'],
+  animations: [
+    trigger('detailExpand', [
+      state('collapsed', style({ height: '0px', minHeight: '0' })),
+      state('expanded', style({ height: '100px' })),
+      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
+    ]),
+  ],
 })
 export class IdentitiesTabComponent {
-  isLoading: boolean = false;
+  isLoading = false;
+  isShow = false;
   searchKey: string;
+  expandedElement: any;
   /** Client Identities */
   clientIdentities: any = [];
   clientIdentitiesOther: any = [];
@@ -45,12 +55,13 @@ export class IdentitiesTabComponent {
   clientId: string;
   images: any[] = [];
   /** Identities Columns */
-  identitiesColumns: string[] = ["id", "documentKey", "description", "type", "documents", "status", "actions"];
-  identitiesOtherColumns: string[] = ["id", "documentKey", "description", "type", "documents", "status"];
+  // identitiesColumns: string[] = ['id', 'documentKey', 'description', 'type', 'documents', 'status', 'actions'];
+  identitiesColumns: string[] = [ 'documentKey', 'description',   'status', 'actions'];
+  identitiesOtherColumns: string[] = [ 'documentKey', 'description', 'type', 'documents', 'status'];
 
   /** Identifiers Table */
-  @ViewChild("identifiersTable", { static: true }) identifiersTable: MatTable<Element>;
-  @ViewChild("identifiersTableOther", { static: true }) identifiersTableOther: MatTable<Element>;
+  @ViewChild('identifiersTable', { static: true }) identifiersTable: MatTable<Element>;
+  @ViewChild('identifiersTableOther', { static: true }) identifiersTableOther: MatTable<Element>;
 
   // @ViewChild('')
   /**
@@ -67,7 +78,7 @@ export class IdentitiesTabComponent {
     private alertService: AlertService,
     private bankService: BanksService
   ) {
-    this.clientId = this.route.parent.snapshot.paramMap.get("clientId");
+    this.clientId = this.route.parent.snapshot.paramMap.get('clientId');
     this.route.data.subscribe((data: { clientIdentities: any; clientIdentifierTemplate: any }) => {
       this.clientIdentifierTemplate = data.clientIdentifierTemplate;
       data.clientIdentities.forEach((element: any) => {
@@ -75,7 +86,7 @@ export class IdentitiesTabComponent {
           this.clientIdentities.push(element);
         } else {
           this.clientIdentitiesOther.push(element);
-          if (element.documentType.name === "CMND") {
+          if (element.documentType.name === 'CMND') {
             this.images.push(element);
           }
         }
@@ -100,9 +111,9 @@ export class IdentitiesTabComponent {
       if (res.result.message) {
         this.alertService.alert({
           message: res.result.message,
-          msgClass: "cssWarning",
-          hPosition: "right",
-          vPosition: "bottom",
+          msgClass: 'cssWarning',
+          hPosition: 'right',
+          vPosition: 'bottom',
         });
       }
 
@@ -129,41 +140,41 @@ export class IdentitiesTabComponent {
                   if (mExpired === mSystem + 1) {
                     this.alertService.alert({
                       message:
-                        "CHÚ Ý: Thẻ sẽ hết hạn vào tháng sau, đây là lần cuối cùng được thực hiện giao dịch trên thẻ này",
-                      msgClass: "cssWarning",
-                      hPosition: "right",
-                      vPosition: "bottom",
+                        'CHÚ Ý: Thẻ sẽ hết hạn vào tháng sau, đây là lần cuối cùng được thực hiện giao dịch trên thẻ này',
+                      msgClass: 'cssWarning',
+                      hPosition: 'right',
+                      vPosition: 'bottom',
                     });
                   }
                 }
                 if (mExpired === mSystem) {
                   this.alertService.alert({
-                    message: "CẢNH BÁO: Thẻ sẽ hết hạn trong tháng này, cân nhắc khi thực hiện giao dịch trên thẻ này",
-                    msgClass: "cssDanger",
-                    hPosition: "center",
-                    vPosition: "bottom",
+                    message: 'CẢNH BÁO: Thẻ sẽ hết hạn trong tháng này, cân nhắc khi thực hiện giao dịch trên thẻ này',
+                    msgClass: 'cssDanger',
+                    hPosition: 'center',
+                    vPosition: 'bottom',
                   });
                 }
                 if (mExpired < mSystem) {
                   this.alertService.alert({
-                    message: "CẢNH BÁO: Thẻ đã hết hạn, không được thực hiện giao dịch trên thẻ này",
-                    msgClass: "cssDanger",
-                    hPosition: "center",
-                    vPosition: "top",
+                    message: 'CẢNH BÁO: Thẻ đã hết hạn, không được thực hiện giao dịch trên thẻ này',
+                    msgClass: 'cssDanger',
+                    hPosition: 'center',
+                    vPosition: 'top',
                   });
                 }
               }
             }
 
             let validRollTerm = true;
-            if (type !== "cash") {
+            if (type !== 'cash') {
               this.transactionService
                 .checkValidCreateRollTermTransaction(identifierId)
                 .subscribe((resRollTermCheck: any) => {
                   validRollTerm = resRollTermCheck.result.isValid;
 
                   if (validRollTerm) {
-                    this.router.navigate(["/transaction/create"], {
+                    this.router.navigate(['/transaction/create'], {
                       queryParams: {
                         clientId: this.clientId,
                         identifierId: identifierId,
@@ -173,14 +184,14 @@ export class IdentitiesTabComponent {
                   } else {
                     this.alertService.alert({
                       message: `CẢNH BÁO: Đã tồn tại khoản Advance với thẻ ${cardNumber} \n vui lòng tất toán trước khi thực hiện khởi tạo khoản Advance mới !`,
-                      msgClass: "cssDanger",
-                      hPosition: "center",
-                      vPosition: "top",
+                      msgClass: 'cssDanger',
+                      hPosition: 'center',
+                      vPosition: 'top',
                     });
                   }
                 });
             } else {
-              this.router.navigate(["/transaction/create"], {
+              this.router.navigate(['/transaction/create'], {
                 queryParams: {
                   clientId: this.clientId,
                   identifierId: identifierId,
@@ -202,16 +213,16 @@ export class IdentitiesTabComponent {
   addIdentifier(addOther: boolean) {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.data = {
-      title: "Thêm Thẻ | CMND/CCCD | TK bank",
+      title: 'Thêm Thẻ | CMND/CCCD | TK bank',
       addOther: addOther,
       clientIdentifierTemplate: this.clientIdentifierTemplate,
     };
 
-    dialogConfig.minWidth = 500;
+    dialogConfig.minWidth = '33rem';
     // init data for opening
     const addIdentifierDialogRef = this.dialog.open(AddIdentitiesComponent, dialogConfig);
 
-    //Call API after close dialog box
+    // Call API after close dialog box
     addIdentifierDialogRef.afterClosed().subscribe((response: any) => {
       if (response.data) {
         let { description } = response.data.value;
@@ -253,9 +264,9 @@ export class IdentitiesTabComponent {
                   documents: [],
                   clientId: this.clientId,
                   status:
-                    response.data.value.status === "Active"
-                      ? "clientIdentifierStatusType.active"
-                      : "clientIdentifierStatusType.inactive",
+                    response.data.value.status === 'Active'
+                      ? 'clientIdentifierStatusType.active'
+                      : 'clientIdentifierStatusType.inactive',
                 });
                 this.identifiersTableOther.renderRows();
               } else {
@@ -270,18 +281,18 @@ export class IdentitiesTabComponent {
                       response.data.value.documentKey.length - 4,
                       response.data.value.documentKey.length
                     )}`,
-                  documents: [],
+                  // documents: [],
                   clientId: this.clientId,
                   status:
-                    response.data.value.status === "Active"
-                      ? "clientIdentifierStatusType.active"
-                      : "clientIdentifierStatusType.inactive",
+                    response.data.value.status === 'Active'
+                      ? 'clientIdentifierStatusType.active'
+                      : 'clientIdentifierStatusType.inactive',
                 });
                 this.identifiersTable.renderRows();
               }
 
               const message = `Thực hiện thành công!`;
-              this.alertService.alert({ message: message, msgClass: "cssInfo" });
+              this.alertService.alert({ message: message, msgClass: 'cssInfo' });
             };
 
             if (document && Number(document.id) >= 38 && Number(document.id) <= 57) {
@@ -343,13 +354,13 @@ export class IdentitiesTabComponent {
     uploadDocumentDialogRef.afterClosed().subscribe((dialogResponse: any) => {
       if (dialogResponse) {
         const formData: FormData = new FormData();
-        formData.append("name", dialogResponse.fileName);
-        formData.append("file", dialogResponse.file);
+        formData.append('name', dialogResponse.fileName);
+        formData.append('file', dialogResponse.file);
         this.clientService.uploadClientIdentifierDocument(identifierId, formData).subscribe((res: any) => {
           if (addOther) {
             this.clientIdentitiesOther[index].documents.push({
               id: res.resourceId,
-              parentEntityType: "client_identifiers",
+              parentEntityType: 'client_identifiers',
               parentEntityId: identifierId,
               name: dialogResponse.fileName,
               fileName: dialogResponse.file.name,
@@ -358,7 +369,7 @@ export class IdentitiesTabComponent {
           } else {
             this.clientIdentities[index].documents.push({
               id: res.resourceId,
-              parentEntityType: "client_identifiers",
+              parentEntityType: 'client_identifiers',
               parentEntityId: identifierId,
               name: dialogResponse.fileName,
               fileName: dialogResponse.file.name,
@@ -376,7 +387,7 @@ export class IdentitiesTabComponent {
   addIdentifierExtraInfo(userIdentifyId: string, cardNumber: string) {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.data = {
-      title: "Thông tin bổ sung cho thẻ",
+      title: 'Thông tin bổ sung cho thẻ',
       clientIdentifierTemplate: this.clientIdentifierTemplate,
     };
     dialogConfig.minWidth = 400;
@@ -404,7 +415,7 @@ export class IdentitiesTabComponent {
     this.transactionService.updateCardInfo(cardExtraInfoEntity).subscribe((result) => {
       this.isLoading = false;
       const message = `Cập nhật thành công cho thẻ: ${cardExtraInfoEntity.refid} `;
-      this.alertService.alert({ message: message, msgClass: "cssInfo" });
+      this.alertService.alert({ message: message, msgClass: 'cssInfo' });
     });
   }
 
@@ -415,8 +426,8 @@ export class IdentitiesTabComponent {
     index: number,
     addOther: boolean = false
   ) {
-    log.debug("cardInfo: ", clientId, identifierId, cardNumber, index, addOther);
-    //Jean : đang sửa tới đây
+    log.debug('cardInfo: ', clientId, identifierId, cardNumber, index, addOther);
+    // Jean : đang sửa tới đây
     this.transactionService.checkExtraCardInfo(this.clientId, identifierId).subscribe((resExtraCardCheck: any) => {
       const checkResult = resExtraCardCheck.result;
 
@@ -432,7 +443,7 @@ export class IdentitiesTabComponent {
 
         /** Dialog box setup */
         dialogConfig.data = {
-          title: "Thông tin bổ sung cho thẻ",
+          title: 'Thông tin bổ sung cho thẻ',
           clientIdentifierTemplate: this.clientIdentifierTemplate,
           cardInfo: checkResult,
         };
@@ -457,27 +468,27 @@ export class IdentitiesTabComponent {
               if (mExpired === mSystem + 1) {
                 this.alertService.alert({
                   message:
-                    "CHÚ Ý: Thẻ sẽ hết hạn vào tháng sau, đây là lần cuối cùng được thực hiện giao dịch trên thẻ này",
-                  msgClass: "cssWarning",
-                  hPosition: "right",
-                  vPosition: "bottom",
+                    'CHÚ Ý: Thẻ sẽ hết hạn vào tháng sau, đây là lần cuối cùng được thực hiện giao dịch trên thẻ này',
+                  msgClass: 'cssWarning',
+                  hPosition: 'right',
+                  vPosition: 'bottom',
                 });
               }
             }
             if (mExpired === mSystem) {
               this.alertService.alert({
-                message: "CẢNH BÁO: Thẻ sẽ hết hạn trong tháng này, cân nhắc khi thực hiện giao dịch trên thẻ này",
-                msgClass: "cssDanger",
-                hPosition: "center",
-                vPosition: "bottom",
+                message: 'CẢNH BÁO: Thẻ sẽ hết hạn trong tháng này, cân nhắc khi thực hiện giao dịch trên thẻ này',
+                msgClass: 'cssDanger',
+                hPosition: 'center',
+                vPosition: 'bottom',
               });
             }
             if (mExpired < mSystem) {
               this.alertService.alert({
-                message: "CẢNH BÁO: Thẻ đã hết hạn, không được thực hiện giao dịch trên thẻ này",
-                msgClass: "cssDanger",
-                hPosition: "center",
-                vPosition: "top",
+                message: 'CẢNH BÁO: Thẻ đã hết hạn, không được thực hiện giao dịch trên thẻ này',
+                msgClass: 'cssDanger',
+                hPosition: 'center',
+                vPosition: 'top',
               });
             }
           }
@@ -488,18 +499,18 @@ export class IdentitiesTabComponent {
     });
   }
 
-  onToggleCardStatus(e:any, identifyId: string){
-    this.clientService.updateStatusIdentify(identifyId, e.checked); 
-    if(confirm("Are you sure ?")) {
+  onToggleCardStatus(e: any, identifyId: string) {
+    this.clientService.updateStatusIdentify(identifyId, e.checked);
+    if (confirm('Are you sure ?')) {
       this.clientService.updateStatusIdentify(identifyId, e.checked).subscribe((res: any) => {
         console.log(res);
         if (res.result.Row_affected === 1) {
-          this.alertService.alert({ message: "Thực hiện thành công", msgClass: "cssInfo" });
+          this.alertService.alert({ message: 'Thực hiện thành công', msgClass: 'cssInfo' });
         }
      });
     }
 
-    
+
 
 
 
