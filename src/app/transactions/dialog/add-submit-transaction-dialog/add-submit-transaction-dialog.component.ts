@@ -42,10 +42,10 @@ export class AddSubmitTransactionDialogComponent implements OnInit {
       this.listObjectTransactionSubmit = [];
       this.transactionTotalByBatchNo.forEach((element: any) => {
         if (element.terminalId == option) {
-          let objectSubmitTransaction = {
+          let objectSubmitTransaction: any = {
             batchNoSubmit: element.batchNo,
             amountSubmitSuggest: element.amount,
-            amountSubmit: "",
+            amountSubmit: undefined,
             fileSubmitBase64: "",
           };
           this.listObjectTransactionSubmit.push(objectSubmitTransaction);
