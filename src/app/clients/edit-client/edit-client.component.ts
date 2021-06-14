@@ -144,6 +144,18 @@ export class EditClientComponent implements OnInit {
         this.editClientForm.addControl('firstname', new FormControl(this.clientDataAndTemplate.firstname,[Validators.required, Validators.pattern('^([^!@#$%^&*()+=<>,?\/]*)$')] ));
         this.editClientForm.addControl('middlename', new FormControl(this.clientDataAndTemplate.middlename, Validators.pattern('^([^!@#$%^&*()+=<>,?\/]*)$')));
         this.editClientForm.addControl('lastname', new FormControl(this.clientDataAndTemplate.lastname, [Validators.required, Validators.pattern('^([^!@#$%^&*()+=<>,?\/]*)$')]));
+
+        this.editClientForm.get('firstname').valueChanges.subscribe( (value: string) => {
+          this.editClientForm.get('firstname').patchValue( value.toUpperCase(), {emitEvent: false} );
+
+        })
+        this.editClientForm.get('middlename').valueChanges.subscribe( (value: string) => {
+          this.editClientForm.get('middlename').patchValue( value.toUpperCase(), {emitEvent: false} );
+        })
+        this.editClientForm.get('lastname').valueChanges.subscribe( (value: string) => {
+          this.editClientForm.get('lastname').patchValue( value.toUpperCase(), {emitEvent: false} );
+        })
+
       } else {
         this.editClientForm.removeControl('firstname');
         this.editClientForm.removeControl('middlename');
@@ -156,6 +168,11 @@ export class EditClientComponent implements OnInit {
           'mainBusinessLineId': [this.clientDataAndTemplate.clientNonPersonDetails.mainBusinessLine && this.clientDataAndTemplate.clientNonPersonDetails.mainBusinessLine.id],
           'remarks': [this.clientDataAndTemplate.clientNonPersonDetails.remarks]
         }));
+
+        this.editClientForm.get('fullname').valueChanges.subscribe( (value: string) => {
+          this.editClientForm.get('fullname').patchValue( value.toUpperCase(), {emitEvent: false} );
+
+        })
       }
     });
   }
