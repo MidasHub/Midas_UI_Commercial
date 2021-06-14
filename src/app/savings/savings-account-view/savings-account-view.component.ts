@@ -188,11 +188,11 @@ export class SavingsAccountViewComponent implements OnInit {
         value: "Ứng tiền phí",
       },
       {
-        id: "3",
+        id: "62",
         value: "Thu hộ",
       },
       {
-        id: "37",
+        id: "-62",
         value: "Chi hộ",
       },
     ];
