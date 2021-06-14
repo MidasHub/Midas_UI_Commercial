@@ -74,23 +74,15 @@
           </ng-container>
 
           <ng-container matColumnDef="status">
-<<<<<<< HEAD
             <th mat-header-cell *matHeaderCellDef>Trạng thái giữ thẻ</th>
             <td mat-cell *matCellDef="let identity">
               <!-- {{ identity.status === "clientIdentifierStatusType.active" ? "A" : "-" }} -->
               <!-- <section class="example-section">
-=======
-            <th mat-header-cell *matHeaderCellDef>Trạng thái</th>
-            <td mat-cell *matCellDef="let identity">
-              <!-- {{ identity.status === "clientIdentifierStatusType.active" ? "A" : "-" }} -->
-              <section class="example-section">
->>>>>>> parent of 543bc90d (config for mobile UI)
                 <mat-slide-toggle
                     class="example-margin"
                     [checked]= "identity.status === 'clientIdentifierStatusType.active' ? true : false"
                     (change)="onToggleCardStatus($event, identity.id)"
                   >
-<<<<<<< HEAD
                   <label *ngIf="identity.status === 'clientIdentifierStatusType.active'"> slide to un hold card </label>
                   <label *ngIf="identity.status !== 'clientIdentifierStatusType.active'"> slide to hold card </label>
 
@@ -101,11 +93,6 @@
               (change)="onToggleCardStatus($event, identity.id)">
               </mat-checkbox>
 
-=======
-                  slide to hold card
-                </mat-slide-toggle>
-              </section>
->>>>>>> parent of 543bc90d (config for mobile UI)
             </td>
           </ng-container>
 

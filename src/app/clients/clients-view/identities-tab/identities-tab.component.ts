@@ -22,13 +22,9 @@ import { analyzeAndValidateNgModules } from "@angular/compiler";
 import { AddIdentitiesExtraInfoComponent } from "./dialog-add-identities-extra-info/add-identities-extra-info.component";
 import { BanksService } from "../../../banks/banks.service";
 
-<<<<<<< HEAD
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import { Logger } from "app/core/logger/logger.service";
 import { ConfirmDialogComponent } from "app/transactions/dialog/confirm-dialog/confirm-dialog.component";
-=======
-import { Logger } from "app/core/logger/logger.service";
->>>>>>> parent of 543bc90d (config for mobile UI)
 const log = new Logger("-IDENTIFIER TAB-");
 
 /**
@@ -494,7 +490,6 @@ export class IdentitiesTabComponent {
     });
   }
 
-<<<<<<< HEAD
   onToggleCardStatus(e: any, identifyId: string) {
     // this.clientService.updateStatusIdentify(identifyId, e.checked);
     const dialog = this.dialog.open(ConfirmDialogComponent, {
@@ -514,22 +509,5 @@ export class IdentitiesTabComponent {
         location.reload()
        }
     });
-=======
-  onToggleCardStatus(e:any, identifyId: string){
-    this.clientService.updateStatusIdentify(identifyId, e.checked); 
-    if(confirm("Are you sure ?")) {
-      this.clientService.updateStatusIdentify(identifyId, e.checked).subscribe((res: any) => {
-        console.log(res);
-        if (res.result.Row_affected === 1) {
-          this.alertService.alert({ message: "Thực hiện thành công", msgClass: "cssInfo" });
-        }
-     });
-    }
-
-    
-
-
-
->>>>>>> parent of 543bc90d (config for mobile UI)
   }
 }
