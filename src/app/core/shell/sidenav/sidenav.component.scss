@@ -123,11 +123,9 @@
       list-style: none;
 
       .mat-list-item {
-        color: #000000;
         .mat-list-icon {
           height: 30px;
           font-size: 22px;
-
         }
       }
     }
@@ -142,7 +140,7 @@
         cursor: pointer;
       }
     }
-
+    
     .app-logo-text {
       display: none;
     }

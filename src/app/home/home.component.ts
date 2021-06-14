@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, HostListener, Input, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { startWith, map } from 'rxjs/operators';
@@ -28,6 +28,7 @@ import { split } from 'lodash';
 
 
 export class HomeComponent implements OnInit {
+
   /** Activity Form. */
   activityForm: any;
   /** Search Text. */
@@ -36,10 +37,10 @@ export class HomeComponent implements OnInit {
   filteredActivities: Observable<any[]>;
   /** All User Activities. */
   allActivities: any[] = activities;
-  // ** Data for banner  */
-  showBanner = false;
+  //** Data for banner  */
+  showBanner: boolean = false
   title: string;
-  childBannerData = new ChildBannerData();
+  childBannerData = new ChildBannerData()
 
   /** Screem size check */
   screenSize: any;
@@ -54,21 +55,21 @@ export class HomeComponent implements OnInit {
 
 
   constructor(private authenticationService: AuthenticationService,
+    private detectDevice: DeviceDetectorService,
     private tourService: TourService) {
-
+    this.isDesktop = this.detectDevice.isDesktop();
   }
 
-  @HostListener('window:resize', ['$event'])
-  onResize(event: any) {
-    this.screenSize = window.innerWidth;
-    if (this.screenSize > 600) {
-      this.isDesktop = true;
-    } else {
-      this.isDesktop = false;
-    }
-    // console.log('Screen Size:', this.screenSize);
-    // console.log('Screen Orientation:', window.screen.orientation);
-  }
+  // @HostListener('window:resize', ['$event'])
+  // onResize(event:any) {
+  //   this.screenSize = window.innerWidth;
+
+
+  //   console.log('Screen Size:', this.screenSize)
+  //   console.log('Screen Orientation:', window.screen.orientation)
+
+
+  // };
 
   /**
    * Sets the username of the authenticated user.
@@ -77,17 +78,17 @@ export class HomeComponent implements OnInit {
   ngOnInit() {
     const credentials = this.authenticationService.getCredentials();
 
-    this.childBannerData.userName = split('credentials.staffDisplayName', ',')[1]?.trim();
-    console.log(split('credentials.staffDisplayName', ',')[1]?.trim());
-    console.log('home: isDesktop', this.isDesktop);
+    this.childBannerData.userName = split("credentials.staffDisplayName",',')[1]?.trim();
+    console.log(split("credentials.staffDisplayName",',')[1]?.trim());
+
     bannerData.some(d => {
       if (d.office === credentials.officeId) {
         this.showBanner = true;
         this.childBannerData.title = d.title;
       }
-    });
+    })
     this.setFilteredActivities();
-    this.screenSize = window.innerWidth;
+    this.screenSize = window.innerWidth
     // console.log('Screen size: ', this.screenSize)
 
 

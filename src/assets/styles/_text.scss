@@ -5,19 +5,14 @@ body {
 
 html {
   font-size: 16px;
-  @media (max-width: 600px) {
-    font-size: 12px;
-  }
 }
 
 body {
   font-weight: 400;
-  font-size: 1rem;
+  font-size: 0.875rem;
   color: rgba(0, 0, 0, 0.87);
   line-height: 1.5;
   font-family: Roboto, "Helvetica Neue", sans-serif;
-
-
 }
 
 .lh-1 {

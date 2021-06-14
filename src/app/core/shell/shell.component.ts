@@ -42,9 +42,9 @@ export class ShellComponent implements OnInit, OnDestroy {
     private progressBarService: ProgressBarService,
     private cdr: ChangeDetectorRef,
     private tourService: TourService,
-    // private detectDevice: DeviceDetectorService
+    private detectDevice: DeviceDetectorService
   ) {
-    // this.isDesktop = this.detectDevice.isDesktop();
+    this.isDesktop = this.detectDevice.isDesktop();
   }
 
   /**

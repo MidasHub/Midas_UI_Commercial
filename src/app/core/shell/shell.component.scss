@@ -16,37 +16,30 @@
     width: 4rem;
   }
 
-  .contentCss {
-    position: relative;
-    top: 64px;
-
-    @media (max-width: 600px) {
-      height: calc(100vh - 60px - 64px);
-      max-height: 90%;
-      display: block;
-      overflow-x: hidden;
-      overflow-y: scroll;
-    }
+  .contentCss{
+    position:relative;
+    top:64px;
   }
 
-  .breadcrumbCss {
-    position: relative;
+  .breadcrumbCss{
+    position:relative;
     top: 64px;
     left: 1rem;
     width: 100%;
   }
 
-  .progressBarCss {
-    position: fixed;
+  .progressBarCss{
+    position:fixed;
     z-index: 9000;
-    top: 0;
+    top:0px;
   }
 
-  .toolBarCss {
+  .toolBarCss{
     position: fixed;
     top: 4px;
     z-index: 9000;
-    width: 100%;
+    width:100%;
+    
   }
 
   // .toolBarCss-compact{
@@ -55,12 +48,12 @@
   //   z-index: 9999;
   //   width: 100%;
   // }
+ 
+  
 
-
-
-  .footerCss {
-    position: fixed;
-    bottom: 0;
+  .footerCss{
+    position:fixed;
+    bottom: 0px;
     z-index: 9999;
     width: 100%;
   }

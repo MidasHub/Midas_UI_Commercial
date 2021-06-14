@@ -21,21 +21,20 @@
           [routerLink]="['/clients/create']"
           [queryParams]="{ go_back: 'home' }"
           style="width: 185px"
-          *ngIf="this.isDesktop"
         >
           <fa-icon icon="user-plus"></fa-icon> &nbsp;&nbsp;
           {{ "Home_Component.btnNewCustomer" | translate }}
         </button>
-<!--        <button-->
-<!--          mat-raised-button-->
-<!--          color="primary"-->
-<!--          [routerLink]="['/groups/create']"-->
-<!--          [queryParams]="{ go_back: 'home' }"-->
-<!--          style="width: 185px"-->
-<!--        >-->
-<!--          <i class="fab fa-google-plus-g"></i> &nbsp;&nbsp;-->
-<!--          {{ "Home_Component.btnNewGroup" | translate }}-->
-<!--        </button>-->
+        <button
+          mat-raised-button
+          color="primary"
+          [routerLink]="['/groups/create']"
+          [queryParams]="{ go_back: 'home' }"
+          style="width: 185px"
+        >
+          <i class="fab fa-google-plus-g"></i> &nbsp;&nbsp;
+          {{ "Home_Component.btnNewGroup" | translate }}
+        </button>
       </div>
       <h1 class="p-l-20">
         {{ "Home_Component.welcome" | translate }} <strong>{{ childBannerData.userName }}</strong
@@ -59,37 +58,34 @@
     class="fluidcontainer m-b-15"
     fxFlex="100"
   >
-<!--    <div fxLayout="row" fxLayout.lt-md="column" class="fluidcontainer p-10 m-b-20" fxFlex="100" fxLayoutGap="1%">-->
+    <div fxLayout="row" fxLayout.lt-md="column" class="fluidcontainer p-10 m-b-20" fxFlex="100" fxLayoutGap="1%">
       <!-- Ô tìm kiếm KH -->
-      <div fxFlex="59" fxFlex.lt-md="95" tourAnchor="id6" class="m-b-10 p-5" style="width:100%" >
-        <mat-card >
-          <mat-card-header>
-            <mat-card-title class="title">
-              <h3>Tim kiếm thông tin khách hàng:</h3>
-            </mat-card-title>
-          </mat-card-header>
+      <mat-card class="m-b-10" fxFlex="59" fxFlex.lt-md="95" tourAnchor="id6">
+        <mat-card-header>
+          <mat-card-title class="title">
+            <h3>Tim kiếm thông tin khách hàng:</h3>
+          </mat-card-title>
+        </mat-card-header>
 
-          <mat-card-content>
-            <!-- Phần tìm kiếm các hành động, tạm ẩn -->
-            <!-- <div fxLayout="column">
-            <mat-form-field>
-              <mat-label>{{'Home_Component.searchActivity'| translate }}</mat-label>
-              <input matInput [matAutocomplete]="activitySearch" [formControl]="searchText">
-            </mat-form-field>
-          </div>
+        <mat-card-content>
+          <!-- Phần tìm kiếm các hành động, tạm ẩn -->
+          <!-- <div fxLayout="column">
+          <mat-form-field>
+            <mat-label>{{'Home_Component.searchActivity'| translate }}</mat-label>
+            <input matInput [matAutocomplete]="activitySearch" [formControl]="searchText">
+          </mat-form-field>
+        </div>
 
-           <mat-autocomplete #activitySearch="matAutocomplete">
-            <mat-option *ngFor="let activity of filteredActivities | async" [routerLink]="activity.path">
-              <span>{{activity.activity}}</span>
-            </mat-option>
-          </mat-autocomplete> -->
+         <mat-autocomplete #activitySearch="matAutocomplete">
+          <mat-option *ngFor="let activity of filteredActivities | async" [routerLink]="activity.path">
+            <span>{{activity.activity}}</span>
+          </mat-option>
+        </mat-autocomplete> -->
 
-            <midas-mainboard></midas-mainboard>
-          </mat-card-content>
-        </mat-card>
-      </div>
-
-      <div fxLayout="column" fxFlex="39" fxFlex.lt-md="95" tourAnchor="id7" class="m-b-10 p-5 " style="width:100%">
+          <midas-mainboard></midas-mainboard>
+        </mat-card-content>
+      </mat-card>
+      <div fxLayout="column" fxFlex="39" fxFlex.lt-md="95" tourAnchor="id7">
         <!-- Ô calendar -->
         <mat-card class="" fxFlex="100">
           <mat-card-header>
@@ -111,5 +107,5 @@
       <midas-rollterm-list></midas-rollterm-list>
       <midas-ondue-card></midas-ondue-card>
     </div> -->
-<!--  </div>-->
+  </div>
 </div>

@@ -3,26 +3,21 @@
   max-width: 98rem;
   width: 95%;
   padding: 0;
-
   .header {
     padding: 1%;
   }
-
   .navigation-tabs {
     overflow: auto;
   }
-
   i:hover {
     cursor: pointer;
   }
-
-  .leftside {
+  .leftside{
     padding: 1rem;
     flex-direction: column;
 
     .header-title-group {
       flex-direction: column;
-
       .client-card-title {
         flex-direction: column;
         margin-top: 1.4rem;
@@ -33,27 +28,22 @@
         // }
       }
     }
-
     .profile-image-container {
       flex-direction: column;
       margin: 1%;
-
-      div {
+      div{
         flex-direction: column;
       }
-
       .profile-image {
         object-fit: cover;
         border-radius: 20px;
       }
-
       .client-image-button {
         min-width: 26px;
         padding: 0 6px;
         margin: 4px;
         line-height: 25px;
       }
-
       .signature {
         // background-color: #0a6aac;
         //color: white;
@@ -65,31 +55,25 @@
         // }
       }
     }
-
     .client-actions {
       // align-self: flex-end;
       width: 100%;
       margin: 0;
       margin-top: 1rem;
-
-      button {
+      button{
         width: 90%;
       }
-
-      span {
+      span{
         width: 100%;
       }
-
       i {
         margin-bottom: 2px;
         margin-right: 4px;
       }
     }
   }
-
-  .rightside {
+  .rightside{
     padding: 0;
-    display: block;
-    overflow: auto;
+   
   }
 }
