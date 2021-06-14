@@ -16,6 +16,7 @@ import { SavingsService } from "app/savings/savings.service";
 import { SettingsService } from "app/settings/settings.service";
 import { TerminalsService } from "app/terminals/terminals.service";
 import { ThirdPartyService } from "app/third-party/third-party.service";
+import { debounceTime, distinctUntilChanged } from "rxjs/operators";
 import { AddFeeDialogComponent } from "../dialog/add-fee-dialog/add-fee-dialog.component";
 import { ConfirmDialogComponent } from "../dialog/confirm-dialog/confirm-dialog.component";
 import { CreateSuccessTransactionDialogComponent } from "../dialog/create-success-transaction-dialog/create-success-transaction-dialog.component";
@@ -126,6 +127,20 @@ export class CreateTransactionComponent implements OnInit {
           }
         }
 
+        this.transactionCreateForm
+          .get("requestAmount")
+          .valueChanges.pipe(debounceTime(1000), distinctUntilChanged())
+          .subscribe((value: string) => {
+            this.changeAmountTransaction(value);
+          });
+
+        this.transactionCreateForm
+          .get("rate")
+          .valueChanges.pipe(debounceTime(1000), distinctUntilChanged())
+          .subscribe((value: string) => {
+            this.onchangeRate(value);
+          });
+
         // if (this.transactionCreateForm.get("batchNo") && this.transactionCreateForm.get("traceNo")) {
         //   if (permit_manager) {
         //     // remove validator required for batchNo, traceNo on hold transaction
@@ -179,8 +194,8 @@ export class CreateTransactionComponent implements OnInit {
     }
   }
 
-  changeAmountTransaction(event: any) {
-    this.transactionInfo.requestAmount = event.target.value;
+  changeAmountTransaction(value: string) {
+    this.transactionInfo.requestAmount = value;
     this.clearInfoTransaction();
   }
 
@@ -321,8 +336,8 @@ export class CreateTransactionComponent implements OnInit {
     this.dialog.open(ValidCheckTransactionHistoryDialogComponent, dialogConfig);
   }
 
-  onchangeRate(event: any) {
-    this.transactionInfo.rate = event.target.value;
+  onchangeRate(rate: string) {
+    this.transactionInfo.rate = rate;
     this.CheckValidRate();
   }
   CheckValidRate() {
