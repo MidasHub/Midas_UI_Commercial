@@ -46,7 +46,7 @@ export class AddSubmitTransactionDialogComponent implements OnInit {
             batchNoSubmit: element.batchNo,
             amountSubmitSuggest: element.amount,
             amountSubmit: undefined,
-            fileSubmitBase64: "",
+            fileSubmitBase64: undefined,
           };
           this.listObjectTransactionSubmit.push(objectSubmitTransaction);
         }
@@ -65,7 +65,7 @@ export class AddSubmitTransactionDialogComponent implements OnInit {
     if (!file) {
       this.listObjectTransactionSubmit.forEach((transaction) => {
         if (transaction.batchNoSubmit == batchNo) {
-          transaction.fileSubmitBase64 = "";
+          transaction.fileSubmitBase64 = undefined;
         }
       });
     }
