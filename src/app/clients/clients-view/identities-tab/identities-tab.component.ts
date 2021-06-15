@@ -463,6 +463,19 @@ export class IdentitiesTabComponent {
                   hPosition: "right",
                   vPosition: "bottom",
                 });
+              } else {
+                const showIdentifierDialogRef = this.dialog.open(AddIdentitiesExtraInfoComponent, dialogConfig);
+                showIdentifierDialogRef.afterClosed().subscribe((response: any) => {
+                  if (response) {
+                    const { dueDay, expiredDate, limitCard, classCard } = response.data.value;
+                    checkResult.cardExtraInfoEntity.limit = limitCard;
+                    checkResult.cardExtraInfoEntity.classCard = classCard;
+                    checkResult.cardExtraInfoEntity.expiredDateString = expiredDate;
+                    checkResult.cardExtraInfoEntity.dueDay = dueDay;
+
+                    this.updateCardInfo(checkResult.cardExtraInfoEntity);
+                  }
+                });
               }
             }
             if (mExpired === mSystem) {
@@ -493,7 +506,7 @@ export class IdentitiesTabComponent {
     // this.clientService.updateStatusIdentify(identifyId, e.checked);
     const dialog = this.dialog.open(ConfirmDialogComponent, {
       data: {
-        message: `Xác nhận ${e.checked ? 'giữ thẻ' : 'bỏ giữ thẻ'}`,
+        message: `Xác nhận ${e.checked ? "giữ thẻ" : "bỏ giữ thẻ"}`,
         title: "Trạng thái giữ thẻ",
       },
     });
@@ -505,8 +518,8 @@ export class IdentitiesTabComponent {
           }
         });
       } else {
-        location.reload()
-       }
+        location.reload();
+      }
     });
   }
 }
