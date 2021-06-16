@@ -16,18 +16,14 @@
 //$fa-font-path: "../node_modules/font-awesome/fonts";
 //@import "../node_modules/font-awesome/scss/font-awesome.scss";
 // don't use fontawesome from node_module
-$fa-font-path: "/assets/webfonts";
+$fa-font-path: "/assets/fontawesome/webfonts";
 
 @import "assets/fontawesome/scss/fontawesome.scss";
 @import "assets/fontawesome/scss/brands.scss";
 @import "assets/fontawesome/scss/solid.scss";
+@import "assets/fontawesome/scss/duotone.scss";
+@import "assets/fontawesome/scss/regular.scss";
+@import "assets/fontawesome/scss/light.scss";
 @import "~@busacca/ng-pick-datetime/assets/style/picker.min.css";
 // add css for angular-calendar lib
 @import "../node_modules/angular-calendar/css/angular-calendar.css";
-
-
-
-
-
-
-
