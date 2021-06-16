@@ -1,15 +1,17 @@
 <mat-toolbar fxLayout="row" color="primary" id="midas-toolbar">
-  <div class="app-brand m-r-20" [routerLink]="['/home']" *ngIf="!this.sidenav.opened" tourAnchor="toolbar-1">
+<!--  <div class="app-brand m-r-20" [routerLink]="['/home']" *ngIf="!this.sidenav.opened" tourAnchor="toolbar-1">-->
+  <div class="app-brand m-r-20" [routerLink]="['/home']" *ngIf="this.isDesktop" tourAnchor="toolbar-1">
     <img src="../../../../assets/images/Midas-logo.png" alt="app-logo" class="app-logo" />
     <span class="app-logo-text text-muted">MIDAS</span>
   </div>
 
-  <div *ngIf="!this.isDesktop">
-    <button mat-mini-fab *ngIf="!sidenavCollapsed" (click)="toggleSidenav()" matTooltip="Bật menu">
-      <fa-icon icon="bars" size="lg"></fa-icon>
-    </button>
-  </div>
+<!--  <div *ngIf="!this.isDesktop">-->
+<!--    <button mat-mini-fab *ngIf="!sidenavCollapsed" (click)="toggleSidenav()" matTooltip="Bật menu">-->
+<!--      <fa-icon icon="bars" size="lg"></fa-icon>-->
+<!--    </button>-->
+<!--  </div>-->
 
+  <!-- Desktop: Nếu màn hinh là Desktop thi hiện menu ngang-->
   <div fxLayout="row" fxLayoutGap.gt-md="1rem" fxLayoutGap.lt-md="0.75rem" *ngIf="this.isDesktop">
     <button
       mat-mini-fab
@@ -192,8 +194,12 @@
 </mat-menu>
 
 <!-- Mobile: Floating Menu -->
-<midas-menu *ngIf="!isDesktop" style="position: fixed; bottom: 1%; right: 3%"> </midas-menu>
+<!--<midas-menu *ngIf="!isDesktop" style="position: fixed; bottom: 1%; right: 3%"> </midas-menu>-->
 <!-- End Mobile: Floatign menu -->
+
+<!-- Mobile: HIện top bottom -->
+<midas-bottom-menu id="midas-bottom-menu" *ngIf="isHandset" ></midas-bottom-menu>
+<!---->
 
 <!-- Mat-menu của billpos -->
 <mat-menu #institutionMenu="matMenu" [overlapTrigger]="false">
