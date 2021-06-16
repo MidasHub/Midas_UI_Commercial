@@ -10,8 +10,8 @@
       'sidebar-compact': sidenavCollapsed
     }"
     [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
-    [mode]="(isHandset$ | async) ? 'over' : 'over'"
-    [opened]="!(isHandset$ | async)">
+    [mode]="(isHandset$ | async) ? 'over' : 'over'">
+<!--    [opened]="!(isHandset$ | async)">-->
 
     <midas-sidenav [sidenavCollapsed]="sidenavCollapsed"></midas-sidenav>
 
@@ -23,18 +23,18 @@
     <!-- Progress Bar -->
     <mat-progress-bar [mode]="progressBarMode" class="progressBarCss"></mat-progress-bar>
 
-    
+
     <!-- Toolbar -->
     <midas-toolbar [sidenav]="sidenav" (collapse)="toggleCollapse($event)"
     class="toolBarCss"
 
     ></midas-toolbar>
     <!-- Breadcrumb -->
-    <midas-breadcrumb class="breadcrumbCss"></midas-breadcrumb>
-    
-    
+    <midas-breadcrumb class="breadcrumbCss" *ngIf="this.isDesktop"></midas-breadcrumb>
+
+
     <!-- Content -->
-    <midas-content class="contentCss"></midas-content>
+    <midas-content class="contentCss" [isDesktop]="isHandset$"></midas-content>
     <!-- Footer -->
     <midas-footer class="footerCss"></midas-footer>
 
