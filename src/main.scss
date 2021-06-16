@@ -8,6 +8,7 @@
 // @import "theme/custom/pictonblue-yellowgreen.scss";
 
 // Global Imports
+
 /* You can add global styles to this file, and also import other style files */
 @import "assets/styles/helper";
 
@@ -16,10 +17,10 @@
 //@import "../node_modules/font-awesome/scss/font-awesome.scss";
 // don't use fontawesome from node_module
 $fa-font-path: "/assets/webfonts";
-@import "theme/fontawesome/scss/fontawesome.scss";
-@import "theme/fontawesome/scss/brands.scss";
-@import "theme/fontawesome/scss/solid.scss";
 
+@import "assets/fontawesome/scss/fontawesome.scss";
+@import "assets/fontawesome/scss/brands.scss";
+@import "assets/fontawesome/scss/solid.scss";
 @import "~@busacca/ng-pick-datetime/assets/style/picker.min.css";
 // add css for angular-calendar lib
 @import "../node_modules/angular-calendar/css/angular-calendar.css";
