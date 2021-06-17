@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DomSanitizer } from '@angular/platform-browser';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
-
+ 
 /** Custom Dialogs */
 import { UnassignStaffDialogComponent } from './custom-dialogs/unassign-staff-dialog/unassign-staff-dialog.component';
 import { UploadSignatureDialogComponent } from './custom-dialogs/upload-signature-dialog/upload-signature-dialog.component';
@@ -12,12 +12,10 @@ import { DeleteSignatureDialogComponent } from './custom-dialogs/delete-signatur
 import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.component';
 import { UploadImageDialogComponent } from './custom-dialogs/upload-image-dialog/upload-image-dialog.component';
 import { CaptureImageDialogComponent } from './custom-dialogs/capture-image-dialog/capture-image-dialog.component';
-
 /** Custom Services */
 import { ClientsService } from '../clients.service';
 import { TransactionHistoryDialogComponent } from 'app/transactions/rollTerm-schedule-transaction/dialog/transaction-history/transaction-history-dialog.component';
-
-
+import template_hdctv from "./template-contract/atom_hdctv";
 @Component({
   selector: 'mifosx-clients-view',
   templateUrl: './clients-view.component.html',
@@ -68,7 +66,6 @@ export class ClientsViewComponent implements OnInit {
 
 
   }
-
   showHistoryTransaction(clientId: string) {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.data = {
@@ -77,7 +74,6 @@ export class ClientsViewComponent implements OnInit {
     dialogConfig.minWidth = 800;
     this.dialog.open(TransactionHistoryDialogComponent, dialogConfig);
   }
-
   /**
    * Performs action button/option action.
    * @param {string} name action name.
@@ -134,9 +130,39 @@ export class ClientsViewComponent implements OnInit {
         const viewStandingInstructionsQueryParams: any = { officeId: this.clientViewData.officeId, accountType: 'fromsavings' };
         this.router.navigate(['standing-instructions/list-standing-instructions'], { relativeTo: this.route, queryParams: viewStandingInstructionsQueryParams });
         break;
+      case 'exportContract':
+        this.exportContract();
+        break;  
+        
     }
   }
-
+  private printComponent() {
+    const printContent = document.getElementById("component1");
+    const WindowPrt = window.open('', '', 'left=0,top=0,width=900,height=900,toolbar=0,scrollbars=0,status=0');
+    console.log(template_hdctv.toString());
+    WindowPrt.document.write(template_hdctv.toString());
+    WindowPrt.document.close();
+    WindowPrt.focus();
+    WindowPrt.print();
+    WindowPrt.close();
+  }
+  private exportContract() {
+      
+    // console.log (template_hdctv);
+    // const doc = new jsPDF();
+    // doc.html(template_hdctv,{
+    //   callback: function (doc) {
+    //     doc.save();
+    //   },
+    //   x: 10,
+    //   y: 10
+    // });
+    //doc.save('tableToPdf.pdf');
+ 
+    //const d = new Printd()
+    //d.print( template_hdctv)
+    
+  }
 
   /**
    * Refetches data for the component

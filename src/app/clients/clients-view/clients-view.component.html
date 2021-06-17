@@ -97,8 +97,12 @@
             <button mat-raised-button [routerLink]="['edit']" *ngIf="!this.isInterchangeClient">
               <i class="fa fa-edit"></i>{{ "Client_Component.ViewClient.btnEdit" | translate }}
             </button>
+          </span> 
+          <span *midasHasPermission="'UPDATE_CLIENT'" class="m-b-10" fxLayoutAlign="center stretch">
+            <button mat-raised-button (click)="printComponent()" *ngIf="!this.isInterchangeClient">
+              <i class="fa fa-edit"></i>sprint
+            </button>
           </span>
-
 
           <!-- <button mat-raised-button [matMenuTriggerFor]="Applications">
             <i class="fa fa-file"></i>{{ "Client_Component.ViewClient.btnApplication" | translate }}
