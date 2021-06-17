@@ -33,10 +33,18 @@ const log = new Logger("-IDENTIFIER TAB-");
   selector: "mifosx-identities-tab",
   templateUrl: "./identities-tab.component.html",
   styleUrls: ["./identities-tab.component.scss"],
+  animations: [
+    trigger('detailExpand', [
+      state('collapsed', style({ height: '0px', minHeight: '0' })),
+      state('expanded', style({ height: '100px' })),
+      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
+    ]),
+  ],
 })
 export class IdentitiesTabComponent {
   isLoading: boolean = false;
   searchKey: string;
+  expandedElement: any;
   /** Client Identities */
   clientIdentities: any = [];
   clientIdentitiesOther: any = [];

@@ -1,4 +1,4 @@
-const subdomain = window.location.hostname.split(".")[0];
+const subdomain = window.location.hostname.split('.')[0];
 
 let tenant = "default";
 let billpostenant = "default";
@@ -9,8 +9,8 @@ let defaultIcURL = "https://ic.kiotthe.com";
 let defaultbaseURL = "https://api.kiotthe.com";
 let defaultbillposURL = "https://api.kiotthe.com";
 
-let apiProvider = "/midas/api";
-const apiVersion = "/v1";
+const apiProvider = '/midas/api';
+const apiVersion = '/v1';
 
 let defaultNotificationURL = "https://staging.kiotthe.com";
 let documentURL = "https://document.kiotthe.com";
