@@ -39,12 +39,7 @@
     <div class="container" fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column"></div>
   </mat-card-content>
 
-  <div
-    fxLayout="row wrap"
-    fxLayoutGap="2%"
-    fxLayout.lt-md="column"
-    [formGroup]="formFilter"
-  >
+  <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column" [formGroup]="formFilter">
     <mat-form-field fxFlex="18%">
       <mat-label>Chi nhánh</mat-label>
       <input matInput type="text" formControlName="officeName" />
@@ -76,31 +71,57 @@
         <div fxLayout="row wrap" fxFlex="20%" class="container m-b-20">
           <img src="assets/images/icons/pnlAmount.svg" />
           <div style="display: flex" fxLayout="column">
-            <span style="font-size: 20px; margin-top: 8px; padding-top: 5px">{{ totalAmountBooking - totalAmountFromBooking | money }}</span>
+            <span style="font-size: 20px; margin-top: 8px; padding-top: 5px">{{
+              totalAmountBooking - totalAmountFromBooking | money
+            }}</span>
             <span>&nbsp;Còn lại</span>
           </div>
         </div>
       </div>
-
     </mat-card>
   </mat-card-content>
 
   <mat-card-content>
     <table mat-table class="mat-elevation-z8" [dataSource]="BookingList" matSort>
       <ng-container matColumnDef="bookingRefNo">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>Mã booking</th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+          Mã booking/<br />
+          Thời gian
+        </th>
         <td mat-cell *matCellDef="let booking">
           <a href="javascript:void(0)">
             <mat-label>
               {{ booking?.bookingRefNo }}
             </mat-label>
           </a>
+
+          <br />
+          <label>
+            {{ booking?.createdDate | date: "dd/MM/yyyy HH:mm:ss" }}
+          </label>
         </td>
       </ng-container>
 
       <ng-container matColumnDef="bookingAmount">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Số tiền</th>
         <td mat-cell *matCellDef="let booking">{{ booking?.totalBooking | money }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="status">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Trạng thái</th>
+        <td mat-cell *matCellDef="let booking">
+          <div>
+            <mat-checkbox
+              [disabled]="booking.checkedByStaff"
+              [(checked)]="booking.checkedByStaff"
+              (change)="checkedBranchBooking(booking)"
+              title="Chọn để xác nhận booking là hợp lệ"
+            >
+            </mat-checkbox>
+            <label *ngIf="!booking.checkedByStaff" style="color: red;"> Chờ xác thực</label>
+            <label *ngIf="booking.checkedByStaff" style="color: green"> √ {{ booking?.checkedByStaff }}</label>
+          </div>
+        </td>
       </ng-container>
 
       <ng-container matColumnDef="getBookedAmount">
@@ -114,16 +135,14 @@
       </ng-container>
 
       <ng-container matColumnDef="officeName">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>Chi nhánh</th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+          Chi nhánh /<br />
+          Người tạo
+        </th>
         <td mat-cell *matCellDef="let booking">
           {{ booking?.officeName }}
-        </td>
-      </ng-container>
-
-      <ng-container matColumnDef="staffName">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>Nhân viên</th>
-        <td mat-cell *matCellDef="let booking">
-          {{ booking?.userName }}
+          <br />
+          <label style="color: green; font-weight: bold">{{ booking?.userName }}</label>
         </td>
       </ng-container>
 
@@ -136,8 +155,8 @@
 
       <ng-container matColumnDef="actions">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Hành động</th>
-        <td mat-cell *matCellDef="let booking">
-          <button mat-mini-fab color="default"  (click)="showDetailBooking(booking.bookingRefNo)">
+        <td mat-cell *matCellDef="let booking" style="width: 100px !important; ">
+          <button mat-mini-fab color="default" (click)="showDetailBooking(booking.bookingRefNo)">
             <mat-icon title="Xem chi tiết "> remove_red_eye </mat-icon>
           </button>
 

@@ -22,7 +22,9 @@ import { analyzeAndValidateNgModules } from "@angular/compiler";
 import { AddIdentitiesExtraInfoComponent } from "./dialog-add-identities-extra-info/add-identities-extra-info.component";
 import { BanksService } from "../../../banks/banks.service";
 
+import {animate, state, style, transition, trigger} from '@angular/animations';
 import { Logger } from "app/core/logger/logger.service";
+import { ConfirmDialogComponent } from "app/transactions/dialog/confirm-dialog/confirm-dialog.component";
 const log = new Logger("-IDENTIFIER TAB-");
 
 /**
@@ -32,10 +34,18 @@ const log = new Logger("-IDENTIFIER TAB-");
   selector: "mifosx-identities-tab",
   templateUrl: "./identities-tab.component.html",
   styleUrls: ["./identities-tab.component.scss"],
+  animations: [
+    trigger('detailExpand', [
+      state('collapsed', style({ height: '0px', minHeight: '0' })),
+      state('expanded', style({ height: '100px' })),
+      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
+    ]),
+  ],
 })
 export class IdentitiesTabComponent {
   isLoading: boolean = false;
   searchKey: string;
+  expandedElement: any;
   /** Client Identities */
   clientIdentities: any = [];
   clientIdentitiesOther: any = [];
@@ -462,6 +472,19 @@ export class IdentitiesTabComponent {
                   hPosition: "right",
                   vPosition: "bottom",
                 });
+              } else {
+                const showIdentifierDialogRef = this.dialog.open(AddIdentitiesExtraInfoComponent, dialogConfig);
+                showIdentifierDialogRef.afterClosed().subscribe((response: any) => {
+                  if (response) {
+                    const { dueDay, expiredDate, limitCard, classCard } = response.data.value;
+                    checkResult.cardExtraInfoEntity.limit = limitCard;
+                    checkResult.cardExtraInfoEntity.classCard = classCard;
+                    checkResult.cardExtraInfoEntity.expiredDateString = expiredDate;
+                    checkResult.cardExtraInfoEntity.dueDay = dueDay;
+
+                    this.updateCardInfo(checkResult.cardExtraInfoEntity);
+                  }
+                });
               }
             }
             if (mExpired === mSystem) {
@@ -488,20 +511,24 @@ export class IdentitiesTabComponent {
     });
   }
 
-  onToggleCardStatus(e:any, identifyId: string){
-    this.clientService.updateStatusIdentify(identifyId, e.checked); 
-    if(confirm("Are you sure ?")) {
-      this.clientService.updateStatusIdentify(identifyId, e.checked).subscribe((res: any) => {
-        console.log(res);
-        if (res.result.Row_affected === 1) {
-          this.alertService.alert({ message: "Thực hiện thành công", msgClass: "cssInfo" });
-        }
-     });
-    }
-
-    
-
-
-
+  onToggleCardStatus(e: any, identifyId: string) {
+    // this.clientService.updateStatusIdentify(identifyId, e.checked);
+    const dialog = this.dialog.open(ConfirmDialogComponent, {
+      data: {
+        message: `Xác nhận ${e.checked ? "giữ thẻ" : "bỏ giữ thẻ"}`,
+        title: "Trạng thái giữ thẻ",
+      },
+    });
+    dialog.afterClosed().subscribe((data) => {
+      if (data) {
+        this.clientService.updateStatusIdentify(identifyId, e.checked).subscribe((res: any) => {
+          if (res.result.Row_affected === 1) {
+            this.alertService.alert({ message: "Thực hiện thành công", msgClass: "cssInfo" });
+          }
+        });
+      } else {
+        location.reload();
+      }
+    });
   }
 }

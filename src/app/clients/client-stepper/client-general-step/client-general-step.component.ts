@@ -123,7 +123,19 @@ export class ClientGeneralStepComponent implements OnInit {
         this.staffOptions = staffs?.staffOptions;
       });
     });
-    // TODO: check MGM here
+
+    this.createClientForm.get('firstname').valueChanges.subscribe( (value: string) => {
+      this.createClientForm.get('firstname').patchValue( value.toUpperCase(), {emitEvent: false} );
+    })
+
+    this.createClientForm.get('middlename').valueChanges.subscribe( (value: string) => {
+      this.createClientForm.get('middlename').patchValue( value.toUpperCase(), {emitEvent: false} );
+    })
+
+    this.createClientForm.get('lastname').valueChanges.subscribe( (value: string) => {
+      this.createClientForm.get('lastname').patchValue( value.toUpperCase(), {emitEvent: false} );
+    })
+
   }
 
   get getIsRelative() {

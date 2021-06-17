@@ -39,26 +39,26 @@
 
           <mat-form-field *ngIf="editClientForm.contains('fullname')" fxFlex="48%">
             <mat-label>{{'Client_Component.ClientStepper.GeneralStep.labelFullName' |translate}}</mat-label>
-            <input matInput required formControlName="fullname">
+            <input matInput required formControlName="fullname" class="upper-case-client" >
             <mat-error *ngIf="editClientForm.controls.fullname.hasError('required')"
               [innerHTML]="'Client_Component.ClientStepper.GeneralStep.labelFullNameMsg' |translate"></mat-error>
           </mat-form-field>
 
           <mat-form-field *ngIf="editClientForm.contains('firstname')" fxFlex="48%">
             <mat-label>{{'Client_Component.ClientStepper.GeneralStep.labelFirstName' |translate}}</mat-label>
-            <input matInput required formControlName="firstname">
+            <input matInput required formControlName="firstname" class="upper-case-client" >
             <mat-error *ngIf="editClientForm.controls.firstname.hasError('required')"
               [innerHTML]="'Client_Component.ClientStepper.GeneralStep.labelFirstNameMsg' |translate"></mat-error>
           </mat-form-field>
 
           <mat-form-field *ngIf="editClientForm.contains('middlename')" fxFlex="48%">
             <mat-label>{{'Client_Component.ClientStepper.GeneralStep.labelMidName' |translate}}</mat-label>
-            <input matInput formControlName="middlename">
+            <input matInput formControlName="middlename" class="upper-case-client" >
           </mat-form-field>
 
           <mat-form-field *ngIf="editClientForm.contains('lastname')" fxFlex="48%">
             <mat-label>{{'Client_Component.ClientStepper.GeneralStep.labelLastName' |translate}}</mat-label>
-            <input matInput required formControlName="lastname">
+            <input matInput required formControlName="lastname" class="upper-case-client" >
             <mat-error *ngIf="editClientForm.controls.lastname.hasError('required')"
               [innerHTML]="'Client_Component.ClientStepper.GeneralStep.labelLastNameMsg' |translate"></mat-error>
           </mat-form-field>

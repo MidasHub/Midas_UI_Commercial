@@ -42,11 +42,11 @@ export class AddSubmitTransactionDialogComponent implements OnInit {
       this.listObjectTransactionSubmit = [];
       this.transactionTotalByBatchNo.forEach((element: any) => {
         if (element.terminalId == option) {
-          let objectSubmitTransaction = {
+          let objectSubmitTransaction: any = {
             batchNoSubmit: element.batchNo,
             amountSubmitSuggest: element.amount,
-            amountSubmit: "",
-            fileSubmitBase64: "",
+            amountSubmit: undefined,
+            fileSubmitBase64: undefined,
           };
           this.listObjectTransactionSubmit.push(objectSubmitTransaction);
         }
@@ -65,7 +65,7 @@ export class AddSubmitTransactionDialogComponent implements OnInit {
     if (!file) {
       this.listObjectTransactionSubmit.forEach((transaction) => {
         if (transaction.batchNoSubmit == batchNo) {
-          transaction.fileSubmitBase64 = "";
+          transaction.fileSubmitBase64 = undefined;
         }
       });
     }

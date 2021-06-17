@@ -6,10 +6,10 @@ import { MatPaginator } from "@angular/material/paginator";
 import { MatSort } from "@angular/material/sort";
 import { BookingService } from "app/booking-manage/booking.service";
 import { DetailBranchBookingDialogComponent } from "app/booking-manage/dialog/detail-branch-booking/detail-branch-booking.component";
-import { EditBookingInternalComponent } from "app/booking-manage/dialog/edit-booking-internal/edit-booking-internal.component";
 import { TransferBookingInternalComponent } from "app/booking-manage/dialog/transfer-booking-internal/transfer-booking-internal.component";
 import { AlertService } from "app/core/alert/alert.service";
 import { SettingsService } from "app/settings/settings.service";
+import { ConfirmDialogComponent } from "app/transactions/dialog/confirm-dialog/confirm-dialog.component";
 import { merge } from "rxjs";
 import { tap } from "rxjs/operators";
 
@@ -20,10 +20,16 @@ import { tap } from "rxjs/operators";
 })
 export class BranchBookingTabComponent implements OnInit {
   expandedElement: any;
-  displayedColumns: any[] =
-  ["bookingRefNo", "officeName", "staffName",
-   "bookingAmount", "getBookedAmount", "needBookedAmount", "txnDate",
-    "actions"];
+  displayedColumns: any[] = [
+    "bookingRefNo",
+    "officeName",
+    "status",
+    "bookingAmount",
+    "getBookedAmount",
+    "needBookedAmount",
+    "txnDate",
+    "actions",
+  ];
   totalBooking: any;
   staffBookingInfo: any;
   dataSource: any[] = [];
@@ -52,10 +58,9 @@ export class BranchBookingTabComponent implements OnInit {
     });
 
     this.formFilter = this.formBuilder.group({
-      officeName: [''],
-      userName: [''],
+      officeName: [""],
+      userName: [""],
     });
-
   }
   showDetailBooking(bookingRefNo: string) {
     const dialogConfig = new MatDialogConfig();
@@ -75,14 +80,13 @@ export class BranchBookingTabComponent implements OnInit {
     const dateFormat = this.settingsService.dateFormat;
     let fromDate = this.formDate.get("fromDate").value;
     let toDate = this.formDate.get("toDate").value;
-    // let officeName = this.formFilter.get("officeName").value ;
     if (fromDate) {
       fromDate = this.datePipe.transform(fromDate, dateFormat);
     }
     if (toDate) {
       toDate = this.datePipe.transform(toDate, dateFormat);
     }
-    this.bookingService.getManageBookingBranch( fromDate, toDate).subscribe((data: any) => {
+    this.bookingService.getManageBookingBranch(fromDate, toDate).subscribe((data: any) => {
       this.staffBookingInfo = data?.result?.bookingInternalResponseDto;
       this.dataSource = data?.result?.bookingInternalResponseDto?.lisBookingManagementDtos;
       this.BookingFilter = this.dataSource;
@@ -99,16 +103,14 @@ export class BranchBookingTabComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.formFilter.valueChanges.subscribe(e => [
-      this.filterData()
-    ]);
+    this.formFilter.valueChanges.subscribe((e) => [this.filterData()]);
   }
 
   filterData() {
     this.BookingFilter = [];
     const form = this.formFilter.value;
     const keys = Object.keys(form);
-    this.BookingFilter = this.dataSource.filter(v => {
+    this.BookingFilter = this.dataSource.filter((v) => {
       for (const key of keys) {
         if (form[key] && !String(v[key]).trim().toLowerCase().includes(String(form[key]).trim().toLowerCase())) {
           return false;
@@ -134,6 +136,42 @@ export class BranchBookingTabComponent implements OnInit {
     });
   }
 
+  checkedBranchBooking(booking: any) {
+    if (!booking){
+      return;
+    }
+    const dialog = this.dialog.open(ConfirmDialogComponent, {
+      data: {
+        message: `Bạn chắc chắn dòng booking này của '${booking.officeName}' là hợp lệ`,
+        title: "Hoàn thành xác thực",
+      },
+    });
+    dialog.afterClosed().subscribe((data) => {
+      if (data) {
+        this.bookingService.checkedBranchBookingByRefNo(booking.bookingRefNo).subscribe((result: any) => {
+          if (result?.status) {
+            const message = `Xác thực booking của ${booking.officeName} thành công`;
+
+            this.alertService.alert({
+              type: "🎉🎉🎉 Thành công !!!",
+              message: message,
+              msgClass: "cssSuccess",
+            });
+          } else {
+            this.alertService.alert({
+              type: "🚨🚨🚨🚨 Lỗi ",
+              msgClass: "cssDanger",
+              message: result?.error,
+            });
+          }
+          this.getBookingInternal();
+        });
+      } else {
+        this.getBookingInternal();
+      }
+    });
+  }
+
   transferBookingInternal(bookingInternal: any) {
     const dateFormat = this.settingsService.dateFormat;
     const dialog = this.dialog.open(TransferBookingInternalComponent, {
@@ -152,27 +190,25 @@ export class BranchBookingTabComponent implements OnInit {
       };
 
       if (data) {
-        this.bookingService.transferBookingAmount(transferInfo,  "BB").subscribe((result) => {
+        this.bookingService.transferBookingAmount(transferInfo, "BB").subscribe((result) => {
           if (result?.result?.status) {
             const message = `Chi tiền cho booking ${transferInfo.bookingRefNo} thành công`;
 
             this.alertService.alert({
-              type: '🎉🎉🎉 Thành công !!!',
+              type: "🎉🎉🎉 Thành công !!!",
               message: message,
-              msgClass: 'cssSuccess'
+              msgClass: "cssSuccess",
             });
             this.getBookingInternal();
           } else {
             this.alertService.alert({
-              type: '🚨🚨🚨🚨 Lỗi ',
-              msgClass: 'cssDanger',
+              type: "🚨🚨🚨🚨 Lỗi ",
+              msgClass: "cssDanger",
               message: result?.error,
             });
           }
-
         });
       }
     });
   }
-
 }

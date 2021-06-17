@@ -304,7 +304,7 @@ export class ManageTransactionComponent implements OnInit {
             if (!String(v[key]).toUpperCase().includes(String(form[key]).toUpperCase())) {
               return false;
             }
-            if (("officeId".indexOf(key) != -1) && (String(v[key]).toUpperCase() != String(form[key]).toUpperCase())) {
+            if ("officeId".indexOf(key) != -1 && String(v[key]).toUpperCase() != String(form[key]).toUpperCase()) {
               return false;
             }
           }
@@ -370,7 +370,7 @@ export class ManageTransactionComponent implements OnInit {
     this.transactionTerminals = [];
     this.transactionTotalByBatchNo = [];
     this.transactionsData.forEach((element) => {
-      if (element.isSubmit == 0) {
+      if (element.isSubmit == 0 && element.status == "C" ) {
         const terminalInfo = this.terminals?.filter((terminal: any) => terminal.terminalId == element.terminalId);
         if (terminalInfo) {
           let isExisting = false;
@@ -385,7 +385,6 @@ export class ManageTransactionComponent implements OnInit {
             this.transactionTerminals.push(terminalInfo[0]);
           }
 
-          // this.transactionTerminals.push(terminalInfo[0]);
         }
 
         let transaction = {
@@ -395,15 +394,15 @@ export class ManageTransactionComponent implements OnInit {
         };
 
         if (this.transactionTotalByBatchNo.length == 0) {
-          this.transactionTotalByBatchNo.push(transaction);
+            this.transactionTotalByBatchNo.push(transaction);
+
         } else {
           let isExisting = false;
           for (let index = 0; index < this.transactionTotalByBatchNo.length; index++) {
             const transaction = this.transactionTotalByBatchNo[index];
             if (
               transaction.batchNo == element.batchNo &&
-              transaction.terminalId == element.terminalId &&
-              transaction.status == "C"
+              transaction.terminalId == element.terminalId
             ) {
               transaction.amount += element.terminalAmount;
               isExisting = true;
@@ -435,6 +434,16 @@ export class ManageTransactionComponent implements OnInit {
           const transaction = listObjectTransactionSubmit[index];
           if (transaction.amountSubmitSuggest != transaction.amountSubmit) {
             let messageCheckSameAmountCrossCheck = `Số tiền chốt lô ${transaction.batchNoSubmit} nhập vào chưa đúng, vui lòng thử lại!`;
+            this.alertService.alert({
+              msgClass: "cssDanger",
+              message: messageCheckSameAmountCrossCheck,
+            });
+
+            return;
+          }
+
+          if (!transaction.fileSubmitBase64) {
+            let messageCheckSameAmountCrossCheck = `Vui lòng cung cấp ảnh bill tổng của lô ${transaction.batchNoSubmit} trước khi thực hiện!`;
             this.alertService.alert({
               msgClass: "cssDanger",
               message: messageCheckSameAmountCrossCheck,
