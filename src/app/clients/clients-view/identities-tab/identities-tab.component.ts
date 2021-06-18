@@ -1,29 +1,24 @@
 /** Angular Imports */
+import { animate, state, style, transition, trigger } from "@angular/animations";
 import { Component, ViewChild } from "@angular/core";
-import { ActivatedRoute, NavigationExtras, Router } from "@angular/router";
-import { MatTable } from "@angular/material/table";
 import { MatDialog, MatDialogConfig } from "@angular/material/dialog";
-
-/** Custom Models */
-import { FormfieldBase } from "app/shared/form-dialog/formfield/model/formfield-base";
-import { InputBase } from "app/shared/form-dialog/formfield/model/input-base";
-import { SelectBase } from "app/shared/form-dialog/formfield/model/select-base";
-
-/** Custom Components */
-import { UploadDocumentDialogComponent } from "../custom-dialogs/upload-document-dialog/upload-document-dialog.component";
-import { DeleteDialogComponent } from "../../../shared/delete-dialog/delete-dialog.component";
-import { FormDialogComponent } from "app/shared/form-dialog/form-dialog.component";
-import { AddIdentitiesComponent } from "./add-identities/add-identities.component";
-/** Custom Services */
-import { ClientsService } from "../../clients.service";
-import { TransactionService } from "../../../transactions/transaction.service";
+import { MatTable } from "@angular/material/table";
+import { ActivatedRoute, Router } from "@angular/router";
 import { AlertService } from "app/core/alert/alert.service";
-import { analyzeAndValidateNgModules } from "@angular/compiler";
-import { AddIdentitiesExtraInfoComponent } from "./dialog-add-identities-extra-info/add-identities-extra-info.component";
-import { BanksService } from "../../../banks/banks.service";
-
 import { Logger } from "app/core/logger/logger.service";
 import { ConfirmDialogComponent } from "app/transactions/dialog/confirm-dialog/confirm-dialog.component";
+import { BanksService } from "../../../banks/banks.service";
+import { DeleteDialogComponent } from "../../../shared/delete-dialog/delete-dialog.component";
+import { TransactionService } from "../../../transactions/transaction.service";
+/** Custom Services */
+import { ClientsService } from "../../clients.service";
+/** Custom Components */
+import { UploadDocumentDialogComponent } from "../custom-dialogs/upload-document-dialog/upload-document-dialog.component";
+import { AddIdentitiesComponent } from "./add-identities/add-identities.component";
+import { AddIdentitiesExtraInfoComponent } from "./dialog-add-identities-extra-info/add-identities-extra-info.component";
+
+
+
 const log = new Logger("-IDENTIFIER TAB-");
 
 /**
