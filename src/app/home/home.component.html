@@ -9,7 +9,7 @@
     tourAnchor="id5"
   >
     <!-- banner default  -->
-    <div fxLayout="column" *ngIf="!this.showBanner || !this.isDesktop">
+    <div fxLayout="column"  fxHide fxShow.gt-sm  *ngIf="!this.showBanner || !this.isDesktop">
       <!-- <button mat-raised-button color="primary" [routerLink]="['/dashboard']">
         <fa-icon icon="tachometer-alt"></fa-icon>&nbsp;&nbsp;
         {{'Home_Component.btnDashboard'| translate}}

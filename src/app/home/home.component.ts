@@ -1,7 +1,8 @@
 /** Angular Imports */
-import { Component, HostListener, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { Observable } from 'rxjs';
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+import {Observable, Subscription} from 'rxjs';
 import { startWith, map } from 'rxjs/operators';
 
 
@@ -27,7 +28,7 @@ import { split } from 'lodash';
 })
 
 
-export class HomeComponent implements OnInit {
+export class HomeComponent implements OnInit, OnDestroy {
 
   /** Activity Form. */
   activityForm: any;
@@ -37,28 +38,31 @@ export class HomeComponent implements OnInit {
   filteredActivities: Observable<any[]>;
   /** All User Activities. */
   allActivities: any[] = activities;
-  //** Data for banner  */
-  showBanner: boolean = false
+  // ** Data for banner  */
+  showBanner = false;
   title: string;
-  childBannerData = new ChildBannerData()
+  childBannerData = new ChildBannerData();
+
+  /** Subscription to breakpoint observer for handset. */
+  isHandset$: Observable<boolean> = this.breakpointObserver
+    .observe(Breakpoints.Handset)
+    .pipe(map((result) => result.matches));
 
   /** Screem size check */
   screenSize: any;
   isDesktop: boolean;
+  isHandset: boolean;
+  /** Subscription to progress bar. */
+  isHandset_: Subscription;
 
   /**
    * @param {AuthenticationService} authenticationService Authentication Service.
-   * @param {FormBuilder} formBuilder Form Builder.
+   * @param breakpointObserver
+   * @param tourService
    */
-
-
-
-
   constructor(private authenticationService: AuthenticationService,
-    private detectDevice: DeviceDetectorService,
-    private tourService: TourService) {
-    this.isDesktop = this.detectDevice.isDesktop();
-  }
+              private breakpointObserver: BreakpointObserver,
+              private tourService: TourService) {}
 
   // @HostListener('window:resize', ['$event'])
   // onResize(event:any) {
@@ -78,20 +82,23 @@ export class HomeComponent implements OnInit {
   ngOnInit() {
     const credentials = this.authenticationService.getCredentials();
 
-    this.childBannerData.userName = split("credentials.staffDisplayName",',')[1]?.trim();
-    console.log(split("credentials.staffDisplayName",',')[1]?.trim());
+    this.childBannerData.userName = split('credentials.staffDisplayName', ',')[1]?.trim();
+    console.log(split('credentials.staffDisplayName', ',')[1]?.trim());
 
     bannerData.some(d => {
       if (d.office === credentials.officeId) {
         this.showBanner = true;
         this.childBannerData.title = d.title;
       }
-    })
+    });
     this.setFilteredActivities();
-    this.screenSize = window.innerWidth
+    // this.screenSize = window.innerWidth;
     // console.log('Screen size: ', this.screenSize)
 
-
+    this.isHandset_ = this.isHandset$.subscribe(isHandset => {
+      this.isHandset = isHandset;
+      this.isDesktop = !isHandset;
+    });
   }
 
   /**
@@ -114,5 +121,7 @@ export class HomeComponent implements OnInit {
     return this.allActivities.filter(activity => activity.activity.toLowerCase().indexOf(filterValue) === 0);
   }
 
-
+  ngOnDestroy() {
+  this.isHandset_.unsubscribe();
+  }
 }
