@@ -5,7 +5,7 @@
     z-index: 1000;
     display: flex;
     justify-content: space-between;
-    padding: 1rem;
+    padding: 1rem 1.5rem;
     background-color: white;
     -webkit-box-shadow: 3px 3px 5px 6px #ccc;  /* Safari 3-4, iOS 4.0.2 - 4.2, Android 2.3+ */
     -moz-box-shadow: 3px 3px 5px 6px #ccc;  /* Firefox 3.5 - 3.6 */
@@ -23,6 +23,7 @@
       button {
         position: relative;
         top: -16px;
+        color: #fff;
       }
     }
   }
