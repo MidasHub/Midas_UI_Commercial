@@ -3,10 +3,10 @@
   // background: linear-gradient(-90deg, rgba(198, 40, 40, 1), rgba(198, 40, 40, 0.5));
   background: #ececec;;
   position: fixed;
-  //top: 4px;
+  top: 4px;
   z-index: 9000;
   width: 100%;
-  overflow: auto;
+  overflow: none;
 
   .mat-toolbar {
     background: transparent;
