@@ -53,30 +53,30 @@
 
   <mat-card-content fxLayout="column"  fxLayoutAlign="center stretch">
 <!--  Show các số liệu tổng  -->
-    <mat-card class="sum_area">
+    <mat-card class="sum-area">
 
       <mat-card-content fxLayout="column"  fxLayout.gt-sm="row"
                         fxLayoutAlign="center stretch" fxLayoutAlign.gt-sm="space-evenly center"
                         fxLayoutGap="2%" >
-        <div fxLayout="row" fxFlex="18%" class="sum-item">
+        <div fxLayout="row wrap" fxFlex="18%" class="sum-item">
           <img src="assets/images/icons/transaction_total.svg" />
           <div fxLayout="column">
-            <span class="sum_value">{{ filterData?.length }}</span>
-            <span class="sum_lable">Tổng giao dịch </span>
+            <span class="sum-value">{{ filterData?.length }}</span>
+            <span class="sum-lable">Tổng giao dịch </span>
           </div>
         </div>
         <div fxLayout="row wrap" fxFlex="20%" class="sum-item">
           <img src="assets/images/icons/money.svg" />
           <div  fxLayout="column">
-            <span class="sum_value">{{ totalTerminalAmount | money }}</span>
-            <span class="sum_lable">Tổng tiền giao dịch</span>
+            <span class="sum-value">{{ totalTerminalAmount | money }}</span>
+            <span class="sum-lable">Tổng tiền giao dịch</span>
           </div>
         </div>
         <div fxLayout="row wrap" fxFlex="20%" class="sum-item">
           <img src="assets/images/icons/transaction.svg" />
           <div fxLayout="column">
-            <span class="sum_value">{{ totalFeeAmount | money }}</span>
-            <span class="sum_lable">Phí thu được ({{ (totalFeeAmount / totalTerminalAmount) * 100 | number: "1.0-2" }}%)</span>
+            <span class="sum-value">{{ totalFeeAmount | money }}</span>
+            <span class="sum-lable">Phí thu được ({{ (totalFeeAmount / totalTerminalAmount) * 100 | number: "1.0-2" }}%)</span>
           </div>
         </div>
         <!-- <div fxLayout="row wrap" *midasHasPermission="'POS_UPDATE'" fxFlex="20%" class="sum-item">
@@ -89,15 +89,15 @@
         <div *midasHasPermission="'POS_UPDATE'" fxLayout="row wrap" fxFlex="20%" class="sum-item">
           <img src="assets/images/icons/pnlAmount.svg" />
           <div fxLayout="column">
-            <span class="sum_value">{{ totalPnlAmount | money }}</span>
-            <span class="sum_lable">PNL</span>
+            <span class="sum-value">{{ totalPnlAmount | money }}</span>
+            <span class="sum-lable">PNL</span>
           </div>
         </div>
       </mat-card-content>
     </mat-card>
 <!--  Kết thúc  -->
 <!--  Các điều kiện tìm kiếm  -->
-    <mat-accordion class="search_area">
+    <mat-accordion class="search-area">
       <mat-expansion-panel expanded="false" (opened)="panelOpenState = true" (closed)="panelOpenState = false">
         <mat-expansion-panel-header>
           <mat-panel-title> Xem theo </mat-panel-title>
@@ -360,17 +360,17 @@
       <ng-container matColumnDef="expandedDetail">
         <td mat-cell fxShow fxHide.gt-md *matCellDef="let element" [attr.colspan]="displayedColumns.length">
           <div class="example-element-detail" [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
-            <div class="example-element-description" fxLayout="column">
-              <div><span style="font-weight: bold"> Loại giao dịch :</span>&nbsp;{{ element.productId }}</div>
-              <div><span style="font-weight: bold">Người tạo :</span> {{ element.createdByName }}</div>
-              <div><span style="font-weight: bold">Máy bán hàng :</span> {{ element.terminalId }}</div>
-              <div>
+            <ul class="example-element-description" fxLayout="column">
+              <li><span style="font-weight: bold"> Loại giao dịch :</span>&nbsp;{{ element.productId }}</li>
+              <li><span style="font-weight: bold">Người tạo :</span> {{ element.createdByName }}</li>
+              <li><span style="font-weight: bold">Máy bán hàng :</span> {{ element.terminalId }}</li>
+              <li>
                 <span style="font-weight: bold"> Ngày giao dịch :</span>&nbsp; &nbsp;{{
                 element.txnDate | date: "dd-MM-yyyy HH:ss"
                 }}
-              </div>
-              <div><span style="font-weight: bold"> Số giao dịch :</span>&nbsp; &nbsp;{{ element.trnRefNo }}</div>
-              <div>
+              </li>
+              <li><span style="font-weight: bold"> Số giao dịch :</span>&nbsp; &nbsp;{{ element.trnRefNo }}</li>
+              <li>
                 <span style="font-weight: bold"> Trạng thái:</span>&nbsp; &nbsp;
                 <span [ngSwitch]="element.status">
                   <img *ngSwitchCase="'C'" src="assets/images/icons/check.svg" />
@@ -378,18 +378,23 @@
                   <img *ngSwitchCase="'V'" src="assets/images/icons/cancel.svg" />
                   <img *ngSwitchDefault src="assets/images/icons/question.svg" />
                 </span>
-              </div>
-              <div>
-                <span style="font-weight: bold"> Phí thu được :</span>&nbsp; &nbsp;{{ element.feeAmount | money }}
-              </div>
-              <div><span style="font-weight: bold"> SP vốn :</span>&nbsp; &nbsp;{{ element.cogsAmount | money }}</div>
-              <div *midasHasPermission="'POS_UPDATE'">
+              </li>
+              <li>
+                 <span style="font-weight: bold"> Phí thu được :</span>&nbsp; &nbsp;{{ element.feeAmount | money }}
+              </li>
+              <li><span style="font-weight: bold"> SP vốn :</span>&nbsp; &nbsp;{{ element.cogsAmount | money }}</li>
+              <li *midasHasPermission="'POS_UPDATE'">
                 <span style="font-weight: bold"> PNL :</span>&nbsp; &nbsp;{{ element.pnlAmount | money }}
-              </div>
-            </div>
+              </li>
+            </ul>
           </div>
         </td>
       </ng-container>
+<!--  Phần render table gồm:
+        - Header
+        - Dòng thông tin bình thường
+        - Dòng thông tin mở rông cho mobile UI
+-->
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr
         mat-row
@@ -399,17 +404,19 @@
         (click)="expandedElement = expandedElement === element ? null : element"
       ></tr>
       <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
+<!--  Kết thúc    -->
     </table>
   </div>
-
-<!--  Kết thúc  -->
-    <mat-paginator
+  <mat-paginator
       paginator
       [length]="filterData?.length"
       [pageSize]="10"
       [pageSizeOptions]="[10, 25, 50, 100]"
       showFirstLastButtons
     ></mat-paginator>
+
+<!--  Kết thúc tables -->
+
   </mat-card-content>
 
 
