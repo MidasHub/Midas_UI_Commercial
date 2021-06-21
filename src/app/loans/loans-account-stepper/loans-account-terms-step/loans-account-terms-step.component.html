@@ -4,7 +4,7 @@
 
       <mat-form-field fxFlex="48%">
         <mat-label>Principal {{loansAccountProductTemplate?.currency.displaySymbol}}</mat-label>
-        <input type="number" matInput formControlName="principal">
+        <input type="number" matInput formControlName="principal"  >
         <mat-error *ngIf="loansAccountTermsForm.controls.principal.hasError('required')">
           Principal is <strong>required</strong>
         </mat-error>
@@ -42,7 +42,7 @@
 
       <mat-form-field fxFlex="48%">
         <mat-label>First repayment on</mat-label>
-        <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="repaymentsPicker"
+        <input matInput [min]="minDate" [matDatepicker]="repaymentsPicker"
           formControlName="repaymentsStartingFromDate">
         <mat-datepicker-toggle matSuffix [for]="repaymentsPicker"></mat-datepicker-toggle>
         <mat-datepicker #repaymentsPicker></mat-datepicker>
@@ -71,8 +71,8 @@
       </mat-form-field>
 
       <mat-form-field fxFlex="48%" *ngIf="loansAccountTermsForm.controls.repaymentFrequencyType.value == 2">
-        <mat-label>Select On</mat-label>
-        <mat-select formControlName="repaymentFrequencyNthDayType" required>
+        <mat-label>Select Week in Month</mat-label>
+        <mat-select formControlName="repaymentFrequencyNthDayType" >
           <mat-option
             *ngFor="let repaymentFrequencyNthDayType of repaymentFrequencyNthDayTypeData"
             [value]="repaymentFrequencyNthDayType.id">
@@ -81,9 +81,9 @@
         </mat-select>
       </mat-form-field>
 
-      <mat-form-field fxFlex="48%" *ngIf="loansAccountTermsForm.controls.repaymentFrequencyType.value == 2">
-        <mat-label>Select Day</mat-label>
-        <mat-select formControlName="repaymentFrequencyDayOfWeekType" required>
+      <mat-form-field fxFlex="48%" *ngIf="loansAccountTermsForm.controls.repaymentFrequencyType.value == 2 && loansAccountTermsForm.controls.repaymentFrequencyNthDayType.value != ''" >
+        <mat-label>Select Day in week </mat-label>
+        <mat-select formControlName="repaymentFrequencyDayOfWeekType" >
           <mat-option
             *ngFor="let repaymentFrequencyDayOfWeekType of repaymentFrequencyDaysOfWeekTypeData"
             [value]="repaymentFrequencyDayOfWeekType.id">
