@@ -1,7 +1,7 @@
 #midas-manage-transaction {
   padding: 1rem 1rem;
 
-  .sum_area {
+  .sum-area {
     margin-top: 1rem;
 
     .sum-item {
@@ -12,18 +12,18 @@
       div {
         padding: 5px;
 
-        .sum_value {
+        .sum-value {
           font-size: 1.5rem;
         }
 
-        .sum_label {
+        .sum-label {
           font-size: 0.875rem;
         }
       }
     }
   }
 
-  .search_area {
+  .search-area {
     padding: 1rem 0;
   }
 
@@ -50,20 +50,56 @@
     min-height: 64px;
   }
 
-  table {
-    width: 100%;
+
+  .productId {
+    background-color: #1fb050;
+    border-radius: 10px;
+    padding: 8px;
+    color: white;
   }
 
-  tr.example-detail-row {
-    height: 0;
+  .red_text {
+    color: red;
+    font-weight: bold;
+    word-wrap: break-word;
   }
 
-  .mat-row:nth-child(4n + 1) {
+  .blue_text {
+    color: blue;
+    font-weight: bold;
+    word-wrap: break-word;
+  }
+
+  .green_text {
+    color: green;
+    font-weight: bold;
+    word-wrap: break-word;
+  }
+}
+
+#transactionData {
+  width: 100%;
+
+  .mat-header-cell,
+  .mat-footer-cell {
+    padding: 5px 5px;
+  }
+
+  .mat-cell {
+    padding: 0 5px;
+    min-height: 1.5rem;
+  }
+
+  .mat-row:nth-child(2n + 1) {
     background: #cef0f5 !important;
   }
 
   .mat-row:not(:nth-child(2n + 1)) {
     background-color: #fff !important;
+  }
+
+  .example-detail-row {
+    height: 0;
   }
 
   .example-element-row td {
@@ -98,36 +134,5 @@
 
   .example-element-description-attribution {
     opacity: 0.5;
-  }
-
-  .productId {
-    background-color: #1fb050;
-    border-radius: 10px;
-    padding: 8px;
-    color: white;
-  }
-
-  .red_text {
-    color: red;
-    font-weight: bold;
-    word-wrap: break-word;
-  }
-
-  .blue_text {
-    color: blue;
-    font-weight: bold;
-    word-wrap: break-word;
-  }
-
-  .green_text {
-    color: green;
-    font-weight: bold;
-    word-wrap: break-word;
-  }
-
-  th.mat-header-cell,
-  td.mat-cell,
-  td.mat-footer-cell {
-    padding: 5px 10px;
   }
 }

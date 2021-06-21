@@ -1,24 +1,31 @@
-.container {
-    .action-button{
+#terminal-page {
+  width: 100%;
+  padding: 1rem;
+
+  .container {
+    .action-button {
       margin-left: auto;
     }
-    .search-button{
+
+    .search-button {
       min-width: 30px;
       margin: 4px;
     }
   }
-  
+
   table {
     tr.select-row:hover {
       cursor: pointer;
     }
   }
-  .fixNumber{
+
+  .fixNumber {
     text-align: center;
     justify-content: center;
   }
 
-  .fixStatus{
+  .fixStatus {
     text-align: center;
     justify-content: center;
   }
+}
