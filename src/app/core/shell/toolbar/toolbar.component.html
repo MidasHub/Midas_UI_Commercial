@@ -1,4 +1,5 @@
-<mat-toolbar fxLayout="row" color="primary" id="midas-toolbar">
+<div id="midas-toolbar" class="mat-elevation-z8">
+<mat-toolbar fxLayout="row"  >
 <!--  <div class="app-brand m-r-20" [routerLink]="['/home']" *ngIf="!this.sidenav.opened" tourAnchor="toolbar-1">-->
   <div class="app-brand m-r-20" [routerLink]="['/home']" *ngIf="this.isDesktop" tourAnchor="toolbar-1">
     <img src="../../../../assets/images/Midas-logo.png" alt="app-logo" class="app-logo" />
@@ -136,7 +137,7 @@
     fxLayoutGap="0.5rem"
   >
     <div fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="0.5rem">
-      <span style="color: black">{{ userFullname }}</span>
+      <span fxHide fxShow.gt-lg style="color: black; font-size: 1rem;">{{ userFullname }}</span>
       <button
         mat-mini-fab
         fxHide.lt-md
@@ -312,3 +313,4 @@
   <button mat-menu-item [routerLink]="['/xbrl']">{{ "Toolbar_Component.lblXBRL" | translate }}</button>
 </mat-menu>
 <!-- end admin -->
+</div>
