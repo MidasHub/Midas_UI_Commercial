@@ -18,7 +18,7 @@
   </mat-sidenav>
 
   <!-- Content -->
-  <mat-sidenav-content>
+  <mat-sidenav-content fxLayout="column" fxLayoutAlign="start stretch">
 
     <!-- Progress Bar -->
     <mat-progress-bar [mode]="progressBarMode" class="progressBarCss"></mat-progress-bar>
@@ -26,7 +26,7 @@
 
     <!-- Toolbar -->
     <midas-toolbar [sidenav]="sidenav" (collapse)="toggleCollapse($event)"
-    class="toolBarCss"
+
 
     ></midas-toolbar>
     <!-- Breadcrumb -->
