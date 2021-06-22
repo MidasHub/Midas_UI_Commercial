@@ -1,0 +1,176 @@
+<mat-divider></mat-divider>
+  <mat-card class="mat-elevation-z2 batchTxnCss">
+    <mat-card-content>
+      <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column"  [formGroup]="formDate">
+        <mat-form-field fxFlex="31%">
+          <mat-label>Từ ngày</mat-label>
+          <input matInput [matDatepicker]="transactionDateFromPicker" formControlName="fromDate" />
+          <mat-datepicker-toggle matSuffix [for]="transactionDateFromPicker"></mat-datepicker-toggle>
+          <mat-datepicker #transactionDateFromPicker></mat-datepicker>
+        </mat-form-field>
+
+        <mat-form-field fxFlex="31%">
+          <mat-label>Đến ngày</mat-label>
+          <input matInput [matDatepicker]="transactionDateToPicker" formControlName="toDate" />
+          <mat-datepicker-toggle matSuffix [for]="transactionDateToPicker"></mat-datepicker-toggle>
+          <mat-datepicker #transactionDateToPicker></mat-datepicker>
+        </mat-form-field>
+
+        <button
+          *ngIf="fromDateAndToDate"
+          (click)="searchByTerminalId()"
+          style="align-self: center"
+          color="primary"
+          mat-raised-button
+        >
+          Tìm kiếm &nbsp;<i class="fa fa-search"></i>
+        </button>
+      </div>
+
+      <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column"  [formGroup]="formFilter">
+        <!-- <mat-form-field fxFlex="31%">
+          <mat-label>Tìm theo terminal ID</mat-label>
+          <input type="text" placeholder="Nhập terminal ID" formControlName="terminal_id"
+            matInput #querySearchAll
+          >
+        </mat-form-field> -->
+
+        <mat-form-field fxFlex="31">
+          <mat-label>Tìm theo terminal ID</mat-label>
+          <input matInput formControlName="terminalId">
+        </mat-form-field>
+
+        <mat-form-field fxFlex="31">
+          <mat-label>Tìm theo người nhận</mat-label>
+          <input matInput formControlName="receiverExternalId">
+        </mat-form-field>
+
+        <!-- <mat-form-field fxFlex="31%">
+          <mat-label>Tìm theo người nhận</mat-label>
+          <input type="text" placeholder="Nhập tên người nhận" formControlName="receiver"
+            matInput #querySearchAll
+          >
+        </mat-form-field> -->
+      </div>
+
+      <div class="example-table-container mat-elevation-z8" fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-sm="column">
+        <table mat-table class="mat-elevation-z8 example-table" multiTemplateDataRows [dataSource]="dataShow" matSort>
+
+          <ng-container matColumnDef="terminalId">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>TERMINAL ID</th>
+            <td mat-cell *matCellDef="let value">
+                <a [routerLink]=""
+                (click)="openDialog(value)"
+                > {{ value.terminalId}}</a>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="senderExternalId">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>NGƯỜI GỬI</th>
+            <td mat-cell *matCellDef="let value" style="word-break: break-word;">
+              <label>
+                {{ value.senderExternalId }}
+              </label>
+              <br />
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="receiverExternalId">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>NGƯỜI NHẬN</th>
+            <td mat-cell *matCellDef="let value" style="word-break: break-word;">
+              <label>
+                {{ value.receiverExternalId }}
+              </label>
+              <br />
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="rate">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>RATE</th>
+            <td mat-cell *matCellDef="let value" style="word-break: break-word;">
+              <label>
+                {{ value.rate }}
+              </label>
+              <br />
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="status">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>TRẠNG THÁI</th>
+            <td mat-cell *matCellDef="let value" style="word-break: break-word;">
+              <label>
+                {{ value.status }}
+              </label>
+              <br />
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="createdBy">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>NGƯỜI TẠO</th>
+            <td mat-cell *matCellDef="let value" style="word-break: break-word;">
+              <label>
+                {{ value.createdBy }}
+              </label>
+              <br />
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="createdDate">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>NGÀY TẠO</th>
+            <td mat-cell fxHide fxShow.gt-md style="word-wrap: break-word;" *matCellDef="let value">
+              <label>
+                {{ value.createdDate | date: "dd-MM-yyyy" }}
+              </label>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="expandedDetail">
+            <td mat-cell fxShow fxHide.gt-md *matCellDef="let element" [attr.colspan]="displayedColumns.length">
+              <div class="example-element-detail" [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
+                <div class="example-element-description" fxLayout="column"></div>
+              </div>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr
+            mat-row
+            *matRowDef="let element; columns: displayedColumns"
+            class="example-element-row"
+            [class.example-expanded-row]="expandedElement === element"
+            (click)="expandedElement = expandedElement === element ? null : element"
+          ></tr>
+          <!-- <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr> -->
+        </table>
+      </div>
+
+      <!-- <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column" style="display: flex; justify-content: center; margin: 15px">
+        <button mat-button type="button" style="background: #646464; color: #FFFFFF;"
+        (click)="reset()"
+        > Hủy
+        </button>
+        <button mat-button type="button" style="background: #C3291C; color: #FFFFFF;"
+        (click)="createTransfer()"
+        > Tạo biên bản
+        </button>
+      </div> -->
+
+    </mat-card-content>
+    <mat-paginator #Table2Paginator="matPaginator"
+      [length]="dataFilter.length"
+      [pageSize]="10"
+      [pageSizeOptions]="[10, 25, 50, 100]"
+      showFirstLastButtons>
+    </mat-paginator>
+    <mat-menu #transactionMenu="matMenu" [overlapTrigger]="false" style="width: 50px">
+      <ng-template matMenuContent let-form="form" style="width: 50px">
+        <button (click)="deleteRow(form)" mat-menu-item>
+          <img style="margin-top: 5px" src="assets/images/icons/remove.svg" />
+          &nbsp;Xóa
+        </button>
+      </ng-template>
+    </mat-menu>
+    <!-- <div *ngIf="isLoading" style="display: flex; justify-content: center; align-items: center; background: white">
+      <mat-progress-spinner color="warn" mode="indeterminate"> </mat-progress-spinner>
+    </div> -->
+  </mat-card>

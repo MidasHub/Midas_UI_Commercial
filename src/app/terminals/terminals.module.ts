@@ -14,6 +14,8 @@ import { EditTerminalsComponent } from './edit-terminals/edit-terminals.componen
 import { CreateTerminalsComponent } from './create-terminals/create-terminals.component';
 import { TransferTerminalComponent } from './transfer-terminal/transfer-terminal.component';
 import { ViewLimitTerminalComponent } from './view-limit-terminal/view-limit-terminal.component';
+import { RequestTransferComponent } from './request-transfer/request-transfer.component';
+import { RateTerminalComponent } from './rate-terminal/rate-terminal.component';
 
 
 @NgModule({
@@ -30,8 +32,10 @@ import { ViewLimitTerminalComponent } from './view-limit-terminal/view-limit-ter
     EditTerminalsComponent,
     CreateTerminalsComponent,
     TransferTerminalComponent,
-    ViewLimitTerminalComponent
-  ],
+    ViewLimitTerminalComponent,
+    RequestTransferComponent,
+    RateTerminalComponent
+    ],
   providers: [DatePipe]
 })
 export class TerminalsModule { }
