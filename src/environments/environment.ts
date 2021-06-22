@@ -30,6 +30,8 @@ export const environment = {
   ICDocumentURL:te.documentURL,
   oauth: {
     enabled: false,  // For connecting to Midas using OAuth2 Authentication change the value to true
+    clientID:'community-app',
+    clientSecrect:'123',
     serverUrl: ''
   },
   defaultLanguage: 'vi-VN',
