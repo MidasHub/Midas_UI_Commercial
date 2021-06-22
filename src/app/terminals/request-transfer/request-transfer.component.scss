@@ -1,0 +1,14 @@
+::ng-deep .mat-sort-header-container {
+  display:flex;
+  justify-content:center;
+}
+
+mat-raised-button, td.mat-raised-button {
+  border-bottom-width: 1px !important;
+  border-bottom-style: solid !important;
+  border-bottom-color: rgba(0, 0, 0, 0.12) !important;
+}
+
+.mat-cell {
+  text-align: center;
+}
