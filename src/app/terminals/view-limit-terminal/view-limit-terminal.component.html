@@ -59,9 +59,10 @@
     <table mat-table class="mat-elevation-z8" (matSortChange)="sortData($event)" [dataSource]="terminalList" matSort>
 
       <ng-container matColumnDef="officeName">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>Chi nhánh</th>
-        <td mat-cell
-            *matCellDef="let terminal"> {{ terminal.officeName}} </td>
+        <th  mat-header-cell *matHeaderCellDef mat-sort-header> Chi nhánh</th>
+        <td  mat-cell
+            *matCellDef="let terminal"> {{ terminal.officeName}}
+          </td>
       </ng-container>
 
       <ng-container matColumnDef="terminalId">
