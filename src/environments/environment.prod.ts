@@ -29,9 +29,11 @@ export const environment = {
   IcGatewayApiUrlPrefix: '/ic-app',
   IcGatewayTenantId: te.icT,
   ICDocumentURL:te.documentURL,
-  
+
   oauth: {
     enabled: false,  // For connecting to Midas using OAuth2 Authentication change the value to true
+    clientID:'community-app',
+    clientSecrect:'123',
     serverUrl: ''
   },
   defaultLanguage: 'vi-VN',
