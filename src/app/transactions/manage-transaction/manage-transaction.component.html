@@ -95,12 +95,18 @@
       <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column" [formGroup]="formFilter">
         <mat-form-field fxFlex="18%" *midasHasPermission="'ALL_FUNCTIONS'">
           <mat-label>Chi nhánh</mat-label>
-          <mat-select formControlName="officeId">
-            <mat-option *ngFor="let type of offices" [value]="type.officeId">
-              {{ type.name }}
-            </mat-option>
-          </mat-select>
+          <input placeholder="Tìm chi nhánh" formControlName="officeId"
+            matInput
+            (click)="this.resetAutoCompleteOffice()"
+            [matAutocomplete]="officeAutocomplete"
+          />
         </mat-form-field>
+
+        <mat-autocomplete #officeAutocomplete="matAutocomplete" [displayWith]="displayOffice">
+          <mat-option *ngFor="let office of officesOptions | async" [value]="office">
+            {{ displayOffice(office) }}
+          </mat-option>
+        </mat-autocomplete>
         <mat-form-field fxFlex="18%">
           <mat-label>Loại gia dịch</mat-label>
           <mat-select formControlName="productId">
