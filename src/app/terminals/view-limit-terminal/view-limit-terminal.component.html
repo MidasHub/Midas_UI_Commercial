@@ -70,9 +70,10 @@
            [dataSource]="terminalList" >
 
       <ng-container matColumnDef="officeName">
-        <th fxHide mat-header-cell *matHeaderCellDef mat-sort-header> Chi nhánh</th>
-        <td fxHide mat-cell
-            *matCellDef="let terminal"> {{ terminal.officeName}} </td>
+        <th  mat-header-cell *matHeaderCellDef mat-sort-header> Chi nhánh</th>
+        <td  mat-cell
+            *matCellDef="let terminal"> {{ terminal.officeName}}
+          </td>
       </ng-container>
 
       <ng-container matColumnDef="terminalId">
