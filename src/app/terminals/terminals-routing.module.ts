@@ -16,6 +16,8 @@ import { TerminalsResolver } from './common-resolvers/terminals.resolver';
 import { CreateTerminalsResolver } from './common-resolvers/CreateTerminalsResolver';
 import { ViewLimitTerminalComponent } from './view-limit-terminal/view-limit-terminal.component';
 import { LimitTerminalsResolver } from './common-resolvers/LimitTerminals.resolver';
+import { RequestTransferComponent } from './request-transfer/request-transfer.component';
+import { RateTerminalComponent } from './rate-terminal/rate-terminal.component';
 
 /** Groups Routes */
 const routes: Routes = [
@@ -43,6 +45,16 @@ const routes: Routes = [
           resolve:{
             terminalData: LimitTerminalsResolver,
           }
+        },
+        {
+          path: 'request',
+          component: RequestTransferComponent,
+          data: { title: extract('Danh sách request transfer'), breadcrumb: 'Danh sách request transfer', routeParamBreadcrumb: false }
+        },
+        {
+          path: 'rate',
+          component: RateTerminalComponent,
+          data: { title: extract('Chi tiết phí'), breadcrumb: 'Chi tiết phí', routeParamBreadcrumb: false }
         },
         {
           path: ':terminalId',
