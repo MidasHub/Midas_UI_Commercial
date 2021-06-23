@@ -108,7 +108,6 @@ export class RollTermScheduleDialogComponent implements OnInit {
     this.bookingService.getBookingInternalByRollTermId(rollTermId).subscribe((result) => {
       this.isLoading = false;
       this.dataSource = result?.result.bookingInternalResponseDto?.listBookingInternalEntities;
-
       this.transactionInfo = result?.result.bookingInternalResponseDto?.billPosTransactionDailyEntity;
       this.transactionInfo.feeAmount = (
         (this.transactionInfo.feePercentage / 100) *
@@ -119,7 +118,7 @@ export class RollTermScheduleDialogComponent implements OnInit {
       this.dataSource.forEach((element) => {
         this.transactionInfo.rollTermId = element.rollTermId;
         this.transactionInfo.totalAmountPaid = element.totalPaid;
-        this.transactionInfo.totalAmountGet = element.totalGet;
+        this.transactionInfo.totalAmountGet += element.totalGet;
       });
     });
   }

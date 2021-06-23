@@ -70,9 +70,9 @@
             <mat-form-field>
               <input
                 matInput
+                readonly
                 opened="true"
                 required
-                readonly
                 [matDatepicker]="transactionDatePicker"
                 [(ngModel)]="booking.txnDate"
                 (dateChange)="editBookingRow(booking)"
