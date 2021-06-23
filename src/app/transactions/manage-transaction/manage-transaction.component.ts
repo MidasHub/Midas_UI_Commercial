@@ -311,6 +311,9 @@ export class ManageTransactionComponent implements OnInit {
   }
 
   filterTransaction() {
+    const { permissions } = this.currentUser;
+    const permit_Head = permissions.includes("ALL_FUNCTIONS");
+
     const limit = this.paginator.pageSize;
     const offset = this.paginator.pageIndex * limit;
     const form = this.formFilter.value;
@@ -331,8 +334,14 @@ export class ManageTransactionComponent implements OnInit {
                 return false;
               }
             }
-            if ("officeId".indexOf(key) != -1 && String(v[key]).toUpperCase() != String(form[key].officeId).toUpperCase()) {
-              return false;
+            if ("officeId".indexOf(key) != -1) {
+              let formKeyOfficeId = String(form[key].officeId);
+              if (!permit_Head) {
+                formKeyOfficeId = String(form[key]);
+              }
+              if (String(v[key]).toUpperCase() != formKeyOfficeId) {
+                return false;
+              }
             }
           }
         }
