@@ -295,9 +295,11 @@
               máy bán hàng
             </th>
             <td fxHide fxShow.gt-md mat-cell *matCellDef="let journalEntry" style="word-wrap: break-word; width: 200px">
-              <!-- {{ journalEntry.officeName }} <br /> -->
+              {{ journalEntry.officeName }} <br />
               <span class="blue_text">{{ journalEntry.createdByName }} </span><br />
               <span class="red_text">{{ displayTerminalName(journalEntry.terminalId) }}</span>
+              <!-- <span class="green_text">{{ journalEntry.officeName }} </span> -->
+
             </td>
           </ng-container>
 
