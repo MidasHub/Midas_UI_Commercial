@@ -523,6 +523,8 @@ export class ManageIcTransactionComponent implements OnInit {
         traceNo: element.traceNo,
         batchNo: element.batchNo,
         feeAmount: element.feeAmount,
+        cardType: element.cardType,
+        cardNumber: element.panNumber,
       };
       dataCopy.push(e);
     }
