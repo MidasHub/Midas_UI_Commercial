@@ -657,7 +657,8 @@ export class ManageTransactionComponent implements OnInit {
       toDate = this.datePipe.transform(toDate, dateFormat);
     }
     const form = this.formFilter.value;
-    let query = `fromDate=${fromDate}&toDate=${toDate}&officeName=${form.officeId || "ALL"}`;
+    //let query = `fromDate=${fromDate}&toDate=${toDate}&officeName=${form.officeId || "ALL"}`;
+    let query = `fromDate=${fromDate}&toDate=${toDate}&officeName=${form.officeId.officeId || "ALL"}`;
     const keys = Object.keys(form);
     for (const key of keys) {
       if (key === "userId") {
