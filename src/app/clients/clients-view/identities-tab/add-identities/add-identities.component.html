@@ -108,7 +108,7 @@
     mat-raised-button
     color="primary"
     [mat-dialog-close]="{ data: form, documentTypes: documentTypes, existBin: existBin }"
-    [disabled]="!this.isValidCardNumber && form.contains('expiredDate') && !this.form.valid"
+    [disabled]="form.contains('expiredDate') && !this.form.valid"
   >
     {{ "Shared_Component.FormDialog.btnAdd" | translate }}
   </button>
