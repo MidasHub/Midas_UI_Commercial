@@ -46,7 +46,6 @@ export class ClientsViewComponent implements OnInit {
       clientTemplateData: any,
       clientDatatables: any
     }) => {
-      this.currentUser = this.authenticationService.getCredentials();
 
       this.clientViewData = data.clientViewData.result.clientInfo;
       // this.clientViewData = data.clientViewData;
@@ -56,6 +55,8 @@ export class ClientsViewComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.currentUser = this.authenticationService.getCredentials();
+
     this.route.queryParamMap
       .subscribe((params) => {
         this.typeViewClient = params.get("typeViewClient");

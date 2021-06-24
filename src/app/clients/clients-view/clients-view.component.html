@@ -95,7 +95,8 @@
 
           <span *midasHasPermission="'UPDATE_CLIENT'" class="m-b-10" fxLayoutAlign="center stretch">
             <button mat-raised-button [routerLink]="['edit']"
-            *ngIf="!this.isInterchangeClient && currentUser.officeId == clientViewData.officeId"
+            *ngIf="!this.isInterchangeClient && ( currentUser?.officeId == clientViewData?.officeId
+            || currentUser?.officeId == 1) "
             >
               <i class="fa fa-edit"></i>{{ "Client_Component.ViewClient.btnEdit" | translate }}
             </button>
