@@ -209,7 +209,7 @@ export class BanksService {
         result.next({ ...res, existBin: false });
       }
 
-      this.getData();
+      // this.getData();
     });
     return result;
   }
