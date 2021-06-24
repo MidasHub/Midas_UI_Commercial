@@ -72,15 +72,72 @@ export class AddIdentitiesComponent implements OnInit {
     log.debug('The data import from bankService: ', this.documentCardBanks, this.documentCardTypes);
 
     this.form.get('documentTypeId').valueChanges.subscribe((value: any) => {
+
       const type = this.documentTypes.find(v => v.id === value);
       if (type && Number(type.id) >= 38 && Number(type.id) <= 57) {
+        this.form.removeControl('documentKey');
+        this.form.addControl('documentKey', new FormControl('', [Validators.required,
+          Validators.minLength(16), Validators.maxLength(16)]));
         this.form.addControl('documentCardBank', new FormControl('', [Validators.required]));
         this.form.addControl('documentCardType', new FormControl('', [Validators.required]));
         this.form.addControl('dueDay', new FormControl('', [Validators.required, Validators.max(31), Validators.min(1)]));
         this.form.addControl('expiredDate', new FormControl('', [Validators.required]));
         this.form.addControl('limitCard', new FormControl(0, [Validators.required]));
         this.form.addControl('classCard', new FormControl('', [Validators.required]));
+        this.form.addControl('isValid', new FormControl(false));
+
+        this.form.get('documentKey').valueChanges.subscribe((value: any) => {
+          if (value.length === 6 || value.length === 16 ) {
+            const typeDocument = this.form.get('documentTypeId').value;
+            const type = this.documentTypes.find(v => v.id === typeDocument);
+            if (type && Number(type.id) >= 38 && Number(type.id) <= 57) {
+
+              log.debug('Cần tìm thông bincode: ', value, ' - 6 first: ', value.slice(0, 6));
+
+              this.bankService?.getInfoBinCode(value.slice(0, 6)).subscribe((res: any) => {
+                if (res) {
+                  if (res.existBin) {
+                    const {bankCode, cardType} = res;
+                    this.existBin = res.existBin;
+                    this.form.get('documentCardBank').setValue(bankCode);
+                    this.form.get('documentCardType').setValue(cardType);
+                  } else {
+                    this.existBin = false;
+                    this.alterService.alert({
+                      message: 'Đầu thẻ chưa tồn tại trong hệ thống, vui lòng liên hệ IT Support!',
+                      msgClass: 'cssDanger'
+                    });
+                  }
+                }
+              });
+            }
+          }
+          if (value.length === 16 && environment.applyLuhnAlgorithm ) {
+            console.log (this.luhnService.isLuhnId(value));
+            console.log ('show button', (!this.form.valid || this.form.pristine) && !this.isValidCardNumber);
+            if (this.luhnService.isLuhnId(value)) {
+
+              this.isValidCardNumber = this.luhnService.isLuhnId(value);
+              this.alterService.alert({
+                message: 'Chúc mừng! Đây là số thẻ đúng.',
+                msgClass: 'cssInfo'
+              });
+            } else {
+              this.isValidCardNumber = this.luhnService.isLuhnId(value);
+              this.alterService.alert({
+                message: 'Đây không phải là số thẻ đúng. Vui lòng kiểm tra lại!',
+                msgClass: 'cssDanger'
+              });
+            }
+
+            this.form.get('isValid').setValue(this.isValidCardNumber);
+
+          }
+        });
+
       } else {
+        this.form.addControl('documentKey', new FormControl(''));
+        this.form.removeControl('isValid');
         this.form.removeControl('documentCardBank');
         this.form.removeControl('documentCardType');
         this.form.removeControl('dueDay');
@@ -90,51 +147,7 @@ export class AddIdentitiesComponent implements OnInit {
       }
     });
 
-    this.form.get('documentKey').valueChanges.subscribe((value: any) => {
-      if (value.length === 6 || value.length === 16 ) {
-        const typeDocument = this.form.get('documentTypeId').value;
-        const type = this.documentTypes.find(v => v.id === typeDocument);
-        if (type && Number(type.id) >= 38 && Number(type.id) <= 57) {
 
-          log.debug('Cần tìm thông bincode: ', value, ' - 6 first: ', value.slice(0, 6));
-
-          this.bankService?.getInfoBinCode(value.slice(0, 6)).subscribe((res: any) => {
-            if (res) {
-              if (res.existBin) {
-                const {bankCode, cardType} = res;
-                this.existBin = res.existBin;
-                this.form.get('documentCardBank').setValue(bankCode);
-                this.form.get('documentCardType').setValue(cardType);
-              } else {
-                this.existBin = false;
-                this.alterService.alert({
-                  message: 'Đầu thẻ chưa tồn tại trong hệ thống, vui lòng chọn ngân hàng bên cạnh!',
-                  msgClass: 'cssDanger'
-                });
-              }
-            }
-          });
-        }
-      }
-      if (value.length === 16 && environment.applyLuhnAlgorithm ) {
-        console.log (this.luhnService.isLuhnId(value));
-        console.log ('show button', (!this.form.valid || this.form.pristine) && !this.isValidCardNumber);
-        if (this.luhnService.isLuhnId(value)) {
-
-          this.isValidCardNumber = this.luhnService.isLuhnId(value);
-          this.alterService.alert({
-            message: 'Chúc mừng! Đây là số thẻ đúng.',
-            msgClass: 'cssInfo'
-          });
-        } else {
-          this.isValidCardNumber = this.luhnService.isLuhnId(value);
-          this.alterService.alert({
-            message: 'Đây không phải là số thẻ đúng. Vui lòng kiểm tra lại!',
-            msgClass: 'cssDanger'
-          });
-        }
-      }
-    });
   }
 
 }

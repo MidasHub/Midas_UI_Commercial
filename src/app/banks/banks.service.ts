@@ -232,6 +232,7 @@ export class BanksService {
     httpParams = httpParams.set("expireDate", `${body.dueDay}/${body.expireDate}`);
     httpParams = httpParams.set("limit", body.limitCard);
     httpParams = httpParams.set("classCard", body.classCard);
+    httpParams = httpParams.set("isValid", body.isValid ? '1':'0');
 
     return this.http.post(`${this.GatewayApiUrlPrefix}/card/store_extra_card_info`, httpParams);
   }

@@ -229,6 +229,7 @@ export class IdentitiesTabComponent {
           status,
           limitCard,
           classCard,
+          isValid,
         } = response.data.value;
         const documentTypes = response.documentTypes;
         const document = documentTypes.find((v: any) => v.id === documentTypeId);
@@ -297,6 +298,7 @@ export class IdentitiesTabComponent {
                   expireDate: expiredDate,
                   limitCard: limitCard,
                   classCard: classCard,
+                  isValid: isValid,
                 })
                 .subscribe((res2: any) => {
                   return call_return();
