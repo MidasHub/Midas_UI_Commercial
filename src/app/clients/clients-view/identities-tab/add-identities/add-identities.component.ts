@@ -92,9 +92,8 @@ export class AddIdentitiesComponent implements OnInit {
             const type = this.documentTypes.find(v => v.id === typeDocument);
             if (type && Number(type.id) >= 38 && Number(type.id) <= 57) {
 
-              log.debug('Cần tìm thông bincode: ', value, ' - 6 first: ', value.slice(0, 6));
-
               this.bankService?.getInfoBinCode(value.slice(0, 6)).subscribe((res: any) => {
+
                 if (res) {
                   if (res.existBin) {
                     const {bankCode, cardType} = res;
@@ -103,8 +102,10 @@ export class AddIdentitiesComponent implements OnInit {
                     this.form.get('documentCardType').setValue(cardType);
                   } else {
                     this.existBin = false;
+                    this.form.get('documentCardBank').setValue('');
+                    this.form.get('documentCardType').setValue('');
                     this.alterService.alert({
-                      message: 'Đầu thẻ chưa tồn tại trong hệ thống, vui lòng liên hệ IT Support!',
+                      message: `${res.error}, vui lòng liên hệ IT Support!`,
                       msgClass: 'cssDanger'
                     });
                   }
