@@ -284,6 +284,7 @@
                 [ngModelOptions]="{ standalone: true }"
                 matNativeControl
               >
+                <option value="" disabled selected>Chọn máy bán hàng</option>
                 <option *ngFor="let terminal of transactionInfo.listTerminal" [value]="terminal.terminalId">
                   {{ terminal.terminalName }} - Còn lại: {{ terminal.limitRemain | money }}
                 </option>
