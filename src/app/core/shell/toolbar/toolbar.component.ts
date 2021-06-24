@@ -64,7 +64,7 @@ export class ToolbarComponent implements OnInit {
    */
   ngOnInit() {
     this.currentUser = this.authenticationService.getCredentials();
-    this.userFullname = split(this.currentUser.staffDisplayName, ',')[1].trim();
+    this.userFullname = split(this.currentUser.staffDisplayName, ',')[1]?.trim();
     this.toggleSidenavCollapse(false);
     this.sidenav.toggle(false);
 
