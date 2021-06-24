@@ -206,12 +206,12 @@ export class IdentitiesTabComponent {
   addIdentifier(addOther: boolean) {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.data = {
-      title: "Thêm Thẻ | CMND/CCCD | TK bank",
+      title: 'Thêm Thẻ | CMND/CCCD | TK bank',
       addOther: addOther,
       clientIdentifierTemplate: this.clientIdentifierTemplate,
     };
 
-    dialogConfig.minWidth = 500;
+    dialogConfig.maxWidth = '90%' ;
     // init data for opening
     const addIdentifierDialogRef = this.dialog.open(AddIdentitiesComponent, dialogConfig);
 
