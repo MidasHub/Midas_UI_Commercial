@@ -12,7 +12,7 @@ import te from './checkurl';
 export const environment = {
   production: true,
   isNewBillPos: true,
-  isCommercial:false, //Phiên bản cung cấp cho khách hàng Commercial thì set biến này thành true
+  isCommercial: false, // Phiên bản cung cấp cho khách hàng Commercial thì set biến này thành true
   version: env?.midas_version + '-staging',
   allowServerSwitch: false,
   fineractPlatformTenantId: te.coreT,  // For connecting to server running elsewhere update the tenant identifier
@@ -28,12 +28,12 @@ export const environment = {
   IcGatewayApiUrl: te.icBaseUrl,
   IcGatewayApiUrlPrefix: '/ic-app',
   IcGatewayTenantId: te.icT,
-  ICDocumentURL:te.documentURL,
+  ICDocumentURL: te.documentURL,
 
   oauth: {
     enabled: false,  // For connecting to Midas using OAuth2 Authentication change the value to true
-    clientID:'community-app',
-    clientSecrect:'123',
+    clientID: 'community-app',
+    clientSecrect: '123',
     serverUrl: ''
   },
   defaultLanguage: 'vi-VN',
@@ -46,16 +46,17 @@ export const environment = {
     vi: 'Vietnamese',
   },
   firebase: {
-    apiKey: "AIzaSyAtCSdklLZJKt7t2sjd4edRbofqZL7-UCw",
-    authDomain: "kiotthe-307407.firebaseapp.com",
-    projectId: "kiotthe-307407",
-    databaseURL:"https://kiotthe-307407-default-rtdb.firebaseio.com/",
-    storageBucket: "kiotthe-307407.appspot.com",
-    messagingSenderId: "83286799966",
-    appId: "1:83286799966:web:b46ce89fcbbdf4c0f2e6cf",
-    measurementId: "G-866JPR188B"
+    apiKey: 'AIzaSyAtCSdklLZJKt7t2sjd4edRbofqZL7-UCw',
+    authDomain: 'kiotthe-307407.firebaseapp.com',
+    projectId: 'kiotthe-307407',
+    databaseURL: 'https://kiotthe-307407-default-rtdb.firebaseio.com/',
+    storageBucket: 'kiotthe-307407.appspot.com',
+    messagingSenderId: '83286799966',
+    appId: '1:83286799966:web:b46ce89fcbbdf4c0f2e6cf',
+    measurementId: 'G-866JPR188B'
   },
-  GA_TRACKING_ID:"G-WML6QQ48CQ",
+  GA_TRACKING_ID: 'G-WML6QQ48CQ',
+  applyLuhnAlgorithm: true
 };
 
 // Server URL

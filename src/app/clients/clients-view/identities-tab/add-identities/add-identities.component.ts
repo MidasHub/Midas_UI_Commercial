@@ -6,7 +6,7 @@ import {AlertService} from '../../../../core/alert/alert.service';
 import {BanksService} from '../../../../banks/banks.service';
 
 import { Logger } from '../../../../core/logger/logger.service';
-import { slice } from 'lodash';
+import {environment} from 'environments/environment';
 import {LuhnService} from './luhn.service';
 const log = new Logger('-Add-Identities-');
 
@@ -116,7 +116,7 @@ export class AddIdentitiesComponent implements OnInit {
           });
         }
       }
-      if (value.length === 16) {
+      if (value.length === 16 && environment.applyLuhnAlgorithm ) {
         console.log (this.luhnService.isLuhnId(value));
         console.log ('show button', (!this.form.valid || this.form.pristine) && !this.isValidCardNumber);
         if (this.luhnService.isLuhnId(value)) {
