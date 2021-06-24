@@ -104,13 +104,13 @@ export class ViewLimitTerminalComponent implements OnInit {
     const pageIndex = this.paginator.pageIndex;
     const pageSize = this.paginator.pageSize;
     this.terminalList = this.terminalFilter.slice(pageIndex * pageSize, pageIndex * pageSize + pageSize);
-    this.totalLimitAmount = this.terminalList?.reduce((total: any, num: any) => {
+    this.totalLimitAmount = this.terminalFilter?.reduce((total: any, num: any) => {
       return total + Math.round(num?.limitAmountDefault);
     }, 0);
-    this.totalUsedAmount = this.terminalList?.reduce((total: any, num: any) => {
+    this.totalUsedAmount = this.terminalFilter?.reduce((total: any, num: any) => {
       return total + Math.round(num?.limitAmountMovement);
     }, 0);
-    this.totalBalanceAmount = this.terminalList?.reduce((total: any, num: any) => {
+    this.totalBalanceAmount = this.terminalFilter?.reduce((total: any, num: any) => {
       return total + Math.round(num?.limitRemain);
     }, 0);
     });
