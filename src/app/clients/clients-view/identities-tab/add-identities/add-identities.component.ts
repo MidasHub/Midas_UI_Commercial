@@ -98,14 +98,14 @@ export class AddIdentitiesComponent implements OnInit {
                   if (res.existBin) {
                     const {bankCode, cardType} = res;
                     this.existBin = res.existBin;
-                    this.form.get('documentCardBank').setValue(bankCode);
-                    this.form.get('documentCardType').setValue(cardType);
+                    this.form.get('documentCardBank').patchValue(bankCode);
+                    this.form.get('documentCardType').patchValue(cardType);
                   } else {
                     this.existBin = false;
-                    this.form.get('documentCardBank').setValue('');
-                    this.form.get('documentCardType').setValue('');
+                    this.form.get('documentCardBank').patchValue('');
+                    this.form.get('documentCardType').patchValue('');
                     this.alterService.alert({
-                      message: `${res.error}, vui lòng liên hệ IT Support!`,
+                      message: `Đầu thẻ ${value.slice(0, 6)} chưa tồn tại trong hệ thống, vui lòng liên hệ IT Support!`,
                       msgClass: 'cssDanger'
                     });
                   }
