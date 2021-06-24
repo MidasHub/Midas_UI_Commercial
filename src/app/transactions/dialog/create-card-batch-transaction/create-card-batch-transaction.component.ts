@@ -129,8 +129,8 @@ export class CreateCardBatchTransactionComponent implements OnInit {
               if (res.existBin) {
                 const { bankCode, cardType } = res;
                 this.existBin = res.existBin;
-                this.formDialog.get("bank").setValue(bankCode);
-                this.formDialog.get("cardType").setValue(cardType);
+                this.formDialog.get("bank").patchValue(bankCode);
+                this.formDialog.get("cardType").patchValue(cardType);
               } else {
                 this.existBin = false;
                 this.alterService.alert({
