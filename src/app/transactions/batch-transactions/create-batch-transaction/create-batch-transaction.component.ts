@@ -825,6 +825,8 @@ export class CreateBatchTransactionComponent implements OnInit {
               expireDate: expiredDate,
               limitCard: limitCard,
               classCard: classCard,
+              isValid: false,
+
             })
             .subscribe((res2: any) => {});
         }

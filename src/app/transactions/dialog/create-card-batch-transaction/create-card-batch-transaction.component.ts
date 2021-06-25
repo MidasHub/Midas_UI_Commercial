@@ -172,6 +172,8 @@ export class CreateCardBatchTransactionComponent implements OnInit {
                   expireDate: this.formDialog.get("expiredDate").value,
                   limitCard: this.formDialog.get("limitCard").value,
                   classCard: this.formDialog.get("classCard").value,
+                  isValid: false,
+
                 })
                 .subscribe((res2: any) => {
 

@@ -405,6 +405,8 @@ export class IdentitiesTabComponent {
             expireDate: expiredDate,
             limitCard: limitCard,
             classCard: classCard,
+            isValid: false,
+
           })
           .subscribe((res2: any) => {});
       }
