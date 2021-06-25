@@ -6,11 +6,19 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { BanksService } from 'app/banks/banks.service';
 import {merge} from 'rxjs';
 import {tap} from 'rxjs/operators';
+import {animate, state, style, transition, trigger} from '@angular/animations';
 
 @Component({
   selector: 'midas-view-limit-terminal',
   templateUrl: './view-limit-terminal.component.html',
-  styleUrls: ['./view-limit-terminal.component.scss']
+  styleUrls: ['./view-limit-terminal.component.scss'],
+  animations: [
+    trigger("detailExpand", [
+      state("collapsed", style({ height: "0px", minHeight: "0" })),
+      state("expanded", style({ height: "*" })),
+      transition("expanded <=> collapsed", animate("225ms cubic-bezier(0.4, 0.0, 0.2, 1)")),
+    ]),
+  ],
 })
 export class ViewLimitTerminalComponent implements OnInit {
   expandedElement: any;
@@ -104,13 +112,13 @@ export class ViewLimitTerminalComponent implements OnInit {
     const pageIndex = this.paginator.pageIndex;
     const pageSize = this.paginator.pageSize;
     this.terminalList = this.terminalFilter.slice(pageIndex * pageSize, pageIndex * pageSize + pageSize);
-    this.totalLimitAmount = this.terminalList?.reduce((total: any, num: any) => {
+    this.totalLimitAmount = this.terminalFilter?.reduce((total: any, num: any) => {
       return total + Math.round(num?.limitAmountDefault);
     }, 0);
-    this.totalUsedAmount = this.terminalList?.reduce((total: any, num: any) => {
+    this.totalUsedAmount = this.terminalFilter?.reduce((total: any, num: any) => {
       return total + Math.round(num?.limitAmountMovement);
     }, 0);
-    this.totalBalanceAmount = this.terminalList?.reduce((total: any, num: any) => {
+    this.totalBalanceAmount = this.terminalFilter?.reduce((total: any, num: any) => {
       return total + Math.round(num?.limitRemain);
     }, 0);
     });

@@ -129,8 +129,8 @@ export class CreateCardBatchTransactionComponent implements OnInit {
               if (res.existBin) {
                 const { bankCode, cardType } = res;
                 this.existBin = res.existBin;
-                this.formDialog.get("bank").setValue(bankCode);
-                this.formDialog.get("cardType").setValue(cardType);
+                this.formDialog.get("bank").patchValue(bankCode);
+                this.formDialog.get("cardType").patchValue(cardType);
               } else {
                 this.existBin = false;
                 this.alterService.alert({
@@ -172,6 +172,8 @@ export class CreateCardBatchTransactionComponent implements OnInit {
                   expireDate: this.formDialog.get("expiredDate").value,
                   limitCard: this.formDialog.get("limitCard").value,
                   classCard: this.formDialog.get("classCard").value,
+                  isValid: false,
+
                 })
                 .subscribe((res2: any) => {
 

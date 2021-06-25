@@ -78,7 +78,8 @@ export class LoansAccountTermsStepComponent implements OnInit, OnChanges {
         'transactionProcessingStrategyId': this.loansAccountProductTemplate.transactionProcessingStrategyId,
         'graceOnInterestCharged': this.loansAccountProductTemplate.graceOnInterestCharged,
         'fixedEmiAmount': this.loansAccountProductTemplate.fixedEmiAmount,
-        'maxOutstandingLoanBalance': this.loansAccountProductTemplate.maxOutstandingLoanBalance
+        'maxOutstandingLoanBalance': this.loansAccountProductTemplate.maxOutstandingLoanBalance,
+
       });
       this.setOptions();
     }
@@ -103,10 +104,10 @@ export class LoansAccountTermsStepComponent implements OnInit, OnChanges {
       'numberOfRepayments': ['', Validators.required],
       'repaymentEvery': ['', Validators.required],
       'repaymentFrequencyType': ['', Validators.required],
-      'repaymentFrequencyNthDayType': ['', Validators.required],
-      'repaymentFrequencyDayOfWeekType': ['', Validators.required],
-      'repaymentsStartingFromDate': [''],
-      'interestChargedFromDate': [''],
+      'repaymentFrequencyNthDayType': [''],
+      'repaymentFrequencyDayOfWeekType': [''],
+      'repaymentsStartingFromDate': ['',Validators.required],
+      'interestChargedFromDate': ['',Validators.required],
       'interestRatePerPeriod': [''],
       'interestType': [''],
       // 'interestRateDifferential': [''],
@@ -134,7 +135,7 @@ export class LoansAccountTermsStepComponent implements OnInit, OnChanges {
    */
   setOptions() {
     this.termFrequencyTypeData = this.loansAccountProductTemplate.termFrequencyTypeOptions;
-    this.repaymentFrequencyNthDayTypeData = this.loansAccountProductTemplate.repaymentFrequencyNthDayTypeOptions;
+    this.repaymentFrequencyNthDayTypeData = [...this.loansAccountProductTemplate.repaymentFrequencyNthDayTypeOptions,{ id: '', code: '', value: 'same as payment date'}]
     this.repaymentFrequencyDaysOfWeekTypeData = this.loansAccountProductTemplate.repaymentFrequencyDaysOfWeekTypeOptions;
     this.interestTypeData = this.loansAccountProductTemplate.interestTypeOptions;
     this.amortizationTypeData = this.loansAccountProductTemplate.amortizationTypeOptions;
@@ -147,7 +148,27 @@ export class LoansAccountTermsStepComponent implements OnInit, OnChanges {
    * Returns loans account terms form value.
    */
   get loansAccountTerms() {
+    if (this.loansAccountTermsForm.value.recalculationCompoundingFrequencyDate === '') {
+      this.loansAccountTermsForm.removeControl('recalculationCompoundingFrequencyDate');
+    }
     return this.loansAccountTermsForm.value;
   }
 
+  /**
+   * Format currency function
+   * Must be change to a service
+   */
+  formatCurrency(value: string) {
+    value = String(value);
+    const neg = value.startsWith('-');
+    value = value.replace(/[-\D]/g, '');
+    value = value.replace(/(\d{3})$/, ',$1');
+    value = value.replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
+    value = value !== '' ? '' + value : '';
+    if (neg) {
+      value = '-'.concat(value);
+    }
+
+    return value;
+  }
 }

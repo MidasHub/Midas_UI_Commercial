@@ -72,6 +72,19 @@ export class TerminalsService {
     return this.http.post<any>(`${this.IcGatewayApiUrlPrefix}/pos`, httpParams);
   }
 
+  searchRequestTransfer(fromDate: string, toDate: string): Observable<any> {
+    let httpParams = this.commonHttpParams.getCommonHttpParams();
+    httpParams = httpParams.set("fromDate", fromDate);
+    httpParams = httpParams.set("toDate", toDate);
+    return this.http.post<any>(`${this.IcGatewayApiUrlPrefix}/pos/requests_transfer`, httpParams);
+  }
+
+  getTerminalRate(terminalId: string): Observable<any> {
+    let httpParams = this.commonHttpParams.getCommonHttpParams();
+    httpParams = httpParams.set("terminalId", terminalId);
+    return this.http.post<any>(`${this.IcGatewayApiUrlPrefix}/pos/transfer_rate`, httpParams);
+  }
+
   getTerminalInfo(terminalId: string): Observable<any> {
     let httpParams = this.commonHttpParams.getCommonHttpParams();
 

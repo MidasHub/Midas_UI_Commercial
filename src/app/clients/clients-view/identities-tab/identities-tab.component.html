@@ -255,11 +255,11 @@
     </mat-card>
   </div>
   <div fxFlex.gt-md="30" fxFlex.lt-md="100%" fxLayoutAlign="center start" fxLayout="column" class="tab-container" >
-    <mat-card class="card-custom" fxFlex="100%">
+    <mat-card class="card-custom" fxFlex="100%" fxLayout="column">
       <mat-card-header fxFlex="100%" fxLayoutAlign="center center">
         <h3>Hình ảnh CMND/CCCD/PASSPORT:</h3>
       </mat-card-header>
-      <mat-card-content *ngFor="let identity of clientIdentitiesOther">
+      <mat-card-content *ngFor="let identity of clientIdentitiesOther" >
         <div fxFlex="100%" fxLayout="column" fxLayoutAlign="start center" *ngIf="identity?.documents">
           <div
             fxFlex.gt-sm="100%"

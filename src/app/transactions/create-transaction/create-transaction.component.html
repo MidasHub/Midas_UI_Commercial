@@ -1,16 +1,18 @@
-<div class="container m-b-5" fxLayout="row" fxLayout.lt-md="column" fxLayoutAlign="end" fxLayoutGap="1%">
+<div id="create-transaction">
+  <mat-card>
+<mat-card-header  fxLayout="row" fxLayout.lt-md="column" fxLayoutAlign="end" fxLayoutGap="1%">
   <div fxFlex="100%" align="center" class="header">
     <h2 class="m-5">MÀN HÌNH GIAO DỊCH - THÔNG TIN GIAO DỊCH</h2>
   </div>
-</div>
-<div class="container" fxLayout="column" fxLayoutGap="2%">
+</mat-card-header>
+<mat-card-content  fxLayout="column" fxLayoutGap="2%">
   <form [formGroup]="transactionCreateForm">
     <mat-card>
-      <div *ngIf="isLoading" style="display: flex; justify-content: center; align-items: center; background: white">
+      <div *ngIf="isLoading" style="display: flex; justify-content: center; align-items: center; background: white;">
         <mat-progress-spinner color="warn" mode="indeterminate"> </mat-progress-spinner>
       </div>
-      <div fxLayout="row wrap" fxLayout.sm="column" fxLayout.xs="column">
-        <div fxFlex.gt-sm="50%" fxLayout="row wrap" class="content">
+      <div fxLayout="row wrap" fxLayout.lt-sm="column" >
+        <div fxFlex.gt-sm="50%" fxLayout="row wrap" >
           <div fxFlex="100%">
             Loại giao dịch :
             <span style="color: green; font-weight: bold" *ngIf="transactionInfo.type == 'cash'">Cash</span>
@@ -19,13 +21,13 @@
               >THU HỒI Advance</span
             >
           </div>
-          <div fxFlex="100%" fxLayout="row wrap" fxLayout.sm="column" fxLayout.xs="column">
+          <div fxFlex="100%" fxLayout="row wrap" fxLayout.lt-sm="column">
             <div fxFlex.gt-sm="30%">Thẻ thực hiện giao dịch</div>
-            <div fxFlex.gt-sm="70%" style="color: blue; font-weight: bold">
+            <div fxFlex.gt-sm="70%" style="color: blue; font-weight: bold;">
               {{ transactionInfo.identifyClientDto?.accountNumber }}
             </div>
           </div>
-          <div fxFlex="100%" fxLayout="row wrap" fxLayout.sm="column" fxLayout.xs="column" class="content">
+          <div fxFlex="100%" fxLayout="row wrap" fxLayout.lt-sm="column">
             <div fxFlex.gt-sm="10%">Loại thẻ</div>
             <div fxFlex.gt-sm="15%" style="color: blue; font-weight: bold">
               {{ transactionInfo.identifyClientDto?.accountType }}
@@ -38,8 +40,7 @@
           <div
             fxFlex="100%"
             fxLayout="row wrap"
-            fxLayout.sm="column"
-            fxLayout.xs="column"
+            fxLayout.lt-sm="column"
             *ngIf="transactionInfo.type == 'cash'"
           >
             <div fxFlex.gt-sm="50%">
@@ -77,9 +78,11 @@
             </div>
           </div>
 
-          <div fxFlex="100%" fxLayout="row wrap" fxLayout.sm="column" fxLayout.xs="column">
-            <div fxFlex.gt-sm="30%" *ngIf="transactionInfo.type == 'rollTermGetCash'">
-              <mat-form-field>
+          <div fxFlex="100%" fxLayout="row wrap"
+               fxLayout.lt-sm="column" fxLayoutAlign.lt-sm="center stretch"
+                fxLayoutGap="2%">
+
+              <mat-form-field fxFlex.gt-sm="30%" *ngIf="transactionInfo.type == 'rollTermGetCash'">
                 <mat-label>Nhu cầu giao dịch (VNĐ)</mat-label>
                 <input
                   type="text"
@@ -90,9 +93,9 @@
                   disabled
                 />
               </mat-form-field>
-            </div>
-            <div fxFlex.gt-sm="30%">
-              <mat-form-field>
+
+
+              <mat-form-field fxFlex.gt-sm="30%">
                 <mat-label>Nhập số tiền giao dịch</mat-label>
                 <input
                   type="text"
@@ -104,9 +107,9 @@
                 />
                 <mat-error> Thông tin bắt buộc nhập! </mat-error>
               </mat-form-field>
-            </div>
-            <div fxFlex.gt-sm="10%">
-              <mat-form-field>
+
+
+              <mat-form-field fxFlex.gt-sm="30%">
                 <mat-label>Nhập phí (%/giá trị giao dịch)</mat-label>
                 <input
                   type="number"
@@ -118,52 +121,52 @@
                 />
                 <mat-error> Thông tin bắt buộc nhập! </mat-error>
               </mat-form-field>
-            </div>
+
           </div>
         </div>
         <div fxFlex.gt-sm="50%" fxLayout="row wrap">
-          <div fxFlex="100%" fxLayout="row wrap" class="content">
+          <div fxFlex="100%" fxLayout="row wrap" >
             <div fxFlex="30%">Tên khách hàng</div>
             <div fxFlex="60%" style="color: blue; font-weight: bold" class="left">
               {{ transactionInfo.clientDto?.displayName | uppercase }}
             </div>
           </div>
-          <div fxFlex="100%" fxLayout="row wrap" class="content">
+          <div fxFlex="100%" fxLayout="row wrap" >
             <div fxFlex="30%">Thuộc đại lý</div>
             <div fxFlex="60%" style="color: blue; font-weight: bold" class="left">
               {{ transactionInfo.clientDto?.groupName | uppercase }}
             </div>
           </div>
-          <div fxFlex="100%" fxLayout="row wrap" class="content">
+          <div fxFlex="100%" fxLayout="row wrap" >
             <div fxFlex="30%">Chi nhánh</div>
             <div fxFlex="60%" style="color: blue; font-weight: bold" class="left">
               {{ transactionInfo.clientDto?.officeName | uppercase }}
             </div>
           </div>
           <div fxFlex="100%" fxLayout="row wrap">
-            <div fxFlex="100%" fxLayout="row wrap" class="content">
+            <div fxFlex="100%" fxLayout="row wrap" >
               <div fxFlex="100%" style="color: green; font-weight: bold">Thông tin về giao dịch</div>
             </div>
 
-            <div fxFlex="100%" fxLayout="row wrap" class="content m-l-20">
+            <div fxFlex="100%" fxLayout="row wrap" >
               <div fxFlex="40%">Giá trị giao dịch</div>
               <div fxFlex="20%">{{ formatCurrency(transactionInfo.txnAmount) }}</div>
               <div fxFlex="20%">Tỉ lệ</div>
             </div>
-            <div fxFlex="100%" style="color: red; font-weight: bold" fxLayout="row wrap" class="content m-l-20">
+            <div fxFlex="100%" style="color: red; font-weight: bold" fxLayout="row wrap" >
               Chi tiết:
             </div>
-            <div class="m-l-10" fxFlex="100%" fxLayout="row wrap" class="m-l-20 content">
+            <div class="m-l-10" fxFlex="100%" fxLayout="row wrap" >
               <div fxFlex="40%">Giá trị giao dịch</div>
               <div fxFlex="20%">{{ formatCurrency(transactionInfo.txnAmount) }}</div>
               <div fxFlex="20%"></div>
             </div>
-            <div class="m-l-10" fxFlex="100%" fxLayout="row wrap" class="m-l-20 content">
+            <div class="m-l-10" fxFlex="100%" fxLayout="row wrap" >
               <div fxFlex="40%">Phí</div>
               <div fxFlex="20%">{{ formatCurrency(transactionInfo.feeAmount) }}</div>
               <div fxFlex="20%">{{ transactionInfo.rate }}%</div>
             </div>
-            <div fxFlex="100%" fxLayout="row wrap" class="content m-l-20">
+            <div fxFlex="100%" fxLayout="row wrap">
               <div style="color: red; font-weight: bold" fxFlex="40%">Giá trị giao dịch ròng</div>
               <div fxFlex="20%">{{ formatCurrency(transactionInfo.txnAmountAfterFee) }}</div>
               <div fxFlex="20%"></div>
@@ -172,28 +175,28 @@
         </div>
       </div>
     </mat-card>
-    <mat-card fxLayout="row wrap" class="m-0">
-      <h3
-        *ngIf="transactionInfo.type == 'cash' || transactionInfo.type == 'rollTermGetCash'"
-        fxFlex
-        align="center"
-        style="color: blue; font-weight: bold"
-      >
-        Chọn máy bán hàng
-      </h3>
-      <h3
-        *ngIf="transactionInfo.type == 'rollTerm' && listRollTermBooking.length > 0"
-        fxFlex
-        align="center"
-        style="color: blue; font-weight: bold"
-      >
-        Lịch thực hiện (Tổng: {{ this.transactionInfo.requestAmount }})
-      </h3>
-      <div
+    <br/>
+
+    <mat-card fxLayout="column" >
+      <mat-card-header>
+        <h3
+          *ngIf="transactionInfo.type == 'cash' || transactionInfo.type == 'rollTermGetCash'"
+          style="color: blue; font-weight: bold"
+        >
+          Chọn máy bán hàng
+        </h3>
+        <h3
+          *ngIf="transactionInfo.type == 'rollTerm' && listRollTermBooking.length > 0"
+          style="color: blue; font-weight: bold"
+        >
+          Lịch thực hiện (Tổng: {{ this.transactionInfo.requestAmount }})
+        </h3>
+      </mat-card-header>
+
+      <mat-card-content
         fxFlex="100%"
-        align="center"
-        fxLayout.sm="column"
-        fxLayout.xs="column"
+        fxLayoutAlign="center center"
+        fxLayout.lt-sm="column"
         *ngIf="transactionInfo.type == 'rollTerm' && listRollTermBooking.length > 0"
       >
         <table mat-table #listBookingRollTermTable [dataSource]="dataSource">
@@ -258,16 +261,22 @@
           <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
           <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
         </table>
-      </div>
-      <div
-        fxFlex="100%"
-        fxLayout.sm="column"
-        fxLayout.xs="column"
-        *ngIf="transactionInfo.type == 'cash' || transactionInfo.type == 'rollTermGetCash'"
+      </mat-card-content>
+<!--      <mat-card-header-->
+<!--        fxFlex="100%"-->
+<!--        fxLayout.sm="column"-->
+<!--        fxLayout.xs="column"-->
+<!--        *ngIf="transactionInfo.type == 'cash' || transactionInfo.type == 'rollTermGetCash'"-->
+<!--      >-->
+<!--      </mat-card-header>-->
+      <mat-card-content  *ngIf="transactionInfo.type == 'cash' || transactionInfo.type == 'rollTermGetCash'"
+                         fxLayout="row wrap" fxLayout.lt-sm="column"
+                         fxLayoutAlign="space-around center" fxLayoutAlign.lt-sm="center stretch"
+                         fxLayoutGap="1%"
       >
-        <div fxFlex.gt-sm="28%" fxLayout="row wrap" class="content">
-          <div fxFlex="100%">
-            <mat-form-field style="width: 100%" appearance="fill">
+
+
+            <mat-form-field fxFlex.gt-sm="30%"  >
               <mat-label>Chọn máy bán hàng</mat-label>
               <select
                 (change)="this.getFeeByTerminal()"
@@ -275,26 +284,25 @@
                 [ngModelOptions]="{ standalone: true }"
                 matNativeControl
               >
+                <option value="" disabled selected>Chọn máy bán hàng</option>
                 <option *ngFor="let terminal of transactionInfo.listTerminal" [value]="terminal.terminalId">
                   {{ terminal.terminalName }} - Còn lại: {{ terminal.limitRemain | money }}
                 </option>
               </select>
             </mat-form-field>
-          </div>
-        </div>
-        <div fxFlex.gt-sm="2%" fxLayout="row wrap" class="content"></div>
-        <div fxFlex.gt-sm="15%" fxLayout="row wrap" class="content">
-          <div fxFlex="100%">
-            <mat-form-field>
+
+
+
+
+            <mat-form-field fxFlex.gt-sm="18%" >
               <mat-label>Giá trị giao dịch đề xuất(VNĐ)</mat-label>
               <input readonly matInput formControlName="txnAmount" />
               <mat-error> Thông tin bắt buộc nhập! </mat-error>
             </mat-form-field>
-          </div>
-        </div>
-        <div fxFlex.gt-sm="15%" fxLayout="row wrap" class="content">
-          <div fxFlex="100%">
-            <mat-form-field>
+
+
+
+            <mat-form-field fxFlex.gt-sm="18%" >
               <mat-label>Giá trị giao dịch thực tế</mat-label>
               <input
                 matInput
@@ -305,26 +313,22 @@
               />
               <mat-error> Thông tin bắt buộc nhập! </mat-error>
             </mat-form-field>
-          </div>
-        </div>
-        <div fxFlex.gt-sm="20%" fxLayout="row wrap" class="content">
-          <div fxFlex="80%">
-            <mat-form-field>
+
+
+            <mat-form-field fxFlex.gt-sm="15%" >
               <mat-label> Số batch</mat-label>
               <input matInput formControlName="batchNo" />
               <mat-error> Thông tin bắt buộc nhập! </mat-error>
             </mat-form-field>
-          </div>
-        </div>
-        <div fxFlex.gt-sm="20%" fxLayout="row wrap" class="content">
-          <div fxFlex="80%">
-            <mat-form-field>
+
+
+
+            <mat-form-field fxFlex.gt-sm="15%" >
               <mat-label> Số trace</mat-label>
               <input matInput formControlName="traceNo" />
               <mat-error> Thông tin bắt buộc nhập! </mat-error>
             </mat-form-field>
-          </div>
-        </div>
+
         <!-- <div fxFlex.gt-sm="10%" fxLayout="row wrap" class="content">
         <div fxFlex="100%"></div>
         <div fxFlex="100%">
@@ -333,8 +337,8 @@
           </section>
         </div>
       </div> -->
-      </div>
-      <div fxLayoutAlign="center center" fxFlex="100%" class="m-t-10">
+      </mat-card-content>
+      <mat-card-footer fxLayoutAlign="center center" fxFlex="100%" class="p-10">
         <button
           (click)="this.submitTransactionCash()"
           *ngIf="transactionInfo.type == 'cash' || transactionInfo.type == 'rollTermGetCash'"
@@ -351,7 +355,9 @@
         >
           <fa-icon icon="check"></fa-icon>&nbsp;&nbsp; Khởi tạo giao dịch
         </button>
-      </div>
+      </mat-card-footer>
     </mat-card>
   </form>
+</mat-card-content>
+  </mat-card>
 </div>

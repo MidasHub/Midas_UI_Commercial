@@ -1,5 +1,7 @@
+<div id="view-limit-terminal">
 <mat-card class="mat-elevation-z20 container-custom">
-  <mat-card-content>
+
+  <mat-card-header>
     <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column" [formGroup]="formFilter">
       <mat-form-field fxFlex="31%">
         <mat-label>Chi nhánh</mat-label>
@@ -18,95 +20,135 @@
         </div>
       </div>
     </div>
-  </mat-card-content>
+  </mat-card-header>
 
-  <mat-card-content style="margin-top: 10px">
-    <mat-card>
-      <div fxLayout="row swap" fxLayoutAlign.lt-sm="center" fxLayoutGap="2%" fxLayout.lt-md="column">
-        <div fxLayout="row" fxFlex="18%" class="export-item">
+  <mat-card-content >
+<!--  Sum Area  -->
+    <mat-card class="sum-area p-b-10">
+      <mat-card-content fxLayout="column"  fxLayout.gt-sm="row"
+                        fxLayoutAlign="center stretch" fxLayoutAlign.gt-sm="space-evenly center"
+                        fxLayoutGap="2%" >
+        <div fxLayout="row " fxFlex="20%" class="sum_item">
           <img src="assets/images/icons/transaction_total.svg" />
-          <div style="display: flex" fxLayout="column">
-            <span style="font-size: 20px; margin-top: 8px; padding-top: 5px">{{ terminalFilter.length }}</span>
-            <span>&nbsp;Tổng cộng</span>
+          <div fxLayout="column">
+            <span class="sum-value">{{ terminalFilter.length }}</span>
+            <span class="sum-lable" >&nbsp;Tổng cộng</span>
           </div>
         </div>
-        <div fxLayout="row" fxFlex="15%" class="export-item">
+        <div fxLayout="row " fxFlex="25%" class="sum-item">
           <img src="assets/images/icons/pnlAmount.svg" />
-          <div style="display: flex" fxLayout="column">
-            <span style="font-size: 20px; margin-top: 8px; padding-top: 5px">{{ totalLimitAmount | money }}</span>
-            <span>&nbsp;Tổng hạn mức</span>
+          <div  fxLayout="column">
+            <span class="sum-value">{{ totalLimitAmount | money }}</span>
+            <span class="sum-label">&nbsp;Tổng hạn mức</span>
           </div>
         </div>
-        <div fxLayout="row wrap" fxFlex="18%" class="container m-b-20">
+        <div fxLayout="row " fxFlex="25%" class="sum-item">
           <img src="assets/images/icons/money.svg" />
-          <div style="display: flex" fxLayout="column">
-            <span style="font-size: 20px; margin-top: 8px; padding-top: 5px">{{ totalUsedAmount | money }}</span>
-            <span>&nbsp;Tổng đã dùng</span>
+          <div fxLayout="column">
+            <span class="sum-value">{{ totalUsedAmount | money }}</span>
+            <span class="sum-label">&nbsp;Tổng đã dùng</span>
           </div>
         </div>
-        <div fxLayout="row wrap" fxFlex="18%" class="container m-b-20">
+        <div fxLayout="row " fxFlex="25%" class="sum-item">
           <img src="assets/images/icons/transaction.svg" />
-          <div style="display: flex" fxLayout="column">
-            <span style="font-size: 20px; margin-top: 8px; padding-top: 5px">{{ totalBalanceAmount | money }}</span>
-            <span>&nbsp;Tổng khả dụng</span>
+          <div fxLayout="column">
+            <span class="sum-value">{{ totalBalanceAmount | money }}</span>
+            <span class="sum-label">&nbsp;Tổng khả dụng</span>
           </div>
         </div>
-      </div>
+      </mat-card-content>
     </mat-card>
-  </mat-card-content>
+<!--  Kết thúc  -->
 
-  <mat-card-content>
-    <table mat-table class="mat-elevation-z8" (matSortChange)="sortData($event)" [dataSource]="terminalList" matSort>
+<!--  Bảng dữ liệu chi tiết  -->
+    <table mat-table
+           multiTemplateDataRows
+           matSort
+           id="terminal-list"
+           class="mat-elevation-z8"
+           (matSortChange)="sortData($event)"
+           [dataSource]="terminalList" >
 
       <ng-container matColumnDef="officeName">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>Chi nhánh</th>
-        <td mat-cell
-            *matCellDef="let terminal"> {{ terminal.officeName}} </td>
+        <th  mat-header-cell *matHeaderCellDef mat-sort-header> Chi nhánh</th>
+        <td  mat-cell
+            *matCellDef="let terminal"> {{ terminal.officeName}}
+          </td>
       </ng-container>
 
       <ng-container matColumnDef="terminalId">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>Mã máy</th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Mã máy</th>
         <td mat-cell
             *matCellDef="let terminal"> {{ terminal.terminalId}} </td>
       </ng-container>
 
       <ng-container matColumnDef="terminalName">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>Tên máy</th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Tên máy</th>
         <td mat-cell
             *matCellDef="let terminal"> {{ terminal.terminalName}} </td>
       </ng-container>
 
       <ng-container matColumnDef="limitDefault">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>Hạn mức</th>
-        <td mat-cell
+        <th fxHide fxShow.gt-sm mat-header-cell *matHeaderCellDef mat-sort-header> Hạn mức</th>
+        <td fxHide fxShow.gt-sm mat-cell
             *matCellDef="let terminal">
             {{ terminal.limitAmountDefault  | money }}
             </td>
       </ng-container>
 
       <ng-container matColumnDef="limitMovement">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>Đã dùng</th>
-        <td mat-cell
+        <th fxHide fxShow.gt-sm mat-header-cell *matHeaderCellDef mat-sort-header> Đã dùng</th>
+        <td fxHide fxShow.gt-sm mat-cell
             *matCellDef="let terminal">
             {{ terminal.limitAmountMovement  | money }}
             </td>
       </ng-container>
 
       <ng-container matColumnDef="limitRemain">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>Khả dụng</th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Khả dụng</th>
         <td mat-cell
             *matCellDef="let terminal">
             {{ terminal.limitRemain  | money }}
             </td>
       </ng-container>
 
+<!--  Bảng thông tin mở rộng trên UI    -->
+      <ng-container matColumnDef="expandedDetail">
+        <td mat-cell fxShow fxHide.gt-md *matCellDef="let element" [attr.colspan]="displayedColumns.length">
+          <div class="example-element-detail" [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
+            <ul class="example-element-description" fxLayout="column">
+              <li><span style="font-weight: bold;">Mã máy :</span>&nbsp;{{ element.terminalId }}</li>
+              <li><span style="font-weight: bold;">Tên máy :</span> {{ element.terminalName }}</li>
+              <li><span style="font-weight: bold;">Hạn mức :</span> {{ element.limitAmountDefault | money }}</li>
+              <li><span style="font-weight: bold;">Đã sử dụng :</span>&nbsp; &nbsp;{{element.limitAmountMovement | money}}</li>
+              <li><span style="font-weight: bold;">Hạn mức còn lại :</span>&nbsp; &nbsp;{{ element.limitRemain | money }}</li>
+            </ul>
+          </div>
+        </td>
+      </ng-container>
+<!--  Kết thúc    -->
+<!--  Phần render table gồm:
+        - Header
+        - Dòng thông tin bình thường
+        - Dòng thông tin mở rông cho mobile UI
+-->
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let element; columns: displayedColumns;"
-          class="example-element-row">
+      <tr
+        mat-row
+        *matRowDef="let element; columns: displayedColumns"
+        class="example-element-row"
+        [class.example-expanded-row]="expandedElement === element"
+        (click)="expandedElement = expandedElement === element ? null : element"
+      ></tr>
+      <tr mat-row *matRowDef="let element; columns: ['expandedDetail']" class="example-detail-row">
       </tr>
-      </table>
+    </table>
+    <mat-paginator paginator [length]="terminalFilter.length" [pageSize]="10" [pageSizeOptions]="[10, 25, 50, 100]"
+                   showFirstLastButtons></mat-paginator>
+<!--  Kết thúc table   -->
+
   </mat-card-content>
-  <mat-paginator paginator [length]="terminalFilter.length" [pageSize]="10" [pageSizeOptions]="[10, 25, 50, 100]"
-                 showFirstLastButtons></mat-paginator>
+
 
 </mat-card>
+</div>

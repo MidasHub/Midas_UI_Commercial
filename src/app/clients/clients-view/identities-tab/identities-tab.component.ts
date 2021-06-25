@@ -212,12 +212,12 @@ export class IdentitiesTabComponent {
   addIdentifier(addOther: boolean) {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.data = {
-      title: "Thêm Thẻ | CMND/CCCD | TK bank",
+      title: 'Thêm Thẻ | CMND/CCCD | TK bank',
       addOther: addOther,
       clientIdentifierTemplate: this.clientIdentifierTemplate,
     };
 
-    dialogConfig.minWidth = 500;
+    dialogConfig.maxWidth = '90%' ;
     // init data for opening
     const addIdentifierDialogRef = this.dialog.open(AddIdentitiesComponent, dialogConfig);
 
@@ -235,6 +235,7 @@ export class IdentitiesTabComponent {
           status,
           limitCard,
           classCard,
+          isValid,
         } = response.data.value;
         const documentTypes = response.documentTypes;
         const document = documentTypes.find((v: any) => v.id === documentTypeId);
@@ -303,6 +304,7 @@ export class IdentitiesTabComponent {
                   expireDate: expiredDate,
                   limitCard: limitCard,
                   classCard: classCard,
+                  isValid: isValid,
                 })
                 .subscribe((res2: any) => {
                   return call_return();
@@ -403,6 +405,8 @@ export class IdentitiesTabComponent {
             expireDate: expiredDate,
             limitCard: limitCard,
             classCard: classCard,
+            isValid: false,
+
           })
           .subscribe((res2: any) => {});
       }

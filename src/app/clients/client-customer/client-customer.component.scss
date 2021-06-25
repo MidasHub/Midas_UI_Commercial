@@ -1,3 +1,7 @@
+#client-list {
+  width: 100%;
+  padding: 0.5rem;
+}
 .action-button {
     button{
       max-height: 42px;
@@ -6,38 +10,38 @@
   table {
     width: 100%;
   }
-  
+
   tr.example-detail-row {
     height: 0;
-  
+
   }
-  
-  
+
+
   .mat-row:nth-child(odd){
     background: transparent;
   }
-  
+
   tr.example-element-row:not(.example-expanded-row):hover, .mat-row:nth-child(even) {
     background: whitesmoke;
-   
+
     td{
       color:#000000
     }
-    
+
   }
   tr.example-element-row:not(.example-expanded-row):active {
     background:whitesmoke;
   }
-  
+
   .example-element-row td {
     border-bottom-width: 0;
   }
-  
+
   .example-element-detail {
     overflow: hidden;
     display: flex;
   }
-  
+
   .example-element-diagram {
     min-width: 80px;
     border: 2px solid black;
@@ -46,19 +50,19 @@
     margin: 8px 0;
     height: 104px;
   }
-  
+
   .example-element-symbol {
     font-weight: bold;
     font-size: 40px;
     line-height: normal;
   }
-  
+
   .example-element-description {
     padding: 10px;
     margin-top: 5px;
     margin-bottom: 5px;
   }
-  
+
   .example-element-description-attribution {
     opacity: 0.5;
   }

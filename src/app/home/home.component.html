@@ -1,15 +1,13 @@
-<div fxLayout="column" tourAnchor="id4">
+<div id="home-page" div fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="2%" tourAnchor="id4">
   <div
     fxLayout="row"
     fxLayout.lt-md="column"
-    fxLayoutAlign="start start"
-    fxLayoutGap="2%"
-    class="fluidcontainer m-b-10 p-10"
+    fxLayoutAlign="start stretch"
     fxFlex="100"
     tourAnchor="id5"
   >
     <!-- banner default  -->
-    <div fxLayout="column" *ngIf="!this.showBanner || !this.isDesktop">
+    <div fxLayout="column"  fxHide fxShow.gt-sm  *ngIf="!this.showBanner || !this.isDesktop">
       <!-- <button mat-raised-button color="primary" [routerLink]="['/dashboard']">
         <fa-icon icon="tachometer-alt"></fa-icon>&nbsp;&nbsp;
         {{'Home_Component.btnDashboard'| translate}}
@@ -55,12 +53,12 @@
     fxLayout="row"
     fxLayout.lt-md="column"
     fxLayoutAlign="space-around start "
-    class="fluidcontainer m-b-15"
+    fxLayoutAlign.lt-md="start stretch "
     fxFlex="100"
   >
-    <div fxLayout="row" fxLayout.lt-md="column" class="fluidcontainer p-10 m-b-20" fxFlex="100" fxLayoutGap="1%">
+<!--    <div fxLayout="row" fxLayout.lt-md="column"  fxFlex="100" fxLayoutGap="1%">-->
       <!-- Ô tìm kiếm KH -->
-      <mat-card class="m-b-10" fxFlex="59" fxFlex.lt-md="95" tourAnchor="id6">
+      <mat-card class="m-b-10" fxFlex="49" fxFlex.lt-md="100" tourAnchor="id6">
         <mat-card-header>
           <mat-card-title class="title">
             <h3>Tim kiếm thông tin khách hàng:</h3>
@@ -85,7 +83,7 @@
           <midas-mainboard></midas-mainboard>
         </mat-card-content>
       </mat-card>
-      <div fxLayout="column" fxFlex="39" fxFlex.lt-md="95" tourAnchor="id7">
+      <div fxLayout="column" fxFlex="49" fxFlex.lt-md="100" tourAnchor="id7">
         <!-- Ô calendar -->
         <mat-card class="" fxFlex="100">
           <mat-card-header>
@@ -100,7 +98,7 @@
           </mat-card-content>
         </mat-card>
       </div>
-    </div>
+<!--    </div>-->
 
     <!-- Tạm thời ẩn mục này
     <div fxLayout="column" fxFlex="25">

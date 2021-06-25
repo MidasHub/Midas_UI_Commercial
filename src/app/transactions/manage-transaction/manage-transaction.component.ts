@@ -1,15 +1,15 @@
 import { forEach, includes } from "lodash";
 import { TransactionDatasource } from "../transaction.datasource";
 import { Component, ElementRef, OnInit, ViewChild } from "@angular/core";
-import { FormBuilder, FormGroup } from "@angular/forms";
+import { FormBuilder, FormControl, FormGroup } from "@angular/forms";
 import { TransactionService } from "../transaction.service";
 import { MatPaginator } from "@angular/material/paginator";
 import { DatePipe } from "@angular/common";
 import { SettingsService } from "../../settings/settings.service";
 import { AuthenticationService } from "../../core/authentication/authentication.service";
 import { MatSort } from "@angular/material/sort";
-import { merge } from "rxjs";
-import { tap } from "rxjs/operators";
+import { merge, Observable } from "rxjs";
+import { map, startWith, tap } from "rxjs/operators";
 import { animate, state, style, transition, trigger } from "@angular/animations";
 import { AlertService } from "../../core/alert/alert.service";
 import { MatDialog } from "@angular/material/dialog";
@@ -51,6 +51,7 @@ export class ManageTransactionComponent implements OnInit {
     // "cogsAmount",
     "terminalAmount_feeAmount",
   ]; // pnlAmount
+  officesOptions: any;
   formDate: FormGroup;
   formFilter: FormGroup;
   dataSource: any[];
@@ -126,6 +127,15 @@ export class ManageTransactionComponent implements OnInit {
   transactionTerminals: any[];
   transactionTotalByBatchNo: any[];
 
+  private _filter(value: string): string[] {
+    const filterValue = String(value).toUpperCase().replace(/\s+/g, "");
+    return this.offices.filter((option: any) => {
+      return (
+        option.name.toUpperCase().replace(/\s+/g, "").includes(filterValue)
+      );
+    });
+  }
+
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChild("htmlData") htmlData: ElementRef;
@@ -187,7 +197,7 @@ export class ManageTransactionComponent implements OnInit {
       agencyName: [""],
     });
     this.formFilter.get("officeId").valueChanges.subscribe((value) => {
-      this.clientsService.getListUserTeller(value).subscribe((result: any) => {
+      this.clientsService.getListUserTeller(value.officeId).subscribe((result: any) => {
         this.staffs = result?.result?.listStaff.filter((staff: any) => staff.displayName.startsWith("R"));
         this.staffs.unshift({
           id: "",
@@ -205,7 +215,22 @@ export class ManageTransactionComponent implements OnInit {
     return terminalInfo ? terminalInfo[0]?.terminalName : terminalId;
   }
 
+  displayOffice(office: any): string | undefined {
+    return office
+      ? `${office.name}`
+      : undefined;
+  }
+
+  resetAutoCompleteOffice() {
+    this.formFilter.controls.officeId.setValue("");
+    this.officesOptions = this.formFilter.get('officeId').valueChanges.pipe(
+      startWith(""),
+      map((value: any) => this._filter(value))
+    );
+  }
+
   ngOnInit(): void {
+    this.officesOptions = new Observable<any[]>();
     this.dataSource = this.transactionsData;
     this.terminalsService.getPartnersTerminalTemplate().subscribe((partner) => {
       this.partners = partner?.result?.partners;
@@ -225,7 +250,7 @@ export class ManageTransactionComponent implements OnInit {
 
     this.bankService.getListOfficeCommon().subscribe((offices: any) => {
       this.offices = offices.result.listOffice;
-      this.offices?.unshift({ officeId: "", name: "Tất cả" });
+      // this.offices?.unshift({ officeId: "", name: "Tất cả" });
       const officeId = this.currentUser.officeId;
       this.currentUser = this.authenticationService.getCredentials();
       const { permissions } = this.currentUser;
@@ -286,6 +311,9 @@ export class ManageTransactionComponent implements OnInit {
   }
 
   filterTransaction() {
+    const { permissions } = this.currentUser;
+    const permit_Head = permissions.includes("ALL_FUNCTIONS");
+
     const limit = this.paginator.pageSize;
     const offset = this.paginator.pageIndex * limit;
     const form = this.formFilter.value;
@@ -298,14 +326,22 @@ export class ManageTransactionComponent implements OnInit {
       for (const key of keys) {
         if (["wholesaleChoose", "RetailsChoose", "holdTransaction"].indexOf(key) === -1) {
           if (form[key]) {
-            if (!v[key]) {
-              return false;
+            if ("officeId".indexOf(key) === -1) {
+              if (!v[key]) {
+                return false;
+              }
+              if (!String(v[key]).toUpperCase().includes(String(form[key]).toUpperCase())) {
+                return false;
+              }
             }
-            if (!String(v[key]).toUpperCase().includes(String(form[key]).toUpperCase())) {
-              return false;
-            }
-            if ("officeId".indexOf(key) != -1 && String(v[key]).toUpperCase() != String(form[key]).toUpperCase()) {
-              return false;
+            if ("officeId".indexOf(key) != -1) {
+              let formKeyOfficeId = String(form[key].officeId);
+              if (!permit_Head) {
+                formKeyOfficeId = String(form[key]);
+              }
+              if (String(v[key]).toUpperCase() != formKeyOfficeId) {
+                return false;
+              }
             }
           }
         }
@@ -630,7 +666,8 @@ export class ManageTransactionComponent implements OnInit {
       toDate = this.datePipe.transform(toDate, dateFormat);
     }
     const form = this.formFilter.value;
-    let query = `fromDate=${fromDate}&toDate=${toDate}&officeName=${form.officeId || "ALL"}`;
+    //let query = `fromDate=${fromDate}&toDate=${toDate}&officeName=${form.officeId || "ALL"}`;
+    let query = `fromDate=${fromDate}&toDate=${toDate}&officeName=${form.officeId.officeId || "ALL"}`;
     const keys = Object.keys(form);
     for (const key of keys) {
       if (key === "userId") {

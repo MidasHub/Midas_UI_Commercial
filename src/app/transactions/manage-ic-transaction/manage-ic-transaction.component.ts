@@ -244,6 +244,7 @@ export class ManageIcTransactionComponent implements OnInit {
       .subscribe((result) => {
         this.isLoading = false;
         const listPosTransaction = result?.result?.listTransaction;
+
         this.transactionsData = listPosTransaction.map((v: any) => {
           return {
             ...v,
@@ -506,13 +507,14 @@ export class ManageIcTransactionComponent implements OnInit {
   }
 
   exportAsXLSX(): void {
-    console.log("data ", this.transactionsData);
+    const dateFormat = this.settingsService.dateFormat;
+
     let dataCopy = [];
     let i = -1;
     while (++i < this.transactionsData.length) {
       let element = this.transactionsData[i];
       let e: any = {
-        createdDate: element.createdDate,
+        createdDate: this.datePipe.transform(element.createdDate, dateFormat),
         terminalId: element.terminalId,
         partnerName: this.displayPartnerPos(element.terminalId),
         bankName: this.displayBankPos(element.terminalId),
@@ -521,6 +523,8 @@ export class ManageIcTransactionComponent implements OnInit {
         traceNo: element.traceNo,
         batchNo: element.batchNo,
         feeAmount: element.feeAmount,
+        cardType: element.cardType,
+        cardNumber: element.panNumber,
       };
       dataCopy.push(e);
     }
