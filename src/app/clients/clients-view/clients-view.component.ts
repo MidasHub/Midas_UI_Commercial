@@ -16,6 +16,8 @@ import { CaptureImageDialogComponent } from './custom-dialogs/capture-image-dial
 import { ClientsService } from '../clients.service';
 import { TransactionHistoryDialogComponent } from 'app/transactions/rollTerm-schedule-transaction/dialog/transaction-history/transaction-history-dialog.component';
 import template_hdctv from "./template-contract/atom_hdctv";
+import template_hddvtv from "./template-contract/atom_hddvtv";
+import * as moment from 'moment';
 @Component({
   selector: 'mifosx-clients-view',
   templateUrl: './clients-view.component.html',
@@ -41,7 +43,6 @@ export class ClientsViewComponent implements OnInit {
       clientTemplateData: any,
       clientDatatables: any
     }) => {
-
       this.clientViewData = data.clientViewData.result.clientInfo;
       // this.clientViewData = data.clientViewData;
       this.clientDatatables = data.clientDatatables ? data.clientDatatables : {};
@@ -136,16 +137,45 @@ export class ClientsViewComponent implements OnInit {
         
     }
   }
+
   private printComponent() {
-    const printContent = document.getElementById("component1");
-    const WindowPrt = window.open('', '', 'left=0,top=0,width=900,height=900,toolbar=0,scrollbars=0,status=0');
-    console.log(template_hdctv.toString());
-    WindowPrt.document.write(template_hdctv.toString());
-    WindowPrt.document.close();
-    WindowPrt.focus();
+     
+    //const WindowPrt = window.open('', '', 'left=0,top=0,width=900,height=900,toolbar=0,scrollbars=0,status=0');
+    const WindowPrt = this.popupwindow('','',1024, 900);
+    
+    
+
+    const today = new Date();
+    const dd = String(today.getDate()).padStart(2, '0');
+    const mm = String(today.getMonth() + 1).padStart(2, '0');
+    const yyyy = String(today.getFullYear());
+    var CMND = '';
+    var EMAIL = '';
+    if(this.clientViewData.externalId){
+      CMND = this.clientViewData.externalId;
+    }
+    if(this.clientViewData.emailAddress){
+      EMAIL = this.clientViewData.emailAddress;
+    }
+    
+    var html = template_hddvtv.replace('[DATE]', dd).replace('[MONTH]', mm).replace('[YEAR]', yyyy)
+              .replace('[DISPLAYNAME]',this.clientViewData.displayName).replace('[CMND]', CMND )
+              .replace('[EMAIL]',EMAIL).replace('[PHONE]',this.clientViewData.mobileNo); 
+
+    WindowPrt.document.write(html);
+    //WindowPrt.document.close();
+    //WindowPrt.focus();
     WindowPrt.print();
     WindowPrt.close();
   }
+
+  private popupwindow(url:string, title:string, w:number, h:number) {
+    var y = window.outerHeight / 2 + window.screenY - ( h / 2)
+    var x = window.outerWidth / 2 + window.screenX - ( w / 2)
+    return window.open(url, title, 'toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=no, copyhistory=no, width=' + w + ', height=' + h + ', top=' + y + ', left=' + x);
+  } 
+
+
   private exportContract() {
       
     // console.log (template_hdctv);
