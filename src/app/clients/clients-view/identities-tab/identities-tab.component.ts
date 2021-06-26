@@ -22,7 +22,7 @@ import { analyzeAndValidateNgModules } from "@angular/compiler";
 import { AddIdentitiesExtraInfoComponent } from "./dialog-add-identities-extra-info/add-identities-extra-info.component";
 import { BanksService } from "../../../banks/banks.service";
 
-import {animate, state, style, transition, trigger} from '@angular/animations';
+import { animate, state, style, transition, trigger } from "@angular/animations";
 import { Logger } from "app/core/logger/logger.service";
 import { ConfirmDialogComponent } from "app/transactions/dialog/confirm-dialog/confirm-dialog.component";
 const log = new Logger("-IDENTIFIER TAB-");
@@ -35,10 +35,10 @@ const log = new Logger("-IDENTIFIER TAB-");
   templateUrl: "./identities-tab.component.html",
   styleUrls: ["./identities-tab.component.scss"],
   animations: [
-    trigger('detailExpand', [
-      state('collapsed', style({ height: '0px', minHeight: '0' })),
-      state('expanded', style({ height: '100px' })),
-      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
+    trigger("detailExpand", [
+      state("collapsed", style({ height: "0px", minHeight: "0" })),
+      state("expanded", style({ height: "100px" })),
+      transition("expanded <=> collapsed", animate("225ms cubic-bezier(0.4, 0.0, 0.2, 1)")),
     ]),
   ],
 })
@@ -414,7 +414,10 @@ export class IdentitiesTabComponent {
             classCard: classCard,
             isValid: false,
           })
-          .subscribe((res2: any) => {});
+          .subscribe((res2: any) => {
+            const message = `Cập nhật thành công cho thẻ: ${userIdentifyId} `;
+            this.alertService.alert({ message: message, msgClass: "cssInfo" });
+          });
       }
     });
   }
