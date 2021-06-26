@@ -406,7 +406,10 @@ export class IdentitiesTabComponent {
             classCard: classCard,
             isValid: false,
           })
-          .subscribe((res2: any) => {});
+          .subscribe((res2: any) => {
+            const message = `Cập nhật thành công cho thẻ: ${userIdentifyId} `;
+            this.alertService.alert({ message: message, msgClass: "cssInfo" });
+          });
       }
     });
   }
