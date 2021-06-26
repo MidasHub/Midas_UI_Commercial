@@ -22,6 +22,7 @@ import { analyzeAndValidateNgModules } from "@angular/compiler";
 import { AddIdentitiesExtraInfoComponent } from "./dialog-add-identities-extra-info/add-identities-extra-info.component";
 import { BanksService } from "../../../banks/banks.service";
 
+import { animate, state, style, transition, trigger } from "@angular/animations";
 import { Logger } from "app/core/logger/logger.service";
 import { ConfirmDialogComponent } from "app/transactions/dialog/confirm-dialog/confirm-dialog.component";
 const log = new Logger("-IDENTIFIER TAB-");
@@ -33,6 +34,13 @@ const log = new Logger("-IDENTIFIER TAB-");
   selector: "mifosx-identities-tab",
   templateUrl: "./identities-tab.component.html",
   styleUrls: ["./identities-tab.component.scss"],
+  animations: [
+    trigger("detailExpand", [
+      state("collapsed", style({ height: "0px", minHeight: "0" })),
+      state("expanded", style({ height: "100px" })),
+      transition("expanded <=> collapsed", animate("225ms cubic-bezier(0.4, 0.0, 0.2, 1)")),
+    ]),
+  ],
 })
 export class IdentitiesTabComponent {
   isLoading: boolean = false;
@@ -153,6 +161,13 @@ export class IdentitiesTabComponent {
                     vPosition: "top",
                   });
                 }
+              } else {
+                this.alertService.alert({
+                  message: "CẢNH BÁO: Thẻ đã hết hạn, không được thực hiện giao dịch trên thẻ này",
+                  msgClass: "cssDanger",
+                  hPosition: "center",
+                  vPosition: "top",
+                });
               }
             }
 
@@ -203,12 +218,12 @@ export class IdentitiesTabComponent {
   addIdentifier(addOther: boolean) {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.data = {
-      title: 'Thêm Thẻ | CMND/CCCD | TK bank',
+      title: "Thêm Thẻ | CMND/CCCD | TK bank",
       addOther: addOther,
       clientIdentifierTemplate: this.clientIdentifierTemplate,
     };
 
-    dialogConfig.maxWidth = '90%' ;
+    dialogConfig.maxWidth = "90%";
     // init data for opening
     const addIdentifierDialogRef = this.dialog.open(AddIdentitiesComponent, dialogConfig);
 
@@ -396,6 +411,7 @@ export class IdentitiesTabComponent {
             expireDate: expiredDate,
             limitCard: limitCard,
             classCard: classCard,
+            isValid: false,
           })
           .subscribe((res2: any) => {});
       }
@@ -424,13 +440,6 @@ export class IdentitiesTabComponent {
       const checkResult = resExtraCardCheck.result;
 
       if (checkResult.isHaveExtraCardInfo) {
-        const dateExpired = new Date(checkResult.cardExtraInfoEntity.expiredDate);
-        const yExpired = dateExpired.getFullYear();
-        const mExpired = dateExpired.getMonth();
-
-        const dateSystem = new Date();
-        const ySystem = dateSystem.getFullYear();
-        const mSystem = dateSystem.getMonth();
         const dialogConfig = new MatDialogConfig();
 
         /** Dialog box setup */
@@ -440,64 +449,18 @@ export class IdentitiesTabComponent {
           cardInfo: checkResult,
         };
         dialogConfig.minWidth = 400;
+        const showIdentifierDialogRef = this.dialog.open(AddIdentitiesExtraInfoComponent, dialogConfig);
+        showIdentifierDialogRef.afterClosed().subscribe((response: any) => {
+          if (response) {
+            const { dueDay, expiredDate, limitCard, classCard } = response.data.value;
+            checkResult.cardExtraInfoEntity.limit = limitCard;
+            checkResult.cardExtraInfoEntity.classCard = classCard;
+            checkResult.cardExtraInfoEntity.expiredDateString = expiredDate;
+            checkResult.cardExtraInfoEntity.dueDay = dueDay;
 
-        if (yExpired > ySystem) {
-          const showIdentifierDialogRef = this.dialog.open(AddIdentitiesExtraInfoComponent, dialogConfig);
-          showIdentifierDialogRef.afterClosed().subscribe((response: any) => {
-            if (response) {
-              const { dueDay, expiredDate, limitCard, classCard } = response.data.value;
-              checkResult.cardExtraInfoEntity.limit = limitCard;
-              checkResult.cardExtraInfoEntity.classCard = classCard;
-              checkResult.cardExtraInfoEntity.expiredDateString = expiredDate;
-              checkResult.cardExtraInfoEntity.dueDay = dueDay;
-
-              this.updateCardInfo(checkResult.cardExtraInfoEntity);
-            }
-          });
-        } else {
-          if (yExpired === ySystem) {
-            if (mExpired > mSystem) {
-              if (mExpired === mSystem + 1) {
-                this.alertService.alert({
-                  message:
-                    "CHÚ Ý: Thẻ sẽ hết hạn vào tháng sau, đây là lần cuối cùng được thực hiện giao dịch trên thẻ này",
-                  msgClass: "cssWarning",
-                  hPosition: "right",
-                  vPosition: "bottom",
-                });
-              } else {
-                const showIdentifierDialogRef = this.dialog.open(AddIdentitiesExtraInfoComponent, dialogConfig);
-                showIdentifierDialogRef.afterClosed().subscribe((response: any) => {
-                  if (response) {
-                    const { dueDay, expiredDate, limitCard, classCard } = response.data.value;
-                    checkResult.cardExtraInfoEntity.limit = limitCard;
-                    checkResult.cardExtraInfoEntity.classCard = classCard;
-                    checkResult.cardExtraInfoEntity.expiredDateString = expiredDate;
-                    checkResult.cardExtraInfoEntity.dueDay = dueDay;
-
-                    this.updateCardInfo(checkResult.cardExtraInfoEntity);
-                  }
-                });
-              }
-            }
-            if (mExpired === mSystem) {
-              this.alertService.alert({
-                message: "CẢNH BÁO: Thẻ sẽ hết hạn trong tháng này, cân nhắc khi thực hiện giao dịch trên thẻ này",
-                msgClass: "cssDanger",
-                hPosition: "center",
-                vPosition: "bottom",
-              });
-            }
-            if (mExpired < mSystem) {
-              this.alertService.alert({
-                message: "CẢNH BÁO: Thẻ đã hết hạn, không được thực hiện giao dịch trên thẻ này",
-                msgClass: "cssDanger",
-                hPosition: "center",
-                vPosition: "top",
-              });
-            }
+            this.updateCardInfo(checkResult.cardExtraInfoEntity);
           }
-        }
+        });
       } else {
         this.addIdentifierExtraInfo(identifierId, cardNumber);
       }
