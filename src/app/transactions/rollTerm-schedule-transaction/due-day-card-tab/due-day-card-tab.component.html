@@ -22,8 +22,8 @@
     <mat-form-field fxFlex="18%">
       <mat-label>Trạng thái</mat-label>
       <select matSelect matNativeControl formControlName="statusFilter">
-        <option *ngFor="let status of statusOptionAll" [value]="status.value">
-          {{ status.label }}
+        <option *ngFor="let status of statusOption" [value]="status.refid">
+          {{ status.value }}
         </option>
       </select>
     </mat-form-field>
@@ -120,15 +120,6 @@
         </td>
       </ng-container>
 
-      <!-- <ng-container matColumnDef="expiredDate">
-        <th mat-header-cell *matHeaderCellDef>Ngày<br />hết hạn</th>
-        <td mat-cell *matCellDef="let card">
-          <mat-form-field>
-            <input type="text" matInput [(ngModel)]="card.expiredDateString" mask="00/00" />
-          </mat-form-field>
-        </td>
-      </ng-container> -->
-
       <ng-container matColumnDef="isHold">
         <th mat-header-cell *matHeaderCellDef>Giử thẻ</th>
         <td mat-cell *matCellDef="let card">
@@ -140,9 +131,9 @@
         <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef>Trạng thái</th>
         <td mat-cell fxHide fxShow.gt-md *matCellDef="let card">
           <mat-form-field appearance="outline">
-            <select [disabled]="card.trackingState == 'C'" matSelect [(ngModel)]="card.trackingState" matNativeControl>
-              <option *ngFor="let status of statusOption" [value]="status.value">
-                {{ status.label }}
+            <select  matSelect [(ngModel)]="card.trackingState" matNativeControl>
+              <option *ngFor="let status of statusOption" [value]="status.refid">
+                {{ status.value }}
               </option>
             </select>
           </mat-form-field>
@@ -151,8 +142,12 @@
       <ng-container matColumnDef="note">
         <th mat-header-cell *matHeaderCellDef>Ghi chú</th>
         <td mat-cell *matCellDef="let card">
-          <mat-form-field style="width: 100%;">
-            <textarea  matInput [(ngModel)]="card.note"></textarea>
+          <mat-form-field appearance="outline">
+            <select matSelect [(ngModel)]="card.note" matNativeControl>
+              <option *ngFor="let status of noteOption" [value]="status.refid">
+                {{ status.value }}
+              </option>
+            </select>
           </mat-form-field>
         </td>
       </ng-container>
@@ -163,6 +158,9 @@
           <mat-icon style="color: blue" title="Nhận phí" (click)="advanceCash(card.refId, card.clientId)"
             >attach_money</mat-icon
           >
+          <!-- <mat-icon style="color: red" title="Lên lịch Advance" (click)="showCreateRollTermScheduleDialog(card)"
+            >format_list_numbered_rtl
+            </mat-icon> -->
         </td>
       </ng-container>
       <ng-container matColumnDef="expandedDetail">

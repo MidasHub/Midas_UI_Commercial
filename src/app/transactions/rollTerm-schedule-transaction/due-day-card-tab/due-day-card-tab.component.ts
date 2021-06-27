@@ -1,3 +1,4 @@
+import { element } from 'protractor';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import {DatePipe} from '@angular/common';
 import {Component, OnInit, ViewChild} from '@angular/core';
@@ -13,6 +14,8 @@ import {TransactionService} from 'app/transactions/transaction.service';
 import {AdvanceFeeRollTermComponent} from '../dialog/advance-fee-roll-term/advance-fee-roll-term.component';
 import {TransactionHistoryDialogComponent} from '../dialog/transaction-history/transaction-history-dialog.component';
 import {BanksService} from '../../../banks/banks.service';
+import { CreateRollTermScheduleDialogComponent } from '../dialog/create-roll-term-schedule/create-roll-term-schedule-dialog.component';
+import { AddLimitIdentitiesExtraInfoComponent } from 'app/clients/clients-view/identities-tab/dialog-add-limit-extra-info/dialog-add-limit-extra-info.component';
 
 @Component({
   selector: 'midas-due-day-card-transaction',
@@ -47,43 +50,9 @@ export class DueDayCardTabComponent implements OnInit {
   currentUser: any;
   minDate: any;
 
-  statusOptionAll: any[] = [
-    {
-      label: 'Tất cả trạng thái',
-      value: '',
-    },
-    {
-      label: 'Khởi tạo',
-      value: 'A',
-    },
-    {
-      label: 'Chờ phí',
-      value: 'P',
-    },
-    {
-      label: 'Từ chối',
-      value: 'R',
-    },
-  ];
+  noteOption: any[] = [];
+  statusOption: any[] = []
 
-  statusOption: any[] = [
-
-    {
-      label: 'Khởi tạo',
-      value: 'A',
-    },
-    {
-      label: 'Chờ phí',
-      value: 'P',
-    },
-    {
-      label: 'Từ chối',
-      value: 'R',
-    },
-  ];
-  partners: any[];
-  staffs: any[];
-  offices: any[];
   totalTerminalAmount = 0;
   totalFeeAmount = 0;
   totalCogsAmount = 0;
@@ -128,6 +97,18 @@ export class DueDayCardTabComponent implements OnInit {
         this.listBank = data;
       }
     });
+    this.transactionService.getCardDueDayTemplate().subscribe((data: any) => {
+      if (data) {
+        this.noteOption = data.result.listLeadStatus;
+        // this.noteOption.forEach((element: any) => {
+        //   element.refid = String(element.refid);
+        // })
+        this.statusOption = data.result.listSaleStage;
+        // this.statusOption.forEach((element: any) => {
+        //   element.refid = String(element.refid);
+        // })
+      }
+    });
   }
 
   advanceCash(cardId: string, clientId: string) {
@@ -153,6 +134,111 @@ export class DueDayCardTabComponent implements OnInit {
         this.alertService.alert({message: message, msgClass: 'cssInfo'});
         this.getRollTermScheduleAndCardDueDayInfo();
       });
+    });
+  }
+
+  showCreateRollTermScheduleDialog(card: any) {
+
+    const data = {
+      clientId: card.clientId,
+      panHolderName: card.clientName,
+      panNumber: card.cardNumber,
+      identifierId: card.cardId,
+    };
+    const dialog = this.dialog.open(CreateRollTermScheduleDialogComponent, {height: 'auto', width: '80%', data});
+    dialog.afterClosed().subscribe((response: any) => {
+
+      const {rollTermBooking, requestAmount, feeRate} = response?.data?.value;
+      if (!card.limit || !card.cardClass) {
+        this.addIdentifierExtraInfo(card, rollTermBooking, requestAmount, feeRate);
+        return;
+      } else{
+        this.submitTransactionRollTerm(card, rollTermBooking, requestAmount, feeRate);
+        return;
+      }
+    });
+  }
+
+  submitTransactionRollTerm(card: any, rollTermBooking: any, requestAmount: any, feeRate: any){
+    let info: any = {};
+    rollTermBooking.forEach((booking: any) => {
+      booking.amountBooking = booking.amountBooking;
+      booking.txnDate = this.datePipe.transform(booking.txnDate, 'dd/MM/yyyy');
+    });
+    const listBookingRollTerm = JSON.stringify(rollTermBooking, function (key, value) {
+      if (key === '$$hashKey') {
+        return undefined;
+      }
+      return value;
+    });
+
+    // prepare value for create schedule roll term transaction
+    info.type = 'rollTerm';
+    info.productId = 'AL01';
+    info.rate = feeRate;
+    info.requestAmount = requestAmount;
+    info.BookingInternalDtoListString = listBookingRollTerm;
+    info.clientName = card.clientName;
+    info.panNumber = card.cardNumber;
+    info.identifierId = card.cardId;
+    info.groupId = card.groupId ? card.groupId : '0';
+    info.cardType = card.cardType;
+    info.bankCode = card.bankCode;
+    info.bookingId = card.bookingId;
+    info.clientId = card.clientId;
+
+    this.isLoading = true;
+    this.transactionService.submitTransactionRollTermOnDialog(info).subscribe((data: any) => {
+      this.isLoading = false;
+      let transactionRefNo = data.result.tranRefNo;
+      this.alertService.alert({
+        message: `Tạo giao dịch ${transactionRefNo} thành công!`,
+        msgClass: 'cssSuccess',
+        hPosition: 'center',
+      });
+
+      this.getRollTermScheduleAndCardDueDayInfo();
+    });
+  }
+
+  addIdentifierExtraInfo(card: any, rollTermBooking: any, requestAmount: any, feeRate: any) {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.data = {
+      title: "Thông tin bổ sung cho thẻ",
+      clientIdentifierTemplate: card,
+    };
+    dialogConfig.minWidth = 400;
+    const addIdentifierDialogRef = this.dialog.open(AddLimitIdentitiesExtraInfoComponent, dialogConfig);
+    addIdentifierDialogRef.afterClosed().subscribe((response: any) => {
+      if (response.data) {
+        const { limitCard, classCard } = response.data.value;
+        const expiredDateString = this.datePipe.transform(card.expiredDate, "MMyy");
+
+        this.transactionService
+          .updateCardTrackingState({
+            refId: card.refId,
+            limitCard: limitCard,
+            classCard: classCard,
+            expiredDateString: expiredDateString,
+            dueDay: card.dueDay,
+            isHold: card.isHold,
+          })
+          .subscribe((res2: any) => {
+            if (res2.result.status) {
+              card.limit = limitCard;
+              card.classCard = classCard;
+
+              this.submitTransactionRollTerm(card, rollTermBooking, requestAmount, feeRate);
+            } else {
+              this.alertService.alert({
+                message: res2.result.message ? res2.result.message : "Lỗi thêm thông tin hạn mức, hạng thẻ!",
+                msgClass: "cssError",
+                hPosition: "center",
+              });
+              return;
+            }
+          });
+      }
     });
   }
 
