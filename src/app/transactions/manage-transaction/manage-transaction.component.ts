@@ -478,15 +478,15 @@ export class ManageTransactionComponent implements OnInit {
             return;
           }
 
-          if (!transaction.fileSubmitBase64) {
-            let messageCheckSameAmountCrossCheck = `Vui lòng cung cấp ảnh bill tổng của lô ${transaction.batchNoSubmit} trước khi thực hiện!`;
-            this.alertService.alert({
-              msgClass: "cssDanger",
-              message: messageCheckSameAmountCrossCheck,
-            });
+          // if (!transaction.fileSubmitBase64) {
+          //   let messageCheckSameAmountCrossCheck = `Vui lòng cung cấp ảnh bill tổng của lô ${transaction.batchNoSubmit} trước khi thực hiện!`;
+          //   this.alertService.alert({
+          //     msgClass: "cssDanger",
+          //     message: messageCheckSameAmountCrossCheck,
+          //   });
 
-            return;
-          }
+          //   return;
+          // }
         }
 
         let note = value.note;
