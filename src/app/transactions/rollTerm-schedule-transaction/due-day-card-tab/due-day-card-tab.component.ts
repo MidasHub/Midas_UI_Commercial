@@ -41,7 +41,7 @@ export class DueDayCardTabComponent implements OnInit {
     'note',
     'actions',
   ];
-  isLoading: boolean = false;
+  isLoading: Boolean = false;
   formDate: FormGroup;
   formFilter: FormGroup;
   dataSource: any[];
@@ -51,7 +51,7 @@ export class DueDayCardTabComponent implements OnInit {
   minDate: any;
 
   noteOption: any[] = [];
-  statusOption: any[] = []
+  statusOption: any[] = [];
 
   totalTerminalAmount = 0;
   totalFeeAmount = 0;
@@ -77,7 +77,8 @@ export class DueDayCardTabComponent implements OnInit {
     this.minDate = new Date();
     this.formDate = this.formBuilder.group({
       fromDate: [new Date()],
-      toDate: [new Date(new Date().setMonth(new Date().getMonth() + 1))],
+      // toDate: [new Date(new Date().setMonth(new Date().getMonth() + 1))],
+      toDate: [new Date(new Date().setDate(new Date().getDate() + 5))],
     });
     this.formFilter = this.formBuilder.group({
       bankName: ['ALL'],
@@ -152,20 +153,20 @@ export class DueDayCardTabComponent implements OnInit {
       if (!card.limit || !card.cardClass) {
         this.addIdentifierExtraInfo(card, rollTermBooking, requestAmount, feeRate);
         return;
-      } else{
+      } else {
         this.submitTransactionRollTerm(card, rollTermBooking, requestAmount, feeRate);
         return;
       }
     });
   }
 
-  submitTransactionRollTerm(card: any, rollTermBooking: any, requestAmount: any, feeRate: any){
-    let info: any = {};
+  submitTransactionRollTerm(card: any, rollTermBooking: any, requestAmount: any, feeRate: any) {
+    const info: any = {};
     rollTermBooking.forEach((booking: any) => {
       booking.amountBooking = booking.amountBooking;
       booking.txnDate = this.datePipe.transform(booking.txnDate, 'dd/MM/yyyy');
     });
-    const listBookingRollTerm = JSON.stringify(rollTermBooking, function (key, value) {
+    const listBookingRollTerm = JSON.stringify(rollTermBooking, function (key: string, value: string) {
       if (key === '$$hashKey') {
         return undefined;
       }
@@ -190,7 +191,7 @@ export class DueDayCardTabComponent implements OnInit {
     this.isLoading = true;
     this.transactionService.submitTransactionRollTermOnDialog(info).subscribe((data: any) => {
       this.isLoading = false;
-      let transactionRefNo = data.result.tranRefNo;
+      const transactionRefNo = data.result.tranRefNo;
       this.alertService.alert({
         message: `Tạo giao dịch ${transactionRefNo} thành công!`,
         msgClass: 'cssSuccess',
@@ -204,7 +205,7 @@ export class DueDayCardTabComponent implements OnInit {
   addIdentifierExtraInfo(card: any, rollTermBooking: any, requestAmount: any, feeRate: any) {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.data = {
-      title: "Thông tin bổ sung cho thẻ",
+      title: 'Thông tin bổ sung cho thẻ',
       clientIdentifierTemplate: card,
     };
     dialogConfig.minWidth = 400;
@@ -212,7 +213,7 @@ export class DueDayCardTabComponent implements OnInit {
     addIdentifierDialogRef.afterClosed().subscribe((response: any) => {
       if (response.data) {
         const { limitCard, classCard } = response.data.value;
-        const expiredDateString = this.datePipe.transform(card.expiredDate, "MMyy");
+        const expiredDateString = this.datePipe.transform(card.expiredDate, 'MMyy');
 
         this.transactionService
           .updateCardTrackingState({
@@ -231,9 +232,9 @@ export class DueDayCardTabComponent implements OnInit {
               this.submitTransactionRollTerm(card, rollTermBooking, requestAmount, feeRate);
             } else {
               this.alertService.alert({
-                message: res2.result.message ? res2.result.message : "Lỗi thêm thông tin hạn mức, hạng thẻ!",
-                msgClass: "cssError",
-                hPosition: "center",
+                message: res2.result.message ? res2.result.message : 'Lỗi thêm thông tin hạn mức, hạng thẻ!',
+                msgClass: 'cssError',
+                hPosition: 'center',
               });
               return;
             }
@@ -251,9 +252,9 @@ export class DueDayCardTabComponent implements OnInit {
     const dateFormat = this.settingsService.dateFormat;
     let fromDate = this.formDate.get('fromDate').value;
     let toDate = this.formDate.get('toDate').value;
-    let statusFilter = this.formFilter.get('statusFilter').value;
-    let bankName = this.formFilter.get('bankName').value;
-    let query = this.formFilter.get('query').value;
+    const statusFilter = this.formFilter.get('statusFilter').value;
+    const bankName = this.formFilter.get('bankName').value;
+    const query = this.formFilter.get('query').value;
     const limit = this.paginator.pageSize ? this.paginator.pageSize : 10;
     const offset = this.paginator.pageIndex * limit;
     if (fromDate) {
@@ -273,8 +274,8 @@ export class DueDayCardTabComponent implements OnInit {
         this.isLoading = false;
         this.transactionsData = result?.result;
         this.dataSource = result?.result.lisCardTransactionTracking;
-        this.dataSource.forEach(element => {
-          element.expiredDateString = this.datePipe.transform(element.expiredDate, 'MMyy');
+        this.dataSource.forEach( item => {
+          item.expiredDateString = this.datePipe.transform(item.expiredDate, 'MMyy');
         });
       });
   }
@@ -290,7 +291,7 @@ export class DueDayCardTabComponent implements OnInit {
 
   updateCardTrackingState(index: number) {
 
-    let updateData = this.dataSource[index];
+    const updateData = this.dataSource[index];
     this.isLoading = true;
     this.transactionService.updateCardTrackingState(updateData)
       .subscribe((result) => {
