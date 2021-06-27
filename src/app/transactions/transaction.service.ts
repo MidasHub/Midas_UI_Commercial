@@ -141,6 +141,12 @@ export class TransactionService {
     return this.http.put<any>(`${this.GatewayApiUrlPrefix}/card/update_card_day_info`, httpParams);
   }
 
+  getCardDueDayTemplate(): Observable<any> {
+    let httpParams = this.commonHttpParams.getCommonHttpParams();
+
+    return this.http.post<any>(`${this.GatewayApiUrlPrefix}/card/get_card_due_day_template`, httpParams);
+  }
+
   submitTransactionCash(transactionInfo: any): Observable<any> {
     let httpParams = this.commonHttpParams.getCommonHttpParams();
     httpParams = httpParams.set("accountNumber", transactionInfo.identifyClientDto.accountNumber);
