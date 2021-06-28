@@ -26,8 +26,10 @@ export const environment = {
   GatewayServerUrl: '',
   GatewayTenantId: te.billposT,
   oauth: {
-    enabled: false,  // For connecting to Midas using OAuth2 Authentication change the value to true
-    serverUrl: ''
+    enabled: true,  // For connecting to Midas using OAuth2 Authentication change the value to true
+    serverUrl: '',
+    clientID: 'community-app',
+    clientSecrect: '123',
   },
   defaultLanguage: 'vi-VN',
   supportedLanguages: [
