@@ -4,7 +4,7 @@
 
     <mat-form-field fxFlex="48%">
       <mat-label>Deposit Amount</mat-label>
-      <input type="number" matInput formControlName="depositAmount" required>
+      <input type="text" currencyMask matInput formControlName="depositAmount" required>
       <mat-error>
         Fixed Deposit Amount is <strong>required</strong>
       </mat-error>

@@ -4,28 +4,43 @@
   </mat-card-header> -->
 
   <mat-card-content fxLayout="row" fxLayout.lt-md="column">
-    <div fxFlex.gt-md="20" class="leftside ">
+    <div fxFlex.gt-md="20" class="leftside">
       <mat-card-title-group class="header-title-group">
-        <h3> Thông tin khách hàng </h3>
+        <h3>Thông tin khách hàng</h3>
         <div class="profile-image-container mat-elevation-z8 p-10 m-b-10">
           <div fxLayoutAlign="center center">
-            <img mat-card-md-image class="profile-image"
-              [src]="clientImage ? clientImage : 'assets/images/user_placeholder.png'" />
+            <img
+              mat-card-md-image
+              class="profile-image"
+              [src]="clientImage ? clientImage : 'assets/images/user_placeholder.png'"
+            />
           </div>
           <div fxLayoutAlign="center center" class="m-b-5" *ngIf="!this.isInterchangeClient">
-            <button class="client-image-button" mat-raised-button (click)="doAction('Upload Image')"
+            <button
+              class="client-image-button"
+              mat-raised-button
+              (click)="doAction('Upload Image')"
               [matTooltip]="'Client_Component.ViewClient.tipUploadImage' | translate"
-              *midasHasPermission="'CREATE_CLIENTIMAGE'">
+              *midasHasPermission="'CREATE_CLIENTIMAGE'"
+            >
               <i class="fa fa-upload"></i>
             </button>
-            <button class="client-image-button" mat-raised-button (click)="doAction('Capture Image')"
+            <button
+              class="client-image-button"
+              mat-raised-button
+              (click)="doAction('Capture Image')"
               [matTooltip]="'Client_Component.ViewClient.tipCaptureImage' | translate"
-              *midasHasPermission="'CREATE_CLIENTIMAGE'">
+              *midasHasPermission="'CREATE_CLIENTIMAGE'"
+            >
               <i class="fa fa-camera"></i>
             </button>
-            <button class="client-image-button" mat-raised-button (click)="doAction('Delete Image')"
+            <button
+              class="client-image-button"
+              mat-raised-button
+              (click)="doAction('Delete Image')"
               [matTooltip]="'Client_Component.ViewClient.tipDeleteImage' | translate"
-              *midasHasPermission="'DELETE_CLIENTIMAGE'">
+              *midasHasPermission="'DELETE_CLIENTIMAGE'"
+            >
               <i class="fa fa-trash"></i>
             </button>
             <br />
@@ -39,8 +54,11 @@
                 {{ "Client_Component.ViewClient.lblClientName" | translate }} : {{ clientViewData?.displayName }}
               </h3> -->
               <h3>
-                <i class="fa fa-stop" [ngClass]="clientViewData?.status?.code | statusLookup"
-                  [matTooltip]="clientViewData?.status?.value"></i>
+                <i
+                  class="fa fa-stop"
+                  [ngClass]="clientViewData?.status?.code | statusLookup"
+                  [matTooltip]="clientViewData?.status?.value"
+                ></i>
                 {{ "Client_Component.ViewClient.lblClientName" | translate }} : {{ clientViewData?.displayName }}
               </h3>
             </mat-card-title>
@@ -48,47 +66,66 @@
             <mat-card-subtitle>
               <p>
                 {{ "Client_Component.ViewClient.lblCifNo" | translate }}: {{ clientViewData?.accountNo }} <br />
-                <label>{{ "Client_Component.ViewClient.lblExternalID" | translate }}: {{ clientViewData?.externalId }} <br /> </label>
-                <label *ngIf="!this.isInterchangeClient">Nhân viên quản lý: {{clientViewData?.staffName || "Chưa phân bổ"}} <br /></label>
-                {{ "Client_Component.ViewClient.lblActivationDate" | translate }} : {{
-                clientViewData?.activationDate
-                ? (clientViewData?.activationDate | date)
-                : ("Client_Component.ViewClient.lblNotActivated" | translate)
+                <label
+                  >{{ "Client_Component.ViewClient.lblExternalID" | translate }}: {{ clientViewData?.externalId }}
+                  <br />
+                </label>
+                <label *ngIf="!this.isInterchangeClient"
+                  >Nhân viên quản lý: {{ clientViewData?.staffName || "Chưa phân bổ" }} <br
+                /></label>
+                {{ "Client_Component.ViewClient.lblActivationDate" | translate }} :
+                {{
+                  clientViewData?.activationDate
+                    ? (clientViewData?.activationDate | date)
+                    : ("Client_Component.ViewClient.lblNotActivated" | translate)
                 }}<br />
-                <label *ngIf="!this.isInterchangeClient">{{ "Client_Component.ViewClient.lblMemberOf" | translate }}:
-                <span *ngFor="let group of clientViewData?.groups">
-                  <a [routerLink]="['/groups', group.id, 'general']">{{ group.name }}</a>&nbsp;
-                </span>
-                <span *ngIf="!clientViewData.groups">{{ "Client_Component.ViewClient.lblUnassigned" | translate
+                <label *ngIf="!this.isInterchangeClient"
+                  >{{ "Client_Component.ViewClient.lblMemberOf" | translate }}:
+                  <span *ngFor="let group of clientViewData?.groups">
+                    <a [routerLink]="['/groups', group.id, 'general']">{{ group.name }}</a
+                    >&nbsp;
+                  </span>
+                  <span *ngIf="!clientViewData.groups">{{
+                    "Client_Component.ViewClient.lblUnassigned" | translate
                   }}</span>
                   <br />
-                  </label>
+                </label>
               </p>
             </mat-card-subtitle>
           </div>
 
-          <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutAlign="center center" >
+          <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutAlign="center center">
             <div *ngIf="!this.isInterchangeClient" class="p-5">
               <button mat-raised-button (click)="doAction('View Signature')">
                 <i class="fas fa-file-signature"></i> {{ "Client_Component.ViewClient.lblViewSignature" | translate }}
               </button>
             </div>
-            <div *midasHasActiveModule="'mgmModule'" class="p-5" >
-              <button mat-raised-button [routerLink]="['/clients/create/']"
-                [queryParams]="{'mgmId': clientViewData.id }" *ngIf="!this.isInterchangeClient">
+            <div *midasHasActiveModule="'mgmModule'" class="p-5">
+              <button
+                mat-raised-button
+                [routerLink]="['/clients/create/']"
+                [queryParams]="{ mgmId: clientViewData.id }"
+                *ngIf="!this.isInterchangeClient"
+              >
                 <i class="fas fa-user-plus"></i> Thêm MGM
               </button>
             </div>
           </div>
-
-
         </div>
 
-        <mat-card-actions fxLayout="column" fxLayoutAlign="center center" *ngIf="!this.showViewClient"
-          class="client-actions">
-          <span  class="m-b-10" fxLayoutAlign="center stretch">
-            <button mat-raised-button (click)="showHistoryTransaction(clientViewData.id)" *ngIf="!this.isInterchangeClient">
-              <i class="fa fa-list-alt "></i>
+        <mat-card-actions
+          fxLayout="column"
+          fxLayoutAlign="center center"
+          *ngIf="!this.showViewClient"
+          class="client-actions"
+        >
+          <span class="m-b-10" fxLayoutAlign="center stretch">
+            <button
+              mat-raised-button
+              (click)="showHistoryTransaction(clientViewData.id)"
+              *ngIf="!this.isInterchangeClient"
+            >
+              <i class="fa fa-list-alt"></i>
               Lịch sử giao dịch
             </button>
           </span>
@@ -97,7 +134,7 @@
             <button mat-raised-button [routerLink]="['edit']" *ngIf="!this.isInterchangeClient">
               <i class="fa fa-edit"></i>{{ "Client_Component.ViewClient.btnEdit" | translate }}
             </button>
-          </span> 
+          </span>
           <span *midasHasPermission="'UPDATE_CLIENT'" class="m-b-10" fxLayoutAlign="center stretch">
             <button mat-raised-button (click)="printComponent()" *ngIf="!this.isInterchangeClient">
               <i class="fa fa-edit"></i>In Hợp đồng dịch vụ tư vấn
@@ -133,10 +170,17 @@
           </button>
           <mat-menu #Actions="matMenu">
             <div *ngIf="!this.isInterchangeClient">
-              <button mat-menu-item  *midasHasPermission="'ALL_FUNCTIONS'" [routerLink]="['loans-accounts', 'create']">
-                {{ "Client_Component.ViewClient.btnNewLoan" | translate }}
+              <button mat-menu-item *midasHasPermission="'ALL_FUNCTIONS'" [routerLink]="['loans-accounts', 'create']">
+                <i class="fas fa-file-invoice-dollar"></i> {{ "Client_Component.ViewClient.btnNewLoan" | translate }}
               </button>
-              </div>
+              <button
+                mat-menu-item
+                *midasHasPermission="'ALL_FUNCTIONS'"
+                [routerLink]="['fixed-deposits-accounts', 'create']"
+              >
+              <i class="fas fa-file-invoice-dollar"></i> {{ "Client_Component.ViewClient.btnNewFixedDeposit" | translate }}
+              </button>
+            </div>
             <div *ngIf="this.isInterchangeClient">
               <button mat-menu-item [routerLink]="['savings-accounts', 'createIcAccount']">
                 <i class="fas fa-file-invoice-dollar"></i> {{ "Client_Component.ViewClient.btnNewSaving" | translate }}
@@ -148,11 +192,15 @@
               </button>
             </div>
             <div *ngIf="!this.isInterchangeClient">
-            <button mat-menu-item  (click)="doAction('Update Default Savings')"
-              *midasHasPermission="'UPDATESAVINGSACCOUNT_CLIENT'">
-              <i class="fas fa-file-invoice"></i> {{ "Client_Component.ViewClient.btnUpdateDefaultSaving" | translate }}
-            </button>
-          </div>
+              <button
+                mat-menu-item
+                (click)="doAction('Update Default Savings')"
+                *midasHasPermission="'UPDATESAVINGSACCOUNT_CLIENT'"
+              >
+                <i class="fas fa-file-invoice"></i>
+                {{ "Client_Component.ViewClient.btnUpdateDefaultSaving" | translate }}
+              </button>
+            </div>
             <div *ngIf="!this.isInterchangeClient">
               <button mat-menu-item (click)="doAction('Create Self Service User')">
                 <i class="fas fa-portrait"></i> {{ "Client_Component.ViewClient.btnCreateSelfService" | translate }}
@@ -171,7 +219,7 @@
               <button mat-menu-item (click)="doAction('Transfer Client')">
                 <i class="fas fa-exchange-alt"></i> {{ "Client_Component.ViewClient.btnTransferClient" | translate }}
               </button>
-              <button mat-menu-item (click)="doAction('Close')" *midasHasPermission="'CLOSE_CLIENT'" >
+              <button mat-menu-item (click)="doAction('Close')" *midasHasPermission="'CLOSE_CLIENT'">
                 <i class="fas fa-user-times"></i> {{ "Client_Component.ViewClient.btnClose" | translate }}
               </button>
 
@@ -180,39 +228,48 @@
               <span *ngIf="clientViewData.status.value === 'Pending'">
                 <button mat-menu-item (click)="doAction('Activate')">
                   {{ "Client_Component.ViewClient.btnActivate" | translate }}
-                </button></span>
+                </button></span
+              >
               <span *ngIf="clientViewData.status.value === 'Pending'">
                 <button mat-menu-item (click)="doAction('Withdraw')">
                   {{ "Client_Component.ViewClient.btnWithdraw" | translate }}
-                </button></span>
+                </button></span
+              >
               <span *ngIf="clientViewData.status.value === 'Pending'">
                 <button mat-menu-item (click)="doAction('Reject')">
                   {{ "Client_Component.ViewClient.btnReject" | translate }}
-                </button></span>
+                </button></span
+              >
               <span *ngIf="clientViewData.status.value === 'Pending'">
                 <button mat-menu-item *midasHasPermission="'DELETE_CLIENT'" (click)="doAction('Delete')">
                   {{ "Client_Component.ViewClient.btnDelete" | translate }}
-                </button></span>
+                </button></span
+              >
               <span *ngIf="clientViewData.status.value === 'Closed'">
                 <button mat-menu-item (click)="doAction('Reactivate')" *midasHasPermission="'REACTIVATE_CLIENT'">
                   {{ "Client_Component.ViewClient.btnReactivate" | translate }}
-                </button></span>
-              <span *ngIf="clientViewData.status.value === 'Rejected'"><button mat-menu-item
-                  (click)="doAction('Undo Rejection')">
+                </button></span
+              >
+              <span *ngIf="clientViewData.status.value === 'Rejected'"
+                ><button mat-menu-item (click)="doAction('Undo Rejection')">
                   {{ "Client_Component.ViewClient.btnUndoReject" | translate }}
-                </button></span>
-              <span *ngIf="clientViewData.status.value === 'Transfer in progress'"><button mat-menu-item
-                  (click)="doAction('Undo Transfer')">
+                </button></span
+              >
+              <span *ngIf="clientViewData.status.value === 'Transfer in progress'"
+                ><button mat-menu-item (click)="doAction('Undo Transfer')">
                   {{ "Client_Component.ViewClient.btnUndoTransfer" | translate }}r
-                </button></span>
-              <span *ngIf="clientViewData.status.value === 'Transfer in progress'"><button mat-menu-item
-                  (click)="doAction('Accept Transfer')">
+                </button></span
+              >
+              <span *ngIf="clientViewData.status.value === 'Transfer in progress'"
+                ><button mat-menu-item (click)="doAction('Accept Transfer')">
                   {{ "Client_Component.ViewClient.btnAcceptTransfer" | translate }}
-                </button></span>
-              <span *ngIf="clientViewData.status.value === 'Transfer in progress'"><button mat-menu-item
-                  (click)="doAction('Reject Transfer')">
+                </button></span
+              >
+              <span *ngIf="clientViewData.status.value === 'Transfer in progress'"
+                ><button mat-menu-item (click)="doAction('Reject Transfer')">
                   {{ "Client_Component.ViewClient.btnRejectTransfer" | translate }}
-                </button></span>
+                </button></span
+              >
 
               <button mat-menu-item (click)="doAction('Upload Signature')" *midasHasPermission="'CREATE_CLIENTIMAGE'">
                 <i class="fas fa-file-signature"></i> {{ "Client_Component.ViewClient.btnUploadSignature" | translate }}
@@ -222,8 +279,6 @@
               </button>
             </div>
           </mat-menu>
-
-
 
           <!-- <button mat-raised-button [matMenuTriggerFor]="More">
             <i class="fab fa-buromobelexperte"></i>{{ "Client_Component.ViewClient.btnMoreAction" | translate }}
@@ -261,73 +316,118 @@
             </button>
           </mat-menu> -->
         </mat-card-actions>
-
-
       </mat-card-title-group>
-
-
     </div>
     <div fxFlex.gt-md="80" class="rightside">
       <nav mat-tab-nav-bar class="navigation-tabs m-b-10" *ngIf="!this.isInterchangeClient">
-        <a mat-tab-link [routerLink]="['./identities']" [queryParams]="{ typeViewClient: this.typeViewClient }"
-          routerLinkActive #identities="routerLinkActive" [active]="identities.isActive"
-          *midasHasPermission="'READ_CLIENTIDENTIFIER'">
+        <a
+          mat-tab-link
+          [routerLink]="['./identities']"
+          [queryParams]="{ typeViewClient: this.typeViewClient }"
+          routerLinkActive
+          #identities="routerLinkActive"
+          [active]="identities.isActive"
+          *midasHasPermission="'READ_CLIENTIDENTIFIER'"
+        >
           {{ "Client_Component.ViewClient.lblIdentity" | translate }}
         </a>
 
-        <a mat-tab-link [routerLink]="['./general']" [queryParams]="{ typeViewClient: this.typeViewClient }"
-          routerLinkActive #general="routerLinkActive" [active]="general.isActive">
+        <a
+          mat-tab-link
+          [routerLink]="['./general']"
+          [queryParams]="{ typeViewClient: this.typeViewClient }"
+          routerLinkActive
+          #general="routerLinkActive"
+          [active]="general.isActive"
+        >
           {{ "Client_Component.ViewClient.lblGeneral" | translate }}
         </a>
 
-        <a mat-tab-link [routerLink]="['./address']" [queryParams]="{ typeViewClient: this.typeViewClient }"
-          routerLinkActive #address="routerLinkActive" [active]="address.isActive"
-          *ngIf="clientTemplateData.isAddressEnabled">
+        <a
+          mat-tab-link
+          [routerLink]="['./address']"
+          [queryParams]="{ typeViewClient: this.typeViewClient }"
+          routerLinkActive
+          #address="routerLinkActive"
+          [active]="address.isActive"
+          *ngIf="clientTemplateData.isAddressEnabled"
+        >
           {{ "Client_Component.ViewClient.lblAddress" | translate }}
         </a>
-        <a mat-tab-link [routerLink]="['./family-members']" [queryParams]="{ typeViewClient: this.typeViewClient }"
-          routerLinkActive #familyMembers="routerLinkActive" [active]="familyMembers.isActive">
+        <a
+          mat-tab-link
+          [routerLink]="['./family-members']"
+          [queryParams]="{ typeViewClient: this.typeViewClient }"
+          routerLinkActive
+          #familyMembers="routerLinkActive"
+          [active]="familyMembers.isActive"
+        >
           {{ "Client_Component.ViewClient.lblFamilyMember" | translate }}
         </a>
-        <a mat-tab-link [routerLink]="['./notes']" [queryParams]="{ typeViewClient: this.typeViewClient }"
-          routerLinkActive #notes="routerLinkActive" [active]="notes.isActive" *midasHasPermission="'READ_CLIENTNOTE'">
+        <a
+          mat-tab-link
+          [routerLink]="['./notes']"
+          [queryParams]="{ typeViewClient: this.typeViewClient }"
+          routerLinkActive
+          #notes="routerLinkActive"
+          [active]="notes.isActive"
+          *midasHasPermission="'READ_CLIENTNOTE'"
+        >
           {{ "Client_Component.ViewClient.lblNote" | translate }}
         </a>
-        <a mat-tab-link [routerLink]="['./documents']" [queryParams]="{ typeViewClient: this.typeViewClient }"
-          routerLinkActive #documents="routerLinkActive" [active]="documents.isActive"
-          *midasHasPermission="'READ_DOCUMENT'">
+        <a
+          mat-tab-link
+          [routerLink]="['./documents']"
+          [queryParams]="{ typeViewClient: this.typeViewClient }"
+          routerLinkActive
+          #documents="routerLinkActive"
+          [active]="documents.isActive"
+          *midasHasPermission="'READ_DOCUMENT'"
+        >
           {{ "Client_Component.ViewClient.lblDocument" | translate }}
         </a>
         <ng-container *ngFor="let clientDatatable of clientDatatables">
-          <a mat-tab-link [routerLink]="['./datatables', clientDatatable.registeredTableName]"
-            [queryParams]="{ typeViewClient: this.typeViewClient }" routerLinkActive #datatable="routerLinkActive"
-            [active]="datatable.isActive" *midasHasPermission="'READ_' + clientDatatable.registeredTableName">
+          <a
+            mat-tab-link
+            [routerLink]="['./datatables', clientDatatable.registeredTableName]"
+            [queryParams]="{ typeViewClient: this.typeViewClient }"
+            routerLinkActive
+            #datatable="routerLinkActive"
+            [active]="datatable.isActive"
+            *midasHasPermission="'READ_' + clientDatatable.registeredTableName"
+          >
             {{
-            (clientDatatable.registeredTableName.indexOf("Ext") >= 0)
-            ? ("Client_Component.ViewClient.lblExtendInfo" | translate)
-            : clientDatatable.registeredTableName
+              clientDatatable.registeredTableName.indexOf("Ext") >= 0
+                ? ("Client_Component.ViewClient.lblExtendInfo" | translate)
+                : clientDatatable.registeredTableName
             }}
           </a>
         </ng-container>
-
       </nav>
       <nav mat-tab-nav-bar class="navigation-tabs m-b-10" *ngIf="this.isInterchangeClient">
-
-        <a mat-tab-link [routerLink]="['./general']" [queryParams]="{ typeViewClient: this.typeViewClient }"
-          routerLinkActive #general="routerLinkActive" [active]="general.isActive">
+        <a
+          mat-tab-link
+          [routerLink]="['./general']"
+          [queryParams]="{ typeViewClient: this.typeViewClient }"
+          routerLinkActive
+          #general="routerLinkActive"
+          [active]="general.isActive"
+        >
           {{ "Client_Component.ViewClient.lblGeneral" | translate }}
         </a>
-        <a mat-tab-link [routerLink]="['./ic-partner']" [queryParams]="{ typeViewClient: this.typeViewClient }"
-          routerLinkActive #icPartner="routerLinkActive" [active]="icPartner.isActive">
+        <a
+          mat-tab-link
+          [routerLink]="['./ic-partner']"
+          [queryParams]="{ typeViewClient: this.typeViewClient }"
+          routerLinkActive
+          #icPartner="routerLinkActive"
+          [active]="icPartner.isActive"
+        >
           Danh sách đối tác
         </a>
-
       </nav>
 
       <router-outlet></router-outlet>
-
-
     </div>
-
   </mat-card-content>
 </mat-card>
