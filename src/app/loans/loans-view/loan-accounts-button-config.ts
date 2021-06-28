@@ -83,7 +83,7 @@ export class LoansAccountButtonConfiguration {
                         taskPermissionName: 'DISBURSE_LOAN',
                     },
                     {
-                        name: 'Disburse to Savings',
+                        name: 'Disburse To Savings',
                         icon: 'fa fa-flag',
                         taskPermissionName: 'DISBURSETOSAVINGS_LOAN',
                     },
