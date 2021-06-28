@@ -56,7 +56,7 @@ export class SettleCashComponent implements OnInit {
       'office': [{value: this.cashierData.officeName, disabled: true}],
       'tellerName': [{value: this.cashierData.tellerName, disabled: true}],
       'cashier': [{value: this.cashierData.cashierName, disabled: true}],
-      'assignmentPeriod': [{value: this.datePipe.transform(this.cashierData.startDate, 'dd MMMM yyyy') + ' - ' + this.datePipe.transform(this.cashierData.endDate, 'dd MMMM yyyy'), disabled: true}],
+      'assignmentPeriod': [{value: this.datePipe.transform(this.cashierData.startDate, 'dd/MM/yyyy') + ' - ' + this.datePipe.transform(this.cashierData.endDate, 'dd/MM/yyyy'), disabled: true}],
       'txnDate': [new Date(), Validators.required],
       'currencyCode': ['', Validators.required],
       'txnAmount': ['', Validators.required],

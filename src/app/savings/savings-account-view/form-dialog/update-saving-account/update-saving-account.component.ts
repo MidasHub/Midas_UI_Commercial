@@ -23,7 +23,7 @@ export class UpdateSavingAccountComponent implements OnInit {
     this.transactions = data;
     this.form = this.formBuilder.group({
       'locale': ['en'],
-      'dateFormat': ['dd MMMM yyyy'],
+      'dateFormat': ['dd/MM/yyyy'],
       'transactionDate': [''],
       'transactionAmount': [''],
       'paymentTypeId': [''],
@@ -60,7 +60,7 @@ export class UpdateSavingAccountComponent implements OnInit {
           // }
         }
         if (date && date.length === 3) {
-          this.form.get('transactionDate').setValue(moment(date[0], date[1], date[2]).format('dd MMMM yyyy'));
+          this.form.get('transactionDate').setValue(moment(date[0], date[1], date[2]).format('dd/MM/yyyy'));
         }
         if (amount) {
           this.form.get('transactionAmount').setValue(amount);

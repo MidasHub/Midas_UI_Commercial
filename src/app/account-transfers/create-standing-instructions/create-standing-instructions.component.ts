@@ -218,12 +218,12 @@ export class CreateStandingInstructionsComponent implements OnInit {
       ... this.createStandingInstructionsForm.value,
       dateFormat,
       locale,
-      monthDayFormat: 'dd MMMM',
+      monthDayFormat: 'dd/MM',
       fromClientId: this.clientId,
       fromOfficeId: this.officeId,
       validFrom: this.datePipe.transform(this.createStandingInstructionsForm.value.validFrom, dateFormat),
       validTill: this.datePipe.transform(this.createStandingInstructionsForm.value.validTill, dateFormat),
-      recurrenceOnMonthDay: this.datePipe.transform(this.createStandingInstructionsForm.value.recurrenceOnMonthDay, 'dd MMMM'),
+      recurrenceOnMonthDay: this.datePipe.transform(this.createStandingInstructionsForm.value.recurrenceOnMonthDay, 'dd/MM'),
     };
     delete standingInstructionData['destination'];
     delete standingInstructionData['applicant'];

@@ -57,7 +57,7 @@
           {{(charge.dueDate | date) || 'Unassigned*'}}
         </span>
         <span *ngIf="charge.chargeTimeType.value === 'Monthly Fee' || charge.chargeTimeType.value === 'Annual Fee'">
-          {{charge.feeOnMonthDay ? ([2000].concat(charge.feeOnMonthDay) | date: 'dd MMMM') : 'Unassigned'}}
+          {{charge.feeOnMonthDay ? ([2000].concat(charge.feeOnMonthDay) | date: 'dd/MM') : 'Unassigned'}}
         </span>
         <span *ngIf="!(charge.chargeTimeType.value === 'Monthly Fee' || charge.chargeTimeType.value === 'Annual Fee'
                 || charge.chargeTimeType.value === 'Specified due date' || charge.chargeTimeType.value === 'Weekly Fee')">

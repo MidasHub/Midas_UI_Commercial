@@ -313,7 +313,7 @@ export class EntityToEntityMappingComponent implements OnInit {
     if (addMappingForm.value.toId === '') {
       addMappingForm.value.toId = undefined;
     }
-    const dateFormat = 'dd MMMM yyyy';
+    const dateFormat = 'dd/MM/yyyy';
 
     const startDate: Date = addMappingForm.value.startDate;
     const endDate: Date = addMappingForm.value.endDate;
@@ -335,7 +335,7 @@ export class EntityToEntityMappingComponent implements OnInit {
    * @param editMappingForm Edit Mapping Form Id
    */
   submitEdit(editMappingForm: any) {
-    const dateFormat = 'dd MMMM yyyy';
+    const dateFormat = 'dd/MM/yyyy';
 
     const startDate: Date = editMappingForm.value.startDate;
     const endDate: Date = editMappingForm.value.endDate;

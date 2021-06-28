@@ -118,7 +118,7 @@ export class EditCenterMeetingComponent implements OnInit {
   submit() {
     // TODO: Update once language and date settings are setup
     const locale = 'en';
-    const dateFormat = 'dd MMMM yyyy';
+    const dateFormat = 'dd/MM/yyyy';
     const title = `centers_${this.centerId}_CollectionMeeting`;
     const typeId = '1';
     const prevStartDate: Date = this.centerEditMeetingForm.value.startDate;

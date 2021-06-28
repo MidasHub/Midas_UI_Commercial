@@ -98,7 +98,7 @@ export class CreateSharesAccountComponent {
   submit() {
     // TODO: Update once language and date settings are setup
     const locale = 'en';
-    const dateFormat = 'dd MMMM yyyy';
+    const dateFormat = 'dd/MM/yyyy';
     const sharesAccount = {
       ...this.sharesAccount,
       clientId: this.sharesAccountTemplate.clientId,

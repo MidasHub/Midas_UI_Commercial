@@ -83,7 +83,7 @@ export class ApproveSharesComponent implements OnInit {
     approveSharesDialogRef.afterClosed().subscribe((response: any) => {
       if (response.approve) {
         const locale = 'en';
-        const dateFormat = 'dd MMMM yyyy';
+        const dateFormat = 'dd/MM/yyyy';
         const data = {
           requestedShares: [{id}],
           dateFormat,

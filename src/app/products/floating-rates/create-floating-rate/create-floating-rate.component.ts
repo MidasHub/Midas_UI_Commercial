@@ -36,7 +36,7 @@ export class CreateFloatingRateComponent implements OnInit {
   /** Data source for floating rate periods table. */
   dataSource: MatTableDataSource<any>;
   /** Date Format. */
-  dateFormat = 'dd MMMM yyyy';
+  dateFormat = 'dd/MM/yyyy';
 
   /** Paginator for floating rate periods table. */
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;

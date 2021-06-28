@@ -62,11 +62,11 @@ export class ForeclosureComponent implements OnInit {
   }
 
   retrieveLoanForeclosureTemplate(val: any) {
-    const dateFormat = 'dd MMMM yyyy';
+    const dateFormat = 'dd/MM/yyyy';
     const transactionDateFormatted = this.datePipe.transform(val, dateFormat);
     const data = {
       command: 'foreclosure',
-      dateFormat: 'dd MMMM yyyy',
+      dateFormat: 'dd/MM/yyyy',
       locale: 'en',
       transactionDate: transactionDateFormatted
     };

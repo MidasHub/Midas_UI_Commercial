@@ -115,7 +115,7 @@ export class CreateRecurringDepositsAccountComponent implements OnInit {
   submit() {
     const locale = this.settingsService.language.code;
     const dateFormat = this.settingsService.dateFormat;
-    const monthDayFormat = 'dd MMMM';
+    const monthDayFormat = 'dd/MM';
     const recurringDepositAccount = {
       ...this.recurringDepositAccount,
       clientId: this.recurringDepositsAccountTemplate.clientId,

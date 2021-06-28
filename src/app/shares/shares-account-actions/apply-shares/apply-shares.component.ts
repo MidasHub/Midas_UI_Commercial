@@ -75,7 +75,7 @@ export class ApplySharesComponent implements OnInit {
   submit() {
     // TODO: Update once language and date settings are setup
     const locale = 'en';
-    const dateFormat = 'dd MMMM yyyy';
+    const dateFormat = 'dd/MM/yyyy';
     const prevRequestedDate: Date = this.applySharesForm.value.requestedDate;
     this.applySharesForm.patchValue({
       requestedDate: this.datePipe.transform(prevRequestedDate, dateFormat),

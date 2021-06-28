@@ -94,7 +94,7 @@ export class EditLoansAccountComponent implements OnInit {
    */
   submit() {
     const locale = 'en';
-    const dateFormat = 'dd MMMM yyyy';
+    const dateFormat = 'dd/MM/yyyy';
     const loanType = 'individual';
     const loansAccountData = {
       ...this.loansAccount,

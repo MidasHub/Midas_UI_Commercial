@@ -65,7 +65,7 @@ export class RejectSharesAccountComponent implements OnInit {
   submit() {
     // TODO: Update once language and date settings are setup
     const locale = 'en';
-    const dateFormat = 'dd MMMM yyyy';
+    const dateFormat = 'dd/MM/yyyy';
     const prevRejectedDate: Date = this.rejectSharesAccountForm.value.rejectedDate;
     this.rejectSharesAccountForm.patchValue({
       rejectedDate: this.datePipe.transform(prevRejectedDate, dateFormat),

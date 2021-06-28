@@ -60,7 +60,7 @@ export class WriteOffPageComponent implements OnInit {
    */
   submit() {
     const transactionDate = this.writeOffForm.value.transactionDate;
-    const dateFormat = 'dd MMMM yyyy';
+    const dateFormat = 'dd/MM/yyyy';
     this.writeOffForm.patchValue({
       transactionDate: this.datePipe.transform(transactionDate, dateFormat)
     });

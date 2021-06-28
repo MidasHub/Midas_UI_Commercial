@@ -65,7 +65,7 @@ export class LoanRescheduleComponent implements OnInit {
     const rescheduleFromDate = this.rescheduleLoanForm.value.rescheduleFromDate;
     const adjustedDueDate = this.rescheduleLoanForm.value.adjustedDueDate;
     const submittedOnDate = this.rescheduleLoanForm.value.submittedOnDate;
-    const dateFormat = 'dd MMMM yyyy';
+    const dateFormat = 'dd/MM/yyyy';
 
     this.rescheduleLoanForm.patchValue({
       rescheduleFromDate: this.datePipe.transform(rescheduleFromDate, dateFormat),

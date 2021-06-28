@@ -63,7 +63,7 @@ export class DisburseLoanAccountComponent implements OnInit {
    */
   submit() {
     const actualDisbursementDate = this.disbursementForm.value.actualDisbursementDate;
-    const dateFormat = 'dd MMMM yyyy';
+    const dateFormat = 'dd/MM/yyyy';
     this.disbursementForm.patchValue({
       actualDisbursementDate: this.datePipe.transform(actualDisbursementDate, dateFormat)
     });

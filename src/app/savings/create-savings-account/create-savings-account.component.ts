@@ -113,7 +113,7 @@ export class CreateSavingsAccountComponent {
     } else {
       const locale = this.settingsService.language.code;
       const dateFormat = this.settingsService.dateFormat;
-      const monthDayFormat = "dd MMMM";
+      const monthDayFormat = "dd/MM";
       const savingsAccount = {
         ...this.savingsAccount,
         charges: this.savingsAccount.charges.map((charge: any) => ({

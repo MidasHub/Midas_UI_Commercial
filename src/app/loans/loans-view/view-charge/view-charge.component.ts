@@ -80,7 +80,7 @@ export class ViewChargeComponent {
     payChargeDialogRef.afterClosed().subscribe((response: any) => {
       if (response.data) {
         const locale = 'en';
-        const dateFormat = 'dd MMMM yyyy';
+        const dateFormat = 'dd/MM/yyyy';
         const dataObject = {
           ...response.data.value,
           dueDate: this.datePipe.transform(response.data.value.dueDate, dateFormat),
@@ -132,7 +132,7 @@ export class ViewChargeComponent {
     editChargeDialogRef.afterClosed().subscribe((response: any) => {
       if (response.data) {
         const locale = 'en';
-        const dateFormat = 'dd MMMM yyyy';
+        const dateFormat = 'dd/MM/yyyy';
         const dataObject = {
           ...response.data.value,
           dateFormat,

@@ -53,7 +53,7 @@ export class ViewTransactionComponent {
     undoTransactionAccountDialogRef.afterClosed().subscribe((response: { confirm: any }) => {
       if (response.confirm) {
         const locale = 'en';
-        const dateFormat = 'dd MMMM yyyy';
+        const dateFormat = 'dd/MM/yyyy';
         const data = {
           transactionDate: this.datePipe.transform(this.transactionData.date && new Date(this.transactionData.date), dateFormat),
           transactionAmount: 0,

@@ -61,7 +61,7 @@ export class WaiveInterestComponent implements OnInit {
   submit() {
     const transactionDate = this.loanInterestForm.value.transactionDate;
     const transactionAmount = this.loanInterestForm.value.transactionAmount;
-    const dateFormat = 'dd MMMM yyyy';
+    const dateFormat = 'dd/MM/yyyy';
     this.loanInterestForm.patchValue({
       transactionDate: this.datePipe.transform(transactionDate, dateFormat),
       transactionAmount: parseInt(transactionAmount, 10)

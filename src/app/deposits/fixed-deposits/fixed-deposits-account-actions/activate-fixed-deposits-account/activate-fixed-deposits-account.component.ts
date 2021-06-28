@@ -65,7 +65,7 @@ export class ActivateFixedDepositsAccountComponent implements OnInit {
   submit() {
     // TODO: Update once language and date settings are setup
     const locale = 'en';
-    const dateFormat = 'dd MMMM yyyy';
+    const dateFormat = 'dd/MM/yyyy';
     const prevActivatedOnDate: Date = this.activateFixedDepositsAccountForm.value.activatedOnDate;
     this.activateFixedDepositsAccountForm.patchValue({
       activatedOnDate: this.datePipe.transform(prevActivatedOnDate, dateFormat),

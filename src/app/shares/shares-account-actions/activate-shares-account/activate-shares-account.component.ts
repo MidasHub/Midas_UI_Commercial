@@ -64,7 +64,7 @@ export class ActivateSharesAccountComponent implements OnInit {
   submit() {
     // TODO: Update once language and date settings are setup
     const locale = 'en';
-    const dateFormat = 'dd MMMM yyyy';
+    const dateFormat = 'dd/MM/yyyy';
     const prevActivatedDate: Date = this.activateSharesAccountForm.value.activatedDate;
     this.activateSharesAccountForm.patchValue({
       activatedDate: this.datePipe.transform(prevActivatedDate, dateFormat),

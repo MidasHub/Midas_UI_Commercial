@@ -65,7 +65,7 @@ export class CloseSharesAccountComponent implements OnInit {
   submit() {
     // TODO: Update once language and date settings are setup
     const locale = 'en';
-    const dateFormat = 'dd MMMM yyyy';
+    const dateFormat = 'dd/MM/yyyy';
     const prevClosedDate: Date = this.closeSharesAccountForm.value.closedDate;
     this.closeSharesAccountForm.patchValue({
       closedDate: this.datePipe.transform(prevClosedDate, dateFormat),

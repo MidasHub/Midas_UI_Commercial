@@ -65,7 +65,7 @@ export class WithdrawByClientFixedDepositsAccountComponent implements OnInit {
   submit() {
     // TODO: Update once language and date settings are setup
     const locale = 'en';
-    const dateFormat = 'dd MMMM yyyy';
+    const dateFormat = 'dd/MM/yyyy';
     const prevWithdrawnOnDate: Date = this.withdrawFixedDepositsAccountForm.value.withdrawnOnDate;
     this.withdrawFixedDepositsAccountForm.patchValue({
       withdrawnOnDate: this.datePipe.transform(prevWithdrawnOnDate, dateFormat),

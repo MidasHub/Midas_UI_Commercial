@@ -128,7 +128,7 @@ export class FixedDepositAccountChargesStepComponent implements OnInit, OnChange
     editChargeDateDialogRef.afterClosed().subscribe((response: any) => {
       if (response.data) {
         let newCharge: any;
-        const dateFormat = 'dd MMMM yyyy';
+        const dateFormat = 'dd/MM/yyyy';
         const date = this.datePipe.transform(response.data.value.date, dateFormat);
         switch (charge.chargeTimeType.value) {
           case 'Specified due date':

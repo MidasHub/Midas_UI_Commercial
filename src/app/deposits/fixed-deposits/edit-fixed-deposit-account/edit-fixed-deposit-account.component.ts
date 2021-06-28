@@ -125,8 +125,8 @@ export class EditFixedDepositAccountComponent {
    */
   submit() {
     const locale = 'en';
-    const dateFormat = 'dd MMMM yyyy';
-    const monthDayFormat = 'dd MMMM';
+    const dateFormat = 'dd/MM/yyyy';
+    const monthDayFormat = 'dd/MM';
     const fixedDepositAccount = {
       ...this.fixedDepositAccount,
       clientId: this.fixedDepositsAccountAndTemplate.clientId,

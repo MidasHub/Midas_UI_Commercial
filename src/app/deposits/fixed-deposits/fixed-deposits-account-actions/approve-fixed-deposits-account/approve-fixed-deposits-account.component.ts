@@ -65,7 +65,7 @@ export class ApproveFixedDepositsAccountComponent implements OnInit {
   submit() {
     // TODO: Update once language and date settings are setup
     const locale = 'en';
-    const dateFormat = 'dd MMMM yyyy';
+    const dateFormat = 'dd/MM/yyyy';
     const prevApprovedOnDate: Date = this.approveFixedDepositsAccountForm.value.approvedOnDate;
     this.approveFixedDepositsAccountForm.patchValue({
       approvedOnDate: this.datePipe.transform(prevApprovedOnDate, dateFormat),

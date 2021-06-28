@@ -38,7 +38,7 @@ export class EditFloatingRateComponent implements OnInit {
   /** Data source for floating rate periods table. */
   dataSource: MatTableDataSource<any>;
   /** Date Format. */
-  dateFormat = 'dd MMMM yyyy';
+  dateFormat = 'dd/MM/yyyy';
   /** Floating Rate Period Data. */
   floatingRatePeriodsData: any[] = [];
 

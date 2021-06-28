@@ -95,7 +95,7 @@ export class CloseFixedDepositsAccountComponent implements OnInit {
   submit() {
     // TODO: Update once language and date settings are setup
     const locale = 'en';
-    const dateFormat = 'dd MMMM yyyy';
+    const dateFormat = 'dd/MM/yyyy';
     const prevClosedDate: Date = this.closeOnMaturityAccountForm.value.closedOnDate;
     this.closeOnMaturityAccountForm.patchValue({
       closedOnDate: this.datePipe.transform(prevClosedDate, dateFormat),

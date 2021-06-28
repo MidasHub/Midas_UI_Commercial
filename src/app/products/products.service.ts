@@ -105,7 +105,7 @@ export class ProductsService {
   }
 
   getDividendData(shareProductId: any, dividendId: any): Observable<any> {
-    const httpParams = new HttpParams().set('dateFormat', 'dd MMMM yyyy')
+    const httpParams = new HttpParams().set('dateFormat', 'dd/MM/yyyy')
                                         .set('limit', '10')
                                         .set('locale', 'en')
                                         .set('offset', '0');

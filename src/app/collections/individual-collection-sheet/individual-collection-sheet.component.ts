@@ -277,7 +277,7 @@ export class IndividualCollectionSheetComponent implements OnInit {
   previewCollectionSheet() {
     // TODO: Update once language and date settings are setup
     const locale = 'en';
-    const dateFormat = 'dd MMMM yyyy';
+    const dateFormat = 'dd/MM/yyyy';
     const collectionSheet = {
       ...this.collectionSheetForm.value,
       'transactionDate': this.datePipe.transform(this.collectionSheetForm.value.transactionDate, dateFormat),
@@ -305,7 +305,7 @@ export class IndividualCollectionSheetComponent implements OnInit {
   submit() {
     // TODO: Update once language and date settings are setup
     const locale = 'en';
-    const dateFormat = 'dd MMMM yyyy';
+    const dateFormat = 'dd/MM/yyyy';
     this.bulkDisbursementTransactionsData['bulkRepaymentTransactions'] = this.bulkRepaymentTransactions;
     this.bulkDisbursementTransactionsData['bulkSavingsDueTransactions'] = this.bulkSavingsDueTransactions;
     const finalSubmitData = {

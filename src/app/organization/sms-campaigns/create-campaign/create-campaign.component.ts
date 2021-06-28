@@ -81,7 +81,7 @@ export class CreateCampaignComponent {
     // TODO: Update once language and date settings are setup
     const locale = this.settingsService.language.code;
     const dateFormat = this.settingsService.dateFormat;
-    const dateTimeFormat = 'dd MMMM yyyy HH:mm:ss';
+    const dateTimeFormat = 'dd/MM/yyyy HH:mm:ss';
     const smsCampaign = {
       ...this.smsCampaign,
       campaignType: this.smsCampaign.isNotification ? 2 : 1,
