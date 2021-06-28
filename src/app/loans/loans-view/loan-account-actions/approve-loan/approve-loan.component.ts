@@ -77,8 +77,10 @@ export class ApproveLoanComponent implements OnInit {
    * Submits Approve form.
    */
   submit() {
-    const local = this.settingsService.language.code;
+
+    const locale = this.settingsService.language.code;
     const dateFormat = this.settingsService.dateFormat;
+
     const approvedOnDate = this.approveLoanForm.value.approvedOnDate;
     const expectedDisbursementDate = this.approveLoanForm.value.expectedDisbursementDate;
     this.approveLoanForm.patchValue({
@@ -88,7 +90,7 @@ export class ApproveLoanComponent implements OnInit {
     const approveLoanFormData = {
       ... this.approveLoanForm.value,
       dateFormat,
-      local
+      locale
     };
     this.loanService.loanActionButtons(this.loanId, 'approve', approveLoanFormData).subscribe((response: any) => {
       this.router.navigate(['../../general'], { relativeTo: this.route });
