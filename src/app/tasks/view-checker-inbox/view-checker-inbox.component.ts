@@ -1,7 +1,7 @@
 /** Angular Imports */
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import * as _ from 'lodash';
+// import * as _ from 'lodash';
 import { MatDialog } from '@angular/material/dialog';
 
 /** Custom Services */
@@ -38,7 +38,7 @@ export class ViewCheckerInboxComponent {
     this.route.data.subscribe((data: { checkerInboxDetail: any }) => {
       this.checkerInboxDetail = data.checkerInboxDetail;
       this.jsondata = JSON.parse(this.checkerInboxDetail.commandAsJson);
-      this.displayJSONData = !(_.isEmpty(this.jsondata));
+      this.displayJSONData = !(this.jsondata.isEmpty()); // !(_.isEmpty(this.jsondata));
     });
    }
 

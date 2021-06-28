@@ -1,0 +1,218 @@
+{
+"$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+"version": 1,
+"newProjectRoot": "projects",
+"projects": {
+"midas-web-app": {
+"root": "",
+"sourceRoot": "src",
+"projectType": "application",
+"prefix": "midas",
+"schematics": {
+"@schematics/angular:component": {
+"style": "scss"
+}
+},
+"architect": {
+"build": {
+"builder": "@angular-devkit/build-angular:browser",
+"options": {
+"aot": true,
+"outputPath": "dist/web-app",
+"index": "src/index.html",
+"main": "src/main.ts",
+"tsConfig": "src/tsconfig.app.json",
+"polyfills": "src/polyfills.ts",
+"extractCss": true,
+"assets": [
+"src/favicon.ico",
+"src/robots.txt",
+"src/manifest.json",
+"src/firebase-messaging-sw.js",
+"src/assets",
+"src/assets/i18n"
+],
+"styles": [
+"src/main.scss",
+{
+"inject": false,
+"input": "src/theme/custom/default_theme.scss",
+"bundleName": "theme/default-theme"
+},
+{
+"inject": false,
+"input": "src/theme/deeppurple-amber.scss",
+"bundleName": "theme/deeppurple-amber"
+},
+{
+"inject": false,
+"input": "src/theme/indigo-pink.scss",
+"bundleName": "theme/indigo-pink"
+},
+{
+"inject": false,
+"input": "src/theme/pink-bluegrey.scss",
+"bundleName": "theme/pink-bluegrey"
+},
+{
+"inject": false,
+"input": "src/theme/custom/purple-green.scss",
+"bundleName": "theme/purple-green"
+},
+{
+"inject": false,
+"input": "src/theme/custom/denim-yellowgreen.scss",
+"bundleName": "theme/denim-yellowgreen"
+},
+{
+"inject": false,
+"input": "src/theme/custom/pictonblue-yellowgreen.scss",
+"bundleName": "theme/pictonblue-yellowgreen"
+}
+],
+"scripts": []
+},
+"configurations": {
+"production": {
+"budgets": [
+{
+"type": "anyComponentStyle",
+"maximumWarning": "6kb"
+}
+],
+"optimization": true,
+"outputHashing": "all",
+"sourceMap": false,
+"extractCss": true,
+"namedChunks": true,
+"aot": true,
+"extractLicenses": true,
+"vendorChunk": true,
+"buildOptimizer": true,
+"serviceWorker": true,
+"fileReplacements": [
+{
+"replace": "src/environments/environment.ts",
+"with": "src/environments/environment.prod.ts"
+}
+]
+}
+}
+},
+"serve": {
+"builder": "@angular-devkit/build-angular:dev-server",
+"options": {
+"browserTarget": "midas-web-app:build",
+"aot": false
+},
+"configurations": {
+"production": {
+"browserTarget": "midas-web-app:build:production"
+}
+}
+},
+"extract-i18n": {
+"builder": "@angular-devkit/build-angular:extract-i18n",
+"options": {
+"browserTarget": "midas-web-app:build"
+}
+},
+"test": {
+"builder": "@angular-devkit/build-angular:karma",
+"options": {
+"main": "src/test.ts",
+"karmaConfig": "src/karma.conf.js",
+"polyfills": "src/polyfills.ts",
+"tsConfig": "src/tsconfig.spec.json",
+"scripts": [],
+"styles": [
+"src/main.scss",
+{
+"inject": false,
+"input": "src/theme/deeppurple-amber.scss",
+"bundleName": "theme/deeppurple-amber"
+},
+{
+"inject": false,
+"input": "src/theme/indigo-pink.scss",
+"bundleName": "theme/indigo-pink"
+},
+{
+"inject": false,
+"input": "src/theme/pink-bluegrey.scss",
+"bundleName": "theme/pink-bluegrey"
+},
+{
+"inject": false,
+"input": "src/theme/purple-green.scss",
+"bundleName": "theme/purple-green"
+},
+{
+"inject": false,
+"input": "src/theme/custom/denim-yellowgreen.scss",
+"bundleName": "theme/denim-yellowgreen"
+},
+{
+"inject": false,
+"input": "src/theme/custom/pictonblue-yellowgreen.scss",
+"bundleName": "theme/pictonblue-yellowgreen"
+}
+],
+"assets": [
+"src/favicon.ico",
+"src/robots.txt",
+"src/manifest.json",
+"src/firebase-messaging-sw.js",
+"src/assets"
+]
+}
+},
+"lint": {
+"builder": "@angular-devkit/build-angular:tslint",
+"options": {
+"tsConfig": [
+"src/tsconfig.app.json",
+"src/tsconfig.spec.json"
+],
+"exclude": [
+"**/node_modules/**"
+]
+}
+}
+}
+},
+"midas-web-app-e2e": {
+"root": "e2e",
+"projectType": "application",
+"architect": {
+"e2e": {
+"builder": "@angular-devkit/build-angular:protractor",
+"options": {
+"protractorConfig": "e2e/protractor.conf.js",
+"devServerTarget": "midas-web-app:serve"
+},
+"configurations": {
+"production": {
+"devServerTarget": "midas-web-app:serve:production"
+}
+}
+},
+"lint": {
+"builder": "@angular-devkit/build-angular:tslint",
+"options": {
+"tsConfig": [
+"e2e/tsconfig.e2e.json"
+],
+"exclude": [
+"**/node_modules/**"
+]
+}
+}
+}
+}
+},
+"defaultProject": "midas-web-app",
+"cli": {
+"analytics": "743dfdb3-5081-4bbe-9932-de450f46c4d5"
+}
+}

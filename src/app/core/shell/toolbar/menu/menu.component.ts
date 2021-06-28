@@ -10,7 +10,7 @@ import { AuthenticationService } from 'app/core/authentication/authentication.se
   encapsulation: ViewEncapsulation.None
 })
 export class MenuComponent implements OnInit {
-  isMenuOpen:boolean=false;
+  isMenuOpen: Boolean = false;
   constructor(private router: Router,
     private authenticationService: AuthenticationService,) { }
 
@@ -38,10 +38,10 @@ export class MenuComponent implements OnInit {
   public doAction(event: any) {
     if (event ==='trigger'){
       this.isMenuOpen = !this.isMenuOpen;
-      
+
       return;
     }
-   
+
 }
 
 }
