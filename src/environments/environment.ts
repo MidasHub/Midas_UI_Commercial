@@ -12,12 +12,14 @@ export const environment = {
   fineractPlatformTenantId: 'default',  // For connecting to server running elsewhere update the tenant identifier
   baseApiUrl: JSON.parse(localStorage.getItem('mifosXServerURL')) || 'https://dev.mifos.io',  // For connecting to server running elsewhere update the base API URL
   allowServerSwitch: env.allow_switching_backend_instance,
-  apiProvider: '/fineract-provider/api',
+  apiProvider: '/midas/api',
   apiVersion: '/v1',
   serverUrl: '',
   oauth: {
-    enabled: false,  // For connecting to Mifos X using OAuth2 Authentication change the value to true
-    serverUrl: ''
+    enabled: true,  // For connecting to Midas using OAuth2 Authentication change the value to true
+    serverUrl: '',
+    clientID: 'community-app',
+    clientSecrect: '123',
   },
   defaultLanguage: 'en-US',
   supportedLanguages: [
