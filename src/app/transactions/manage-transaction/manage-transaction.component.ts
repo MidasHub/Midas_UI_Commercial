@@ -671,7 +671,7 @@ export class ManageTransactionComponent implements OnInit {
     const form = this.formFilter.value;
     //let query = `fromDate=${fromDate}&toDate=${toDate}&officeName=${form.officeId || "ALL"}`;
     debugger;
-    let query = `fromDate=${fromDate}&toDate=${toDate}&officeName=${form.officeId || "ALL"}`;
+    let query = `fromDate=${fromDate}&toDate=${toDate}&officeName=${form.officeId?.officeId ? form.officeId.officeId : (form.officeId ? form.officeId  : "ALL" )}`;
     const keys = Object.keys(form);
     for (const key of keys) {
       if (key === "userId") {
@@ -708,7 +708,7 @@ export class ManageTransactionComponent implements OnInit {
     }
 
     const form = this.formFilter.value;
-    let query = `fromDate=${fromDate}&toDate=${toDate}&officeName=${form.officeId || "ALL"}`;
+    let query = `fromDate=${fromDate}&toDate=${toDate}&officeName=${form.officeId?.officeId ? form.officeId.officeId : (form.officeId ? form.officeId  : "ALL" )}`;
     const keys = Object.keys(form);
     for (const key of keys) {
       if (key === "staffId") {
