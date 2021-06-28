@@ -9,7 +9,7 @@ import {TranslateService, LangChangeEvent} from '@ngx-translate/core';
 import {Logger} from '../logger/logger.service';
 
 /** Other Imports */
-import {includes} from 'lodash';
+// import {includes} from 'lodash';
 import {environment} from 'environments/environment';
 // import * as enUS from '../../../translations/en-US.json';
 // import * as frFR from '../../../translations/fr-FR.json';
@@ -81,7 +81,7 @@ export class I18nService {
    */
   set language(language: string) {
     language = language || localStorage.getItem(this.languageStorageKey) || this.translate.getBrowserCultureLang();
-    let isSupportedLanguage = includes(this.supportedLanguages, language);
+    let isSupportedLanguage = this.supportedLanguages.includes(language);  // includes(this.supportedLanguages, language);
     console.log('start:', language);
     console.log('start supported Lang:', isSupportedLanguage);
     // If no exact match is found, search without the region

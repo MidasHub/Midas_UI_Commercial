@@ -1,45 +1,45 @@
 /** Angular Imports */
-import { Injectable } from "@angular/core";
-import { HttpEvent, HttpInterceptor, HttpHandler, HttpRequest } from "@angular/common/http";
+import { Injectable } from '@angular/core';
+import { HttpEvent, HttpInterceptor, HttpHandler, HttpRequest } from '@angular/common/http';
 
 /** rxjs Imports */
-import { Observable } from "rxjs";
+import { Observable } from 'rxjs';
 
 /** Environment Configuration */
-import { environment } from "../../../environments/environment";
+import { environment } from '../../../environments/environment';
 
 /** Logger */
-import { Logger } from "../logger/logger.service";
-import { SystemService } from "app/system/system.service";
-import { BanksService } from "app/banks/banks.service";
-const log = new Logger("Authen-interceptor");
+import { Logger } from '../logger/logger.service';
+import { SystemService } from 'app/system/system.service';
+import { BanksService } from 'app/banks/banks.service';
+const log = new Logger('Authen-interceptor');
 
 /** Authorization header. */
-const authorizationHeader = "Authorization";
+const authorizationHeader = 'Authorization';
 /** Two factor access token header. */
-const twoFactorAccessTokenHeader = "Fineract-Platform-TFA-Token";
+const twoFactorAccessTokenHeader = 'Fineract-Platform-TFA-Token';
 /** Http request options headers. */
 const httpOptions = {
   headers: {
-    "Fineract-Platform-TenantId": window.localStorage.getItem("Fineract-Platform-TenantId")
-      ? window.localStorage.getItem("Fineract-Platform-TenantId")
+    'Fineract-Platform-TenantId': window.localStorage.getItem('Fineract-Platform-TenantId')
+      ? window.localStorage.getItem('Fineract-Platform-TenantId')
       : environment.fineractPlatformTenantId,
   },
 };
 const httpOptionsGateway = {
   headers: {
-    "Gateway-TenantId": window.localStorage.getItem("Gateway-TenantId")
-      ? window.localStorage.getItem("Gateway-TenantId")
+    'Gateway-TenantId': window.localStorage.getItem('Gateway-TenantId')
+      ? window.localStorage.getItem('Gateway-TenantId')
       : environment.GatewayTenantId,
   },
 };
 
 const httpOptionsIcGateway = {
   headers: {
-    "Gateway-TenantId": window.localStorage.getItem("Gateway-TenantId")
-      ? window.localStorage.getItem("Gateway-TenantId")
+    'Gateway-TenantId': window.localStorage.getItem('Gateway-TenantId')
+      ? window.localStorage.getItem('Gateway-TenantId')
       : environment.GatewayTenantId,
-    "IC-TenantId": "default",
+    'IC-TenantId': 'default',
   },
 };
 /**
@@ -48,16 +48,16 @@ const httpOptionsIcGateway = {
 @Injectable()
 export class AuthenticationInterceptor implements HttpInterceptor {
   constructor(private systemService: SystemService) {
-    const subdomain = window.location.hostname.split(".")[0];
+    const subdomain = window.location.hostname.split('.')[0];
     this.systemService.getTenantInfo(subdomain).subscribe((data) => {
       const tenantId = data.result.tenantIdentifier;
-      window.localStorage.setItem("Fineract-Platform-TenantId", tenantId);
-      window.localStorage.setItem("Gateway-TenantId", tenantId);
+      window.localStorage.setItem('Fineract-Platform-TenantId', tenantId);
+      window.localStorage.setItem('Gateway-TenantId', tenantId);
       /** Http request options headers. */
-      httpOptions.headers["Fineract-Platform-TenantId"] = window.localStorage.getItem("Fineract-Platform-TenantId");
-      httpOptionsGateway.headers["Gateway-TenantId"] = window.localStorage.getItem("Gateway-TenantId");
-      httpOptionsIcGateway.headers["Gateway-TenantId"] = window.localStorage.getItem("Gateway-TenantId");
-      httpOptionsIcGateway.headers["IC-TenantId"] = "default";
+      httpOptions.headers['Fineract-Platform-TenantId'] = window.localStorage.getItem('Fineract-Platform-TenantId');
+      httpOptionsGateway.headers['Gateway-TenantId'] = window.localStorage.getItem('Gateway-TenantId');
+      httpOptionsIcGateway.headers['Gateway-TenantId'] = window.localStorage.getItem('Gateway-TenantId');
+      httpOptionsIcGateway.headers['IC-TenantId'] = 'default';
     });
   }
 

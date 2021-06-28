@@ -17,7 +17,7 @@ import { TourService } from 'ngx-tour-md-menu';
 import { DeviceDetectorService, OrientationType, DeviceType } from 'ngx-device-detector';
 
 import * as ScreenEnum from '../core/constants/screen_constant';
-import { split } from 'lodash';
+// import { split } from 'lodash';
 /**
  * Home component.
  */
@@ -82,8 +82,8 @@ export class HomeComponent implements OnInit, OnDestroy {
   ngOnInit() {
     const credentials = this.authenticationService.getCredentials();
 
-    this.childBannerData.userName = split('credentials.staffDisplayName', ',')[1]?.trim();
-    console.log(split('credentials.staffDisplayName', ',')[1]?.trim());
+    this.childBannerData.userName = credentials.staffDisplayName.split(',')[1]?.trim(); // split('credentials.staffDisplayName', ',')[1]?.trim();
+    console.log(credentials.staffDisplayName.split(',')[1]?.trim());
 
     bannerData.some(d => {
       if (d.office === credentials.officeId) {
