@@ -169,8 +169,8 @@ export class ManageTransactionComponent implements OnInit {
       fromDate: [new Date()],
       toDate: [new Date()],
     });
-
     this.currentUser = this.authenticationService.getCredentials();
+
     const { permissions } = this.currentUser;
     const permit_userTeller = permissions.includes("POS_UPDATE");
     if (permit_userTeller) {
@@ -197,9 +197,10 @@ export class ManageTransactionComponent implements OnInit {
       agencyName: [""],
     });
     this.formFilter.get("officeId").valueChanges.subscribe((value) => {
-      this.clientsService.getListUserTeller(value.officeId).subscribe((result: any) => {
+      debugger;
+      this.clientsService.getListUserTeller(value.officeId ? value.officeId : value).subscribe((result: any) => {
         this.staffs = result?.result?.listStaff.filter((staff: any) => staff.displayName.startsWith("R"));
-        this.staffs.unshift({
+        this.staffs?.unshift({
           id: "",
           displayName: "Tất cả",
         });
@@ -230,6 +231,8 @@ export class ManageTransactionComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.currentUser = this.authenticationService.getCredentials();
+
     this.officesOptions = new Observable<any[]>();
     this.dataSource = this.transactionsData;
     this.terminalsService.getPartnersTerminalTemplate().subscribe((partner) => {
@@ -667,7 +670,8 @@ export class ManageTransactionComponent implements OnInit {
     }
     const form = this.formFilter.value;
     //let query = `fromDate=${fromDate}&toDate=${toDate}&officeName=${form.officeId || "ALL"}`;
-    let query = `fromDate=${fromDate}&toDate=${toDate}&officeName=${form.officeId.officeId || "ALL"}`;
+    debugger;
+    let query = `fromDate=${fromDate}&toDate=${toDate}&officeName=${form.officeId || "ALL"}`;
     const keys = Object.keys(form);
     for (const key of keys) {
       if (key === "userId") {
