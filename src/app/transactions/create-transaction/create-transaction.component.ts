@@ -1,38 +1,38 @@
 /** Angular Imports */
-import { DatePipe } from '@angular/common';
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, FormGroupDirective, Validators } from '@angular/forms';
-import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
-import { MatPaginator } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
-import { MatTable, MatTableDataSource } from '@angular/material/table';
-import { ActivatedRoute, Router } from '@angular/router';
-import { BanksService } from 'app/banks/banks.service';
-import { AddLimitIdentitiesExtraInfoComponent } from 'app/clients/clients-view/identities-tab/dialog-add-limit-extra-info/dialog-add-limit-extra-info.component';
-import { ClientsService } from 'app/clients/clients.service';
-import { AlertService } from 'app/core/alert/alert.service';
-import { AuthenticationService } from 'app/core/authentication/authentication.service';
-import { SavingsService } from 'app/savings/savings.service';
-import { SettingsService } from 'app/settings/settings.service';
-import { TerminalsService } from 'app/terminals/terminals.service';
-import { ThirdPartyService } from 'app/third-party/third-party.service';
-import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
-import { AddFeeDialogComponent } from '../dialog/add-fee-dialog/add-fee-dialog.component';
-import { ConfirmDialogComponent } from '../dialog/confirm-dialog/confirm-dialog.component';
-import { CreateSuccessTransactionDialogComponent } from '../dialog/create-success-transaction-dialog/create-success-transaction-dialog.component';
-import { ValidCheckTransactionHistoryDialogComponent } from '../dialog/valid-check-transaction-history/valid-check-transaction-history-dialog.component';
-import { TransactionService } from '../transaction.service';
+import { DatePipe } from "@angular/common";
+import { Component, OnInit, ViewChild } from "@angular/core";
+import { FormBuilder, FormControl, FormGroup, FormGroupDirective, Validators } from "@angular/forms";
+import { MatDialog, MatDialogConfig } from "@angular/material/dialog";
+import { MatPaginator } from "@angular/material/paginator";
+import { MatSort } from "@angular/material/sort";
+import { MatTable, MatTableDataSource } from "@angular/material/table";
+import { ActivatedRoute, Router } from "@angular/router";
+import { BanksService } from "app/banks/banks.service";
+import { AddLimitIdentitiesExtraInfoComponent } from "app/clients/clients-view/identities-tab/dialog-add-limit-extra-info/dialog-add-limit-extra-info.component";
+import { ClientsService } from "app/clients/clients.service";
+import { AlertService } from "app/core/alert/alert.service";
+import { AuthenticationService } from "app/core/authentication/authentication.service";
+import { SavingsService } from "app/savings/savings.service";
+import { SettingsService } from "app/settings/settings.service";
+import { TerminalsService } from "app/terminals/terminals.service";
+import { ThirdPartyService } from "app/third-party/third-party.service";
+import { debounceTime, distinctUntilChanged } from "rxjs/operators";
+import { AddFeeDialogComponent } from "../dialog/add-fee-dialog/add-fee-dialog.component";
+import { ConfirmDialogComponent } from "../dialog/confirm-dialog/confirm-dialog.component";
+import { CreateSuccessTransactionDialogComponent } from "../dialog/create-success-transaction-dialog/create-success-transaction-dialog.component";
+import { ValidCheckTransactionHistoryDialogComponent } from "../dialog/valid-check-transaction-history/valid-check-transaction-history-dialog.component";
+import { TransactionService } from "../transaction.service";
 
 /**
  * transaction Component.
  */
 @Component({
-  selector: 'midas-create-transaction',
-  templateUrl: './create-transaction.component.html',
-  styleUrls: ['./create-transaction.component.scss'],
+  selector: "midas-create-transaction",
+  templateUrl: "./create-transaction.component.html",
+  styleUrls: ["./create-transaction.component.scss"],
 })
 export class CreateTransactionComponent implements OnInit {
-  displayedColumns: string[] = ['no', 'amountBooking', 'txnDate', 'action'];
+  displayedColumns: string[] = ["no", "amountBooking", "txnDate", "action"];
 
   dataSource: MatTableDataSource<any>;
   transactionInfo: any = {};
@@ -43,7 +43,7 @@ export class CreateTransactionComponent implements OnInit {
   activateAndApproveAccountForm: FormGroup;
   totalBookingAmount: number;
   currentUser: any;
-  @ViewChild('listBookingRollTermTable') listBookingRollTermTable: MatTable<Element>;
+  @ViewChild("listBookingRollTermTable") listBookingRollTermTable: MatTable<Element>;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   /**
@@ -79,75 +79,75 @@ export class CreateTransactionComponent implements OnInit {
   ngOnInit() {
     this.currentUser = this.authenticationService.getCredentials();
     const { permissions } = this.currentUser;
-    const permit_manager = permissions.includes('POS_UPDATE');
+    const permit_manager = permissions.includes("POS_UPDATE");
 
     this.route.queryParamMap.subscribe((params: any) => {
-      const clientId = params.get('clientId');
-      const identifierId = params.get('identifierId');
-      const type = params.get('type');
-      const remainValue = params.get('remainValue');
-      const tranId = params.get('tranId');
-      const bookingId = params.get('bookingId');
+      const clientId = params.get("clientId");
+      const identifierId = params.get("identifierId");
+      const type = params.get("type");
+      const remainValue = params.get("remainValue");
+      const tranId = params.get("tranId");
+      const bookingId = params.get("bookingId");
       this.isLoading = true;
       this.transactionService.getTransactionTemplate(clientId, identifierId, tranId).subscribe((data: any) => {
         this.isLoading = false;
         this.transactionInfo = data.result;
         this.transactionInfo.isDone = false;
-        this.transactionInfo.productId = type == 'cash' ? 'CA01' : 'AL01';
+        this.transactionInfo.productId = type == "cash" ? "CA01" : "AL01";
         this.transactionInfo.type = type;
         this.transactionInfo.identifierId =
-          type != 'rollTermGetCash' ? identifierId : data.result.posTransaction.identifierId;
-        this.transactionInfo.clientId = type != 'rollTermGetCash' ? clientId : data.result.posTransaction.custId;
+          type != "rollTermGetCash" ? identifierId : data.result.posTransaction.identifierId;
+        this.transactionInfo.clientId = type != "rollTermGetCash" ? clientId : data.result.posTransaction.custId;
         this.transactionInfo.bookingId = bookingId;
         this.transactionInfo.remainValue = this.formatCurrency(remainValue);
 
         this.transactionCreateForm = this.formBuilder.group({
-          requestAmount: ['', Validators.required],
-          rate: ['', Validators.required],
-          txnAmount: ['', Validators.required],
-          terminalAmount: ['', Validators.required],
-          batchNo: ['', Validators.required],
-          traceNo: ['', Validators.required],
+          requestAmount: ["", Validators.required],
+          rate: ["", Validators.required],
+          txnAmount: ["", Validators.required],
+          terminalAmount: ["", Validators.required],
+          batchNo: ["", Validators.required],
+          traceNo: ["", Validators.required],
         });
 
-        if (this.transactionInfo.type == 'cash') {
+        if (this.transactionInfo.type == "cash") {
           if (data.result.listAccAccount.length > 0) {
             this.transactionInfo.accountCash = data.result.listAccAccount[0].documentKey;
           }
         } else {
-          if (this.transactionInfo.type == 'rollTerm') {
+          if (this.transactionInfo.type == "rollTerm") {
             this.transactionCreateForm = this.formBuilder.group({
-              requestAmount: ['', Validators.required],
-              rate: ['', Validators.required],
+              requestAmount: ["", Validators.required],
+              rate: ["", Validators.required],
             });
           } else {
             this.transactionInfo.rate = this.transactionInfo.posTransaction.feePercentage;
             this.transactionInfo.refId = tranId;
-            this.transactionCreateForm.get('rate').setValue(this.transactionInfo.rate);
+            this.transactionCreateForm.get("rate").setValue(this.transactionInfo.rate);
           }
         }
 
         this.transactionCreateForm
-          .get('requestAmount')
+          .get("requestAmount")
           .valueChanges.pipe(debounceTime(1000), distinctUntilChanged())
           .subscribe((value: string) => {
             this.changeAmountTransaction(value);
           });
 
         this.transactionCreateForm
-          .get('rate')
+          .get("rate")
           .valueChanges.pipe(debounceTime(1000), distinctUntilChanged())
           .subscribe((value: string) => {
             this.onchangeRate(value);
           });
 
-        if (this.transactionCreateForm.get('batchNo') && this.transactionCreateForm.get('traceNo')) {
+        if (this.transactionCreateForm.get("batchNo") && this.transactionCreateForm.get("traceNo")) {
           if (permit_manager) {
             // remove validator required for batchNo, traceNo on hold transaction
-            this.transactionCreateForm.get('batchNo').clearValidators();
-            this.transactionCreateForm.get('batchNo').updateValueAndValidity();
-            this.transactionCreateForm.get('traceNo').clearValidators();
-            this.transactionCreateForm.get('traceNo').updateValueAndValidity();
+            this.transactionCreateForm.get("batchNo").clearValidators();
+            this.transactionCreateForm.get("batchNo").updateValueAndValidity();
+            this.transactionCreateForm.get("traceNo").clearValidators();
+            this.transactionCreateForm.get("traceNo").updateValueAndValidity();
           }
         }
       });
@@ -157,26 +157,26 @@ export class CreateTransactionComponent implements OnInit {
   clearInfoTransaction() {
     if (this.transactionInfo.txnAmount && this.transactionService.formatLong(this.transactionInfo.txnAmount) > 0) {
       setTimeout(() => {
-        this.transactionCreateForm.controls['txnAmount'].reset();
-        this.transactionCreateForm.controls['terminalAmount'].reset();
+        this.transactionCreateForm.controls["txnAmount"].reset();
+        this.transactionCreateForm.controls["terminalAmount"].reset();
       }, 0);
     }
 
     this.transactionInfo.listTerminal = [];
-    this.transactionInfo.txnAmount = '';
-    this.transactionInfo.terminalAmount = '';
-    this.transactionInfo.terminalId = '';
-    this.transactionInfo.feeAmount = '';
-    this.transactionInfo.txnAmountAfterFee = '';
+    this.transactionInfo.txnAmount = "";
+    this.transactionInfo.terminalAmount = "";
+    this.transactionInfo.terminalId = "";
+    this.transactionInfo.feeAmount = "";
+    this.transactionInfo.txnAmountAfterFee = "";
 
     if (
       this.transactionInfo.requestAmount &&
       this.transactionService.formatLong(this.transactionInfo.requestAmount) > 0
     ) {
-      if (this.transactionInfo.type === 'cash' || this.transactionInfo.type === 'rollTermGetCash') {
+      if (this.transactionInfo.type === "cash" || this.transactionInfo.type === "rollTermGetCash") {
         this.getTerminalListEnoughBalance(this.transactionInfo.requestAmount);
       } else {
-        if (this.transactionInfo.type === 'rollTerm') {
+        if (this.transactionInfo.type === "rollTerm") {
           this.listRollTermBooking = [];
           this.dataSource.data = [];
           for (let index = 0; index < 4; index++) {
@@ -201,7 +201,7 @@ export class CreateTransactionComponent implements OnInit {
 
   getTerminalListEnoughBalance(amountTransaction: string) {
     const amount = this.transactionService.formatLong(amountTransaction);
-    this.terminalsService.getListTerminalAvailable(amount, 'LE').subscribe((data: any) => {
+    this.terminalsService.getListTerminalAvailable(amount, "LE").subscribe((data: any) => {
       this.transactionInfo.listTerminal = data.result.listTerminal;
     });
   }
@@ -213,7 +213,7 @@ export class CreateTransactionComponent implements OnInit {
       this.transactionInfo.rate &&
       this.transactionInfo.rate !== 0
     ) {
-      this.transactionInfo.terminalAmount = this.transactionCreateForm.controls['terminalAmount'].value;
+      this.transactionInfo.terminalAmount = this.transactionCreateForm.controls["terminalAmount"].value;
       const amount_value = this.transactionInfo.terminalAmount;
       const rate = this.transactionInfo.rate;
       this.transactionInfo.cogsRate = this.terminalFee.cogsRate;
@@ -226,7 +226,7 @@ export class CreateTransactionComponent implements OnInit {
       );
 
       if (
-        this.transactionInfo.productId === 'CA01' &&
+        this.transactionInfo.productId === "CA01" &&
         this.transactionService.formatLong(this.transactionInfo.feeAmount) < this.terminalFee.minFeeDefault
       ) {
         this.transactionInfo.feeAmount = this.terminalFee.minFeeDefault;
@@ -247,7 +247,7 @@ export class CreateTransactionComponent implements OnInit {
         this.transactionInfo.requestAmount !== 0 &&
         this.transactionInfo.rate &&
         this.transactionInfo.rate !== 0 &&
-        this.transactionInfo.type !== 'cash'
+        this.transactionInfo.type !== "cash"
       ) {
         const amount_value = this.transactionInfo.requestAmount;
         const rate = this.transactionInfo.rate;
@@ -271,36 +271,36 @@ export class CreateTransactionComponent implements OnInit {
       .subscribe((data: any) => {
         if (data.status != 200) {
           if (data.statusCode == 401) {
-            if (data.error == 'Unauthorize with Midas') {
+            if (data.error == "Unauthorize with Midas") {
               this.alertService.alert({
-                message: 'Phiên làm việc hết hạn vui lòng đăng nhập lại để tiếp tục',
-                msgClass: 'cssDanger',
-                hPosition: 'center',
+                message: "Phiên làm việc hết hạn vui lòng đăng nhập lại để tiếp tục",
+                msgClass: "cssDanger",
+                hPosition: "center",
               });
             }
           }
 
           if (data.statusCode == 666) {
-            if (typeof data.error !== 'undefined' && data.error !== '') {
+            if (typeof data.error !== "undefined" && data.error !== "") {
               this.alertService.alert({
                 message: `${data.error}`,
-                msgClass: 'cssDanger',
-                hPosition: 'center',
+                msgClass: "cssDanger",
+                hPosition: "center",
               });
             }
           } else {
             this.alertService.alert({
               message: `Lỗi xảy ra : Vui lòng liên hệ ITSupport. ERROR: ${data}`,
-              msgClass: 'cssDanger',
-              hPosition: 'center',
+              msgClass: "cssDanger",
+              hPosition: "center",
             });
           }
 
           return;
         }
         if (
-          typeof data.result.caution != 'undefined' &&
-          data.result.caution != 'NaN' &&
+          typeof data.result.caution != "undefined" &&
+          data.result.caution != "NaN" &&
           data.result.amountTransaction > 0
         ) {
           this.showHistoryTransaction(data.result.caution, data.result.listTransaction);
@@ -309,14 +309,14 @@ export class CreateTransactionComponent implements OnInit {
         if (data.result.amountTransaction > 0) {
           this.transactionInfo.txnAmount = this.formatCurrency(data.result.amountTransaction);
           this.transactionInfo.terminalAmount = this.formatCurrency(data.result.amountTransaction);
-          this.transactionCreateForm.controls['terminalAmount'].setValue(this.transactionInfo.terminalAmount);
-          this.transactionCreateForm.controls['txnAmount'].setValue(this.transactionInfo.txnAmount);
+          this.transactionCreateForm.controls["terminalAmount"].setValue(this.transactionInfo.terminalAmount);
+          this.transactionCreateForm.controls["txnAmount"].setValue(this.transactionInfo.txnAmount);
           this.calculateFeeTransaction();
         } else {
           this.alertService.alert({
             message: `Lỗi truy xuất số tiền đề xuất giao dịch, vui lòng liên hệ IT support! `,
-            msgClass: 'cssDanger',
-            hPosition: 'center',
+            msgClass: "cssDanger",
+            hPosition: "center",
           });
 
           return;
@@ -349,12 +349,12 @@ export class CreateTransactionComponent implements OnInit {
       parseFloat(this.transactionInfo.rate) > parseFloat(this.terminalFee.maxRate)
     ) {
       this.transactionInfo.rate = this.terminalFee.maxRate;
-      this.transactionCreateForm.get('rate').setValue(this.terminalFee.maxRate);
+      this.transactionCreateForm.get("rate").setValue(this.terminalFee.maxRate);
       this.calculateFeeTransaction();
       this.alertService.alert({
         message: `Tỉ lệ phí không được thấp hơn ${this.terminalFee.minRate} và cao hơn ${this.terminalFee.maxRate} !`,
-        msgClass: 'cssDanger',
-        hPosition: 'center',
+        msgClass: "cssDanger",
+        hPosition: "center",
       });
     } else {
       this.calculateFeeTransaction();
@@ -380,8 +380,8 @@ export class CreateTransactionComponent implements OnInit {
     this.transactionInfo.isDone = true;
     this.alertService.alert({
       message: `Tạo giao dịch ${this.transactionInfo.transactionRefNo} thành công!`,
-      msgClass: 'cssSuccess',
-      hPosition: 'center',
+      msgClass: "cssSuccess",
+      hPosition: "center",
     });
     this.showSuccessCreateTransactionDialog();
 
@@ -407,7 +407,7 @@ export class CreateTransactionComponent implements OnInit {
         if (!isHaveActiveSavingsAccount) {
           this.createClientSavingAccountTemplate(
             this.transactionInfo.clientId,
-            '2',
+            "2",
             this.transactionInfo.clientDto.displayName
           );
         } else {
@@ -423,9 +423,9 @@ export class CreateTransactionComponent implements OnInit {
       if (numOfTransaction == 2) {
         this.alertService.alert({
           message: `Đây là khách hàng mới đã giao dịch lần 2!`,
-          msgClass: 'cssSuccess',
-          hPosition: 'center',
-          vPosition: 'center',
+          msgClass: "cssSuccess",
+          hPosition: "center",
+          vPosition: "center",
         });
         return;
       }
@@ -437,8 +437,8 @@ export class CreateTransactionComponent implements OnInit {
       return;
     }
     let messageConfirm = `Bạn chắc chắn muốn lưu giao dịch?`;
-    const traceNo = this.transactionCreateForm.get('traceNo').value;
-    const batchNo = this.transactionCreateForm.get('batchNo').value;
+    const traceNo = this.transactionCreateForm.get("traceNo").value;
+    const batchNo = this.transactionCreateForm.get("batchNo").value;
 
     if (!traceNo || !batchNo || traceNo.trim().length == 0 || batchNo.trim().length == 0) {
       messageConfirm = `Hệ thống ghi nhận đây là giao dịch treo (do không có mã lô và mã hóa đơn), bạn chắc chắn muốn lưu giao dịch?`;
@@ -447,7 +447,7 @@ export class CreateTransactionComponent implements OnInit {
     const dialog = this.dialog.open(ConfirmDialogComponent, {
       data: {
         message: messageConfirm,
-        title: 'Hoàn thành giao dịch',
+        title: "Hoàn thành giao dịch",
       },
     });
 
@@ -456,16 +456,34 @@ export class CreateTransactionComponent implements OnInit {
         this.transactionInfo.batchNo = this.transactionCreateForm.value.batchNo;
         this.transactionInfo.traceNo = this.transactionCreateForm.value.traceNo;
         this.transactionInfo.terminalAmount = this.transactionCreateForm.value.terminalAmount;
-        if (this.transactionInfo.type == 'cash') {
+        if (this.transactionInfo.type == "cash") {
           this.transactionService.submitTransactionCash(this.transactionInfo).subscribe((data: any) => {
-            this.afterSuccessCreateCashTransaction(data);
+            if (!data.error) {
+              this.afterSuccessCreateCashTransaction(data);
+            } else {
+              this.alertService.alert({
+                message: data.error,
+                msgClass: "cssDanger",
+                hPosition: "center",
+              });
+              return;
+            }
           });
         } else {
-          if (this.transactionInfo.type == 'rollTermGetCash') {
+          if (this.transactionInfo.type == "rollTermGetCash") {
             this.transactionService
               .submitTransactionCashFromRollTermTransaction(this.transactionInfo)
               .subscribe((data: any) => {
-                this.afterSuccessCreateCashTransaction(data);
+                if (!data.error) {
+                  this.afterSuccessCreateCashTransaction(data);
+                } else {
+                  this.alertService.alert({
+                    message: data.error,
+                    msgClass: "cssDanger",
+                    hPosition: "center",
+                  });
+                  return;
+                }
               });
           }
         }
@@ -476,7 +494,7 @@ export class CreateTransactionComponent implements OnInit {
   addIdentifierExtraInfo() {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.data = {
-      title: 'Thông tin bổ sung cho thẻ',
+      title: "Thông tin bổ sung cho thẻ",
       clientIdentifierTemplate: this.transactionInfo.cardExtraInfo,
     };
     dialogConfig.minWidth = 400;
@@ -484,7 +502,7 @@ export class CreateTransactionComponent implements OnInit {
     addIdentifierDialogRef.afterClosed().subscribe((response: any) => {
       if (response.data) {
         const { limitCard, classCard } = response.data.value;
-        const expiredDateString = this.datePipe.transform(this.transactionInfo.cardExtraInfo.expiredDate, 'MMyy');
+        const expiredDateString = this.datePipe.transform(this.transactionInfo.cardExtraInfo.expiredDate, "MMyy");
 
         this.transactionService
           .updateCardTrackingState({
@@ -503,9 +521,9 @@ export class CreateTransactionComponent implements OnInit {
               this.submitTransactionRollTerm();
             } else {
               this.alertService.alert({
-                message: res2.result.message ? res2.result.message : 'Lỗi thêm thông tin hạn mức, hạng thẻ!',
-                msgClass: 'cssDanger',
-                hPosition: 'center',
+                message: res2.result.message ? res2.result.message : "Lỗi thêm thông tin hạn mức, hạng thẻ!",
+                msgClass: "cssDanger",
+                hPosition: "center",
               });
               return;
             }
@@ -528,8 +546,8 @@ export class CreateTransactionComponent implements OnInit {
     if (this.transactionService.formatLong(this.transactionInfo.requestAmount) != totalBooking) {
       this.alertService.alert({
         message: `Tổng số tiền trong lịch Advance không bằng số tiền cần làm Advance (${this.transactionInfo.requestAmount}) `,
-        msgClass: 'cssDanger',
-        hPosition: 'center',
+        msgClass: "cssDanger",
+        hPosition: "center",
       });
       return;
     }
@@ -540,18 +558,18 @@ export class CreateTransactionComponent implements OnInit {
 
     const dialog = this.dialog.open(ConfirmDialogComponent, {
       data: {
-        message: 'Bạn chắc chắn muốn lưu giao dịch',
-        title: 'Hoàn thành giao dịch',
+        message: "Bạn chắc chắn muốn lưu giao dịch",
+        title: "Hoàn thành giao dịch",
       },
     });
     dialog.afterClosed().subscribe((data) => {
       if (data) {
         this.listRollTermBooking.forEach((booking: any) => {
           booking.amountBooking = this.transactionService.formatLong(booking.amountBooking);
-          booking.txnDate = this.datePipe.transform(booking.txnDate, 'dd/MM/yyyy');
+          booking.txnDate = this.datePipe.transform(booking.txnDate, "dd/MM/yyyy");
         });
         const listBookingRollTerm = JSON.stringify(this.listRollTermBooking, function (key, value) {
-          if (key === '$$hashKey') {
+          if (key === "$$hashKey") {
             return undefined;
           }
           return value;
@@ -565,11 +583,11 @@ export class CreateTransactionComponent implements OnInit {
 
           this.alertService.alert({
             message: `Tạo giao dịch ${this.transactionInfo.transactionRefNo} thành công!`,
-            msgClass: 'cssSuccess',
-            hPosition: 'center',
+            msgClass: "cssSuccess",
+            hPosition: "center",
           });
           setTimeout(() => {
-            this.router.navigate(['/transaction/rollTermSchedule']);
+            this.router.navigate(["/transaction/rollTermSchedule"]);
           }, 2000); // 5s
         });
       }
@@ -591,8 +609,8 @@ export class CreateTransactionComponent implements OnInit {
         if (this.transactionService.formatLong(booking.amountBooking) > maxAmount) {
           this.alertService.alert({
             message: `Số tiền không được vuợt quá ${this.formatCurrency(String(maxAmount))} đ`,
-            msgClass: 'cssDanger',
-            hPosition: 'center',
+            msgClass: "cssDanger",
+            hPosition: "center",
           });
           booking.amountBooking = this.formatCurrency(String(maxAmount));
         }
@@ -662,9 +680,9 @@ export class CreateTransactionComponent implements OnInit {
       type: this.transactionInfo.type,
     };
     const dialog = this.dialog.open(CreateSuccessTransactionDialogComponent, {
-      height: '90%',
-      width: '100%',
-      maxWidth: '95vw',
+      height: "90%",
+      width: "100%",
+      maxWidth: "95vw",
       disableClose: true,
       data,
     });
@@ -690,7 +708,7 @@ export class CreateTransactionComponent implements OnInit {
           dateFormat,
           locale,
         };
-        this.savingsService.executeSavingsAccountCommand(savingsAccount.savingsId, 'approve', data).subscribe(() => {
+        this.savingsService.executeSavingsAccountCommand(savingsAccount.savingsId, "approve", data).subscribe(() => {
           this.activateAndApproveAccountForm = this.formBuilder.group({
             activatedOnDate: [new Date(), Validators.required],
           });
@@ -702,7 +720,7 @@ export class CreateTransactionComponent implements OnInit {
             dateFormat,
             locale,
           };
-          this.savingsService.executeSavingsAccountCommand(savingsAccount.savingsId, 'activate', data).subscribe(() => {
+          this.savingsService.executeSavingsAccountCommand(savingsAccount.savingsId, "activate", data).subscribe(() => {
             this.savingsService.makeFunForMarketing(savingsAccount.savingsId, clientName).subscribe((res: any) => {
               const message = `Thực hiện thành công!`;
               this.savingsService.handleResponseApiSavingTransaction(res, message, false);
@@ -715,13 +733,13 @@ export class CreateTransactionComponent implements OnInit {
 
   formatCurrency(value: string) {
     value = String(value);
-    const neg = value.startsWith('-');
-    value = value.replace(/[-\D]/g, '');
-    value = value.replace(/(\d{3})$/, ',$1');
-    value = value.replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
-    value = value !== '' ? '' + value : '';
+    const neg = value.startsWith("-");
+    value = value.replace(/[-\D]/g, "");
+    value = value.replace(/(\d{3})$/, ",$1");
+    value = value.replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
+    value = value !== "" ? "" + value : "";
     if (neg) {
-      value = '-'.concat(value);
+      value = "-".concat(value);
     }
 
     return value;

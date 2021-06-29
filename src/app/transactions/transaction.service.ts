@@ -199,6 +199,8 @@ export class TransactionService {
     httpParams = httpParams.set('productId', transactionInfo.productId);
     httpParams = httpParams.set('customerName', transactionInfo.clientDto.displayName);
     httpParams = httpParams.set('terminalId', transactionInfo.terminalId);
+    httpParams = httpParams.set('toClientId', transactionInfo.clientId);
+
 
     return this.http.post<any>(
       `${this.GatewayApiUrlPrefix}/transaction/create_retail_cash_from_rollTerm_transaction`,
