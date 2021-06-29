@@ -205,7 +205,7 @@
 
           <ng-container matColumnDef="documents">
             <th fxHide fxShow.gt-md mat-header-cell *matHeaderCellDef>Đính kèm</th>
-            <td fxHide fxShow.gt-md mat-cell *matCellDef="let identity; let i = index">
+            <td fxHide fxShow.gt-md mat-cell *matCellDef="let identity; let ind = renderIndex">
               <div *ngFor="let document of identity.documents">
                 {{ document.name }}
                 <fa-icon
@@ -217,7 +217,7 @@
               <fa-icon
                 style="color: green"
                 icon="cloud-upload-alt"
-                (click)="uploadDocument(i, identity.id, true)"
+                (click)="uploadDocument(ind, identity.id, true)"
                 *midasHasPermission="'CREATE_DOCUMENT'"
               ></fa-icon>
             </td>
