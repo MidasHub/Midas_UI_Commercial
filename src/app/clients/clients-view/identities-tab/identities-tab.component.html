@@ -55,7 +55,7 @@
 
           <ng-container matColumnDef="documents">
             <th fxHide fxShow.gt-md mat-header-cell *matHeaderCellDef matTooltip="Hình ảnh CMND/CCCD">Đính kèm</th>
-            <td fxHide fxShow.gt-md mat-cell *matCellDef="let identity; let ind = renderIndex">
+            <td fxHide fxShow.gt-md mat-cell *matCellDef="let identity; let ind = index">
               <div *ngFor="let document of identity.documents">
                 {{ document.name }}
                 <fa-icon
@@ -183,7 +183,7 @@
 
           <ng-container matColumnDef="documents">
             <th fxHide fxShow.gt-md mat-header-cell *matHeaderCellDef>Đính kèm</th>
-            <td fxHide fxShow.gt-md mat-cell *matCellDef="let identity; let ind = renderIndex">
+            <td fxHide fxShow.gt-md mat-cell *matCellDef="let identity; let ind = index">
               <div *ngFor="let document of identity.documents">
                 {{ document.name }}
                 <fa-icon
