@@ -31,7 +31,7 @@ export class LoanAccountLoadDocumentsDialogComponent implements OnInit {
    */
   createUploadDocumentForm() {
     this.uploadDocumentForm = this.formBuilder.group({
-      'name': ['', Validators.required],
+      'fileName': ['', Validators.required],
       'description': [''],
       'file': ['']
     });

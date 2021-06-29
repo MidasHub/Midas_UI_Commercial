@@ -31,14 +31,11 @@
 
       <ng-container matColumnDef="actions">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Actions </th>
+        
         <td mat-cell *matCellDef="let document; let index">
-          <button class="loan-document-action-button" mat-raised-button color="primary">
-            <fa-icon icon="cloud-download-alt"></fa-icon>
-          </button>
-
-          <button class="loan-document-action-button" mat-raised-button color="primary" *ngIf="document.fileIsImage">
-            <i class="fa fa-eye"></i>
-          </button>
+          <button class="document-action-button" mat-raised-button color="primary" (click)="download(document.parentEntityId,document.id)">
+            <fa-icon icon="cloud-download-alt" matTooltip="Tải về"></fa-icon>
+            </button>
 
           <button class="loan-document-action-button" mat-raised-button color="warn"
             (click)="deleteDocument(document.id, index)">
@@ -47,6 +44,19 @@
 
         </td>
       </ng-container>
+
+      <!-- <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef> Hành động </th>
+        <td mat-cell *matCellDef="let document; let i = index">
+            <button class="document-action-button" mat-raised-button color="primary" (click)="download(document.parentEntityId,document.id)">
+      <fa-icon icon="cloud-download-alt" matTooltip="Tải về"></fa-icon>
+      </button>
+              <button class="document-action-button" mat-raised-button color="warn" (click)="deleteDocument(document.parentEntityId,document.id,i)">
+        <fa-icon icon="times" matTooltip="Xóa tài liệu"></fa-icon>
+      </button>
+          </td>
+      </ng-container> -->
+
 
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
