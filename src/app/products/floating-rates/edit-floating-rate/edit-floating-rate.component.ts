@@ -176,7 +176,7 @@ export class EditFloatingRateComponent implements OnInit {
       floatingRatePeriod.isActive = undefined;
       floatingRatePeriod.locale = 'en';
       floatingRatePeriod.dateFormat = this.dateFormat;
-      floatingRatePeriod.fromDate = this.datePipe.transform(floatingRatePeriod.fromDate, this.dateFormat);
+      floatingRatePeriod.fromDate = floatingRatePeriod.fromDate;
     });
     this.floatingRateForm.value.ratePeriods = this.floatingRatePeriodsData.length > 0 ? this.floatingRatePeriodsData : undefined;
     this.productsService.updateFloatingRate(this.route.snapshot.paramMap.get('id'), this.floatingRateForm.value)
