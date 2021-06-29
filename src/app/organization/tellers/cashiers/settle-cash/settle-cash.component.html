@@ -52,7 +52,7 @@
 
           <mat-form-field fxFlex="48%">
             <mat-label>Amount</mat-label>
-            <input matInput required formControlName="txnAmount">
+            <input matInput currencyMask type="text" required formControlName="txnAmount">
             <mat-error *ngIf="settleCashForm.controls.txnAmount.hasError('required')">
               Amount <strong>is required</strong>
             </mat-error>

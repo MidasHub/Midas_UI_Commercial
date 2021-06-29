@@ -72,7 +72,7 @@
 
   <div fxFlexFill *ngIf="savingProduct.minRequiredOpeningBalance">
     <span fxFlex="40%">Minimum Opening Balance:</span>
-    <span fxFlex="60%">{{ savingProduct.minRequiredOpeningBalance }}</span>
+    <span fxFlex="60%">{{ savingProduct.minRequiredOpeningBalance | money }}</span>
   </div>
 
   <div fxFlexFill *ngIf="savingProduct.lockinPeriodFrequency">
@@ -87,7 +87,7 @@
 
   <div fxFlexFill *ngIf="savingProduct.minBalanceForInterestCalculation">
     <span fxFlex="40%">Balance Required for Interest Calculation:</span>
-    <span fxFlex="60%">{{ savingProduct.minBalanceForInterestCalculation }}</span>
+    <span fxFlex="60%">{{ savingProduct.minBalanceForInterestCalculation | money }}</span>
   </div>
 
   <div fxFlexFill>
@@ -97,7 +97,7 @@
 
   <div fxFlexFill *ngIf="savingProduct.minRequiredBalance">
     <span fxFlex="40%">Minimum Balance:</span>
-    <span fxFlex="60%">{{ savingProduct.minRequiredBalance }}</span>
+    <span fxFlex="60%">{{ savingProduct.minRequiredBalance | money }}</span>
   </div>
 
   <div fxFlexFill>
@@ -169,7 +169,7 @@
       <ng-container matColumnDef="amount">
         <th mat-header-cell *matHeaderCellDef> Amount </th>
         <td mat-cell *matCellDef="let charge">
-          {{ charge.amount  }}
+          {{ charge.amount | money }}
         </td>
       </ng-container>
 

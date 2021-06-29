@@ -21,7 +21,7 @@
 
           <mat-form-field>
             <mat-label>Transaction Amount</mat-label>
-            <input matInput required formControlName="transactionAmount">
+            <input matInput currencyMask type="text" required formControlName="transactionAmount">
             <mat-error *ngIf="prepayLoanForm.controls.transactionAmount.hasError('required')">
               Transaction Amount <strong>is required</strong>
             </mat-error>
@@ -34,7 +34,7 @@
 
           <mat-form-field>
             <mat-label>Interest Amount</mat-label>
-            <input matInput required formControlName="interestAmount">
+            <input matInput currencyMask type="text" required formControlName="interestAmount">
             <mat-error *ngIf="prepayLoanForm.controls.interestAmount.hasError('required')">
               Interest Amount <strong>is required</strong>
             </mat-error>
