@@ -378,12 +378,15 @@ export class CreateTransactionComponent implements OnInit {
     const numOfTransaction = data.result.numTransaction;
 
     this.transactionInfo.isDone = true;
+    const messageSuccess = `Tạo giao dịch ${this.transactionInfo.transactionRefNo} thành công!
+    ${data.result.pointReceived ?  ` Khách hàng nhận thưởng ${data.result.pointReceived} vào tài khoản điểm thưởng` : ''}` ;
+
+    this.showSuccessCreateTransactionDialog();
     this.alertService.alert({
-      message: `Tạo giao dịch ${this.transactionInfo.transactionRefNo} thành công!`,
+      message: messageSuccess,
       msgClass: "cssSuccess",
       hPosition: "center",
     });
-    this.showSuccessCreateTransactionDialog();
 
     if (numOfTransaction == 1) {
       let savingAccountId: string = null;
