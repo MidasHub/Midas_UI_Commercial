@@ -268,8 +268,9 @@ export class CreateClientComponent implements OnInit {
     delete data.maritalStatus;
     delete data.documentTypeId;
     delete data.files;
+    console.log(data.address);
     // if (_.isEmpty(data.address)) {
-    if (data.address.isEmpty()) {
+    if (data.address.length === 0) {
       alert('Vui lòng nhập ít nhất một địa chỉ');
       return;
     }
