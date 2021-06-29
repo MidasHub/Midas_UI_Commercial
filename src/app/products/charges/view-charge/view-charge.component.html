@@ -20,7 +20,7 @@
         <div fxFlex="50%" class="mat-body-strong">
           Charge Type
         </div>
-          
+
         <div fxFlex="50%">
           {{ chargeData.penalty === true ? 'Penalty' : 'Charge' }}
         </div>
@@ -38,7 +38,7 @@
         </div>
 
         <div fxFlex="50%">
-          {{ chargeData.amount }}
+          {{ chargeData.amount | money }}
         </div>
 
         <div fxFlex="50%" class="mat-body-strong">

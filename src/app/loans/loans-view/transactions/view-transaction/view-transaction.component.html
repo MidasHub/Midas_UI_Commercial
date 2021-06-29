@@ -55,7 +55,7 @@
         </div>
 
         <div fxFlex="50%">
-          {{ transactionData.amount }}
+          {{ transactionData.amount | money }}
         </div>
 
         <ng-container *ngIf="transactionData.paymentDetailData">

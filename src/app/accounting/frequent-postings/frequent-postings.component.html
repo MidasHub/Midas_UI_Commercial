@@ -65,7 +65,7 @@
 
               <mat-form-field fxFlex="43%">
                 <mat-label>Debit Amount</mat-label>
-                <input type="number" matInput required formControlName="amount">
+                <input currencyMask type="text" matInput required formControlName="amount">
                 <mat-error *ngIf="debits.at(i).controls.amount.hasError('required')">
                   Debit Amount is <strong>required</strong>
                 </mat-error>
@@ -103,7 +103,7 @@
 
               <mat-form-field fxFlex="43%">
                 <mat-label>Credit Amount</mat-label>
-                <input type="number" matInput required formControlName="amount">
+                <input currencyMask type="text" matInput required formControlName="amount">
                 <mat-error *ngIf="credits.at(i).controls.amount.hasError('required')">
                   Credit Amount is <strong>required</strong>
                 </mat-error>
