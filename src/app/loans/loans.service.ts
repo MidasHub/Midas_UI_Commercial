@@ -315,6 +315,13 @@ export class LoansService {
     return this.http.post(`/loans/${loanId}/documents`, data);
   }
 
+  uploadLoanDocument_(loanId: string, documentData: any) {
+    return this.http.post(`/loans/${loanId}/documents`, documentData);
+  }
+  
+  downloadLoanDocument(parentEntityId: string, documentId: string) {
+    return this.http.get(`/loans/${parentEntityId}/documents/${documentId}/attachment`, { responseType: "blob" });
+  }
   /**
    * @param clientId Client Id
    * @param clientName Client Name

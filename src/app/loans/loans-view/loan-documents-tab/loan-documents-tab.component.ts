@@ -52,7 +52,8 @@ export class LoanDocumentsTabComponent implements OnInit {
     private loansService: LoansService,
     public dialog: MatDialog) {
     this.route.data.subscribe((data: { loanDocuments: any }) => {
-      this.getLoanDocumentsData(data.loanDocuments);
+      //this.getLoanDocumentsData(data.loanDocuments);
+      this.loanDocuments = data.loanDocuments;
     });
     this.route.parent.data.subscribe((data: { loanDetailsData: any }) => {
       this.loanDetailsData = data.loanDetailsData;
@@ -87,14 +88,37 @@ export class LoanDocumentsTabComponent implements OnInit {
     });
     this.loanDocuments = data;
   }
-
+ 
   uploadDocument() {
-    const uploadLoanDocumentDialogRef = this.dialog.open(LoanAccountLoadDocumentsDialogComponent);
-    uploadLoanDocumentDialogRef.afterClosed().subscribe((data: any) => {
-      if (data) {
-        this.loansService.loadLoanDocument(this.loanDetailsData.id, data)
-          .subscribe(() => {});
+    const uploadDocumentDialogRef = this.dialog.open(LoanAccountLoadDocumentsDialogComponent);
+    uploadDocumentDialogRef.afterClosed().subscribe((dialogResponse: any) => {
+      console.log("dialogResponse",dialogResponse);
+      if (dialogResponse) { 
+        const formData: FormData = new FormData();
+        formData.append("name", dialogResponse.fileName);
+        formData.append("description", dialogResponse.description);
+        formData.append("file", dialogResponse.file);
+        this.loansService.uploadLoanDocument_(this.loanDetailsData.id, formData).subscribe((res: any) => {
+            this.loanDocuments.push({
+              id: res.resourceId,
+              parentEntityType: 'loans',
+              parentEntityId: this.loanDetailsData.id,
+              name: dialogResponse.fileName,
+              fileName: dialogResponse.file.name,
+              description: dialogResponse.description,
+              size:0,
+              type:''
+            });
+            this.dataSource = this.loanDocuments;
+        });
       }
+    });
+  }
+   
+  download(parentEntityId: string, documentId: string) {
+    this.loansService.downloadLoanDocument(parentEntityId, documentId).subscribe(res => {
+      const url = window.URL.createObjectURL(res);
+      window.open(url);
     });
   }
 
