@@ -298,27 +298,27 @@ export class AuthenticationService {
     switch (moduleName) {
       case 'billModule':
         const isBillModule = credentials.appSettingModule.billModule;
-        return isBillModule === 1;
+        return isBillModule == 1;
 
       case 'mgmModule':
         const isMgmModule = credentials.appSettingModule.mgmModule;
-        return isMgmModule === 1;
+        return isMgmModule == 1;
 
       case 'checkIdAgencyModule':
         const isCheckIdAgencyModule = credentials.appSettingModule.checkIdAgencyModule;
-        return isCheckIdAgencyModule === 1;
+        return isCheckIdAgencyModule == 1;
 
       case 'sendTransferNotificationBi':
         const sendTransferNotificationBi = credentials.appSettingModule.sendTransferNotificationBi;
-        return sendTransferNotificationBi === 1;
+        return sendTransferNotificationBi == 1;
 
       case 'sendNotificationBi':
         const sendNotificationBi = credentials.appSettingModule.sendNotificationBi;
-        return sendNotificationBi === 1;
+        return sendNotificationBi == 1;
 
       case 'campaignModule':
         const campaignModule = credentials.appSettingModule.campaignModule;
-        return campaignModule === 1;
+        return campaignModule == 1;
       ///  ......  another module setting ///
     }
   }

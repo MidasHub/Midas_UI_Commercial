@@ -10,7 +10,7 @@ import {environment} from 'environments/environment';
 // import {indexOf} from 'lodash';
 
 /** Logger */
-import {Logger} from '../logger/logger.service';
+import {Logger} from '../logger/logger.service'
 const log = new Logger('API-Interceptor');
 
 /**
@@ -39,7 +39,7 @@ export class ApiPrefixInterceptor implements HttpInterceptor {
 
             request = request.clone({url: environment.IcGatewayApiUrl + request.url});
 
-          } else {
+          }else{
 
             request = request.clone({url: environment.serverUrl + request.url});
 

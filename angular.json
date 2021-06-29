@@ -17,17 +17,20 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/",
+            "aot": true,
+            "outputPath": "dist/web-app",
             "index": "src/index.html",
             "main": "src/main.ts",
             "tsConfig": "src/tsconfig.app.json",
             "polyfills": "src/polyfills.ts",
+            "extractCss": true,
             "assets": [
               "src/favicon.ico",
               "src/robots.txt",
               "src/manifest.json",
               "src/firebase-messaging-sw.js",
-              "src/assets"
+              "src/assets",
+              "src/assets/i18n"
             ],
             "styles": [
               "src/main.scss",
@@ -35,6 +38,36 @@
                 "inject": false,
                 "input": "src/theme/custom/default_theme.scss",
                 "bundleName": "theme/default-theme"
+              },
+              {
+                "inject": false,
+                "input": "src/theme/deeppurple-amber.scss",
+                "bundleName": "theme/deeppurple-amber"
+              },
+              {
+                "inject": false,
+                "input": "src/theme/indigo-pink.scss",
+                "bundleName": "theme/indigo-pink"
+              },
+              {
+                "inject": false,
+                "input": "src/theme/pink-bluegrey.scss",
+                "bundleName": "theme/pink-bluegrey"
+              },
+              {
+                "inject": false,
+                "input": "src/theme/custom/purple-green.scss",
+                "bundleName": "theme/purple-green"
+              },
+              {
+                "inject": false,
+                "input": "src/theme/custom/denim-yellowgreen.scss",
+                "bundleName": "theme/denim-yellowgreen"
+              },
+              {
+                "inject": false,
+                "input": "src/theme/custom/pictonblue-yellowgreen.scss",
+                "bundleName": "theme/pictonblue-yellowgreen"
               }
             ],
             "scripts": []
@@ -51,10 +84,10 @@
               "outputHashing": "all",
               "sourceMap": false,
               "extractCss": true,
-              "namedChunks": true,
+              "namedChunks": false,
               "aot": true,
               "extractLicenses": true,
-              "vendorChunk": true,
+              "vendorChunk": false,
               "buildOptimizer": true,
               "serviceWorker": true,
               "fileReplacements": [
@@ -70,9 +103,7 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
             "browserTarget": "midas-web-app:build",
-            "sourceMap": false,
-            "aot": true,
-            "vendorChunk": true
+            "aot": false
           },
           "configurations": {
             "production": {

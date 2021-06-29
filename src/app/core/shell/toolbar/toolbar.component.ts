@@ -16,7 +16,7 @@ import { AuthenticationService } from '../../authentication/authentication.servi
 
 // import { DeviceDetectorService } from 'ngx-device-detector';
 import {environment} from 'environments/environment';
-// import { split } from 'lodash';
+import { split } from 'lodash';
 
 /**
  * Toolbar component.
@@ -64,7 +64,7 @@ export class ToolbarComponent implements OnInit {
    */
   ngOnInit() {
     this.currentUser = this.authenticationService.getCredentials();
-    this.userFullname =  this.currentUser.staffDisplayName.split(',')[1].trim() //split(this.currentUser.staffDisplayName, ',')[1]?.trim();
+    this.userFullname = split(this.currentUser.staffDisplayName, ',')[1]?.trim();
     this.toggleSidenavCollapse(false);
     this.sidenav.toggle(false);
 
