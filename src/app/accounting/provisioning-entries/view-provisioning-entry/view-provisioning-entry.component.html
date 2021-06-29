@@ -34,7 +34,7 @@
         </div>
 
         <div fxFlex="18%">
-          {{ provisioningEntry.reservedAmount }}
+          {{ provisioningEntry.reservedAmount | money}}
         </div>
 
       </div>
@@ -112,7 +112,7 @@
 
     <ng-container matColumnDef="amountreserved">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> Provisioning Amount </th>
-      <td mat-cell *matCellDef="let provisioningEntry"> {{ provisioningEntry.amountreserved }} </td>
+      <td mat-cell *matCellDef="let provisioningEntry"> {{ provisioningEntry.amountreserved | money}} </td>
     </ng-container>
 
     <ng-container matColumnDef="liabilityAccountName">

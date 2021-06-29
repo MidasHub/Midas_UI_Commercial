@@ -192,21 +192,21 @@
             </tr>
             <tr >
               <td> Actual Available Balance</td>
-              <td>{{ recurringDepositsAccountData.currency.displaySymbol }}&nbsp;{{ recurringDepositsAccountData.summary.accountBalance }}
+              <td>{{ recurringDepositsAccountData.currency.displaySymbol }}&nbsp;{{ recurringDepositsAccountData.summary.accountBalance | money }}
             </tr>
             <tr>
               <td> Recurring Deposits Amount</td>
               <td>
-                {{ recurringDepositsAccountData.currency.displaySymbol }}&nbsp;{{ recurringDepositsAccountData.mandatoryRecommendedDepositAmount }}
+                {{ recurringDepositsAccountData.currency.displaySymbol }}&nbsp;{{ recurringDepositsAccountData.mandatoryRecommendedDepositAmount | money }}
             </tr>
             <tr *ngIf="recurringDepositsAccountData.summary.totalInterestEarned">
               <td> Interests Earned </td>
-              <td><span>{{ recurringDepositsAccountData.currency.displaySymbol }}&nbsp;{{ recurringDepositsAccountData.summary.totalInterestEarned }}</span></td>
+              <td><span>{{ recurringDepositsAccountData.currency.displaySymbol }}&nbsp;{{ recurringDepositsAccountData.summary.totalInterestEarned | money }}</span></td>
             </tr>
             <tr *ngIf="recurringDepositsAccountData.summary.totalWithdrawals">
               <td> Total Withdrawls </td>
               <td>
-                <span>{{ recurringDepositsAccountData.currency.displaySymbol }}&nbsp;{{ recurringDepositsAccountData.summary.totalWithdrawals }}</span>
+                <span>{{ recurringDepositsAccountData.currency.displaySymbol }}&nbsp;{{ recurringDepositsAccountData.summary.totalWithdrawals | money }}</span>
               </td>
             </tr>
             <tr *ngIf="recurringDepositsAccountData.minBalanceForInterestCalculation">

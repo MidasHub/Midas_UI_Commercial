@@ -23,7 +23,7 @@
 
           <mat-form-field>
             <mat-label>Maturity Amount</mat-label>
-            <input matInput required formControlName="maturityAmount">
+            <input matInput currencyMask type="text" required formControlName="maturityAmount">
             <mat-error *ngIf="closeRecurringDepositForm.controls.maturityAmount.hasError('required')">
               Maturity Amount <strong>is required</strong>
             </mat-error>

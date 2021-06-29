@@ -24,7 +24,7 @@
 
         <mat-form-field>
           <mat-label>Số tiền</mat-label>
-          <input type="text" formControlName="transactionAmount" required matInput currencyMask />
+          <input currencyMask type="text" formControlName="transactionAmount" required matInput currencyMask />
           <mat-error *ngIf="savingAccountTransactionForm.controls.transactionAmount.hasError('required')">
             Số tiền <strong>bắt buộc</strong>
           </mat-error>

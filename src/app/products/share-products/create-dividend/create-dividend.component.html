@@ -30,7 +30,7 @@
 
           <mat-form-field>
             <mat-label>Dividend Amount</mat-label>
-            <input matInput required formControlName="dividendAmount">
+            <input matInput currencyMask type="text" required formControlName="dividendAmount">
             <mat-error *ngIf="createDividendForm.controls.dividendAmount.hasError('required')">
               Amount is <strong>required</strong>
             </mat-error>

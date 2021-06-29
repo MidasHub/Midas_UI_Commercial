@@ -234,7 +234,7 @@
 
     <mat-form-field fxFlex="48%" *ngIf="loansAccountProductTemplate?.canDefineInstallmentAmount">
       <mat-label>Installment Amount</mat-label>
-      <input type="number" matInput formControlName="fixedEmiAmount">
+      <input currencyMask type="text" matInput formControlName="fixedEmiAmount">
     </mat-form-field>
 
     <ng-container *ngIf="loansAccountProductTemplate?.canUseForTopup">

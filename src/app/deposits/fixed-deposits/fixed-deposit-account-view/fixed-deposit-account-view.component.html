@@ -23,8 +23,8 @@
           <p>
             Account #: {{fixedDepositsAccountData.accountNo}} | Client Name: {{fixedDepositsAccountData.clientName}}<br/>
             <span *ngIf="!fixedDepositsAccountData.status.rejected && !fixedDepositsAccountData.status.submittedAndPendingApproval">
-              Current Balance: {{fixedDepositsAccountData.currency.displaySymbol}}&nbsp;{{fixedDepositsAccountData.summary.accountBalance}}<br/>
-              Deposit Amount: {{fixedDepositsAccountData.currency.displaySymbol}}&nbsp;{{fixedDepositsAccountData.depositAmount}}<br/>
+              Current Balance: {{fixedDepositsAccountData.currency.displaySymbol}}&nbsp;{{fixedDepositsAccountData.summary.accountBalance | money}}<br/>
+              Deposit Amount: {{fixedDepositsAccountData.currency.displaySymbol}}&nbsp;{{fixedDepositsAccountData.depositAmount | money}}<br/>
             </span>
           </p>
         </mat-card-subtitle>
@@ -38,7 +38,7 @@
         <button mat-raised-button (click)="doAction(button.name)">
           <i class="{{button.icon}}"></i> {{button.name}}</button>
       </ng-container>
-  
+
       <ng-container *ngIf="buttonConfig.options.length">
         <button mat-raised-button [matMenuTriggerFor]="More">More</button>
         <mat-menu #More="matMenu">
@@ -47,7 +47,7 @@
         </span>
         </mat-menu>
       </ng-container>
-  
+
     </mat-card-actions>
 
   </mat-card-header>
@@ -131,23 +131,23 @@
             <tbody>
               <tr>
                 <td>Principal Amount</td>
-                <td>{{fixedDepositsAccountData.currency.displaySymbol}}&nbsp;{{fixedDepositsAccountData.depositAmount}}</td>
+                <td>{{fixedDepositsAccountData.currency.displaySymbol}}&nbsp;{{fixedDepositsAccountData.depositAmount | money}}</td>
               </tr>
               <tr>
                 <td>Maturity Amount</td>
-                <td>{{fixedDepositsAccountData.currency.displaySymbol}}&nbsp;{{fixedDepositsAccountData.maturityAmount}}</td>
+                <td>{{fixedDepositsAccountData.currency.displaySymbol}}&nbsp;{{fixedDepositsAccountData.maturityAmount | money}}</td>
               </tr>
               <tr *ngIf="fixedDepositsAccountData.summary.totalDeposits">
                 <td>Total Deposits</td>
-                <td>{{fixedDepositsAccountData.currency.displaySymbol}}&nbsp;{{fixedDepositsAccountData.summary.totalDeposits}}</td>
+                <td>{{fixedDepositsAccountData.currency.displaySymbol}}&nbsp;{{fixedDepositsAccountData.summary.totalDeposits | money}}</td>
               </tr>
               <tr *ngIf="fixedDepositsAccountData.summary.totalWithdrawals">
                 <td>Total Withdrawals</td>
-                <td>{{fixedDepositsAccountData.currency.displaySymbol}}&nbsp;{{fixedDepositsAccountData.summary.totalWithdrawals}}</td>
+                <td>{{fixedDepositsAccountData.currency.displaySymbol}}&nbsp;{{fixedDepositsAccountData.summary.totalWithdrawals | money}}</td>
               </tr>
               <tr *ngIf="fixedDepositsAccountData.summary.totalInterestEarned >= 0">
                 <td>Total Interest Earned</td>
-                <td>{{fixedDepositsAccountData.currency.displaySymbol}}&nbsp;{{fixedDepositsAccountData.summary.totalInterestEarned}}</td>
+                <td>{{fixedDepositsAccountData.currency.displaySymbol}}&nbsp;{{fixedDepositsAccountData.summary.totalInterestEarned | money}}</td>
               </tr>
           </table>
         </div>

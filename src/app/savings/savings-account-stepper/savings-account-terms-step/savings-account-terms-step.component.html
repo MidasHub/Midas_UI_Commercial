@@ -138,7 +138,7 @@
 
     <mat-form-field fxFlex="48%" *ngIf="savingsAccountTermsForm.controls.minBalanceForInterestCalculation.value">
       <mat-label>Balance Required for Interest Calculation</mat-label>
-      <input type="number" matInput formControlName="minBalanceForInterestCalculation">
+      <input currencyMask type="text" matInput formControlName="minBalanceForInterestCalculation">
     </mat-form-field>
 
   </div>

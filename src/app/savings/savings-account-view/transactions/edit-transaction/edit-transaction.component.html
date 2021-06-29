@@ -19,7 +19,7 @@
 
         <mat-form-field>
           <mat-label>Transaction Amount</mat-label>
-          <input type="number" formControlName="transactionAmount" required matInput />
+          <input currencyMask type="text" formControlName="transactionAmount" required matInput />
           <mat-error *ngIf="editTransactionForm.controls.transactionAmount.hasError('required')">
             Transaction Amount is <strong>required</strong>
           </mat-error>
@@ -72,10 +72,9 @@
         </mat-card-actions>
 
       </mat-card-content>
-      
+
     </form>
 
   </mat-card>
 
 </div>
-  

@@ -46,22 +46,22 @@
 
       <ng-container matColumnDef="due">
         <th mat-header-cell *matHeaderCellDef> Due </th>
-        <td mat-cell *matCellDef="let charge"> {{charge.currency.displaySymbol}}&nbsp;{{charge.amount}} </td>
+        <td mat-cell *matCellDef="let charge"> {{charge.currency.displaySymbol}}&nbsp;{{charge.amount | money}} </td>
       </ng-container>
 
       <ng-container matColumnDef="paid">
         <th mat-header-cell *matHeaderCellDef> Paid </th>
-        <td mat-cell *matCellDef="let charge"> {{charge.currency.displaySymbol}}&nbsp;{{charge.amountPaid}} </td>
+        <td mat-cell *matCellDef="let charge"> {{charge.currency.displaySymbol}}&nbsp;{{charge.amountPaid | money}} </td>
       </ng-container>
 
       <ng-container matColumnDef="waived">
         <th mat-header-cell *matHeaderCellDef> Waived </th>
-        <td mat-cell *matCellDef="let charge"> {{charge.currency.displaySymbol}}&nbsp;{{charge.amountWaived}} </td>
+        <td mat-cell *matCellDef="let charge"> {{charge.currency.displaySymbol}}&nbsp;{{charge.amountWaived | money}} </td>
       </ng-container>
 
       <ng-container matColumnDef="outstanding">
         <th mat-header-cell *matHeaderCellDef> Outstanding </th>
-        <td mat-cell *matCellDef="let charge"> {{charge.currency.displaySymbol}}&nbsp;{{charge.amountOutstanding}} </td>
+        <td mat-cell *matCellDef="let charge"> {{charge.currency.displaySymbol}}&nbsp;{{charge.amountOutstanding | money}} </td>
       </ng-container>
 
       <ng-container matColumnDef="actions">
