@@ -1,40 +1,48 @@
 // customed by Midas team
-.cssSuccess{
+.cssSuccess {
+  color: #fff;
+  font-weight: 500;
+  z-index: 9000;
+  background-color: $msg-success;
+  white-space: pre-wrap;
+
+  .mat-button-wrapper {
     color: #fff;
-    font-weight: 500;
-    background-color: $msg-success;
-    white-space: pre-wrap;
-    .mat-button-wrapper{
-        color: #fff
-    }
+  }
 }
 
-.cssInfo{
+.cssInfo {
+  color: #fff;
+  font-weight: 500;
+  z-index: 9000;
+  background-color: $msg-info;
+  white-space: pre-wrap;
+
+  .mat-button-wrapper {
     color: #fff;
-    font-weight: 500;
-    background-color: $msg-info;
-    white-space: pre-wrap;
-    .mat-button-wrapper{
-        color: #fff
-    }
+  }
 }
 
-.cssWarning{
+.cssWarning {
+  color: #fff;
+  font-weight: 500;
+  z-index: 9000;
+  background-color: $msg-warning;
+  white-space: pre-wrap;
+
+  .mat-button-wrapper {
     color: #fff;
-    font-weight: 500;
-    background-color: $msg-warning;
-    white-space: pre-wrap;
-    .mat-button-wrapper{
-        color: #fff
-    }
+  }
 }
 
-.cssDanger{
+.cssDanger {
+  color: #fff;
+  font-weight: 500;
+  z-index: 9000;
+  background-color: $msg-danger;
+  white-space: pre-wrap;
+
+  .mat-button-wrapper {
     color: #fff;
-    font-weight: 500;
-    background-color: $msg-danger;
-    white-space: pre-wrap;
-    .mat-button-wrapper{
-        color: #fff
-    }
+  }
 }
