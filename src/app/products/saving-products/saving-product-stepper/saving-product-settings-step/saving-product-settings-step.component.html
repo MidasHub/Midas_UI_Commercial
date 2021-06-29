@@ -4,9 +4,9 @@
 
     <mat-form-field fxFlex="48%">
       <mat-label>Minimum Opening Balance</mat-label>
-      <input type="number" matInput formControlName="minRequiredOpeningBalance">
+      <input currencyMask type="text" matInput formControlName="minRequiredOpeningBalance">
     </mat-form-field>
-    
+
     <span fxFlex="48%" fxHide.lt-md></span>
 
     <mat-form-field fxFlex="48%">
@@ -28,7 +28,7 @@
 
     <mat-form-field fxFlex="48%">
       <mat-label>Balance Required for Interest Calculation</mat-label>
-      <input type="number" matInput formControlName="minBalanceForInterestCalculation">
+      <input currencyMask type="text" matInput formControlName="minBalanceForInterestCalculation">
     </mat-form-field>
 
     <mat-checkbox fxFlex="48%" labelPosition="before" formControlName="enforceMinRequiredBalance" class="margin-v">
@@ -37,7 +37,7 @@
 
     <mat-form-field fxFlex="48%">
       <mat-label>Minimum Balance</mat-label>
-      <input type="number" matInput formControlName="minRequiredBalance">
+      <input currencyMask type="text" matInput formControlName="minRequiredBalance">
     </mat-form-field>
 
     <mat-checkbox fxFlex="48%" labelPosition="before" formControlName="withHoldTax" class="margin-v">

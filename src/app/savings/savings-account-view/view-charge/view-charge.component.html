@@ -45,7 +45,7 @@
         <div fxFlex="50%">
           {{ chargeData.name }}
         </div>
-        
+
         <div fxFlex="50%" class="mat-body-strong">
           Charge Type
         </div>
@@ -85,13 +85,13 @@
         <div fxFlex="50%">
           {{ chargeData.chargeCalculationType.value }}
         </div>
-        
+
         <div fxFlex="50%" class="mat-body-strong">
           Due
         </div>
 
         <div fxFlex="50%">
-          {{ chargeData.amount }}
+          {{ chargeData.amount | money }}
         </div>
 
         <div fxFlex="50%" class="mat-body-strong">
@@ -99,7 +99,7 @@
         </div>
 
         <div fxFlex="50%">
-          {{ chargeData.amountPaid }}
+          {{ chargeData.amountPaid | money }}
         </div>
 
         <div fxFlex="50%" class="mat-body-strong">
@@ -107,7 +107,7 @@
         </div>
 
         <div fxFlex="50%">
-          {{ chargeData.amountWaived }}
+          {{ chargeData.amountWaived | money }}
         </div>
 
         <div fxFlex="50%" class="mat-body-strong">
@@ -115,7 +115,7 @@
         </div>
 
         <div fxFlex="50%">
-          {{ chargeData.amountOutstanding }}
+          {{ chargeData.amountOutstanding | money }}
         </div>
 
       </div>

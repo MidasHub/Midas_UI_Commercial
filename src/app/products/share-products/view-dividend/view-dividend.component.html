@@ -30,7 +30,7 @@
 
       <ng-container matColumnDef="dividendAmount">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Dividend Amount </th>
-        <td mat-cell *matCellDef="let dividend"> {{ dividend.amount }} </td>
+        <td mat-cell *matCellDef="let dividend"> {{ dividend.amount | money }} </td>
       </ng-container>
 
       <ng-container matColumnDef="status">

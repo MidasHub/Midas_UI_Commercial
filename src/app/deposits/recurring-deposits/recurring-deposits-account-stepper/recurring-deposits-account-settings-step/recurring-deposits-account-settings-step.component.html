@@ -36,7 +36,7 @@
 
     <mat-form-field fxFlex="48%">
       <mat-label>Recurring Deposit Amount</mat-label>
-      <input type="number" matInput formControlName="mandatoryRecommendedDepositAmount" required>
+      <input currencyMask type="text" matInput formControlName="mandatoryRecommendedDepositAmount" required>
       <mat-error>
         Recurring Deposit Amount is <strong>required</strong>
       </mat-error>
@@ -172,13 +172,13 @@
           {{ preClosurePenalInterestOnType.value }}
         </mat-option>
       </mat-select>
-    </mat-form-field> 
+    </mat-form-field>
 
     <!-- <mat-divider fxFlex="98%"></mat-divider> -->
 
     <mat-form-field fxFlex="48%">
       <mat-label>Minimum Balance For Interest Calculation</mat-label>
-      <input type="number" matInput formControlName="minBalanceForInterestCalculation">
+      <input currencyMask type="text" matInput formControlName="minBalanceForInterestCalculation">
     </mat-form-field>
 
     <ng-container *ngIf="taxGroup">
@@ -187,7 +187,7 @@
       <mat-checkbox fxFlex="48%" labelPosition="before" formControlName="withHoldTax" class="margin-v">
         Is Withhold Tax Applicable?
       </mat-checkbox>
-    
+
       <mat-form-field fxFlex="48%" *ngIf="recurringDepositAccountSettingsForm.controls.taxGroupId">
         <mat-label>Tax Group</mat-label>
         <input type="text" matInput formControlName="taxGroupId">
