@@ -517,7 +517,7 @@ export class ManageIcTransactionComponent implements OnInit {
         createdDate: this.datePipe.transform(element.createdDate, dateFormat),
         terminalId: element.terminalId,
         partnerName: this.displayPartnerPos(element.terminalId),
-        bankName: this.displayBankPos(element.terminalId),
+        bankName: element.panBank,
         customerName: element.panHolderName,
         terminalAmount: element.terminalAmount,
         traceNo: element.traceNo,
