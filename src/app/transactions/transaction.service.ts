@@ -52,6 +52,7 @@ export class TransactionService {
 
   mappingInvoiceWithTransaction(
     accountTypeCode: string,
+    accountBankId: string,
     accountNumber: string,
     identifierId: string,
     amountTransaction: number,
@@ -62,6 +63,7 @@ export class TransactionService {
     httpParams = httpParams.set('ext4', identifierId);
     httpParams = httpParams.set('AmountMappingInvoice', String(this.formatLong(String(amountTransaction))));
     httpParams = httpParams.set('accountTypeId', accountTypeCode);
+    httpParams = httpParams.set('accountBankId', accountBankId);
     httpParams = httpParams.set('terminalId', terminalId);
 
     return this.http.post<any>(`${this.GatewayApiUrlPrefix}/transaction/mapping_invoice_transaction`, httpParams);
