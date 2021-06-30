@@ -260,10 +260,11 @@ export class SavingsService {
    * @param {string} savingAccountId is saving account"s Id.
    * @returns {Observable<any>}
    */
-  getLimitSavingsTransactionConfig(paymentTypeId: string, staffId?: string): Observable<any> {
+  getLimitSavingsTransactionConfig(paymentTypeId: string, officeId: string, staffId?: string): Observable<any> {
     let httpParams = this.commonHttpParams.getCommonHttpParams();
 
     httpParams = httpParams.set("paymentTypeId", paymentTypeId);
+    httpParams = httpParams.set("officeTransactionId", officeId);
     httpParams = httpParams.set("staffId", staffId ? staffId : "");
 
     return this.http.post(`${this.GatewayApiUrlPrefix}/config/get_limit_withdrawal_config_amount`, httpParams);
