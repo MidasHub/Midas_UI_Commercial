@@ -489,7 +489,7 @@ export class CreateBatchTransactionComponent implements OnInit {
     if (amount && amount > 0) {
       // @ts-ignore
       this.transactionServices
-        .mappingInvoiceWithTransaction(form.data.binCodeInfo.cardType, documentKey, documentId, amount, result)
+        .mappingInvoiceWithTransaction(form.data.binCodeInfo.cardType, form.data.binCodeInfo.bankCode, documentKey, documentId, amount, result)
         .subscribe((result2: any) => {
           if (result2.status != 200) {
             if (result2.status == 401) {

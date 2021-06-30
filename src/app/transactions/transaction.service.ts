@@ -51,17 +51,19 @@ export class TransactionService {
 
   mappingInvoiceWithTransaction(
     accountTypeCode: string,
+    accountBankId: string,
     accountNumber: string,
     identifierId: string,
     amountTransaction: number,
     terminalId: string
   ): Observable<any> {
     let httpParams = this.commonHttpParams.getCommonHttpParams();
-    httpParams = httpParams.set("accountNumber", accountNumber);
-    httpParams = httpParams.set("ext4", identifierId);
-    httpParams = httpParams.set("AmountMappingInvoice", String(this.formatLong(String(amountTransaction))));
-    httpParams = httpParams.set("accountTypeId", accountTypeCode);
-    httpParams = httpParams.set("terminalId", terminalId);
+    httpParams = httpParams.set('accountNumber', accountNumber);
+    httpParams = httpParams.set('ext4', identifierId);
+    httpParams = httpParams.set('AmountMappingInvoice', String(this.formatLong(String(amountTransaction))));
+    httpParams = httpParams.set('accountTypeId', accountTypeCode);
+    httpParams = httpParams.set('accountBankId', accountBankId);
+    httpParams = httpParams.set('terminalId', terminalId);
 
     return this.http.post<any>(`${this.GatewayApiUrlPrefix}/transaction/mapping_invoice_transaction`, httpParams);
   }

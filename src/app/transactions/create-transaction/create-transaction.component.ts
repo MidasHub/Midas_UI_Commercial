@@ -263,6 +263,7 @@ export class CreateTransactionComponent implements OnInit {
     this.transactionService
       .mappingInvoiceWithTransaction(
         this.transactionInfo.identifyClientDto.accountTypeId,
+        this.transactionInfo.identifyClientDto.accountBankId,
         this.transactionInfo.identifyClientDto.accountNumber,
         this.transactionInfo.identifierId,
         this.transactionInfo.requestAmount,
