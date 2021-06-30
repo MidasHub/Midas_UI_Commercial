@@ -116,6 +116,8 @@ export class SavingsAccountTransactionsComponent implements OnInit {
       this.changePaymentType();
     });
 
+
+
     // **SÁNG** open add on info on default
     this.addPaymentDetails();
   }
@@ -157,18 +159,19 @@ export class SavingsAccountTransactionsComponent implements OnInit {
     });
     this.paymentTypeDescription = paymentTypeDescription;
     if (this.transactionCommand == "withdrawal" && !this.isInterchangeClient) {
+      let officeId = this.savingAccountTransactionForm.get("bankNumber").value;
       if (this.showStaffChoose) {
         let staffId = this.savingAccountTransactionForm.get("accountNumber").value;
-        this.checkValidAmountWithdrawalTransaction(paymentTypeId, staffId);
+        this.checkValidAmountWithdrawalTransaction(paymentTypeId, officeId, staffId);
       } else {
-        this.checkValidAmountWithdrawalTransaction(paymentTypeId);
+        this.checkValidAmountWithdrawalTransaction(paymentTypeId, officeId);
       }
     }
   }
 
   // get limit config for withdraw action
-  checkValidAmountWithdrawalTransaction(paymentTypeId: string, staffId?: string) {
-    this.savingsService.getLimitSavingsTransactionConfig(paymentTypeId, staffId).subscribe((config) => {
+  checkValidAmountWithdrawalTransaction(paymentTypeId: string, officeId: string, staffId?: string) {
+    this.savingsService.getLimitSavingsTransactionConfig(paymentTypeId, officeId, staffId).subscribe((config) => {
       this.limitInfo = config.result;
     });
   }
@@ -186,6 +189,10 @@ export class SavingsAccountTransactionsComponent implements OnInit {
       this.savingAccountTransactionForm.addControl("bankNumber", new FormControl(String(this.currentUser.officeId)));
 
       this.savingAccountTransactionForm.get("accountNumber").valueChanges.subscribe((value) => {
+        this.changePaymentType();
+      });
+
+      this.savingAccountTransactionForm.get("bankNumber").valueChanges.subscribe((value) => {
         this.changePaymentType();
       });
     } else {
