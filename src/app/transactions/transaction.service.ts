@@ -273,15 +273,18 @@ export class TransactionService {
     createdByFilter: string;
     limit: number;
     offset: number;
+    officeFilter: number;
   }): Observable<any> {
     let httpParams = this.commonHttpParams.getCommonHttpParams();
     httpParams = httpParams.set("bankFilter", payload.bankFilter == "ALL" ? "%%" : payload.bankFilter);
-    httpParams = httpParams.set("createdByFilter", payload.createdByFilter == "ALL" ? "%%" : payload.createdByFilter);
+    httpParams = httpParams.set("createdByFilter", !payload.createdByFilter ? "%%" : payload.createdByFilter);
     httpParams = httpParams.set("customerSearch", !payload.query ? "%%" : `%${payload.query}%`);
+    httpParams = httpParams.set("officeSearch", !payload.officeFilter ? "%%" : `${payload.officeFilter}`);
     httpParams = httpParams.set("limit", String(payload.limit));
     httpParams = httpParams.set("offset", String(payload.offset));
     httpParams = httpParams.set("fromDate", payload.fromDate);
     httpParams = httpParams.set("toDate", payload.toDate);
+
 
     return this.http.post(`${this.GatewayApiUrlPrefix}/transaction/get_list_pos_transaction_rollterm`, httpParams);
   }

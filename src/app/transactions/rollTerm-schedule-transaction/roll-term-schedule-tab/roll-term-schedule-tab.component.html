@@ -19,7 +19,15 @@
   </mat-card-content>
 
   <div [formGroup]="formFilter" fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column" [formGroup]="formFilter">
-    <mat-form-field fxFlex="40%" *midasHasPermission="'REFINANCE_EXECUTIVE'">
+    <mat-form-field fxFlex="18%" *midasHasPermission="'REFINANCE_EXECUTIVE'">
+      <mat-label>Chi nhánh</mat-label>
+      <mat-select formControlName="OfficeFilter">
+        <mat-option *ngFor="let office of offices" [value]="office.id">
+          {{ office.name }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field fxFlex="18%" *midasHasPermission="'REFINANCE_EXECUTIVE'">
       <mat-label>Nhân viên</mat-label>
       <mat-select formControlName="createdByFilter">
         <mat-option *ngFor="let option of staffs" [value]="option.userId">
@@ -53,12 +61,7 @@
       >
         Tìm kiếm &nbsp;<i class="fa fa-search" aria-hidden="true"></i>
       </button>
-      <button
-        (click)="ExportExcel()"
-        style="align-self: center; margin-left: 5px;"
-        color="primary"
-        mat-raised-button
-      >
+      <button (click)="ExportExcel()" style="align-self: center; margin-left: 5px" color="primary" mat-raised-button>
         Xuất Excel &nbsp;<i class="fa fa-search" aria-hidden="true"></i>
       </button>
       <h3 *ngIf="!fromDateAndToDate">
@@ -146,9 +149,15 @@
       </ng-container>
 
       <ng-container matColumnDef="createdDate">
-        <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>Ngày tạo</th>
+        <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>
+          Thẻ (Ngân hàng)/ <br />
+          Ngày tạo
+        </th>
         <td mat-cell fxHide fxShow.gt-md *matCellDef="let journalEntry">
-          {{ journalEntry.createdDate | date: "dd-MM-yyyy HH:mm:ss" }}
+          <label style="color: green; font-weight: bold;">{{ journalEntry.panNumber.replace("XXX-XXX", "X") }} </label>
+          <span style="color: red ; font-weight: bold;"> ({{ journalEntry.panBank }}) </span>
+          <br />
+          {{ journalEntry.createdDate | date: "dd/MM/yyyy HH:mm:ss" }}
         </td>
       </ng-container>
 
@@ -159,16 +168,19 @@
         </td>
       </ng-container>
 
-      <ng-container matColumnDef="cardNumber">
+      <!-- <ng-container matColumnDef="cardNumber">
         <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>Thẻ</th>
         <td mat-cell fxHide fxShow.gt-md *matCellDef="let journalEntry">
           {{ journalEntry.panNumber.replace("XXX-XXX", "X") }}
         </td>
-      </ng-container>
+      </ng-container> -->
 
       <ng-container matColumnDef="officeName">
-        <th mat-header-cell *matHeaderCellDef>Chi nhánh</th>
-        <td mat-cell *matCellDef="let journalEntry">{{ journalEntry.officeName }}</td>
+        <th mat-header-cell *matHeaderCellDef>Chi nhánh/ <br /> Người tạo</th>
+        <td mat-cell *matCellDef="let journalEntry">{{ journalEntry.officeName }} <br />
+          <span style="color: green; font-weight: bold;"> {{journalEntry.createdByName}} </span>
+
+        </td>
       </ng-container>
 
       <!-- <ng-container matColumnDef="agencyName">
