@@ -197,7 +197,6 @@ export class ManageTransactionComponent implements OnInit {
       agencyName: [""],
     });
     this.formFilter.get("officeId").valueChanges.subscribe((value) => {
-      debugger;
       this.clientsService.getListUserTeller(value.officeId ? value.officeId : value).subscribe((result: any) => {
         this.staffs = result?.result?.listStaff.filter((staff: any) => staff.displayName.startsWith("R"));
         this.staffs?.unshift({
