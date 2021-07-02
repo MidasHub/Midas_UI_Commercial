@@ -10,6 +10,7 @@ import { CentersService } from "app/centers/centers.service";
 import { ClientsService } from "app/clients/clients.service";
 import { AlertService } from "app/core/alert/alert.service";
 import { AuthenticationService } from "app/core/authentication/authentication.service";
+import { OrganizationService } from "app/organization/organization.service";
 import { SavingsService } from "app/savings/savings.service";
 import { SettingsService } from "app/settings/settings.service";
 import { ConfirmDialogComponent } from "app/transactions/dialog/confirm-dialog/confirm-dialog.component";
@@ -39,7 +40,7 @@ export class RollTermScheduleTabComponent implements OnInit {
     "panHolderName",
     "feeAmount",
     "createdDate",
-    "cardNumber",
+    // "cardNumber",
     "officeName",
     // "agencyName",
     "requestAmount",
@@ -118,7 +119,9 @@ export class RollTermScheduleTabComponent implements OnInit {
     private dialog: MatDialog,
     private banksServices: BanksService,
     private savingsService: SavingsService,
-    private clientServices: ClientsService
+    private clientServices: ClientsService,
+    private organizationService: OrganizationService
+
   ) {
     this.formDate = this.formBuilder.group({
       fromDate: [new Date(new Date().setMonth(new Date().getMonth() - 1))],
@@ -133,12 +136,35 @@ export class RollTermScheduleTabComponent implements OnInit {
     });
     this.clientServices.getListUserTeller(this.currentUser.officeId).subscribe((result: any) => {
       this.staffs = result?.result?.listStaff.filter((staff: any) => staff.displayName.startsWith("R"));
+      this.staffs?.unshift({
+        userId: undefined,
+        displayName: "Tất cả",
+      });
     });
     this.formFilter = this.formBuilder.group({
-      createdByFilter: [this.currentUser.userId],
+      OfficeFilter: [''],
+      createdByFilter: [''],
       bankFilter: ["ALL"],
       query: [""],
     });
+
+    this.organizationService.getOffices().subscribe((offices: any) => {
+      this.offices = offices;
+      this.offices?.unshift({
+        id: "",
+        name: "Tất cả",
+      });
+
+      this.formFilter.get('OfficeFilter').valueChanges.subscribe((value) => {
+        this.clientServices.getListUserTeller(value).subscribe((result: any) => {
+          this.staffs = result?.result?.listStaff.filter((staff: any) => staff.displayName.startsWith("R"));
+          this.staffs?.unshift({
+            userId: undefined,
+            displayName: "Tất cả",
+          });
+        });
+      });
+    })
 
     this.getRollTermScheduleAndCardDueDayInfo();
   }
@@ -158,6 +184,8 @@ export class RollTermScheduleTabComponent implements OnInit {
     let query = this.formFilter.get("query").value;
     let bankFilter = this.formFilter.get("bankFilter").value;
     let createdByFilter = this.formFilter.get("createdByFilter").value;
+    let officeFilter = this.formFilter.get("OfficeFilter").value;
+
 
     const limit = this.paginator.pageSize ? this.paginator.pageSize : 10;
     const offset = this.paginator.pageIndex * limit;
@@ -170,7 +198,7 @@ export class RollTermScheduleTabComponent implements OnInit {
     this.isLoading = true;
     this.dataSource = [];
     this.transactionService
-      .getListRollTermTransactionOpenByUserId({ fromDate, toDate, bankFilter, query, limit, createdByFilter, offset })
+      .getListRollTermTransactionOpenByUserId({ fromDate, toDate, bankFilter, query, limit, createdByFilter, offset, officeFilter })
       .subscribe((result) => {
         this.isLoading = false;
         this.transactionsData = result?.result;
