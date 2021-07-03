@@ -186,6 +186,12 @@ export class RollTermScheduleTabComponent implements OnInit {
     let createdByFilter = this.formFilter.get("createdByFilter").value;
     let officeFilter = this.formFilter.get("OfficeFilter").value;
 
+    const { permissions } = this.currentUser;
+    const permit_Head = permissions.includes("REFINANCE_EXECUTIVE");
+    if (!permit_Head) {
+      createdByFilter = this.currentUser.userId
+
+    }
 
     const limit = this.paginator.pageSize ? this.paginator.pageSize : 10;
     const offset = this.paginator.pageIndex * limit;
