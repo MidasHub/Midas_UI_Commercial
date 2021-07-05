@@ -144,7 +144,9 @@ export class RollTermScheduleTabComponent implements OnInit {
       OfficeFilter: [''],
       createdByFilter: [''],
       bankFilter: ["ALL"],
+      dueDay: [10],
       query: [""],
+      viewDoneTransaction: [false],
     });
 
     this.banksServices.getListOfficeCommon().subscribe((offices: any) => {
@@ -180,10 +182,13 @@ export class RollTermScheduleTabComponent implements OnInit {
     const dateFormat = this.settingsService.dateFormat;
     let fromDate = this.formDate.get("fromDate").value;
     let toDate = this.formDate.get("toDate").value;
-    let query = this.formFilter.get("query").value;
-    let bankFilter = this.formFilter.get("bankFilter").value;
-    let createdByFilter = this.formFilter.get("createdByFilter").value;
-    let officeFilter = this.formFilter.get("OfficeFilter").value;
+    const query = this.formFilter.get("query").value;
+    const bankFilter = this.formFilter.get("bankFilter").value;
+    const createdByFilter = this.formFilter.get("createdByFilter").value;
+    const officeFilter = this.formFilter.get("OfficeFilter").value;
+    const dueDayFilter = this.formFilter.get("dueDay").value;
+    const viewDoneTransaction = this.formFilter.get("viewDoneTransaction").value;
+
 
     const limit = this.paginator.pageSize ? this.paginator.pageSize : 10;
     const offset = this.paginator.pageIndex * limit;
@@ -196,7 +201,9 @@ export class RollTermScheduleTabComponent implements OnInit {
     this.isLoading = true;
     this.dataSource = [];
     this.transactionService
-      .getListRollTermTransactionOpenByUserId({ fromDate, toDate, bankFilter, query, limit, createdByFilter, offset, officeFilter })
+      .getListRollTermTransactionOpenByUserId({ fromDate, toDate, bankFilter,
+        query, limit, createdByFilter, offset,
+        officeFilter, dueDayFilter, viewDoneTransaction })
       .subscribe((result) => {
         this.isLoading = false;
         this.transactionsData = result?.result;
