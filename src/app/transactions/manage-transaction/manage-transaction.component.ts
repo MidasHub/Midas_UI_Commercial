@@ -257,9 +257,13 @@ export class ManageTransactionComponent implements OnInit {
       this.currentUser = this.authenticationService.getCredentials();
       const { permissions } = this.currentUser;
       const permit_Head = permissions.includes("ALL_FUNCTIONS");
-      if (!permit_Head) {
-        this.formFilter.get("officeId").setValue(officeId);
-      }
+      // if (!permit_Head) {
+      //   debugger;
+      //   for(let i = 0; i < this.offices.length ; i++) {
+      //     if (officeId == this.offices[i].officeId)
+      //   this.formFilter.get("officeId").setValue(this.offices[i]);
+      //   }
+      // }
     });
     this.getTransaction();
   }
@@ -337,10 +341,10 @@ export class ManageTransactionComponent implements OnInit {
               }
             }
             if ("officeId".indexOf(key) != -1) {
-              let formKeyOfficeId = String(form[key].officeId);
-              if (!permit_Head) {
-                formKeyOfficeId = String(form[key]);
-              }
+              let formKeyOfficeId = String(form[key].officeId ? form[key].officeId : form[key]);
+              // if (!permit_Head) {
+              //   formKeyOfficeId = String(form[key]);
+              // }
               if (String(v[key]).toUpperCase() != formKeyOfficeId) {
                 return false;
               }
