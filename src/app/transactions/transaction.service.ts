@@ -277,12 +277,16 @@ export class TransactionService {
     limit: number;
     offset: number;
     officeFilter: number;
+    dueDayFilter:number;
+    viewDoneTransaction: boolean;
   }): Observable<any> {
     let httpParams = this.commonHttpParams.getCommonHttpParams();
     httpParams = httpParams.set("bankFilter", payload.bankFilter == "ALL" ? "%%" : payload.bankFilter);
     httpParams = httpParams.set("createdByFilter", !payload.createdByFilter ? "%%" : payload.createdByFilter);
     httpParams = httpParams.set("customerSearch", !payload.query ? "%%" : `%${payload.query}%`);
     httpParams = httpParams.set("officeSearch", !payload.officeFilter ? "%%" : `${payload.officeFilter}`);
+    httpParams = httpParams.set("dueDayFilter", `${payload.dueDayFilter}`);
+    httpParams = httpParams.set("viewDoneTransaction", `${payload.viewDoneTransaction}`);
     httpParams = httpParams.set("limit", String(payload.limit));
     httpParams = httpParams.set("offset", String(payload.offset));
     httpParams = httpParams.set("fromDate", payload.fromDate);
