@@ -120,7 +120,6 @@ export class RollTermScheduleTabComponent implements OnInit {
     private banksServices: BanksService,
     private savingsService: SavingsService,
     private clientServices: ClientsService,
-    private organizationService: OrganizationService
 
   ) {
     this.formDate = this.formBuilder.group({
@@ -148,8 +147,8 @@ export class RollTermScheduleTabComponent implements OnInit {
       query: [""],
     });
 
-    this.organizationService.getOffices().subscribe((offices: any) => {
-      this.offices = offices;
+    this.banksServices.getListOfficeCommon().subscribe((offices: any) => {
+      this.offices = offices.result.listOffice;
       this.offices?.unshift({
         id: "",
         name: "Tất cả",
@@ -185,13 +184,6 @@ export class RollTermScheduleTabComponent implements OnInit {
     let bankFilter = this.formFilter.get("bankFilter").value;
     let createdByFilter = this.formFilter.get("createdByFilter").value;
     let officeFilter = this.formFilter.get("OfficeFilter").value;
-
-    const { permissions } = this.currentUser;
-    const permit_Head = permissions.includes("REFINANCE_EXECUTIVE");
-    if (!permit_Head) {
-      createdByFilter = this.currentUser.userId
-
-    }
 
     const limit = this.paginator.pageSize ? this.paginator.pageSize : 10;
     const offset = this.paginator.pageIndex * limit;
