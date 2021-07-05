@@ -22,7 +22,7 @@
     <mat-form-field fxFlex="18%" *midasHasPermission="'REFINANCE_EXECUTIVE'">
       <mat-label>Chi nhánh</mat-label>
       <mat-select formControlName="OfficeFilter">
-        <mat-option *ngFor="let office of offices" [value]="office.id">
+        <mat-option *ngFor="let office of offices" [value]="office.officeId">
           {{ office.name }}
         </mat-option>
       </mat-select>
@@ -156,6 +156,8 @@
         <td mat-cell fxHide fxShow.gt-md *matCellDef="let journalEntry">
           <label style="color: green; font-weight: bold;">{{ journalEntry.panNumber.replace("XXX-XXX", "X") }} </label>
           <span style="color: red ; font-weight: bold;"> ({{ journalEntry.panBank }}) </span>
+          <br />
+          Ngày đến hạn: <label style="color: red ; font-weight: bold;"> {{journalEntry.dueDay}} </label>
           <br />
           {{ journalEntry.createdDate | date: "dd/MM/yyyy HH:mm:ss" }}
         </td>
