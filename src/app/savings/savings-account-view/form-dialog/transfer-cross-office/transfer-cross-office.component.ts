@@ -113,15 +113,15 @@ export class TransferCrossOfficeComponent implements OnInit {
     if (this.transferIc && !this.transferToIc) {
       this.typeAdvanceCashes = [
         {
-          id: "59",
+          id: "58",
           name: "Interchange: Chuyển tiền toàn cầu",
         },
         {
-          id: "60",
+          id: "59",
           name: "Interchange: Chuyển tiền nội bộ IC",
         },
         {
-          id: "61",
+          id: "60",
           name: "Interchange: Chuyển tiền về Chi nhánh",
         },
       ];
@@ -148,7 +148,7 @@ export class TransferCrossOfficeComponent implements OnInit {
       if (this.transferIc && this.transferToIc) {
         this.typeAdvanceCashes = [
           {
-            id: "62",
+            id: "61",
             name: "Interchange: Chuyển tiền về Ic",
           },
         ];

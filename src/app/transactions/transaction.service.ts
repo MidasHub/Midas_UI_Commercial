@@ -291,7 +291,6 @@ export class TransactionService {
     httpParams = httpParams.set("offset", String(payload.offset));
     httpParams = httpParams.set("fromDate", payload.fromDate);
     httpParams = httpParams.set("toDate", payload.toDate);
-    debugger;
     return this.http.post(`${this.GatewayApiUrlPrefix}/transaction/get_list_pos_transaction_rollterm`, httpParams);
   }
 
