@@ -252,18 +252,11 @@ export class ManageTransactionComponent implements OnInit {
 
     this.bankService.getListOfficeCommon().subscribe((offices: any) => {
       this.offices = offices.result.listOffice;
-      // this.offices?.unshift({ officeId: "", name: "Tất cả" });
       const officeId = this.currentUser.officeId;
       this.currentUser = this.authenticationService.getCredentials();
       const { permissions } = this.currentUser;
       const permit_Head = permissions.includes("ALL_FUNCTIONS");
-      // if (!permit_Head) {
-      //   debugger;
-      //   for(let i = 0; i < this.offices.length ; i++) {
-      //     if (officeId == this.offices[i].officeId)
-      //   this.formFilter.get("officeId").setValue(this.offices[i]);
-      //   }
-      // }
+
     });
     this.getTransaction();
   }
@@ -672,8 +665,7 @@ export class ManageTransactionComponent implements OnInit {
       toDate = this.datePipe.transform(toDate, dateFormat);
     }
     const form = this.formFilter.value;
-    //let query = `fromDate=${fromDate}&toDate=${toDate}&officeName=${form.officeId || "ALL"}`;
-    debugger;
+
     let query = `fromDate=${fromDate}&toDate=${toDate}&officeName=${form.officeId?.officeId ? form.officeId.officeId : (form.officeId ? form.officeId  : "ALL" )}`;
     const keys = Object.keys(form);
     for (const key of keys) {
