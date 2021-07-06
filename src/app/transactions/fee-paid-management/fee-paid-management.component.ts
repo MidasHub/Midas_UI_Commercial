@@ -34,6 +34,28 @@ import { ViewFeePaidTransactionDialogComponent } from "../dialog/view-fee-paid-t
 })
 export class FeePaidManagementComponent implements OnInit {
   expandedElement: any;
+  transactionType: any[] = [
+    {
+      label: "Tất cả",
+      shortName: "Tất cả",
+      value: "",
+    },
+    {
+      label: "Giao dịch Cash",
+      shortName: "Cash",
+      value: "CASH",
+    },
+    {
+      label: "Giao dịch Advance",
+      shortName: "Advance",
+      value: "ROLLTERM",
+    },
+    {
+      label: "Giao dịch lô",
+      shortName: "Lô",
+      value: "BATCH",
+    }
+  ];
   displayedColumns: string[] = [
     "txnDate",
     "officeName",
@@ -53,32 +75,7 @@ export class FeePaidManagementComponent implements OnInit {
   isLoading: boolean = false;
   transactionsData: any[] = [];
   currentUser: any;
-  transactionType: any[] = [
-    {
-      label: "Tất cả",
-      value: "",
-    },
-    {
-      label: "Giao dịch Cash",
-      value: "CA01",
-    },
-    {
-      label: "Giao dịch Advance",
-      value: "AL01",
-    },
-    {
-      label: "Giao dịch test thẻ",
-      value: "TEST",
-    },
-    {
-      label: "Giao dịch lô lẻ",
-      value: "CA02",
-    },
-    {
-      label: "Giao dịch Cash-tiền chờ",
-      value: "CA03",
-    },
-  ];
+
 
   paidPaymentType: any[] = [];
 
@@ -145,7 +142,7 @@ export class FeePaidManagementComponent implements OnInit {
     });
     this.formFilter = this.formBuilder.group({
       status: ["A"],
-      // txnType: [''],
+      txnType: [""],
       officeName: [""],
       agencyName: [""],
       customerName: [""],
@@ -323,10 +320,6 @@ export class FeePaidManagementComponent implements OnInit {
       return true;
     }
     return false;
-  }
-
-  displayProductId(type: string) {
-    return this.transactionType.find((v) => v.value === type)?.label || "N/A";
   }
 
   menuOpened() {
