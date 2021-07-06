@@ -79,7 +79,14 @@
             </mat-option>
           </mat-select>
         </mat-form-field>
-
+        <mat-form-field fxFlex="18%">
+          <mat-label>Loại giao dịch</mat-label>
+          <mat-select formControlName="txnType">
+            <mat-option *ngFor="let type of transactionType" [value]="type.value">
+              {{ type.label }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
         <mat-form-field fxFlex="18%">
           <mat-label>Loại (thu/chi)</mat-label>
           <mat-select formControlName="txnPaymentType">
