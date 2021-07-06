@@ -14,12 +14,31 @@
         <mat-datepicker-toggle matSuffix [for]="transactionDateToPicker"></mat-datepicker-toggle>
         <mat-datepicker #transactionDateToPicker></mat-datepicker>
       </mat-form-field>
+
+      <div fxFlex="18%">
+        <button
+          *ngIf="fromDateAndToDate"
+          (click)="getRollTermScheduleAndCardDueDayInfo()"
+          style="align-self: center"
+          color="primary"
+          mat-raised-button
+        >
+          Tìm kiếm &nbsp;<i class="fa fa-search" aria-hidden="true"></i>
+        </button>
+        <button (click)="ExportExcel()" style="align-self: center; margin-left: 5px" color="primary" mat-raised-button>
+          Xuất Excel &nbsp;<i class="fa fa-search" aria-hidden="true"></i>
+        </button>
+        <h3 *ngIf="!fromDateAndToDate">
+          Vui lòng chọn thời gian &nbsp; <i class="fa fa-calendar" style="align-self: center" aria-hidden="true"></i>
+        </h3>
+      </div>
     </div>
     <div class="container" fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column"></div>
+
   </mat-card-content>
 
   <div [formGroup]="formFilter" fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column" [formGroup]="formFilter">
-    <mat-form-field fxFlex="30%" *midasHasPermission="'REFINANCE_EXECUTIVE'">
+    <mat-form-field fxFlex="12%" *midasHasPermission="'REFINANCE_EXECUTIVE'">
       <mat-label>Chi nhánh</mat-label>
       <mat-select formControlName="OfficeFilter">
         <mat-option *ngFor="let office of offices" [value]="office.officeId">
@@ -29,14 +48,14 @@
     </mat-form-field>
     <mat-form-field fxFlex="30%" *midasHasPermission="'REFINANCE_EXECUTIVE'">
       <mat-label>Nhân viên</mat-label>
-      <mat-select formControlName="createdByFilter">
+      <mat-select matSelect matNativeControl formControlName="createdByFilter">
         <mat-option *ngFor="let option of staffs" [value]="option.userId">
           {{ option.displayName }}
         </mat-option>
       </mat-select>
     </mat-form-field>
 
-    <mat-form-field fxFlex="30%">
+    <mat-form-field fxFlex="12%">
       <mat-label>Ngân hàng</mat-label>
       <select matSelect matNativeControl formControlName="bankFilter">
         <option value="ALL">Tất cả ngân hàng</option>
@@ -45,37 +64,22 @@
         </option>
       </select>
     </mat-form-field>
-    <mat-form-field fxFlex="18%">
+    <!-- <mat-form-field fxFlex="18%">
       <mat-label>Thẻ đến hạn {{ dueDay.value != 0 ? (dueDay.value + ' ngày tới') : ' hôm nay' }} </mat-label>
       <input  type="number" matInput #dueDay min="0" max="31"  formControlName="dueDay" />
-    </mat-form-field>
+    </mat-form-field> -->
     <mat-form-field fxFlex="18%">
       <mat-label>Thông tin khách hàng</mat-label>
       <input matInput type="text" formControlName="query" />
     </mat-form-field>
     <div fxFlex="18%" fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
+      <mat-label ></mat-label>
       <mat-checkbox fxFlex="100%" labelPosition="before" formControlName="viewDoneTransaction" class="margin-v">
         Đã thực hiện xong
       </mat-checkbox>
 
     </div>
-    <div fxFlex="18%">
-      <button
-        *ngIf="fromDateAndToDate"
-        (click)="getRollTermScheduleAndCardDueDayInfo()"
-        style="align-self: center"
-        color="primary"
-        mat-raised-button
-      >
-        Tìm kiếm &nbsp;<i class="fa fa-search" aria-hidden="true"></i>
-      </button>
-      <button (click)="ExportExcel()" style="align-self: center; margin-left: 5px" color="primary" mat-raised-button>
-        Xuất Excel &nbsp;<i class="fa fa-search" aria-hidden="true"></i>
-      </button>
-      <h3 *ngIf="!fromDateAndToDate">
-        Vui lòng chọn thời gian &nbsp; <i class="fa fa-calendar" style="align-self: center" aria-hidden="true"></i>
-      </h3>
-    </div>
+
   </div>
 
   <mat-card-content>
