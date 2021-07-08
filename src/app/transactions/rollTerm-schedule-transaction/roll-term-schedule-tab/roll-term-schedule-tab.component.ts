@@ -144,7 +144,7 @@ export class RollTermScheduleTabComponent implements OnInit {
       OfficeFilter: [''],
       createdByFilter: [''],
       bankFilter: ["ALL"],
-      dueDay: [10],
+      dueDay: [''],
       query: [""],
       viewDoneTransaction: [false],
     });
