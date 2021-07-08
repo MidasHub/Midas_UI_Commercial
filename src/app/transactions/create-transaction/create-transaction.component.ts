@@ -1,13 +1,12 @@
 /** Angular Imports */
 import { DatePipe } from "@angular/common";
 import { Component, OnInit, ViewChild } from "@angular/core";
-import { FormBuilder, FormControl, FormGroup, FormGroupDirective, Validators } from "@angular/forms";
+import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
 import { MatDialog, MatDialogConfig } from "@angular/material/dialog";
 import { MatPaginator } from "@angular/material/paginator";
 import { MatSort } from "@angular/material/sort";
 import { MatTable, MatTableDataSource } from "@angular/material/table";
 import { ActivatedRoute, Router } from "@angular/router";
-import { BanksService } from "app/banks/banks.service";
 import { AddLimitIdentitiesExtraInfoComponent } from "app/clients/clients-view/identities-tab/dialog-add-limit-extra-info/dialog-add-limit-extra-info.component";
 import { ClientsService } from "app/clients/clients.service";
 import { AlertService } from "app/core/alert/alert.service";
@@ -15,9 +14,7 @@ import { AuthenticationService } from "app/core/authentication/authentication.se
 import { SavingsService } from "app/savings/savings.service";
 import { SettingsService } from "app/settings/settings.service";
 import { TerminalsService } from "app/terminals/terminals.service";
-import { ThirdPartyService } from "app/third-party/third-party.service";
 import { debounceTime, distinctUntilChanged } from "rxjs/operators";
-import { AddFeeDialogComponent } from "../dialog/add-fee-dialog/add-fee-dialog.component";
 import { ConfirmDialogComponent } from "../dialog/confirm-dialog/confirm-dialog.component";
 import { CreateSuccessTransactionDialogComponent } from "../dialog/create-success-transaction-dialog/create-success-transaction-dialog.component";
 import { ValidCheckTransactionHistoryDialogComponent } from "../dialog/valid-check-transaction-history/valid-check-transaction-history-dialog.component";
@@ -179,9 +176,17 @@ export class CreateTransactionComponent implements OnInit {
         if (this.transactionInfo.type === "rollTerm") {
           this.listRollTermBooking = [];
           this.dataSource.data = [];
-          for (let index = 0; index < 4; index++) {
-            const amountOnPerBooking = this.transactionService.formatLong(this.transactionInfo.requestAmount) * 0.25;
-            const BookingRollTerm = {
+          let totalAmountMap = 0;
+          let rowBooking = Math.floor((this.transactionService.formatLong(this.transactionInfo.requestAmount) / 30000000 )) ;
+          rowBooking = (rowBooking == 0 ? 1 : rowBooking ) + 1;
+
+          for (let index = 0; index < rowBooking; index++) {
+            let amountOnPerBooking = Math.floor(this.transactionService.formatLong(this.transactionInfo.requestAmount) / rowBooking);
+            if (index == (rowBooking - 1)){
+              amountOnPerBooking = this.transactionService.formatLong(this.transactionInfo.requestAmount) - totalAmountMap;
+            }
+            totalAmountMap += amountOnPerBooking;
+            let BookingRollTerm = {
               txnDate: new Date(),
               amountBooking: this.formatCurrency(String(amountOnPerBooking)),
             };
@@ -639,7 +644,7 @@ export class CreateTransactionComponent implements OnInit {
       if (
         this.transactionService.formatLong(
           this.listRollTermBooking[this.listRollTermBooking.length - 1].amountBooking
-        ) < 1
+        ) < 0
       ) {
         this.removeBookingRow(String(this.listRollTermBooking.length - 1));
         this.calculateTotalBookingAmount();
