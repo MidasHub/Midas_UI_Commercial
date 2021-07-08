@@ -179,9 +179,17 @@ export class CreateTransactionComponent implements OnInit {
         if (this.transactionInfo.type === 'rollTerm') {
           this.listRollTermBooking = [];
           this.dataSource.data = [];
-          for (let index = 0; index < 4; index++) {
-            const amountOnPerBooking = this.transactionService.formatLong(this.transactionInfo.requestAmount) * 0.25;
-            const BookingRollTerm = {
+          let totalAmountMap = 0;
+          let rowBooking = Math.floor((this.transactionService.formatLong(this.transactionInfo.requestAmount) / 30000000 )) ;
+          rowBooking = (rowBooking == 0 ? 1 : rowBooking ) + 1;
+
+          for (let index = 0; index < rowBooking; index++) {
+            let amountOnPerBooking = Math.floor(this.transactionService.formatLong(this.transactionInfo.requestAmount) / rowBooking);
+            if (index == (rowBooking - 1)){
+              amountOnPerBooking = this.transactionService.formatLong(this.transactionInfo.requestAmount) - totalAmountMap;
+            }
+            totalAmountMap += amountOnPerBooking;
+            let BookingRollTerm = {
               txnDate: new Date(),
               amountBooking: this.formatCurrency(String(amountOnPerBooking)),
             };
@@ -618,7 +626,7 @@ export class CreateTransactionComponent implements OnInit {
       if (
         this.transactionService.formatLong(
           this.listRollTermBooking[this.listRollTermBooking.length - 1].amountBooking
-        ) < 1
+        ) < 0
       ) {
         this.removeBookingRow(String(this.listRollTermBooking.length - 1));
         this.calculateTotalBookingAmount();
