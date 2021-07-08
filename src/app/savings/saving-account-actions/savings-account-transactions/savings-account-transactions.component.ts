@@ -209,19 +209,19 @@ export class SavingsAccountTransactionsComponent implements OnInit {
    */
   submit() {
     if (this.limitInfo && this.limitInfo.limitConfig > 0 && !this.isInterchangeClient) {
-      if (
-        this.limitInfo.limitUsed >= this.limitInfo.limitConfig ||
-        this.limitInfo.limitConfig - this.limitInfo.limitUsed <
-          this.savingAccountTransactionForm.get("transactionAmount").value
-      ) {
-        this.alertService.alert({
-          message: `Số tiền chi vượt hạn mức hoặc đã hết hạn mức, không thể thực hiện!`,
-          msgClass: "cssDanger",
-          hPosition: "center",
-        });
+      // if (
+      //   this.limitInfo.limitUsed >= this.limitInfo.limitConfig ||
+      //   this.limitInfo.limitConfig - this.limitInfo.limitUsed <
+      //     this.savingAccountTransactionForm.get("transactionAmount").value
+      // ) {
+      //   this.alertService.alert({
+      //     message: `Số tiền chi vượt hạn mức hoặc đã hết hạn mức, không thể thực hiện!`,
+      //     msgClass: "cssDanger",
+      //     hPosition: "center",
+      //   });
 
-        return;
-      }
+      //   return;
+      // }
     }
     // remove un use controller
     this.savingAccountTransactionForm.removeControl("paymentTypeGroup");
