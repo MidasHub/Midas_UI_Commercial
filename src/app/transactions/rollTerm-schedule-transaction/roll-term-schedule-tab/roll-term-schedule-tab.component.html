@@ -46,7 +46,7 @@
         </mat-option>
       </mat-select>
     </mat-form-field>
-    <mat-form-field fxFlex="30%" *midasHasPermission="'REFINANCE_EXECUTIVE'">
+    <mat-form-field fxFlex="25%" *midasHasPermission="'REFINANCE_EXECUTIVE'">
       <mat-label>Nhân viên</mat-label>
       <mat-select matSelect matNativeControl formControlName="createdByFilter">
         <mat-option *ngFor="let option of staffs" [value]="option.userId">
@@ -64,17 +64,17 @@
         </option>
       </select>
     </mat-form-field>
-    <!-- <mat-form-field fxFlex="18%">
-      <mat-label>Thẻ đến hạn {{ dueDay.value != 0 ? (dueDay.value + ' ngày tới') : ' hôm nay' }} </mat-label>
+    <mat-form-field fxFlex="10%">
+      <mat-label>Ngày đến hạn</mat-label>
       <input  type="number" matInput #dueDay min="0" max="31"  formControlName="dueDay" />
-    </mat-form-field> -->
+    </mat-form-field>
     <mat-form-field fxFlex="18%">
       <mat-label>Thông tin khách hàng</mat-label>
       <input matInput type="text" formControlName="query" />
     </mat-form-field>
-    <div fxFlex="18%" fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
+    <div fxFlex="10%" fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
       <mat-label ></mat-label>
-      <mat-checkbox fxFlex="100%" labelPosition="before" formControlName="viewDoneTransaction" class="margin-v">
+      <mat-checkbox fxFlex="100%" labelPosition="after" formControlName="viewDoneTransaction" class="margin-v">
         Đã thực hiện xong
       </mat-checkbox>
 
