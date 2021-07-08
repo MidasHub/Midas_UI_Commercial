@@ -19,7 +19,7 @@ const log = new Logger('-Add-Identities-');
 export class AddIdentitiesComponent implements OnInit {
   form: FormGroup;
   documentTypes: any[];
-  statusOptions: any[] = [{value: 'Active'}, {value: 'Inactive'}];
+  statusOptions: any[] = [{value: 'Active', description: 'Giử thẻ'}, {value: 'Inactive', description: 'Không giử thẻ'}];
   documentCardBanks: any[] = this.bankService.documentCardBanks;
   documentCardTypes: any[] = this.bankService.documentCardTypes;
   currentUser: any;
@@ -64,7 +64,7 @@ export class AddIdentitiesComponent implements OnInit {
     });
     this.form = this.formBuilder.group({
       'documentTypeId': [''],
-      'status': ['Active'],
+      'status': ['Inactive'],
       'documentKey': [''],
       'description': ['']
     });

@@ -91,7 +91,7 @@
     <mat-label>{{ "Client_Component.ViewClient.TabIdentities.selectStatus" | translate }}</mat-label>
     <mat-select required [disabled]="isTeller" formControlName="status">
       <mat-option *ngFor="let sa of statusOptions" [value]="sa.value">
-        {{ sa.value }}
+        {{ sa.description }}
       </mat-option>
     </mat-select>
   </mat-form-field>
