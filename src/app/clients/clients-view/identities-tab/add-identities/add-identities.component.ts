@@ -137,6 +137,8 @@ export class AddIdentitiesComponent implements OnInit {
         });
 
       } else {
+        this.form.get('status').setValue("Active");
+
         this.form.addControl('documentKey', new FormControl(''));
         this.form.removeControl('isValid');
         this.form.removeControl('documentCardBank');
