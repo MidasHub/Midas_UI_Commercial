@@ -87,9 +87,9 @@
     </mat-select>
   </mat-form-field>
 
-  <mat-form-field fxFlex="96%" *ngIf="form.contains('status')">
+  <mat-form-field fxFlex="96%" *ngIf="form.contains('documentCardType')">
     <mat-label>{{ "Client_Component.ViewClient.TabIdentities.selectStatus" | translate }}</mat-label>
-    <mat-select required [disabled]="isTeller" formControlName="status">
+    <mat-select required  formControlName="status">
       <mat-option *ngFor="let sa of statusOptions" [value]="sa.value">
         {{ sa.description }}
       </mat-option>
