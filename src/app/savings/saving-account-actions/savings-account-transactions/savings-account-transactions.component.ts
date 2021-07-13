@@ -1,3 +1,4 @@
+import { forEach } from 'lodash';
 /** Angular Imports */
 import { Component, OnInit } from "@angular/core";
 import { FormGroup, FormBuilder, Validators, FormControl } from "@angular/forms";
@@ -10,6 +11,7 @@ import { AlertService } from "app/core/alert/alert.service";
 import { SettingsService } from "app/settings/settings.service";
 import { ClientsService } from "app/clients/clients.service";
 import { AuthenticationService } from "app/core/authentication/authentication.service";
+import { CollectionsService } from "app/collections/collections.service";
 
 /**
  * Create savings account transactions component.
@@ -64,7 +66,7 @@ export class SavingsAccountTransactionsComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private datePipe: DatePipe,
-    private alertService: AlertService,
+    private collectionsService: CollectionsService,
     private savingsService: SavingsService,
     private clientService: ClientsService,
     private settingsService: SettingsService,
@@ -136,6 +138,8 @@ export class SavingsAccountTransactionsComponent implements OnInit {
       }
     }
 
+
+
     this.filteredOptions = this.paymentTypeOptions.filter((item) => {
       if (groupId.startsWith("!")) {
         return item.name.indexOf(groupId.substring(1)) == -1;
@@ -151,6 +155,7 @@ export class SavingsAccountTransactionsComponent implements OnInit {
     if (!paymentTypeId) {
       return;
     }
+
     let paymentTypeDescription = "";
     this.paymentTypeOptions.forEach(function (paymentType) {
       if (paymentType.id == paymentTypeId) {
@@ -158,8 +163,10 @@ export class SavingsAccountTransactionsComponent implements OnInit {
       }
     });
     this.paymentTypeDescription = paymentTypeDescription;
+    const  officeId = this.savingAccountTransactionForm.get("bankNumber").value;
+
     if (this.transactionCommand == "withdrawal" && !this.isInterchangeClient) {
-      let officeId = this.savingAccountTransactionForm.get("bankNumber").value;
+
       if (this.showStaffChoose) {
         let staffId = this.savingAccountTransactionForm.get("accountNumber").value;
         this.checkValidAmountWithdrawalTransaction(paymentTypeId, officeId, staffId);
@@ -167,6 +174,27 @@ export class SavingsAccountTransactionsComponent implements OnInit {
         this.checkValidAmountWithdrawalTransaction(paymentTypeId, officeId);
       }
     }
+    else {
+      if (this.transactionCommand != "withdrawal" && !this.isInterchangeClient) {
+
+      if (paymentTypeId == 69){
+        this.showStaffChoose = true;
+        this.collectionsService.getStaffs(officeId).subscribe((result: any) => {
+          let listStaff = result?.filter((staff: any) => staff.isLoanOfficer);
+          listStaff?.forEach((staff:any) => {
+            staff.staffId = staff.id;
+          })
+
+          this.limitInfo = {
+            listStaff : listStaff
+          }
+
+        });
+      } else {
+        this.showStaffChoose = false;
+      }
+    }
+  }
   }
 
   // get limit config for withdraw action
