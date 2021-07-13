@@ -30,42 +30,38 @@
         </button>
       </div>
 
-      <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
+      <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column" [formGroup]="formFilter">
         <mat-form-field fxFlex="22%">
           <mat-label>Tìm theo mã biên bản</mat-label>
-          <input type="text" placeholder="Nhập mã biên bản" [formControl]="cardFilter"
-          (ngModelChange)="this.searchByTransferRefNo(querySearchAll.value);"
+          <input type="text" placeholder="Nhập mã biên bản" formControlName="transferRefNo"
           matInput #querySearchAll
           >
         </mat-form-field>
 
         <mat-form-field fxFlex="22%">
           <mat-label>Tìm theo Shipper</mat-label>
-          <input placeholder="Nhập tên Shipper" [formControl]="shipperFilter"
-          (ngModelChange)="this.searchByShipper(querySearchShipper.value);"
+          <input placeholder="Nhập tên Shipper" formControlName="actionStaffName"
           matInput #querySearchShipper
           />
         </mat-form-field>
 
         <mat-form-field fxFlex="22%">
           <mat-label>Tìm theo nhân viên giao</mat-label>
-          <input placeholder="Nhập tên nhân viên giao" [formControl]="deliverFilter"
-          (ngModelChange)="this.searchByDeliver(querySearchDeliver.value);"
+          <input placeholder="Nhập tên nhân viên giao" formControlName="senderStaffName"
           matInput #querySearchDeliver
           />
         </mat-form-field>
 
         <mat-form-field fxFlex="22%">
           <mat-label>Tìm theo nhân viên nhận</mat-label>
-          <input placeholder="Nhập nhân viên nhận thẻ" [formControl]="staffFilter"
-          (ngModelChange)="this.searchByStaff(querySearchStaff.value);"
+          <input placeholder="Nhập nhân viên nhận thẻ" formControlName="receiverStaffName"
           matInput #querySearchStaff
           />
         </mat-form-field>
       </div>
 
       <div class="example-table-container mat-elevation-z8" fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-sm="column">
-        <table mat-table class="mat-elevation-z8 example-table" multiTemplateDataRows [dataSource]="dataSource" matSort>
+        <table mat-table class="mat-elevation-z8 example-table" (matSortChange)="sortData($event)" multiTemplateDataRows [dataSource]="dataShow" matSort>
           <ng-container matColumnDef="transferDate">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>NGÀY GIAO</th>
             <td mat-cell fxHide fxShow.gt-md style="word-wrap: break-word;" *matCellDef="let value">
@@ -150,7 +146,7 @@
             [class.example-expanded-row]="expandedElement === element"
             (click)="expandedElement = expandedElement === element ? null : element"
           ></tr>
-          <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
+          <!-- <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr> -->
         </table>
       </div>
 
@@ -166,14 +162,8 @@
       </div>
 
     </mat-card-content>
-    <mat-menu #transactionMenu="matMenu" [overlapTrigger]="false" style="width: 50px">
-      <ng-template matMenuContent let-form="form" style="width: 50px">
-        <button (click)="deleteRow(form)" mat-menu-item>
-          <img style="margin-top: 5px" src="assets/images/icons/remove.svg" />
-          &nbsp;Xóa
-        </button>
-      </ng-template>
-    </mat-menu>
+    <mat-paginator paginator [length]="dataFilter.length" [pageSize]="10" [pageSizeOptions]="[10, 25, 50, 100]"
+                 showFirstLastButtons></mat-paginator>
     <!-- <div *ngIf="isLoading" style="display: flex; justify-content: center; align-items: center; background: white">
       <mat-progress-spinner color="warn" mode="indeterminate"> </mat-progress-spinner>
     </div> -->
