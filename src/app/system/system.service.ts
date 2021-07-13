@@ -1,17 +1,17 @@
 /** Angular Imports */
-import { Injectable } from "@angular/core";
-import { HttpClient, HttpParams } from "@angular/common/http";
+import { Injectable } from '@angular/core';
+import { HttpClient, HttpParams } from '@angular/common/http';
 
 /** rxjs Imports */
-import { Observable } from "rxjs";
-import { CommonHttpParams } from "app/shared/CommonHttpParams";
-import { environment } from "environments/environment";
+import { Observable } from 'rxjs';
+import { CommonHttpParams } from 'app/shared/CommonHttpParams';
+import { environment } from 'environments/environment';
 
 /**
  * System service.
  */
 @Injectable({
-  providedIn: "root",
+  providedIn: 'root',
 })
 export class SystemService {
   /**
@@ -25,7 +25,7 @@ export class SystemService {
 
   getTenantInfo(subdomain: string): Observable<any> {
     let httpParams = new HttpParams();
-    httpParams = httpParams.set("subdomain", subdomain);
+    httpParams = httpParams.set('subdomain', (subdomain === 'localhost') ? environment.fineractPlatformTenantId : subdomain);
     return this.http.post(`${this.IcGatewayApiUrlPrefix}/config/get_ic_config`, httpParams);
   }
 
@@ -33,14 +33,14 @@ export class SystemService {
    * @returns {Observable<any>} Data tables.
    */
   getDataTables(): Observable<any> {
-    return this.http.get("/datatables");
+    return this.http.get('/datatables');
   }
 
   /**
    * @returns {Observable<any>} Hooks.
    */
   getHooks(): Observable<any> {
-    return this.http.get("/hooks");
+    return this.http.get('/hooks');
   }
 
   /**
@@ -55,7 +55,7 @@ export class SystemService {
    * @returns {Observable<any>} Hooks Template.
    */
   getHooksTemplate(): Observable<any> {
-    return this.http.get("/hooks/template");
+    return this.http.get('/hooks/template');
   }
 
   /**
@@ -63,7 +63,7 @@ export class SystemService {
    * @returns {Observable<any>}
    */
   createHook(hook: any): Observable<any> {
-    return this.http.post("/hooks", hook);
+    return this.http.post('/hooks', hook);
   }
 
   /**
@@ -87,7 +87,7 @@ export class SystemService {
    * @returns {Observable<any>} Fetches Roles and Permissions
    */
   getRoles(): Observable<any> {
-    return this.http.get("/roles");
+    return this.http.get('/roles');
   }
 
   /**
@@ -128,7 +128,7 @@ export class SystemService {
    * @returns {Observable<any>}
    */
   createRole(role: any): Observable<any> {
-    return this.http.post("/roles", role);
+    return this.http.post('/roles', role);
   }
 
   /**
@@ -136,7 +136,7 @@ export class SystemService {
    * @returns {Observable<any>}
    */
   enableRole(roleId: string): Observable<any> {
-    const httpParams = new HttpParams().set("command", "enable");
+    const httpParams = new HttpParams().set('command', 'enable');
     return this.http.post(`/roles/${roleId}`, {}, { params: httpParams });
   }
 
@@ -145,7 +145,7 @@ export class SystemService {
    * @returns {Observable<any>}
    */
   disableRole(roleId: string): Observable<any> {
-    const httpParams = new HttpParams().set("command", "disable");
+    const httpParams = new HttpParams().set('command', 'disable');
     return this.http.post(`/roles/${roleId}`, {}, { params: httpParams });
   }
 
@@ -153,7 +153,7 @@ export class SystemService {
    * @returns {Observable<any>} Fetches Codes.
    */
   getCodes(): Observable<any> {
-    return this.http.get("/codes");
+    return this.http.get('/codes');
   }
 
   /**
@@ -221,7 +221,7 @@ export class SystemService {
    * @returns {Observable<any>} Fetches Surveys.
    */
   getSurveys(): Observable<any> {
-    return this.http.get("/surveys");
+    return this.http.get('/surveys');
   }
 
   /**
@@ -229,7 +229,7 @@ export class SystemService {
    * @returns {Observable<any>}
    */
   createSurvey(survey: any): Observable<any> {
-    return this.http.post("/surveys", survey);
+    return this.http.post('/surveys', survey);
   }
 
   /**
@@ -244,14 +244,14 @@ export class SystemService {
    * @returns {Observable<any>} Fetches Jobs.
    */
   getJobs(): Observable<any> {
-    return this.http.get("/jobs");
+    return this.http.get('/jobs');
   }
 
   /**
    * @returns {Observable<any>} Fetches Scheduler.
    */
   getScheduler(): Observable<any> {
-    return this.http.get("/scheduler");
+    return this.http.get('/scheduler');
   }
 
   /**
@@ -284,7 +284,7 @@ export class SystemService {
    * @returns {Observable<any>}
    */
   createCode(code: any): Observable<any> {
-    return this.http.post("/codes", code);
+    return this.http.post('/codes', code);
   }
 
   /**
@@ -292,7 +292,7 @@ export class SystemService {
    * @return {Observable<any>}
    */
   createDataTable(dataTable: any): Observable<any> {
-    return this.http.post("/datatables", dataTable);
+    return this.http.post('/datatables', dataTable);
   }
 
   /**
@@ -324,7 +324,7 @@ export class SystemService {
    * @returns {Observable<any>} Configurations data.
    */
   getConfigurations(): Observable<any> {
-    return this.http.get("/configurations");
+    return this.http.get('/configurations');
   }
 
   /**
@@ -365,14 +365,14 @@ export class SystemService {
    * @returns {Observable<any>} Account number preferences.
    */
   getAccountNumberPreferences(): Observable<any> {
-    return this.http.get("/accountnumberformats");
+    return this.http.get('/accountnumberformats');
   }
 
   /**
    * @returns {Observable<any>} Fetches Account Number Preferences Template.
    */
   getAccountNumberPreferencesTemplate(): Observable<any> {
-    return this.http.get("/accountnumberformats/template");
+    return this.http.get('/accountnumberformats/template');
   }
 
   /**
@@ -388,7 +388,7 @@ export class SystemService {
    * @returns {Observable<any>}
    */
   createAccountNumberPreference(accountNumberPreference: any): Observable<any> {
-    return this.http.post("/accountnumberformats", accountNumberPreference);
+    return this.http.post('/accountnumberformats', accountNumberPreference);
   }
 
   /**
@@ -415,7 +415,7 @@ export class SystemService {
    * @returns {Observable<any>} Reports.
    */
   getReports(): Observable<any> {
-    return this.http.get("/reports");
+    return this.http.get('/reports');
   }
 
   /**
@@ -430,7 +430,7 @@ export class SystemService {
    * @returns {Observable<any>} Report Template.
    */
   getReportTemplate(): Observable<any> {
-    return this.http.get("/reports/template");
+    return this.http.get('/reports/template');
   }
 
   /**
@@ -438,7 +438,7 @@ export class SystemService {
    * @returns {Observable<any>}
    */
   createReport(report: any): Observable<any> {
-    return this.http.post("/reports", report);
+    return this.http.post('/reports', report);
   }
 
   /**
@@ -468,18 +468,18 @@ export class SystemService {
    */
   getAuditTrails(filterBy: any, orderBy: string, sortOrder: string, offset: number, limit: number): Observable<any> {
     let httpParams = new HttpParams()
-      .set("offset", offset.toString())
-      .set("limit", limit.toString())
-      .set("sortOrder", sortOrder)
-      .set("orderBy", orderBy)
-      .set("paged", "true");
+      .set('offset', offset.toString())
+      .set('limit', limit.toString())
+      .set('sortOrder', sortOrder)
+      .set('orderBy', orderBy)
+      .set('paged', 'true');
     // filterBy: actionName, entityName, resourceId, makerId, makerDateTimeFrom, makerDateTimeTo, checkerId, checkerDateTimeFrom, checkerDateTimeTo, processingResult
     filterBy.forEach(function (filter: any) {
-      if (filter.value !== "") {
+      if (filter.value !== '') {
         httpParams = httpParams.set(filter.type, filter.value);
       }
     });
-    return this.http.get("/audits", { params: httpParams });
+    return this.http.get('/audits', { params: httpParams });
   }
 
   /**
@@ -494,14 +494,14 @@ export class SystemService {
    * @returns {Observable<any>} Audit Trail Search Template.
    */
   getAuditTrailSearchTemplate(): Observable<any> {
-    return this.http.get("/audits/searchtemplate");
+    return this.http.get('/audits/searchtemplate');
   }
 
   /**
    * @returns {Observable<any>} Fetches Mapping Data.
    */
   getEntityMappings(): Observable<any> {
-    return this.http.get("/entitytoentitymapping");
+    return this.http.get('/entitytoentitymapping');
   }
 
   /**
@@ -554,36 +554,36 @@ export class SystemService {
    * @returns {Observable<any>} Offices data
    */
   getOffices(): Observable<any> {
-    return this.http.get("/office");
+    return this.http.get('/office');
   }
 
   /**
    * @returns {Observable<any>} Loan products data.
    */
   getLoanProducts(): Observable<any> {
-    return this.http.get("/loanproducts");
+    return this.http.get('/loanproducts');
   }
 
   /**
    * @returns {Observable<any>} Saving products data
    */
   getSavingProducts(): Observable<any> {
-    return this.http.get("/savingsproducts");
+    return this.http.get('/savingsproducts');
   }
 
   /**
    * @returns {Observable<any>} Charges data
    */
   getCharges(): Observable<any> {
-    return this.http.get("/charges");
+    return this.http.get('/charges');
   }
 
   /**
    * @returns {Observable<any>}
    */
   getMakerCheckerPermissions(): Observable<any> {
-    const httpParams = new HttpParams().set("makerCheckerable", "true");
-    return this.http.get("/permissions", { params: httpParams });
+    const httpParams = new HttpParams().set('makerCheckerable', 'true');
+    return this.http.get('/permissions', { params: httpParams });
   }
 
   /**
@@ -591,7 +591,7 @@ export class SystemService {
    * @returns {Observable<any>}
    */
   updateMakerCheckerPermission(data: any): Observable<any> {
-    const httpParams = new HttpParams().set("makerCheckerable", "true");
-    return this.http.put("/permissions", data, { params: httpParams });
+    const httpParams = new HttpParams().set('makerCheckerable', 'true');
+    return this.http.put('/permissions', data, { params: httpParams });
   }
 }
