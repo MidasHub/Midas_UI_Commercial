@@ -1,7 +1,7 @@
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AlertService } from 'app/core/alert/alert.service';
 import { AuthenticationService } from 'app/core/authentication/authentication.service';
@@ -33,6 +33,7 @@ export class ManageTransferComponent implements OnInit {
   fromDate: any;
   toDate: any;
   isExported: any;
+  formDate: FormGroup;
 
   constructor(
     private authenticationService: AuthenticationService,
@@ -41,18 +42,28 @@ export class ManageTransferComponent implements OnInit {
     private alertService: AlertService,
     private router: Router,
     private route: ActivatedRoute,
+    private formBuilder: FormBuilder,
   )
   {
     this.currentUser = this.authenticationService.getCredentials();
     this.officeId = this.currentUser.officeId;
-
+    this.formDate = this.formBuilder.group({
+      fromDate: [new Date()],
+      toDate: [new Date()],
+    });
   }
 
   ngOnInit(): void {
-    this.fromDate = this.datePipe.transform(new Date(), 'dd/MM/yyyy');
-    this.toDate = this.datePipe.transform(new Date(), 'dd/MM/yyyy');
 
-    this.getListTransfer();
+  }
+
+  get fromDateAndToDate() {
+    const fromDate = this.formDate.get("fromDate").value;
+    const toDate = this.formDate.get("toDate").value;
+    if (fromDate && toDate) {
+      return true;
+    }
+    return false;
   }
 
   reset(){
@@ -63,6 +74,8 @@ export class ManageTransferComponent implements OnInit {
   }
 
   getListTransfer(){
+    this.fromDate = this.datePipe.transform(this.formDate.get("fromDate").value, 'dd/MM/yyyy');
+    this.toDate = this.datePipe.transform(this.formDate.get("toDate").value, 'dd/MM/yyyy');
     this.transactionServices.getListTransfer(this.fromDate, this.toDate, this.officeId).subscribe((data) => {
       let statusCode = data.statusCode;
       this.dataSource = data.result.listRequest;
