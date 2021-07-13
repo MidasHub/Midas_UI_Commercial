@@ -60,7 +60,7 @@
           </mat-error>
         </mat-form-field>
 
-        <div fxLayout="row" fxLayout.xs="column" class="form-group" *ngIf="limitInfo && limitInfo.limitConfig != 0">
+        <div fxLayout="row" fxLayout.xs="column" class="form-group" *ngIf="limitInfo && limitInfo.limitConfig && limitInfo.limitConfig != 0 ">
           <ul>
             <li>
               <span>Định mức tháng này:</span
@@ -91,7 +91,6 @@
         </div> -->
         <mat-form-field *ngIf="savingAccountTransactionForm.controls['bankNumber']">
           <mat-label>Chi nhánh</mat-label>
-          <!-- <input formControlName="bankNumber" matInput /> -->
           <mat-select formControlName="bankNumber">
             <mat-option *ngFor="let office of offices" selected label="{{ office.name }}" value="{{ office.id }}">
               {{ office.name }}
@@ -103,10 +102,8 @@
           <input type="number" formControlName="accountNumber" matInput />
         </mat-form-field>
         <mat-form-field *ngIf="savingAccountTransactionForm.controls['accountNumber'] && showStaffChoose">
-          <mat-label>Account Number</mat-label>
+          <mat-label>Nhân viên</mat-label>
           <mat-select formControlName="accountNumber">
-            <!-- <mat-option selected label="Vương Ngọc Khiêm" value="51"> Vương Ngọc Khiêm </mat-option>
-            <mat-option label="Đặng Tô Vân Toàn" value="43"> Đặng Tô Vân Toàn </mat-option> -->
             <mat-option *ngFor="let staff of limitInfo?.listStaff" selected label="{{ staff.displayName }}" value="{{ staff.staffId }}">
               {{ staff.displayName }}
             </mat-option>
