@@ -19,13 +19,13 @@ export const environment = {
   apiVersion: te.apiVersion,
   serverUrl: '',
   GatewayApiUrl: JSON.parse(sessionStorage.getItem('midasBillposServerURL')) || te.defaultbillposURL,
-  GatewayApiUrlPrefix: '/billpos',
+  GatewayApiUrlPrefix: '/loyalty-api',
   GatewayServerUrl: '',
   GatewayTenantId: te.billposT,
   NotiGatewayURL: te.defaultNotiURL,
   NotiGatewayPrefix: '/notification',
   oauth: {
-    enabled: true,  // For connecting to Midas using OAuth2 Authentication change the value to true
+    enabled: false,  // For connecting to Midas using OAuth2 Authentication change the value to true
     serverUrl: '',
     clientID: 'community-app',
     clientSecrect: '123',

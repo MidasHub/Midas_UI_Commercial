@@ -7,8 +7,8 @@ const subdomain = window.location.hostname.split(".")[0];
 
 let tenant = "default";
 let billpostenant = "default";
-let defaultbaseURL = "https://training.kiotthe.com";
-let defaultbillposURL = "https://training.kiotthe.com";
+let defaultbaseURL = "https://loyalty.kiotthe.app";
+let defaultbillposURL = "https://loyalty.kiotthe.app";
 
 // let tenant = 'hdcredit';
 // let billpostenant = 'hdcredit';
