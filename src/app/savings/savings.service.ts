@@ -578,9 +578,11 @@ export class SavingsService {
    * @param entityId Entity Id assosciated with savings account.
    * @returns {Observable<any>} Savings account template.
    */
-   createSavingsAccountIc( productId?: string): Observable<any> {
+   createSavingsAccountIc( productId?: string, externalId?: string): Observable<any> {
     let httpParams = this.commonHttpParams.getCommonHttpParams();
     httpParams = productId ? httpParams.set("productId", productId) : httpParams;
+    httpParams = externalId ? httpParams.set("externalId", externalId) : httpParams;
+
     return this.http.post(`${this.IcGatewayApiUrlPrefix}/client/create_ic_client_account`, httpParams);
   }
 

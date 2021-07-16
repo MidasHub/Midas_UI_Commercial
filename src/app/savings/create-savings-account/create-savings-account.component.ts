@@ -107,7 +107,7 @@ export class CreateSavingsAccountComponent {
   submit() {
 
     if (this.savingsAccountTemplate.isIcClient) {
-      this.savingsService.createSavingsAccountIc(this.savingsAccount.productId).subscribe((response: any) => {
+      this.savingsService.createSavingsAccountIc(this.savingsAccount.productId, this.savingsAccount.externalId).subscribe((response: any) => {
         this.router.navigate([`/clients/ic-client/savings-accounts/ic`, response.result.clientAccount.resourceId, "transactions"]);
       });
     } else {
