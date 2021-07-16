@@ -157,7 +157,7 @@ export class ClientGeneralStepComponent implements OnInit {
     this.savingProductOptions = this.clientTemplate.savingProductOptions;
     this.documentTypes = [];
     this.clientIdentifierTemplate.allowedDocumentTypes?.map((type: any) => {
-      if (type.name === 'Passport' || type.name === 'CMND' || type.name === 'CCCD') {
+      if (type.name === 'CMND' || type.name === 'CCCD') {
         this.documentTypes.push(type);
       }
       if (type.name === 'CMND') {
