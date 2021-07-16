@@ -299,6 +299,11 @@ export class ManageIcTransactionComponent implements OnInit {
     return this.banksCommon?.find((v: any) => v.bankCode == bankCode)?.bankName || bankCode;
   }
 
+  displayCodePos(terminalId: string) {
+    const terminalCode = this.terminalsCommon?.find((v: any) => v.terminalId == terminalId)?.terminalCode || "N/A";
+    return terminalCode ? terminalCode : terminalId;
+  }
+
   displayPartnerPos(externalId: string) {
     const usingExternalId = this.terminalsCommon?.find((v: any) => v.terminalId == externalId)?.usingName || "N/A";
     return usingExternalId;
@@ -515,7 +520,7 @@ export class ManageIcTransactionComponent implements OnInit {
       let element = this.transactionsData[i];
       let e: any = {
         createdDate: this.datePipe.transform(element.createdDate, dateFormat),
-        terminalId: element.terminalId,
+        terminalId: this.displayCodePos(element.terminalId),
         partnerName: this.displayPartnerPos(element.terminalId),
         bankName: element.panBank,
         customerName: element.panHolderName,
