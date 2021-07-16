@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, Inject, OnInit, ViewChild} from '@angular/core';
 import {BanksService} from '../banks.service';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import {MatPaginator} from '@angular/material/paginator';
@@ -13,6 +13,7 @@ import {DatepickerBase} from '../../shared/form-dialog/formfield/model/datepicke
 import {FormDialogComponent} from '../../shared/form-dialog/form-dialog.component';
 import {MatDialog, MatDialogState} from '@angular/material/dialog';
 import {SelectBase} from '../../shared/form-dialog/formfield/model/select-base';
+import { DOCUMENT } from '@angular/common';
 
 @Component({
   selector: 'midas-banks',
@@ -49,7 +50,8 @@ export class BanksComponent implements OnInit, AfterViewInit {
 
   constructor(private banksServices: BanksService,
               private alertService: AlertService,
-              private dialog: MatDialog) {
+              private dialog: MatDialog,
+              @Inject(DOCUMENT) private _document: Document) {
   }
 
   setEditBank() {
@@ -60,14 +62,14 @@ export class BanksComponent implements OnInit, AfterViewInit {
   createBank() {
     const formfields: FormfieldBase[] = [
       new InputBase({
-        controlName: 'bankName',
+        controlName: 'bank_name',
         label: 'Tên',
         value: '',
         type: 'text',
         required: true
       }),
       new InputBase({
-        controlName: 'bankCode',
+        controlName: 'bank_code',
         label: 'Mã',
         value: '',
         type: 'text',
@@ -83,12 +85,10 @@ export class BanksComponent implements OnInit, AfterViewInit {
     dialogBank.afterClosed().subscribe((response: any) => {
       if (response.data) {
         const value = response.data.value;
-        this.banksServices.storeBank(value.bankCode, value.bankName).subscribe(rp => {
-          if (rp?.status === '200') {
+        this.banksServices.createBank(value.bank_code, value.bank_name).subscribe(rp => {
+          if (rp?.status === 200) {
             this.alertService.alert({message: 'Thêm ngân hàng thành công.', msgClass: 'cssSuccess'});
-            console.log("result===",rp);
-            value.refid = rp.result.id;
-            console.log("value===",value);
+            value.refid = rp.insertId;
             this.banksServices.addBank(value);
           }
         });
@@ -96,29 +96,29 @@ export class BanksComponent implements OnInit, AfterViewInit {
     });
   }
 
-  createOrEditCard(card: any) {
+  createCard(card: any) {
     let formfields;
     formfields = [
       new SelectBase({
-        controlName: 'bankCode',
+        controlName: 'bank_code',
         label: 'Ngân hàng',
-        value: card ? card.bankCode : this.bank_active.bankCode,
-        options: {label: 'bankName', value: 'bankCode', data: this.banks},
+        value: card ? card.bank_code : this.bank_active.bank_code,
+        options: {label: 'bank_name', value: 'bank_code', data: this.banks},
         required: card ? true : false,
         disabled: card ? false : true
       }),
       new SelectBase({
-        controlName: 'cardType',
+        controlName: 'card_type',
         label: 'Loại',
-        value: card ? card.cardType : '',
+        value: card ? card.card_type : '',
         options: {label: 'description', value: 'code', data: this.cardTypes},
         required: false,
-        disabled: true
+        disabled: card ? true : false,
       }),
       new InputBase({
-        controlName: 'binCode',
+        controlName: 'bincode',
         label: 'Bin Code',
-        value: card ? card.binCode : '',
+        value: card ? card.bincode : '',
         type: 'text',
         maxLength: 6,
         minLength: 6,
@@ -127,9 +127,9 @@ export class BanksComponent implements OnInit, AfterViewInit {
 
       }),
       new InputBase({
-        controlName: 'cardClass',
+        controlName: 'card_class',
         label: 'Class',
-        value: card ? card.cardClass : '',
+        value: card ? card.card_class : '',
         type: 'text',
         required: false
       }),
@@ -147,26 +147,88 @@ export class BanksComponent implements OnInit, AfterViewInit {
         const formData = response.data.value;
         if (!card) {
 
-          const binCode = formData.binCode;
+          const bincode = formData.bincode;
           for (const typeCard of this.cardTypes) {
-            if (String(binCode).startsWith(String(typeCard.codeDigit))) {
+            if (String(bincode).startsWith(String(typeCard.code_digit))) {
               formData.cardType = typeCard.code;
             }
           }
         }
-        this.banksServices.storeBinCode(formData.binCode, formData.bankCode, formData.cardType || '', formData.cardClass || '').subscribe(rp => {
-          if (rp.status === '200') {
-            if (card) {
-              this.alertService.alert({message: 'Cập nhập thông tin thẻ thành công', msgClass: 'cssSuccess'});
-              card = {...card, ...formData};
-              this.banksServices.updateCard(card);
-            } else {
-              this.alertService.alert({message: 'Thêm thẻ thành công', msgClass: 'cssSuccess'});
-              formData.refid = rp.result.id
-              this.banksServices.addCard(formData);
+        this.banksServices.storeBinCode(formData.bincode, formData.bank_code, formData.card_type || '', formData.card_class || '').subscribe(rp => {
+          if (rp.status === 200) {
+            this.alertService.alert({message: 'Thêm thẻ thành công', msgClass: 'cssSuccess'});
+            formData.refid = rp.insertId;
+            console.log("formData: ", formData);
+            this.banksServices.addCard(formData);
+          }
+        });
+      }
+    });
+  }
+
+  editCard(card: any) {
+    let formfields;
+    formfields = [
+      new SelectBase({
+        controlName: 'bank_code',
+        label: 'Ngân hàng',
+        value: card ? card.bank_code : this.bank_active.bank_code,
+        options: {label: 'bank_name', value: 'bank_code', data: this.banks},
+        required: card ? true : false,
+        disabled: false
+      }),
+      new SelectBase({
+        controlName: 'card_type',
+        label: 'Loại',
+        value: card ? card.card_type : '',
+        options: {label: 'description', value: 'code', data: this.cardTypes},
+        required: false,
+        disabled: false,
+      }),
+      new InputBase({
+        controlName: 'bincode',
+        label: 'Bin Code',
+        value: card ? card.bincode : '',
+        type: 'text',
+        maxLength: 6,
+        minLength: 6,
+        required: card ? false : true,
+        disabled: false,
+
+      }),
+      new InputBase({
+        controlName: 'card_class',
+        label: 'Class',
+        value: card ? card.card_class : '',
+        type: 'text',
+        required: false
+      }),
+    ];
+    const data = {
+      title: card ? `Cập nhập thông tin thẻ` : 'Thêm thẻ mới',
+      layout: {addButtonText: 'Lưu'},
+      formfields: formfields,
+      cardTypes: this.cardTypes
+    };
+
+    const dialogCard = this.dialog.open(FormDialogComponent, {data});
+    dialogCard.afterClosed().subscribe((response: any) => {
+      if (response.data) {
+        const formData = response.data.value;
+        if (!card) {
+
+          const bincode = formData.bincode;
+          for (const typeCard of this.cardTypes) {
+            if (String(bincode).startsWith(String(typeCard.code_digit))) {
+              formData.cardType = typeCard.code;
             }
-            // this.cards_active = this.bank_active.cards;
-            // this.getDataSourceCard();
+          }
+        }
+        this.banksServices.updateBinCode(card.refid, formData.bincode, formData.bank_code, formData.card_type || '', formData.card_class || '').subscribe(rp => {
+          if (rp.data === 200) {
+            this.alertService.alert({message: 'Cập nhập thông tin thẻ thành công', msgClass: 'cssSuccess'});
+            card = {...card, ...formData};
+            this.banksServices.updateCard(card);
           }
         });
       }
@@ -174,11 +236,11 @@ export class BanksComponent implements OnInit, AfterViewInit {
   }
 
   saveBank() {
-    const value = this.nameBank.value;
-    this.banksServices.storeBank(this.bank_active.bankCode, value).subscribe(result => {
-      if (result.status === '200') {
+    const bankName = this.nameBank.value;
+    this.banksServices.storeBank(this.bank_active.refid, bankName).subscribe(result => {
+      if (result.data === 200) {
         this.alertService.alert({message: 'Cập nhập thông tin thành công', msgClass: 'cssSuccess'});
-        this.bank_active.bankName = value;
+        this.bank_active.bank_name = bankName;
       }
       this.edit_bank = false;
     });
@@ -190,6 +252,7 @@ export class BanksComponent implements OnInit, AfterViewInit {
         this.cards = result;
       }
     });
+
     this.banksServices.getBanks().subscribe(result => {
       if (result) {
         this.banks = result;
@@ -200,6 +263,7 @@ export class BanksComponent implements OnInit, AfterViewInit {
         this.filterData();
       }
     });
+
     this.banksServices.getCardTypes().subscribe(result => {
       if (result) {
         this.cardTypes = result;
@@ -218,7 +282,7 @@ export class BanksComponent implements OnInit, AfterViewInit {
 
   filterData() {
     if (this.textSearch) {
-      this.dataStore = this.banks.filter(value => String(value.bankName).toLowerCase().indexOf(this.textSearch) !== -1 || String(value.bankCode).toLowerCase().indexOf(this.textSearch) !== -1);
+      this.dataStore = this.banks.filter(value => String(value.bank_name).toLowerCase().indexOf(this.textSearch) !== -1 || String(value.bank_code).toLowerCase().indexOf(this.textSearch) !== -1);
     } else {
       this.dataStore = this.banks;
     }
@@ -269,5 +333,9 @@ export class BanksComponent implements OnInit, AfterViewInit {
       }
       return false;
     });
+  }
+
+  refreshPage() {
+    this._document.defaultView.location.reload();
   }
 }

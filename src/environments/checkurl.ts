@@ -7,7 +7,7 @@ const ictenant = 'default';
 const defaultIcURL = 'https://icdev.kiotthe.com';
 
 const defaultbaseURL = 'https://icdev.kiotthe.com';
-// let defaultbillposURL = "http://localhost:8088";
+// let defaultbillposURL = "http://localhost:8087";
 const defaultbillposURL = 'https://icdev.kiotthe.com';
 
 const apiProvider = '/midas/api';
@@ -15,6 +15,7 @@ const apiVersion = '/v1';
 
 const defaultNotificationURL = 'https://staging.kiotthe.com';
 const documentURL = 'http://119.82.135.181:8001';
+const masterDataURL = 'http://localhost:3000/api/v1';
 export default {
   coreT: tenant,
   billposT: billpostenant,
@@ -26,4 +27,5 @@ export default {
   apiProvider: apiProvider,
   apiVersion: apiVersion,
   documentURL: documentURL,
+  masterDataURL: masterDataURL,
 };

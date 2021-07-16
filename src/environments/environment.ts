@@ -28,6 +28,7 @@ export const environment = {
   NotiGatewayURL: te.defaultNotiURL,
   NotiGatewayPrefix: '/notification',
   ICDocumentURL: te.documentURL,
+  MasterDataURL: te.masterDataURL,
   oauth: {
     enabled: false,  // For connecting to Midas using OAuth2 Authentication change the value to true
     clientID: 'community-app',

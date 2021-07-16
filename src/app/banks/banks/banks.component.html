@@ -23,7 +23,7 @@
             <div fxLayout="row" style="display: flex;">
               <img *ngIf="bank.status==='O'" src="assets/images/icons/checked.svg" width="20" height="20">
               <img *ngIf="bank.status!=='O'" src="assets/images/icons/disabled.svg" width="20" height="20">
-              <h4 style="word-wrap: break-word; margin: 2px; padding: 2px;">{{bank.bankName}}</h4>
+              <h4 style="word-wrap: break-word; margin: 2px; padding: 2px;">{{bank.bank_name}}</h4>
             </div>
           </mat-card-content>
         </mat-card>
@@ -58,7 +58,7 @@
       <mat-card [fxHide]="!bank_active" style="width: 100%;">
         <mat-card-header>
           <mat-card-title *ngIf="!edit_bank">
-            {{bank_active?.bankName}} [{{bank_active?.bankCode}}]
+            {{bank_active?.bank_name}} [{{bank_active?.bank_code}}]
           </mat-card-title>
           <mat-form-field *ngIf="edit_bank" style="width: 80%;">
             <input matInput placeholder="name"
@@ -93,7 +93,7 @@
               </mat-form-field>
               <div fxFlex="20%">
                 <button
-                  (click)="createOrEditCard(null)"
+                  (click)="createCard(null)"
                   mat-raised-button style="margin: 10px;" color="primary">Thêm +
                 </button>
               </div>
@@ -113,7 +113,7 @@
                 <th mat-header-cell *matHeaderCellDef
                     mat-sort-header='binCode'>Bin Code
                 </th>
-                <td mat-cell *matCellDef="let row"> {{row.binCode}} </td>
+                <td mat-cell *matCellDef="let row"> {{row.bincode}} </td>
               </ng-container>
 
               <!-- Account no Column -->
@@ -121,14 +121,14 @@
                 <th mat-header-cell *matHeaderCellDef
                     mat-sort-header='cardType'>Loại
                 </th>
-                <td mat-cell *matCellDef="let row"> {{getCardTypeName(row.cardType)}} </td>
+                <td mat-cell *matCellDef="let row"> {{getCardTypeName(row.card_type)}} </td>
               </ng-container>
 
               <ng-container matColumnDef="edit" style="width: 60px;">
                 <th mat-header-cell *matHeaderCellDef>Edit</th>
                 <td mat-cell *matCellDef="let row">
                   <button mat-raised-button
-                          (click)="createOrEditCard(row)"
+                          (click)="editCard(row)"
                   >
                     <img src="assets/images/icons/edit.svg" width="20px" height="20px">
                   </button>
