@@ -103,10 +103,17 @@ export class ToolbarComponent implements OnInit {
   }
 
   /**
-   * Opens Midas JIRA Wiki page.
+   * Opens Midas  Wiki page.
    */
   help() {
-    window.open('https://drive.google.com/drive/folders/1-J4JQyaaxBz2QSfZMzC4bPrPwWlksFWw?usp=sharing', '_blank');
+    window.open('https://wiki.kiotthe.app/projects/kiotthe', '_blank');
+  }
+
+  /**
+   * Opens vtiger page.
+   */
+  vtiger() {
+    window.open('https://vtiger.kiotthe.app', '_blank');
   }
 
   daily() {

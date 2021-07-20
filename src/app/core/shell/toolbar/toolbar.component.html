@@ -76,7 +76,9 @@
       <i class="fas fa-hands-helping"></i>
     </button>
 
-    <button mat-mini-fab [routerLink]="['/checker-inbox-and-tasks/checker-inbox']" matTooltip="Phê duyệt">
+    <button mat-mini-fab 
+      [routerLink]="['/checker-inbox-and-tasks/checker-inbox']" 
+      matTooltip="Phê duyệt">
       <i class="fa fa-check"></i>
     </button>
 
@@ -90,6 +92,20 @@
       <i class="fas fa-exchange-alt"></i>
     </button>
 
+    <button  mat-mini-fab  
+      (click)="vtiger()"
+      matTooltip="Quản lý lead">
+      <i class="fas fa-headset"></i>
+    </button>
+
+    <button  mat-mini-fab 
+        (click)="help()"
+        matTooltip="Tài liệu hỗ trợ">
+      <i class="fas fa-question-circle"></i>
+    </button>
+
+
+    
     <!-- <div *midasHasPermission="'POS_UPDATE'">
       <button mat-mini-fab *midasHasActiveModule="'campaignModule'"
        [matMenuTriggerFor]="MarketingMenu"
@@ -100,6 +116,8 @@
 
       </button>
     </div> -->
+
+    <!-- Các nút Menu quản trị -->
     <div fxLayout="row" *midasHasPermission="'ALL_FUNCTIONS'" fxLayoutGap.gt-md="1rem" fxLayoutGap.lt-md="0.75rem">
       <button
         mat-mini-fab
@@ -125,6 +143,7 @@
       >
         <i class="fas fa-cogs"></i>
       </button>
+
     </div>
   </div>
 
@@ -150,6 +169,7 @@
         <i class="fas fa-user-cog"></i>
       </button>
     </div>
+
     <midas-theme-picker fxHide.lt-md class="m-r-15" *ngIf="this.isCommercial"></midas-theme-picker>
 
     <midas-notifications-tray fxHide.lt-md class="m-r-15" tourAnchor="toolbar-3"> </midas-notifications-tray>
