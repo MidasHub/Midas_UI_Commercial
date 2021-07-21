@@ -34,7 +34,14 @@
             >Vui lòng thêm thông tin trước khi thực hiện
           </mat-error>
         </mat-form-field>
-
+        <mat-form-field fxFlex="96%" *ngIf="formDialogPaid.contains('routingCodePartner')" class="input_custom">
+          <mat-label>Lựa chọn đối tác</mat-label>
+          <mat-select required formControlName="routingCodePartner">
+            <mat-option *ngFor="let partner of partners"  [value]="partner.code">
+              {{ partner.desc }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
         <mat-form-field fxFlex="96%">
           <mat-label>Ghi chú</mat-label>
           <textarea matTextareaAutosize matInput formControlName="notePaid"></textarea>
