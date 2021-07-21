@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit } from "@angular/core";
 import { TransactionService } from "../../transaction.service";
-import { FormBuilder, FormGroup } from "@angular/forms";
+import { FormBuilder, FormControl, FormGroup } from "@angular/forms";
 import { MAT_DIALOG_DATA, MatDialogRef, MatDialog } from "@angular/material/dialog";
 import { AuthenticationService } from "../../../core/authentication/authentication.service";
 import { AlertService } from "../../../core/alert/alert.service";
@@ -8,6 +8,7 @@ import { MidasClientService } from "../../../midas-client/midas-client.service";
 import { GroupsService } from "app/groups/groups.service";
 import { ConfirmDialogComponent } from "../confirm-dialog/confirm-dialog.component";
 import { SavingsService } from "app/savings/savings.service";
+import { BanksService } from "app/banks/banks.service";
 
 @Component({
   selector: "midas-add-fee-dialog",
@@ -20,6 +21,7 @@ export class AddFeeDialogComponent implements OnInit {
   formDialogGet: FormGroup;
   accountsFee: any[] = [];
   txnCode: string;
+  partners: any[] = [];
   transactions: any[] = [];
   accountsPaid: any[] = [];
   currentUser: any;
@@ -53,13 +55,15 @@ export class AddFeeDialogComponent implements OnInit {
     private midasClientServices: MidasClientService,
     private groupsService: GroupsService,
     private dialog: MatDialog,
-    private savingsService: SavingsService
+    private savingsService: SavingsService,
+
   ) {
     this.txnCode = data.data?.txnCode;
     this.amountPaidBooking = data.data?.amountPaid;
     this.formDialogPaid = this.formBuilder.group({
       paymentCode: [""],
       savingAccountPaid: [""],
+      routingCodePartner: [""],
       amountPaid: [""],
       notePaid: [""],
     });
@@ -85,6 +89,7 @@ export class AddFeeDialogComponent implements OnInit {
     this.formDialogPaid.value;
     const paymentCode = this.formDialogPaid.get("paymentCode").value;
     if (paymentCode !== "DE") {
+
       this.midasClientServices.getListSavingAccountByUserId().subscribe((result) => {
         this.accountsPaid = result?.result?.listSavingAccount;
         this.showGet = true;
@@ -230,6 +235,10 @@ export class AddFeeDialogComponent implements OnInit {
       this.transactionFee = this.transactions.find((v) => v.txnPaymentType === "IN");
       this.transactionPaid = this.transactions.find((v) => v.txnPaymentType === "OUT");
       this.selectedPaymentTypePaid = "FT";
+
+      this.savingsService.getListPartner().subscribe((result: any) => {
+        this.partners = result?.result?.listPartner;
+      });
 
       // check is get amount paid from booking
       if (this.amountPaidBooking && this.amountPaidBooking > 0) {
