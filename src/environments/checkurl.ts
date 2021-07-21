@@ -5,10 +5,10 @@ const subdomain = window.location.hostname.split(".")[0];
 // let defaultbaseURL = 'https://midas.kiotthe.com';
 // let defaultbillposURL = 'https://midas.kiotthe.com';
 
-let tenant = "default";
-let billpostenant = "default";
-let defaultbaseURL = "https://loyalty.kiotthe.app";
-let defaultbillposURL = "https://loyalty.kiotthe.app";
+let tenant = "staging";
+let billpostenant = "staging";
+let defaultbaseURL = "https://icdev.kiotthe.com";
+let defaultbillposURL = "https://icdev.kiotthe.com";
 
 // let tenant = 'hdcredit';
 // let billpostenant = 'hdcredit';
