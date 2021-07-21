@@ -231,7 +231,6 @@ export class SavingsAccountViewComponent implements OnInit {
             });
             return;
           } else {
-            // let savingAccountId = ListAccount[0].id;
             this.AdvanceCashAction(clientAdvanceCash, savingAccountId, amountAdvance, noteAdvance, typeAdvanceCash);
           }
         }
@@ -275,6 +274,7 @@ export class SavingsAccountViewComponent implements OnInit {
       savingsAccountData: this.savingsAccountData,
     };
     dialogConfig.minWidth = 800;
+    dialogConfig.disableClose = true;
     const refDialog = this.dialog.open(AdvanceComponent, dialogConfig);
     refDialog.afterClosed().subscribe((response: any) => {
       if (response) {
@@ -305,6 +305,7 @@ export class SavingsAccountViewComponent implements OnInit {
       savingsAccountData: this.savingsAccountData,
     };
     dialogConfig.minWidth = 400;
+    dialogConfig.disableClose = true;
     const refDialog = this.dialog.open(TransferCrossOfficeComponent, dialogConfig);
     refDialog.afterClosed().subscribe((response: any) => {
       if (response) {
@@ -361,6 +362,7 @@ export class SavingsAccountViewComponent implements OnInit {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.data = {};
     dialogConfig.minWidth = 400;
+    dialogConfig.disableClose = true;
     const refDialog = this.dialog.open(TransferCrossOfficeComponent, dialogConfig);
     refDialog.afterClosed().subscribe((response: any) => {
       if (response) {
@@ -413,6 +415,7 @@ export class SavingsAccountViewComponent implements OnInit {
       currentUser: this.currentUser,
     };
     dialogConfig.minWidth = 500;
+    dialogConfig.disableClose = true;
     const refDialog = this.dialog.open(PartnerAdvanceCashComponent, dialogConfig);
     refDialog.afterClosed().subscribe((response: any) => {
       if (response) {
@@ -437,7 +440,9 @@ export class SavingsAccountViewComponent implements OnInit {
               String(amountPartnerAdvance).replace(/\\B(?=(\\d{3})+(?!\\d))/g, ",") + " đ"
             }`;
             // this.alertService.alertMsgTop({alertMsg: message});
-            this.alertService.alert({ message: message, msgClass: "cssInfo" });
+            // this.alertService.alert({ message: message, msgClass: "cssInfo" });
+            this.savingsService.handleResponseApiSavingTransaction(res, message, true);
+
           });
       }
     });
