@@ -19,10 +19,35 @@
   </mat-card-content>
 
   <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column" [formGroup]="formFilter">
+    <mat-form-field fxFlex="18%" >
+      <mat-label>Chi nhánh</mat-label>
+      <mat-select formControlName="OfficeFilter">
+        <mat-option *ngFor="let office of offices" [value]="office.officeId">
+          {{ office.name }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field fxFlex="18%" >
+      <mat-label>Nhân viên</mat-label>
+      <mat-select matSelect matNativeControl formControlName="staffFilter">
+        <mat-option *ngFor="let option of staffs" [value]="option.id">
+          {{ option.displayName }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
     <mat-form-field fxFlex="18%">
       <mat-label>Trạng thái</mat-label>
-      <select matSelect matNativeControl formControlName="statusFilter">
+      <select matSelect matNativeControl formControlName="stageFilter">
         <option *ngFor="let status of statusOption" [value]="status.refid">
+          {{ status.value }}
+        </option>
+      </select>
+    </mat-form-field>
+
+    <mat-form-field fxFlex="18%">
+      <mat-label>Ghi chú</mat-label>
+      <select matSelect matNativeControl formControlName="statusFilter">
+        <option *ngFor="let status of noteOption" [value]="status.refid">
           {{ status.value }}
         </option>
       </select>
@@ -43,6 +68,14 @@
     <mat-form-field fxFlex="36%">
       <mat-label>Tìm tên khách hàng/số thẻ</mat-label>
       <input matInput formControlName="query" />
+    </mat-form-field>
+    <mat-form-field fxFlex="18%">
+      <mat-label>Tình trạng thẻ</mat-label>
+      <select matSelect matNativeControl formControlName="cardHoldFilter">
+        <option *ngFor="let status of cardHoldOption" [value]="status.code">
+          {{ status.description }}
+        </option>
+      </select>
     </mat-form-field>
     <div fxFlex="20%">
       <button
@@ -202,5 +235,5 @@
     showFirstLastButtons
     (page)="getRollTermScheduleAndCardDueDayInfo()"
   ></mat-paginator>
-  =</mat-card
+  </mat-card
 >
