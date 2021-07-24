@@ -128,7 +128,7 @@ export class TransactionService {
     httpParams = httpParams.set('dueDay', updateData.dueDay ? updateData.dueDay : '1');
     httpParams = httpParams.set('limit', updateData.limitCard ? updateData.limitCard : '');
     httpParams = httpParams.set('classCard', updateData.classCard ? updateData.classCard : '');
-    httpParams = httpParams.set('isHold', updateData.isHold ? '1' : '0');
+    httpParams = httpParams.set('isHold', updateData.isHold ? '200' : '600');
 
     return this.http.put<any>(`${this.GatewayApiUrlPrefix}/card/update_card_on_due_day`, httpParams);
   }
@@ -300,7 +300,10 @@ export class TransactionService {
     toDate: string;
     limit: number;
     offset: number;
+    stageFilter: string,
     statusFilter: string;
+    staffFilter: string;
+    cardHoldFilter: string,
     bankName: string;
     query: string;
   }): Observable<any> {
@@ -310,8 +313,10 @@ export class TransactionService {
     httpParams = httpParams.set('limit', String(payload.limit));
     httpParams = httpParams.set('offset', String(payload.offset));
     httpParams = httpParams.set('amountTransaction', '%%');
-    httpParams = httpParams.set('trackingState', payload.statusFilter === '' ? `%%` : `%${payload.statusFilter}%`);
-    httpParams = httpParams.set('createdUser', '%%');
+    httpParams = httpParams.set('trackingState', payload.stageFilter === 'ALL' ? `%%` : `%${payload.stageFilter}%`);
+    httpParams = httpParams.set('trackingStatus', payload.statusFilter === 'ALL' ? `%%` : `%${payload.statusFilter}%`);
+    httpParams = httpParams.set('staffFilter', payload.staffFilter === 'ALL' ? `%%` : `${payload.staffFilter}`);
+    httpParams = httpParams.set('cardHoldFilter', payload.cardHoldFilter === 'ALL' ? `%%` : `${payload.cardHoldFilter}`);
     httpParams = httpParams.set('bankName', payload.bankName === 'ALL' ? `%%` : `${payload.bankName}`);
     httpParams = httpParams.set('fromDate', payload.fromDate);
     httpParams = httpParams.set('toDate', payload.toDate);
