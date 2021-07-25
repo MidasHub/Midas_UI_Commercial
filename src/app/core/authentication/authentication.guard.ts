@@ -1,6 +1,7 @@
 /** Angular Imports */
 import { Injectable } from '@angular/core';
 import { Router, CanActivate } from '@angular/router';
+import { BanksService } from 'app/banks/banks.service';
 
 /** Custom Services */
 import { Logger } from '../logger/logger.service';
@@ -20,7 +21,9 @@ export class AuthenticationGuard implements CanActivate {
    * @param {AuthenticationService} authenticationService Authentication Service.
    */
   constructor(private router: Router,
-              private authenticationService: AuthenticationService) { }
+              private authenticationService: AuthenticationService,
+              private bankService: BanksService,
+              ) { }
 
   /**
    * Ensures route access is authorized only when user is authenticated, otherwise redirects to login.
@@ -29,6 +32,9 @@ export class AuthenticationGuard implements CanActivate {
    */
   canActivate(): boolean {
     if (this.authenticationService.isAuthenticated()) {
+      this.authenticationService.checkAppModuleSetting(null);
+          // load card and bank data
+    this.bankService.bankCardDataInit();
       return true;
     }
 
