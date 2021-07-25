@@ -303,6 +303,7 @@ export class TransactionService {
     cardHoldFilter: string,
     bankName: string;
     query: string;
+    viewDoneTransaction: string;
   }): Observable<any> {
     let httpParams = this.commonHttpParams.getCommonHttpParams();
     httpParams = httpParams.set('query', !payload.query ? `%%` : `%${payload.query}%`);
@@ -315,6 +316,7 @@ export class TransactionService {
     httpParams = httpParams.set('staffFilter', payload.staffFilter === 'ALL' ? `%%` : `${payload.staffFilter}`);
     httpParams = httpParams.set('cardHoldFilter', payload.cardHoldFilter === 'ALL' ? `%%` : `${payload.cardHoldFilter}`);
     httpParams = httpParams.set('bankName', payload.bankName === 'ALL' ? `%%` : `${payload.bankName}`);
+    httpParams = httpParams.set("viewDoneTransaction", `${payload.viewDoneTransaction}`);
     httpParams = httpParams.set('fromDate', payload.fromDate);
     httpParams = httpParams.set('toDate', payload.toDate);
 

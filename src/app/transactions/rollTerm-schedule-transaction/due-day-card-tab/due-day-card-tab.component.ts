@@ -91,7 +91,7 @@ export class DueDayCardTabComponent implements OnInit {
         description: "Giử Thẻ",
       },
       {
-        code: "600",
+        code: "100",
         description: "Không giử thẻ",
       },
     ];
@@ -104,6 +104,8 @@ export class DueDayCardTabComponent implements OnInit {
       statusFilter: ["ALL"],
       stageFilter: ["ALL"],
       query: [""],
+      viewDoneTransaction: [false],
+
     });
   }
 
@@ -300,6 +302,8 @@ export class DueDayCardTabComponent implements OnInit {
     const query = this.formFilter.get("query").value;
     const limit = this.paginator.pageSize ? this.paginator.pageSize : 10;
     const offset = this.paginator.pageIndex * limit;
+    const viewDoneTransaction = this.formFilter.get("viewDoneTransaction").value;
+
     if (fromDate) {
       fromDate = this.datePipe.transform(fromDate, dateFormat);
     }
@@ -320,6 +324,7 @@ export class DueDayCardTabComponent implements OnInit {
         cardHoldFilter,
         bankName,
         query,
+        viewDoneTransaction,
       })
       .subscribe((result) => {
         this.isLoading = false;
