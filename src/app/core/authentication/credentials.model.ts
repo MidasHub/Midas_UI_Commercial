@@ -2,6 +2,7 @@
  * Credentials model.
  */
 export interface Credentials {
+  officeHierarchy: string;
   appSettingModule: any;
   accessToken?: string;
   authenticated: boolean;

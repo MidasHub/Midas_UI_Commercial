@@ -81,7 +81,6 @@ export class WebAppComponent implements OnInit {
     private alertService: AlertService,
     private settingsService: SettingsService,
     private authenticationService: AuthenticationService,
-    private bankService: BanksService,
     private messagingService: FireBaseMessagingService,
     private deviceService: DeviceDetectorService,
     private tourService: TourService
@@ -225,8 +224,6 @@ export class WebAppComponent implements OnInit {
         ]);
       }
     }
-    // load card and bank data
-    this.bankService.bankCardDataInit();
 
     // Firebase Message
 
