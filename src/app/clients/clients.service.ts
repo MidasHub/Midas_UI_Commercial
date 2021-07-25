@@ -107,11 +107,13 @@ export class ClientsService {
     this.accessToken = JSON.parse(
       sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey)
     );
+
     if (!this.accessToken.permissions.includes("POS_UPDATE")) {
       sqlSearch += ` AND c.staff_id = ${this.accessToken.staffId} `;
     }
+
     let httpParams = new HttpParams()
-      // .set('fields', 'displayName,mobileNo,accountNo,externalId,active,mobileNo,gender,officeName,staffName')
+      .set('underHierarchy', this.accessToken.officeHierarchy)
       .set("offset", offset.toString())
       .set("limit", limit.toString())
       .set("sortOrder", "DESC")
@@ -121,10 +123,6 @@ export class ClientsService {
     this.accessToken = JSON.parse(
       sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey)
     );
-
-    if (!this.accessToken.permissions.includes("ALL_FUNCTIONS")) {
-      httpParams = httpParams.set("officeId", this.accessToken.officeId);
-    }
 
     return this.http.get("/clients", { params: httpParams });
   }
