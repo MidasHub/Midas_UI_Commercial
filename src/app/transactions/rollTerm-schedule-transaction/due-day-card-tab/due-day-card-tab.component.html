@@ -3,14 +3,14 @@
     <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column" [formGroup]="formDate">
       <mat-form-field fxFlex="31%">
         <mat-label>Từ ngày</mat-label>
-        <input matInput [matDatepicker]="transactionDateFromPicker" [min]="minDate" min formControlName="fromDate" />
+        <input matInput [matDatepicker]="transactionDateFromPicker"   formControlName="fromDate" />
         <mat-datepicker-toggle matSuffix [for]="transactionDateFromPicker"></mat-datepicker-toggle>
         <mat-datepicker #transactionDateFromPicker></mat-datepicker>
       </mat-form-field>
 
       <mat-form-field fxFlex="31%">
         <mat-label>Đến ngày</mat-label>
-        <input matInput [matDatepicker]="transactionDateToPicker" [min]="minDate" formControlName="toDate" />
+        <input matInput [matDatepicker]="transactionDateToPicker"  formControlName="toDate" />
         <mat-datepicker-toggle matSuffix [for]="transactionDateToPicker"></mat-datepicker-toggle>
         <mat-datepicker #transactionDateToPicker></mat-datepicker>
       </mat-form-field>
@@ -19,7 +19,7 @@
   </mat-card-content>
 
   <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column" [formGroup]="formFilter">
-    <mat-form-field fxFlex="18%" >
+    <mat-form-field fxFlex="18%" *midasHasPermission="'REFINANCE_EXECUTIVE'">
       <mat-label>Chi nhánh</mat-label>
       <mat-select formControlName="OfficeFilter">
         <mat-option *ngFor="let office of offices" [value]="office.officeId">
@@ -27,7 +27,7 @@
         </mat-option>
       </mat-select>
     </mat-form-field>
-    <mat-form-field fxFlex="18%" >
+    <mat-form-field fxFlex="18%" *midasHasPermission="'REFINANCE_EXECUTIVE'">
       <mat-label>Nhân viên</mat-label>
       <mat-select matSelect matNativeControl formControlName="staffFilter">
         <mat-option *ngFor="let option of staffs" [value]="option.id">
@@ -77,6 +77,13 @@
         </option>
       </select>
     </mat-form-field>
+    <!-- <div fxFlex="18%" fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
+      <mat-label ></mat-label>
+      <mat-checkbox fxFlex="100%" labelPosition="after" formControlName="viewDoneTransaction" class="margin-v">
+        Đã thực hiện giao dịch
+      </mat-checkbox>
+
+    </div> -->
     <div fxFlex="20%">
       <button
         *ngIf="fromDateAndToDate"
