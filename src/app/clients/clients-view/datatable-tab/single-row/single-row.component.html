@@ -1,5 +1,5 @@
 <div class="tab-container mat-typography">
-  <h3>{{datatableName}}</h3>
+  <h3>Thông tin bổ sung</h3>
   <div fxLayout="row" fxLayoutAlign="flex-end">
     <button mat-raised-button color="primary" (click)="add()" *ngIf="!dataObject.data[0]">
       <fa-icon icon="plus"></fa-icon>&nbsp;&nbsp;Add
@@ -12,8 +12,9 @@
     </button>
   </div>
   <mat-list role="list" *ngIf="dataObject.data[0]">
+    <label style="font-weight: bold; color: red;" >{{ clientSource }}</label>
     <mat-list-item role="listitem" *ngFor="let columnHeader of dataObject.columnHeaders;let i = index">
-      {{columnHeader.columnName}} : {{dataObject.data[0].row[i]}}
+      {{displayExtendInfo(columnHeader.columnName, i)}}
     </mat-list-item>
   </mat-list>
 </div>

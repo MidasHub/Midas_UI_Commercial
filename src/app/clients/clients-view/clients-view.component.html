@@ -48,19 +48,42 @@
             <mat-card-subtitle>
               <p>
                 {{ "Client_Component.ViewClient.lblCifNo" | translate }}: {{ clientViewData?.accountNo }} <br />
-                <label>{{ "Client_Component.ViewClient.lblExternalID" | translate }}: {{ clientViewData?.externalId }} <br /> </label>
-                <label *ngIf="!this.isInterchangeClient">Nhân viên quản lý: {{clientViewData?.staffName || "Chưa phân bổ"}} <br /></label>
-                {{ "Client_Component.ViewClient.lblActivationDate" | translate }} : {{
-                clientViewData?.activationDate
-                ? (clientViewData?.activationDate | date)
-                : ("Client_Component.ViewClient.lblNotActivated" | translate)
-                }}<br />
-                <label *ngIf="!this.isInterchangeClient">{{ "Client_Component.ViewClient.lblMemberOf" | translate }}:
-                <span *ngFor="let group of clientViewData?.groups">
-                  <a [routerLink]="['/groups', group.id, 'general']">{{ group.name }}</a>&nbsp;
-                </span>
-                <span *ngIf="!clientViewData.groups">{{ "Client_Component.ViewClient.lblUnassigned" | translate
+                <label
+                  >{{ "Client_Component.ViewClient.lblExternalID" | translate }}: {{ clientViewData?.externalId }}
+                  <br />
+                </label>
+                <label *ngIf="!this.isInterchangeClient"
+                  >Nhân viên quản lý: {{ clientViewData?.staffName || "Chưa phân bổ" }} <br
+                /></label>
+                {{ "Client_Component.ViewClient.lblActivationDate" | translate }} :
+                {{
+                  clientViewData?.activationDate
+                    ? (clientViewData?.activationDate | date)
+                    : ("Client_Component.ViewClient.lblNotActivated" | translate)
+                }}
+                <br />
+                <label *ngIf="!this.isInterchangeClient && clientViewData?.groups?.length > 0"
+                  >{{ "Client_Component.ViewClient.lblMemberOf" | translate }}:
+                  <span *ngFor="let group of clientViewData?.groups">
+                    <a [routerLink]="['/groups', group.id, 'general']">{{ group.name }}</a
+                    >&nbsp;
+                  </span>
+                  <span *ngIf="!clientViewData.groups.length > 0">{{
+                    "Client_Component.ViewClient.lblUnassigned" | translate
                   }}</span>
+                </label>
+                <label *ngIf="!this.isInterchangeClient"
+                  >Nguồn khách hàng:
+                  <span style="font-weight: bold; color: green;">
+                    {{ clientViewData.sourceClient ? clientViewData.sourceClient : 'Chưa xác định' }}
+                  </span>
+                  <br />
+                  </label>
+                  <label *ngIf="!this.isInterchangeClient"
+                  >Nick name:
+                  <span style="font-weight: bold; color: red;">
+                    {{ clientViewData.nickName ? clientViewData.nickName : 'Chưa xác định' }}
+                  </span>
                   <br />
                   </label>
               </p>
@@ -129,8 +152,16 @@
           </button>
           <mat-menu #Actions="matMenu">
             <div *ngIf="!this.isInterchangeClient">
-              <button mat-menu-item  *midasHasPermission="'ALL_FUNCTIONS'" [routerLink]="['loans-accounts', 'create']">
-                {{ "Client_Component.ViewClient.btnNewLoan" | translate }}
+              <button mat-menu-item *midasHasPermission="'ALL_FUNCTIONS'" [routerLink]="['loans-accounts', 'create']">
+                <i class="fas fa-file-invoice-dollar"></i> {{ "Client_Component.ViewClient.btnNewLoan" | translate }}
+              </button>
+              <button
+                mat-menu-item
+                *midasHasPermission="'ALL_FUNCTIONS'"
+                [routerLink]="['fixed-deposits-accounts', 'create']"
+              >
+                <i class="fas fa-file-invoice-dollar"></i>
+                {{ "Client_Component.ViewClient.btnNewFixedDeposit" | translate }}
               </button>
               </div>
             <div *ngIf="this.isInterchangeClient">
