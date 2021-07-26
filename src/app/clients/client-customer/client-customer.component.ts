@@ -41,7 +41,7 @@ export class ClientCustomerComponent implements OnInit, AfterViewInit {
   /** Get the required filter value. */
   searchValue = '';
   /** Client Type:
-   * Staff: 22 
+   * Staff: 22
    * Customer: 23
   */
   clientType: string = '';
@@ -70,7 +70,7 @@ export class ClientCustomerComponent implements OnInit, AfterViewInit {
       switch (v.ctype) {
         case 'staff':
           this.clientType = '22,143';
-          this.createButtonName = 'Thêm nhân viên';          
+          this.createButtonName = 'Thêm nhân viên';
           break;
         case 'ic':
           this.clientType = '23'
@@ -135,8 +135,8 @@ export class ClientCustomerComponent implements OnInit, AfterViewInit {
           queryParamsHandling: 'merge', // remove to replace all query params by provided
         });
 
-      // this.dataSource.getClients(this.sort.active, this.sort.direction, this.paginator.pageIndex, this.paginator.pageSize, !this.showClosedAccounts.checked);
-      this.dataSource.getClients(this.clientType,this.sort.active, this.sort.direction, this.paginator.pageIndex, this.paginator.pageSize, !this.showClosedAccounts.checked);
+      this.dataSource.getClients(this.sort.active, this.sort.direction, this.paginator.pageIndex, this.paginator.pageSize, !this.showClosedAccounts.checked);
+      //this.dataSource.getClients(this.clientType,this.sort.active, this.sort.direction, this.paginator.pageIndex, this.paginator.pageSize, !this.showClosedAccounts.checked);
     }
   }
 
@@ -145,8 +145,8 @@ export class ClientCustomerComponent implements OnInit, AfterViewInit {
    */
   getClients() {
     this.dataSource = new ClientsDataSource(this.clientsService, this.midasClientService);
-    // this.dataSource.getClients(this.sort.active, this.sort.direction, this.paginator.pageIndex, this.paginator.pageSize, !this.showClosedAccounts.checked);
-    this.dataSource.getClients(this.clientType,this.sort.active, this.sort.direction, this.paginator.pageIndex, this.paginator.pageSize, !this.showClosedAccounts.checked );
+    this.dataSource.getClients(this.sort.active, this.sort.direction, this.paginator.pageIndex, this.paginator.pageSize, !this.showClosedAccounts.checked);
+    //this.dataSource.getClients(this.clientType,this.sort.active, this.sort.direction, this.paginator.pageIndex, this.paginator.pageSize, !this.showClosedAccounts.checked );
     log.debug('Data Source:' + this.dataSource)
   }
 
@@ -154,10 +154,15 @@ export class ClientCustomerComponent implements OnInit, AfterViewInit {
    * Filter Client Data
    * @param {string} filterValue Value to filter data.
    */
-  applyFilter(filterValue: string = '') {
+  // applyFilter(filterValue: string = '') {
+  //   this.searchValue = filterValue;
+  //   this.dataSource.filterClients(filterValue, this.sort.active, this.sort.direction, this.paginator.pageIndex, this.paginator.pageSize, !this.showClosedAccounts.checked,this.clientType);
+  //   // this.paginator.pageIndex = 0;
+  // }
+
+  applyFilter(filterValue: string= '') {
     this.searchValue = filterValue;
-    this.dataSource.filterClients(filterValue, this.sort.active, this.sort.direction, this.paginator.pageIndex, this.paginator.pageSize, !this.showClosedAccounts.checked,this.clientType);
-    // this.paginator.pageIndex = 0;
+    this.dataSource.filterClients(filterValue.trim().toLowerCase(), this.sort.active, this.sort.direction, this.paginator.pageIndex, this.paginator.pageSize, !this.showClosedAccounts.checked);
   }
 
 }

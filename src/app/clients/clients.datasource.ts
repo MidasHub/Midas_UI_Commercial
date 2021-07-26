@@ -36,7 +36,7 @@ export class ClientsDataSource implements DataSource<any> {
    * @param {number} pageIndex Page number.
    * @param {number} limit Number of clients within the page.
    */
-  getClients(clientType:string='22',orderBy: string = '', sortOrder: string = '', pageIndex: number = 0, limit: number = 10, clientActive: boolean = true) {
+  getClients2(clientType:string='22',orderBy: string = '', sortOrder: string = '', pageIndex: number = 0, limit: number = 10, clientActive: boolean = true) {
     this.clientsSubject.next([]);
     let sqlSearch = '';
     if (clientActive) {
@@ -47,6 +47,17 @@ export class ClientsDataSource implements DataSource<any> {
     this.clientsService.getClientsByOfficeOfUser('', '', pageIndex * limit, limit, sqlSearch)
       .subscribe((clients: any) => {
         // clients.pageItems = (clientActive) ? (clients.pageItems.filter((client: any) => client.active)) : (clients.pageItems.filter((client: any) => !client.active));
+        this.recordsSubject.next(clients.totalFilteredRecords);
+        this.clientsSubject.next(clients.pageItems);
+      });
+  }
+
+  getClients(orderBy: string = '', sortOrder: string = '', pageIndex: number = 0, limit: number = 10, clientActive: boolean = true) {
+    this.clientsSubject.next([]);
+    this.clientsService.getClients(orderBy, sortOrder, pageIndex * limit, limit)
+      .subscribe((clients: any) => {
+        console.log("clients: ", clients);
+        clients.pageItems = (clientActive) ? (clients.pageItems.filter((client: any) => client.active)) : (clients.pageItems.filter((client: any) => !client.active));
         this.recordsSubject.next(clients.totalFilteredRecords);
         this.clientsSubject.next(clients.pageItems);
       });
@@ -74,7 +85,7 @@ export class ClientsDataSource implements DataSource<any> {
    * @param {number} pageIndex Page number.
    * @param {number} limit Number of clients within the page.
    */
-  filterClients(filter: string, orderBy: string = '', sortOrder: string = '', pageIndex: number = 0, limit: number = 10, clientActive: boolean = true,clientType:string='22') {
+  filterClients2(filter: string, orderBy: string = '', sortOrder: string = '', pageIndex: number = 0, limit: number = 10, clientActive: boolean = true,clientType:string='22') {
     this.clientsSubject.next([]);
     if (!filter) {
       this.getClients(clientType);
@@ -107,6 +118,16 @@ export class ClientsDataSource implements DataSource<any> {
       // }
     }
 
+  }
+
+  filterClients(filter: string, orderBy: string = '', sortOrder: string = '', pageIndex: number = 0, limit: number = 10, clientActive: boolean = true) {
+    this.clientsSubject.next([]);
+    this.clientsService.getClients(orderBy, sortOrder, pageIndex * limit, limit)
+      .subscribe((clients: any) => {
+        clients.pageItems = clients.pageItems.filter((client: any) => client.active === clientActive && client.displayName.toLowerCase().includes(filter));
+        this.recordsSubject.next(clients.totalFilteredRecords);
+        this.clientsSubject.next(clients.pageItems);
+      });
   }
 
 

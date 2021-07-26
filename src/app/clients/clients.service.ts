@@ -76,7 +76,7 @@ export class ClientsService {
       .set("limit", limit.toString())
       .set("sortOrder", sortOrder)
       .set("orderBy", orderBy);
-    return this.http.get("/clients", { params: httpParams });
+    return this.http.get("https://demo.fineract.dev/fineract-provider/api/v1/clients", { params: httpParams });
   }
 
   getClientsByStaff(orderBy: string, sortOrder: string, offset: number, limit: number,  sqlSearch?: string): Observable<any> {
