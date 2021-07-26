@@ -153,40 +153,40 @@ export class OnRollTermCardTabComponent implements OnInit {
   }
 
   getOnCardDueDayInfo() {
-    const dateFormat = this.settingsService.dateFormat;
-    let fromDate = this.formDate.get('fromDate').value;
-    let toDate = this.formDate.get('toDate').value;
-    let statusFilter = 'C';
-    let bankName = this.formFilter.get('bankName').value;
-    let query = this.formFilter.get('query').value;
-    const limit = this.paginator.pageSize ? this.paginator.pageSize : 10;
-    const offset = this.paginator.pageIndex * limit;
-    if (fromDate) {
-      fromDate = this.datePipe.transform(fromDate, dateFormat);
-    }
-    if (toDate) {
-      toDate = this.datePipe.transform(toDate, dateFormat);
-    }
-    this.dataSource = [];
-    this.isLoading = true;
-    this.transactionService
-      .getListCardOnDueDayByUserId({
-        fromDate,
-        toDate,
-        limit,
-        offset,
-        statusFilter,
-        bankName,
-        query,
-      }).subscribe((result) => {
-        this.isLoading = false;
-        this.transactionsData = result?.result;
-        this.dataSource = result?.result.lisCardTransactionTracking;
-        this.dataSource.forEach((element) => {
-          element.expiredDateString = this.datePipe.transform(element.expiredDate, 'MMyy');
-        });
-      });
-  }
+  //   const dateFormat = this.settingsService.dateFormat;
+  //   let fromDate = this.formDate.get('fromDate').value;
+  //   let toDate = this.formDate.get('toDate').value;
+  //   let statusFilter = 'C';
+  //   let bankName = this.formFilter.get('bankName').value;
+  //   let query = this.formFilter.get('query').value;
+  //   const limit = this.paginator.pageSize ? this.paginator.pageSize : 10;
+  //   const offset = this.paginator.pageIndex * limit;
+  //   if (fromDate) {
+  //     fromDate = this.datePipe.transform(fromDate, dateFormat);
+  //   }
+  //   if (toDate) {
+  //     toDate = this.datePipe.transform(toDate, dateFormat);
+  //   }
+  //   this.dataSource = [];
+  //   this.isLoading = true;
+  //   this.transactionService
+  //     .getListCardOnDueDayByUserId({
+  //       fromDate,
+  //       toDate,
+  //       limit,
+  //       offset,
+  //       statusFilter,
+  //       bankName,
+  //       query,
+  //     }).subscribe((result) => {
+  //       this.isLoading = false;
+  //       this.transactionsData = result?.result;
+  //       this.dataSource = result?.result.lisCardTransactionTracking;
+  //       this.dataSource.forEach((element) => {
+  //         element.expiredDateString = this.datePipe.transform(element.expiredDate, 'MMyy');
+  //       });
+  //     });
+   }
 
   get fromDateAndToDate() {
     const fromDate = this.formDate.get('fromDate').value;
