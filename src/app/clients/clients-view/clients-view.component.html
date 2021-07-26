@@ -78,16 +78,30 @@
                   clientViewData?.activationDate
                     ? (clientViewData?.activationDate | date)
                     : ("Client_Component.ViewClient.lblNotActivated" | translate)
-                }}<br />
-                <label *ngIf="!this.isInterchangeClient"
+                }}
+                <br />
+                <label *ngIf="!this.isInterchangeClient && clientViewData?.groups?.length > 0"
                   >{{ "Client_Component.ViewClient.lblMemberOf" | translate }}:
                   <span *ngFor="let group of clientViewData?.groups">
                     <a [routerLink]="['/groups', group.id, 'general']">{{ group.name }}</a
                     >&nbsp;
                   </span>
-                  <span *ngIf="!clientViewData.groups">{{
+                  <span *ngIf="!clientViewData.groups.length > 0">{{
                     "Client_Component.ViewClient.lblUnassigned" | translate
                   }}</span>
+                </label>
+                <label *ngIf="!this.isInterchangeClient"
+                  >Nguồn khách hàng:
+                  <span style="font-weight: bold; color: green;">
+                    {{ clientViewData.sourceClient ? clientViewData.sourceClient : 'Chưa xác định' }}
+                  </span>
+                  <br />
+                  </label>
+                  <label *ngIf="!this.isInterchangeClient"
+                  >Nick name:
+                  <span style="font-weight: bold; color: red;">
+                    {{ clientViewData.nickName ? clientViewData.nickName : 'Chưa xác định' }}
+                  </span>
                   <br />
                 </label>
               </p>
@@ -178,7 +192,8 @@
                 *midasHasPermission="'ALL_FUNCTIONS'"
                 [routerLink]="['fixed-deposits-accounts', 'create']"
               >
-              <i class="fas fa-file-invoice-dollar"></i> {{ "Client_Component.ViewClient.btnNewFixedDeposit" | translate }}
+                <i class="fas fa-file-invoice-dollar"></i>
+                {{ "Client_Component.ViewClient.btnNewFixedDeposit" | translate }}
               </button>
             </div>
             <div *ngIf="this.isInterchangeClient">
