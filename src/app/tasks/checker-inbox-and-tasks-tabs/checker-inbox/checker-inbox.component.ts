@@ -1,3 +1,4 @@
+import { filter } from 'rxjs/operators';
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -20,7 +21,8 @@ import { ConfirmationDialogComponent } from 'app/shared/confirmation-dialog/conf
   styleUrls: ['./checker-inbox.component.scss']
 })
 export class CheckerInboxComponent implements OnInit {
-
+  uniqueEntityName: any[];
+  uniqueActionName: any[];
   /** Data to be displayed */
   searchData: any;
   /** Maker Checker Template */
@@ -65,6 +67,15 @@ export class CheckerInboxComponent implements OnInit {
         this.checkerData = true;
       }
       this.makerCheckerTemplate = data.makerCheckerTemplate;
+      this.uniqueEntityName = this.makerCheckerTemplate.map((item: any) => {
+        return item.entityName;
+      })
+      this.uniqueActionName = this.makerCheckerTemplate.map((item: any) => {
+        return item.actionName;
+      })
+      this.uniqueEntityName = this.uniqueEntityName.filter((v, i, a) => a.indexOf(v) === i);
+      this.uniqueActionName = this.uniqueActionName.filter((v, i, a) => a.indexOf(v) === i);
+
       this.dataSource = new MatTableDataSource(this.searchData);
       this.selection = new SelectionModel(true, []);
     });
