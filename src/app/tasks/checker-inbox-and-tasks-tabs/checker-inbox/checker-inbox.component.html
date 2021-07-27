@@ -42,7 +42,7 @@
       <mat-form-field fxFlex="31%">
         <mat-label>Action</mat-label>
         <mat-select formControlName="actionName">
-          <mat-option *ngFor="let action of makerCheckerTemplate.actionNames" [value]="action">
+          <mat-option *ngFor="let action of uniqueActionName" [value]="action">
             {{ action }}
           </mat-option>
         </mat-select>
@@ -51,7 +51,7 @@
       <mat-form-field fxFlex="31%">
         <mat-label>Entity</mat-label>
         <mat-select formControlName="entityName">
-          <mat-option *ngFor="let entity of makerCheckerTemplate.entityNames" [value]="entity">
+          <mat-option *ngFor="let entity of uniqueEntityName" [value]="entity">
             {{ entity }}
           </mat-option>
         </mat-select>
