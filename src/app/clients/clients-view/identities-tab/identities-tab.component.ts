@@ -251,6 +251,9 @@ export class IdentitiesTabComponent {
           }
           description = `${documentCardBank}-${documentCardType}-${description}`;
         }
+        if (Number(document.id) >= 58 && Number(document.id) <= 67) {
+          description = `${documentCardBank}-${description}`;
+        }
         this.clientService
           .addClientIdentifier(this.clientId, {
             documentKey,
@@ -263,7 +266,7 @@ export class IdentitiesTabComponent {
               if (addOther) {
                 this.clientIdentitiesOther.push({
                   id: res.resourceId,
-                  description: response.data.value.description,
+                  description: `${response.data.value.documentCardBank}-${response.data.value.description}`,
                   documentType: this.clientIdentifierTemplate.allowedDocumentTypes.filter(
                     (doc: any) => doc.id === response.data.value.documentTypeId
                   )[0],

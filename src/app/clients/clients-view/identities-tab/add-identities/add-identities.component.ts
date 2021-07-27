@@ -135,8 +135,11 @@ export class AddIdentitiesComponent implements OnInit {
 
           }
         });
-
-      } else {
+      }
+      if (type && Number(type.id) >= 58 && Number(type.id) <= 67) {
+        this.form.addControl('documentCardBank', new FormControl('', [Validators.required]));
+      }
+      else {
         this.form.get('status').setValue("Active");
 
         this.form.addControl('documentKey', new FormControl(''));
