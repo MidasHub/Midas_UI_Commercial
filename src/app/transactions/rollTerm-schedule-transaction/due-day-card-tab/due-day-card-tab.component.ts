@@ -106,7 +106,6 @@ export class DueDayCardTabComponent implements OnInit {
       stageFilter: ["ALL"],
       query: [""],
       viewDoneTransaction: [false],
-
     });
   }
 
@@ -205,7 +204,7 @@ export class DueDayCardTabComponent implements OnInit {
   }
 
   submitTransactionRollTerm(card: any, rollTermBooking: any, requestAmount: any, feeRate: any) {
-    const info: any = {};
+    let info: any = {};
     rollTermBooking.forEach((booking: any) => {
       booking.amountBooking = booking.amountBooking;
       booking.txnDate = this.datePipe.transform(booking.txnDate, "dd/MM/yyyy");
@@ -347,7 +346,12 @@ export class DueDayCardTabComponent implements OnInit {
   }
 
   updateCardTrackingState(index: number) {
-    const updateData = this.dataSource[index];
+    let updateData = this.dataSource[index];
+
+    let fromDate = this.formDate.get("fromDate").value;
+    updateData.month = this.datePipe.transform(fromDate, "MM");
+    updateData.year = this.datePipe.transform(fromDate, "yyyy");
+
     this.isLoading = true;
     this.transactionService.updateCardTrackingState(updateData).subscribe((result) => {
       this.isLoading = false;
