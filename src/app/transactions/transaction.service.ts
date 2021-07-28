@@ -128,6 +128,9 @@ export class TransactionService {
     httpParams = httpParams.set('limit', updateData.limitCard ? updateData.limitCard : '');
     httpParams = httpParams.set('classCard', updateData.classCard ? updateData.classCard : '');
     httpParams = httpParams.set('isHold', updateData.isHold ? '200' : '100');
+    httpParams = httpParams.set('year', updateData.year);
+    httpParams = httpParams.set('month', updateData.month );
+
 
     return this.http.put<any>(`${this.GatewayApiUrlPrefix}/card/update_card_on_due_day`, httpParams);
   }
