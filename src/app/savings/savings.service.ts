@@ -390,6 +390,7 @@ export class SavingsService {
     httpParams = httpParams.set("isRevert", payload.isRevert);
     httpParams = httpParams.set("txnCode", payload.txnCode);
     httpParams = httpParams.set("paymentDetail", payload.paymentDetail);
+    httpParams = httpParams.set("routingCode", payload.routingCode);
     httpParams = httpParams.set("limit", payload.limit);
     httpParams = httpParams.set("offset", payload.offset);
 
