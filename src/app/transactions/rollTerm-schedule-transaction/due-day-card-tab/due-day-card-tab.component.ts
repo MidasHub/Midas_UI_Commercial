@@ -105,7 +105,6 @@ export class DueDayCardTabComponent implements OnInit {
       stageFilter: ["ALL"],
       query: [""],
       viewDoneTransaction: [false],
-
     });
   }
 
@@ -196,14 +195,14 @@ export class DueDayCardTabComponent implements OnInit {
       if (!card.limit || !card.cardClass) {
         this.addIdentifierExtraInfo(card, rollTermBooking, requestAmount, feeRate);
         return;
-      } else{
+      } else {
         this.submitTransactionRollTerm(card, rollTermBooking, requestAmount, feeRate);
         return;
       }
     });
   }
 
-  submitTransactionRollTerm(card: any, rollTermBooking: any, requestAmount: any, feeRate: any){
+  submitTransactionRollTerm(card: any, rollTermBooking: any, requestAmount: any, feeRate: any) {
     let info: any = {};
     rollTermBooking.forEach((booking: any) => {
       booking.amountBooking = booking.amountBooking;
@@ -346,7 +345,12 @@ export class DueDayCardTabComponent implements OnInit {
   }
 
   updateCardTrackingState(index: number) {
-    const updateData = this.dataSource[index];
+    let updateData = this.dataSource[index];
+
+    let fromDate = this.formDate.get("fromDate").value;
+    updateData.month = this.datePipe.transform(fromDate, "MM");
+    updateData.year = this.datePipe.transform(fromDate, "yyyy");
+
     this.isLoading = true;
     this.transactionService.updateCardTrackingState(updateData).subscribe((result) => {
       this.isLoading = false;
