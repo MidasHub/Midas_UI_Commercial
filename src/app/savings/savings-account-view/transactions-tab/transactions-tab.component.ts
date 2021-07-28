@@ -124,15 +124,9 @@ export class TransactionsTabComponent implements OnInit {
     const txnCode = this.form.get("txnCode").value;
     const paymentDetail = this.form.get("paymentDetail").value;
     const isRevert = this.form.get("isRevert").value;
+    const routingCode = this.form.get("routingCode").value;
     const limit = this.paginator.pageSize ? this.paginator.pageSize : 10;
     const offset = this.paginator.pageIndex * limit;
-    const queryParams: Params = {
-      fromDate: fromDate,
-      toDate: toDate,
-      note: note,
-      txnCode: txnCode,
-      paymentDetail: paymentDetail,
-    };
 
     this.dataSource = [];
     this.isLoading = true;
@@ -146,6 +140,7 @@ export class TransactionsTabComponent implements OnInit {
         isRevert: isRevert,
         txnCode: txnCode,
         paymentDetail: paymentDetail,
+        routingCode: routingCode,
         limit: limit,
         offset: offset,
       })
@@ -195,6 +190,7 @@ export class TransactionsTabComponent implements OnInit {
       note: [""],
       txnCode: [""],
       paymentDetail: [""],
+      routingCode: [""],
       isRevert: [0],
     });
     // @ts-ignore
