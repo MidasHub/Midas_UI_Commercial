@@ -116,6 +116,7 @@ export class FeePaidManagementComponent implements OnInit {
   offices: any[];
   totalFeeSum = 0;
   totalFeePaid = 0;
+  totalFeePaidDE = 0;
   totalFeeRemain = 0;
   panelOpenState = true;
   filterData: any[];
@@ -148,6 +149,7 @@ export class FeePaidManagementComponent implements OnInit {
       customerName: [""],
       traceNo: [""],
       batchNo: [""],
+      txnPaymentCode: [""],
       txnPaymentType: [""],
       RetailsChoose: [true],
       wholesaleChoose: [true],
@@ -247,6 +249,7 @@ export class FeePaidManagementComponent implements OnInit {
     const RetailsChoose = form.RetailsChoose;
     const keys = Object.keys(form);
     this.filterData = this.transactionsData.filter((v) => {
+
       for (const key of keys) {
         if (["wholesaleChoose", "RetailsChoose"].indexOf(key) === -1) {
           if (form[key]) {
@@ -282,6 +285,14 @@ export class FeePaidManagementComponent implements OnInit {
     }, 0);
     this.totalFeePaid = this.filterData.reduce((total: any, num: any) => {
       return total + Math.round(num?.feePaid);
+    }, 0);
+    this.totalFeePaidDE = this.filterData.reduce((total: any, num: any) => {
+
+      let  DEAmount = 0;
+      if (num.txnPaymentCode == 'DE'){
+          DEAmount = num?.txnAmount - num?.feeSum;
+      }
+      return total + Math.round(DEAmount);
     }, 0);
     this.totalFeeRemain = this.filterData.reduce((total: any, num: any) => {
       return total + Math.round(num?.feeRemain);

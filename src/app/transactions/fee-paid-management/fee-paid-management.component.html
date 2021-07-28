@@ -34,28 +34,35 @@
   <mat-card-content style="margin-top: 10px">
     <mat-card>
       <div fxLayout="row swap" fxLayoutAlign.lt-sm="center" fxLayoutGap="2%" fxLayout.lt-md="column">
-        <div fxLayout="row" fxFlex="18%" class="export-item">
+        <div fxLayout="row" fxFlex="15%" class="export-item">
           <img src="assets/images/icons/transaction_total.svg" />
           <div fxLayout="column">
             <span class="money-total">{{ getLengthSource() }}</span>
             <span>Tổng giao dịch </span>
           </div>
         </div>
-        <div fxLayout="row wrap" fxFlex="20%" class="container m-b-20">
+        <div fxLayout="row wrap" fxFlex="15%" class="container m-b-20">
           <img src="assets/images/icons/money.svg" width="40" height="40" />
           <div style="display: flex" fxLayout="column">
             <span style="font-size: 16px; margin-top: 1px; padding-top: 2px">{{ totalFeeSum | money }}</span>
             <span>&nbsp;Tổng thu chi</span>
           </div>
         </div>
-        <div fxLayout="row wrap" fxFlex="20%" class="container m-b-20">
+        <div fxLayout="row wrap" fxFlex="15%" class="container m-b-20">
           <img src="assets/images/icons/transaction.svg" width="40" height="40" />
           <div style="display: flex" fxLayout="column">
             <span style="font-size: 16px; margin-top: 1px; padding-top: 2px">{{ totalFeePaid | money }}</span>
             <span>&nbsp;Đã thu/chi</span>
           </div>
         </div>
-        <div fxLayout="row wrap" fxFlex="20%" class="container m-b-20">
+        <div fxLayout="row wrap" fxFlex="15%" class="container m-b-20">
+          <img src="assets/images/icons/transaction.svg" width="40" height="40" />
+          <div style="display: flex" fxLayout="column">
+            <span style="font-size: 16px; margin-top: 1px; padding-top: 2px">{{ totalFeePaidDE | money }}</span>
+            <span>&nbsp;Đã cấn trừ</span>
+          </div>
+        </div>
+        <div fxLayout="row wrap" fxFlex="15%" class="container m-b-20">
           <img src="assets/images/icons/capital.svg" width="40" height="40" />
           <div style="display: flex" fxLayout="column">
             <span style="font-size: 16px; margin-top: 1px; padding-top: 2px">{{ totalFeeRemain | money }}</span>
@@ -121,14 +128,14 @@
           <input matInput formControlName="traceNo" />
         </mat-form-field>
 
-        <!-- <mat-form-field fxFlex="18%">
+        <mat-form-field fxFlex="18%">
           <mat-label>Lựa chọn phương thức</mat-label>
-          <mat-select formControlName="txnType">
+          <mat-select formControlName="txnPaymentCode">
             <mat-option *ngFor="let type of paidPaymentType" [value]="type.code">
               {{ type.desc }}
             </mat-option>
           </mat-select>
-        </mat-form-field> -->
+        </mat-form-field>
 
         <mat-form-field fxFlex="18%">
           <mat-label>Nhân viên</mat-label>
@@ -159,15 +166,7 @@
       </div>
     </mat-expansion-panel>
   </mat-accordion>
-  <!-- <mat-card-header>
-    <div class="search-box">
-      <mat-form-field>
-        <input matInput placeholder="Tìm kiếm ....."
-               midasAfterValueChanged
-               (delayedInput)="applyFilter($event.target.value)">
-      </mat-form-field>
-    </div>
-  </mat-card-header> -->
+
   <mat-card-content>
     <table mat-table multiTemplateDataRows class="mat-elevation-z8" [dataSource]="dataSource" matSort>
       <ng-container matColumnDef="txnDate">
