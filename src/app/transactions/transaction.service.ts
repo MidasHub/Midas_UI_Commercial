@@ -308,6 +308,7 @@ export class TransactionService {
     staffFilter: string;
     cardHoldFilter: string,
     bankName: string;
+    cardType: string;
     query: string;
     viewDoneTransaction: string;
   }): Observable<any> {
@@ -322,6 +323,7 @@ export class TransactionService {
     httpParams = httpParams.set('staffFilter', payload.staffFilter === 'ALL' ? `%%` : `${payload.staffFilter}`);
     httpParams = httpParams.set('cardHoldFilter', payload.cardHoldFilter === 'ALL' ? `%%` : `${payload.cardHoldFilter}`);
     httpParams = httpParams.set('bankName', payload.bankName === 'ALL' ? `%%` : `${payload.bankName}`);
+    httpParams = httpParams.set('cardType', payload.cardType === 'ALL' ? `%%` : `${payload.cardType}`);
     httpParams = httpParams.set("viewDoneTransaction", `${payload.viewDoneTransaction}`);
     httpParams = httpParams.set('fromDate', payload.fromDate);
     httpParams = httpParams.set('toDate', payload.toDate);
