@@ -151,10 +151,7 @@ export class DueDayCardTabComponent implements OnInit {
           refid: "ALL",
           value: "Tất cả",
         });
-        this.cardTypeOption?.unshift({
-          code: "ALL",
-          description: "Tất cả",
-        });
+
       }
     });
   }
