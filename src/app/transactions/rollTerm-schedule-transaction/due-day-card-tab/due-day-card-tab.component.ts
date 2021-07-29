@@ -53,6 +53,7 @@ export class DueDayCardTabComponent implements OnInit {
   offices: any[];
   noteOption: any[] = [];
   statusOption: any[] = [];
+  cardTypeOption: any[] = [];
   cardHoldOption: any[] = [];
   totalTerminalAmount = 0;
   totalFeeAmount = 0;
@@ -101,6 +102,7 @@ export class DueDayCardTabComponent implements OnInit {
       staffFilter: ["ALL"],
       cardHoldFilter: ["ALL"],
       bankName: ["ALL"],
+      cardType: ["ALL"],
       statusFilter: ["ALL"],
       stageFilter: ["ALL"],
       query: [""],
@@ -140,6 +142,7 @@ export class DueDayCardTabComponent implements OnInit {
       if (data) {
         this.noteOption = data.result.listLeadStatus;
         this.statusOption = data.result.listSaleStage;
+        this.cardTypeOption = data.result.listCard;
         this.noteOption?.unshift({
           refid: "ALL",
           value: "Tất cả",
@@ -147,6 +150,10 @@ export class DueDayCardTabComponent implements OnInit {
         this.statusOption?.unshift({
           refid: "ALL",
           value: "Tất cả",
+        });
+        this.cardTypeOption?.unshift({
+          code: "ALL",
+          description: "Tất cả",
         });
       }
     });
@@ -298,6 +305,7 @@ export class DueDayCardTabComponent implements OnInit {
     const staffFilter = this.formFilter.get("staffFilter").value;
     const cardHoldFilter = this.formFilter.get("cardHoldFilter").value;
     const bankName = this.formFilter.get("bankName").value;
+    const cardType = this.formFilter.get("cardType").value;
     const query = this.formFilter.get("query").value;
     const limit = this.paginator.pageSize ? this.paginator.pageSize : 10;
     const offset = this.paginator.pageIndex * limit;
@@ -322,6 +330,7 @@ export class DueDayCardTabComponent implements OnInit {
         staffFilter,
         cardHoldFilter,
         bankName,
+        cardType,
         query,
         viewDoneTransaction,
       })
