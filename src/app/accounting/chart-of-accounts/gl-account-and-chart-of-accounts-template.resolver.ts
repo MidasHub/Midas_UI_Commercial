@@ -33,23 +33,25 @@ export class GlAccountAndChartOfAccountsTemplateResolver implements Resolve<Obje
          * Nếu 1 gl account có header thì accountOptions sẽ nhận gía trị dòng switch bên dưới
          * Nếu GL Accoung ko có header se gây lỗi ở hàm accountOptions.find((accountOption: any)
          * Nên cần check logic nếu accountOptions là mảng rỗng thi ko gọi hàm này
+         * Ngoài ra xử lý trường hợp các phần từ con glAccountData (như assetHeaderAccountOptions..) được backend trả về là null
+         * thì bổ sung thêm logic " || []" để lỡ bị null thì sẽ gán mảng rỗng cho accountOptions thay vì type undefined hoặc null
          */
         let accountOptions = [];
         switch (glAccountData.type.value) {
           case "ASSET":
-            accountOptions = glAccountData.assetHeaderAccountOptions;
+            accountOptions = glAccountData.assetHeaderAccountOptions || [];
             break;
           case "EQUITY":
-            accountOptions = glAccountData.equityHeaderAccountOptions;
+            accountOptions = glAccountData.equityHeaderAccountOptions || [];
             break;
           case "EXPENSE":
-            accountOptions = glAccountData.expenseHeaderAccountOptions;
+            accountOptions = glAccountData.expenseHeaderAccountOptions || [];
             break;
           case "INCOME":
-            accountOptions = glAccountData.incomeHeaderAccountOptions;
+            accountOptions = glAccountData.incomeHeaderAccountOptions || [];
             break;
           case "LIABILITY":
-            accountOptions = glAccountData.liabilityHeaderAccountOptions;
+            accountOptions = glAccountData.liabilityHeaderAccountOptions || [];
             break;
         }
         if (accountOptions !== []) {
