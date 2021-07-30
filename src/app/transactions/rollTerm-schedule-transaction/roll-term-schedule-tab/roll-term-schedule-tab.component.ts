@@ -107,6 +107,7 @@ export class RollTermScheduleTabComponent implements OnInit {
   permitFee = false;
   filterData: any[];
   today = new Date();
+  cardTypeOption: any[] = [];
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
@@ -119,8 +120,7 @@ export class RollTermScheduleTabComponent implements OnInit {
     private dialog: MatDialog,
     private banksServices: BanksService,
     private savingsService: SavingsService,
-    private clientServices: ClientsService,
-
+    private clientServices: ClientsService
   ) {
     this.formDate = this.formBuilder.group({
       fromDate: [new Date(new Date().setMonth(new Date().getMonth() - 1))],
@@ -133,6 +133,11 @@ export class RollTermScheduleTabComponent implements OnInit {
     this.banksServices.getBanks().subscribe((result) => {
       this.banks = result;
     });
+
+    this.banksServices.getCardType().subscribe((result) => {
+      this.cardTypeOption = result?.result?.listCardType;
+    });
+
     this.clientServices.getListUserTeller(this.currentUser.officeId).subscribe((result: any) => {
       this.staffs = result?.result?.listStaff.filter((staff: any) => staff.displayName.startsWith("R"));
       this.staffs?.unshift({
@@ -140,11 +145,13 @@ export class RollTermScheduleTabComponent implements OnInit {
         displayName: "Tất cả",
       });
     });
+
     this.formFilter = this.formBuilder.group({
-      OfficeFilter: [''],
-      createdByFilter: [''],
+      OfficeFilter: [""],
+      createdByFilter: [""],
       bankFilter: ["ALL"],
-      dueDay: [''],
+      cardType: ["ALL"],
+      dueDay: [""],
       query: [""],
       viewDoneTransaction: [false],
     });
@@ -156,7 +163,7 @@ export class RollTermScheduleTabComponent implements OnInit {
         name: "Tất cả",
       });
 
-      this.formFilter.get('OfficeFilter').valueChanges.subscribe((value) => {
+      this.formFilter.get("OfficeFilter").valueChanges.subscribe((value) => {
         this.clientServices.getListUserTeller(value).subscribe((result: any) => {
           this.staffs = result?.result?.listStaff.filter((staff: any) => staff.displayName.startsWith("R"));
           this.staffs?.unshift({
@@ -165,7 +172,7 @@ export class RollTermScheduleTabComponent implements OnInit {
           });
         });
       });
-    })
+    });
 
     this.getRollTermScheduleAndCardDueDayInfo();
   }
@@ -184,11 +191,11 @@ export class RollTermScheduleTabComponent implements OnInit {
     let toDate = this.formDate.get("toDate").value;
     const query = this.formFilter.get("query").value;
     const bankFilter = this.formFilter.get("bankFilter").value;
+    const cardTypeFilter = this.formFilter.get("cardType").value;
     const createdByFilter = this.formFilter.get("createdByFilter").value;
     const officeFilter = this.formFilter.get("OfficeFilter").value;
     const dueDayFilter = this.formFilter.get("dueDay").value;
     const viewDoneTransaction = this.formFilter.get("viewDoneTransaction").value;
-
 
     const limit = this.paginator.pageSize ? this.paginator.pageSize : 10;
     const offset = this.paginator.pageIndex * limit;
@@ -201,9 +208,19 @@ export class RollTermScheduleTabComponent implements OnInit {
     this.isLoading = true;
     this.dataSource = [];
     this.transactionService
-      .getListRollTermTransactionOpenByUserId({ fromDate, toDate, bankFilter,
-        query, limit, createdByFilter, offset,
-        officeFilter, dueDayFilter, viewDoneTransaction })
+      .getListRollTermTransactionOpenByUserId({
+        fromDate,
+        toDate,
+        bankFilter,
+        cardTypeFilter,
+        query,
+        limit,
+        createdByFilter,
+        offset,
+        officeFilter,
+        dueDayFilter,
+        viewDoneTransaction,
+      })
       .subscribe((result) => {
         this.isLoading = false;
         this.transactionsData = result?.result;
@@ -223,17 +240,17 @@ export class RollTermScheduleTabComponent implements OnInit {
       });
       console.log("element: ", element);
       let e: any = {
-        panHolderName: element.panHolderName,//Tên khách hàng
-        externalId: element.externalId,//externalId
-        feeReceive: ((element.feePercentage / 100) * element.reqAmount).toFixed(0),//phi thu
-        createdDate: this.datePipe.transform(element.createdDate, "dd-MM-yyyy HH:mm:ss"),//Ngày tạo
-        panNumber: element.panNumber,//the
-        officeName: element.officeName,//Chi nhánh
-        principal: element.principal,// Số tiền Tạm ứng
-        paidAmount: element.paidAmount,//Đã tạm ứng
-        unPaydAmount: element.principal - element.paidAmount,//Còn phải Tạm ứng
-        amountPaid: element.amountPaid,//Đã thu hồi
-        needToGetAmount: element.paidAmount - element.amountPaid//Cần thu hồi
+        panHolderName: element.panHolderName, //Tên khách hàng
+        externalId: element.externalId, //externalId
+        feeReceive: ((element.feePercentage / 100) * element.reqAmount).toFixed(0), //phi thu
+        createdDate: this.datePipe.transform(element.createdDate, "dd-MM-yyyy HH:mm:ss"), //Ngày tạo
+        panNumber: element.panNumber, //the
+        officeName: element.officeName, //Chi nhánh
+        principal: element.principal, // Số tiền Tạm ứng
+        paidAmount: element.paidAmount, //Đã tạm ứng
+        unPaydAmount: element.principal - element.paidAmount, //Còn phải Tạm ứng
+        amountPaid: element.amountPaid, //Đã thu hồi
+        needToGetAmount: element.paidAmount - element.amountPaid, //Cần thu hồi
       };
       dataCopy.push(e);
     }
