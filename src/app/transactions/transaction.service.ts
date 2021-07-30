@@ -276,6 +276,7 @@ export class TransactionService {
     toDate: string;
     query: string;
     bankFilter: string;
+    cardTypeFilter: string;
     createdByFilter: string;
     limit: number;
     offset: number;
@@ -285,6 +286,7 @@ export class TransactionService {
   }): Observable<any> {
     let httpParams = this.commonHttpParams.getCommonHttpParams();
     httpParams = httpParams.set("bankFilter", payload.bankFilter == "ALL" ? "%%" : payload.bankFilter);
+    httpParams = httpParams.set("cardTypeFilter", payload.cardTypeFilter == "ALL" ? "%%" : payload.cardTypeFilter);
     httpParams = httpParams.set("createdByFilter", !payload.createdByFilter ? "%%" : payload.createdByFilter);
     httpParams = httpParams.set("customerSearch", !payload.query ? "%%" : `%${payload.query}%`);
     httpParams = httpParams.set("officeSearch", !payload.officeFilter ? "%%" : `${payload.officeFilter}`);
