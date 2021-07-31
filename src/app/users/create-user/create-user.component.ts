@@ -20,7 +20,7 @@ import { confirmPasswordValidator } from '../../login/reset-password/confirm-pas
 export class CreateUserComponent implements OnInit {
 
   /** User form. */
-  userForm: FormGroup;
+  userForm!: FormGroup;
   /** Offices data. */
   officesData: any;
   /** Roles data. */
@@ -40,7 +40,7 @@ export class CreateUserComponent implements OnInit {
               private route: ActivatedRoute,
               private router: Router) {
     this.route.data.subscribe((data: {
-        usersTemplate: any
+        usersTemplate?: any
       }) => {
         this.officesData = data.usersTemplate.allowedOffices;
         this.rolesData = data.usersTemplate.availableRoles;
@@ -77,7 +77,7 @@ export class CreateUserComponent implements OnInit {
    * Sets the staff data each time the user selects a new office
    */
   setStaffData() {
-    this.userForm.get('officeId').valueChanges.subscribe((officeId: string) => {
+    this.userForm.get('officeId')?.valueChanges.subscribe((officeId: string) => {
       this.staffData = [];
       this.usersService.getStaff(officeId).subscribe((staff: any) => {
         this.staffData = staff;
@@ -89,17 +89,17 @@ export class CreateUserComponent implements OnInit {
    * Sets the conditional controls of the user form
    */
   setConditionalControls() {
-    this.userForm.get('sendPasswordToEmail').valueChanges.subscribe((sendPasswordToEmail: boolean) => {
+    this.userForm.get('sendPasswordToEmail')?.valueChanges.subscribe((sendPasswordToEmail: boolean) => {
       if (sendPasswordToEmail) {
         this.userForm.removeControl('password');
         this.userForm.removeControl('repeatPassword');
-        this.userForm.get('email').setValidators([Validators.required, Validators.email]);
+        this.userForm.get('email')?.setValidators([Validators.required, Validators.email]);
       } else {
         this.userForm.addControl('password', new FormControl('', Validators.required));
         this.userForm.addControl('repeatPassword', new FormControl('', Validators.required));
-        this.userForm.get('email').setValidators([Validators.email]);
+        this.userForm.get('email')?.setValidators([Validators.email]);
       }
-      this.userForm.get('email').updateValueAndValidity();
+      this.userForm.get('email')!.updateValueAndValidity();
     });
   }
 

@@ -23,19 +23,19 @@ export class ManageDataTablesComponent implements OnInit {
   /** Columns to be displayed in manage data tables table. */
   displayedColumns: string[] = ['registeredTableName', 'applicationTableName'];
   /** Data source for manage data tables table. */
-  dataSource: MatTableDataSource<any>;
+  dataSource!: MatTableDataSource<any>;
 
   /** Paginator for manage data tables table. */
-  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+  @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
   /** Sorter for manage data tables table. */
-  @ViewChild(MatSort, { static: true }) sort: MatSort;
+  @ViewChild(MatSort, { static: true }) sort!: MatSort;
 
   /**
    * Retrieves the data tables data from `resolve`.
    * @param {ActivatedRoute} route Activated Route.
    */
   constructor(private route: ActivatedRoute) {
-    this.route.data.subscribe(( data: { dataTables: any }) => {
+    this.route.data.subscribe(( data: { dataTables?: any }) => {
       this.dataTableData = data.dataTables;
     });
   }

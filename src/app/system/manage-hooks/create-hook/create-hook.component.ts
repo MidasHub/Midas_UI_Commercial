@@ -27,15 +27,15 @@ export class CreateHookComponent implements OnInit {
   /** Hooks Template Data. */
   hooksTemplateData: any;
   /** Hook Form. */
-  hookForm: FormGroup;
+  hookForm!: FormGroup;
   /** Columns to be displayed in events table. */
   displayedColumns: string[] = ['entityName', 'actionName', 'actions'];
   /** Data source for events table. */
-  dataSource: MatTableDataSource<any>;
+  dataSource!: MatTableDataSource<any>;
   /** Events Data. */
   eventsData: any[] = [];
   /** Sorter for events table. */
-  @ViewChild(MatSort, { static: true }) sort: MatSort;
+  @ViewChild(MatSort, { static: true }) sort!: MatSort;
 
   /**
    * Retrieves the hooks template data from `resolve`.
@@ -50,7 +50,7 @@ export class CreateHookComponent implements OnInit {
               private router: Router,
               private formBuilder: FormBuilder,
               private dialog: MatDialog) {
-    this.route.data.subscribe((data: { hooksTemplate: any }) => {
+    this.route.data.subscribe((data: { hooksTemplate?: any }) => {
       this.hooksTemplateData = data.hooksTemplate;
     });
   }
@@ -60,19 +60,19 @@ export class CreateHookComponent implements OnInit {
    */
   ngOnInit() {
     this.createHookForm();
-    this.hookForm.get('name').valueChanges.subscribe(name => {
+    this.hookForm.get('name')?.valueChanges.subscribe(name => {
       if (name === 'Web') {
-        this.hookForm.get('contentType').enable();
-        this.hookForm.get('phoneNumber').disable();
-        this.hookForm.get('smsProvider').disable();
-        this.hookForm.get('smsProviderAccountId').disable();
-        this.hookForm.get('smsProviderToken').disable();
+        this.hookForm.get('contentType')?.enable();
+        this.hookForm.get('phoneNumber')?.disable();
+        this.hookForm.get('smsProvider')?.disable();
+        this.hookForm.get('smsProviderAccountId')?.disable();
+        this.hookForm.get('smsProviderToken')?.disable();
       } else {
-        this.hookForm.get('contentType').disable();
-        this.hookForm.get('phoneNumber').enable();
-        this.hookForm.get('smsProvider').enable();
-        this.hookForm.get('smsProviderAccountId').enable();
-        this.hookForm.get('smsProviderToken').enable();
+        this.hookForm.get('contentType')?.disable();
+        this.hookForm.get('phoneNumber')?.enable();
+        this.hookForm.get('smsProvider')?.enable();
+        this.hookForm.get('smsProviderAccountId')?.enable();
+        this.hookForm.get('smsProviderToken')?.enable();
       }
     });
     this.setEvents();
@@ -147,16 +147,16 @@ export class CreateHookComponent implements OnInit {
         'SMS Provider Account Id'?: string, 'SMS Provider Token'?: string
       }
     } = {
-      name: this.hookForm.get('name').value,
-      isActive: this.hookForm.get('isActive').value,
-      displayName: this.hookForm.get('displayName').value,
+      name: this.hookForm.get('name')?.value,
+      isActive: this.hookForm.get('isActive')?.value,
+      displayName: this.hookForm.get('displayName')?.value,
       events: this.eventsData,
       config: {
-        'Payload URL': this.hookForm.get('payloadUrl').value,
-        'Content Type': this.hookForm.get('contentType').enabled ? this.hookForm.get('contentType').value : undefined,
-        'SMS Provider': this.hookForm.get('smsProvider').enabled ? this.hookForm.get('smsProvider').value : undefined,
-        'SMS Provider Account Id': this.hookForm.get('smsProviderAccountId').enabled ? this.hookForm.get('smsProviderAccountId').value : undefined,
-        'SMS Provider Token': this.hookForm.get('smsProviderToken').enabled ? this.hookForm.get('smsProviderToken').value : undefined
+        'Payload URL': this.hookForm.get('payloadUrl')?.value,
+        'Content Type': this.hookForm.get('contentType')?.enabled ? this.hookForm.get('contentType')?.value : undefined,
+        'SMS Provider': this.hookForm.get('smsProvider')?.enabled ? this.hookForm.get('smsProvider')?.value : undefined,
+        'SMS Provider Account Id': this.hookForm.get('smsProviderAccountId')?.enabled ? this.hookForm.get('smsProviderAccountId')?.value : undefined,
+        'SMS Provider Token': this.hookForm.get('smsProviderToken')?.enabled ? this.hookForm.get('smsProviderToken')?.value : undefined
       }
     };
     this.systemService.createHook(hook)

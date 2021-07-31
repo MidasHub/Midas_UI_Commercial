@@ -17,19 +17,19 @@ export class CodesComponent implements OnInit {
   /** Columns to be displayed in codes table. */
   displayedColumns: string[] = ['name', 'systemDefined'];
   /** Data source for codes table. */
-  dataSource: MatTableDataSource<any>;
+  dataSource!: MatTableDataSource<any>;
 
   /** Paginator for codes table. */
-  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+  @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
   /** Sorter for codes table. */
-  @ViewChild(MatSort, { static: true }) sort: MatSort;
+  @ViewChild(MatSort, { static: true }) sort!: MatSort;
 
   /**
    * Retrieves the codes data from `resolve`.
    * @param {ActivatedRoute} route Activated Route.
    */
   constructor(private route: ActivatedRoute) {
-    this.route.data.subscribe(( data: { codes: any }) => {
+    this.route.data.subscribe(( data: { codes?: any }) => {
       this.codesData = data.codes;
     });
   }

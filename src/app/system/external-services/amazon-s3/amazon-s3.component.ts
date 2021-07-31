@@ -19,17 +19,17 @@ export class AmazonS3Component implements OnInit {
   /** Columns to be displayed in Amazon S3 configuration table. */
   displayedColumns: string[] = ['name', 'value'];
   /** Data source for Amazon S3 configuration table. */
-  dataSource: MatTableDataSource<any>;
+  dataSource!: MatTableDataSource<any>;
 
   /** Sorter for Amazon S3 configuration table. */
-  @ViewChild(MatSort, { static: true }) sort: MatSort;
+  @ViewChild(MatSort, { static: true }) sort!: MatSort;
 
   /**
    * Retrieves the Amazon S3 configuration data from `resolve`.
    * @param {ActivatedRoute} route Activated Route.
    */
   constructor(private route: ActivatedRoute) {
-    this.route.data.subscribe((data: { amazonS3Configuration: any }) => {
+    this.route.data.subscribe((data: { amazonS3Configuration?: any }) => {
       this.amazonS3ConfigurationData = data.amazonS3Configuration;
     });
   }

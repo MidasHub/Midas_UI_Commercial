@@ -101,7 +101,7 @@ export class TransferTerminalComponent implements OnInit {
           this.transferTerminalForm.get("transferTarget")!.valueChanges.subscribe((value) => {
             if (this.isTransferBack &&
                this.transferRequest.senderExternalId == value) {
-                this.transferTerminalForm.get("transferType")!.setValue(2);
+                this.transferTerminalForm.get("transferType")?.setValue(2);
             }
           });
 

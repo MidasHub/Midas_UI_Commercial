@@ -33,7 +33,7 @@ export class ViewAccountNumberPreferenceComponent implements OnInit {
               private systemService: SystemService,
               private router: Router,
               private dialog: MatDialog) {
-    this.route.data.subscribe((data: { accountNumberPreference: any }) => {
+    this.route.data.subscribe((data: { accountNumberPreference?: any }) => {
       this.accountNumberPreferenceData = data.accountNumberPreference;
     });
   }

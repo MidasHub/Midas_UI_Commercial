@@ -33,7 +33,7 @@ export class ViewReportComponent implements OnInit {
               private systemService: SystemService,
               private dialog: MatDialog,
               private router: Router) {
-    this.route.data.subscribe((data: { report: any }) => {
+    this.route.data.subscribe((data: { report?: any }) => {
       this.reportData = data.report;
     });
   }

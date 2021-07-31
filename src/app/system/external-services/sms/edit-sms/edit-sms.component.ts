@@ -19,7 +19,7 @@ export class EditSMSComponent implements OnInit {
   /** SMS Configuration data */
   smsConfigurationData: any;
   /** SMS Configuration Form */
-  smsConfigurationForm: FormGroup;
+  smsConfigurationForm!: FormGroup;
 
   /**
    * Retrieves the SMS configuration data from `resolve`.
@@ -32,7 +32,7 @@ export class EditSMSComponent implements OnInit {
               private systemService: SystemService,
               private route: ActivatedRoute,
               private router: Router) {
-    this.route.data.subscribe((data: { smsConfiguration: any }) => {
+    this.route.data.subscribe((data: { smsConfiguration?: any }) => {
       this.smsConfigurationData = data.smsConfiguration;
     });
   }

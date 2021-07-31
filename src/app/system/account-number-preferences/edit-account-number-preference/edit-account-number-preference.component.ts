@@ -17,13 +17,13 @@ import { SystemService } from 'app/system/system.service';
 export class EditAccountNumberPreferenceComponent implements OnInit {
 
   /** Account Number Preference Form */
-  accountNumberPreferenceForm: FormGroup;
+  accountNumberPreferenceForm!: FormGroup;
   /** Account Number Preference Data */
   accountNumberPreferenceData: any;
   /** Account Number Preferences Template Data */
   accountNumberPreferencesTemplateData: any;
   /** Prefix Type Data */
-  prefixTypeData: any[];
+  prefixTypeData?: any[];
 
   /**
    * Retrieves the account number preference and account number preferences template data from `resolve`.
@@ -36,7 +36,7 @@ export class EditAccountNumberPreferenceComponent implements OnInit {
               private formBuilder: FormBuilder,
               private systemService: SystemService,
               private router: Router) {
-    this.route.data.subscribe((data: { accountNumberPreference: any, accountNumberPreferencesTemplate: any }) => {
+    this.route.data.subscribe((data: { accountNumberPreference?: any, accountNumberPreferencesTemplate?: any }) => {
       this.accountNumberPreferenceData = data.accountNumberPreference;
       this.accountNumberPreferencesTemplateData = data.accountNumberPreferencesTemplate;
     });

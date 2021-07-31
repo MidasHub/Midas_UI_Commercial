@@ -17,7 +17,7 @@ import { SystemService } from '../../system.service';
 export class EditCodeComponent implements OnInit {
 
   /** Code Form */
-  codeForm: FormGroup;
+  codeForm!: FormGroup;
   /** Code Data */
   codeData: any;
 
@@ -32,7 +32,7 @@ export class EditCodeComponent implements OnInit {
               private systemService: SystemService,
               private route: ActivatedRoute,
               private router: Router) {
-    this.route.data.subscribe((data: { code: any }) => {
+    this.route.data.subscribe((data: { code?: any }) => {
       this.codeData = data.code;
     });
   }

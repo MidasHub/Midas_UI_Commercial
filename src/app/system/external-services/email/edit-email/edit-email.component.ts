@@ -19,7 +19,7 @@ export class EditEmailComponent implements OnInit {
   /** Email Configuration data */
   emailConfigurationData: any;
   /** Email Configuration Form */
-  emailConfigurationForm: FormGroup;
+  emailConfigurationForm!: FormGroup;
 
   /**
    * Retrieves the Email configuration data from `resolve`.
@@ -32,7 +32,7 @@ export class EditEmailComponent implements OnInit {
               private systemService: SystemService,
               private route: ActivatedRoute,
               private router: Router) {
-    this.route.data.subscribe((data: { emailConfiguration: any }) => {
+    this.route.data.subscribe((data: { emailConfiguration?: any }) => {
       this.emailConfigurationData = data.emailConfiguration;
     });
   }

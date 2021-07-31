@@ -14,8 +14,8 @@ import { TransactionService } from "app/transactions/transaction.service";
 })
 export class ExecuteLoanDialogComponent implements OnInit {
   paidPaymentType: any[] = [];
-  formDialogPaid: FormGroup;
-  formDialogGet: FormGroup;
+  formDialogPaid!: FormGroup;
+  formDialogGet!: FormGroup;
   accountsFee: any[] = [];
   refId: number;
   posTransaction: any;
@@ -47,14 +47,14 @@ export class ExecuteLoanDialogComponent implements OnInit {
 
       this.accountsPaid.forEach((result) => {
           if (result.productId == 12){
-            this.formDialogPaid.get("savingAccountPaid").setValue(result.id);
+            this.formDialogPaid.get("savingAccountPaid")?.setValue(result.id);
           }
       })
 
-      this.formDialogPaid.get('fromClientId').setValue(
+      this.formDialogPaid.get('fromClientId')?.setValue(
         this.posTransaction.custId
       );
-      this.formDialogPaid.get('amountPaid').setValue(
+      this.formDialogPaid.get('amountPaid')?.setValue(
         this.posTransaction.principal - this.posTransaction.amountPaid
       );
     });

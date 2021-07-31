@@ -42,7 +42,7 @@ export class AddRowCreateBatchTransactionComponent implements OnInit {
     if (rowData) {
       const keys = Object.keys(rowData);
       for (const key of keys) {
-        this.formDialog.get(key).setValue(rowData[key]);
+        this.formDialog.get(key)?.setValue(rowData[key]);
       }
     }
   }

@@ -44,13 +44,13 @@ export class DueDayCardTabComponent implements OnInit {
   isLoading: Boolean = false;
   formDate: FormGroup;
   formFilter: FormGroup;
-  dataSource: any[];
-  listBank: any[];
+  dataSource!: any[];
+  listBank!: any[];
   transactionsData: any;
   currentUser: any;
   minDate: any;
-  staffs: any[];
-  offices: any[];
+  staffs!: any[];
+  offices!: any[];
   noteOption: any[] = [];
   statusOption: any[] = [];
   cardTypeOption: any[] = [];
@@ -60,10 +60,10 @@ export class DueDayCardTabComponent implements OnInit {
   totalCogsAmount = 0;
   totalPnlAmount = 0;
   panelOpenState = false;
-  filterData: any[];
+  filterData?: any[];
   today = new Date();
-  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
-  @ViewChild(MatSort, { static: true }) sort: MatSort;
+  @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
+  @ViewChild(MatSort, { static: true }) sort!: MatSort;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -128,7 +128,7 @@ export class DueDayCardTabComponent implements OnInit {
         name: "Tất cả",
       });
 
-      this.formFilter.get("OfficeFilter").valueChanges.subscribe((value) => {
+      this.formFilter.get("OfficeFilter")?.valueChanges.subscribe((value) => {
         this.centersService.getStaff(value).subscribe((staffs: any) => {
           this.staffs = staffs?.staffOptions.filter((staff: any) => staff.displayName.startsWith("R"));
           this.staffs?.unshift({
@@ -296,18 +296,18 @@ export class DueDayCardTabComponent implements OnInit {
 
   getRollTermScheduleAndCardDueDayInfo() {
     const dateFormat = this.settingsService.dateFormat;
-    let fromDate = this.formDate.get("fromDate").value;
-    let toDate = this.formDate.get("toDate").value;
-    const stageFilter = this.formFilter.get("stageFilter").value;
-    const statusFilter = this.formFilter.get("statusFilter").value;
-    const staffFilter = this.formFilter.get("staffFilter").value;
-    const cardHoldFilter = this.formFilter.get("cardHoldFilter").value;
-    const bankName = this.formFilter.get("bankName").value;
-    const cardType = this.formFilter.get("cardType").value;
-    const query = this.formFilter.get("query").value;
+    let fromDate = this.formDate.get("fromDate")?.value;
+    let toDate = this.formDate.get("toDate")?.value;
+    const stageFilter = this.formFilter.get("stageFilter")?.value;
+    const statusFilter = this.formFilter.get("statusFilter")?.value;
+    const staffFilter = this.formFilter.get("staffFilter")?.value;
+    const cardHoldFilter = this.formFilter.get("cardHoldFilter")?.value;
+    const bankName = this.formFilter.get("bankName")?.value;
+    const cardType = this.formFilter.get("cardType")?.value;
+    const query = this.formFilter.get("query")?.value;
     const limit = this.paginator.pageSize ? this.paginator.pageSize : 10;
     const offset = this.paginator.pageIndex * limit;
-    const viewDoneTransaction = this.formFilter.get("viewDoneTransaction").value;
+    const viewDoneTransaction = this.formFilter.get("viewDoneTransaction")?.value;
 
     if (fromDate) {
       fromDate = this.datePipe.transform(fromDate, dateFormat);
@@ -336,15 +336,15 @@ export class DueDayCardTabComponent implements OnInit {
         this.isLoading = false;
         this.transactionsData = result?.result;
         this.dataSource = result?.result.lisCardTransactionTracking;
-        this.dataSource.forEach((item) => {
+        this.dataSource?.forEach((item) => {
           item.expiredDateString = this.datePipe.transform(item.expiredDate, "MMyy");
         });
       });
   }
 
   get fromDateAndToDate() {
-    const fromDate = this.formDate.get("fromDate").value;
-    const toDate = this.formDate.get("toDate").value;
+    const fromDate = this.formDate.get("fromDate")?.value;
+    const toDate = this.formDate.get("toDate")?.value;
     if (fromDate && toDate) {
       return true;
     }
@@ -354,7 +354,7 @@ export class DueDayCardTabComponent implements OnInit {
   updateCardTrackingState(index: number) {
     let updateData = this.dataSource[index];
 
-    let fromDate = this.formDate.get("fromDate").value;
+    let fromDate = this.formDate.get("fromDate")?.value;
     updateData.month = this.datePipe.transform(fromDate, "MM");
     updateData.year = this.datePipe.transform(fromDate, "yyyy");
 

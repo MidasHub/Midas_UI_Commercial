@@ -41,7 +41,7 @@ export class EntityToEntityMappingComponent implements OnInit {
   /** Selected Entity Id */
   retrieveById = 0;
   /** relative Id */
-  relId: number;
+  relId!: number;
   /** Stores filtered data */
   filterPreference: any;
   /** details of particular map id */
@@ -53,25 +53,25 @@ export class EntityToEntityMappingComponent implements OnInit {
    */
   firstEntityData: any = [];
   secondEntityData: any = [];
-  firstMappingEntity: string;
-  secondMappingEntity: string;
+  firstMappingEntity!: string;
+  secondMappingEntity!: string;
 
   /** Data source for entity table. */
-  datasource: MatTableDataSource<any>;
+  datasource!: MatTableDataSource<any>;
   /** Data source for entity to entity list data. */
-  entityMappingsListData: MatTableDataSource<any>;
+  entityMappingsListData!: MatTableDataSource<any>;
 
   /** Filter Preference Form */
-  filterPreferenceForm: FormGroup;
+  filterPreferenceForm?: FormGroup;
   /** List of Entity to Entity Mapping */
   displayedColumns: string[] = ['entitymapping'];
   /** Columns for details of a chosen mapping */
   entityMappingListColumns: string[] = ['fromentity', 'toentity', 'startdate', 'enddate', 'edit', 'delete'];
 
   /** Paginator for entity table. */
-  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
   /** Sorter for entity table. */
-  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatSort) sort!: MatSort;
 
 
   /**
@@ -83,7 +83,7 @@ export class EntityToEntityMappingComponent implements OnInit {
     private systemService: SystemService,
     private datePipe: DatePipe,
     private dialog: MatDialog) {
-    this.route.data.subscribe((data: { entityMappings: any }) => {
+    this.route.data.subscribe((data: { entityMappings?: any }) => {
       this.entityMappings = data.entityMappings;
     });
   }
@@ -185,7 +185,7 @@ export class EntityToEntityMappingComponent implements OnInit {
    * Submits the filter preference form and creates a entityMappingList data
    */
   showFilteredData() {
-    this.filterPreference = this.filterPreferenceForm.value;
+    this.filterPreference = this.filterPreferenceForm?.value;
     if (this.filterPreference.mappingFirstParamId === '') {
       this.filterPreference.mappingFirstParamId = 0;
     }

@@ -23,9 +23,9 @@ export class ViewCodeComponent implements OnInit {
   /** Code Data */
   codeData: any;
   /** Code Values Data */
-  codeValuesData: any[];
+  codeValuesData!: any[];
   /** Code Values Form */
-  codeValuesForm: FormGroup;
+  codeValuesForm!: FormGroup;
   /** Code Value Row Status */
   codeValueRowStatus: string[] = [];
 
@@ -42,7 +42,7 @@ export class ViewCodeComponent implements OnInit {
               private router: Router,
               private formBuilder: FormBuilder,
               private dialog: MatDialog) {
-    this.route.data.subscribe((data: { code: any, codeValues: any }) => {
+    this.route.data.subscribe((data: { code?: any, codeValues?: any }) => {
       this.codeData = data.code;
       this.codeValuesData = data.codeValues;
     });
@@ -164,10 +164,10 @@ export class ViewCodeComponent implements OnInit {
    * @param {number} index Index of the row.
    */
   disableRow(index: number) {
-    this.codeValues.at(index).get('name').setValue(this.codeValuesData[index].name);
-    this.codeValues.at(index).get('description').setValue(this.codeValuesData[index].description);
-    this.codeValues.at(index).get('position').setValue(this.codeValuesData[index].position);
-    this.codeValues.at(index).get('isActive').setValue(this.codeValuesData[index].isActive);
+    this.codeValues.at(index).get('name')?.setValue(this.codeValuesData[index].name);
+    this.codeValues.at(index).get('description')?.setValue(this.codeValuesData[index].description);
+    this.codeValues.at(index).get('position')?.setValue(this.codeValuesData[index].position);
+    this.codeValues.at(index).get('isActive')?.setValue(this.codeValuesData[index].isActive);
     this.codeValues.at(index).disable();
     this.codeValueRowStatus[index] = 'disabled';
     this.codeValues.at(index).markAsPristine();
@@ -185,10 +185,10 @@ export class ViewCodeComponent implements OnInit {
         this.codeValueRowStatus[index] = 'disabled';
         this.codeValuesData.push({
           id: response.subResourceId,
-          name: this.codeValues.at(index).get('name').value,
-          description: this.codeValues.at(index).get('description').value,
-          position: this.codeValues.at(index).get('position').value,
-          isActive: this.codeValues.at(index).get('isActive').value
+          name: this.codeValues.at(index).get('name')?.value,
+          description: this.codeValues.at(index).get('description')?.value,
+          position: this.codeValues.at(index).get('position')?.value,
+          isActive: this.codeValues.at(index).get('isActive')?.value
         });
         this.codeValues.at(index).markAsPristine();
       });

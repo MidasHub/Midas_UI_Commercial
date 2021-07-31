@@ -14,7 +14,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 export class ReportParameterDialogComponent implements OnInit {
 
   /** Report Parameter Form. */
-  reportParameterForm: FormGroup;
+  reportParameterForm!: FormGroup;
 
   /**
    * @param {MatDialogRef} dialogRef Component reference to dialog.

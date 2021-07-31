@@ -29,17 +29,17 @@ export class EditHookComponent implements OnInit {
   /** Hook Data. */
   hookData: any;
   /** Hook Form. */
-  hookForm: FormGroup;
+  hookForm!: FormGroup;
   /** Columns to be displayed in events table. */
   displayedColumns: string[] = ['entityName', 'actionName', 'actions'];
   /** Data source for events table. */
-  dataSource: MatTableDataSource<any>;
+  dataSource!: MatTableDataSource<any>;
   /** Events Data. */
   eventsData: any[] = [];
   /** Boolean to check if events data is changed or not. */
   eventsDataChanged: Boolean = false;
   /** Sorter for events table. */
-  @ViewChild(MatSort, { static: true }) sort: MatSort;
+  @ViewChild(MatSort, { static: true }) sort!: MatSort;
 
   /**
    * Retrieves the hooks template data from `resolve`.
@@ -54,7 +54,7 @@ export class EditHookComponent implements OnInit {
               private router: Router,
               private formBuilder: FormBuilder,
               private dialog: MatDialog) {
-    this.route.data.subscribe(( data: { hooksTemplate: any, hook: any }) => {
+    this.route.data.subscribe(( data: { hooksTemplate?: any, hook?: any }) => {
       this.hooksTemplateData = data.hooksTemplate;
       this.hookData = data.hook;
       this.eventsData = data.hook.events ? data.hook.events : [];
@@ -140,16 +140,16 @@ export class EditHookComponent implements OnInit {
         'SMS Provider Account Id'?: string, 'SMS Provider Token'?: string
       }
     } = {
-      name: this.hookForm.get('name').value,
-      isActive: this.hookForm.get('isActive').value,
-      displayName: this.hookForm.get('displayName').value,
+      name: this.hookForm.get('name')?.value,
+      isActive: this.hookForm.get('isActive')?.value,
+      displayName: this.hookForm.get('displayName')?.value,
       events: this.eventsData,
       config: {
-        'Payload URL': this.hookForm.get('payloadUrl').value,
-        'Content Type': this.hookForm.get('contentType').enabled ? this.hookForm.get('contentType').value : undefined,
-        'SMS Provider': this.hookForm.get('smsProvider').enabled ? this.hookForm.get('smsProvider').value : undefined,
-        'SMS Provider Account Id': this.hookForm.get('smsProviderAccountId').enabled ? this.hookForm.get('smsProviderAccountId').value : undefined,
-        'SMS Provider Token': this.hookForm.get('smsProviderToken').enabled ? this.hookForm.get('smsProviderToken').value : undefined
+        'Payload URL': this.hookForm.get('payloadUrl')?.value,
+        'Content Type': this.hookForm.get('contentType')?.enabled ? this.hookForm.get('contentType')?.value : undefined,
+        'SMS Provider': this.hookForm.get('smsProvider')?.enabled ? this.hookForm.get('smsProvider')?.value : undefined,
+        'SMS Provider Account Id': this.hookForm.get('smsProviderAccountId')?.enabled ? this.hookForm.get('smsProviderAccountId')?.value : undefined,
+        'SMS Provider Token': this.hookForm.get('smsProviderToken')?.enabled ? this.hookForm.get('smsProviderToken')?.value : undefined
       }
     };
     this.systemService.updateHook(this.hookData.id, hook)

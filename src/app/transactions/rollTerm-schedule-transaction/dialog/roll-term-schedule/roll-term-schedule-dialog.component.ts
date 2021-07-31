@@ -27,12 +27,12 @@ import { AuthenticationService } from "app/core/authentication/authentication.se
 export class RollTermScheduleDialogComponent implements OnInit {
   expandedElement: any;
   transactionInfo: any;
-  dataSource: any[];
+  dataSource!: any[];
   isLoading = false;
   displayedColumns: string[] = ["transaction", "txnDate", "amount", "fee", "getAmount", "actions"];
   rollTermId: string;
-  form: FormGroup;
-  pristine: boolean;
+  form!: FormGroup;
+  pristine?: boolean;
   currentUser: any;
   permitFee: boolean = false;
 
@@ -243,7 +243,7 @@ export class RollTermScheduleDialogComponent implements OnInit {
     }
   }
 
-  addBookingRow = function () {
+  addBookingRow () {
     let BookingRollTerm = {
       txnDate: this.datePipe.transform(new Date(), "dd/MM/yyyy"),
       amountBooking: 0,

@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { constructor } from 'lodash';
 import { ActivatedRoute } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import * as _ from 'lodash';
@@ -20,21 +19,21 @@ export class ConfigureMakerCheckerTasksComponent implements OnInit {
   selectedItem = '';
   previousGrouping = '';
   checkboxesChanged: Boolean = false;
-  currentGrouping: string;
-  formGroup: FormGroup;
-  backupform: FormGroup;
+  currentGrouping!: string;
+  formGroup!: FormGroup;
+  backupform!: FormGroup;
 
-  permissions: {
+  permissions!: {
     permissions: { code: string, id: number }[]
   };
-  tempPermissionUIData: {
+  tempPermissionUIData!: {
     permissions: { code: string }[]
   }[];
 
   constructor(private route: ActivatedRoute,
     private systemService: SystemService,
     private formBuilder: FormBuilder, ) {
-    this.route.data.subscribe((data: { permissions: any }) => {
+    this.route.data.subscribe((data: { permissions?: any }) => {
       this.permissionsData = data.permissions;
     });
   }
@@ -89,7 +88,7 @@ export class ConfigureMakerCheckerTasksComponent implements OnInit {
   }
 
 
-  permissionName = function (name: any) {
+  permissionName (name: any) {
     name = name || '';
     // replace '_' with ' '
     name = name.replace(/_/g, ' ');
@@ -100,7 +99,7 @@ export class ConfigureMakerCheckerTasksComponent implements OnInit {
     return name;
   };
 
-  formatName = function (stringVal: string) {
+  formatName(stringVal: string) {
     stringVal = stringVal || '';
     if (stringVal.indexOf('portfolio_') > -1) {
       stringVal = stringVal.replace('portfolio_', '');
@@ -145,7 +144,7 @@ export class ConfigureMakerCheckerTasksComponent implements OnInit {
   }
 
   submit() {
-    const value = this.formGroup.get('roster').value;
+    const value = this.formGroup.get('roster')?.value;
     const data = {};
     const permissionData = {
       permissions: {}

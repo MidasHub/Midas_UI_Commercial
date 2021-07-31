@@ -14,7 +14,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 export class AddEventDialogComponent implements OnInit {
 
   /** Event Form. */
-  eventForm: FormGroup;
+  eventForm!: FormGroup;
   /** Entity Data. */
   entityData: Array<any> = new Array<any>();
   /** Action Data. */
@@ -47,7 +47,7 @@ export class AddEventDialogComponent implements OnInit {
    * Subscribes to the grouping dropdown to set entity data for that row accordingly.
    */
   setGroupingListener() {
-    this.eventForm.get('grouping').valueChanges
+    this.eventForm.get('grouping')?.valueChanges
       .subscribe(changedGrouping => {
         this.entityData = this.data.groupings.find((grouping: any) => grouping.name === changedGrouping).entities;
       });
@@ -57,7 +57,7 @@ export class AddEventDialogComponent implements OnInit {
    * Subscribes to the entity dropdown to set entity data for that row accordingly.
    */
   setEntityListener() {
-    this.eventForm.get('entity').valueChanges
+    this.eventForm.get('entity')?.valueChanges
       .subscribe(changedEntity => {
         this.actionData = this.entityData[0].actions;
       });

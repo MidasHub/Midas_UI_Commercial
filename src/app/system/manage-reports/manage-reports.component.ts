@@ -20,19 +20,19 @@ export class ManageReportsComponent implements OnInit {
   /** Columns to be displayed in reports table. */
   displayedColumns: string[] = ['reportName', 'reportType', 'reportSubType', 'reportCategory', 'coreReport', 'userReport'];
   /** Data source for reports table. */
-  dataSource: MatTableDataSource<any>;
+  dataSource!: MatTableDataSource<any>;
 
    /** Paginator for reports table. */
-   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+   @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
    /** Sorter for reports table. */
-   @ViewChild(MatSort, { static: true }) sort: MatSort;
+   @ViewChild(MatSort, { static: true }) sort!: MatSort;
 
   /**
    * Retrieves the reports data from `resolve`.
    * @param {ActivatedRoute} route Activated Route.
    */
   constructor(private route: ActivatedRoute) {
-    this.route.data.subscribe((data: { reports: any }) => {
+    this.route.data.subscribe((data: { reports?: any }) => {
       this.reportsData = data.reports;
     });
   }

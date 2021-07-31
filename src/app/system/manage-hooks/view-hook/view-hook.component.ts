@@ -33,7 +33,7 @@ export class ViewHookComponent implements OnInit {
               private dialog: MatDialog,
               private systemService: SystemService,
               private router: Router) {
-    this.route.data.subscribe((data: { hook: any }) => {
+    this.route.data.subscribe((data: { hook?: any }) => {
       this.hookData = data.hook;
     });
   }

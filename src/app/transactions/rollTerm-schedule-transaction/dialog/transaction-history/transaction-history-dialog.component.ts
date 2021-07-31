@@ -21,11 +21,11 @@ import { Router } from "@angular/router";
 export class TransactionHistoryDialogComponent implements OnInit {
   expandedElement: any;
   transactionInfo: any;
-  dataSource: any[];
+  dataSource!: any[];
   displayedColumns: string[] = ["cardNumber", "type", "amount", "txnDate", "actions"];
 
-  form: FormGroup;
-  pristine: boolean;
+  form!: FormGroup;
+  pristine?: boolean;
 
   constructor(
     private router: Router,

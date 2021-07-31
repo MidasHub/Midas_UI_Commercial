@@ -29,12 +29,12 @@ export class ViewDataTableComponent implements OnInit {
   /** Columns to be displayed in columns table. */
   displayedColumns: string[] = ['columnName', 'columnDisplayType', 'columnLength', 'columnCode', 'isColumnPrimaryKey'];
   /** Data source for columns table. */
-  dataSource: MatTableDataSource<any>;
+  dataSource!: MatTableDataSource<any>;
 
   /** Paginator for columns table. */
-  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+  @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
   /** Sorter for columns table. */
-  @ViewChild(MatSort, { static: true }) sort: MatSort;
+  @ViewChild(MatSort, { static: true }) sort!: MatSort;
 
   /**
    * Retrieves the data table data from `resolve`.
@@ -47,7 +47,7 @@ export class ViewDataTableComponent implements OnInit {
               private systemService: SystemService,
               private router: Router,
               private dialog: MatDialog) {
-    this.route.data.subscribe((data: { dataTable: any }) => {
+    this.route.data.subscribe((data: { dataTable?: any }) => {
       this.dataTableData = data.dataTable;
       this.columnsData = this.dataTableData.columnHeaderData;
     });

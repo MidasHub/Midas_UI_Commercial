@@ -14,7 +14,7 @@ import { SystemService } from '../../system.service';
 export class CreateCodeComponent implements OnInit {
 
   /** Code form. */
-  codeForm: FormGroup;
+  codeForm!: FormGroup;
 
   /**
    * @param {FormBuilder} formBuilder Form Builder.

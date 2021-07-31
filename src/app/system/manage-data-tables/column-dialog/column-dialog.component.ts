@@ -17,7 +17,7 @@ import { columnTypeData } from '../column-type-data';
 export class ColumnDialogComponent implements OnInit {
 
   /** Column Form. */
-  columnForm: FormGroup;
+  columnForm!: FormGroup;
   /** Column Type Data */
   columnTypeData = columnTypeData;
 
@@ -70,22 +70,22 @@ export class ColumnDialogComponent implements OnInit {
    * Watches on Column Type field to enable/diable certain fields.
    */
   onColumnTypeChanges() {
-    this.columnForm.get('type').valueChanges
+    this.columnForm.get('type')?.valueChanges
       .subscribe(type => {
         switch (type) {
           case 'String': {
-            this.columnForm.get('length').enable();
-            this.columnForm.get('code').disable();
+            this.columnForm.get('length')?.enable();
+            this.columnForm.get('code')?.disable();
             break;
           }
           case 'Dropdown': {
-            this.columnForm.get('code').enable();
-            this.columnForm.get('length').disable();
+            this.columnForm.get('code')?.enable();
+            this.columnForm.get('length')?.disable();
             break;
           }
           default: {
-            this.columnForm.get('code').disable();
-            this.columnForm.get('length').disable();
+            this.columnForm.get('code')?.disable();
+            this.columnForm.get('length')?.disable();
           }
         }
       });

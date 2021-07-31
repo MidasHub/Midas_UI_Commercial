@@ -18,7 +18,7 @@ export class AddSubmitTransactionDialogComponent implements OnInit {
   listObjectTransactionSubmit: any[];
   displayedColumns: string[] = ["no", "amountSubmit", "batchNoSubmit", "fileSubmit"];
   dataSource: MatTableDataSource<any>;
-  @ViewChild("bookingBranchSubmit") bookingBranchSubmit: MatTable<Element>;
+  @ViewChild("bookingBranchSubmit") bookingBranchSubmit!: MatTable<Element>;
 
   constructor(
     public dialogRef: MatDialogRef<AddSubmitTransactionDialogComponent>,
@@ -38,7 +38,7 @@ export class AddSubmitTransactionDialogComponent implements OnInit {
 
   ngOnInit(): void {
     //init batchNo with total amnount submit
-    this.formDialog.get("terminalSubmit").valueChanges.subscribe((option: any) => {
+    this.formDialog.get("terminalSubmit")?.valueChanges.subscribe((option: any) => {
       this.listObjectTransactionSubmit = [];
       this.transactionTotalByBatchNo.forEach((element: any) => {
         if (element.terminalId == option) {

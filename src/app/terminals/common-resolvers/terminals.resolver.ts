@@ -10,7 +10,7 @@ export class TerminalsResolver implements Resolve<Object> {
   constructor(private terminalsService: TerminalsService) { }
  
   resolve(route: ActivatedRouteSnapshot): Observable<any> { 
-    const terminalId = route.parent.paramMap.get('terminalId');
+    const terminalId = route.parent?.paramMap.get('terminalId') ||'';
     return this.terminalsService.getTerminalByID(terminalId);
   }
 

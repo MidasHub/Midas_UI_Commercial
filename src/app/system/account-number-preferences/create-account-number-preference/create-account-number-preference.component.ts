@@ -17,11 +17,11 @@ import { SystemService } from '../../system.service';
 export class CreateAccountNumberPreferenceComponent implements OnInit {
 
   /** Account Number Preferences Form */
-  accountNumberPreferenceForm: FormGroup;
+  accountNumberPreferenceForm!: FormGroup;
   /** Account Number Preferences Template Data */
   accountNumberPreferencesTemplateData: any;
   /** Prefix Type Data */
-  prefixTypeData: any[];
+  prefixTypeData?: any[];
 
   /**
    * Retrieves the account number preferences template data from `resolve`.
@@ -34,7 +34,7 @@ export class CreateAccountNumberPreferenceComponent implements OnInit {
               private systemService: SystemService,
               private route: ActivatedRoute,
               private router: Router) {
-    this.route.data.subscribe((data: { accountNumberPreferencesTemplate: any }) => {
+    this.route.data.subscribe((data: { accountNumberPreferencesTemplate?: any }) => {
       this.accountNumberPreferencesTemplateData = data.accountNumberPreferencesTemplate;
     });
   }
@@ -52,7 +52,7 @@ export class CreateAccountNumberPreferenceComponent implements OnInit {
    * Subscribes on Form Controls to change Prefix Type data.
    */
   getPrefixTypeValue() {
-    this.accountNumberPreferenceForm.get('accountType').valueChanges
+    this.accountNumberPreferenceForm.get('accountType')?.valueChanges
       .subscribe(accountId => {
         this.prefixTypeData = this.accountNumberPreferencesTemplateData.prefixTypeOptions[`accountType.${this.accountNumberPreferencesTemplateData.accountTypeOptions.find((accountType: any) => accountType.id === accountId).value.toLowerCase()}`];
       });

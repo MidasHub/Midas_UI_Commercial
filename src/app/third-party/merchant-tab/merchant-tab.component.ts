@@ -22,19 +22,19 @@ import { ConfirmDialogComponent } from "app/transactions/dialog/confirm-dialog/c
 
 //@Injectable()
 export class MerchantTabComponent implements OnInit {
-  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
-  @ViewChild(MatSort, { static: true }) sort: MatSort;
+  @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
+  @ViewChild(MatSort, { static: true }) sort!: MatSort;
 
   private onSubject = new Subject<{ key: string; value: any }>();
   public changes = this.onSubject.asObservable().pipe(share());
 
-  merchants: any[];
-  dataSource: MatTableDataSource<any>;
+  merchants!: any[];
+  dataSource!: MatTableDataSource<any>;
   displayedColumns = ["name", "partner", "rangeDay", "status", "action"];
-  merchantsActive: any[];
-  merchantsInActive: any[];
+  merchantsActive?: any[];
+  merchantsInActive?: any[];
   merchantsStatus: any;
-  filterSearch: string;
+  filterSearch?: string;
 
   constructor(
     private alertServices: AlertService,

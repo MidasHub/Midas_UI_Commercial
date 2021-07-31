@@ -20,19 +20,19 @@ export class ManageHooksComponent implements OnInit {
   /** Columns to be displayed in manage hooks table. */
   displayedColumns: string[] = ['name', 'displayName', 'isActive'];
   /** Data source for manage hooks table. */
-  dataSource: MatTableDataSource<any>;
+  dataSource!: MatTableDataSource<any>;
 
   /** Paginator for manage hooks table. */
-  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+  @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
   /** Sorter for manage hooks table. */
-  @ViewChild(MatSort, { static: true }) sort: MatSort;
+  @ViewChild(MatSort, { static: true }) sort!: MatSort;
 
   /**
    * Retrieves the hooks data from `resolve`.
    * @param {ActivatedRoute} route Activated Route.
    */
   constructor(private route: ActivatedRoute) {
-    this.route.data.subscribe(( data: { hooks: any }) => {
+    this.route.data.subscribe(( data: { hooks?: any }) => {
       this.hookData = data.hooks;
     });
   }

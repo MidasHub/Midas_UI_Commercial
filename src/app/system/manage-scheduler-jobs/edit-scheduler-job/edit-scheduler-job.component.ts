@@ -32,7 +32,7 @@ export class EditSchedulerJobComponent implements OnInit {
               private systemService: SystemService,
               private router: Router,
               private formBuilder: FormBuilder ) {
-    this.route.data.subscribe((data: { jobSelected: any }) => {
+    this.route.data.subscribe((data: { jobSelected?: any }) => {
       this.jobData = data.jobSelected;
     });
   }

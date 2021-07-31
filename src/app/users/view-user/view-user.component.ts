@@ -34,7 +34,7 @@ export class ViewUserComponent implements OnInit {
               private route: ActivatedRoute,
               private router: Router,
               private dialog: MatDialog) {
-    this.route.data.subscribe((data: { user: any }) => {
+    this.route.data.subscribe((data: { user?: any }) => {
       this.userData = data.user;
     });
   }

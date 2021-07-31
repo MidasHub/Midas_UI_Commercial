@@ -24,7 +24,7 @@ export class SurveyResolver implements Resolve<Object> {
    * @returns {Observable<any>}
    */
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
-    const surveyId = route.paramMap.get('id');
+    const surveyId = route.paramMap.get('id')||'';
     return this.systemService.getSurvey(surveyId);
   }
 

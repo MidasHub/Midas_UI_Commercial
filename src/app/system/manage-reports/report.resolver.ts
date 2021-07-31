@@ -24,7 +24,7 @@ export class ReportResolver implements Resolve<Object> {
    * @returns {Observable<any>}
    */
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
-    const reportId = route.paramMap.get('id');
+    const reportId = route.paramMap.get('id')||'';
     return this.systemService.getReport(reportId);
   }
 

@@ -10,10 +10,10 @@ import { ThirdPartyService } from "app/third-party/third-party.service";
   styleUrls: ["./merchant-dialog.component.scss"],
 })
 export class MerchantDialogComponent implements OnInit {
-  merchantForm: FormGroup;
+  merchantForm!: FormGroup;
   dataFrom: any;
   action: string;
-  partners: any[];
+  partners!: any[];
   merchant: any;
   timeTypes: any[] = [
     {

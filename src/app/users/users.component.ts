@@ -23,19 +23,19 @@ export class UsersComponent implements OnInit {
   /** Columns to be displayed in users table. */
   displayedColumns: string[] = ['firstname', 'lastname', 'email', 'officeName'];
   /** Data source for users table. */
-  dataSource: MatTableDataSource<any>;
+  dataSource!: MatTableDataSource<any>;
 
   /** Paginator for users table. */
-  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+  @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
   /** Sorter for users table. */
-  @ViewChild(MatSort, { static: true }) sort: MatSort;
+  @ViewChild(MatSort, { static: true }) sort!: MatSort;
 
   /**
    * Retrieves the users data from `resolve`.
    * @param {ActivatedRoute} route Activated Route.
    */
   constructor(private route: ActivatedRoute) {
-    this.route.data.subscribe(( data: { users: any }) => {
+    this.route.data.subscribe(( data: { users?: any }) => {
       this.usersData = data.users;
     });
   }

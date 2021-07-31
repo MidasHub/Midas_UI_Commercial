@@ -90,10 +90,10 @@ export class ManageTransferComponent implements OnInit {
   }
 
   reset(){
-    this.formFilter.get('transferRefNo')!.setValue("");
-    this.formFilter.get('actionStaffName')!.setValue("");
-    this.formFilter.get('senderStaffName')!.setValue("");
-    this.formFilter.get('receiverStaffName')!.setValue("");
+    this.formFilter.get('transferRefNo')?.setValue("");
+    this.formFilter.get('actionStaffName')?.setValue("");
+    this.formFilter.get('senderStaffName')?.setValue("");
+    this.formFilter.get('receiverStaffName')?.setValue("");
   }
 
   getListTransfer(){

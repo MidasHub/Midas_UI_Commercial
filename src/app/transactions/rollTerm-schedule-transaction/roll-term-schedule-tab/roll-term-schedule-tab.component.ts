@@ -51,8 +51,8 @@ export class RollTermScheduleTabComponent implements OnInit {
     "actions",
   ];
   formDate: FormGroup;
-  formFilter: FormGroup;
-  dataSource: any[];
+  formFilter!: FormGroup;
+  dataSource!: any[];
   transactionsData: any;
   currentUser: any;
   transactionType: any[] = [
@@ -95,22 +95,22 @@ export class RollTermScheduleTabComponent implements OnInit {
       value: "V",
     },
   ];
-  partners: any[];
-  staffs: any[];
-  banks: any[];
-  offices: any[];
+  partners!: any[];
+  staffs!: any[];
+  banks!: any[];
+  offices!: any[];
   totalTerminalAmount = 0;
   totalFeeAmount = 0;
   totalCogsAmount = 0;
   totalPnlAmount = 0;
   panelOpenState = false;
   permitFee = false;
-  filterData: any[];
+  filterData?: any[];
   today = new Date();
   cardTypeOption: any[] = [];
 
-  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
-  @ViewChild(MatSort, { static: true }) sort: MatSort;
+  @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
+  @ViewChild(MatSort, { static: true }) sort!: MatSort;
   constructor(
     private formBuilder: FormBuilder,
     private transactionService: TransactionService,
@@ -163,7 +163,7 @@ export class RollTermScheduleTabComponent implements OnInit {
         name: "Tất cả",
       });
 
-      this.formFilter.get("OfficeFilter").valueChanges.subscribe((value) => {
+      this.formFilter.get("OfficeFilter")?.valueChanges.subscribe((value) => {
         this.clientServices.getListUserTeller(value).subscribe((result: any) => {
           this.staffs = result?.result?.listStaff.filter((staff: any) => staff.displayName.startsWith("R"));
           this.staffs?.unshift({
@@ -187,15 +187,15 @@ export class RollTermScheduleTabComponent implements OnInit {
 
   getRollTermScheduleAndCardDueDayInfo() {
     const dateFormat = this.settingsService.dateFormat;
-    let fromDate = this.formDate.get("fromDate").value;
-    let toDate = this.formDate.get("toDate").value;
-    const query = this.formFilter.get("query").value;
-    const bankFilter = this.formFilter.get("bankFilter").value;
-    const cardTypeFilter = this.formFilter.get("cardType").value;
-    const createdByFilter = this.formFilter.get("createdByFilter").value;
-    const officeFilter = this.formFilter.get("OfficeFilter").value;
-    const dueDayFilter = this.formFilter.get("dueDay").value;
-    const viewDoneTransaction = this.formFilter.get("viewDoneTransaction").value;
+    let fromDate = this.formDate.get("fromDate")?.value;
+    let toDate = this.formDate.get("toDate")?.value;
+    const query = this.formFilter.get("query")?.value;
+    const bankFilter = this.formFilter.get("bankFilter")?.value;
+    const cardTypeFilter = this.formFilter.get("cardType")?.value;
+    const createdByFilter = this.formFilter.get("createdByFilter")?.value;
+    const officeFilter = this.formFilter.get("OfficeFilter")?.value;
+    const dueDayFilter = this.formFilter.get("dueDay")?.value;
+    const viewDoneTransaction = this.formFilter.get("viewDoneTransaction")?.value;
 
     const limit = this.paginator.pageSize ? this.paginator.pageSize : 10;
     const offset = this.paginator.pageIndex * limit;
@@ -258,8 +258,8 @@ export class RollTermScheduleTabComponent implements OnInit {
   }
 
   get fromDateAndToDate() {
-    const fromDate = this.formDate.get("fromDate").value;
-    const toDate = this.formDate.get("toDate").value;
+    const fromDate = this.formDate.get("fromDate")?.value;
+    const toDate = this.formDate.get("toDate")?.value;
     if (fromDate && toDate) {
       return true;
     }

@@ -20,19 +20,19 @@ export class ViewAuditComponent implements OnInit {
   /** Columns to be displayed in audit trail table. */
   displayedColumns: string[] = ['command', 'commandValue'];
   /** Data source for audit trail table. */
-  dataSource: MatTableDataSource<any>;
+  dataSource!: MatTableDataSource<any>;
 
   /** Paginator for audit trails table. */
-  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
   /** Sorter for audit trails table. */
-  @ViewChild(MatSort, { static: true }) sort: MatSort;
+  @ViewChild(MatSort, { static: true }) sort!: MatSort;
 
   /**
    * Retrieves the audit trail data from `resolve`.
    * @param {ActivatedRoute} route Activated Route.
    */
   constructor(private route: ActivatedRoute) {
-    this.route.data.subscribe((data: { auditTrail: any }) => {
+    this.route.data.subscribe((data: { auditTrail?: any }) => {
       this.auditTrailData = data.auditTrail;
     });
   }

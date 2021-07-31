@@ -48,8 +48,8 @@ export class OnRollTermCardTabComponent implements OnInit {
   isLoading: boolean = false;
   formDate: FormGroup;
   formFilter: FormGroup;
-  dataSource: any[];
-  listBank: any[];
+  dataSource!: any[];
+  listBank?: any[];
   transactionsData: any;
   currentUser: any;
   minDate: any;
@@ -72,18 +72,18 @@ export class OnRollTermCardTabComponent implements OnInit {
       value: 'R',
     },
   ];
-  partners: any[];
-  staffs: any[];
-  offices: any[];
+  partners!: any[];
+  staffs?: any[];
+  offices?: any[];
   totalTerminalAmount = 0;
   totalFeeAmount = 0;
   totalCogsAmount = 0;
   totalPnlAmount = 0;
   panelOpenState = false;
-  filterData: any[];
+  filterData!: any[];
   today = new Date();
-  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
-  @ViewChild(MatSort, {static: true}) sort: MatSort;
+  @ViewChild(MatPaginator, {static: true}) paginator!: MatPaginator;
+  @ViewChild(MatSort, {static: true}) sort!: MatSort;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -189,8 +189,8 @@ export class OnRollTermCardTabComponent implements OnInit {
    }
 
   get fromDateAndToDate() {
-    const fromDate = this.formDate.get('fromDate').value;
-    const toDate = this.formDate.get('toDate').value;
+    const fromDate = this.formDate.get('fromDate')?.value;
+    const toDate = this.formDate.get('toDate')?.value;
     if (fromDate && toDate) {
       return true;
     }

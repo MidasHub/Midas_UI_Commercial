@@ -19,17 +19,17 @@ export class EmailComponent implements OnInit {
   /** Columns to be displayed in Email configuration table. */
   displayedColumns: string[] = ['name', 'value'];
   /** Data source for Email configuration table. */
-  dataSource: MatTableDataSource<any>;
+  dataSource!: MatTableDataSource<any>;
 
   /** Sorter for Email configuration table. */
-  @ViewChild(MatSort, { static: true }) sort: MatSort;
+  @ViewChild(MatSort, { static: true }) sort!: MatSort;
 
   /**
    * Retrieves the Email configuration data from `resolve`.
    * @param {ActivatedRoute} route Activated Route.
    */
   constructor(private route: ActivatedRoute) {
-    this.route.data.subscribe((data: { emailConfiguration: any }) => {
+    this.route.data.subscribe((data: { emailConfiguration?: any }) => {
       this.emailConfigurationData = data.emailConfiguration;
     });
   }

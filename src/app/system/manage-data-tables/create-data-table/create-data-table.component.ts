@@ -28,20 +28,20 @@ import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.co
 export class CreateDataTableComponent implements OnInit {
 
   /** Data Table Form */
-  dataTableForm: FormGroup;
+  dataTableForm!: FormGroup;
   /** Application Table Data */
   appTableData = appTableData;
   /** Column Data */
   columnData: any[] = [];
   /** Data passed to dialog. */
   dataForDialog: {
-    columnName: string,
-    columnDisplayType: string,
-    isColumnPrimaryKey: boolean,
-    columnLength: string,
-    columnCode: string,
-    columnCodes: any,
-    type: string
+    columnName?: string,
+    columnDisplayType?: string,
+    isColumnPrimaryKey?: boolean,
+    columnLength?: string,
+    columnCode?: string,
+    columnCodes?: any,
+    type?: string
   } = {
       columnName: undefined,
       columnDisplayType: undefined,
@@ -54,11 +54,11 @@ export class CreateDataTableComponent implements OnInit {
   /** Columns to be displayed in columns table. */
   displayedColumns: string[] = ['name', 'type', 'mandatory', 'length', 'code', 'actions'];
   /** Data source for columns table. */
-  dataSource: MatTableDataSource<any>;
+  dataSource!: MatTableDataSource<any>;
   /** Paginator for columns table. */
-  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+  @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
   /** Sorter for columns table. */
-  @ViewChild(MatSort, { static: true }) sort: MatSort;
+  @ViewChild(MatSort, { static: true }) sort!: MatSort;
 
   /**
    * Retrieves the column codes data from `resolve`.
@@ -73,7 +73,7 @@ export class CreateDataTableComponent implements OnInit {
               private route: ActivatedRoute,
               private router: Router,
               private dialog: MatDialog) {
-    this.route.data.subscribe((data: { columnCodes: any }) => {
+    this.route.data.subscribe((data: { columnCodes?: any }) => {
       this.dataForDialog.columnCodes = data.columnCodes;
     });
   }

@@ -17,7 +17,7 @@ import { SystemService } from '../../system.service';
 export class EditConfigurationComponent implements OnInit {
 
   /** Global Configuration form. */
-  configurationForm: FormGroup;
+  configurationForm!: FormGroup;
   /** Configuration. */
   configuration: any;
 
@@ -32,7 +32,7 @@ export class EditConfigurationComponent implements OnInit {
               private systemService: SystemService,
               private route: ActivatedRoute,
               private router: Router) {
-    this.route.data.subscribe((data: { configuration: any }) => {
+    this.route.data.subscribe((data: { configuration?: any }) => {
       this.configuration = data.configuration;
     });
   }

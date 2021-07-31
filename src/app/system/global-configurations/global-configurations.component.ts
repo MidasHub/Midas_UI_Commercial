@@ -23,12 +23,12 @@ export class GlobalConfigurationsComponent implements OnInit {
   /** Columns to be displayed in configurations table. */
   displayedColumns: string[] = ['name', 'enabled', 'value', 'action', 'edit'];
   /** Data source for configurations table. */
-  dataSource: MatTableDataSource<any>;
+  dataSource!: MatTableDataSource<any>;
 
   /** Paginator for configurations table. */
-  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+  @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
   /** Sorter for configurations table. */
-  @ViewChild(MatSort, { static: true }) sort: MatSort;
+  @ViewChild(MatSort, { static: true }) sort!: MatSort;
 
   /**
    * Retrieves the configurations data from `resolve`.
@@ -39,7 +39,7 @@ export class GlobalConfigurationsComponent implements OnInit {
   constructor(private route: ActivatedRoute,
               private systemService: SystemService,
               private router: Router) {
-    this.route.data.subscribe((data: { configurations: any }) => {
+    this.route.data.subscribe((data: { configurations?: any }) => {
       this.configurationData = data.configurations.globalConfiguration;
     });
   }

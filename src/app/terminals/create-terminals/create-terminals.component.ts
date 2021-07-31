@@ -139,7 +139,7 @@ export class CreateTerminalsComponent implements OnInit {
       cardsCheck: [[]],
     });
     this.createTerminalForm.get("terminalId")!.valueChanges.subscribe(data => {
-      this.createTerminalForm.get("terminalCode")!.setValue(data);
+      this.createTerminalForm.get("terminalCode")?.setValue(data);
     })
   }
 

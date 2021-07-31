@@ -11,7 +11,7 @@ import { ThirdPartyService } from 'app/third-party/third-party.service';
   styleUrls: ['./partner-dialog.component.scss']
 })
 export class PartnerDialogComponent implements OnInit {
-  partnerForm: FormGroup;
+  partnerForm!: FormGroup;
   dataFrom: any;
   editable: boolean = false;
   action:string

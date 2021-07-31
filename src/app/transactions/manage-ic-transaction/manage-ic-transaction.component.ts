@@ -52,9 +52,9 @@ export class ManageIcTransactionComponent implements OnInit {
     "terminalAmount_feeAmount",
   ]; // pnlAmount
   formDate: FormGroup;
-  formFilter: FormGroup;
+  formFilter!: FormGroup;
   formFilterPartner: FormGroup;
-  dataSource: any[];
+  dataSource!: any[];
   isLoading: boolean = false;
   transactionsData: any[] = [];
   currentUser: any;
@@ -108,8 +108,8 @@ export class ManageIcTransactionComponent implements OnInit {
       value: "V",
     },
   ];
-  partners: any[];
-  staffs: any[];
+  partners!: any[];
+  staffs!: any[];
   terminals: any;
   terminalsCommon: any;
   banksCommon: any;
@@ -118,13 +118,13 @@ export class ManageIcTransactionComponent implements OnInit {
   totalCogsAmount = 0;
   totalPnlAmount = 0;
   panelOpenState = true;
-  filterData: any[];
-  banks: any[];
-  partnersMapping: any[];
+  filterData!: any[];
+  banks!: any[];
+  partnersMapping!: any[];
   today = new Date();
 
-  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
-  @ViewChild(MatSort, { static: true }) sort: MatSort;
+  @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
+  @ViewChild(MatSort, { static: true }) sort!: MatSort;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -169,9 +169,9 @@ export class ManageIcTransactionComponent implements OnInit {
       this.filterTransaction();
     });
 
-    this.formFilterPartner.get("partnerCode").valueChanges.subscribe((value) => {
-      this.formFilterPartner.get("terminalId").setValue("");
-      this.formFilterPartner.get("bankCode").setValue("");
+    this.formFilterPartner.get("partnerCode")?.valueChanges.subscribe((value) => {
+      this.formFilterPartner.get("terminalId")?.setValue("");
+      this.formFilterPartner.get("bankCode")?.setValue("");
 
       this.terminalsService.getBanksByPartnerPos(value).subscribe((partner) => {
         this.banks = partner?.result?.listBank;
@@ -182,9 +182,9 @@ export class ManageIcTransactionComponent implements OnInit {
       });
     });
 
-    this.formFilterPartner.get("bankCode").valueChanges.subscribe((value) => {
-      this.formFilterPartner.get("terminalId").setValue("");
-      const partnerCode = this.formFilterPartner.get("partnerCode").value;
+    this.formFilterPartner.get("bankCode")?.valueChanges.subscribe((value) => {
+      this.formFilterPartner.get("terminalId")?.setValue("");
+      const partnerCode = this.formFilterPartner.get("partnerCode")!.value;
       this.terminalsService.getTerminalsByAccountBankId(value, partnerCode).subscribe((partner) => {
         this.terminals = partner?.result?.listTerminal;
         if (this.terminals?.length > 0) {
@@ -214,8 +214,8 @@ export class ManageIcTransactionComponent implements OnInit {
 
   getTransaction() {
     const dateFormat = this.settingsService.dateFormat;
-    let fromDate = this.formDate.get("fromDate").value;
-    let toDate = this.formDate.get("toDate").value;
+    let fromDate = this.formDate.get("fromDate")?.value;
+    let toDate = this.formDate.get("toDate")?.value;
     const oneDay = 24 * 60 * 60 * 1000; // hours*minutes*seconds*milliseconds
     const diffDays = Math.round(Math.abs((fromDate - toDate) / oneDay));
     if (diffDays > 31) {
@@ -235,9 +235,9 @@ export class ManageIcTransactionComponent implements OnInit {
     }
     this.dataSource = [];
     this.isLoading = true;
-    let terminalId = this.formFilterPartner.get("terminalId").value;
-    let bankCode = this.formFilterPartner.get("bankCode").value;
-    let partner = this.formFilterPartner.get("partnerCode").value;
+    let terminalId = this.formFilterPartner.get("terminalId")?.value;
+    let bankCode = this.formFilterPartner.get("bankCode")?.value;
+    let partner = this.formFilterPartner.get("partnerCode")?.value;
     terminalId = terminalId.replace("MIDAS", "");
     this.transactionService
       .getTransactionIc({ fromDate, toDate, terminalId, bankCode, partner })
@@ -282,8 +282,8 @@ export class ManageIcTransactionComponent implements OnInit {
   }
 
   get fromDateAndToDate() {
-    const fromDate = this.formDate.get("fromDate").value;
-    const toDate = this.formDate.get("toDate").value;
+    const fromDate = this.formDate.get("fromDate")?.value;
+    const toDate = this.formDate.get("toDate")?.value;
     if (fromDate && toDate) {
       return true;
     }
@@ -440,8 +440,8 @@ export class ManageIcTransactionComponent implements OnInit {
 
   exportTransaction() {
     const dateFormat = this.settingsService.dateFormat;
-    let fromDate = this.formDate.get("fromDate").value;
-    let toDate = this.formDate.get("toDate").value;
+    let fromDate = this.formDate.get("fromDate")?.value;
+    let toDate = this.formDate.get("toDate")?.value;
     if (fromDate) {
       fromDate = this.datePipe.transform(fromDate, dateFormat);
     }
@@ -476,8 +476,8 @@ export class ManageIcTransactionComponent implements OnInit {
 
   exportTransactionForPartner() {
     const dateFormat = this.settingsService.dateFormat;
-    let fromDate = this.formDate.get("fromDate").value;
-    let toDate = this.formDate.get("toDate").value;
+    let fromDate = this.formDate.get("fromDate")?.value;
+    let toDate = this.formDate.get("toDate")?.value;
     if (fromDate) {
       fromDate = this.datePipe.transform(fromDate, dateFormat);
     }

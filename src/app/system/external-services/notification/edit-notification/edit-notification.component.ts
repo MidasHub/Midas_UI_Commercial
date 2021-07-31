@@ -19,7 +19,7 @@ export class EditNotificationComponent implements OnInit {
   /** Notification Configuration data */
   notificationConfigurationData: any;
   /** Notification Configuration Form */
-  notificationConfigurationForm: FormGroup;
+  notificationConfigurationForm!: FormGroup;
 
   /**
    * Retrieves the Notification configuration data from `resolve`.
@@ -32,7 +32,7 @@ export class EditNotificationComponent implements OnInit {
               private systemService: SystemService,
               private route: ActivatedRoute,
               private router: Router) {
-    this.route.data.subscribe((data: { notificationConfiguration: any }) => {
+    this.route.data.subscribe((data: { notificationConfiguration?: any }) => {
       this.notificationConfigurationData = data.notificationConfiguration;
     });
   }

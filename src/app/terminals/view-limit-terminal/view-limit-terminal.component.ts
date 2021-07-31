@@ -36,8 +36,8 @@ export class ViewLimitTerminalComponent implements OnInit {
   totalUsedAmount = 0;
   totalBalanceAmount = 0;
 
-  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
-  @ViewChild(MatSort, {static: true}) sort: MatSort;
+  @ViewChild(MatPaginator, {static: true}) paginator!: MatPaginator;
+  @ViewChild(MatSort, {static: true}) sort!: MatSort;
   commonOffices: any[] = this.bankService.documentOffices;
 
 
@@ -52,7 +52,7 @@ export class ViewLimitTerminalComponent implements OnInit {
     private bankService: BanksService,
 
   ) {
-    this.route.data.subscribe((data: { terminalData: any }) => {
+    this.route.data.subscribe((data: { terminalData?: any }) => {
       this.dataSource = data?.terminalData?.result?.listLimitPos;
 
       this.bankService.getListOfficeCommon().subscribe((offices: any) => {

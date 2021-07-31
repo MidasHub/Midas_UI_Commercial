@@ -19,17 +19,17 @@ export class SMSComponent implements OnInit {
   /** Columns to be displayed in SMS configuration table. */
   displayedColumns: string[] = ['name', 'value'];
   /** Data source for SMS configuration table. */
-  dataSource: MatTableDataSource<any>;
+  dataSource!: MatTableDataSource<any>;
 
   /** Sorter for SMS configuration table. */
-  @ViewChild(MatSort, { static: true }) sort: MatSort;
+  @ViewChild(MatSort, { static: true }) sort!: MatSort;
 
   /**
    * Retrieves the SMS configuration data from `resolve`.
    * @param {ActivatedRoute} route Activated Route.
    */
   constructor(private route: ActivatedRoute) {
-    this.route.data.subscribe((data: {smsConfiguration: any}) => {
+    this.route.data.subscribe((data: {smsConfiguration?: any}) => {
       this.smsConfigurationData = data.smsConfiguration;
     });
    }

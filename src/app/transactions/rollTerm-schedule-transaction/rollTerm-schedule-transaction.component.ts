@@ -20,9 +20,9 @@ import { RollTermScheduleTabComponent } from "./roll-term-schedule-tab/roll-term
 })
 export class RollTermScheduleTransactionComponent implements OnInit {
 
-  @ViewChild(OnRollTermCardTabComponent) private onRollTermCardTabComponent: OnRollTermCardTabComponent;
-  @ViewChild(DueDayCardTabComponent) private dueDayCardTabComponent: DueDayCardTabComponent;
-  @ViewChild(RollTermScheduleTabComponent) private rollTermScheduleTabComponent: RollTermScheduleTabComponent;
+  @ViewChild(OnRollTermCardTabComponent) private onRollTermCardTabComponent!: OnRollTermCardTabComponent;
+  @ViewChild(DueDayCardTabComponent) private dueDayCardTabComponent!: DueDayCardTabComponent;
+  @ViewChild(RollTermScheduleTabComponent) private rollTermScheduleTabComponent!: RollTermScheduleTabComponent;
 
   constructor(
     public dialog: MatDialog,

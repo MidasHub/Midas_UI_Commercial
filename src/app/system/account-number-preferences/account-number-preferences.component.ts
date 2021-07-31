@@ -20,19 +20,19 @@ export class AccountNumberPreferencesComponent implements OnInit {
   /** Columns to be displayed in account number preferences table. */
   displayedColumns: string[] = ['accountType'];
   /** Data source for account number preferences table. */
-  dataSource: MatTableDataSource<any>;
+  dataSource!: MatTableDataSource<any>;
 
   /** Paginator for account number preferences table. */
-  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+  @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
   /** Sorter for account number preferences table. */
-  @ViewChild(MatSort, { static: true }) sort: MatSort;
+  @ViewChild(MatSort, { static: true }) sort!: MatSort;
 
   /**
    * Retrieves the account number preferences data from `resolve`.
    * @param {ActivatedRoute} route Activated Route.
    */
   constructor(private route: ActivatedRoute) {
-    this.route.data.subscribe((data: { accountNumberPreferences: any }) => {
+    this.route.data.subscribe((data: { accountNumberPreferences?: any }) => {
       this.accountNumberPreferencesData = data.accountNumberPreferences;
     });
   }

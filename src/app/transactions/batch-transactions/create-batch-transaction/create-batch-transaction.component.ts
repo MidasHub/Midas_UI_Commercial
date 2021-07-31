@@ -353,9 +353,8 @@ export class CreateBatchTransactionComponent implements OnInit {
       member: member,
     };
 
-    form
-      .get("requestAmount")
-      .valueChanges.pipe(
+  
+    form.get("requestAmount")?.valueChanges.pipe(
         debounce(() => timer(1000)),
         distinctUntilChanged(null, (event: any) => {
           return event;
@@ -367,16 +366,14 @@ export class CreateBatchTransactionComponent implements OnInit {
           this.terminalsService.getListTerminalAvailable(value, "SI").subscribe((result) => {
             // @ts-ignore
             form?.data.terminals = result?.result?.listTerminal;
-            form.get("terminalId").setValidators([Validators.required]);
+            form.get("terminalId")?.setValidators([Validators.required]);
           });
         }
       });
     form.valueChanges.subscribe((e) => {
       this.onChangeTotal();
     });
-    form
-      .get("rate")
-      .valueChanges.pipe(
+    form.get("rate")?.valueChanges.pipe(
         debounce(() => timer(1000)),
         distinctUntilChanged(null, (event: any) => {
           return event;
@@ -388,7 +385,7 @@ export class CreateBatchTransactionComponent implements OnInit {
         // @ts-ignore
         const { minRate, maxRate, cogsRate } = form?.data?.feeTerminalDto;
         if (rate < minRate || rate > maxRate) {
-          form.get("rate").setValue(maxRate);
+          form.get("rate")?.setValue(maxRate);
           rate = maxRate;
           // @ts-ignore
           form.get("pnlRate").setValue(Number(maxRate - cogsRate).toFixed(2));
@@ -400,8 +397,8 @@ export class CreateBatchTransactionComponent implements OnInit {
           // @ts-ignore
           form.get("pnlRate").setValue(Number(rate - cogsRate).toFixed(2));
         }
-        const terminalAmount = form.get("terminalAmount").value;
-        form.get("fee").setValue(Number(terminalAmount * (rate / 100)).toFixed(0));
+        const terminalAmount = form.get("terminalAmount")?.value;
+        form.get("fee")?.setValue(Number(terminalAmount * (rate / 100)).toFixed(0));
       });
     this.bankServices?.getInfoBinCode(member.cardNumber.slice(0, 6)).subscribe((result) => {
       if (result) {
@@ -409,12 +406,12 @@ export class CreateBatchTransactionComponent implements OnInit {
         form.data.binCodeInfo = result;
       }
     });
-    form.get("productId").valueChanges.subscribe((result) => {
-      const cardNumber = form.get("identitydocumentsId").value;
+    form.get("productId")?.valueChanges.subscribe((result) => {
+      const cardNumber = form.get("identitydocumentsId")?.value;
       let newRate = this.getFee(cardNumber, result);
-      form.get("rate").setValue(newRate);
+      form.get("rate")?.setValue(newRate);
     });
-    form.get("terminalId").valueChanges.subscribe((terminalId) => {
+    form.get("terminalId")?.valueChanges.subscribe((terminalId) => {
       if (terminalId) {
         // @ts-ignore
         if (!form.data.binCodeInfo) {
@@ -430,8 +427,8 @@ export class CreateBatchTransactionComponent implements OnInit {
         }
       }
 
-      const amount = form.get("requestAmount").value;
-      const rate = form.get("rate").value;
+      const amount = form.get("requestAmount")?.value;
+      const rate = form.get("rate")?.value;
       // @ts-ignore
       // tslint:disable-next-line:no-shadowed-variable
       const { documentId } = form.data.member;
@@ -454,15 +451,15 @@ export class CreateBatchTransactionComponent implements OnInit {
         }
       }
     });
-    form.get("terminalAmount").valueChanges.subscribe((result) => {
-      const rate = form.get("rate").value;
-      const cogsRate = form.get("cogsRate").value;
+    form.get("terminalAmount")?.valueChanges.subscribe((result) => {
+      const rate = form.get("rate")?.value;
+      const cogsRate = form.get("cogsRate")?.value;
       const fee = Number(result * (rate / 100)).toFixed(0);
-      form.get("fee").setValue(fee);
+      form.get("fee")?.setValue(fee);
       const feeCP = Number(result * (cogsRate / 100)).toFixed(0);
-      form.get("feeCP").setValue(feeCP);
+      form.get("feeCP")?.setValue(feeCP);
       // @ts-ignore
-      form.get("feePNL").setValue(Number(fee - feeCP).toFixed(0));
+      form.get("feePNL")?.setValue(Number(fee - feeCP).toFixed(0));
     });
     return form;
   }

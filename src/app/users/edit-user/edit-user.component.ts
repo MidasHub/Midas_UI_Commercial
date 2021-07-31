@@ -25,7 +25,7 @@ export class EditUserComponent implements OnInit {
   /** Roles Data */
   rolesData: any;
   /** Edit User form. */
-  editUserForm: FormGroup;
+  editUserForm!: FormGroup;
 
   /**
    * Retrieves the offices data from `resolve`.
@@ -38,7 +38,7 @@ export class EditUserComponent implements OnInit {
               private usersService: UsersService,
               private route: ActivatedRoute,
               private router: Router) {
-    this.route.data.subscribe((data: { user: any, usersTemplate: any }) => {
+    this.route.data.subscribe((data: { user?: any, usersTemplate?: any }) => {
       this.userData = data.user;
       this.officesData = data.usersTemplate.allowedOffices;
       this.rolesData = data.usersTemplate.availableRoles;

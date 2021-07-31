@@ -24,7 +24,7 @@ export class HookResolver implements Resolve<Object> {
    * @returns {Observable<any>}
    */
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
-    const hookId = route.paramMap.get('id');
+    const hookId = route.paramMap.get('id')||'';
     return this.systemService.getHook(hookId);
   }
 

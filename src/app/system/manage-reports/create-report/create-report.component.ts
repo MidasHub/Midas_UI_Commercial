@@ -25,11 +25,11 @@ import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.co
 export class CreateReportComponent implements OnInit {
 
   /** Report Form. */
-  reportForm: FormGroup;
+  reportForm!: FormGroup;
   /** Report Template Data. */
   reportTemplateData: any;
   /** Data passed to dialog. */
-  dataForDialog: { allowedParameters: any[], parameterName: string, reportParameterName: string } =
+  dataForDialog: { allowedParameters?: any[], parameterName?: string, reportParameterName?: string } =
     {
       allowedParameters: undefined,
       parameterName: undefined,
@@ -38,13 +38,13 @@ export class CreateReportComponent implements OnInit {
   /** Columns to be displayed in report parameters table. */
   displayedColumns: string[] = ['parameterName', 'parameterNamePassed', 'actions'];
   /** Data source for report parameters table. */
-  dataSource: MatTableDataSource<any>;
+  dataSource!: MatTableDataSource<any>;
   /** Report Parameters Data. */
   reportParametersData: any[] = [];
   /** Paginator for report parameters table. */
-  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+  @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
   /** Sorter for report parameters table. */
-  @ViewChild(MatSort, { static: true }) sort: MatSort;
+  @ViewChild(MatSort, { static: true }) sort!: MatSort;
 
   /**
    * Retrieves the report template data from `resolve`.
@@ -59,7 +59,7 @@ export class CreateReportComponent implements OnInit {
               private route: ActivatedRoute,
               private router: Router,
               private dialog: MatDialog) {
-    this.route.data.subscribe((data: { reportTemplate: any }) => {
+    this.route.data.subscribe((data: { reportTemplate?: any }) => {
       this.reportTemplateData = data.reportTemplate;
       this.dataForDialog.allowedParameters = this.reportTemplateData.allowedParameters;
     });
@@ -159,20 +159,20 @@ export class CreateReportComponent implements OnInit {
    * Toggles the visibility status of Report Sub Type dropdown.
    */
   toggleVisibility() {
-    this.reportForm.get('reportType').valueChanges
+    this.reportForm.get('reportType')?.valueChanges
       .subscribe(type => {
         switch (type) {
           case 'Chart':
-            this.reportForm.get('reportSubType').enable();
-            this.reportForm.get('reportSql').enable();
+            this.reportForm.get('reportSubType')?.enable();
+            this.reportForm.get('reportSql')?.enable();
             break;
           case 'Pentaho':
-            this.reportForm.get('reportSql').disable();
-            this.reportForm.get('reportSubType').disable();
+            this.reportForm.get('reportSql')?.disable();
+            this.reportForm.get('reportSubType')?.disable();
             break;
           default:
-            this.reportForm.get('reportSql').enable();
-            this.reportForm.get('reportSubType').disable();
+            this.reportForm.get('reportSql')?.enable();
+            this.reportForm.get('reportSubType')?.disable();
         }
       });
   }

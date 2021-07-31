@@ -45,7 +45,7 @@ export class AuditTrailsComponent implements OnInit, AfterViewInit {
   /** Columns to be displayed in audit trails table. */
   displayedColumns: string[] = ['id', 'resourceId', 'processingResult', 'maker', 'actionName', 'entityName', 'officeName', 'madeOnDate', 'checker', 'checkedOnDate'];
   /** Data source for audit trails table. */
-  dataSource: AuditTrailsDataSource;
+  dataSource!: AuditTrailsDataSource;
   /** Audit Trails filter. */
   filterAuditTrailsBy = [
     {
@@ -119,9 +119,9 @@ export class AuditTrailsComponent implements OnInit, AfterViewInit {
   checker = new FormControl();
 
   /** Paginator for audit trails table. */
-  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+  @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
   /** Sorter for audit trails table. */
-  @ViewChild(MatSort, { static: true }) sort: MatSort;
+  @ViewChild(MatSort, { static: true }) sort!: MatSort;
 
   /**
    * Retrieves the audit trail search template data from `resolve`.
@@ -131,7 +131,7 @@ export class AuditTrailsComponent implements OnInit, AfterViewInit {
   constructor(private route: ActivatedRoute,
               private systemService: SystemService,
               private datePipe: DatePipe) {
-    this.route.data.subscribe((data: { auditTrailSearchTemplate: any }) => {
+    this.route.data.subscribe((data: { auditTrailSearchTemplate?: any }) => {
       this.auditTrailSearchTemplateData = data.auditTrailSearchTemplate;
     });
   }
@@ -168,7 +168,7 @@ export class AuditTrailsComponent implements OnInit, AfterViewInit {
         debounceTime(500),
         distinctUntilChanged(),
         tap((filterValue) => {
-          this.applyFilter(this.getDate(filterValue), 'makerDateTimeFrom');
+          this.applyFilter(this.getDate(filterValue)!, 'makerDateTimeFrom');
         })
       ).subscribe();
 
@@ -177,7 +177,7 @@ export class AuditTrailsComponent implements OnInit, AfterViewInit {
         debounceTime(500),
         distinctUntilChanged(),
         tap((filterValue) => {
-          this.applyFilter(this.getDate(filterValue), 'makerDateTimeTo');
+          this.applyFilter(this.getDate(filterValue)!, 'makerDateTimeTo');
         })
       ).subscribe();
 
@@ -186,7 +186,7 @@ export class AuditTrailsComponent implements OnInit, AfterViewInit {
         debounceTime(500),
         distinctUntilChanged(),
         tap((filterValue) => {
-          this.applyFilter(this.getDate(filterValue), 'checkerDateTimeFrom');
+          this.applyFilter(this.getDate(filterValue)!, 'checkerDateTimeFrom');
         })
       ).subscribe();
 
@@ -195,7 +195,7 @@ export class AuditTrailsComponent implements OnInit, AfterViewInit {
         debounceTime(500),
         distinctUntilChanged(),
         tap((filterValue) => {
-          this.applyFilter(this.getDate(filterValue), 'checkerDateTimeTo');
+          this.applyFilter(this.getDate(filterValue)!, 'checkerDateTimeTo');
         })
       ).subscribe();
 
@@ -259,7 +259,8 @@ export class AuditTrailsComponent implements OnInit, AfterViewInit {
    */
   loadAuditTrailsPage() {
     if (!this.sort.direction) {
-      delete this.sort.active;
+      // delete this.sort.active ;
+      this.sort.active  = '';
     }
     this.dataSource.getAuditTrails(this.filterAuditTrailsBy, this.sort.active, this.sort.direction, this.paginator.pageIndex, this.paginator.pageSize);
   }

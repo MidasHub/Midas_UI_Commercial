@@ -20,16 +20,16 @@ import { MatSlideToggleChange } from '@angular/material/slide-toggle';
   styleUrls: ['./partner-tab.component.scss']
 })
 export class PartnerTabComponent implements OnInit {
-  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
-  @ViewChild(MatSort, { static: true }) sort: MatSort;
+  @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
+  @ViewChild(MatSort, { static: true }) sort!: MatSort;
   //@ViewChild('showClosedPartners', { static: true }) showClosedPartners: MatCheckbox;
 
 
-  partners:any[];
-  dataSource: MatTableDataSource<any>;
+  partners!:any[];
+  dataSource!: MatTableDataSource<any>;
   displayedColumns =  ['code', 'desc', 'typeCheckValid', 'status', 'limit', 'action'];
-  partnersDataActive:any[];
-  partnersDataInActive:any[];
+  partnersDataActive!:any[];
+  partnersDataInActive!:any[];
   selectedIndex: number = 0;
 
   constructor(
