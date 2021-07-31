@@ -418,12 +418,14 @@ export class SavingsService {
     fromDate: string,
     note: string,
     txnCode: string,
-    paymentDetail: string
+    paymentDetail: string,
+    routingCode: string
+
   ) {
     this.accessToken = JSON.parse(
       sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey)
     );
-    const url = `${environment.GatewayApiUrl}${this.GatewayApiUrlPrefix}/export/download_export_transaction_saving?accessToken=${this.accessToken.base64EncodedAuthenticationKey}&fromDate=${fromDate}&toDate=${toDate}&accountId=${accountId}&note=${note}&txnCode=${txnCode}&paymentDetail=${paymentDetail}&createdBy=${this.accessToken.userId}`;
+    const url = `${environment.GatewayApiUrl}${this.GatewayApiUrlPrefix}/export/download_export_transaction_saving?accessToken=${this.accessToken.base64EncodedAuthenticationKey}&fromDate=${fromDate}&toDate=${toDate}&accountId=${accountId}&note=${note}&txnCode=${txnCode}&paymentDetail=${paymentDetail}&routingCode=${routingCode}&createdBy=${this.accessToken.userId}`;
     this.getExportExcelFile(url).subscribe((data: any) => {
       const downloadURL = window.URL.createObjectURL(data);
       const link = document.createElement("a");
