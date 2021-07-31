@@ -400,14 +400,22 @@ export class SavingsService {
     );
   }
 
-  getExportExcelFile(url: string) {
-    const httpOptions = {
+  getExportExcelFile(url: string, isIcReport: boolean) {
+    let httpOptions = {
       responseType: "blob" as "json",
       headers: new HttpHeaders({
         "Gateway-TenantId": window.localStorage.getItem("Gateway-TenantId"),
-        "Ic-TenantId": "default",
       }),
     };
+    if (isIcReport){
+      httpOptions = {
+        responseType: "blob" as "json",
+        headers: new HttpHeaders({
+          "Gateway-TenantId": window.localStorage.getItem("Gateway-TenantId"),
+          "Ic-TenantId": "default",
+        }),
+      };
+    }
 
     return this.http.get(url, httpOptions);
   }
@@ -426,7 +434,7 @@ export class SavingsService {
       sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey)
     );
     const url = `${environment.GatewayApiUrl}${this.GatewayApiUrlPrefix}/export/download_export_transaction_saving?accessToken=${this.accessToken.base64EncodedAuthenticationKey}&fromDate=${fromDate}&toDate=${toDate}&accountId=${accountId}&note=${note}&txnCode=${txnCode}&paymentDetail=${paymentDetail}&routingCode=${routingCode}&createdBy=${this.accessToken.userId}`;
-    this.getExportExcelFile(url).subscribe((data: any) => {
+    this.getExportExcelFile(url, false).subscribe((data: any) => {
       const downloadURL = window.URL.createObjectURL(data);
       const link = document.createElement("a");
       link.href = downloadURL;
@@ -447,7 +455,7 @@ export class SavingsService {
       sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey)
     );
     const url = `${environment.IcGatewayApiUrl}${this.IcGatewayApiUrlPrefix}/export/download_export_transaction_saving?accessToken=${this.accessToken.base64EncodedAuthenticationKey}&fromDate=${fromDate}&toDate=${toDate}&accountId=${accountId}&note=${note}&txnCode=${txnCode}&paymentDetail=${paymentDetail}&createdBy=${this.accessToken.userId}`;
-    this.getExportExcelFile(url).subscribe((data: any) => {
+    this.getExportExcelFile(url, true).subscribe((data: any) => {
       const downloadURL = window.URL.createObjectURL(data);
       const link = document.createElement("a");
       link.href = downloadURL;
