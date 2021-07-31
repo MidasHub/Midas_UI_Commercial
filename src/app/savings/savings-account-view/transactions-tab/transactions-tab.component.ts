@@ -173,6 +173,7 @@ export class TransactionsTabComponent implements OnInit {
     const note = this.form.get("note").value;
     const txnCode = this.form.get("txnCode").value;
     const paymentDetail = this.form.get("paymentDetail").value;
+    const routingCode = this.form.get("routingCode").value;
     const isRevert = this.form.get("isRevert").value;
 
     this.savingsService.downloadReport(
@@ -181,7 +182,8 @@ export class TransactionsTabComponent implements OnInit {
       fromDate,
       note,
       txnCode,
-      paymentDetail
+      paymentDetail,
+      routingCode
     );
   }
 
