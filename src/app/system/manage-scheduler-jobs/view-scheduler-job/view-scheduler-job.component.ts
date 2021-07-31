@@ -20,7 +20,7 @@ export class ViewSchedulerJobComponent {
    * @param {ActivatedRoute} route Activated Route.
    */
   constructor(private route: ActivatedRoute) {
-    this.route.data.subscribe((data: { selectedJob: any }) => {
+    this.route.data.subscribe((data: { selectedJob?: any }) => {
       this.jobData = data.selectedJob;
     });
   }

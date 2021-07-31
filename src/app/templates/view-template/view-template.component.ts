@@ -33,7 +33,7 @@ export class ViewTemplateComponent {
               private templatesService: TemplatesService,
               private router: Router,
               private dialog: MatDialog) {
-    this.route.data.subscribe((data: { template: any }) => {
+    this.route.data.subscribe((data: { template?: any }) => {
       this.templateData = data.template;
     });
   }

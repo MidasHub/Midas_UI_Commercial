@@ -24,11 +24,11 @@ export class RescheduleLoanComponent implements OnInit {
   /** Loans Data */
   loans: any;
   /** Datasource */
-  dataSource: MatTableDataSource<any>;
+  dataSource!: MatTableDataSource<any>;
   /** Rows Selection Data */
-  selection: SelectionModel<any>;
+  selection!: SelectionModel<any>;
   /** Batch Requests */
-  batchRequests: any[];
+  batchRequests!: any[];
   /** Displayed Columns */
   displayedColumns: string[] = ['select', 'client', 'rescheduleRequestNo', 'loanAccountNo', 'rescheduleForm', 'rescheduleReason'];
 
@@ -47,10 +47,10 @@ export class RescheduleLoanComponent implements OnInit {
     private router: Router,
     private settingsService: SettingsService,
     private tasksService: TasksService) {
-    this.route.data.subscribe((data: { recheduleLoansData: any }) => {
+    this.route.data.subscribe((data: { recheduleLoansData?: any }) => {
       this.loans = data.recheduleLoansData;
       this.dataSource = new MatTableDataSource(this.loans);
-      this.selection = new SelectionModel(true, []);
+      this.selection = new SelectionModel<any>(true, []) ;
     });
   }
 
@@ -68,7 +68,7 @@ export class RescheduleLoanComponent implements OnInit {
   masterToggle() {
     this.isAllSelected() ?
       this.selection.clear() :
-      this.dataSource.data.forEach((row: any) => this.selection.select(row));
+      this.dataSource.data.forEach((row?: any) => this.selection.select(row!));
   }
 
   /** The label for the checkbox on the passed row */
@@ -83,7 +83,7 @@ export class RescheduleLoanComponent implements OnInit {
     const rescheduleLoanDialogRef = this.dialog.open(ConfirmationDialogComponent, {
       data: { heading: 'Reschedule Loan', dialogContext: 'Are you sure you want to Reschedule Loan' }
     });
-    rescheduleLoanDialogRef.afterClosed().subscribe((response: { confirm: any }) => {
+    rescheduleLoanDialogRef.afterClosed().subscribe((response: { confirm?: any }) => {
       if (response.confirm) {
         this.bulkLoanRescheduleApproval();
       }

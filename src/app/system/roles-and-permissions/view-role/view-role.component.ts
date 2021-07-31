@@ -24,7 +24,7 @@ export class ViewRoleComponent implements OnInit {
   /** Role Permissions Data */
   rolePermissionService: any;
   /** Stores the current grouping */
-  currentGrouping: string;
+  currentGrouping!: string;
   /** Stores the previous grouping */
   previousGrouping = '';
   /** Stores Grouping Data */
@@ -40,15 +40,15 @@ export class ViewRoleComponent implements OnInit {
   /** Role ID */
   roleId: any;
   /** Creates permission form  */
-  formGroup: FormGroup;
+  formGroup!: FormGroup;
   /** Creates Backup form */
-  backupform: FormGroup;
+  backupform!: FormGroup;
   /** Temporarily stores Permission data */
-  tempPermissionUIData: {
+  tempPermissionUIData!: {
     permissions: { code: string }[]
   }[];
   /** Stores permissions */
-  permissions: {
+  permissions!: {
     permissions: { code: string, id: number }[]
   };
 
@@ -65,7 +65,7 @@ export class ViewRoleComponent implements OnInit {
     private router: Router,
     private formBuilder: FormBuilder,
     public dialog: MatDialog) {
-    this.route.data.subscribe((data: { roledetails: any }) => {
+    this.route.data.subscribe((data: { roledetails?: any }) => {
       this.rolePermissionService = data.roledetails;
     });
   }
@@ -202,7 +202,7 @@ export class ViewRoleComponent implements OnInit {
    * Submits the modified permissions
    */
   submit() {
-    const value = this.formGroup.get('roster').value;
+    const value = this.formGroup.get('roster')?.value;
     const data = {};
     const permissionData = {
       permissions: {}

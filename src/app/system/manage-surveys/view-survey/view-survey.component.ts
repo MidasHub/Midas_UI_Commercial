@@ -33,7 +33,7 @@ export class ViewSurveyComponent implements OnInit {
               private systemService: SystemService,
               private dialog: MatDialog,
               private router: Router) {
-    this.route.data.subscribe((data: { survey: any }) => {
+    this.route.data.subscribe((data: { survey?: any }) => {
       this.surveyData = data.survey;
     });
   }

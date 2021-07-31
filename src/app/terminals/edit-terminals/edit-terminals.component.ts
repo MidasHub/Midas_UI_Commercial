@@ -30,9 +30,9 @@ export interface PeriodicElements {
   styleUrls: ["./edit-terminals.component.scss"],
 })
 export class EditTerminalsComponent implements OnInit, AfterViewInit {
-  @ViewChild(MatSort) sort: MatSort;
-  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
-  editTerminalForm: FormGroup;
+  @ViewChild(MatSort) sort!: MatSort;
+  @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
+  editTerminalForm!: FormGroup;
   officeSelect = new FormControl();
   offices: any;
   terminalData: any;
@@ -87,7 +87,7 @@ export class EditTerminalsComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
-    this.route.data.subscribe((data: { terminalData: any }) => {
+    this.route.data.subscribe((data: { terminalData?: any }) => {
       this.terminalData = data.terminalData.result;
       this.isOwner = this.terminalData.isOwner;
       this.merchants = data.terminalData.result.Merchants;

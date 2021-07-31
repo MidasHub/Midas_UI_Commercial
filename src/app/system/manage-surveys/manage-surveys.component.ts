@@ -20,19 +20,19 @@ export class ManageSurveysComponent implements OnInit {
   /* Columns to be displayed in manage surveys data table */
   displayedColumns: string[] = ['key', 'name', 'description', 'countryCode', 'status', 'action'];
   /* Data source for manage surveys data table */
-  dataSource: MatTableDataSource<any>;
+  dataSource!: MatTableDataSource<any>;
 
   /** Paginator for manage surveys table. */
-  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+  @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
   /** Sorter for manage surveys table. */
-  @ViewChild(MatSort, { static: true }) sort: MatSort;
+  @ViewChild(MatSort, { static: true }) sort!: MatSort;
 
   /**
    * Retrieves the surveys data from `resolve`.
    * @param {ActivatedRoute} route Activated Route.
    */
   constructor(private route: ActivatedRoute) {
-    this.route.data.subscribe(( data: { surveys: any }) => {
+    this.route.data.subscribe(( data: { surveys?: any }) => {
       this.surveysData = data.surveys;
     });
   }
@@ -52,7 +52,7 @@ export class ManageSurveysComponent implements OnInit {
    */
   ngOnInit() {
     this.setSurveys();
-    this.dataSource.sortingDataAccessor = (item, property) => {
+    this.dataSource.sortingDataAccessor = (item: any, property:any) => {
       switch (property) {
         case 'status': return this.isActive(item.validFrom, item.validTo);
         case 'action': return this.isActive(item.validFrom, item.validTo);

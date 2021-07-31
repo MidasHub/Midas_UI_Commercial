@@ -38,8 +38,8 @@ export class ManageTransferComponent implements OnInit {
   formDate: FormGroup;
   formFilter: FormGroup;
 
-  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
-  @ViewChild(MatSort, { static: true }) sort: MatSort;
+  @ViewChild(MatPaginator, { static: true }) paginator?: MatPaginator;
+  @ViewChild(MatSort, { static: true }) sort?: MatSort;
 
   constructor(
     private authenticationService: AuthenticationService,
@@ -66,8 +66,8 @@ export class ManageTransferComponent implements OnInit {
   }
 
   ngAfterViewInit() {
-    this.sort.sortChange.subscribe(() => (this.paginator.pageIndex = 0));
-    merge(this.sort.sortChange, this.paginator.page)
+    this.sort?.sortChange.subscribe(() => (this.paginator!.pageIndex = 0));
+    merge(this.sort!.sortChange, this.paginator!.page)
       .pipe(tap(() => this.loadData()))
       .subscribe();
   }
@@ -81,8 +81,8 @@ export class ManageTransferComponent implements OnInit {
   }
 
   get fromDateAndToDate() {
-    const fromDate = this.formDate.get("fromDate").value;
-    const toDate = this.formDate.get("toDate").value;
+    const fromDate = this.formDate.get("fromDate")?.value;
+    const toDate = this.formDate.get("toDate")?.value;
     if (fromDate && toDate) {
       return true;
     }
@@ -90,15 +90,15 @@ export class ManageTransferComponent implements OnInit {
   }
 
   reset(){
-    this.formFilter.get('transferRefNo').setValue("");
-    this.formFilter.get('actionStaffName').setValue("");
-    this.formFilter.get('senderStaffName').setValue("");
-    this.formFilter.get('receiverStaffName').setValue("");
+    this.formFilter.get('transferRefNo')!.setValue("");
+    this.formFilter.get('actionStaffName')!.setValue("");
+    this.formFilter.get('senderStaffName')!.setValue("");
+    this.formFilter.get('receiverStaffName')!.setValue("");
   }
 
   getListTransfer(){
-    this.fromDate = this.datePipe.transform(this.formDate.get("fromDate").value, 'dd/MM/yyyy');
-    this.toDate = this.datePipe.transform(this.formDate.get("toDate").value, 'dd/MM/yyyy');
+    this.fromDate = this.datePipe.transform(this.formDate.get("fromDate")?.value, 'dd/MM/yyyy');
+    this.toDate = this.datePipe.transform(this.formDate.get("toDate")?.value, 'dd/MM/yyyy');
     this.transactionServices.getListTransfer(this.fromDate, this.toDate, this.officeId).subscribe((data) => {
       this.dataSource = data.result.listRequest;
       this.dataFilter = this.dataSource;
@@ -107,8 +107,8 @@ export class ManageTransferComponent implements OnInit {
   }
 
   loadData() {
-    const pageIndex = this.paginator.pageIndex;
-    const pageSize = this.paginator.pageSize;
+    const pageIndex = this.paginator!.pageIndex;
+    const pageSize = this.paginator!.pageSize;
     this.dataShow = this.dataFilter.slice(pageIndex * pageSize, pageIndex * pageSize + pageSize);
   }
 
@@ -123,7 +123,7 @@ export class ManageTransferComponent implements OnInit {
       }
       return true;
     });
-    this.paginator.pageIndex = 0;
+    this.paginator!.pageIndex = 0;
     this.loadData();
   }
 
@@ -145,7 +145,7 @@ export class ManageTransferComponent implements OnInit {
           return 0;
       }
     });
-    this.paginator.pageIndex = 0;
+    this.paginator!.pageIndex = 0;
     this.loadData();
   }
 

@@ -16,12 +16,12 @@ import { TransferTerminalComponent } from './transfer-terminal/transfer-terminal
   styleUrls: ['./terminals.component.scss']
 })
 export class TerminalsComponent implements OnInit, AfterViewInit {
-  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
-  @ViewChild(MatSort, { static: true }) sort: MatSort;
+  @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
+  @ViewChild(MatSort, { static: true }) sort!: MatSort;
   viewTerminals = new FormControl('viewTerminals');
   displayedColumns =  ['terminalNo', 'terminalName',  'status', 'createdBy','createdDate','updatedDate','action'];
 
-  searchQuery: string;
+  searchQuery?: string;
   dataSource = new MatTableDataSource<TerminalObj>();
   dataSourceDefault:any;
   terminalsData: TerminalObj[] = [];

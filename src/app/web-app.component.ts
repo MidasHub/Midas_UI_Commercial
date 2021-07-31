@@ -54,10 +54,10 @@ declare const gtag: Function;
   styleUrls: ["./web-app.component.scss"],
 })
 export class WebAppComponent implements OnInit {
-  buttonConfig: KeyboardShortcutsConfiguration;
+  buttonConfig?: KeyboardShortcutsConfiguration;
   deviceInfo: any;
-  public lat: String;
-  public lng: String;
+  public lat?: String;
+  public lng?: String;
 
   /**
    * @param {Router} router Router for navigation.
@@ -88,11 +88,12 @@ export class WebAppComponent implements OnInit {
     /** Activate GoogleAnalytic */
     this.addGAScript();
 
-    this.router.events.pipe(filter((event) => event instanceof NavigationEnd)).subscribe((event: NavigationEnd) => {
+    this.router.events.pipe(filter((event) => event instanceof NavigationEnd)).subscribe((event) => {
       /** START : Code to Track Page View  */
-      log.info("GA: ", event?.urlAfterRedirects);
-      gtag("event", "page_view_" + window.location.hostname + event?.urlAfterRedirects.replace("/", "#"), {
-        page_path: event?.urlAfterRedirects,
+      let event_ = event as NavigationEnd;
+      log.info("GA: ", event_?.urlAfterRedirects);
+      gtag("event", "page_view_" + window.location.hostname + event_?.urlAfterRedirects.replace("/", "#"), {
+        page_path: event_?.urlAfterRedirects,
       });
       //gtag('config', environment.GA_TRACKING_ID, {'page_path': event.urlAfterRedirects});
       /** Multi GA testing */
@@ -152,7 +153,7 @@ export class WebAppComponent implements OnInit {
     // Stores top 100 user activites as local storage object.
     let activities: string[] = [];
     if (sessionStorage.getItem("midasLocation")) {
-      const activitiesArray: string[] = JSON.parse(sessionStorage.getItem("midasLocation"));
+      const activitiesArray: string[] = JSON.parse(sessionStorage.getItem("midasLocation") || '');
       const length = activitiesArray.length;
       activities = length > 100 ? activitiesArray.slice(length - 100) : activitiesArray;
     }
@@ -177,7 +178,7 @@ export class WebAppComponent implements OnInit {
           duration: alertEvent.msgDuration ? alertEvent.msgDuration : 7000,
           horizontalPosition: alertEvent.hPosition ? alertEvent.hPosition : "right",
           verticalPosition: alertEvent.vPosition ? alertEvent.vPosition : "top",
-          panelClass: [alertEvent.msgClass],
+          panelClass: [alertEvent.msgClass ||''] ,
         }
       );
     });
@@ -297,7 +298,7 @@ export class WebAppComponent implements OnInit {
   // Monitor all keyboard events and excute keyboard shortcuts
   @HostListener("window:keydown", ["$event"])
   onKeydownHandler(event: KeyboardEvent) {
-    const routeD = this.buttonConfig.buttonCombinations.find(
+    const routeD = this.buttonConfig?.buttonCombinations.find(
       (x) =>
         x.ctrlKey === event.ctrlKey && x.shiftKey === event.shiftKey && x.altKey === event.altKey && x.key === event.key
     );
@@ -310,7 +311,7 @@ export class WebAppComponent implements OnInit {
           this.help();
           break;
         case "runReport":
-          document.getElementById("runReport").click();
+          document.getElementById("runReport")!.click();
           break;
         case "cancel":
           const cancelButtons = document.querySelectorAll("button");

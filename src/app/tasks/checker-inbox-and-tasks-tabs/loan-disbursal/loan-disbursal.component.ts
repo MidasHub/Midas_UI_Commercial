@@ -23,11 +23,11 @@ export class LoanDisbursalComponent {
   /** Loans Data */
   loans: any;
   /** Batch Requests */
-  batchRequests: any[];
+  batchRequests?: any[];
   /** Datasource for loans disbursal table */
-  dataSource: MatTableDataSource<any>;
+  dataSource!: MatTableDataSource<any>;
   /** Row Selection */
-  selection: SelectionModel<any>;
+  selection?: SelectionModel<any>;
   /** Displayed Columns for loan disbursal data */
   displayedColumns: string[] = ['select', 'client', 'loanAccountNumber', 'loanProduct', 'principal'];
 
@@ -45,19 +45,19 @@ export class LoanDisbursalComponent {
     private datePipe: DatePipe,
     private settingsService: SettingsService,
     private tasksService: TasksService) {
-    this.route.data.subscribe((data: { loansData: any }) => {
+    this.route.data.subscribe((data: { loansData?: any }) => {
       this.loans = data.loansData.pageItems;
       this.loans = this.loans.filter((account: any) => {
         return (account.status.waitingForDisbursal === true);
       });
       this.dataSource = new MatTableDataSource(this.loans);
-      this.selection = new SelectionModel(true, []);
+      this.selection = new SelectionModel<any>(true, []);
     });
   }
 
   /** Whether the number of selected elements matches the total number of rows. */
   isAllSelected() {
-    const numSelected = this.selection.selected.length;
+    const numSelected = this.selection?.selected.length;
     const numRows = this.dataSource.data.length;
     return numSelected === numRows;
   }
@@ -65,8 +65,8 @@ export class LoanDisbursalComponent {
   /** Selects all rows if they are not all selected; otherwise clear selection. */
   masterToggle() {
     this.isAllSelected() ?
-      this.selection.clear() :
-      this.dataSource.data.forEach((row: any) => this.selection.select(row));
+      this.selection?.clear() :
+      this.dataSource.data.forEach((row: any) => this.selection?.select(row));
   }
 
   /** The label for the checkbox on the passed row */
@@ -74,7 +74,7 @@ export class LoanDisbursalComponent {
     if (!row) {
       return `${this.isAllSelected() ? 'select' : 'deselect'} all`;
     }
-    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.position + 1}`;
+    return `${this.selection?.isSelected(row) ? 'deselect' : 'select'} row ${row.position + 1}`;
   }
 
   disburseLoan() {
@@ -97,16 +97,16 @@ export class LoanDisbursalComponent {
       approvedOnDate,
       locale
     };
-    const selectedAccounts = this.selection.selected.length;
-    const listSelectedAccounts = this.selection.selected;
+    const selectedAccounts = this.selection?.selected.length;
+    const listSelectedAccounts = this.selection?.selected;
     let approvedAccounts = 0;
     this.batchRequests = [];
     let reqId = 1;
-    listSelectedAccounts.forEach((element: any) => {
+    listSelectedAccounts?.forEach((element: any) => {
       const url = 'loans/' + element.id + '?command=disburse';
       const bodyData = JSON.stringify(formData);
       const batchData = { requestId: reqId++, relativeUrl: url, method: 'POST', body: bodyData };
-      this.batchRequests.push(batchData);
+      this.batchRequests?.push(batchData);
     });
     this.tasksService.submitBatchData(this.batchRequests).subscribe((response: any) => {
       response.forEach((responseEle: any) => {
@@ -128,7 +128,7 @@ export class LoanDisbursalComponent {
         return (account.status.waitingForDisbursal === true);
       });
       this.dataSource = new MatTableDataSource(this.loans);
-      this.selection = new SelectionModel(true, []);
+      this.selection = new SelectionModel<any>(true, []);
     });
   }
 

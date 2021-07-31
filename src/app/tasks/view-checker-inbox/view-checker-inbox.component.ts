@@ -35,7 +35,7 @@ export class ViewCheckerInboxComponent {
     private dialog: MatDialog,
     private router: Router,
     private tasksService: TasksService) {
-    this.route.data.subscribe((data: { checkerInboxDetail: any }) => {
+    this.route.data.subscribe((data: { checkerInboxDetail?: any }) => {
       this.checkerInboxDetail = data.checkerInboxDetail;
       this.jsondata = JSON.parse(this.checkerInboxDetail.commandAsJson);
       this.displayJSONData = !(_.isEmpty(this.jsondata));

@@ -26,21 +26,21 @@ export class ManageSchedulerJobsComponent implements OnInit {
   /** Columns to be displayed in manage scheduler jobs table. */
   displayedColumns: string[] = ['select', 'displayName', 'nextRunTime', 'previousRunTime', 'previousRunStatus', 'currentlyRunning', 'errorLog'];
   /** Data source for manage scheduler jobs table. */
-  dataSource: MatTableDataSource<any>;
+  dataSource!: MatTableDataSource<any>;
   /** Initialize Selection */
   selection = new SelectionModel<any>(true, []);
 
   /** Paginator for table. */
-  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+  @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
   /** Sorter for manage scheduler jobs table. */
-  @ViewChild(MatSort, { static: true }) sort: MatSort;
+  @ViewChild(MatSort, { static: true }) sort!: MatSort;
 
   /**
    * Retrieves the scheduler jobs data from `resolve`.
    * @param {ActivatedRoute} route Activated Route.
    */
   constructor(private route: ActivatedRoute) {
-    this.route.data.subscribe((data: { jobsScheduler: any }) => {
+    this.route.data.subscribe((data: { jobsScheduler?: any }) => {
       this.jobData = data.jobsScheduler[0];
       this.schedulerData = data.jobsScheduler[1];
     });
@@ -77,7 +77,7 @@ export class ManageSchedulerJobsComponent implements OnInit {
    */
   ngOnInit() {
     this.setJobs();
-    this.dataSource.sortingDataAccessor = (item, property) => {
+    this.dataSource.sortingDataAccessor = (item: any , property: any) => {
       switch (property) {
         case 'previousRunStatus': return item.lastRunHistory.status;
         case 'errorLog': return item.lastRunHistory.status;

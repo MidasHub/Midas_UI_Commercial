@@ -28,15 +28,15 @@ export class LoanApprovalComponent {
   /** Checks whether to show data or not */
   showData = false;
   /** Data source for loans approval table. */
-  dataSource: MatTableDataSource<any>;
+  dataSource!: MatTableDataSource<any>;
   /** Row Selection Data */
-  selection: SelectionModel<any>;
+  selection?: SelectionModel<any>;
   /** Map data */
   idToNodeMap = {};
   /** Grouped Office Data */
-  officesArray: any[];
+  officesArray?: any[];
   /** List of Requests */
-  batchRequests: any[];
+  batchRequests?: any[];
   /** Displayed Columns */
   displayedColumns: string[] = ['select', 'clientName', 'loan', 'amount', 'loanPurpose'];
 
@@ -55,7 +55,7 @@ export class LoanApprovalComponent {
     private router: Router,
     private settingsService: SettingsService,
     private tasksService: TasksService) {
-    this.route.data.subscribe((data: { officesData: any, loansData: any }) => {
+    this.route.data.subscribe((data: { officesData?: any, loansData?: any }) => {
       this.offices = data.officesData;
       this.loans = data.loansData.pageItems;
       this.setOfficeData();
@@ -91,13 +91,13 @@ export class LoanApprovalComponent {
     });
     this.officesArray = finalArray;
     this.dataSource = new MatTableDataSource(this.officesArray);
-    this.selection = new SelectionModel(true, []);
+    this.selection = new SelectionModel<any>(true, []);
   }
 
   /** Whether the number of selected elements matches the total number of rows. */
   isAllSelected(dataSource2: any) {
     if (dataSource2) {
-      const numSelected = this.selection.selected;
+      const numSelected = this.selection!.selected;
       return _.difference(dataSource2, numSelected).length === 0;
     }
   }
@@ -106,8 +106,8 @@ export class LoanApprovalComponent {
   masterToggle(dataSource3: any) {
     if (dataSource3) {
       this.isAllSelected(dataSource3) ?
-        dataSource3.forEach((row: any) => this.selection.deselect(row)) :
-        dataSource3.forEach((row: any) => this.selection.select(row));
+        dataSource3.forEach((row: any) => this.selection!.deselect(row)) :
+        dataSource3.forEach((row: any) => this.selection!.select(row));
     }
   }
 
@@ -116,7 +116,7 @@ export class LoanApprovalComponent {
     if (!row) {
       return `${this.isAllSelected(row) ? 'select' : 'deselect'} all`;
     }
-    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.position + 1}`;
+    return `${this.selection!.isSelected(row) ? 'deselect' : 'select'} row ${row.position + 1}`;
   }
 
   approveLoan() {
@@ -139,8 +139,8 @@ export class LoanApprovalComponent {
       approvedOnDate,
       locale
     };
-    const selectedAccounts = this.selection.selected.length;
-    const listSelectedAccounts = this.selection.selected;
+    const selectedAccounts = this.selection!.selected.length;
+    const listSelectedAccounts = this.selection!.selected;
     let approvedAccounts = 0;
     this.batchRequests = [];
     let reqId = 1;
@@ -148,7 +148,7 @@ export class LoanApprovalComponent {
       const url = 'loans/' + element.id + '?command=approve';
       const bodyData = JSON.stringify(formData);
       const batchData = { requestId: reqId++, relativeUrl: url, method: 'POST', body: bodyData };
-      this.batchRequests.push(batchData);
+      this.batchRequests!.push(batchData);
     });
     this.tasksService.submitBatchData(this.batchRequests).subscribe((response: any) => {
       response.forEach((responseEle: any) => {
@@ -175,7 +175,7 @@ export class LoanApprovalComponent {
         return (account.status.waitingForDisbursal === true);
       });
       this.dataSource = new MatTableDataSource(this.loans);
-      this.selection = new SelectionModel(true, []);
+      this.selection = new SelectionModel<any>(true, []);
     });
   }
 

@@ -16,7 +16,7 @@ import { SystemService } from '../../system.service';
 })
 export class EditRoleComponent implements OnInit {
   /** Role Form */
-  roleForm: FormGroup;
+  roleForm!: FormGroup;
   /** Role Data */
   roleData: any;
 
@@ -33,7 +33,7 @@ export class EditRoleComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router
   ) {
-    this.route.data.subscribe((data: { role: any }) => {
+    this.route.data.subscribe((data: { role?: any }) => {
       this.roleData = data.role;
     });
   }

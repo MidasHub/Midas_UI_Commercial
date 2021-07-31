@@ -21,8 +21,8 @@ import { ConfirmationDialogComponent } from 'app/shared/confirmation-dialog/conf
   styleUrls: ['./checker-inbox.component.scss']
 })
 export class CheckerInboxComponent implements OnInit {
-  uniqueEntityName: any[];
-  uniqueActionName: any[];
+  uniqueEntityName?: any[];
+  uniqueActionName?: any[];
   /** Data to be displayed */
   searchData: any;
   /** Maker Checker Template */
@@ -32,15 +32,15 @@ export class CheckerInboxComponent implements OnInit {
   /** Checks if there is any checker data */
   checkerData = false;
   /** Maker Checker Search Form */
-  makerCheckerSearchForm: FormGroup;
+  makerCheckerSearchForm!: FormGroup;
   /** Minimum date allowed. */
   minDate = new Date(2000, 0, 1);
   /** Maximum date allowed. */
   maxDate = new Date(2100, 0, 1);
   /** DataSource */
-  dataSource: MatTableDataSource<any>;
+  dataSource!: MatTableDataSource<any>;
   /** Selecting rows from table */
-  selection: SelectionModel<any>;
+  selection!: SelectionModel<any>;
   /** Displayed Column in table */
   displayedColumns: string[] = ['select', 'id', 'madeOnDate', 'status', 'user', 'action', 'entity'];
 
@@ -61,7 +61,7 @@ export class CheckerInboxComponent implements OnInit {
     private tasksService: TasksService,
     private settingsService: SettingsService,
     private formBuilder: FormBuilder) {
-    this.route.data.subscribe((data: { makerCheckerResource: any, makerCheckerTemplate: any }) => {
+    this.route.data.subscribe((data: { makerCheckerResource?: any, makerCheckerTemplate?: any }) => {
       this.searchData = data.makerCheckerResource;
       if (this.searchData.length > 0) {
         this.checkerData = true;
@@ -73,11 +73,11 @@ export class CheckerInboxComponent implements OnInit {
       this.uniqueActionName = this.makerCheckerTemplate.map((item: any) => {
         return item.actionName;
       })
-      this.uniqueEntityName = this.uniqueEntityName.filter((v, i, a) => a.indexOf(v) === i);
-      this.uniqueActionName = this.uniqueActionName.filter((v, i, a) => a.indexOf(v) === i);
+      this.uniqueEntityName = this.uniqueEntityName!.filter((v, i, a) => a.indexOf(v) === i);
+      this.uniqueActionName = this.uniqueActionName!.filter((v, i, a) => a.indexOf(v) === i);
 
       this.dataSource = new MatTableDataSource(this.searchData);
-      this.selection = new SelectionModel(true, []);
+      this.selection = new SelectionModel<any>(true, []);
     });
   }
 
@@ -113,7 +113,7 @@ export class CheckerInboxComponent implements OnInit {
         this.noSearchedData = false;
       }
       this.dataSource = new MatTableDataSource(this.searchData);
-      this.selection = new SelectionModel(true, []);
+      this.selection = new SelectionModel<any>(true, []);
     });
   }
 

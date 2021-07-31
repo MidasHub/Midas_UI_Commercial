@@ -14,20 +14,20 @@ import { forEach } from "lodash";
   styleUrls: ["./transfer-terminal.component.scss"],
 })
 export class TransferTerminalComponent implements OnInit {
-  transferTerminalForm: FormGroup;
-  listLimitPos: any[];
-  offices: any[];
-  listPartner: any[];
-  limitRemain: number;
-  officeName: string;
+  transferTerminalForm!: FormGroup;
+  listLimitPos?: any[];
+  offices?: any[];
+  listPartner?: any[];
+  limitRemain?: number;
+  officeName?: string;
   terminalName: string;
   terminalId: string;
-  rate: string;
+  rate?: string;
   itemPos: any;
   isChoosePartner: boolean = true;
   isTransferBack: boolean = false;
   transferRequest: any;
-  officeId: number;
+  officeId?: number;
   isTF: boolean = true;
   cardTypes: any[] = [];
   listRateDefault: any[] = [];
@@ -83,9 +83,9 @@ export class TransferTerminalComponent implements OnInit {
       officeName: [""],
       limitRemain: [""],
     });
-    this.transferTerminalForm.get("limitRemain").disable();
+    this.transferTerminalForm.get("limitRemain")!.disable();
 
-    this.transferTerminalForm.get("transferType").valueChanges.subscribe((value) => {
+    this.transferTerminalForm.get("transferType")!.valueChanges.subscribe((value) => {
       if (value == 0) {
         this.transferTerminalForm.removeControl("transferTarget");
         this.transferTerminalForm.removeControl("rate");
@@ -98,10 +98,10 @@ export class TransferTerminalComponent implements OnInit {
           this.transferTerminalForm.addControl("transferTarget", new FormControl("", [Validators.required]));
           this.transferTerminalForm.addControl("rate", new FormControl("",));
 
-          this.transferTerminalForm.get("transferTarget").valueChanges.subscribe((value) => {
+          this.transferTerminalForm.get("transferTarget")!.valueChanges.subscribe((value) => {
             if (this.isTransferBack &&
                this.transferRequest.senderExternalId == value) {
-                this.transferTerminalForm.get("transferType").setValue(2);
+                this.transferTerminalForm.get("transferType")!.setValue(2);
             }
           });
 

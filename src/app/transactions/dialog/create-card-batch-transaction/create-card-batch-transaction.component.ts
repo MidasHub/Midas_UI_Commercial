@@ -88,7 +88,7 @@ export class CreateCardBatchTransactionComponent implements OnInit {
         limitCard: ['0', [Validators.required]],
         classCard: ['', [Validators.required]]
       });
-      this.formDialog.get("clientId").valueChanges.subscribe((value) => {
+      this.formDialog.get("clientId")?.valueChanges.subscribe((value) => {
         this.transactionService.getIdentifierTypeCC(value).subscribe((result) => {
           this.documentAlreadyExits = result?.result?.listIdentifier
             ?.filter((v: any) => Number(v.documentType.id) >= 38 && Number(v.documentType.id) <= 57)
@@ -119,9 +119,9 @@ export class CreateCardBatchTransactionComponent implements OnInit {
         this.typeCards = result;
       }
     });
-    this.formDialog.get("documentKey").valueChanges.subscribe((value: any) => {
+    this.formDialog.get("documentKey")?.valueChanges.subscribe((value: any) => {
       if (value && value?.length === 6) {
-        const typeDocument = this.formDialog.get("documentTypeId").value;
+        const typeDocument = this.formDialog.get("documentTypeId")?.value;
         const type = this.documents.find((v) => v.id === typeDocument);
         if (type && Number(type.id) >= 38 && Number(type.id) <= 57) {
           this.bankService?.getInfoBinCode(value.substring(0, 6)).subscribe((res: any) => {
@@ -129,8 +129,8 @@ export class CreateCardBatchTransactionComponent implements OnInit {
               if (res.existBin) {
                 const { bankCode, cardType } = res;
                 this.existBin = res.existBin;
-                this.formDialog.get("bank").patchValue(bankCode);
-                this.formDialog.get("cardType").patchValue(cardType);
+                this.formDialog.get("bank")?.patchValue(bankCode);
+                this.formDialog.get("cardType")?.patchValue(cardType);
               } else {
                 this.existBin = false;
                 this.alterService.alert({
@@ -156,7 +156,7 @@ export class CreateCardBatchTransactionComponent implements OnInit {
   submitForm() {
     this.newDocuments.forEach((document) => {
       this.clientService
-        .addClientIdentifier(this.formDialog.get("clientId").value, {
+        .addClientIdentifier(this.formDialog.get("clientId")?.value, {
           documentKey: document.documentKey,
           documentTypeId: document.documentTypeId,
           status: "Active",
@@ -166,12 +166,12 @@ export class CreateCardBatchTransactionComponent implements OnInit {
           this.alterService.alert({ message: `Thêm thẻ thành công: ${document.documentKey}`, msgClass: "cssSuccess" });
           this.bankService
                 .storeExtraCardInfo({
-                  userId: this.formDialog.get("clientId").value,
+                  userId: this.formDialog.get("clientId")?.value,
                   userIdentifyId: result.resourceId,
-                  dueDay: this.formDialog.get("dueDay").value,
-                  expireDate: this.formDialog.get("expiredDate").value,
-                  limitCard: this.formDialog.get("limitCard").value,
-                  classCard: this.formDialog.get("classCard").value,
+                  dueDay: this.formDialog.get("dueDay")?.value,
+                  expireDate: this.formDialog.get("expiredDate")?.value,
+                  limitCard: this.formDialog.get("limitCard")?.value,
+                  classCard: this.formDialog.get("classCard")?.value,
                   isValid: false,
 
                 })
@@ -199,11 +199,11 @@ export class CreateCardBatchTransactionComponent implements OnInit {
       },
       ...this.newDocuments,
     ];
-    this.formDialog.get("documentTypeId").setValue("");
-    this.formDialog.get("documentKey").setValue("");
-    this.formDialog.get("description").setValue("");
-    this.formDialog.get("bank").setValue("");
-    this.formDialog.get("cardType").setValue("");
+    this.formDialog.get("documentTypeId")?.setValue("");
+    this.formDialog.get("documentKey")?.setValue("");
+    this.formDialog.get("description")?.setValue("");
+    this.formDialog.get("bank")?.setValue("");
+    this.formDialog.get("cardType")?.setValue("");
   }
 
   getTypeDocument(id: number) {

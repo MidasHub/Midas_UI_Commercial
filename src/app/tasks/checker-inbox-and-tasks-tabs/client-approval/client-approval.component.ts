@@ -28,11 +28,11 @@ export class ClientApprovalComponent {
   /** Checks to show the data */
   showData = false;
   /** Batch Requests */
-  batchRequests: any[];
+  batchRequests?: any[];
   /** Datasource */
-  dataSource: MatTableDataSource<any>;
+  dataSource!: MatTableDataSource<any>;
   /** Row Selection Data */
-  selection: SelectionModel<any>;
+  selection!: SelectionModel<any>;
   /** Displayed Columns */
   displayedColumns: string[] = ['select', 'name', 'accountNumber', 'staff'];
 
@@ -51,13 +51,13 @@ export class ClientApprovalComponent {
     private router: Router,
     private settingsService: SettingsService,
     private tasksService: TasksService) {
-    this.route.data.subscribe((data: { groupedClientData: any }) => {
+    this.route.data.subscribe((data: { groupedClientData?: any }) => {
       this.groupedClients = _.groupBy(data.groupedClientData.pageItems, 'officeName');
       if (Object.keys(this.groupedClients).length) {
         this.showData = true;
       }
       this.dataSource = new MatTableDataSource(data.groupedClientData.pageItems);
-      this.selection = new SelectionModel(true, []);
+      this.selection = new SelectionModel<any>(true, []);
     });
   }
 
@@ -127,7 +127,7 @@ export class ClientApprovalComponent {
       const url = 'clients/' + element.id + '?command=activate';
       const bodyData = JSON.stringify(formData);
       const batchData = { requestId: reqId++, relativeUrl: url, method: 'POST', body: bodyData };
-      this.batchRequests.push(batchData);
+      this.batchRequests!.push(batchData);
     });
     this.tasksService.submitBatchData(this.batchRequests).subscribe((response: any) => {
       response.forEach((responseEle: any) => {

@@ -28,7 +28,7 @@ export class EditTemplateComponent implements OnInit {
   @ViewChild('ckEditor', { static: true }) ckEditor: any;
 
   /** Template form. */
-  templateForm: FormGroup;
+  templateForm!: FormGroup;
   /** Edit Template Data. */
   editTemplateData: any;
   /** Template Mappers */
@@ -54,7 +54,7 @@ export class EditTemplateComponent implements OnInit {
               private route: ActivatedRoute,
               private router: Router,
               private templateService: TemplatesService) {
-    this.route.data.subscribe((data: { editTemplateData: any }) => {
+    this.route.data.subscribe((data: { editTemplateData?: any }) => {
       this.editTemplateData = data.editTemplateData;
       this.mappers = this.editTemplateData.template.mappers
         .map((mapper: any) => ({
@@ -86,7 +86,7 @@ export class EditTemplateComponent implements OnInit {
    */
   buildDependencies() {
     const tenantIdentifier = 'default'; // update once global settings are setup.
-    this.templateForm.get('entity').valueChanges.subscribe((value: any) => {
+    this.templateForm.get('entity')?.valueChanges.subscribe((value: any) => {
       if (value === 0) { // client
         this.mappers.splice(0, 1, {
           mappersorder: 0,

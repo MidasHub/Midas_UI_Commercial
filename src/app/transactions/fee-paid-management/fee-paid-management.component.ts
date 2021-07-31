@@ -71,7 +71,7 @@ export class FeePaidManagementComponent implements OnInit {
   ];
   formDate: FormGroup;
   formFilter: FormGroup;
-  dataSource: any[];
+  dataSource?: any[];
   isLoading: boolean = false;
   transactionsData: any[] = [];
   currentUser: any;
@@ -111,20 +111,20 @@ export class FeePaidManagementComponent implements OnInit {
       value: "V",
     },
   ];
-  partners: any[];
-  staffs: any[];
-  offices: any[];
+  partners?: any[];
+  staffs?: any[];
+  offices?: any[];
   totalFeeSum = 0;
   totalFeePaid = 0;
   totalFeePaidDE = 0;
   totalFeeRemain = 0;
   panelOpenState = true;
-  filterData: any[];
+  filterData?: any[];
   groupData: any;
   searchText = "";
   today = new Date();
-  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
-  @ViewChild(MatSort, { static: true }) sort: MatSort;
+  @ViewChild(MatPaginator, { static: true }) paginator?: MatPaginator;
+  @ViewChild(MatSort, { static: true }) sort?: MatSort;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -181,7 +181,7 @@ export class FeePaidManagementComponent implements OnInit {
     });
     this.clientServices.getListUserTeller(this.currentUser.officeId).subscribe((result: any) => {
       this.staffs = result?.result?.listStaff.filter((staff: any) => staff.displayName.startsWith("R"));
-      this.staffs.unshift({
+      this.staffs?.unshift({
         id: "",
         displayName: "Tất cả",
       });
@@ -200,16 +200,16 @@ export class FeePaidManagementComponent implements OnInit {
 
   // tslint:disable-next-line:use-lifecycle-interface
   ngAfterViewInit() {
-    this.sort.sortChange.subscribe(() => (this.paginator.pageIndex = 0));
-    merge(this.sort.sortChange, this.paginator.page)
+    this.sort?.sortChange.subscribe(() => (this.paginator!.pageIndex = 0));
+    merge(this.sort!.sortChange, this.paginator!.page)
       .pipe(tap(() => this.filterTransaction()))
       .subscribe();
   }
 
   getTransaction() {
     const dateFormat = this.settingsService.dateFormat;
-    let fromDate = this.formDate.get("fromDate").value;
-    let toDate = this.formDate.get("toDate").value;
+    let fromDate = this.formDate.get("fromDate")?.value;
+    let toDate = this.formDate.get("toDate")?.value;
     if (fromDate) {
       fromDate = this.datePipe.transform(fromDate, dateFormat);
     }
@@ -242,8 +242,8 @@ export class FeePaidManagementComponent implements OnInit {
   }
 
   filterTransaction() {
-    const limit = this.paginator.pageSize;
-    const offset = this.paginator.pageIndex * limit;
+    const limit = this.paginator!.pageSize;
+    const offset = this.paginator!.pageIndex * limit;
     const form = this.formFilter.value;
     const wholesaleChoose = form.wholesaleChoose;
     const RetailsChoose = form.RetailsChoose;
@@ -325,8 +325,8 @@ export class FeePaidManagementComponent implements OnInit {
   }
 
   get fromDateAndToDate() {
-    const fromDate = this.formDate.get("fromDate").value;
-    const toDate = this.formDate.get("toDate").value;
+    const fromDate = this.formDate.get("fromDate")?.value;
+    const toDate = this.formDate.get("toDate")?.value;
     if (fromDate && toDate) {
       return true;
     }
@@ -402,7 +402,7 @@ export class FeePaidManagementComponent implements OnInit {
   }
 
   exportTransactionFeePaid() {
-    const refids = this.filterData.map((v) => {
+    const refids = this.filterData!.map((v) => {
       return v.refid;
     });
     const re = refids.toString().split(",").join("-");

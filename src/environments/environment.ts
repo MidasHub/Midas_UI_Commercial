@@ -13,12 +13,12 @@ export const environment = {
   isCommercial: false, // Phiên bản cung cấp cho khách hàng Commercial thì set biến này thành true
   version: env?.midas_version + '-dev',
   fineractPlatformTenantId: te.coreT,  // For connecting to server running elsewhere update the tenant identifier
-  baseApiUrl: JSON.parse(sessionStorage.getItem('midasServerURL')) || te.defaultbaseURL,
+  baseApiUrl: sessionStorage.getItem('midasServerURL') || te.defaultbaseURL,
   allowServerSwitch: env?.allow_switching_backend_instance,
   apiProvider: te.apiProvider,
   apiVersion: te.apiVersion,
   serverUrl: '',
-  GatewayApiUrl: JSON.parse(sessionStorage.getItem('midasBillposServerURL')) || te.defaultbillposURL,
+  GatewayApiUrl: sessionStorage.getItem('midasBillposServerURL') || te.defaultbillposURL,
   GatewayApiUrlPrefix: '/billpos',
   GatewayServerUrl: '',
   GatewayTenantId: te.billposT,

@@ -19,12 +19,12 @@ export class ViewHistorySchedulerJobComponent implements OnInit {
   /** Columns to be displayed in Scheduler Job History. */
   displayedColumns: string[] = ['version', 'run_start_time', 'status', 'run_type', 'error_log'];
   /** Data source for Scheduler Job History table. */
-  dataSource: MatTableDataSource<any>;
+  dataSource!: MatTableDataSource<any>;
 
   /** Paginator for Scheduler Job History table. */
-  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+  @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
   /** Sorter for Scheduler Job History table. */
-  @ViewChild(MatSort, { static: true }) sort: MatSort;
+  @ViewChild(MatSort, { static: true }) sort!: MatSort;
 
   /**
    * Retrieves the scheduler Job History data from `resolve`.
@@ -33,7 +33,7 @@ export class ViewHistorySchedulerJobComponent implements OnInit {
   constructor(private route: ActivatedRoute,
               private dialog: MatDialog,
               private router: Router ) {
-    this.route.data.subscribe(( data: { jobsSchedulerHistory: any }) => {
+    this.route.data.subscribe(( data: { jobsSchedulerHistory?: any }) => {
       this.jobHistoryData = data.jobsSchedulerHistory;
     });
    }

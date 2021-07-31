@@ -32,16 +32,16 @@ export class RequestTransferComponent implements OnInit {
   dataFilter: any[] = [];
   dataShow: any[] = [];
   displayedColumns: any[] = ["terminalId", "senderExternalId", "receiverExternalId", "rate", "status", "createdBy", "createdDate"];
-  terminalId: string;
+  terminalId?: string;
   formDate: FormGroup;
   formFilter: FormGroup;
   isLoading: boolean = false;
 
-  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
-  @ViewChild(MatSort, {static: true}) sort: MatSort;
+  @ViewChild(MatPaginator, {static: true}) paginator?: MatPaginator;
+  @ViewChild(MatSort, {static: true}) sort?: MatSort;
 
-  @ViewChild('Table2Paginator', {static: true}) table2Paginator: MatPaginator;
-  @ViewChild('Table2Sort', {static: true}) table2Sort: MatSort;
+  @ViewChild('Table2Paginator', {static: true}) table2Paginator?: MatPaginator;
+  @ViewChild('Table2Sort', {static: true}) table2Sort?: MatSort;
 
   constructor(
     private authenticationService: AuthenticationService,
@@ -78,8 +78,8 @@ export class RequestTransferComponent implements OnInit {
   }
 
   get fromDateAndToDate() {
-    const fromDate = this.formDate.get("fromDate").value;
-    const toDate = this.formDate.get("toDate").value;
+    const fromDate = this.formDate.get("fromDate")?.value;
+    const toDate = this.formDate.get("toDate")?.value;
     if (fromDate && toDate) {
       return true;
     }
@@ -88,8 +88,8 @@ export class RequestTransferComponent implements OnInit {
 
   searchByTerminalId(){
     const dateFormat = this.settingsService.dateFormat;
-    let fromDate = this.formDate.get("fromDate").value;
-    let toDate = this.formDate.get("toDate").value;
+    let fromDate = this.formDate.get("fromDate")?.value;
+    let toDate = this.formDate.get("toDate")?.value;
     const oneDay = 24 * 60 * 60 * 1000; // hours*minutes*seconds*milliseconds
     const diffDays = Math.round(Math.abs((fromDate - toDate) / oneDay));
     if (diffDays > 31) {
@@ -133,13 +133,13 @@ export class RequestTransferComponent implements OnInit {
       return true;
     });
     console.log("dataFilter: ", this.dataFilter);
-    this.paginator.pageIndex = 0;
+    this.paginator!.pageIndex = 0;
     this.loadData();
   }
 
   loadData() {
-    const pageIndex = this.paginator.pageIndex;
-    const pageSize = this.paginator.pageSize;
+    const pageIndex = this.paginator!.pageIndex;
+    const pageSize = this.paginator!.pageSize;
     this.dataShow = this.dataFilter.slice(pageIndex * pageSize, pageIndex * pageSize + pageSize);
   }
 

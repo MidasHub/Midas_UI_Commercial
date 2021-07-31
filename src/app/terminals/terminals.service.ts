@@ -23,7 +23,7 @@ export class TerminalsService {
     private authenticationService: AuthenticationService
   ) {
     this.accessToken = JSON.parse(
-      sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey)
+      sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey) ||''
     );
     this.GatewayApiUrlPrefix = environment.GatewayApiUrlPrefix;
     this.IcGatewayApiUrlPrefix = environment.IcGatewayApiUrlPrefix;
@@ -57,11 +57,11 @@ export class TerminalsService {
 
   getLimitTerminals(): Observable<any> {
     const currentUser = this.authenticationService.getCredentials();
-    const { permissions } = currentUser;
-    const isHavePermission = permissions.includes("ALL_FUNCTIONS");
+    const  permissions = currentUser?.permissions;
+    const isHavePermission = permissions?.includes("ALL_FUNCTIONS");
 
     let httpParams = this.commonHttpParams.getCommonHttpParams();
-    httpParams = httpParams.set("queryOffice", isHavePermission ? `%%` : `${currentUser.officeId}`);
+    httpParams = httpParams.set("queryOffice", isHavePermission ? `%%` : `${currentUser?.officeId}`);
 
     return this.http.post<any>(`${this.IcGatewayApiUrlPrefix}/pos/get_list_limit_pos`, httpParams);
   }
@@ -107,7 +107,7 @@ export class TerminalsService {
 
   save(data: any): Observable<any> {
     this.accessToken = JSON.parse(
-      sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey)
+      sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey) ||''
     );
     const httpParams = {
       createdBy: this.accessToken.userId,
@@ -119,7 +119,7 @@ export class TerminalsService {
 
   update(data: any): Observable<any> {
     this.accessToken = JSON.parse(
-      sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey)
+      sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey) ||''
     );
     const httpParams = {
       createdBy: this.accessToken.userId,

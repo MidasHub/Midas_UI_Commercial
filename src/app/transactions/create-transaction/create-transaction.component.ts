@@ -37,12 +37,12 @@ export class CreateTransactionComponent implements OnInit {
   listRollTermBooking: any = [];
   isLoading = false;
   transactionCreateForm: FormGroup;
-  activateAndApproveAccountForm: FormGroup;
-  totalBookingAmount: number;
+  activateAndApproveAccountForm?: FormGroup;
+  totalBookingAmount: number=0;
   currentUser: any;
-  @ViewChild("listBookingRollTermTable") listBookingRollTermTable: MatTable<Element>;
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild("listBookingRollTermTable") listBookingRollTermTable?: MatTable<Element>;
+  @ViewChild(MatPaginator) paginator?: MatPaginator;
+  @ViewChild(MatSort) sort?: MatSort;
   /**
    * @param {AuthenticationService} authenticationService Authentication Service
    * @param {UserService} userService Users Service
@@ -120,20 +120,16 @@ export class CreateTransactionComponent implements OnInit {
           } else {
             this.transactionInfo.rate = this.transactionInfo.posTransaction.feePercentage;
             this.transactionInfo.refId = tranId;
-            this.transactionCreateForm.get("rate").setValue(this.transactionInfo.rate);
+            this.transactionCreateForm.get("rate")?.setValue(this.transactionInfo.rate);
           }
         }
 
-        this.transactionCreateForm
-          .get("requestAmount")
-          .valueChanges.pipe(debounceTime(1000), distinctUntilChanged())
+        this.transactionCreateForm.get("requestAmount")?.valueChanges.pipe(debounceTime(1000), distinctUntilChanged())
           .subscribe((value: string) => {
             this.changeAmountTransaction(value);
           });
 
-        this.transactionCreateForm
-          .get("rate")
-          .valueChanges.pipe(debounceTime(1000), distinctUntilChanged())
+        this.transactionCreateForm.get("rate")?.valueChanges.pipe(debounceTime(1000), distinctUntilChanged())
           .subscribe((value: string) => {
             this.onchangeRate(value);
           });
@@ -141,10 +137,10 @@ export class CreateTransactionComponent implements OnInit {
         if (this.transactionCreateForm.get("batchNo") && this.transactionCreateForm.get("traceNo")) {
           if (permit_manager) {
             // remove validator required for batchNo, traceNo on hold transaction
-            this.transactionCreateForm.get("batchNo").clearValidators();
-            this.transactionCreateForm.get("batchNo").updateValueAndValidity();
-            this.transactionCreateForm.get("traceNo").clearValidators();
-            this.transactionCreateForm.get("traceNo").updateValueAndValidity();
+            this.transactionCreateForm.get("batchNo")?.clearValidators();
+            this.transactionCreateForm.get("batchNo")?.updateValueAndValidity();
+            this.transactionCreateForm.get("traceNo")?.clearValidators();
+            this.transactionCreateForm.get("traceNo")?.updateValueAndValidity();
           }
         }
       });
@@ -355,7 +351,7 @@ export class CreateTransactionComponent implements OnInit {
       parseFloat(this.transactionInfo.rate) > parseFloat(this.terminalFee.maxRate)
     ) {
       this.transactionInfo.rate = this.terminalFee.maxRate;
-      this.transactionCreateForm.get("rate").setValue(this.terminalFee.maxRate);
+      this.transactionCreateForm.get("rate")?.setValue(this.terminalFee.maxRate);
       this.calculateFeeTransaction();
       this.alertService.alert({
         message: `Tỉ lệ phí không được thấp hơn ${this.terminalFee.minRate} và cao hơn ${this.terminalFee.maxRate} !`,
@@ -395,7 +391,7 @@ export class CreateTransactionComponent implements OnInit {
     });
 
     if (numOfTransaction == 1) {
-      let savingAccountId: string = null;
+      let savingAccountId!: string;
       this.clientsService.getClientAccountDataCross(this.transactionInfo.clientId).subscribe((savings) => {
         const ListAccount = savings?.result?.clientAccount?.savingsAccounts;
         let isHaveActiveSavingsAccount = true;
@@ -446,8 +442,8 @@ export class CreateTransactionComponent implements OnInit {
       return;
     }
     let messageConfirm = `Bạn chắc chắn muốn lưu giao dịch?`;
-    const traceNo = this.transactionCreateForm.get("traceNo").value;
-    const batchNo = this.transactionCreateForm.get("batchNo").value;
+    const traceNo = this.transactionCreateForm.get("traceNo")?.value;
+    const batchNo = this.transactionCreateForm.get("batchNo")?.value;
 
     if (!traceNo || !batchNo || traceNo.trim().length == 0 || batchNo.trim().length == 0) {
       messageConfirm = `Hệ thống ghi nhận đây là giao dịch treo (do không có mã lô và mã hóa đơn), bạn chắc chắn muốn lưu giao dịch?`;
@@ -651,10 +647,10 @@ export class CreateTransactionComponent implements OnInit {
       }
     }
 
-    this.listBookingRollTermTable.renderRows();
+    this.listBookingRollTermTable?.renderRows();
   }
 
-  addBookingRow = function () {
+  addBookingRow =  () =>{
     const BookingRollTerm = {
       txnDate: new Date(),
       amountBooking: 0,

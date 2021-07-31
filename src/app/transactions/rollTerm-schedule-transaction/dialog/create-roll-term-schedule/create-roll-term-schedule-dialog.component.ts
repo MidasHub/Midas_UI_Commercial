@@ -26,13 +26,13 @@ export class CreateRollTermScheduleDialogComponent implements OnInit {
   expandedElement: any;
   requestAmount: any;
   info: any;
-  totalBookingAmount: number;
+  totalBookingAmount: number =0;
   dataSource: MatTableDataSource<any>;
   displayedColumns: string[] = ["transaction", "txnDate", "amount", "actions"];
   transactionInfo: any;
-  listRollTermBooking: any[];
+  listRollTermBooking: any[] = [];
   form: FormGroup;
-  pristine: boolean;
+  pristine?: boolean;
 
   constructor(
     private router: Router,
@@ -52,11 +52,11 @@ export class CreateRollTermScheduleDialogComponent implements OnInit {
       feeRate: ["", Validators.required],
       rollTermBooking: ["", Validators.required],
     });
-    this.form.get("feeRate").valueChanges.subscribe((value) => {
+    this.form.get("feeRate")?.valueChanges.subscribe((value) => {
       this.calculateFee();
     });
 
-    this.form.get("requestAmount").valueChanges.subscribe((value) => {
+    this.form.get("requestAmount")?.valueChanges.subscribe((value) => {
       this.listRollTermBooking = [];
       this.dataSource.data = this.listRollTermBooking;
       for (let index = 0; index < 4; index++) {
@@ -72,7 +72,7 @@ export class CreateRollTermScheduleDialogComponent implements OnInit {
       this.totalBookingAmount = value;
       this.calculateFee();
 
-      this.form.get("rollTermBooking").setValue(this.listRollTermBooking);
+      this.form.get("rollTermBooking")?.setValue(this.listRollTermBooking);
     });
   }
 
@@ -90,7 +90,7 @@ export class CreateRollTermScheduleDialogComponent implements OnInit {
     });
 
     this.listRollTermBooking[this.listRollTermBooking.length - 1].amountBooking =
-      this.form.get("requestAmount").value - lastBookingAmountExceptLast;
+      this.form.get("requestAmount")?.value - lastBookingAmountExceptLast;
     this.listRollTermBooking.forEach((booking: any) => {
       totalBookingAmountTmp += booking.amountBooking;
     });
@@ -99,7 +99,7 @@ export class CreateRollTermScheduleDialogComponent implements OnInit {
     this.dataSource.data = this.listRollTermBooking;
   }
 
-  addBookingRow = function () {
+  addBookingRow (){
     let BookingRollTerm = {
       txnDate: new Date(),
       amountBooking: 0,
@@ -122,13 +122,13 @@ export class CreateRollTermScheduleDialogComponent implements OnInit {
     this.calculateTotalBookingAmount();
   }
 
-  calculateFee = function () {
+  calculateFee () {
 
     if (this.form.invalid) {
       return;
     }
-    let requestAmount =  this.form.get("requestAmount").value ;
-    let feeRate =  this.form.get("feeRate").value;
+    let requestAmount =  this.form.get("requestAmount")?.value ;
+    let feeRate =  this.form.get("feeRate")?.value;
     this.info.feeAmount = (requestAmount * feeRate / 100).toFixed(0) ;
   };
 }

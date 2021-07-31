@@ -7,7 +7,8 @@
   },
   "angularCompilerOptions": {
     "enableIvy": true,
-    "fullTemplateTypeCheck": false,
+    "fullTemplateTypeCheck": true,
+    "strictTemplates":true,
     "preserveWhitespaces": true
   },
   "files": [

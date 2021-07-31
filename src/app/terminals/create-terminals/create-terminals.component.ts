@@ -44,7 +44,7 @@ const initialData: PeriodicElements[] = [
   styleUrls: ["./create-terminals.component.scss"],
 })
 export class CreateTerminalsComponent implements OnInit {
-  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatSort) sort!: MatSort;
   // @ViewChild(MatPaginator) paginator: MatPaginator;
 
   displayedColumns: string[] = [
@@ -59,7 +59,7 @@ export class CreateTerminalsComponent implements OnInit {
   ];
 
   dataSource = new MatTableDataSource(initialData);
-  createTerminalForm: FormGroup;
+  createTerminalForm!: FormGroup;
   offices: any;
   terminalData: any;
   merchants: any;
@@ -90,7 +90,7 @@ export class CreateTerminalsComponent implements OnInit {
 
   ) {
 
-    this.route.data.subscribe((data: { terminalData: any }) => {
+    this.route.data.subscribe((data: { terminalData?: any }) => {
       this.merchants = data.terminalData.result.merchants;
     });
 
@@ -138,8 +138,8 @@ export class CreateTerminalsComponent implements OnInit {
       banksCheck: [[]],
       cardsCheck: [[]],
     });
-    this.createTerminalForm.get("terminalId").valueChanges.subscribe(data => {
-      this.createTerminalForm.get("terminalCode").setValue(data);
+    this.createTerminalForm.get("terminalId")!.valueChanges.subscribe(data => {
+      this.createTerminalForm.get("terminalCode")!.setValue(data);
     })
   }
 

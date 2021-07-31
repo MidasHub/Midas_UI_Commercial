@@ -54,7 +54,7 @@ export class ManageTransactionComponent implements OnInit {
   officesOptions: any;
   formDate: FormGroup;
   formFilter: FormGroup;
-  dataSource: any[];
+  dataSource: any[] =[];
   isLoading: boolean = false;
   transactionsData: any[] = [];
   currentUser: any;
@@ -113,19 +113,19 @@ export class ManageTransactionComponent implements OnInit {
       value: "V",
     },
   ];
-  partners: any[];
-  staffs: any[];
-  offices: any[];
+  partners: any[]=[];
+  staffs: any[]=[];
+  offices: any[]=[];
   terminals: any;
   totalTerminalAmount = 0;
   totalFeeAmount = 0;
   totalCogsAmount = 0;
   totalPnlAmount = 0;
   panelOpenState = true;
-  filterData: any[];
+  filterData: any[]=[];
   today = new Date();
-  transactionTerminals: any[];
-  transactionTotalByBatchNo: any[];
+  transactionTerminals: any[]=[];
+  transactionTotalByBatchNo: any[]=[];
 
   private _filter(value: string): string[] {
     const filterValue = String(value).toUpperCase().replace(/\s+/g, "");
@@ -136,13 +136,13 @@ export class ManageTransactionComponent implements OnInit {
     });
   }
 
-  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
-  @ViewChild(MatSort, { static: true }) sort: MatSort;
-  @ViewChild("htmlData") htmlData: ElementRef;
+  @ViewChild(MatPaginator, { static: true }) paginator?: MatPaginator;
+  @ViewChild(MatSort, { static: true }) sort?: MatSort;
+  @ViewChild("htmlData") htmlData?: ElementRef;
 
   public openPDF(): void {
     let DATA = document.getElementById("transactionData");
-    html2canvas(DATA).then((canvas) => {
+    html2canvas(DATA!).then((canvas) => {
       let fileWidth = 208;
       let fileHeight = (canvas.height * fileWidth) / canvas.width;
       const FILEURI = canvas.toDataURL("image/png");
@@ -196,7 +196,7 @@ export class ManageTransactionComponent implements OnInit {
       holdTransaction: [false],
       agencyName: [""],
     });
-    this.formFilter.get("officeId").valueChanges.subscribe((value) => {
+    this.formFilter.get("officeId")?.valueChanges.subscribe((value) => {
       this.clientsService.getListUserTeller(value.officeId ? value.officeId : value).subscribe((result: any) => {
         this.staffs = result?.result?.listStaff.filter((staff: any) => staff.displayName.startsWith("R"));
         this.staffs?.unshift({
@@ -223,7 +223,7 @@ export class ManageTransactionComponent implements OnInit {
 
   resetAutoCompleteOffice() {
     this.formFilter.controls.officeId.setValue("");
-    this.officesOptions = this.formFilter.get('officeId').valueChanges.pipe(
+    this.officesOptions = this.formFilter.get('officeId')?.valueChanges.pipe(
       startWith(""),
       map((value: any) => this._filter(value))
     );
@@ -263,16 +263,16 @@ export class ManageTransactionComponent implements OnInit {
 
   // tslint:disable-next-line:use-lifecycle-interface
   ngAfterViewInit() {
-    this.sort.sortChange.subscribe(() => (this.paginator.pageIndex = 0));
-    merge(this.sort.sortChange, this.paginator.page)
+    this.sort?.sortChange.subscribe(() => (this.paginator!.pageIndex = 0));
+    merge(this.sort!.sortChange, this.paginator!.page)
       .pipe(tap(() => this.filterTransaction()))
       .subscribe();
   }
 
   getTransaction() {
     const dateFormat = this.settingsService.dateFormat;
-    let fromDate = this.formDate.get("fromDate").value;
-    let toDate = this.formDate.get("toDate").value;
+    let fromDate = this.formDate.get("fromDate")!.value;
+    let toDate = this.formDate.get("toDate")!.value;
     const oneDay = 24 * 60 * 60 * 1000; // hours*minutes*seconds*milliseconds
     const diffDays = Math.round(Math.abs((fromDate - toDate) / oneDay));
     if (diffDays > 31) {
@@ -313,8 +313,8 @@ export class ManageTransactionComponent implements OnInit {
     const { permissions } = this.currentUser;
     const permit_Head = permissions.includes("ALL_FUNCTIONS");
 
-    const limit = this.paginator.pageSize;
-    const offset = this.paginator.pageIndex * limit;
+    const limit = this.paginator!.pageSize;
+    const offset = this.paginator!.pageIndex * limit;
     const form = this.formFilter.value;
     const wholesaleChoose = form.wholesaleChoose;
     const RetailsChoose = form.RetailsChoose;
@@ -373,8 +373,8 @@ export class ManageTransactionComponent implements OnInit {
   }
 
   get fromDateAndToDate() {
-    const fromDate = this.formDate.get("fromDate").value;
-    const toDate = this.formDate.get("toDate").value;
+    const fromDate = this.formDate.get("fromDate")!.value;
+    const toDate = this.formDate.get("toDate")!.value;
     if (fromDate && toDate) {
       return true;
     }
@@ -656,8 +656,8 @@ export class ManageTransactionComponent implements OnInit {
 
   exportTransaction() {
     const dateFormat = this.settingsService.dateFormat;
-    let fromDate = this.formDate.get("fromDate").value;
-    let toDate = this.formDate.get("toDate").value;
+    let fromDate = this.formDate.get("fromDate")?.value;
+    let toDate = this.formDate.get("toDate")?.value;
     if (fromDate) {
       fromDate = this.datePipe.transform(fromDate, dateFormat);
     }
@@ -693,8 +693,8 @@ export class ManageTransactionComponent implements OnInit {
 
   exportTransactionForPartner() {
     const dateFormat = this.settingsService.dateFormat;
-    let fromDate = this.formDate.get("fromDate").value;
-    let toDate = this.formDate.get("toDate").value;
+    let fromDate = this.formDate.get("fromDate")!.value;
+    let toDate = this.formDate.get("toDate")!.value;
     if (fromDate) {
       fromDate = this.datePipe.transform(fromDate, dateFormat);
     }
