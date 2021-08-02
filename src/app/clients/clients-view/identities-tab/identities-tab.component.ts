@@ -1,3 +1,4 @@
+import { Subscriber } from 'rxjs';
 /** Angular Imports */
 import { Component, ViewChild } from "@angular/core";
 import { ActivatedRoute, NavigationExtras, Router } from "@angular/router";
@@ -53,6 +54,7 @@ export class IdentitiesTabComponent {
   /** Client Id */
   clientId: string;
   images: any[] = [];
+  clientViewData: any;
   /** Identities Columns */
   identitiesColumns: string[] = ["id", "documentKey", "description", "type", "documents", "status", "actions"];
   identitiesOtherColumns: string[] = ["id", "documentKey", "description", "type", "documents", "status"];
@@ -77,7 +79,12 @@ export class IdentitiesTabComponent {
     private bankService: BanksService
   ) {
     this.clientId = this.route.parent.snapshot.paramMap.get("clientId");
-    this.route.data.subscribe((data: { clientIdentities: any; clientIdentifierTemplate: any }) => {
+    this.route.data.subscribe((data: { clientViewData: any, clientIdentities: any; clientIdentifierTemplate: any }) => {
+      this.clientService.getClientCross(this.clientId).subscribe((clientResult: any) => {
+
+        this.clientViewData = clientResult.result.clientInfo;
+      })
+
       this.clientIdentifierTemplate = data.clientIdentifierTemplate;
       data.clientIdentities.forEach((element: any) => {
         if (element.documentType.id >= 38 && element.documentType.id <= 57) {

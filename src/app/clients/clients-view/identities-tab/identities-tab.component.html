@@ -99,13 +99,14 @@
           <ng-container matColumnDef="actions">
             <th mat-header-cell *matHeaderCellDef>Hành động</th>
             <td mat-cell *matCellDef="let identity; let i = index">
+              <div *midasHasPermission="'TXN_CREATE'" >
               <button
                 class="action-button"
                 mat-raised-button
                 color="primary"
                 (click)="routeToMakeTransaction(identity.id, 'cash', identity.documentKey)"
-                *midasHasPermission="'TXN_CREATE'"
                 matTooltip="Cash"
+                [disabled]='!this.clientViewData.active'
               >
                 <i class="fas fa-money-bill-wave"></i>
               </button>
@@ -114,20 +115,21 @@
                 class="action-button"
                 mat-raised-button
                 color="warn"
-                *midasHasPermission="'TXN_CREATE'"
                 (click)="routeToMakeTransaction(identity.id, 'rollTerm', identity.documentKey)"
                 matTooltip="Advance"
+                [disabled]='!this.clientViewData.active'
               >
                 <i class="fas fa-hand-holding-usd"></i>
               </button>
-              <br />
+              <!-- <br />
               <button class="action-button" mat-raised-button *midasHasPermission="'TXN_CREATE'" matTooltip="Thu hộ">
                 <i class="fas fa-arrow-up"></i>
               </button>
 
               <button class="action-button" mat-raised-button *midasHasPermission="'TXN_CREATE'" matTooltip="Chi hộ">
                 <i class="fas fa-arrow-down"></i>
-              </button>
+              </button> -->
+            </div>
             </td>
           </ng-container>
 
