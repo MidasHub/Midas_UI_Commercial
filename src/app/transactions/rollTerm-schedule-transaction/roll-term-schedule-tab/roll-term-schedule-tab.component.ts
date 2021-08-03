@@ -127,7 +127,7 @@ export class RollTermScheduleTabComponent implements OnInit {
   CheckedFilterOption = [
     {
       code: 0,
-      description: "Tất cả ",
+      description: "Giao dịch đã/chưa chọn ",
     },
     {
       code: 1,
