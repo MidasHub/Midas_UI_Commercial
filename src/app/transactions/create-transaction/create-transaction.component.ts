@@ -491,7 +491,9 @@ export class CreateTransactionComponent implements OnInit {
       if (response.data) {
         const { limitCard, classCard } = response.data.value;
         const expiredDateString = this.datePipe.transform(this.transactionInfo.cardExtraInfo.expiredDate, "MMyy");
-
+        let fromDate = new Date();
+        const month = this.datePipe.transform(fromDate, "MM");
+        const year = this.datePipe.transform(fromDate, "yyyy");
         this.transactionService
           .updateCardTrackingState({
             refId: this.transactionInfo.cardExtraInfo.refid,
@@ -500,6 +502,8 @@ export class CreateTransactionComponent implements OnInit {
             expiredDateString: expiredDateString,
             dueDay: this.transactionInfo.cardExtraInfo.dueDay,
             isHold: this.transactionInfo.cardExtraInfo.isHold,
+            month: month,
+            year: year,
           })
           .subscribe((res2: any) => {
             if (res2.result.status) {
