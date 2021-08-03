@@ -6,6 +6,7 @@ import { MatDialog } from "@angular/material/dialog";
 import { MatPaginator } from "@angular/material/paginator";
 import { MatSort } from "@angular/material/sort";
 import { BanksService } from "app/banks/banks.service";
+import { BookingService } from "app/booking-manage/booking.service";
 import { CentersService } from "app/centers/centers.service";
 import { ClientsService } from "app/clients/clients.service";
 import { AlertService } from "app/core/alert/alert.service";
@@ -38,7 +39,7 @@ export class RollTermScheduleTabComponent implements OnInit {
   expandedElement: any;
   displayedColumns: string[] = [
     "panHolderName",
-    "feeAmount",
+    "isCheck",
     "createdDate",
     // "cardNumber",
     "officeName",
@@ -108,7 +109,35 @@ export class RollTermScheduleTabComponent implements OnInit {
   filterData: any[];
   today = new Date();
   cardTypeOption: any[] = [];
+  cardHoldOption = [
+    {
+      code: "ALL",
+      description: "Tất cả",
+    },
+    {
+      code: "200",
+      description: "Giử Thẻ",
+    },
+    {
+      code: "100",
+      description: "Không giử thẻ",
+    },
+  ];
 
+  CheckedFilterOption = [
+    {
+      code: 0,
+      description: "Tất cả ",
+    },
+    {
+      code: 1,
+      description: "Chưa chọn",
+    },
+    {
+      code: 2,
+      description: "Đã được chọn",
+    },
+  ];
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   constructor(
@@ -120,7 +149,9 @@ export class RollTermScheduleTabComponent implements OnInit {
     private dialog: MatDialog,
     private banksServices: BanksService,
     private savingsService: SavingsService,
-    private clientServices: ClientsService
+    private clientServices: ClientsService,
+    private bookingService: BookingService,
+    private alertService: AlertService
   ) {
     this.formDate = this.formBuilder.group({
       fromDate: [new Date(new Date().setMonth(new Date().getMonth() - 1))],
@@ -151,9 +182,12 @@ export class RollTermScheduleTabComponent implements OnInit {
       createdByFilter: [""],
       bankFilter: ["ALL"],
       cardType: ["ALL"],
+      cardHoldFilter: ["ALL"],
       dueDay: [""],
       query: [""],
       viewDoneTransaction: [false],
+      isCheckedFilter: [0],
+      checkedByUserName: [""],
     });
 
     this.banksServices.getListOfficeCommon().subscribe((offices: any) => {
@@ -185,6 +219,44 @@ export class RollTermScheduleTabComponent implements OnInit {
       .subscribe();
   }
 
+  checkedRollTermBooking(rollTermId: any, isCheck: any) {
+    if (!rollTermId) {
+      return;
+    }
+
+    isCheck = isCheck ? false : true;
+    const dialog = this.dialog.open(ConfirmDialogComponent, {
+      data: {
+        message: `Bạn chắc chắn chọn khoản Advance này!`,
+        title: "Hoàn thành xác thực",
+      },
+    });
+    dialog.afterClosed().subscribe((data) => {
+      if (data) {
+        this.bookingService.checkedBranchBookingByRollTermId(rollTermId, isCheck).subscribe((result: any) => {
+          if (result?.status) {
+            const message = `Xác thực thành công`;
+
+            this.alertService.alert({
+              type: "🎉🎉🎉 Thành công !!!",
+              message: message,
+              msgClass: "cssSuccess",
+            });
+          } else {
+            this.alertService.alert({
+              type: "🚨🚨🚨🚨 Lỗi ",
+              msgClass: "cssDanger",
+              message: result?.error,
+            });
+          }
+
+          this.getRollTermScheduleAndCardDueDayInfo();
+        });
+      }
+
+    });
+  }
+
   getRollTermScheduleAndCardDueDayInfo() {
     const dateFormat = this.settingsService.dateFormat;
     let fromDate = this.formDate.get("fromDate").value;
@@ -195,7 +267,10 @@ export class RollTermScheduleTabComponent implements OnInit {
     const createdByFilter = this.formFilter.get("createdByFilter").value;
     const officeFilter = this.formFilter.get("OfficeFilter").value;
     const dueDayFilter = this.formFilter.get("dueDay").value;
+    const cardHoldFilter = this.formFilter.get("cardHoldFilter").value;
     const viewDoneTransaction = this.formFilter.get("viewDoneTransaction").value;
+    const isCheckedFilter = this.formFilter.get("isCheckedFilter").value;
+    const checkedByUserName = this.formFilter.get("checkedByUserName").value;
 
     const limit = this.paginator.pageSize ? this.paginator.pageSize : 10;
     const offset = this.paginator.pageIndex * limit;
@@ -220,6 +295,9 @@ export class RollTermScheduleTabComponent implements OnInit {
         officeFilter,
         dueDayFilter,
         viewDoneTransaction,
+        cardHoldFilter,
+        isCheckedFilter,
+        checkedByUserName
       })
       .subscribe((result) => {
         this.isLoading = false;

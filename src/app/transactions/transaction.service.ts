@@ -128,7 +128,7 @@ export class TransactionService {
     httpParams = httpParams.set('limit', updateData.limitCard ? updateData.limitCard : '');
     httpParams = httpParams.set('classCard', updateData.classCard ? updateData.classCard : '');
     httpParams = httpParams.set('isHold', updateData.isHold ? '200' : '100');
-    httpParams = httpParams.set('year', updateData.year);
+    httpParams = httpParams.set('year', updateData.year );
     httpParams = httpParams.set('month', updateData.month );
 
 
@@ -280,6 +280,9 @@ export class TransactionService {
     officeFilter: number;
     dueDayFilter:number;
     viewDoneTransaction: boolean;
+    cardHoldFilter: string;
+    isCheckedFilter: string;
+    checkedByUserName: string;
   }): Observable<any> {
     let httpParams = this.commonHttpParams.getCommonHttpParams();
     httpParams = httpParams.set("bankFilter", payload.bankFilter == "ALL" ? "%%" : payload.bankFilter);
@@ -289,6 +292,9 @@ export class TransactionService {
     httpParams = httpParams.set("officeSearch", !payload.officeFilter ? "%%" : `${payload.officeFilter}`);
     httpParams = httpParams.set("dueDayFilter", !payload.dueDayFilter ? '-1' :`${payload.dueDayFilter}`);
     httpParams = httpParams.set("viewDoneTransaction", `${payload.viewDoneTransaction}`);
+    httpParams = httpParams.set("cardHoldFilter", payload.cardHoldFilter == "ALL" ? "%%" : payload.cardHoldFilter);
+    httpParams = httpParams.set("isCheckedFilter", payload.isCheckedFilter ? payload.isCheckedFilter : "0");
+    httpParams = httpParams.set("checkedByUserName", !payload.checkedByUserName ? "%%" : `%${payload.checkedByUserName}%`);
     httpParams = httpParams.set("limit", String(payload.limit));
     httpParams = httpParams.set("offset", String(payload.offset));
     httpParams = httpParams.set("fromDate", payload.fromDate);
