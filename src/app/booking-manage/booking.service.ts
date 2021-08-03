@@ -40,6 +40,18 @@ export class BookingService {
     );
   }
 
+  checkedBranchBookingByRollTermId(rollTermId: string, isCheck: boolean): Observable<any> {
+    let httpParams = this.commonHttpParams.getCommonHttpParams();
+    httpParams = httpParams.set("rollTermId", rollTermId);
+    httpParams = httpParams.set("isCheck", String(isCheck));
+
+
+    return this.http.post<any>(
+      `${this.GatewayApiUrlPrefix}/bookingInternal/change_booking_branch_status_by_roll_term_id`,
+      httpParams
+    );
+  }
+
   getDetailBranchBookingByRefNo(bookingRefNo: string): Observable<any> {
     let httpParams = this.commonHttpParams.getCommonHttpParams();
     httpParams = httpParams.set("bookingRefNo", bookingRefNo);
