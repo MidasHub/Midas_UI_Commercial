@@ -7,6 +7,7 @@ import { FormfieldBase } from "./formfield/model/formfield-base";
 import { FormGroupService } from "./form-group.service";
 
 import { I18nService } from "app/core/i18n/i18n.service";
+import { ClientsService } from "app/clients/clients.service";
 
 const layoutGap = 2;
 
@@ -37,6 +38,7 @@ export class FormDialogComponent implements OnInit {
   cardTypes: any[];
 
   constructor(
+    private clientService: ClientsService,
     public dialogRef: MatDialogRef<FormDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private formGroupService: FormGroupService,
@@ -69,6 +71,29 @@ export class FormDialogComponent implements OnInit {
     if (!this.pristine) {
       this.form.markAsDirty();
     }
+
+    this.form?.controls["stateProvinceId"]?.valueChanges.subscribe((value) => {
+      this.clientService.getClientDistrict(value).subscribe((res: any) => {
+        this.formfields.map((item: any) => {
+          if (item.controlName === 'countyDistrict') {
+            item.value = res.result.listAddressDistrict ? res.result.listAddressDistrict.refid : '';
+            item.options = { label: 'description', value: 'refid', data: res.result.listAddressDistrict };
+          }
+        });
+      });
+    });
+
+    this.form?.controls["countyDistrict"]?.valueChanges.subscribe((value) => {
+      this.clientService.getClientTownVillage(value).subscribe((res: any) => {
+        this.formfields.map((item: any) => {
+          if (item.controlName === 'townVillage') {
+            item.value = res.result.listAddressWard ? res.result.listAddressWard.refid : '';
+            item.options = { label: 'description', value: 'refid', data: res.result.listAddressWard };
+          }
+        });
+      });
+    });
+
   }
   formatCurrency(value: string) {
     value = String(value);
@@ -86,4 +111,5 @@ export class FormDialogComponent implements OnInit {
   get getForm() {
     return this.form;
   }
+
 }

@@ -143,6 +143,23 @@ export class ClientsService {
     return this.http.get("/clients/template");
   }
 
+  getClientProvince(): Observable<any> {
+    let httpParams = this.commonHttpParams.getCommonHttpParams();
+    return this.http.post(`${this.GatewayApiUrlPrefix}/common/getMasterProvince`, httpParams);
+  }
+
+  getClientDistrict(provinceId: string): Observable<any> {
+    let httpParams = this.commonHttpParams.getCommonHttpParams();
+    httpParams = httpParams.set("provinceId", provinceId);
+    return this.http.post(`${this.GatewayApiUrlPrefix}/common/getMasterDistrict`, httpParams);
+  }
+
+  getClientTownVillage(districtId: string): Observable<any> {
+    let httpParams = this.commonHttpParams.getCommonHttpParams();
+    httpParams = httpParams.set("districtId", districtId);
+    return this.http.post(`${this.GatewayApiUrlPrefix}/common/getMasterWard`, httpParams);
+  }
+
   getClientData(clientId: string) {
     const key = `getClientData_${clientId}`;
     if (this.cacheClientRequest[key]) {
