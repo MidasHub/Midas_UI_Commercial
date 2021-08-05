@@ -12,6 +12,7 @@ import { UpdateSavingAccountComponent } from "../form-dialog/update-saving-accou
 import { AlertService } from "../../../core/alert/alert.service";
 import { MatPaginator } from "@angular/material/paginator";
 import { MatSort } from "@angular/material/sort";
+import { TerminalsService } from "app/terminals/terminals.service";
 
 /**
  * Transactions Tab Component.
@@ -52,6 +53,7 @@ export class TransactionsTabComponent implements OnInit {
   form: FormGroup;
   isLoading: boolean = false;
   transactions: any[] = [];
+  partners: any[]=[];
   savingsAccountData: any;
   totalTransactions: number = 0;
   totalDeposit = 0;
@@ -85,7 +87,8 @@ export class TransactionsTabComponent implements OnInit {
     private settingsService: SettingsService,
     private datePipe: DatePipe,
     public dialog: MatDialog,
-    private alterServices: AlertService
+    private alterServices: AlertService,
+    private terminalsService: TerminalsService
   ) {
     this.route.parent.parent.data.subscribe((data: { savingsAccountData: any }) => {
       this.savingsAccountData = data.savingsAccountData;
@@ -157,6 +160,10 @@ export class TransactionsTabComponent implements OnInit {
           }
         });
         this.dataSource = this.transactionsData;
+      });
+
+      this.terminalsService.getPartnersTerminalTemplate().subscribe((partner) => {
+        this.partners = partner?.result?.partners;
       });
   }
 
