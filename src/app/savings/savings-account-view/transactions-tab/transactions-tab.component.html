@@ -63,9 +63,14 @@
           <mat-label>{{ "Saving_Account_Component.tabTransactions.lblNote" | translate }}</mat-label>
           <input formControlName="note" matInput />
         </mat-form-field>
-        <mat-form-field fxFlex="20%">
+        <mat-form-field fxFlex="18%">
           <mat-label>Đối tác</mat-label>
-          <input formControlName="routingCode" matInput />
+          <mat-select formControlName="routingCode">
+            <mat-option value="">Tất cả</mat-option>
+            <mat-option *ngFor="let type of partners" [value]="type.desc">
+              {{ type.desc }}
+            </mat-option>
+          </mat-select>
         </mat-form-field>
       </div>
     </div>
