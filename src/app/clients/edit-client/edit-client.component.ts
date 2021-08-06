@@ -142,7 +142,7 @@ export class EditClientComponent implements OnInit {
         this.editClientForm.removeControl('clientNonPersonDetails');
         //Jean changed from "Validators.required" to "[Validators.required, Validators.pattern('^([^!@#$%^&*()+=<>,?\/]*)$')]"
         this.editClientForm.addControl('firstname', new FormControl(this.clientDataAndTemplate.firstname, [Validators.required]));
-        this.editClientForm.addControl('middlename', new FormControl(this.clientDataAndTemplate.middlename,  [Validators.required]));
+        this.editClientForm.addControl('middlename', new FormControl(this.clientDataAndTemplate.middlename));
         this.editClientForm.addControl('lastname', new FormControl(this.clientDataAndTemplate.lastname,  [Validators.required]));
 
         this.editClientForm.get('firstname').valueChanges.subscribe( (value: string) => {
