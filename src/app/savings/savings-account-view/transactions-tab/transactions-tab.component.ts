@@ -88,7 +88,6 @@ export class TransactionsTabComponent implements OnInit {
     private datePipe: DatePipe,
     public dialog: MatDialog,
     private alterServices: AlertService,
-    private terminalsService: TerminalsService
   ) {
     this.route.parent.parent.data.subscribe((data: { savingsAccountData: any }) => {
       this.savingsAccountData = data.savingsAccountData;
@@ -162,8 +161,8 @@ export class TransactionsTabComponent implements OnInit {
         this.dataSource = this.transactionsData;
       });
 
-      this.terminalsService.getPartnersTerminalTemplate().subscribe((partner) => {
-        this.partners = partner?.result?.partners;
+      this.savingsService.getListPartner().subscribe((result: any) => {
+        this.partners = result?.result?.listPartner;
       });
   }
 
