@@ -37,12 +37,14 @@ export class ClientsService {
 
   updateStatusIdentify(identifyId: string, status: string): Observable<any> {
     let httpParams = this.commonHttpParams.getCommonHttpParams();
-    httpParams = httpParams.set("identifyId", identifyId).set("status",status);
+    httpParams = httpParams.set("identifyId", identifyId).set("status", status);
     return this.http.post<any>(`${this.GatewayApiUrlPrefix}/client/client_identifier_status`, httpParams);
   }
 
   loadImageIdentifier(identifierId: string, imageId: string): Observable<any> {
-    const url = `/client_identifiers/${identifierId}/documents/${imageId}/attachment?tenantIdentifier=${window.localStorage.getItem("Fineract-Platform-TenantId")}`;
+    const url = `/client_identifiers/${identifierId}/documents/${imageId}/attachment?tenantIdentifier=${window.localStorage.getItem(
+      "Fineract-Platform-TenantId"
+    )}`;
     return this.http.get(url, { responseType: "blob" });
   }
 
@@ -87,7 +89,13 @@ export class ClientsService {
     return this.http.get("/clients", { params: httpParams });
   }
 
-  getClientsByStaff(orderBy: string, sortOrder: string, offset: number, limit: number,  sqlSearch?: string): Observable<any> {
+  getClientsByStaff(
+    orderBy: string,
+    sortOrder: string,
+    offset: number,
+    limit: number,
+    sqlSearch?: string
+  ): Observable<any> {
     const httpParams = new HttpParams()
       .set("offset", offset.toString())
       .set("limit", limit.toString())
@@ -102,7 +110,8 @@ export class ClientsService {
     sortOrder: string,
     offset: number,
     limit: number,
-    sqlSearch?: string
+    sqlSearch?: string,
+    staffFilter?: string
   ): Observable<any> {
     this.accessToken = JSON.parse(
       sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey)
@@ -110,14 +119,18 @@ export class ClientsService {
 
     if (!this.accessToken.permissions.includes("POS_UPDATE")) {
       sqlSearch += ` AND c.staff_id = ${this.accessToken.staffId} `;
+    } else {
+      if (staffFilter) {
+        sqlSearch += ` AND c.staff_id = ${staffFilter} `;
+      }
     }
 
     let httpParams = new HttpParams()
-      .set('underHierarchy', this.accessToken.officeHierarchy)
+      .set("underHierarchy", this.accessToken.officeHierarchy)
       .set("offset", offset.toString())
       .set("limit", limit.toString())
       .set("sortOrder", "DESC")
-      .set("orderBy", 'id')
+      .set("orderBy", "id")
       .set("sqlSearch", sqlSearch ? sqlSearch : "");
 
     this.accessToken = JSON.parse(
@@ -341,7 +354,10 @@ export class ClientsService {
   }
 
   getClientSignatureImage(clientId: string, documentId: string) {
-    const httpParams = new HttpParams().set("tenantIdentifier", window.localStorage.getItem("Fineract-Platform-TenantId"));
+    const httpParams = new HttpParams().set(
+      "tenantIdentifier",
+      window.localStorage.getItem("Fineract-Platform-TenantId")
+    );
     return this.http.get(`/clients/${clientId}/documents/${documentId}/attachment`, {
       params: httpParams,
       responseType: "blob",
@@ -411,7 +427,10 @@ export class ClientsService {
   }
 
   uploadClientDocumenttenantIdentifier(clientId: string, documentData: any): Observable<any> {
-    return this.http.post(`/clients/${clientId}/documents?tenantIdentifier=${window.localStorage.getItem("Fineract-Platform-TenantId")}`, documentData);
+    return this.http.post(
+      `/clients/${clientId}/documents?tenantIdentifier=${window.localStorage.getItem("Fineract-Platform-TenantId")}`,
+      documentData
+    );
   }
 
   deleteClientDocument(parentEntityId: string, documentId: string) {
@@ -580,16 +599,15 @@ export class ClientsService {
     return this.http.post<any>(`${this.IcGatewayApiUrlPrefix}/client/add_ic_partner`, httpParams);
   }
 
-  ToggleStatusICPartner(id:any , status: any): Observable<any> {
+  ToggleStatusICPartner(id: any, status: any): Observable<any> {
     let httpParams = this.commonHttpParams.getCommonHttpParams();
     httpParams = httpParams.set("externalPartnerId", id).set("toggleStatus", status);
     return this.http.post<any>(`${this.IcGatewayApiUrlPrefix}/client/togglestatusicpartner`, httpParams);
   }
 
-  DeleteICPartner(id:any): Observable<any> {
+  DeleteICPartner(id: any): Observable<any> {
     let httpParams = this.commonHttpParams.getCommonHttpParams();
     httpParams = httpParams.set("externalPartnerId", id);
     return this.http.post<any>(`${this.IcGatewayApiUrlPrefix}/client/deleteicpartner`, httpParams);
   }
-
 }

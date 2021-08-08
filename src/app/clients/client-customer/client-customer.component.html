@@ -1,7 +1,24 @@
  <div id="client-list" class="mat-typography">
     <mat-card >
 
-        <mat-card-header fxLayout="row wrap" fxLayout.lt-md="column" >
+        <div fxLayout="row wrap" fxLayout.lt-md="column">
+          <mat-form-field fxFlex="18%">
+            <mat-label>Chi nhánh</mat-label>
+            <mat-select formControlName="officeId">
+              <mat-option *ngFor="let office of offices" [value]="office.id">
+                {{ office.name }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field fxFlex="18%">
+            <mat-label>Nhân viên</mat-label>
+            <mat-select formControlName="staffId">
+              <mat-option *ngFor="let type of staffs" [value]="type.userId">
+                {{ type.displayName }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
           <div class="search-box" fxFlex.gt-md="48%"  >
             <mat-form-field>
               <input matInput [placeholder]="'Client_Component.inputPlaceholderClosedCIF'| translate"
@@ -22,10 +39,10 @@
               <fa-icon icon="plus"></fa-icon>&nbsp;&nbsp;{{ this.createButtonName}}
             </button>
           </div>
-        </mat-card-header>
+        </div>
 
-        <mat-card-content class="m-t-10"  >
-          <table id="client-list-table" class="mat-elevation-z8" mat-table [dataSource]="dataSource" matSort multiTemplateDataRows>-->
+        <div >
+          <table class="mat-elevation-z8" mat-table [dataSource]="dataSource" matSort multiTemplateDataRows>
             <!-- Name Column -->
             <ng-container matColumnDef="name">
               <th mat-header-cell  *matHeaderCellDef mat-sort-header='displayName'> {{ 'Client_Component.tblColName'| translate}}</th>
@@ -115,11 +132,6 @@
                       [matTooltip]="'ShareLabel.lblViewDetail'| translate" matTooltipPosition="above">
                   <i class="fa fa-address-card" aria-hidden="true"></i></button></td>
             </ng-container>
-<!-- Phần render table gồm:
-        - Header
-        - Dòng thông tin bình thường
-        - Dòng thông tin mở rông cho mobile UI
- -->
             <tr mat-header-row  *matHeaderRowDef="displayedColumns"></tr>
             <tr mat-row *matRowDef="let element; columns: displayedColumns;"
                 class="example-element-row"
@@ -131,9 +143,7 @@
 
           <mat-paginator [length]="dataSource?.records$ | async" [pageSize]="10" [pageSizeOptions]="[10, 25, 50, 100]"
                          showFirstLastButtons></mat-paginator>
-<!--  Kết thúc Table   -->
-        </mat-card-content>
+        </div>
 
       </mat-card>
  </div>
-

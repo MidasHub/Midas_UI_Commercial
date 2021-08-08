@@ -36,7 +36,8 @@ export class ClientsDataSource implements DataSource<any> {
    * @param {number} pageIndex Page number.
    * @param {number} limit Number of clients within the page.
    */
-  getClients(clientType:string='22',orderBy: string = '', sortOrder: string = '', pageIndex: number = 0, limit: number = 10, clientActive: boolean = true) {
+  getClients(clientType:string='22',orderBy: string = '', sortOrder: string = '',
+            pageIndex: number = 0, limit: number = 10, clientActive: boolean = true, staffFilter: string = null ) {
     this.clientsSubject.next([]);
     let sqlSearch = '';
     if (clientActive) {
@@ -54,7 +55,7 @@ export class ClientsDataSource implements DataSource<any> {
     //     this.clientsSubject.next(clients.pageItems);
     //   });
     // } else {
-      this.clientsService.getClientsByOfficeOfUser('', '', pageIndex * limit, limit, sqlSearch)
+      this.clientsService.getClientsByOfficeOfUser('', '', pageIndex * limit, limit, sqlSearch, staffFilter)
       .subscribe((clients: any) => {
         // clients.pageItems = (clientActive) ? (clients.pageItems.filter((client: any) => client.active)) : (clients.pageItems.filter((client: any) => !client.active));
         this.recordsSubject.next(clients.totalFilteredRecords);
@@ -86,7 +87,8 @@ export class ClientsDataSource implements DataSource<any> {
    * @param {number} pageIndex Page number.
    * @param {number} limit Number of clients within the page.
    */
-  filterClients(filter: string, orderBy: string = '', sortOrder: string = '', pageIndex: number = 0, limit: number = 10, clientActive: boolean = true,clientType:string='22') {
+  filterClients(filter: string, orderBy: string = '', sortOrder: string = '', pageIndex: number = 0,
+  limit: number = 10, clientActive: boolean = true,clientType:string='22', staffFilter: string = null) {
     this.clientsSubject.next([]);
     if (!filter) {
       this.getClients(clientType);
@@ -104,7 +106,7 @@ export class ClientsDataSource implements DataSource<any> {
       if (clientActive) {
         sqlSearch = `${sqlSearch} AND c.status_enum = 300 and c.client_type_cv_id IN (${clientType})`;
       }
-      this.clientsService.getClientsByOfficeOfUser('', '', pageIndex * limit, limit, sqlSearch)
+      this.clientsService.getClientsByOfficeOfUser('', '', pageIndex * limit, limit, sqlSearch, staffFilter)
         .subscribe((clients: any) => {
           this.old_result = clients?.pageItems;
           // this.recordsSubject.next(this.old_result.length);
@@ -121,31 +123,4 @@ export class ClientsDataSource implements DataSource<any> {
 
   }
 
-
-  /** Filter Active Client Data.
-   * @param {string} filterType Filter Value which clients should be filtered by client type:21=Customer,22=Internal,143=Vault
-   * @param {string} orderBy Property by which clients should be sorted.
-   * @param {string} sortOrder Sort order: ascending or descending.
-   * @param {number} pageIndex Page number.
-   * @param {number} limit Number of clients within the page.
-   */
-  // getClientsbyType(orderBy: string = '', sortOrder: string = '', pageIndex: number = 0, limit: number = 10, clientActive: boolean = true,clientType: string = '21', ) {
-
-  //   //let sqlSearch = `(c.client_type_cv_id LIKE "%${filterType}%" )`; // searchClientByNameAndExternalIdAndPhoneAndDocumentKey
-  //   this.clientsSubject.next([]);
-  //   let sqlSearch = '';
-  //   if (clientActive) {
-  //     sqlSearch = `c.status_enum = 300 and c.client_type_cv_id IN (${clientType}) `;
-  //     console.log(sqlSearch)
-  //   } else {
-  //     sqlSearch = `c.status_enum = 600 and c.client_type_cv_id IN (${clientType}) `;
-  //   }
-  //   this.clientsService.getClientsByOfficeOfUser('', '', pageIndex * limit, limit, sqlSearch)
-  //     .subscribe((clients: any) => {
-  //       // clients.pageItems = (clientActive) ? (clients.pageItems.filter((client: any) => client.active)) : (clients.pageItems.filter((client: any) => !client.active));
-  //       this.recordsSubject.next(clients.totalFilteredRecords);
-  //       this.clientsSubject.next(clients.pageItems);
-  //     });
-
-  // }
 }
