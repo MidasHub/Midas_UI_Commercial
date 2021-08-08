@@ -55,7 +55,6 @@ export class ClientCustomerComponent implements OnInit, AfterViewInit {
   offices: any = [];
   formFilter: FormGroup;
 
-
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
@@ -79,12 +78,21 @@ export class ClientCustomerComponent implements OnInit, AfterViewInit {
       staffId: [null],
       officeId: [null],
     });
-    this.clientsService.getListUserTeller(this.currentUser.officeId).subscribe((result: any) => {
-      this.staffs = result?.result?.listStaff.filter((staff: any) => staff.displayName.startsWith("R"));
-      this.staffs.unshift({
-        id: null,
-        displayName: "Tất cả",
+
+    this.formFilter.get("officeId").valueChanges.subscribe((result: any) => {
+      this.formFilter.get("staffId").setValue(null);
+      this.applyFilter(this.searchValue);
+      this.centersService.getStaff(result).subscribe((result: any) => {
+        this.staffs = result?.staffOptions?.filter((staff: any) => staff.displayName.startsWith("R"));
+        this.staffs.unshift({
+          id: null,
+          displayName: "Tất cả",
+        });
       });
+    });
+
+    this.formFilter.get("staffId").valueChanges.subscribe((result: any) => {
+      this.applyFilter(this.searchValue);
     });
 
     this.clientsService.getOffices().subscribe((offices: any) => {
@@ -147,7 +155,6 @@ export class ClientCustomerComponent implements OnInit, AfterViewInit {
     if (!this.sort.direction) {
       delete this.sort.active;
     }
-
     if (this.searchValue !== "") {
       this.applyFilter(this.searchValue);
     } else {
@@ -157,6 +164,8 @@ export class ClientCustomerComponent implements OnInit, AfterViewInit {
         queryParamsHandling: "merge", // remove to replace all query params by provided
       });
 
+      const officeId = this.formFilter.get("officeId").value ? this.formFilter.get("officeId").value : null;
+      const staffId = this.formFilter.get("staffId").value ? this.formFilter.get("staffId").value : null;
       // this.dataSource.getClients(this.sort.active, this.sort.direction, this.paginator.pageIndex, this.paginator.pageSize, !this.showClosedAccounts.checked);
       this.dataSource.getClients(
         this.clientType,
@@ -164,7 +173,9 @@ export class ClientCustomerComponent implements OnInit, AfterViewInit {
         this.sort.direction,
         this.paginator.pageIndex,
         this.paginator.pageSize,
-        !this.showClosedAccounts.checked
+        !this.showClosedAccounts.checked,
+        officeId,
+        staffId
       );
     }
   }
@@ -191,6 +202,9 @@ export class ClientCustomerComponent implements OnInit, AfterViewInit {
    * @param {string} filterValue Value to filter data.
    */
   applyFilter(filterValue: string = "") {
+    debugger;
+    const officeId = this.formFilter.get("officeId").value ? this.formFilter.get("officeId").value : null;
+    const staffId = this.formFilter.get("staffId").value ? this.formFilter.get("staffId").value : null;
     this.searchValue = filterValue;
     this.dataSource.filterClients(
       filterValue,
@@ -199,7 +213,9 @@ export class ClientCustomerComponent implements OnInit, AfterViewInit {
       this.paginator.pageIndex,
       this.paginator.pageSize,
       !this.showClosedAccounts.checked,
-      this.clientType
+      this.clientType,
+      officeId,
+      staffId
     );
     // this.paginator.pageIndex = 0;
   }

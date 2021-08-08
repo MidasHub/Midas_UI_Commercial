@@ -111,6 +111,7 @@ export class ClientsService {
     offset: number,
     limit: number,
     sqlSearch?: string,
+    officeFilter?: string,
     staffFilter?: string
   ): Observable<any> {
     this.accessToken = JSON.parse(
@@ -118,13 +119,15 @@ export class ClientsService {
     );
 
     if (!this.accessToken.permissions.includes("POS_UPDATE")) {
-      sqlSearch += ` AND c.staff_id = ${this.accessToken.staffId} `;
+      sqlSearch = `${sqlSearch} AND c.staff_id = ${this.accessToken.staffId} `;
     } else {
+      if (officeFilter) {
+        sqlSearch = `${sqlSearch} AND c.office_id = ${officeFilter} `;
+      }
       if (staffFilter) {
-        sqlSearch += ` AND c.staff_id = ${staffFilter} `;
+        sqlSearch = `${sqlSearch} AND c.staff_id = ${staffFilter} `;
       }
     }
-
     let httpParams = new HttpParams()
       .set("underHierarchy", this.accessToken.officeHierarchy)
       .set("offset", offset.toString())
