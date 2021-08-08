@@ -323,8 +323,8 @@ export class TransactionService {
     httpParams = httpParams.set('limit', String(payload.limit));
     httpParams = httpParams.set('offset', String(payload.offset));
     httpParams = httpParams.set('amountTransaction', '%%');
-    httpParams = httpParams.set('trackingState', payload.stageFilter === 'ALL' ? `%%` : `%${payload.stageFilter}%`);
-    httpParams = httpParams.set('trackingStatus', payload.statusFilter === 'ALL' ? `%%` : `%${payload.statusFilter}%`);
+    httpParams = httpParams.set('trackingState', payload.stageFilter === 'ALL' ? `%%` : `${payload.stageFilter}`);
+    httpParams = httpParams.set('trackingStatus', payload.statusFilter === 'ALL' ? `%%` : `${payload.statusFilter}`);
     httpParams = httpParams.set('staffFilter', payload.staffFilter === 'ALL' ? `%%` : `${payload.staffFilter}`);
     httpParams = httpParams.set('cardHoldFilter', payload.cardHoldFilter === 'ALL' ? `%%` : `${payload.cardHoldFilter}`);
     httpParams = httpParams.set('bankName', payload.bankName === 'ALL' ? `%%` : `${payload.bankName}`);
