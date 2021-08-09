@@ -87,8 +87,17 @@ export class BalanceAccountTellerComponent implements OnInit {
     const keys = Object.keys(form);
     this.accountFilter = this.dataSource.filter((v) => {
       for (const key of keys) {
-        if (form[key] && !String(v[key]).toLowerCase().includes(String(form[key]).toLowerCase())) {
-          return false;
+        if (form[key] ) {
+          if ("tellerSourceName".indexOf(key) != -1) {
+            if (!this.clientServices.preProcessText(String(v[key])).toUpperCase().includes(this.clientServices.preProcessText(String(form[key])).toUpperCase())) {
+              return false;
+            }
+          }
+          if ("tellerSourceName".indexOf(key) === -1) {
+            if (!String(v[key]).toLowerCase().includes(String(form[key]).toLowerCase())) {
+              return false;
+            }
+          }
         }
       }
       return true;
