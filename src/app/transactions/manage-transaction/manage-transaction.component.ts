@@ -293,6 +293,7 @@ export class ManageTransactionComponent implements OnInit {
     this.dataSource = [];
     this.isLoading = true;
     this.transactionService.getTransaction({ fromDate, toDate }).subscribe((result) => {
+      console.log("result: ", result)
       this.isLoading = false;
       this.transactionsData = result?.result?.listPosTransaction.map((v: any) => {
         return {
@@ -329,8 +330,15 @@ export class ManageTransactionComponent implements OnInit {
               if (!v[key]) {
                 return false;
               }
-              if (!String(v[key]).toUpperCase().includes(String(form[key]).toUpperCase())) {
-                return false;
+              if ("panHolderName".indexOf(key) != -1) {
+                if (!this.clientsService.preProcessText(String(v[key])).toUpperCase().includes(this.clientsService.preProcessText(String(form[key])).toUpperCase())) {
+                  return false;
+                }
+              }
+              if ("panHolderName".indexOf(key) === -1) {
+                if (!String(v[key]).toUpperCase().includes(String(form[key]).toUpperCase())) {
+                  return false;
+                }
               }
             }
             if ("officeId".indexOf(key) != -1) {
