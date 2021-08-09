@@ -55,6 +55,7 @@ export class BalanceAccountClientComponent implements OnInit {
     private clientServices: ClientsService,
     private formBuilder: FormBuilder,
     private authenticationService: AuthenticationService,
+    private clientsService: ClientsService
   ) {
 
     this.currentUser = this.authenticationService.getCredentials();
@@ -191,8 +192,17 @@ export class BalanceAccountClientComponent implements OnInit {
     const keys = Object.keys(form);
     this.accountFilter = this.dataSource.filter(v => {
       for (const key of keys) {
-        if (form[key] && !String(v[key]).toLowerCase().includes(String(form[key]).toLowerCase())) {
-          return false;
+        if (form[key] ) {
+          if ("customer_name".indexOf(key) != -1) {
+            if (!this.clientsService.preProcessText(String(v[key])).toUpperCase().includes(this.clientsService.preProcessText(String(form[key])).toUpperCase())) {
+              return false;
+            }
+          }
+          if ("customer_name".indexOf(key) === -1) {
+            if (!String(v[key]).toLowerCase().includes(String(form[key]).toLowerCase())) {
+              return false;
+            }
+          }
         }
       }
       return true;
@@ -207,8 +217,17 @@ export class BalanceAccountClientComponent implements OnInit {
     const keys = Object.keys(form);
     this.accountFilter2 = this.dataSource2.filter(v => {
       for (const key of keys) {
-        if (form[key] && !String(v[key]).toLowerCase().includes(String(form[key]).toLowerCase())) {
-          return false;
+        if (form[key] ) {
+          if ("customer_name".indexOf(key) != -1) {
+            if (!this.clientsService.preProcessText(String(v[key])).toUpperCase().includes(this.clientsService.preProcessText(String(form[key])).toUpperCase())) {
+              return false;
+            }
+          }
+          if ("customer_name".indexOf(key) === -1) {
+            if (!String(v[key]).toLowerCase().includes(String(form[key]).toLowerCase())) {
+              return false;
+            }
+          }
         }
       }
       return true;
