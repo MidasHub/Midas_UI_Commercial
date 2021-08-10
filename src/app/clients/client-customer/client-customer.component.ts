@@ -20,6 +20,7 @@ import { Logger } from "../../core/logger/logger.service";
 import { AuthenticationService } from "app/core/authentication/authentication.service";
 import { FormBuilder, FormGroup } from "@angular/forms";
 import { CentersService } from "app/centers/centers.service";
+import { BanksService } from "app/banks/banks.service";
 const log = new Logger("Client-customer");
 
 @Component({
@@ -64,6 +65,7 @@ export class ClientCustomerComponent implements OnInit, AfterViewInit {
     private centersService: CentersService,
     private route: ActivatedRoute,
     private router: Router,
+    private bankService: BanksService,
     private midasClientService: MidasClientService,
     private authenticationService: AuthenticationService,
     private formBuilder: FormBuilder
@@ -96,8 +98,10 @@ export class ClientCustomerComponent implements OnInit, AfterViewInit {
       this.applyFilter(this.searchValue);
     });
 
-    this.clientsService.getOffices().subscribe((offices: any) => {
-      this.offices = offices;
+    // this.clientsService.getOffices().subscribe((offices: any) => {
+    //   this.offices = offices;
+    this.bankService.getListOfficeCommon(this.currentUser.officeHierarchy).subscribe((offices: any) => {
+      this.offices = offices.result.listOffice;
       this.staffs.unshift({
         id: null,
         name: "Tất cả",
