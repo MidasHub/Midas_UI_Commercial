@@ -5,6 +5,8 @@ import {AlertService} from '../../../core/alert/alert.service';
 import {TransactionService} from '../../transaction.service';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import {ConfirmDialogComponent} from '../confirm-dialog/confirm-dialog.component';
+import { DatePipe } from '@angular/common';
+import { SettingsService } from 'app/settings/settings.service';
 
 @Component({
   selector: 'midas-view-fee-paid-transaction-dialog',
@@ -21,6 +23,7 @@ import {ConfirmDialogComponent} from '../confirm-dialog/confirm-dialog.component
 export class ViewFeePaidTransactionDialogComponent implements OnInit {
   txnCode: any;
   transactions: any[] = [];
+  today = new Date();
   expandedElement: any;
   displayedColumns: string[] = ['txnSavingResource',
     'createdDate', 'txnSavingType', 'txnPaymentCode', 'txnSavingId', 'paidAmount',
@@ -30,10 +33,12 @@ export class ViewFeePaidTransactionDialogComponent implements OnInit {
   constructor(
     public dialogRef: MatDialogRef<ViewFeePaidTransactionDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
-    private authenticationService: AuthenticationService,
     private alertServices: AlertService,
+    private settingsService: SettingsService,
     private transactionServices: TransactionService,
     public dialog: MatDialog,
+    private datePipe: DatePipe,
+
   ) {
     this.txnCode = data.data?.txnCode;
     this.getData();
@@ -49,13 +54,27 @@ export class ViewFeePaidTransactionDialogComponent implements OnInit {
 
   }
 
-  revertTransaction(txnSavingResource: string) {
+  revertTransaction(txnSavingResource: string, createdDate :any) {
+    const dateFormat = this.settingsService.dateFormat;
+    const todayString = this.datePipe.transform(this.today, dateFormat);
+    const createdDateString = this.datePipe.transform(createdDate, dateFormat);
+
+    if (todayString != createdDateString){
+      this.alertServices.alert({
+        type: '🚨🚨🚨🚨 Lỗi ',
+        msgClass: 'cssBig',
+        message: 'Lỗi không thể hoàn tác dòng chi tiền trong ngày quá khứ',
+      });
+      return;
+    }
+
     const dialog = this.dialog.open(ConfirmDialogComponent, {
       data: {
         message: 'Bạn chắc chắn muốn hoàn tác giao dịch ' + txnSavingResource,
         title: 'Hoàn tác giao dịch'
       },
     });
+
     dialog.afterClosed().subscribe(data => {
       if (data) {
         this.transactionServices.revertFeeByResourceId(txnSavingResource).subscribe(result => {
