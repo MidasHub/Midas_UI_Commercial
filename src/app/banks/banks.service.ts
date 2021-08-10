@@ -31,6 +31,7 @@ export class BanksService {
 
   getListOfficeCommon(hierarchy: string = '') {
     let httpParams = this.commonHttpParams.getCommonHttpParams();
+    httpParams = httpParams.set("hierarchy", `${hierarchy}%`);
 
     return this.http.post<any>(`${this.GatewayApiUrlPrefix}/common/get_list_office`, httpParams);
   }
