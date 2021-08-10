@@ -250,7 +250,7 @@ export class ManageTransactionComponent implements OnInit {
       });
     });
 
-    this.bankService.getListOfficeCommon().subscribe((offices: any) => {
+    this.bankService.getListOfficeCommon(this.currentUser.officeHierarchy).subscribe((offices: any) => {
       this.offices = offices.result.listOffice;
       const officeId = this.currentUser.officeId;
       this.currentUser = this.authenticationService.getCredentials();

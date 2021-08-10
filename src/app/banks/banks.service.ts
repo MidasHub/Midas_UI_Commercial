@@ -29,8 +29,9 @@ export class BanksService {
     this.GatewayApiUrlPrefix = environment.GatewayApiUrlPrefix;
   }
 
-  getListOfficeCommon() {
+  getListOfficeCommon(hierarchy: string = null) {
     let httpParams = this.commonHttpParams.getCommonHttpParams();
+    httpParams = httpParams.set("hierarchy", hierarchy ? `${hierarchy}%` : `.%`);
 
     return this.http.post<any>(`${this.GatewayApiUrlPrefix}/common/get_list_office`, httpParams);
   }

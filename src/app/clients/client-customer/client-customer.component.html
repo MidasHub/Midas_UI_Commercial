@@ -1,5 +1,14 @@
- <div id="client-list" class="mat-typography">
-    <mat-card >
+<div id="client-list" class="mat-typography">
+  <mat-card>
+    <div fxLayout="row wrap" fxLayout.lt-md="column" [formGroup]="formFilter">
+      <mat-form-field fxFlex="18%">
+        <mat-label>Chi nhánh</mat-label>
+        <mat-select formControlName="officeId">
+          <mat-option *ngFor="let office of offices" [value]="office.officeId">
+            {{ office.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
 
         <div fxLayout="row wrap" fxLayout.lt-md="column">
           <mat-form-field fxFlex="18%">
