@@ -256,8 +256,15 @@ export class FeePaidManagementComponent implements OnInit {
             if (!v[key]) {
               return false;
             }
-            if (!String(v[key])?.toLowerCase().includes(String(form[key])?.toLowerCase())) {
-              return false;
+            if ("customerName".indexOf(key) != -1) {
+              if (!this.clientServices.preProcessText(String(v[key])).toUpperCase().includes(this.clientServices.preProcessText(String(form[key])).toUpperCase())) {
+                return false;
+              }
+            }
+            if ("customerName".indexOf(key) === -1) {
+              if (!String(v[key])?.toLowerCase().includes(String(form[key])?.toLowerCase())) {
+                return false;
+              }
             }
           }
         }
