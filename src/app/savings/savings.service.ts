@@ -198,6 +198,7 @@ export class SavingsService {
     let httpParams = this.commonHttpParams.getCommonHttpParams();
     httpParams = httpParams.set("buSavingAccount", info.buSavingAccount);
     httpParams = httpParams.set("paymentTypeId", info.paymentTypeId);
+    httpParams = httpParams.set("routingCode", info.routingCode);
     httpParams = httpParams.set("note", info.note);
     httpParams = httpParams.set("amountAdvanceCash", info.amountAdvanceCash);
     httpParams = httpParams.set("clientSavingAccount", info.clientSavingAccount);
