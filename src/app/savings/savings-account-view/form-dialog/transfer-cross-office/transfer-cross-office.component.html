@@ -1,26 +1,29 @@
-<h1 mat-dialog-title style="text-align: center">
-  ĐIỀU CHUYỂN TIỀN
-</h1>
+<h1 mat-dialog-title style="text-align: center">ĐIỀU CHUYỂN TIỀN</h1>
 
-<div mat-dialog-content [formGroup]="form" [fxLayout]="'column'" fxLayout.lt-md="column" [fxLayoutGap]="'1%'"
-     fxLayoutGap.lt-md="0%">
-
-     <mat-form-field fxFlex="96%" *ngIf="form.contains('typeAdvanceCashes')">
-      <mat-label>Loại </mat-label>
-      <mat-select required formControlName="typeAdvanceCashes">
-        <mat-option  *ngFor="let type of typeAdvanceCashes" [value]="type.id">
-          {{ type.name }}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
-    <mat-form-field fxFlex="96%" *ngIf="form.contains('office')">
-      <mat-label>Chi nhánh nhận</mat-label>
-      <mat-select required formControlName="office">
-        <mat-option *ngFor="let office of offices" [value]="office.officeId">
-          {{ office.name }}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
+<div
+  mat-dialog-content
+  [formGroup]="form"
+  [fxLayout]="'column'"
+  fxLayout.lt-md="column"
+  [fxLayoutGap]="'1%'"
+  fxLayoutGap.lt-md="0%"
+>
+  <mat-form-field fxFlex="96%" *ngIf="form.contains('typeAdvanceCashes')">
+    <mat-label>Loại </mat-label>
+    <mat-select required formControlName="typeAdvanceCashes">
+      <mat-option *ngFor="let type of typeAdvanceCashes" [value]="type.id">
+        {{ type.name }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field fxFlex="96%" *ngIf="form.contains('office')">
+    <mat-label>Chi nhánh nhận</mat-label>
+    <mat-select required formControlName="office">
+      <mat-option *ngFor="let office of offices" [value]="office.officeId">
+        {{ office.name }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
   <mat-form-field class="select-book" *ngIf="form.contains('client')">
     <mat-label>Nhân viên</mat-label>
     <mat-select required formControlName="client">
@@ -30,10 +33,18 @@
     </mat-select>
   </mat-form-field>
   <mat-form-field class="select-book" *ngIf="form.contains('partner')">
-    <mat-label>Đối tác</mat-label>
+    <mat-label>Đối tác ghi nhân</mat-label>
     <mat-select required formControlName="partner">
       <mat-option *ngFor="let partner of partners" [value]="partner.id">
         {{ partner.externalId }} - {{ partner.displayName }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field class="select-book" *ngIf="form.contains('partnerLocal')">
+    <mat-label>Đối tác ghi nhân</mat-label>
+    <mat-select required formControlName="partnerLocal">
+      <mat-option *ngFor="let partner of partnersLocal" [value]="partner.code">
+        {{ partner.desc }}
       </mat-option>
     </mat-select>
   </mat-form-field>
@@ -48,22 +59,23 @@
 
   <mat-form-field fxFlex="96%" *ngIf="form.contains('amount')">
     <mat-label>Số tiền</mat-label>
-    <input required
-           currencyMask
-           matInput formControlName="amount">
+    <input required currencyMask matInput formControlName="amount" />
   </mat-form-field>
-
 
   <mat-form-field *ngIf="form.contains('note')" fxFlex="48%">
-    <mat-label>{{'Saving_Account_Component.clientAdvanceCash.labelNoteAdvance' |translate}}</mat-label>
-    <input type="text" aria-multiline="true" matInput formControlName="note">
+    <mat-label>{{ "Saving_Account_Component.clientAdvanceCash.labelNoteAdvance" | translate }}</mat-label>
+    <input type="text" aria-multiline="true" matInput formControlName="note" />
   </mat-form-field>
-
 </div>
 
 <mat-dialog-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="2%">
-  <button mat-raised-button mat-dialog-close>{{ 'Shared_Component.FormDialog.btnCancel' | translate }}</button>
-  <button mat-raised-button color="primary"
-          [mat-dialog-close]="{ data: form  }"
-          [disabled]="!form.valid || form.pristine">Thực hiện</button>
+  <button mat-raised-button mat-dialog-close>{{ "Shared_Component.FormDialog.btnCancel" | translate }}</button>
+  <button
+    mat-raised-button
+    color="primary"
+    [mat-dialog-close]="{ data: form }"
+    [disabled]="!form.valid || form.pristine"
+  >
+    Thực hiện
+  </button>
 </mat-dialog-actions>
