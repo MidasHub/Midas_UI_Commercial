@@ -304,13 +304,14 @@ export class SavingsAccountViewComponent implements OnInit {
     const refDialog = this.dialog.open(TransferCrossOfficeComponent, dialogConfig);
     refDialog.afterClosed().subscribe((response: any) => {
       if (response) {
-        const { typeAdvanceCashes, savingAccountId, note, amount } = response?.data?.value;
+        const { typeAdvanceCashes, savingAccountId, note, amount, partnerLocal } = response?.data?.value;
 
         this.savingsService
           .transferIcTransaction({
             buSavingAccount: this.savingsAccountData.id,
             clientSavingAccount: savingAccountId,
             note: note,
+            routingCode: partnerLocal,
             amountAdvanceCash: amount,
             paymentTypeId: typeAdvanceCashes,
           })

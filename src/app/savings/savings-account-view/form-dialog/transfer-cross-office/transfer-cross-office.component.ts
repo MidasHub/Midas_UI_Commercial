@@ -20,6 +20,7 @@ export class TransferCrossOfficeComponent implements OnInit {
   isLoading: boolean = false;
   offices: any[] = [];
   partners: any[] = [];
+  partnersLocal: any[] = [];
   transferIc: boolean = false;
   transferToIc: boolean = false;
 
@@ -137,7 +138,7 @@ export class TransferCrossOfficeComponent implements OnInit {
       });
       this.modifiedForm();
 
-      this.form.get("typeAdvanceCashes").valueChanges.subscribe((value) => {
+      this.form.get("typeAdvanceCashes")?.valueChanges.subscribe((value) => {
         this.modifiedForm();
       });
 
@@ -153,8 +154,13 @@ export class TransferCrossOfficeComponent implements OnInit {
           },
         ];
 
+        this.savingsService.getListPartner().subscribe((result: any) => {
+          this.partnersLocal = result?.result?.listPartner;
+        });
+
         this.form = this.formBuilder.group({
-          typeAdvanceCashes: ["62", Validators.required],
+          typeAdvanceCashes: ["61", Validators.required],
+          partnerLocal: ["", Validators.required],
           savingAccountId: ["", Validators.required],
           amount: ["", Validators.required],
           note: [""],
@@ -170,13 +176,13 @@ export class TransferCrossOfficeComponent implements OnInit {
       this.offices = offices.result.listOffice;
     });
 
-    this.form.get("office").valueChanges.subscribe((value) => {
+    this.form.get("office")?.valueChanges.subscribe((value) => {
       this.serviceClient.getStaffsByOffice(value).subscribe((result) => {
         this.staffs = result.result.listStaff;
       });
     });
 
-    this.form.get("client").valueChanges.subscribe((value) => {
+    this.form.get("client")?.valueChanges.subscribe((value) => {
       this.savingsService.getListClientSavingStaffByOffice(value).subscribe((result) => {
         this.accounts = result.result.listClientSavingVault;
       });
