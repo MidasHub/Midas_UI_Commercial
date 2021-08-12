@@ -564,6 +564,13 @@ export class ClientsService {
     return this.http.post<any>(`${this.GatewayApiUrlPrefix}/common/get_list_user_off_office`, httpParams);
   }
 
+  getListUserTellerV2(officeId: string): Observable<any> {
+    let httpParams = this.commonHttpParams.getCommonHttpParams();
+    httpParams = httpParams.set("officeIdFilter", officeId);
+
+    return this.http.post<any>(`${this.GatewayApiUrlPrefix}/common/get_list_user_off_office/v2`, httpParams);
+  }
+
   getStaffsByOffice(officeId: string): Observable<any> {
     let httpParams = this.commonHttpParams.getCommonHttpParams();
     httpParams = httpParams.set("officeIdSelected", officeId);

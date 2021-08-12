@@ -300,6 +300,35 @@ export class TransactionService {
     return this.http.post(`${this.GatewayApiUrlPrefix}/transaction/get_list_pos_transaction_rollterm`, httpParams);
   }
 
+  getListRollTermTransactionOpenByUserIdV2(payload: {
+    fromDate: string;
+    toDate: string;
+    query: string;
+    bankFilter: string;
+    cardTypeFilter: string;
+    createdByFilter: string;
+    limit: number;
+    offset: number;
+    officeFilter: number;
+    dueDayFilter:number;
+    viewDoneTransaction: boolean;
+  }): Observable<any> {
+    let httpParams = this.commonHttpParams.getCommonHttpParams();
+    httpParams = httpParams.set("bankFilter", payload.bankFilter == "ALL" ? "%%" : payload.bankFilter);
+    httpParams = httpParams.set("cardTypeFilter", payload.cardTypeFilter == "ALL" ? "%%" : payload.cardTypeFilter);
+    httpParams = httpParams.set("createdByFilter", !payload.createdByFilter ? "%%" : payload.createdByFilter);
+    httpParams = httpParams.set("customerSearch", !payload.query ? "%%" : `%${payload.query}%`);
+    httpParams = httpParams.set("officeSearch", !payload.officeFilter ? "%%" : `${payload.officeFilter}`);
+    httpParams = httpParams.set("dueDayFilter", !payload.dueDayFilter ? '-1' :`${payload.dueDayFilter}`);
+    httpParams = httpParams.set("viewDoneTransaction", `${payload.viewDoneTransaction}`);
+    httpParams = httpParams.set("limit", String(payload.limit));
+    httpParams = httpParams.set("offset", String(payload.offset));
+    httpParams = httpParams.set("fromDate", payload.fromDate);
+    httpParams = httpParams.set("toDate", payload.toDate);
+
+    return this.http.post(`${this.GatewayApiUrlPrefix}/transaction/get_list_pos_transaction_rollterm/v2`, httpParams);
+  }
+
   getListCardOnDueDayByUserId(payload: {
     fromDate: string;
     toDate: string;
