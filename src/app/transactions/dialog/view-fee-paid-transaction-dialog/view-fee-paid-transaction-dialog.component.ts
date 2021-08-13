@@ -23,7 +23,7 @@ export class ViewFeePaidTransactionDialogComponent implements OnInit {
   transactions: any[] = [];
   expandedElement: any;
   displayedColumns: string[] = ['txnSavingResource',
-    'createdDate', 'txnSavingType', 'txnPaymentCode', 'txnSavingId', 'paidAmount',
+    'createdDate', 'txnSavingType', 'txnPaymentCode', 'txnSavingId', 'paidAmount', "routingCode",
     'actions',
   ];
 
