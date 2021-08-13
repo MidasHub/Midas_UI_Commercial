@@ -102,7 +102,7 @@
             </mat-form-field>
           </td>
         </ng-container>
-        <!-- <ng-container matColumnDef="feePaid">
+        <ng-container matColumnDef="feePaid">
           <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef>
             Đã chi / <br />
             (Đối tác)
@@ -113,7 +113,7 @@
               >({{ booking?.routingCode }})
             </label>
           </td>
-        </ng-container> -->
+        </ng-container>
         <ng-container matColumnDef="fee">
           <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef>Phí thực tế</th>
           <td mat-cell fxHide fxShow.gt-md *matCellDef="let booking">{{ transactionInfo?.feePercentage }}%</td>
@@ -141,7 +141,7 @@
               "
             > -->
             <mat-icon
-              *ngIf="permitFee "
+              *ngIf="permitFee && (transaction.totalPaid < transaction.bookingAmount)  "
               style="color: red"
               title="Chi tiền"
               mat-dialog-close
