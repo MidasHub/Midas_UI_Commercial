@@ -1,14 +1,13 @@
 import { Component, Inject, OnInit } from "@angular/core";
-import { TransactionService } from "../../transaction.service";
-import { FormBuilder, FormControl, FormGroup } from "@angular/forms";
-import { MAT_DIALOG_DATA, MatDialogRef, MatDialog } from "@angular/material/dialog";
-import { AuthenticationService } from "../../../core/authentication/authentication.service";
-import { AlertService } from "../../../core/alert/alert.service";
-import { MidasClientService } from "../../../midas-client/midas-client.service";
+import { FormBuilder, FormGroup } from "@angular/forms";
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
 import { GroupsService } from "app/groups/groups.service";
-import { ConfirmDialogComponent } from "../confirm-dialog/confirm-dialog.component";
 import { SavingsService } from "app/savings/savings.service";
-import { BanksService } from "app/banks/banks.service";
+import { AlertService } from "../../../core/alert/alert.service";
+import { AuthenticationService } from "../../../core/authentication/authentication.service";
+import { MidasClientService } from "../../../midas-client/midas-client.service";
+import { TransactionService } from "../../transaction.service";
+import { ConfirmDialogComponent } from "../confirm-dialog/confirm-dialog.component";
 
 @Component({
   selector: "midas-add-fee-dialog",
@@ -44,7 +43,7 @@ export class AddFeeDialogComponent implements OnInit {
   isLoading: boolean = false;
   amountPaidBooking: number;
   maxAmount: number = 0;
-
+  bookingId: number = null;
   constructor(
     private transactionService: TransactionService,
     private formBuilder: FormBuilder,
@@ -59,6 +58,7 @@ export class AddFeeDialogComponent implements OnInit {
 
   ) {
     this.txnCode = data.data?.txnCode;
+    this.bookingId = data.data?.bookingId;
     this.amountPaidBooking = data.data?.amountPaid;
     this.formDialogPaid = this.formBuilder.group({
       paymentCode: [""],
@@ -338,6 +338,7 @@ export class AddFeeDialogComponent implements OnInit {
     let form = {
       ...this.formDialogGet.value,
       ...this.formDialogPaid.value,
+      bookingId: this.bookingId,
     };
 
     const dialog = this.dialog.open(ConfirmDialogComponent, {

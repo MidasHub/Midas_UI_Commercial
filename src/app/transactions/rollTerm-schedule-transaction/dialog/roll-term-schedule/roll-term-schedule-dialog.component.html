@@ -102,7 +102,18 @@
             </mat-form-field>
           </td>
         </ng-container>
-
+        <ng-container matColumnDef="feePaid">
+          <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef>
+            Đã chi / <br />
+            (Đối tác)
+          </th>
+          <td mat-cell fxHide fxShow.gt-md *matCellDef="let booking">
+            {{ booking?.totalPaid | money }} <br />
+            <label *ngIf="booking.routingCode" style="color: green; font-weight: bold"
+              >({{ booking?.routingCode }})
+            </label>
+          </td>
+        </ng-container>
         <ng-container matColumnDef="fee">
           <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef>Phí thực tế</th>
           <td mat-cell fxHide fxShow.gt-md *matCellDef="let booking">{{ transactionInfo?.feePercentage }}%</td>
@@ -121,14 +132,17 @@
           </th>
           <td mat-cell *matCellDef="let transaction">
             <mat-icon
-              *ngIf="permitFee"
+              *ngIf="permitFee && (transaction.totalPaid < transaction.bookingAmount)  "
               style="color: red"
               title="Chi tiền"
               mat-dialog-close
-              (click)="addFeeDialogByTransactionId(false, transaction.rollTermId, transaction.bookingAmount)"
+              (click)="
+                addFeeDialogByTransactionId(false, transaction.rollTermId, transaction.bookingAmount, transaction.refid)
+              "
             >
               attach_money
             </mat-icon>
+
             <mat-icon
               mat-dialog-close
               style="color: blue"
@@ -142,6 +156,20 @@
               "
               >gavel
             </mat-icon>
+            <!-- <mat-icon
+              mat-dialog-close
+              style="color: blue"
+              title="Làm giao dịch thu hồi Advance"
+              (click)="
+                routeToMakeRollTermGetCash(
+                  transaction.rollTermId,
+                  transaction.refid,
+                  transactionInfo.totalAmountPaid - transactionInfo.totalAmountGet
+                )
+              "
+              >gavel
+            </mat-icon> -->
+
             <!-- <mat-icon
               mat-dialog-close
               style="color: green;"

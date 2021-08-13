@@ -11,6 +11,7 @@ import { AlertService } from "app/core/alert/alert.service";
 import { ViewFeePaidTransactionDialogComponent } from "app/transactions/dialog/view-fee-paid-transaction-dialog/view-fee-paid-transaction-dialog.component";
 import { DatePipe } from "@angular/common";
 import { AuthenticationService } from "app/core/authentication/authentication.service";
+import { ConfirmDialogComponent } from "app/transactions/dialog/confirm-dialog/confirm-dialog.component";
 
 @Component({
   selector: "midas-roll-term-schedule-dialog",
@@ -29,7 +30,7 @@ export class RollTermScheduleDialogComponent implements OnInit {
   transactionInfo: any;
   dataSource!: any[];
   isLoading = false;
-  displayedColumns: string[] = ["transaction", "txnDate", "amount", "fee", "getAmount", "actions"];
+  displayedColumns: string[] = ["transaction", "txnDate", "amount", "feePaid", "fee", "getAmount", "actions"];
   rollTermId: string;
   form!: FormGroup;
   pristine?: boolean;
@@ -114,18 +115,18 @@ export class RollTermScheduleDialogComponent implements OnInit {
         this.transactionInfo?.reqAmount
       ).toFixed(0);
       this.transactionInfo.totalAmountGet = 0;
-
+      this.transactionInfo.totalAmountPaid = 0;
       this.dataSource.forEach((element) => {
         this.transactionInfo.rollTermId = element.rollTermId;
-        this.transactionInfo.totalAmountPaid = element.totalPaid;
+        this.transactionInfo.totalAmountPaid += element.totalPaid;
         this.transactionInfo.totalAmountGet += element.totalGet;
       });
     });
   }
 
-  addFeeDialogByTransactionId(isTrnRefNo: boolean, transactionId: string, amountPaid: number) {
+  addFeeDialogByTransactionId(isTrnRefNo: boolean, transactionId: string, amountPaid: number, bookingId: number) {
     if (isTrnRefNo) {
-      this.addFeeDialog(transactionId);
+      this.addFeeDialog(transactionId, bookingId);
     } else {
       this.transactionService.getTransactionDetail(transactionId).subscribe((result) => {
         const dialogConfig = new MatDialogConfig();
@@ -134,6 +135,7 @@ export class RollTermScheduleDialogComponent implements OnInit {
           data: {
             txnCode: result?.result?.detailTransactionDto?.trnRefNo,
             amountPaid: amountPaid,
+            bookingId: bookingId,
           },
         };
         // dialogConfig.minWidth = 400;
@@ -165,14 +167,14 @@ export class RollTermScheduleDialogComponent implements OnInit {
         txnCode: txnCode,
       },
     };
-    // dialogConfig.minWidth = 400;
+    dialogConfig.minWidth = 1000;
     const dialog = this.dialog.open(ViewFeePaidTransactionDialogComponent, dialogConfig);
     dialog.afterClosed().subscribe((data) => {
       if (data && data.status) {
       }
     });
   }
-  addFeeDialog(txnCode: string) {
+  addFeeDialog(txnCode: string, bookingId: number) {
     if (!txnCode) {
       const message = "Vui lòng thực hiện giao dịch thu hồi trước!";
       this.alertService.alert({
@@ -185,6 +187,7 @@ export class RollTermScheduleDialogComponent implements OnInit {
     dialogConfig.data = {
       data: {
         txnCode: txnCode,
+        bookingId: bookingId,
       },
     };
     // dialogConfig.minWidth = 400;
@@ -243,40 +246,70 @@ export class RollTermScheduleDialogComponent implements OnInit {
     }
   }
 
-  addBookingRow () {
-    let BookingRollTerm = {
-      txnDate: this.datePipe.transform(new Date(), "dd/MM/yyyy"),
-      amountBooking: 0,
-      bookingRefNo: this.dataSource[0].bookingRefNo,
-      isIsTmpBooking: false,
-      productId: "AL01",
-      rollTermId: this.rollTermId,
-      cardId: this.dataSource[0].identifierId,
-      clientId: this.dataSource[0].customerId,
-    };
-    this.bookingService.addRowBookingInternalOnRollTermSchedule(BookingRollTerm).subscribe((data: any) => {
-      this.getRollTermScheduleAndCardDueDayInfo(this.rollTermId);
+  addBookingRow = function () {
+    const dialog = this.dialog.open(ConfirmDialogComponent, {
+      data: {
+        message: "Bạn chắc chắn muốn thêm một dòng lịch Advance mới",
+        title: "Xác nhận",
+      },
+    });
+    dialog.afterClosed().subscribe((data: any) => {
+      if (data) {
+        let BookingRollTerm = {
+          txnDate: this.datePipe.transform(new Date(), "dd/MM/yyyy"),
+          amountBooking: 0,
+          bookingRefNo: this.dataSource[0].bookingRefNo,
+          isIsTmpBooking: false,
+          productId: "AL01",
+          rollTermId: this.rollTermId,
+          cardId: this.dataSource[0].identifierId,
+          clientId: this.dataSource[0].customerId,
+        };
+        this.bookingService.addRowBookingInternalOnRollTermSchedule(BookingRollTerm).subscribe((data: any) => {
+          this.getRollTermScheduleAndCardDueDayInfo(this.rollTermId);
+        });
+      }
     });
   };
 
   removeBookingRow(index: number) {
-    let bookingInfo = this.dataSource[index];
-    let BookingRollTerm = {
-      bookingInternalId: bookingInfo.refid,
-    };
-    this.bookingService.removeRowBookingInternalOnRollTermSchedule(BookingRollTerm).subscribe((data: any) => {
-      this.getRollTermScheduleAndCardDueDayInfo(this.rollTermId);
+    const dialog = this.dialog.open(ConfirmDialogComponent, {
+      data: {
+        message: "Bạn chắc chắn muốn xoá dòng lịch Advance này",
+        title: "Xác nhận",
+      },
+    });
+    dialog.afterClosed().subscribe((data: any) => {
+      if (data) {
+        let bookingInfo = this.dataSource[index];
+        let BookingRollTerm = {
+          bookingInternalId: bookingInfo.refid,
+        };
+        this.bookingService.removeRowBookingInternalOnRollTermSchedule(BookingRollTerm).subscribe((data: any) => {
+          this.getRollTermScheduleAndCardDueDayInfo(this.rollTermId);
+        });
+      }
     });
   }
 
   editBookingRow(booking: any) {
-    let BookingRollTerm = {
-      bookingInternalId: booking.refid,
-      amountBooking: booking.bookingAmount,
-      txnDate: this.datePipe.transform(booking.txnDate, "dd/MM/yyyy"),
-    };
-    this.bookingService.editBookingInternalOnRollTermSchedule(BookingRollTerm).subscribe((data: any) => {
-      this.getRollTermScheduleAndCardDueDayInfo(this.rollTermId);
+    const dialog = this.dialog.open(ConfirmDialogComponent, {
+      data: {
+        message: "Bạn chắc chắn muốn chỉnh sửa dòng lịch Advance này",
+        title: "Xác nhận",
+      },
+    });
+    dialog.afterClosed().subscribe((data: any) => {
+      if (data) {
+        let BookingRollTerm = {
+          bookingInternalId: booking.refid,
+          amountBooking: booking.bookingAmount,
+          txnDate: this.datePipe.transform(booking.txnDate, "dd/MM/yyyy"),
+        };
+        this.bookingService.editBookingInternalOnRollTermSchedule(BookingRollTerm).subscribe((data: any) => {
+          this.getRollTermScheduleAndCardDueDayInfo(this.rollTermId);
+        });
+      }
     });
   }
 }
