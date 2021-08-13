@@ -3,7 +3,6 @@ import { animate, state, style, transition, trigger } from "@angular/animations"
 import { MAT_DIALOG_DATA, MatDialogRef, MatDialog } from "@angular/material/dialog";
 import { FormBuilder, FormGroup } from "@angular/forms";
 import { TransactionService } from "../../transaction.service";
-import { AlertService } from "../../../core/alert/alert.service";
 import { ClientsService } from "../../../clients/clients.service";
 import { SavingsService } from "app/savings/savings.service";
 import { ConfirmDialogComponent } from "../confirm-dialog/confirm-dialog.component";
@@ -28,6 +27,7 @@ export class MakeFeeOnAdvanceComponent implements OnInit {
     "txnPaymentCode",
     "txnSavingId",
     "paidAmount",
+    "routingCode",
   ];
   expandedElement: any;
   formDialog: FormGroup;

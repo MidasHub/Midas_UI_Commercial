@@ -302,12 +302,7 @@ export class CreateBatchTransactionComponent implements OnInit {
         }, 0);
       });
     }
-    // this.totalAmount = this.dataSource.reduce((total: any, num: any) => {
-    //   return total + Math.round(num?.get("requestAmount").value);
-    // }, 0);
-    // this.totalAmountTransaction = this.dataSource.reduce((total: any, num: any) => {
-    //     return total + Math.round(num?.get('amountTransaction').value);
-    // }, 0);
+
     this.totalTerminalAmount = this.dataSource.reduce((total: any, num: any) => {
       return total + Math.round(num?.get("terminalAmount").value);
     }, 0);
@@ -635,7 +630,7 @@ export class CreateBatchTransactionComponent implements OnInit {
     dialogConfig.data = {
       batchTxnName: this.batchTxnName,
     };
-    // dialogConfig.minWidth = 400;
+    dialogConfig.minWidth = 1000;
     const dialog = this.dialog.open(MakeFeeOnAdvanceComponent, dialogConfig);
     dialog.afterClosed().subscribe((data) => {});
   }
