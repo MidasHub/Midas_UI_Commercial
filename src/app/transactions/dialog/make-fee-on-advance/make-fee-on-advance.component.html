@@ -97,6 +97,11 @@
         <td mat-cell fxHide fxShow.gt-md
             *matCellDef="let form"> {{form.paidAmount | money}}</td>
       </ng-container>
+      <ng-container matColumnDef="routingCode">
+        <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>Đối tác</th>
+        <td mat-cell fxHide fxShow.gt-md
+            *matCellDef="let form"> <label style="color: red; font-weight: bold;" for="">{{form.routingCode}}</label></td>
+      </ng-container>
 
       <ng-container matColumnDef="expandedDetail">
         <td mat-cell fxShow fxHide.gt-md *matCellDef="let element" [attr.colspan]="displayedColumns.length">

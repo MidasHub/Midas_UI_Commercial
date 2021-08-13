@@ -40,6 +40,13 @@
           *matCellDef="let transaction">{{ transaction.paidAmount | money }} </td>
     </ng-container>
 
+    <ng-container matColumnDef="routingCode">
+      <th mat-header-cell class="mat-cell-custom"  *matHeaderCellDef mat-sort-header>Đối tác</th>
+      <td mat-cell class="mat-cell-custom"
+          *matCellDef="let transaction">
+          <label style="color: red; font-weight: bold;" for="">{{ transaction.routingCode}}</label> </td>
+    </ng-container>
+
 
     <ng-container matColumnDef="actions">
       <th mat-header-cell class="mat-cell-custom" *matHeaderCellDef mat-sort-header></th>

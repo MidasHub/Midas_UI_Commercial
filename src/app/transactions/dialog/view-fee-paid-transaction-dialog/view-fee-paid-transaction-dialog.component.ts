@@ -26,7 +26,7 @@ export class ViewFeePaidTransactionDialogComponent implements OnInit {
   today = new Date();
   expandedElement: any;
   displayedColumns: string[] = ['txnSavingResource',
-    'createdDate', 'txnSavingType', 'txnPaymentCode', 'txnSavingId', 'paidAmount',
+    'createdDate', 'txnSavingType', 'txnPaymentCode', 'txnSavingId', 'paidAmount', "routingCode",
     'actions',
   ];
 

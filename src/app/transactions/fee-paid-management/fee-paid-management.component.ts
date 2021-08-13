@@ -377,7 +377,7 @@ export class FeePaidManagementComponent implements OnInit {
         txnCode: txnCode,
       },
     };
-    // dialogConfig.minWidth = 400;
+    dialogConfig.minWidth = 1000;
     const dialog = this.dialog.open(ViewFeePaidTransactionDialogComponent, dialogConfig);
     dialog.afterClosed().subscribe((data) => {
       if (data && data.status) {
