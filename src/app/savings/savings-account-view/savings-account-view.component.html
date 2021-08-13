@@ -68,12 +68,14 @@
     <div class="savings-account-tables" fxLayout="row" fxLayoutGap="2%">
   <!-- Tóm tắt tài khoản  -->
       <div fxFlex="49%"
-           *ngIf="!savingsAccountData.status.rejected && !savingsAccountData.status.submittedAndPendingApproval;" >
+            >
 <!--        // else alternateSummary">-->
         <h4 class="table-headers"
         [ngClass]="{'bankType': this.isBankAcccount,
                     'CCAType': this.isCCA,
-                    'cashType': this.isCash  }">{{'Saving_Account_Component.ViewSavingAccount.labelAccountSummary'|translate}}</h4>
+                    'cashType': this.isCash  }"
+                    >
+                    {{'Saving_Account_Component.ViewSavingAccount.labelAccountSummary'|translate}}</h4>
         <table>
           <tbody>
 <!--          <tr *ngIf="savingsAccountData.summary.totalWithdrawalFees">-->
@@ -124,66 +126,11 @@
             <td># {{'Saving_Account_Component.ViewSavingAccount.labelDaysinYear'|translate}}</td>
             <td>{{savingsAccountData.interestCalculationDaysInYearType.value}}</td>
           </tr>
-<!--          <tr *ngIf="savingsAccountData.withdrawalFee">-->
-<!--            <td>Withdrawal Fee</td>-->
-<!--            <td>{{savingsAccountData.currency.displaySymbol}}&nbsp;{{savingsAccountData.withdrawalFee.amount}}</td>-->
-<!--          </tr>-->
           <tr *ngIf="savingsAccountData.lastActiveTransactionDate">
             <td>{{'Saving_Account_Component.ViewSavingAccount.labelLastActiveTransactionDate'|translate}}</td>
             <td>{{savingsAccountData.lastActiveTransactionDate | date}}</td>
           </tr>
-<!--          <tr *ngIf="!(savingsAccountData.subStatus.id === 0)">-->
-<!--            <td>Substatus</td>-->
-<!--            <td>{{savingsAccountData.subStatus.value}}</td>-->
-<!--          </tr>-->
-<!--          <tr *ngIf="savingsAccountData.daysToInactive">-->
-<!--            <td>Days to Inactive</td>-->
-<!--            <td>{{savingsAccountData.daysToInactive}}</td>-->
-<!--          </tr>-->
-<!--          <tr *ngIf="savingsAccountData.daysToDormancy">-->
-<!--            <td>Days to Dormancy</td>-->
-<!--            <td>{{savingsAccountData.daysToDormancy}}</td>-->
-<!--          </tr>-->
-<!--          <tr *ngIf="savingsAccountData.daysToEscheat">-->
-<!--            <td>Days to Escheat</td>-->
-<!--            <td>{{savingsAccountData.daysToEscheat}}</td>-->
-<!--          </tr>-->
-<!--          <tr *ngIf="savingsAccountData.annualFee">-->
-<!--            <td>Annual Fee</td>-->
-<!--            <td>{{savingsAccountData.currency.displaySymbol}}&nbsp;{{savingsAccountData.annualFee.amount}}</td>-->
-<!--          </tr>-->
-<!--          <tr *ngIf="savingsAccountData.allowOverdraft">-->
-<!--            <td>Over Draft Limit</td>-->
-<!--            <td>{{savingsAccountData.overdraftLimit}}</td>-->
-<!--          </tr>-->
-<!--          <tr *ngIf="savingsAccountData.allowOverdraft">-->
-<!--            <td>Min Overdraft Required for Interest Calculation</td>-->
-<!--            <td>{{savingsAccountData.minOverdraftForInterestCalculation}}</td>-->
-<!--          </tr>-->
-<!--          <tr *ngIf="savingsAccountData.minBalanceForInterestCalculation">-->
-<!--            <td>Min Balance Required for Interest Calculation</td>-->
-<!--            <td>{{savingsAccountData.minBalanceForInterestCalculation}}</td>-->
-<!--          </tr>-->
-<!--          <tr *ngIf="savingsAccountData.minRequiredBalance">-->
-<!--            <td>Minimum Required Balance</td>-->
-<!--            <td>{{savingsAccountData.minRequiredBalance}}</td>-->
-<!--          </tr>-->
-<!--          <tr *ngIf="savingsAccountData.enforceMinRequiredBalance">-->
-<!--            <td>Enforce Minimum Required Balance</td>-->
-<!--            <td>{{savingsAccountData.enforceMinRequiredBalance}}</td>-->
-<!--          </tr>-->
-<!--          <tr *ngIf="savingsAccountData.summary.lastInterestCalculationDate">-->
-<!--            <td>Interest Recalculation Date</td>-->
-<!--            <td>{{savingsAccountData.summary.lastInterestCalculationDate | date}}</td>-->
-<!--          </tr>-->
-<!--          <tr *ngIf="savingsAccountData.onHoldFunds">-->
-<!--            <td>On Hold Funds</td>-->
-<!--            <td><a *midasHasPermission="'READ_SAVINGSACCOUNT'">{{savingsAccountData.onHoldFunds}}</a></td>-->
-<!--          </tr>-->
-<!--          <tr *ngIf="savingsAccountData.withHoldTax">-->
-<!--            <td>Withhold Tax Group</td>-->
-<!--            <td>{{savingsAccountData.taxGroup.name}}</td>-->
-<!--          </tr>-->
+
           </tbody>
         </table>
       </div>
@@ -240,6 +187,38 @@
             <tr>
               <td>{{'Saving_Account_Component.ViewSavingAccount.labelNominalInterestRate'|translate}}</td>
               <td>{{savingsAccountData.nominalAnnualInterestRate}}%</td>
+            </tr>
+            <tr *ngIf="savingsAccountData.allowOverdraft">
+              <td>Over Draft Limit</td>
+              <td>{{savingsAccountData.overdraftLimit | money }}</td>
+            </tr>
+            <tr *ngIf="savingsAccountData.allowOverdraft">
+              <td>Min Overdraft Required for Interest Calculation</td>
+              <td>{{savingsAccountData.minOverdraftForInterestCalculation}}</td>
+            </tr>
+            <tr *ngIf="savingsAccountData.minBalanceForInterestCalculation">
+              <td>Min Balance Required for Interest Calculation</td>
+              <td>{{savingsAccountData.minBalanceForInterestCalculation}}</td>
+            </tr>
+            <tr *ngIf="savingsAccountData.minRequiredBalance">
+              <td>Minimum Required Balance</td>
+              <td>{{savingsAccountData.minRequiredBalance | money}}</td>
+            </tr>
+            <tr *ngIf="savingsAccountData.enforceMinRequiredBalance">
+              <td>Enforce Minimum Required Balance</td>
+              <td>{{savingsAccountData.enforceMinRequiredBalance | money }}</td>
+            </tr>
+            <tr *ngIf="savingsAccountData.summary.lastInterestCalculationDate">
+              <td>Interest Recalculation Date</td>
+              <td>{{savingsAccountData.summary.lastInterestCalculationDate | date}}</td>
+            </tr>
+            <tr *ngIf="savingsAccountData.onHoldFunds">
+              <td>On Hold Funds</td>
+              <td><a *midasHasPermission="'READ_SAVINGSACCOUNT'">{{savingsAccountData.onHoldFunds | money}}</a></td>
+            </tr>
+            <tr *ngIf="savingsAccountData.withHoldTax">
+               <td>Withhold Tax Group</td>
+              <td>{{savingsAccountData.taxGroup.name}}</td>
             </tr>
             </tbody>
           </table>
