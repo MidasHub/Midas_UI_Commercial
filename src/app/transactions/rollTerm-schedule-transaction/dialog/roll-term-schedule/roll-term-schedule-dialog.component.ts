@@ -30,7 +30,9 @@ export class RollTermScheduleDialogComponent implements OnInit {
   transactionInfo: any;
   dataSource: any[];
   isLoading = false;
-  displayedColumns: string[] = ["transaction", "txnDate", "amount", "feePaid", "fee", "getAmount", "actions"];
+  displayedColumns: string[] = ["transaction", "txnDate", "amount"
+  // , "feePaid"
+  , "fee", "getAmount", "actions"];
   rollTermId: string;
   form: FormGroup;
   pristine: boolean;
@@ -118,7 +120,8 @@ export class RollTermScheduleDialogComponent implements OnInit {
       this.transactionInfo.totalAmountPaid = 0;
       this.dataSource.forEach((element) => {
         this.transactionInfo.rollTermId = element.rollTermId;
-        this.transactionInfo.totalAmountPaid += element.totalPaid;
+        // this.transactionInfo.totalAmountPaid += element.totalPaid;
+        this.transactionInfo.totalAmountPaid = element.totalPaid;
         this.transactionInfo.totalAmountGet += element.totalGet;
       });
     });
