@@ -2,6 +2,7 @@ import { animate, state, style, transition, trigger } from "@angular/animations"
 import { DatePipe } from "@angular/common";
 import { Component, OnInit, ViewChild } from "@angular/core";
 import { FormBuilder, FormGroup } from "@angular/forms";
+import { MatOption } from "@angular/material/core";
 import { MatDialog } from "@angular/material/dialog";
 import { MatPaginator } from "@angular/material/paginator";
 import { MatSort } from "@angular/material/sort";
@@ -138,12 +139,8 @@ export class RollTermScheduleTabComponent implements OnInit {
       this.cardTypeOption = result?.result?.listCardType;
     });
 
-    this.clientServices.getListUserTeller(this.currentUser.officeId).subscribe((result: any) => {
+    this.clientServices.getListUserTellerV2(this.currentUser.officeId).subscribe((result: any) => {
       this.staffs = result?.result?.listStaff.filter((staff: any) => staff.displayName.startsWith("R"));
-      this.staffs?.unshift({
-        userId: undefined,
-        displayName: "Tất cả",
-      });
     });
 
     this.formFilter = this.formBuilder.group({
@@ -158,18 +155,9 @@ export class RollTermScheduleTabComponent implements OnInit {
 
     this.banksServices.getListOfficeCommon().subscribe((offices: any) => {
       this.offices = offices.result.listOffice;
-      this.offices?.unshift({
-        id: "",
-        name: "Tất cả",
-      });
-
       this.formFilter.get("OfficeFilter")?.valueChanges.subscribe((value) => {
-        this.clientServices.getListUserTeller(value).subscribe((result: any) => {
+        this.clientServices.getListUserTellerV2(value).subscribe((result: any) => {
           this.staffs = result?.result?.listStaff.filter((staff: any) => staff.displayName.startsWith("R"));
-          this.staffs?.unshift({
-            userId: undefined,
-            displayName: "Tất cả",
-          });
         });
       });
     });
@@ -199,6 +187,7 @@ export class RollTermScheduleTabComponent implements OnInit {
 
     const limit = this.paginator.pageSize ? this.paginator.pageSize : 10;
     const offset = this.paginator.pageIndex * limit;
+
     if (fromDate) {
       fromDate = this.datePipe.transform(fromDate, dateFormat);
     }
@@ -208,7 +197,7 @@ export class RollTermScheduleTabComponent implements OnInit {
     this.isLoading = true;
     this.dataSource = [];
     this.transactionService
-      .getListRollTermTransactionOpenByUserId({
+      .getListRollTermTransactionOpenByUserIdV2({
         fromDate,
         toDate,
         bankFilter,
@@ -310,4 +299,5 @@ export class RollTermScheduleTabComponent implements OnInit {
       }
     });
   }
+
 }

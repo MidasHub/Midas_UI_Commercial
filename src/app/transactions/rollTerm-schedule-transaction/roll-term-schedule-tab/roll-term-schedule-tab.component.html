@@ -40,15 +40,16 @@
   <div [formGroup]="formFilter" fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column" [formGroup]="formFilter">
     <mat-form-field fxFlex="12%" *midasHasPermission="'REFINANCE_EXECUTIVE'">
       <mat-label>Chi nhánh</mat-label>
-      <mat-select formControlName="OfficeFilter">
+      <mat-select formControlName="OfficeFilter" multiple>
         <mat-option *ngFor="let office of offices" [value]="office.officeId">
           {{ office.name }}
         </mat-option>
       </mat-select>
     </mat-form-field>
+
     <mat-form-field fxFlex="25%" *midasHasPermission="'REFINANCE_EXECUTIVE'">
       <mat-label>Nhân viên</mat-label>
-      <mat-select matSelect matNativeControl formControlName="createdByFilter">
+      <mat-select matSelect matNativeControl formControlName="createdByFilter" multiple>
         <mat-option *ngFor="let option of staffs" [value]="option.userId">
           {{ option.displayName }}
         </mat-option>
