@@ -335,11 +335,21 @@ export class AddFeeDialogComponent implements OnInit {
       this.formDialogGet.get("amountGet").setValue("");
     } else {
     }
+
+
     let form = {
       ...this.formDialogGet.value,
-      ...this.formDialogPaid.value,
-      bookingId: this.bookingId,
+      ...this.formDialogPaid.value
+
     };
+
+    if (this.bookingId){
+      form = {
+        ...this.formDialogGet.value,
+        ...this.formDialogPaid.value,
+        bookingId: this.bookingId,
+      };
+    }
 
     const dialog = this.dialog.open(ConfirmDialogComponent, {
       data: {
