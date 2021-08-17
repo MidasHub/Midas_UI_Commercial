@@ -1,19 +1,19 @@
 <mat-divider></mat-divider>
   <mat-card class="mat-elevation-z2 batchTxnCss">
-    <h1 class="m-l-10" align="center">QUẢN LÝ BIÊN BẢN GIAO NHẬN THẺ</h1>
+    <h1 class="m-l-10" align="center">{{ "CardTransfer.titleManage" | translate }}</h1>
     <hr>
-    <h2>Điều kiện tìm kiếm</h2>
+    <h2>{{ "CardTransfer.titleSearchQuery" | translate }}</h2>
     <mat-card-content>
       <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column"  [formGroup]="formDate">
         <mat-form-field fxFlex="22%">
-          <mat-label>Từ ngày</mat-label>
+          <mat-label>{{ "CardTransfer.lableFromDate" | translate }}</mat-label>
           <input matInput [matDatepicker]="transactionDateFromPicker" formControlName="fromDate" />
           <mat-datepicker-toggle matSuffix [for]="transactionDateFromPicker"></mat-datepicker-toggle>
           <mat-datepicker #transactionDateFromPicker></mat-datepicker>
         </mat-form-field>
 
         <mat-form-field fxFlex="22%">
-          <mat-label>Đến ngày</mat-label>
+          <mat-label>{{ "CardTransfer.lableToDate" | translate }}</mat-label>
           <input matInput [matDatepicker]="transactionDateToPicker" formControlName="toDate" />
           <mat-datepicker-toggle matSuffix [for]="transactionDateToPicker"></mat-datepicker-toggle>
           <mat-datepicker #transactionDateToPicker></mat-datepicker>
@@ -26,35 +26,35 @@
           color="primary"
           mat-button
         >
-          Tìm kiếm &nbsp;<i class="fa fa-search"></i>
+        {{ "CardTransfer.btnSearch" | translate }} &nbsp;<i class="fa fa-search"></i>
         </button>
       </div>
 
       <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column" [formGroup]="formFilter">
         <mat-form-field fxFlex="22%">
-          <mat-label>Tìm theo mã biên bản</mat-label>
-          <input type="text" placeholder="Nhập mã biên bản" formControlName="transferRefNo"
+          <mat-label>{{ "CardTransfer.lableSearchByTransferNo" | translate }}</mat-label>
+          <input type="text" [placeholder]="'CardTransfer.inputPlaceholderTransferNo'| translate" formControlName="transferRefNo"
           matInput #querySearchAll
           >
         </mat-form-field>
 
         <mat-form-field fxFlex="22%">
-          <mat-label>Tìm theo Shipper</mat-label>
-          <input placeholder="Nhập tên Shipper" formControlName="actionStaffName"
+          <mat-label>{{ "CardTransfer.lableSearchByShipper" | translate }}</mat-label>
+          <input [placeholder]="'CardTransfer.inputPlaceholderShipperText'| translate" formControlName="actionStaffName"
           matInput #querySearchShipper
           />
         </mat-form-field>
 
         <mat-form-field fxFlex="22%">
-          <mat-label>Tìm theo nhân viên giao</mat-label>
-          <input placeholder="Nhập tên nhân viên giao" formControlName="senderStaffName"
+          <mat-label>{{ "CardTransfer.lableSearchByDeliverStaff" | translate }}</mat-label>
+          <input [placeholder]="'CardTransfer.inputPlaceholderDeliverStaff'| translate" formControlName="senderStaffName"
           matInput #querySearchDeliver
           />
         </mat-form-field>
 
         <mat-form-field fxFlex="22%">
-          <mat-label>Tìm theo nhân viên nhận</mat-label>
-          <input placeholder="Nhập nhân viên nhận thẻ" formControlName="receiverStaffName"
+          <mat-label>{{ "CardTransfer.lableSearchByReceiveStaff" | translate }}</mat-label>
+          <input [placeholder]="'CardTransfer.inputPlaceholderReceiveStaff'| translate" formControlName="receiverStaffName"
           matInput #querySearchStaff
           />
         </mat-form-field>
@@ -63,7 +63,7 @@
       <div class="example-table-container mat-elevation-z8" fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-sm="column">
         <table mat-table class="mat-elevation-z8 example-table" (matSortChange)="sortData($event)" multiTemplateDataRows [dataSource]="dataShow" matSort>
           <ng-container matColumnDef="transferDate">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>NGÀY GIAO</th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ "CardTransfer.tableManageTransfer.Today" | translate }}</th>
             <td mat-cell fxHide fxShow.gt-md style="word-wrap: break-word;" *matCellDef="let value">
               <label>
                 {{ value.transferDate | date: "dd-MM-yyyy" }}
@@ -72,7 +72,7 @@
           </ng-container>
 
           <ng-container matColumnDef="transferRefNo">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>MÃ BIÊN BẢN</th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ "CardTransfer.tableManageTransfer.TransferNo" | translate }}</th>
             <td mat-cell *matCellDef="let value" style="word-break: break-word;">
               <label>
                 {{ value.transferRefNo }}
@@ -82,7 +82,7 @@
           </ng-container>
 
           <ng-container matColumnDef="senderStaffName">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>NGƯỜI GIAO</th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ "CardTransfer.tableManageTransfer.DeliverStaff" | translate }}</th>
             <td mat-cell fxHide fxShow.gt-md *matCellDef="let value" style="word-break: break-word;">
               <label class="card-info">
                 {{ value.senderStaffName }}
@@ -91,7 +91,7 @@
           </ng-container>
 
           <ng-container matColumnDef="actionStaffName" style="width: 25px">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>SHIPPER</th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ "CardTransfer.tableManageTransfer.Shipper" | translate }}</th>
             <td mat-cell *matCellDef="let value" style="word-break: break-word;">
               <label class="card-info">
                 {{ value.actionStaffName }}
@@ -100,7 +100,7 @@
           </ng-container>
 
           <ng-container matColumnDef="receiverStaffName" style="width: 25px">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>NGƯỜI NHẬN</th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ "CardTransfer.tableManageTransfer.Receiver" | translate }}</th>
             <td mat-cell *matCellDef="let value" style="word-break: break-word;">
               <label class="card-info">
                 {{ value.receiverStaffName }}
@@ -109,19 +109,19 @@
           </ng-container>
 
           <ng-container matColumnDef="action" style="width: 25px">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>HÀNH ĐỘNG</th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ "CardTransfer.tableManageTransfer.Action" | translate }}</th>
             <td *matCellDef="let form" style="word-break: break-word; text-align: center;">
               <table style="width: 100%; background-color: white;">
                 <tr>
                   <td style="text-align: center; padding-left: 50px;">
-                    <button class="action-button" mat-raised-button style="color: #FFFFFF; background-color: #c53225;" matTooltip="Chỉnh sửa biên bản này"
+                    <button class="action-button" mat-raised-button style="color: #FFFFFF; background-color: #c53225;" [matTooltip]="'CardTransfer.tableManageTransfer.ToolTipEdit'| translate"
                     (click)="editCardTransferRequest(form)">
                       <i class="fas fa-pen"></i>
                     </button>
                   </td>
 
                   <td style="text-align: center; padding-right: 84px;">
-                    <button class="action-button" mat-raised-button style="color: #FFFFFF; background-color: #646464;" matTooltip="Xóa biên bản này"
+                    <button class="action-button" mat-raised-button style="color: #FFFFFF; background-color: #646464;" [matTooltip]="'CardTransfer.tableManageTransfer.ToolTipDelete'| translate"
                     (click)="deleteCardTransferRequest(form)">
                       <i class="fas fa-trash-alt"></i>
                     </button>
@@ -153,11 +153,11 @@
       <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column" style="display: flex; justify-content: center; margin: 15px">
         <button mat-button type="button" style="background: #646464; color: #FFFFFF;"
         (click)="reset()"
-        > Hủy
+        > {{ "CardTransfer.btnCancel" | translate }}
         </button>
         <button mat-button type="button" style="background: #C3291C; color: #FFFFFF;"
         (click)="createTransfer()"
-        > Tạo biên bản
+        > {{ "CardTransfer.btnCreateTransfer" | translate }}
         </button>
       </div>
 

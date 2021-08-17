@@ -45,7 +45,7 @@
             </div>
             <div fxFlex="58%" fxLayout="column">
               <h3 style="margin: 2px;">{{banks.length}}</h3>
-              <span>Thêm +</span>
+              <span>{{ "ShareButton.Add" | translate }}</span>
             </div>
           </div>
         </div>
@@ -68,7 +68,7 @@
           <div *ngIf="!edit_bank" style="float: right; margin: 4px;">
             <button
               (click)="setEditBank()"
-              mat-raised-button>Edit
+              mat-raised-button>{{ "ShareButton.Edit" | translate }}
             </button>
           </div>
           <div *ngIf="edit_bank" style="float: right; margin: 20px;" fxLayout="row">
@@ -79,7 +79,7 @@
             </button>
             <button
               (click)="saveBank()"
-              mat-raised-button color="primary">Save
+              mat-raised-button color="primary">{{ "ShareButton.Save" | translate }}
             </button>
           </div>
         </mat-card-header>
@@ -94,7 +94,7 @@
               <div fxFlex="20%">
                 <button
                   (click)="createOrEditCard(null)"
-                  mat-raised-button style="margin: 10px;" color="primary">Thêm +
+                  mat-raised-button style="margin: 10px;" color="primary">{{ "ShareButton.Add" | translate }}
                 </button>
               </div>
             </div>
@@ -103,7 +103,7 @@
               <!-- External ID Column -->
               <ng-container matColumnDef="refid">
                 <th mat-header-cell *matHeaderCellDef
-                    mat-sort-header='refid'>ID
+                    mat-sort-header='refid'>{{ "Bank.ID" | translate }}
                 </th>
                 <td mat-cell *matCellDef="let row"> {{row.refid}} </td>
               </ng-container>
@@ -111,7 +111,7 @@
               <!-- Name Column -->
               <ng-container matColumnDef="binCode">
                 <th mat-header-cell *matHeaderCellDef
-                    mat-sort-header='binCode'>Bin Code
+                    mat-sort-header='binCode'>{{ "Bank.Bincode" | translate }}
                 </th>
                 <td mat-cell *matCellDef="let row"> {{row.binCode}} </td>
               </ng-container>
@@ -119,13 +119,13 @@
               <!-- Account no Column -->
               <ng-container matColumnDef="cardType">
                 <th mat-header-cell *matHeaderCellDef
-                    mat-sort-header='cardType'>Loại
+                    mat-sort-header='cardType'>{{ "Bank.Type" | translate }}
                 </th>
                 <td mat-cell *matCellDef="let row"> {{getCardTypeName(row.cardType)}} </td>
               </ng-container>
 
               <ng-container matColumnDef="edit" style="width: 60px;">
-                <th mat-header-cell *matHeaderCellDef>Edit</th>
+                <th mat-header-cell *matHeaderCellDef>{{ "Bank.Edit" | translate }}</th>
                 <td mat-cell *matCellDef="let row">
                   <button mat-raised-button
                           (click)="createOrEditCard(row)"

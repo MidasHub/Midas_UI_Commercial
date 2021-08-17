@@ -1,4 +1,4 @@
-<h1 mat-dialog-title align="center">UPLOAD HÓA ĐƠN</h1>
+<h1 mat-dialog-title align="center">{{ "BillManage.title" | translate }}</h1>
 
 <div
   mat-dialog-content
@@ -9,12 +9,12 @@
   fxLayoutGap.lt-md="0%"
 >
   <mat-form-field fxFlex="80%">
-    <mat-label>Tên file:</mat-label>
+    <mat-label>{{ "BillManage.lableFileName" | translate }}</mat-label>
     <input matInput type="text" formControlName="fileName" />
   </mat-form-field>
 
   <mat-form-field fxFlex="80%">
-    <mat-label>Hộ kinh doanh:</mat-label>
+    <mat-label>{{ "BillManage.lableMerchant" | translate }}</mat-label>
     <select matNativeControl
     formControlName="merchantId" >
     <option
@@ -24,7 +24,7 @@
   </mat-form-field>
 
   <mat-form-field fxFlex="80%">
-    <mat-label>Đối tác:</mat-label>
+    <mat-label>{{ "BillManage.lablePartner" | translate }}</mat-label>
     <select matNativeControl
     formControlName="partner" >
     <option
@@ -34,14 +34,14 @@
   </mat-form-field>
 
   <mat-form-field fxFlex="80%">
-    <mat-label>Mô tả:</mat-label>
+    <mat-label>{{ "BillManage.lableNote" | translate }}</mat-label>
     <input matInput type="text"  formControlName="note" />
   </mat-form-field>
 
   <div  fxFlex="80%" align="center">
     <button type="button" mat-raised-button color="primary" (click)="fileInput.click()">
       <mat-icon>attach_file</mat-icon>
-      <span>Chọn file upload</span>
+      <span>{{ "BillManage.spanSelectFile" | translate }}</span>
       <input
       (change)="fileChange($event)"
       #fileInput type="file"
@@ -63,6 +63,6 @@
     [mat-dialog-close]="{ data: formDialog, file: file}"
     [disabled]="!formDialog.valid || formDialog.pristine"
   >
-    Tải lên
+  {{ "Shared_Component.FormDialog.btnUpload" | translate }}
   </button>
 </mat-dialog-actions>
