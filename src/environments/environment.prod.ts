@@ -17,11 +17,11 @@ export const environment = {
   allowServerSwitch: false,
   fineractPlatformTenantId: te.coreT,  // For connecting to server running elsewhere update the tenant identifier
 
-  baseApiUrl: JSON.parse(localStorage.getItem('midasServerURL')) || te.defaultbaseURL,
+  baseApiUrl: localStorage.getItem('midasServerURL') || te.defaultbaseURL,
   apiProvider: te.apiProvider,
   apiVersion: te.apiVersion,
   serverUrl: '',
-  GatewayApiUrl: JSON.parse(localStorage.getItem('midasBillposServerURL')) || te.defaultbillposURL,
+  GatewayApiUrl: localStorage.getItem('midasBillposServerURL') || te.defaultbillposURL,
   GatewayApiUrlPrefix: '/billpos',
   GatewayServerUrl: '',
   GatewayTenantId: te.billposT,
@@ -46,14 +46,13 @@ export const environment = {
     vi: 'Vietnamese',
   },
   firebase: {
-    apiKey: 'AIzaSyAtCSdklLZJKt7t2sjd4edRbofqZL7-UCw',
-    authDomain: 'kiotthe-307407.firebaseapp.com',
-    projectId: 'kiotthe-307407',
-    databaseURL: 'https://kiotthe-307407-default-rtdb.firebaseio.com/',
-    storageBucket: 'kiotthe-307407.appspot.com',
-    messagingSenderId: '83286799966',
-    appId: '1:83286799966:web:b46ce89fcbbdf4c0f2e6cf',
-    measurementId: 'G-866JPR188B'
+    apiKey: "AIzaSyBpNno5SqMfjhfgDFjAJFNoJ48ibGKzp-w",
+    authDomain: "kiottheapp.firebaseapp.com",
+    projectId: "kiottheapp",
+    storageBucket: "kiottheapp.appspot.com",
+    messagingSenderId: "978912393065",
+    appId: "1:978912393065:web:371cdff154d2b8141b2ff8",
+    measurementId: "G-N0CWQ1E2RP"
   },
   GA_TRACKING_ID: 'G-WML6QQ48CQ',
   applyLuhnAlgorithm: true

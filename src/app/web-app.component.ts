@@ -243,7 +243,7 @@ export class WebAppComponent implements OnInit {
     // register google tag manager
     const gTagManagerScript = document.createElement("script");
     gTagManagerScript.async = true;
-    gTagManagerScript.src = `https://www.googletagmanager.com/gtag/js?id=${environment.GA_TRACKING_ID}`;
+    gTagManagerScript.src = `https://www.googletagmanager.com/gtag/js?id=${environment.firebase.measurementId}`;
     document.head.appendChild(gTagManagerScript);
 
     // register google analytics
@@ -252,7 +252,6 @@ export class WebAppComponent implements OnInit {
       window.dataLayer = window.dataLayer || [];
       function gtag() { dataLayer.push(arguments); }
       gtag('js', new Date());
-      gtag('config', '${environment.GA_TRACKING_ID}');
       gtag('config', '${environment.firebase.measurementId}', {'page_path': ''});
     `;
     if (gaScript) {
