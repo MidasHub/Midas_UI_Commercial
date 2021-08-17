@@ -28,7 +28,7 @@
           </div>
           <div fxFlex="58%" fxLayout="column">
             <h3 style="margin: 2px;">{{banks.length}}</h3>
-            <span>Thêm +</span>
+            <span>{{ "ShareButton.Add" | translate }}</span>
           </div>
         </div>
       </div>
@@ -50,13 +50,13 @@
         <mat-card-title>{{bank.bankName}}</mat-card-title>
       </mat-card-header>
       <mat-card-content>
-        <span style="float: left; font-size: 16px; font-weight: inherit;">Code: {{bank.bankCode}}</span>
+        <span style="float: left; font-size: 16px; font-weight: inherit;">{{ "ShareButton.spanBankCode" | translate }} {{bank.bankCode}}</span>
         <div style="display: flex; justify-content: center; float: right;">
           <div fxLayout="row">
             <img src="assets/images/icons/credit-card.svg" width="40px" height="40px">
             <div fxLayout="column">
               <h4 style="margin: 2px;">{{bank.cards.length}}</h4>
-              <span>cards</span>
+              <span>{{ "ShareButton.spanCard" | translate }}</span>
             </div>
           </div>
         </div>

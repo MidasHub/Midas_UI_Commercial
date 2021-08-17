@@ -464,6 +464,7 @@
     },
     "FormDialog": {
       "btnCancel": "Hủy",
+      "btnUpload": "Tải lên",
       "btnAdd": "Thêm"
     }
   },
@@ -695,5 +696,109 @@
   "ShareLabel": {
     "lblViewDetail": "Xem chi tiết",
     "lblMakeRepayment": "Thanh toán nợ"
+  },
+  "CardTransfer": {
+    "title": "BIÊN BẢN GIAO NHẬN THẺ",
+    "labelOffice": "Chi nhánh",
+    "labelCardInfo": "Thông tin thẻ để giao/nhận",
+    "inputPlaceholderCustomerInfo": "Tìm thẻ bằng SĐT/Tên KH/Số thẻ",
+    "labelShipper": "Shipper",
+    "inputPlaceholderShipper": "Chọn tên Shipper",
+    "labelDeliverStaff": "Nhân viên giao",
+    "labelReiceveStaff": "Nhân viên nhận",
+    "inputPlaceholderReiceveStaff": "Chọn nhân viên nhận thẻ",
+    "btnAdd": "Thêm",
+    "btnSave": "Lưu",
+    "btnCancel": "Hủy",
+    "btnDownload": "Tải biên bản",
+    "tableCardTransfer": {
+      "Today": "NGÀY GIAO",
+      "CustomerName": "TÊN KHÁCH HÀNG",
+      "CardNo": "SỐ THẺ",
+      "Action": "HÀNH ĐỘNG",
+      "ToolTipDelete": "Xóa dòng này"
+    },
+
+    "titleManage": "QUẢN LÝ BIÊN BẢN GIAO NHẬN THẺ",
+    "titleSearchQuery": "Điều kiện tìm kiếm",
+    "lableFromDate": "Từ ngày",
+    "lableToDate": "Đến ngày",
+    "btnSearch": "Tìm kiếm",
+    "lableSearchByTransferNo": "Tìm theo mã biên bản",
+    "inputPlaceholderTransferNo": "Nhập mã biên bản",
+    "lableSearchByShipper": "Tìm theo Shipper",
+    "inputPlaceholderShipperText": "Nhập tên Shipper",
+    "lableSearchByDeliverStaff": "Tìm theo nhân viên giao",
+    "inputPlaceholderDeliverStaff": "Nhập tên nhân viên giao",
+    "lableSearchByReceiveStaff": "Tìm theo nhân viên nhận",
+    "inputPlaceholderReceiveStaff": "Nhập nhân viên nhận thẻ",
+    "tableManageTransfer": {
+      "Today": "NGÀY GIAO",
+      "TransferNo": "MÃ BIÊN BẢN",
+      "DeliverStaff": "NGƯỜI GIAO",
+      "Shipper": "SHIPPER",
+      "Receiver": "NGƯỜI NHẬN",
+      "Action": "HÀNH ĐỘNG",
+      "ToolTipEdit": "Chỉnh sửa biên bản này",
+      "ToolTipDelete": "Xóa biên bản này"
+    },
+    "btnCreateTransfer": "Tạo biên bản",
+
+    "labelShipperExport": "SHIPPER",
+    "labelDeliverStaffExport": "NHÂN VIÊN GIAO",
+    "labelReiceveStaffExport": "NHÂN VIÊN NHẬN",
+    "tableExportTransfer": {
+      "Today": "NGÀY GIAO",
+      "CustName": "TÊN KHÁCH HÀNG",
+      "CardNo": "SỐ THẺ",
+      "Deliver": "BÊN GIAO",
+      "Shipper": "SHIPPER",
+      "Receiver": "BÊN NHẬN",
+      "Note": "GHI CHÚ",
+      "ToolTipDelete": "Xóa biên bản này"
+    },
+    "btnPrint": "In"
+  },
+
+  "Bank": {
+    "Edit": "Edit",
+    "ID": "ID",
+    "Bincode": "Bin Code",
+    "Type": "Loại",
+    "lableEdit": "Edit",
+    "spanBankCode": "Code",
+    "spanCard": "cards"
+  },
+
+  "BillManage": {
+    "title": "UPLOAD HÓA ĐƠN",
+    "lableFileName": "Tên file:",
+    "lableMerchant": "Hộ kinh doanh:",
+    "lablePartner": "Đối tác:",
+    "lableNote": "Mô tả:",
+    "spanSelectFile": "Chọn file upload",
+    "lableSearchQuery": "Tìm kiếm mã, tên khách hàng, số tiền(viết liền)",
+    "tableDetail": {
+      "RefNo": "Mã",
+      "CustName": "Khách hàng",
+      "Status": "Trạng thái",
+      "UploadDate": "Ngày tải lên",
+      "Merchant": "Hộ kinh doanh",
+      "Amount": "Số tiền"
+    },
+    "btnUploadBill": "Tải lên hóa đơn",
+    "Status": "Trạng thái",
+    "BillAmount": "Tổng số hóa đơn",
+    "BatchCode": "Số lô upload",
+    "UploadBy": "Người tải lên",
+    "Details": "Chi tiết"
+  },
+
+  "ShareButton": {
+    "Edit": "Edit",
+    "Cancel": "Hủy",
+    "Add": "Thêm +",
+    "Search": "Tìm kiếm",
+    "Save": "Save"
   }
 }
