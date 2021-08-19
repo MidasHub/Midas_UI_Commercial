@@ -35,7 +35,7 @@ export class ClientGeneralStepComponent implements OnInit {
   currentUser: any;
 
   /** Create Client Form */
-  createClientForm: FormGroup;
+  createClientForm?: FormGroup ;
 
   /** Office Options */
   officeOptions: any;
@@ -118,23 +118,23 @@ export class ClientGeneralStepComponent implements OnInit {
     });
     this.createClientForm.addControl('activationDate', new FormControl(new Date()));
     this.createClientForm.addControl('submittedOnDate', new FormControl(new Date()));
-    this.createClientForm.get('officeId').valueChanges.subscribe((value: any) => {
+    this.createClientForm.get('officeId')?.valueChanges.subscribe((value: any) => {
       this.centersService.getStaff(value).subscribe((staffs: any) => {
         this.staffOptions = staffs?.staffOptions;
       });
     });
 
-    this.createClientForm.get('firstname').valueChanges.subscribe( (value: string) => {
-      this.createClientForm.get('firstname').patchValue( value.toUpperCase(), {emitEvent: false} );
-    })
+    this.createClientForm.get('firstname')?.valueChanges.subscribe( (value: string) => {
+      this.createClientForm?.get('firstname')?.patchValue( value.toUpperCase(), {emitEvent: false} );
+    });
 
-    this.createClientForm.get('middlename').valueChanges.subscribe( (value: string) => {
-      this.createClientForm.get('middlename').patchValue( value.toUpperCase(), {emitEvent: false} );
-    })
+    this.createClientForm.get('middlename')?.valueChanges.subscribe( (value: string) => {
+      this.createClientForm?.get('middlename')?.patchValue( value.toUpperCase(), {emitEvent: false} );
+    });
 
-    this.createClientForm.get('lastname').valueChanges.subscribe( (value: string) => {
-      this.createClientForm.get('lastname').patchValue( value.toUpperCase(), {emitEvent: false} );
-    })
+    this.createClientForm.get('lastname')?.valueChanges.subscribe( (value: string) => {
+      this.createClientForm?.get('lastname')?.patchValue( value.toUpperCase(), {emitEvent: false} );
+    });
 
   }
 
@@ -161,13 +161,13 @@ export class ClientGeneralStepComponent implements OnInit {
         this.documentTypes.push(type);
       }
       if (type.name === 'CMND') {
-        this.createClientForm.get('documentTypeId').setValue(type.id);
+        this.createClientForm?.get('documentTypeId')?.setValue(type.id);
       }
     });
-    //this.currentUser = this.authenticationService.getCredentials();
+    // this.currentUser = this.authenticationService.getCredentials();
     const {roles, staffId} = this.currentUser;
-    this.createClientForm.get('staffId').setValue(staffId);
-    roles.map((role: any,index: number) => {
+    this.createClientForm?.get('staffId')?.setValue(staffId);
+    roles.map((role: any, index: number) => {
       if (role.id !== 3 ) {
         this.isTeller = false;
       }
@@ -236,7 +236,7 @@ export class ClientGeneralStepComponent implements OnInit {
    * Client General Details
    */
   get clientGeneralDetails() {
-    const generalDetails = this.createClientForm.value;
+    const generalDetails = this.createClientForm?.value;
     const dateFormat = this.settingsService.dateFormat;
     const locale = this.settingsService.language.code;
     // TODO: Update once language and date settings are setup

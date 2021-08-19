@@ -64,7 +64,7 @@ export class ClientPreviewStepComponent {
     return;
   }
 
-  clickCancel(){
-    console.log (this.go_back)
+  clickCancel() {
+    console.log (this.go_back);
   }
 }

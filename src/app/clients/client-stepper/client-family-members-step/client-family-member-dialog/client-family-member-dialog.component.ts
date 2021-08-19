@@ -23,7 +23,7 @@ export class ClientFamilyMemberDialogComponent implements OnInit {
     maxDate = new Date();
 
     /** Add/Edit family member form. */
-    familyMemberForm: FormGroup;
+    familyMemberForm!: FormGroup;
 
     /**
      * @param {MatDialogRef} dialogRef Client Family Member Dialog Reference
