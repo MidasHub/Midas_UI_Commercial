@@ -24,8 +24,8 @@ import {AuthenticationService} from '../../core/authentication/authentication.se
 export class BalanceAccountClientComponent implements OnInit {
   expandedElement: any;
   expandedElement2: any;
-  //displayedColumns: any[] = ['customer_name', 'staff_name', 'account_no', 'account_balance_derived'];
-  //displayedColumns2: any[] = ['customer_name', 'staff_name', 'account_no', 'account_balance_derived'];
+  // displayedColumns: any[] = ['customer_name', 'staff_name', 'account_no', 'account_balance_derived'];
+  // displayedColumns2: any[] = ['customer_name', 'staff_name', 'account_no', 'account_balance_derived'];
   displayedColumns: any[] = ['customer_name', 'staff_name', 'officeName', 'account_no', 'account_balance_derived'];
   displayedColumns2: any[] = ['customer_name', 'staff_name', 'officeName', 'account_no', 'account_balance_derived'];
   dataSource: any[] = [];
@@ -37,19 +37,19 @@ export class BalanceAccountClientComponent implements OnInit {
   accountsShow: any[] = [];
   accountsShow2: any[] = [];
   staffs: any[] = [];
-  //currentStaffSelect: number;
+  // currentStaffSelect: number;
   currentUser: any;
-  totalAmountDerived:number = 0;
-  totalAmountDerived2:number = 0;
-  totalAccOfUser:number  = 0;
-  totalAccOfUser2:number = 0;
-  totalAmountDerivedOfUser:number = 0;
-  totalAmountDerivedOfUser2:number = 0;
-  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
-  @ViewChild(MatSort, {static: true}) sort: MatSort;
+  totalAmountDerived = 0;
+  totalAmountDerived2 = 0;
+  totalAccOfUser  = 0;
+  totalAccOfUser2 = 0;
+  totalAmountDerivedOfUser = 0;
+  totalAmountDerivedOfUser2 = 0;
+  @ViewChild(MatPaginator, {static: true}) paginator!: MatPaginator;
+  @ViewChild(MatSort, {static: true}) sort: MatSort | any;
 
-  @ViewChild('Table2Paginator', {static: true}) table2Paginator: MatPaginator;
-  @ViewChild('Table2Sort', {static: true}) table2Sort: MatSort;
+  @ViewChild('Table2Paginator', {static: true}) table2Paginator!: MatPaginator;
+  @ViewChild('Table2Sort', {static: true}) table2Sort: MatSort | any;
 
   constructor(
     private clientServices: ClientsService,
@@ -59,19 +59,19 @@ export class BalanceAccountClientComponent implements OnInit {
   ) {
 
     this.currentUser = this.authenticationService.getCredentials();
-    //this.currentStaffSelect = this.currentUser.staffId;
+    // this.currentStaffSelect = this.currentUser.staffId;
 
     this.clientServices.getBalanceAccountOfCustomer().subscribe(result => {
       const {permissions, staffId} = this.currentUser;
       this.dataSource = result?.result?.listBalanceCustomer.filter((v: any) => Number(v.account_balance_derived) >= 0 ) ;
       this.dataSource2 = result?.result?.listBalanceCustomer.filter((v: any) => Number(v.account_balance_derived) < 0 );
-      //this.accountFilter = this.dataSource.filter((v:any) => staffId == v.staff_id);
+      // this.accountFilter = this.dataSource.filter((v:any) => staffId == v.staff_id);
       this.accountFilter = this.dataSource;
      // this.accountFilter2 = this.dataSource2.filter((v:any) => staffId == v.staff_id);
       this.accountFilter2 = this.dataSource2;
-      this.loadData();this.loadData2();
+      this.loadData(); this.loadData2();
       this.totalAmountDerived = this.accountFilter.reduce( ( sum, { account_balance_derived } ) => sum + account_balance_derived , 0);
-      this.totalAmountDerived2 = this.accountFilter2.reduce( ( sum, { account_balance_derived } ) => sum + account_balance_derived , 0)
+      this.totalAmountDerived2 = this.accountFilter2.reduce( ( sum, { account_balance_derived } ) => sum + account_balance_derived , 0);
       this.totalAccOfUser = this.accountFilter.length;
       this.totalAccOfUser2 = this.accountFilter2.length;
       this.totalAmountDerivedOfUser  = this.totalAmountDerived;
@@ -90,13 +90,13 @@ export class BalanceAccountClientComponent implements OnInit {
       'customer_name': [''],
       'staff_name': [''],
       'officeName': ['']
-      //'staff_id': ['']
+      // 'staff_id': ['']
     });
     this.formFilter2 = this.formBuilder.group({
       'customer_name': [''],
       'staff_name': [''],
       'officeName': ['']
-      //'staff_id': ['']
+      // 'staff_id': ['']
     });
   }
 
@@ -146,14 +146,14 @@ export class BalanceAccountClientComponent implements OnInit {
 
   // tslint:disable-next-line:use-lifecycle-interface
   ngAfterViewInit() {
-    //this.formFilter.get('staff_id').setValue(this.currentStaffSelect);
+    // this.formFilter.get('staff_id').setValue(this.currentStaffSelect);
     this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
     merge(this.sort.sortChange, this.paginator.page)
       .pipe(
         tap(() => this.loadData())
       )
       .subscribe();
-    //this.formFilter2.get('staff_id').setValue(this.currentStaffSelect);
+    // this.formFilter2.get('staff_id').setValue(this.currentStaffSelect);
     this.table2Sort.sortChange.subscribe(() => this.table2Paginator.pageIndex = 0);
     merge(this.table2Sort.sortChange, this.table2Paginator.page)
       .pipe(
@@ -193,12 +193,12 @@ export class BalanceAccountClientComponent implements OnInit {
     this.accountFilter = this.dataSource.filter(v => {
       for (const key of keys) {
         if (form[key] ) {
-          if ("customer_name".indexOf(key) != -1) {
+          if ('customer_name'.indexOf(key) !== -1) {
             if (!this.clientsService.preProcessText(String(v[key])).toUpperCase().includes(this.clientsService.preProcessText(String(form[key])).toUpperCase())) {
               return false;
             }
           }
-          if ("customer_name".indexOf(key) === -1) {
+          if ('customer_name'.indexOf(key) === -1) {
             if (!String(v[key]).toLowerCase().includes(String(form[key]).toLowerCase())) {
               return false;
             }
@@ -209,7 +209,7 @@ export class BalanceAccountClientComponent implements OnInit {
     });
     this.paginator.pageIndex = 0;
     this.loadData();
-    this.totalAmountDerived = this.accountFilter.reduce( ( sum, { account_balance_derived } ) => sum + account_balance_derived , 0)
+    this.totalAmountDerived = this.accountFilter.reduce( ( sum, { account_balance_derived } ) => sum + account_balance_derived , 0);
   }
 
   filterData2() {
@@ -218,12 +218,12 @@ export class BalanceAccountClientComponent implements OnInit {
     this.accountFilter2 = this.dataSource2.filter(v => {
       for (const key of keys) {
         if (form[key] ) {
-          if ("customer_name".indexOf(key) != -1) {
+          if ('customer_name'.indexOf(key) !== -1) {
             if (!this.clientsService.preProcessText(String(v[key])).toUpperCase().includes(this.clientsService.preProcessText(String(form[key])).toUpperCase())) {
               return false;
             }
           }
-          if ("customer_name".indexOf(key) === -1) {
+          if ('customer_name'.indexOf(key) === -1) {
             if (!String(v[key]).toLowerCase().includes(String(form[key]).toLowerCase())) {
               return false;
             }
@@ -234,6 +234,6 @@ export class BalanceAccountClientComponent implements OnInit {
     });
     this.table2Paginator.pageIndex = 0;
     this.loadData2();
-    this.totalAmountDerived2 = this.accountFilter2.reduce( ( sum, { account_balance_derived } ) => sum + account_balance_derived , 0)
+    this.totalAmountDerived2 = this.accountFilter2.reduce( ( sum, { account_balance_derived } ) => sum + account_balance_derived , 0);
   }
 }

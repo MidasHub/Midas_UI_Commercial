@@ -1,19 +1,19 @@
-import { Component, OnInit, ViewChild } from "@angular/core";
-import { FormBuilder, FormGroup } from "@angular/forms";
-import { MatPaginator } from "@angular/material/paginator";
-import { MatSort } from "@angular/material/sort";
-import { ClientsService } from "../clients.service";
-import { merge } from "rxjs";
-import { tap } from "rxjs/operators";
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { ClientsService } from '../clients.service';
+import { merge } from 'rxjs';
+import { tap } from 'rxjs/operators';
 
 @Component({
-  selector: "midas-balance-account-teller",
-  templateUrl: "./balance-account-teller.component.html",
-  styleUrls: ["./balance-account-teller.component.scss"],
+  selector: 'midas-balance-account-teller',
+  templateUrl: './balance-account-teller.component.html',
+  styleUrls: ['./balance-account-teller.component.scss'],
 })
 export class BalanceAccountTellerComponent implements OnInit {
   expandedElement: any;
-  displayedColumns: any[] = ["tellerSourceName", "officeName", "accountNo", "sourceInfo", "balance"];
+  displayedColumns: any[] = ['tellerSourceName', 'officeName', 'accountNo', 'sourceInfo', 'balance'];
   dataSource: any[] = [];
   formFilter: FormGroup;
   accountFilter: any[] = [];
@@ -21,8 +21,8 @@ export class BalanceAccountTellerComponent implements OnInit {
   staffs: any[] = [];
   totalBalanceAmount: any;
 
-  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
-  @ViewChild(MatSort, { static: true }) sort: MatSort;
+  @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator ;
+  @ViewChild(MatSort, { static: true }) sort: MatSort |any;
 
   constructor(private clientServices: ClientsService, private formBuilder: FormBuilder) {
     this.clientServices.getBalanceOfTeller().subscribe((result) => {
@@ -34,25 +34,25 @@ export class BalanceAccountTellerComponent implements OnInit {
       this.loadData();
     });
     this.formFilter = this.formBuilder.group({
-      tellerSourceName: [""],
-      sourceInfo: [""],
-      officeName: [""]
+      tellerSourceName: [''],
+      sourceInfo: [''],
+      officeName: ['']
     });
   }
 
   sortData(sort: any) {
     this.accountFilter = this.accountFilter.sort((a, b) => {
-      const isAsc = sort.direction === "asc";
+      const isAsc = sort.direction === 'asc';
       switch (sort.active) {
-        case "tellerSourceName":
+        case 'tellerSourceName':
           return this.compare(a.tellerSourceName, b.tellerSourceName, isAsc);
-        case "officeName":
+        case 'officeName':
           return this.compare(a.officeName, b.officeName, isAsc);
-        case "accountNo":
+        case 'accountNo':
           return this.compare(a.accountNo, b.accountNo, isAsc);
-        case "sourceInfo":
+        case 'sourceInfo':
           return this.compare(a.sourceInfo, b.sourceInfo, isAsc);
-        case "balance":
+        case 'balance':
           return this.compare(a.balance, b.balance, isAsc);
         default:
           return 0;
@@ -88,12 +88,12 @@ export class BalanceAccountTellerComponent implements OnInit {
     this.accountFilter = this.dataSource.filter((v) => {
       for (const key of keys) {
         if (form[key] ) {
-          if ("tellerSourceName".indexOf(key) != -1) {
+          if ('tellerSourceName'.indexOf(key) !== -1) {
             if (!this.clientServices.preProcessText(String(v[key])).toUpperCase().includes(this.clientServices.preProcessText(String(form[key])).toUpperCase())) {
               return false;
             }
           }
-          if ("tellerSourceName".indexOf(key) === -1) {
+          if ('tellerSourceName'.indexOf(key) === -1) {
             if (!String(v[key]).toLowerCase().includes(String(form[key]).toLowerCase())) {
               return false;
             }
