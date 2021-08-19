@@ -21,7 +21,7 @@ export class FrequentPostingsComponent implements OnInit {
   /** Maximum transaction date allowed. */
   maxDate = new Date();
   /** Frequent postings form. */
-  frequentPostingsForm: FormGroup;
+  frequentPostingsForm!: FormGroup;
   /** Office data. */
   officeData: any;
   /** Accounting rule data. */
@@ -35,9 +35,9 @@ export class FrequentPostingsComponent implements OnInit {
   /** Credit account data. */
   creditAccountData: any;
   /** True if multiple credit entries are allowed. */
-  allowMultipleCreditEntries: boolean;
+  allowMultipleCreditEntries: Boolean = false;
   /** True if multiple debit entries are allowed. */
-  allowMultipleDebitEntries: boolean;
+  allowMultipleDebitEntries: Boolean = false;
 
   /**
    * Retrieves the offices, accounting rules, currencies and payment types data from `resolve`.
@@ -55,7 +55,7 @@ export class FrequentPostingsComponent implements OnInit {
         accountingRules: any,
         currencies: any,
         paymentTypes: any
-      }) => {
+      }|any) => {
         this.officeData = data.offices;
         this.accountingRuleData = data.accountingRules;
         this.currencyData = data.currencies.selectedCurrencyOptions;
@@ -97,7 +97,7 @@ export class FrequentPostingsComponent implements OnInit {
    * Sets the affected gl entry form array.
    */
   setAffectedGLEntryForm() {
-    this.frequentPostingsForm.get('accountingRule').valueChanges.subscribe(accountingRule => {
+    this.frequentPostingsForm.get('accountingRule')?.valueChanges.subscribe(accountingRule => {
       while (this.debits.length) {
         this.debits.removeAt(0);
       }

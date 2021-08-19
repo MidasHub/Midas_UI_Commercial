@@ -3,11 +3,11 @@ import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { FormControl } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute, Data } from '@angular/router';
 
 /** rxjs Imports */
 import { merge } from 'rxjs';
-import { tap, startWith, map, distinctUntilChanged, debounceTime} from 'rxjs/operators';
+import { tap, startWith, map, distinctUntilChanged, debounceTime } from 'rxjs/operators';
 
 /** Custom Services */
 import { AccountingService } from '../accounting.service';
@@ -21,10 +21,9 @@ import { JournalEntriesDataSource } from './journal-entry.datasource';
 @Component({
   selector: 'mifosx-search-journal-entry',
   templateUrl: './search-journal-entry.component.html',
-  styleUrls: ['./search-journal-entry.component.scss']
+  styleUrls: ['./search-journal-entry.component.scss'],
 })
 export class SearchJournalEntryComponent implements OnInit, AfterViewInit {
-
   /** Minimum transaction date allowed. */
   minDate = new Date(2000, 0, 1);
   /** Maximum transaction date allowed. */
@@ -47,16 +46,16 @@ export class SearchJournalEntryComponent implements OnInit, AfterViewInit {
   entryTypeFilterData = [
     {
       option: 'All',
-      value: ''
+      value: '',
     },
     {
       option: 'Manual Entries',
-      value: true
+      value: true,
     },
     {
       option: 'System Entries',
-      value: false  // Bug: unable to implement from server side
-    }
+      value: false, // Bug: unable to implement from server side
+    },
   ];
   /** Từ ngày form control. */
   transactionDateFrom = new FormControl(new Date(new Date().setMonth(new Date().getMonth() - 1)));
@@ -65,64 +64,73 @@ export class SearchJournalEntryComponent implements OnInit, AfterViewInit {
   /** Transaction ID form control. */
   transactionId = new FormControl();
   /** Columns to be displayed in journal entries table. */
-  displayedColumns: string[] = ['id', 'officeName', 'transactionId', 'transactionDate', 'glAccountType', 'createdByUserName', 'glAccountCode', 'glAccountName', 'debit', 'credit'];
+  displayedColumns: string[] = [
+    'id',
+    'officeName',
+    'transactionId',
+    'transactionDate',
+    'glAccountType',
+    'createdByUserName',
+    'glAccountCode',
+    'glAccountName',
+    'debit',
+    'credit',
+  ];
   /** Data source for journal entries table. */
-  dataSource: JournalEntriesDataSource;
+  dataSource!: JournalEntriesDataSource;
   /** Journal entries filter. */
   filterJournalEntriesBy = [
     {
       type: 'officeId',
-      value: ''
+      value: '',
     },
     {
       type: 'glAccountId',
-      value: ''
+      value: '',
     },
     {
       type: 'manualEntriesOnly',
-      value: ''
+      value: '',
     },
     {
       type: 'transactionId',
-      value: ''
+      value: '',
     },
     {
       type: 'fromDate',
-      value: this.getDate(new Date(new Date().setMonth(new Date().getMonth() - 1)))
+      value: this.getDate(new Date(new Date().setMonth(new Date().getMonth() - 1))),
     },
     {
       type: 'toDate',
-      value: this.getDate(new Date())
+      value: this.getDate(new Date()),
     },
     {
       type: 'dateFormat',
-      value: 'yyyy-MM-dd'
+      value: 'yyyy-MM-dd',
     },
     {
       type: 'locale',
-      value: 'en'
-    }
+      value: 'en',
+    },
   ];
 
   /** Paginator for journal entries table. */
-  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+  @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
   /** Sorter for journal entries table. */
-  @ViewChild(MatSort, { static: true }) sort: MatSort;
+  @ViewChild(MatSort, { static: true }) sort: MatSort | any;
 
   /**
    * Retrieves the offices and gl accounts data from `resolve`.
    * @param {AccountingService} accountingService Accounting Service.
    * @param {ActivatedRoute} route Activated Route.
    */
-  constructor(private accountingService: AccountingService,
-              private route: ActivatedRoute) {
-    this.route.data.subscribe((data: {
-        offices: any,
-        glAccounts: any
-      }) => {
+  constructor(private accountingService: AccountingService, private route: ActivatedRoute) {
+    this.route.data.subscribe(
+      (data: {offices: any; glAccounts: any; }| Data) => {
         this.officeData = data.offices;
         this.glAccountData = data.glAccounts;
-      });
+      }
+    );
   }
 
   /**
@@ -142,7 +150,7 @@ export class SearchJournalEntryComponent implements OnInit, AfterViewInit {
   ngAfterViewInit() {
     this.officeName.valueChanges
       .pipe(
-        map(value => value.id ? value.id : ''),
+        map((value) => (value.id ? value.id : '')),
         debounceTime(500),
         distinctUntilChanged(),
         tap((filterValue) => {
@@ -153,7 +161,7 @@ export class SearchJournalEntryComponent implements OnInit, AfterViewInit {
 
     this.glAccount.valueChanges
       .pipe(
-        map(value => value.id ? value.id : ''),
+        map((value) => (value.id ? value.id : '')),
         debounceTime(500),
         distinctUntilChanged(),
         tap((filterValue) => {
@@ -192,12 +200,10 @@ export class SearchJournalEntryComponent implements OnInit, AfterViewInit {
       )
       .subscribe();
 
-    this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
+    this.sort.sortChange.subscribe(() => (this.paginator.pageIndex = 0));
 
     merge(this.sort.sortChange, this.paginator.page)
-      .pipe(
-        tap(() => this.loadJournalEntriesPage())
-      )
+      .pipe(tap(() => this.loadJournalEntriesPage()))
       .subscribe();
   }
 
@@ -207,8 +213,15 @@ export class SearchJournalEntryComponent implements OnInit, AfterViewInit {
   loadJournalEntriesPage() {
     if (!this.sort.direction) {
       delete this.sort.active;
+      // this.sort.active = '';
     }
-    this.dataSource.getJournalEntries(this.filterJournalEntriesBy, this.sort.active, this.sort.direction, this.paginator.pageIndex, this.paginator.pageSize);
+    this.dataSource.getJournalEntries(
+      this.filterJournalEntriesBy,
+      this.sort.active,
+      this.sort.direction,
+      this.paginator.pageIndex,
+      this.paginator.pageSize
+    );
   }
 
   /**
@@ -218,7 +231,7 @@ export class SearchJournalEntryComponent implements OnInit, AfterViewInit {
    */
   applyFilter(filterValue: string, property: string) {
     this.paginator.pageIndex = 0;
-    const findIndex = this.filterJournalEntriesBy.findIndex(filter => filter.type === property);
+    const findIndex = this.filterJournalEntriesBy.findIndex((filter) => filter.type === property);
     this.filterJournalEntriesBy[findIndex].value = filterValue;
     this.loadJournalEntriesPage();
   }
@@ -245,24 +258,24 @@ export class SearchJournalEntryComponent implements OnInit, AfterViewInit {
    * Sets filtered offices for autocomplete.
    */
   setFilteredOffices() {
-    this.filteredOfficeData = this.officeName.valueChanges
-      .pipe(
-        startWith(''),
-        map((office: any) => typeof office === 'string' ? office : office.name),
-        map((officeName: string) => officeName ? this.filterOfficeAutocompleteData(officeName) : this.officeData)
-      );
+    this.filteredOfficeData = this.officeName.valueChanges.pipe(
+      startWith(''),
+      map((office: any) => (typeof office === 'string' ? office : office.name)),
+      map((officeName: string) => (officeName ? this.filterOfficeAutocompleteData(officeName) : this.officeData))
+    );
   }
 
   /**
    * Sets filtered gl accounts for autocomplete.
    */
   setFilteredGlAccounts() {
-    this.filteredGLAccountData = this.glAccount.valueChanges
-      .pipe(
-        startWith(''),
-        map((glAccount: any) => typeof glAccount === 'string' ? glAccount : glAccount.name + ' (' + glAccount.glCode + ')'),
-        map((glAccount: string) => glAccount ? this.filterGLAccountAutocompleteData(glAccount) : this.glAccountData)
-      );
+    this.filteredGLAccountData = this.glAccount.valueChanges.pipe(
+      startWith(''),
+      map((glAccount: any) =>
+        typeof glAccount === 'string' ? glAccount : glAccount.name + ' (' + glAccount.glCode + ')'
+      ),
+      map((glAccount: string) => (glAccount ? this.filterGLAccountAutocompleteData(glAccount) : this.glAccountData))
+    );
   }
 
   /**
@@ -280,7 +293,9 @@ export class SearchJournalEntryComponent implements OnInit, AfterViewInit {
    * @returns {any} Filtered gl accounts.
    */
   private filterGLAccountAutocompleteData(glAccount: string): any {
-    return this.glAccountData.filter((option: any) => (option.name + ' (' + option.glCode + ')').toLowerCase().includes(glAccount.toLowerCase()));
+    return this.glAccountData.filter((option: any) =>
+      (option.name + ' (' + option.glCode + ')').toLowerCase().includes(glAccount.toLowerCase())
+    );
   }
 
   /**
@@ -288,7 +303,13 @@ export class SearchJournalEntryComponent implements OnInit, AfterViewInit {
    */
   getJournalEntries() {
     this.dataSource = new JournalEntriesDataSource(this.accountingService);
-    this.dataSource.getJournalEntries(this.filterJournalEntriesBy, this.sort.active, this.sort.direction, this.paginator.pageIndex, this.paginator.pageSize);
+    this.dataSource.getJournalEntries(
+      this.filterJournalEntriesBy,
+      this.sort.active,
+      this.sort.direction,
+      this.paginator.pageIndex,
+      this.paginator.pageSize
+    );
   }
 
   /**
@@ -310,5 +331,4 @@ export class SearchJournalEntryComponent implements OnInit, AfterViewInit {
     }
     return `${year}-${month}-${day}`;
   }
-
 }

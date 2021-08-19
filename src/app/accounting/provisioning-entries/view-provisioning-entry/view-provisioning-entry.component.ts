@@ -23,7 +23,7 @@ import { AccountingService } from '../../accounting.service';
 export class ViewProvisioningEntryComponent implements OnInit, AfterViewInit {
 
   /** Provisioning entry id. */
-  provisioningEntryId: string;
+  provisioningEntryId!: string;
   /** Provisioning entry. */
   provisioningEntry: any;
   /** Provisioning entry entries. */
@@ -49,7 +49,7 @@ export class ViewProvisioningEntryComponent implements OnInit, AfterViewInit {
   /** Columns to be displayed in provisioning entry entries table. */
   displayedColumns: string[] = ['officeName', 'productName', 'currencyCode', 'categoryName', 'amountreserved', 'liabilityAccountName', 'expenseAccountName'];
   /** Data source for provisioning entry entries table. */
-  dataSource: MatTableDataSource<any>;
+  dataSource!: MatTableDataSource<any>;
   /** Provisioning entry entries filter. */
   filterValue: any = {
     officeName: '',
@@ -58,9 +58,9 @@ export class ViewProvisioningEntryComponent implements OnInit, AfterViewInit {
   };
 
   /** Paginator for provisioning entry entries table. */
-  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+  @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
   /** Sorter for provisioning entry entries table. */
-  @ViewChild(MatSort, { static: true }) sort: MatSort;
+  @ViewChild(MatSort, { static: true }) sort: MatSort | any;
 
   /**
    * Retrieves the provisioning entry, provisioning entry entries, offices,
@@ -78,7 +78,7 @@ export class ViewProvisioningEntryComponent implements OnInit, AfterViewInit {
         offices: any,
         loanProducts: any,
         provisiningCategories: any
-      }) => {
+      }|any) => {
         this.provisioningEntryId = data.provisioningEntry.id;
         this.provisioningEntry = data.provisioningEntry;
         this.provisioningEntryEntries = data.provisioningEntryEntries;

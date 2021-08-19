@@ -22,7 +22,7 @@ export class ClosingEntriesComponent implements OnInit {
   /** Columns to be displayed in closing entries table. */
   displayedColumns: string[] = ['officeName', 'closingDate', 'comments', 'createdByUsername'];
   /** Data source for closing entries table. */
-  dataSource: MatTableDataSource<any>;
+  dataSource!: MatTableDataSource<any>;
   /** Office name filter form control. */
   officeName = new FormControl();
   /** Office data. */
@@ -33,9 +33,9 @@ export class ClosingEntriesComponent implements OnInit {
   glAccountClosureData: any;
 
   /** Paginator for closing entries table. */
-  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+  @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
   /** Sorter for closing entries table. */
-  @ViewChild(MatSort, { static: true }) sort: MatSort;
+  @ViewChild(MatSort, { static: true }) sort: MatSort | any;
 
   /**
    * Retrieves the offices and gl account closures data from `resolve`.
@@ -45,7 +45,7 @@ export class ClosingEntriesComponent implements OnInit {
     this.route.data.subscribe((data: {
       offices: any,
       glAccountClosures: any
-    }) => {
+    }|any) => {
       this.officeData = data.offices;
       this.glAccountClosureData = data.glAccountClosures;
     });

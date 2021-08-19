@@ -5,27 +5,26 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 
 /** rxjs Imports */
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 
 /**
  * Accounting service.
  */
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AccountingService {
-
   /**
    * @param {HttpClient} http Http Client to send requests.
    */
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   /**
    * @returns {Observable<any>} Offices data ordered by id.
    */
   getOffices(): Observable<any> {
     const httpParams = new HttpParams().set('orderBy', 'id');
-    return  this.http.get('/offices', { params: httpParams });
+    return this.http.get('/offices', { params: httpParams });
   }
 
   /**
@@ -66,10 +65,7 @@ export class AccountingService {
    * @returns {Observable<any>} GL Accounts.
    */
   getGlAccounts(): Observable<any> {
-    const httpParams = new HttpParams()
-      .set('manualEntriesAllowed', 'true')
-      .set('usage', '1')
-      .set('disabled', 'false');
+    const httpParams = new HttpParams().set('manualEntriesAllowed', 'true').set('usage', '1').set('disabled', 'false');
     return this.http.get(`/glaccounts`, { params: httpParams });
   }
 
@@ -78,9 +74,7 @@ export class AccountingService {
    * @returns {Observable<any>} Journal Entries.
    */
   getJournalEntry(transactionId: string): Observable<any> {
-    const httpParams = new HttpParams()
-      .set('transactionId', transactionId)
-      .set('transactionDetails', 'true');
+    const httpParams = new HttpParams().set('transactionId', transactionId).set('transactionDetails', 'true');
     return this.http.get(`/journalentries`, { params: httpParams });
   }
 
@@ -148,7 +142,7 @@ export class AccountingService {
    * @param {boolean} template True if template is required.
    * @returns {Observable<any>} Financial activity account.
    */
-  getFinancialActivityAccount(financialActivityAccountId: string, template: boolean = false): Observable<any> {
+  getFinancialActivityAccount(financialActivityAccountId: string|null, template: boolean = false): Observable<any> {
     const httpParams = new HttpParams().set('template', template.toString());
     return this.http.get(`/financialactivityaccounts/${financialActivityAccountId}`, { params: httpParams });
   }
@@ -215,7 +209,7 @@ export class AccountingService {
    * @param {boolean} template True if template is required.
    * @returns {Observable<any>} GL account.
    */
-  getGlAccount(glAccountId: string, template: boolean = false): Observable<any> {
+  getGlAccount(glAccountId: string|null, template: boolean = false): Observable<any> {
     const httpParams = new HttpParams().set('template', template.toString());
     return this.http.get(`/glaccounts/${glAccountId}`, { params: httpParams });
   }
@@ -256,7 +250,7 @@ export class AccountingService {
    * @param {string} accountingClosureId Accounting closure ID of gl closure.
    * @returns {Observable<any>} Accounting closure.
    */
-  getAccountingClosure(accountingClosureId: string): Observable<any> {
+  getAccountingClosure(accountingClosureId: string|null): Observable<any> {
     return this.http.get(`/glclosures/${accountingClosureId}`);
   }
 
@@ -296,7 +290,7 @@ export class AccountingService {
    * @param {string} accountingRuleId Accounting rule ID of accounting rule.
    * @returns {Observable<any>} Accounting rule.
    */
-  getAccountingRule(accountingRuleId: string): Observable<any> {
+  getAccountingRule(accountingRuleId: string | null): Observable<any> {
     return this.http.get(`/accountingrules/${accountingRuleId}`);
   }
 
@@ -344,7 +338,7 @@ export class AccountingService {
    * @param {string} provisioningEntryId Provisioning entry ID of provisioning entry.
    * @returns {Observable<any>} Provisioning entry.
    */
-  getProvisioningEntry(provisioningEntryId: string): Observable<any> {
+  getProvisioningEntry(provisioningEntryId: string|null): Observable<any> {
     return this.http.get(`/provisioningentries/${provisioningEntryId}`);
   }
 
@@ -366,8 +360,8 @@ export class AccountingService {
    * @param {string} provisioningEntryId Provisioning entry ID of provisioning entry.
    * @returns {Observable<any>} Provisioning entry entries.
    */
-  getProvisioningEntryEntries(provisioningEntryId: string): Observable<any> {
-    const httpParams = new HttpParams().set('entryId', provisioningEntryId);
+  getProvisioningEntryEntries(provisioningEntryId: string | null): Observable<any> {
+    const httpParams = new HttpParams().set('entryId', provisioningEntryId || '');
     return this.http.get('/provisioningentries/entries', { params: httpParams });
   }
 
@@ -397,5 +391,4 @@ export class AccountingService {
     const httpParams = new HttpParams().set('command', 'recreateprovisioningentry');
     return this.http.post(`/provisioningentries/${provisioningEntryId}`, {}, { params: httpParams });
   }
-
 }

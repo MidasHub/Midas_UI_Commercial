@@ -17,7 +17,7 @@ import { AccountingService } from '../../accounting.service';
 export class EditClosureComponent implements OnInit {
 
   /** Accounting closure form. */
-  accountingClosureForm: FormGroup;
+  accountingClosureForm!: FormGroup;
   /** GL Account closure. */
   glAccountClosure: any;
   /** Office data. */
@@ -34,7 +34,7 @@ export class EditClosureComponent implements OnInit {
               private accountingService: AccountingService,
               private route: ActivatedRoute,
               private router: Router) {
-    this.route.data.subscribe((data: { glAccountClosure: any }) => {
+    this.route.data.subscribe((data: { glAccountClosure: any }|any) => {
       this.glAccountClosure = data.glAccountClosure;
     });
   }
@@ -63,9 +63,9 @@ export class EditClosureComponent implements OnInit {
    */
   setAccountingClosure() {
     this.officeData = [{ id: this.glAccountClosure.officeId, name: this.glAccountClosure.officeName }];
-    this.accountingClosureForm.get('officeId').setValue(this.glAccountClosure.officeId);
-    this.accountingClosureForm.get('closingDate').setValue(new Date(this.glAccountClosure.closingDate));
-    this.accountingClosureForm.get('comments').setValue(this.glAccountClosure.comments);
+    this.accountingClosureForm.get('officeId')?.setValue(this.glAccountClosure.officeId);
+    this.accountingClosureForm.get('closingDate')?.setValue(new Date(this.glAccountClosure.closingDate));
+    this.accountingClosureForm.get('comments')?.setValue(this.glAccountClosure.comments);
   }
 
 

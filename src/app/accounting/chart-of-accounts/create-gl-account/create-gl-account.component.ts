@@ -17,7 +17,7 @@ import { AccountingService } from '../../accounting.service';
 export class CreateGlAccountComponent implements OnInit {
 
   /** GL account form. */
-  glAccountForm: FormGroup;
+  glAccountForm!: FormGroup;
   /** Chart of accounts data. */
   chartOfAccountsData: any;
   /** Account type data. */
@@ -29,9 +29,9 @@ export class CreateGlAccountComponent implements OnInit {
   /** Tag data. */
   tagData: any;
   /** Account type id. (for creation of sub-ledger account) */
-  accountTypeId: number;
+  accountTypeId!: number;
   /** Parent id. (for creation of sub-ledger account) */
-  parentId: number;
+  parentId!: number;
   /** Cancel route. (depending on creation of gl account or sub-ledger account) */
   cancelRoute = '../../';
 
@@ -54,7 +54,7 @@ export class CreateGlAccountComponent implements OnInit {
       }
     });
 
-    this.route.data.subscribe((data: { chartOfAccountsTemplate: any }) => {
+    this.route.data.subscribe((data: { chartOfAccountsTemplate: any }|any) => {
       this.chartOfAccountsData = data.chartOfAccountsTemplate;
       this.accountTypeData = data.chartOfAccountsTemplate.accountTypeOptions;
       this.accountUsageData = data.chartOfAccountsTemplate.usageOptions;
@@ -89,7 +89,7 @@ export class CreateGlAccountComponent implements OnInit {
    * Sets gl account form for selected account type.
    */
   setGLAccountForm() {
-    this.glAccountForm.get('type').valueChanges.subscribe(accountTypeId => {
+    this.glAccountForm.get('type')?.valueChanges.subscribe(accountTypeId => {
       switch (accountTypeId) {
         case 1: this.parentData = this.chartOfAccountsData.assetHeaderAccountOptions;
                 this.tagData = this.chartOfAccountsData.allowedAssetsTagOptions;
@@ -109,7 +109,7 @@ export class CreateGlAccountComponent implements OnInit {
       }
     });
 
-    this.glAccountForm.get('type').setValue(this.accountTypeId);
+    this.glAccountForm.get('type')?.setValue(this.accountTypeId);
   }
 
   /**

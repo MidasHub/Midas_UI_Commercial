@@ -17,7 +17,7 @@ import { AccountingService } from '../../accounting.service';
 export class EditGlAccountComponent implements OnInit {
 
   /** GL account form. */
-  glAccountForm: FormGroup;
+  glAccountForm!: FormGroup;
   /** GL account and chart of accounts data. */
   glAccount: any;
   /** Account type data. */
@@ -40,7 +40,7 @@ export class EditGlAccountComponent implements OnInit {
               private accountingService: AccountingService,
               private route: ActivatedRoute,
               private router: Router) {
-    this.route.data.subscribe((data: { glAccountAndChartOfAccountsTemplate: any }) => {
+    this.route.data.subscribe((data: { glAccountAndChartOfAccountsTemplate: any }|any) => {
       this.glAccount = data.glAccountAndChartOfAccountsTemplate;
     });
   }
@@ -75,7 +75,7 @@ export class EditGlAccountComponent implements OnInit {
   setGLAccountForm() {
     this.accountTypeData = this.glAccount.accountTypeOptions;
     this.accountUsageData = this.glAccount.usageOptions;
-    this.glAccountForm.get('type').valueChanges.subscribe(accountTypeId => {
+    this.glAccountForm.get('type')?.valueChanges.subscribe(accountTypeId => {
       switch (accountTypeId) {
         case 1: this.parentData = this.glAccount.assetHeaderAccountOptions;
                 this.tagData = this.glAccount.allowedAssetsTagOptions;
@@ -95,7 +95,7 @@ export class EditGlAccountComponent implements OnInit {
       }
     });
 
-    this.glAccountForm.get('type').setValue(this.glAccount.type.id);
+    this.glAccountForm.get('type')?.setValue(this.glAccount.type.id);
   }
 
   /**

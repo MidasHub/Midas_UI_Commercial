@@ -33,7 +33,7 @@ export class ViewClosureComponent implements OnInit {
               private route: ActivatedRoute,
               private router: Router,
               public dialog: MatDialog) {
-    this.route.data.subscribe((data: { glAccountClosure: any }) => {
+    this.route.data.subscribe((data: { glAccountClosure: any }|any) => {
       this.glAccountClosure = data.glAccountClosure;
     });
   }

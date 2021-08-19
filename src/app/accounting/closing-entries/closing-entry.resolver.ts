@@ -24,7 +24,7 @@ export class ClosingEntryResolver implements Resolve<Object> {
    * @returns {Observable<any>}
    */
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
-    const glAccountClosureId = route.paramMap.get('id');
+    const glAccountClosureId = route.paramMap.get('id') ;
     return this.accountingService.getAccountingClosure(glAccountClosureId);
   }
 

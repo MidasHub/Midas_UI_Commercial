@@ -21,7 +21,7 @@ export class CreateClosureComponent implements OnInit {
   /** Maximum closing date allowed. */
   maxDate = new Date();
   /** Accounting closure form. */
-  accountingClosureForm: FormGroup;
+  accountingClosureForm!: FormGroup;
   /** Office data. */
   officeData: any;
 
@@ -36,7 +36,7 @@ export class CreateClosureComponent implements OnInit {
               private accountingService: AccountingService,
               private route: ActivatedRoute,
               private router: Router) {
-    this.route.data.subscribe((data: { offices: any }) => {
+    this.route.data.subscribe((data: { offices: any }|any) => {
       this.officeData = data.offices;
     });
   }

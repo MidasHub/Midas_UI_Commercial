@@ -1,13 +1,13 @@
 /** Angular Imports */
-import { Injectable } from "@angular/core";
-import { Resolve, ActivatedRouteSnapshot } from "@angular/router";
+import { Injectable } from '@angular/core';
+import { Resolve, ActivatedRouteSnapshot } from '@angular/router';
 
 /** rxjs Imports */
-import { Observable } from "rxjs";
-import { map } from "rxjs/operators";
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 /** Custom Services */
-import { AccountingService } from "../accounting.service";
+import { AccountingService } from '../accounting.service';
 
 /**
  * GL Account and chart of accounts template data resolver.
@@ -24,7 +24,7 @@ export class GlAccountAndChartOfAccountsTemplateResolver implements Resolve<Obje
    * @returns {Observable<any>}
    */
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
-    const id = route.paramMap.get("id");
+    const id = route.paramMap.get('id');
 
     return this.accountingService.getGlAccount(id, true).pipe(
       map((glAccountData: any) => {
@@ -38,19 +38,19 @@ export class GlAccountAndChartOfAccountsTemplateResolver implements Resolve<Obje
          */
         let accountOptions = [];
         switch (glAccountData.type.value) {
-          case "ASSET":
+          case 'ASSET':
             accountOptions = glAccountData.assetHeaderAccountOptions || [];
             break;
-          case "EQUITY":
+          case 'EQUITY':
             accountOptions = glAccountData.equityHeaderAccountOptions || [];
             break;
-          case "EXPENSE":
+          case 'EXPENSE':
             accountOptions = glAccountData.expenseHeaderAccountOptions || [];
             break;
-          case "INCOME":
+          case 'INCOME':
             accountOptions = glAccountData.incomeHeaderAccountOptions || [];
             break;
-          case "LIABILITY":
+          case 'LIABILITY':
             accountOptions = glAccountData.liabilityHeaderAccountOptions || [];
             break;
         }

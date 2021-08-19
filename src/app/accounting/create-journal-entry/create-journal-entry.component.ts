@@ -21,7 +21,7 @@ export class CreateJournalEntryComponent implements OnInit {
   /** Maximum transaction date allowed. */
   maxDate = new Date();
   /** Journal entry form. */
-  journalEntryForm: FormGroup;
+  journalEntryForm!: FormGroup;
   /** Office data. */
   officeData: any;
   /** Currency data. */
@@ -47,7 +47,7 @@ export class CreateJournalEntryComponent implements OnInit {
         currencies: any,
         paymentTypes: any,
         glAccounts: any
-      }) => {
+      }|any) => {
         this.officeData = data.offices;
         this.currencyData = data.currencies.selectedCurrencyOptions;
         this.paymentTypeData = data.paymentTypes;

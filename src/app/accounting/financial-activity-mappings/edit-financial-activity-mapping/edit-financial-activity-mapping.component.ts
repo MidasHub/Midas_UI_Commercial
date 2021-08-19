@@ -17,7 +17,7 @@ import { AccountingService } from '../../accounting.service';
 export class EditFinancialActivityMappingComponent implements OnInit {
 
   /** Financial activity mapping form. */
-  financialActivityMappingForm: FormGroup;
+  financialActivityMappingForm!: FormGroup;
   /** GL Account options. */
   glAccountOptions: any;
   /** GL Account data. */
@@ -25,11 +25,11 @@ export class EditFinancialActivityMappingComponent implements OnInit {
   /** Financial activity data. */
   financialActivityData: any;
   /** Financial activity account ID. */
-  financialActivityAccountId: string;
+  financialActivityAccountId!: string;
   /** Financial activity ID. */
-  financialActivityId: number;
+  financialActivityId!: number;
   /** GL Account ID. */
-  glAccountId: number;
+  glAccountId!: number;
 
   /**
    * Retrieves the gl account options, financial activity and financial activity account data from `resolve`.
@@ -42,7 +42,7 @@ export class EditFinancialActivityMappingComponent implements OnInit {
               private accountingService: AccountingService,
               private route: ActivatedRoute,
               private router: Router) {
-    this.route.data.subscribe((data: { financialActivityAccountAndTemplate: any }) => {
+    this.route.data.subscribe((data: { financialActivityAccountAndTemplate: any }|any) => {
       this.financialActivityAccountId = data.financialActivityAccountAndTemplate.id;
       this.financialActivityId = data.financialActivityAccountAndTemplate.financialActivityData.id;
       this.glAccountId = data.financialActivityAccountAndTemplate.glAccountData.id;
@@ -57,8 +57,8 @@ export class EditFinancialActivityMappingComponent implements OnInit {
   ngOnInit() {
     this.createFinancialActivityMappingForm();
     this.setGLAccountData();
-    this.financialActivityMappingForm.get('financialActivityId').setValue(this.financialActivityId);
-    this.financialActivityMappingForm.get('glAccountId').setValue(this.glAccountId);
+    this.financialActivityMappingForm.get('financialActivityId')?.setValue(this.financialActivityId);
+    this.financialActivityMappingForm.get('glAccountId')?.setValue(this.glAccountId);
   }
 
   /**
@@ -75,7 +75,7 @@ export class EditFinancialActivityMappingComponent implements OnInit {
    * Sets the gl account data on the basis of selected financial activity.
    */
   setGLAccountData() {
-    this.financialActivityMappingForm.get('financialActivityId').valueChanges
+    this.financialActivityMappingForm.get('financialActivityId')?.valueChanges
       .subscribe(financialActivityId => {
         switch (financialActivityId) {
           case 100:

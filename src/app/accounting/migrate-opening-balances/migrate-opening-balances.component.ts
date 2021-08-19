@@ -24,7 +24,7 @@ export class MigrateOpeningBalancesComponent implements OnInit {
   /** Maximum opening balances date allowed. */
   maxDate = new Date();
   /** Opening balances form. */
-  openingBalancesForm: FormGroup;
+  openingBalancesForm!: FormGroup;
   /** Opening balances data. */
   openingBalancesData: any;
   /** Office data. */
@@ -50,7 +50,7 @@ export class MigrateOpeningBalancesComponent implements OnInit {
     this.route.data.subscribe((data: {
         offices: any,
         currencies: any
-      }) => {
+      }|any) => {
         this.officeData = data.offices;
         this.currencyData = data.currencies.selectedCurrencyOptions;
       });

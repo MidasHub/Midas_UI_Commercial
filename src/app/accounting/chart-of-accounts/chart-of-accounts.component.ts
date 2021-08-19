@@ -34,18 +34,18 @@ export class ChartOfAccountsComponent implements AfterViewInit, OnInit {
   /** Columns to be displayed in chart of accounts table. */
   displayedColumns: string[] = ['name', 'glCode', 'glAccountType', 'disabled', 'manualEntriesAllowed', 'usedAs'];
   /** Data source for chart of accounts table. */
-  tableDataSource: MatTableDataSource<any>;
+  tableDataSource!: MatTableDataSource<any>;
   /** Nested tree control for chart of accounts tree. */
   nestedTreeControl: NestedTreeControl<GLAccountNode>;
   /** Nested tree data source for chart of accounts tree. */
   nestedTreeDataSource: MatTreeNestedDataSource<GLAccountNode>;
   /** Selected GL Account. */
-  glAccount: GLAccountNode;
+  glAccount?: GLAccountNode;
 
   /** Paginator for chart of accounts table. */
-  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+  @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
   /** Sorter for chart of accounts table. */
-  @ViewChild(MatSort, { static: true }) sort: MatSort;
+  @ViewChild(MatSort, { static: true }) sort: MatSort | any;
 
   /**
    * Retrieves the gl accounts data from `resolve` and initializes(generates) gl accounts tree.
@@ -54,7 +54,7 @@ export class ChartOfAccountsComponent implements AfterViewInit, OnInit {
    */
   constructor(private glAccountTreeService: GlAccountTreeService,
               private route: ActivatedRoute) {
-    this.route.data.subscribe((data: { chartOfAccounts: any }) => {
+    this.route.data.subscribe((data: { chartOfAccounts: any }|any) => {
       this.glAccountData = data.chartOfAccounts;
       glAccountTreeService.initialize(this.glAccountData);
     });

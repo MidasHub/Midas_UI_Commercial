@@ -20,19 +20,19 @@ export class FinancialActivityMappingsComponent implements OnInit {
   /** Columns to be displayed in financial activity mappings table. */
   displayedColumns: string[] = ['financialActivity', 'glAccountName', 'glAccountCode'];
   /** Data source for financial activity mappings table. */
-  dataSource: MatTableDataSource<any>;
+  dataSource!: MatTableDataSource<any>;
 
   /** Paginator for financial activity mappings table. */
-  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+  @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
   /** Sorter for financial activity mappings table. */
-  @ViewChild(MatSort, { static: true }) sort: MatSort;
+  @ViewChild(MatSort, { static: true }) sort: MatSort | any;
 
   /**
    * Retrieves the financial activity accounts data from `resolve`.
    * @param {ActivatedRoute} route Activated Route.
    */
   constructor(private route: ActivatedRoute) {
-    this.route.data.subscribe(( data: { financialActivityAccounts: any }) => {
+    this.route.data.subscribe(( data: { financialActivityAccounts: any }|any) => {
       this.financialActivityAccountData = data.financialActivityAccounts;
     });
   }

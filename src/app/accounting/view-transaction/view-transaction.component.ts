@@ -28,16 +28,16 @@ export class ViewTransactionComponent implements OnInit {
   /** Transaction data.  */
   transaction: any;
   /** Transaction ID. */
-  transactionId: string;
+  transactionId!: string;
   /** Columns to be displayed in transaction table. */
   displayedColumns: string[] = ['id', 'glAccountType', 'glAccountCode', 'glAccountName', 'debit', 'credit'];
   /** Data source for transaction table. */
-  dataSource: MatTableDataSource<any>;
+  dataSource!: MatTableDataSource<any>;
 
   /** Paginator for transaction table. */
-  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+  @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
   /** Sorter for transaction table. */
-  @ViewChild(MatSort, { static: true }) sort: MatSort;
+  @ViewChild(MatSort, { static: true }) sort: MatSort | any;
 
   /**
    * @param {AccountingService} accountingService Accounting Service.
@@ -54,7 +54,7 @@ export class ViewTransactionComponent implements OnInit {
    * Retrieves the transaction data from `resolve` and sets the transaction table.
    */
   ngOnInit() {
-    this.route.data.subscribe((data: { transaction: any }) => {
+    this.route.data.subscribe((data: { transaction: any }|any) => {
       this.transaction = data.transaction;
       this.transactionId = data.transaction.pageItems[0].transactionId;
       this.setTransaction();

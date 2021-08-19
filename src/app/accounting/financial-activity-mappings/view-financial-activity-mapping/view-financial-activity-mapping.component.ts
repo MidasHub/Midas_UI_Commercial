@@ -35,7 +35,7 @@ export class ViewFinancialActivityMappingComponent implements OnInit {
               private route: ActivatedRoute,
               private router: Router,
               public dialog: MatDialog) {
-    this.route.data.subscribe((data: { financialActivityAccount: any }) => {
+    this.route.data.subscribe((data: { financialActivityAccount: any }|any) => {
       this.financialActivityAccount = data.financialActivityAccount;
       this.financialActivityAccountId = data.financialActivityAccount.id;
     });

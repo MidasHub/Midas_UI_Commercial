@@ -17,7 +17,7 @@ import { AccountingService } from '../../accounting.service';
 export class CreateFinancialActivityMappingComponent implements OnInit {
 
   /** Financial activity mapping form. */
-  financialActivityMappingForm: FormGroup;
+  financialActivityMappingForm!: FormGroup;
   /** GL Account options. */
   glAccountOptions: any;
   /** GL Account data. */
@@ -36,7 +36,7 @@ export class CreateFinancialActivityMappingComponent implements OnInit {
               private accountingService: AccountingService,
               private route: ActivatedRoute,
               private router: Router) {
-    this.route.data.subscribe((data: { financialActivityAccountsTemplate: any }) => {
+    this.route.data.subscribe((data: { financialActivityAccountsTemplate: any }|any) => {
       this.glAccountOptions = data.financialActivityAccountsTemplate.glAccountOptions;
       this.financialActivityData = data.financialActivityAccountsTemplate.financialActivityOptions;
     });
@@ -64,7 +64,7 @@ export class CreateFinancialActivityMappingComponent implements OnInit {
    * Sets the gl account data on the basis of selected financial activity.
    */
   setGlAccountData() {
-    this.financialActivityMappingForm.get('financialActivityId').valueChanges
+    this.financialActivityMappingForm.get('financialActivityId')?.valueChanges
       .subscribe(financialActivityId => {
         switch (financialActivityId) {
           case 100:
