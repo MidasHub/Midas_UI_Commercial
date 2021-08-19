@@ -33,7 +33,7 @@ export class ViewRuleComponent implements OnInit {
               private route: ActivatedRoute,
               private router: Router,
               public dialog: MatDialog) {
-    this.route.data.subscribe((data: { accountingRule: any }) => {
+    this.route.data.subscribe((data: { accountingRule: any }|any) => {
       this.accountingRule = data.accountingRule;
     });
   }

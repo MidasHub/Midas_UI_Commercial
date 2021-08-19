@@ -20,7 +20,7 @@ import { oneOfTheFieldsIsRequiredValidator } from '../one-of-the-fields-is-requi
 export class CreateRuleComponent implements OnInit {
 
   /** Accounting rule form. */
-  accountingRuleForm: FormGroup;
+  accountingRuleForm!: FormGroup;
   /** Office data. */
   officeData: any;
   /** GL Account data. */
@@ -41,7 +41,7 @@ export class CreateRuleComponent implements OnInit {
               private accountingService: AccountingService,
               private route: ActivatedRoute,
               private router: Router) {
-    this.route.data.subscribe((data: { accountingRulesTemplate: any }) => {
+    this.route.data.subscribe((data: { accountingRulesTemplate: any }|any) => {
       this.officeData = data.accountingRulesTemplate.allowedOffices;
       this.glAccountData = data.accountingRulesTemplate.allowedAccounts;
       this.debitTagData = data.accountingRulesTemplate.allowedDebitTagOptions;
@@ -80,22 +80,22 @@ export class CreateRuleComponent implements OnInit {
    * Sets accounting rule form for selected accounting rule type.
    */
   setAccountingRulesForm() {
-    this.accountingRuleForm.get('debitRuleType').valueChanges.subscribe((debitRuleType: string) => {
+    this.accountingRuleForm.get('debitRuleType')?.valueChanges.subscribe((debitRuleType: string) => {
       if (debitRuleType === 'fixedAccount') {
-        this.accountingRuleForm.get('debitTags').reset();
-        this.accountingRuleForm.get('allowMultipleDebitEntries').reset();
+        this.accountingRuleForm.get('debitTags')?.reset();
+        this.accountingRuleForm.get('allowMultipleDebitEntries')?.reset();
       } else {
-        this.accountingRuleForm.get('accountToDebit').reset();
-        this.accountingRuleForm.get('allowMultipleDebitEntries').setValue(false);
+        this.accountingRuleForm.get('accountToDebit')?.reset();
+        this.accountingRuleForm.get('allowMultipleDebitEntries')?.setValue(false);
       }
     });
-    this.accountingRuleForm.get('creditRuleType').valueChanges.subscribe((creditRuleType: string) => {
+    this.accountingRuleForm.get('creditRuleType')?.valueChanges.subscribe((creditRuleType: string) => {
       if (creditRuleType === 'fixedAccount') {
-        this.accountingRuleForm.get('creditTags').reset();
-        this.accountingRuleForm.get('allowMultipleCreditEntries').reset();
+        this.accountingRuleForm.get('creditTags')?.reset();
+        this.accountingRuleForm.get('allowMultipleCreditEntries')?.reset();
       } else {
-        this.accountingRuleForm.get('accountToCredit').reset();
-        this.accountingRuleForm.get('allowMultipleCreditEntries').setValue(false);
+        this.accountingRuleForm.get('accountToCredit')?.reset();
+        this.accountingRuleForm.get('allowMultipleCreditEntries')?.setValue(false);
       }
     });
   }
