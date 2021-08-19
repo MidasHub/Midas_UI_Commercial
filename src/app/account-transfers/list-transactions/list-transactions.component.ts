@@ -31,14 +31,14 @@ export class ListTransactionsComponent {
   displayedColumns: string[] = ['transactionDate', 'amount', 'notes', 'reversed'];
 
   /** Paginator for centers table. */
-  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+  @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator ;
 
   /**
    * Retrieves Recurring Deposits Account Data from `resolve`.
    * @param {ActivatedRoute} route Activated Route.
    */
   constructor(private route: ActivatedRoute) {
-    this.route.data.subscribe((data: { listTransactionData: any }) => {
+    this.route.data.subscribe((data: { listTransactionData: any }|any) => {
       this.listTransactionData = data.listTransactionData;
       this.dataSource = new MatTableDataSource(this.listTransactionData.transactions.pageItems);
       this.dataSource.paginator = this.paginator;

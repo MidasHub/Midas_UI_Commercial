@@ -26,7 +26,7 @@ export class ListStandingInstructionsComponent implements OnInit {
   /** Recurring Deposits Data */
   standingIntructionsTemplateData: any;
   /** Instructions Data */
-  instructionsData: any[];
+  instructionsData?: any[];
   /** Name form control. */
   transferType = new FormControl();
   /** ExternalId form control. */
@@ -42,20 +42,20 @@ export class ListStandingInstructionsComponent implements OnInit {
   /** Account Type */
   accountType: any;
   /** Account Type ID */
-  accountTypeId: string;
+  accountTypeId?: string;
   /** Id */
   id: any;
   /** Is from Client? */
-  isFromClient: Boolean;
+  isFromClient?: Boolean;
   /** Data source for instructions table. */
   dataSource = new MatTableDataSource();
   /** Columns to be displayed in instructions table. */
   displayedColumns: string[] = ['client', 'fromAccount', 'beneficiary', 'toAccount', 'amount', 'validity', 'actions'];
 
   /** Instruction Table Reference */
-  @ViewChild('instructionsTable', { static: true }) instructionTableRef: MatTable<Element>;
+  @ViewChild('instructionsTable', { static: true }) instructionTableRef!: MatTable<Element>;
   /** Paginator for centers table. */
-  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+  @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
 
 
   /**
@@ -69,7 +69,7 @@ export class ListStandingInstructionsComponent implements OnInit {
     private accountTransfersService: AccountTransfersService,
     private settingsService: SettingsService,
     private dialog: MatDialog) {
-    this.route.data.subscribe((data: { standingIntructionsTemplate: any }) => {
+    this.route.data.subscribe((data: { standingIntructionsTemplate: any }|any) => {
       this.standingIntructionsTemplateData = data.standingIntructionsTemplate;
       if (data.standingIntructionsTemplate.fromClient) {
         this.clientName = this.standingIntructionsTemplateData.fromClient.displayName;
@@ -95,7 +95,7 @@ export class ListStandingInstructionsComponent implements OnInit {
       default:
         this.accountTypeId = '0';
     }
-    this.isFromClient = this.route.parent.parent.snapshot.params['clientId'] ? true : false;
+    this.isFromClient = this.route.parent?.parent?.snapshot.params['clientId'] ? true : false;
   }
 
   filterStandingInstructions() {
@@ -121,7 +121,7 @@ export class ListStandingInstructionsComponent implements OnInit {
     };
     this.accountTransfersService.getStandingInstructions(searchData).subscribe((response: any) => {
       this.instructionsData = response.pageItems;
-      this.dataSource.data = this.instructionsData;
+      this.dataSource.data = this.instructionsData || [];
       this.instructionTableRef.renderRows();
     });
   }

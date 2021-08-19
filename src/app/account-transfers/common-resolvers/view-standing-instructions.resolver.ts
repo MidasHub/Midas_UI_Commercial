@@ -25,7 +25,7 @@ export class ViewStandingInstructionsResolver implements Resolve<Object> {
      * @returns {Observable<any>}
      */
     resolve(route: ActivatedRouteSnapshot): Observable<any> {
-        const standingInstructionsId = route.parent.paramMap.get('standingInstructionsId');
+        const standingInstructionsId = route.parent!.paramMap.get('standingInstructionsId');
         return this.accountTransfersService.getStandingInstructionsData(standingInstructionsId);
     }
 

@@ -15,7 +15,7 @@ export class ViewAccountTransferComponent {
    * @param {ActivatedRoute} route Activated Route.
    */
   constructor(private route: ActivatedRoute) {
-    this.route.data.subscribe((data: { viewAccountTransferData: any }) => {
+    this.route.data.subscribe((data: { viewAccountTransferData: any }|any) => {
       this.viewAccountTransferData = data.viewAccountTransferData;
     });
   }

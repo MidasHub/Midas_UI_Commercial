@@ -27,7 +27,7 @@ export class CreateStandingInstructionsComponent implements OnInit {
   /** Allow Client Edit */
   allowclientedit = true;
   /** Edit Standing Instructions form. */
-  createStandingInstructionsForm: FormGroup;
+  createStandingInstructionsForm!: FormGroup;
   /** Priority Type Data */
   priorityTypeData: any;
   /** Status Type Data */
@@ -45,7 +45,7 @@ export class CreateStandingInstructionsComponent implements OnInit {
   /** From Account Data */
   fromAccountData: any;
   /** Destination Type Data */
-  destinationTypeData: { id: number; value: string; }[];
+  destinationTypeData?: { id: number; value: string; }[];
   /** To Office Type Data */
   toOfficeTypeData: any;
   /** To Client Type Data */
@@ -78,7 +78,7 @@ export class CreateStandingInstructionsComponent implements OnInit {
     private accountTransfersService: AccountTransfersService,
     private settingsService: SettingsService,
     private datePipe: DatePipe) {
-    this.route.data.subscribe((data: { standingIntructionsTemplate: any }) => {
+    this.route.data.subscribe((data: { standingIntructionsTemplate: any }|any) => {
       this.standingIntructionsTemplate = data.standingIntructionsTemplate;
       this.setParams();
       this.setOptions();
@@ -89,7 +89,7 @@ export class CreateStandingInstructionsComponent implements OnInit {
   setParams() {
     this.officeId = this.route.snapshot.queryParams['officeId'];
     this.accountType = this.route.snapshot.queryParams['accountType'];
-    this.clientId = this.route.parent.snapshot.params['clientId'];
+    this.clientId = this.route.parent?.snapshot.params['clientId'];
     switch (this.accountType) {
       case 'fromloans':
         this.accountTypeId = '1';
@@ -162,7 +162,7 @@ export class CreateStandingInstructionsComponent implements OnInit {
    * Changes the value on change of destination value
    */
   buildDependencies() {
-    this.createStandingInstructionsForm.get('destination').valueChanges.subscribe((destination: any) => {
+    this.createStandingInstructionsForm.get('destination')?.valueChanges.subscribe((destination: any) => {
       if (destination === 1) {
         this.allowclientedit = false;
         this.createStandingInstructionsForm.patchValue({

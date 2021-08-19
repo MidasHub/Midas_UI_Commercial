@@ -28,7 +28,7 @@ export class ListTransactionsResolver implements Resolve<Object> {
      * @returns {Observable<any>}
      */
     resolve(route: ActivatedRouteSnapshot): Observable<any> {
-        const id = route.parent.paramMap.get('standingInstructionsId');
+        const id = route.parent?.paramMap.get('standingInstructionsId') ;
         const dateFormat = this.settingsService.dateFormat;
         const locale = this.settingsService.language.code;
         return this.accountTransfersService.getStandingInstructionsTransactions(id, dateFormat, locale);

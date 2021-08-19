@@ -14,7 +14,7 @@ import { AccountTransfersService } from '../account-transfers.service';
 @Injectable()
 export class StandingInstructionsTemplateResolver implements Resolve<Object> {
 
-    accountTypeId: string;
+    accountTypeId?: string;
 
     /**
      * @param {accountTransfersService} AccountTransfersService Account Transfers service.
@@ -29,7 +29,7 @@ export class StandingInstructionsTemplateResolver implements Resolve<Object> {
     resolve(route: ActivatedRouteSnapshot): Observable<any> {
         const officeId = route.queryParamMap.get('officeId');
         const accountType = route.queryParamMap.get('accountType');
-        const clientId = route.parent.paramMap.get('clientId');
+        const clientId = route.parent?.paramMap.get('clientId');
         switch (accountType) {
             case 'fromloans':
                 this.accountTypeId = '1';

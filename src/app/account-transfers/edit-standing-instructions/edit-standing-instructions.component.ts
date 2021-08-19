@@ -25,7 +25,7 @@ export class EditStandingInstructionsComponent implements OnInit {
   /** Allow Client Edit */
   allowclientedit = false;
   /** Edit Standing Instructions form. */
-  editStandingInstructionsForm: FormGroup;
+  editStandingInstructionsForm!: FormGroup;
   /** Priority Type Data */
   priorityTypeData: any;
   /** Status Type Data */
@@ -56,7 +56,7 @@ export class EditStandingInstructionsComponent implements OnInit {
     private accountTransfersService: AccountTransfersService,
     private settingsService: SettingsService,
     private datePipe: DatePipe) {
-    this.route.data.subscribe((data: { standingInstructionsDataAndTemplate: any }) => {
+    this.route.data.subscribe((data: { standingInstructionsDataAndTemplate: any }|any) => {
       this.standingInstructionsData = data.standingInstructionsDataAndTemplate;
       this.standingInstructionsId = data.standingInstructionsDataAndTemplate.id;
       if (this.standingInstructionsData.fromClient.id === this.standingInstructionsData.toClient.id) {

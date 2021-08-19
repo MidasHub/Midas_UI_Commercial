@@ -1,21 +1,21 @@
 /** Angular Imports */
-import { Component, OnInit, AfterViewInit } from "@angular/core";
-import { ActivatedRoute, Router } from "@angular/router";
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { DatePipe } from "@angular/common";
+import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { DatePipe } from '@angular/common';
 
 /** Custom Services */
-import { AccountTransfersService } from "../account-transfers.service";
-import { SettingsService } from "app/settings/settings.service";
-import { ClientsService } from "app/clients/clients.service";
+import { AccountTransfersService } from '../account-transfers.service';
+import { SettingsService } from 'app/settings/settings.service';
+import { ClientsService } from 'app/clients/clients.service';
 
 /**
  * Create account transfers
  */
 @Component({
-  selector: "mifosx-make-account-transfers",
-  templateUrl: "./make-account-transfers.component.html",
-  styleUrls: ["./make-account-transfers.component.scss"],
+  selector: 'mifosx-make-account-transfers',
+  templateUrl: './make-account-transfers.component.html',
+  styleUrls: ['./make-account-transfers.component.scss'],
 })
 export class MakeAccountTransfersComponent implements OnInit, AfterViewInit {
   /** Standing Instructions Data */
@@ -25,7 +25,7 @@ export class MakeAccountTransfersComponent implements OnInit, AfterViewInit {
   /** Maximum date allowed. */
   maxDate = new Date(2100, 0, 1);
   /** Edit Standing Instructions form. */
-  makeAccountTransferForm: FormGroup;
+  makeAccountTransferForm!: FormGroup;
   /** To Office Type Data */
   toOfficeTypeData: any;
   /** To Client Type Data */
@@ -44,7 +44,7 @@ export class MakeAccountTransfersComponent implements OnInit, AfterViewInit {
   clientsData: any;
 
   accessToken: any;
-  private credentialsStorageKey = "midasCredentials";
+  private credentialsStorageKey = 'midasCredentials';
 
   /**
    * Retrieves the standing instructions template from `resolve`.
@@ -65,7 +65,7 @@ export class MakeAccountTransfersComponent implements OnInit, AfterViewInit {
     private settingsService: SettingsService,
     private clientsService: ClientsService
   ) {
-    this.route.data.subscribe((data: { accountTransferTemplate: any }) => {
+    this.route.data.subscribe((data: { accountTransferTemplate: any }|any) => {
       this.accountTransferTemplateData = data.accountTransferTemplate;
       this.setParams();
       this.setOptions();
@@ -74,18 +74,18 @@ export class MakeAccountTransfersComponent implements OnInit, AfterViewInit {
   }
   /** Sets the value from the URL */
   setParams() {
-    this.accountType = this.route.snapshot.queryParams["accountType"];
+    this.accountType = this.route.snapshot.queryParams['accountType'];
     switch (this.accountType) {
-      case "fromloans":
-        this.accountTypeId = "1";
-        this.id = this.route.snapshot.queryParams["loanId"];
+      case 'fromloans':
+        this.accountTypeId = '1';
+        this.id = this.route.snapshot.queryParams['loanId'];
         break;
-      case "fromsavings":
-        this.accountTypeId = "2";
-        this.id = this.route.snapshot.queryParams["savingsId"];
+      case 'fromsavings':
+        this.accountTypeId = '2';
+        this.id = this.route.snapshot.queryParams['savingsId'];
         break;
       default:
-        this.accountTypeId = "0";
+        this.accountTypeId = '0';
     }
   }
 
@@ -101,13 +101,13 @@ export class MakeAccountTransfersComponent implements OnInit, AfterViewInit {
    */
   createMakeAccountTransferForm() {
     this.makeAccountTransferForm = this.formBuilder.group({
-      toOfficeId: ["", Validators.required],
-      toClientId: ["", Validators.required],
-      toAccountType: ["", Validators.required],
-      toAccountId: ["", Validators.required],
+      toOfficeId: ['', Validators.required],
+      toClientId: ['', Validators.required],
+      toAccountType: ['', Validators.required],
+      toAccountId: ['', Validators.required],
       transferAmount: [this.accountTransferTemplateData.transferAmount, Validators.required],
-      transferDate: ["", Validators.required],
-      transferDescription: ["", Validators.required],
+      transferDate: ['', Validators.required],
+      transferDescription: ['', Validators.required],
     });
   }
 
@@ -116,7 +116,7 @@ export class MakeAccountTransfersComponent implements OnInit, AfterViewInit {
     this.toOfficeTypeData = this.accountTransferTemplateData.toOfficeOptions;
     this.toAccountTypeData = this.accountTransferTemplateData.toAccountTypeOptions;
     this.toAccountData = this.accountTransferTemplateData.toAccountOptions;
-    //this.toClientTypeData = this.accountTransferTemplateData.toClientOptions;
+    // this.toClientTypeData = this.accountTransferTemplateData.toClientOptions;
   }
 
   /** Executes on change of various select options */
@@ -144,7 +144,7 @@ export class MakeAccountTransfersComponent implements OnInit, AfterViewInit {
     const propNames = Object.getOwnPropertyNames(dataObj);
     for (let i = 0; i < propNames.length; i++) {
       const propName = propNames[i];
-      if (dataObj[propName] === null || dataObj[propName] === undefined || dataObj[propName] === "") {
+      if (dataObj[propName] === null || dataObj[propName] === undefined || dataObj[propName] === '') {
         delete dataObj[propName];
       }
     }
@@ -182,7 +182,7 @@ export class MakeAccountTransfersComponent implements OnInit, AfterViewInit {
    */
   submit() {
     this.accessToken = JSON.parse(
-      sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey)
+      sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey) || ''
     );
     const dateFormat = this.settingsService.dateFormat;
     const locale = this.settingsService.language.code;
@@ -202,8 +202,8 @@ export class MakeAccountTransfersComponent implements OnInit, AfterViewInit {
         : this.accessToken.officeId,
     };
     this.accountTransfersService.createAccountTransfer(makeAccountTransferData).subscribe(() => {
-      this.router.navigate(["../../transactions"], { relativeTo: this.route });
-      console.log(this.router.navigate(["../../transactions"], { relativeTo: this.route }));
+      this.router.navigate(['../../transactions'], { relativeTo: this.route });
+      console.log(this.router.navigate(['../../transactions'], { relativeTo: this.route }));
     });
   }
 }

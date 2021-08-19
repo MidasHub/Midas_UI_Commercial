@@ -14,7 +14,7 @@ import { AccountTransfersService } from '../account-transfers.service';
 @Injectable()
 export class MakeAccountTransferTemplateResolver implements Resolve<Object> {
 
-    accountTypeId: string;
+    accountTypeId?: string;
     id: any;
     /**
      * @param {accountTransfersService} AccountTransfersService Account Transfers service.
