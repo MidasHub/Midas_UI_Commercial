@@ -24,8 +24,8 @@ export class CenterDatatableResolver implements Resolve<Object> {
      * @returns {Observable<any>}
      */
     resolve(route: ActivatedRouteSnapshot): Observable<any> {
-        const centerId = route.parent.parent.paramMap.get('centerId');
-        const datatableName = route.paramMap.get('datatableName');
+        const centerId = route.parent?.parent?.paramMap.get('centerId') ;
+        const datatableName = route.paramMap.get('datatableName') ;
         return this.centersService.getCenterDatatable(centerId, datatableName);
     }
 

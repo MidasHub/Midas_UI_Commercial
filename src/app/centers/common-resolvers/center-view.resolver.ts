@@ -24,7 +24,7 @@ export class CenterViewResolver implements Resolve<Object> {
      * @returns {Observable<any>}
      */
     resolve(route: ActivatedRouteSnapshot): Observable<any> {
-        const centerId = route.paramMap.get('centerId');
+        const centerId = route.paramMap.get('centerId') ;
         return this.centersService.getCenterData(centerId);
     }
 

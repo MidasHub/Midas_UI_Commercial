@@ -3,20 +3,19 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 
 /** rxjs Imports */
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 
 /**
  * Clients service.
  */
 @Injectable({
-    providedIn: 'root'
+  providedIn: 'root',
 })
 export class CentersService {
-
   /**
    * @param {HttpClient} http Http Client to send requests.
    */
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   /**
    * @param {any} filterBy Properties by which entries should be filtered.
@@ -47,7 +46,7 @@ export class CentersService {
    * @returns {Observable<any>}
    */
   createCenter(center: any): Observable<any> {
-      return this.http.post('/centers', center);
+    return this.http.post('/centers', center);
   }
 
   /**
@@ -55,29 +54,25 @@ export class CentersService {
    * @returns {Observable<any>}
    */
   getStaff(officeId: number): Observable<any> {
-      const httpParams = new HttpParams()
-          .set('officeId', officeId.toString())
-          .set('staffInSelectedOfficeOnly', 'true');
-      return this.http.get('/centers/template', { params: httpParams });
+    const httpParams = new HttpParams().set('officeId', officeId.toString()).set('staffInSelectedOfficeOnly', 'true');
+    return this.http.get('/centers/template', { params: httpParams });
   }
 
   /**
    * @param centerId CenterID
    * @returns {Observable<any>} Group Data for Center
    */
-  getCenterData(centerId: string): Observable<any> {
-    const httpParams = new HttpParams()
-        .set('associations', 'groupMembers,collectionMeetingCalendar');
-    return this.http.get(`/centers/${centerId}`, { params: httpParams } );
+  getCenterData(centerId?: string| null): Observable<any> {
+    const httpParams = new HttpParams().set('associations', 'groupMembers,collectionMeetingCalendar');
+    return this.http.get(`/centers/${centerId}`, { params: httpParams });
   }
 
   /**
    * @param centerId Center ID
    * @returns {Observable<any>} Returns the entire details of the Center ID
    */
-  getCenterSummary(centerId: string): Observable<any> {
-    const httpParams = new HttpParams().set('R_groupId', centerId)
-      .set('genericResultSet', 'false');
+  getCenterSummary(centerId?: string| null): Observable<any> {
+    const httpParams = new HttpParams().set('R_groupId', centerId || '').set('genericResultSet', 'false');
     return this.http.get(`/runreports/GroupSummaryCounts`, { params: httpParams });
   }
 
@@ -85,7 +80,7 @@ export class CentersService {
    * @param centerId Center ID
    * @returns {Observable<any>} Returns the saving account for that center
    */
-  getSavingsAccountDetails(centerId: string): Observable<any> {
+  getSavingsAccountDetails(centerId?: string|null): Observable<any> {
     return this.http.get(`/centers/${centerId}/accounts`);
   }
 
@@ -93,7 +88,7 @@ export class CentersService {
    * @param centerId Center Id
    * @returns The notes for particular center
    */
-  getCenterNotes(centerId: string): Observable<any> {
+  getCenterNotes(centerId?: string|null): Observable<any> {
     return this.http.get(`/groups/${centerId}/notes`);
   }
 
@@ -131,7 +126,7 @@ export class CentersService {
    */
   getcenterDatatables() {
     const httpParams = new HttpParams().set('apptable', 'm_center');
-  return this.http.get(`/datatables`, { params: httpParams });
+    return this.http.get(`/datatables`, { params: httpParams });
   }
 
   /**
@@ -139,9 +134,13 @@ export class CentersService {
    * @param centerId Center ID
    * @param datatableName Datatable Name
    */
-  getCenterDatatable(centerId: string, datatableName: string) {
+  getCenterDatatable(centerId?: string | null, datatableName?: string|null): Observable<any> {
     const httpParams = new HttpParams().set('genericResultSet', 'true');
-    return this.http.get(`/datatables/${datatableName}/${centerId}`, { params: httpParams });
+    if (centerId && datatableName) {
+      return this.http.get(`/datatables/${datatableName}/${centerId}`, { params: httpParams });
+    } else {
+      return of();
+    }
   }
 
   /**
@@ -150,9 +149,13 @@ export class CentersService {
    * @param data Data.
    * @returns {Observable<any>}
    */
-  addCenterDatatableEntry(centerId: string, datatableName: string, data: any): Observable<any> {
+  addCenterDatatableEntry(centerId?: string | null, datatableName?: string, data?: any): Observable<any> {
     const httpParams = new HttpParams().set('genericResultSet', 'true');
-    return this.http.post(`/datatables/${datatableName}/${centerId}`, data, { params: httpParams });
+    if (centerId && datatableName && data) {
+      return this.http.post(`/datatables/${datatableName}/${centerId}`, data, { params: httpParams });
+    } else {
+      return of();
+    }
   }
 
   /**
@@ -161,9 +164,13 @@ export class CentersService {
    * @param data Data.
    * @returns {Observable<any>}
    */
-  editCenterDatatableEntry(centerId: string, datatableName: string, data: any): Observable<any> {
+  editCenterDatatableEntry(centerId?: string | null, datatableName?: string, data?: any): Observable<any> {
     const httpParams = new HttpParams().set('genericResultSet', 'true');
+    if ((centerId) && (datatableName) && (data)) {
     return this.http.put(`/datatables/${datatableName}/${centerId}`, data, { params: httpParams });
+    } else {
+      return of();
+    }
   }
 
   /**
@@ -171,9 +178,13 @@ export class CentersService {
    * @param datatableName Data Table name.
    * @returns {Observable<any>}
    */
-  deleteDatatableContent(centerId: string, datatableName: string): Observable<any> {
+  deleteDatatableContent(centerId?: string | null, datatableName?: string): Observable<any> {
     const httpParams = new HttpParams().set('genericResultSet', 'true');
-    return this.http.delete(`/datatables/${datatableName}/${centerId}`, { params: httpParams });
+    if (centerId && datatableName) {
+      return this.http.delete(`/datatables/${datatableName}/${centerId}`, { params: httpParams });
+    } else {
+      return of();
+    }
   }
 
   /**
@@ -202,10 +213,11 @@ export class CentersService {
    * @param centerId Center Id of center to get data for.
    * @returns {Observable<any>} Center data.
    */
-  getGroupStaffData(centerId: string): Observable<any> {
-    const httpParams = new HttpParams().set('groupOrCenter', 'centers')
-                                      .set('staffInSelectedOfficeOnly', 'true')
-                                      .set('template', 'true');
+  getGroupStaffData(centerId?: string | null): Observable<any> {
+    const httpParams = new HttpParams()
+      .set('groupOrCenter', 'centers')
+      .set('staffInSelectedOfficeOnly', 'true')
+      .set('template', 'true');
     return this.http.get(`/groups/${centerId}`, { params: httpParams });
   }
 
@@ -213,10 +225,10 @@ export class CentersService {
     return this.http.delete(`/centers/${centerId}`);
   }
 
-  getCentersData(centerId: string, associations: string, template?: string) {
-    let httpParams = new HttpParams().set('associations', associations);
+  getCentersData(centerId?: string|null, associations?: string, template?: string) {
+    let httpParams = new HttpParams().set('associations', associations || '');
     httpParams = template ? httpParams.set('template', template) : httpParams;
-    return this.http.get(`/centers/${centerId}`, {params: httpParams});
+    return this.http.get(`/centers/${centerId}`, { params: httpParams });
   }
 
   getMeetingsTemplate(centerId: any, calendarId: any): Observable<any> {
@@ -226,7 +238,7 @@ export class CentersService {
 
   assignCenterAttendance(centerId: any, calendarId: any, data: any): Observable<any> {
     const httpParams = new HttpParams().set('calenderId', calendarId);
-    return this.http.post(`/centers/${centerId}/meetings`, data, {params: httpParams});
+    return this.http.post(`/centers/${centerId}/meetings`, data, { params: httpParams });
   }
 
   getCalendarTemplate(centerId: any): Observable<any> {
@@ -252,21 +264,29 @@ export class CentersService {
    * @param {object} centerId CenterId.
    * @returns {Observable<any>}
    */
-  getStaffAssignmentHistoryData(reportName: any, centerId: any, tenantIdentifier: string, locale: string): Observable<any> {
+  getStaffAssignmentHistoryData(
+    reportName: any,
+    centerId: any,
+    tenantIdentifier: string,
+    locale: string
+  ): Observable<any> {
     const httpParams = new HttpParams()
       .set('tenantIdentifier', tenantIdentifier)
       .set('locale', locale)
       .set('R_centerId', centerId);
-    return this.http.get(`/runreports/${reportName}`, { responseType: 'arraybuffer', observe: 'response', params: httpParams });
+    return this.http.get(`/runreports/${reportName}`, {
+      responseType: 'arraybuffer',
+      observe: 'response',
+      params: httpParams,
+    });
   }
 
   /**
    * @param centerId Center Id of center to get data for.
    * @returns {Observable<any>} Center data and template.
    */
-  getCenterAndTemplateData(centerId: string): Observable<any> {
-    const httpParams = new HttpParams().set('staffInSelectedOfficeOnly', 'true')
-                                       .set('template', 'true');
+  getCenterAndTemplateData(centerId?: string|null): Observable<any> {
+    const httpParams = new HttpParams().set('staffInSelectedOfficeOnly', 'true').set('template', 'true');
     return this.http.get(`/centers/${centerId}`, { params: httpParams });
   }
 
@@ -278,5 +298,4 @@ export class CentersService {
   executeEditCenter(centerId: string, data: any): Observable<any> {
     return this.http.put(`/groups/${centerId}`, data);
   }
-
 }

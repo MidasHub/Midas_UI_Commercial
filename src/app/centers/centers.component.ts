@@ -25,7 +25,7 @@ import { CentersDataSource } from './centers.datasource';
   styleUrls: ['./centers.component.scss'],
 })
 export class CentersComponent implements OnInit, AfterViewInit {
-  @ViewChild('showClosedCenters', { static: true }) showClosedCenters: MatCheckbox;
+  @ViewChild('showClosedCenters', { static: true }) showClosedCenters!: MatCheckbox;
 
   /** Name form control. */
   name = new FormControl();
@@ -34,7 +34,7 @@ export class CentersComponent implements OnInit, AfterViewInit {
   /** Columns to be displayed in centers table. */
   displayedColumns =  ['name', 'accountNo', 'externalId', 'status', 'officeName'];
   /** Data source for centers table. */
-  dataSource: CentersDataSource;
+  dataSource!: CentersDataSource;
   /** Centers filter. */
   filterCentersBy = [
     {
@@ -48,9 +48,9 @@ export class CentersComponent implements OnInit, AfterViewInit {
   ];
 
   /** Paginator for centers table. */
-  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+  @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
   /** Sorter for centers table. */
-  @ViewChild(MatSort, { static: true }) sort: MatSort;
+  @ViewChild(MatSort, { static: true }) sort: MatSort| any;
 
   constructor(private centersService: CentersService) { }
 

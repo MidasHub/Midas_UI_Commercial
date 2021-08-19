@@ -24,7 +24,7 @@ export class CreateCenterComponent implements OnInit {
   /** Maximum date allowed. */
   maxDate = new Date();
   /** Center form. */
-  centerForm: FormGroup;
+  centerForm!: FormGroup;
   /** Office data. */
   officeData: any;
   /** Group data. */
@@ -53,7 +53,7 @@ export class CreateCenterComponent implements OnInit {
               private settingsService: SettingsService,
               private groupService: GroupsService,
               private datePipe: DatePipe) {
-    this.route.data.subscribe( (data: { offices: any }) => {
+    this.route.data.subscribe( (data: { offices: any }|any) => {
       this.officeData = data.offices;
     });
   }
@@ -85,7 +85,7 @@ export class CreateCenterComponent implements OnInit {
    * Adds form control Activation Date if active.
    */
   buildDependencies() {
-    this.centerForm.get('officeId').valueChanges.subscribe( (option: any) => {
+    this.centerForm.get('officeId')?.valueChanges.subscribe( (option: any) => {
       this.groupService.getGroupsByOfficeId(option).subscribe( (data: any) => {
         this.groupsData = data;
         if (!this.groupsData.length) {
@@ -103,7 +103,7 @@ export class CreateCenterComponent implements OnInit {
         }
       });
     });
-    this.centerForm.get('active').valueChanges.subscribe( (bool: boolean) => {
+    this.centerForm.get('active')?.valueChanges.subscribe( (bool: boolean) => {
       if (bool) {
         this.centerForm.addControl('activationDate', new FormControl('', Validators.required));
       } else {

@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Resolve, ActivatedRouteSnapshot } from '@angular/router';
 
 /** rxjs Imports */
-import { Observable } from 'rxjs';
+import { Observable, of, scheduled  } from 'rxjs';
 
 /** Custom Services */
 import { CentersService } from '../centers.service';
@@ -12,7 +12,7 @@ import { CentersService } from '../centers.service';
  * Group Actions data resolver.
  */
 @Injectable()
-export class CenterActionsResolver implements Resolve<Object> {
+export class CenterActionsResolver implements Resolve<Object | undefined> {
 
   /**
    * @param {CentersService} centersService Savings service.
@@ -26,7 +26,7 @@ export class CenterActionsResolver implements Resolve<Object> {
    */
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
     const actionName = route.paramMap.get('name');
-    const centerId = route.paramMap.get('centerId') || route.parent.parent.paramMap.get('centerId');
+    const centerId = route.paramMap.get('centerId') || route.parent?.parent?.paramMap.get('centerId');
     switch (actionName) {
       case 'Assign Staff':
         return this.centersService.getGroupStaffData(centerId);
@@ -43,7 +43,7 @@ export class CenterActionsResolver implements Resolve<Object> {
       case 'Staff Assignment History':
         return this.centersService.getStaffAssignmentHistoryData('Staff Assignment History', centerId, 'default', 'en');
       default:
-        return undefined;
+        return of(); // trả về 1 Observable với giá trị là undefined
     }
   }
 

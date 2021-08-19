@@ -27,7 +27,7 @@ export class EditCenterComponent implements OnInit {
   /** Maximum date allowed. */
   maxDate = new Date();
   /** Activate center form. */
-  editCenterForm: FormGroup;
+  editCenterForm!: FormGroup;
 
   /**
    * Retrieves the center and template data from `resolve`.
@@ -44,7 +44,7 @@ export class EditCenterComponent implements OnInit {
     private centersService: CentersService,
     private settingsService: SettingsService,
     private datePipe: DatePipe) {
-    this.route.data.subscribe((data: { centerData: any }) => {
+    this.route.data.subscribe((data: { centerData: any }|any) => {
       this.centerData = data.centerData;
       this.staffs = this.centerData.staffOptions;
     });
