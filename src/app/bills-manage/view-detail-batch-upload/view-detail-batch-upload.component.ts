@@ -1,33 +1,33 @@
-import { Component, OnInit, ViewChild, AfterViewInit } from "@angular/core";
-import { MatDialog } from "@angular/material/dialog";
-import { MatPaginator } from "@angular/material/paginator";
-import { MatSort } from "@angular/material/sort";
-import { MatTableDataSource } from "@angular/material/table";
-import { ActivatedRoute } from "@angular/router";
-import { BillsService } from "../bills-manage.service";
+import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
+import { ActivatedRoute } from '@angular/router';
+import { BillsService } from '../bills-manage.service';
 @Component({
-  selector: "midas-view-detail-batch-upload",
-  templateUrl: "./view-detail-batch-upload.component.html",
-  styleUrls: ["./view-detail-batch-upload.component.scss"],
+  selector: 'midas-view-detail-batch-upload',
+  templateUrl: './view-detail-batch-upload.component.html',
+  styleUrls: ['./view-detail-batch-upload.component.scss'],
 })
 export class ViewDetailBatchUploadComponent implements OnInit, AfterViewInit {
-  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
-  @ViewChild(MatSort, { static: true }) sort: MatSort;
-  displayedColumns = ["refNo", "customerName", "uploadDate", "amount", "status", "merchant"];
-  isLoading: boolean = false;
-  batchCode: string;
-  sumBills: number;
+  @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
+  @ViewChild(MatSort, { static: true }) sort: MatSort | any;
+  displayedColumns = ['refNo', 'customerName', 'uploadDate', 'amount', 'status', 'merchant'];
+  isLoading = false;
+  batchCode!: string | null;
+  sumBills!: number;
   dataSource = new MatTableDataSource<any>();
   constructor(private billsService: BillsService, private route: ActivatedRoute, private dialog: MatDialog) {
     this.route.data.subscribe((data: any) => {
-      this.batchCode = this.route.snapshot.paramMap.get("batchCode");
+      this.batchCode = this.route.snapshot.paramMap.get('batchCode') ;
       this.dataSource = data?.BillsResourceData?.result?.listInvoice;
       this.sumBills = data?.BillsResourceData?.result?.totalBills;
     });
   }
 
   findBills(filterValue: string) {
-    filterValue = filterValue? `%${filterValue}%`:'%%'
+    filterValue = filterValue ? `%${filterValue}%` : '%%';
     this.isLoading = true;
     this.dataSource = new MatTableDataSource<any>();
     const limit = this.paginator.pageSize ? this.paginator.pageSize : 10;

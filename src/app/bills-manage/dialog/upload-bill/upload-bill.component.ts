@@ -1,18 +1,18 @@
-import { Component, Inject, OnInit } from "@angular/core";
-import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { BillsService } from "app/bills-manage/bills-manage.service";
+import { Component, Inject, OnInit } from '@angular/core';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { BillsService } from 'app/bills-manage/bills-manage.service';
 
 @Component({
-  selector: "midas-upload-bill",
-  templateUrl: "./upload-bill.component.html",
-  styleUrls: ["./upload-bill.component.scss"],
+  selector: 'midas-upload-bill',
+  templateUrl: './upload-bill.component.html',
+  styleUrls: ['./upload-bill.component.scss'],
 })
 export class UploadFileBillComponent implements OnInit {
   formDialog: FormGroup;
   listMerchant: any;
   listPartner: any;
-  fileNameChosen: string;
+  fileNameChosen!: string;
   file: any;
 
   constructor(
@@ -20,28 +20,29 @@ export class UploadFileBillComponent implements OnInit {
     private formBuilder: FormBuilder,
     private billsService: BillsService
   ) {
+    // tslint:disable-next-line: no-shadowed-variable
     this.billsService.getListMerchant().subscribe((data: any) => {
       this.listMerchant = data.result.listMerchant;
     });
 
     this.formDialog = this.formBuilder.group({
-      fileName: ["", Validators.required],
-      merchantId: ["", Validators.required],
-      partner: ["", Validators.required],
-      note: ["", Validators.required],
-      file: ["", Validators.required],
+      fileName: ['', Validators.required],
+      merchantId: ['', Validators.required],
+      partner: ['', Validators.required],
+      note: ['', Validators.required],
+      file: ['', Validators.required],
     });
 
-    this.formDialog.get('merchantId').valueChanges.subscribe((value => {
+    this.formDialog.get('merchantId')?.valueChanges.subscribe((value => {
       // const office = this.offices.find(v => v.name === value);
       this.billsService.getListPartnerByMerchant(value).subscribe((listPartner: any) => {
         this.listPartner = listPartner?.result?.listPartner;
-        this.formDialog.get('partner').setValue(this.listPartner[0].code);
+        this.formDialog.get('partner')?.setValue(this.listPartner[0].code);
       });
     }));
 
-    this.formDialog.get('file').valueChanges.subscribe((value => {
-      this.fileNameChosen = value === ''? 'Chưa chọn file':value;
+    this.formDialog.get('file')?.valueChanges.subscribe((value => {
+      this.fileNameChosen = value === '' ? 'Chưa chọn file' : value;
     }));
   }
 
