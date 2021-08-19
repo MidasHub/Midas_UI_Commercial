@@ -1,37 +1,37 @@
-import { Injectable } from "@angular/core";
-import { HttpClient, HttpParams } from "@angular/common/http";
-import { environment } from "../../environments/environment";
-import { BehaviorSubject, Observable, of, Subject } from "rxjs";
+import { Injectable } from '@angular/core';
+import { HttpClient, HttpParams } from '@angular/common/http';
+import { environment } from '../../environments/environment';
+import { BehaviorSubject, Observable, of, Subject } from 'rxjs';
 
-//** Logger */
-import { Logger } from "../core/logger/logger.service";
-import { CommonHttpParams } from "app/shared/CommonHttpParams";
-const log = new Logger("Bank-Service");
+// ** Logger */
+import { Logger } from '../core/logger/logger.service';
+import { CommonHttpParams } from 'app/shared/CommonHttpParams';
+const log = new Logger('Bank-Service');
 @Injectable({
-  providedIn: "root",
+  providedIn: 'root',
 })
 export class BanksService {
-  private credentialsStorageKey = "midasCredentials";
+  private credentialsStorageKey = 'midasCredentials';
   private accessToken: any;
   private GatewayApiUrlPrefix: any;
   public cards: any;
   public banks: any;
   public offices: any;
   public cardTypes: any;
-  public documentCardBanks: any[];
-  public documentOffices: any[];
-  public documentCardTypes: any[];
+  public documentCardBanks: any[] = [];
+  public documentOffices: any[] = [];
+  public documentCardTypes: any[] = [];
 
   constructor(private http: HttpClient, private commonHttpParams: CommonHttpParams) {
     this.accessToken = JSON.parse(
-      sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey)
+      sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey) || ''
     );
     this.GatewayApiUrlPrefix = environment.GatewayApiUrlPrefix;
   }
 
-  getListOfficeCommon(hierarchy: string = null) {
+  getListOfficeCommon(hierarchy?: string) {
     let httpParams = this.commonHttpParams.getCommonHttpParams();
-    httpParams = httpParams.set("hierarchy", hierarchy ? `${hierarchy}%` : `.%`);
+    httpParams = httpParams.set('hierarchy', hierarchy ? `${hierarchy}%` : `.%`);
 
     return this.http.post<any>(`${this.GatewayApiUrlPrefix}/common/get_list_office`, httpParams);
   }
@@ -41,7 +41,7 @@ export class BanksService {
     banks.push({
       ...bank,
       cards: [],
-      status: "O",
+      status: 'O',
     });
     this.banks.next(banks);
   }
@@ -101,7 +101,7 @@ export class BanksService {
   }
 
   getAllCardOnDueDay(): Observable<any> {
-    let httpParams = this.commonHttpParams.getCommonHttpParams();
+    const httpParams = this.commonHttpParams.getCommonHttpParams();
 
     return this.http.post<any>(`${this.GatewayApiUrlPrefix}/card/get_all_card_on_due_day`, httpParams);
   }
@@ -109,8 +109,8 @@ export class BanksService {
   storeBank(bankCode: string, bankName: string): Observable<any> {
     let httpParams = this.commonHttpParams.getCommonHttpParams();
 
-    httpParams = httpParams.set("bankCode", bankCode);
-    httpParams = httpParams.set("bankName", bankName);
+    httpParams = httpParams.set('bankCode', bankCode);
+    httpParams = httpParams.set('bankName', bankName);
     return this.http.post<any>(`${this.GatewayApiUrlPrefix}/common/store_bank_info`, httpParams);
   }
 
@@ -118,7 +118,7 @@ export class BanksService {
     if (!this.offices) {
       this.offices = new BehaviorSubject(null);
     }
-    let httpParams = this.commonHttpParams.getCommonHttpParams();
+    const httpParams = this.commonHttpParams.getCommonHttpParams();
 
     this.http.post<any>(`${this.GatewayApiUrlPrefix}/common/get_list_office`, httpParams).subscribe((result) => {
       if (result?.result) {
@@ -140,7 +140,7 @@ export class BanksService {
     if (!this.cardTypes) {
       this.cardTypes = new BehaviorSubject(null);
     }
-    let httpParams = this.commonHttpParams.getCommonHttpParams();
+    const httpParams = this.commonHttpParams.getCommonHttpParams();
 
     this.http.post<any>(`${this.GatewayApiUrlPrefix}/card/get_all_bincode_info`, httpParams).subscribe((result) => {
       if (result?.result) {
@@ -165,7 +165,7 @@ export class BanksService {
   getCardInfo(binCode: string): Observable<any> {
     let httpParams = this.commonHttpParams.getCommonHttpParams();
 
-    httpParams = httpParams.set("bincode", binCode);
+    httpParams = httpParams.set('bincode', binCode);
 
     return this.http.post<any>(`${this.GatewayApiUrlPrefix}/card/get_bincode_info`, httpParams);
   }
@@ -173,21 +173,21 @@ export class BanksService {
   storeBinCode(binCode: string, bankCode: string, cardType: string, cardClass: string): Observable<any> {
     let httpParams = this.commonHttpParams.getCommonHttpParams();
 
-    httpParams = httpParams.set("bincode", binCode);
-    httpParams = httpParams.set("bankCode", bankCode);
-    httpParams = httpParams.set("cardType", cardType);
-    httpParams = httpParams.set("cardClass", cardClass);
+    httpParams = httpParams.set('bincode', binCode);
+    httpParams = httpParams.set('bankCode', bankCode);
+    httpParams = httpParams.set('cardType', cardType);
+    httpParams = httpParams.set('cardClass', cardClass);
     return this.http.post<any>(`${this.GatewayApiUrlPrefix}/card/store_bincode_info`, httpParams);
   }
 
   getCardType(): Observable<any> {
-    let httpParams = this.commonHttpParams.getCommonHttpParams();
+    const httpParams = this.commonHttpParams.getCommonHttpParams();
 
     return this.http.post<any>(`${this.GatewayApiUrlPrefix}/common/get_list_card_type`, httpParams);
   }
 
   gerListBank(): Observable<any> {
-    let httpParams = this.commonHttpParams.getCommonHttpParams();
+    const httpParams = this.commonHttpParams.getCommonHttpParams();
 
     return this.http.post<any>(`${this.GatewayApiUrlPrefix}/common/get_list_bank`, httpParams);
   }
@@ -218,22 +218,22 @@ export class BanksService {
   storeInfoBinCode(body: any): Observable<any> {
     let httpParams = this.commonHttpParams.getCommonHttpParams();
 
-    httpParams = httpParams.set("binCode", body.binCode);
-    httpParams = httpParams.set("cardType", body.cardType);
-    httpParams = httpParams.set("bankCode", body.bankCode);
+    httpParams = httpParams.set('binCode', body.binCode);
+    httpParams = httpParams.set('cardType', body.cardType);
+    httpParams = httpParams.set('bankCode', body.bankCode);
 
     return this.http.post(`${this.GatewayApiUrlPrefix}/common/store_info_bin_code`, httpParams);
   }
 
   storeExtraCardInfo(body: any): Observable<any> {
     let httpParams = this.commonHttpParams.getCommonHttpParams();
-    httpParams = httpParams.set("userId", body.userId);
-    httpParams = httpParams.set("userIdentifyId", body.userIdentifyId);
-    httpParams = httpParams.set("dueDay", body.dueDay);
-    httpParams = httpParams.set("expireDate", `${body.dueDay}/${body.expireDate}`);
-    httpParams = httpParams.set("limit", body.limitCard);
-    httpParams = httpParams.set("classCard", body.classCard);
-    httpParams = httpParams.set("isValid", body.isValid ? '1':'0');
+    httpParams = httpParams.set('userId', body.userId);
+    httpParams = httpParams.set('userIdentifyId', body.userIdentifyId);
+    httpParams = httpParams.set('dueDay', body.dueDay);
+    httpParams = httpParams.set('expireDate', `${body.dueDay}/${body.expireDate}`);
+    httpParams = httpParams.set('limit', body.limitCard);
+    httpParams = httpParams.set('classCard', body.classCard);
+    httpParams = httpParams.set('isValid', body.isValid ? '1' : '0');
 
     return this.http.post(`${this.GatewayApiUrlPrefix}/card/store_extra_card_info`, httpParams);
   }
@@ -257,5 +257,5 @@ export class BanksService {
       });
     }
   }
-  //----end Class---//
+  // ----end Class---//
 }

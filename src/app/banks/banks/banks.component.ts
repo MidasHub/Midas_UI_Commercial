@@ -30,22 +30,22 @@ export class BanksComponent implements OnInit, AfterViewInit {
   banks: any[] = [];
   cards: any[] = [];
   cardTypes: any[] = [];
-  textSearch: string;
+  textSearch!: string;
   dataStore: any[] = [];
   centered = false;
   disabled = false;
   unbounded = false;
   bank_active: any;
-  radius: number;
-  color: string;
+  radius!: number;
+  color!: string;
   expandedElement: any;
   displayedColumns = ['refid', 'binCode', 'cardType', 'edit'];
   cards_active: any;
   edit_bank = false;
-  textSearchCard: string;
+  textSearchCard!: string;
   nameBank = new FormControl();
-  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
-  @ViewChild(MatSort, {static: true}) sort: MatSort;
+  @ViewChild(MatPaginator, {static: true}) paginator!: MatPaginator;
+  @ViewChild(MatSort, {static: true}) sort: MatSort | any;
 
   constructor(private banksServices: BanksService,
               private alertService: AlertService,
@@ -86,9 +86,9 @@ export class BanksComponent implements OnInit, AfterViewInit {
         this.banksServices.storeBank(value.bankCode, value.bankName).subscribe(rp => {
           if (rp?.status === '200') {
             this.alertService.alert({message: 'Thêm ngân hàng thành công.', msgClass: 'cssSuccess'});
-            console.log("result===",rp);
+            console.log('result===', rp);
             value.refid = rp.result.id;
-            console.log("value===",value);
+            console.log('value===', value);
             this.banksServices.addBank(value);
           }
         });
@@ -162,7 +162,7 @@ export class BanksComponent implements OnInit, AfterViewInit {
               this.banksServices.updateCard(card);
             } else {
               this.alertService.alert({message: 'Thêm thẻ thành công', msgClass: 'cssSuccess'});
-              formData.refid = rp.result.id
+              formData.refid = rp.result.id;
               this.banksServices.addCard(formData);
             }
             // this.cards_active = this.bank_active.cards;
