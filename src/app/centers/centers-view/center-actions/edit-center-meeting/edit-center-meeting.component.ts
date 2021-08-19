@@ -22,13 +22,13 @@ export class EditCenterMeetingComponent implements OnInit {
   /** Maximum date allowed. */
   maxDate = new Date();
   /** Center Meeting form. */
-  centerEditMeetingForm: FormGroup;
+  centerEditMeetingForm!: FormGroup;
   /** Calendar Template Data */
   calendarTemplate: any;
   /** Center Id */
   centerId: any;
   /** Repetition Intervals */
-  repetitionIntervals: any[];
+  repetitionIntervals!: any[];
   /** Frequency Options */
   frequencyOptions: any;
   /** Repetition Days Data */
@@ -49,13 +49,13 @@ export class EditCenterMeetingComponent implements OnInit {
               private datePipe: DatePipe,
               private route: ActivatedRoute,
               private router: Router) {
-    this.route.data.subscribe((data: { centersActionData: any }) => {
+    this.route.data.subscribe((data: { centersActionData: any }|any) => {
       this.calendarTemplate = data.centersActionData;
       this.frequencyOptions = this.calendarTemplate.frequencyOptions;
       this.repeatsOnDays = this.calendarTemplate.repeatsOnDayOptions;
     });
     this.calendarId = this.route.snapshot.queryParams['calendarId'];
-    this.centerId = this.route.parent.snapshot.params['centerId'];
+    this.centerId = this.route.parent?.snapshot.params['centerId'];
   }
 
   ngOnInit() {
@@ -78,7 +78,7 @@ export class EditCenterMeetingComponent implements OnInit {
    * Subscribes to value changes of controls.
    */
   buildDependencies() {
-    this.centerEditMeetingForm.get('frequency').valueChanges.subscribe((frequency: any) => {
+    this.centerEditMeetingForm.get('frequency')?.valueChanges.subscribe((frequency: any) => {
       this.centerEditMeetingForm.removeControl('repeatsOnDay');
       switch (frequency) {
         case 1: // Daily
@@ -87,7 +87,7 @@ export class EditCenterMeetingComponent implements OnInit {
         case 2: // Weekly
           this.repetitionIntervals = ['1', '2', '3'];
           this.centerEditMeetingForm.addControl('repeatsOnDay', new FormControl('', Validators.required));
-          this.centerEditMeetingForm.get('repeatsOnDay').patchValue(this.calendarTemplate.repeatsOnDay.id);
+          this.centerEditMeetingForm.get('repeatsOnDay')?.patchValue(this.calendarTemplate.repeatsOnDay.id);
         break;
         case 3: // Monthly
           this.repetitionIntervals = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11'];

@@ -17,7 +17,7 @@ import { CentersService } from 'app/centers/centers.service';
 export class CenterAssignStaffComponent implements OnInit {
 
   /** Center Assign Staff form. */
-  centerAssignStaffForm: FormGroup;
+  centerAssignStaffForm!: FormGroup;
   /** Field Officer Data */
   staffData: any;
   /** Center Data */
@@ -34,7 +34,7 @@ export class CenterAssignStaffComponent implements OnInit {
               private centersService: CentersService,
               private route: ActivatedRoute,
               private router: Router) {
-    this.route.data.subscribe((data: { centersActionData: any }) => {
+    this.route.data.subscribe((data: { centersActionData: any }|any) => {
       this.centerData = data.centersActionData;
     });
   }

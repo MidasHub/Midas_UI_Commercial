@@ -23,7 +23,7 @@ export class ActivateCenterComponent implements OnInit {
   /** Maximum date allowed. */
   maxDate = new Date();
   /** Activate center form. */
-  activateCenterForm: FormGroup;
+  activateCenterForm!: FormGroup;
   /** Group Account Id */
   centerId: any;
 
@@ -41,7 +41,7 @@ export class ActivateCenterComponent implements OnInit {
               private datePipe: DatePipe,
               private route: ActivatedRoute,
               private router: Router) {
-    this.centerId = this.route.parent.snapshot.params['centerId'];
+    this.centerId = this.route.parent?.snapshot.params['centerId'];
   }
 
   /**

@@ -18,9 +18,9 @@ import { AuthenticationService } from '../../../core/authentication/authenticati
 })
 export class NotesTabComponent implements OnInit {
   centerId: string;
-  username: string;
+  username?: string ;
   centerNotes: any;
-  noteForm: FormGroup;
+  noteForm!: FormGroup;
   @ViewChild('formRef', { static: true }) formRef: any;
 
 
@@ -29,10 +29,10 @@ export class NotesTabComponent implements OnInit {
     private centersService: CentersService,
     private authenticationService: AuthenticationService,
     private dialog: MatDialog) {
-    const savedCredentials = this.authenticationService.getCredentials();
-    this.username = savedCredentials.username;
-    this.centerId = this.route.parent.snapshot.params['centerId'];
-    this.route.data.subscribe((data: { centerNotes: any }) => {
+    const savedCredentials = this.authenticationService.getCredentials() ;
+    this.username = savedCredentials?.username ;
+    this.centerId = this.route.parent?.snapshot.params['centerId'];
+    this.route.data.subscribe((data: { centerNotes: any }|any) => {
       this.centerNotes = data.centerNotes;
     });
   }

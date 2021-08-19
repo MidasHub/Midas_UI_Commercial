@@ -23,7 +23,7 @@ export class CloseCenterComponent implements OnInit {
   /** Maximum date allowed. */
   maxDate = new Date();
   /** Close Share Account form. */
-  closeCenterForm: FormGroup;
+  closeCenterForm!: FormGroup;
   /** Center Data */
   closureData: any;
   /** Center Id */
@@ -43,10 +43,10 @@ export class CloseCenterComponent implements OnInit {
               private datePipe: DatePipe,
               private route: ActivatedRoute,
               private router: Router) {
-    this.route.data.subscribe((data: { centeractionData: any }) => {
+    this.route.data.subscribe((data: { centeractionData: any }|any) => {
       this.closureData = data.centeractionData.closureReasons;
     });
-    this.centerId = this.route.parent.snapshot.params['centerId'];
+    this.centerId = this.route.parent?.snapshot.params['centerId'];
   }
 
   ngOnInit() {

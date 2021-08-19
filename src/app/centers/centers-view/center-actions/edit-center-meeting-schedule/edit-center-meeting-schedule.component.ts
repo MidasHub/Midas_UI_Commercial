@@ -23,7 +23,7 @@ export class EditCenterMeetingScheduleComponent implements OnInit {
   /** Maximum date allowed. */
   maxDate = new Date();
   /** Center Meeting form. */
-  centerEditMeetingScheduleForm: FormGroup;
+  centerEditMeetingScheduleForm!: FormGroup;
   /** Calendar Template Data */
   calendarTemplate: any;
   /** Center Id */
@@ -48,12 +48,12 @@ export class EditCenterMeetingScheduleComponent implements OnInit {
               private datePipe: DatePipe,
               private route: ActivatedRoute,
               private router: Router) {
-    this.route.data.subscribe((data: { centersActionData: any }) => {
+    this.route.data.subscribe((data: { centersActionData: any }|any) => {
       this.calendarTemplate = data.centersActionData;
       this.nextMeetingDates = this.calendarTemplate.nextTenRecurringDates;
     });
     this.calendarId = this.route.snapshot.queryParams['calendarId'];
-    this.centerId = this.route.parent.snapshot.params['centerId'];
+    this.centerId = this.route.parent?.snapshot.params['centerId'];
   }
 
   ngOnInit() {

@@ -34,18 +34,18 @@ export class MultiRowComponent implements OnInit, OnChanges {
   @Input() dataObject: any;
 
   /** Data Table Name */
-  datatableName: string;
+  datatableName!: string;
   /** Data Table Columns */
   datatableColumns: string[] = [];
   /** Data Table Data */
   datatableData: any;
   /** Center Id */
-  centerId: string;
+  centerId?: string | null;
   /** Toggle button visibility */
-  showDeleteBotton: boolean;
+  showDeleteBotton!: boolean;
 
   /** Data Table Reference */
-  @ViewChild('dataTable', { static: true }) dataTableRef: MatTable<Element>;
+  @ViewChild('dataTable', { static: true }) dataTableRef!: MatTable<Element>;
 
   /**
    * Fetches center Id from parent route params.
@@ -60,7 +60,7 @@ export class MultiRowComponent implements OnInit, OnChanges {
               private centersService: CentersService,
               private settingsService: SettingsService,
               private dialog: MatDialog) {
-    this.centerId = this.route.parent.parent.snapshot.paramMap.get('centerId');
+    this.centerId = this.route.parent?.parent?.snapshot.paramMap.get('centerId');
   }
 
   /**

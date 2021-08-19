@@ -23,13 +23,13 @@ export class AttachCenterMeetingComponent implements OnInit {
   /** Maximum date allowed. */
   maxDate = new Date();
   /** Center Meeting form. */
-  centerMeetingForm: FormGroup;
+  centerMeetingForm!: FormGroup;
   /** Calnedar Template Data */
   calendarTemplate: any;
   /** Center Id */
   centerId: any;
   /** Repetition Intervals */
-  repetitionIntervals: any[];
+  repetitionIntervals!: any[];
   /** Frequency Options */
   frequencyOptions: any;
   /** Repetition Days Data */
@@ -50,12 +50,12 @@ export class AttachCenterMeetingComponent implements OnInit {
               private datePipe: DatePipe,
               private route: ActivatedRoute,
               private router: Router) {
-    this.route.data.subscribe((data: { centersActionData: any }) => {
+    this.route.data.subscribe((data: { centersActionData: any }|any) => {
       this.calendarTemplate = data.centersActionData;
       this.frequencyOptions = this.calendarTemplate.frequencyOptions;
       this.repeatsOnDays = this.calendarTemplate.repeatsOnDayOptions;
     });
-    this.centerId = this.route.parent.snapshot.params['centerId'];
+    this.centerId = this.route.parent?.snapshot.params['centerId'];
   }
 
   ngOnInit() {
@@ -77,11 +77,11 @@ export class AttachCenterMeetingComponent implements OnInit {
    * Subscribes to value changes of controls.
    */
   buildDependencies() {
-    this.centerMeetingForm.get('repeating').valueChanges.subscribe((value: boolean) => {
+    this.centerMeetingForm.get('repeating')?.valueChanges.subscribe((value: boolean) => {
       if (value) {
         this.centerMeetingForm.addControl('frequency', new FormControl());
         this.centerMeetingForm.addControl('interval', new FormControl());
-        this.centerMeetingForm.get('frequency').valueChanges.subscribe((frequency: any) => {
+        this.centerMeetingForm.get('frequency')?.valueChanges.subscribe((frequency: any) => {
           this.centerMeetingForm.removeControl('repeatsOnDay');
           switch (frequency) {
             case 1: // Daily

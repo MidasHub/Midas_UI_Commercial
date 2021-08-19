@@ -33,9 +33,9 @@ export class SingleRowComponent implements OnInit {
   @Input() dataObject: any;
 
   /** Data Table Name */
-  datatableName: string;
+  datatableName!: string;
   /** Center Id */
-  centerId: string;
+  centerId?: string | null;
 
   /**
    * Fetches center Id from parent route params.
@@ -50,7 +50,7 @@ export class SingleRowComponent implements OnInit {
               private dialog: MatDialog,
               private settingsService: SettingsService,
               private centersService: CentersService) {
-    this.centerId = this.route.parent.parent.snapshot.paramMap.get('centerId');
+    this.centerId = this.route.parent?.parent?.snapshot.paramMap.get('centerId');
   }
 
   /**

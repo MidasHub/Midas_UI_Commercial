@@ -25,7 +25,7 @@ export class CentersViewComponent implements OnInit {
   /** Center datatable */
   centerDatatables: any;
   /** Meeting data */
-  meetingData: boolean;
+  meetingData!: boolean;
 
   /**
    * Retrieves the data for center
@@ -38,7 +38,7 @@ export class CentersViewComponent implements OnInit {
       this.route.data.subscribe((data: {
         centerViewData: any,
         centerDatatables: any
-      }) => {
+      }|any) => {
         this.centerViewData = data.centerViewData;
         this.centerDatatables = data.centerDatatables;
       });

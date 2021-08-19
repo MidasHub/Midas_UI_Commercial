@@ -39,7 +39,7 @@ export class ManageGroupsComponent implements AfterViewInit {
               private centersService: CentersService,
               private groupsService: GroupsService,
               public dialog: MatDialog) {
-    this.route.data.subscribe((data: { centersActionData: any }) => {
+    this.route.data.subscribe((data: { centersActionData: any }|any) => {
       this.centerData = data.centersActionData;
       this.groupMembers = data.centersActionData.groupMembers;
     });

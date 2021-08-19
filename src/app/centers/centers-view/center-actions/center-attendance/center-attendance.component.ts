@@ -37,7 +37,7 @@ export class CenterAttendanceComponent implements OnInit {
   /** Start Date Form Control */
   meetingDate = new FormControl();
   /** Meeting Dates Data */
-  meetingDates: any[];
+  meetingDates!: any[];
   /** Data source for client members table. */
   dataSource: {}[] = [];
   /** Minimum date allowed. */
@@ -60,7 +60,7 @@ export class CenterAttendanceComponent implements OnInit {
               private centersService: CentersService,
               private settingsService: SettingsService,
               public dialog: MatDialog) {
-    this.route.data.subscribe(( data: { centersActionData: any }) => {
+    this.route.data.subscribe(( data: { centersActionData: any }|any) => {
       this.centerData = data.centersActionData;
       this.membersData = data.centersActionData.clients;
     });

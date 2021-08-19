@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Data } from '@angular/router';
 
 /**
  * Create Center General Tab Component
@@ -34,7 +34,7 @@ export class GeneralTabComponent implements OnInit {
       centerSummaryData: any,
       centerViewData: any,
       savingsAccountData: any
-    }) => {
+    }| Data) => {
       this.centerSummaryData = data.centerSummaryData[0];
       this.centerViewData = data.centerViewData;
       this.savingsAccountData = data.savingsAccountData.savingsAccounts;
