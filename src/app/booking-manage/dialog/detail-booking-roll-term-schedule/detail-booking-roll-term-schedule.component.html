@@ -1,8 +1,8 @@
-<h1 mat-dialog-title>Booking tạm ứng [{{ bookingRefNo }}]</h1>
+<h1 mat-dialog-title>{{ "BookingManage.Dialog.DetailBookingRollTermScheduleComponent.title" | translate }} [{{ bookingRefNo }}]</h1>
 <div mat-dialog-content>
   <table mat-table multiTemplateDataRows class="mat-elevation-z8" [dataSource]="transactions" matSort>
     <ng-container matColumnDef="bookingRefNo">
-      <th mat-header-cell class="mat-cell-custom" *matHeaderCellDef>Loại</th>
+      <th mat-header-cell class="mat-cell-custom" *matHeaderCellDef>{{ "BookingManage.Dialog.DetailBookingRollTermScheduleComponent.type" | translate }}</th>
       <td mat-cell class="mat-cell-custom" *matCellDef="let transaction; let i = dataIndex">
         <mat-label>
           {{ i == 0 ? "Test thẻ" : "Lần " + i }}
@@ -11,21 +11,21 @@
     </ng-container>
 
     <ng-container matColumnDef="txnDate">
-      <th mat-header-cell class="mat-cell-custom" fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>Thời gian</th>
+      <th mat-header-cell class="mat-cell-custom" fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>{{ "BookingManage.Dialog.DetailBookingRollTermScheduleComponent.txnDate" | translate }}</th>
       <td mat-cell class="mat-cell-custom" fxHide fxShow.gt-md *matCellDef="let transaction">
         {{ transaction.txnDate | date: "dd-MM-yyyy" }}
       </td>
     </ng-container>
 
     <ng-container matColumnDef="clientName">
-      <th mat-header-cell class="mat-cell-custom" fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>Khách hàng</th>
+      <th mat-header-cell class="mat-cell-custom" fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>{{ "BookingManage.Dialog.DetailBookingRollTermScheduleComponent.customerName" | translate }}</th>
       <td mat-cell fxHide fxShow.gt-md class="mat-cell-custom" *matCellDef="let transaction">
         {{ transaction.customerName }}
       </td>
     </ng-container>
 
     <ng-container matColumnDef="bookingAmount">
-      <th mat-header-cell class="mat-cell-custom" *matHeaderCellDef mat-sort-header>Số tiền</th>
+      <th mat-header-cell class="mat-cell-custom" *matHeaderCellDef mat-sort-header>{{ "BookingManage.Dialog.DetailBookingRollTermScheduleComponent.bookingAmount" | translate }}</th>
       <td mat-cell class="mat-cell-custom" *matCellDef="let transaction">{{ transaction.bookingAmount | money }}</td>
     </ng-container>
 
@@ -34,12 +34,12 @@
         <div class="example-element-detail" [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
           <div class="example-element-description" fxLayout="column">
             <div>
-              <span style="font-weight: bold"> Thời gian :</span>&nbsp; &nbsp;{{
+              <span style="font-weight: bold"> {{ "BookingManage.Dialog.DetailBookingRollTermScheduleComponent.txnDate" | translate }}</span>&nbsp; &nbsp;{{
                 element.txnDate | date: "dd-MM-yyyy HH:mm:ss"
               }}
             </div>
-            <div><span style="font-weight: bold"> Khách hàng :</span>&nbsp; &nbsp;{{ element.customerName }}</div>
-            <div><span style="font-weight: bold"> Số tiền :</span>&nbsp; &nbsp;{{ element.bookingAmount | money }}</div>
+            <div><span style="font-weight: bold"> {{ "BookingManage.Dialog.DetailBookingRollTermScheduleComponent.customerName" | translate }}</span>&nbsp; &nbsp;{{ element.customerName }}</div>
+            <div><span style="font-weight: bold"> {{ "BookingManage.Dialog.DetailBookingRollTermScheduleComponent.bookingAmount" | translate }}</span>&nbsp; &nbsp;{{ element.bookingAmount | money }}</div>
           </div>
         </div>
       </td>
@@ -56,5 +56,5 @@
   </table>
 </div>
 <mat-dialog-actions align="center">
-  <button mat-raised-button color="warn" [mat-dialog-close]="{ file: true }">Đóng</button>
+  <button mat-raised-button color="warn" [mat-dialog-close]="{ file: true }">{{ "ShareButton.Close" | translate }}</button>
 </mat-dialog-actions>

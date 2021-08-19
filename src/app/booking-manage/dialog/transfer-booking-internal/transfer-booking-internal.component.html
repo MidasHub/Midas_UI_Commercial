@@ -1,12 +1,12 @@
 <h1 mat-dialog-title>
-  ĐIỀU CHUYỂN TIỀN BOOKING CHO [{{bookingInfo?.staffName}}]
+  {{ "BookingManage.Dialog.TransferBookingInternalComponent.title" | translate }} [{{bookingInfo?.staffName}}]
 </h1>
 
 <div mat-dialog-content [formGroup]="form" [fxLayout]="'column'" fxLayout.lt-md="column" [fxLayoutGap]="'1%'"
      fxLayoutGap.lt-md="0%">
 
   <mat-form-field class="select-book">
-    <mat-label>Tài khoản nhận tiền</mat-label>
+    <mat-label>{{ "BookingManage.Dialog.TransferBookingInternalComponent.lableClientSavingAccount" | translate }}</mat-label>
     <mat-select required formControlName="clientSavingAccount">
       <mat-option *ngFor="let saving of listSavingAccount" [value]="saving.id">
         {{ saving.externalId }} - Số dư: {{ saving.balance | money}}
@@ -16,10 +16,10 @@
   </mat-form-field>
 
   <mat-form-field fxFlex="96%" >
-    <mat-label>Tài khoản chi tiền</mat-label>
+    <mat-label>{{ "BookingManage.Dialog.TransferBookingInternalComponent.lableBuSavingAccounts" | translate }}</mat-label>
     <mat-select required formControlName="buSavingAccount">
       <mat-option *ngFor="let saving of buSavingAccounts" [value]="saving.id">
-        {{ saving.externalId }} - Số dư: {{ saving.balance | money }}
+        {{ saving.externalId }} {{ "BookingManage.Dialog.TransferBookingInternalComponent.balance" | translate }} {{ saving.balance | money }}
       </mat-option>
     </mat-select>
   </mat-form-field>

@@ -1,4 +1,4 @@
-<h1 mat-dialog-title>{{data.btnTitle}} booking nội bộ</h1>
+<h1 mat-dialog-title>{{data.btnTitle}} {{ "BookingManage.Dialog.EditBookingInternalComponent.title" | translate }}</h1>
 
 <div
   mat-dialog-content
@@ -9,7 +9,7 @@
   fxLayoutGap.lt-md="0%"
 >
   <mat-form-field fxFlex="48%">
-    <mat-label>Ngày giao dịch:</mat-label>
+    <mat-label>{{ "BookingManage.Dialog.EditBookingInternalComponent.txnDate" | translate }}</mat-label>
 
     <input isOpen="true" matInput [matDatepicker]="transactionDateFromPicker" formControlName="txnDate" />
     <mat-datepicker-toggle matSuffix [for]="transactionDateFromPicker"></mat-datepicker-toggle>
@@ -17,7 +17,7 @@
   </mat-form-field>
 
   <mat-form-field fxFlex="48%">
-    <mat-label>Số tiền booking:</mat-label>
+    <mat-label>{{ "BookingManage.Dialog.EditBookingInternalComponent.bookingAmount" | translate }}</mat-label>
     <input matInput currencyMask formControlName="bookingAmount" />
   </mat-form-field>
 </div>
