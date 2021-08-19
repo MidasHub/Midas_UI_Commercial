@@ -2,14 +2,14 @@
   <mat-card-content>
     <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column" [formGroup]="formDate">
       <mat-form-field fxFlex="31%">
-        <mat-label>Từ ngày</mat-label>
+        <mat-label>{{ "ShareLable.FromDate" | translate }}</mat-label>
         <input matInput [matDatepicker]="transactionDateFromPicker" formControlName="fromDate" />
         <mat-datepicker-toggle matSuffix [for]="transactionDateFromPicker"></mat-datepicker-toggle>
         <mat-datepicker #transactionDateFromPicker></mat-datepicker>
       </mat-form-field>
 
       <mat-form-field fxFlex="31%">
-        <mat-label>Đến ngày</mat-label>
+        <mat-label>{{ "ShareLable.ToDate" | translate }}</mat-label>
         <input matInput [matDatepicker]="transactionDateToPicker" formControlName="toDate" />
         <mat-datepicker-toggle matSuffix [for]="transactionDateToPicker"></mat-datepicker-toggle>
         <mat-datepicker #transactionDateToPicker></mat-datepicker>
@@ -22,10 +22,10 @@
           color="primary"
           mat-raised-button
         >
-          Tìm kiếm &nbsp;<i class="fa fa-search" aria-hidden="true"></i>
+        {{ "ShareButton.Search" | translate }} &nbsp;<i class="fa fa-search" aria-hidden="true"></i>
         </button>
         <h3 *ngIf="!formDate">
-          Vui lòng chọn thời gian &nbsp; <i class="fa fa-calendar" style="align-self: center" aria-hidden="true"></i>
+          {{ "BookingManage.h3" | translate }} &nbsp; <i class="fa fa-calendar" style="align-self: center" aria-hidden="true"></i>
         </h3>
       </div>
     </div>
@@ -40,7 +40,7 @@
             <span style="font-size: 20px; margin-top: 8px; padding-top: 5px">{{
               totalBooking?.totalAmountBooking | money
             }}</span>
-            <span>&nbsp;Tiền booking</span>
+            <span>&nbsp;{{ "BookingManage.spanTotalAmountBooking" | translate }}</span>
           </div>
         </div>
         <div fxLayout="row wrap" fxFlex="20%" class="container m-b-20">
@@ -49,7 +49,7 @@
             <span style="font-size: 20px; margin-top: 8px; padding-top: 5px">{{
               totalBooking?.totalAmountUsed | money
             }}</span>
-            <span>&nbsp;Đã giao dịch</span>
+            <span>&nbsp;{{ "BookingManage.spanTotalAmountUsed" | translate }}</span>
           </div>
         </div>
         <div fxLayout="row wrap" fxFlex="20%" class="container m-b-20">
@@ -58,7 +58,7 @@
             <span style="font-size: 20px; margin-top: 8px; padding-top: 5px">{{
               totalBooking?.totalAmountCanceled | money
             }}</span>
-            <span>&nbsp;Đã hủy</span>
+            <span>&nbsp;{{ "BookingManage.BookingAgencyComponent.spanTotalAmountCanceled" | translate }}</span>
           </div>
         </div>
         <div fxLayout="row wrap" fxFlex="20%" class="container m-b-20">
@@ -70,7 +70,7 @@
                   | money
               }}
             </span>
-            <span>&nbsp;Còn lại</span>
+            <span>&nbsp;{{ "BookingManage.spanTotalAmountAvailable" | translate }}</span>
           </div>
         </div>
       </div>
@@ -79,12 +79,12 @@
   <mat-card-content>
     <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column" [formGroup]="formFilter">
       <mat-form-field fxFlex="15%">
-        <mat-label>Chi nhánh</mat-label>
+        <mat-label>{{ "BookingManage.BookingAgencyComponent.lableBranchName" | translate }}</mat-label>
         <input matInput formControlName="officeName" />
       </mat-form-field>
 
       <mat-form-field fxFlex="15%">
-        <mat-label>Ca tiền</mat-label>
+        <mat-label>{{ "BookingManage.BookingAgencyComponent.lableTrancheNo" | translate }}</mat-label>
         <mat-select formControlName="trancheNo">
           <mat-option *ngFor="let tranche of TrancheNoOption" [value]="tranche.value">
             {{ tranche.label }}
@@ -93,12 +93,12 @@
       </mat-form-field>
 
       <mat-form-field fxFlex="15%">
-        <mat-label>Telegram user name</mat-label>
+        <mat-label>{{ "BookingManage.BookingAgencyComponent.lableUserNameTelegram" | translate }}</mat-label>
         <input matInput formControlName="userNameTelegram" />
       </mat-form-field>
       <div>
         <div style="margin-top: 15px" fxLayout="row">
-          <div style="margin: 5px; margin-top: 20px"><span>Tổng cộng: &nbsp;</span> {{ BookingFilter.length }}</div>
+          <div style="margin: 5px; margin-top: 20px"><span>{{ "BookingManage.BookingAgencyComponent.spanTotal" | translate }}&nbsp;</span> {{ BookingFilter.length }}</div>
         </div>
       </div>
     </div>
@@ -106,86 +106,86 @@
   <mat-card-content>
     <table mat-table class="mat-elevation-z8" (matSortChange)="sortData($event)" [dataSource]="BookingList" matSort>
       <ng-container matColumnDef="officeName">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>Chi nhánh</th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ "BookingManage.BookingAgencyComponent.tableDetail.officeName" | translate }}</th>
         <td mat-cell *matCellDef="let booking">{{ booking?.officeName }}</td>
       </ng-container>
 
       <ng-container matColumnDef="txnDate">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>Ngày booking</th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ "BookingManage.BookingAgencyComponent.tableDetail.txnDate" | translate }}</th>
         <td mat-cell *matCellDef="let booking">{{ booking?.txnDate | date: "dd-MM-yyyy " }}</td>
       </ng-container>
 
       <ng-container matColumnDef="trancheNo">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>Ca tiền</th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ "BookingManage.BookingAgencyComponent.tableDetail.trancheNo" | translate }}</th>
         <td mat-cell *matCellDef="let booking">{{ displayTrancheNo(booking.trancheNo) }}</td>
       </ng-container>
 
       <ng-container matColumnDef="agencyInfo">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>Người đăng kí - telegram id</th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ "BookingManage.BookingAgencyComponent.tableDetail.userIdTelegram" | translate }}</th>
         <td mat-cell *matCellDef="let booking" style="padding: 10px">
           <mat-label>
             {{ booking?.userNameTelegram }} - {{ booking?.userIdTelegram }}
             <br />
             <a *ngIf="booking.agencyName" href="#/groups/{{ booking.agencyId }}/general">
-              <mat-icon style="color: black" title="Thuộc đại lý">groups</mat-icon>
+              <mat-icon style="color: black" [title]="'BookingManage.BookingAgencyComponent.tableDetail.title'| translate">groups</mat-icon>
               {{ booking.agencyName }}
             </a>
 
             <a *ngIf="!booking.agencyName" href="#/groups">
-              <mat-icon style="color: black" title="Thuộc đại lý">groups</mat-icon>
-              Chưa xác định
+              <mat-icon style="color: black" [title]="'BookingManage.BookingAgencyComponent.tableDetail.title'| translate">groups</mat-icon>
+              {{ "BookingManage.BookingAgencyComponent.tableDetail.undefine" | translate }}
             </a>
           </mat-label>
         </td>
       </ng-container>
 
       <ng-container matColumnDef="bookingAmount">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>Số tiền</th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ "BookingManage.BookingAgencyComponent.tableDetail.bookingAmount" | translate }}</th>
         <td mat-cell [ngClass]="textDecorateBooking(booking?.status)" *matCellDef="let booking">
           {{ booking?.bookingAmount | money }}
         </td>
       </ng-container>
 
       <ng-container matColumnDef="amountTransaction">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>Đã giao dịch</th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ "BookingManage.BookingAgencyComponent.tableDetail.amountTransaction" | translate }}</th>
         <td mat-cell [ngClass]="textDecorateBooking('C')" *matCellDef="let booking">
           {{ booking?.amountTransaction | money }}
         </td>
       </ng-container>
       <ng-container matColumnDef="amountCancel">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>Đã hủy</th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ "BookingManage.BookingAgencyComponent.tableDetail.status" | translate }}</th>
         <td mat-cell [ngClass]="textDecorateBooking('C')" *matCellDef="let booking">
           {{ booking?.status == "C" ? booking?.bookingAmount : (0 | money) }}
         </td>
       </ng-container>
       <ng-container matColumnDef="amountRemain">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>Còn lại</th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ "BookingManage.BookingAgencyComponent.tableDetail.totalAmountAvailable" | translate }}</th>
         <td mat-cell *matCellDef="let booking">
           {{ booking?.status == "C" ? 0 : (booking?.bookingAmount - booking?.amountTransaction | money) }}
         </td>
       </ng-container>
 
       <ng-container matColumnDef="batchTxnName">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>Mã giao dịch</th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ "BookingManage.BookingAgencyComponent.tableDetail.batchTxnName" | translate }}</th>
         <td mat-cell *matCellDef="let booking" style="color: blue;">
           {{ booking.batchTxnName }}
         </td>
       </ng-container>
 
       <ng-container matColumnDef="actions">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>Hành động</th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ "BookingManage.BookingAgencyComponent.tableDetail.action" | translate }}</th>
         <td mat-cell *matCellDef="let booking">
 
           <button mat-mini-fab color="primary"
           [routerLink]="['/transaction/batch-transaction/',booking.agencyId]"
           [queryParams]="{batchTxnName: booking.batchTxnName, bookingTxnDailyId: booking.refid}">
-            <mat-icon title="Thực hiện giao dịch "> gavel </mat-icon>
+            <mat-icon [title]="'BookingManage.BookingAgencyComponent.tableDetail.iconTitleProcess'| translate"> gavel </mat-icon>
           </button>
           <button mat-mini-fab color="warn" (click)="cancelBooking(booking)">
-            <mat-icon title="Thực hiện giao dịch "> undo </mat-icon>
+            <mat-icon [title]="'BookingManage.BookingAgencyComponent.tableDetail.iconTitleProcess'| translate"> undo </mat-icon>
           </button>
           <button *midasHasPermission="'ALL_FUNCTIONS'" mat-mini-fab color="warn" (click)="removeBooking(booking)">
-            <mat-icon title="Thực hiện giao dịch "> delete_forever </mat-icon>
+            <mat-icon [title]="'BookingManage.BookingAgencyComponent.tableDetail.iconTitleProcess'| translate"> delete_forever </mat-icon>
           </button>
         </td>
       </ng-container>

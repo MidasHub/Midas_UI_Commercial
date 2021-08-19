@@ -1,22 +1,22 @@
 <mat-card class="mat-elevation-z20 container-custom">
-  <mat-card-title align="center">MÀN HÌNH QUẢN LÝ BOOKING NỘI BỘ</mat-card-title>
+  <mat-card-title align="center">{{ "BookingManage.ViewInternalBooking.title" | translate }}</mat-card-title>
   <mat-card-subtitle align="center" style="color: blue; font-weight: bold">
-    Chi nhánh: {{ staffBookingInfo?.officeName }}
+    {{ "BookingManage.ViewInternalBooking.officeName" | translate }} {{ staffBookingInfo?.officeName }}
     <br />
-    Nhân viên: {{ staffBookingInfo?.staffName }}
+    {{ "BookingManage.ViewInternalBooking.staffName" | translate }} {{ staffBookingInfo?.staffName }}
   </mat-card-subtitle>
 
   <mat-card-content>
     <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column" [formGroup]="formDate">
       <mat-form-field fxFlex="31%">
-        <mat-label>Từ ngày</mat-label>
+        <mat-label>{{ "ShareLable.FromDate" | translate }}</mat-label>
         <input matInput [matDatepicker]="transactionDateFromPicker" formControlName="fromDate" />
         <mat-datepicker-toggle matSuffix [for]="transactionDateFromPicker"></mat-datepicker-toggle>
         <mat-datepicker #transactionDateFromPicker></mat-datepicker>
       </mat-form-field>
 
       <mat-form-field fxFlex="31%">
-        <mat-label>Đến ngày</mat-label>
+        <mat-label>{{ "ShareLable.ToDate" | translate }}</mat-label>
         <input matInput [matDatepicker]="transactionDateToPicker" formControlName="toDate" />
         <mat-datepicker-toggle matSuffix [for]="transactionDateToPicker"></mat-datepicker-toggle>
         <mat-datepicker #transactionDateToPicker></mat-datepicker>
@@ -29,10 +29,10 @@
           color="primary"
           mat-raised-button
         >
-          Tìm kiếm &nbsp;<i class="fa fa-search" aria-hidden="true"></i>
+        {{ "ShareButton.Search" | translate }} &nbsp;<i class="fa fa-search" aria-hidden="true"></i>
         </button>
         <h3 *ngIf="!formDate">
-          Vui lòng chọn thời gian &nbsp; <i class="fa fa-calendar" style="align-self: center" aria-hidden="true"></i>
+          {{ "BookingManage.h3" | translate }} &nbsp; <i class="fa fa-calendar" style="align-self: center" aria-hidden="true"></i>
         </h3>
       </div>
     </div>
@@ -46,12 +46,12 @@
     [formGroup]="formFilter"
   >
     <mat-form-field fxFlex="18%" *midasHasPermission="'ALL_FUNCTIONS'">
-      <mat-label>Chi nhánh</mat-label>
+      <mat-label>{{ "BookingManage.ViewInternalBooking.InternalBookingTabComponent.lableOfficeName" | translate }}</mat-label>
       <input matInput type="text" (blur)="getBookingInternal()" formControlName="officeName" />
     </mat-form-field>
 
     <mat-form-field fxFlex="18%">
-      <mat-label>Nhân viên</mat-label>
+      <mat-label>{{ "BookingManage.ViewInternalBooking.InternalBookingTabComponent.lableUserName" | translate }}</mat-label>
       <input matInput type="text" (blur)="getBookingInternal()" formControlName="staffName" />
     </mat-form-field>
   </div>
@@ -64,7 +64,7 @@
             <span style="font-size: 20px; margin-top: 8px; padding-top: 5px">{{
               staffBookingInfo?.totalAmountBooking | money
             }}</span>
-            <span>&nbsp;Tiền booking</span>
+            <span>&nbsp;{{ "BookingManage.ViewInternalBooking.InternalBookingTabComponent.spanTotalAmountBooking" | translate }}</span>
           </div>
         </div>
         <div fxLayout="row wrap" fxFlex="20%" class="container m-b-20">
@@ -73,7 +73,7 @@
             <span style="font-size: 20px; margin-top: 8px; padding-top: 5px">{{
               staffBookingInfo?.totalAmountFromBooking | money
             }}</span>
-            <span>&nbsp;Đã nhận</span>
+            <span>&nbsp;{{ "BookingManage.ViewInternalBooking.InternalBookingTabComponent.spanTotalAmountFromBooking" | translate }}</span>
           </div>
         </div>
         <div fxLayout="row wrap" fxFlex="20%" class="container m-b-20">
@@ -82,7 +82,7 @@
             <span style="font-size: 20px; margin-top: 8px; padding-top: 5px">{{
               staffBookingInfo?.totalAmountPaidTransaction | money
             }}</span>
-            <span>&nbsp;Đã giao dịch</span>
+            <span>&nbsp;{{ "BookingManage.ViewInternalBooking.InternalBookingTabComponent.spanTotalAmountPaidTransaction" | translate }}</span>
           </div>
         </div>
         <div fxLayout="row wrap" fxFlex="20%" class="container m-b-20">
@@ -91,7 +91,7 @@
             <span style="font-size: 20px; margin-top: 8px; padding-top: 5px">
               {{ staffBookingInfo?.totalAmountRemain | money }}
             </span>
-            <span>&nbsp;Còn lại</span>
+            <span>&nbsp;{{ "BookingManage.ViewInternalBooking.InternalBookingTabComponent.spanTotalAmountRemain" | translate }}</span>
           </div>
         </div>
       </div>
@@ -101,7 +101,7 @@
   <mat-card-content>
     <table mat-table class="mat-elevation-z8" [dataSource]="BookingList" matSort>
       <ng-container matColumnDef="bookingRefNo">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>Mã booking</th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ "BookingManage.ViewInternalBooking.InternalBookingTabComponent.table.bookingRefNo" | translate }}</th>
         <td mat-cell *matCellDef="let booking">
           <a href="javascript:void(0)">
             <mat-label>
@@ -112,38 +112,38 @@
       </ng-container>
 
       <ng-container matColumnDef="bookingAmount">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>Số tiền</th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ "BookingManage.ViewInternalBooking.InternalBookingTabComponent.table.totalBooking" | translate }}</th>
         <td mat-cell *matCellDef="let booking">{{ booking?.totalBooking | money }}</td>
       </ng-container>
 
       <ng-container matColumnDef="getBookedAmount">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>Đã chi</th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ "BookingManage.ViewInternalBooking.InternalBookingTabComponent.table.totalPaid" | translate }}</th>
         <td mat-cell *matCellDef="let booking">{{ booking?.totalPaid | money }}</td>
       </ng-container>
 
       <ng-container matColumnDef="officeName">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>Chi nhánh</th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ "BookingManage.ViewInternalBooking.InternalBookingTabComponent.table.officeName" | translate }}</th>
         <td mat-cell *matCellDef="let booking">
           {{ booking?.officeName }}
         </td>
       </ng-container>
 
       <ng-container matColumnDef="staffName">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>Nhân viên</th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ "BookingManage.ViewInternalBooking.InternalBookingTabComponent.table.userName" | translate }}</th>
         <td mat-cell *matCellDef="let booking">
           {{ booking?.userName }}
         </td>
       </ng-container>
 
       <ng-container matColumnDef="txnDate">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>Ngày</th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ "BookingManage.ViewInternalBooking.InternalBookingTabComponent.table.txnDate" | translate }}</th>
         <td mat-cell *matCellDef="let booking">
           {{ booking?.txnDate | date: "dd/MM/yyyy " }}
         </td>
       </ng-container>
 
       <ng-container matColumnDef="actions">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>Hành động</th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ "BookingManage.ViewInternalBooking.InternalBookingTabComponent.table.action" | translate }}</th>
         <td mat-cell *matCellDef="let booking">
           <button
             *ngIf="booking.totalPaid < booking.totalBooking"
@@ -151,7 +151,7 @@
             color="primary"
             (click)="transferBookingInternal(booking)"
           >
-            <mat-icon title="Thực hiện chi tiền "> gavel </mat-icon>
+            <mat-icon [title]="'BookingManage.Dialog.DetailBranchBookingDialogComponent.iconTitleProcess'| translate"> gavel </mat-icon>
           </button>
         </td>
       </ng-container>

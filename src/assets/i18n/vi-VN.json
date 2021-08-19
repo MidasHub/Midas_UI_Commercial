@@ -799,6 +799,157 @@
     "Cancel": "Hủy",
     "Add": "Thêm +",
     "Search": "Tìm kiếm",
+    "Save": "Save",
+    "Close": "Đóng"
+  },
+
+  "ShareLable": {
+    "FromDate": "Từ ngày",
+    "ToDate": "Đến ngày",
+    "Add": "Thêm +",
+    "Search": "Tìm kiếm",
     "Save": "Save"
+  },
+
+  "BookingManage": {
+    "h3": "Vui lòng chọn thời gian",
+    "spanTotalAmountBooking": "Tiền booking",
+    "spanTotalAmountUsed": "Đã giao dịch",
+    "spanTotalAmountAvailable": "Còn lại",
+
+    "BookingAgencyComponent": {
+      "spanTotalAmountCanceled": "Đã hủy",
+      "lableTrancheNo": "Ca tiền",
+      "lableUserNameTelegram": "Telegram user name",
+      "spanTotal": "Tổng cộng: ",
+      "tableDetail": {
+        "officeName": "Chi nhánh",
+        "txnDate": "Ngày booking",
+        "trancheNo": "Ca tiền",
+        "userIdTelegram": "Người đăng kí - telegram id",
+        "undefine": "Chưa xác định",
+        "title": "Thuộc đại lý",
+        "bookingAmount": "Số tiền",
+        "amountTransaction": "Đã giao dịch",
+        "status": "Đã hủy",
+        "totalAmountAvailable": "Còn lại",
+        "batchTxnName": "Mã giao dịch",
+        "iconTitleProcess": "Thực hiện giao dịch ",
+        "action": "Hành động"
+      }
+    },
+
+    "CreateInternalBookingComponent": {
+      "title": "MÀN HÌNH BOOKING DOANH SỐ THEO NGÀY",
+      "officeName": "Chi nhánh: ",
+      "staffName": "Nhân viên: ",
+      "totalAmountFromBooking": "Đã nhận",
+      "btnAddBooking": "Thêm booking",
+      "tableDetail": {
+        "bookingRefNo": "Mã booking",
+        "bookingAmount": "Số tiền",
+        "TotalGet": "Đã nhận",
+        "txnDate": "Ngày giao dịch",
+        "action": "Hành động",
+        "iconTitleProcess": "Thực hiện giao dịch "
+      }
+    },
+
+    "Dialog": {
+      "AddBookingInternalComponent": {
+        "title": "booking nội bộ",
+        "txnDate": "Ngày giao dịch:",
+        "bookingAmount": "Số tiền booking:",
+        "note": "Ghi chú:"
+      },
+      "DetailBookingRollTermScheduleComponent": {
+        "title": "Booking tạm ứng",
+        "type": "Loại",
+        "txnDate": "Thời gian",
+        "customerName": "Khách hàng",
+        "bookingAmount": "Số tiền"
+      },
+      "DetailBranchBookingDialogComponent": {
+        "title": "Chi tiết thông tin chốt số",
+        "terminalName": "Máy bán hàng",
+        "batchNo": "Số lô",
+        "amount": "Số tiền / Số bill con",
+        "sumaryBill": "Bill tổng",
+        "ToolTipDownload": "Tải về",
+        "h3": "Chưa có giao dịch!"
+      },
+      "EditBookingInternalComponent": {
+        "title": "booking nội bộ",
+        "txnDate": "Ngày giao dịch:",
+        "bookingAmount": "Số tiền booking:"
+      },
+      "TransferBookingInternalComponent": {
+        "title": "ĐIỀU CHUYỂN TIỀN BOOKING CHO",
+        "lableClientSavingAccount": "Tài khoản nhận tiền",
+        "lableBuSavingAccounts": "Tài khoản chi tiền",
+        "balance": " - Số dư: "
+      }
+    },
+    "ViewInternalBooking": {
+      "tab1": "Booking nội bộ",
+      "tab2": "Booking tạm ứng",
+      "tab3": "Booking chi nhánh",
+      "title": "MÀN HÌNH QUẢN LÝ BOOKING NỘI BỘ",
+      "officeName": "Chi nhánh: ",
+      "staffName": "Nhân viên: ",
+      "BranchBookingTabComponent": {
+        "lableOfficeName": "Chi nhánh",
+        "lableUserName": "Nhân viên",
+        "spanTotalAmountBooking": "Tiền booking",
+        "spanTotalAmountFromBooking": "Đã chi",
+        "spanTotalAmountAvailable": "Còn lại",
+        "bookingRef": "Mã booking/",
+        "bookingTime": "Thời gian",
+        "totalBooking": "Số tiền",
+        "status": "Trạng thái",
+        "checkedByStaff": "Chờ xác thực",
+        "totalPaid": "Đã chi",
+        "needBookedAmount": "Cần chi",
+        "officeName2": "Chi nhánh /",
+        "userName": "Người tạo",
+        "txnDate": "Ngày",
+        "action": "Hành động",
+        "iconTitleProcess": "Thực hiện chi tiền "
+      },
+      "InternalBookingTabComponent": {
+        "lableOfficeName": "Chi nhánh",
+        "lableUserName": "Nhân viên",
+        "spanTotalAmountBooking": "Tiền booking",
+        "spanTotalAmountFromBooking": "Đã nhận",
+        "spanTotalAmountPaidTransaction": "Đã giao dịch",
+        "spanTotalAmountRemain": "Còn lại",
+        "table": {
+          "bookingRefNo": "Mã booking",
+          "totalBooking": "Số tiền",
+          "totalPaid": "Đã chi",
+          "officeName": "Chi nhánh",
+          "userName": "Nhân viên",
+          "txnDate": "Ngày",
+          "action": "Hành động",
+          "iconTitleProcess": "Thực hiện chi tiền "
+        }
+      },
+      "RollTermScheduleBookingTabComponent": {
+        "title": "MÀN HÌNH QUẢN LÝ BOOKING TẠM ỨNG",
+        "lableOfficeName": "Chi nhánh",
+        "lableUserName": "Nhân viên",
+        "lableClientName": "Khách hàng",
+        "spanTotalAmountBooking": "Tiền booking",
+        "table": {
+          "bookingRefNo": "Mã booking",
+          "totalBooking": "Số tiền",
+          "officeName": "Chi nhánh",
+          "userName": "Nhân viên",
+          "clientName": "Khách hàng",
+          "action": "Hành động",
+          "iconTitleDetail": "Xem chi tiết booking "
+        }
+      }
+    }
   }
 }
