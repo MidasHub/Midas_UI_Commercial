@@ -1,11 +1,11 @@
-import { Component, Inject, OnInit } from "@angular/core";
-import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { Component, Inject, OnInit } from '@angular/core';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
-  selector: "midas-add-booking-internal",
-  templateUrl: "./add-booking-internal.component.html",
-  styleUrls: ["./add-booking-internal.component.scss"],
+  selector: 'midas-add-booking-internal',
+  templateUrl: './add-booking-internal.component.html',
+  styleUrls: ['./add-booking-internal.component.scss'],
 })
 export class AddBookingInternalComponent implements OnInit {
   formDialog: FormGroup;
@@ -20,7 +20,7 @@ export class AddBookingInternalComponent implements OnInit {
     this.formDialog = this.formBuilder.group({
       txnDate: [new Date(), Validators.required],
       bookingAmount: [0, Validators.required],
-      note: [""],
+      note: [''],
     });
   }
 

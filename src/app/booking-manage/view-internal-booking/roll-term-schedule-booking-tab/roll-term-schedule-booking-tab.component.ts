@@ -1,27 +1,27 @@
-import { DatePipe } from "@angular/common";
-import { Component, OnInit, ViewChild } from "@angular/core";
-import { FormBuilder, FormGroup } from "@angular/forms";
-import { MatDialog } from "@angular/material/dialog";
-import { MatPaginator } from "@angular/material/paginator";
-import { MatSort } from "@angular/material/sort";
-import { BookingService } from "app/booking-manage/booking.service";
-import { DetailBookingRollTermScheduleComponent } from "app/booking-manage/dialog/detail-booking-roll-term-schedule/detail-booking-roll-term-schedule.component";
-import { EditBookingInternalComponent } from "app/booking-manage/dialog/edit-booking-internal/edit-booking-internal.component";
-import { AlertService } from "app/core/alert/alert.service";
-import { SettingsService } from "app/settings/settings.service";
-import { merge } from "rxjs";
-import { tap } from "rxjs/operators";
+import { DatePipe } from '@angular/common';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { BookingService } from 'app/booking-manage/booking.service';
+import { DetailBookingRollTermScheduleComponent } from 'app/booking-manage/dialog/detail-booking-roll-term-schedule/detail-booking-roll-term-schedule.component';
+import { EditBookingInternalComponent } from 'app/booking-manage/dialog/edit-booking-internal/edit-booking-internal.component';
+import { AlertService } from 'app/core/alert/alert.service';
+import { SettingsService } from 'app/settings/settings.service';
+import { merge } from 'rxjs';
+import { tap } from 'rxjs/operators';
 
 @Component({
-  selector: "midas-roll-term-schedule-booking-tab",
-  templateUrl: "./roll-term-schedule-booking-tab.component.html",
-  styleUrls: ["./roll-term-schedule-booking-tab.component.scss"],
+  selector: 'midas-roll-term-schedule-booking-tab',
+  templateUrl: './roll-term-schedule-booking-tab.component.html',
+  styleUrls: ['./roll-term-schedule-booking-tab.component.scss'],
 })
 export class RollTermScheduleBookingTabComponent implements OnInit {
   expandedElement: any;
-  displayedColumns: any[] = ["bookingRefNo",
-   "officeName", "userName", "clientName",
-    "bookingAmount",  "actions"];
+  displayedColumns: any[] = ['bookingRefNo',
+   'officeName', 'userName', 'clientName',
+    'bookingAmount',  'actions'];
   totalBooking: any;
   staffBookingInfo: any;
   dataSource: any[] = [];
@@ -30,8 +30,8 @@ export class RollTermScheduleBookingTabComponent implements OnInit {
   BookingFilter: any[] = [];
   BookingList: any[] = [];
   staffs: any[] = [];
-  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
-  @ViewChild(MatSort, { static: true }) sort: MatSort;
+  @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
+  @ViewChild(MatSort, { static: true }) sort: MatSort | any;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -53,17 +53,16 @@ export class RollTermScheduleBookingTabComponent implements OnInit {
   }
 
   textDecorateBooking(status: string) {
-    if (status == "A") return " onBookingAmount";
-    else if (status == "C") return " onTransactionAmount";
+    if (status === 'A') { return ' onBookingAmount'; } else if (status === 'C') { return ' onTransactionAmount'; }
   }
 
   getBookingInternal() {
     const dateFormat = this.settingsService.dateFormat;
-    let fromDate = this.formDate.get("fromDate").value;
-    let toDate = this.formDate.get("toDate").value;
-    let staffName = this.formFilter.get("staffName").value;
-    let officeName = this.formFilter.get("officeName").value ;
-    let clientName = this.formFilter.get("clientName").value ;
+    let fromDate = this.formDate.get('fromDate')?.value;
+    let toDate = this.formDate.get('toDate')?.value;
+    const staffName = this.formFilter.get('staffName')?.value;
+    const officeName = this.formFilter.get('officeName')?.value ;
+    const clientName = this.formFilter.get('clientName')?.value ;
     if (fromDate) {
       fromDate = this.datePipe.transform(fromDate, dateFormat);
     }

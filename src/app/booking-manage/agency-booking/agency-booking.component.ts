@@ -1,34 +1,34 @@
-import { DatePipe } from "@angular/common";
-import { Component, OnInit, ViewChild } from "@angular/core";
-import { FormBuilder, FormGroup } from "@angular/forms";
-import { MatDialog } from "@angular/material/dialog";
-import { MatPaginator } from "@angular/material/paginator";
-import { MatSort } from "@angular/material/sort";
-import { AlertService } from "app/core/alert/alert.service";
-import { SettingsService } from "app/settings/settings.service";
-import { ConfirmDialogComponent } from "app/transactions/dialog/confirm-dialog/confirm-dialog.component";
-import { merge } from "rxjs";
-import { tap } from "rxjs/operators";
-import { BookingService } from "../booking.service";
+import { DatePipe } from '@angular/common';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { AlertService } from 'app/core/alert/alert.service';
+import { SettingsService } from 'app/settings/settings.service';
+import { ConfirmDialogComponent } from 'app/transactions/dialog/confirm-dialog/confirm-dialog.component';
+import { merge } from 'rxjs';
+import { tap } from 'rxjs/operators';
+import { BookingService } from '../booking.service';
 
 @Component({
-  selector: "midas-agency-booking",
-  templateUrl: "./agency-booking.component.html",
-  styleUrls: ["./agency-booking.component.scss"],
+  selector: 'midas-agency-booking',
+  templateUrl: './agency-booking.component.html',
+  styleUrls: ['./agency-booking.component.scss'],
 })
 export class BookingAgencyComponent implements OnInit {
   expandedElement: any;
   displayedColumns: any[] = [
-    "officeName",
-    "txnDate",
-    "trancheNo",
-    "agencyInfo",
-    "bookingAmount",
-    "amountTransaction",
-    "amountCancel",
-    "amountRemain",
-    "batchTxnName",
-    "actions",
+    'officeName',
+    'txnDate',
+    'trancheNo',
+    'agencyInfo',
+    'bookingAmount',
+    'amountTransaction',
+    'amountCancel',
+    'amountRemain',
+    'batchTxnName',
+    'actions',
   ];
   totalBooking: any;
   dataSource: any[] = [];
@@ -37,29 +37,29 @@ export class BookingAgencyComponent implements OnInit {
   BookingFilter: any[] = [];
   BookingList: any[] = [];
   staffs: any[] = [];
-  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
-  @ViewChild(MatSort, { static: true }) sort: MatSort;
+  @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
+  @ViewChild(MatSort, { static: true }) sort: MatSort | any;
 
   TrancheNoOption: any[] = [
     {
-      label: "Tất cả ca tiền",
-      value: "",
+      label: 'Tất cả ca tiền',
+      value: '',
     },
     {
-      label: "8h-10h30",
-      value: "1",
+      label: '8h-10h30',
+      value: '1',
     },
     {
-      label: "10h30-12h",
-      value: "2",
+      label: '10h30-12h',
+      value: '2',
     },
     {
-      label: "12h-14h30",
-      value: "3",
+      label: '12h-14h30',
+      value: '3',
     },
     {
-      label: "14h30-16h00",
-      value: "4",
+      label: '14h30-16h00',
+      value: '4',
     },
   ];
 
@@ -76,23 +76,22 @@ export class BookingAgencyComponent implements OnInit {
       toDate: [new Date()],
     });
     this.formFilter = this.formBuilder.group({
-      officeName: [""],
-      trancheNo: [""],
-      userNameTelegram: [""],
+      officeName: [''],
+      trancheNo: [''],
+      userNameTelegram: [''],
     });
     this.getBookingAgency();
   }
 
   textDecorateBooking(status: string) {
-    if (status == "A") return " onBookingAmount";
-    else if (status == "C") return " onTransactionAmount";
+    if (status === 'A') { return ' onBookingAmount'; } else if (status === 'C') { return ' onTransactionAmount'; }
   }
 
-getUrlReturnBatchTransaction(agencyId: string, batchTxnName: string){
-  let url = "/transaction/batch-transaction" ;
-  if (!batchTxnName){
+getUrlReturnBatchTransaction(agencyId: string, batchTxnName: string) {
+  let url = '/transaction/batch-transaction' ;
+  if (!batchTxnName) {
     url = `${url}/${agencyId}` ;
-  }else{
+  } else {
     url = `${url}/${agencyId}??batchTxnName=${batchTxnName}`;
   }
 
@@ -100,13 +99,13 @@ getUrlReturnBatchTransaction(agencyId: string, batchTxnName: string){
 }
 
   displayTrancheNo(tranche: string) {
-    return this.TrancheNoOption.find((v) => v.value == tranche)?.label || "N/A";
+    return this.TrancheNoOption.find((v) => v.value === tranche)?.label || 'N/A';
   }
 
   getBookingAgency() {
     const dateFormat = this.settingsService.dateFormat;
-    let fromDate = this.formDate.get("fromDate").value;
-    let toDate = this.formDate.get("toDate").value;
+    let fromDate = this.formDate.get('fromDate')?.value;
+    let toDate = this.formDate.get('toDate')?.value;
     if (fromDate) {
       fromDate = this.datePipe.transform(fromDate, dateFormat);
     }
@@ -122,15 +121,15 @@ getUrlReturnBatchTransaction(agencyId: string, batchTxnName: string){
 
   sortData(sort: any) {
     this.BookingFilter = this.BookingFilter.sort((a, b) => {
-      const isAsc = sort.direction === "asc";
+      const isAsc = sort.direction === 'asc';
       switch (sort.active) {
-        case "trancheNo":
+        case 'trancheNo':
           return this.compare(a.trancheNo, b.trancheNo, isAsc);
-        case "txnDate":
+        case 'txnDate':
           return this.compare(a.txnDate, b.txnDate, isAsc);
-        case "bookingAmount":
+        case 'bookingAmount':
           return this.compare(a.bookingAmount, b.bookingAmount, isAsc);
-        case "amountTransaction":
+        case 'amountTransaction':
           return this.compare(a.amountTransaction, b.amountTransaction, isAsc);
         default:
           return 0;
@@ -163,9 +162,9 @@ getUrlReturnBatchTransaction(agencyId: string, batchTxnName: string){
     // setting none agency   transaction
     this.BookingFilter.forEach((element) => {
       this.totalBooking.totalAmountBooking += element.bookingAmount;
-      if (element.status == "C" || element.amountTransaction > 0) {
-        this.totalBooking.totalAmountUsed += element.status == "C" ? 0 : element.amountTransaction;
-        this.totalBooking.totalAmountCanceled += element.status == "C" ? element.bookingAmount : 0;
+      if (element.status === 'C' || element.amountTransaction > 0) {
+        this.totalBooking.totalAmountUsed += element.status === 'C' ? 0 : element.amountTransaction;
+        this.totalBooking.totalAmountCanceled += element.status === 'C' ? element.bookingAmount : 0;
       }
     });
 
@@ -202,10 +201,10 @@ getUrlReturnBatchTransaction(agencyId: string, batchTxnName: string){
     dialog.afterClosed().subscribe((data) => {
       if (data) {
         this.bookingService.cancelBookingAgency(bookingInfo.refid).subscribe((result) => {
-          if (result.status === "200") {
+          if (result.status === '200') {
             const message = `Hủy booking ${bookingInfo.userNameTelegram} thành công`;
             this.alertService.alert({
-              msgClass: "cssInfo",
+              msgClass: 'cssInfo',
               message: message,
             });
             this.getBookingAgency();
@@ -225,10 +224,10 @@ getUrlReturnBatchTransaction(agencyId: string, batchTxnName: string){
     dialog.afterClosed().subscribe((data) => {
       if (data) {
         this.bookingService.removeBookingAgency(bookingInfo.refid).subscribe((result) => {
-          if (result.status === "200") {
+          if (result.status === '200') {
             const message = `Xóa booking ${bookingInfo.userNameTelegram} thành công`;
             this.alertService.alert({
-              msgClass: "cssInfo",
+              msgClass: 'cssInfo',
               message: message,
             });
             this.getBookingAgency();

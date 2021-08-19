@@ -1,13 +1,13 @@
-import { Component, Inject, OnInit } from "@angular/core";
-import { FormBuilder, FormGroup } from "@angular/forms";
-import { MAT_DIALOG_DATA } from "@angular/material/dialog";
-import { BookingService } from "app/booking-manage/booking.service";
+import { Component, Inject, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { BookingService } from 'app/booking-manage/booking.service';
 
 @Component({
   // tslint:disable-next-line:component-selector
-  selector: "midas-transfer-booking-internal",
-  templateUrl: "./transfer-booking-internal.component.html",
-  styleUrls: ["./transfer-booking-internal.component.scss"],
+  selector: 'midas-transfer-booking-internal',
+  templateUrl: './transfer-booking-internal.component.html',
+  styleUrls: ['./transfer-booking-internal.component.scss'],
 })
 export class TransferBookingInternalComponent implements OnInit {
   bookingInfo: any;
@@ -19,15 +19,15 @@ export class TransferBookingInternalComponent implements OnInit {
     this.bookingInfo = data;
   }
 
-  form: FormGroup;
+  form!: FormGroup;
   listSavingAccount: any;
   buSavingAccounts: any;
-  filteredClient: any[];
+  filteredClient!: any[];
 
   ngOnInit(): void {
     this.form = this.formBuilder.group({
-      clientSavingAccount: [""],
-      buSavingAccount: [""],
+      clientSavingAccount: [''],
+      buSavingAccount: [''],
       amountTransfer: [this.bookingInfo.amount],
     });
     this.bookingService.getTransferBookingAmountTemplate(this.bookingInfo.createdBy).subscribe((cl: any) => {

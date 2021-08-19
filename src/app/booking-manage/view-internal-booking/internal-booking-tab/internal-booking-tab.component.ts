@@ -1,28 +1,28 @@
-import { DatePipe } from "@angular/common";
-import { Component, OnInit, ViewChild } from "@angular/core";
-import { FormBuilder, FormGroup } from "@angular/forms";
-import { MatDialog } from "@angular/material/dialog";
-import { MatPaginator } from "@angular/material/paginator";
-import { MatSort } from "@angular/material/sort";
-import { BookingService } from "app/booking-manage/booking.service";
-import { EditBookingInternalComponent } from "app/booking-manage/dialog/edit-booking-internal/edit-booking-internal.component";
-import { TransferBookingInternalComponent } from "app/booking-manage/dialog/transfer-booking-internal/transfer-booking-internal.component";
-import { AlertService } from "app/core/alert/alert.service";
-import { SettingsService } from "app/settings/settings.service";
-import { merge } from "rxjs";
-import { tap } from "rxjs/operators";
+import { DatePipe } from '@angular/common';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { BookingService } from 'app/booking-manage/booking.service';
+import { EditBookingInternalComponent } from 'app/booking-manage/dialog/edit-booking-internal/edit-booking-internal.component';
+import { TransferBookingInternalComponent } from 'app/booking-manage/dialog/transfer-booking-internal/transfer-booking-internal.component';
+import { AlertService } from 'app/core/alert/alert.service';
+import { SettingsService } from 'app/settings/settings.service';
+import { merge } from 'rxjs';
+import { tap } from 'rxjs/operators';
 
 @Component({
-  selector: "midas-internal-booking-tab",
-  templateUrl: "./internal-booking-tab.component.html",
-  styleUrls: ["./internal-booking-tab.component.scss"],
+  selector: 'midas-internal-booking-tab',
+  templateUrl: './internal-booking-tab.component.html',
+  styleUrls: ['./internal-booking-tab.component.scss'],
 })
 export class InternalBookingTabComponent implements OnInit {
   expandedElement: any;
   displayedColumns: any[] =
-  ["bookingRefNo", "officeName", "staffName",
-   "bookingAmount", "getBookedAmount", "txnDate",
-    "actions"];
+  ['bookingRefNo', 'officeName', 'staffName',
+   'bookingAmount', 'getBookedAmount', 'txnDate',
+    'actions'];
   totalBooking: any;
   staffBookingInfo: any;
   dataSource: any[] = [];
@@ -31,8 +31,8 @@ export class InternalBookingTabComponent implements OnInit {
   BookingFilter: any[] = [];
   BookingList: any[] = [];
   staffs: any[] = [];
-  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
-  @ViewChild(MatSort, { static: true }) sort: MatSort;
+  @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
+  @ViewChild(MatSort, { static: true }) sort: MatSort | any;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -56,16 +56,15 @@ export class InternalBookingTabComponent implements OnInit {
   }
 
   textDecorateBooking(status: string) {
-    if (status == "A") return " onBookingAmount";
-    else if (status == "C") return " onTransactionAmount";
+    if (status === 'A') { return ' onBookingAmount'; } else if (status === 'C') { return ' onTransactionAmount'; }
   }
 
   getBookingInternal() {
     const dateFormat = this.settingsService.dateFormat;
-    let fromDate = this.formDate.get("fromDate").value;
-    let toDate = this.formDate.get("toDate").value;
-    let staffName = this.formFilter.get("staffName").value;
-    let officeName = this.formFilter.get("officeName").value ;
+    let fromDate = this.formDate.get('fromDate')?.value;
+    let toDate = this.formDate.get('toDate')?.value;
+    const staffName = this.formFilter.get('staffName')?.value;
+    const officeName = this.formFilter.get('officeName')?.value ;
     if (fromDate) {
       fromDate = this.datePipe.transform(fromDate, dateFormat);
     }
@@ -108,7 +107,7 @@ export class InternalBookingTabComponent implements OnInit {
       },
     });
     dialog.afterClosed().subscribe((data) => {
-      let transferInfo = {
+      const transferInfo = {
         bookingRefNo: bookingInternal.bookingRefNo,
         savingAccountPaid: data.data.value.buSavingAccount,
         amountPaid: data.data.value.amountTransfer,
@@ -116,7 +115,7 @@ export class InternalBookingTabComponent implements OnInit {
       };
 
       if (data) {
-        this.bookingService.transferBookingAmount(transferInfo, "BI").subscribe((result) => {
+        this.bookingService.transferBookingAmount(transferInfo, 'BI').subscribe((result) => {
           if (result?.result?.status) {
             const message = `Chi tiền cho booking ${transferInfo.bookingRefNo} thành công`;
 
