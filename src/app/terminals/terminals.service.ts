@@ -59,9 +59,7 @@ export class TerminalsService {
     const currentUser = this.authenticationService.getCredentials();
 
     let httpParams = this.commonHttpParams.getCommonHttpParams();
-    if (currentUser) {
-      httpParams = httpParams.set("hierarchy", currentUser.officeHierarchy);
-    }
+    httpParams = httpParams.set("hierarchy", `${currentUser.officeHierarchy}%`);
 
     return this.http.post<any>(`${this.GatewayApiUrlPrefix}/pos/get_list_limit_pos`, httpParams);
   }
