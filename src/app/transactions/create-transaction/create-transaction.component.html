@@ -262,13 +262,7 @@
           <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
         </table>
       </mat-card-content>
-<!--      <mat-card-header-->
-<!--        fxFlex="100%"-->
-<!--        fxLayout.sm="column"-->
-<!--        fxLayout.xs="column"-->
-<!--        *ngIf="transactionInfo.type == 'cash' || transactionInfo.type == 'rollTermGetCash'"-->
-<!--      >-->
-<!--      </mat-card-header>-->
+
       <mat-card-content  *ngIf="transactionInfo.type == 'cash' || transactionInfo.type == 'rollTermGetCash'"
                          fxLayout="row wrap" fxLayout.lt-sm="column"
                          fxLayoutAlign="space-around center" fxLayoutAlign.lt-sm="center stretch"

@@ -161,7 +161,7 @@ export class ClientCustomerComponent implements OnInit, AfterViewInit {
     if (!this.sort.direction) {
       delete this.sort.active;
     }
-    if (this.searchValue !== '') {
+    if (this.searchValue !== "") {
       this.applyFilter(this.searchValue);
     } else {
       const queryParams: Params = { i: this.paginator.pageIndex, s: this.paginator.pageSize };
@@ -207,10 +207,9 @@ export class ClientCustomerComponent implements OnInit, AfterViewInit {
    * Filter Client Data
    * @param {string} filterValue Value to filter data.
    */
-  applyFilter(filterValue: string = '') {
-    // debugger;
-    const officeId = this.formFilter.get('officeId')?.value ? this.formFilter.get('officeId')?.value : null;
-    const staffId = this.formFilter.get('staffId')?.value ? this.formFilter.get('staffId')?.value : null;
+  applyFilter(filterValue: string = "") {
+    const officeId = this.formFilter.get("officeId")?.value ? this.formFilter.get("officeId")?.value : null;
+    const staffId = this.formFilter.get("staffId")?.value ? this.formFilter.get("staffId")?.value : null;
     this.searchValue = filterValue;
     this.dataSource.filterClients(
       filterValue,

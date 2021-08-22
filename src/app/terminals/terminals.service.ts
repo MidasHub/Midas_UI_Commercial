@@ -23,7 +23,7 @@ export class TerminalsService {
     private authenticationService: AuthenticationService
   ) {
     this.accessToken = JSON.parse(
-      sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey) ||''
+      sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey) || ""
     );
     this.GatewayApiUrlPrefix = environment.GatewayApiUrlPrefix;
     this.IcGatewayApiUrlPrefix = environment.IcGatewayApiUrlPrefix;
@@ -42,7 +42,7 @@ export class TerminalsService {
     return this.http.post<any>(`${this.IcGatewayApiUrlPrefix}/pos/get_list_terminal_by_office_sl`, httpParams);
   }
 
-  getTerminalsByAccountBankId(accountBankId: string, partnerCode:  string): Observable<any> {
+  getTerminalsByAccountBankId(accountBankId: string, partnerCode: string): Observable<any> {
     let httpParams = this.commonHttpParams.getCommonHttpParams();
     httpParams = httpParams.set("accountBankId", accountBankId);
     httpParams = httpParams.set("partnerExternalId", partnerCode);
@@ -57,13 +57,13 @@ export class TerminalsService {
 
   getLimitTerminals(): Observable<any> {
     const currentUser = this.authenticationService.getCredentials();
-    const  permissions = currentUser?.permissions;
-    const isHavePermission = permissions?.includes("ALL_FUNCTIONS");
 
     let httpParams = this.commonHttpParams.getCommonHttpParams();
-    httpParams = httpParams.set("queryOffice", isHavePermission ? `%%` : `${currentUser?.officeId}`);
+    if (currentUser) {
+      httpParams = httpParams.set("hierarchy", currentUser.officeHierarchy);
+    }
 
-    return this.http.post<any>(`${this.IcGatewayApiUrlPrefix}/pos/get_list_limit_pos`, httpParams);
+    return this.http.post<any>(`${this.GatewayApiUrlPrefix}/pos/get_list_limit_pos`, httpParams);
   }
 
   getTerminals(): Observable<any> {
@@ -107,7 +107,7 @@ export class TerminalsService {
 
   save(data: any): Observable<any> {
     this.accessToken = JSON.parse(
-      sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey) ||''
+      sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey) || ""
     );
     const httpParams = {
       createdBy: this.accessToken.userId,
@@ -119,7 +119,7 @@ export class TerminalsService {
 
   update(data: any): Observable<any> {
     this.accessToken = JSON.parse(
-      sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey) ||''
+      sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey) || ""
     );
     const httpParams = {
       createdBy: this.accessToken.userId,
@@ -129,7 +129,7 @@ export class TerminalsService {
     return this.http.post<any>(`${this.IcGatewayApiUrlPrefix}/pos/update`, httpParams);
   }
 
-  transfer(terminalId: string, rate: string,  transferToTarget: string, transferType: string): Observable<any> {
+  transfer(terminalId: string, rate: string, transferToTarget: string, transferType: string): Observable<any> {
     let httpParams = this.commonHttpParams.getCommonHttpParams();
     httpParams = httpParams.set("terminalId", terminalId);
     httpParams = httpParams.set("rate", rate);
