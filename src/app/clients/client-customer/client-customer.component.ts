@@ -41,7 +41,7 @@ export class ClientCustomerComponent implements OnInit, AfterViewInit {
   /** Get the required filter value. */
   searchValue = '';
   /** Client Type:
-   * Staff: 22 
+   * Staff: 22
    * Customer: 23
   */
   clientType: string = '';
@@ -70,7 +70,7 @@ export class ClientCustomerComponent implements OnInit, AfterViewInit {
       switch (v.ctype) {
         case 'staff':
           this.clientType = '22,143';
-          this.createButtonName = 'Thêm nhân viên';          
+          this.createButtonName = 'Thêm nhân viên';
           break;
         case 'ic':
           this.clientType = '23'
@@ -124,8 +124,7 @@ export class ClientCustomerComponent implements OnInit, AfterViewInit {
     if (!this.sort.direction) {
       delete this.sort.active;
     }
-
-    if (this.searchValue !== '') {
+    if (this.searchValue !== "") {
       this.applyFilter(this.searchValue);
     } else {
       const queryParams: Params = { i: this.paginator.pageIndex, s: this.paginator.pageSize };
