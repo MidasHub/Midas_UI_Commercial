@@ -151,7 +151,6 @@ export class DueDayCardTabComponent implements OnInit {
           refid: "ALL",
           value: "Tất cả",
         });
-
       }
     });
   }
@@ -167,9 +166,9 @@ export class DueDayCardTabComponent implements OnInit {
     const refDialog = this.dialog.open(AdvanceFeeRollTermComponent, dialogConfig);
     refDialog.afterClosed().subscribe((response: any) => {
       const { buSavingAccount, clientAdvanceCash, noteAdvance, amountAdvance, typeAdvanceCash } = response?.data?.value;
+
       this.savingsService
-        .advanceCashForDueDayCardTransaction({
-          cardId: cardId,
+        .advanceCashTransaction({
           buSavingAccount: buSavingAccount,
           clientSavingAccount: clientAdvanceCash,
           noteAdvance: noteAdvance,
@@ -180,8 +179,9 @@ export class DueDayCardTabComponent implements OnInit {
           const message = `Ứng tiền thành công cho tài khoản: ${clientAdvanceCash} với số tiền ${
             String(amountAdvance).replace(/\\B(?=(\\d{3})+(?!\\d))/g, ",") + " đ"
           }`;
-          this.alertService.alert({ message: message, msgClass: "cssInfo" });
+          this.savingsService.handleResponseApiSavingTransaction(result, message, false);
           this.getRollTermScheduleAndCardDueDayInfo();
+
         });
     });
   }

@@ -160,7 +160,6 @@ export class ClientCustomerComponent implements OnInit, AfterViewInit {
     if (!this.sort.direction) {
       delete this.sort.active;
     }
-    debugger;
     if (this.searchValue !== "") {
       this.applyFilter(this.searchValue);
     } else {
@@ -208,7 +207,6 @@ export class ClientCustomerComponent implements OnInit, AfterViewInit {
    * @param {string} filterValue Value to filter data.
    */
   applyFilter(filterValue: string = "") {
-    debugger;
     const officeId = this.formFilter.get("officeId").value ? this.formFilter.get("officeId").value : null;
     const staffId = this.formFilter.get("staffId").value ? this.formFilter.get("staffId").value : null;
     this.searchValue = filterValue;
