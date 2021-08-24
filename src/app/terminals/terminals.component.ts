@@ -17,7 +17,7 @@ import { TransferTerminalComponent } from './transfer-terminal/transfer-terminal
 })
 export class TerminalsComponent implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
-  @ViewChild(MatSort, { static: true }) sort!: MatSort;
+  @ViewChild(MatSort, { static: true }) sort: MatSort | any;
   viewTerminals = new FormControl('viewTerminals');
   displayedColumns =  ['terminalNo', 'terminalName',  'status', 'createdBy','createdDate','updatedDate','action'];
 

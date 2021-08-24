@@ -44,7 +44,7 @@ const initialData: PeriodicElements[] = [
   styleUrls: ["./create-terminals.component.scss"],
 })
 export class CreateTerminalsComponent implements OnInit {
-  @ViewChild(MatSort) sort!: MatSort;
+  @ViewChild(MatSort) sort: MatSort | any;
   // @ViewChild(MatPaginator) paginator: MatPaginator;
 
   displayedColumns: string[] = [

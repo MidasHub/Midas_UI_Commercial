@@ -25,7 +25,7 @@ export class TemplatesComponent implements OnInit {
   /** Paginator for templates table. */
   @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
   /** Sorter for templates table. */
-  @ViewChild(MatSort, { static: true }) sort!: MatSort;
+  @ViewChild(MatSort, { static: true }) sort: MatSort | any;
 
   /**
    * Retrieves the templates data from `resolve`.

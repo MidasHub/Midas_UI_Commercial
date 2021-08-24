@@ -30,7 +30,7 @@ export interface PeriodicElements {
   styleUrls: ["./edit-terminals.component.scss"],
 })
 export class EditTerminalsComponent implements OnInit, AfterViewInit {
-  @ViewChild(MatSort) sort!: MatSort;
+  @ViewChild(MatSort) sort: MatSort | any;
   @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
   editTerminalForm!: FormGroup;
   officeSelect = new FormControl();
