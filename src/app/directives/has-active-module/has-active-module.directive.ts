@@ -36,7 +36,7 @@ export class HasActiveModuleDirective {
      /** Clear the template beforehand to prevent overlap OnChanges. */
      this.viewContainer.clear();
      /** Shows Template if user has active module */
-     let isActive = this.authenticationService.checkAppModuleSetting(moduleName);
+     const isActive = this.authenticationService.checkAppModuleSetting(moduleName);
      if (isActive) {
        this.viewContainer.createEmbeddedView(this.templateRef);
      }

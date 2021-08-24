@@ -17,8 +17,8 @@ export class TableResponsiveDirective implements OnInit, AfterViewInit, OnDestro
 
   private onDestroy$ = new Subject<boolean>();
 
-  private thead: HTMLTableSectionElement;
-  private tbody: HTMLTableSectionElement;
+  private thead?: HTMLTableSectionElement;
+  private tbody?: HTMLTableSectionElement;
 
   private theadChanged$ = new BehaviorSubject(true);
   private tbodyChanged$ = new Subject<boolean>();
@@ -33,7 +33,9 @@ export class TableResponsiveDirective implements OnInit, AfterViewInit, OnDestro
     this.thead = this.table.nativeElement.querySelector('thead');
     this.tbody = this.table.nativeElement.querySelector('tbody');
 
+    // @ts-ignore
     this.theadObserver.observe(this.thead, {characterData: true, subtree: true});
+    // @ts-ignore
     this.tbodyObserver.observe(this.tbody, {childList: true});
   }
 
@@ -45,6 +47,7 @@ export class TableResponsiveDirective implements OnInit, AfterViewInit, OnDestro
      */
     combineLatest([this.theadChanged$, this.tbodyChanged$])
       .pipe(
+        // @ts-ignore
         mapTo([this.thead.rows.item(0), this.tbody.rows]),
         map(
           ([headRow, bodyRows]: [HTMLTableRowElement, HTMLCollectionOf<HTMLTableRowElement>]) => [
@@ -56,6 +59,7 @@ export class TableResponsiveDirective implements OnInit, AfterViewInit, OnDestro
         ),
         takeUntil(this.onDestroy$)
       )
+      // @ts-ignore
       .subscribe(([columnNames, rows]: [string[], HTMLTableCellElement[][]]) =>
         rows.forEach(rowCells =>
           rowCells.forEach(cell => this.renderer.setAttribute(

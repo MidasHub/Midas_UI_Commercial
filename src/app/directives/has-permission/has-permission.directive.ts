@@ -8,13 +8,12 @@ import { AuthenticationService } from '../../core/authentication/authentication.
  * Has Permission Directive
  */
 @Directive({
-  selector: '[midasHasPermission], [midasHasPermissions]'
+  selector: '[midasHasPermission], [midasHasPermissions]',
 })
 export class HasPermissionDirective {
-
   /** User Permissions */
   private userPermissions: any[];
-  private permissions: any[];
+  private permissions!: any[];
   private logicalOp = 'AND';
   private isHidden = true;
   /**
@@ -23,11 +22,17 @@ export class HasPermissionDirective {
    * @param {ViewContainerRef} viewContainer View Container Reference
    * @param {AuthenticationService} authenticationService AuthenticationService
    */
-  constructor(private templateRef: TemplateRef<any>,
-              private viewContainer: ViewContainerRef,
-              private authenticationService: AuthenticationService) {
+  constructor(
+    private templateRef: TemplateRef<any>,
+    private viewContainer: ViewContainerRef,
+    private authenticationService: AuthenticationService
+  ) {
     const savedCredentials = this.authenticationService.getCredentials();
-    this.userPermissions = savedCredentials.permissions;
+    if (savedCredentials) {
+      this.userPermissions = savedCredentials.permissions;
+    } else {
+      this.userPermissions = [];
+    }
   }
 
   /**
@@ -59,17 +64,15 @@ export class HasPermissionDirective {
     }
   }
 
-
   private checkPermissions(permission: string) {
     permission = permission.trim();
 
     // add custom permission
-      if (this.userPermissions.includes(permission)) {
-        return true;
-      } else {
-        return false;
-      }
-
+    if (this.userPermissions.includes(permission)) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
   /**
@@ -89,16 +92,15 @@ export class HasPermissionDirective {
     if (this.userPermissions.includes('ALL_FUNCTIONS') && !this.userPermissions.includes('SYSTEM_CONFIG')) {
       return true;
     } else if (permission !== '') {
-        if (permission.substring(0, 5) === 'READ_' && this.userPermissions.includes('ALL_FUNCTIONS_READ')) {
-          return true;
-        } else if (this.userPermissions.includes(permission)) {
-          return true;
-        } else {
-          return false;
-        }
+      if (permission.substring(0, 5) === 'READ_' && this.userPermissions.includes('ALL_FUNCTIONS_READ')) {
+        return true;
+      } else if (this.userPermissions.includes(permission)) {
+        return true;
+      } else {
+        return false;
+      }
     } else {
       return false;
     }
   }
-
 }
