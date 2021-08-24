@@ -15,7 +15,7 @@ import * as moment from 'moment';
   styleUrls: ['./create-booking-marketing.component.scss']
 })
 export class CreateBookingMarketingComponent implements OnInit {
-  fromGroup: FormGroup;
+  fromGroup!: FormGroup;
   minDate = new Date(2000, 0, 1);
   /** Maximum closing date allowed. */
   maxDate = new Date();
@@ -76,13 +76,13 @@ export class CreateBookingMarketingComponent implements OnInit {
             if (this.campaign.listOfficeDtos) {
 
             }
-            this.fromGroup.get('PosCampaignName').setValue(this.campaign.campaign.campainName);
-            this.fromGroup.get('fromDate').setValue(moment(this.campaign.campaign.fromDate).toDate());
-            this.fromGroup.get('notifyDate').setValue(moment(this.campaign.campaign.timeNotify).toDate());
-            this.fromGroup.get('toDate').setValue(moment(this.campaign.campaign.toDate).toDate());
-            this.fromGroup.get('secondRemain').setValue(this.campaign.campaign.secondRemain / 60);
-            this.fromGroup.get('budget').setValue(this.campaign.campaign.budget);
-            this.fromGroup.get('cashRule').setValue(this.campaign.campaign.cashRule);
+            this.fromGroup.get('PosCampaignName')?.setValue(this.campaign.campaign.campainName);
+            this.fromGroup.get('fromDate')?.setValue(moment(this.campaign.campaign.fromDate).toDate());
+            this.fromGroup.get('notifyDate')?.setValue(moment(this.campaign.campaign.timeNotify).toDate());
+            this.fromGroup.get('toDate')?.setValue(moment(this.campaign.campaign.toDate).toDate());
+            this.fromGroup.get('secondRemain')?.setValue(this.campaign.campaign.secondRemain / 60);
+            this.fromGroup.get('budget')?.setValue(this.campaign.campaign.budget);
+            this.fromGroup.get('cashRule')?.setValue(this.campaign.campaign.cashRule);
             this.getCards();
           }
         });
@@ -137,7 +137,7 @@ export class CreateBookingMarketingComponent implements OnInit {
   }
 
   minDateTo() {
-    return this.fromGroup.get('fromDate').value ? this.fromGroup.get('fromDate').value : new Date().toDateString();
+    return this.fromGroup.get('fromDate')?.value ? this.fromGroup.get('fromDate')?.value : new Date().toDateString();
   }
 
   changeOffices(type: any, b: any) {

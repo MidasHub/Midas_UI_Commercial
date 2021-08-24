@@ -60,7 +60,7 @@
               </div>
             </mat-radio-button>
           </mat-radio-group>
-          <mat-form-field *ngIf="fromGroup.get('cashRule').value !== '-1'">
+          <mat-form-field *ngIf="fromGroup.get('cashRule')?.value !== '-1'">
             <div fxLayout="row" style="margin: 8px;">
               <input type="number" [required]="fromGroup.get('cashRule').value !== '-1'" formControlName="cashRule"
                      matInput>
