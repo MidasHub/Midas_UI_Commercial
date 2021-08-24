@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Data, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { DatePipe } from '@angular/common';
 
@@ -45,7 +45,7 @@ export class ViewChargeComponent {
               private datePipe: DatePipe,
               private router: Router,
               public dialog: MatDialog) {
-    this.route.data.subscribe((data: { loansAccountCharge: any, loanDetailsData: any }) => {
+    this.route.data.subscribe((data: { loansAccountCharge: any, loanDetailsData: any }|Data) => {
       this.chargeData = data.loansAccountCharge;
       this.loansAccountData = data.loanDetailsData;
     });

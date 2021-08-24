@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Data, Router } from '@angular/router';
 import { DatePipe } from '@angular/common';
 import { LoansService } from '../loans.service';
 import { LoansAccountDetailsStepComponent } from '../loans-account-stepper/loans-account-details-step/loans-account-details-step.component';
@@ -13,9 +13,9 @@ import { LoansAccountChargesStepComponent } from '../loans-account-stepper/loans
 })
 export class EditLoansAccountComponent implements OnInit {
 
-  @ViewChild(LoansAccountDetailsStepComponent, { static: true }) loansAccountDetailsStep: LoansAccountDetailsStepComponent;
-  @ViewChild(LoansAccountTermsStepComponent, { static: true }) loansAccountTermsStep: LoansAccountTermsStepComponent;
-  @ViewChild(LoansAccountChargesStepComponent, { static: true }) loansAccountChargesStep: LoansAccountChargesStepComponent;
+  @ViewChild(LoansAccountDetailsStepComponent, { static: true }) loansAccountDetailsStep!: LoansAccountDetailsStepComponent;
+  @ViewChild(LoansAccountTermsStepComponent, { static: true }) loansAccountTermsStep!: LoansAccountTermsStepComponent;
+  @ViewChild(LoansAccountChargesStepComponent, { static: true }) loansAccountChargesStep!: LoansAccountChargesStepComponent;
 
   loansAccountAndTemplate: any;
   /** Loans Account Product Template */
@@ -37,10 +37,10 @@ export class EditLoansAccountComponent implements OnInit {
     private datePipe: DatePipe,
     private loansService: LoansService
   ) {
-    this.route.data.subscribe((data: { loansAccountAndTemplate: any }) => {
+    this.route.data.subscribe((data: { loansAccountAndTemplate: any }| Data) => {
       this.loansAccountAndTemplate = data.loansAccountAndTemplate;
     });
-    this.loanId = this.route.parent.snapshot.params['loanId'];
+    this.loanId = this.route.parent?.snapshot.params['loanId'];
   }
 
   ngOnInit() {

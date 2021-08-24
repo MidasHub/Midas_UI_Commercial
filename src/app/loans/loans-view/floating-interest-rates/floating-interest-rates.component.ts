@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Data } from '@angular/router';
 
 @Component({
   selector: 'mifosx-floating-interest-rates',
@@ -20,7 +20,7 @@ export class FloatingInterestRatesComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route.
    */
   constructor(private route: ActivatedRoute) {
-    this.route.parent.data.subscribe(( data: { loanDetailsData: any }) => {
+    this.route.parent?.data.subscribe(( data: { loanDetailsData: any }|Data) => {
       this.loanDetails = data.loanDetailsData;
     });
   }

@@ -178,7 +178,7 @@ export class ClientsService {
   }
 
   /* Chỗ này cần review lại để dùng bằng service-worker*/
-  getClientData(clientId: string): any {
+  getClientData(clientId?: string|null): any {
     const key = `getClientData_${clientId}`;
     if (this.cacheClientRequest[key]) {
       return this.cacheClientRequest[key];
@@ -403,7 +403,7 @@ export class ClientsService {
     return this.http.delete(`/clients/${clientId}/familymembers/${familyMemberId}`);
   }
 
-  getClientIdentifiers(clientId: string) {
+  getClientIdentifiers(clientId?: string|null) {
     return this.http.get(`/clients/${clientId}/identifiers`);
   }
 

@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Data, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { DatePipe } from '@angular/common';
 
@@ -37,7 +37,7 @@ export class ViewTransactionComponent {
               private datePipe: DatePipe,
               private router: Router,
               public dialog: MatDialog) {
-    this.route.data.subscribe((data: { loansAccountTransaction: any }) => {
+    this.route.data.subscribe((data: { loansAccountTransaction: any }|Data) => {
       this.transactionData = data.loansAccountTransaction;
     });
   }
@@ -46,7 +46,7 @@ export class ViewTransactionComponent {
    * Undo the loans transaction
    */
   undoTransaction() {
-    const accountId = this.route.parent.parent.parent.snapshot.params['loanId'];
+    const accountId = this.route.parent?.parent?.parent?.snapshot.params['loanId'];
     const undoTransactionAccountDialogRef = this.dialog.open(ConfirmationDialogComponent, {
       data: { heading: 'Undo Transaction', dialogContext: `Are you sure you want undo the transaction ${this.transactionData.id}` }
     });

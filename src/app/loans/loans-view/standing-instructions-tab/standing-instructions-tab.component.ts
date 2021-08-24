@@ -2,7 +2,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource, MatTable } from '@angular/material/table';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Data } from '@angular/router';
 
 /** Custom Services */
 import { LoansService } from 'app/loans/loans.service';
@@ -24,14 +24,14 @@ export class StandingInstructionsTabComponent implements OnInit {
   /** Loans Data */
   loanDetailsData: any;
   /** Instructions Data */
-  instructionsData: any[];
+  instructionsData!: any[];
   /** Data source for instructions table. */
   dataSource = new MatTableDataSource();
   /** Columns to be displayed in instructions table. */
   displayedColumns: string[] = ['client', 'fromAccount', 'beneficiary', 'toAccount', 'amount', 'validity', 'actions'];
 
   /** Instruction Table Reference */
-  @ViewChild('instructionsTable', { static: true }) instructionTableRef: MatTable<Element>;
+  @ViewChild('instructionsTable', { static: true }) instructionTableRef!: MatTable<Element>;
 
   /**
    * Retrieves Loans Account Data from `resolve`.
@@ -41,7 +41,7 @@ export class StandingInstructionsTabComponent implements OnInit {
     private loansService: LoansService,
     private dialog: MatDialog,
     private accountTransfersService: AccountTransfersService) {
-    this.route.parent.data.subscribe((data: { loanDetailsData: any }) => {
+    this.route.parent?.data.subscribe((data: { loanDetailsData: any }|Data) => {
       this.loanDetailsData = data.loanDetailsData;
     });
   }

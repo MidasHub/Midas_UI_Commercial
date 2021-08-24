@@ -1,7 +1,7 @@
 /** Angular Imports. */
 import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Data, Router } from '@angular/router';
 import { distinctUntilChanged } from 'rxjs/operators';
 import { DatePipe } from '@angular/common';
 
@@ -19,7 +19,7 @@ import { LoansService } from 'app/loans/loans.service';
 export class ApproveLoanComponent implements OnInit {
 
   /** Approve Loan form. */
-  approveLoanForm: FormGroup;
+  approveLoanForm!: FormGroup;
   /** Loan data. */
   loanData: any = new Object();
   /** Association Data */
@@ -42,10 +42,10 @@ export class ApproveLoanComponent implements OnInit {
     private datePipe: DatePipe,
     private loanService: LoansService,
     private router: Router) {
-    this.route.data.subscribe((data: { actionButtonData: any }) => {
+    this.route.data.subscribe((data: { actionButtonData: any }|Data) => {
       this.loanData = data.actionButtonData;
     });
-    this.loanId = this.route.parent.snapshot.params['loanId'];
+    this.loanId = this.route.parent?.snapshot.params['loanId'];
   }
 
   ngOnInit() {

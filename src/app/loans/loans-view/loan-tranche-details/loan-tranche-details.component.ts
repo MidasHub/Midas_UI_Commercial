@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Data } from '@angular/router';
 
 @Component({
   selector: 'mifosx-loan-tranche-details',
@@ -11,7 +11,7 @@ export class LoanTrancheDetailsComponent implements OnInit {
   return: any;
   status: any;
   totalDisbursedAmount: any;
-  count: number;
+  count!: number;
   expectedDisbursementColumns: string[] = ['expected disbursement on', 'disbursed on', 'principal', 'action'];
   emivariationColumns: string[] = ['emi amount variation from', 'fixed emi amount'];
 
@@ -20,7 +20,7 @@ export class LoanTrancheDetailsComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route.
    */
   constructor(private route: ActivatedRoute) {
-    this.route.parent.data.subscribe((data: { loanDetailsData: any }) => {
+    this.route.parent?.data.subscribe((data: { loanDetailsData: any }|Data) => {
       this.loanDetails = data.loanDetailsData;
     });
   }

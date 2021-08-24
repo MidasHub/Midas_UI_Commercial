@@ -24,7 +24,7 @@ export class DisburseLoanAccountComponent implements OnInit {
   /** Maximum Date allowed. */
   maxDate = new Date();
   /** Disbursement Loan form. */
-  disbursementForm: FormGroup;
+  disbursementForm!: FormGroup;
 
   /**
    * Get data from `Resolver`.
@@ -67,7 +67,7 @@ export class DisburseLoanAccountComponent implements OnInit {
     this.disbursementForm.patchValue({
       actualDisbursementDate: this.datePipe.transform(actualDisbursementDate, dateFormat)
     });
-    const loanId = this.route.parent.snapshot.params['loanId'];
+    const loanId = this.route.parent?.snapshot.params['loanId'];
     const disbursementForm = this.disbursementForm.value;
     disbursementForm.locale = 'en';
     disbursementForm.dateFormat = dateFormat;

@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Data, Router } from '@angular/router';
 import { DatePipe } from '@angular/common';
 
 /** Custom Services */
@@ -22,9 +22,9 @@ import { LoansAccountChargesStepComponent } from '../loans-account-stepper/loans
 export class CreateLoansAccountComponent implements OnInit {
 
   /** Imports all the step component */
-  @ViewChild(LoansAccountDetailsStepComponent, { static: true }) loansAccountDetailsStep: LoansAccountDetailsStepComponent;
-  @ViewChild(LoansAccountTermsStepComponent, { static: true }) loansAccountTermsStep: LoansAccountTermsStepComponent;
-  @ViewChild(LoansAccountChargesStepComponent, { static: true }) loansAccountChargesStep: LoansAccountChargesStepComponent;
+  @ViewChild(LoansAccountDetailsStepComponent, { static: true }) loansAccountDetailsStep!: LoansAccountDetailsStepComponent;
+  @ViewChild(LoansAccountTermsStepComponent, { static: true }) loansAccountTermsStep!: LoansAccountTermsStepComponent;
+  @ViewChild(LoansAccountChargesStepComponent, { static: true }) loansAccountChargesStep!: LoansAccountChargesStepComponent;
 
   /** Loans Account Template */
   loansAccountTemplate: any;
@@ -45,7 +45,7 @@ export class CreateLoansAccountComponent implements OnInit {
     private datePipe: DatePipe,
     private loansService: LoansService
   ) {
-    this.route.data.subscribe((data: { loansAccountTemplate: any }) => {
+    this.route.data.subscribe((data: { loansAccountTemplate: any }| Data) => {
       this.loansAccountTemplate = data.loansAccountTemplate;
     });
   }

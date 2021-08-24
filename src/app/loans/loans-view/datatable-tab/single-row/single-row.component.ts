@@ -30,7 +30,7 @@ export class SingleRowComponent implements OnInit {
   @Input() dataObject: any;
 
   /** Data Table Name */
-  datatableName: string;
+  datatableName!: string;
   /** Loan Id */
   loanId: string;
 
@@ -45,7 +45,7 @@ export class SingleRowComponent implements OnInit {
               private datePipe: DatePipe,
               private dialog: MatDialog,
               private loansService: LoansService) {
-    this.loanId = this.route.parent.parent.snapshot.paramMap.get('loanId');
+    this.loanId = this.route.parent?.parent?.snapshot.paramMap.get('loanId') || '';
   }
 
   /**

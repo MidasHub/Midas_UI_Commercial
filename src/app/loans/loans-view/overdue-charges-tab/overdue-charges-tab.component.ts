@@ -3,7 +3,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Data } from '@angular/router';
 
 /**
  * Overdue charges tab component
@@ -23,19 +23,19 @@ export class OverdueChargesTabComponent implements OnInit {
   /** Columns to be displayed in overdue charges table. */
   displayedColumns: string[] = ['name', 'type', 'amount', 'collectedon'];
   /** Data source for codes table. */
-  dataSource: MatTableDataSource<any>;
+  dataSource!: MatTableDataSource<any>;
 
   /** Paginator for codes table. */
-  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+  @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
   /** Sorter for codes table. */
-  @ViewChild(MatSort, { static: true }) sort: MatSort;
+  @ViewChild(MatSort, { static: true }) sort!: MatSort;
 
   /**
    * Retrieves the loans data from `resolve`.
    * @param {ActivatedRoute} route Activated Route.
    */
   constructor(private route: ActivatedRoute) {
-    this.route.parent.data.subscribe(( data: { loanDetailsData: any }) => {
+    this.route.parent?.data.subscribe(( data: { loanDetailsData: any }|Data) => {
       this.loanDetails = data.loanDetailsData;
     });
   }

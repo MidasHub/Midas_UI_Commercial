@@ -36,7 +36,7 @@ export class LoansAccountDetailsStepComponent implements OnInit {
   /** For edit loan accounts form */
   isFieldOfficerPatched = false;
   /** Loans Account Details Form */
-  loansAccountDetailsForm: FormGroup;
+  loansAccountDetailsForm!: FormGroup;
 
   /** Loans Account Template with product data  */
   @Output() loansAccountProductTemplate = new EventEmitter();
@@ -91,7 +91,7 @@ export class LoansAccountDetailsStepComponent implements OnInit {
    */
   buildDependencies() {
     const clientId = this.loansAccountTemplate.clientId;
-    this.loansAccountDetailsForm.get('productId').valueChanges.subscribe((productId: string) => {
+    this.loansAccountDetailsForm.get('productId')?.valueChanges.subscribe((productId: string) => {
       this.loansService.getLoansAccountTemplateResource(clientId, productId).subscribe((response: any) => {
         this.loansAccountProductTemplate.emit(response);
         this.loanOfficerOptions = response.loanOfficerOptions;
@@ -99,7 +99,7 @@ export class LoansAccountDetailsStepComponent implements OnInit {
         this.fundOptions = response.fundOptions;
         this.accountLinkingOptions = response.accountLinkingOptions;
         if (response.createStandingInstructionAtDisbursement) {
-          this.loansAccountDetailsForm.get('createStandingInstructionAtDisbursement').patchValue(response.createStandingInstructionAtDisbursement);
+          this.loansAccountDetailsForm.get('createStandingInstructionAtDisbursement')?.patchValue(response.createStandingInstructionAtDisbursement);
         }
       });
     });

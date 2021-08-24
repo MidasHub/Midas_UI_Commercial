@@ -25,7 +25,7 @@ export class WithdrawnByClientComponent implements OnInit {
   /** Maximum Date allowed. */
   maxDate = new Date();
   /** Withdrawn By Applicant Loan Form */
-  withdrawnByClientLoanForm: FormGroup;
+  withdrawnByClientLoanForm!: FormGroup;
 
   /**
    * @param {FormBuilder} formBuilder Form Builder.
@@ -39,7 +39,7 @@ export class WithdrawnByClientComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private datePipe: DatePipe) {
-    this.loanId = this.route.parent.snapshot.params['loanId'];
+    this.loanId = this.route.parent?.snapshot.params['loanId'];
   }
 
   /**

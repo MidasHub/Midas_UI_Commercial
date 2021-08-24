@@ -19,7 +19,7 @@ export class LoanScreenReportsComponent implements OnInit {
 
   @Input() dataObject: any;
   /** Loan Screen Reportform. */
-  loanScreenReportForm: FormGroup;
+  loanScreenReportForm!: FormGroup;
   /** Templates Data */
   templatesData: any;
   /** Loan Id */
@@ -28,7 +28,7 @@ export class LoanScreenReportsComponent implements OnInit {
   template: any;
 
   /** Screen report output reference */
-  @ViewChild('screenReport', { static: true }) screenReportRef: ElementRef;
+  @ViewChild('screenReport', { static: true }) screenReportRef!: ElementRef;
 
   /**
    * Fetches Loan Action Data from `resolve`
@@ -43,7 +43,7 @@ export class LoanScreenReportsComponent implements OnInit {
     private route: ActivatedRoute,
     private sanitizer: DomSanitizer,
     private renderer: Renderer2) {
-    this.loanId = this.route.parent.snapshot.params['loanId'];
+    this.loanId = this.route.parent?.snapshot.params['loanId'];
   }
 
   /**
@@ -68,19 +68,19 @@ export class LoanScreenReportsComponent implements OnInit {
    */
   print() {
     const templateWindow = window.open('', 'Screen Report', 'height=400,width=600');
-    templateWindow.document.write('<html><head>');
-    templateWindow.document.write('</head><body>');
-    templateWindow.document.write(this.template);
-    templateWindow.document.write('</body></html>');
-    templateWindow.print();
-    templateWindow.close();
+    templateWindow?.document.write('<html><head>');
+    templateWindow?.document.write('</head><body>');
+    templateWindow?.document.write(this.template);
+    templateWindow?.document.write('</body></html>');
+    templateWindow?.print();
+    templateWindow?.close();
   }
 
   /**
    * Submits the form and generates screen report for the loan.
    */
   generate() {
-    const templateId = this.loanScreenReportForm.get('templateId').value;
+    const templateId = this.loanScreenReportForm.get('templateId')?.value;
     this.loansService.getTemplateData(templateId, this.loanId).subscribe((response: any) => {
       this.template = this.sanitizer.sanitize(SecurityContext.HTML, response);
       this.renderer.setProperty(this.screenReportRef.nativeElement, 'innerHTML', this.template);

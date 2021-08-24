@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Data } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
@@ -19,9 +19,9 @@ import { AuthenticationService } from '../../../core/authentication/authenticati
 export class NotesTabComponent implements OnInit {
 
   loanId: string;
-  username: string;
+  username: string | undefined;
   loanNotes: any;
-  noteForm: FormGroup;
+  noteForm!: FormGroup;
   @ViewChild('formRef', { static: true }) formRef: any;
 
 
@@ -31,9 +31,9 @@ export class NotesTabComponent implements OnInit {
     private authenticationService: AuthenticationService,
     private dialog: MatDialog) {
     const savedCredentials = this.authenticationService.getCredentials();
-    this.username = savedCredentials.username;
-    this.loanId = this.route.parent.snapshot.params['loanId'];
-    this.route.data.subscribe((data: { loanNotes: any }) => {
+    this.username = savedCredentials?.username ;
+    this.loanId = this.route.parent?.snapshot.params['loanId'];
+    this.route.data.subscribe((data: { loanNotes: any } |Data) => {
       this.loanNotes = data.loanNotes;
     });
   }

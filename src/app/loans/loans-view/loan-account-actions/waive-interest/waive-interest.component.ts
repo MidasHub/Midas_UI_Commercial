@@ -20,7 +20,7 @@ export class WaiveInterestComponent implements OnInit {
   @Input() dataObject: any;
 
   /** Loan Interest form. */
-  loanInterestForm: FormGroup;
+  loanInterestForm!: FormGroup;
   /** Minimum Date allowed. */
   minDate = new Date(2000, 0, 1);
   /** Maximum Date allowed. */
@@ -66,7 +66,7 @@ export class WaiveInterestComponent implements OnInit {
       transactionDate: this.datePipe.transform(transactionDate, dateFormat),
       transactionAmount: parseInt(transactionAmount, 10)
     });
-    const loanId = this.route.parent.snapshot.params['loanId'];
+    const loanId = this.route.parent?.snapshot.params['loanId'];
     const loanInterestForm = this.loanInterestForm.value;
     loanInterestForm.locale = 'en';
     loanInterestForm.dateFormat = dateFormat;

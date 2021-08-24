@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Data, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
@@ -36,12 +36,12 @@ export class ChargesTabComponent implements OnInit {
   /** Columns to be displayed in charges table. */
   displayedColumns: string[] = ['name', 'feepenalty', 'paymentdueat', 'dueasof', 'calculationtype', 'due', 'paid', 'waived', 'outstanding', 'actions'];
   /** Data source for charges table. */
-  dataSource: MatTableDataSource<any>;
+  dataSource!: MatTableDataSource<any>;
 
   /** Paginator for charges table. */
-  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+  @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
   /** Sorter for charges table. */
-  @ViewChild(MatSort, { static: true }) sort: MatSort;
+  @ViewChild(MatSort, { static: true }) sort!: MatSort;
 
   /**
    * Retrieves the loans data from `resolve`.
@@ -52,7 +52,7 @@ export class ChargesTabComponent implements OnInit {
               private datePipe: DatePipe,
               private router: Router,
               public dialog: MatDialog) {
-    this.route.parent.data.subscribe(( data: { loanDetailsData: any }) => {
+    this.route.parent?.data.subscribe(( data: { loanDetailsData: any }| Data) => {
       this.loanDetails = data.loanDetailsData;
     });
   }

@@ -14,7 +14,7 @@ export class CloseAsRescheduledComponent implements OnInit {
   @Input() dataObject: any;
 
   /** Close form. */
-  closeLoanForm: FormGroup;
+  closeLoanForm!: FormGroup;
   /** Loan Id */
   loanId: any;
   /** Minimum Date allowed. */
@@ -33,7 +33,7 @@ export class CloseAsRescheduledComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private datePipe: DatePipe) {
-      this.loanId = this.route.parent.snapshot.params['loanId'];
+      this.loanId = this.route.parent?.snapshot.params['loanId'];
     }
 
   /**

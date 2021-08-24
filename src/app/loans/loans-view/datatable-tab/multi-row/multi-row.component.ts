@@ -33,18 +33,18 @@ export class MultiRowComponent implements OnInit, OnChanges {
   @Input() dataObject: any;
 
   /** Data Table Name */
-  datatableName: string;
+  datatableName!: string;
   /** Data Table Columns */
   datatableColumns: string[] = [];
   /** Data Table Data */
   datatableData: any;
   /** Loan Id */
-  loanId: string;
+  loanId!: string;
   /** Toggle button visibility */
-  showDeleteBotton: boolean;
+  showDeleteBotton!: boolean;
 
   /** Data Table Reference */
-  @ViewChild('dataTable', { static: true }) dataTableRef: MatTable<Element>;
+  @ViewChild('dataTable', { static: true }) dataTableRef!: MatTable<Element>;
 
   /**
    * Fetches loan Id from parent route params.
@@ -57,7 +57,7 @@ export class MultiRowComponent implements OnInit, OnChanges {
               private datePipe: DatePipe,
               private loansService: LoansService,
               private dialog: MatDialog) {
-    this.loanId = this.route.parent.parent.snapshot.paramMap.get('loanId');
+    this.loanId = this.route.parent?.parent?.snapshot.paramMap.get('loanId') || '';
   }
 
   /**

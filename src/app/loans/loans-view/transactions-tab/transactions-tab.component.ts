@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Data, Router } from '@angular/router';
 import {FormControl} from '@angular/forms';
 
 @Component({
@@ -16,9 +16,9 @@ export class TransactionsTabComponent implements OnInit {
   /** Temporary Transaction Data */
   tempTransaction: any;
   /** Form control to handle accural parameter */
-  hideAccrualsParam: FormControl;
+  hideAccrualsParam!: FormControl;
   /** Stores the status of the loan account */
-  status: string;
+  status!: string;
   /** Columns to be displayed in original schedule table. */
   displayedColumns: string[] = ['id', 'office', 'transactionDate', 'transactionType', 'amount', 'principal', 'interest', 'fee', 'penalties', 'loanBalance', 'actions'];
 
@@ -28,7 +28,7 @@ export class TransactionsTabComponent implements OnInit {
    */
   constructor(private route: ActivatedRoute,
               private router: Router) {
-    this.route.parent.parent.data.subscribe((data: { loanDetailsData: any }) => {
+    this.route.parent?.parent?.data.subscribe((data: { loanDetailsData: any }|Data) => {
       this.transactions = data.loanDetailsData.transactions;
       this.tempTransaction = data.loanDetailsData.transactions;
       this.status = data.loanDetailsData.status.value;

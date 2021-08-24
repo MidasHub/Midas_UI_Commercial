@@ -13,7 +13,7 @@ export class ForeclosureComponent implements OnInit {
 
 
   loanId: any;
-  foreclosureForm: FormGroup;
+  foreclosureForm!: FormGroup;
   /** Minimum Date allowed. */
   minDate = new Date(2000, 0, 1);
   /** Maximum Date allowed. */
@@ -33,7 +33,7 @@ export class ForeclosureComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private datePipe: DatePipe) {
-      this.loanId = this.route.parent.snapshot.params['loanId'];
+      this.loanId = this.route.parent?.snapshot.params['loanId'];
     }
 
   ngOnInit() {
@@ -55,7 +55,7 @@ export class ForeclosureComponent implements OnInit {
   }
 
   onChanges(): void {
-    this.foreclosureForm.get('transactionDate').valueChanges.subscribe(val => {
+    this.foreclosureForm.get('transactionDate')?.valueChanges.subscribe(val => {
       this.retrieveLoanForeclosureTemplate(val);
     });
 

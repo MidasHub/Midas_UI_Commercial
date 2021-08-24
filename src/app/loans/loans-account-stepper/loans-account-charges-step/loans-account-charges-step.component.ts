@@ -29,7 +29,7 @@ export class LoansAccountChargesStepComponent implements OnInit, OnChanges {
   // @Imput loansAccountTemplate: LoansAccountTemplate
   @Input() loansAccountTemplate: any;
   // @Input() loansAccountFormValid: LoansAccountFormValid
-  @Input() loansAccountFormValid: boolean;
+  @Input() loansAccountFormValid?: boolean;
   // @Input collateralOptionsL Collateral Options
   @Input() collateralOptions: any;
 

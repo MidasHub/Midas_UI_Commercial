@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Data } from '@angular/router';
 
 @Component({
   selector: 'mifosx-account-details',
@@ -9,13 +9,13 @@ import { ActivatedRoute } from '@angular/router';
 export class AccountDetailsComponent implements OnInit {
 
   loanDetails: any;
-  dataObject: {
-    property: string,
-    value: string
+  dataObject?: {
+    property: string;
+    value: string;
   }[];
 
   constructor(private route: ActivatedRoute) {
-    this.route.parent.data.subscribe((data: { loanDetailsData: any, }) => {
+    this.route.parent?.data.subscribe((data: { loanDetailsData: any }|Data) => {
       this.loanDetails = data.loanDetailsData;
     });
   }

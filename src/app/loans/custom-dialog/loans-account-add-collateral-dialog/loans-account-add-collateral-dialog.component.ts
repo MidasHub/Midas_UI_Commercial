@@ -15,7 +15,7 @@ export class LoansAccountAddCollateralDialogComponent implements OnInit {
       addButtonText: 'Add'
     };
 
-  addCollateralForm: FormGroup;
+  addCollateralForm!: FormGroup;
   collateralTypeData: any;
 
   constructor(public dialogRef: MatDialogRef<LoansAccountAddCollateralDialogComponent>,

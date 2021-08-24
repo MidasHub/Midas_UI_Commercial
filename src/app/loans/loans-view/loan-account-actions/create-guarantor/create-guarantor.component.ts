@@ -20,7 +20,7 @@ export class CreateGuarantorComponent implements OnInit, AfterViewInit {
 
   @Input() dataObject: any;
   /** New Guarantor Form */
-  newGuarantorForm: FormGroup;
+  newGuarantorForm!: FormGroup;
   /** Loan ID */
   loanId: string;
   /** Relation Types */
@@ -49,7 +49,7 @@ export class CreateGuarantorComponent implements OnInit, AfterViewInit {
     private router: Router,
     private datePipe: DatePipe,
     private clientsService: ClientsService) {
-    this.loanId = this.route.parent.snapshot.params['loanId'];
+    this.loanId = this.route.parent?.snapshot.params['loanId'];
   }
 
   ngOnInit() {
@@ -81,7 +81,7 @@ export class CreateGuarantorComponent implements OnInit, AfterViewInit {
    * Add guarantor detail fields to the UI.
    */
   buildDependencies() {
-    this.newGuarantorForm.get('existingClient').valueChanges.subscribe(() => {
+    this.newGuarantorForm.get('existingClient')?.valueChanges.subscribe(() => {
       this.showClientDetailsForm = !this.showClientDetailsForm;
       if (this.showClientDetailsForm) {
         this.newGuarantorForm.addControl('firstname', new FormControl(''));
@@ -118,7 +118,7 @@ export class CreateGuarantorComponent implements OnInit, AfterViewInit {
    */
   ngAfterViewInit() {
     if (this.newGuarantorForm.value.existingClient) {
-      this.newGuarantorForm.get('name').valueChanges.subscribe((value: string) => {
+      this.newGuarantorForm.get('name')?.valueChanges.subscribe((value: string) => {
         if (value.length >= 2) {
           this.clientsService.getFilteredClients('displayName', 'ASC', true, value)
             .subscribe((data: any) => {

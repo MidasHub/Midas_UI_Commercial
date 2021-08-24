@@ -24,7 +24,7 @@ export class WriteOffPageComponent implements OnInit {
   maxDate = new Date();
 
   /** Write Off form. */
-  writeOffForm: FormGroup;
+  writeOffForm!: FormGroup;
 
   /**
    * Get data from `Resolver`.
@@ -64,7 +64,7 @@ export class WriteOffPageComponent implements OnInit {
     this.writeOffForm.patchValue({
       transactionDate: this.datePipe.transform(transactionDate, dateFormat)
     });
-    const loanId = this.route.parent.snapshot.params['loanId'];
+    const loanId = this.route.parent?.snapshot.params['loanId'];
     const writeOffForm = this.writeOffForm.value;
     delete writeOffForm.amount;
     writeOffForm.locale = 'en';

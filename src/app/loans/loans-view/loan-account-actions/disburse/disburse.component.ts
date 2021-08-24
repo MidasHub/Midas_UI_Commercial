@@ -29,7 +29,7 @@ export class DisburseComponent implements OnInit {
   /** Maximum Date allowed. */
   maxDate = new Date();
   /** Disbursement Loan Form */
-  disbursementLoanForm: FormGroup;
+  disbursementLoanForm!: FormGroup;
 
   /**
    * @param {FormBuilder} formBuilder Form Builder.
@@ -43,7 +43,7 @@ export class DisburseComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private datePipe: DatePipe) {
-    this.loanId = this.route.parent.snapshot.params['loanId'];
+    this.loanId = this.route.parent?.snapshot.params['loanId'];
   }
 
 

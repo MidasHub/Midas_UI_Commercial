@@ -1,6 +1,6 @@
 /** Angular Imports. */
 import { Component } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Data, Router } from '@angular/router';
 
 /**
  * Loan Account Actions component.
@@ -67,7 +67,7 @@ export class LoanAccountActionsComponent {
    */
   constructor(private router: Router,
     private route: ActivatedRoute) {
-      this.route.data.subscribe(( data: { actionButtonData: any }) => {
+      this.route.data.subscribe(( data: { actionButtonData: any }|Data) => {
         this.actionButtonData = data.actionButtonData;
       });
 

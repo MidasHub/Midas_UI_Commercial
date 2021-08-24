@@ -33,7 +33,7 @@ export class PrepayLoanComponent implements OnInit {
   /** Maximum Date allowed. */
   maxDate = new Date();
   /** Prepay Loan form. */
-  prepayLoanForm: FormGroup;
+  prepayLoanForm!: FormGroup;
 
   /**
    * @param {FormBuilder} formBuilder Form Builder.
@@ -47,7 +47,7 @@ export class PrepayLoanComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private datePipe: DatePipe) {
-      this.loanId = this.route.parent.snapshot.params['loanId'];
+      this.loanId = this.route.parent?.snapshot.params['loanId'];
     }
 
   /**

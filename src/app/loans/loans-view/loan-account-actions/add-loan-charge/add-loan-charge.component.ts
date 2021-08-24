@@ -1,7 +1,7 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute, Data } from '@angular/router';
 import { DatePipe } from '@angular/common';
 
 /** Custom Services */
@@ -22,9 +22,9 @@ export class AddLoanChargeComponent implements OnInit {
   /** Maximum Due Date allowed. */
   maxDate = new Date();
   /** Add Loan Charge form. */
-  loanChargeForm: FormGroup;
+  loanChargeForm!: FormGroup;
   /** loan charge options. */
-  loanChargeOptions: {
+  loanChargeOptions!: {
     id: number;
     name: string;
     amount: number;
@@ -54,10 +54,10 @@ export class AddLoanChargeComponent implements OnInit {
               private router: Router,
               private datePipe: DatePipe,
               private loansService: LoansService) {
-    this.route.data.subscribe((data: { actionButtonData: any }) => {
+    this.route.data.subscribe((data: { actionButtonData: any }| Data) => {
       this.loanChargeOptions = data.actionButtonData.chargeOptions;
     });
-    this.loanId = this.route.parent.snapshot.params['loanId'];
+    this.loanId = this.route.parent?.snapshot.params['loanId'];
   }
 
   /**
@@ -69,15 +69,15 @@ export class AddLoanChargeComponent implements OnInit {
       const chargeDetails = this.loanChargeOptions.find(option => {
         return option.id === chargeId;
       });
-      if (chargeDetails.chargeTimeType.id === 2) {
+      if (chargeDetails?.chargeTimeType.id === 2) {
         this.loanChargeForm.addControl('dueDate', new FormControl('', Validators.required));
       } else {
         this.loanChargeForm.removeControl('dueDate');
       }
       this.loanChargeForm.patchValue({
-        'amount': chargeDetails.amount,
-        'chargeCalculation': chargeDetails.chargeCalculationType.value,
-        'chargeTime': chargeDetails.chargeTimeType.value
+        'amount': chargeDetails?.amount,
+        'chargeCalculation': chargeDetails?.chargeCalculationType.value,
+        'chargeTime': chargeDetails?.chargeTimeType.value
       });
     });
   }

@@ -4,7 +4,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource, MatTable } from '@angular/material/table';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Data } from '@angular/router';
 
 /** Custom Services */
 import { environment } from 'environments/environment';
@@ -20,10 +20,10 @@ import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.co
 @Component({
   selector: 'mifosx-loan-documents-tab',
   templateUrl: './loan-documents-tab.component.html',
-  styleUrls: ['./loan-documents-tab.component.scss']
+  styleUrls: ['./loan-documents-tab.component.scss'],
 })
 export class LoanDocumentsTabComponent implements OnInit {
-  @ViewChild('documentsTable') documentsTable: MatTable<Element>;
+  @ViewChild('documentsTable') documentsTable!: MatTable<Element>;
 
   /** Stores the resolved loan documents data */
   loanDocuments: any;
@@ -32,30 +32,28 @@ export class LoanDocumentsTabComponent implements OnInit {
   /** Status of the loan account */
   status: any;
   /** Choice */
-  choice: boolean;
+  choice!: boolean;
 
   /** Columns to be displayed in loan documents table. */
   displayedColumns: string[] = ['name', 'description', 'filename', 'actions'];
   /** Data source for loan documents table. */
-  dataSource: MatTableDataSource<any>;
+  dataSource!: MatTableDataSource<any>;
 
   /** Paginator for codes table. */
-  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
   /** Sorter for codes table. */
-  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatSort) sort!: MatSort;
 
   /**
    * Retrieves the loans data from `resolve`.
    * @param {ActivatedRoute} route Activated Route.
    */
-  constructor(private route: ActivatedRoute,
-    private loansService: LoansService,
-    public dialog: MatDialog) {
-    this.route.data.subscribe((data: { loanDocuments: any }) => {
-      //this.getLoanDocumentsData(data.loanDocuments);
+  constructor(private route: ActivatedRoute, private loansService: LoansService, public dialog: MatDialog) {
+    this.route.data.subscribe((data: { loanDocuments: any } | Data) => {
+      // this.getLoanDocumentsData(data.loanDocuments);
       this.loanDocuments = data.loanDocuments;
     });
-    this.route.parent.data.subscribe((data: { loanDetailsData: any }) => {
+    this.route.parent?.data.subscribe((data: { loanDetailsData: any } | Data) => {
       this.loanDetailsData = data.loanDetailsData;
     });
   }
@@ -73,10 +71,21 @@ export class LoanDocumentsTabComponent implements OnInit {
   getLoanDocumentsData(data: any) {
     data.forEach((ele: any) => {
       let loandocs = {};
-      loandocs = environment.serverUrl + '/loans/' + ele.parentEntityId + '/documents/' + ele.id + '/attachment?tenantIdentifier=' + window.localStorage.getItem("Fineract-Platform-TenantId");
+      loandocs =
+        environment.serverUrl +
+        '/loans/' +
+        ele.parentEntityId +
+        '/documents/' +
+        ele.id +
+        '/attachment?tenantIdentifier=' +
+        window.localStorage.getItem('Fineract-Platform-TenantId');
       ele.docUrl = loandocs;
       if (ele.fileName) {
-        if (ele.fileName.toLowerCase().indexOf('.jpg') !== -1 || ele.fileName.toLowerCase().indexOf('.jpeg') !== -1 || ele.fileName.toLowerCase().indexOf('.png') !== -1) {
+        if (
+          ele.fileName.toLowerCase().indexOf('.jpg') !== -1 ||
+          ele.fileName.toLowerCase().indexOf('.jpeg') !== -1 ||
+          ele.fileName.toLowerCase().indexOf('.png') !== -1
+        ) {
           ele.fileIsImage = true;
         }
       }
@@ -88,35 +97,35 @@ export class LoanDocumentsTabComponent implements OnInit {
     });
     this.loanDocuments = data;
   }
- 
+
   uploadDocument() {
     const uploadDocumentDialogRef = this.dialog.open(LoanAccountLoadDocumentsDialogComponent);
     uploadDocumentDialogRef.afterClosed().subscribe((dialogResponse: any) => {
-      console.log("dialogResponse",dialogResponse);
-      if (dialogResponse) { 
+      console.log('dialogResponse', dialogResponse);
+      if (dialogResponse) {
         const formData: FormData = new FormData();
-        formData.append("name", dialogResponse.fileName);
-        formData.append("description", dialogResponse.description);
-        formData.append("file", dialogResponse.file);
+        formData.append('name', dialogResponse.fileName);
+        formData.append('description', dialogResponse.description);
+        formData.append('file', dialogResponse.file);
         this.loansService.uploadLoanDocument_(this.loanDetailsData.id, formData).subscribe((res: any) => {
-            this.loanDocuments.push({
-              id: res.resourceId,
-              parentEntityType: 'loans',
-              parentEntityId: this.loanDetailsData.id,
-              name: dialogResponse.fileName,
-              fileName: dialogResponse.file.name,
-              description: dialogResponse.description,
-              size:0,
-              type:''
-            });
-            this.dataSource = this.loanDocuments;
+          this.loanDocuments.push({
+            id: res.resourceId,
+            parentEntityType: 'loans',
+            parentEntityId: this.loanDetailsData.id,
+            name: dialogResponse.fileName,
+            fileName: dialogResponse.file.name,
+            description: dialogResponse.description,
+            size: 0,
+            type: '',
+          });
+          this.dataSource = this.loanDocuments;
         });
       }
     });
   }
-   
+
   download(parentEntityId: string, documentId: string) {
-    this.loansService.downloadLoanDocument(parentEntityId, documentId).subscribe(res => {
+    this.loansService.downloadLoanDocument(parentEntityId, documentId).subscribe((res) => {
       const url = window.URL.createObjectURL(res);
       window.open(url);
     });
@@ -124,7 +133,7 @@ export class LoanDocumentsTabComponent implements OnInit {
 
   deleteDocument(documentId: any, index: any) {
     const deleteDocumentDialogRef = this.dialog.open(DeleteDialogComponent, {
-      data: { deleteContext: `document id:${documentId}` }
+      data: { deleteContext: `document id:${documentId}` },
     });
     deleteDocumentDialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {
@@ -135,5 +144,4 @@ export class LoanDocumentsTabComponent implements OnInit {
       }
     });
   }
-
 }

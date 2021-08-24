@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Data } from '@angular/router';
 
 @Component({
   selector: 'mifosx-original-schedule-tab',
@@ -18,7 +18,7 @@ export class OriginalScheduleTabComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route.
    */
   constructor(private route: ActivatedRoute) {
-    this.route.parent.data.subscribe((data: { loanDetailsData: any }) => {
+    this.route.parent?.data.subscribe((data: { loanDetailsData: any }|Data) => {
       this.originalScheduleDetails = data.loanDetailsData.originalSchedule;
     });
   }

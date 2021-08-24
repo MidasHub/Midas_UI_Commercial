@@ -1,7 +1,7 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Data } from '@angular/router';
 
 /**
  * View Transaction Reciept Component
@@ -25,7 +25,7 @@ export class ViewRecieptComponent implements OnInit {
    */
   constructor(private sanitizer: DomSanitizer,
               private route: ActivatedRoute) {
-    this.route.data.subscribe((data: { loansTransactionReciept: any }) => {
+    this.route.data.subscribe((data: { loansTransactionReciept: any }|Data) => {
       this.transactionRecieptData = data.loansTransactionReciept;
     });
   }

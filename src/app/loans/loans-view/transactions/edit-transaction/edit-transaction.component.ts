@@ -1,7 +1,7 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute, Data } from '@angular/router';
 import { DatePipe } from '@angular/common';
 
 /** Custom Services */
@@ -22,9 +22,9 @@ export class EditTransactionComponent implements OnInit {
   /** Maximum Due Date allowed. */
   maxDate = new Date();
   /** Loans account transaction form. */
-  editTransactionForm: FormGroup;
+  editTransactionForm!: FormGroup;
   /** loans account transaction payment options. */
-  paymentTypeOptions: {
+  paymentTypeOptions!: {
     id: number,
     name: string,
     description: string,
@@ -51,11 +51,11 @@ export class EditTransactionComponent implements OnInit {
               private router: Router,
               private datePipe: DatePipe,
               private loansService: LoansService) {
-    this.route.data.subscribe((data: { loansAccountTransactionTemplate: any }) => {
+    this.route.data.subscribe((data: { loansAccountTransactionTemplate: any }|Data) => {
       this.transactionTemplateData = data.loansAccountTransactionTemplate;
       this.paymentTypeOptions = this.transactionTemplateData.paymentTypeOptions;
     });
-    this.loanAccountId = this.route.parent.parent.parent.snapshot.params['loanId'];
+    this.loanAccountId = this.route.parent?.parent?.parent?.snapshot.params['loanId'];
   }
 
   /**

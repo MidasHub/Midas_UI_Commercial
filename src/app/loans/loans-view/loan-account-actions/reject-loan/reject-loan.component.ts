@@ -20,7 +20,7 @@ export class RejectLoanComponent implements OnInit {
   /** Loan Id. */
   loanId: any;
   /** Reject Loan form. */
-  rejectLoanForm: FormGroup;
+  rejectLoanForm!: FormGroup;
   /** Minimum Date allowed. */
   minDate = new Date(2000, 0, 1);
   /** Maximum Date allowed. */
@@ -38,7 +38,7 @@ export class RejectLoanComponent implements OnInit {
               private route: ActivatedRoute,
               private loanService: LoansService,
               private datePipe: DatePipe ) {
-    this.loanId = this.route.parent.snapshot.params['loanId'];
+    this.loanId = this.route.parent?.snapshot.params['loanId'];
   }
 
   ngOnInit() {

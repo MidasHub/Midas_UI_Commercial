@@ -19,7 +19,7 @@ export class UndoDisbursalComponent implements OnInit {
   /** Loan ID. */
   loanId: any;
   /** Undo disbursal form. */
-  note: FormControl;
+  note!: FormControl;
 
   /**
    * @param {FormBuilder} formBuilder Form Builder.
@@ -31,7 +31,7 @@ export class UndoDisbursalComponent implements OnInit {
               private loansService: LoansService,
               private router: Router,
               private route: ActivatedRoute) {
-    this.loanId = this.route.parent.snapshot.params['loanId'];
+    this.loanId = this.route.parent?.snapshot.params['loanId'];
   }
 
   /**

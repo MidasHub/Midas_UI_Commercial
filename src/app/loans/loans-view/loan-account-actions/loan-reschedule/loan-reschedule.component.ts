@@ -14,7 +14,7 @@ export class LoanRescheduleComponent implements OnInit {
 
   @Input() dataObject: any;
   loanId: any;
-  rescheduleLoanForm: FormGroup;
+  rescheduleLoanForm!: FormGroup;
 
   /** Minimum Date allowed. */
   minDate = new Date(2000, 0, 1);
@@ -38,7 +38,7 @@ export class LoanRescheduleComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private datePipe: DatePipe) {
-      this.loanId = this.route.parent.snapshot.params['loanId'];
+      this.loanId = this.route.parent?.snapshot.params['loanId'];
     }
 
   ngOnInit() {

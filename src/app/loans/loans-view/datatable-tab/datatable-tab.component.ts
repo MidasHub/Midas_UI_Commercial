@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Data } from '@angular/router';
 
 @Component({
   selector: 'mifosx-datatable-tab',
@@ -11,14 +11,14 @@ export class DatatableTabComponent {
     /** Loan Datatable */
     loanDatatable: any;
     /** Multi Row Datatable Flag */
-    multiRowDatatableFlag: boolean;
+    multiRowDatatableFlag?: boolean;
 
     /**
      * Fetches data table data from `resolve`
      * @param {ActivatedRoute} route Activated Route.
      */
     constructor(private route: ActivatedRoute) {
-      this.route.data.subscribe((data: { loanDatatable: any }) => {
+      this.route.data.subscribe((data: { loanDatatable: any }| Data) => {
         this.loanDatatable = data.loanDatatable;
         this.multiRowDatatableFlag = this.loanDatatable.columnHeaders[0].columnName === 'id' ? true : false;
       });

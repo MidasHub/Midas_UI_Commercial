@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Data } from '@angular/router';
 
 @Component({
   selector: 'mifosx-repayment-schedule-tab',
@@ -11,7 +11,7 @@ export class RepaymentScheduleTabComponent implements OnInit {
   /** Loan Repayment Schedule Details Data */
   repaymentScheduleDetails: any;
   /** Stores if there is any waived amount */
-  isWaived: boolean;
+  isWaived!: boolean;
   /** Columns to be displayed in original schedule table. */
   displayedColumns: string[] = ['number', 'days', 'date', 'paiddate', 'check', 'principalDue', 'balanceOfLoan', 'interest', 'fees', 'penalties', 'due', 'paid', 'inadvance', 'late', 'waived', 'outstanding'];
 
@@ -20,7 +20,7 @@ export class RepaymentScheduleTabComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route.
    */
   constructor(private route: ActivatedRoute) {
-    this.route.parent.data.subscribe((data: { loanDetailsData: any }) => {
+    this.route.parent?.data.subscribe((data: { loanDetailsData: any }|Data) => {
       this.repaymentScheduleDetails = data.loanDetailsData.repaymentSchedule;
     });
   }

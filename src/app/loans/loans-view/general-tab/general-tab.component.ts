@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Data } from '@angular/router';
 import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
@@ -13,7 +13,7 @@ export class GeneralTabComponent implements OnInit {
   status: any;
   loanSummaryColumns: string[] = ['Empty', 'Original', 'Paid', 'Waived', 'Written Off', 'Outstanding', 'Over Due'];
   loanDetailsColumns: string[] = ['Key', 'Value'];
-  loanSummaryTableData: {
+  loanSummaryTableData!: {
     'property': string,
     'original': string,
     'paid': string,
@@ -22,17 +22,17 @@ export class GeneralTabComponent implements OnInit {
     'outstanding': string,
     'overdue': string
   }[];
-  loanDetailsTableData: {
+  loanDetailsTableData!: {
     'key': string,
     'value'?: string
   }[];
 
   /** Data source for loans summary table. */
-  dataSource: MatTableDataSource<any>;
-  detailsDataSource: MatTableDataSource<any>;
+  dataSource!: MatTableDataSource<any>;
+  detailsDataSource!: MatTableDataSource<any>;
 
   constructor(private route: ActivatedRoute) {
-    this.route.parent.data.subscribe((data: { loanDetailsData: any, }) => {
+    this.route.parent?.data.subscribe((data: { loanDetailsData: any, }|Data) => {
       this.loanDetails = data.loanDetailsData;
     });
   }
@@ -159,7 +159,7 @@ export class GeneralTabComponent implements OnInit {
     return true;
   }
 
-  showDisbursedAmountBasedOnStatus = function() {
+  showDisbursedAmountBasedOnStatus() {
     if (this.status === 'Submitted and pending approval' || this.status === 'Withdrawn by applicant' || this.status === 'Rejected' ||
         this.status === 'Approved') {
         return false;
