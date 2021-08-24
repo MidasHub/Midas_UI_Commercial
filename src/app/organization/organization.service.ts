@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 
 /** rxjs Imports */
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 
 /** Custom Imports. */
 import { SettingsService } from 'app/settings/settings.service';
@@ -307,7 +307,7 @@ export class OrganizationService {
    * @param {string} adhocQueryId Adhoc Query ID of adhoc query.
    * @returns {Observable<any>} Adhoc query.
    */
-  getAdhocQuery(adhocQueryId: string): Observable<any> {
+  getAdhocQuery(adhocQueryId?: string|null): Observable<any> {
     return this.http.get(`/adhocquery/${adhocQueryId}`);
   }
 
@@ -322,7 +322,7 @@ export class OrganizationService {
    * @param {string} adhocQueryId Adhoc Query ID of adhoc query.
    * @returns {Observable<any>} Adhoc query and template.
    */
-  getAdhocQueryAndTemplate(adhocQueryId: string): Observable<any> {
+  getAdhocQueryAndTemplate(adhocQueryId?: string|null): Observable<any> {
     const httpParams = new HttpParams().set('template', 'true');
     return this.http.get(`/adhocquery/${adhocQueryId}`, { params: httpParams });
   }
@@ -693,9 +693,13 @@ export class OrganizationService {
    * @param {string} entity Entity to get imports data for.
    * @returns {Observable<any>} Imports data.
    */
-  getImports(entity: string): Observable<any> {
+  getImports(entity?: string): Observable<any> {
+    if (entity) {
     const httpParams = new HttpParams().set('entityType', entity);
     return this.http.get('/imports', { params: httpParams } );
+    } else {
+      return of();
+    }
   }
 
   /**

@@ -1,7 +1,7 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute, Data } from '@angular/router';
 
 /** Custom Services */
 import { OrganizationService } from '../../organization.service';
@@ -17,7 +17,7 @@ import { OrganizationService } from '../../organization.service';
 export class CreateAdhocQueryComponent implements OnInit {
 
   /** Adhoc Query form. */
-  adhocQueryForm: FormGroup;
+  adhocQueryForm!: FormGroup;
   /** Adhoc Query template data. */
   adhocQueryTemplateData: any;
   /** Report run frequencies data. */
@@ -34,7 +34,7 @@ export class CreateAdhocQueryComponent implements OnInit {
               private organizationService: OrganizationService,
               private route: ActivatedRoute,
               private router: Router) {
-    this.route.data.subscribe((data: { adhocQueryTemplate: any }) => {
+    this.route.data.subscribe((data: { adhocQueryTemplate: any }|Data) => {
       this.adhocQueryTemplateData = data.adhocQueryTemplate;
     });
   }
@@ -67,7 +67,7 @@ export class CreateAdhocQueryComponent implements OnInit {
    * Sets the conditional controls of the adhoc query form
    */
   setConditionalControls() {
-    this.adhocQueryForm.get('reportRunFrequency').valueChanges.subscribe(reportRunFrequencyId => {
+    this.adhocQueryForm.get('reportRunFrequency')?.valueChanges.subscribe(reportRunFrequencyId => {
       if (reportRunFrequencyId === 5) {
         this.adhocQueryForm.addControl('reportRunEvery', new FormControl('', [Validators.required, Validators.min(1)]));
       } else {

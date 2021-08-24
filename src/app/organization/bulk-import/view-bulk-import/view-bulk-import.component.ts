@@ -25,11 +25,11 @@ export class ViewBulkImportComponent implements OnInit {
   /** staff Data */
   staffData: any;
   /** Entity Template */
-  template: File;
+  template!: File;
   /** imports Data */
   importsData: any;
   /** bulk-import form. */
-  bulkImportForm: FormGroup;
+  bulkImportForm!: FormGroup;
   /** array of deined bulk-imports */
   bulkImportsArray = BulkImports;
   /** bulk-import which user navigated to */
@@ -50,11 +50,11 @@ export class ViewBulkImportComponent implements OnInit {
   ];
 
   /** Paginator for imports table. */
-  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+  @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
   /** Sorter for imports table. */
-  @ViewChild(MatSort, { static: true }) sort: MatSort;
+  @ViewChild(MatSort, { static: true }) sort!: MatSort;
   /** Imports table reference */
-  @ViewChild('importsTable', { static: true }) importsTableRef: MatTable<Element>;
+  @ViewChild('importsTable', { static: true }) importsTableRef!: MatTable<Element>;
 
   /**
    * fetches offices and imports data from resolve
@@ -98,7 +98,7 @@ export class ViewBulkImportComponent implements OnInit {
    * Subscribe to value changes and fetches select options accordingly.
    */
   buildDependencies() {
-    this.bulkImportForm.get('officeId').valueChanges.subscribe((value: any) => {
+    this.bulkImportForm.get('officeId')?.valueChanges.subscribe((value: any) => {
       if (this.bulkImport.formFields >= 2) {
          this.organizationService.getStaff(value).subscribe( (data: any) => {
           this.staffData = data;
@@ -120,11 +120,11 @@ export class ViewBulkImportComponent implements OnInit {
    * Gets bulk import's downloadable template from API.
    */
   downloadTemplate() {
-    const officeId = this.bulkImportForm.get('officeId').value;
-    const staffId = this.bulkImportForm.get('staffId').value;
+    const officeId = this.bulkImportForm.get('officeId')?.value;
+    const staffId = this.bulkImportForm.get('staffId')?.value;
     let legalFormType = '';
     /** Only for Client Bulk Imports */
-    switch (this.bulkImportForm.get('legalForm').value) {
+    switch (this.bulkImportForm.get('legalForm')?.value) {
       case 'Person':
           legalFormType = 'CLIENTS_PERSON';
         break;

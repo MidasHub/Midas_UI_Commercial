@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Data, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 
 /** Custom Services */
@@ -33,7 +33,7 @@ export class ViewAdhocQueryComponent implements OnInit {
               private route: ActivatedRoute,
               private router: Router,
               private dialog: MatDialog) {
-    this.route.data.subscribe((data: { adhocQuery: any }) => {
+    this.route.data.subscribe((data: { adhocQuery: any }|Data) => {
       this.adhocQueryData = data.adhocQuery;
     });
   }
@@ -45,7 +45,7 @@ export class ViewAdhocQueryComponent implements OnInit {
    * Retrieves the report run frequency value from id
    * @returns {string} Report run frequency value.
    */
-  get reportRunFrequency(): string {
+  get reportRunFrequency(): string | any {
     for (const reportRunFrequency of this.adhocQueryData.reportRunFrequencies) {
       if (reportRunFrequency.id === this.adhocQueryData.reportRunFrequency) {
         return reportRunFrequency.value;

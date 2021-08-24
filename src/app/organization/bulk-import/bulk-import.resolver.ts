@@ -31,7 +31,7 @@ export class BulkImportResolver implements Resolve<Object> {
    */
   getEntityName(importName: string) {
     const bulkImport = this.bulkImportsArray.find((entry: any) => importName === entry.name);
-    return bulkImport.entityType;
+    return bulkImport?.entityType;
   }
 
   /**

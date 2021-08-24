@@ -1,7 +1,7 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute, Data } from '@angular/router';
 
 /** Custom Services */
 import { OrganizationService } from '../../organization.service';
@@ -17,7 +17,7 @@ import { OrganizationService } from '../../organization.service';
 export class EditAdhocQueryComponent implements OnInit {
 
   /** Edit Adhoc Query form. */
-  editAdhocQueryForm: FormGroup;
+  editAdhocQueryForm!: FormGroup;
   /** Adhoc Query template data. */
   adhocQueryTemplateData: any;
   /** Report run frequencies data. */
@@ -34,7 +34,7 @@ export class EditAdhocQueryComponent implements OnInit {
               private organizationService: OrganizationService,
               private route: ActivatedRoute,
               private router: Router) {
-    this.route.data.subscribe((data: { adhocQueryAndTemplate: any }) => {
+    this.route.data.subscribe((data: { adhocQueryAndTemplate: any }|Data) => {
       this.adhocQueryTemplateData = data.adhocQueryAndTemplate;
     });
   }
@@ -67,15 +67,15 @@ export class EditAdhocQueryComponent implements OnInit {
    * Sets the conditional controls of the adhoc query form
    */
   setConditionalControls() {
-    this.editAdhocQueryForm.get('reportRunFrequency').valueChanges.subscribe(reportRunFrequencyId => {
+    this.editAdhocQueryForm.get('reportRunFrequency')?.valueChanges.subscribe(reportRunFrequencyId => {
       if (reportRunFrequencyId === 5) {
         this.editAdhocQueryForm.addControl('reportRunEvery', new FormControl('', [Validators.required, Validators.min(1)]));
-        this.editAdhocQueryForm.get('reportRunEvery').patchValue(this.adhocQueryTemplateData.reportRunEvery);
+        this.editAdhocQueryForm.get('reportRunEvery')?.patchValue(this.adhocQueryTemplateData.reportRunEvery);
       } else {
         this.editAdhocQueryForm.removeControl('reportRunEvery');
       }
     });
-    this.editAdhocQueryForm.get('reportRunFrequency').patchValue(this.adhocQueryTemplateData.reportRunFrequency);
+    this.editAdhocQueryForm.get('reportRunFrequency')?.patchValue(this.adhocQueryTemplateData.reportRunFrequency);
   }
 
   /**
