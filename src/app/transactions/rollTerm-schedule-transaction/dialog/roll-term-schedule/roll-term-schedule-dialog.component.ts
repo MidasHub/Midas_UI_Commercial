@@ -110,10 +110,12 @@ export class RollTermScheduleDialogComponent implements OnInit {
       this.isLoading = false;
       this.dataSource = result?.result.bookingInternalResponseDto?.listBookingInternalEntities;
       this.transactionInfo = result?.result.bookingInternalResponseDto?.billPosTransactionDailyEntity;
-      this.transactionInfo.feeAmount = (
-        (this.transactionInfo.feePercentage / 100) *
-        this.transactionInfo?.reqAmount
-      ).toFixed(0);
+      if (!this.transactionInfo.feeAmount) {
+        this.transactionInfo.feeAmount = (
+          (this.transactionInfo.feePercentage / 100) *
+          this.transactionInfo?.reqAmount
+        ).toFixed(0);
+      }
       this.transactionInfo.totalAmountGet = 0;
       this.transactionInfo.totalAmountPaid = 0;
       this.dataSource.forEach((element) => {
@@ -207,43 +209,56 @@ export class RollTermScheduleDialogComponent implements OnInit {
   }
 
   calculateTotalBookingAmount(indexEdit: number) {
-    let lastAmountBooking = 0;
-    let totalBookingAmountTmp = 0;
-    let bookingEdited = this.dataSource[indexEdit];
-    for (let index = 0; index < this.dataSource.length; index++) {
-      totalBookingAmountTmp += this.dataSource[index].bookingAmount;
-    }
-    lastAmountBooking = this.dataSource[this.dataSource.length - 1].bookingAmount;
-
-    // check valid amount change
-    if (totalBookingAmountTmp > this.transactionInfo.reqAmount + lastAmountBooking) {
-      const message = "Tổng số tiền lịch Advance sau điều chỉnh không thể vượt quá giá trị khoản Advance! ";
-      this.alertService.alert({
-        msgClass: "cssDanger",
-        message: message,
-      });
-
-      this.getRollTermScheduleAndCardDueDayInfo(this.rollTermId);
-      return;
-    } else {
-      if (bookingEdited.trnRefNo && bookingEdited.totalGet > bookingEdited.bookingAmount) {
-        const message = "Số tiền điều chỉnh không thể nhỏ hơn số tiền đã thu hồi! ";
-        this.alertService.alert({
-          msgClass: "cssDanger",
-          message: message,
-        });
-
+    const dialog = this.dialog.open(ConfirmDialogComponent, {
+      data: {
+        message: "Bạn chắc chắn muốn chỉnh sửa dòng lịch Advance này",
+        title: "Xác nhận",
+      },
+    });
+    dialog.afterClosed().subscribe((data: any) => {
+      if (!data) {
         this.getRollTermScheduleAndCardDueDayInfo(this.rollTermId);
         return;
       } else {
-        // save change amount of booking
-        this.editBookingRow(bookingEdited);
-        // set lastAmount of booking
-        lastAmountBooking = this.transactionInfo.reqAmount - totalBookingAmountTmp;
-        this.dataSource[this.dataSource.length - 1].bookingAmount += lastAmountBooking;
-        this.editBookingRow(this.dataSource[this.dataSource.length - 1]);
+        let lastAmountBooking = 0;
+        let totalBookingAmountTmp = 0;
+        let bookingEdited = this.dataSource[indexEdit];
+        for (let index = 0; index < this.dataSource.length; index++) {
+          totalBookingAmountTmp += this.dataSource[index].bookingAmount;
+        }
+        lastAmountBooking = this.dataSource[this.dataSource.length - 1].bookingAmount;
+
+        // check valid amount change
+        if (totalBookingAmountTmp > this.transactionInfo.reqAmount + lastAmountBooking) {
+          const message = "Tổng số tiền lịch Advance sau điều chỉnh không thể vượt quá giá trị khoản Advance! ";
+          this.alertService.alert({
+            msgClass: "cssDanger",
+            message: message,
+          });
+
+          this.getRollTermScheduleAndCardDueDayInfo(this.rollTermId);
+          return;
+        } else {
+          if (bookingEdited.trnRefNo && bookingEdited.totalGet > bookingEdited.bookingAmount) {
+            const message = "Số tiền điều chỉnh không thể nhỏ hơn số tiền đã thu hồi! ";
+            this.alertService.alert({
+              msgClass: "cssDanger",
+              message: message,
+            });
+
+            this.getRollTermScheduleAndCardDueDayInfo(this.rollTermId);
+            return;
+          } else {
+            // save change amount of booking
+            this.editBookingRow(bookingEdited);
+            // set lastAmount of booking
+            lastAmountBooking = this.transactionInfo.reqAmount - totalBookingAmountTmp;
+            this.dataSource[this.dataSource.length - 1].bookingAmount += lastAmountBooking;
+            this.editBookingRow(this.dataSource[this.dataSource.length - 1]);
+          }
+        }
       }
-    }
+    });
   }
 
   addBookingRow = function () {
@@ -293,23 +308,23 @@ export class RollTermScheduleDialogComponent implements OnInit {
   }
 
   editBookingRow(booking: any) {
-    const dialog = this.dialog.open(ConfirmDialogComponent, {
-      data: {
-        message: "Bạn chắc chắn muốn chỉnh sửa dòng lịch Advance này",
-        title: "Xác nhận",
-      },
+    // const dialog = this.dialog.open(ConfirmDialogComponent, {
+    //   data: {
+    //     message: "Bạn chắc chắn muốn chỉnh sửa dòng lịch Advance này",
+    //     title: "Xác nhận",
+    //   },
+    // });
+    // dialog.afterClosed().subscribe((data: any) => {
+    //   if (data) {
+    let BookingRollTerm = {
+      bookingInternalId: booking.refid,
+      amountBooking: booking.bookingAmount,
+      txnDate: this.datePipe.transform(booking.txnDate, "dd/MM/yyyy"),
+    };
+    this.bookingService.editBookingInternalOnRollTermSchedule(BookingRollTerm).subscribe((data: any) => {
+      this.getRollTermScheduleAndCardDueDayInfo(this.rollTermId);
     });
-    dialog.afterClosed().subscribe((data: any) => {
-      if (data) {
-        let BookingRollTerm = {
-          bookingInternalId: booking.refid,
-          amountBooking: booking.bookingAmount,
-          txnDate: this.datePipe.transform(booking.txnDate, "dd/MM/yyyy"),
-        };
-        this.bookingService.editBookingInternalOnRollTermSchedule(BookingRollTerm).subscribe((data: any) => {
-          this.getRollTermScheduleAndCardDueDayInfo(this.rollTermId);
-        });
-      }
-    });
+    //   }
+    // });
   }
 }

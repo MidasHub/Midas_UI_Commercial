@@ -65,7 +65,7 @@
 
         <ng-container matColumnDef="txnDate">
           <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef>Ngày giao dịch</th>
-          <td mat-cell fxHide fxShow.gt-md *matCellDef="let booking">
+          <td mat-cell fxHide fxShow.gt-md *matCellDef="let booking; let i = dataIndex">
             <!-- {{ booking.txnDate | date: "dd-MM-yyyy" }} -->
             <mat-form-field>
               <input
@@ -75,7 +75,8 @@
                 required
                 [matDatepicker]="transactionDatePicker"
                 [(ngModel)]="booking.txnDate"
-                (dateChange)="editBookingRow(booking)"
+                (dateChange)="calculateTotalBookingAmount(i)"
+
               />
               <mat-datepicker-toggle
                 [disabled]="booking.trnRefNo"
@@ -141,7 +142,7 @@
               "
             > -->
             <mat-icon
-              *ngIf="permitFee && (transaction.totalPaid < transaction.bookingAmount)  "
+              *ngIf="permitFee && transaction.totalPaid < transaction.bookingAmount"
               style="color: red"
               title="Chi tiền"
               mat-dialog-close

@@ -248,7 +248,7 @@
           </label>
           <br />
           <label style="color: green" for="">
-            {{ ((journalEntry?.feePercentage / 100) * journalEntry?.reqAmount).toFixed(0) | money }}
+            {{ (journalEntry?.feeAmount ? journalEntry?.feeAmount : ((journalEntry?.feePercentage / 100) * journalEntry?.reqAmount).toFixed(0)) | money }}
           </label>
         </td>
       </ng-container>
