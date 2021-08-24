@@ -20,7 +20,7 @@ import { TourService } from 'ngx-tour-md-menu';
   styleUrls: ['./shell.component.scss'],
 })
 export class ShellComponent implements OnInit, OnDestroy {
-  isDesktop: Boolean;
+  isDesktop?: Boolean;
   /** Subscription to breakpoint observer for handset. */
   isHandset$: Observable<boolean> = this.breakpointObserver
     .observe(Breakpoints.Handset)
@@ -28,9 +28,9 @@ export class ShellComponent implements OnInit, OnDestroy {
   /** Sets the initial state of sidenav as collapsed. Not collapsed if false. */
   sidenavCollapsed = true;
   /** Progress bar mode. */
-  progressBarMode: string;
+  progressBarMode!: string;
   /** Subscription to progress bar. */
-  progressBar$: Subscription;
+  progressBar$!: Subscription;
 
   /**
    * @param {BreakpointObserver} breakpointObserver Breakpoint Observer to detect screen size.

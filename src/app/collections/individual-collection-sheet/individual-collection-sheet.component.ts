@@ -42,13 +42,13 @@ export class IndividualCollectionSheetComponent implements OnInit {
   /** Maximum Date allowed. */
   maxDate = new Date();
   /** Collection Sheet form. */
-  collectionSheetForm: FormGroup;
+  collectionSheetForm!: FormGroup;
   /** Toggles b/w form and table */
   isCollapsed = false;
   /** Collections Sheet Data */
   collectionSheetData: any;
   /** checks and stores the local storage values */
-  Success: boolean;
+  success!: boolean;
   /** Bulk Disbursement Transactions Data */
   bulkDisbursementTransactionsData = {};
   /** Bulk Repayment Transactions Data */
@@ -64,15 +64,15 @@ export class IndividualCollectionSheetComponent implements OnInit {
   savingsDisplayedColumns: string[] = ['depositAccount', 'savingsAccountNo', 'productName', 'clientName', 'totalDue', 'actions'];
 
   /** Data source for loans table. */
-  loansDataSource: MatTableDataSource<any>;
+  loansDataSource!: MatTableDataSource<any>;
   /** Data source for savings table. */
-  savingsDataSource: MatTableDataSource<any>;
+  savingsDataSource!: MatTableDataSource<any>;
 
 
   /** Paginator for table. */
-  @ViewChild(MatPaginator, { read: true }) paginator: MatPaginator;
+  @ViewChild(MatPaginator, { read: true }) paginator: MatPaginator | any;
   /** Sorter for table. */
-  @ViewChild(MatSort, { read: true }) sort: MatSort;
+  @ViewChild(MatSort, { read: true }) sort: MatSort | any;
 
   /**
    * Retrieves the offices data from `resolve`.
@@ -89,7 +89,7 @@ export class IndividualCollectionSheetComponent implements OnInit {
     private datePipe: DatePipe,
     public dialog: MatDialog,
     private router: Router, ) {
-    this.route.data.subscribe((data: { officesData: any }) => {
+    this.route.data.subscribe((data: { officesData: any }|any) => {
       this.officesData = data.officesData;
     });
   }
@@ -97,8 +97,8 @@ export class IndividualCollectionSheetComponent implements OnInit {
   ngOnInit() {
     if (localStorage.getItem('Success')) {
       localStorage.removeItem('Success');
-      this.Success = true;
-      setTimeout(() => { this.Success = false; }, 3000);
+      this.success = true;
+      setTimeout(() => { this.success = false; }, 3000);
     }
     this.createCollectionSheetForm();
     this.buildDependencies();
@@ -119,7 +119,7 @@ export class IndividualCollectionSheetComponent implements OnInit {
    * Checks for the office id value change
    */
   buildDependencies() {
-    this.collectionSheetForm.get('officeId').valueChanges.subscribe((value: any) => {
+    this.collectionSheetForm.get('officeId')?.valueChanges.subscribe((value: any) => {
       this.collectionsService.getStaffs(value).subscribe((response: any) => {
         this.loanOfficerData = response;
       });

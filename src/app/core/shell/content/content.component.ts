@@ -10,7 +10,7 @@ import { Component, Input, OnInit } from '@angular/core';
   styleUrls: ['./content.component.scss']
 })
 export class ContentComponent implements OnInit {
-  @Input() isDesktop: boolean;
+  @Input() isDesktop?: boolean;
   constructor() { }
 
   ngOnInit() {

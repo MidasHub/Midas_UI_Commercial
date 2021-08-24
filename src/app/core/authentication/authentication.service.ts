@@ -1,27 +1,27 @@
 /** Angular Imports */
-import { Injectable } from "@angular/core";
-import { HttpClient, HttpParams, HttpHeaders } from "@angular/common/http";
+import { Injectable } from '@angular/core';
+import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 
 /** rxjs Imports */
-import { Observable, of } from "rxjs";
-import { map } from "rxjs/operators";
+import { Observable, of } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 /** Custom Services */
-import { AlertService } from "../alert/alert.service";
+import { AlertService } from '../alert/alert.service';
 
 /** Custom Interceptors */
-import { AuthenticationInterceptor } from "./authentication.interceptor";
+import { AuthenticationInterceptor } from './authentication.interceptor';
 
 /** Environment Configuration */
-import { environment } from "../../../environments/environment";
+import { environment } from '../../../environments/environment';
 
 /** Custom Models */
-import { LoginContext } from "./login-context.model";
-import { Credentials } from "./credentials.model";
-import { OAuth2Token } from "./o-auth2-token.model";
-import { MidasClientService } from "app/midas-client/midas-client.service";
-import { BanksService } from "app/banks/banks.service";
-import { OrganizationService } from "app/organization/organization.service";
+import { LoginContext } from './login-context.model';
+import { Credentials } from './credentials.model';
+import { OAuth2Token } from './o-auth2-token.model';
+import { MidasClientService } from 'app/midas-client/midas-client.service';
+import { BanksService } from 'app/banks/banks.service';
+import { OrganizationService } from 'app/organization/organization.service';
 
 /**
  * Authentication workflow.
@@ -40,27 +40,27 @@ export class AuthenticationService {
   private storage: any;
   /** User credentials. */
 
-  private credentials: Credentials;
+  private credentials?: Credentials;
   /** Key to store credentials in storage. */
-  private credentialsStorageKey = "midasCredentials";
+  private credentialsStorageKey = 'midasCredentials';
   /** Key to store oauth token details in storage. */
-  private oAuthTokenDetailsStorageKey = "mifosXOAuthTokenDetails";
+  private oAuthTokenDetailsStorageKey = 'mifosXOAuthTokenDetails';
   /** Key to store two factor authentication token in storage. */
-  private twoFactorAuthenticationTokenStorageKey = "mifosXTwoFactorAuthenticationToken";
+  private twoFactorAuthenticationTokenStorageKey = 'mifosXTwoFactorAuthenticationToken';
 
   /** Const for authen message */
   authenMsg = {
-    starting: { type: "Authentication Start", message: "Please wait..." },
-    twoFactorRequired: { type: "Two Factor Authentication Required", message: "Two Factor Authentication Required" },
-    expiredPassword: { type: "Password Expired", message: "Your password has expired, please reset your password!" },
-    loginSuccess(cus_username: string = "") {
+    starting: { type: 'Authentication Start', message: 'Please wait...' },
+    twoFactorRequired: { type: 'Two Factor Authentication Required', message: 'Two Factor Authentication Required' },
+    expiredPassword: { type: 'Password Expired', message: 'Your password has expired, please reset your password!' },
+    loginSuccess(cus_username: string = '') {
       return {
-        type: "Authentication Success",
+        type: 'Authentication Success',
         message: `${cus_username} successfully logged in!`,
-        msgClass: "cssSuccess",
+        msgClass: 'cssSuccess',
       };
     },
-    resetPass: { type: "Password Reset Success", message: `Your password was sucessfully reset!` },
+    resetPass: { type: 'Password Reset Success', message: `Your password was sucessfully reset!` },
   };
 
   /**
@@ -81,7 +81,7 @@ export class AuthenticationService {
     this.rememberMe = false;
     this.storage = sessionStorage;
     const savedCredentials = JSON.parse(
-      sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey)
+      sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey) || ''
     );
     if (savedCredentials) {
       if (savedCredentials.rememberMe) {
@@ -113,28 +113,28 @@ export class AuthenticationService {
 
     if (environment.oauth.enabled) {
       const body = new URLSearchParams();
-      body.append("client_id", environment.oauth.clientID);
-      body.append("grant_type", "password");
-      body.append("client_secret", environment.oauth.clientSecrect);
-      body.append("username", loginContext.username);
-      body.append("password", loginContext.password);
+      body.append('client_id', environment.oauth.clientID);
+      body.append('grant_type', 'password');
+      body.append('client_secret', environment.oauth.clientSecrect);
+      body.append('username', loginContext.username);
+      body.append('password', loginContext.password);
       let httpHeader = new HttpHeaders();
-      httpHeader = httpHeader.set("Content-Type", "application/x-www-form-urlencoded");
+      httpHeader = httpHeader.set('Content-Type', 'application/x-www-form-urlencoded');
 
       return this.http
         .disableApiPrefix()
         .post(`${environment.oauth.serverUrl}/oauth/token`, body.toString(), { headers: httpHeader })
         .pipe(
-          map((tokenResponse: OAuth2Token) => {
+          map((tokenResponse: OAuth2Token | any) => {
             this.getUserDetails(tokenResponse);
             return of(true);
           })
         );
     } else {
       return this.http
-        .post("/authentication", { username: loginContext.username, password: loginContext.password })
+        .post('/authentication', { username: loginContext.username, password: loginContext.password })
         .pipe(
-          map((credentials: Credentials) => {
+          map((credentials: Credentials | any) => {
             this.onLoginSuccess(credentials);
             return of(true);
           })
@@ -149,9 +149,9 @@ export class AuthenticationService {
    * @param {OAuth2Token} tokenResponse OAuth2 Token details.
    */
   private getUserDetails(tokenResponse: OAuth2Token) {
-    const httpParams = new HttpParams().set("access_token", tokenResponse.access_token);
+    const httpParams = new HttpParams().set('access_token', tokenResponse.access_token);
     this.refreshTokenOnExpiry(tokenResponse.expires_in);
-    this.http.get("/userdetails", { params: httpParams }).subscribe((credentials: Credentials) => {
+    this.http.get('/userdetails', { params: httpParams }).subscribe((credentials: Credentials | any) => {
       this.onLoginSuccess(credentials);
       if (!credentials.shouldRenewPassword) {
         this.storage.setItem(this.oAuthTokenDetailsStorageKey, JSON.stringify(tokenResponse));
@@ -179,18 +179,18 @@ export class AuthenticationService {
     // httpParams = httpParams.set('client_secret', '123');
     // httpParams = httpParams.set('refresh_token', oAuthRefreshToken);
     const body = new URLSearchParams();
-    body.append("client_id", environment.oauth.clientID);
-    body.append("grant_type", "refresh_token");
-    body.append("client_secret", environment.oauth.clientSecrect);
-    body.append("refresh_token", oAuthRefreshToken);
+    body.append('client_id', environment.oauth.clientID);
+    body.append('grant_type', 'refresh_token');
+    body.append('client_secret', environment.oauth.clientSecrect);
+    body.append('refresh_token', oAuthRefreshToken);
 
     let httpHeader = new HttpHeaders();
-    httpHeader = httpHeader.set("Content-Type", "application/x-www-form-urlencoded");
+    httpHeader = httpHeader.set('Content-Type', 'application/x-www-form-urlencoded');
 
     this.http
       .disableApiPrefix()
       .post(`${environment.oauth.serverUrl}/oauth/token`, body.toString(), { headers: httpHeader })
-      .subscribe((tokenResponse: OAuth2Token) => {
+      .subscribe((tokenResponse: OAuth2Token | any) => {
         this.storage.setItem(this.oAuthTokenDetailsStorageKey, JSON.stringify(tokenResponse));
         this.authenticationInterceptor.setAuthorizationToken(tokenResponse.access_token);
         this.refreshTokenOnExpiry(tokenResponse.expires_in);
@@ -211,11 +211,18 @@ export class AuthenticationService {
    * @param {Credentials} credentials Authenticated user credentials.
    */
   private onLoginSuccess(credentials: Credentials) {
-
     if (environment.oauth.enabled) {
-      this.authenticationInterceptor.setAuthorizationToken(credentials.accessToken);
+      if (credentials.accessToken) {
+        this.authenticationInterceptor.setAuthorizationToken(credentials.accessToken);
+      } else {
+        this.alertService.alert({ type: 'Notification', message: 'Please provide the access token ' });
+      }
     } else {
-      this.authenticationInterceptor.setAuthorizationToken(credentials.base64EncodedAuthenticationKey);
+      if (credentials.base64EncodedAuthenticationKey) {
+        this.authenticationInterceptor.setAuthorizationToken(credentials.base64EncodedAuthenticationKey);
+      } else {
+        this.alertService.alert({ type: 'Notification', message: 'Please provide the authen key ' });
+      }
     }
     if (credentials.isTwoFactorAuthenticationRequired) {
       this.credentials = credentials;
@@ -239,7 +246,7 @@ export class AuthenticationService {
   logout(): Observable<boolean> {
     const twoFactorToken = JSON.parse(this.storage.getItem(this.twoFactorAuthenticationTokenStorageKey));
     if (twoFactorToken) {
-      this.http.post("/twofactor/invalidate", { token: twoFactorToken.token }).subscribe();
+      this.http.post('/twofactor/invalidate', { token: twoFactorToken.token }).subscribe();
       this.authenticationInterceptor.removeTwoFactorAuthorization();
     }
     this.authenticationInterceptor.removeAuthorization();
@@ -247,14 +254,13 @@ export class AuthenticationService {
     return of(true);
   }
 
-
   /**
    * Checks if the setting module available.
    * @returns {boolean} True if the two factor access token is valid or two factor authentication is not required.
    */
-  checkAppModuleSetting(moduleName: string): boolean {
+  checkAppModuleSetting(moduleName: string|null): boolean {
     const credentials = this.getCredentials();
-    if (credentials) {
+    if (credentials && (moduleName !== null)) {
       if (!credentials.appSettingModule) {
         this.midasClientService
           .getInfoModuleActive(credentials.userId, credentials.officeId, credentials.base64EncodedAuthenticationKey)
@@ -276,35 +282,34 @@ export class AuthenticationService {
         });
       }
     }
-
     return false;
   }
 
-  checkAppModuleService(moduleName: string, credentials: any) {
+  checkAppModuleService(moduleName: string, credentials: any): any {
     switch (moduleName) {
-      case "billModule":
+      case 'billModule':
         const isBillModule = credentials.appSettingModule.billModule;
-        return isBillModule == 1;
+        return isBillModule === 1;
 
-      case "mgmModule":
+      case 'mgmModule':
         const isMgmModule = credentials.appSettingModule.mgmModule;
-        return isMgmModule == 1;
+        return isMgmModule === 1;
 
-      case "checkIdAgencyModule":
+      case 'checkIdAgencyModule':
         const isCheckIdAgencyModule = credentials.appSettingModule.checkIdAgencyModule;
-        return isCheckIdAgencyModule == 1;
+        return isCheckIdAgencyModule === 1;
 
-      case "sendTransferNotificationBi":
+      case 'sendTransferNotificationBi':
         const sendTransferNotificationBi = credentials.appSettingModule.sendTransferNotificationBi;
-        return sendTransferNotificationBi == 1;
+        return sendTransferNotificationBi === 1;
 
-      case "sendNotificationBi":
+      case 'sendNotificationBi':
         const sendNotificationBi = credentials.appSettingModule.sendNotificationBi;
-        return sendNotificationBi == 1;
+        return sendNotificationBi === 1;
 
-      case "campaignModule":
+      case 'campaignModule':
         const campaignModule = credentials.appSettingModule.campaignModule;
-        return campaignModule == 1;
+        return campaignModule === 1;
       ///  ......  another module setting ///
     }
   }
@@ -328,7 +333,7 @@ export class AuthenticationService {
   isAuthenticated(): boolean {
     return !!(
       JSON.parse(
-        sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey)
+        sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey) || ''
       ) && this.twoFactorAccessTokenIsValid()
     );
   }
@@ -374,7 +379,7 @@ export class AuthenticationService {
    * Gets the two factor authentication delivery methods available for the user.
    */
   getDeliveryMethods() {
-    return this.http.get("/twofactor");
+    return this.http.get('/twofactor');
   }
 
   /**
@@ -383,8 +388,8 @@ export class AuthenticationService {
    */
   requestOTP(deliveryMethod: any) {
     let httpParams = new HttpParams();
-    httpParams = httpParams.set("deliveryMethod", deliveryMethod.name);
-    httpParams = httpParams.set("extendedToken", this.rememberMe.toString());
+    httpParams = httpParams.set('deliveryMethod', deliveryMethod.name);
+    httpParams = httpParams.set('extendedToken', this.rememberMe.toString());
     return this.http.post(`/twofactor`, {}, { params: httpParams });
   }
 
@@ -393,7 +398,7 @@ export class AuthenticationService {
    * @param {string} otp
    */
   validateOTP(otp: string) {
-    const httpParams = new HttpParams().set("token", otp);
+    const httpParams = new HttpParams().set('token', otp);
     return this.http.post(`/twofactor/validate`, {}, { params: httpParams }).pipe(
       map((response) => {
         this.onOTPValidateSuccess(response);
@@ -411,11 +416,11 @@ export class AuthenticationService {
    */
   private onOTPValidateSuccess(response: any) {
     this.authenticationInterceptor.setTwoFactorAccessToken(response.token);
-    if (this.credentials.shouldRenewPassword) {
+    if (this.credentials?.shouldRenewPassword) {
       this.alertService.alert(this.authenMsg.expiredPassword);
     } else {
       this.setCredentials(this.credentials);
-      this.alertService.alert(this.authenMsg.loginSuccess(this.credentials.username));
+      this.alertService.alert(this.authenMsg.loginSuccess(this.credentials?.username));
       delete this.credentials;
       this.storage.setItem(this.twoFactorAuthenticationTokenStorageKey, JSON.stringify(response));
     }
@@ -426,14 +431,14 @@ export class AuthenticationService {
    * @param {any} passwordDetails New password.
    */
   resetPassword(passwordDetails: any) {
-    return this.http.put(`/users/${this.credentials.userId}`, passwordDetails).pipe(
+    return this.http.put(`/users/${this.credentials?.userId}`, passwordDetails).pipe(
       map(() => {
         this.alertService.alert(this.authenMsg.resetPass);
         this.authenticationInterceptor.removeAuthorization();
         this.authenticationInterceptor.removeTwoFactorAuthorization();
         const loginContext: LoginContext = {
-          username: this.credentials.username,
-          password: passwordDetails.password,
+          username: this.credentials?.username || '',
+          password: passwordDetails?.password || '',
           remember: this.rememberMe,
         };
         this.login(loginContext).subscribe();

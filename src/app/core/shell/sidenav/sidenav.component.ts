@@ -23,10 +23,10 @@ import { frequentActivities } from './frequent-activities';
 export class SidenavComponent implements OnInit {
 
   /** True if sidenav is in collapsed state. */
-  @Input() sidenavCollapsed: boolean;
+  @Input() sidenavCollapsed?: boolean;
 
   /** Username of authenticated user. */
-  username: string;
+  username?: string;
   /** Array of all user activities */
   userActivity: string[];
   /** Mapped Activites */
@@ -43,7 +43,7 @@ export class SidenavComponent implements OnInit {
   constructor(private router: Router,
               public dialog: MatDialog,
               private authenticationService: AuthenticationService) {
-    this.userActivity = JSON.parse(sessionStorage.getItem('midasLocation'));
+    this.userActivity = JSON.parse(sessionStorage.getItem('midasLocation') || '');
 
   }
 

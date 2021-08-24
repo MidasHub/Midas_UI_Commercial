@@ -35,13 +35,13 @@ export class I18nService {
   private languageStorageKey = 'midasLanguageCode';
   private localeStorageKey = 'midasLocale';
   private languagesNameStoragekey = 'midasLanguageName';
-  languagesNameObj: {
-    en: 'English',
-    vi: 'Vietnamese'
+  languagesNameObj!: {
+    en: 'English';
+    vi: 'Vietnamese';
   };
 
-  defaultLanguage: string;
-  supportedLanguages: string[];
+  defaultLanguage!: string;
+  supportedLanguages!: string[];
 
   constructor(private translate: TranslateService) {
     /**  Embed languages to avoid extra HTTP requests - Jean: rem due to error when using this method
@@ -87,7 +87,7 @@ export class I18nService {
     // If no exact match is found, search without the region
     if (language && !isSupportedLanguage) {
       language = language.split('-')[0];
-      language = this.supportedLanguages.find(supportedLanguage => supportedLanguage.startsWith(language)) || '';
+      language = this.supportedLanguages.find(supportedLanguage => supportedLanguage.startsWith(language)) || 'vi';
       isSupportedLanguage = Boolean(language);
     }
 
