@@ -35,7 +35,7 @@
                 Số dư tối thiểu: {{savingsAccountData.minRequiredBalance | money}}<br/>
               </label>
               <h3 style="font-weight: bold;">
-                {{'Saving_Account_Component.ViewSavingAccount.labelAvailableBalance'|translate}}: {{savingsAccountData.summary.availableBalance - savingsAccountData.minRequiredBalance | money }}<br/>
+                {{'Saving_Account_Component.ViewSavingAccount.labelAvailableBalance'|translate}}: {{savingsAccountData.summary.availableBalance - ( savingsAccountData.minRequiredBalance ? savingsAccountData.minRequiredBalance : 0 ) | money }}<br/>
               </h3>
 
             </span>
