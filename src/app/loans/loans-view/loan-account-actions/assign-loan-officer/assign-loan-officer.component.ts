@@ -15,13 +15,13 @@ export class AssignLoanOfficerComponent implements OnInit {
   @Input() dataObject: any;
   /** Loan Id */
   loanId: string;
-  loanOfficers: any[];
+  loanOfficers!: any[];
   /** Minimum Date allowed. */
   minDate = new Date(2000, 0, 1);
   /** Maximum Date allowed. */
   maxDate = new Date();
   /** Assign loan Officer form. */
-  assignOfficerForm: FormGroup;
+  assignOfficerForm!: FormGroup;
 
   /**
    * @param {FormBuilder} formBuilder Form Builder.
@@ -34,7 +34,7 @@ export class AssignLoanOfficerComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private datePipe: DatePipe) {
-      this.loanId = this.route.parent.snapshot.params['loanId'];
+      this.loanId = this.route.parent?.snapshot.params['loanId'];
     }
 
   /**
@@ -64,7 +64,7 @@ export class AssignLoanOfficerComponent implements OnInit {
     const assignForm = this.assignOfficerForm.value;
     assignForm.locale = 'en';
     assignForm.dateFormat = dateFormat;
-    assignForm.fromLoanOfficerId = this.dataObject.loanOfficerId || '';
+    assignForm.fromLoanOfficerId = this.dataObject.loanOfficerId ;
 
     this.loanService.loanActionButtons(this.loanId, 'assignLoanOfficer', assignForm)
       .subscribe((response: any) => {

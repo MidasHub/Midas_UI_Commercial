@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 
 /** rxjs Imports */
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 
 /**
  * Loans service.
@@ -21,9 +21,14 @@ export class LoansService {
     return this.http.get(`/loans/${loanId}/charges/template`);
   }
 
-  getLoanActionTemplate(loanId: string, command: string): Observable<any> {
-    const httpParams = new HttpParams().set('command', command);
+  getLoanActionTemplate(loanId?: string|null, command?: string|null): Observable<any> {
+
+    if ((loanId) && (command)) {
+      const httpParams = new HttpParams().set('command', command );
     return this.http.get(`/loans/${loanId}/transactions/template`, { params: httpParams });
+    } else {
+      return of();
+    }
   }
 
   getLoanAccountResource(loanId: string, associations: string): Observable<any> {
@@ -51,7 +56,7 @@ export class LoansService {
    * Returns the loan template data with specific condition
    * @param loanId Loan Id
    */
-  getLoanTemplate(loanId: string): Observable<any> {
+  getLoanTemplate(loanId?: string| null): Observable<any> {
     const httpParams = new HttpParams()
                       .set('fields', 'id,loanOfficerId,loanOfficerOptions')
                       .set('staffInSelectedOfficeOnly', 'true')
@@ -80,8 +85,12 @@ export class LoansService {
    * @param {string} loanId Loan Id.
    * @returns {Observable<any>}
    */
-  getLoanCollateralTemplate(loanId: string): Observable<any> {
+  getLoanCollateralTemplate(loanId?: string | null): Observable<any> {
+    if ((loanId)) {
     return this.http.get(`/loans/${loanId}/collaterals/template`);
+    } else {
+      return of();
+    }
   }
 
   /**
@@ -318,7 +327,7 @@ export class LoansService {
   uploadLoanDocument_(loanId: string, documentData: any) {
     return this.http.post(`/loans/${loanId}/documents`, documentData);
   }
-  
+
   downloadLoanDocument(parentEntityId: string, documentId: string) {
     return this.http.get(`/loans/${parentEntityId}/documents/${documentId}/attachment`, { responseType: "blob" });
   }

@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Resolve, ActivatedRouteSnapshot } from '@angular/router';
 
 /** rxjs Imports */
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 
 /** Custom Services */
 import { LoansService } from '../loans.service';
@@ -24,7 +24,7 @@ export class LoanActionButtonResolver implements Resolve<Object> {
      * @returns {Observable<any>}
      */
     resolve(route: ActivatedRouteSnapshot): Observable<any> {
-        const loanId = route.parent.paramMap.get('loanId');
+        const loanId = route.parent?.paramMap.get('loanId');
         const loanActionButton = route.paramMap.get('action');
         if (loanActionButton === 'Assign Loan Officer' || loanActionButton === 'Change Loan Officer') {
             return this.loansService.getLoanTemplate(loanId);
@@ -61,7 +61,8 @@ export class LoanActionButtonResolver implements Resolve<Object> {
         } else if (loanActionButton === 'Add Loan Charge') {
             return this.loansService.getLoanChargeTemplateResource(loanId);
         } else {
-            return undefined;
+            // return undefined;
+            return of();
         }
     }
 
