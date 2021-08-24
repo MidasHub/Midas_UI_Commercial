@@ -24,7 +24,7 @@ export class ViewHistorySchedulerJobComponent implements OnInit {
   /** Paginator for Scheduler Job History table. */
   @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
   /** Sorter for Scheduler Job History table. */
-  @ViewChild(MatSort, { static: true }) sort!: MatSort;
+  @ViewChild(MatSort, { static: true }) sort: MatSort | any;
 
   /**
    * Retrieves the scheduler Job History data from `resolve`.

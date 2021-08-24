@@ -25,7 +25,7 @@ export class ManageSurveysComponent implements OnInit {
   /** Paginator for manage surveys table. */
   @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
   /** Sorter for manage surveys table. */
-  @ViewChild(MatSort, { static: true }) sort!: MatSort;
+  @ViewChild(MatSort, { static: true }) sort: MatSort | any;
 
   /**
    * Retrieves the surveys data from `resolve`.

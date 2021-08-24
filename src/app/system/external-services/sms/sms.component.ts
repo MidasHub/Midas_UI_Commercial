@@ -22,7 +22,7 @@ export class SMSComponent implements OnInit {
   dataSource!: MatTableDataSource<any>;
 
   /** Sorter for SMS configuration table. */
-  @ViewChild(MatSort, { static: true }) sort!: MatSort;
+  @ViewChild(MatSort, { static: true }) sort: MatSort | any;
 
   /**
    * Retrieves the SMS configuration data from `resolve`.

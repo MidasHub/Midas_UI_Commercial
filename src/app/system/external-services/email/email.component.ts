@@ -22,7 +22,7 @@ export class EmailComponent implements OnInit {
   dataSource!: MatTableDataSource<any>;
 
   /** Sorter for Email configuration table. */
-  @ViewChild(MatSort, { static: true }) sort!: MatSort;
+  @ViewChild(MatSort, { static: true }) sort: MatSort | any;
 
   /**
    * Retrieves the Email configuration data from `resolve`.

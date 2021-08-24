@@ -25,7 +25,7 @@ export class AccountNumberPreferencesComponent implements OnInit {
   /** Paginator for account number preferences table. */
   @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
   /** Sorter for account number preferences table. */
-  @ViewChild(MatSort, { static: true }) sort!: MatSort;
+  @ViewChild(MatSort, { static: true }) sort: MatSort | any;
 
   /**
    * Retrieves the account number preferences data from `resolve`.

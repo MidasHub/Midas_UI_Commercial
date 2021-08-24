@@ -25,7 +25,7 @@ export class ManageHooksComponent implements OnInit {
   /** Paginator for manage hooks table. */
   @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
   /** Sorter for manage hooks table. */
-  @ViewChild(MatSort, { static: true }) sort!: MatSort;
+  @ViewChild(MatSort, { static: true }) sort: MatSort | any;
 
   /**
    * Retrieves the hooks data from `resolve`.

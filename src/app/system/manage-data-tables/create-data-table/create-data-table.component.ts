@@ -58,7 +58,7 @@ export class CreateDataTableComponent implements OnInit {
   /** Paginator for columns table. */
   @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
   /** Sorter for columns table. */
-  @ViewChild(MatSort, { static: true }) sort!: MatSort;
+  @ViewChild(MatSort, { static: true }) sort: MatSort | any;
 
   /**
    * Retrieves the column codes data from `resolve`.

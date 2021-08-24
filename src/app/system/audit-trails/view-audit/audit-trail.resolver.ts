@@ -24,7 +24,7 @@ export class AuditTrailResolver implements Resolve<Object> {
    * @returns {Observable<any>}
    */
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
-    const auditTrailId = route.paramMap.get('id') || '';
+    const auditTrailId = route.paramMap.get('id') ;
     return this.systemService.getAuditTrail(auditTrailId);
   }
 

@@ -28,7 +28,7 @@ export class ManageDataTablesComponent implements OnInit {
   /** Paginator for manage data tables table. */
   @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
   /** Sorter for manage data tables table. */
-  @ViewChild(MatSort, { static: true }) sort!: MatSort;
+  @ViewChild(MatSort, { static: true }) sort: MatSort | any;
 
   /**
    * Retrieves the data tables data from `resolve`.

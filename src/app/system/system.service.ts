@@ -177,7 +177,7 @@ export class SystemService {
    * @param codeId Code ID.
    * @returns {Observable<any>} Code Values.
    */
-  getCodeValues(codeId: string): Observable<any> {
+  getCodeValues(codeId: string|null): Observable<any> {
     return this.http.get(`/codes/${codeId}/codevalues`);
   }
 
@@ -275,7 +275,7 @@ export class SystemService {
    * @param jobId Job Id to view the history.
    * @returns {Observable<any>} Fetches History of the Job.
    */
-  getHistoryScheduler(jobId: string): Observable<any> {
+  getHistoryScheduler(jobId: string|null): Observable<any> {
     return this.http.get(`/jobs/${jobId}/runhistory`);
   }
 
@@ -331,7 +331,7 @@ export class SystemService {
    * @param {string} configurationId Configuration ID of configuration.
    * @returns {Observable<any>} Configuration.
    */
-  getConfiguration(configurationId: string): Observable<any> {
+  getConfiguration(configurationId: string|null): Observable<any> {
     return this.http.get(`/configurations/${configurationId}`);
   }
 
@@ -379,7 +379,7 @@ export class SystemService {
    * @param {string} accountNumberPreferenceId Account Number Preference ID.
    * @returns {Observable<any>} Fetches Account Number Preference.
    */
-  getAccountNumberPreference(accountNumberPreferenceId: string): Observable<any> {
+  getAccountNumberPreference(accountNumberPreferenceId: string|null): Observable<any> {
     return this.http.get(`/accountnumberformats/${accountNumberPreferenceId}`);
   }
 
@@ -486,7 +486,7 @@ export class SystemService {
    * @param {string} auditTrailId Audit Trail ID.
    * @returns {Observable<any>}
    */
-  getAuditTrail(auditTrailId: string): Observable<any> {
+  getAuditTrail(auditTrailId: string|null): Observable<any> {
     return this.http.get(`/audits/${auditTrailId}`);
   }
 

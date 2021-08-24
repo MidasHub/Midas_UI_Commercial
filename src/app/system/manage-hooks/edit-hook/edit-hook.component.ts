@@ -39,7 +39,7 @@ export class EditHookComponent implements OnInit {
   /** Boolean to check if events data is changed or not. */
   eventsDataChanged: Boolean = false;
   /** Sorter for events table. */
-  @ViewChild(MatSort, { static: true }) sort!: MatSort;
+  @ViewChild(MatSort, { static: true }) sort: MatSort | any;
 
   /**
    * Retrieves the hooks template data from `resolve`.

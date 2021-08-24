@@ -71,7 +71,7 @@ export class EntityToEntityMappingComponent implements OnInit {
   /** Paginator for entity table. */
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   /** Sorter for entity table. */
-  @ViewChild(MatSort) sort!: MatSort;
+  @ViewChild(MatSort) sort: MatSort | any;
 
 
   /**

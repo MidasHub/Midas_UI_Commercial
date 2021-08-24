@@ -157,7 +157,7 @@ export class ViewRoleComponent implements OnInit {
    * @param name String
    */
   permissionName(name: any) {
-    name = name || '';
+    name = name;
     // replace '_' with ' '
     name = name.replace(/_/g, ' ');
     // for reorts replace read with view

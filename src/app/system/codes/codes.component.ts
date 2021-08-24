@@ -22,7 +22,7 @@ export class CodesComponent implements OnInit {
   /** Paginator for codes table. */
   @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
   /** Sorter for codes table. */
-  @ViewChild(MatSort, { static: true }) sort!: MatSort;
+  @ViewChild(MatSort, { static: true }) sort: MatSort | any;
 
   /**
    * Retrieves the codes data from `resolve`.

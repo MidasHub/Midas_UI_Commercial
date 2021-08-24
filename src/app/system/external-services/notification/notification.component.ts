@@ -22,7 +22,7 @@ export class NotificationComponent implements OnInit {
   dataSource?: MatTableDataSource<any>;
 
   /** Sorter for Notification configuration table. */
-  @ViewChild(MatSort, { static: true }) sort!: MatSort;
+  @ViewChild(MatSort, { static: true }) sort: MatSort | any;
 
   /**
    * Retrieves the Notification configuration data from `resolve`.

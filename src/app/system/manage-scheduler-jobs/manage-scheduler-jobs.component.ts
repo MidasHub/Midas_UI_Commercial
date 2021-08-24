@@ -33,7 +33,7 @@ export class ManageSchedulerJobsComponent implements OnInit {
   /** Paginator for table. */
   @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
   /** Sorter for manage scheduler jobs table. */
-  @ViewChild(MatSort, { static: true }) sort!: MatSort;
+  @ViewChild(MatSort, { static: true }) sort: MatSort | any;
 
   /**
    * Retrieves the scheduler jobs data from `resolve`.

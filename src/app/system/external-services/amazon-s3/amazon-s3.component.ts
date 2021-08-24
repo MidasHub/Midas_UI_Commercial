@@ -22,7 +22,7 @@ export class AmazonS3Component implements OnInit {
   dataSource!: MatTableDataSource<any>;
 
   /** Sorter for Amazon S3 configuration table. */
-  @ViewChild(MatSort, { static: true }) sort!: MatSort;
+  @ViewChild(MatSort, { static: true }) sort: MatSort | any;
 
   /**
    * Retrieves the Amazon S3 configuration data from `resolve`.

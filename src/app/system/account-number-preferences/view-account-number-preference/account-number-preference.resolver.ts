@@ -24,7 +24,7 @@ export class AccountNumberPreferenceResolver implements Resolve<Object> {
    * @returns {Observable<any>}
    */
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
-    const accountNumberPreferenceId = route.paramMap.get('id') || '';
+    const accountNumberPreferenceId = route.paramMap.get('id');
     return this.systemService.getAccountNumberPreference(accountNumberPreferenceId);
   }
 

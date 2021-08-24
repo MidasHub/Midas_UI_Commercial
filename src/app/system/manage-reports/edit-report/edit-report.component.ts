@@ -49,7 +49,7 @@ export class EditReportComponent implements OnInit {
   /** Paginator for report parameters table. */
   @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
   /** Sorter for report parameters table. */
-  @ViewChild(MatSort, { static: true }) sort!: MatSort;
+  @ViewChild(MatSort, { static: true }) sort: MatSort | any;
 
   /**
    * Retrieves the report and report template data from `resolve`.

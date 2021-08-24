@@ -89,7 +89,7 @@ export class ConfigureMakerCheckerTasksComponent implements OnInit {
 
 
   permissionName (name: any) {
-    name = name || '';
+    name = name ;
     // replace '_' with ' '
     name = name.replace(/_/g, ' ');
     // for reorts replace read with view
@@ -100,7 +100,7 @@ export class ConfigureMakerCheckerTasksComponent implements OnInit {
   };
 
   formatName(stringVal: string) {
-    stringVal = stringVal || '';
+    stringVal = stringVal ;
     if (stringVal.indexOf('portfolio_') > -1) {
       stringVal = stringVal.replace('portfolio_', '');
     }

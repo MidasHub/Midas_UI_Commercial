@@ -25,7 +25,7 @@ export class ManageReportsComponent implements OnInit {
    /** Paginator for reports table. */
    @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
    /** Sorter for reports table. */
-   @ViewChild(MatSort, { static: true }) sort!: MatSort;
+   @ViewChild(MatSort, { static: true }) sort: MatSort | any;
 
   /**
    * Retrieves the reports data from `resolve`.
