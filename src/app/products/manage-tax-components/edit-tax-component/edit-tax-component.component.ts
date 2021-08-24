@@ -1,7 +1,7 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute, Data } from '@angular/router';
 import { DatePipe } from '@angular/common';
 
 /** Custom Services */
@@ -20,7 +20,7 @@ export class EditTaxComponentComponent implements OnInit {
   /** Minimum date allowed. */
   minDate = new Date(2000, 0, 1);
   /** Tax Component form. */
-  taxComponentForm: FormGroup;
+  taxComponentForm!: FormGroup;
   /** Tax Component data. */
   taxComponentData: any;
 
@@ -37,7 +37,7 @@ export class EditTaxComponentComponent implements OnInit {
               private route: ActivatedRoute,
               private router: Router,
               private datePipe: DatePipe) {
-    this.route.data.subscribe((data: { taxComponent: any }) => {
+    this.route.data.subscribe((data: { taxComponent: any } | Data) => {
       this.taxComponentData = data.taxComponent;
     });
   }

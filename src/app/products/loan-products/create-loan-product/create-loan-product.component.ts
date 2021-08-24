@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Data, Router } from '@angular/router';
 
 import { LoanProductDetailsStepComponent } from '../loan-product-stepper/loan-product-details-step/loan-product-details-step.component';
 import { LoanProductCurrencyStepComponent } from '../loan-product-stepper/loan-product-currency-step/loan-product-currency-step.component';
@@ -17,12 +17,12 @@ import { ProductsService } from 'app/products/products.service';
 })
 export class CreateLoanProductComponent implements OnInit {
 
-  @ViewChild(LoanProductDetailsStepComponent, { static: true }) loanProductDetailsStep: LoanProductDetailsStepComponent;
-  @ViewChild(LoanProductCurrencyStepComponent, { static: true }) loanProductCurrencyStep: LoanProductCurrencyStepComponent;
-  @ViewChild(LoanProductTermsStepComponent, { static: true }) loanProductTermsStep: LoanProductTermsStepComponent;
-  @ViewChild(LoanProductSettingsStepComponent, { static: true }) loanProductSettingsStep: LoanProductSettingsStepComponent;
-  @ViewChild(LoanProductChargesStepComponent, { static: true }) loanProductChargesStep: LoanProductChargesStepComponent;
-  @ViewChild(LoanProductAccountingStepComponent, { static: true }) loanProductAccountingStep: LoanProductAccountingStepComponent;
+  @ViewChild(LoanProductDetailsStepComponent, { static: true }) loanProductDetailsStep!: LoanProductDetailsStepComponent;
+  @ViewChild(LoanProductCurrencyStepComponent, { static: true }) loanProductCurrencyStep!: LoanProductCurrencyStepComponent;
+  @ViewChild(LoanProductTermsStepComponent, { static: true }) loanProductTermsStep!: LoanProductTermsStepComponent;
+  @ViewChild(LoanProductSettingsStepComponent, { static: true }) loanProductSettingsStep!: LoanProductSettingsStepComponent;
+  @ViewChild(LoanProductChargesStepComponent, { static: true }) loanProductChargesStep!: LoanProductChargesStepComponent;
+  @ViewChild(LoanProductAccountingStepComponent, { static: true }) loanProductAccountingStep!: LoanProductAccountingStepComponent;
 
   loanProductsTemplate: any;
   accountingRuleData = ['None', 'Cash', 'Accrual (periodic)', 'Accrual (upfront)'];
@@ -30,7 +30,7 @@ export class CreateLoanProductComponent implements OnInit {
   constructor(private route: ActivatedRoute,
               private productsService: ProductsService,
               private router: Router) {
-    this.route.data.subscribe((data: { loanProductsTemplate: any }) => {
+    this.route.data.subscribe((data: { loanProductsTemplate: any }| Data) => {
       this.loanProductsTemplate = data.loanProductsTemplate;
     });
   }

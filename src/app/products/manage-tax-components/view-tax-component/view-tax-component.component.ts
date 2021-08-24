@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Data } from '@angular/router';
 
 /**
  * View tax Component component.
@@ -20,7 +20,7 @@ export class ViewTaxComponentComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route.
    */
   constructor(private route: ActivatedRoute) {
-    this.route.data.subscribe((data: { taxComponent: any }) => {
+    this.route.data.subscribe((data: { taxComponent: any }| Data) => {
       this.taxComponentData = data.taxComponent;
     });
   }

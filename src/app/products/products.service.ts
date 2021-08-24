@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 
 /** rxjs Imports */
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 
 /**
  * Products service.
@@ -33,7 +33,7 @@ export class ProductsService {
     return this.http.get('/loanproducts/template');
   }
 
-  getLoanProduct(loanProductId: string, template: boolean = false): Observable<any> {
+  getLoanProduct(loanProductId?: string|null, template: boolean = false): Observable<any> {
     const httpParams = new HttpParams().set('template', template.toString());
     return this.http.get(`/loanproducts/${loanProductId}`, { params: httpParams });
   }
@@ -154,9 +154,13 @@ export class ProductsService {
    * @param {string} chargeId Charge ID of charge.
    * @returns {Observable<any>} Charge.
    */
-  getCharge(selectedCharge: string, template: boolean = false): Observable<any> {
+  getCharge(selectedCharge?: string |null, template: boolean = false): Observable<any> {
+    if (selectedCharge) {
     const httpParams = new HttpParams().set('template', template.toString());
     return this.http.get(`/charges/${selectedCharge}`, { params: httpParams });
+    } else {
+      return of();
+    }
   }
 
   /**
@@ -202,7 +206,7 @@ export class ProductsService {
    * @param {string} fixedDepositProductId fixed deposit product ID of fixed deposit product.
    * @returns {Observable<any>} Fixed deposit product.
    */
-  getFixedDepositProduct(fixedDepositProductId: string): Observable<any> {
+  getFixedDepositProduct(fixedDepositProductId?: string|null): Observable<any> {
     return this.http.get(`/fixeddepositproducts/${fixedDepositProductId}`);
   }
 
@@ -226,7 +230,7 @@ export class ProductsService {
    * @param {string} taxComponentId tax Component ID of tax Component.
    * @returns {Observable<any>} Tax Component.
    */
-  getTaxComponent(taxComponentId: string): Observable<any> {
+  getTaxComponent(taxComponentId?: string|null): Observable<any> {
     return this.http.get(`/taxes/component/${taxComponentId}`);
   }
 
@@ -322,7 +326,7 @@ export class ProductsService {
    * @param {string} floatingRateId Floating Rate ID.
    * @returns {Observable<any>}
    */
-  getFloatingRate(floatingRateId: string): Observable<any> {
+  getFloatingRate(floatingRateId?: string|null): Observable<any> {
     return this.http.get(`/floatingrates/${floatingRateId}`);
   }
 
@@ -331,7 +335,7 @@ export class ProductsService {
    * @param {any} floatingRate Changes in Floating Rate.
    * @returns {Observable<any>}
    */
-  updateFloatingRate(floatingRateId: string, floatingRate: any): Observable<any> {
+  updateFloatingRate(floatingRateId?: string|null, floatingRate?: any): Observable<any> {
     return this.http.put(`/floatingrates/${floatingRateId}`, floatingRate);
   }
 

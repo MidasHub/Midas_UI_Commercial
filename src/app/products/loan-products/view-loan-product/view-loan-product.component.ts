@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Data } from '@angular/router';
 
 @Component({
   selector: 'mifosx-view-loan-product',
@@ -16,13 +16,13 @@ export class ViewLoanProductComponent implements OnInit {
   feesPenaltyIncomeDisplayedColumns: string[] = ['chargeId', 'incomeAccountId'];
 
   constructor(private route: ActivatedRoute) {
-    this.route.data.subscribe((data: { loanProduct: any }) => {
+    this.route.data.subscribe((data: { loanProduct: any }| Data) => {
       this.loanProduct = data.loanProduct;
     });
   }
 
   ngOnInit() {
-    this.loanProduct.allowAttributeConfiguration = Object.values(this.loanProduct.allowAttributeOverrides).some((attribute: boolean) => attribute);
+    this.loanProduct.allowAttributeConfiguration = Object.values(this.loanProduct.allowAttributeOverrides).some((attribute: boolean|any) => attribute);
   }
 
 }

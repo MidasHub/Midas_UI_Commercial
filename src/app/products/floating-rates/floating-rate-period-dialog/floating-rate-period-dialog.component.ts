@@ -14,7 +14,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 export class FloatingRatePeriodDialogComponent implements OnInit {
 
   /** Floating Rate Period Form. */
-  floatingRatePeriodForm: FormGroup;
+  floatingRatePeriodForm!: FormGroup;
   /** Minimum floating rate period date allowed. */
   minDate = new Date();
 

@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Data } from '@angular/router';
 import { MatTable } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
 import { trigger, state, transition, animate, style } from '@angular/animations';
@@ -39,7 +39,7 @@ export class ViewFixedDepositProductComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route.
    */
   constructor(private route: ActivatedRoute) {
-    this.route.data.subscribe((data: { fixedDepositProduct: any, fixedDepositProductsTemplate: any }) => {
+    this.route.data.subscribe((data: { fixedDepositProduct: any, fixedDepositProductsTemplate: any }|Data) => {
       this.fixedDepositProductData = data.fixedDepositProduct;
       this.fixedDepositProductsTemplate = data.fixedDepositProductsTemplate;
     });

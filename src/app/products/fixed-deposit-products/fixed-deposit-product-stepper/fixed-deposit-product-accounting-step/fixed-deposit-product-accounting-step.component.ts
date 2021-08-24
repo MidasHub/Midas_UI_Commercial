@@ -17,9 +17,9 @@ export class FixedDepositProductAccountingStepComponent implements OnInit {
 
   @Input() fixedDepositProductsTemplate: any;
   @Input() accountingRuleData: any;
-  @Input() fixedDepositProductFormValid: boolean;
+  @Input() fixedDepositProductFormValid?: boolean;
 
-  fixedDepositProductAccountingForm: FormGroup;
+  fixedDepositProductAccountingForm!: FormGroup;
 
   chargeData: any;
   penaltyData: any;
@@ -109,7 +109,7 @@ export class FixedDepositProductAccountingStepComponent implements OnInit {
   }
 
   setConditionalControls() {
-    this.fixedDepositProductAccountingForm.get('accountingRule').valueChanges
+    this.fixedDepositProductAccountingForm.get('accountingRule')?.valueChanges
       .subscribe((accountingRule: any) => {
         if (accountingRule === 2) {
           this.fixedDepositProductAccountingForm.addControl('savingsReferenceAccountId', new FormControl('', Validators.required));
@@ -120,7 +120,7 @@ export class FixedDepositProductAccountingStepComponent implements OnInit {
           this.fixedDepositProductAccountingForm.addControl('incomeFromPenaltyAccountId', new FormControl('', Validators.required));
           this.fixedDepositProductAccountingForm.addControl('advancedAccountingRules', new FormControl(false));
 
-          this.fixedDepositProductAccountingForm.get('advancedAccountingRules').valueChanges
+          this.fixedDepositProductAccountingForm.get('advancedAccountingRules')?.valueChanges
             .subscribe((advancedAccountingRules: boolean) => {
               if (advancedAccountingRules) {
                 this.fixedDepositProductAccountingForm.addControl('paymentChannelToFundSourceMappings', this.formBuilder.array([]));
@@ -191,7 +191,7 @@ export class FixedDepositProductAccountingStepComponent implements OnInit {
     });
   }
 
-  getData(formType: string, values?: any) {
+  getData(formType: string, values?: any): any {
     switch (formType) {
       case 'PaymentFundSource': return { title: 'Configure Fund Sources for Payment Channels', formfields: this.getPaymentFundSourceFormfields(values) };
       case 'FeesIncome': return { title: 'Map Fees to Income Accounts', formfields: this.getFeesIncomeFormfields(values) };

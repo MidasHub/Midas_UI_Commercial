@@ -15,7 +15,7 @@ export class UrlToStringPipe implements PipeTransform {
     const urlSubstrings: string[] = url.slice(1).split('/');
     if (url.includes('?')) { // Query params URL.
       const query = urlSubstrings.pop();
-      const prefix = query.slice(0, query.indexOf('?'));
+      const prefix = query?.slice(0, query?.indexOf('?')) || '';
       urlSubstrings.push(prefix);
     }
     const stringRepresentation =

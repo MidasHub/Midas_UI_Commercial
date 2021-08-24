@@ -1,7 +1,7 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute, Data } from '@angular/router';
 import { DatePipe } from '@angular/common';
 
 /** Custom Services */
@@ -22,7 +22,7 @@ export class CreateTaxComponentComponent implements OnInit {
   /** Maximum start date allowed. */
   maxDate = new Date(new Date().setFullYear(new Date().getFullYear() + 10));
   /** Tax Component form. */
-  taxComponentForm: FormGroup;
+  taxComponentForm!: FormGroup;
   /** Tax Component template data. */
   taxComponentTemplateData: any;
   /** Credit Account Type data. */
@@ -47,7 +47,7 @@ export class CreateTaxComponentComponent implements OnInit {
               private route: ActivatedRoute,
               private router: Router,
               private datePipe: DatePipe) {
-    this.route.data.subscribe(( data: { taxComponentTemplate: any }) => {
+    this.route.data.subscribe(( data: { taxComponentTemplate: any }| Data) => {
       this.taxComponentTemplateData = data.taxComponentTemplate;
     });
   }
@@ -78,11 +78,11 @@ export class CreateTaxComponentComponent implements OnInit {
    * Sets the conditional controls of the tax Component form
    */
   setConditionalControls() {
-    this.taxComponentForm.get('debitAccountType').valueChanges.subscribe(debitAccountTypeId => {
+    this.taxComponentForm.get('debitAccountType')?.valueChanges.subscribe(debitAccountTypeId => {
       this.debitAccountData = this.getAccountsData(debitAccountTypeId);
       this.taxComponentForm.addControl('debitAcountId', new FormControl('', Validators.required));
     });
-    this.taxComponentForm.get('creditAccountType').valueChanges.subscribe(creditAccountTypeId => {
+    this.taxComponentForm.get('creditAccountType')?.valueChanges.subscribe(creditAccountTypeId => {
       this.creditAccountData = this.getAccountsData(creditAccountTypeId);
       this.taxComponentForm.addControl('creditAcountId', new FormControl('', Validators.required));
     });

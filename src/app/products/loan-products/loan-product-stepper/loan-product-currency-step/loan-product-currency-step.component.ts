@@ -10,7 +10,7 @@ export class LoanProductCurrencyStepComponent implements OnInit {
 
   @Input() loanProductsTemplate: any;
 
-  loanProductCurrencyForm: FormGroup;
+  loanProductCurrencyForm!: FormGroup;
 
   currencyData: any;
 

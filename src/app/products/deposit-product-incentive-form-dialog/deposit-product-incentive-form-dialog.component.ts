@@ -15,9 +15,9 @@ export class DepositProductIncentiveFormDialogComponent implements OnInit {
     addButtonText: 'Add'
   };
 
-  depositProductIncentiveForm: FormGroup;
+  depositProductIncentiveForm!: FormGroup;
 
-  title: string;
+  title?: string;
 
   entityTypeData: any;
   attributeNameData: any;
@@ -57,11 +57,11 @@ export class DepositProductIncentiveFormDialogComponent implements OnInit {
       });
     }
 
-    this.title = `Incentives: ${this.entityTypeData.find((entityType: any) => this.depositProductIncentiveForm.get('entityType').value === entityType.id).value} Attributes`;
+    this.title = `Incentives: ${this.entityTypeData.find((entityType: any) => this.depositProductIncentiveForm.get('entityType')?.value === entityType.id).value} Attributes`;
   }
 
   setConditionalControls() {
-    this.depositProductIncentiveForm.get('attributeName').valueChanges
+    this.depositProductIncentiveForm.get('attributeName')?.valueChanges
       .subscribe((attributeName: any) => {
         this.depositProductIncentiveForm.patchValue({ 'attributeValue': '' });
         this.attributeValueData = this.data.chartTemplate[`${this.attributeNameData.find((option: any) => option.id === attributeName).code.split('.')[1]}Options`];

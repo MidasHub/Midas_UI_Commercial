@@ -9,9 +9,9 @@ import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms'
 export class LoanProductSettingsStepComponent implements OnInit {
 
   @Input() loanProductsTemplate: any;
-  @Input() isLinkedToFloatingInterestRates: FormControl;
+  @Input() isLinkedToFloatingInterestRates!: FormControl;
 
-  loanProductSettingsForm: FormGroup;
+  loanProductSettingsForm!: FormGroup;
 
   amortizationTypeData: any;
   interestTypeData: any;
@@ -36,7 +36,7 @@ export class LoanProductSettingsStepComponent implements OnInit {
     this.isLinkedToFloatingInterestRates.valueChanges
       .subscribe((isLinkedToFloatingInterestRates: any) => {
         if (isLinkedToFloatingInterestRates) {
-          this.loanProductSettingsForm.get('isInterestRecalculationEnabled').setValue(true);
+          this.loanProductSettingsForm.get('isInterestRecalculationEnabled')?.setValue(true);
         }
     });
 
@@ -120,7 +120,7 @@ export class LoanProductSettingsStepComponent implements OnInit {
 
     if (this.loanProductsTemplate.allowAttributeOverrides) {
       this.loanProductSettingsForm.patchValue({
-        'allowAttributeConfiguration': Object.values(this.loanProductsTemplate.allowAttributeOverrides).some((attribute: boolean) => attribute),
+        'allowAttributeConfiguration': Object.values(this.loanProductsTemplate.allowAttributeOverrides).some((attribute: boolean|any) => attribute),
         'allowAttributeOverrides': {
           'amortizationType': this.loanProductsTemplate.allowAttributeOverrides.amortizationType,
           'interestType': this.loanProductsTemplate.allowAttributeOverrides.interestType,
@@ -175,7 +175,7 @@ export class LoanProductSettingsStepComponent implements OnInit {
   setConditionalControls() {
     const allowAttributeOverrides = this.loanProductSettingsForm.get('allowAttributeOverrides');
 
-    this.loanProductSettingsForm.get('interestCalculationPeriodType').valueChanges
+    this.loanProductSettingsForm.get('interestCalculationPeriodType')?.valueChanges
       .subscribe((interestCalculationPeriodType: any) => {
         if (interestCalculationPeriodType === 1) {
           this.loanProductSettingsForm.addControl('allowPartialPeriodInterestCalcualtion', new FormControl(false));
@@ -184,7 +184,7 @@ export class LoanProductSettingsStepComponent implements OnInit {
         }
       });
 
-    this.loanProductSettingsForm.get('allowVariableInstallments').valueChanges
+    this.loanProductSettingsForm.get('allowVariableInstallments')?.valueChanges
       .subscribe((allowVariableInstallments: any) => {
         if (allowVariableInstallments) {
           this.loanProductSettingsForm.addControl('minimumGap', new FormControl('', Validators.required));
@@ -195,7 +195,7 @@ export class LoanProductSettingsStepComponent implements OnInit {
         }
       });
 
-    this.loanProductSettingsForm.get('isInterestRecalculationEnabled').valueChanges
+    this.loanProductSettingsForm.get('isInterestRecalculationEnabled')?.valueChanges
       .subscribe((isInterestRecalculationEnabled: any) => {
         if (isInterestRecalculationEnabled) {
           this.loanProductSettingsForm.addControl('preClosureInterestCalculationStrategy', new FormControl(this.preClosureInterestCalculationStrategyData[0].id, Validators.required));
@@ -204,12 +204,12 @@ export class LoanProductSettingsStepComponent implements OnInit {
           this.loanProductSettingsForm.addControl('recalculationRestFrequencyType', new FormControl(this.interestRecalculationFrequencyTypeData[0].id, Validators.required));
           this.loanProductSettingsForm.addControl('isArrearsBasedOnOriginalSchedule', new FormControl(''));
 
-          this.loanProductSettingsForm.get('interestRecalculationCompoundingMethod').valueChanges
+          this.loanProductSettingsForm.get('interestRecalculationCompoundingMethod')?.valueChanges
             .subscribe((interestRecalculationCompoundingMethod: any) => {
               if (interestRecalculationCompoundingMethod !== 0) {
                 this.loanProductSettingsForm.addControl('recalculationCompoundingFrequencyType', new FormControl(this.interestRecalculationFrequencyTypeData[0].id, Validators.required));
 
-                this.loanProductSettingsForm.get('recalculationCompoundingFrequencyType').valueChanges
+                this.loanProductSettingsForm.get('recalculationCompoundingFrequencyType')?.valueChanges
                   .subscribe((recalculationCompoundingFrequencyType: any) => {
                     if (recalculationCompoundingFrequencyType !== 1) {
                       this.loanProductSettingsForm.addControl('recalculationCompoundingFrequencyInterval', new FormControl('', Validators.required));
@@ -225,7 +225,7 @@ export class LoanProductSettingsStepComponent implements OnInit {
                       this.loanProductSettingsForm.addControl('recalculationCompoundingFrequencyNthDayType', new FormControl(''));
                       this.loanProductSettingsForm.addControl('recalculationCompoundingFrequencyDayOfWeekType', new FormControl(''));
 
-                      this.loanProductSettingsForm.get('recalculationCompoundingFrequencyNthDayType').valueChanges
+                      this.loanProductSettingsForm.get('recalculationCompoundingFrequencyNthDayType')?.valueChanges
                         .subscribe((recalculationCompoundingFrequencyNthDayType: any) => {
                           if (recalculationCompoundingFrequencyNthDayType === -2) {
                             this.loanProductSettingsForm.addControl('recalculationCompoundingFrequencyOnDayType', new FormControl(''));
@@ -247,7 +247,7 @@ export class LoanProductSettingsStepComponent implements OnInit {
               }
             });
 
-          this.loanProductSettingsForm.get('recalculationRestFrequencyType').valueChanges
+          this.loanProductSettingsForm.get('recalculationRestFrequencyType')?.valueChanges
             .subscribe((recalculationRestFrequencyType: any) => {
               if (recalculationRestFrequencyType !== 1) {
                 this.loanProductSettingsForm.addControl('recalculationRestFrequencyInterval', new FormControl('', Validators.required));
@@ -263,7 +263,7 @@ export class LoanProductSettingsStepComponent implements OnInit {
                 this.loanProductSettingsForm.addControl('recalculationRestFrequencyNthDayType', new FormControl(''));
                 this.loanProductSettingsForm.addControl('recalculationRestFrequencyDayOfWeekType', new FormControl(''));
 
-                this.loanProductSettingsForm.get('recalculationRestFrequencyNthDayType').valueChanges
+                this.loanProductSettingsForm.get('recalculationRestFrequencyNthDayType')?.valueChanges
                   .subscribe((recalculationRestFrequencyNthDayType: any) => {
                     if (recalculationRestFrequencyNthDayType === -2) {
                       this.loanProductSettingsForm.addControl('recalculationRestFrequencyOnDayType', new FormControl(''));
@@ -290,7 +290,7 @@ export class LoanProductSettingsStepComponent implements OnInit {
         }
       });
 
-    this.loanProductSettingsForm.get('holdGuaranteeFunds').valueChanges
+    this.loanProductSettingsForm.get('holdGuaranteeFunds')?.valueChanges
       .subscribe(holdGuaranteeFunds => {
         if (holdGuaranteeFunds) {
           this.loanProductSettingsForm.addControl('mandatoryGuarantee', new FormControl('', Validators.required));
@@ -303,7 +303,7 @@ export class LoanProductSettingsStepComponent implements OnInit {
         }
       });
 
-    this.loanProductSettingsForm.get('multiDisburseLoan').valueChanges
+    this.loanProductSettingsForm.get('multiDisburseLoan')?.valueChanges
       .subscribe(multiDisburseLoan => {
         if (multiDisburseLoan) {
           this.loanProductSettingsForm.addControl('maxTrancheCount', new FormControl('', Validators.required));
@@ -314,10 +314,10 @@ export class LoanProductSettingsStepComponent implements OnInit {
         }
       });
 
-    this.loanProductSettingsForm.get('allowAttributeConfiguration').valueChanges
+    this.loanProductSettingsForm.get('allowAttributeConfiguration')?.valueChanges
       .subscribe((allowAttributeConfiguration: any) => {
         if (allowAttributeConfiguration) {
-          allowAttributeOverrides.patchValue({
+          allowAttributeOverrides?.patchValue({
             'amortizationType': true,
             'interestType': true,
             'transactionProcessingStrategyId': true,
@@ -328,7 +328,7 @@ export class LoanProductSettingsStepComponent implements OnInit {
             'graceOnArrearsAgeing': true
           });
         } else {
-          allowAttributeOverrides.patchValue({
+          allowAttributeOverrides?.patchValue({
             'amortizationType': false,
             'interestType': false,
             'transactionProcessingStrategyId': false,

@@ -10,7 +10,7 @@ export class FixedDepositProductCurrencyStepComponent implements OnInit {
 
   @Input() fixedDepositProductsTemplate: any;
 
-  fixedDepositProductCurrencyForm: FormGroup;
+  fixedDepositProductCurrencyForm!: FormGroup;
 
   currencyData: any;
 

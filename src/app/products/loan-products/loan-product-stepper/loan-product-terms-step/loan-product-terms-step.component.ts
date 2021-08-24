@@ -18,7 +18,7 @@ export class LoanProductTermsStepComponent implements OnInit {
 
   @Input() loanProductsTemplate: any;
 
-  loanProductTermsForm: FormGroup;
+  loanProductTermsForm!: FormGroup;
 
   valueConditionTypeData: any;
   floatingRateData: any;
@@ -92,7 +92,7 @@ export class LoanProductTermsStepComponent implements OnInit {
   }
 
   setConditionalControls() {
-    this.loanProductTermsForm.get('isLinkedToFloatingInterestRates').valueChanges
+    this.loanProductTermsForm.get('isLinkedToFloatingInterestRates')?.valueChanges
       .subscribe(isLinkedToFloatingInterestRates => {
         if (isLinkedToFloatingInterestRates) {
           this.loanProductTermsForm.removeControl('minInterestRatePerPeriod');
@@ -119,7 +119,7 @@ export class LoanProductTermsStepComponent implements OnInit {
         }
       });
 
-      this.loanProductTermsForm.get('useBorrowerCycle').valueChanges
+      this.loanProductTermsForm.get('useBorrowerCycle')?.valueChanges
         .subscribe(useBorrowerCycle => {
           if (useBorrowerCycle) {
             this.loanProductTermsForm.addControl('principalVariationsForBorrowerCycle', this.formBuilder.array([]));
@@ -185,7 +185,7 @@ export class LoanProductTermsStepComponent implements OnInit {
     });
   }
 
-  getData(formType: string, values?: any) {
+  getData(formType: string, values?: any): any {
     switch (formType) {
       case 'Principal': return { title: 'Principal by loan cycle', formfields: this.getFormfields(values) };
       case 'NumberOfRepayments': return { title: 'Number of repayments by loan cycle', formfields: this.getFormfields(values) };

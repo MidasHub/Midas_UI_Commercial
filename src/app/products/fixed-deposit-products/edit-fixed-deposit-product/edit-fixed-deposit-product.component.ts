@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Data, Router } from '@angular/router';
 
 import { FixedDepositProductDetailsStepComponent } from '../fixed-deposit-product-stepper/fixed-deposit-product-details-step/fixed-deposit-product-details-step.component';
 import { FixedDepositProductCurrencyStepComponent } from '../fixed-deposit-product-stepper/fixed-deposit-product-currency-step/fixed-deposit-product-currency-step.component';
@@ -18,13 +18,13 @@ import { ProductsService } from 'app/products/products.service';
 })
 export class EditFixedDepositProductComponent implements OnInit {
 
-  @ViewChild(FixedDepositProductDetailsStepComponent, { static: true }) fixedDepositProductDetailsStep: FixedDepositProductDetailsStepComponent;
-  @ViewChild(FixedDepositProductCurrencyStepComponent, { static: true }) fixedDepositProductCurrencyStep: FixedDepositProductCurrencyStepComponent;
-  @ViewChild(FixedDepositProductTermsStepComponent, { static: true }) fixedDepositProductTermsStep: FixedDepositProductTermsStepComponent;
-  @ViewChild(FixedDepositProductSettingsStepComponent, { static: true }) fixedDepositProductSettingsStep: FixedDepositProductSettingsStepComponent;
-  @ViewChild(FixedDepositProductInterestRateChartStepComponent, { static: true }) fixedDepositProductInterestRateChartStep: FixedDepositProductInterestRateChartStepComponent;
-  @ViewChild(FixedDepositProductChargesStepComponent, { static: true }) fixedDepositProductChargesStep: FixedDepositProductChargesStepComponent;
-  @ViewChild(FixedDepositProductAccountingStepComponent, { static: true }) fixedDepositProductAccountingStep: FixedDepositProductAccountingStepComponent;
+  @ViewChild(FixedDepositProductDetailsStepComponent, { static: true }) fixedDepositProductDetailsStep!: FixedDepositProductDetailsStepComponent;
+  @ViewChild(FixedDepositProductCurrencyStepComponent, { static: true }) fixedDepositProductCurrencyStep!: FixedDepositProductCurrencyStepComponent;
+  @ViewChild(FixedDepositProductTermsStepComponent, { static: true }) fixedDepositProductTermsStep!: FixedDepositProductTermsStepComponent;
+  @ViewChild(FixedDepositProductSettingsStepComponent, { static: true }) fixedDepositProductSettingsStep!: FixedDepositProductSettingsStepComponent;
+  @ViewChild(FixedDepositProductInterestRateChartStepComponent, { static: true }) fixedDepositProductInterestRateChartStep!: FixedDepositProductInterestRateChartStepComponent;
+  @ViewChild(FixedDepositProductChargesStepComponent, { static: true }) fixedDepositProductChargesStep!: FixedDepositProductChargesStepComponent;
+  @ViewChild(FixedDepositProductAccountingStepComponent, { static: true }) fixedDepositProductAccountingStep!: FixedDepositProductAccountingStepComponent;
 
   fixedDepositProductsTemplate: any;
   accountingRuleData = ['None', 'Cash'];
@@ -32,7 +32,7 @@ export class EditFixedDepositProductComponent implements OnInit {
   constructor(private route: ActivatedRoute,
     private productsService: ProductsService,
     private router: Router) {
-    this.route.data.subscribe((data: { fixedDepositProductAndTemplate: any }) => {
+    this.route.data.subscribe((data: { fixedDepositProductAndTemplate: any }|Data) => {
       this.fixedDepositProductsTemplate = data.fixedDepositProductAndTemplate;
     });
   }

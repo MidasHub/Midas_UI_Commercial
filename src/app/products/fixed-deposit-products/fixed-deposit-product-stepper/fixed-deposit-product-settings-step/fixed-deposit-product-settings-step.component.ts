@@ -10,7 +10,7 @@ export class FixedDepositProductSettingsStepComponent implements OnInit {
 
   @Input() fixedDepositProductsTemplate: any;
 
-  fixedDepositProductSettingsForm: FormGroup;
+  fixedDepositProductSettingsForm!: FormGroup;
 
   lockinPeriodFrequencyTypeData: any;
   periodFrequencyTypeData: any;
@@ -67,7 +67,7 @@ export class FixedDepositProductSettingsStepComponent implements OnInit {
   }
 
   setConditionalControls() {
-    this.fixedDepositProductSettingsForm.get('withHoldTax').valueChanges
+    this.fixedDepositProductSettingsForm.get('withHoldTax')?.valueChanges
       .subscribe((withHoldTax: any) => {
         if (withHoldTax) {
           this.fixedDepositProductSettingsForm.addControl('taxGroupId', new FormControl('', Validators.required));

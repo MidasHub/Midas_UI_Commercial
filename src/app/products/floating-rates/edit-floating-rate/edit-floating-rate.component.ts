@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute, Data } from '@angular/router';
 import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
@@ -26,7 +26,7 @@ import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.co
 export class EditFloatingRateComponent implements OnInit {
 
   /** Floating Rate Form. */
-  floatingRateForm: FormGroup;
+  floatingRateForm!: FormGroup;
   /** Floating Rate Data. */
   floatingRateData: any;
   /** Minimum floating rate period date allowed. */
@@ -36,16 +36,16 @@ export class EditFloatingRateComponent implements OnInit {
   /** Columns to be displayed in floating rate periods table. */
   displayedColumns: string[] = ['fromDate', 'interestRate', 'isDifferential', 'actions'];
   /** Data source for floating rate periods table. */
-  dataSource: MatTableDataSource<any>;
+  dataSource!: MatTableDataSource<any>;
   /** Date Format. */
   dateFormat = 'dd/MM/yyyy';
   /** Floating Rate Period Data. */
   floatingRatePeriodsData: any[] = [];
 
   /** Paginator for floating rate periods table. */
-  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+  @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
   /** Sorter for floating rate periods table. */
-  @ViewChild(MatSort, { static: true }) sort: MatSort;
+  @ViewChild(MatSort, { static: true }) sort!: MatSort;
 
   /**
    * Retrieves the floating rate data from `resolve`.
@@ -62,7 +62,7 @@ export class EditFloatingRateComponent implements OnInit {
               private route: ActivatedRoute,
               private datePipe: DatePipe,
               private dialog: MatDialog) {
-    this.route.data.subscribe((data: { floatingRate: any }) => {
+    this.route.data.subscribe((data: { floatingRate: any }|Data) => {
       this.floatingRateData = data.floatingRate;
       this.floatingRatePeriodsData = data.floatingRate.ratePeriods ? data.floatingRate.ratePeriods : [];
     });

@@ -1,7 +1,7 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Data, Router } from '@angular/router';
 
 /** Custom Services */
 import { ProductsService } from 'app/products/products.service';
@@ -19,7 +19,7 @@ export class EditChargeComponent implements OnInit {
   /** Selected Data. */
   chargeData: any;
   /** Charge form. */
-  chargeForm: FormGroup;
+  chargeForm!: FormGroup;
   /** Select Income. */
   selectedIncome: any;
   /** Select Time Type. */
@@ -56,7 +56,7 @@ export class EditChargeComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
   ) {
-    this.route.data.subscribe((data: { chargesTemplate: any }) => {
+    this.route.data.subscribe((data: { chargesTemplate: any }|Data) => {
       this.chargeData = data.chargesTemplate;
     });
   }

@@ -30,18 +30,18 @@ export class CreateFloatingRateComponent implements OnInit {
   /** Minimum floating rate period date allowed. */
   minDate = new Date();
   /** Floating Rate Form. */
-  floatingRateForm: FormGroup;
+  floatingRateForm!: FormGroup;
   /** Columns to be displayed in floating rate periods table. */
   displayedColumns: string[] = ['fromDate', 'interestRate', 'isDifferential', 'actions'];
   /** Data source for floating rate periods table. */
-  dataSource: MatTableDataSource<any>;
+  dataSource!: MatTableDataSource<any>;
   /** Date Format. */
   dateFormat = 'dd/MM/yyyy';
 
   /** Paginator for floating rate periods table. */
-  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+  @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
   /** Sorter for floating rate periods table. */
-  @ViewChild(MatSort, { static: true }) sort: MatSort;
+  @ViewChild(MatSort, { static: true }) sort!: MatSort;
 
   /**
    * @param {Router} router Router for navigation.
