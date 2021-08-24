@@ -1,5 +1,4 @@
 import {Component, OnInit} from '@angular/core';
-import {MatSnackBar} from '@angular/material/snack-bar';
 import {AlertService} from 'app/core/alert/alert.service';
 import {I18nService} from 'app/core/i18n/i18n.service';
 
@@ -19,6 +18,6 @@ export class OndueCardComponent implements OnInit {
   }
 
   onClickAlert() {
-    this.alertService.alert({message:'Tính năng này đang phát triển, Vui lòng thử lại sau !',msgClass: 'cssInfo'});
+    this.alertService.alert({message: 'Tính năng này đang phát triển, Vui lòng thử lại sau !', msgClass: 'cssInfo'});
   }
 }

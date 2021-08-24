@@ -16,7 +16,7 @@ import { TourService } from 'ngx-tour-md-menu';
 /** Device detector */
 import { DeviceDetectorService, OrientationType, DeviceType } from 'ngx-device-detector';
 
-import * as ScreenEnum from '../core/constants/screen_constant';
+// import * as ScreenEnum from '../core/constants/screen_constant';
 import { split } from 'lodash';
 /**
  * Home component.
@@ -35,12 +35,12 @@ export class HomeComponent implements OnInit, OnDestroy {
   /** Search Text. */
   searchText: FormControl = new FormControl();
   /** Filtered Activities. */
-  filteredActivities: Observable<any[]>;
+  filteredActivities!: Observable<any[]>;
   /** All User Activities. */
   allActivities: any[] = activities;
   // ** Data for banner  */
   showBanner = false;
-  title: string;
+  title!: string;
   childBannerData = new ChildBannerData();
 
   /** Subscription to breakpoint observer for handset. */
@@ -50,10 +50,10 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   /** Screem size check */
   screenSize: any;
-  isDesktop: boolean;
-  isHandset: boolean;
+  isDesktop?: boolean;
+  isHandset?: boolean;
   /** Subscription to progress bar. */
-  isHandset_: Subscription;
+  isHandset_?: Subscription;
 
   /**
    * @param {AuthenticationService} authenticationService Authentication Service.
@@ -86,7 +86,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     console.log(split('credentials.staffDisplayName', ',')[1]?.trim());
 
     bannerData.some(d => {
-      if (d.office === credentials.officeId) {
+      if (d.office === credentials?.officeId) {
         this.showBanner = true;
         this.childBannerData.title = d.title;
       }
@@ -122,6 +122,6 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-  this.isHandset_.unsubscribe();
+  this.isHandset_?.unsubscribe();
   }
 }

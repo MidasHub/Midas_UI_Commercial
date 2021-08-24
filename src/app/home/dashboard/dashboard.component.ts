@@ -14,15 +14,15 @@ export class DashboardComponent implements OnInit {
   /** Array of all user activities */
   userActivity: string[];
   /** Array of most recent user activities */
-  recentActivities: string[];
+  recentActivities!: string[];
   /** Array of most frequent user activities */
-  frequentActivities: string[];
+  frequentActivities!: string[];
 
   /**
    * Gets user activities from local storage.
    */
   constructor() {
-    this.userActivity = JSON.parse(sessionStorage.getItem('midasLocation'));
+    this.userActivity = JSON.parse(sessionStorage.getItem('midasLocation') || localStorage.getItem('midasLocation') || '');
   }
 
   ngOnInit() {

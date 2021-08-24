@@ -1,7 +1,7 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Data } from '@angular/router';
 
 /** Custom Services */
 import { HomeService } from '../../home.service';
@@ -37,7 +37,7 @@ export class AmountCollectedPieComponent implements OnInit {
    */
   constructor(private homeService: HomeService,
               private route: ActivatedRoute) {
-    this.route.data.subscribe( (data: { offices: any }) => {
+    this.route.data.subscribe( (data: { offices: any }|Data) => {
       this.officeData = data.offices;
     });
   }

@@ -1,7 +1,7 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Data } from '@angular/router';
 import { DatePipe } from '@angular/common';
 
 /** rxjs Imports */
@@ -44,7 +44,7 @@ export class ClientTrendsBarComponent implements OnInit {
   constructor(private homeService: HomeService,
               private route: ActivatedRoute,
               private datePipe: DatePipe) {
-    this.route.data.subscribe( (data: { offices: any }) => {
+    this.route.data.subscribe( (data: { offices: any }|Data) => {
       this.officeData = data.offices;
     });
   }

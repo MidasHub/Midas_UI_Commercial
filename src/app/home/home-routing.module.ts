@@ -56,6 +56,6 @@ const routes: Routes = [
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
-  providers: [OfficesResolver,ClientTemplateResolver,ClientAddressFieldConfigurationResolver]
+  providers: [OfficesResolver, ClientTemplateResolver, ClientAddressFieldConfigurationResolver]
 })
 export class HomeRoutingModule { }

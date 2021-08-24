@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild, } from '@angular/core';
 import { MidasClientService } from './../../midas-client/midas-client.service';
 import { Router } from '@angular/router';
 import {FormControl,  Validators} from '@angular/forms';
@@ -14,7 +14,7 @@ import { AlertService } from 'app/core/alert/alert.service';
   templateUrl: './mainboard.component.html',
   styleUrls: ['./mainboard.component.scss']
 })
-export class MainboardComponent implements OnInit {
+export class MainboardComponent implements OnInit, AfterViewInit {
   displayedColumns: string[] = ['id', 'status', 'officeName', 'displayName' , 'mobileNo', 'documentKey', 'bankName'];
   dataSource: MatTableDataSource<any>;
   emailFormControl = new FormControl('', [
@@ -22,11 +22,11 @@ export class MainboardComponent implements OnInit {
     Validators.email,
   ]);
   isLoading = false;
-  showSearchTable =false;
+  showSearchTable = false;
   matcher = new ErrorStateMatcher();
 
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatPaginator) paginator: MatPaginator |any;
+  @ViewChild(MatSort) sort: MatSort |any;
   constructor(
     private midasClientService: MidasClientService,
 
@@ -34,6 +34,7 @@ export class MainboardComponent implements OnInit {
     this.dataSource = new MatTableDataSource();
 
    }
+
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
@@ -48,7 +49,7 @@ export class MainboardComponent implements OnInit {
     this.dataSource.data = [];
     this.showSearchTable = true;
     this.isLoading = true;
-    this.midasClientService.searchClientByNameAndExternalIdAndPhoneAndDocumentKey(query).subscribe((data: any) =>{
+    this.midasClientService.searchClientByNameAndExternalIdAndPhoneAndDocumentKey(query).subscribe((data: any) => {
       this.isLoading = false;
       this.dataSource.data = data.result.listClientSearch;
 

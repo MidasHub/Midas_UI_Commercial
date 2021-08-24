@@ -1,59 +1,38 @@
-import { Component, OnInit, ChangeDetectionStrategy, ViewChild, TemplateRef, AfterViewInit } from "@angular/core";
-import { startOfDay, endOfDay, subDays, addDays, endOfMonth, isSameDay, isSameMonth, addHours } from "date-fns";
-import { CalendarEvent, CalendarEventAction, CalendarEventTimesChangedEvent, CalendarView } from "angular-calendar";
-import { Subject } from "rxjs";
-import { AlertService } from "../../core/alert/alert.service";
-import { BanksService } from "app/banks/banks.service";
+import { Component, OnInit, ChangeDetectionStrategy, ViewChild, TemplateRef, AfterViewInit } from '@angular/core';
+import { startOfDay, endOfDay, subDays, addDays, endOfMonth, isSameDay, isSameMonth, addHours } from 'date-fns';
+import { CalendarEvent, CalendarEventAction, CalendarEventTimesChangedEvent, CalendarView } from 'angular-calendar';
+import { Subject } from 'rxjs';
+import { AlertService } from '../../core/alert/alert.service';
+import { BanksService } from 'app/banks/banks.service';
 
 const colors: any = {
   red: {
-    primary: "#ad2121",
-    secondary: "#FAE3E3",
+    primary: '#ad2121',
+    secondary: '#FAE3E3',
   },
   blue: {
-    primary: "#1e90ff",
-    secondary: "#D1E8FF",
+    primary: '#1e90ff',
+    secondary: '#D1E8FF',
   },
   yellow: {
-    primary: "#e3bc08",
-    secondary: "#FDF1BA",
+    primary: '#e3bc08',
+    secondary: '#FDF1BA',
   },
 };
 
 @Component({
-  selector: "midas-calendar",
+  selector: 'midas-calendar',
   // changeDetection: ChangeDetectionStrategy.OnPush,
-  templateUrl: "./calendar.component.html",
-  styleUrls: ["./calendar.component.scss"],
+  templateUrl: './calendar.component.html',
+  styleUrls: ['./calendar.component.scss'],
 })
 export class CalendarComponent {
-  events: CalendarEvent[] = [];
-  @ViewChild("modalContent", { static: true }) modalContent: TemplateRef<any>;
 
-  setEvents() {
-    this.bankService?.getAllCardOnDueDay().subscribe((response: any) => {
-      this.events = [];
-      const listCard = response.result.listCard;
-      listCard.forEach((element: any) => {
-        let date: Date = new Date();
-        date.setDate(element.dueDay);
-        let event = {
-          start: date,
-          end: date,
-          title: `Có ${element.numOfCard} thẻ đến hạn`,
-          color: colors.red,
-          actions: this.actions,
-          allDay: true,
-          resizable: {
-            beforeStart: true,
-            afterEnd: true,
-          },
-          draggable: true,
-        };
-        this.events.push(event);
-      });
-    });
+  constructor(private alertService: AlertService, private bankService: BanksService) {
+    this.setEvents();
   }
+  events: CalendarEvent[] = [];
+  @ViewChild('modalContent', { static: true }) modalContent: TemplateRef<any>|any;
 
   view: CalendarView = CalendarView.Month;
 
@@ -61,7 +40,7 @@ export class CalendarComponent {
 
   viewDate: Date = new Date();
 
-  modalData: {
+  modalData!: {
     action: string;
     event: CalendarEvent;
   };
@@ -87,18 +66,39 @@ export class CalendarComponent {
   viewDetail: CalendarEventAction[] = [
     {
       label: '<i class="fas fa-fw fa-eyes"></i>',
-      a11yLabel: "Edit",
+      a11yLabel: 'Edit',
       onClick: ({ event }: { event: CalendarEvent }): void => {
-        this.handleEvent("Edited", event);
+        this.handleEvent('Edited', event);
       },
     },
   ];
 
   refresh: Subject<any> = new Subject();
-  activeDayIsOpen: boolean = false;
+  activeDayIsOpen = false;
 
-  constructor(private alertService: AlertService, private bankService: BanksService) {
-    this.setEvents();
+  setEvents() {
+    this.bankService?.getAllCardOnDueDay().subscribe((response: any) => {
+      this.events = [];
+      const listCard = response.result.listCard;
+      listCard.forEach((element: any) => {
+        const date: Date = new Date();
+        date.setDate(element.dueDay);
+        const event = {
+          start: date,
+          end: date,
+          title: `Có ${element.numOfCard} thẻ đến hạn`,
+          color: colors.red,
+          actions: this.actions,
+          allDay: true,
+          resizable: {
+            beforeStart: true,
+            afterEnd: true,
+          },
+          draggable: true,
+        };
+        this.events.push(event);
+      });
+    });
   }
 
   dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
@@ -123,7 +123,7 @@ export class CalendarComponent {
       }
       return iEvent;
     });
-    this.handleEvent("Dropped or resized", event);
+    this.handleEvent('Dropped or resized', event);
   }
 
   handleEvent(action: string, event: CalendarEvent): void {
@@ -131,12 +131,12 @@ export class CalendarComponent {
     // this.modal.open(this.modalContent, { size: 'lg' });
     this.alertService.alert({
       message:
-        "Hành động: " +
+        'Hành động: ' +
         action +
-        " - Nội dung: " +
+        ' - Nội dung: ' +
         event.title +
-        ". Nhờ anh em cho hiện cái dialogbox chứa nội dung của event này lên.",
-      msgClass: "cssSuccess",
+        '. Nhờ anh em cho hiện cái dialogbox chứa nội dung của event này lên.',
+      msgClass: 'cssSuccess',
     });
   }
 
@@ -144,7 +144,7 @@ export class CalendarComponent {
     this.events = [
       ...this.events,
       {
-        title: "New event",
+        title: 'New event',
         start: startOfDay(new Date()),
         end: endOfDay(new Date()),
         color: colors.red,
