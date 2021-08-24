@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute, Data } from '@angular/router';
 import { FormControl } from '@angular/forms';
 
 /** Custom Services */
@@ -24,11 +24,11 @@ import { ClientNavigationComponent } from './client-navigation/client-navigation
 export class NavigationComponent implements OnInit {
 
   /** Navigation Components */
-  @ViewChild(OfficeNavigationComponent) officeNavigationComponent: OfficeNavigationComponent;
-  @ViewChild(StaffNavigationComponent) staffNavigationComponent: StaffNavigationComponent;
-  @ViewChild(CenterNavigationComponent) centerNavigationComponent: CenterNavigationComponent;
-  @ViewChild(GroupNavigationComponent) groupNavigationComponent: GroupNavigationComponent;
-  @ViewChild(ClientNavigationComponent) clientNavigationComponent: ClientNavigationComponent;
+  @ViewChild(OfficeNavigationComponent) officeNavigationComponent!: OfficeNavigationComponent;
+  @ViewChild(StaffNavigationComponent) staffNavigationComponent!: StaffNavigationComponent;
+  @ViewChild(CenterNavigationComponent) centerNavigationComponent!: CenterNavigationComponent;
+  @ViewChild(GroupNavigationComponent) groupNavigationComponent!: GroupNavigationComponent;
+  @ViewChild(ClientNavigationComponent) clientNavigationComponent!: ClientNavigationComponent;
 
   /** Office data */
   officeData: any;
@@ -69,7 +69,7 @@ export class NavigationComponent implements OnInit {
   constructor(private navigationService: NavigationService,
               private route: ActivatedRoute,
               private router: Router) {
-    this.route.data.subscribe((data: { offices: any }) => {
+    this.route.data.subscribe((data: { offices: any }| Data) => {
       this.officeData = data.offices;
     });
   }

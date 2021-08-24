@@ -13,8 +13,8 @@ import { SavingsAccountTableComponent } from '../savings-account-table/savings-a
 })
 export class GroupNavigationComponent implements OnInit {
 
-  @ViewChild(LoanAccountTableComponent) loanAccountTableComponent: LoanAccountTableComponent;
-  @ViewChild(SavingsAccountTableComponent) savingsAccountTableComponent: SavingsAccountTableComponent;
+  @ViewChild(LoanAccountTableComponent) loanAccountTableComponent!: LoanAccountTableComponent;
+  @ViewChild(SavingsAccountTableComponent) savingsAccountTableComponent!: SavingsAccountTableComponent;
 
   @Input() groupData: any;
   @Input() groupAccountsData: any;

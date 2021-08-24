@@ -14,12 +14,12 @@ export class MemberGroupsComponent implements OnInit {
   /** Columns to be displayed in the member groups table. */
   displayedColumns: string[] = ['accountNo', 'name'];
   /** Data source for member groups table. */
-  dataSource: MatTableDataSource<any>;
+  dataSource!: MatTableDataSource<any>;
 
   /** Paginator for member groups table. */
-  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+  @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
   /** Sorter for member groups table. */
-  @ViewChild(MatSort, { static: true }) sort: MatSort;
+  @ViewChild(MatSort, { static: true }) sort!: MatSort;
 
   /** Member Group Data Setter */
   @Input() set memberGroupData(data: any) {

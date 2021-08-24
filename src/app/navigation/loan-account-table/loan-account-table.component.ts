@@ -19,14 +19,14 @@ export class LoanAccountTableComponent implements OnInit {
   /** Show closed loan accounts */
   showClosed = false;
   /** Data source for loan account table. */
-  dataSource: MatTableDataSource<any>;
+  dataSource!: MatTableDataSource<any>;
   /** Loan Account Data */
   accountData: any;
 
   /** Paginator for loan accounts table. */
-  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+  @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
   /** Sorter for loan accounts table. */
-  @ViewChild(MatSort, { static: true }) sort: MatSort;
+  @ViewChild(MatSort, { static: true }) sort!: MatSort;
 
   /** Loan Account Setter */
   @Input() set loanAccountData(data: any) {

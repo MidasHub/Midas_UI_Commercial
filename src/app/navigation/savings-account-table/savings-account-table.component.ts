@@ -19,14 +19,14 @@ export class SavingsAccountTableComponent implements OnInit {
   /** Show closed saving accounts */
   showClosed = false;
   /** Data source for savings account table. */
-  dataSource: MatTableDataSource<any>;
+  dataSource!: MatTableDataSource<any>;
   /** Savings Account Data */
   accountData: any;
 
   /** Paginator for savings account table. */
-  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+  @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
   /** Sorter for savings account table. */
-  @ViewChild(MatSort, { static: true }) sort: MatSort;
+  @ViewChild(MatSort, { static: true }) sort!: MatSort;
 
   /** Savings Account Setter */
   @Input() set savingsAccountData(data: any) {
