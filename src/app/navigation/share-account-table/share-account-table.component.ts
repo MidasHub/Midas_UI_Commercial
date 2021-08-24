@@ -19,14 +19,14 @@ export class ShareAccountTableComponent implements OnInit {
   /** Show closed share accounts */
   showClosed = false;
   /** Data source for share account table. */
-  dataSource: MatTableDataSource<any>;
+  dataSource!: MatTableDataSource<any>;
   /** Share Account Data */
   accountData: any;
 
   /** Paginator for share account table. */
-  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+  @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
   /** Sorter for share account table. */
-  @ViewChild(MatSort, { static: true }) sort: MatSort;
+  @ViewChild(MatSort, { static: true }) sort!: MatSort;
 
   /** Share Account Setter */
   @Input() set shareAccountData(data: any) {

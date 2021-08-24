@@ -3,7 +3,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Data } from '@angular/router';
 
 /**
  * Notifications Page Component
@@ -20,7 +20,7 @@ export class NotificationsPageComponent implements OnInit {
   /** Columns to be displayed in notifications table. */
   displayedColumns: string[] = ['notification', 'createdAt'];
   /** Data source for notifications table. */
-  dataSource: MatTableDataSource<any>;
+  dataSource!: MatTableDataSource<any>;
 
   /**
    * Gets router link prefix from notification's objectType attribute
@@ -40,16 +40,16 @@ export class NotificationsPageComponent implements OnInit {
   };
 
   /** Paginator for notifications table. */
-  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+  @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
   /** Sorter for notifications table. */
-  @ViewChild(MatSort, { static: true }) sort: MatSort;
+  @ViewChild(MatSort, { static: true }) sort!: MatSort;
 
   /**
    * Retrieves the notifications data from `resolve`.
    * @param {ActivatedRoute} route Activated Route.
    */
   constructor(private route: ActivatedRoute) {
-    this.route.data.subscribe(( data: { notifications: any }) => {
+    this.route.data.subscribe(( data: { notifications: any }|Data) => {
       this.notificationsData = data.notifications.pageItems;
     });
   }
