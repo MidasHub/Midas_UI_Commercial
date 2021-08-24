@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFireMessaging } from '@angular/fire/messaging';
-import { BehaviorSubject } from 'rxjs'
+import { BehaviorSubject } from 'rxjs';
 import { AlertService } from '../core/alert/alert.service';
 
 /** Logger */
@@ -21,10 +21,10 @@ export class FireBaseMessagingService {
         _messaging.onMessage = _messaging.onMessage.bind(_messaging);
         _messaging.onTokenRefresh = _messaging.onTokenRefresh.bind(_messaging);
       }
-    )
+    );
   }
 
- 
+
   requestPermission() {
     this.angularFireMessaging.requestToken.subscribe(
       (token: any) => {
@@ -44,9 +44,9 @@ export class FireBaseMessagingService {
   receiveMessage() {
     this.angularFireMessaging.messages.subscribe(
       (payload: any) => {
-        log.debug("new message received. ", payload);
-        this.alertService.alert({ message: '[Firebase-Notification]: \n' + payload.notification.title + ": " + payload.notification.body, msgClass: 'cssInfo' })
+        log.debug('new message received. ', payload);
+        this.alertService.alert({ message: '[Firebase-Notification]: \n' + payload.notification.title + ': ' + payload.notification.body, msgClass: 'cssInfo' });
         this.currentMessage.next(payload);
-      })
+      });
   }
 }
