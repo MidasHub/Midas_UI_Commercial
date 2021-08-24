@@ -17,7 +17,7 @@ import { ClientsService } from 'app/clients/clients.service';
 export class AcceptClientTransferComponent implements OnInit {
 
   /** Accept Client Transfer form. */
-  acceptClientTransferForm: FormGroup;
+  acceptClientTransferForm!: FormGroup;
   /** Client Id */
   clientId: any;
   /** Transfer Date */
@@ -33,10 +33,10 @@ export class AcceptClientTransferComponent implements OnInit {
               private clientsService: ClientsService,
               private route: ActivatedRoute,
               private router: Router) {
-    this.route.data.subscribe((data: { clientActionData: any }) => {
+    this.route.data.subscribe((data: { clientActionData: any }|any) => {
       this.transferDate = data.clientActionData;
     });
-    this.clientId = this.route.parent.snapshot.params['clientId'];
+    this.clientId = this.route.parent?.snapshot.params['clientId'];
   }
 
   /**

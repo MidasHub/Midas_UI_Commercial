@@ -1,7 +1,7 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute, Data } from '@angular/router';
 import { DatePipe } from '@angular/common';
 
 /** Custom Services */
@@ -19,11 +19,11 @@ import { SettingsService } from 'app/settings/settings.service';
 export class EditFamilyMemberComponent implements OnInit {
 
   /** Minimum Due Date allowed. */
-  minDate = new Date(2000, 0, 1);
+  minDate = new Date(1920, 0, 1);
   /** Maximum Due Date allowed. */
   maxDate = new Date();
   /** Add family member form. */
-  editFamilyMemberForm: FormGroup;
+  editFamilyMemberForm!: FormGroup;
   /** Add family member template. */
   addFamilyMemberTemplate: any;
   /** Family Members Details */
@@ -43,7 +43,7 @@ export class EditFamilyMemberComponent implements OnInit {
               private route: ActivatedRoute,
               private clientsService: ClientsService,
               private settingsService: SettingsService) {
-    this.route.data.subscribe((data: { clientTemplate: any, editFamilyMember: any }) => {
+    this.route.data.subscribe((data: { clientTemplate: any, editFamilyMember: any }| Data) => {
       this.addFamilyMemberTemplate = data.clientTemplate.familyMemberOptions;
       this.familyMemberDetails = data.editFamilyMember;
     });

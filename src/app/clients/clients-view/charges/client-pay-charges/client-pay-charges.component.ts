@@ -41,7 +41,7 @@ export class ClientPayChargesComponent implements OnInit {
     private datePipe: DatePipe,
     private settingsService: SettingsService
   ) {
-    this.route.data.subscribe((data: { transactionData: any }) => {
+    this.route.data.subscribe((data: { transactionData: any }|any) => {
       this.transactionData = data.transactionData;
     });
   }

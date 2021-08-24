@@ -17,7 +17,7 @@ import { ClientsService } from 'app/clients/clients.service';
 export class ClientAssignStaffComponent implements OnInit {
 
   /** Client Assign Staff form. */
-  clientAssignStaffForm: FormGroup;
+  clientAssignStaffForm!: FormGroup;
   /** Staff Data */
   staffData: any;
   /** Client Data */
@@ -34,7 +34,7 @@ export class ClientAssignStaffComponent implements OnInit {
               private clientsService: ClientsService,
               private route: ActivatedRoute,
               private router: Router) {
-    this.route.data.subscribe((data: { clientActionData: any }) => {
+    this.route.data.subscribe((data: { clientActionData: any }|any) => {
       this.clientData = data.clientActionData;
     });
   }

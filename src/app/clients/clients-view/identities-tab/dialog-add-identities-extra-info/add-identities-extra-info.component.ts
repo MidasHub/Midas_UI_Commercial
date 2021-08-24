@@ -1,27 +1,27 @@
-import { Component, Inject, OnInit } from "@angular/core";
-import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
-import { MAT_DIALOG_DATA } from "@angular/material/dialog";
-import { AuthenticationService } from "../../../../core/authentication/authentication.service";
+import { Component, Inject, OnInit } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { AuthenticationService } from '../../../../core/authentication/authentication.service';
 
-//**Logger */
-import { Logger } from "../../../../core/logger/logger.service";
-const log = new Logger("-Add card extra info-");
+// **Logger */
+import { Logger } from '../../../../core/logger/logger.service';
+const log = new Logger('-Add card extra info-');
 @Component({
   // tslint:disable-next-line:component-selector
-  selector: "midas-add-identities-extra-info",
-  templateUrl: "./add-identities-extra-info.component.html",
-  styleUrls: ["./add-identities-extra-info.component.scss"],
+  selector: 'midas-add-identities-extra-info',
+  templateUrl: './add-identities-extra-info.component.html',
+  styleUrls: ['./add-identities-extra-info.component.scss'],
 })
 export class AddIdentitiesExtraInfoComponent implements OnInit {
-  form: FormGroup;
+  form!: FormGroup;
   documentTypes: any[];
-  statusOptions: any[] = [{ value: "Active" }, { value: "Inactive" }];
-  documentCardBanks: any[];
-  documentCardTypes: any[];
+  statusOptions: any[] = [{ value: 'Active' }, { value: 'Inactive' }];
+  documentCardBanks!: any[];
+  documentCardTypes!: any[];
   currentUser: any;
   isTeller = true;
   existBin = false;
-  classCardEnum=["CLASSIC","GOLD","PLATINUM","SIGNATURE","INFINITY"];
+  classCardEnum = ['CLASSIC', 'GOLD', 'PLATINUM', 'SIGNATURE', 'INFINITY'];
 
   constructor(
     private formBuilder: FormBuilder,
@@ -47,7 +47,7 @@ export class AddIdentitiesExtraInfoComponent implements OnInit {
         dueDay: [this.data.cardInfo.cardExtraInfoEntity.dueDay, Validators.required],
         expiredDate: [
           this.data.cardInfo.cardExtraInfoEntity.expiredDate.slice(5, 7) +
-            "/" +
+            '/' +
             this.data.cardInfo.cardExtraInfoEntity.expiredDate.slice(2, 4),
           Validators.required,
         ],
@@ -57,10 +57,10 @@ export class AddIdentitiesExtraInfoComponent implements OnInit {
 
     } else {
       this.form = this.formBuilder.group({
-        dueDay: ["", Validators.required],
-        expiredDate: ["", Validators.required],
+        dueDay: ['', Validators.required],
+        expiredDate: ['', Validators.required],
         limitCard: [0, Validators.required],
-        classCard: ["", Validators.required],
+        classCard: ['', Validators.required],
       });
     }
   }

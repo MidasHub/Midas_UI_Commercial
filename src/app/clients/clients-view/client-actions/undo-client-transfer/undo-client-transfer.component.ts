@@ -1,7 +1,7 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Data, Router } from '@angular/router';
 
 /** Custom Services */
 import { ClientsService } from 'app/clients/clients.service';
@@ -17,7 +17,7 @@ import { ClientsService } from 'app/clients/clients.service';
 export class UndoClientTransferComponent implements OnInit {
 
   /** Undo Client Transfer form. */
-  undoClientTransferForm: FormGroup;
+  undoClientTransferForm!: FormGroup;
   /** Client Id */
   clientId: any;
   /** Transfer Date */
@@ -33,10 +33,10 @@ export class UndoClientTransferComponent implements OnInit {
               private clientsService: ClientsService,
               private route: ActivatedRoute,
               private router: Router) {
-    this.route.data.subscribe((data: { clientActionData: any }) => {
+    this.route.data.subscribe((data: { clientActionData: any }| Data) => {
       this.transferDate = data.clientActionData;
     });
-    this.clientId = this.route.parent.snapshot.params['clientId'];
+    this.clientId = this.route.parent?.snapshot.params['clientId'];
   }
 
   /**

@@ -13,7 +13,7 @@ import { MatDialogRef } from '@angular/material/dialog';
 export class UploadImageDialogComponent {
 
   /** Client Image */
-  image: File;
+  image?: File;
 
   /**
    * @param {MatDialogRef} dialogRef Component reference to dialog.

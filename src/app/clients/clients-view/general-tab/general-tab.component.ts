@@ -1,6 +1,6 @@
 /** Angular Imports */
 import {Component, OnInit} from '@angular/core';
-import {Router, ActivatedRoute} from '@angular/router';
+import {Router, ActivatedRoute, Data} from '@angular/router';
 
 /** Custom Services. */
 import {ClientsService} from 'app/clients/clients.service';
@@ -59,7 +59,7 @@ export class GeneralTabComponent {
   clientid: any;
   isTeller = true;
   isInterchangeClient = false;
-  routingSavingAccountUrl: string = "savings-accounts";
+  routingSavingAccountUrl = 'savings-accounts';
 
 
   /**
@@ -73,7 +73,7 @@ export class GeneralTabComponent {
     private router: Router,
     private authenticationService: AuthenticationService
   ) {
-    this.route.data.subscribe((data: { clientAccountsData: any, clientChargesData: any, clientSummary: any }) => {
+    this.route.data.subscribe((data: { clientAccountsData: any, clientChargesData: any, clientSummary: any }|Data) => {
 
       this.clientAccountData = data.clientAccountsData.result.clientAccount;
       this.savingAccounts = data.clientAccountsData.result.clientAccount.savingsAccounts.sort((v: any) => ['SCA0', 'CCA0', 'ACA0', 'FCA0'].indexOf(v.shortProductName) === -1);
@@ -81,17 +81,17 @@ export class GeneralTabComponent {
       this.shareAccounts = data.clientAccountsData.result.clientAccount.codeshareAccounts;
       this.upcomingCharges = data.clientChargesData ? data.clientChargesData.pageItems : [];
       this.clientSummary = data.clientSummary ? data.clientSummary[0] :  {};
-      this.clientid = this.route.parent.snapshot.params['clientId'];
+      this.clientid = this.route.parent?.snapshot.params['clientId'];
       this.route.queryParamMap
       .subscribe((params) => {
-          if (params.get("clientType") == 'ic') {
+          if (params.get('clientType') === 'ic') {
           this.isInterchangeClient = true ;
           // this.routingSavingAccountUrl = "savings-accounts-ic"
         }
       });
     });
     const currentUser = this.authenticationService.getCredentials();
-    const {roles, staffId} = currentUser;
+    const {roles, staffId} = currentUser || {roles: null, staffId: null};
     roles.map((role: any) => {
       if (role.id !== 3) {
         this.isTeller = false;

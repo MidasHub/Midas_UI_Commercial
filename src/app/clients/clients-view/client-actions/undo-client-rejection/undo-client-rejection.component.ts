@@ -23,7 +23,7 @@ export class UndoClientRejectionComponent implements OnInit {
   /** Maximum date allowed. */
   maxDate = new Date();
   /** Undo Client Rejection form. */
-  undoClientRejectionForm: FormGroup;
+  undoClientRejectionForm!: FormGroup;
   /** Client Id */
   clientId: any;
 
@@ -40,7 +40,7 @@ export class UndoClientRejectionComponent implements OnInit {
               private route: ActivatedRoute,
               private router: Router,
               private settingsService: SettingsService) {
-    this.clientId = this.route.parent.snapshot.params['clientId'];
+    this.clientId = this.route.parent?.snapshot.params['clientId'];
   }
 
   /**

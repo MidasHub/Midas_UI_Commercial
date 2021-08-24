@@ -1,7 +1,7 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Data, Router } from '@angular/router';
 
 /** Custom Services */
 import { ClientsService } from 'app/clients/clients.service';
@@ -17,7 +17,7 @@ import { ClientsService } from 'app/clients/clients.service';
 export class UpdateClientSavingsAccountComponent implements OnInit {
 
   /** Client Update Savings Account form. */
-  clientSavingsAccountForm: FormGroup;
+  clientSavingsAccountForm!: FormGroup;
   /** Savings Accounts Data */
   savingsAccounts: any;
   /** Client Data */
@@ -34,7 +34,7 @@ export class UpdateClientSavingsAccountComponent implements OnInit {
               private clientsService: ClientsService,
               private route: ActivatedRoute,
               private router: Router) {
-    this.route.data.subscribe((data: { clientActionData: any }) => {
+    this.route.data.subscribe((data: { clientActionData: any }| Data) => {
       this.clientData = data.clientActionData;
     });
   }

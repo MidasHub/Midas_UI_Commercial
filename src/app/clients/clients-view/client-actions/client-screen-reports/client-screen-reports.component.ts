@@ -18,7 +18,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 export class ClientScreenReportsComponent implements OnInit {
 
   /** Client Screen Reportform. */
-  clientScreenReportForm: FormGroup;
+  clientScreenReportForm!: FormGroup;
   /** Templates Data */
   templatesData: any;
   /** Client Id */
@@ -27,7 +27,7 @@ export class ClientScreenReportsComponent implements OnInit {
   template: any;
 
   /** Screen report output reference */
-  @ViewChild('screenReport', { static: true }) screenReportRef: ElementRef;
+  @ViewChild('screenReport', { static: true }) screenReportRef: ElementRef |any;
 
   /**
    * Fetches Client Action Data from `resolve`
@@ -42,10 +42,10 @@ export class ClientScreenReportsComponent implements OnInit {
               private route: ActivatedRoute,
               private sanitizer: DomSanitizer,
               private renderer: Renderer2) {
-    this.route.data.subscribe((data: { clientActionData: any }) => {
+    this.route.data.subscribe((data: { clientActionData: any }|any) => {
       this.templatesData = data.clientActionData;
     });
-    this.clientId = this.route.parent.snapshot.params['clientId'];
+    this.clientId = this.route.parent?.snapshot.params['clientId'] ;
   }
 
   /**
@@ -69,19 +69,19 @@ export class ClientScreenReportsComponent implements OnInit {
    */
   print() {
     const templateWindow = window.open('', 'Screen Report', 'height=400,width=600');
-    templateWindow.document.write('<html><head>');
-    templateWindow.document.write('</head><body>');
-    templateWindow.document.write(this.template);
-    templateWindow.document.write('</body></html>');
-    templateWindow.print();
-    templateWindow.close();
+    templateWindow?.document.write('<html><head>');
+    templateWindow?.document.write('</head><body>');
+    templateWindow?.document.write(this.template);
+    templateWindow?.document.write('</body></html>');
+    templateWindow?.print();
+    templateWindow?.close();
   }
 
   /**
    * Submits the form and generates screen report for the client.
    */
   generate() {
-    const templateId = this.clientScreenReportForm.get('templateId').value;
+    const templateId = this.clientScreenReportForm.get('templateId')?.value ;
     this.clientsService.retrieveClientReportTemplate(templateId, this.clientId).subscribe((response: any) => {
       this.template = this.sanitizer.sanitize(SecurityContext.HTML, response);
       this.renderer.setProperty(this.screenReportRef.nativeElement, 'innerHTML', this.template);

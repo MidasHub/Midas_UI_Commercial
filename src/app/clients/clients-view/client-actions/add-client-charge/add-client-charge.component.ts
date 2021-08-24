@@ -23,7 +23,7 @@ export class AddClientChargeComponent implements OnInit {
   /** Maximum Due Date allowed. */
   maxDate = new Date();
   /** Add Clients Charge form. */
-  clientChargeForm: FormGroup;
+  clientChargeForm!: FormGroup;
   /** clients charge options. */
   clientChargeOptions: any;
   /** clients Id */
@@ -48,10 +48,10 @@ export class AddClientChargeComponent implements OnInit {
     private clientsService: ClientsService,
     private settingsService: SettingsService
   ) {
-    this.route.data.subscribe((data: { clientActionData: any }) => {
+    this.route.data.subscribe((data: { clientActionData: any }|any) => {
       this.clientChargeOptions = data.clientActionData.chargeOptions;
     });
-    this.clientId = this.route.parent.snapshot.params['clientId'];
+    this.clientId = this.route.parent?.snapshot.params['clientId'] ;
   }
 
   ngOnInit() {

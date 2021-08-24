@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Data } from '@angular/router';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -18,14 +18,14 @@ export class ViewSurveyComponent implements OnInit {
   /** Survey Data */
   surveyData: any;
   /** Data source for view surveys table. */
-  dataSource: MatTableDataSource<any>;
+  dataSource!: MatTableDataSource<any>;
   /** Columns to be displayed in list of surveys table. */
   displayedColumns: string[] = ['surveyName', 'createdBy', 'date', 'score'];
 
   /** Paginator for list of surveys table. */
-  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator |any;
   /** Sorter for list of surveys table. */
-  @ViewChild(MatSort, { static: true }) sort: MatSort;
+  @ViewChild(MatSort, { static: true }) sort: MatSort |any;
 
 
   /**
@@ -33,7 +33,7 @@ export class ViewSurveyComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route.
    */
   constructor(private route: ActivatedRoute) {
-    this.route.data.subscribe((data: { clientActionData: any }) => {
+    this.route.data.subscribe((data: { clientActionData: any } | Data) => {
       this.surveyData = data.clientActionData;
     });
   }

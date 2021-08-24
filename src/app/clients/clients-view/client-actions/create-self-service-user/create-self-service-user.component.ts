@@ -14,7 +14,7 @@ import { ClientsService } from 'app/clients/clients.service';
 })
 export class CreateSelfServiceUserComponent implements OnInit {
 
-  createSelfServiceForm: FormGroup;
+  createSelfServiceForm!: FormGroup;
   clientData: any;
   hidePasswordField = true;
 
@@ -22,7 +22,7 @@ export class CreateSelfServiceUserComponent implements OnInit {
               private route: ActivatedRoute,
               private clientService: ClientsService,
               private router: Router) {
-    this.route.data.subscribe((data: { clientActionData: any}) => {
+    this.route.data.subscribe((data: { clientActionData: any}|any) => {
       this.clientData = data.clientActionData;
     });
   }
@@ -68,7 +68,7 @@ export class CreateSelfServiceUserComponent implements OnInit {
    * Submit form.
    */
   submit() {
-    if (!this.createSelfServiceForm.get('passwordNeverExpires').value) {
+    if (!this.createSelfServiceForm.get('passwordNeverExpires')?.value) {
       this.createSelfServiceForm.removeControl('passwordNeverExpires');
     }
     const clientId = this.clientData.id.toString();

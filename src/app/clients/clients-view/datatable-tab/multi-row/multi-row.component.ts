@@ -22,20 +22,20 @@ import { SettingsService } from 'app/settings/settings.service';
   styleUrls: ['./multi-row.component.scss']
 })
 export class MultiRowComponent implements OnInit, OnChanges {
-  @ViewChild('dataTable', { static: true }) dataTableRef: MatTable<Element>;
+  @ViewChild('dataTable', { static: true }) dataTableRef!: MatTable<Element>;
   @Input() dataObject: any;
-  datatableName: string;
+  datatableName?: string;
   datatableColumns: string[] = [];
   datatableData: any;
-  clientId: string;
-  showDeleteBotton: boolean;
+  clientId?: string | null ;
+  showDeleteBotton?: boolean;
 
   constructor(private route: ActivatedRoute,
     private datePipe: DatePipe,
     private clientsService: ClientsService,
     private dialog: MatDialog,
     private settingsService: SettingsService) {
-    this.clientId = this.route.parent.parent.snapshot.paramMap.get('clientId');
+    this.clientId = this.route.parent?.parent?.snapshot.paramMap.get('clientId');
   }
 
   ngOnInit() {

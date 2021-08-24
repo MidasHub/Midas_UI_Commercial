@@ -18,12 +18,12 @@ export class ChargesOverviewComponent implements OnInit {
   /** Columns to be displayed in charge overview table. */
   displayedColumns: string[] = ['name', 'dueAsOf', 'due', 'paid', 'waived', 'outstanding'];
   /** Data source for charge overview table. */
-  dataSource: MatTableDataSource<any>;
+  dataSource?: MatTableDataSource<any> ;
   /** Charge Overview data */
   chargeOverviewData: any;
 
   /** Paginator for charge overview table. */
-  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator | any;
 
   /**
    * Retrieves the charge overview data from `resolve`.
@@ -32,7 +32,7 @@ export class ChargesOverviewComponent implements OnInit {
    */
   constructor(private route: ActivatedRoute,
               public dialog: MatDialog) {
-      this.route.data.subscribe((data: { clientChargesData: any }) => {
+      this.route.data.subscribe((data: { clientChargesData: any }|any) => {
         this.chargeOverviewData = data.clientChargesData;
     });
   }

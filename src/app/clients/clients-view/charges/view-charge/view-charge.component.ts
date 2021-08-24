@@ -28,7 +28,7 @@ export class ViewChargeComponent implements OnInit {
               private router: Router,
               private date: DatePipe,
               private clientService: ClientsService) {
-    this.route.data.subscribe((data: { clientChargeData: any }) => {
+    this.route.data.subscribe((data: { clientChargeData: any }|any) => {
       this.chargeData = data.clientChargeData;
     });
    }

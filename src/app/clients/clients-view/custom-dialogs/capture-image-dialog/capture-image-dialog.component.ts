@@ -13,18 +13,18 @@ import { MatDialogRef } from '@angular/material/dialog';
 export class CaptureImageDialogComponent implements AfterViewInit, OnDestroy {
 
   /** Video element reference */
-  @ViewChild('video', { static: true }) video: ElementRef;
+  @ViewChild('video', { static: true }) video: ElementRef |any;
   /** Canvas element reference */
-  @ViewChild('canvas', { static: true }) canvas: ElementRef;
+  @ViewChild('canvas', { static: true }) canvas: ElementRef |any;
   /** Fallback element reference */
-  @ViewChild('fallback', { static: true }) fallback: ElementRef;
+  @ViewChild('fallback', { static: true }) fallback: ElementRef |any;
   /** Capture button element reference */
-  @ViewChild('captureButton') captureButton: ElementRef;
+  @ViewChild('captureButton') captureButton: ElementRef |any;
 
   /** Toggles button states */
   isCaptured = false;
   /** Client image file */
-  clientImageDataURL: string;
+  clientImageDataURL?: string;
 
   /**
    * @param {MatDialogRef} dialogRef Mat Dialog Reference

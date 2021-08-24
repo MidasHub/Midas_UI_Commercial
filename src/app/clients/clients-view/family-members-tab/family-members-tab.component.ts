@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Data } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 
 /** Custom Components */
@@ -30,7 +30,7 @@ export class FamilyMembersTabComponent {
   constructor(private route: ActivatedRoute,
               private clientsService: ClientsService,
               public dialog: MatDialog) {
-    this.route.data.subscribe((data: { clientFamilyMembers: any }) => {
+    this.route.data.subscribe((data: { clientFamilyMembers: any } | Data) => {
       this.clientFamilyMembers = data.clientFamilyMembers;
     });
   }

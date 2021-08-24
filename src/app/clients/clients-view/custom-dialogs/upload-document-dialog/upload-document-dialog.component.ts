@@ -10,7 +10,7 @@ import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms'
 export class UploadDocumentDialogComponent implements OnInit {
 
   /** Upload Document form. */
-  uploadDocumentForm: FormGroup;
+  uploadDocumentForm!: FormGroup;
   /** Upload Document Data */
   uploadDocumentData: any = [];
   /** Triggers description field */
@@ -49,7 +49,7 @@ export class UploadDocumentDialogComponent implements OnInit {
   onFileSelect($event: any) {
     if ($event.target.files.length > 0) {
       const file = $event.target.files[0];
-      this.uploadDocumentForm.get('file').setValue(file);
+      this.uploadDocumentForm.get('file')?.setValue(file);
     }
   }
 

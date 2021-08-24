@@ -23,11 +23,11 @@ export class TakeSurveyComponent {
   /** Particular Survey Data */
   surveyData: any;
   /** Stores the response from the user */
-  componentGroups: any[];
+  componentGroups?: any[] ;
   /** Client ID */
   clientId: any;
   /** Stores the value to send to the API */
-  formData: {
+  formData?: {
     userId: Number,
     clientId: Number,
     surveyId: Number,
@@ -48,13 +48,13 @@ export class TakeSurveyComponent {
               private clientsService: ClientsService,
               private router: Router,
               private authenticationService: AuthenticationService) {
-    this.route.data.subscribe((data: { clientActionData: any }) => {
+    this.route.data.subscribe((data: { clientActionData: any }|any) => {
       this.allSurveyData = data.clientActionData;
-      this.clientId = this.route.parent.parent.snapshot.paramMap.get('clientId');
+      this.clientId = this.route.parent?.parent?.snapshot.paramMap.get('clientId');
     });
     /** Retrieves User ID */
     const savedCredentials = this.authenticationService.getCredentials();
-    this.userId = savedCredentials.userId;
+    this.userId = savedCredentials?.userId;
   }
 
   // TODO: document the function
@@ -126,7 +126,7 @@ export class TakeSurveyComponent {
           value: elem.answer.value,
           createdOn: new Date().getTime()
         };
-        this.formData.scorecardValues.push(tmp);
+        this.formData?.scorecardValues.push(tmp);
       }
     });
     this.clientsService.createNewSurvey(this.surveyData.id, this.formData).subscribe(() => {

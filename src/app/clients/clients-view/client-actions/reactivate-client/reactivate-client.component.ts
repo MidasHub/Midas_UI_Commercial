@@ -23,7 +23,7 @@ export class ReactivateClientComponent implements OnInit {
   /** Maximum date allowed. */
   maxDate = new Date();
   /** Reactivate client form. */
-  reactivateClientForm: FormGroup;
+  reactivateClientForm!: FormGroup;
   /** Client Account Id */
   clientId: any;
 
@@ -41,7 +41,7 @@ export class ReactivateClientComponent implements OnInit {
               private route: ActivatedRoute,
               private router: Router,
               private settingsService: SettingsService) {
-    this.clientId = this.route.parent.snapshot.params['clientId'];
+    this.clientId = this.route.parent?.snapshot.params['clientId'];
   }
 
   /**

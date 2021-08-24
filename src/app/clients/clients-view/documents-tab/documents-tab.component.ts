@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Data } from '@angular/router';
 import { MatTable } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
 
@@ -17,20 +17,20 @@ import { DeleteDialogComponent } from '../../../shared/delete-dialog/delete-dial
   styleUrls: ['./documents-tab.component.scss']
 })
 export class DocumentsTabComponent implements OnInit {
-  @ViewChild('documentsTable', { static: true }) documentsTable: MatTable<Element>;
+  @ViewChild('documentsTable', { static: true }) documentsTable!: MatTable<Element>;
   documentsColumns: string[] = ['name', 'description', 'fileName', 'actions'];
   clientDocuments: any;
-  clientId: string;
+  clientId?: string |null;
 
 
   constructor(private route: ActivatedRoute,
     private clientService: ClientsService,
     public dialog: MatDialog) {
-    this.route.data.subscribe((data: { clientDocuments: any }) => {
+    this.route.data.subscribe((data: { clientDocuments: any }|Data) => {
       this.clientDocuments = data.clientDocuments;
 
     });
-    this.clientId = this.route.parent.snapshot.paramMap.get('clientId');
+    this.clientId = this.route.parent?.snapshot.paramMap.get('clientId');
   }
 
   ngOnInit() {

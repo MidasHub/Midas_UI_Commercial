@@ -2,7 +2,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { DatePipe } from '@angular/common';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Data, Router } from '@angular/router';
 
 /** Custom Services */
 import { ClientsService } from 'app/clients/clients.service';
@@ -23,7 +23,7 @@ export class TransferClientComponent implements OnInit {
   /** Maximum date allowed. */
   maxDate = new Date();
   /** Transfer Client form. */
-  transferClientForm: FormGroup;
+  transferClientForm!: FormGroup;
   /** Client Data */
   officeData: any;
   /** Client Id */
@@ -43,10 +43,10 @@ export class TransferClientComponent implements OnInit {
               private route: ActivatedRoute,
               private router: Router,
               private settingsService: SettingsService) {
-    this.route.data.subscribe((data: { clientActionData: any }) => {
+    this.route.data.subscribe((data: { clientActionData: any }| Data) => {
       this.officeData = data.clientActionData;
     });
-    this.clientId = this.route.parent.snapshot.params['clientId'];
+    this.clientId = this.route.parent?.snapshot.params['clientId'];
   }
 
   ngOnInit() {

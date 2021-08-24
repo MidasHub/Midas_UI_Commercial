@@ -13,7 +13,7 @@ import { MatDialogRef } from '@angular/material/dialog';
 export class UploadSignatureDialogComponent {
 
   /** Client Signature */
-  signature: File;
+  signature?: File;
 
   /**
    * @param {MatDialogRef} dialogRef Component reference to dialog.

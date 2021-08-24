@@ -1,7 +1,7 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute, Data } from '@angular/router';
 import { DatePipe } from '@angular/common';
 
 /** Custom Services */
@@ -23,7 +23,7 @@ export class AddFamilyMemberComponent implements OnInit {
   /** Maximum Due Date allowed. */
   maxDate = new Date();
   /** Add family member form. */
-  addFamilyMemberForm: FormGroup;
+  addFamilyMemberForm!: FormGroup;
   /** Add family member template. */
   addFamilyMemberTemplate: any;
   /** Client ID */
@@ -43,10 +43,10 @@ export class AddFamilyMemberComponent implements OnInit {
               private route: ActivatedRoute,
               private clientsService: ClientsService,
               private settingsService: SettingsService) {
-    this.route.data.subscribe((data: { clientTemplate: any }) => {
+    this.route.data.subscribe((data: { clientTemplate: any }| Data) => {
       this.addFamilyMemberTemplate = data.clientTemplate.familyMemberOptions;
     });
-    this.clientId = this.route.parent.parent.snapshot.params['clientId'];
+    this.clientId = this.route.parent?.parent?.snapshot.params['clientId'];
 
   }
 
@@ -90,9 +90,9 @@ export class AddFamilyMemberComponent implements OnInit {
       this.router.navigate(['../'], { relativeTo: this.route });
     });
   }
-  onChange(event:any){
-    let currentDate: Date = new Date();
-    this.addFamilyMemberForm.patchValue({age: currentDate.getFullYear() - event.value.getFullYear()});   
+  onChange(event: any) {
+    const currentDate: Date = new Date();
+    this.addFamilyMemberForm.patchValue({age: currentDate.getFullYear() - event.value.getFullYear()});
 
   }
 

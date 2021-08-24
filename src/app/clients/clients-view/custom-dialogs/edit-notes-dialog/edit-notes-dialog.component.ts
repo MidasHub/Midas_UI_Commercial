@@ -9,7 +9,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
   styleUrls: ['./edit-notes-dialog.component.scss']
 })
 export class EditNotesDialogComponent implements OnInit {
-  noteForm: FormGroup;
+  noteForm!: FormGroup;
 
   constructor(public dialogRef: MatDialogRef<EditNotesDialogComponent>,
     private formBuilder: FormBuilder,

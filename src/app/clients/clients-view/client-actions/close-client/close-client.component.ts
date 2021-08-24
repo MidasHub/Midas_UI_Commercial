@@ -23,7 +23,7 @@ export class CloseClientComponent implements OnInit {
   /** Maximum date allowed. */
   maxDate = new Date();
   /** Close Client form. */
-  closeClientForm: FormGroup;
+  closeClientForm!: FormGroup;
   /** Client Data */
   closureData: any;
   /** Client Id */
@@ -43,10 +43,10 @@ export class CloseClientComponent implements OnInit {
               private route: ActivatedRoute,
               private router: Router,
               private settingsService: SettingsService) {
-    this.route.data.subscribe((data: { clientActionData: any }) => {
+    this.route.data.subscribe((data: { clientActionData: any }|any) => {
       this.closureData = data.clientActionData.narrations;
     });
-    this.clientId = this.route.parent.snapshot.params['clientId'];
+    this.clientId = this.route.parent?.snapshot.params['clientId'];
   }
 
   ngOnInit() {
