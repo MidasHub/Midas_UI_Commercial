@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { DomSanitizer } from '@angular/platform-browser';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute, Data } from '@angular/router';
 import { DeleteSignatureDialogComponent } from 'app/clients/clients-view/custom-dialogs/delete-signature-dialog/delete-signature-dialog.component';
 import { UploadSignatureDialogComponent } from 'app/clients/clients-view/custom-dialogs/upload-signature-dialog/upload-signature-dialog.component';
 import { ViewSignatureDialogComponent } from 'app/clients/clients-view/custom-dialogs/view-signature-dialog/view-signature-dialog.component';
@@ -23,7 +23,7 @@ export class MidasClientComponent implements OnInit {
   clientIdentifierViewData: any;
   clientIdentifierTemplateData: any;
   profileData: any;
-  dataSource: any[];
+  dataSource!: any[];
   constructor(
     private route: ActivatedRoute,
     private clientsService: ClientsService,
@@ -36,7 +36,7 @@ export class MidasClientComponent implements OnInit {
       midasClientIdentifierViewData: any,
       midasClientIdentifierTemplateData: any,
 
-    }) => {
+    }|Data) => {
       this.clientViewData = data.midasClientViewResolver;
       this.clientIdentifierViewData = data.midasClientIdentifierViewData;
       this.clientIdentifierTemplateData = data.midasClientIdentifierTemplateData;

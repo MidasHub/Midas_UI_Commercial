@@ -25,7 +25,7 @@ export class MidasClientService {
 
     this.accessToken = JSON.parse(
       sessionStorage.getItem(this.credentialsStorageKey)
-      || localStorage.getItem(this.credentialsStorageKey)
+      || localStorage.getItem(this.credentialsStorageKey) || ''
     );
     this.GatewayApiUrlPrefix = environment.GatewayApiUrlPrefix ;
     this.environment = environment ;
@@ -33,14 +33,14 @@ export class MidasClientService {
 
 
    getInfoSavingAccountByUserId(): Observable<any> {
-    let httpParams = this.commonHttpParams.getCommonHttpParams();
+    const httpParams = this.commonHttpParams.getCommonHttpParams();
 
     return this.http.post<any>(`${this.GatewayApiUrlPrefix}/savingTransaction/get_info_saving_account_by_user_id`, httpParams);
   }
 
-  getInfoModuleActive( userId?: number, officeId?:number, accessToken?:string): Observable<any> {
+  getInfoModuleActive( userId?: number, officeId?: number, accessToken?: string): Observable<any> {
 
-    let httpParams = this.commonHttpParams.getCommonHttpParams();
+    const httpParams = this.commonHttpParams.getCommonHttpParams();
     return this.http.post<any>(`${this.GatewayApiUrlPrefix}/config/get_info_module_active`, httpParams);
   }
 
@@ -53,14 +53,14 @@ export class MidasClientService {
   }
 
   getListSavingAccountFtByUserId(): Observable<any> {
-    let httpParams = this.commonHttpParams.getCommonHttpParams();
+    const httpParams = this.commonHttpParams.getCommonHttpParams();
 
     return this.http.post<any>(`${this.GatewayApiUrlPrefix}/savingTransaction/get_list_saving_account_ft_by_user_id`, httpParams);
   }
 
   getListSavingAccountByUserId(): Observable<any> {
 
-    let httpParams = this.commonHttpParams.getCommonHttpParams();
+    const httpParams = this.commonHttpParams.getCommonHttpParams();
 
     return this.http.post<any>(`${this.GatewayApiUrlPrefix}/savingTransaction/get_list_saving_account_by_user_id`, httpParams);
   }
@@ -73,12 +73,12 @@ export class MidasClientService {
     return this.http.post<any>(`${this.GatewayApiUrlPrefix}/savingTransaction/get_list_saving_account_by_client_id`, httpParams);
   }
 
-  formatLong(value: string){
+  formatLong(value: string) {
     value = String(value) ;
     const neg = value.startsWith('-');
-    value = value.replace(/[^0-9]+/g, "");
-    if(neg) value = '-'.concat(value);
-    return parseInt(value);
+    value = value.replace(/[^0-9]+/g, '');
+    if (neg) { value = '-'.concat(value); }
+    return parseInt(value, 0);
   }
 
 
