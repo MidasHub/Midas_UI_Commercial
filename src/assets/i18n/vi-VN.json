@@ -800,7 +800,8 @@
     "Add": "Thêm +",
     "Search": "Tìm kiếm",
     "Save": "Save",
-    "Close": "Đóng"
+    "Close": "Đóng",
+    "CancelEng": "Cancel"
   },
 
   "ShareLable": {
@@ -951,5 +952,40 @@
         }
       }
     }
-  }
+  },
+  "Collections": {
+    "IndividualCollectionSheet": {
+      "title": "No repayments and disbursal are available for selected client and meeting date",
+      "lableOfficeName": "Branch Office",
+      "errorOffice": "Branch Office is ",
+      "requiredStrong": "required",
+      "lableRepaymentDate": "Repayment date",
+      "errorRepaymentDate": "Repayment Date is ",
+      "lableStaff": "Staff",
+      "action": "Collection Sheet",
+      "btnParameters": "Parameters",
+      "h2Loan": "Due Collections",
+      "h2Saving": "Due Savings Collections",
+      "btnCancel": "Cancel",
+      "btnSubmit": "Submit",
+      "tableLoan": {
+        "accountId": "Loan Account#",
+        "productShortName": "Product Name",
+        "clientName": "Client Name",
+        "totalDue": "Total Due",
+        "feeDue": "Charges",
+        "Actions": "Actions",
+        "btnAddPayment": "Add Payment"
+      },
+      "tableSaving": {
+        "depositAccountType": "Deposit Account",
+        "accountId": "Savings Account #",
+        "productName": "Product Name",
+        "clientId": "Client Name",
+        "dueAmount": "Total Due",
+        "Actions": "Actions",
+        "btnAddPayment": "Add Payment"
+      }
+    }
+  },
 }
