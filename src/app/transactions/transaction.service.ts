@@ -1,7 +1,7 @@
 /** Angular Imports */
 import { Injectable } from "@angular/core";
 import { environment } from "environments/environment";
-import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
 
 /** rxjs Imports */
 import { Observable } from "rxjs";
@@ -31,6 +31,21 @@ export class TransactionService {
     this.environment = environment;
   }
 
+  getFeeSuggestByProduct(
+    accountTypeCode: string,
+    requestAmount: number,
+    productId: string,
+    clientId: number
+  ): Observable<any> {
+    let httpParams = this.commonHttpParams.getCommonHttpParams();
+    httpParams = httpParams.set("accountTypeId", accountTypeCode);
+    httpParams = httpParams.set("requestAmount", String(requestAmount));
+    httpParams = httpParams.set("productId", productId);
+    httpParams = httpParams.set("clientId", String(clientId));
+
+    return this.http.post<any>(`${this.GatewayApiUrlPrefix}/transaction/get_fee_suggest_by_product`, httpParams);
+  }
+
   getTransactionIc(payload: {
     fromDate: string;
     toDate: string;
@@ -58,12 +73,12 @@ export class TransactionService {
     terminalId: string
   ): Observable<any> {
     let httpParams = this.commonHttpParams.getCommonHttpParams();
-    httpParams = httpParams.set('accountNumber', accountNumber);
-    httpParams = httpParams.set('ext4', identifierId);
-    httpParams = httpParams.set('AmountMappingInvoice', String(this.formatLong(String(amountTransaction))));
-    httpParams = httpParams.set('accountTypeId', accountTypeCode);
-    httpParams = httpParams.set('accountBankId', accountBankId);
-    httpParams = httpParams.set('terminalId', terminalId);
+    httpParams = httpParams.set("accountNumber", accountNumber);
+    httpParams = httpParams.set("ext4", identifierId);
+    httpParams = httpParams.set("AmountMappingInvoice", String(this.formatLong(String(amountTransaction))));
+    httpParams = httpParams.set("accountTypeId", accountTypeCode);
+    httpParams = httpParams.set("accountBankId", accountBankId);
+    httpParams = httpParams.set("terminalId", terminalId);
 
     return this.http.post<any>(`${this.GatewayApiUrlPrefix}/transaction/mapping_invoice_transaction`, httpParams);
   }
@@ -120,17 +135,16 @@ export class TransactionService {
       2
     )}/${updateData.expiredDateString?.substring(2, 4)}`;
     let httpParams = this.commonHttpParams.getCommonHttpParams();
-    httpParams = httpParams.set('expiredDate', expiredDateString ? expiredDateString : '');
-    httpParams = httpParams.set('refId', updateData.refId);
-    httpParams = httpParams.set('note', updateData.note ? updateData.note : '');
-    httpParams = httpParams.set('state', updateData.trackingState ? updateData.trackingState : 'A');
-    httpParams = httpParams.set('dueDay', updateData.dueDay ? updateData.dueDay : '1');
-    httpParams = httpParams.set('limit', updateData.limitCard ? updateData.limitCard : '');
-    httpParams = httpParams.set('classCard', updateData.classCard ? updateData.classCard : '');
-    httpParams = httpParams.set('isHold', updateData.isHold ? '200' : '100');
-    httpParams = httpParams.set('year', updateData.year );
-    httpParams = httpParams.set('month', updateData.month );
-
+    httpParams = httpParams.set("expiredDate", expiredDateString ? expiredDateString : "");
+    httpParams = httpParams.set("refId", updateData.refId);
+    httpParams = httpParams.set("note", updateData.note ? updateData.note : "");
+    httpParams = httpParams.set("state", updateData.trackingState ? updateData.trackingState : "A");
+    httpParams = httpParams.set("dueDay", updateData.dueDay ? updateData.dueDay : "1");
+    httpParams = httpParams.set("limit", updateData.limitCard ? updateData.limitCard : "");
+    httpParams = httpParams.set("classCard", updateData.classCard ? updateData.classCard : "");
+    httpParams = httpParams.set("isHold", updateData.isHold ? "200" : "100");
+    httpParams = httpParams.set("year", updateData.year);
+    httpParams = httpParams.set("month", updateData.month);
 
     return this.http.put<any>(`${this.GatewayApiUrlPrefix}/card/update_card_on_due_day`, httpParams);
   }
@@ -157,7 +171,7 @@ export class TransactionService {
     httpParams = httpParams.set("accountNumber", transactionInfo.identifyClientDto.accountNumber);
     httpParams = httpParams.set("accountBankId", transactionInfo.identifyClientDto.accountBankId);
     httpParams = httpParams.set("accountTypeId", transactionInfo.identifyClientDto.accountTypeId);
-    httpParams = httpParams.set("accountCash", transactionInfo.accountCash);
+    // httpParams = httpParams.set('accountCash', transactionInfo.accountCash);
     httpParams = httpParams.set("bNo", transactionInfo.batchNo);
     httpParams = httpParams.set("tid", transactionInfo.traceNo);
     httpParams = httpParams.set("terminalAmount", String(this.formatLong(transactionInfo.terminalAmount)));
@@ -177,6 +191,13 @@ export class TransactionService {
     httpParams = httpParams.set("terminalId", transactionInfo.terminalId);
     httpParams = httpParams.set("ext2", transactionInfo.type);
     httpParams = httpParams.set("ext4", transactionInfo.identifierId);
+
+    if (transactionInfo.minFeeApply && transactionInfo.minFeeApply > 0) {
+      httpParams = httpParams.set("minFeeApply", transactionInfo.minFeeApply);
+    }
+    if (transactionInfo.accountCash) {
+      httpParams = httpParams.set("accountCash", transactionInfo.accountCash);
+    }
 
     return this.http.post<any>(`${this.GatewayApiUrlPrefix}/transaction/create_cash_retail_transaction`, httpParams);
   }
@@ -203,7 +224,11 @@ export class TransactionService {
     httpParams = httpParams.set("productId", transactionInfo.productId);
     httpParams = httpParams.set("customerName", transactionInfo.clientDto.displayName);
     httpParams = httpParams.set("terminalId", transactionInfo.terminalId);
+    httpParams = httpParams.set("toClientId", transactionInfo.clientId);
 
+    if (transactionInfo.minFeeApply && transactionInfo.minFeeApply > 0) {
+      httpParams = httpParams.set("minFeeApply", transactionInfo.minFeeApply);
+    }
     return this.http.post<any>(
       `${this.GatewayApiUrlPrefix}/transaction/create_retail_cash_from_rollTerm_transaction`,
       httpParams
@@ -217,6 +242,7 @@ export class TransactionService {
     httpParams = httpParams.set("accountTypeId", transactionInfo.identifyClientDto.accountTypeId);
     httpParams = httpParams.set("accountCash", transactionInfo.accountCash ? transactionInfo.accountCash : "");
     httpParams = httpParams.set("feeRate", transactionInfo.rate);
+    httpParams = httpParams.set("feeAmount", transactionInfo.feeAmount);
     httpParams = httpParams.set("toClientId", transactionInfo.clientId);
     httpParams = httpParams.set("requestAmount", String(this.formatLong(transactionInfo.requestAmount)));
     httpParams = httpParams.set("productId", transactionInfo.productId);
@@ -228,6 +254,9 @@ export class TransactionService {
 
     if (transactionInfo.accountCash) {
       httpParams = httpParams.set("accountCash", transactionInfo.accountCash);
+    }
+    if (transactionInfo.minFeeApply && transactionInfo.minFeeApply > 0) {
+      httpParams = httpParams.set("minFeeApply", transactionInfo.minFeeApply);
     }
     return this.http.post<any>(
       `${this.GatewayApiUrlPrefix}/transaction/create_rollTerm_retail_transaction`,
@@ -278,7 +307,7 @@ export class TransactionService {
     limit: number;
     offset: number;
     officeFilter: number;
-    dueDayFilter:number;
+    dueDayFilter: number;
     viewDoneTransaction: boolean;
     cardHoldFilter: string;
     isCheckedFilter: string;
@@ -290,11 +319,14 @@ export class TransactionService {
     httpParams = httpParams.set("createdByFilter", !payload.createdByFilter ? "%%" : payload.createdByFilter);
     httpParams = httpParams.set("customerSearch", !payload.query ? "%%" : `%${payload.query}%`);
     httpParams = httpParams.set("officeSearch", !payload.officeFilter ? "%%" : `${payload.officeFilter}`);
-    httpParams = httpParams.set("dueDayFilter", !payload.dueDayFilter ? '-1' :`${payload.dueDayFilter}`);
+    httpParams = httpParams.set("dueDayFilter", !payload.dueDayFilter ? "-1" : `${payload.dueDayFilter}`);
     httpParams = httpParams.set("viewDoneTransaction", `${payload.viewDoneTransaction}`);
     httpParams = httpParams.set("cardHoldFilter", payload.cardHoldFilter == "ALL" ? "%%" : payload.cardHoldFilter);
     httpParams = httpParams.set("isCheckedFilter", payload.isCheckedFilter ? payload.isCheckedFilter : "0");
-    httpParams = httpParams.set("checkedByUserName", !payload.checkedByUserName ? "%%" : `%${payload.checkedByUserName}%`);
+    httpParams = httpParams.set(
+      "checkedByUserName",
+      !payload.checkedByUserName ? "%%" : `%${payload.checkedByUserName}%`
+    );
     httpParams = httpParams.set("limit", String(payload.limit));
     httpParams = httpParams.set("offset", String(payload.offset));
     httpParams = httpParams.set("fromDate", payload.fromDate);
@@ -308,30 +340,33 @@ export class TransactionService {
     toDate: string;
     limit: number;
     offset: number;
-    stageFilter: string,
+    stageFilter: string;
     statusFilter: string;
     staffFilter: string;
-    cardHoldFilter: string,
+    cardHoldFilter: string;
     bankName: string;
     cardType: string;
     query: string;
     viewDoneTransaction: string;
   }): Observable<any> {
     let httpParams = this.commonHttpParams.getCommonHttpParams();
-    httpParams = httpParams.set('query', !payload.query ? `%%` : `%${payload.query}%`);
-    httpParams = httpParams.set('agencyName', '%%');
-    httpParams = httpParams.set('limit', String(payload.limit));
-    httpParams = httpParams.set('offset', String(payload.offset));
-    httpParams = httpParams.set('amountTransaction', '%%');
-    httpParams = httpParams.set('trackingState', payload.stageFilter === 'ALL' ? `%%` : `${payload.stageFilter}`);
-    httpParams = httpParams.set('trackingStatus', payload.statusFilter === 'ALL' ? `%%` : `${payload.statusFilter}`);
-    httpParams = httpParams.set('staffFilter', payload.staffFilter === 'ALL' ? `%%` : `${payload.staffFilter}`);
-    httpParams = httpParams.set('cardHoldFilter', payload.cardHoldFilter === 'ALL' ? `%%` : `${payload.cardHoldFilter}`);
-    httpParams = httpParams.set('bankName', payload.bankName === 'ALL' ? `%%` : `${payload.bankName}`);
-    httpParams = httpParams.set('cardType', payload.cardType === 'ALL' ? `%%` : `${payload.cardType}`);
+    httpParams = httpParams.set("query", !payload.query ? `%%` : `%${payload.query}%`);
+    httpParams = httpParams.set("agencyName", "%%");
+    httpParams = httpParams.set("limit", String(payload.limit));
+    httpParams = httpParams.set("offset", String(payload.offset));
+    httpParams = httpParams.set("amountTransaction", "%%");
+    httpParams = httpParams.set("trackingState", payload.stageFilter === "ALL" ? `%%` : `${payload.stageFilter}`);
+    httpParams = httpParams.set("trackingStatus", payload.statusFilter === "ALL" ? `%%` : `${payload.statusFilter}`);
+    httpParams = httpParams.set("staffFilter", payload.staffFilter === "ALL" ? `%%` : `${payload.staffFilter}`);
+    httpParams = httpParams.set(
+      "cardHoldFilter",
+      payload.cardHoldFilter === "ALL" ? `%%` : `${payload.cardHoldFilter}`
+    );
+    httpParams = httpParams.set("bankName", payload.bankName === "ALL" ? `%%` : `${payload.bankName}`);
+    httpParams = httpParams.set("cardType", payload.cardType === "ALL" ? `%%` : `${payload.cardType}`);
     httpParams = httpParams.set("viewDoneTransaction", `${payload.viewDoneTransaction}`);
-    httpParams = httpParams.set('fromDate', payload.fromDate);
-    httpParams = httpParams.set('toDate', payload.toDate);
+    httpParams = httpParams.set("fromDate", payload.fromDate);
+    httpParams = httpParams.set("toDate", payload.toDate);
 
     return this.http.post(`${this.GatewayApiUrlPrefix}/card/get_list_card_on_due_day`, httpParams);
   }
@@ -450,11 +485,8 @@ export class TransactionService {
     return this.http.post<any>(`${this.GatewayApiUrlPrefix}/transaction/revert_transaction`, httpParams);
   }
 
-  uploadBillForBranchBooking(
-    bookingRefNo: string,
-    base64Image: string,
-  ): Observable<any> {
-    let httpParams = this.commonHttpParams.getCommonHttpParams();
+  uploadBillForBranchBooking(bookingRefNo: string, base64Image: string): Observable<any> {
+    const httpParams = this.commonHttpParams.getCommonHttpParams();
     const Params = {
       createdBy: httpParams.get("createdBy"),
       accessToken: httpParams.get("accessToken"),
@@ -462,7 +494,6 @@ export class TransactionService {
       staffId: httpParams.get("staffId"),
       bookingRefNo: bookingRefNo,
       fileSubmitBase64: base64Image,
-
     };
 
     return this.http.post<any>(`${this.GatewayApiUrlPrefix}/transaction/upload_bill_file_branch_booking`, Params);

@@ -40,6 +40,8 @@ export class CreateTransactionComponent implements OnInit {
   activateAndApproveAccountForm: FormGroup;
   totalBookingAmount: number;
   currentUser: any;
+  productFee: any;
+
   @ViewChild("listBookingRollTermTable") listBookingRollTermTable: MatTable<Element>;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -159,6 +161,7 @@ export class CreateTransactionComponent implements OnInit {
       }, 0);
     }
 
+    this.terminalFee = {};
     this.transactionInfo.listTerminal = [];
     this.transactionInfo.txnAmount = "";
     this.transactionInfo.terminalAmount = "";
@@ -170,32 +173,7 @@ export class CreateTransactionComponent implements OnInit {
       this.transactionInfo.requestAmount &&
       this.transactionService.formatLong(this.transactionInfo.requestAmount) > 0
     ) {
-      if (this.transactionInfo.type === "cash" || this.transactionInfo.type === "rollTermGetCash") {
-        this.getTerminalListEnoughBalance(this.transactionInfo.requestAmount);
-      } else {
-        if (this.transactionInfo.type === "rollTerm") {
-          this.listRollTermBooking = [];
-          this.dataSource.data = [];
-          let totalAmountMap = 0;
-          let rowBooking = Math.floor((this.transactionService.formatLong(this.transactionInfo.requestAmount) / 30000000 )) ;
-          rowBooking = (rowBooking == 0 ? 1 : rowBooking ) + 1;
-
-          for (let index = 0; index < rowBooking; index++) {
-            let amountOnPerBooking = Math.floor(this.transactionService.formatLong(this.transactionInfo.requestAmount) / rowBooking);
-            if (index == (rowBooking - 1)){
-              amountOnPerBooking = this.transactionService.formatLong(this.transactionInfo.requestAmount) - totalAmountMap;
-            }
-            totalAmountMap += amountOnPerBooking;
-            let BookingRollTerm = {
-              txnDate: new Date(),
-              amountBooking: this.formatCurrency(String(amountOnPerBooking)),
-            };
-            this.listRollTermBooking.push(BookingRollTerm);
-          }
-        }
-        this.dataSource.data = this.listRollTermBooking;
-        this.totalBookingAmount = this.transactionInfo.requestAmount;
-      }
+      this.getFeeSuggestByProduct();
     }
   }
 
@@ -237,6 +215,13 @@ export class CreateTransactionComponent implements OnInit {
         this.transactionInfo.feeAmount = this.terminalFee.minFeeDefault;
         this.transactionInfo.feeGet = this.terminalFee.minFeeDefault;
       }
+      if (
+        (this.transactionInfo.productId === "AL01" || this.transactionInfo.productId === "AL02") &&
+        this.transactionInfo.feeApplyAdvanceTransaction != null
+      ) {
+        this.transactionInfo.feeAmount = this.transactionInfo.feeApplyAdvanceTransaction;
+        this.transactionInfo.feeGet = this.transactionInfo.feeApplyAdvanceTransaction;
+      }
       this.transactionInfo.feeCogs = (
         (this.transactionService.formatLong(amount_value) * Number(this.transactionInfo.cogsRate)) /
         100
@@ -260,6 +245,9 @@ export class CreateTransactionComponent implements OnInit {
           this.transactionService.formatLong(amount_value) *
           (Number(rate) / 100)
         ).toFixed(0);
+        if (this.transactionService.formatLong(this.transactionInfo.feeAmount) < this.terminalFee.minFeeDefault) {
+          this.transactionInfo.feeAmount = this.terminalFee.minFeeDefault;
+        }
       }
     }
   }
@@ -344,7 +332,10 @@ export class CreateTransactionComponent implements OnInit {
 
   onchangeRate(rate: string) {
     this.transactionInfo.rate = rate;
-    this.CheckValidRate();
+    const terminalId = this.transactionCreateForm.controls["terminalAmount"].value;
+    if (terminalId) {
+      this.CheckValidRate();
+    }
   }
   CheckValidRate() {
     if (this.transactionInfo.rate == null || String(this.transactionInfo.rate).length === 0) {
@@ -368,13 +359,102 @@ export class CreateTransactionComponent implements OnInit {
   }
 
   getFeeByTerminal(): any {
+    this.transactionInfo.txnAmount = null;
+    this.transactionInfo.terminalAmount = null;
+    this.transactionInfo.txnAmountAfterFee = null;
+    this.transactionInfo.feeAmount = null;
+    this.transactionCreateForm.controls["txnAmount"].setValue(null);
+    this.transactionCreateForm.controls["terminalAmount"].setValue(null);
+    this.calculateFeeTransaction();
+
     this.terminalsService
       .getFeeByTerminal(this.transactionInfo.identifyClientDto.accountTypeId, this.transactionInfo.terminalId)
       .subscribe((data: any) => {
+        const minFeeByProduct = this.terminalFee.minFeeDefault;
+
         this.terminalFee = data.result.feeTerminalDto;
+        if (minFeeByProduct && minFeeByProduct > this.terminalFee.minFeeDefault) {
+          this.terminalFee.minFeeDefault = minFeeByProduct;
+        }
         this.CheckValidRate();
         // call mapping bill for this transaction
         this.mappingBillForTransaction();
+      });
+  }
+
+  getFeeSuggestByProduct(): any {
+    this.productFee = null;
+    this.transactionService
+      .getFeeSuggestByProduct(
+        this.transactionInfo.identifyClientDto.accountTypeId,
+        this.transactionService.formatLong(this.transactionInfo.requestAmount),
+        this.transactionInfo.productId,
+        this.transactionInfo.clientId
+      )
+      .subscribe((data: any) => {
+        this.productFee = data.result.feeTransaction;
+        if (this.productFee) {
+          let messageInfoProductFee = "";
+
+          if (this.productFee.feeType == 1) {
+            this.terminalFee.minFeeDefault = this.productFee.feeValue;
+            this.transactionInfo.feeAmount = this.productFee.feeValue;
+            this.transactionInfo.feeGet = this.productFee.feeValue;
+            messageInfoProductFee = `Hệ thống đề xuất mức phí cần thu của giao dịch này là ${this.formatCurrency(
+              this.productFee.feeValue
+            )} `;
+          } else {
+            if (this.productFee.feeType == 2) {
+              this.transactionInfo.rate = this.productFee.feeValue;
+              this.transactionCreateForm.get("rate").setValue(this.productFee.feeValue);
+
+              messageInfoProductFee = `Hệ thống đề xuất phí cần thu của giao dịch này là ${this.productFee.feeValue}% `;
+            }
+          }
+          this.alertService.alert({
+            message: messageInfoProductFee,
+            msgClass: "cssInfo",
+            hPosition: "center",
+            vPosition: "center",
+          });
+        }
+
+        if (this.transactionInfo.type === "cash" || this.transactionInfo.type === "rollTermGetCash") {
+          this.getTerminalListEnoughBalance(this.transactionInfo.requestAmount);
+        } else {
+          if (this.transactionInfo.type === "rollTerm") {
+            this.listRollTermBooking = [];
+            this.dataSource.data = [];
+            let totalAmountMap = 0;
+            let rowBooking = Math.floor(
+              this.transactionService.formatLong(this.transactionInfo.requestAmount) / 30000000
+            );
+            rowBooking = (rowBooking == 0 ? 1 : rowBooking) + 1;
+
+            for (let index = 0; index < rowBooking; index++) {
+              let amountOnPerBooking = Math.floor(
+                this.transactionService.formatLong(this.transactionInfo.requestAmount) / rowBooking
+              );
+
+              if (this.terminalFee.minFeeDefault && this.terminalFee.minFeeDefault > 0) {
+                amountOnPerBooking = this.currentUser.appSettingModule.minAmountMakeTransaction;
+              }
+
+              if (index == rowBooking - 1) {
+                amountOnPerBooking =
+                  this.transactionService.formatLong(this.transactionInfo.requestAmount) - totalAmountMap;
+              }
+              totalAmountMap += amountOnPerBooking;
+              let BookingRollTerm = {
+                txnDate: new Date(),
+                amountBooking: this.formatCurrency(String(amountOnPerBooking)),
+              };
+              this.listRollTermBooking.push(BookingRollTerm);
+            }
+          }
+          this.dataSource.data = this.listRollTermBooking;
+          this.totalBookingAmount = this.transactionInfo.requestAmount;
+        }
       });
   }
 
@@ -462,6 +542,8 @@ export class CreateTransactionComponent implements OnInit {
         this.transactionInfo.batchNo = this.transactionCreateForm.value.batchNo;
         this.transactionInfo.traceNo = this.transactionCreateForm.value.traceNo;
         this.transactionInfo.terminalAmount = this.transactionCreateForm.value.terminalAmount;
+        this.transactionInfo.minFeeApply = this.terminalFee.minFeeDefault;
+
         if (this.transactionInfo.type == "cash") {
           this.transactionService.submitTransactionCash(this.transactionInfo).subscribe((data: any) => {
             this.afterSuccessCreateCashTransaction(data);
@@ -567,6 +649,8 @@ export class CreateTransactionComponent implements OnInit {
           return value;
         });
         this.transactionInfo.BookingInternalDtoListString = listBookingRollTerm;
+        this.transactionInfo.minFeeApply = this.terminalFee.minFeeDefault;
+
         this.transactionService.submitTransactionRollTerm(this.transactionInfo).subscribe((data: any) => {
           this.listRollTermBooking = [];
           this.transactionInfo.transactionRefNo = data.result.tranRefNo;
@@ -578,9 +662,9 @@ export class CreateTransactionComponent implements OnInit {
             msgClass: "cssSuccess",
             hPosition: "center",
           });
-          setTimeout(() => {
-            this.router.navigate(["/transaction/rollTermSchedule"]);
-          }, 2000); //5s
+          // setTimeout(() => {
+          this.router.navigate(["/transaction/rollTermSchedule"]);
+          //  }, 2000); // 5s
         });
       }
     });
