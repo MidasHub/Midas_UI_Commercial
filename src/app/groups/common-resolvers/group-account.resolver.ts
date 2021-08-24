@@ -25,7 +25,7 @@ export class GroupAccountsResolver implements Resolve<Object> {
    * @returns {Observable<any>}
    */
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
-    const groupId = route.parent.paramMap.get('groupId');
+    const groupId = route.parent?.paramMap.get('groupId');
     return this.groupsService.getGroupAccountsData(groupId);
   }
 

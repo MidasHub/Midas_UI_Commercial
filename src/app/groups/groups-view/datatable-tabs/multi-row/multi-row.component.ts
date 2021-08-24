@@ -34,18 +34,18 @@ export class MultiRowComponent implements OnInit, OnChanges {
   @Input() dataObject: any;
 
   /** Data Table Name */
-  datatableName: string;
+  datatableName!: string;
   /** Data Table Columns */
   datatableColumns: string[] = [];
   /** Data Table Data */
   datatableData: any;
   /** Group Id */
-  groupId: string;
+  groupId?: string|null;
   /** Toggle button visibility */
-  showDeleteBotton: boolean;
+  showDeleteBotton!: boolean;
 
   /** Data Table Reference */
-  @ViewChild('dataTable', { static: true }) dataTableRef: MatTable<Element>;
+  @ViewChild('dataTable', { static: true }) dataTableRef!: MatTable<Element>;
 
   /**
    * Fetches group Id from parent route params.
@@ -60,7 +60,7 @@ export class MultiRowComponent implements OnInit, OnChanges {
               private groupsService: GroupsService,
               private dialog: MatDialog,
               private settingsService: SettingsService) {
-    this.groupId = this.route.parent.parent.snapshot.paramMap.get('groupId');
+    this.groupId = this.route.parent?.parent?.snapshot.paramMap.get('groupId');
   }
 
   /**

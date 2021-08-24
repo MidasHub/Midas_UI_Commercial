@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component, ViewChild } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Data } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTable } from '@angular/material/table';
 
@@ -23,14 +23,14 @@ export class CommitteeTabComponent {
   /** Group Status */
   groupStatus: any;
   /** Group Roles Data */
-  groupRolesData: any[];
+  groupRolesData!: any[];
   /** Groups View Data */
   groupViewData: any;
   /** Columns to be Displayed for client members table */
   groupRolesColumns: string[] = ['Name', 'Role', 'Client Id', 'Actions'];
 
   /** Roles Table */
-  @ViewChild('rolesTable') rolesTableRef: MatTable<Element>;
+  @ViewChild('rolesTable') rolesTableRef: MatTable<Element>|any;
 
   /**
    * Fetches groups data from parent's `resolve`.
@@ -41,7 +41,7 @@ export class CommitteeTabComponent {
   constructor(private route: ActivatedRoute,
               private groupsService: GroupsService,
               public dialog: MatDialog) {
-    this.route.parent.data.subscribe((data: { groupViewData: any }) => {
+    this.route.parent?.data.subscribe((data: { groupViewData: any }|Data) => {
       this.groupViewData = data.groupViewData;
       this.groupRolesData = this.groupViewData.groupRoles;
       this.groupStatus = this.groupViewData.status.value;

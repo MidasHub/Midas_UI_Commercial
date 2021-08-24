@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Resolve, ActivatedRouteSnapshot } from '@angular/router';
 
 /** rxjs Imports */
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 
 /** Custom Services */
 import { GroupsService } from '../groups.service';
@@ -26,7 +26,7 @@ export class GroupActionsResolver implements Resolve<Object> {
    */
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
     const actionName = route.paramMap.get('name');
-    const groupId = route.paramMap.get('groupId') || route.parent.parent.paramMap.get('groupId');
+    const groupId = route.paramMap.get('groupId') || route.parent?.parent?.paramMap.get('groupId');
     switch (actionName) {
       case 'Attendance':
       case 'Manage Members':
@@ -43,7 +43,8 @@ export class GroupActionsResolver implements Resolve<Object> {
         const calendarId = route.queryParamMap.get('calendarId');
         return this.groupsService.getGroupCalendarAndTemplate(groupId, calendarId);
       default:
-        return undefined;
+        // return undefined;
+        return of();
     }
   }
 

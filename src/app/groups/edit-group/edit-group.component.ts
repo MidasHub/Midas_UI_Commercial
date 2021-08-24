@@ -1,7 +1,7 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute, Data } from '@angular/router';
 import { DatePipe } from '@angular/common';
 
 /** Custom Services */
@@ -17,7 +17,7 @@ export interface PeriodicElements {
   minValue: number;
   maxValue: number;
 }
-interface groupT {
+interface GroupT {
   value: string;
   viewValue: string;
 }
@@ -33,22 +33,22 @@ export class EditGroupComponent implements OnInit {
   /** Maximum date allowed. */
   maxDate = new Date();
   /** Edit Group form. */
-  editGroupForm: FormGroup;
+  editGroupForm!: FormGroup;
   /** Staff data. */
   staffData: any;
   /** Group Data */
   groupData: any;
   /** Submitted On Date */
   submittedOnDate: any;
-  groupType: groupT[] = [
+  groupType: GroupT[] = [
     {value: 'I', viewValue: 'Group lẻ, MGM'},
     {value: 'C', viewValue: 'Group sỉ'}
   ];
-     
-  groupTypeId : any;
+
+  groupTypeId: any;
   displayedColumns: string[] = ['cardDescription', 'minValue', 'maxValue'];
   dataSource = new MatTableDataSource<any>();
-  cards : PeriodicElements[] = [];
+  cards: PeriodicElements[] = [];
   /**
    * Retrieves the offices data from `resolve`.
    * @param {FormBuilder} formBuilder Form Builder.
@@ -64,7 +64,7 @@ export class EditGroupComponent implements OnInit {
               private groupService: GroupsService,
               private datePipe: DatePipe,
               private settingsService: SettingsService) {
-    this.route.data.subscribe( (data: { groupAndTemplateData: any, groupViewData: any } ) => {
+    this.route.data.subscribe( (data: { groupAndTemplateData: any, groupViewData: any } | Data) => {
       this.staffData = data.groupAndTemplateData.staffOptions;
       this.groupData = data.groupAndTemplateData;
       this.submittedOnDate = data.groupViewData.timeline.submittedOnDate && new Date(data.groupViewData.timeline.submittedOnDate);
@@ -76,14 +76,14 @@ export class EditGroupComponent implements OnInit {
    * Creates and sets the edit group form.
    */
   ngOnInit() {
-    
-    
-    let name = String(this.groupData.name).trim().replace('(C)', ''); 
+
+
+    let name = String(this.groupData.name).trim().replace('(C)', '');
     name = String(name).trim().replace('(I)', '');
 
-    if(this.groupData.name.indexOf("(C)") === -1 ){
+    if (this.groupData.name.indexOf('(C)') === -1 ) {
       this.groupTypeId = this.groupType[0].value;
-    }else{
+    } else {
       this.groupTypeId = this.groupType[1].value;
     }
 
@@ -97,15 +97,15 @@ export class EditGroupComponent implements OnInit {
     });
 
     this.groupService.getCartTypesByGroupId(this.groupData.id).subscribe( (data: any) => {
-      data.result.listFeeGroup.forEach((item: any) =>{
-         let fee = {
-             cardType: item.cardType , 
+      data.result.listFeeGroup.forEach((item: any) => {
+         const fee = {
+             cardType: item.cardType ,
              cardDescription: item.description ,
-             minValue: item.minValue , 
+             minValue: item.minValue ,
              maxValue: item.maxValue ,
          };
          this.cards.push(fee);
-      }); 
+      });
       this.dataSource.data = this.cards;
     });
   }
@@ -119,7 +119,7 @@ export class EditGroupComponent implements OnInit {
       'submittedOnDate': ['', Validators.required],
       'staffId': [''],
       'externalId': [''],
-      'groupTypeId':['']
+      'groupTypeId': ['']
     });
     this.buildDependencies();
   }
@@ -130,7 +130,7 @@ export class EditGroupComponent implements OnInit {
   buildDependencies() {
     if (this.groupData.active) {
       this.editGroupForm.addControl('activationDate', new FormControl('', Validators.required));
-      this.editGroupForm.get('activationDate').patchValue(this.groupData.activationDate && new Date(this.groupData.activationDate));
+      this.editGroupForm.get('activationDate')?.patchValue(this.groupData.activationDate && new Date(this.groupData.activationDate));
     } else {
       this.editGroupForm.removeControl('activationDate');
     }
@@ -151,45 +151,45 @@ export class EditGroupComponent implements OnInit {
     });
     const group = this.editGroupForm.value;
 
-    let name = String(group.name).trim().replace('(I)', '').replace('(C)', '');
+    const name = String(group.name).trim().replace('(I)', '').replace('(C)', '');
     if (group.groupTypeId === 'C') {
-      group.name = "(C) " + name;
+      group.name = '(C) ' + name;
     } else {
-      let name = String(group.name).trim().replace('(I)', '');
-      group.name = "(I) " + name;
+      const nameI = String(group.name).trim().replace('(I)', '');
+      group.name = '(I) ' + nameI;
     }
-    
+
     delete group.groupTypeId;
 
     group.locale = this.settingsService.language.code;
     group.dateFormat = dateFormat;
- 
+
     this.groupService.updateGroup(group, this.groupData.id).subscribe((response: any) => {
-      //this.router.navigate(['../'], { relativeTo: this.route });
+      // this.router.navigate(['../'], { relativeTo: this.route });
       this.updateFeeGroup(response);
     });
   }
-  updateFeeGroup(groupObj:any){
-    
-    this.groupService.updateFeeGroup(groupObj.groupId,this.cards).subscribe((response: any) => {
-       
+  updateFeeGroup(groupObj: any) {
+
+    this.groupService.updateFeeGroup(groupObj.groupId, this.cards).subscribe((response: any) => {
+
       this.router.navigate(['../general'], { relativeTo: this.route });
     });
   }
 
-    
-  onBlur(event:any, index:any){
-    console.log("value_input === ", event.target.value);
-    console.log("value === === ", event.target.id);
-    let name_input = event.target.id;
-    this.cards.forEach((item: any) =>{
-      if(item.cardType == index.cardType){ 
-        Object.keys(item).forEach(function (key){
-          if(name_input.split("_")[1] == key){
+
+  onBlur(event: any, index: any) {
+    console.log('value_input === ', event.target.value);
+    console.log('value === === ', event.target.id);
+    const name_input = event.target.id;
+    this.cards.forEach((item: any) => {
+      if (item.cardType === index.cardType) {
+        Object.keys(item).forEach(function (key: any) {
+          if (name_input.split('_')[1] === key) {
             item[key] = Number(event.target.value);
           }
         });
-      } 
-    }); 
+      }
+    });
   }
 }

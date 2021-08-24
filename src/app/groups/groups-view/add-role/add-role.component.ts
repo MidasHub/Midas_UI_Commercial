@@ -1,7 +1,7 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Data, Router } from '@angular/router';
 
 /** Custom Services */
 import { GroupsService } from '../../groups.service';
@@ -17,7 +17,7 @@ import { GroupsService } from '../../groups.service';
 export class AddRoleComponent implements OnInit {
 
   /** Groups Add Role Form */
-  groupsAddRoleForm: FormGroup;
+  groupsAddRoleForm!: FormGroup;
   /** Client Member Data */
   clientMemberData: any;
   /** Role Data */
@@ -35,7 +35,7 @@ export class AddRoleComponent implements OnInit {
               private groupsService: GroupsService,
               private route: ActivatedRoute,
               private router: Router) {
-    this.route.data.subscribe((data: { groupAndTemplateData: any }) => {
+    this.route.data.subscribe((data: { groupAndTemplateData: any }|Data) => {
       this.groupAndTemplateData = data.groupAndTemplateData;
     });
   }

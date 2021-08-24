@@ -3,17 +3,16 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from 'environments/environment';
 /** rxjs Imports */
-import { Observable,BehaviorSubject } from 'rxjs';
+import { Observable, BehaviorSubject, of } from 'rxjs';
 import { CommonHttpParams } from 'app/shared/CommonHttpParams';
 
 /**
  * Groups service.
  */
 @Injectable({
-    providedIn: 'root'
+  providedIn: 'root',
 })
 export class GroupsService {
-
   /**
    * @param {HttpClient} http Http Client to send requests.
    */
@@ -23,10 +22,9 @@ export class GroupsService {
   public pending_limit: any;
   constructor(private http: HttpClient, private commonHttpParams: CommonHttpParams) {
     this.accessToken = JSON.parse(
-      sessionStorage.getItem(this.credentialsStorageKey)
-      || localStorage.getItem(this.credentialsStorageKey)
+      sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey) || ''
     );
-    this.GatewayApiUrlPrefix = environment.GatewayApiUrlPrefix ;
+    this.GatewayApiUrlPrefix = environment.GatewayApiUrlPrefix;
   }
 
   updateDefaultSavingAccount(savingAccountInfo: any): Observable<any> {
@@ -45,7 +43,7 @@ export class GroupsService {
    * @param {number} limit Number of entries within the page.
    * @returns {Observable<any>} Groups.
    */
-  getGroups(filterBy: any, orderBy: string, sortOrder: string, offset?: number, limit?: number): Observable<any> {
+  getGroups(filterBy: any, orderBy: string, sortOrder: string, offset: number = 0, limit: number = 10): Observable<any> {
     let httpParams = new HttpParams()
       .set('offset', offset.toString())
       .set('limit', limit.toString())
@@ -62,12 +60,12 @@ export class GroupsService {
   }
 
   getCartTypes(): Observable<any> {
-    let httpParams = this.commonHttpParams.getCommonHttpParams();
+    const httpParams = this.commonHttpParams.getCommonHttpParams();
 
     return this.http.post<any>(`${this.GatewayApiUrlPrefix}/groups/get_fee_group_template`, httpParams);
   }
 
-  getCartTypesByGroupId(groupId:any): Observable<any> {
+  getCartTypesByGroupId(groupId: any): Observable<any> {
     let httpParams = this.commonHttpParams.getCommonHttpParams();
 
     httpParams = httpParams.set('groupId', groupId);
@@ -82,11 +80,14 @@ export class GroupsService {
    * @param {any} orphansOnly? Orphans Only.
    * @returns {Observable<any>} Groups.
    */
-  getFilteredGroups(orderBy: string, sortOrder: string, name: string, officeId?: any, orphansOnly?: any): Observable<any> {
-    let httpParams = new HttpParams()
-      .set('name', name)
-      .set('sortOrder', sortOrder)
-      .set('orderBy', orderBy);
+  getFilteredGroups(
+    orderBy: string,
+    sortOrder: string,
+    name: string,
+    officeId?: any,
+    orphansOnly?: any
+  ): Observable<any> {
+    let httpParams = new HttpParams().set('name', name).set('sortOrder', sortOrder).set('orderBy', orderBy);
     if (officeId) {
       httpParams = httpParams.set('officeId', officeId);
     }
@@ -100,7 +101,7 @@ export class GroupsService {
    */
   getGroupsByOfficeId(officeId: number): Observable<any> {
     const httpParams = new HttpParams().set('officeId', officeId.toString());
-    return this.http.get('/groups', { params: httpParams } );
+    return this.http.get('/groups', { params: httpParams });
   }
 
   /**
@@ -108,35 +109,46 @@ export class GroupsService {
    * @param {string} template? Is template data required.
    * @returns {Observable<any>} Group data.
    */
-  getGroupData(groupId: string, template?: string): Observable<any> {
+  getGroupData(groupId?: string | null, template?: string): Observable<any> {
     let httpParams = new HttpParams().set('associations', 'all');
     httpParams = template ? httpParams.set('template', template) : httpParams;
+    if (groupId) {
     return this.http.get(`/groups/${groupId}`, { params: httpParams });
+    } else {
+      return of();
+    }
   }
 
   /**
    * @param groupId Group Id of group to get data for.
    * @returns {Observable<any>} Group Summary data.
    */
-  getGroupSummary(groupId: string): Observable<any> {
-    const httpParams = new HttpParams().set('R_groupId', groupId)
-      .set('genericResultSet', 'false');
+  getGroupSummary(groupId?: string|null): Observable<any> {
+    if (groupId) {
+    const httpParams = new HttpParams().set('R_groupId', groupId).set('genericResultSet', 'false');
     return this.http.get(`/runreports/GroupSummaryCounts`, { params: httpParams });
+    } else {
+      return of();
+    }
   }
 
   /**
    * @param groupId Group Id of group to get data for.
    * @returns {Observable<any>} Group Accounts data.
    */
-  getGroupAccountsData(groupId: string): Observable<any> {
-    return this.http.get(`/groups/${groupId}/accounts`);
+  getGroupAccountsData(groupId?: string | null): Observable<any> {
+    if (groupId) {
+      return this.http.get(`/groups/${groupId}/accounts`);
+    } else {
+      return of();
+    }
   }
 
   /**
    * @param groupId Group Id of group to get data for.
    * @returns {Observable<any>} Group Notes data.
    */
-  getGroupNotes(groupId: string): Observable<any> {
+  getGroupNotes(groupId?: string|null): Observable<any> {
     return this.http.get(`/groups/${groupId}/notes`);
   }
 
@@ -181,9 +193,13 @@ export class GroupsService {
    * @param datatableName Data table name.
    * @returns {Observable<any>}
    */
-  getGroupDatatable(groupId: string, datatableName: string): Observable<any> {
+  getGroupDatatable(groupId?: string|null, datatableName?: string| null): Observable<any> {
     const httpParams = new HttpParams().set('genericResultSet', 'true');
+    if ((groupId) && (datatableName)) {
     return this.http.get(`/datatables/${datatableName}/${groupId}`, { params: httpParams });
+    } else {
+      return of();
+    }
   }
 
   /**
@@ -192,7 +208,7 @@ export class GroupsService {
    * @param data Data.
    * @returns {Observable<any>}
    */
-  addGroupDatatableEntry(groupId: string, datatableName: string, data: any): Observable<any> {
+  addGroupDatatableEntry(groupId?: string|null, datatableName?: string|null, data?: any): Observable<any> {
     const httpParams = new HttpParams().set('genericResultSet', 'true');
     return this.http.post(`/datatables/${datatableName}/${groupId}`, data, { params: httpParams });
   }
@@ -203,7 +219,7 @@ export class GroupsService {
    * @param data Data.
    * @returns {Observable<any>}
    */
-  editGroupDatatableEntry(groupId: string, datatableName: string, data: any): Observable<any> {
+  editGroupDatatableEntry(groupId?: string|null, datatableName?: string|null, data?: any): Observable<any> {
     const httpParams = new HttpParams().set('genericResultSet', 'true');
     return this.http.put(`/datatables/${datatableName}/${groupId}`, data, { params: httpParams });
   }
@@ -213,7 +229,7 @@ export class GroupsService {
    * @param datatableName Data Table name.
    * @returns {Observable<any>}
    */
-  deleteDatatableContent(groupId: string, datatableName: string): Observable<any> {
+  deleteDatatableContent(groupId?: string|null, datatableName?: string|null): Observable<any> {
     const httpParams = new HttpParams().set('genericResultSet', 'true');
     return this.http.delete(`/datatables/${datatableName}/${groupId}`, { params: httpParams });
   }
@@ -244,9 +260,7 @@ export class GroupsService {
    * @returns {Observable<any>}
    */
   unAssignRoleCommand(groupId: string, roleId: any): Observable<any> {
-    const httpParams = new HttpParams()
-        .set('command', 'unassignRole')
-        .set('roleId', roleId);
+    const httpParams = new HttpParams().set('command', 'unassignRole').set('roleId', roleId);
     return this.http.post(`/groups/${groupId}`, {}, { params: httpParams });
   }
 
@@ -259,27 +273,26 @@ export class GroupsService {
   }
   createFeeGroup(groupId: any, listFeeGroup: any): Observable<any> {
     this.accessToken = JSON.parse(
-      sessionStorage.getItem(this.credentialsStorageKey)
-      || localStorage.getItem(this.credentialsStorageKey)
+      sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey) || ''
     );
-    let httpParams = {
-      'createdBy': this.accessToken.userId,
-      'accessToken': this.accessToken.base64EncodedAuthenticationKey,
-      'groupId': groupId,
-      'listFeeGroup': JSON.stringify(listFeeGroup)
+    const httpParams = {
+      createdBy: this.accessToken.userId,
+      accessToken: this.accessToken.base64EncodedAuthenticationKey,
+      groupId: groupId,
+      listFeeGroup: JSON.stringify(listFeeGroup),
     };
     return this.http.post<any>(`${this.GatewayApiUrlPrefix}/groups/add_fee_by_Group`, httpParams);
   }
+
   updateFeeGroup(groupId: any, listFeeGroup: any): Observable<any> {
     this.accessToken = JSON.parse(
-      sessionStorage.getItem(this.credentialsStorageKey)
-      || localStorage.getItem(this.credentialsStorageKey)
+      sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey) || ''
     );
-    let httpParams = {
-      'createdBy': this.accessToken.userId,
-      'accessToken': this.accessToken.base64EncodedAuthenticationKey,
-      'groupId': groupId,
-      'listFeeGroup': JSON.stringify(listFeeGroup)
+    const httpParams = {
+      createdBy: this.accessToken.userId,
+      accessToken: this.accessToken.base64EncodedAuthenticationKey,
+      groupId: groupId,
+      listFeeGroup: JSON.stringify(listFeeGroup),
     };
     return this.http.post<any>(`${this.GatewayApiUrlPrefix}/groups/update_fee_by_Group`, httpParams);
   }
@@ -363,11 +376,10 @@ export class GroupsService {
    * @returns {Observable<any>} Staff Data for group.
    */
   getStaff(id: number): Observable<any> {
-    const httpParams = new HttpParams()
-        .set('officeId', id.toString())
-        .set('staffInSelectedOfficeOnly', 'true');
+    const httpParams = new HttpParams().set('officeId', id.toString()).set('staffInSelectedOfficeOnly', 'true');
     return this.http.get('/groups/template', { params: httpParams });
   }
+
   getStaffs(officeId: string): Observable<any> {
     const httpParams = new HttpParams()
       .set('createdBy', this.accessToken.userId)
@@ -375,18 +387,18 @@ export class GroupsService {
       .set('officeId', officeId);
     return this.http.post<any>(`${this.GatewayApiUrlPrefix}/common/get_list_staffName_of_office`, httpParams);
   }
-  getLastTransaction(groupId:any): Observable<any> {
+  getLastTransaction(groupId: any): Observable<any> {
     const httpParams = new HttpParams()
       .set('createdBy', this.accessToken.userId)
       .set('accessToken', this.accessToken.base64EncodedAuthenticationKey);
-    return this.http.post<any>(`${this.GatewayApiUrlPrefix}/groups/${groupId}/last_transaction`,  httpParams );
+    return this.http.post<any>(`${this.GatewayApiUrlPrefix}/groups/${groupId}/last_transaction`, httpParams);
   }
 
-  getSalesLast3months(groupId:any): Observable<any> {
+  getSalesLast3months(groupId: any): Observable<any> {
     const httpParams = new HttpParams()
       .set('createdBy', this.accessToken.userId)
       .set('accessToken', this.accessToken.base64EncodedAuthenticationKey);
-    return this.http.post<any>(`${this.GatewayApiUrlPrefix}/groups/${groupId}/sales_last_3_months`,  httpParams );
+    return this.http.post<any>(`${this.GatewayApiUrlPrefix}/groups/${groupId}/sales_last_3_months`, httpParams);
   }
 
   storeSpendingLimit(data: any): Observable<any> {
@@ -410,13 +422,15 @@ export class GroupsService {
         .set('accessToken', this.accessToken.base64EncodedAuthenticationKey)
         .set('year', String(year))
         .set('month', String(month));
-      this.http.post<any>(`${this.GatewayApiUrlPrefix}/config/get_limit_config_info`, httpParams).subscribe(response => {
-        this.pending_limit.next({
-          year: year,
-          month: month,
-          data: response?.result
+      this.http
+        .post<any>(`${this.GatewayApiUrlPrefix}/config/get_limit_config_info`, httpParams)
+        .subscribe((response) => {
+          this.pending_limit.next({
+            year: year,
+            month: month,
+            data: response?.result,
+          });
         });
-      });
     }
     return this.pending_limit;
   }
@@ -427,8 +441,8 @@ export class GroupsService {
         ...value,
         data: {
           ...value.data,
-          listSavingLimitConfig: [row, ...value.data.listSavingLimitConfig]
-        }
+          listSavingLimitConfig: [row, ...value.data.listSavingLimitConfig],
+        },
       };
       this.pending_limit.next(newData);
     }
@@ -440,13 +454,13 @@ export class GroupsService {
         ...value,
         data: {
           ...value.data,
-          listSavingLimitConfig: value.data.listSavingLimitConfig.map( (item: any) => {
+          listSavingLimitConfig: value.data.listSavingLimitConfig.map((item: any) => {
             if (item.refid === row.refid) {
               return row;
             }
             return item;
-          })
-        }
+          }),
+        },
       };
       this.pending_limit.next(newData);
     }

@@ -57,7 +57,7 @@ export class CreateEditSpendingComponent implements OnInit {
         }
       });
     }
-    this.formDialog.get('officeId').valueChanges.subscribe(officeId => {
+    this.formDialog.get('officeId')?.valueChanges.subscribe(officeId => {
       this.groupsService.getStaffs(officeId).subscribe((result: any) => {
         if (result) {
           this.staffs = result?.result?.listStaff;
