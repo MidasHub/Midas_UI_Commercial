@@ -1,7 +1,7 @@
 /** Angular Imports */
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Data, Router } from '@angular/router';
 import { FormControl } from '@angular/forms';
 
 /** Custom Services */
@@ -42,7 +42,7 @@ export class XBRLComponent implements OnInit, AfterViewInit {
   constructor(private route: ActivatedRoute,
               private router: Router,
               private reportService: ReportsService) {
-    this.route.data.subscribe(( data: { mixtaxonomy: any, mixmapping: any, glAccounts: any }) => {
+    this.route.data.subscribe(( data: { mixtaxonomy: any, mixmapping: any, glAccounts: any }|Data) => {
       this.mixtaxonomyArray = data.mixtaxonomy;
       this.mixMappingJson = data.mixmapping.config || JSON.stringify({});
       this.glAccounts = data.glAccounts;
@@ -81,7 +81,7 @@ export class XBRLComponent implements OnInit, AfterViewInit {
     this.mixtaxonomyArray.forEach((taxonomy: any) => {
       const mapping = JSON.parse(this.mixMappingJson)[taxonomy.id];
         taxonomy.mapping = new FormControl('');
-        taxonomy.mapping.value = mapping || '';
+        taxonomy.mapping.value = mapping;
     });
   }
 

@@ -30,11 +30,11 @@ export class CreateTaxGroupComponent implements OnInit {
   /** Maximum start date allowed. */
   maxDate = new Date(2100, 0, 1);
   /** Tax Group form. */
-  taxGroupForm: FormGroup;
+  taxGroupForm!: FormGroup;
   /** Tax Group template data. */
   taxGroupTemplateData: any;
   /** Tax Component Data Source */
-  taxComponentsDataSource: {}[];
+  taxComponentsDataSource!: {}[];
   /** Tax Component Options */
   taxComponentOptions: any;
 
@@ -55,7 +55,7 @@ export class CreateTaxGroupComponent implements OnInit {
     private router: Router,
     private datePipe: DatePipe,
     public dialog: MatDialog) {
-    this.route.data.subscribe((data: { taxGroupTemplate: any }) => {
+    this.route.data.subscribe((data: { taxGroupTemplate: any }|any) => {
       this.taxGroupTemplateData = data.taxGroupTemplate;
       this.taxComponentOptions = this.taxGroupTemplateData.taxComponents;
     });
@@ -172,7 +172,7 @@ export class CreateTaxGroupComponent implements OnInit {
       locale
     };
     for (const taxComponent of taxGroup.taxComponents) {
-      taxComponent.startDate = this.datePipe.transform(taxComponent.startDate, dateFormat) || '';
+      taxComponent.startDate = this.datePipe.transform(taxComponent.startDate, dateFormat) ;
     }
     this.productsService.createTaxGroup(taxGroup).subscribe((response: any) => {
       this.router.navigate(['../', response.resourceId], { relativeTo: this.route });
