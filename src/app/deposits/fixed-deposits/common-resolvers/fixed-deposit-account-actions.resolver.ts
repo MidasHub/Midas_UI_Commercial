@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Resolve, ActivatedRouteSnapshot } from '@angular/router';
 
 /** rxjs Imports */
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 
 /** Custom Services */
 import { SavingsService } from 'app/savings/savings.service';
@@ -29,14 +29,14 @@ export class FixedDepositsAccountActionsResolver implements Resolve<Object> {
    */
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
     const actionName = route.paramMap.get('name');
-    const fixedDepositAccountId = route.paramMap.get('fixedDepositAccountId') || route.parent.parent.paramMap.get('fixedDepositAccountId');
+    const fixedDepositAccountId = route.paramMap.get('fixedDepositAccountId') || route.parent?.parent?.paramMap.get('fixedDepositAccountId') ;
     switch (actionName) {
       case 'Add Charge':
         return this.savingsService.getSavingsChargeTemplateResource(fixedDepositAccountId);
       case 'Close':
         return this.fixedDepositsService.getFixedDepositsAccountClosureTemplate(fixedDepositAccountId);
       default:
-        return undefined;
+        return of();
     }
   }
 
