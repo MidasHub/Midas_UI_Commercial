@@ -1,7 +1,7 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { MatDialog } from '@angular/material/dialog'
+import { MatDialog } from '@angular/material/dialog';
 
 /** rxjs Imports */
 import { finalize } from 'rxjs/operators';
@@ -13,7 +13,7 @@ import { HttpParams } from '@angular/common/http';
 import { split } from 'lodash';
 
 import { Logger } from '../../core/logger/logger.service';
-const log = new Logger('Login Page')
+const log = new Logger('Login Page');
 /**
  * Login form component.
  */
@@ -25,9 +25,9 @@ const log = new Logger('Login Page')
 export class LoginFormComponent implements OnInit {
 
   /** Login form group. */
-  loginForm: FormGroup;
+  loginForm!: FormGroup;
   /** Password input field type. */
-  passwordInputType: string;
+  passwordInputType!: string;
   /** True if loading. */
   loading = false;
 
@@ -50,21 +50,21 @@ export class LoginFormComponent implements OnInit {
     this.passwordInputType = 'password';
   }
 
-  //** Register Firebase to Noti Server */
+  // ** Register Firebase to Noti Server */
   sendFireBaseKeyToServer() {
     if (localStorage.getItem('MidasFirebase') && sessionStorage.getItem('midasCredentials')) {
 
-      let currentuser = JSON.parse(sessionStorage.getItem('midasCredentials'));
+      const currentuser = JSON.parse(sessionStorage.getItem('midasCredentials') || '');
       const body = {
         officeID: currentuser.officeId,
         staffAppID: currentuser.staffId,
         staffUsername: currentuser.username,
-        staffName: split(currentuser.staffDisplayName, ",")[1].trim(),
-        staffCode: split(currentuser.staffDisplayName, ",")[0].trim(),
-        tokens: "[{'token':" + localStorage.getItem('MidasFirebase') + "}]"
+        staffName: split(currentuser.staffDisplayName, ',')[1].trim(),
+        staffCode: split(currentuser.staffDisplayName, ',')[0].trim(),
+        tokens: '[{\'token\':' + localStorage.getItem('MidasFirebase') + '}]'
       };
       console.log(body);
-      //return this.http.post(environment.NotiGatewayURL + `/users`, body);
+      // return this.http.post(environment.NotiGatewayURL + `/users`, body);
     }
   }
 
@@ -90,7 +90,7 @@ export class LoginFormComponent implements OnInit {
    * TODO: Decision to be taken on providing this feature.
    */
   forgotPassword() {
-    alert('Forgot Password feature currently unavailable.')
+    alert('Forgot Password feature currently unavailable.');
   }
 
   /**

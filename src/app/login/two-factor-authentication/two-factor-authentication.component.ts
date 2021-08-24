@@ -25,11 +25,11 @@ export class TwoFactorAuthenticationComponent implements OnInit {
   /** True if OTP is requested. */
   otpRequested = false;
   /** Time for which OTP is valid. */
-  tokenValidityTime: number;
+  tokenValidityTime!: number;
   /** Two factor authentication delivery method form group. */
-  twoFactorAuthenticationDeliveryMethodForm: FormGroup;
+  twoFactorAuthenticationDeliveryMethodForm!: FormGroup;
   /** Two factor authentication form group. */
-  twoFactorAuthenticationForm: FormGroup;
+  twoFactorAuthenticationForm!: FormGroup;
   /** True if loading. */
   loading = false;
   /** True if loading. */
