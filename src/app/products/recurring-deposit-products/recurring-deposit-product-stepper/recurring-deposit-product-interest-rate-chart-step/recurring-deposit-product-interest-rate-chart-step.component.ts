@@ -28,7 +28,7 @@ export class RecurringDepositProductInterestRateChartStepComponent implements On
 
   @Input() recurringDepositProductsTemplate: any;
 
-  recurringDepositProductInterestRateChartForm: FormGroup;
+  recurringDepositProductInterestRateChartForm!: FormGroup;
 
   periodTypeData: any;
   entityTypeData: any;
@@ -85,7 +85,7 @@ export class RecurringDepositProductInterestRateChartStepComponent implements On
     this.getChartsDetailsData();
 
     // Iterates for every chart in charts
-    this.charts.controls.forEach((chartDetailControl: FormGroup, i: number) => {
+    this.charts.controls.forEach((chartDetailControl: FormGroup|any, i: number) => {
 
       // Iterate for every chartSlab in chart
       this.chartsDetail[i].chartSlabs.forEach((chartSlabDetail: any, j: number) => {
@@ -220,7 +220,7 @@ export class RecurringDepositProductInterestRateChartStepComponent implements On
 
   setConditionalControls(chartIndex: number) {
     this.chartSlabsDisplayedColumns[chartIndex] = ['period', 'amountRange', 'annualInterestRate', 'description', 'actions'];
-    this.charts.at(chartIndex).get('isPrimaryGroupingByAmount').valueChanges
+    this.charts.at(chartIndex).get('isPrimaryGroupingByAmount')?.valueChanges
       .subscribe((isPrimaryGroupingByAmount: boolean) => {
         this.chartSlabsDisplayedColumns[chartIndex] = isPrimaryGroupingByAmount ? ['amountRange', 'period'] : ['period', 'amountRange'];
         this.chartSlabsDisplayedColumns[chartIndex].push('annualInterestRate', 'description', 'actions');
@@ -356,8 +356,8 @@ export class RecurringDepositProductInterestRateChartStepComponent implements On
     for (const chart of recurringDepositProductInterestRateChart.charts) {
       chart.dateFormat = dateFormat;
       chart.locale = locale;
-      chart.fromDate = this.datePipe.transform(chart.fromDate, dateFormat) || '';
-      chart.endDate = this.datePipe.transform(chart.endDate, dateFormat) || '';
+      chart.fromDate = this.datePipe.transform(chart.fromDate, dateFormat);
+      chart.endDate = this.datePipe.transform(chart.endDate, dateFormat);
       if (chart.endDate === '') {
         delete chart.endDate;
       }

@@ -30,11 +30,11 @@ export class EditTaxGroupComponent implements OnInit {
   /** Maximum start date allowed. */
   maxDate = new Date(2100, 0, 1);
   /** Tax Group form. */
-  taxGroupForm: FormGroup;
+  taxGroupForm!: FormGroup;
   /** Tax Group template data. */
   taxGroupData: any;
   /** Tax Component Data Source */
-  taxComponentsDataSource: {}[];
+  taxComponentsDataSource!: {}[];
   /** Tax Component Options */
   taxComponentOptions: any;
 
@@ -55,7 +55,7 @@ export class EditTaxGroupComponent implements OnInit {
     private router: Router,
     private datePipe: DatePipe,
     public dialog: MatDialog) {
-    this.route.data.subscribe((data: { taxGroup: any }) => {
+    this.route.data.subscribe((data: { taxGroup: any }|any) => {
       this.taxGroupData = data.taxGroup;
       this.taxComponentOptions = this.taxGroupData.taxComponents;
     });
@@ -202,10 +202,10 @@ export class EditTaxGroupComponent implements OnInit {
       locale
     };
     for (const taxComponent of taxGroup.taxComponents) {
-      taxComponent.startDate = this.datePipe.transform(taxComponent.startDate, dateFormat) || '';
+      taxComponent.startDate = this.datePipe.transform(taxComponent.startDate, dateFormat) ;
       if (taxComponent.endDate) {
         delete taxComponent.startDate;
-        taxComponent.endDate = this.datePipe.transform(taxComponent.endDate, dateFormat) || '';
+        taxComponent.endDate = this.datePipe.transform(taxComponent.endDate, dateFormat);
       }
       delete taxComponent.isNew;
     }
