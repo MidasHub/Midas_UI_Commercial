@@ -23,7 +23,7 @@ import { ConfirmDialogComponent } from "app/transactions/dialog/confirm-dialog/c
 //@Injectable()
 export class MerchantTabComponent implements OnInit {
   @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
-  @ViewChild(MatSort, { static: true }) sort!: MatSort;
+  @ViewChild(MatSort, { static: true }) sort: MatSort | any;
 
   private onSubject = new Subject<{ key: string; value: any }>();
   public changes = this.onSubject.asObservable().pipe(share());

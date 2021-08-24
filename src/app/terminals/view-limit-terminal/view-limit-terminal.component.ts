@@ -37,7 +37,7 @@ export class ViewLimitTerminalComponent implements OnInit {
   totalBalanceAmount = 0;
 
   @ViewChild(MatPaginator, {static: true}) paginator!: MatPaginator;
-  @ViewChild(MatSort, {static: true}) sort!: MatSort;
+  @ViewChild(MatSort, {static: true}) sort: MatSort | any;
   commonOffices: any[] = this.bankService.documentOffices;
 
 

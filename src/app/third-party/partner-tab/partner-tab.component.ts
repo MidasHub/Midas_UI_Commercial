@@ -21,7 +21,7 @@ import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 })
 export class PartnerTabComponent implements OnInit {
   @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
-  @ViewChild(MatSort, { static: true }) sort!: MatSort;
+  @ViewChild(MatSort, { static: true }) sort: MatSort | any;
   //@ViewChild('showClosedPartners', { static: true }) showClosedPartners: MatCheckbox;
 
 
