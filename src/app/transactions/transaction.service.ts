@@ -25,7 +25,7 @@ export class TransactionService {
    */
   constructor(private http: HttpClient, private commonHttpParams: CommonHttpParams) {
     this.accessToken = JSON.parse(
-      sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey) ||'' ||''
+      sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey) || '' || ''
     );
     this.GatewayApiUrlPrefix = environment.GatewayApiUrlPrefix;
     this.IcGatewayApiUrlPrefix = environment.IcGatewayApiUrlPrefix;
@@ -281,21 +281,21 @@ export class TransactionService {
     limit: number;
     offset: number;
     officeFilter: number;
-    dueDayFilter:number;
+    dueDayFilter: number;
     viewDoneTransaction: boolean;
   }): Observable<any> {
     let httpParams = this.commonHttpParams.getCommonHttpParams();
-    httpParams = httpParams.set("bankFilter", payload.bankFilter == "ALL" ? "%%" : payload.bankFilter);
-    httpParams = httpParams.set("cardTypeFilter", payload.cardTypeFilter == "ALL" ? "%%" : payload.cardTypeFilter);
-    httpParams = httpParams.set("createdByFilter", !payload.createdByFilter ? "%%" : payload.createdByFilter);
-    httpParams = httpParams.set("customerSearch", !payload.query ? "%%" : `%${payload.query}%`);
-    httpParams = httpParams.set("officeSearch", !payload.officeFilter ? "%%" : `${payload.officeFilter}`);
-    httpParams = httpParams.set("dueDayFilter", !payload.dueDayFilter ? '-1' :`${payload.dueDayFilter}`);
-    httpParams = httpParams.set("viewDoneTransaction", `${payload.viewDoneTransaction}`);
-    httpParams = httpParams.set("limit", String(payload.limit));
-    httpParams = httpParams.set("offset", String(payload.offset));
-    httpParams = httpParams.set("fromDate", payload.fromDate);
-    httpParams = httpParams.set("toDate", payload.toDate);
+    httpParams = httpParams.set('bankFilter', payload.bankFilter === 'ALL' ? '%%' : payload.bankFilter);
+    httpParams = httpParams.set('cardTypeFilter', payload.cardTypeFilter === 'ALL' ? '%%' : payload.cardTypeFilter);
+    httpParams = httpParams.set('createdByFilter', !payload.createdByFilter ? '%%' : payload.createdByFilter);
+    httpParams = httpParams.set('customerSearch', !payload.query ? '%%' : `%${payload.query}%`);
+    httpParams = httpParams.set('officeSearch', !payload.officeFilter ? '%%' : `${payload.officeFilter}`);
+    httpParams = httpParams.set('dueDayFilter', !payload.dueDayFilter ? '-1' : `${payload.dueDayFilter}`);
+    httpParams = httpParams.set('viewDoneTransaction', `${payload.viewDoneTransaction}`);
+    httpParams = httpParams.set('limit', String(payload.limit));
+    httpParams = httpParams.set('offset', String(payload.offset));
+    httpParams = httpParams.set('fromDate', payload.fromDate);
+    httpParams = httpParams.set('toDate', payload.toDate);
 
     return this.http.post(`${this.GatewayApiUrlPrefix}/transaction/get_list_pos_transaction_rollterm`, httpParams);
   }
@@ -310,21 +310,21 @@ export class TransactionService {
     limit: number;
     offset: number;
     officeFilter: number;
-    dueDayFilter:number;
+    dueDayFilter: number;
     viewDoneTransaction: boolean;
   }): Observable<any> {
     let httpParams = this.commonHttpParams.getCommonHttpParams();
-    httpParams = httpParams.set("bankFilter", payload.bankFilter == "ALL" ? "%%" : payload.bankFilter);
-    httpParams = httpParams.set("cardTypeFilter", payload.cardTypeFilter == "ALL" ? "%%" : payload.cardTypeFilter);
-    httpParams = httpParams.set("createdByFilter", !payload.createdByFilter ? "%%" : payload.createdByFilter);
-    httpParams = httpParams.set("customerSearch", !payload.query ? "%%" : `%${payload.query}%`);
-    httpParams = httpParams.set("officeSearch", !payload.officeFilter ? "%%" : `${payload.officeFilter}`);
-    httpParams = httpParams.set("dueDayFilter", !payload.dueDayFilter ? '-1' :`${payload.dueDayFilter}`);
-    httpParams = httpParams.set("viewDoneTransaction", `${payload.viewDoneTransaction}`);
-    httpParams = httpParams.set("limit", String(payload.limit));
-    httpParams = httpParams.set("offset", String(payload.offset));
-    httpParams = httpParams.set("fromDate", payload.fromDate);
-    httpParams = httpParams.set("toDate", payload.toDate);
+    httpParams = httpParams.set('bankFilter', payload.bankFilter === 'ALL' ? '%%' : payload.bankFilter);
+    httpParams = httpParams.set('cardTypeFilter', payload.cardTypeFilter === 'ALL' ? '%%' : payload.cardTypeFilter);
+    httpParams = httpParams.set('createdByFilter', !payload.createdByFilter ? '%%' : payload.createdByFilter);
+    httpParams = httpParams.set('customerSearch', !payload.query ? '%%' : `%${payload.query}%`);
+    httpParams = httpParams.set('officeSearch', !payload.officeFilter ? '%%' : `${payload.officeFilter}`);
+    httpParams = httpParams.set('dueDayFilter', !payload.dueDayFilter ? '-1' : `${payload.dueDayFilter}`);
+    httpParams = httpParams.set('viewDoneTransaction', `${payload.viewDoneTransaction}`);
+    httpParams = httpParams.set('limit', String(payload.limit));
+    httpParams = httpParams.set('offset', String(payload.offset));
+    httpParams = httpParams.set('fromDate', payload.fromDate);
+    httpParams = httpParams.set('toDate', payload.toDate);
 
     return this.http.post(`${this.GatewayApiUrlPrefix}/transaction/get_list_pos_transaction_rollterm/v2`, httpParams);
   }
@@ -355,17 +355,17 @@ export class TransactionService {
     httpParams = httpParams.set('cardHoldFilter', payload.cardHoldFilter === 'ALL' ? `%%` : `${payload.cardHoldFilter}`);
     httpParams = httpParams.set('bankName', payload.bankName === 'ALL' ? `%%` : `${payload.bankName}`);
     httpParams = httpParams.set('cardType', payload.cardType === 'ALL' ? `%%` : `${payload.cardType}`);
-    httpParams = httpParams.set("viewDoneTransaction", `${payload.viewDoneTransaction}`);
+    httpParams = httpParams.set('viewDoneTransaction', `${payload.viewDoneTransaction}`);
     httpParams = httpParams.set('fromDate', payload.fromDate);
     httpParams = httpParams.set('toDate', payload.toDate);
 
     return this.http.post(`${this.GatewayApiUrlPrefix}/card/get_list_card_on_due_day`, httpParams);
   }
 
-  checkValidRetailCashTransaction(clientId: string): Observable<any> {
+  checkValidRetailCashTransaction(clientId?: string | null): Observable<any> {
     let httpParams = this.commonHttpParams.getCommonHttpParams();
 
-    httpParams = httpParams.set('clientId', clientId);
+    httpParams = httpParams.set('clientId', clientId || '');
 
     return this.http.post<any>(
       `${this.GatewayApiUrlPrefix}/transaction/check_valid_for_retail_transaction`,
@@ -373,10 +373,10 @@ export class TransactionService {
     );
   }
 
-  checkExtraCardInfo(clientId: string, identifierId: string): Observable<any> {
+  checkExtraCardInfo(clientId?: string | null, identifierId?: string): Observable<any> {
     let httpParams = this.commonHttpParams.getCommonHttpParams();
-    httpParams = httpParams.set('userIdentifyId', identifierId);
-    httpParams = httpParams.set('userId', clientId);
+    httpParams = httpParams.set('userIdentifyId', identifierId || '');
+    httpParams = httpParams.set('userId', clientId || '');
 
     return this.http.post<any>(`${this.GatewayApiUrlPrefix}/card/check_extra_card_info`, httpParams);
   }
@@ -416,7 +416,7 @@ export class TransactionService {
 
   downloadVoucher(transactionId: string) {
     this.accessToken = JSON.parse(
-      sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey) ||'' ||''
+      sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey) || '' || ''
     );
     const url = `${this.environment.GatewayApiUrl}${this.GatewayApiUrlPrefix}/export/download_voucher?id=${transactionId}&accessToken=${this.accessToken.base64EncodedAuthenticationKey}&createdBy=${this.accessToken.userId}`;
     const xhr = new XMLHttpRequest();
@@ -434,7 +434,7 @@ export class TransactionService {
 
     xhr.open('GET', url);
     if (this.environment.isNewBillPos) {
-      xhr.setRequestHeader('Gateway-TenantId', window.localStorage.getItem('Gateway-TenantId')||'');
+      xhr.setRequestHeader('Gateway-TenantId', window.localStorage.getItem('Gateway-TenantId') || '');
     }
     xhr.responseType = 'blob';
     xhr.send();
@@ -442,7 +442,7 @@ export class TransactionService {
 
   downloadBill(clientId: string, documentId: string) {
     this.accessToken = JSON.parse(
-      sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey) ||'' ||''
+      sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey) || '' || ''
     );
     const xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function () {
@@ -523,7 +523,7 @@ export class TransactionService {
 
         const context = canvas.getContext('2d');
 
-        context!.drawImage(image, 0, 0, newWidth, newHeight);
+        context?.drawImage(image, 0, 0, newWidth, newHeight);
 
         canvas.toBlob((b) => {
           return resolve(<File>b);
@@ -585,7 +585,7 @@ export class TransactionService {
     const httpOptions = {
       responseType: 'blob' as 'json',
       headers: new HttpHeaders({
-        'Gateway-TenantId': window.localStorage.getItem('Gateway-TenantId')||'',
+        'Gateway-TenantId': window.localStorage.getItem('Gateway-TenantId') || '',
       }),
     };
 
@@ -594,7 +594,7 @@ export class TransactionService {
 
   exportTransactionForPartner(query: string) {
     this.accessToken = JSON.parse(
-      sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey) ||''||''
+      sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey) || '' || ''
     );
     // tslint:disable-next-line:max-line-length
     const fileUrl = `${this.environment.GatewayApiUrl}${this.environment.GatewayApiUrlPrefix}/export/export_transaction_partner?ext5=ALL&typeExport=transaction&accessToken=${this.accessToken.base64EncodedAuthenticationKey}&createdBy=${this.accessToken.userId}&${query}`;
@@ -609,7 +609,7 @@ export class TransactionService {
 
   exportTransaction(query: string) {
     this.accessToken = JSON.parse(
-      sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey) ||''||''
+      sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey) || '' || ''
     );
     // tslint:disable-next-line:max-line-length
     const fileUrl = `${this.environment.GatewayApiUrl}${this.environment.GatewayApiUrlPrefix}/export/export_transaction?ext5=ALL&typeExport=transaction&accessToken=${this.accessToken.base64EncodedAuthenticationKey}&createdBy=${this.accessToken.userId}&staffId=${this.accessToken.staffId}&${query}`;
@@ -677,7 +677,7 @@ export class TransactionService {
 
   exportTransactionFeePaid(transactions: string) {
     this.accessToken = JSON.parse(
-      sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey) ||''||''
+      sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey) || '' || ''
     );
     const { permissions, officeId } = this.accessToken;
     const permit = permissions.includes('TXN_CREATE');
@@ -740,7 +740,7 @@ export class TransactionService {
   getShippersCardTransfer(): Observable<any> {
     // let httpParams = this.commonHttpParams.getCommonHttpParams();
     this.accessToken = JSON.parse(
-      sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey) ||''||''
+      sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey) || '' || ''
     );
     const Params = {
       createdBy: this.accessToken.userId,
@@ -752,7 +752,7 @@ export class TransactionService {
   saveCardTransfer(data: any) {
     // let httpParams = this.commonHttpParams.getCommonHttpParams();
     this.accessToken = JSON.parse(
-      sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey) ||''||''
+      sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey) || '' || ''
     );
     const Params = {
       createdBy: this.accessToken.userId,
@@ -769,7 +769,7 @@ export class TransactionService {
   getDetailByTransferRefNo(transferRefNo: any, officeId: any) {
     // let httpParams = this.commonHttpParams.getCommonHttpParams();
     this.accessToken = JSON.parse(
-      sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey) ||''
+      sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey) || ''
     );
     const Params = {
       createdBy: this.accessToken.userId,
@@ -784,7 +784,7 @@ export class TransactionService {
   exportCardTransferRequest(transferRefNo: any, officeId: any) {
     // let httpParams = this.commonHttpParams.getCommonHttpParams();
     this.accessToken = JSON.parse(
-      sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey) ||''
+      sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey) || ''
     );
     const Params = {
       createdBy: this.accessToken.userId,
@@ -798,7 +798,7 @@ export class TransactionService {
 
   getListTransfer(fromDate: any, toDate: any, officeId: any) {
     this.accessToken = JSON.parse(
-      sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey) ||''
+      sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey) || ''
     );
     const Params = {
       createdBy: this.accessToken.userId,
@@ -814,7 +814,7 @@ export class TransactionService {
 
   deleteCardTransferRequest(transferRefNo: any, officeId: any) {
     this.accessToken = JSON.parse(
-      sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey) ||''
+      sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey) || ''
     );
     const Params = {
       createdBy: this.accessToken.userId,
@@ -829,7 +829,7 @@ export class TransactionService {
 
   addDetailCardTransfer(transferRefNo: any, officeId: any, listCardId: any) {
     this.accessToken = JSON.parse(
-      sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey) ||''
+      sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey) || ''
     );
     const Params = {
       createdBy: this.accessToken.userId,
@@ -845,7 +845,7 @@ export class TransactionService {
 
   deleteDetailCardTransfer(transferRefNo: any, officeId: any, listCardId: any) {
     this.accessToken = JSON.parse(
-      sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey) ||''
+      sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey) || ''
     );
     const Params = {
       createdBy: this.accessToken.userId,
@@ -928,7 +928,7 @@ export class TransactionService {
 
   exportAsExcelFile(exportType: string, data: any) {
     this.accessToken = JSON.parse(
-      sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey) ||''
+      sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey) || ''
     );
 
     // tslint:disable-next-line:max-line-length
@@ -962,7 +962,7 @@ export class TransactionService {
     };
     xhr.open('GET', url);
     if (this.environment.isNewBillPos) {
-      xhr.setRequestHeader('Gateway-TenantId', window.localStorage.getItem('Gateway-TenantId') ||'');
+      xhr.setRequestHeader('Gateway-TenantId', window.localStorage.getItem('Gateway-TenantId') || '');
     }
     xhr.responseType = 'blob';
     xhr.send();
@@ -970,7 +970,7 @@ export class TransactionService {
 
   exportDataFile(exportType: string, data: any) {
     this.accessToken = JSON.parse(
-      sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey) ||''
+      sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey) || ''
     );
 
     // tslint:disable-next-line:max-line-length
@@ -983,7 +983,7 @@ export class TransactionService {
 
   exportRollTermScheduleTab(exportType: string, data: any) {
     this.accessToken = JSON.parse(
-      sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey) ||''
+      sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey) || ''
     );
 
     // tslint:disable-next-line:max-line-length

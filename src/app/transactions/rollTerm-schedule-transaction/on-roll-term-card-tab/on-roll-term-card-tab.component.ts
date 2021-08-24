@@ -83,7 +83,7 @@ export class OnRollTermCardTabComponent implements OnInit {
   filterData!: any[];
   today = new Date();
   @ViewChild(MatPaginator, {static: true}) paginator!: MatPaginator;
-  @ViewChild(MatSort, {static: true}) sort!: MatSort;
+  @ViewChild(MatSort, {static: true}) sort: MatSort | any;
 
   constructor(
     private formBuilder: FormBuilder,

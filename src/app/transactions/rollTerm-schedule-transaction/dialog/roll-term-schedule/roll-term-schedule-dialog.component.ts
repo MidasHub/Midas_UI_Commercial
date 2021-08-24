@@ -246,7 +246,7 @@ export class RollTermScheduleDialogComponent implements OnInit {
     }
   }
 
-  addBookingRow = function () {
+  addBookingRow () {
     const dialog = this.dialog.open(ConfirmDialogComponent, {
       data: {
         message: "Bạn chắc chắn muốn thêm một dòng lịch Advance mới",

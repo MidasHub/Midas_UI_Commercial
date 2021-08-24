@@ -111,7 +111,7 @@ export class RollTermScheduleTabComponent implements OnInit {
   cardTypeOption: any[] = [];
 
   @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
-  @ViewChild(MatSort, { static: true }) sort!: MatSort;
+  @ViewChild(MatSort, { static: true }) sort: MatSort | any;
   constructor(
     private formBuilder: FormBuilder,
     private transactionService: TransactionService,
