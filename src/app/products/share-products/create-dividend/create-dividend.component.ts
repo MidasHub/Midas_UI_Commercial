@@ -1,7 +1,7 @@
 /** Angular Imports. */
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Data, Router } from '@angular/router';
 import { DatePipe } from '@angular/common';
 
 /** Custom Services. */
@@ -18,7 +18,7 @@ import { ProductsService } from 'app/products/products.service';
 export class CreateDividendComponent implements OnInit {
 
   /** Create Dividend Form. */
-  createDividendForm: FormGroup;
+  createDividendForm!: FormGroup;
   /** Share Product data. */
   shareProductData: any;
   /** Minimum Date allowed. */
@@ -37,7 +37,7 @@ export class CreateDividendComponent implements OnInit {
               private datePipe: DatePipe,
               private productService: ProductsService,
               private router: Router) {
-    this.route.data.subscribe((data: { shareProduct: any }) => {
+    this.route.data.subscribe((data: { shareProduct: any }| Data) => {
       this.shareProductData = data.shareProduct;
     });
   }

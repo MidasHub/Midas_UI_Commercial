@@ -10,7 +10,7 @@ export class SavingProductTermsStepComponent implements OnInit {
 
   @Input() savingProductsTemplate: any;
 
-  savingProductTermsForm: FormGroup;
+  savingProductTermsForm!: FormGroup;
 
   interestCompoundingPeriodTypeData: any;
   interestPostingPeriodTypeData: any;

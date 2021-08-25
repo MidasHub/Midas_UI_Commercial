@@ -57,7 +57,7 @@ export class ProductsService {
     return this.http.get('/savingsproducts/template');
   }
 
-  getSavingProduct(savingProductId: string, template: boolean = false): Observable<any> {
+  getSavingProduct(savingProductId?: string|null, template: boolean = false): Observable<any> {
     const httpParams = new HttpParams().set('template', template.toString());
     return this.http.get(`/savingsproducts/${savingProductId}`, { params: httpParams });
   }
@@ -81,7 +81,7 @@ export class ProductsService {
     return this.http.get('/products/share/template');
   }
 
-  getShareProduct(shareProductId: string, template: boolean = false): Observable<any> {
+  getShareProduct(shareProductId?: string | null, template: boolean = false): Observable<any> {
     const httpParams = new HttpParams().set('template', template.toString());
     return this.http.get(`/products/share/${shareProductId}`, { params: httpParams });
   }
@@ -90,7 +90,7 @@ export class ProductsService {
     return this.http.put(`/products/share/${shareProductId}`, shareProduct);
   }
 
-  getDividends(shareProductId: string): Observable<any> {
+  getDividends(shareProductId?: string | null): Observable<any> {
     return this.http.get(`/shareproduct/${shareProductId}/dividend`);
   }
 
@@ -130,7 +130,7 @@ export class ProductsService {
    * @param {boolean} template Template
    * @return {Observable<any>} Recurring Deposit Product Details
    */
-  getRecurringDepositProduct(recurringDepositProductId: string, template: boolean = false): Observable<any> {
+  getRecurringDepositProduct(recurringDepositProductId?: string|null, template: boolean = false): Observable<any> {
     const httpParams = new HttpParams().set('template', template.toString());
     return this.http.get(`/recurringdepositproducts/${recurringDepositProductId}`, { params: httpParams });
   }
@@ -269,9 +269,13 @@ export class ProductsService {
    * @param {string} template Template
    * @returns {Observable<any>} Tax Component.
    */
-  getTaxGroup(taxGroupId: string, template: string): Observable<any> {
+  getTaxGroup(taxGroupId?: string|null, template?: string|null): Observable<any> {
+    if ((taxGroupId) && (template)) {
     const httpParams = new HttpParams().set('template', template);
     return this.http.get(`/taxes/group/${taxGroupId}`, { params: httpParams });
+    } else {
+      return of();
+    }
   }
 
   /**
@@ -343,7 +347,7 @@ export class ProductsService {
    * @param {string} productId Id of the product.
    * @returns {Observable<any>} Product.
    */
-  getProductMix(productId: string): Observable<any> {
+  getProductMix(productId?: string|null): Observable<any> {
     return this.http.get(`/loanproducts/${productId}/productmix`);
   }
 

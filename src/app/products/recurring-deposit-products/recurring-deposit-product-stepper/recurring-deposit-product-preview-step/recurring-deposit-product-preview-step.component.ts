@@ -16,7 +16,7 @@ import { trigger, state, transition, animate, style } from '@angular/animations'
 export class RecurringDepositProductPreviewStepComponent implements OnInit {
 
   @Input() recurringDepositProductsTemplate: any;
-  @Input() chartSlabsDisplayedColumns: any[];
+  @Input() chartSlabsDisplayedColumns: any[] = [];
   @Input() accountingRuleData: any;
   @Input() recurringDepositProduct: any;
   @Output() submit = new EventEmitter();

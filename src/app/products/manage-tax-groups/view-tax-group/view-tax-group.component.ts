@@ -1,6 +1,6 @@
 /** Angular Imports. */
 import { Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Data } from '@angular/router';
 
 /**
  * View Tax Group component.
@@ -20,7 +20,7 @@ export class ViewTaxGroupComponent {
    * @param {ActivatedRoute} route Activated Route.
    */
   constructor(private route: ActivatedRoute) {
-    this.route.data.subscribe((data: { taxGroup: any }) => {
+    this.route.data.subscribe((data: { taxGroup: any } | Data) => {
       this.taxGroupData = data.taxGroup;
     });
   }

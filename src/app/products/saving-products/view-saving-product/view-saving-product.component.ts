@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Data } from '@angular/router';
 
 @Component({
   selector: 'mifosx-view-saving-product',
@@ -15,7 +15,7 @@ export class ViewSavingProductComponent implements OnInit {
   feesPenaltyIncomeDisplayedColumns: string[] = ['chargeId', 'incomeAccountId'];
 
   constructor(private route: ActivatedRoute) {
-    this.route.data.subscribe((data: { savingProduct: any }) => {
+    this.route.data.subscribe((data: { savingProduct: any } | Data) => {
       this.savingProduct = data.savingProduct;
     });
   }

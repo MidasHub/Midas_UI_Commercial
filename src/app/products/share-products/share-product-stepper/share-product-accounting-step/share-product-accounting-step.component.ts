@@ -10,9 +10,9 @@ export class ShareProductAccountingStepComponent implements OnInit {
 
   @Input() shareProductsTemplate: any;
   @Input() accountingRuleData: any;
-  @Input() shareProductFormValid: boolean;
+  @Input() shareProductFormValid?: boolean;
 
-  shareProductAccountingForm: FormGroup;
+  shareProductAccountingForm!: FormGroup;
 
   assetAccountData: any;
   incomeAccountData: any;
@@ -53,7 +53,7 @@ export class ShareProductAccountingStepComponent implements OnInit {
   }
 
   setConditionalControls() {
-    this.shareProductAccountingForm.get('accountingRule').valueChanges
+    this.shareProductAccountingForm.get('accountingRule')?.valueChanges
       .subscribe((accountingRule: any) => {
         if (accountingRule === 2) {
           this.shareProductAccountingForm.addControl('shareReferenceId', new FormControl('', Validators.required));

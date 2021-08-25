@@ -10,7 +10,7 @@ export class RecurringDepositProductCurrencyStepComponent implements OnInit {
 
   @Input() recurringDepositProductsTemplate: any;
 
-  recurringDepositProductCurrencyForm: FormGroup;
+  recurringDepositProductCurrencyForm!: FormGroup;
 
   currencyData: any;
 

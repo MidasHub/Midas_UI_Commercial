@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Data, Router } from '@angular/router';
 
 import { RecurringDepositProductDetailsStepComponent } from '../recurring-deposit-product-stepper/recurring-deposit-product-details-step/recurring-deposit-product-details-step.component';
 import { RecurringDepositProductCurrencyStepComponent } from '../recurring-deposit-product-stepper/recurring-deposit-product-currency-step/recurring-deposit-product-currency-step.component';
@@ -18,13 +18,13 @@ import { ProductsService } from 'app/products/products.service';
 })
 export class CreateRecurringDepositProductComponent implements OnInit {
 
-  @ViewChild(RecurringDepositProductDetailsStepComponent, { static: true }) recurringDepositProductDetailsStep: RecurringDepositProductDetailsStepComponent;
-  @ViewChild(RecurringDepositProductCurrencyStepComponent, { static: true }) recurringDepositProductCurrencyStep: RecurringDepositProductCurrencyStepComponent;
-  @ViewChild(RecurringDepositProductTermsStepComponent, { static: true }) recurringDepositProductTermsStep: RecurringDepositProductTermsStepComponent;
-  @ViewChild(RecurringDepositProductSettingsStepComponent, { static: true }) recurringDepositProductSettingsStep: RecurringDepositProductSettingsStepComponent;
-  @ViewChild(RecurringDepositProductInterestRateChartStepComponent, { static: true }) recurringDepositProductInterestRateChartStep: RecurringDepositProductInterestRateChartStepComponent;
-  @ViewChild(RecurringDepositProductChargesStepComponent, { static: true }) recurringDepositProductChargesStep: RecurringDepositProductChargesStepComponent;
-  @ViewChild(RecurringDepositProductAccountingStepComponent, { static: true }) recurringDepositProductAccountingStep: RecurringDepositProductAccountingStepComponent;
+  @ViewChild(RecurringDepositProductDetailsStepComponent, { static: true }) recurringDepositProductDetailsStep!: RecurringDepositProductDetailsStepComponent;
+  @ViewChild(RecurringDepositProductCurrencyStepComponent, { static: true }) recurringDepositProductCurrencyStep!: RecurringDepositProductCurrencyStepComponent;
+  @ViewChild(RecurringDepositProductTermsStepComponent, { static: true }) recurringDepositProductTermsStep!: RecurringDepositProductTermsStepComponent;
+  @ViewChild(RecurringDepositProductSettingsStepComponent, { static: true }) recurringDepositProductSettingsStep!: RecurringDepositProductSettingsStepComponent;
+  @ViewChild(RecurringDepositProductInterestRateChartStepComponent, { static: true }) recurringDepositProductInterestRateChartStep!: RecurringDepositProductInterestRateChartStepComponent;
+  @ViewChild(RecurringDepositProductChargesStepComponent, { static: true }) recurringDepositProductChargesStep!: RecurringDepositProductChargesStepComponent;
+  @ViewChild(RecurringDepositProductAccountingStepComponent, { static: true }) recurringDepositProductAccountingStep!: RecurringDepositProductAccountingStepComponent;
 
   recurringDepositProductsTemplate: any;
   accountingRuleData = ['None', 'Cash'];
@@ -32,7 +32,7 @@ export class CreateRecurringDepositProductComponent implements OnInit {
   constructor(private route: ActivatedRoute,
     private productsService: ProductsService,
     private router: Router) {
-    this.route.data.subscribe((data: { recurringDepositProductsTemplate: any }) => {
+    this.route.data.subscribe((data: { recurringDepositProductsTemplate: any } | Data) => {
       this.recurringDepositProductsTemplate = data.recurringDepositProductsTemplate;
     });
   }

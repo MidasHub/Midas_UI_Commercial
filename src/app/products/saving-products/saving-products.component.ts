@@ -3,7 +3,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Data } from '@angular/router';
 
 
 
@@ -16,13 +16,13 @@ export class SavingProductsComponent implements OnInit {
 
   savingProductsData: any;
   displayedColumns: string[] = ['name', 'shortName'];
-  dataSource: MatTableDataSource<any>;
+  dataSource!: MatTableDataSource<any>;
 
-  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
-  @ViewChild(MatSort, { static: true }) sort: MatSort;
+  @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
+  @ViewChild(MatSort, { static: true }) sort!: MatSort;
 
   constructor(private route: ActivatedRoute) {
-    this.route.data.subscribe((data: { savingProducts: any }) => {
+    this.route.data.subscribe((data: { savingProducts: any } | Data) => {
       this.savingProductsData = data.savingProducts;
     });
   }

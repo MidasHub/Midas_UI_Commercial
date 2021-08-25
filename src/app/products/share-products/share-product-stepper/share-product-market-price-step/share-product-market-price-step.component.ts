@@ -19,7 +19,7 @@ export class ShareProductMarketPriceStepComponent implements OnInit {
 
   @Input() shareProductsTemplate: any;
 
-  shareProductMarketPriceForm: FormGroup;
+  shareProductMarketPriceForm!: FormGroup;
 
   displayedColumns: string[] = ['fromDate', 'shareValue', 'actions'];
 

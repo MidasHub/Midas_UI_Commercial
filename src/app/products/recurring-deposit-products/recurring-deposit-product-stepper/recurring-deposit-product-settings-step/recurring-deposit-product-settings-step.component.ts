@@ -10,7 +10,7 @@ export class RecurringDepositProductSettingsStepComponent implements OnInit {
 
   @Input() recurringDepositProductsTemplate: any;
 
-  recurringDepositProductSettingsForm: FormGroup;
+  recurringDepositProductSettingsForm!: FormGroup;
 
   lockinPeriodFrequencyTypeData: any;
   periodFrequencyTypeData: any;
@@ -70,7 +70,7 @@ export class RecurringDepositProductSettingsStepComponent implements OnInit {
   }
 
   setConditionalControls() {
-    this.recurringDepositProductSettingsForm.get('withHoldTax').valueChanges
+    this.recurringDepositProductSettingsForm.get('withHoldTax')?.valueChanges
       .subscribe((withHoldTax: any) => {
         if (withHoldTax) {
           this.recurringDepositProductSettingsForm.addControl('taxGroupId', new FormControl('', Validators.required));

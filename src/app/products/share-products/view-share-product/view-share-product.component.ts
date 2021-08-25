@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Data } from '@angular/router';
 
 @Component({
   selector: 'mifosx-view-share-product',
@@ -14,7 +14,7 @@ export class ViewShareProductComponent implements OnInit {
   chargesDisplayedColumns: string[] = ['name', 'chargeCalculationType', 'amount', 'chargeTimeType'];
 
   constructor(private route: ActivatedRoute) {
-    this.route.data.subscribe((data: { shareProduct: any }) => {
+    this.route.data.subscribe((data: { shareProduct: any } | Data) => {
       this.shareProduct = data.shareProduct;
     });
   }

@@ -3,7 +3,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Data } from '@angular/router';
 
 @Component({
   selector: 'mifosx-share-products',
@@ -14,13 +14,13 @@ export class ShareProductsComponent implements OnInit {
 
   shareProductsData: any;
   displayedColumns: string[] = ['name', 'shortName', 'totalShares'];
-  dataSource: MatTableDataSource<any>;
+  dataSource!: MatTableDataSource<any>;
 
-  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
-  @ViewChild(MatSort, { static: true }) sort: MatSort;
+  @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
+  @ViewChild(MatSort, { static: true }) sort!: MatSort;
 
   constructor(private route: ActivatedRoute) {
-    this.route.data.subscribe((data: { shareProducts: any }) => {
+    this.route.data.subscribe((data: { shareProducts: any } | Data) => {
       this.shareProductsData = data.shareProducts.pageItems;
     });
   }

@@ -12,11 +12,11 @@ import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.co
 export class ShareProductChargesStepComponent implements OnInit {
 
   @Input() shareProductsTemplate: any;
-  @Input() currencyCode: FormControl;
+  @Input() currencyCode?: FormControl;
 
   chargeData: any;
 
-  chargesDataSource: {}[];
+  chargesDataSource!: {}[];
   displayedColumns: string[] = ['name', 'chargeCalculationType', 'amount', 'chargeTimeType', 'action'];
 
   pristine = true;
@@ -30,7 +30,7 @@ export class ShareProductChargesStepComponent implements OnInit {
     this.chargesDataSource = this.shareProductsTemplate.charges || [];
     this.pristine = true;
 
-    this.currencyCode.valueChanges.subscribe(() => this.chargesDataSource = []);
+    this.currencyCode?.valueChanges.subscribe(() => this.chargesDataSource = []);
   }
 
   addCharge(charge: any) {

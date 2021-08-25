@@ -10,7 +10,7 @@ export class SavingProductSettingsStepComponent implements OnInit {
 
   @Input() savingProductsTemplate: any;
 
-  savingProductSettingsForm: FormGroup;
+  savingProductSettingsForm!: FormGroup;
 
   lockinPeriodFrequencyTypeData: any;
   taxGroupData: any;
@@ -61,7 +61,7 @@ export class SavingProductSettingsStepComponent implements OnInit {
   }
 
   setConditionalControls() {
-    this.savingProductSettingsForm.get('allowOverdraft').valueChanges
+    this.savingProductSettingsForm.get('allowOverdraft')?.valueChanges
       .subscribe((allowOverdraft: any) => {
         if (allowOverdraft) {
           this.savingProductSettingsForm.addControl('minOverdraftForInterestCalculation', new FormControl(''));
@@ -74,7 +74,7 @@ export class SavingProductSettingsStepComponent implements OnInit {
         }
       });
 
-    this.savingProductSettingsForm.get('withHoldTax').valueChanges
+    this.savingProductSettingsForm.get('withHoldTax')?.valueChanges
       .subscribe((withHoldTax: any) => {
         if (withHoldTax) {
           this.savingProductSettingsForm.addControl('taxGroupId', new FormControl('', Validators.required));
@@ -83,7 +83,7 @@ export class SavingProductSettingsStepComponent implements OnInit {
         }
       });
 
-    this.savingProductSettingsForm.get('isDormancyTrackingActive').valueChanges
+    this.savingProductSettingsForm.get('isDormancyTrackingActive')?.valueChanges
       .subscribe((isDormancyTrackingActive: any) => {
         if (isDormancyTrackingActive) {
           this.savingProductSettingsForm.addControl('daysToInactive', new FormControl('', Validators.required));

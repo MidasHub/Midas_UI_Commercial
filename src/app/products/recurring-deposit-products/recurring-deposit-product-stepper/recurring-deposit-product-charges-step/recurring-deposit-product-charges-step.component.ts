@@ -12,11 +12,11 @@ import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.co
 export class RecurringDepositProductChargesStepComponent implements OnInit {
 
   @Input() recurringDepositProductsTemplate: any;
-  @Input() currencyCode: FormControl;
+  @Input() currencyCode?: FormControl;
 
   chargeData: any;
 
-  chargesDataSource: {}[];
+  chargesDataSource?: {}[];
   displayedColumns: string[] = ['name', 'chargeCalculationType', 'amount', 'chargeTimeType', 'action'];
 
   constructor(public dialog: MatDialog) {
@@ -29,11 +29,11 @@ export class RecurringDepositProductChargesStepComponent implements OnInit {
     } else {
       this.chargesDataSource = [];
     }
-    this.currencyCode.valueChanges.subscribe(() => this.chargesDataSource = []);
+    this.currencyCode?.valueChanges.subscribe(() => this.chargesDataSource = []);
   }
 
   addCharge(charge: any) {
-    this.chargesDataSource = this.chargesDataSource.concat([charge.value]);
+    this.chargesDataSource = this.chargesDataSource?.concat([charge.value]);
     charge.value = '';
   }
 
@@ -43,8 +43,8 @@ export class RecurringDepositProductChargesStepComponent implements OnInit {
     });
     deleteChargeDialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {
-        this.chargesDataSource.splice(this.chargesDataSource.indexOf(charge), 1);
-        this.chargesDataSource = this.chargesDataSource.concat([]);
+        this.chargesDataSource?.splice(this.chargesDataSource.indexOf(charge), 1);
+        this.chargesDataSource = this.chargesDataSource?.concat([]);
       }
     });
   }

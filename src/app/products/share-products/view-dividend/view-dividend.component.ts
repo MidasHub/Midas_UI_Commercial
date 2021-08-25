@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Data, Router } from '@angular/router';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -16,15 +16,15 @@ export class ViewDividendComponent implements OnInit {
   status: any;
   isdividendPosted = false;
 
-  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
-  @ViewChild(MatSort, { static: true }) sort: MatSort;
+  @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
+  @ViewChild(MatSort, { static: true }) sort!: MatSort;
   displayedColumns: string[] = ['clientName', 'shareAccount', 'dividendAmount', 'status'];
-  dataSource: MatTableDataSource<any>;
+  dataSource!: MatTableDataSource<any>;
 
   constructor(private route: ActivatedRoute,
               private productsService: ProductsService,
               private router: Router) {
-    this.route.data.subscribe((data: { dividendData: any }) => {
+    this.route.data.subscribe((data: { dividendData: any } | Data) => {
       this.dividendData = data.dividendData;
     });
     this.status = this.route.snapshot.queryParams['status'];
@@ -40,7 +40,7 @@ export class ViewDividendComponent implements OnInit {
   }
 
   postDividends() {
-    const shareProductId = this.route.parent.parent.snapshot.paramMap.get('id');
+    const shareProductId = this.route.parent?.parent?.snapshot.paramMap.get('id');
     const dividendId = this.route.snapshot.paramMap.get('dividendId');
     this.productsService.approveDividend(shareProductId, dividendId, { productId: shareProductId, dividendId: dividendId}).subscribe(() => {
       this.router.navigate(['../'], { relativeTo: this.route });

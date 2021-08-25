@@ -1,7 +1,7 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute, Data } from '@angular/router';
 
 /** Custom Services */
 import { ProductsService } from '../../products.service';
@@ -17,7 +17,7 @@ import { ProductsService } from '../../products.service';
 export class CreateProductMixComponent implements OnInit {
 
   /** Product mix form. */
-  productMixForm: FormGroup;
+  productMixForm!: FormGroup;
   /** Products mix template data. */
   productsMixTemplateData: any;
   /** Product option data. */
@@ -36,7 +36,7 @@ export class CreateProductMixComponent implements OnInit {
               private productsService: ProductsService,
               private route: ActivatedRoute,
               private router: Router) {
-    this.route.data.subscribe(( data: { productsMixTemplate: any }) => {
+    this.route.data.subscribe(( data: { productsMixTemplate: any } | Data) => {
       this.productsMixTemplateData = data.productsMixTemplate;
     });
   }
@@ -64,13 +64,13 @@ export class CreateProductMixComponent implements OnInit {
    * Sets the conditional controls of the product mix form.
    */
   setConditionalControls() {
-    this.productMixForm.get('productId').valueChanges.subscribe(productId => {
+    this.productMixForm.get('productId')?.valueChanges.subscribe(productId => {
       this.productData = undefined;
-      this.productMixForm.get('restrictedProducts').reset();
+      this.productMixForm.get('restrictedProducts')?.reset();
       this.productsService.getProductMixTemplate(productId).subscribe((productMixTemplateData: any) => {
         const restrictedProductsData = productMixTemplateData.restrictedProducts;
         this.productData = [...restrictedProductsData, ...productMixTemplateData.allowedProducts];
-        this.productMixForm.get('restrictedProducts').setValue([...restrictedProductsData.map((restrictedProduct: any) => restrictedProduct.id)]);
+        this.productMixForm.get('restrictedProducts')?.setValue([...restrictedProductsData.map((restrictedProduct: any) => restrictedProduct.id)]);
         }
       );
     });

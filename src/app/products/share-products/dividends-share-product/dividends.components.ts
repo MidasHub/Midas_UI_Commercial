@@ -3,7 +3,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Data, Router } from '@angular/router';
 
 /**
  * Dividends component.
@@ -20,12 +20,12 @@ export class ShareProductsDividendsComponent implements OnInit {
   /** Columns to be displayed in dividends table. */
   displayedColumns: string[] = ['name', 'dividendPeriodStartDate', 'dividendPeriodEndDate', 'amount', 'status'];
   /** Data source for accounting rules table. */
-  dataSource: MatTableDataSource<any>;
+  dataSource!: MatTableDataSource<any>;
 
   /** Paginator for dividends table. */
-  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+  @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
   /** Sorter for dividends table. */
-  @ViewChild(MatSort, { static: true }) sort: MatSort;
+  @ViewChild(MatSort, { static: true }) sort!: MatSort;
 
   /**
    * Retrieves the dividends data from `resolve`.
@@ -33,7 +33,7 @@ export class ShareProductsDividendsComponent implements OnInit {
    */
   constructor(private route: ActivatedRoute,
               private router: Router) {
-    this.route.data.subscribe((data: {dividends: any}) => {
+    this.route.data.subscribe((data: {dividends: any} | Data ) => {
       this.dividendData = data.dividends.pageItems;
     });
    }

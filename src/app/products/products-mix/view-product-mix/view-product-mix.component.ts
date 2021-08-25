@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Data, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
@@ -23,22 +23,22 @@ export class ViewProductMixComponent implements OnInit {
   /** Product mix data. */
   productMixData: any;
   /** Allowed products datasource. */
-  allowedProductsDatasource: MatTableDataSource<any>;
+  allowedProductsDatasource!: MatTableDataSource<any>;
   /** Restricted products datasource. */
-  restrictedProductsDatasource: MatTableDataSource<any>;
+  restrictedProductsDatasource!: MatTableDataSource<any>;
   /** Columns to be displayed in allowed products table. */
   allowedProductsDisplayedColumns: string[] = ['name'];
   /** Columns to be displayed in restricted products table. */
   restrictedProductsDisplayedColumns: string[] = ['name'];
 
   /** Paginator for allowed products table. */
-  @ViewChild('allowed', { static: true }) allowedPaginator: MatPaginator;
+  @ViewChild('allowed', { static: true }) allowedPaginator!: MatPaginator;
   /** Paginator for restricted products table. */
-  @ViewChild('restricted', { static: true }) restrictedPaginator: MatPaginator;
+  @ViewChild('restricted', { static: true }) restrictedPaginator!: MatPaginator;
   /** Sorter for allowed products table. */
-  @ViewChild(MatSort, { static: true }) allowedSort: MatSort;
+  @ViewChild(MatSort, { static: true }) allowedSort!: MatSort;
   /** Sorter for restricted products table. */
-  @ViewChild(MatSort, { static: true }) restrictedSort: MatSort;
+  @ViewChild(MatSort, { static: true }) restrictedSort!: MatSort;
 
   /**
    * Retrieves the product mix data from `resolve`.
@@ -48,7 +48,7 @@ export class ViewProductMixComponent implements OnInit {
               private dialog: MatDialog,
               private productsService: ProductsService,
               private router: Router ) {
-    this.route.data.subscribe((data: { productMix: any }) => {
+    this.route.data.subscribe((data: { productMix: any } | Data) => {
       this.productMixData = data.productMix;
     });
   }

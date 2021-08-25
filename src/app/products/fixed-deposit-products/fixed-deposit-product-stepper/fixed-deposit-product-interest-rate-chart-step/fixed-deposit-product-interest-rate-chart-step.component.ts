@@ -282,14 +282,14 @@ export class FixedDepositProductInterestRateChartStepComponent implements OnInit
     });
   }
 
-  getData(formType: string, values?: any) {
+  getData(formType: string, values?: any): any{
     switch (formType) {
       case 'Slab': return  { title: 'Slab', formfields: this.getSlabFormfields(values) };
       case 'Incentive': return { values, chartTemplate: this.fixedDepositProductsTemplate.chartTemplate };
     }
   }
 
-  getSlabFormfields(values?: any) {
+  getSlabFormfields(values?: any): any {
     const formfields: FormfieldBase[] = [
       new SelectBase({
         controlName: 'periodType',

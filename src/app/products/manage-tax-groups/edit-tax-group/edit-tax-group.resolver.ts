@@ -24,7 +24,7 @@ export class EditTaxGroupResolver implements Resolve<Object> {
      * @returns {Observable<any>}
      */
     resolve(route: ActivatedRouteSnapshot): Observable<any> {
-        const taxGroupId = route.parent.paramMap.get('id');
+        const taxGroupId = route.parent?.paramMap.get('id');
         return this.productsService.getTaxGroup(taxGroupId, 'true');
     }
 }

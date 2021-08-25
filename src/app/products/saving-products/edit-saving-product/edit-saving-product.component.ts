@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Data, Router } from '@angular/router';
 
 import { SavingProductDetailsStepComponent } from '../saving-product-stepper/saving-product-details-step/saving-product-details-step.component';
 import { SavingProductCurrencyStepComponent } from '../saving-product-stepper/saving-product-currency-step/saving-product-currency-step.component';
@@ -18,12 +18,12 @@ import { TranslateService } from '@ngx-translate/core';
 })
 export class EditSavingProductComponent implements OnInit {
 
-  @ViewChild(SavingProductDetailsStepComponent, { static: true }) savingProductDetailsStep: SavingProductDetailsStepComponent;
-  @ViewChild(SavingProductCurrencyStepComponent, { static: true }) savingProductCurrencyStep: SavingProductCurrencyStepComponent;
-  @ViewChild(SavingProductTermsStepComponent, { static: true }) savingProductTermsStep: SavingProductTermsStepComponent;
-  @ViewChild(SavingProductSettingsStepComponent, { static: true }) savingProductSettingsStep: SavingProductSettingsStepComponent;
-  @ViewChild(SavingProductChargesStepComponent, { static: true }) savingProductChargesStep: SavingProductChargesStepComponent;
-  @ViewChild(SavingProductAccountingStepComponent, { static: true }) savingProductAccountingStep: SavingProductAccountingStepComponent;
+  @ViewChild(SavingProductDetailsStepComponent, { static: true }) savingProductDetailsStep!: SavingProductDetailsStepComponent;
+  @ViewChild(SavingProductCurrencyStepComponent, { static: true }) savingProductCurrencyStep!: SavingProductCurrencyStepComponent;
+  @ViewChild(SavingProductTermsStepComponent, { static: true }) savingProductTermsStep!: SavingProductTermsStepComponent;
+  @ViewChild(SavingProductSettingsStepComponent, { static: true }) savingProductSettingsStep!: SavingProductSettingsStepComponent;
+  @ViewChild(SavingProductChargesStepComponent, { static: true }) savingProductChargesStep!: SavingProductChargesStepComponent;
+  @ViewChild(SavingProductAccountingStepComponent, { static: true }) savingProductAccountingStep!: SavingProductAccountingStepComponent;
 
   savingProductAndTemplate: any;
   accountingRuleData = ['None', 'Cash'];
@@ -32,7 +32,7 @@ export class EditSavingProductComponent implements OnInit {
               private productsService: ProductsService,
               private translate: TranslateService,
               private router: Router) {
-    this.route.data.subscribe((data: { savingProductAndTemplate: any }) => {
+    this.route.data.subscribe((data: { savingProductAndTemplate: any } | Data) => {
       this.savingProductAndTemplate = data.savingProductAndTemplate;
     });
   }

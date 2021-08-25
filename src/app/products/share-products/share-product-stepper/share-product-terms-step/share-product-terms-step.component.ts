@@ -11,7 +11,7 @@ export class ShareProductTermsStepComponent implements OnInit {
 
   @Input() shareProductsTemplate: any;
 
-  shareProductTermsForm: FormGroup;
+  shareProductTermsForm!: FormGroup;
 
   constructor(private formBuilder: FormBuilder) {
     this.createShareProductTermsForm();
@@ -19,10 +19,10 @@ export class ShareProductTermsStepComponent implements OnInit {
 
   ngOnInit() {
     combineLatest([
-      this.shareProductTermsForm.get('sharesIssued').valueChanges,
-      this.shareProductTermsForm.get('unitPrice').valueChanges
-    ]).subscribe(([sharesIssued, unitPrice]: number[]) => {
-      this.shareProductTermsForm.get('shareCapital').setValue(sharesIssued * unitPrice);
+      this.shareProductTermsForm.get('sharesIssued')?.valueChanges,
+      this.shareProductTermsForm.get('unitPrice')?.valueChanges
+    ]).subscribe(([sharesIssued, unitPrice]: number[]|any[]) => {
+      this.shareProductTermsForm.get('shareCapital')?.setValue(sharesIssued * unitPrice);
     });
 
     if (this.shareProductsTemplate) {

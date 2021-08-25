@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Data } from '@angular/router';
 import { trigger, state, transition, animate, style } from '@angular/animations';
 
 @Component({
@@ -27,7 +27,7 @@ export class ViewRecurringDepositProductComponent implements OnInit {
   feesPenaltyIncomeDisplayedColumns: string[] = ['chargeId', 'incomeAccountId'];
 
   constructor(private route: ActivatedRoute) {
-    this.route.data.subscribe((data: { recurringDepositProduct: any, recurringDepositProductsTemplate: any}) => {
+    this.route.data.subscribe((data: { recurringDepositProduct: any, recurringDepositProductsTemplate: any}| Data) => {
       this.recurringDepositProduct = data.recurringDepositProduct;
       this.recurringDepositProductTemplate = data.recurringDepositProductsTemplate;
     });

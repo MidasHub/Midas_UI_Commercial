@@ -10,7 +10,7 @@ export class ShareProductDetailsStepComponent implements OnInit {
 
   @Input() shareProductsTemplate: any;
 
-  shareProductDetailsForm: FormGroup;
+  shareProductDetailsForm!: FormGroup;
 
   constructor(private formBuilder: FormBuilder) {
     this.createShareProductDetailsForm();

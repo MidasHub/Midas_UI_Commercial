@@ -19,10 +19,10 @@ export class SavingProductAccountingStepComponent implements OnInit {
 
   @Input() savingProductsTemplate: any;
   @Input() accountingRuleData: any;
-  @Input() isDormancyTrackingActive: FormControl;
-  @Input() savingProductFormValid: boolean;
+  @Input() isDormancyTrackingActive?: FormControl;
+  @Input() savingProductFormValid?: boolean;
 
-  savingProductAccountingForm: FormGroup;
+  savingProductAccountingForm!: FormGroup;
 
   chargeData: any;
   penaltyData: any;
@@ -89,7 +89,7 @@ export class SavingProductAccountingStepComponent implements OnInit {
   }
 
   setConditionalControls() {
-    this.savingProductAccountingForm.get('accountingRule').valueChanges
+    this.savingProductAccountingForm.get('accountingRule')?.valueChanges
       .subscribe((accountingRule: any) => {
         if (accountingRule === 2) {
           this.savingProductAccountingForm.addControl('savingsReferenceAccountId', new FormControl('', Validators.required));
@@ -103,11 +103,11 @@ export class SavingProductAccountingStepComponent implements OnInit {
           this.savingProductAccountingForm.addControl('incomeFromInterestId', new FormControl('', Validators.required));
           this.savingProductAccountingForm.addControl('advancedAccountingRules', new FormControl(false));
 
-          if (this.isDormancyTrackingActive.value) {
+          if (this.isDormancyTrackingActive?.value) {
             this.savingProductAccountingForm.addControl('escheatLiabilityId', new FormControl('', Validators.required));
           }
 
-          this.isDormancyTrackingActive.valueChanges
+          this.isDormancyTrackingActive?.valueChanges
             .subscribe((isDormancyTrackingActive: boolean) => {
               if (isDormancyTrackingActive) {
                 this.savingProductAccountingForm.addControl('escheatLiabilityId', new FormControl('', Validators.required));
@@ -116,7 +116,7 @@ export class SavingProductAccountingStepComponent implements OnInit {
               }
             });
 
-          this.savingProductAccountingForm.get('advancedAccountingRules').valueChanges
+          this.savingProductAccountingForm.get('advancedAccountingRules')?.valueChanges
             .subscribe((advancedAccountingRules: boolean) => {
               if (advancedAccountingRules) {
                 this.savingProductAccountingForm.addControl('paymentChannelToFundSourceMappings', this.formBuilder.array([]));
@@ -196,7 +196,7 @@ export class SavingProductAccountingStepComponent implements OnInit {
     });
   }
 
-  getData(formType: string, values?: any) {
+  getData(formType: string, values?: any): any {
     switch (formType) {
       case 'PaymentFundSource': return { title: 'Configure Fund Sources for Payment Channels', formfields: this.getPaymentFundSourceFormfields(values) };
       case 'FeesIncome': return { title: 'Map Fees to Income Accounts', formfields: this.getFeesIncomeFormfields(values) };

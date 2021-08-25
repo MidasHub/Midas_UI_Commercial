@@ -1,7 +1,7 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute, Data } from '@angular/router';
 
 /** Custom Services */
 import { ProductsService } from '../../products.service';
@@ -17,7 +17,7 @@ import { ProductsService } from '../../products.service';
 export class EditProductMixComponent implements OnInit {
 
   /** Product mix form. */
-  productMixForm: FormGroup;
+  productMixForm!: FormGroup;
   /** Products mix template data. */
   productMixData: any;
   /** Product option data. */
@@ -36,7 +36,7 @@ export class EditProductMixComponent implements OnInit {
     private productsService: ProductsService,
     private route: ActivatedRoute,
     private router: Router) {
-    this.route.data.subscribe((data: { productMix: any }) => {
+    this.route.data.subscribe((data: { productMix: any } | Data) => {
       this.productMixData = data.productMix;
     });
   }
@@ -65,7 +65,7 @@ export class EditProductMixComponent implements OnInit {
   setFormData() {
     const restrictedProductsData: {}[] = this.productMixData.restrictedProducts;
     this.productData = [...restrictedProductsData, ...this.productMixData.allowedProducts];
-    this.productMixForm.get('restrictedProducts').setValue([...restrictedProductsData.map((restrictedProduct: any) => restrictedProduct.id)]);
+    this.productMixForm.get('restrictedProducts')?.setValue([...restrictedProductsData.map((restrictedProduct: any) => restrictedProduct.id)]);
   }
 
   /**
