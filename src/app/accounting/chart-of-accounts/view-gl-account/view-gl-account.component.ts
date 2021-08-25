@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Data, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 
 /** Custom Components */
@@ -33,7 +33,7 @@ export class ViewGlAccountComponent implements OnInit {
               private route: ActivatedRoute,
               private router: Router,
               public dialog: MatDialog) {
-    this.route.data.subscribe((data: { glAccountAndChartOfAccountsTemplate: any }) => {
+    this.route.data.subscribe((data: { glAccountAndChartOfAccountsTemplate: any } | Data) => {
       this.glAccount = data.glAccountAndChartOfAccountsTemplate;
     });
   }

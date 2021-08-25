@@ -73,9 +73,13 @@ export class AccountingService {
    * @param transactionId Transaction ID of journal entries.
    * @returns {Observable<any>} Journal Entries.
    */
-  getJournalEntry(transactionId: string): Observable<any> {
+  getJournalEntry(transactionId?: string|null): Observable<any> {
+    if (transactionId){
     const httpParams = new HttpParams().set('transactionId', transactionId).set('transactionDetails', 'true');
     return this.http.get(`/journalentries`, { params: httpParams });
+    } else {
+      return of();
+    }
   }
 
   /**
@@ -369,9 +373,13 @@ export class AccountingService {
    * @param {string} provisioningEntryId Provisioning entry ID of provisioning entry.
    * @returns {Observable<any>} Provisioning journal entries.
    */
-  getProvisioningJournalEntries(provisioningEntryId: string): Observable<any> {
+  getProvisioningJournalEntries(provisioningEntryId?: string|null): Observable<any> {
+    if(provisioningEntryId){
     const httpParams = new HttpParams().set('entryId', provisioningEntryId);
     return this.http.get('/journalentries/provisioning', { params: httpParams });
+    } else {
+      return of();
+    }
   }
 
   /**

@@ -3,7 +3,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute, Data } from '@angular/router';
 
 /** Custom Services */
 import { AccountingService } from '../accounting.service';
@@ -23,12 +23,12 @@ export class ProvisioningEntriesComponent implements OnInit {
   /** Columns to be displayed in provisioning entries table. */
   displayedColumns: string[] = ['createdUser', 'createdDate', 'journalEntry', 'viewReport', 'recreateProvisioning', 'viewJournalEntry'];
   /** Data source for provisioning entries table. */
-  dataSource: MatTableDataSource<any>;
+  dataSource!: MatTableDataSource<any>;
 
   /** Paginator for provisioning entries table. */
-  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+  @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
   /** Sorter for provisioning entries table. */
-  @ViewChild(MatSort, { static: true }) sort: MatSort;
+  @ViewChild(MatSort, { static: true }) sort!: MatSort;
 
   /**
    * Retrieves the provisioning entries data from `resolve`.
@@ -39,7 +39,7 @@ export class ProvisioningEntriesComponent implements OnInit {
   constructor(private accountingService: AccountingService,
               private route: ActivatedRoute,
               private router: Router) {
-    this.route.data.subscribe((data: { provisioningEntries: any }) => {
+    this.route.data.subscribe((data: { provisioningEntries: any }| Data) => {
       this.provisioningEntryData = data.provisioningEntries.pageItems;
     });
   }
