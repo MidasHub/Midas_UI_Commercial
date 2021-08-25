@@ -2,7 +2,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { DatePipe } from '@angular/common';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Data, Router } from '@angular/router';
 
 /** Custom Services */
 import { GroupsService } from 'app/groups/groups.service';
@@ -23,7 +23,7 @@ export class EditGroupMeetingScheduleComponent implements OnInit {
   /** Maximum date allowed. */
   maxDate = new Date();
   /** Group Meeting form. */
-  groupEditMeetingScheduleForm: FormGroup;
+  groupEditMeetingScheduleForm!: FormGroup;
   /** Calendar Template Data */
   calendarTemplate: any;
   /** Group Id */
@@ -48,12 +48,12 @@ export class EditGroupMeetingScheduleComponent implements OnInit {
               private route: ActivatedRoute,
               private router: Router,
               private settingsService: SettingsService) {
-    this.route.data.subscribe((data: { groupActionData: any }) => {
+    this.route.data.subscribe((data: { groupActionData: any } |Data) => {
       this.calendarTemplate = data.groupActionData;
       this.nextMeetingDates = this.calendarTemplate.nextTenRecurringDates;
     });
     this.calendarId = this.route.snapshot.queryParams['calendarId'];
-    this.groupId = this.route.parent.snapshot.params['groupId'];
+    this.groupId = this.route.parent?.snapshot.params['groupId'];
   }
 
   ngOnInit() {

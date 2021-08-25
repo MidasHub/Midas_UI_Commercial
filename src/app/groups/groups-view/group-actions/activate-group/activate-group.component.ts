@@ -23,7 +23,7 @@ export class ActivateGroupComponent implements OnInit {
   /** Maximum date allowed. */
   maxDate = new Date();
   /** Activate group form. */
-  activateGroupForm: FormGroup;
+  activateGroupForm!: FormGroup;
   /** Group Id */
   groupId: any;
 
@@ -41,7 +41,7 @@ export class ActivateGroupComponent implements OnInit {
               private route: ActivatedRoute,
               private router: Router,
               private settingsService: SettingsService) {
-    this.groupId = this.route.parent.snapshot.params['groupId'];
+    this.groupId = this.route.parent?.snapshot.params['groupId'];
   }
 
   ngOnInit() {

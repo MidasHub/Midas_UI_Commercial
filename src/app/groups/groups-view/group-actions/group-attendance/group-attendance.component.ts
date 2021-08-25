@@ -2,7 +2,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { DatePipe } from '@angular/common';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Data, Router } from '@angular/router';
 import { FormControl } from '@angular/forms';
 
 /** Custom Services */
@@ -37,9 +37,9 @@ export class GroupAttendanceComponent implements OnInit {
   /** Start Date Form Control */
   meetingDate = new FormControl();
   /** Meeting Dates Data */
-  meetingDates: any[];
+  meetingDates: any[] = [];
   /** Data source for client members table. */
-  dataSource: {}[];
+  dataSource: {}[] = [{}] ;
 
   /**
    * Retrieves the group members data from `resolve`.
@@ -56,7 +56,7 @@ export class GroupAttendanceComponent implements OnInit {
               private groupsService: GroupsService,
               public dialog: MatDialog,
               private settingsService: SettingsService) {
-    this.route.data.subscribe(( data: { groupActionData: any }) => {
+    this.route.data.subscribe(( data: { groupActionData: any }| Data) => {
       this.groupData = data.groupActionData;
       this.membersData = data.groupActionData.clientMembers;
     });

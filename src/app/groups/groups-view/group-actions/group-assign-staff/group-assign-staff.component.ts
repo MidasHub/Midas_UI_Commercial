@@ -1,7 +1,7 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Data, Router } from '@angular/router';
 
 /** Custom Services */
 import { GroupsService } from 'app/groups/groups.service';
@@ -17,7 +17,7 @@ import { GroupsService } from 'app/groups/groups.service';
 export class GroupAssignStaffComponent implements OnInit {
 
   /** Group Assign Staff form. */
-  groupAssignStaffForm: FormGroup;
+  groupAssignStaffForm!: FormGroup;
   /** Staff Data */
   staffData: any;
   /** Group Data */
@@ -34,7 +34,7 @@ export class GroupAssignStaffComponent implements OnInit {
               private groupsService: GroupsService,
               private route: ActivatedRoute,
               private router: Router) {
-    this.route.data.subscribe((data: { groupActionData: any }) => {
+    this.route.data.subscribe((data: { groupActionData: any } | Data) => {
       this.groupData = data.groupActionData;
     });
   }

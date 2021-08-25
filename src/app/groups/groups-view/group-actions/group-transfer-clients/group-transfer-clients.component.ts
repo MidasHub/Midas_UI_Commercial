@@ -1,7 +1,7 @@
 /** Angular Imports */
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute, Data } from '@angular/router';
 
 /** Custom Services */
 import { GroupsService } from 'app/groups/groups.service';
@@ -18,7 +18,7 @@ import { SettingsService } from 'app/settings/settings.service';
 export class GroupTransferClientsComponent implements OnInit, AfterViewInit {
 
   /** Transfer Clients form. */
-  transferClientsForm: FormGroup;
+  transferClientsForm!: FormGroup;
   /** Group Data */
   groupData: any;
   /** Group data. */
@@ -41,7 +41,7 @@ export class GroupTransferClientsComponent implements OnInit, AfterViewInit {
               private router: Router,
               private groupsService: GroupsService,
               private settingsService: SettingsService) {
-    this.route.data.subscribe((data: { groupActionData: any }) => {
+    this.route.data.subscribe((data: { groupActionData: any }|Data) => {
       this.groupData = data.groupActionData;
       this.clientMembers = this.groupData.clientMembers;
     });
@@ -55,7 +55,7 @@ export class GroupTransferClientsComponent implements OnInit, AfterViewInit {
    * Subscribes to Groups search filter:
    */
   ngAfterViewInit() {
-    this.transferClientsForm.get('destinationGroupId').valueChanges.subscribe( (value: string) => {
+    this.transferClientsForm.get('destinationGroupId')?.valueChanges.subscribe( (value: string) => {
       if (value.length >= 2) {
         this.groupsService.getFilteredGroups('name', 'ASC', value, this.groupData.officeId)
           .subscribe( (data: any) => {
@@ -93,7 +93,7 @@ export class GroupTransferClientsComponent implements OnInit, AfterViewInit {
     const locale = this.settingsService.language.code;
     const data = {
       ...this.transferClientsForm.value,
-      destinationGroupId: this.transferClientsForm.get('destinationGroupId').value.id,
+      destinationGroupId: this.transferClientsForm.get('destinationGroupId')?.value.id,
       locale
     };
     this.groupsService.executeGroupCommand(this.groupData.id, 'transferClients', data).subscribe(() => {

@@ -2,7 +2,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { DatePipe } from '@angular/common';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Data, Router } from '@angular/router';
 
 /** Custom Services */
 import { GroupsService } from 'app/groups/groups.service';
@@ -23,13 +23,13 @@ export class AttachGroupMeetingComponent implements OnInit {
   /** Maximum date allowed. */
   maxDate = new Date();
   /** Group Meeting form. */
-  groupMeetingForm: FormGroup;
+  groupMeetingForm!: FormGroup;
   /** Calnedar Template Data */
   calendarTemplate: any;
   /** Group Id */
   groupId: any;
   /** Repetition Intervals */
-  repetitionIntervals: any[];
+  repetitionIntervals: any[] =  [];
   /** Frequency Options */
   frequencyOptions: any;
   /** Repetition Days Data */
@@ -50,12 +50,12 @@ export class AttachGroupMeetingComponent implements OnInit {
               private route: ActivatedRoute,
               private router: Router,
               private settingsService: SettingsService) {
-    this.route.data.subscribe((data: { groupActionData: any }) => {
+    this.route.data.subscribe((data: { groupActionData: any }| Data) => {
       this.calendarTemplate = data.groupActionData;
       this.frequencyOptions = this.calendarTemplate.frequencyOptions;
       this.repeatsOnDays = this.calendarTemplate.repeatsOnDayOptions;
     });
-    this.groupId = this.route.parent.snapshot.params['groupId'];
+    this.groupId = this.route.parent?.snapshot.params['groupId'];
   }
 
   ngOnInit() {
@@ -77,11 +77,11 @@ export class AttachGroupMeetingComponent implements OnInit {
    * Subscribes to value changes of controls.
    */
   buildDependencies() {
-    this.groupMeetingForm.get('repeating').valueChanges.subscribe((value: boolean) => {
+    this.groupMeetingForm.get('repeating')?.valueChanges.subscribe((value: boolean) => {
       if (value) {
         this.groupMeetingForm.addControl('frequency', new FormControl());
         this.groupMeetingForm.addControl('interval', new FormControl());
-        this.groupMeetingForm.get('frequency').valueChanges.subscribe((frequency: any) => {
+        this.groupMeetingForm.get('frequency')?.valueChanges.subscribe((frequency: any) => {
           this.groupMeetingForm.removeControl('repeatsOnDay');
           switch (frequency) {
             case 1: // Daily

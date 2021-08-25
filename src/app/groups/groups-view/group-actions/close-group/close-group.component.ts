@@ -2,7 +2,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { DatePipe } from '@angular/common';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Data, Router } from '@angular/router';
 
 /** Custom Services */
 import { GroupsService } from 'app/groups/groups.service';
@@ -23,7 +23,7 @@ export class CloseGroupComponent implements OnInit {
   /** Maximum date allowed. */
   maxDate = new Date();
   /** Close Group form. */
-  closeGroupForm: FormGroup;
+  closeGroupForm!: FormGroup;
   /** Group Closure Data */
   closureData: any;
   /** Group Id */
@@ -43,10 +43,10 @@ export class CloseGroupComponent implements OnInit {
               private route: ActivatedRoute,
               private router: Router,
               private settingsService: SettingsService) {
-    this.route.data.subscribe((data: { groupActionData: any }) => {
+    this.route.data.subscribe((data: { groupActionData: any } | Data) => {
       this.closureData = data.groupActionData.closureReasons;
     });
-    this.groupId = this.route.parent.snapshot.params['groupId'];
+    this.groupId = this.route.parent?.snapshot.params['groupId'];
   }
 
   ngOnInit() {

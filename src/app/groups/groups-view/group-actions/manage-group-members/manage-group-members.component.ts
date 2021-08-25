@@ -1,7 +1,7 @@
 /** Angular Imports */
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute, Data } from '@angular/router';
 
 /** Custom Dialogs */
 import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.component';
@@ -13,7 +13,7 @@ import { MatDialog, MatDialogConfig, MatDialogRef, MAT_DIALOG_DATA } from '@angu
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
-import { ViewChild } from '@angular/core'; 
+import { ViewChild } from '@angular/core';
 import { Inject } from '@angular/core';
 /**
  * Manage Group Members Component
@@ -23,9 +23,9 @@ import { Inject } from '@angular/core';
   templateUrl: './manage-group-members.component.html',
   styleUrls: ['./manage-group-members.component.scss']
 })
-export class ManageGroupMembersComponent implements AfterViewInit,OnInit {
-  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
-  @ViewChild(MatSort) sort: MatSort;
+export class ManageGroupMembersComponent implements AfterViewInit, OnInit {
+  @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
+  @ViewChild(MatSort) sort!: MatSort;
   /** Group Data */
   groupData: any;
   /** Client data. */
@@ -35,10 +35,10 @@ export class ManageGroupMembersComponent implements AfterViewInit,OnInit {
   /** Client Choice. */
   clientChoice = new FormControl('');
 
-  dataSource: MatTableDataSource<any>;
-  displayedColumns =  ['displayName', 'Status','Action'];
+  dataSource!: MatTableDataSource<any>;
+  displayedColumns =  ['displayName', 'Status', 'Action'];
 
-  displayAddClient: boolean = true;
+  displayAddClient = true;
 
   /**
    * Fetches group action data from `resolve`
@@ -51,7 +51,7 @@ export class ManageGroupMembersComponent implements AfterViewInit,OnInit {
               private groupsService: GroupsService,
               private clientsService: ClientsService,
               public dialog: MatDialog) {
-      this.route.data.subscribe((data: { groupActionData: any }) => {
+      this.route.data.subscribe((data: { groupActionData: any }| Data) => {
         this.groupData = data.groupActionData;
         this.clientMembers = data.groupActionData.clientMembers;
         this.dataSource = new MatTableDataSource();
@@ -71,8 +71,8 @@ export class ManageGroupMembersComponent implements AfterViewInit,OnInit {
     this.dataSource.sort = this.sort;
     this.clientChoice.valueChanges.subscribe( (value: string) => {
       if (value.length >= 2) {
-        //this.clientsService.getFilteredClients('displayName', 'ASC', true, value, this.groupData.officeId)
-        this.clientsService.getFilteredClients('displayName', 'ASC', false, value,'')
+        // this.clientsService.getFilteredClients('displayName', 'ASC', true, value, this.groupData.officeId)
+        this.clientsService.getFilteredClients('displayName', 'ASC', false, value, '')
           .subscribe((data: any) => {
             this.clientsData = data.pageItems;
           });
@@ -84,17 +84,17 @@ export class ManageGroupMembersComponent implements AfterViewInit,OnInit {
    * Add client.
    */
   addClient() {
-    if(this.clientMembers){
+    if (this.clientMembers) {
       if (!this.clientMembers.includes(this.clientChoice.value)) {
         this.groupsService.executeGroupCommand(this.groupData.id, 'associateClients', {clientMembers: [this.clientChoice.value.id]})
-          .subscribe(() => { this.clientMembers.splice(0,0,this.clientChoice.value); this.dataSource.data = this.clientMembers;});
+          .subscribe(() => { this.clientMembers.splice(0, 0, this.clientChoice.value); this.dataSource.data = this.clientMembers; });
       }
-    }else{
+    } else {
       this.clientMembers = [];
       this.groupsService.executeGroupCommand(this.groupData.id, 'associateClients', {clientMembers: [this.clientChoice.value.id]})
-          .subscribe(() => { this.clientMembers.push(this.clientChoice.value); this.dataSource.data = this.clientMembers;});
+          .subscribe(() => { this.clientMembers.push(this.clientChoice.value); this.dataSource.data = this.clientMembers; });
     }
-    
+
   }
 
   /**
@@ -109,8 +109,8 @@ export class ManageGroupMembersComponent implements AfterViewInit,OnInit {
     removeMemberDialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {
         this.groupsService.executeGroupCommand(this.groupData.id, 'disassociateClients', {clientMembers: [client.id]})
-          .subscribe(() => { 
-            this.clientMembers.splice(index, 1); 
+          .subscribe(() => {
+            this.clientMembers.splice(index, 1);
             this.dataSource.data = this.clientMembers;
           });
       }
@@ -137,17 +137,17 @@ export class ManageGroupMembersComponent implements AfterViewInit,OnInit {
       width: '400px',
       data: {...client}
     });
-    //dialogRef.afterClosed().subscribe();
+    // dialogRef.afterClosed().subscribe();
   }
- 
+
   doFilterGroupClients(filterValue: string) {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
-  getClientIdSelect(clientSelect:any){
+  getClientIdSelect(clientSelect: any) {
     this.displayAddClient = true;
-    this.clientMembers.forEach((item)=>{ 
-      if(item.id === clientSelect.id){
+    this.clientMembers.forEach((item) => {
+      if (item.id === clientSelect.id) {
         this.displayAddClient = false;
       }
     });
@@ -168,6 +168,7 @@ export interface DialogDataClient {
   selector: 'dialog-overview-example-dialog',
   templateUrl: 'group_member_details.html',
 })
+// tslint:disable-next-line: component-class-suffix
 export class DialogOverviewClientDialog {
 
   constructor(

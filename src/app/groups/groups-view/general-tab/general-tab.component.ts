@@ -3,7 +3,7 @@ import { Component, AfterViewInit, ViewChild } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Data } from '@angular/router';
 import { AddIdentitiesComponent } from 'app/clients/clients-view/identities-tab/add-identities/add-identities.component';
 import { CreateCardBatchTransactionComponent } from 'app/transactions/dialog/create-card-batch-transaction/create-card-batch-transaction.component';
 
@@ -16,6 +16,31 @@ import { CreateCardBatchTransactionComponent } from 'app/transactions/dialog/cre
   styleUrls: ['./general-tab.component.scss']
 })
 export class GeneralTabComponent implements AfterViewInit {
+
+
+  /**
+   * Fetches group's related data from `resolve`
+   * @param {ActivatedRoute} route Activated Route.
+   */
+  constructor(private route: ActivatedRoute,
+    public dialog: MatDialog) {
+    this.route.data.subscribe((data: { groupAccountsData: any, groupClientMembers: any, groupSummary: any }|Data) => {
+      this.groupAccountData = data.groupAccountsData;
+      this.savingAccounts = data.groupAccountsData.savingsAccounts;
+      this.loanAccounts = data.groupAccountsData.loanAccounts;
+      this.groupSummary = data.groupSummary[0];
+    });
+    this.route.parent?.data.subscribe((data: { groupViewData: any }|Data) => {
+      this.groupViewData = data.groupViewData;
+      console.log('this.groupViewData = data.groupViewData;', this.groupViewData);
+      this.groupClientMembers = this.groupViewData.clientMembers;
+      // this.groupClientMembersSameOffice  = this.groupClientMembers.filter( (member: { officeId: any; }) => member.officeId === data.groupViewData.officeId);
+      // this.groupClientMembersDiffidentOffice  = this.groupClientMembers.filter( (member: { officeId: any; }) => member.officeId !== data.groupViewData.officeId);
+
+      this.groupClientMembersSameOffice = new MatTableDataSource<ClientElement>(this.groupClientMembers.filter( (member: { officeId: any; }) => member.officeId === this.groupViewData.officeId));
+      this.groupClientMembersDiffidentOffice = new MatTableDataSource<ClientElement>(this.groupClientMembers.filter( (member: { officeId: any; }) => member.officeId !== this.groupViewData.officeId));
+    });
+  }
 
   /** Group's all accounts data */
   groupAccountData: any;
@@ -44,34 +69,12 @@ export class GeneralTabComponent implements AfterViewInit {
 
   groupClientMembersDiffidentOffice: any;
   groupClientMembersSameOffice: any;
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  
-  groupViewData:any;
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+
+  groupViewData: any;
 
 
-  /**
-   * Fetches group's related data from `resolve`
-   * @param {ActivatedRoute} route Activated Route.
-   */
-  constructor(private route: ActivatedRoute,
-    public dialog: MatDialog) {
-    this.route.data.subscribe((data: { groupAccountsData: any, groupClientMembers: any, groupSummary: any }) => {
-      this.groupAccountData = data.groupAccountsData;
-      this.savingAccounts = data.groupAccountsData.savingsAccounts;
-      this.loanAccounts = data.groupAccountsData.loanAccounts;
-      this.groupSummary = data.groupSummary[0];
-    });
-    this.route.parent.data.subscribe((data: { groupViewData: any }) => {
-      this.groupViewData = data.groupViewData;
-      console.log("this.groupViewData = data.groupViewData;", this.groupViewData);
-      this.groupClientMembers = this.groupViewData.clientMembers;
-      // this.groupClientMembersSameOffice  = this.groupClientMembers.filter( (member: { officeId: any; }) => member.officeId === data.groupViewData.officeId);
-      // this.groupClientMembersDiffidentOffice  = this.groupClientMembers.filter( (member: { officeId: any; }) => member.officeId !== data.groupViewData.officeId);
-
-      this.groupClientMembersSameOffice = new MatTableDataSource<clientElement>(this.groupClientMembers.filter( (member: { officeId: any; }) => member.officeId === this.groupViewData.officeId));
-      this.groupClientMembersDiffidentOffice = new MatTableDataSource<clientElement>(this.groupClientMembers.filter( (member: { officeId: any; }) => member.officeId !== this.groupViewData.officeId));
-    });
-  }
+  clientIdentifierTemplate: any;
 
   ngAfterViewInit() {
     this.groupClientMembersSameOffice.paginator = this.paginator;
@@ -107,21 +110,18 @@ export class GeneralTabComponent implements AfterViewInit {
   public doFilterGroupClientMembersDiffidentOffice = (value: string) => {
     this.groupClientMembersDiffidentOffice.filter = value.trim().toLocaleLowerCase();
   }
- 
 
-  clientIdentifierTemplate: any;
-
-  addIdentifier(element:any){
+  addIdentifier(element: any) {
 
     const dialogConfig = new MatDialogConfig();
-    
-    let mem = [{
-      "cardNumber": "",
-      "clientId": element.id,
-      "documentId": 0,
-      "documentTypeId": "38",
-      "fullName": element.displayName,
-      "groupId": 0
+
+    const mem = [{
+      'cardNumber': '',
+      'clientId': element.id,
+      'documentId': 0,
+      'documentTypeId': '38',
+      'fullName': element.displayName,
+      'groupId': 0
     }];
 
     dialogConfig.data = {
@@ -133,7 +133,7 @@ export class GeneralTabComponent implements AfterViewInit {
   }
 
 }
-export interface clientElement {
+export interface ClientElement {
   name: string;
   accountNo: string;
   Office: number;

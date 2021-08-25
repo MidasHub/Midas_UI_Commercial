@@ -24,14 +24,14 @@ import { GroupsDataSource } from './groups.datasource';
   styleUrls: ['./groups.component.scss']
 })
 export class GroupsComponent implements OnInit, AfterViewInit {
-  @ViewChild('showClosedGroups', { static: true }) showClosedGroups: MatCheckbox;
+  @ViewChild('showClosedGroups', { static: true }) showClosedGroups!: MatCheckbox;
 
   /** Name form control. */
   name = new FormControl();
   /** Columns to be displayed in groups table. */
   displayedColumns =  ['name', 'accountNo', 'externalId', 'status', 'officeName'];
   /** Data source for groups table. */
-  dataSource: GroupsDataSource;
+  dataSource!: GroupsDataSource;
   /** Groups filter. */
   filterGroupsBy = [
     {
@@ -41,9 +41,9 @@ export class GroupsComponent implements OnInit, AfterViewInit {
   ];
 
   /** Paginator for groups table. */
-  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+  @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
   /** Sorter for groups table. */
-  @ViewChild(MatSort, { static: true }) sort: MatSort;
+  @ViewChild(MatSort, { static: true }) sort!: MatSort;
 
   /**
    * @param {GroupsService} groupsService Groups Service
@@ -89,7 +89,8 @@ export class GroupsComponent implements OnInit, AfterViewInit {
    */
   loadGroupsPage() {
     if (!this.sort.direction) {
-      delete this.sort.active;
+      // delete this.sort.active;
+       this.sort.active = '';
     }
     this.dataSource.getGroups(this.filterGroupsBy, this.sort.active, this.sort.direction, this.paginator.pageIndex, this.paginator.pageSize, !this.showClosedGroups.checked);
   }

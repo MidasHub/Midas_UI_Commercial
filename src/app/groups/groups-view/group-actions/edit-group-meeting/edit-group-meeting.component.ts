@@ -2,7 +2,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { DatePipe } from '@angular/common';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Data, Router } from '@angular/router';
 
 /** Custom Services */
 import { GroupsService } from 'app/groups/groups.service';
@@ -23,13 +23,13 @@ export class EditGroupMeetingComponent implements OnInit {
   /** Maximum date allowed. */
   maxDate = new Date();
   /** Group Meeting form. */
-  groupEditMeetingForm: FormGroup;
+  groupEditMeetingForm!: FormGroup;
   /** Calendar Template Data */
   calendarTemplate: any;
   /** Group Id */
   groupId: any;
   /** Repetition Intervals */
-  repetitionIntervals: any[];
+  repetitionIntervals: any[] = [];
   /** Frequency Options */
   frequencyOptions: any;
   /** Repetition Days Data */
@@ -52,13 +52,13 @@ export class EditGroupMeetingComponent implements OnInit {
               private route: ActivatedRoute,
               private router: Router,
               private settingsService: SettingsService) {
-    this.route.data.subscribe((data: { groupActionData: any }) => {
+    this.route.data.subscribe((data: { groupActionData: any }| Data) => {
       this.calendarTemplate = data.groupActionData;
       this.frequencyOptions = this.calendarTemplate.frequencyOptions;
       this.repeatsOnDays = this.calendarTemplate.repeatsOnDayOptions;
     });
     this.calendarId = this.route.snapshot.queryParams['calendarId'];
-    this.groupId = this.route.parent.snapshot.params['groupId'];
+    this.groupId = this.route.parent?.snapshot.params['groupId'];
   }
 
   ngOnInit() {
@@ -81,7 +81,7 @@ export class EditGroupMeetingComponent implements OnInit {
    * Subscribes to value changes of controls.
    */
   buildDependencies() {
-    this.groupEditMeetingForm.get('frequency').valueChanges.subscribe((frequency: any) => {
+    this.groupEditMeetingForm.get('frequency')?.valueChanges.subscribe((frequency: any) => {
       this.groupEditMeetingForm.removeControl('repeatsOnDay');
       switch (frequency) {
         case 1: // Daily
@@ -90,7 +90,7 @@ export class EditGroupMeetingComponent implements OnInit {
         case 2: // Weekly
           this.repetitionIntervals = ['1', '2', '3'];
           this.groupEditMeetingForm.addControl('repeatsOnDay', new FormControl('', Validators.required));
-          this.groupEditMeetingForm.get('repeatsOnDay').patchValue(this.calendarTemplate.repeatsOnDay.id);
+          this.groupEditMeetingForm.get('repeatsOnDay')?.patchValue(this.calendarTemplate.repeatsOnDay.id);
         break;
         case 3: // Monthly
           this.repetitionIntervals = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11'];
