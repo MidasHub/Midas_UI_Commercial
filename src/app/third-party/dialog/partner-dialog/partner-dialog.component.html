@@ -16,8 +16,8 @@
 
           <label labelPosition="before" class="entries"> Kiểm tra giao dịch thuộc đối tác/HKD </label>
           <mat-radio-group formControlName="typeCheckValid">
-            <mat-radio-button  [checked]="partnerForm.get('typeCheckValid').value=='0'" style="margin-right: 10px" value="0">Đối tác</mat-radio-button>
-            <mat-radio-button  [checked]="partnerForm.get('typeCheckValid').value=='1'" value="1">Hộ Kinh doanh</mat-radio-button>
+            <mat-radio-button  [checked]="partnerForm.get('typeCheckValid')?.value==='0'" style="margin-right: 10px" value="0">Đối tác</mat-radio-button>
+            <mat-radio-button  [checked]="partnerForm.get('typeCheckValid')?.value==='1'" value="1">Hộ Kinh doanh</mat-radio-button>
           </mat-radio-group>
 
           <mat-form-field fxFlex="98%">

@@ -1,13 +1,13 @@
-import { Component, Inject, OnInit } from "@angular/core";
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
-import { AlertService } from "app/core/alert/alert.service";
-import { ThirdPartyService } from "app/third-party/third-party.service";
+import { Component, Inject, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { AlertService } from 'app/core/alert/alert.service';
+import { ThirdPartyService } from 'app/third-party/third-party.service';
 
 @Component({
-  selector: "midas-merchant-dialog",
-  templateUrl: "./merchant-dialog.component.html",
-  styleUrls: ["./merchant-dialog.component.scss"],
+  selector: 'midas-merchant-dialog',
+  templateUrl: './merchant-dialog.component.html',
+  styleUrls: ['./merchant-dialog.component.scss'],
 })
 export class MerchantDialogComponent implements OnInit {
   merchantForm!: FormGroup;
@@ -17,20 +17,20 @@ export class MerchantDialogComponent implements OnInit {
   merchant: any;
   timeTypes: any[] = [
     {
-      code: "DAY",
-      desc: "Ngày",
+      code: 'DAY',
+      desc: 'Ngày',
     },
     {
-      code: "HOUR",
-      desc: "Giờ",
+      code: 'HOUR',
+      desc: 'Giờ',
     },
     {
-      code: "MINUTE",
-      desc: "Phút",
+      code: 'MINUTE',
+      desc: 'Phút',
     },
     {
-      code: "SECOND",
-      desc: "Giây",
+      code: 'SECOND',
+      desc: 'Giây',
     },
   ];
   constructor(
@@ -45,18 +45,18 @@ export class MerchantDialogComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.thirdPartyService.getPartners("active").subscribe((data: any) => {
+    this.thirdPartyService.getPartners('active').subscribe((data: any) => {
       this.partners = data.result.partners;
     });
     this.merchantForm = this.formBuilder.group({
-      name: ["", [Validators.required, Validators.pattern("^([^!@#$%^&*()+=<>,.?/]*)$")]],
-      partner: ["", Validators.required],
-      rangeDay: [""],
-      unitType: ["DAY"],
+      name: ['', [Validators.required, Validators.pattern('^([^!@#$%^&*()+=<>,.?/]*)$')]],
+      partner: ['', Validators.required],
+      rangeDay: [''],
+      unitType: ['DAY'],
       active: [true],
     });
 
-    if (this.dataFrom.action === "edit") {
+    if (this.dataFrom.action === 'edit') {
       this.merchantForm.patchValue({
         name: this.dataFrom.name,
         partner: this.dataFrom.partnerCode,
@@ -66,11 +66,11 @@ export class MerchantDialogComponent implements OnInit {
       });
 
     } else {
-      this.merchantForm.removeControl("active");
+      this.merchantForm.removeControl('active');
     }
   }
 
-  submit() {
+  submit(): any {
     if (!this.merchantForm.valid) {
       return false;
     }
@@ -80,17 +80,17 @@ export class MerchantDialogComponent implements OnInit {
     };
 
     this.thirdPartyService.saveMerchant(payload).subscribe((response: any) => {
-      if (response.statusCode == "200") {
+      if (response.statusCode = '200') {
         this.alertServices.alert({
-          type: "🎉🎉🎉 Thành công !!!",
-          message: "🎉🎉 Xử lý thành công",
-          msgClass: "cssSuccess",
+          type: '🎉🎉🎉 Thành công !!!',
+          message: '🎉🎉 Xử lý thành công',
+          msgClass: 'cssSuccess',
         });
         this.dialogRef.close(payload);
       } else {
         this.alertServices.alert({
-          type: "🚨🚨🚨🚨 Lỗi ",
-          msgClass: "cssBig",
+          type: '🚨🚨🚨🚨 Lỗi ',
+          msgClass: 'cssBig',
           message: response.error,
         });
         this.dialogRef.close(payload);
@@ -98,7 +98,7 @@ export class MerchantDialogComponent implements OnInit {
     });
   }
 
-  update() {
+  update(): any {
     if (!this.merchantForm.valid) {
       return false;
     }
@@ -108,18 +108,18 @@ export class MerchantDialogComponent implements OnInit {
     };
 
     this.thirdPartyService.updateMerchant(payload).subscribe((response: any) => {
-      if (response.statusCode === "success") {
+      if (response.statusCode === 'success') {
         this.alertServices.alert({
-          type: "🎉🎉🎉 Thành công !!!",
-          message: "🎉🎉 Xử lý thành công",
-          msgClass: "cssSuccess",
+          type: '🎉🎉🎉 Thành công !!!',
+          message: '🎉🎉 Xử lý thành công',
+          msgClass: 'cssSuccess',
         });
         this.dialogRef.close(payload);
       } else {
         this.alertServices.alert({
-          type: "🚨🚨🚨🚨 Lỗi ",
-          msgClass: "cssBig",
-          message: "🚨🚨 Lỗi Điều chuyển máy bán hàng, vui lòng liên hệ IT Support để được hổ trợ 🚨🚨",
+          type: '🚨🚨🚨🚨 Lỗi ',
+          msgClass: 'cssBig',
+          message: '🚨🚨 Lỗi Điều chuyển máy bán hàng, vui lòng liên hệ IT Support để được hổ trợ 🚨🚨',
         });
         this.dialogRef.close(payload);
       }

@@ -8,11 +8,11 @@ import { ThirdPartyService } from '../third-party.service';
 import { AlertService } from 'app/core/alert/alert.service';
 import { faLessThanEqual } from '@fortawesome/free-solid-svg-icons';
 import { sampleSize } from 'lodash';
-//import { MatCheckbox } from '@angular/material/checkbox';
+// import { MatCheckbox } from '@angular/material/checkbox';
 import {MatTabsModule} from '@angular/material/tabs';
 import { ThirdPartyComponent } from '../third-party.component';
 import { MatSlideToggleChange } from '@angular/material/slide-toggle';
-//import { MerchantTabComponent } from '../merchant-tab/merchant-tab.component';
+// import { MerchantTabComponent } from '../merchant-tab/merchant-tab.component';
 
 @Component({
   selector: 'midas-partner-tab',
@@ -22,28 +22,28 @@ import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 export class PartnerTabComponent implements OnInit {
   @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort | any;
-  //@ViewChild('showClosedPartners', { static: true }) showClosedPartners: MatCheckbox;
+  // @ViewChild('showClosedPartners', { static: true }) showClosedPartners: MatCheckbox;
 
 
-  partners!:any[];
+  partners!: any[];
   dataSource!: MatTableDataSource<any>;
   displayedColumns =  ['code', 'desc', 'typeCheckValid', 'status', 'limit', 'action'];
-  partnersDataActive!:any[];
-  partnersDataInActive!:any[];
-  selectedIndex: number = 0;
+  partnersDataActive: any[] = [];
+  partnersDataInActive: any[] = [];
+  selectedIndex = 0;
 
   constructor(
     private alertServices: AlertService,
     private thirdPartyService: ThirdPartyService,
-    public dialog : MatDialog,
-    public thirdPartyComponent : ThirdPartyComponent ,
-    ){
+    public dialog: MatDialog,
+    public thirdPartyComponent: ThirdPartyComponent ,
+    ) {
 
   }
 
   ngOnInit(): void {
 
-    this.thirdPartyService.getPartners("active").subscribe((data: any) => {
+    this.thirdPartyService.getPartners('active').subscribe((data: any) => {
       this.partners = data.result.partners;
 
       this.dataSource = new MatTableDataSource(data.result.partners);
@@ -53,44 +53,44 @@ export class PartnerTabComponent implements OnInit {
   }
 
 
-  createPartner(){
+  createPartner() {
     const data = {
       action: 'create'
     };
-    const dialog = this.dialog.open(PartnerDialogComponent, { height: "auto", width: "30%" , data });
+    const dialog = this.dialog.open(PartnerDialogComponent, { height: 'auto', width: '30%' , data });
     dialog.afterClosed().subscribe((payload: any) => {
-        if(payload){
+        if (payload) {
           this.ngOnInit();
         }
     });
   }
 
-  editPartner(partner:any, index:number){
+  editPartner(partner: any, index: number) {
 
     const data = {
       action: 'edit',
       ... partner
     };
-    const dialog = this.dialog.open(PartnerDialogComponent, { height: "auto", width: "30%" , data });
+    const dialog = this.dialog.open(PartnerDialogComponent, { height: 'auto', width: '30%' , data });
     dialog.afterClosed().subscribe((payload: any) => {
-      if(payload){
+      if (payload) {
 
-        this.ngOnInit()
+        this.ngOnInit();
       }
     });
   }
 
 
-  changeShowClosedPartners(isActive:boolean){
-    if(isActive){
-      this.thirdPartyService.getPartners("inactive").subscribe((data: any) => {
+  changeShowClosedPartners(isActive: boolean) {
+    if (isActive) {
+      this.thirdPartyService.getPartners('inactive').subscribe((data: any) => {
         this.partners = data.result.partners;
         this.dataSource.data = this.partners;
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
       });
-    }else{
-      this.thirdPartyService.getPartners("active").subscribe((data: any) => {
+    } else {
+      this.thirdPartyService.getPartners('active').subscribe((data: any) => {
         this.partners = data.result.partners;
         this.dataSource.data = this.partners;
         this.dataSource.paginator = this.paginator;
@@ -99,11 +99,12 @@ export class PartnerTabComponent implements OnInit {
     }
   }
 
-  applyFilter(filterValue: string) {
+  applyFilter(e: Event) {
+    const filterValue = (<HTMLInputElement>e.target).value || '';
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
-  nextStep(partner:any) {
+  nextStep(partner: any) {
     // if (this.selectedIndex != 1) {
     //   this.selectedIndex = this.selectedIndex + 1;
     // }
@@ -112,7 +113,7 @@ export class PartnerTabComponent implements OnInit {
 
   }
 
-  onChange(value: MatSlideToggleChange, partner : any) {
+  onChange(value: MatSlideToggleChange, partner: any) {
 
     partner.status = value.checked ? 'O' : 'D' ;
 
@@ -123,17 +124,17 @@ export class PartnerTabComponent implements OnInit {
     this.thirdPartyService.updatePartnerStatus(payload).subscribe((response: any) => {
       if (response.result.status === '200') {
         this.alertServices.alert({
-          type: "🎉🎉🎉 Thành công !!!",
-          message: "🎉🎉 Xử lý thành công",
-          msgClass: "cssSuccess",
+          type: '🎉🎉🎉 Thành công !!!',
+          message: '🎉🎉 Xử lý thành công',
+          msgClass: 'cssSuccess',
         });
         this.ngOnInit();
 
       } else {
         this.alertServices.alert({
-          type: "🚨🚨🚨🚨 Lỗi ",
-          msgClass: "cssBig",
-          message: "🚨🚨 Lỗi cập nhật trạng thái đối tác, kiểm tra tất cả hộ khinh doanh liên kết với đối tác phải đóng hoặc vui lòng liên hệ IT Support để được hổ trợ 🚨🚨",
+          type: '🚨🚨🚨🚨 Lỗi ',
+          msgClass: 'cssBig',
+          message: '🚨🚨 Lỗi cập nhật trạng thái đối tác, kiểm tra tất cả hộ khinh doanh liên kết với đối tác phải đóng hoặc vui lòng liên hệ IT Support để được hổ trợ 🚨🚨',
         });
       }
     });

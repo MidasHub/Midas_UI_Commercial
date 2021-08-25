@@ -7,17 +7,17 @@ import { MatTabChangeEvent } from '@angular/material/tabs';
 })
 export class ThirdPartyComponent implements OnInit {
 
-  selectedIndex: number = 0;
-  
-  constructor(){}
+  selectedIndex = 0;
+
+  constructor() {}
   ngOnInit(): void {
   }
 
-  changeTab(index:number){
+  changeTab(index: number) {
     this.selectedIndex = index;
   }
-  
-  onTabChanged = (tabChangeEvent: MatTabChangeEvent): void => { 
+
+  onTabChanged = (tabChangeEvent: MatTabChangeEvent): void => {
     this.selectedIndex = tabChangeEvent.index;
   }
 }

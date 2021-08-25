@@ -13,15 +13,15 @@ import { ThirdPartyService } from 'app/third-party/third-party.service';
 export class PartnerDialogComponent implements OnInit {
   partnerForm!: FormGroup;
   dataFrom: any;
-  editable: boolean = false;
-  action:string
+  editable = false;
+  action: string;
   constructor(
     private formBuilder: FormBuilder,
     private thirdPartyService: ThirdPartyService,
     private alertServices: AlertService,
     public dialogRef: MatDialogRef<PartnerDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any
-  ){
+  ) {
     this.dataFrom = data;
     this.action = data.action;
   }
@@ -35,20 +35,20 @@ export class PartnerDialogComponent implements OnInit {
       'active': [true],
     });
 
-    if(this.dataFrom.action ==="edit"){
+    if (this.dataFrom.action === 'edit') {
       this.editable = true;
       this.partnerForm.patchValue({
         'code': this.dataFrom.code,
         'desc': this.dataFrom.desc,
         'typeCheckValid': this.dataFrom.typeCheckValid ,
         'limit': this.dataFrom.limit,
-        'active': this.dataFrom.status == 'O' ? true : false,
+        'active': this.dataFrom.status === 'O' ? true : false,
       });
     }
   }
 
 
-  submit(){
+  submit(): any {
 
     if (!this.partnerForm.valid) {
       return false;
@@ -59,18 +59,18 @@ export class PartnerDialogComponent implements OnInit {
     };
 
     this.thirdPartyService.savePartner(payload).subscribe((response: any) => {
-      if (response.statusCode == '200') {
+      if (response.statusCode === '200') {
         this.alertServices.alert({
-          type: "🎉🎉🎉 Thành công !!!",
-          message: "🎉🎉 Xử lý thành công",
-          msgClass: "cssSuccess",
+          type: '🎉🎉🎉 Thành công !!!',
+          message: '🎉🎉 Xử lý thành công',
+          msgClass: 'cssSuccess',
         });
         this.dialogRef.close(payload);
       } else {
         this.alertServices.alert({
-          type: "🚨🚨🚨🚨 Lỗi ",
-          msgClass: "cssBig",
-          message: "🚨🚨 Lỗi vui lòng liên hệ IT Support để được hổ trợ 🚨🚨",
+          type: '🚨🚨🚨🚨 Lỗi ',
+          msgClass: 'cssBig',
+          message: '🚨🚨 Lỗi vui lòng liên hệ IT Support để được hổ trợ 🚨🚨',
         });
         this.dialogRef.close(payload);
       }
@@ -78,7 +78,7 @@ export class PartnerDialogComponent implements OnInit {
 
   }
 
-  update(){
+  update(): any {
     if (!this.partnerForm.valid) {
       return false;
     }
@@ -90,16 +90,16 @@ export class PartnerDialogComponent implements OnInit {
     this.thirdPartyService.updatePartner(payload).subscribe((response: any) => {
       if (response.statusCode === 'success') {
         this.alertServices.alert({
-          type: "🎉🎉🎉 Thành công !!!",
-          message: "🎉🎉 Xử lý thành công",
-          msgClass: "cssSuccess",
+          type: '🎉🎉🎉 Thành công !!!',
+          message: '🎉🎉 Xử lý thành công',
+          msgClass: 'cssSuccess',
         });
         this.dialogRef.close(payload);
       } else {
         this.alertServices.alert({
-          type: "🚨🚨🚨🚨 Lỗi ",
-          msgClass: "cssBig",
-          message: "🚨🚨 Lỗi Điều chuyển máy bán hàng, vui lòng liên hệ IT Support để được hổ trợ 🚨🚨",
+          type: '🚨🚨🚨🚨 Lỗi ',
+          msgClass: 'cssBig',
+          message: '🚨🚨 Lỗi Điều chuyển máy bán hàng, vui lòng liên hệ IT Support để được hổ trợ 🚨🚨',
         });
         this.dialogRef.close(payload);
       }
