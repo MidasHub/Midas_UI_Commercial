@@ -24,7 +24,7 @@ export class ClientChargeOverviewResolver implements Resolve<Object> {
      * @returns {Observable<any>}
      */
     resolve(route: ActivatedRouteSnapshot): Observable<any> {
-        const clientId = route.parent.params.clientId;
+        const clientId = route.parent?.params.clientId;
         return this.clientsService.getAllClientCharges(clientId);
     }
 

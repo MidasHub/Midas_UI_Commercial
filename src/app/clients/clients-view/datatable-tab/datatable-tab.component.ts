@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Data } from '@angular/router';
 
 @Component({
   selector: 'mifosx-datatable-tab',
@@ -8,9 +8,9 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class DatatableTabComponent implements OnInit {
   clientDatatable: any;
-  multiRowDatatableFlag: boolean;
+  multiRowDatatableFlag?: boolean;
   constructor(private route: ActivatedRoute) {
-    this.route.data.subscribe((data: { clientDatatable: any }) => {
+    this.route.data.subscribe((data: { clientDatatable: any }| Data) => {
       this.clientDatatable = data.clientDatatable;
       this.multiRowDatatableFlag = this.clientDatatable.columnHeaders[0].columnName === 'id' ? true : false;
     });

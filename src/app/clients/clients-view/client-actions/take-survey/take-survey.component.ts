@@ -88,7 +88,7 @@ export class TakeSurveyComponent {
    */
   isAnyResponse(): boolean {
     if (this.surveyData) {
-      this.surveyData.questionDatas.forEach((element: any) => {
+      this.surveyData.questionDatas.forEach((element: any): any => {
         if (element.answer) {
           return false;
         }

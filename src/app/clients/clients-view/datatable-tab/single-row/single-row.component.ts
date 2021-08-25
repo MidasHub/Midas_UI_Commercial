@@ -1,31 +1,31 @@
-import { filter } from "rxjs/operators";
-import { Component, OnInit, Input } from "@angular/core";
-import { ActivatedRoute } from "@angular/router";
-import { MatDialog } from "@angular/material/dialog";
-import { FormfieldBase } from "app/shared/form-dialog/formfield/model/formfield-base";
-import { InputBase } from "app/shared/form-dialog/formfield/model/input-base";
-import { SelectBase } from "app/shared/form-dialog/formfield/model/select-base";
-import { CheckboxBase } from "app/shared/form-dialog/formfield/model/checkbox-base";
-import { DatePipe } from "@angular/common";
+import { filter } from 'rxjs/operators';
+import { Component, OnInit, Input } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
+import { FormfieldBase } from 'app/shared/form-dialog/formfield/model/formfield-base';
+import { InputBase } from 'app/shared/form-dialog/formfield/model/input-base';
+import { SelectBase } from 'app/shared/form-dialog/formfield/model/select-base';
+import { CheckboxBase } from 'app/shared/form-dialog/formfield/model/checkbox-base';
+import { DatePipe } from '@angular/common';
 
 /** Custom Components */
-import { FormDialogComponent } from "app/shared/form-dialog/form-dialog.component";
-import { DeleteDialogComponent } from "../../../../shared/delete-dialog/delete-dialog.component";
+import { FormDialogComponent } from 'app/shared/form-dialog/form-dialog.component';
+import { DeleteDialogComponent } from '../../../../shared/delete-dialog/delete-dialog.component';
 
 /** Custom Services */
-import { ClientsService } from "../../../clients.service";
-import { SettingsService } from "app/settings/settings.service";
+import { ClientsService } from '../../../clients.service';
+import { SettingsService } from 'app/settings/settings.service';
 
 @Component({
-  selector: "mifosx-single-row",
-  templateUrl: "./single-row.component.html",
-  styleUrls: ["./single-row.component.scss"],
+  selector: 'mifosx-single-row',
+  templateUrl: './single-row.component.html',
+  styleUrls: ['./single-row.component.scss'],
 })
 export class SingleRowComponent implements OnInit {
   @Input() dataObject: any;
-  datatableName: string;
+  datatableName!: string;
   clientId: string;
-  clientSource: string = null;
+  clientSource!: string;
 
   constructor(
     private route: ActivatedRoute,
@@ -34,7 +34,7 @@ export class SingleRowComponent implements OnInit {
     private clientsService: ClientsService,
     private settingsService: SettingsService
   ) {
-    this.clientId = this.route.parent.parent.snapshot.paramMap.get("clientId");
+    this.clientId = this.route.parent?.parent?.snapshot.paramMap.get('clientId') || '';
   }
 
   ngOnInit() {
@@ -43,15 +43,15 @@ export class SingleRowComponent implements OnInit {
     });
   }
 
-  displayExtendInfo(columnNameHeader: string, index: number) {
-    if (columnNameHeader == "customerSource_cd_customerSource") {
-      let info = this.dataObject.data[0].row[index];
+  displayExtendInfo(columnNameHeader: string, index: number): any {
+    if (columnNameHeader === 'customerSource_cd_customerSource') {
+      const info = this.dataObject.data[0].row[index];
       if (!this.clientSource) {
         this.clientsService.getClientDatatable(this.clientId, this.datatableName).subscribe((extendInfo: any) => {
           extendInfo.columnHeaders.forEach((element: any) => {
-            if (element.columnCode == "customerSource") {
+            if (element.columnCode === 'customerSource') {
               element.columnValues.forEach((values: any) => {
-                if (values.id == info) {
+                if (values.id === info) {
                   this.clientSource = `Nguồn khách hàng: ${values.value}`;
                 }
               });
@@ -60,7 +60,7 @@ export class SingleRowComponent implements OnInit {
         });
       }
     } else {
-      let info = this.dataObject.data[0].row[index];
+      const info = this.dataObject.data[0].row[index];
       return `${columnNameHeader}: ${info}`;
     }
   }
@@ -71,11 +71,11 @@ export class SingleRowComponent implements OnInit {
     };
     const dateTransformColumns: string[] = [];
     const columns = this.dataObject.columnHeaders.filter((column: any) => {
-      return column.columnName !== "id" && column.columnName !== "client_id";
+      return column.columnName !== 'id' && column.columnName !== 'client_id';
     });
     const formfields: FormfieldBase[] = this.getFormfields(columns, dateTransformColumns, dataTableEntryObject);
     const data = {
-      title: "Add " + this.datatableName,
+      title: 'Add ' + this.datatableName,
       formfields: formfields,
     };
     const addDialogRef = this.dialog.open(FormDialogComponent, { data });
@@ -106,16 +106,16 @@ export class SingleRowComponent implements OnInit {
     };
     const dateTransformColumns: string[] = [];
     const columns = this.dataObject.columnHeaders.filter((column: any) => {
-      return column.columnName !== "id" && column.columnName !== "client_id";
+      return column.columnName !== 'id' && column.columnName !== 'client_id';
     });
     let formfields: FormfieldBase[] = this.getFormfields(columns, dateTransformColumns, dataTableEntryObject);
     formfields = formfields.map((formfield: FormfieldBase, index: number) => {
-      formfield.value = this.dataObject.data[0].row[index + 1] ? this.dataObject.data[0].row[index + 1] : "";
+      formfield.value = this.dataObject.data[0].row[index + 1] ? this.dataObject.data[0].row[index + 1] : '';
 
       return formfield;
     });
     const data = {
-      title: "Edit " + this.datatableName,
+      title: 'Edit ' + this.datatableName,
       formfields: formfields,
     };
     const editDialogRef = this.dialog.open(FormDialogComponent, { data });
@@ -156,54 +156,54 @@ export class SingleRowComponent implements OnInit {
   }
 
   getFormfields(columns: any, dateTransformColumns: string[], dataTableEntryObject: any) {
-    return columns.map((column: any) => {
+    return columns.map((column: any): any => {
       switch (column.columnDisplayType) {
-        case "INTEGER":
-        case "STRING":
-        case "DECIMAL":
-        case "TEXT":
+        case 'INTEGER':
+        case 'STRING':
+        case 'DECIMAL':
+        case 'TEXT':
           return new InputBase({
             controlName: column.columnName,
             label: column.columnName,
-            value: "",
-            type: column.columnDisplayType === "INTEGER" || column.columnDisplayType === "DECIMAL" ? "number" : "text",
+            value: '',
+            type: column.columnDisplayType === 'INTEGER' || column.columnDisplayType === 'DECIMAL' ? 'number' : 'text',
             required: column.isColumnNullable ? false : true,
           });
-        case "BOOLEAN":
+        case 'BOOLEAN':
           return new CheckboxBase({
             controlName: column.columnName,
             label: column.columnName,
-            value: "",
-            type: "checkbox",
+            value: '',
+            type: 'checkbox',
             required: column.isColumnNullable ? false : true,
           });
-        case "CODELOOKUP":
+        case 'CODELOOKUP':
           return new SelectBase({
             controlName: column.columnName,
             label: column.columnName,
-            value: "",
-            options: { label: "value", value: "id", data: column.columnValues },
+            value: '',
+            options: { label: 'value', value: 'id', data: column.columnValues },
             required: column.isColumnNullable ? false : true,
           });
-        case "DATE": {
+        case 'DATE': {
           dateTransformColumns.push(column.columnName);
-          dataTableEntryObject.dateFormat = "yyyy-MM-dd";
+          dataTableEntryObject.dateFormat = 'yyyy-MM-dd';
           return new InputBase({
             controlName: column.columnName,
             label: column.columnName,
-            value: "",
-            type: "date",
+            value: '',
+            type: 'date',
             required: column.isColumnNullable ? false : true,
           });
         }
-        case "DATETIME": {
+        case 'DATETIME': {
           dateTransformColumns.push(column.columnName);
-          dataTableEntryObject.dateFormat = "yyyy-MM-dd HH:mm";
+          dataTableEntryObject.dateFormat = 'yyyy-MM-dd HH:mm';
           return new InputBase({
             controlName: column.columnName,
             label: column.columnName,
-            value: "",
-            type: "datetime-local",
+            value: '',
+            type: 'datetime-local',
             required: column.isColumnNullable ? false : true,
           });
         }

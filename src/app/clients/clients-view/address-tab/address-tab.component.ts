@@ -38,7 +38,7 @@ export class AddressTabComponent {
    * @param {MatDialog} dialog Mat Dialog
    */
   constructor(private route: ActivatedRoute, private clientService: ClientsService, private dialog: MatDialog) {
-    this.route.data.subscribe((data:{clientAddressData: any; clientAddressFieldConfig: any; clientAddressTemplateData: any;}| Data) => {
+    this.route.data.subscribe((data: {clientAddressData: any; clientAddressFieldConfig: any; clientAddressTemplateData: any; }| Data) => {
         this.clientAddressData = data.clientAddressData;
         this.clientAddressFieldConfig = data.clientAddressFieldConfig;
         this.clientAddressTemplate = data.clientAddressTemplateData;
@@ -178,7 +178,7 @@ export class AddressTabComponent {
    * @param {any} address Address
    */
 
-  getAddressFormFields(formType?: string, address?: any) {
+  getAddressFormFields(formType?: string, address?: any): any {
     let formfields: FormfieldBase[] = [];
     if (formType === 'add') {
       //   formfields.push(this.isFieldEnabled('addressType') ? new SelectBase({

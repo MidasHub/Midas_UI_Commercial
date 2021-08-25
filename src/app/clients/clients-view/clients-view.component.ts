@@ -1,37 +1,37 @@
 /** Angular Imports */
-import { Component, OnInit } from "@angular/core";
-import { ActivatedRoute, Router } from "@angular/router";
-import { DomSanitizer } from "@angular/platform-browser";
-import { MatDialog, MatDialogConfig } from "@angular/material/dialog";
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Data, Router } from '@angular/router';
+import { DomSanitizer } from '@angular/platform-browser';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 
 /** Custom Dialogs */
-import { UnassignStaffDialogComponent } from "./custom-dialogs/unassign-staff-dialog/unassign-staff-dialog.component";
-import { UploadSignatureDialogComponent } from "./custom-dialogs/upload-signature-dialog/upload-signature-dialog.component";
-import { ViewSignatureDialogComponent } from "./custom-dialogs/view-signature-dialog/view-signature-dialog.component";
-import { DeleteSignatureDialogComponent } from "./custom-dialogs/delete-signature-dialog/delete-signature-dialog.component";
-import { DeleteDialogComponent } from "app/shared/delete-dialog/delete-dialog.component";
-import { UploadImageDialogComponent } from "./custom-dialogs/upload-image-dialog/upload-image-dialog.component";
-import { CaptureImageDialogComponent } from "./custom-dialogs/capture-image-dialog/capture-image-dialog.component";
+import { UnassignStaffDialogComponent } from './custom-dialogs/unassign-staff-dialog/unassign-staff-dialog.component';
+import { UploadSignatureDialogComponent } from './custom-dialogs/upload-signature-dialog/upload-signature-dialog.component';
+import { ViewSignatureDialogComponent } from './custom-dialogs/view-signature-dialog/view-signature-dialog.component';
+import { DeleteSignatureDialogComponent } from './custom-dialogs/delete-signature-dialog/delete-signature-dialog.component';
+import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.component';
+import { UploadImageDialogComponent } from './custom-dialogs/upload-image-dialog/upload-image-dialog.component';
+import { CaptureImageDialogComponent } from './custom-dialogs/capture-image-dialog/capture-image-dialog.component';
 
 /** Custom Services */
-import { ClientsService } from "../clients.service";
-import { TransactionHistoryDialogComponent } from "app/transactions/rollTerm-schedule-transaction/dialog/transaction-history/transaction-history-dialog.component";
-import template_hdctv from "./template-contract/atom_hdctv";
-import template_hddvtv from "./template-contract/atom_hddvtv";
+import { ClientsService } from '../clients.service';
+import { TransactionHistoryDialogComponent } from 'app/transactions/rollTerm-schedule-transaction/dialog/transaction-history/transaction-history-dialog.component';
+import template_hdctv from './template-contract/atom_hdctv';
+import template_hddvtv from './template-contract/atom_hddvtv';
 import * as moment from 'moment';
 @Component({
-  selector: "mifosx-clients-view",
-  templateUrl: "./clients-view.component.html",
-  styleUrls: ["./clients-view.component.scss"],
+  selector: 'mifosx-clients-view',
+  templateUrl: './clients-view.component.html',
+  styleUrls: ['./clients-view.component.scss'],
 })
 export class ClientsViewComponent implements OnInit {
   clientViewData: any;
   clientDatatables: any;
   clientImage: any;
   clientTemplateData: any;
-  showViewClient: boolean = false;
-  typeViewClient: string;
-  isInterchangeClient: boolean = false;
+  showViewClient = false;
+  typeViewClient!: string;
+  isInterchangeClient = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -40,7 +40,7 @@ export class ClientsViewComponent implements OnInit {
     private _sanitizer: DomSanitizer,
     public dialog: MatDialog
   ) {
-    this.route.data.subscribe((data: { clientViewData: any; clientTemplateData: any; clientDatatables: any }) => {
+    this.route.data.subscribe((data: { clientViewData: any; clientTemplateData: any; clientDatatables: any }| Data) => {
       this.clientViewData = data.clientViewData.result.clientInfo;
       this.clientDatatables = data.clientDatatables ? data.clientDatatables : {};
       this.clientTemplateData = data.clientTemplateData ? data.clientTemplateData : {};
@@ -54,12 +54,12 @@ export class ClientsViewComponent implements OnInit {
       .getClientDatatable(this.clientViewData.id, this.clientDatatables[0]?.registeredTableName)
       .subscribe((extendInfo: any) => {
         extendInfo.columnHeaders.forEach((element: any) => {
-          if (element.columnCode == "customerSource") {
+          if (element.columnCode === 'customerSource') {
             this.clientDatatables[0].columnHeaderData.forEach((header: any) => {
-              if (element.columnCode == header.columnCode) {
+              if (element.columnCode === header.columnCode) {
                 element.columnValues.forEach((values: any) => {
-                  let valueResourceCode = extendInfo.data[0].row[indexCustomerSource];
-                  if (values.id == valueResourceCode) {
+                  const valueResourceCode = extendInfo.data[0].row[indexCustomerSource];
+                  if (values.id === valueResourceCode) {
                     this.clientViewData.sourceClient = values.value;
                   }
                 });
@@ -67,8 +67,8 @@ export class ClientsViewComponent implements OnInit {
             });
           } else {
 
-            if (element.columnName == "nickName") {
-              let nickName = extendInfo.data[0].row[indexCustomerSource];
+            if (element.columnName === 'nickName') {
+              const nickName = extendInfo.data[0].row[indexCustomerSource];
               this.clientViewData.nickName = nickName;
             }
             indexCustomerSource += 1;
@@ -79,9 +79,9 @@ export class ClientsViewComponent implements OnInit {
 
   ngOnInit() {
     this.route.queryParamMap.subscribe((params) => {
-      this.typeViewClient = params.get("typeViewClient");
+      this.typeViewClient = params.get('typeViewClient') || '';
       // this.showViewClient = (this.typeViewClient == 'transaction');
-      if (params.get("clientType") == "ic") {
+      if (params.get('clientType') === 'ic') {
         this.isInterchangeClient = true;
       }
     });
@@ -106,64 +106,64 @@ export class ClientsViewComponent implements OnInit {
    */
   doAction(name: string) {
     switch (name) {
-      case "Assign Staff":
-      case "Close":
-      case "Survey":
-      case "Reject":
-      case "Activate":
-      case "Withdraw":
-      case "Update Default Savings":
-      case "Transfer Client":
-      case "Undo Transfer":
-      case "Accept Transfer":
-      case "Reject Transfer":
-      case "Reactivate":
-      case "Undo Rejection":
-      case "Add Charge":
-      case "Create Self Service User":
-      case "Client Screen Reports":
+      case 'Assign Staff':
+      case 'Close':
+      case 'Survey':
+      case 'Reject':
+      case 'Activate':
+      case 'Withdraw':
+      case 'Update Default Savings':
+      case 'Transfer Client':
+      case 'Undo Transfer':
+      case 'Accept Transfer':
+      case 'Reject Transfer':
+      case 'Reactivate':
+      case 'Undo Rejection':
+      case 'Add Charge':
+      case 'Create Self Service User':
+      case 'Client Screen Reports':
         this.router.navigate([`actions/${name}`], { relativeTo: this.route });
         break;
-      case "Unassign Staff":
+      case 'Unassign Staff':
         this.unassignStaff();
         break;
-      case "Delete":
+      case 'Delete':
         this.deleteClient();
         break;
-      case "View Signature":
+      case 'View Signature':
         this.viewSignature();
         break;
-      case "Upload Signature":
+      case 'Upload Signature':
         this.uploadSignature();
         break;
-      case "Delete Signature":
+      case 'Delete Signature':
         this.deleteSignature();
         break;
-      case "Capture Image":
+      case 'Capture Image':
         this.captureProfileImage();
         break;
-      case "Upload Image":
+      case 'Upload Image':
         this.uploadProfileImage();
         break;
-      case "Delete Image":
+      case 'Delete Image':
         this.deleteProfileImage();
         break;
-      case "Create Standing Instructions":
+      case 'Create Standing Instructions':
         const createStandingInstructionsQueryParams: any = {
           officeId: this.clientViewData.officeId,
-          accountType: "fromsavings",
+          accountType: 'fromsavings',
         };
-        this.router.navigate(["standing-instructions/create-standing-instructions"], {
+        this.router.navigate(['standing-instructions/create-standing-instructions'], {
           relativeTo: this.route,
           queryParams: createStandingInstructionsQueryParams,
         });
         break;
-      case "View Standing Instructions":
+      case 'View Standing Instructions':
         const viewStandingInstructionsQueryParams: any = {
           officeId: this.clientViewData.officeId,
-          accountType: "fromsavings",
+          accountType: 'fromsavings',
         };
-        this.router.navigate(["standing-instructions/list-standing-instructions"], {
+        this.router.navigate(['standing-instructions/list-standing-instructions'], {
           relativeTo: this.route,
           queryParams: viewStandingInstructionsQueryParams,
         });
@@ -177,8 +177,8 @@ export class ClientsViewComponent implements OnInit {
 
   private printComponent() {
 
-    //const WindowPrt = window.open('', '', 'left=0,top=0,width=900,height=900,toolbar=0,scrollbars=0,status=0');
-    const WindowPrt = this.popupwindow('','',1024, 900);
+    // const WindowPrt = window.open('', '', 'left=0,top=0,width=900,height=900,toolbar=0,scrollbars=0,status=0');
+    const WindowPrt = this.popupwindow('', '', 1024, 900);
 
 
 
@@ -186,29 +186,29 @@ export class ClientsViewComponent implements OnInit {
     const dd = String(today.getDate()).padStart(2, '0');
     const mm = String(today.getMonth() + 1).padStart(2, '0');
     const yyyy = String(today.getFullYear());
-    var CMND = '';
-    var EMAIL = '';
-    if(this.clientViewData.externalId){
+    let CMND = '';
+    let EMAIL = '';
+    if (this.clientViewData.externalId) {
       CMND = this.clientViewData.externalId;
     }
-    if(this.clientViewData.emailAddress){
+    if (this.clientViewData.emailAddress) {
       EMAIL = this.clientViewData.emailAddress;
     }
 
-    var html = template_hddvtv.replace('[DATE]', dd).replace('[MONTH]', mm).replace('[YEAR]', yyyy)
-              .replace('[DISPLAYNAME]',this.clientViewData.displayName).replace('[CMND]', CMND )
-              .replace('[EMAIL]',EMAIL).replace('[PHONE]',this.clientViewData.mobileNo);
+    const html = template_hddvtv.replace('[DATE]', dd).replace('[MONTH]', mm).replace('[YEAR]', yyyy)
+              .replace('[DISPLAYNAME]', this.clientViewData.displayName).replace('[CMND]', CMND )
+              .replace('[EMAIL]', EMAIL).replace('[PHONE]', this.clientViewData.mobileNo);
 
-    WindowPrt.document.write(html);
-    //WindowPrt.document.close();
-    //WindowPrt.focus();
-    WindowPrt.print();
-    WindowPrt.close();
+    WindowPrt?.document.write(html);
+    // WindowPrt.document.close();
+    // WindowPrt.focus();
+    WindowPrt?.print();
+    WindowPrt?.close();
   }
 
-  private popupwindow(url:string, title:string, w:number, h:number) {
-    var y = window.outerHeight / 2 + window.screenY - ( h / 2)
-    var x = window.outerWidth / 2 + window.screenX - ( w / 2)
+  private popupwindow(url: string, title: string, w: number, h: number) {
+    const y = window.outerHeight / 2 + window.screenY - ( h / 2);
+    const x = window.outerWidth / 2 + window.screenX - ( w / 2);
     return window.open(url, title, 'toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=no, copyhistory=no, width=' + w + ', height=' + h + ', top=' + y + ', left=' + x);
   }
 
@@ -224,10 +224,10 @@ export class ClientsViewComponent implements OnInit {
     //   x: 10,
     //   y: 10
     // });
-    //doc.save('tableToPdf.pdf');
+    // doc.save('tableToPdf.pdf');
 
-    //const d = new Printd()
-    //d.print( template_hdctv)
+    // const d = new Printd()
+    // d.print( template_hdctv)
 
   }
 
@@ -255,7 +255,7 @@ export class ClientsViewComponent implements OnInit {
     deleteClientDialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {
         this.clientsService.deleteClient(this.clientViewData.id).subscribe(() => {
-          this.router.navigate(["/clients"], { relativeTo: this.route });
+          this.router.navigate(['/clients'], { relativeTo: this.route });
         });
       }
     });
@@ -269,7 +269,7 @@ export class ClientsViewComponent implements OnInit {
     unAssignStaffDialogRef.afterClosed().subscribe((response: { confirm: any }) => {
       if (response.confirm) {
         this.clientsService
-          .executeClientCommand(this.clientViewData.id, "unassignStaff", { staffId: this.clientViewData.staffId })
+          .executeClientCommand(this.clientViewData.id, 'unassignStaff', { staffId: this.clientViewData.staffId })
           .subscribe(() => {
             this.reload();
           });
