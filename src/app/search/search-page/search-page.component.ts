@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute, Data } from '@angular/router';
 
 /**
  * Search Page Component
@@ -15,7 +15,7 @@ export class SearchPageComponent {
   /** Search Results */
   searchResults: any;
   /** Flags if number of search results exceed 200 */
-  overload: boolean;
+  overload?: boolean;
 
   /**
    * @param {ActivatedRoute} route Activated Route
@@ -23,7 +23,7 @@ export class SearchPageComponent {
    */
   constructor(private route: ActivatedRoute,
               private router: Router) {
-    this.route.data.subscribe(( data: { searchResults: any }) => {
+    this.route.data.subscribe(( data: { searchResults: any }| Data) => {
       this.searchResults = data.searchResults;
       this.overload = this.searchResults.length > 200 ? true : false;
       if (this.overload) {

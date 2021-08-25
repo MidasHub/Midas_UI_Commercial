@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Data, Router } from '@angular/router';
 import { ChangePasswordDialogComponent } from 'app/shared/change-password-dialog/change-password-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 
@@ -34,7 +34,7 @@ export class ViewUserComponent implements OnInit {
               private userService: UserService,
               private router: Router,
               private dialog: MatDialog) {
-    this.route.data.subscribe((data: { user: any }) => {
+    this.route.data.subscribe((data: { user: any }| Data) => {
       this.user = data.user;
     });
   }

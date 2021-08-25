@@ -27,9 +27,9 @@ export class SettingsService {
    * @param {any} language Language.
    */
   setLanguage(language: { name: string, code: string }) {
-    localStorage.setItem('midasLanguageCode',language.code);
-    localStorage.setItem('code',language.code.split('-')[0]);
-    localStorage.setItem('midasLanguageName',language.name) //JSON.stringify(language.code).code);
+    localStorage.setItem('midasLanguageCode', language.code);
+    localStorage.setItem('code', language.code.split('-')[0]);
+    localStorage.setItem('midasLanguageName', language.name); // JSON.stringify(language.code).code);
   }
 
   /**
@@ -68,7 +68,7 @@ export class SettingsService {
    * Set device type
    */
 
-  setDeviceData(deviceData:string){
+  setDeviceData(deviceData: string) {
     sessionStorage.setItem('midasDeviceType', JSON.stringify(deviceData));
   }
 
@@ -94,14 +94,14 @@ export class SettingsService {
    * Returns language setting
    */
   get language() {
-    return { name: localStorage.getItem('midasLanguageCode'), code:'en'}; //localStorage.getItem('midasLocale') }
+    return { name: localStorage.getItem('midasLanguageCode'), code: 'en'}; // localStorage.getItem('midasLocale') }
   }
 
   /**
    * Returns list of default server
    */
   get servers() {
-    return JSON.parse(sessionStorage.getItem('midasServers'));
+    return JSON.parse(sessionStorage.getItem('midasServers') || localStorage.getItem('midasServers') || '');
   }
 
   /**
@@ -114,7 +114,7 @@ export class SettingsService {
    * Returns list of default server
    */
   get serversBillpos() {
-    return JSON.parse(sessionStorage.getItem('midasBillposServers'));
+    return JSON.parse(sessionStorage.getItem('midasBillposServers')|| localStorage.getItem('midasBillposServers') || '' );
   }
 
   /**

@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Data } from '@angular/router';
 import { SelectionModel } from '@angular/cdk/collections';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
@@ -25,25 +25,25 @@ import { User } from './user.model';
 export class UsersComponent implements OnInit {
 
   /** Self service users. */
-  userData: User[];
+  userData: User[] = [];
   /** Columns to be displayed in users table. */
   displayedColumns: string[] = ['select', 'name', 'id', 'email', 'status', 'officeName', 'staff'];
   /** Data source for users table. */
-  dataSource: MatTableDataSource<User>;
+  dataSource: MatTableDataSource<User> = new MatTableDataSource();
   /** Selection model for users table. */
   selection = new SelectionModel<User>(true, []);
 
   /** Paginator for users table. */
-  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+  @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
   /** Sorter for users table. */
-  @ViewChild(MatSort, { static: true }) sort: MatSort;
+  @ViewChild(MatSort, { static: true }) sort!: MatSort;
 
   /**
    * Retrieves the users data from `resolve`.
    * @param {ActivatedRoute} route Activated Route.
    */
   constructor(private route: ActivatedRoute) {
-    this.route.data.subscribe((data: { users: User[] }) => {
+    this.route.data.subscribe((data: { users: User[] }|Data) => {
       this.userData = data.users;
     });
   }
