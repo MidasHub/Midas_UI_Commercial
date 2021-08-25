@@ -43,6 +43,20 @@ export class SavingsService {
     this.environment = environment;
   }
 
+  getAdvanceFeeTemplate(): Observable<any> {
+    let httpParams = this.commonHttpParams.getCommonHttpParams();
+
+    return this.http.post(`${this.GatewayApiUrlPrefix}/savingTransaction/get_advance_fee_template`, httpParams);
+  }
+
+  getAdvanceFeeOnDueDayCardTemplate(clientId: string): Observable<any> {
+    let httpParams = this.commonHttpParams.getCommonHttpParams();
+    httpParams = httpParams.set('clientId', clientId);
+
+
+    return this.http.post(`${this.GatewayApiUrlPrefix}/savingTransaction/get_advance_fee_on_due_day_card_template`, httpParams);
+  }
+
   makeFunForMarketing(accountSavingIdFrom: string, clientName: string): Observable<any> {
     let httpParams = this.commonHttpParams.getCommonHttpParams();
     httpParams = httpParams.set("accountSavingIdFrom", accountSavingIdFrom);
@@ -80,8 +94,10 @@ export class SavingsService {
       .set("dateFormat", data.dateFormat);
 
     return this.http.post(
-      `${this.IcGatewayApiUrlPrefix}/savingTransaction/execute_ic_account_saving_action`, httpParams)
-    }
+      `${this.IcGatewayApiUrlPrefix}/savingTransaction/execute_ic_account_saving_action`,
+      httpParams
+    );
+  }
   makeFeeOnAdvanceExecute(form: any): Observable<any> {
     let httpParams = this.commonHttpParams.getCommonHttpParams();
 
@@ -117,7 +133,6 @@ export class SavingsService {
   }
 
   handleResponseApiSavingTransaction(res: any, messageReceived: string, refresh: boolean) {
-
     if (res.error) {
       this.alertService.alert({
         message: `Lỗi: ${res.error}, Vui lòng liên hệ IT support!`,
@@ -141,7 +156,6 @@ export class SavingsService {
       this.alertService.alert({ message: messageReceived, msgClass: "cssSuccess" });
 
       if (refresh) {
-
         let currentUrl = this.router.url;
         this.router.navigateByUrl("/", { skipLocationChange: true }).then(() => {
           this.router.navigate([currentUrl]);
@@ -163,7 +177,6 @@ export class SavingsService {
       });
       return true;
     }
-
   }
 
   checkValidRevertSavingTransaction(resourceId: string): Observable<any> {
@@ -203,10 +216,7 @@ export class SavingsService {
     httpParams = httpParams.set("amountAdvanceCash", info.amountAdvanceCash);
     httpParams = httpParams.set("clientSavingAccount", info.clientSavingAccount);
 
-    return this.http.post(
-      `${this.IcGatewayApiUrlPrefix}/savingTransaction/transfer_ic_transaction`,
-      httpParams
-    );
+    return this.http.post(`${this.IcGatewayApiUrlPrefix}/savingTransaction/transfer_ic_transaction`, httpParams);
   }
 
   /**
@@ -339,8 +349,6 @@ export class SavingsService {
     );
   }
 
-
-
   getListIcPartner() {
     let httpParams = this.commonHttpParams.getCommonHttpParams();
     return this.http.post<any>(`${this.IcGatewayApiUrlPrefix}/client/get_ic_client_connection`, httpParams);
@@ -408,7 +416,7 @@ export class SavingsService {
         "Gateway-TenantId": window.localStorage.getItem("Gateway-TenantId"),
       }),
     };
-    if (isIcReport){
+    if (isIcReport) {
       httpOptions = {
         responseType: "blob" as "json",
         headers: new HttpHeaders({
@@ -429,7 +437,6 @@ export class SavingsService {
     txnCode: string,
     paymentDetail: string,
     routingCode: string
-
   ) {
     this.accessToken = JSON.parse(
       sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey)
@@ -580,7 +587,7 @@ export class SavingsService {
    * @param entityId Entity Id assosciated with savings account.
    * @returns {Observable<any>} Savings account template.
    */
-   getSavingsAccountIcTemplate( productId?: string): Observable<any> {
+  getSavingsAccountIcTemplate(productId?: string): Observable<any> {
     let httpParams = this.commonHttpParams.getCommonHttpParams();
     httpParams = productId ? httpParams.set("productId", productId) : httpParams;
     return this.http.post(`${this.IcGatewayApiUrlPrefix}/client/get_ic_client_account_template`, httpParams);
@@ -590,14 +597,13 @@ export class SavingsService {
    * @param entityId Entity Id assosciated with savings account.
    * @returns {Observable<any>} Savings account template.
    */
-   createSavingsAccountIc( productId?: string, externalId?: string): Observable<any> {
+  createSavingsAccountIc(productId?: string, externalId?: string): Observable<any> {
     let httpParams = this.commonHttpParams.getCommonHttpParams();
     httpParams = productId ? httpParams.set("productId", productId) : httpParams;
     httpParams = externalId ? httpParams.set("externalId", externalId) : httpParams;
 
     return this.http.post(`${this.IcGatewayApiUrlPrefix}/client/create_ic_client_account`, httpParams);
   }
-
 
   /**
    * @param entityId Entity Id assosciated with savings account.

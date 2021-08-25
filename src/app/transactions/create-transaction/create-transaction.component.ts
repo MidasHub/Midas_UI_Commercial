@@ -350,6 +350,7 @@ export class CreateTransactionComponent implements OnInit {
     this.CheckValidRate();
   }
   CheckValidRate() {
+
     if (this.transactionInfo.rate == null || String(this.transactionInfo.rate).length === 0) {
       return;
     }
