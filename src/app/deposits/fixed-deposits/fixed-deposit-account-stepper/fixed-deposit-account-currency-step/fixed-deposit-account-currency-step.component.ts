@@ -18,7 +18,7 @@ export class FixedDepositAccountCurrencyStepComponent implements OnChanges {
   @Input() fixedDepositsAccountProductTemplate: any;
 
   /** Fixed Deposit Account Currency Form */
-  fixedDepositAccountCurrencyForm: FormGroup;
+  fixedDepositAccountCurrencyForm!: FormGroup;
   /** Currency Data */
   currencyData: any;
 

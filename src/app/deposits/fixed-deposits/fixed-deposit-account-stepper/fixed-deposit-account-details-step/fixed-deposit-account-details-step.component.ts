@@ -29,7 +29,7 @@ export class FixedDepositAccountDetailsStepComponent implements OnInit {
   /** For edit savings form */
   isFieldOfficerPatched = false;
   /** Fixed Deposits Account Details Form */
-  fixedDepositAccountDetailsForm: FormGroup;
+  fixedDepositAccountDetailsForm!: FormGroup;
 
   /** Fixed Deposits Account Template with product data  */
   @Output() fixedDepositsAccountProductTemplate = new EventEmitter();
@@ -73,15 +73,15 @@ export class FixedDepositAccountDetailsStepComponent implements OnInit {
    */
   buildDependencies() {
     const clientId = this.fixedDepositsAccountTemplate.clientId;
-    this.fixedDepositAccountDetailsForm.get('productId').valueChanges.subscribe((productId: string) => {
+    this.fixedDepositAccountDetailsForm.get('productId')?.valueChanges.subscribe((productId: string) => {
       this.fixedDepositsService.getFixedDepositsAccountTemplate(clientId, productId).subscribe((response: any) => {
         this.fixedDepositsAccountProductTemplate.emit(response);
         this.fieldOfficerData = response.fieldOfficerOptions;
         if (!this.isFieldOfficerPatched && this.fixedDepositsAccountTemplate.fieldOfficerId) {
-          this.fixedDepositAccountDetailsForm.get('fieldOfficerId').patchValue(this.fixedDepositsAccountTemplate.fieldOfficerId);
+          this.fixedDepositAccountDetailsForm.get('fieldOfficerId')?.patchValue(this.fixedDepositsAccountTemplate.fieldOfficerId);
           this.isFieldOfficerPatched = true;
         } else {
-          this.fixedDepositAccountDetailsForm.get('fieldOfficerId').patchValue('');
+          this.fixedDepositAccountDetailsForm.get('fieldOfficerId')?.patchValue('');
         }
       });
     });

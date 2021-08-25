@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component, ViewChild } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Data, Router } from '@angular/router';
 import { DatePipe } from '@angular/common';
 
 /** Custom Services */
@@ -24,15 +24,15 @@ import { FixedDepositAccountChargesStepComponent } from '../fixed-deposit-accoun
 export class EditFixedDepositAccountComponent {
 
   /** Fixed Deposits Account Details Step */
-  @ViewChild(FixedDepositAccountDetailsStepComponent, { static: true }) fixedDepositsAccountDetailsStep: FixedDepositAccountDetailsStepComponent;
+  @ViewChild(FixedDepositAccountDetailsStepComponent, { static: true }) fixedDepositsAccountDetailsStep!: FixedDepositAccountDetailsStepComponent;
   /** Fixed Deposits Account Currency Step */
-  @ViewChild(FixedDepositAccountCurrencyStepComponent, { static: true }) fixedDepositAccountCurrencyStep: FixedDepositAccountCurrencyStepComponent;
+  @ViewChild(FixedDepositAccountCurrencyStepComponent, { static: true }) fixedDepositAccountCurrencyStep!: FixedDepositAccountCurrencyStepComponent;
   /** Fixed Deposits Account Terms Step */
-  @ViewChild(FixedDepositAccountTermsStepComponent, { static: true }) fixedDepositAccountTermsStep: FixedDepositAccountTermsStepComponent;
+  @ViewChild(FixedDepositAccountTermsStepComponent, { static: true }) fixedDepositAccountTermsStep!: FixedDepositAccountTermsStepComponent;
   /** Fixed Deposits Account Settings Step */
-  @ViewChild(FixedDepositAccountSettingsStepComponent, { static: true }) fixedDepositAccountSettingsStep: FixedDepositAccountSettingsStepComponent;
+  @ViewChild(FixedDepositAccountSettingsStepComponent, { static: true }) fixedDepositAccountSettingsStep!: FixedDepositAccountSettingsStepComponent;
   /** Fixed Deposits Account Charges Step */
-  @ViewChild(FixedDepositAccountChargesStepComponent, { static: true }) fixedDepositAccountChargesStep: FixedDepositAccountChargesStepComponent;
+  @ViewChild(FixedDepositAccountChargesStepComponent, { static: true }) fixedDepositAccountChargesStep!: FixedDepositAccountChargesStepComponent;
 
   /** Fixed Deposits Account Template */
   fixedDepositsAccountAndTemplate: any;
@@ -50,7 +50,7 @@ export class EditFixedDepositAccountComponent {
               private router: Router,
               private datePipe: DatePipe,
               private fixedDepositsService: FixedDepositsService) {
-    this.route.data.subscribe((data: { fixedDepositsAccountAndTemplate: any }) => {
+    this.route.data.subscribe((data: { fixedDepositsAccountAndTemplate: any } | Data) => {
       this.fixedDepositsAccountAndTemplate = data.fixedDepositsAccountAndTemplate;
     });
   }

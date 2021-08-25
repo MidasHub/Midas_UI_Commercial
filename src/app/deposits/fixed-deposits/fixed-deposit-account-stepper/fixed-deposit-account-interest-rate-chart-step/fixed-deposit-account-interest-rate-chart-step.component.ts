@@ -34,10 +34,10 @@ export class FixedDepositAccountInterestRateChartStepComponent implements OnChan
   /** Additional Column to disblac incentives table  */
   chartSlabsIncentivesDisplayedColumns: string[] = ['incentives'];
   /** Expand Chart Slab Index used in the view */
-  expandChartSlabIndex: number;
+  expandChartSlabIndex!: number;
 
   /** Interest Rate charts table reference */
-  @ViewChild('chartsTable', { static: true }) chartsTableRef: MatTable<Element>;
+  @ViewChild('chartsTable', { static: true }) chartsTableRef!: MatTable<Element>;
 
   constructor() { }
 
