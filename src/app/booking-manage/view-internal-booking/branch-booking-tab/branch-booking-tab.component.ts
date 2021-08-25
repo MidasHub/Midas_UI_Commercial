@@ -62,7 +62,7 @@ export class BranchBookingTabComponent implements OnInit {
       userName: [''],
     });
   }
-  showDetailBooking(bookingRefNo: string) {
+  showDetailBooking(bookingRefNo: string): any {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.data = {
       bookingRefNo: bookingRefNo,
@@ -71,11 +71,11 @@ export class BranchBookingTabComponent implements OnInit {
     this.dialog.open(DetailBranchBookingDialogComponent, dialogConfig);
   }
 
-  textDecorateBooking(status: string) {
+  textDecorateBooking(status: string): any {
     if (status === 'A') { return ' onBookingAmount'; } else if (status === 'C') { return ' onTransactionAmount'; }
   }
 
-  getBookingInternal() {
+  getBookingInternal(): any {
     const dateFormat = this.settingsService.dateFormat;
     let fromDate = this.formDate.get('fromDate')?.value;
     let toDate = this.formDate.get('toDate')?.value;

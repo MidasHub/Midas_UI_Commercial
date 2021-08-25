@@ -76,7 +76,7 @@ export class CreateInternalBookingComponent implements OnInit {
     this.getBookingInternal();
   }
 
-  textDecorateBooking(status: string) {
+  textDecorateBooking(status: string): any{
     if (status === 'A') { return ' onBookingAmount'; } else if (status === 'C') { return ' onTransactionAmount'; }
   }
 

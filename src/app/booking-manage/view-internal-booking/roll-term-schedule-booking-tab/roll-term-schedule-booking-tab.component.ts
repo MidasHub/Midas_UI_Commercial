@@ -19,9 +19,7 @@ import { tap } from 'rxjs/operators';
 })
 export class RollTermScheduleBookingTabComponent implements OnInit {
   expandedElement: any;
-  displayedColumns: any[] = ['bookingRefNo',
-   'officeName', 'userName', 'clientName',
-    'bookingAmount',  'actions'];
+  displayedColumns: any[] = ['bookingRefNo', 'officeName', 'userName', 'clientName', 'bookingAmount', 'actions'];
   totalBooking: any;
   staffBookingInfo: any;
   dataSource: any[] = [];
@@ -38,7 +36,7 @@ export class RollTermScheduleBookingTabComponent implements OnInit {
     private bookingService: BookingService,
     private settingsService: SettingsService,
     private datePipe: DatePipe,
-    private dialog: MatDialog,
+    private dialog: MatDialog
   ) {
     this.formDate = this.formBuilder.group({
       fromDate: [new Date()],
@@ -52,8 +50,12 @@ export class RollTermScheduleBookingTabComponent implements OnInit {
     // this.getBookingInternal();
   }
 
-  textDecorateBooking(status: string) {
-    if (status === 'A') { return ' onBookingAmount'; } else if (status === 'C') { return ' onTransactionAmount'; }
+  textDecorateBooking(status: string): any {
+    if (status === 'A') {
+      return ' onBookingAmount';
+    } else if (status === 'C') {
+      return ' onTransactionAmount';
+    }
   }
 
   getBookingInternal() {
@@ -61,20 +63,22 @@ export class RollTermScheduleBookingTabComponent implements OnInit {
     let fromDate = this.formDate.get('fromDate')?.value;
     let toDate = this.formDate.get('toDate')?.value;
     const staffName = this.formFilter.get('staffName')?.value;
-    const officeName = this.formFilter.get('officeName')?.value ;
-    const clientName = this.formFilter.get('clientName')?.value ;
+    const officeName = this.formFilter.get('officeName')?.value;
+    const clientName = this.formFilter.get('clientName')?.value;
     if (fromDate) {
       fromDate = this.datePipe.transform(fromDate, dateFormat);
     }
     if (toDate) {
       toDate = this.datePipe.transform(toDate, dateFormat);
     }
-    this.bookingService.getManageBookingRollTermSchedule(officeName, staffName, clientName, fromDate, toDate).subscribe((data: any) => {
-      this.staffBookingInfo = data?.result?.bookingInternalResponseDto;
-      this.dataSource = data?.result?.bookingInternalResponseDto?.lisBookingManagementDtos;
-      this.BookingFilter = this.dataSource;
-      this.loadData();
-    });
+    this.bookingService
+      .getManageBookingRollTermSchedule(officeName, staffName, clientName, fromDate, toDate)
+      .subscribe((data: any) => {
+        this.staffBookingInfo = data?.result?.bookingInternalResponseDto;
+        this.dataSource = data?.result?.bookingInternalResponseDto?.lisBookingManagementDtos;
+        this.BookingFilter = this.dataSource;
+        this.loadData();
+      });
   }
 
   // tslint:disable-next-line:use-lifecycle-interface
@@ -101,7 +105,5 @@ export class RollTermScheduleBookingTabComponent implements OnInit {
         bookingRefNo: bookingInternal.bookingRefNo,
       },
     });
-
   }
-
 }

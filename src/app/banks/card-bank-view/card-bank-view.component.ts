@@ -16,8 +16,8 @@ export class CardBankViewComponent implements OnInit {
   disabled = false;
   unbounded = false;
 
-  radius?: number;
-  color?: string;
+  radius = 0;
+  color = '';
   constructor(private banksServices: BanksService) {}
 
   ngOnInit(): void {
@@ -48,7 +48,7 @@ export class CardBankViewComponent implements OnInit {
     }
   }
 
-  applyFilter(text: string) {
+  applyFilter(text: string = '') {
     this.textSearch = String(text).toLowerCase();
     this.filterData();
   }
