@@ -1,7 +1,7 @@
 /** Angular Imports. */
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Data, Router } from '@angular/router';
 import { DatePipe } from '@angular/common';
 
 /** Custom Services. */
@@ -19,13 +19,13 @@ import { SettingsService } from 'app/settings/settings.service';
 export class BulkLoanReassignmnetComponent implements OnInit {
 
   /** Bulk Loan form. */
-  bulkLoanForm: FormGroup;
+  bulkLoanForm!: FormGroup;
   /** Office data. */
   offices: any;
   /** To Loan Officers. */
-  toLoanOfficers: any[];
+  toLoanOfficers: any[] = [];
   /** From Loan Offices. */
-  fromLoanOfficers: any[];
+  fromLoanOfficers: any[] = [];
   /** Office Template. */
   officeTemplate: any;
   /** Officer Template. */
@@ -51,7 +51,7 @@ export class BulkLoanReassignmnetComponent implements OnInit {
               private settingsService: SettingsService,
               private datePipe: DatePipe,
               private router: Router) {
-    this.route.data.subscribe((data: { offices: any} ) => {
+    this.route.data.subscribe((data: { offices: any} | Data) => {
       this.offices = data.offices;
     });
   }

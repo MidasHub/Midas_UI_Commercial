@@ -1,7 +1,7 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute, Data } from '@angular/router';
 import { MatTableDataSource } from '@angular/material/table';
 
 /** Custom Services */
@@ -27,7 +27,7 @@ export class ViewLoanProvisioningCriteriaComponent implements OnInit {
   /** Column Headers for Mat Table. */
   displayedColumns: string[] = ['category', 'minAge', 'maxAge', 'percentage', 'liabilityAccount', 'expenseAccount'];
   /** Data source for loan provisioning criteria table. */
-  dataSource: MatTableDataSource<any>;
+  dataSource!: MatTableDataSource<any>;
 
   /**
    * Retrieves the Provisioning data from `resolve`.
@@ -40,7 +40,7 @@ export class ViewLoanProvisioningCriteriaComponent implements OnInit {
               private route: ActivatedRoute,
               private router: Router,
               public dialog: MatDialog) {
-      this.route.data.subscribe((data: { loanProvisioningCriteria: any }) => {
+      this.route.data.subscribe((data: { loanProvisioningCriteria: any } |Data) => {
         this.provisioningData = data.loanProvisioningCriteria;
     });
   }

@@ -1,7 +1,7 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute, Data } from '@angular/router';
 import { DatePipe } from '@angular/common';
 
 /** Custom Services */
@@ -24,7 +24,7 @@ export class EditTellerComponent implements OnInit {
   /** Maximum date allowed. */
   maxDate = new Date();
   /** Teller form. */
-  tellerForm: FormGroup;
+  tellerForm!: FormGroup;
   /** Office data. */
   officeData: any;
   /** TellerStatuses data. */
@@ -47,7 +47,7 @@ export class EditTellerComponent implements OnInit {
               private route: ActivatedRoute,
               private router: Router,
               private datePipe: DatePipe) {
-    this.route.data.subscribe((data: { teller: any, offices: any }) => {
+    this.route.data.subscribe((data: { teller: any, offices: any }| Data) => {
       this.tellerData = data.teller;
       this.officeData = data.offices;
     });

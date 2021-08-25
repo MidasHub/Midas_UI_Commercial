@@ -1,7 +1,7 @@
 /** Angular Imports. */
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Data, Router } from '@angular/router';
 import { DatePipe } from '@angular/common';
 
 /** Custom Services. */
@@ -21,7 +21,7 @@ export class EditCashierComponent implements OnInit {
   /** Cashier Data. */
   cashierData: any = new Object();
   /** Edit cashier form. */
-  editCashierForm: FormGroup;
+  editCashierForm!: FormGroup;
   /** Is Staff ID present. */
   isStaffId = true;
   /** Minimum Date allowed. */
@@ -44,7 +44,7 @@ export class EditCashierComponent implements OnInit {
               private datePipe: DatePipe,
               private organizationService: OrganizationService,
               private settingsService: SettingsService ) {
-    this.route.data.subscribe((data: { cashier: any, cashierTemplate: any }) => {
+    this.route.data.subscribe((data: { cashier: any, cashierTemplate: any }|Data) => {
       this.cashierData.data = data.cashier;
       this.cashierData.template = data.cashierTemplate;
       this.isStaffId = this.cashierData.template.staffOptions.some((element: any) => element.id === this.cashierData.data.staffId);

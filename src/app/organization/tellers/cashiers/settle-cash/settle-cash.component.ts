@@ -1,7 +1,7 @@
 /** Angular Imports. */
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Data, Router } from '@angular/router';
 import { DatePipe } from '@angular/common';
 
 /** Customer Services. */
@@ -22,7 +22,7 @@ export class SettleCashComponent implements OnInit {
   /** Cashier data. */
   cashierData: any;
   /** Cashier Form. */
-  settleCashForm: FormGroup;
+  settleCashForm!: FormGroup;
 
   /**
    * Get cashier data from `Resolver`.
@@ -39,7 +39,7 @@ export class SettleCashComponent implements OnInit {
               private organizationService: OrganizationService,
               private settingsService: SettingsService,
               private router: Router) {
-    this.route.data.subscribe((data: { cashierTemplate: any}) => {
+    this.route.data.subscribe((data: { cashierTemplate: any} | Data) => {
       this.cashierData = data.cashierTemplate;
     });
   }

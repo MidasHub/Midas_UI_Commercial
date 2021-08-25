@@ -13,16 +13,16 @@ import { FormControl } from '@angular/forms';
 export class CampaignMessageStepComponent implements OnChanges {
 
   /** Column headers */
-  @Input() templateParameters: any[];
+  @Input() templateParameters: any[] = [];
   /** Valdity check for sms campaign form */
-  @Input() smsCampaignFormValid: boolean;
+  @Input() smsCampaignFormValid?: boolean;
   /** [Optional] SMS Campaign message for edit form */
   @Input() editCampaignMessage: any;
 
   /** Camapaign Message */
-  message = new FormControl('');
+  message = new FormControl({});
   /** Column header names */
-  parameterLabels: any[];
+  parameterLabels: any[] = [];
 
   constructor() { }
 

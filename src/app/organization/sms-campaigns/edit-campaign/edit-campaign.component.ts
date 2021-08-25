@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component, ViewChild } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Data, Router } from '@angular/router';
 import { DatePipe } from '@angular/common';
 
 /** Custom Services */
@@ -28,7 +28,7 @@ export class EditCampaignComponent {
   templateParameters: any;
 
   /** Campaign Message Step */
-  @ViewChild(CampaignMessageStepComponent, { static: true }) campaignMessageStep: CampaignMessageStepComponent;
+  @ViewChild(CampaignMessageStepComponent, { static: true }) campaignMessageStep!: CampaignMessageStepComponent;
 
   /**
    * Fetches campaign template from `resolve`
@@ -43,7 +43,7 @@ export class EditCampaignComponent {
               private datePipe: DatePipe,
               private organizationService: OrganizationService,
               private settingsService: SettingsService) {
-    this.route.data.subscribe((data: { smsCampaign: any, smsCampaignTemplate: any }) => {
+    this.route.data.subscribe((data: { smsCampaign: any, smsCampaignTemplate: any }|Data) => {
       this.smsCampaignTemplate = data.smsCampaignTemplate;
       this.smsCampaign = data.smsCampaign;
       this.smsCampaign.editFlag = true;

@@ -25,7 +25,7 @@ export class BusinessRuleParametersComponent implements OnChanges {
   @Input() paramData: any;
 
   /** Report Name */
-  reportName: string;
+  reportName!: string;
   /** Initializes new form group ReportForm */
   ReportForm = new FormGroup({});
   /** Array of all parent parameters */
@@ -106,7 +106,7 @@ export class BusinessRuleParametersComponent implements OnChanges {
     */
   setChildControls() {
     this.parentParameters.forEach((param: ReportParameter) => {
-      this.ReportForm.get(param.name).valueChanges.subscribe((option: any) => {
+      this.ReportForm.get(param.name)?.valueChanges.subscribe((option: any) => {
         param.childParameters.forEach((child: ReportParameter) => {
           if (child.displayType === 'none') {
             this.ReportForm.addControl(child.name, new FormControl(child.defaultVal));
@@ -152,7 +152,8 @@ export class BusinessRuleParametersComponent implements OnChanges {
           formattedResponse[newKey] = value;
           break;
         case 'select':
-          formattedResponse[newKey] = value['id'];
+          // formattedResponse[newKey] = value['id'];
+          formattedResponse[newKey] = value;
           break;
         case 'date':
           const dateFormat = this.settingsService.dateFormat;

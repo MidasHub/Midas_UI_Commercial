@@ -1,7 +1,7 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute, Data } from '@angular/router';
 
 /** Custom Services */
 import { OrganizationService } from '../organization.service';
@@ -17,7 +17,7 @@ import { OrganizationService } from '../organization.service';
 export class PasswordPreferencesComponent implements OnInit {
 
   /** Password preferences form. */
-  passwordPreferencesForm: FormGroup;
+  passwordPreferencesForm!: FormGroup;
   /** Password preferences data. */
   passwordPreferencesData: any;
 
@@ -32,7 +32,7 @@ export class PasswordPreferencesComponent implements OnInit {
               private organizationService: OrganizationService,
               private route: ActivatedRoute,
               private router: Router) {
-    this.route.data.subscribe((data: { passwordPreferencesTemplate: any}) => {
+    this.route.data.subscribe((data: { passwordPreferencesTemplate: any} | Data) => {
       this.passwordPreferencesData = data.passwordPreferencesTemplate;
     });
   }
@@ -60,7 +60,7 @@ export class PasswordPreferencesComponent implements OnInit {
   setPasswordPreferencesForm() {
     for (const passwordPreference of this.passwordPreferencesData) {
       if (passwordPreference.active === true) {
-        this.passwordPreferencesForm.get('validationPolicyId').setValue(passwordPreference.id);
+        this.passwordPreferencesForm.get('validationPolicyId')?.setValue(passwordPreference.id);
       }
     }
   }

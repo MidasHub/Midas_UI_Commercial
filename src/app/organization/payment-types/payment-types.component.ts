@@ -4,7 +4,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Data } from '@angular/router';
 
 /** rxjs Imports */
 import { of } from 'rxjs';
@@ -30,12 +30,12 @@ export class PaymentTypesComponent implements OnInit {
   /** Columns to be displayed in payment types table. */
   displayedColumns: string[] = ['name', 'description', 'isCashPayment', 'position', 'actions'];
   /** Data source for payment types table. */
-  dataSource: MatTableDataSource<any>;
+  dataSource!: MatTableDataSource<any>;
 
   /** Paginator for payment types table. */
-  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+  @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
   /** Sorter for payment types table. */
-  @ViewChild(MatSort, { static: true }) sort: MatSort;
+  @ViewChild(MatSort, { static: true }) sort!: MatSort;
 
   /**
    * Retrieves the payment types data from `resolve`.
@@ -46,7 +46,7 @@ export class PaymentTypesComponent implements OnInit {
   constructor(private organizationService: OrganizationService,
               private route: ActivatedRoute,
               private dialog: MatDialog) {
-    this.route.data.subscribe(( data: { paymentTypes: any }) => {
+    this.route.data.subscribe(( data: { paymentTypes: any }| Data) => {
       this.paymentTypesData = data.paymentTypes;
     });
   }

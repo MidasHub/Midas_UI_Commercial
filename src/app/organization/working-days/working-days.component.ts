@@ -1,7 +1,7 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, FormArray, FormControl } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute, Data } from '@angular/router';
 
 /** Custom Services */
 import { OrganizationService } from '../organization.service';
@@ -21,7 +21,7 @@ const recurrenceDefaultValue = 'FREQ=WEEKLY;INTERVAL=1;BYDAY=';
 export class WorkingDaysComponent implements OnInit {
 
   /** Working days form. */
-  workingDaysForm: FormGroup;
+  workingDaysForm!: FormGroup ;
   /** Working days data. */
   workingDaysData: any;
   /** Week days */
@@ -50,7 +50,7 @@ export class WorkingDaysComponent implements OnInit {
               private organizationService: OrganizationService,
               private settingsService: SettingsService,
               private router: Router) {
-    this.route.data.subscribe((data: { workingDays: any }) => {
+    this.route.data.subscribe((data: { workingDays: any } | Data) => {
       this.workingDaysData = data.workingDays;
     });
   }

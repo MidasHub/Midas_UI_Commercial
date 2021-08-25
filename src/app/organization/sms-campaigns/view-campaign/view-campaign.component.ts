@@ -3,7 +3,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource, MatTable } from '@angular/material/table';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Data, Router } from '@angular/router';
 import { DatePipe } from '@angular/common';
 
 /** Custom Dialogs */
@@ -33,7 +33,7 @@ export class ViewCampaignComponent implements OnInit {
   /** Maximum date allowed. */
   maxDate = new Date();
   /** SMS form. */
-  smsForm: FormGroup;
+  smsForm!: FormGroup;
   /** SMS Campaign data. */
   smsCampaignData: any;
   /** Message Status */
@@ -44,7 +44,7 @@ export class ViewCampaignComponent implements OnInit {
   dataSource = new MatTableDataSource();
 
   /** Message Table Reference */
-  @ViewChild('messageTable') messageTableRef: MatTable<Element>;
+  @ViewChild('messageTable') messageTableRef!: MatTable<Element>;
 
   /** SMS Camapaign Tabs */
   smsTabs: any[] = [
@@ -87,7 +87,7 @@ export class ViewCampaignComponent implements OnInit {
               private datePipe: DatePipe,
               private organizationService: OrganizationService,
               private settingsService: SettingsService) {
-    this.route.data.subscribe((data: { smsCampaign: any }) => {
+    this.route.data.subscribe((data: { smsCampaign: any }|Data) => {
       this.smsCampaignData = data.smsCampaign;
     });
   }

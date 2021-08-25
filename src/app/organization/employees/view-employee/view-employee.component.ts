@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Data } from '@angular/router';
 
 /**
  * View Employee Component.
@@ -20,7 +20,7 @@ export class ViewEmployeeComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route.
    */
   constructor(private route: ActivatedRoute) {
-    this.route.data.subscribe((data: { employee: any }) => {
+    this.route.data.subscribe((data: { employee: any }| Data) => {
       this.employeeData = data.employee;
     });
   }

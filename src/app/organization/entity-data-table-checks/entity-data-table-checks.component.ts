@@ -4,7 +4,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Data } from '@angular/router';
 
 /** Custom Services */
 import { OrganizationService } from '../organization.service';
@@ -27,7 +27,7 @@ export class EntityDataTableChecksComponent implements OnInit {
   /** Columns to be displayed in entity data table checks table. */
   displayedColumns: string[] = ['entity', 'productName', 'datatableName', 'status', 'systemDefined', 'actions'];
   /** Data source for entity data table checks table. */
-  dataSource: MatTableDataSource<any>;
+  dataSource!: MatTableDataSource<any>;
   /** Corresponding values for Entity */
   entityValues: any = [
     {
@@ -49,9 +49,9 @@ export class EntityDataTableChecksComponent implements OnInit {
   ];
 
   /** Paginator for entity data table checks table. */
-  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+  @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
   /** Sorter for entity data table checks table. */
-  @ViewChild(MatSort, { static: true }) sort: MatSort;
+  @ViewChild(MatSort, { static: true }) sort!: MatSort;
 
   /**
    * Retrieves the entity data table checks data from `resolve`.
@@ -62,7 +62,7 @@ export class EntityDataTableChecksComponent implements OnInit {
   constructor(private organizationService: OrganizationService,
               private route: ActivatedRoute,
               private dialog: MatDialog) {
-    this.route.data.subscribe(( data: { entityDataTableChecks: any }) => {
+    this.route.data.subscribe(( data: { entityDataTableChecks: any }| Data) => {
       this.entityDataTableChecksData = data.entityDataTableChecks.pageItems;
     });
   }

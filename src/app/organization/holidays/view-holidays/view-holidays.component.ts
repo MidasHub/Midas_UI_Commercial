@@ -1,6 +1,6 @@
 /** Angular Imports. */
 import { Component } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Data, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 
 /** Custom Services. */
@@ -30,7 +30,7 @@ export class ViewHolidaysComponent {
               private router: Router,
               private dialog: MatDialog,
               private organizationService: OrganizationService ) {
-    this.route.data.subscribe((data: { holidays: any}) => {
+    this.route.data.subscribe((data: { holidays: any} | Data) => {
       this.holidayData = data.holidays;
     });
   }

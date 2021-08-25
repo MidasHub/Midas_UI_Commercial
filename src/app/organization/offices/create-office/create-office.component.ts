@@ -1,7 +1,7 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute, Data } from '@angular/router';
 import { DatePipe } from '@angular/common';
 
 /** Custom Services */
@@ -19,7 +19,7 @@ import { SettingsService } from 'app/settings/settings.service';
 export class CreateOfficeComponent implements OnInit {
 
   /** Office form. */
-  officeForm: FormGroup;
+  officeForm!: FormGroup;
   /** Office Data */
   officeData: any;
   /** Minimum Date allowed. */
@@ -42,7 +42,7 @@ export class CreateOfficeComponent implements OnInit {
               private router: Router,
               private route: ActivatedRoute,
               private datePipe: DatePipe) {
-    this.route.data.subscribe((data: { offices: any }) => {
+    this.route.data.subscribe((data: { offices: any } | Data) => {
       this.officeData = data.offices;
     });
   }

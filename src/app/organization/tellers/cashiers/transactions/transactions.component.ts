@@ -3,7 +3,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Data } from '@angular/router';
 import { FormControl } from '@angular/forms';
 
 /** Custom Services */
@@ -32,12 +32,12 @@ export class TransactionsComponent implements OnInit {
   /** Columns to be displayed in transactions table. */
   displayedColumns: string[] = ['date', 'transactions', 'allocation', 'cashIn', 'cashOut', 'settlement'];
   /** Data source for transactions table. */
-  dataSource: MatTableDataSource<any>;
+  dataSource!: MatTableDataSource<any>;
 
   /** Paginator for transactions table. */
-  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
   /** Sorter for transactions table. */
-  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatSort) sort!: MatSort;
 
   /**
    * Retrieves the currencies data from `resolve`.
@@ -46,11 +46,11 @@ export class TransactionsComponent implements OnInit {
    */
   constructor(private organizationService: OrganizationService,
               private route: ActivatedRoute) {
-    this.route.data.subscribe(( data: { currencies: any }) => {
+    this.route.data.subscribe(( data: { currencies: any } | Data) => {
       this.currencyData = data.currencies.selectedCurrencyOptions;
     });
-    this.tellerId = this.route.parent.parent.parent.snapshot.params['id'];
-    this.cashierId = this.route.parent.snapshot.params['id'];
+    this.tellerId = this.route.parent?.parent?.parent?.snapshot.params['id'];
+    this.cashierId = this.route.parent?.snapshot.params['id'];
   }
 
   /**

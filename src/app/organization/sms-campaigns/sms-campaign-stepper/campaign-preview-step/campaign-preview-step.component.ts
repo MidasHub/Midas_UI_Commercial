@@ -19,9 +19,9 @@ export class CampaignPreviewStepComponent implements OnInit {
   @Input() editedCampaignMessage: any;
 
   /** Trigger types options */
-  triggerTypes: any[];
+  triggerTypes: any[] = [];
   /** SMS providers options */
-  smsProviders: any[];
+  smsProviders: any[] = [];
 
   /** Emits submit() event */
   @Output() submit = new EventEmitter;

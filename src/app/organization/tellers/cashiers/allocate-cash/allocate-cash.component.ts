@@ -1,7 +1,7 @@
 /** Angular Imports. */
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Data, Router } from '@angular/router';
 import { DatePipe } from '@angular/common';
 
 /** Custom Services. */
@@ -25,7 +25,7 @@ export class AllocateCashComponent implements OnInit {
   /** Cashier data. */
   cashierData: any;
   /** Cashier Form. */
-  allocateCashForm: FormGroup;
+  allocateCashForm!: FormGroup;
 
   /**
    * Get cashier data from `Resolver`.
@@ -42,7 +42,7 @@ export class AllocateCashComponent implements OnInit {
               private organizationService: OrganizationService,
               private settingsService: SettingsService,
               private router: Router) {
-    this.route.data.subscribe((data: { cashierTemplate: any}) => {
+    this.route.data.subscribe((data: { cashierTemplate: any} | Data) => {
       this.cashierData = data.cashierTemplate;
     });
   }

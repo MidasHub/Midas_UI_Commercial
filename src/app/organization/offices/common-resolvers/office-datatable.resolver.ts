@@ -24,7 +24,7 @@ export class OfficeDatatableResolver implements Resolve<Object> {
    * @returns {Observable<any>}
    */
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
-    const officeId = route.parent.parent.paramMap.get('id');
+    const officeId = route.parent?.parent?.paramMap.get('id');
     const datatableName = route.paramMap.get('datatableName');
     return this.organizationService.getOfficeDatatable(officeId, datatableName);
   }

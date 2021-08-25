@@ -1,6 +1,6 @@
 /** Angular Imports. */
 import { Component } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Data, Router } from '@angular/router';
 
 /** Custom Dialogs */
 import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.component';
@@ -33,7 +33,7 @@ export class ViewCashierComponent {
               private router: Router,
               private organizationService: OrganizationService,
               public dialog: MatDialog) {
-    this.route.data.subscribe((data: { cashier: any }) => {
+    this.route.data.subscribe((data: { cashier: any }| Data) => {
       this.cashierData = data.cashier;
     });
   }

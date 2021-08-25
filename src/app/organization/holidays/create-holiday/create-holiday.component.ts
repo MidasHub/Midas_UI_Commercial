@@ -1,7 +1,7 @@
 /** Angular Imports. */
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Data, Router } from '@angular/router';
 import { DatePipe } from '@angular/common';
 
 /** Custom Services. */
@@ -20,7 +20,7 @@ import { SettingsService } from 'app/settings/settings.service';
 export class CreateHolidayComponent implements OnInit {
 
   /** Create Holiday form. */
-  holidayForm: FormGroup;
+  holidayForm!: FormGroup;
   /** Repayment Scheduling data. */
   repaymentSchedulingTypes: any;
   /** Offices Data */
@@ -44,7 +44,7 @@ export class CreateHolidayComponent implements OnInit {
               private organizationService: OrganizationService,
               private settings: SettingsService,
               private router: Router ) {
-    this.route.data.subscribe((data: { offices: any, holidayTemplate: any }) => {
+    this.route.data.subscribe((data: { offices: any, holidayTemplate: any }|Data) => {
       this.officesData = data.offices;
       this.repaymentSchedulingTypes = data.holidayTemplate;
     });
@@ -73,7 +73,7 @@ export class CreateHolidayComponent implements OnInit {
    * Sets the conditional controls.
    */
   buildDependencies() {
-    this.holidayForm.get('reschedulingType').valueChanges.subscribe((option: any) => {
+    this.holidayForm.get('reschedulingType')?.valueChanges.subscribe((option: any) => {
       if (option === 2) {
         this.holidayForm.addControl('repaymentsRescheduledTo', new FormControl('', Validators.required));
       } else {

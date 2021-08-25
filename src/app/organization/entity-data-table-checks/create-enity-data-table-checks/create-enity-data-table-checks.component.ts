@@ -1,7 +1,7 @@
 /** Angular Imports. */
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Data, Router } from '@angular/router';
 
 /** Custom Services. */
 import { OrganizationService } from 'app/organization/organization.service';
@@ -17,17 +17,17 @@ import { OrganizationService } from 'app/organization/organization.service';
 export class CreateEnityDataTableChecksComponent implements OnInit {
 
   /** Create Entity Datatable Checks form. */
-  createEntityForm: FormGroup;
+  createEntityForm!: FormGroup;
   /** Entity Datatable Checks data. */
   createEntityData: any;
   /** Selected entity type. */
-  entityType: string;
+  entityType!: string;
   /** Entity types object array. */
-  entityTypes: any[];
+  entityTypes: any[] = [];
   /** Datatable Checks list. */
-  dataTableList: any[];
+  dataTableList: any[] = [];
   /** Loan and Savings status list. */
-  statusList: any[];
+  statusList: any[] = [];
 
   /**
    * Retrieves Entity Datatable Checks data from `resolve`.
@@ -40,7 +40,7 @@ export class CreateEnityDataTableChecksComponent implements OnInit {
               private route: ActivatedRoute,
               private organizationService: OrganizationService,
               private router: Router) {
-    this.route.data.subscribe((data: {dataTableEntity: any}) => {
+    this.route.data.subscribe((data: {dataTableEntity: any} | Data) => {
       this.createEntityData = data.dataTableEntity;
       this.entityTypes = [
         { name: 'Client', value: this.createEntityData.entities[0] },
@@ -72,7 +72,7 @@ export class CreateEnityDataTableChecksComponent implements OnInit {
    * @param entity Selected Entity.
    */
   getEntityType() {
-    this.createEntityForm.get('entity').valueChanges.subscribe((option: any) => {
+    this.createEntityForm.get('entity')?.valueChanges.subscribe((option: any) => {
       switch (option) {
         case 'm_client': {
           this.entityType = 'm_client';

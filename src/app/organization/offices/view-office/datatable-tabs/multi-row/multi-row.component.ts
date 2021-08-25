@@ -34,18 +34,18 @@ export class MultiRowComponent implements OnInit, OnChanges {
   @Input() dataObject: any;
 
   /** Data Table Name */
-  datatableName: string;
+  datatableName!: string;
   /** Data Table Columns */
   datatableColumns: string[] = [];
   /** Data Table Data */
   datatableData: any;
   /** Office Id */
-  officeId: string;
+  officeId!: string ;
   /** Toggle button visibility */
-  showDeleteBotton: boolean;
+  showDeleteBotton?: boolean;
 
   /** Data Table Reference */
-  @ViewChild('dataTable', { static: true }) dataTableRef: MatTable<Element>;
+  @ViewChild('dataTable', { static: true }) dataTableRef!: MatTable<Element>;
 
   /**
    * Fetches office Id from parent route params.
@@ -60,7 +60,7 @@ export class MultiRowComponent implements OnInit, OnChanges {
               private organizationService: OrganizationService,
               private settingsService: SettingsService,
               private dialog: MatDialog) {
-    this.officeId = this.route.parent.parent.snapshot.paramMap.get('id');
+    this.officeId = this.route.parent?.parent?.snapshot.paramMap.get('id') || '';
   }
 
   /**
@@ -90,10 +90,10 @@ export class MultiRowComponent implements OnInit, OnChanges {
   add() {
     let dataTableEntryObject: any = { locale: this.settingsService.language.code };
     const dateTransformColumns: string[] = [];
-    const columns = this.dataObject.columnHeaders.filter((column: any) => {
+    const columns = this.dataObject.columnHeaders.filter((column: any): any => {
       return ((column.columnName !== 'id') && (column.columnName !== 'office_id'));
     });
-    const formfields: FormfieldBase[] = columns.map((column: any) => {
+    const formfields: FormfieldBase[] = columns.map((column: any): any => {
       switch (column.columnDisplayType) {
         case 'INTEGER':
         case 'STRING':

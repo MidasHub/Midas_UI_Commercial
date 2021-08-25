@@ -1,7 +1,7 @@
 /** Angular Imports. */
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Data, Router } from '@angular/router';
 import { DatePipe } from '@angular/common';
 
 /** Custom Services. */
@@ -19,11 +19,11 @@ import { SettingsService } from 'app/settings/settings.service';
 export class EditHolidayComponent implements OnInit {
 
   /** Edit Holiday form. */
-  holidayForm: FormGroup;
+  holidayForm!: FormGroup;
   /** Holiday data. */
   holidayData: any;
   /** Rescheduling Type. */
-  reSchedulingType: number;
+  reSchedulingType!: number;
   /** Is Active Holiday. */
   isActiveHoliday = true;
   /** Minimum Date allowed. */
@@ -45,7 +45,7 @@ export class EditHolidayComponent implements OnInit {
               private organizatioService: OrganizationService,
               private settings: SettingsService,
               private router: Router ) {
-    this.route.data.subscribe((data: { holiday: any, holidayTemplate: any }) => {
+    this.route.data.subscribe((data: { holiday: any, holidayTemplate: any }| Data) => {
       this.holidayData = data.holiday;
       this.holidayData.repaymentSchedulingTypes = data.holidayTemplate;
       this.reSchedulingType = this.holidayData.reschedulingType;
@@ -86,7 +86,7 @@ export class EditHolidayComponent implements OnInit {
    * Get Rescheduling Type.
    */
   getReschedulingType() {
-    this.holidayForm.get('reschedulingType').valueChanges.subscribe( (option: any) => {
+    this.holidayForm.get('reschedulingType')?.valueChanges.subscribe( (option: any) => {
       this.reSchedulingType = option;
       if (option === 2) {
         this.holidayForm.addControl('repaymentsRescheduledTo', new FormControl(new Date(), Validators.required));

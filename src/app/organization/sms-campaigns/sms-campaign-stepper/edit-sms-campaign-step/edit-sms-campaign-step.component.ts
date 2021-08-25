@@ -24,17 +24,17 @@ export class EditSmsCampaignStepComponent implements OnInit {
   @Input() smsCampaign: any;
 
   /** SMS Campaign Form */
-  smsCampaignDetailsForm: FormGroup;
+  smsCampaignDetailsForm!: FormGroup;
   /** Data to be passed to sub component */
   paramData: any;
   /** Trigger types options */
-  triggerTypes: any[];
+  triggerTypes: any[] = [];
   /** SMS providers options */
-  smsProviders: any[];
+  smsProviders: any[] = [];
   /** Business Rules options */
-  businessRules: any[];
+  businessRules: any[] = [];
   /** Repetition Intervals */
-  repetitionIntervals: any[];
+  repetitionIntervals: any[] = [];
   /** Minimum Date allowed. */
   minDate = new Date(2000, 0, 1);
   /** Maximum Date allowed. */

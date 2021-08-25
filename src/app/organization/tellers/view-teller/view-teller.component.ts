@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Data, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 
 /** Custom Services */
@@ -33,7 +33,7 @@ export class ViewTellerComponent implements OnInit {
               private route: ActivatedRoute,
               private router: Router,
               public dialog: MatDialog) {
-    this.route.data.subscribe((data: { teller: any }) => {
+    this.route.data.subscribe((data: { teller: any } | Data) => {
       this.tellerData = data.teller;
     });
   }

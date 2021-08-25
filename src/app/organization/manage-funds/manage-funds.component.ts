@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Data } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { FormBuilder, Validators } from '@angular/forms';
 
@@ -42,7 +42,7 @@ export class ManageFundsComponent implements OnInit {
               private formBuilder: FormBuilder,
               private organizationservice: OrganizationService,
               public dialog: MatDialog) {
-    this.route.data.subscribe(( data: { funds: any }) => {
+    this.route.data.subscribe(( data: { funds: any }|Data) => {
       this.fundsData = data.funds;
     });
   }

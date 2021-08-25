@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Data } from '@angular/router';
 
 /**
  * View Office Component
@@ -20,7 +20,7 @@ export class ViewOfficeComponent {
    * @param {ActivatedRoute} route Activated Route
    */
   constructor(private route: ActivatedRoute) {
-    this.route.data.subscribe((data: { officeDatatables: any }) => {
+    this.route.data.subscribe((data: { officeDatatables: any } |Data) => {
       this.officeDatatables = data.officeDatatables;
     });
   }

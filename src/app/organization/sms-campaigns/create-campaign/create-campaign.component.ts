@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component, ViewChild } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Data, Router } from '@angular/router';
 import { DatePipe } from '@angular/common';
 
 /** Custom Components */
@@ -27,9 +27,9 @@ export class CreateCampaignComponent {
   templateParameters: any;
 
   /** SMS Campaign Step */
-  @ViewChild(SmsCampaignStepComponent, { static: true }) smsCampaignStep: SmsCampaignStepComponent;
+  @ViewChild(SmsCampaignStepComponent, { static: true }) smsCampaignStep!: SmsCampaignStepComponent;
   /** Campaign Message Step */
-  @ViewChild(CampaignMessageStepComponent, { static: true }) campaignMessageStep: CampaignMessageStepComponent;
+  @ViewChild(CampaignMessageStepComponent, { static: true }) campaignMessageStep!: CampaignMessageStepComponent;
 
   /**
    * Fetches campaign template from `resolve`
@@ -44,7 +44,7 @@ export class CreateCampaignComponent {
               private organizationService: OrganizationService,
               private settingsService: SettingsService,
               private datePipe: DatePipe) {
-    this.route.data.subscribe((data: { smsCampaignTemplate: any }) => {
+    this.route.data.subscribe((data: { smsCampaignTemplate: any } |Data) => {
       this.smsCampaignTemplate = data.smsCampaignTemplate;
     });
   }

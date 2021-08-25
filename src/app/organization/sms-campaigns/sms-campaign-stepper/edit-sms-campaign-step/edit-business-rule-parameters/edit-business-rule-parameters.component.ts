@@ -71,7 +71,7 @@ export class EditBusinessRuleParametersComponent implements OnChanges {
           const controlValue = this.paramValue[param.variable].toString();
           switch (param.displayType) {
             case 'text':
-              this.ReportForm.get(param.name).patchValue(controlValue);
+              this.ReportForm.get(param.name)?.patchValue(controlValue);
               break;
             case 'select':
               this.fetchSelectOptions(param, param.name);
@@ -79,7 +79,7 @@ export class EditBusinessRuleParametersComponent implements OnChanges {
             case 'date':
               const dateFormat = this.settingsService.dateFormat;
               const newControlValue = this.datePipe.transform(controlValue, dateFormat);
-              this.ReportForm.get(param.name).patchValue(newControlValue);
+              this.ReportForm.get(param.name)?.patchValue(newControlValue);
               break;
           }
         } else { // Child Parameter
@@ -111,7 +111,7 @@ export class EditBusinessRuleParametersComponent implements OnChanges {
    */
   setChildControls() {
     this.parentParameters.forEach((param: ReportParameter) => {
-      this.ReportForm.get(param.name).valueChanges.subscribe((option: any) => {
+      this.ReportForm.get(param.name)?.valueChanges.subscribe((option: any) => {
         param.childParameters.forEach((child: ReportParameter) => {
           if (child.displayType === 'none') {
             this.ReportForm.addControl(child.name, new FormControl(child.defaultVal));
@@ -140,7 +140,9 @@ export class EditBusinessRuleParametersComponent implements OnChanges {
       }
       const optionId = this.paramValue[param.variable].toString();
       const option = options.find(entry => entry.id === optionId);
+      if (option) {
       this.ReportForm.controls[param.name].patchValue({ id: optionId, name: option.name });
+      }
     });
   }
 

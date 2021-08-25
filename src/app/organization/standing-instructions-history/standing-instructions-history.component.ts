@@ -4,7 +4,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource, MatTable } from '@angular/material/table';
 import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute, Data } from '@angular/router';
 import { DatePipe } from '@angular/common';
 
 /** Custom Services */
@@ -26,7 +26,7 @@ export class StandingInstructionsHistoryComponent implements OnInit {
   /** Maximum Date allowed. */
   maxDate = new Date();
   /** Instruction  form. */
-  instructionForm: FormGroup;
+  instructionForm!: FormGroup;
   /** Standing Instructions Template */
   standingInstructionsTemplate: any;
   /** Toggles b/w form and table */
@@ -35,12 +35,12 @@ export class StandingInstructionsHistoryComponent implements OnInit {
   /** Columns to be displayed in instructions table. */
   displayedColumns: string[] = ['fromClient', 'fromAccount', 'toClient', 'toAccount', 'executionTime', 'amount', 'status', 'errorLog'];
   /** Data source for instructions table. */
-  dataSource: MatTableDataSource<any>;
+  dataSource!: MatTableDataSource<any>;
 
   /** Paginator for instructions table. */
-  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
   /** Sorter for instructions table. */
-  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatSort) sort!: MatSort;
 
   /**
    * Retrieves the instructions template from `resolve`.
@@ -57,7 +57,7 @@ export class StandingInstructionsHistoryComponent implements OnInit {
               private router: Router,
               private route: ActivatedRoute,
               private datePipe: DatePipe) {
-    this.route.data.subscribe((data: { standingInstructionsTemplate: any }) => {
+    this.route.data.subscribe((data: { standingInstructionsTemplate: any }| Data) => {
       this.standingInstructionsTemplate = data.standingInstructionsTemplate;
     });
   }
@@ -85,7 +85,7 @@ export class StandingInstructionsHistoryComponent implements OnInit {
    * Sets conditional child controls.
    */
   buildDependencies() {
-    this.instructionForm.get('fromAccountType').valueChanges.subscribe(() => {
+    this.instructionForm.get('fromAccountType')?.valueChanges.subscribe(() => {
       this.instructionForm.addControl('fromAccountId', new FormControl(''));
     });
   }

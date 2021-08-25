@@ -1,7 +1,7 @@
 /** Angular Imports. */
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Data, Router } from '@angular/router';
 import { DatePipe } from '@angular/common';
 
 /** Custom Services. */
@@ -25,7 +25,7 @@ export class CreateCashierComponent implements OnInit {
   /** Cashier Template. */
   cashierTemplate: any;
   /** Create cashier form. */
-  createCashierForm: FormGroup;
+  createCashierForm!: FormGroup;
 
   /**
    * Fetches cashier template from `resolve`
@@ -42,7 +42,7 @@ export class CreateCashierComponent implements OnInit {
               private datePipe: DatePipe,
               private organizationService: OrganizationService,
               private settingsService: SettingsService ) {
-    this.route.data.subscribe((data: { cashierTemplate: any }) => {
+    this.route.data.subscribe((data: { cashierTemplate: any }| Data) => {
       this.cashierTemplate = data.cashierTemplate;
     });
   }

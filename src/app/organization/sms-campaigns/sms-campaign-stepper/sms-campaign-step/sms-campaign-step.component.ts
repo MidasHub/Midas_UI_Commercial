@@ -24,7 +24,7 @@ export class SmsCampaignStepComponent implements OnInit {
   /** SMS Campaign Template */
   @Input() smsCampaignTemplate: any;
   /** Business Rule Parameters Component */
-  @ViewChild(BusinessRuleParametersComponent) businessRuleParametersComponent: BusinessRuleParametersComponent;
+  @ViewChild(BusinessRuleParametersComponent) businessRuleParametersComponent!: BusinessRuleParametersComponent;
 
   /** Min. Date */
   minDate = new Date();
@@ -32,17 +32,17 @@ export class SmsCampaignStepComponent implements OnInit {
   maxDate = new Date(new Date().setFullYear(new Date().getFullYear() + 10));
 
   /** SMS Campaign Form */
-  smsCampaignDetailsForm: FormGroup;
+  smsCampaignDetailsForm!: FormGroup;
   /** Data to be passed to sub component */
   paramData: any;
   /** Trigger types options */
-  triggerTypes: any[];
+  triggerTypes: any[] = [];
   /** SMS providers options */
-  smsProviders: any[];
+  smsProviders!: any[];
   /** Business Rules options */
-  businessRules: any[];
+  businessRules!: any[];
   /** Repetition Intervals */
-  repetitionIntervals: any[];
+  repetitionIntervals!: any[];
 
   /** Template Parameters Event Emitter */
   @Output() templateParameters = new EventEmitter();
@@ -125,14 +125,14 @@ export class SmsCampaignStepComponent implements OnInit {
    * Gets reports parameters and passes it to subcomponent on business rule value changes.
    */
   buildDependencies() {
-    this.smsCampaignDetailsForm.get('isNotification').valueChanges.subscribe((value: boolean) => {
+    this.smsCampaignDetailsForm.get('isNotification')?.valueChanges.subscribe((value: boolean) => {
       if (!value) {
         this.smsCampaignDetailsForm.addControl('providerId', new FormControl(null));
       } else {
         this.smsCampaignDetailsForm.removeControl('providerId');
       }
     });
-    this.smsCampaignDetailsForm.get('runReportId').valueChanges.subscribe((value: number) => {
+    this.smsCampaignDetailsForm.get('runReportId')?.valueChanges.subscribe((value: number) => {
       if (value) {
         const report = this.businessRules.find((rule: any) => rule.reportId === value);
         this.reportService.getReportParams(report.reportName).subscribe((response: ReportParameter[]) => {
@@ -140,11 +140,11 @@ export class SmsCampaignStepComponent implements OnInit {
         });
       }
     });
-    this.smsCampaignDetailsForm.get('triggerType').valueChanges.subscribe((value: number) => {
+    this.smsCampaignDetailsForm.get('triggerType')?.valueChanges.subscribe((value: number) => {
       this.templateParameters.emit(null);
       this.businessRules = this.smsCampaignTemplate.businessRulesOptions;
       if (this.smsCampaignDetailsForm.controls.runReportId.value) {
-        this.smsCampaignDetailsForm.get('runReportId').patchValue('');
+        this.smsCampaignDetailsForm.get('runReportId')?.patchValue('');
       }
       if (value === 3) {
         this.businessRules = this.businessRules.filter((rule: any) => rule.reportSubType === 'Triggered');
@@ -155,7 +155,7 @@ export class SmsCampaignStepComponent implements OnInit {
         this.smsCampaignDetailsForm.addControl('recurrenceStartDate', new FormControl('', Validators.required));
         this.smsCampaignDetailsForm.addControl('frequency', new FormControl('', Validators.required));
         this.smsCampaignDetailsForm.addControl('interval', new FormControl('', Validators.required));
-        this.smsCampaignDetailsForm.get('frequency').valueChanges.subscribe((frequency: number) => {
+        this.smsCampaignDetailsForm.get('frequency')?.valueChanges.subscribe((frequency: number) => {
           this.smsCampaignDetailsForm.removeControl('repeatsOnDay');
           switch (frequency) {
             case 1: // Daily

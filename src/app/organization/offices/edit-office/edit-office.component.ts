@@ -1,7 +1,7 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Data, Router } from '@angular/router';
 import { DatePipe } from '@angular/common';
 
 /** Custom Services */
@@ -21,7 +21,7 @@ export class EditOfficeComponent implements OnInit {
   /** Selected Data. */
   officeData: any;
   /** Office form. */
-  officeForm: FormGroup;
+  officeForm?: FormGroup;
   /** Minimum Date allowed. */
   minDate = new Date(2000, 0, 1);
   /** Maximum Date allowed. */
@@ -43,7 +43,7 @@ export class EditOfficeComponent implements OnInit {
                 private route: ActivatedRoute,
                 private router: Router,
                 private datepipe: DatePipe) {
-      this.route.data.subscribe((data: { officeTemplate: any }) => {
+      this.route.data.subscribe((data: { officeTemplate: any } | Data) => {
         this.officeData = data.officeTemplate;
       });
     }
@@ -70,12 +70,12 @@ export class EditOfficeComponent implements OnInit {
    * Submits the edit office form.
    */
   submit() {
-    const openedOn: Date = this.officeForm.value.openingDate;
+    const openedOn: Date = this.officeForm?.value.openingDate;
     const dateFormat = this.settingsService.dateFormat;
-    this.officeForm.patchValue({
+    this.officeForm?.patchValue({
       openingDate: this.datepipe.transform(openedOn, dateFormat)
     });
-    const office = this.officeForm.value;
+    const office = this.officeForm?.value;
     office.locale = this.settingsService.language.code;
     office.dateFormat = dateFormat;
     this.organizationService.updateOffice(this.officeData.id, office).subscribe((response: any) => {

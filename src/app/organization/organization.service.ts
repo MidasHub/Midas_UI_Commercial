@@ -39,7 +39,7 @@ export class OrganizationService {
    * @param {string} provisioningId Provisioning ID of Loan Provisioning Criteria.
    * @returns {Observable<any>} Provisioning Criteria.
    */
-  getProvisioningCriteria(provisioningId: string, template: boolean = false): Observable<any> {
+  getProvisioningCriteria(provisioningId?: string|null, template: boolean = false): Observable<any> {
     const httpParams = new HttpParams().set('template', template.toString());
     return this.http.get(`/provisioningcriteria/${provisioningId}`, { params: httpParams });
   }
@@ -112,7 +112,7 @@ export class OrganizationService {
    * @param {boolean} template
    * @returns {Observable<any>} Office.
    */
-  getOffice(officeId: string, template: boolean = false): Observable<any> {
+  getOffice(officeId?: string |null, template: boolean = false): Observable<any> {
     const httpParams = new HttpParams().set('template', template.toString());
     return this.http.get(`/offices/${officeId}`, { params: httpParams });
   }
@@ -147,7 +147,7 @@ export class OrganizationService {
    * @param datatableName Data table name.
    * @returns {Observable<any>}
    */
-  getOfficeDatatable(officeId: string, datatableName: string): Observable<any> {
+  getOfficeDatatable(officeId?: string|null, datatableName?: string|null): Observable<any> {
     const httpParams = new HttpParams().set('genericResultSet', 'true');
     return this.http.get(`/datatables/${datatableName}/${officeId}`, { params: httpParams });
   }
@@ -205,7 +205,7 @@ export class OrganizationService {
    * @param {boolean} template
    * @returns {Observable<any>} Employee.
    */
-  getEmployee(employeeId: string, template: boolean = true): Observable<any> {
+  getEmployee(employeeId?: string|null, template: boolean = true): Observable<any> {
     const httpParams = new HttpParams().set('template', template.toString());
     return this.http.get(`/staff/${employeeId}`, { params: httpParams });
   }
@@ -236,7 +236,7 @@ export class OrganizationService {
    * @param {string} smsCampaignId SMS Campaign ID of SMS Campaign.
    * @returns {Observable<any>} SMS Campaign.
    */
-  getSmsCampaign(campaignId: string): Observable<any> {
+  getSmsCampaign(campaignId?: string|null): Observable<any> {
     return this.http.get(`/smscampaigns/${campaignId}`);
   }
 
@@ -363,7 +363,7 @@ export class OrganizationService {
    * @param {string} tellerId Teller ID of teller.
    * @returns {Observable<any>} Teller.
    */
-  getTeller(tellerId: string): Observable<any> {
+  getTeller(tellerId?: string|null): Observable<any> {
     return this.http.get(`/tellers/${tellerId}`);
   }
 
@@ -371,7 +371,7 @@ export class OrganizationService {
    * @param {string} tellerId Teller ID of teller.
    * @returns {Observable<any>} Cashier data.
    */
-  getCashiers(tellerId: string): Observable<any> {
+  getCashiers(tellerId?: string|null): Observable<any> {
     return this.http.get(`/tellers/${tellerId}/cashiers`);
   }
 
@@ -380,7 +380,7 @@ export class OrganizationService {
    * @param {string} cashierId Cashier ID of cashier
    * @returns {Observable<any>} Cashier data.
    */
-  getCashier(tellerId: string, cashierId: string): Observable<any> {
+  getCashier(tellerId?: string|null, cashierId?: string|null): Observable<any> {
     return this.http.get(`/tellers/${tellerId}/cashiers/${cashierId}`);
   }
 
@@ -401,7 +401,7 @@ export class OrganizationService {
    * @param {string} cashierId Cashier Id.
    * @returns {Observable<any>} Cashier Transaction data.
    */
-  getCashierTransactionTemplate(tellerId: string, cashierId: string): Observable<any> {
+  getCashierTransactionTemplate(tellerId?: string|null, cashierId?: string|null): Observable<any> {
     return this.http.get(`/tellers/${tellerId}/cashiers/${cashierId}/transactions/template`);
   }
 
@@ -449,7 +449,7 @@ export class OrganizationService {
    * @param tellerId Teller ID.
    * @returns {Observable<any>} Cashier template.
    */
-  getCashierTemplate(tellerId: string): Observable<any> {
+  getCashierTemplate(tellerId?: string|null): Observable<any> {
     return this.http.get(`/tellers/${tellerId}/cashiers/template`);
   }
 
@@ -507,7 +507,7 @@ export class OrganizationService {
    * @param {string} paymentTypeId Payment type ID of payment type.
    * @returns {Observable<any>} Payment type.
    */
-  getPaymentType(paymentTypeId: string): Observable<any> {
+  getPaymentType(paymentTypeId?: string|null): Observable<any> {
     return this.http.get(`/paymenttypes/${paymentTypeId}`);
   }
 
@@ -599,7 +599,7 @@ export class OrganizationService {
    * @param holidayId Holiday Id of holidays.
    * @returns {Observable<any>} Holiday data.
    */
-  getHoliday(holidayId: string): Observable<any> {
+  getHoliday(holidayId?: string|null): Observable<any> {
     return this.http.get(`/holidays/${holidayId}`);
   }
 

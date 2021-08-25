@@ -3,7 +3,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Data } from '@angular/router';
 import { FormControl } from '@angular/forms';
 
 /** rxjs Imports */
@@ -31,12 +31,12 @@ export class HolidaysComponent implements OnInit {
   /** Columns to be displayed in holidays table. */
   displayedColumns: string[] = ['name', 'fromDate', 'toDate', 'repaymentsRescheduledTo', 'status'];
   /** Data source for holidays table. */
-  dataSource: MatTableDataSource<any>;
+  dataSource!: MatTableDataSource<any>;
 
   /** Paginator for holidays table. */
-  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+  @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
   /** Sorter for holidays table. */
-  @ViewChild(MatSort, { static: true }) sort: MatSort;
+  @ViewChild(MatSort, { static: true }) sort!: MatSort;
 
   /**
    * Retrieves the offices data from `resolve`.
@@ -46,7 +46,7 @@ export class HolidaysComponent implements OnInit {
    */
   constructor(private organizationService: OrganizationService,
               private route: ActivatedRoute) {
-    this.route.data.subscribe(( data: { offices: any }) => {
+    this.route.data.subscribe(( data: { offices: any }| Data) => {
       this.officeData = data.offices;
     });
   }

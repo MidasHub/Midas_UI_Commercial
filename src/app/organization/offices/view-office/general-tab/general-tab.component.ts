@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Data } from '@angular/router';
 
 /**
  * Office View General Tab
@@ -20,7 +20,7 @@ export class GeneralTabComponent {
    * @param {ActivatedRoute} route Activated Route
    */
   constructor(private route: ActivatedRoute) {
-    this.route.parent.data.subscribe((data: { office: any }) => {
+    this.route.parent?.data.subscribe((data: { office: any }|Data) => {
       this.officeData = data.office;
     });
   }

@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute, Data } from '@angular/router';
 
 /** Custom Models */
 import { FormfieldBase } from 'app/shared/form-dialog/formfield/model/formfield-base';
@@ -28,7 +28,7 @@ import { SettingsService } from 'app/settings/settings.service';
 export class CreateLoanProvisioningCriteriaComponent implements OnInit {
 
   /** Loan Provisioning Criteria form. */
-  provisioningCriteriaForm: FormGroup;
+  provisioningCriteriaForm!: FormGroup;
   /** Loan Provisioning Criteria Template */
   loanProvisioningCriteriaTemplate: any;
   /** Liability Accounts */
@@ -65,7 +65,7 @@ export class CreateLoanProvisioningCriteriaComponent implements OnInit {
               private router: Router,
               public dialog: MatDialog,
               private route: ActivatedRoute) {
-     this.route.data.subscribe((data: { loanProvisioningCriteriaTemplate: any }) => {
+     this.route.data.subscribe((data: { loanProvisioningCriteriaTemplate: any } | Data) => {
       this.loanProvisioningCriteriaTemplate = data.loanProvisioningCriteriaTemplate;
       this.definitions = this.loanProvisioningCriteriaTemplate.definitions;
       this.liabilityAccounts = this.loanProvisioningCriteriaTemplate.glAccounts.filter((account: any) => account.type.value === 'LIABILITY');
@@ -177,7 +177,7 @@ export class CreateLoanProvisioningCriteriaComponent implements OnInit {
     const locale = this.settingsService.language.code;
     const loanProvisioningCriteria = {
       ...this.provisioningCriteriaForm.value,
-      loanProducts: this.provisioningCriteriaForm.get('loanProducts').value.map((product: any) => ({
+      loanProducts: this.provisioningCriteriaForm.get('loanProducts')?.value.map((product: any) => ({
         id: product.id,
         name: product.name,
         includeInBorrowerCycle: product.includeInBorrowerCycle

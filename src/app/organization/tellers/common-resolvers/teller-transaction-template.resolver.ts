@@ -24,8 +24,8 @@ export class CashierTransactionTemplateResolver implements Resolve<Object> {
    * @returns {Observable<any>}
    */
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
-    const cashierId = route.parent.paramMap.get('id');
-    const tellerId = route.parent.parent.paramMap.get('id');
+    const cashierId = route.parent?.paramMap.get('id');
+    const tellerId = route.parent?.parent?.paramMap.get('id');
     return this.organizationService.getCashierTransactionTemplate(tellerId, cashierId);
   }
 

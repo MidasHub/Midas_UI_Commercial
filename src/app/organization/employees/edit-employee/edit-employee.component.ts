@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Data, Router } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 
@@ -25,7 +25,7 @@ export class EditEmployeeComponent implements OnInit {
   /** Maximum joining date allowed. */
   maxDate = new Date();
   /** Employee form. */
-  editEmployeeForm: FormGroup;
+  editEmployeeForm!: FormGroup;
   /** Office data. */
   officeData: any;
 
@@ -44,7 +44,7 @@ export class EditEmployeeComponent implements OnInit {
               private route: ActivatedRoute,
               private router: Router,
               private datePipe: DatePipe) {
-    this.route.data.subscribe((data: { employee: any, offices: any  }) => {
+    this.route.data.subscribe((data: { employee: any, offices: any  }| Data) => {
       this.employeeData = data.employee;
       this.officeData = data.employee.allowedOffices;
     });

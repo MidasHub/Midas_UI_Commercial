@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Data } from '@angular/router';
 
 /**
  * Offices Datatable Tabs Component
@@ -15,14 +15,14 @@ export class DatatableTabsComponent {
   /** Office Datatable */
   officeDatatable: any;
   /** Multi Row Datatable Flag */
-  multiRowDatatableFlag: boolean;
+  multiRowDatatableFlag?: boolean;
 
   /**
    * Fetches data table data from `resolve`
    * @param {ActivatedRoute} route Activated Route.
    */
   constructor(private route: ActivatedRoute) {
-    this.route.data.subscribe((data: { officeDatatable: any }) => {
+    this.route.data.subscribe((data: { officeDatatable: any } | Data) => {
       this.officeDatatable = data.officeDatatable;
       this.multiRowDatatableFlag = this.officeDatatable.columnHeaders[0].columnName === 'id' ? true : false;
     });

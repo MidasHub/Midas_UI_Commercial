@@ -33,7 +33,7 @@ export class SingleRowComponent implements OnInit {
   @Input() dataObject: any;
 
   /** Data Table Name */
-  datatableName: string;
+  datatableName!: string;
   /** Office Id */
   officeId: string;
 
@@ -50,7 +50,7 @@ export class SingleRowComponent implements OnInit {
               private dialog: MatDialog,
               private organizationService: OrganizationService,
               private settingsService: SettingsService ) {
-    this.officeId = this.route.parent.parent.snapshot.paramMap.get('id');
+    this.officeId = this.route.parent?.parent?.snapshot.paramMap.get('id') || '';
   }
 
   /**
@@ -154,7 +154,7 @@ export class SingleRowComponent implements OnInit {
    * @param {any} dataTableEntryObject Additional data table details.
    */
   getFormfields(columns: any, dateTransformColumns: string[], dataTableEntryObject: any) {
-    return columns.map((column: any) => {
+    return columns.map((column: any): any => {
       switch (column.columnDisplayType) {
         case 'INTEGER':
         case 'STRING':

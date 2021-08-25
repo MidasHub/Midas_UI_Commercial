@@ -1,7 +1,7 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute, Data } from '@angular/router';
 
 /** Custom Services */
 import { OrganizationService } from 'app/organization/organization.service';
@@ -17,7 +17,7 @@ import { OrganizationService } from 'app/organization/organization.service';
 export class EditPaymentTypeComponent implements OnInit {
 
   /** Payment Type form. */
-  paymentTypeForm: FormGroup;
+  paymentTypeForm!: FormGroup;
   /** Payment Type Data. */
   paymentTypeData: any;
 
@@ -32,7 +32,7 @@ export class EditPaymentTypeComponent implements OnInit {
               private organizationService: OrganizationService,
               private router: Router,
               private route: ActivatedRoute) {
-    this.route.data.subscribe(( data: { paymentType: any }) => {
+    this.route.data.subscribe(( data: { paymentType: any }|Data) => {
       this.paymentTypeData = data.paymentType;
     });
   }

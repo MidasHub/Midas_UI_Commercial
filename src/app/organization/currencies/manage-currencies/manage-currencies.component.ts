@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Data } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { FormBuilder, Validators } from '@angular/forms';
 
@@ -21,7 +21,7 @@ import { OrganizationService } from '../../organization.service';
 export class ManageCurrenciesComponent implements OnInit {
 
   /** Selected Currencies data. */
-  selectedCurrencies: any[];
+  selectedCurrencies: any[] =[];
   /** Currency options data */
   currencyData: any;
   /** Currency form */
@@ -41,7 +41,7 @@ export class ManageCurrenciesComponent implements OnInit {
               private formBuilder: FormBuilder,
               private organizationservice: OrganizationService,
               public dialog: MatDialog) {
-    this.route.parent.data.subscribe(( data: { currencies: any }) => {
+    this.route.parent?.data.subscribe(( data: { currencies: any }|Data) => {
       this.selectedCurrencies = data.currencies.selectedCurrencyOptions;
       this.currencyData = data.currencies.currencyOptions;
     });

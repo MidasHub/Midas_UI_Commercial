@@ -23,14 +23,14 @@ import { environment } from '../../environments/environment';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit, OnDestroy {
-  
+
   public environment = environment;
   /** True if password requires a reset. */
   resetPassword = false;
   /** True if user requires two factor authentication. */
   twoFactorAuthenticationRequired = false;
   /** Subscription to alerts. */
-  alert$: Subscription;
+  alert$: Subscription = new Subscription();
 
   /**
    * @param {AlertService} alertService Alert Service.
