@@ -1,14 +1,14 @@
-import { Component, Inject, OnInit, ViewChild } from "@angular/core";
-import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { MatTable, MatTableDataSource } from "@angular/material/table";
-import { promise } from "selenium-webdriver";
-import { TransactionService } from "app/transactions/transaction.service";
+import { Component, Inject, OnInit, ViewChild } from '@angular/core';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatTable, MatTableDataSource } from '@angular/material/table';
+import { promise } from 'selenium-webdriver';
+import { TransactionService } from 'app/transactions/transaction.service';
 
 @Component({
-  selector: "midas-add-submit-transaction-dialog",
-  templateUrl: "./add-submit-transaction-dialog.component.html",
-  styleUrls: ["./add-submit-transaction-dialog.component.scss"],
+  selector: 'midas-add-submit-transaction-dialog',
+  templateUrl: './add-submit-transaction-dialog.component.html',
+  styleUrls: ['./add-submit-transaction-dialog.component.scss'],
 })
 export class AddSubmitTransactionDialogComponent implements OnInit {
   formDialog: FormGroup;
@@ -16,9 +16,9 @@ export class AddSubmitTransactionDialogComponent implements OnInit {
   listTerminalTransaction: any[];
   transactionTotalByBatchNo: any[];
   listObjectTransactionSubmit: any[];
-  displayedColumns: string[] = ["no", "amountSubmit", "batchNoSubmit", "fileSubmit"];
+  displayedColumns: string[] = ['no', 'amountSubmit', 'batchNoSubmit', 'fileSubmit'];
   dataSource: MatTableDataSource<any>;
-  @ViewChild("bookingBranchSubmit") bookingBranchSubmit!: MatTable<Element>;
+  @ViewChild('bookingBranchSubmit') bookingBranchSubmit!: MatTable<Element>;
 
   constructor(
     public dialogRef: MatDialogRef<AddSubmitTransactionDialogComponent>,
@@ -32,17 +32,17 @@ export class AddSubmitTransactionDialogComponent implements OnInit {
     this.listObjectTransactionSubmit = [];
 
     this.formDialog = this.formBuilder.group({
-      terminalSubmit: ["", Validators.required],
+      terminalSubmit: ['', Validators.required],
     });
   }
 
   ngOnInit(): void {
-    //init batchNo with total amnount submit
-    this.formDialog.get("terminalSubmit")?.valueChanges.subscribe((option: any) => {
+    // init batchNo with total amnount submit
+    this.formDialog.get('terminalSubmit')?.valueChanges.subscribe((option: any) => {
       this.listObjectTransactionSubmit = [];
       this.transactionTotalByBatchNo.forEach((element: any) => {
-        if (element.terminalId == option) {
-          let objectSubmitTransaction: any = {
+        if (element.terminalId === option) {
+          const objectSubmitTransaction: any = {
             batchNoSubmit: element.batchNo,
             amountSubmitSuggest: element.amount,
             amountSubmit: undefined,
@@ -61,10 +61,10 @@ export class AddSubmitTransactionDialogComponent implements OnInit {
   }
 
   async readThis(inputValue: any, batchNo: string) {
-    var file: File = inputValue.files[0];
+    let file: File = inputValue.files[0];
     if (!file) {
       this.listObjectTransactionSubmit.forEach((transaction) => {
-        if (transaction.batchNoSubmit == batchNo) {
+        if (transaction.batchNoSubmit === batchNo) {
           transaction.fileSubmitBase64 = undefined;
         }
       });
@@ -72,11 +72,11 @@ export class AddSubmitTransactionDialogComponent implements OnInit {
 
     file = await this.transactionService.resizeImage(file, 1920, 1080 );
 
-    var myReader: FileReader = new FileReader();
+    const myReader: FileReader = new FileReader();
 
     myReader.onloadend = (e) => {
       this.listObjectTransactionSubmit.forEach((transaction) => {
-        if (transaction.batchNoSubmit == batchNo) {
+        if (transaction.batchNoSubmit === batchNo) {
           transaction.fileSubmitBase64 = myReader.result;
         }
       });

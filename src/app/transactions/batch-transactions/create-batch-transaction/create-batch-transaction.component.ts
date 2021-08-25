@@ -1,66 +1,66 @@
-import { Component, OnInit } from "@angular/core";
-import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
-import { animate, state, style, transition, trigger } from "@angular/animations";
-import { MatDialog, MatDialogConfig } from "@angular/material/dialog";
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { animate, state, style, transition, trigger } from '@angular/animations';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 // import { AddFeeDialogComponent } from "../../dialog/add-fee-dialog/add-fee-dialog.component";
 // import { AddRowCreateBatchTransactionComponent } from "../../dialog/add-row-create-batch-transaction/add-row-create-batch-transaction.component";
-import { CreateCardBatchTransactionComponent } from "../../dialog/create-card-batch-transaction/create-card-batch-transaction.component";
-import { TransactionService } from "../../transaction.service";
-import { ActivatedRoute, ActivatedRouteSnapshot, Router } from "@angular/router";
-import { AlertService } from "../../../core/alert/alert.service";
-import { AuthenticationService } from "../../../core/authentication/authentication.service";
-import { GroupsService } from "../../../groups/groups.service";
+import { CreateCardBatchTransactionComponent } from '../../dialog/create-card-batch-transaction/create-card-batch-transaction.component';
+import { TransactionService } from '../../transaction.service';
+import { ActivatedRoute, ActivatedRouteSnapshot, Router } from '@angular/router';
+import { AlertService } from '../../../core/alert/alert.service';
+import { AuthenticationService } from '../../../core/authentication/authentication.service';
+import { GroupsService } from '../../../groups/groups.service';
 // import { AddInformationCardBatchComponent } from "../../dialog/add-information-card-batch/add-information-card-batch.component";
-import { AddIdentitiesExtraInfoComponent } from "../../../clients/clients-view/identities-tab/dialog-add-identities-extra-info/add-identities-extra-info.component";
-import { ClientsService } from "../../../clients/clients.service";
-import { debounce, distinctUntilChanged, map, startWith, takeUntil } from "rxjs/operators";
-import { Observable, Subject, timer } from "rxjs";
-import { ConfirmDialogComponent } from "../../dialog/confirm-dialog/confirm-dialog.component";
-import { MakeFeeOnAdvanceComponent } from "../../dialog/make-fee-on-advance/make-fee-on-advance.component";
-import { BanksService } from "../../../banks/banks.service";
-import { ValidCheckTransactionHistoryDialogComponent } from "app/transactions/dialog/valid-check-transaction-history/valid-check-transaction-history-dialog.component";
-import { TerminalsService } from "app/terminals/terminals.service";
-import { Logger } from "../../../core/logger/logger.service";
-import { AddFeeDialogComponent } from "app/transactions/dialog/add-fee-dialog/add-fee-dialog.component";
-import { ThirdPartyService } from "app/third-party/third-party.service";
-const log = new Logger("Batch Txn");
+import { AddIdentitiesExtraInfoComponent } from '../../../clients/clients-view/identities-tab/dialog-add-identities-extra-info/add-identities-extra-info.component';
+import { ClientsService } from '../../../clients/clients.service';
+import { debounce, distinctUntilChanged, map, startWith, takeUntil } from 'rxjs/operators';
+import { Observable, Subject, timer } from 'rxjs';
+import { ConfirmDialogComponent } from '../../dialog/confirm-dialog/confirm-dialog.component';
+import { MakeFeeOnAdvanceComponent } from '../../dialog/make-fee-on-advance/make-fee-on-advance.component';
+import { BanksService } from '../../../banks/banks.service';
+import { ValidCheckTransactionHistoryDialogComponent } from 'app/transactions/dialog/valid-check-transaction-history/valid-check-transaction-history-dialog.component';
+import { TerminalsService } from 'app/terminals/terminals.service';
+import { Logger } from '../../../core/logger/logger.service';
+import { AddFeeDialogComponent } from 'app/transactions/dialog/add-fee-dialog/add-fee-dialog.component';
+import { ThirdPartyService } from 'app/third-party/third-party.service';
+const log = new Logger('Batch Txn');
 @Component({
-  selector: "midas-create-batch-transaction",
-  templateUrl: "./create-batch-transaction.component.html",
-  styleUrls: ["./create-batch-transaction.component.scss"],
+  selector: 'midas-create-batch-transaction',
+  templateUrl: './create-batch-transaction.component.html',
+  styleUrls: ['./create-batch-transaction.component.scss'],
   animations: [
-    trigger("detailExpand", [
-      state("collapsed", style({ height: "0px", minHeight: "0" })),
-      state("expanded", style({ height: "100px" })),
-      transition("expanded <=> collapsed", animate("225ms cubic-bezier(0.4, 0.0, 0.2, 1)")),
+    trigger('detailExpand', [
+      state('collapsed', style({ height: '0px', minHeight: '0' })),
+      state('expanded', style({ height: '100px' })),
+      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
     ]),
   ],
 })
 export class CreateBatchTransactionComponent implements OnInit {
   dataSource: any[] = [];
-  formFilter = new FormControl("");
+  formFilter = new FormControl('');
   displayedColumns: any[] = [
-    "clientName",
-    "productId",
-    "rate",
-    "amount",
-    "terminalId",
-    "invoiceAmount",
-    "fee",
-    "batchNo",
-    "tid",
-    "terminalAmount",
-    "actions",
+    'clientName',
+    'productId',
+    'rate',
+    'amount',
+    'terminalId',
+    'invoiceAmount',
+    'fee',
+    'batchNo',
+    'tid',
+    'terminalAmount',
+    'actions',
   ];
   terminals: any[] = [];
   batchProducts: any[] = [
     {
-      label: "Cash",
-      value: "CA01",
+      label: 'Cash',
+      value: 'CA01',
     },
     {
-      label: "Advance",
-      value: "AL02",
+      label: 'Advance',
+      value: 'AL02',
     },
   ];
   totalAmount = 0;
@@ -68,34 +68,34 @@ export class CreateBatchTransactionComponent implements OnInit {
   totalFee = 0;
   totalAmountTransaction = 0;
   totalTerminalAmount = 0;
-  isRequiredTraceBatchNo: boolean = true;
+  isRequiredTraceBatchNo = true;
   expandedElement: any;
   accountFilter: any[] = [];
   accountsShow: any[] = [];
   members: any[] = [];
   group: any;
   defaultData: any = {
-    clientId: "",
-    clientName: "",
-    groupId: "",
-    officeId: "", // webStorage.get('sessionData').officeId,
-    fromClientId: "", // webStorage.get('sessionData').userId,
+    clientId: '',
+    clientName: '',
+    groupId: '',
+    officeId: '', // webStorage.get('sessionData').officeId,
+    fromClientId: '', // webStorage.get('sessionData').userId,
     parentOfficeId: 0,
-    toClientId: "", // id
+    toClientId: '', // id
     toAccountId: 0,
-    customerName: "", // name
+    customerName: '', // name
     // identitydocuments: [],
-    identitydocumentsId: "", // identifierId
-    documentId: "", // documentId
+    identitydocumentsId: '', // identifierId
+    documentId: '', // documentId
     amount: 0,
     terminalAmount: 0,
     invoiceAmount: 0,
     requestAmount: 0,
-    rate: "", // scope.getFeeByCardAndType(identifierId, 'CA01'),
+    rate: '', // scope.getFeeByCardAndType(identifierId, 'CA01'),
     fee: 0,
-    productId: "CA01",
-    batchTxnName: "", // scope.batchTxnName,
-    bookingTxnDailyId: "", // scope.bookingId,
+    productId: 'CA01',
+    batchTxnName: '', // scope.batchTxnName,
+    bookingTxnDailyId: '', // scope.bookingId,
     // <!-- add fee real paid -->
 
     feeCP: 0,
@@ -132,11 +132,11 @@ export class CreateBatchTransactionComponent implements OnInit {
   txnDate: any = new Date();
 
   private _filter(value: string): string[] {
-    const filterValue = String(value).toUpperCase().replace(/\s+/g, "");
+    const filterValue = String(value).toUpperCase().replace(/\s+/g, '');
     return this.members.filter((option: any) => {
       return (
-        option.fullName.toUpperCase().replace(/\s+/g, "").includes(filterValue) ||
-        option.cardNumber.toUpperCase().replace(/\s+/g, "").includes(filterValue)
+        option.fullName.toUpperCase().replace(/\s+/g, '').includes(filterValue) ||
+        option.cardNumber.toUpperCase().replace(/\s+/g, '').includes(filterValue)
       );
     });
   }
@@ -155,7 +155,7 @@ export class CreateBatchTransactionComponent implements OnInit {
   ) {
     this.currentUser = this.authenticationService.getCredentials();
     const { permissions } = this.currentUser;
-    const permit_manager = permissions.includes("POS_UPDATE");
+    const permit_manager = permissions.includes('POS_UPDATE');
     if (permit_manager) {
       this.isRequiredTraceBatchNo = false;
     }
@@ -165,13 +165,13 @@ export class CreateBatchTransactionComponent implements OnInit {
     // }
   }
 
-  displayClient(client: any): string | undefined {
+  displayClient(client: any): string  {
     return client
       ? `${client.cardNumber.slice(0, 6)} X ${client.cardNumber.slice(
           client.cardNumber.length - 4,
           client.cardNumber.length
         )} - ${client.fullName}`
-      : undefined;
+      : '';
   }
 
   getLabelProduct(productId: string) {
@@ -183,9 +183,9 @@ export class CreateBatchTransactionComponent implements OnInit {
   }
 
   resetAutoComplete() {
-    this.formFilter.setValue("");
+    this.formFilter.setValue('');
     this.filteredOptions = this.formFilter.valueChanges.pipe(
-      startWith(""),
+      startWith(''),
       map((value: any) => this._filter(value))
     );
   }
@@ -261,7 +261,7 @@ export class CreateBatchTransactionComponent implements OnInit {
   }
 
   displayTerminalName(terminalId: string) {
-    const terminalInfo = this.terminalsMasters?.filter((terminal: any) => terminal.terminalId == terminalId);
+    const terminalInfo = this.terminalsMasters?.filter((terminal: any) => terminal.terminalId === terminalId);
     return terminalInfo ? terminalInfo[0]?.terminalName : terminalId;
   }
 
@@ -272,11 +272,11 @@ export class CreateBatchTransactionComponent implements OnInit {
     const card = this.feeGroup.find((v: any) => String(panNumber).startsWith(v.cardBeginDigit));
     if (card) {
       switch (productId) {
-        case "CA01":
+        case 'CA01':
           return card?.minValue;
-        case "AL01":
+        case 'AL01':
           return card?.maxValue;
-        case "AL02":
+        case 'AL02':
           return card?.maxValue;
         default:
           return 2.0;
@@ -287,8 +287,8 @@ export class CreateBatchTransactionComponent implements OnInit {
 
   clearRequestAmount() {
     this.dataSource.forEach((element) => {
-      if (element?.get("requestAmount").value == 0) {
-        element?.get("requestAmount").setValue(undefined);
+      if (element?.get('requestAmount').value === 0) {
+        element?.get('requestAmount').setValue(undefined);
       }
     });
   }
@@ -304,13 +304,13 @@ export class CreateBatchTransactionComponent implements OnInit {
     }
 
     this.totalTerminalAmount = this.dataSource.reduce((total: any, num: any) => {
-      return total + Math.round(num?.get("terminalAmount").value);
+      return total + Math.round(num?.get('terminalAmount').value);
     }, 0);
     this.totalFee = this.dataSource.reduce((total: any, num: any) => {
-      return total + Math.round(num?.get("fee").value);
+      return total + Math.round(num?.get('fee').value);
     }, 0);
     this.totalRequest = this.dataSource.reduce((total: any, num: any) => {
-      return total + Math.round(num?.get("invoiceAmount").value);
+      return total + Math.round(num?.get('invoiceAmount').value);
     }, 0);
   }
 
@@ -318,7 +318,7 @@ export class CreateBatchTransactionComponent implements OnInit {
     this.init();
     this.filteredOptions = new Observable<any[]>();
     this.filteredOptions = this.formFilter.valueChanges.pipe(
-      startWith(""),
+      startWith(''),
       map((value: any) => this._filter(value))
     );
   }
@@ -348,29 +348,31 @@ export class CreateBatchTransactionComponent implements OnInit {
       member: member,
     };
 
-  
-    form.get("requestAmount")?.valueChanges.pipe(
+
+    form.get('requestAmount')?.valueChanges.pipe(
         debounce(() => timer(1000)),
-        distinctUntilChanged(null, (event: any) => {
+        // distinctUntilChanged(null, (event: any) => {
+          distinctUntilChanged( (event: any) => {
           return event;
         }),
         takeUntil(this.destroy$)
       )
       .subscribe((value) => {
         if (value && value > 0) {
-          this.terminalsService.getListTerminalAvailable(value, "SI").subscribe((result) => {
+          this.terminalsService.getListTerminalAvailable(value, 'SI').subscribe((result) => {
             // @ts-ignore
             form?.data.terminals = result?.result?.listTerminal;
-            form.get("terminalId")?.setValidators([Validators.required]);
+            form.get('terminalId')?.setValidators([Validators.required]);
           });
         }
       });
     form.valueChanges.subscribe((e) => {
       this.onChangeTotal();
     });
-    form.get("rate")?.valueChanges.pipe(
+    form.get('rate')?.valueChanges.pipe(
         debounce(() => timer(1000)),
-        distinctUntilChanged(null, (event: any) => {
+        // distinctUntilChanged(null, (event: any) => {
+          distinctUntilChanged( (event: any) => {
           return event;
         }),
         takeUntil(this.destroy$)
@@ -380,20 +382,20 @@ export class CreateBatchTransactionComponent implements OnInit {
         // @ts-ignore
         const { minRate, maxRate, cogsRate } = form?.data?.feeTerminalDto;
         if (rate < minRate || rate > maxRate) {
-          form.get("rate")?.setValue(maxRate);
+          form.get('rate')?.setValue(maxRate);
           rate = maxRate;
           // @ts-ignore
-          form.get("pnlRate").setValue(Number(maxRate - cogsRate).toFixed(2));
+          form.get('pnlRate').setValue(Number(maxRate - cogsRate).toFixed(2));
           this.alertService.alert({
-            message: "Tỉ lệ phí không được thấp hơn " + minRate + " và cao hơn " + maxRate,
-            msgClass: "cssWarning",
+            message: 'Tỉ lệ phí không được thấp hơn ' + minRate + ' và cao hơn ' + maxRate,
+            msgClass: 'cssWarning',
           });
         } else {
           // @ts-ignore
-          form.get("pnlRate").setValue(Number(rate - cogsRate).toFixed(2));
+          form.get('pnlRate').setValue(Number(rate - cogsRate).toFixed(2));
         }
-        const terminalAmount = form.get("terminalAmount")?.value;
-        form.get("fee")?.setValue(Number(terminalAmount * (rate / 100)).toFixed(0));
+        const terminalAmount = form.get('terminalAmount')?.value;
+        form.get('fee')?.setValue(Number(terminalAmount * (rate / 100)).toFixed(0));
       });
     this.bankServices?.getInfoBinCode(member.cardNumber.slice(0, 6)).subscribe((result) => {
       if (result) {
@@ -401,12 +403,12 @@ export class CreateBatchTransactionComponent implements OnInit {
         form.data.binCodeInfo = result;
       }
     });
-    form.get("productId")?.valueChanges.subscribe((result) => {
-      const cardNumber = form.get("identitydocumentsId")?.value;
-      let newRate = this.getFee(cardNumber, result);
-      form.get("rate")?.setValue(newRate);
+    form.get('productId')?.valueChanges.subscribe((result) => {
+      const cardNumber = form.get('identitydocumentsId')?.value;
+      const newRate = this.getFee(cardNumber, result);
+      form.get('rate')?.setValue(newRate);
     });
-    form.get("terminalId")?.valueChanges.subscribe((terminalId) => {
+    form.get('terminalId')?.valueChanges.subscribe((terminalId) => {
       if (terminalId) {
         // @ts-ignore
         if (!form.data.binCodeInfo) {
@@ -422,13 +424,13 @@ export class CreateBatchTransactionComponent implements OnInit {
         }
       }
 
-      const amount = form.get("requestAmount")?.value;
-      const rate = form.get("rate")?.value;
+      const amount = form.get('requestAmount')?.value;
+      const rate = form.get('rate')?.value;
       // @ts-ignore
       // tslint:disable-next-line:no-shadowed-variable
       const { documentId } = form.data.member;
       if (amount && rate !== 0 && terminalId) {
-        let cardNumber = `${member.cardNumber.slice(0, 6)}-X-${member.cardNumber.slice(
+        const cardNumber = `${member.cardNumber.slice(0, 6)}-X-${member.cardNumber.slice(
           member.cardNumber.length - 4,
           member.cardNumber.length
         )} `;
@@ -446,32 +448,32 @@ export class CreateBatchTransactionComponent implements OnInit {
         }
       }
     });
-    form.get("terminalAmount")?.valueChanges.subscribe((result) => {
-      const rate = form.get("rate")?.value;
-      const cogsRate = form.get("cogsRate")?.value;
+    form.get('terminalAmount')?.valueChanges.subscribe((result) => {
+      const rate = form.get('rate')?.value;
+      const cogsRate = form.get('cogsRate')?.value;
       const fee = Number(result * (rate / 100)).toFixed(0);
-      form.get("fee")?.setValue(fee);
+      form.get('fee')?.setValue(fee);
       const feeCP = Number(result * (cogsRate / 100)).toFixed(0);
-      form.get("feeCP")?.setValue(feeCP);
+      form.get('feeCP')?.setValue(feeCP);
       // @ts-ignore
-      form.get("feePNL")?.setValue(Number(fee - feeCP).toFixed(0));
+      form.get('feePNL')?.setValue(Number(fee - feeCP).toFixed(0));
     });
     return form;
   }
 
   formatLong(value: any) {
-    return Number(String(value).replace(/[^0-9]+/g, ""));
+    return Number(String(value).replace(/[^0-9]+/g, ''));
   }
 
   formatCurrency(value: string) {
     value = String(value);
-    const neg = value.startsWith("-");
-    value = value.replace(/[-\D]/g, "");
-    value = value.replace(/(\d{3})$/, ",$1");
-    value = value.replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
-    value = value !== "" ? "" + value : "";
+    const neg = value.startsWith('-');
+    value = value.replace(/[-\D]/g, '');
+    value = value.replace(/(\d{3})$/, ',$1');
+    value = value.replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
+    value = value !== '' ? '' + value : '';
     if (neg) {
-      value = "-".concat(value);
+      value = '-'.concat(value);
     }
 
     return value;
@@ -483,50 +485,50 @@ export class CreateBatchTransactionComponent implements OnInit {
       this.transactionServices
         .mappingInvoiceWithTransaction(form.data.binCodeInfo.cardType, form.data.binCodeInfo.bankCode, documentKey, documentId, amount, result)
         .subscribe((result2: any) => {
-          if (result2.status != 200) {
-            if (result2.status == 401) {
-              if (result2.error == "Unauthorize with Midas") {
+          if (result2.status !== 200) {
+            if (result2.status === 401) {
+              if (result2.error === 'Unauthorize with Midas') {
                 this.alertService.alert({
-                  message: "Phiên làm việc hết hạn vui lòng đăng nhập lại để tiếp tục",
-                  msgClass: "cssDanger",
-                  hPosition: "center",
+                  message: 'Phiên làm việc hết hạn vui lòng đăng nhập lại để tiếp tục',
+                  msgClass: 'cssDanger',
+                  hPosition: 'center',
                 });
               }
             }
 
-            if (result2.statusCode == 666) {
-              if (typeof result2.error !== "undefined" && result2.error !== "") {
+            if (result2.statusCode = 666) {
+              if (typeof result2.error !== 'undefined' && result2.error !== '') {
                 this.alertService.alert({
                   message: `${result2.error}`,
-                  msgClass: "cssDanger",
-                  hPosition: "center",
+                  msgClass: 'cssDanger',
+                  hPosition: 'center',
                 });
               }
             } else {
               this.alertService.alert({
                 message: `Lỗi xảy ra : Vui lòng liên hệ ITSupport. ERROR: ${result2}`,
-                msgClass: "cssDanger",
-                hPosition: "center",
+                msgClass: 'cssDanger',
+                hPosition: 'center',
               });
             }
             return;
           }
-          if (typeof result2.result.caution != "undefined" && result2.result.caution != "NaN") {
+          if (typeof result2.result.caution !== 'undefined' && result2.result.caution !== 'NaN') {
             this.showHistoryTransaction(result2.result.caution, result2.result.listTransaction);
           }
           const value = result2?.result.amountTransaction;
           if (value > 0) {
             // form.get('amountTransaction').setValue(value);
-            form.get("invoiceAmount").setValue(value);
+            form.get('invoiceAmount').setValue(value);
 
-            form.get("terminalAmount").setValue(value);
+            form.get('terminalAmount').setValue(value);
             // @ts-ignore
-            form.get("bills").setValue(result2.result.listInvoice);
+            form.get('bills').setValue(result2.result.listInvoice);
           } else {
             this.alertService.alert({
               message: `Lỗi truy xuất số tiền đề xuất giao dịch, vui lòng liên hệ IT support! `,
-              msgClass: "cssDanger",
-              hPosition: "center",
+              msgClass: 'cssDanger',
+              hPosition: 'center',
             });
 
             return;
@@ -552,7 +554,7 @@ export class CreateBatchTransactionComponent implements OnInit {
       // @ts-ignore
       form.data.feeTerminalDto = result1?.result?.feeTerminalDto;
       const { minRate, maxRate, cogsRate } = result1?.result?.feeTerminalDto;
-      form.get("cogsRate").setValue(cogsRate);
+      form.get('cogsRate').setValue(cogsRate);
       // @ts-ignore
       form.data.feeTerminalDto = {
         minRate,
@@ -560,22 +562,22 @@ export class CreateBatchTransactionComponent implements OnInit {
         cogsRate,
       };
       // tslint:disable-next-line:no-shadowed-variable
-      let rate = form.get("rate").value;
+      let rate = form.get('rate').value;
       if (rate < minRate || rate > maxRate) {
-        form.get("rate").setValue(maxRate);
+        form.get('rate').setValue(maxRate);
         rate = maxRate;
         // @ts-ignore
-        form.get("pnlRate").setValue(Number(maxRate - cogsRate).toFixed(2));
+        form.get('pnlRate').setValue(Number(maxRate - cogsRate).toFixed(2));
         this.alertService.alert({
-          message: "Tỉ lệ phí không được thấp hơn " + minRate + " và cao hơn " + maxRate,
-          msgClass: "cssWarning",
+          message: 'Tỉ lệ phí không được thấp hơn ' + minRate + ' và cao hơn ' + maxRate,
+          msgClass: 'cssWarning',
         });
       } else {
         // @ts-ignore
-        form.get("pnlRate").setValue(Number(rate - cogsRate).toFixed(2));
+        form.get('pnlRate').setValue(Number(rate - cogsRate).toFixed(2));
       }
-      const terminalAmount = form.get("terminalAmount").value;
-      form.get("fee").setValue(Number(terminalAmount * (rate / 100)).toFixed(0));
+      const terminalAmount = form.get('terminalAmount').value;
+      form.get('fee').setValue(Number(terminalAmount * (rate / 100)).toFixed(0));
     });
   }
 
@@ -588,7 +590,7 @@ export class CreateBatchTransactionComponent implements OnInit {
     if (!checkValidTransaction1?.result?.isValid) {
       return this.alertService.alert({
         message: checkValidTransaction1?.result?.message,
-        msgClass: "cssWarning",
+        msgClass: 'cssWarning',
       });
     }
     const resultCard = await this.checkCard(member.clientId, member.documentId);
@@ -611,7 +613,7 @@ export class CreateBatchTransactionComponent implements OnInit {
             clientName: member.fullName,
             documentId: member.documentId,
             toAccountId: result?.result?.clientInfo?.savingsAccountId,
-            rate: this.getFee(member.cardNumber.slice(0, 6), "CA01"),
+            rate: this.getFee(member.cardNumber.slice(0, 6), 'CA01'),
           };
           this.dataSource = [this.generaForm(batchTransaction, member), ...this.dataSource];
         }
@@ -622,7 +624,7 @@ export class CreateBatchTransactionComponent implements OnInit {
   }
 
   deleteRow(form: any) {
-    this.dataSource = this.dataSource.filter((v) => v.get("index").value !== form.get("index").value);
+    this.dataSource = this.dataSource.filter((v) => v.get('index').value !== form.get('index').value);
   }
 
   makeFeeOnAdvance() {
@@ -651,25 +653,25 @@ export class CreateBatchTransactionComponent implements OnInit {
   }
 
   onSave(form: any) {
-    if (form.invalid || !form.get("terminalId").value) {
+    if (form.invalid || !form.get('terminalId').value) {
       return this.alertService.alert({
-        message: "Vui lòng điền đầy đủ thông tin",
-        msgClass: "cssDanger",
+        message: 'Vui lòng điền đầy đủ thông tin',
+        msgClass: 'cssDanger',
       });
     }
 
     let messageConfirm = `Bạn chắc chắn muốn lưu giao dịch?`;
-    let traceNo = form.get("tid").value;
-    let batchNo = form.get("batchNo").value;
+    const traceNo = form.get('tid').value;
+    const batchNo = form.get('batchNo').value;
 
-    if (!traceNo || !batchNo || traceNo.trim().length == 0 || batchNo.trim().length == 0) {
+    if (!traceNo || !batchNo || traceNo.trim().length === 0 || batchNo.trim().length === 0) {
       messageConfirm = `Hệ thống ghi nhận đây là giao dịch treo (do không có mã lô và mã hóa đơn), bạn chắc chắn muốn lưu giao dịch?`;
     }
 
     const dialog = this.dialog.open(ConfirmDialogComponent, {
       data: {
         message: messageConfirm,
-        title: "Hoàn thành giao dịch",
+        title: 'Hoàn thành giao dịch',
       },
     });
     dialog.afterClosed().subscribe((data) => {
@@ -677,23 +679,23 @@ export class CreateBatchTransactionComponent implements OnInit {
         const formData = { ...form.data.member, ...form.value };
         delete formData.index;
         this.transactionServices.onSaveTransactionBatch(formData).subscribe((result) => {
-          if (result?.status === "200") {
+          if (result?.status === '200') {
             this.batchTxnName = result?.result?.batchTxnName;
 
             const queryParams = { batchTxnName: this.batchTxnName };
             this.router.navigate([], {
               queryParams: queryParams,
-              queryParamsHandling: "merge", // remove to replace all query params by provided
+              queryParamsHandling: 'merge', // remove to replace all query params by provided
             });
             this.updateData(form, result?.result?.transactionId);
             return this.alertService.alert({
-              message: "Giao dịch thành công",
-              msgClass: "cssSuccess",
+              message: 'Giao dịch thành công',
+              msgClass: 'cssSuccess',
             });
           }
           return this.alertService.alert({
             message: result?.error,
-            msgClass: "cssDanger",
+            msgClass: 'cssDanger',
           });
         });
       }
@@ -704,7 +706,7 @@ export class CreateBatchTransactionComponent implements OnInit {
     this.transactionServices.getTransactionDetail(transactionId).subscribe((result) => {
       const v = result?.result?.detailTransactionDto;
       const member = form.data.member;
-      const index = form.get("index").value;
+      const index = form.get('index').value;
       if (this.batchTxnName) {
         this.defaultData.batchTxnName = this.batchTxnName;
       }
@@ -731,7 +733,7 @@ export class CreateBatchTransactionComponent implements OnInit {
       };
       const form_new = this.generaForm(batchTransaction, member);
       const newDataSo = this.dataSource.slice();
-      const indesx = newDataSo.findIndex((j: any) => j.get("index").value === form.get("index").value);
+      const indesx = newDataSo.findIndex((j: any) => j.get('index').value === form.get('index').value);
       newDataSo[indesx] = form_new;
       this.dataSource = newDataSo;
     });
@@ -751,21 +753,21 @@ export class CreateBatchTransactionComponent implements OnInit {
                 if (expiredDate.getMonth() === now.getMonth() + 1) {
                   this.alertService.alert({
                     message:
-                      "CHÚ Ý: Thẻ sẽ hết hạn vào tháng sau, đây là lần cuối cùng được thực hiện giao dịch trên thẻ này",
-                    msgClass: "cssWarning",
+                      'CHÚ Ý: Thẻ sẽ hết hạn vào tháng sau, đây là lần cuối cùng được thực hiện giao dịch trên thẻ này',
+                    msgClass: 'cssWarning',
                   });
                 }
               }
               if (expiredDate.getMonth() === now.getMonth()) {
                 this.alertService.alert({
-                  message: "CẢNH BÁO: Thẻ sẽ hết hạn trong tháng này, cân nhắc khi thực hiện giao dịch trên thẻ này",
-                  msgClass: "cssWarning",
+                  message: 'CẢNH BÁO: Thẻ sẽ hết hạn trong tháng này, cân nhắc khi thực hiện giao dịch trên thẻ này',
+                  msgClass: 'cssWarning',
                 });
               }
               if (expiredDate.getMonth() < now.getMonth()) {
                 this.alertService.alert({
-                  message: "CẢNH BÁO: Thẻ đã hết hạn, không được thực hiện giao dịch trên thẻ này",
-                  msgClass: "cssWarning",
+                  message: 'CẢNH BÁO: Thẻ đã hết hạn, không được thực hiện giao dịch trên thẻ này',
+                  msgClass: 'cssWarning',
                 });
               }
             }
@@ -787,7 +789,7 @@ export class CreateBatchTransactionComponent implements OnInit {
 
   sortData(sort: any) {
     this.accountFilter = this.accountFilter.sort((a, b) => {
-      const isAsc = sort.direction === "asc";
+      const isAsc = sort.direction === 'asc';
       const key = sort.active;
       return this.compare(a[key], b[key], isAsc);
     });
@@ -827,7 +829,7 @@ export class CreateBatchTransactionComponent implements OnInit {
   }
 
   addCard() {
-    console.log("member", this.members);
+    console.log('member', this.members);
     const dialogConfig = new MatDialogConfig();
     dialogConfig.data = {
       members: this.members,

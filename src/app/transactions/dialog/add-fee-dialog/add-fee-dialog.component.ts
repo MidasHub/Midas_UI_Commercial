@@ -1,23 +1,23 @@
-import { Component, Inject, OnInit } from "@angular/core";
-import { FormBuilder, FormGroup } from "@angular/forms";
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
-import { GroupsService } from "app/groups/groups.service";
-import { SavingsService } from "app/savings/savings.service";
-import { AlertService } from "../../../core/alert/alert.service";
-import { AuthenticationService } from "../../../core/authentication/authentication.service";
-import { MidasClientService } from "../../../midas-client/midas-client.service";
-import { TransactionService } from "../../transaction.service";
-import { ConfirmDialogComponent } from "../confirm-dialog/confirm-dialog.component";
+import { Component, Inject, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { GroupsService } from 'app/groups/groups.service';
+import { SavingsService } from 'app/savings/savings.service';
+import { AlertService } from '../../../core/alert/alert.service';
+import { AuthenticationService } from '../../../core/authentication/authentication.service';
+import { MidasClientService } from '../../../midas-client/midas-client.service';
+import { TransactionService } from '../../transaction.service';
+import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
 
 @Component({
-  selector: "midas-add-fee-dialog",
-  templateUrl: "./add-fee-dialog.component.html",
-  styleUrls: ["./add-fee-dialog.component.scss"],
+  selector: 'midas-add-fee-dialog',
+  templateUrl: './add-fee-dialog.component.html',
+  styleUrls: ['./add-fee-dialog.component.scss'],
 })
 export class AddFeeDialogComponent implements OnInit {
   paidPaymentType: any[] = [];
-  formDialogPaid: FormGroup;
-  formDialogGet: FormGroup;
+  formDialogPaid!: FormGroup;
+  formDialogGet!: FormGroup;
   accountsFee: any[] = [];
   txnCode: string;
   partners: any[] = [];
@@ -30,7 +30,7 @@ export class AddFeeDialogComponent implements OnInit {
 
   showGet = true;
   showCashAccountPaid = true;
-  selectedPaymentTypePaid = "";
+  selectedPaymentTypePaid = '';
   paidAmount = 0;
   feeAmount = 0;
   donePaid = false;
@@ -39,11 +39,11 @@ export class AddFeeDialogComponent implements OnInit {
   disableAmountPaid = false;
   clientId: any;
   clientAccount: any;
-  messageError: string ='';
-  isLoading: boolean = false;
+  messageError = '';
+  isLoading = false;
   amountPaidBooking: number;
-  maxAmount: number = 0;
-  bookingId: number = null;
+  maxAmount = 0;
+  bookingId: number ;
   constructor(
     private transactionService: TransactionService,
     private formBuilder: FormBuilder,
@@ -61,63 +61,63 @@ export class AddFeeDialogComponent implements OnInit {
     this.bookingId = data.data?.bookingId;
     this.amountPaidBooking = data.data?.amountPaid;
     this.formDialogPaid = this.formBuilder.group({
-      paymentCode: [""],
-      savingAccountPaid: [""],
-      routingCodePartner: [""],
-      amountPaid: [""],
-      notePaid: [""],
+      paymentCode: [''],
+      savingAccountPaid: [''],
+      routingCodePartner: [''],
+      amountPaid: [''],
+      notePaid: [''],
     });
     this.formDialogGet = this.formBuilder.group({
-      paymentCodeGet: [""],
-      amountGet: [""],
-      savingAccountGet: [""],
-      noteGet: [""],
+      paymentCodeGet: [''],
+      amountGet: [''],
+      savingAccountGet: [''],
+      noteGet: [''],
     });
-    this.formDialogPaid.get("paymentCode")?.valueChanges.subscribe((value) => {
+    this.formDialogPaid.get('paymentCode')?.valueChanges.subscribe((value) => {
       this.checkAccountAndAmountPaid();
     });
-    this.formDialogGet.get("paymentCodeGet")?.valueChanges.subscribe((value) => {
+    this.formDialogGet.get('paymentCodeGet')?.valueChanges.subscribe((value) => {
       this.checkAccountFee();
     });
   }
 
   getPaymentCode() {
-    return this.formDialogPaid.get("paymentCode")?.value;
+    return this.formDialogPaid.get('paymentCode')?.value;
   }
 
   checkAccountAndAmountPaid() {
-    this.formDialogPaid.value;
-    const paymentCode = this.formDialogPaid.get("paymentCode")?.value;
-    if (paymentCode !== "DE") {
+    // this.formDialogPaid.value;
+    const paymentCode = this.formDialogPaid.get('paymentCode')?.value;
+    if (paymentCode !== 'DE') {
 
       this.midasClientServices.getListSavingAccountByUserId().subscribe((result) => {
         this.accountsPaid = result?.result?.listSavingAccount;
         this.showGet = true;
-        this.formDialogPaid.get("amountPaid")?.enable();
-        this.transactionFee = this.transactions.find((v) => v.txnPaymentType === "IN");
-        this.transactionPaid = this.transactions.find((v) => v.txnPaymentType === "OUT");
+        this.formDialogPaid.get('amountPaid')?.enable();
+        this.transactionFee = this.transactions.find((v) => v.txnPaymentType === 'IN');
+        this.transactionPaid = this.transactions.find((v) => v.txnPaymentType === 'OUT');
 
         if (!this.transactionPaid) {
-          this.formDialogPaid.get("amountPaid")?.setValue(0);
+          this.formDialogPaid.get('amountPaid')?.setValue(0);
         } else {
-          this.formDialogPaid.get("amountPaid")?.setValue(this.transactionPaid?.feeRemain);
+          this.formDialogPaid.get('amountPaid')?.setValue(this.transactionPaid?.feeRemain);
         }
 
         if (!this.transactionFee) {
-          this.formDialogGet.get("amountGet")?.setValue(0);
+          this.formDialogGet.get('amountGet')?.setValue(0);
         } else {
-          this.formDialogGet.get("amountGet")?.setValue(this.transactionFee?.feeRemain);
+          this.formDialogGet.get('amountGet')?.setValue(this.transactionFee?.feeRemain);
         }
 
-        const AC = paymentCode === "CA" ? 9 : 8;
+        const AC = paymentCode === 'CA' ? 9 : 8;
         let NoAccount = 0;
         this.accountsPaid.map((v) => {
           if (v.productId !== AC) {
             v.hide = true;
           } else {
             v.hide = false;
-            if (NoAccount == 0) {
-              this.formDialogPaid.get("savingAccountPaid")?.setValue(v.id);
+            if (NoAccount === 0) {
+              this.formDialogPaid.get('savingAccountPaid')?.setValue(v.id);
             }
             NoAccount += 1;
           }
@@ -125,35 +125,35 @@ export class AddFeeDialogComponent implements OnInit {
       });
     } else {
       this.showGet = false;
-      this.formDialogPaid.get("amountPaid")?.setValue(this.transactionPaid?.feeRemain - this.transactionFee?.feeRemain);
+      this.formDialogPaid.get('amountPaid')?.setValue(this.transactionPaid?.feeRemain - this.transactionFee?.feeRemain);
       if (!this.isBATCH) {
-        this.formDialogPaid.get("amountPaid")?.disable();
+        this.formDialogPaid.get('amountPaid')?.disable();
       } else {
         this.accountsPaid = [];
-        let groupId = this.transactions[0].agencyId;
+        const groupId = this.transactions[0].agencyId;
         this.groupsService.getGroupAccountsData(groupId).subscribe((savings) => {
           this.clientAccount = savings?.savingsAccounts;
           let savingAccountId = null;
           if (this.clientAccount) {
             for (let index = 0; index < this.clientAccount.length; index++) {
-              if (this.clientAccount[index].status.id == 300) {
+              if (this.clientAccount[index].status.id === 300) {
                 savingAccountId = this.clientAccount[index].id;
               }
             }
 
             if (savingAccountId != null) {
               this.accountsPaid = this.clientAccount;
-              this.formDialogPaid.get("savingAccountPaid")?.setValue(savingAccountId);
+              this.formDialogPaid.get('savingAccountPaid')?.setValue(savingAccountId);
             } else {
               this.alertServices.alert({
-                message: "Đại lý hưa có tài khoản thanh toán còn hoạt động, vui lòng thêm tài khoản trước!",
-                msgClass: "cssWarning",
+                message: 'Đại lý hưa có tài khoản thanh toán còn hoạt động, vui lòng thêm tài khoản trước!',
+                msgClass: 'cssWarning',
               });
             }
           } else {
             this.alertServices.alert({
-              message: "Đại lý chưa có tài khoản thanh toán, vui lòng thêm tài khoản trước!",
-              msgClass: "cssWarning",
+              message: 'Đại lý chưa có tài khoản thanh toán, vui lòng thêm tài khoản trước!',
+              msgClass: 'cssWarning',
             });
           }
         });
@@ -162,22 +162,22 @@ export class AddFeeDialogComponent implements OnInit {
   }
 
   checkAccountFee() {
-    const value = this.formDialogGet.get("paymentCodeGet")?.value;
-    this.formDialogGet.get("savingAccountGet")?.setValue("");
+    const value = this.formDialogGet.get('paymentCodeGet')?.value;
+    this.formDialogGet.get('savingAccountGet')?.setValue('');
 
-    if (value === "AM" || value === "AR") {
-      if (value === "AM") {
+    if (value === 'AM' || value === 'AR') {
+      if (value === 'AM') {
         this.midasClientServices.getListSavingAccountByClientId(this.clientId).subscribe((result) => {
           this.clientAccount = result?.result?.listSavingAccount;
           this.accountsFee = this.clientAccount;
 
           if (this.accountsFee.length > 0) {
-            this.formDialogGet.get("savingAccountGet")?.setValue(this.accountsFee[0].id);
+            this.formDialogGet.get('savingAccountGet')?.setValue(this.accountsFee[0].id);
           }
         });
       } else {
-        if (value === "AR") {
-          let groupId = this.transactions[0].agencyId;
+        if (value === 'AR') {
+          const groupId = this.transactions[0].agencyId;
           this.groupsService.getGroupAccountsData(groupId).subscribe((savings) => {
             this.clientAccount = savings?.savingsAccounts;
             this.clientAccount.filter((account: any) => {
@@ -186,7 +186,7 @@ export class AddFeeDialogComponent implements OnInit {
             this.accountsFee = this.clientAccount;
 
             if (this.accountsFee.length > 0) {
-              this.formDialogGet.get("savingAccountGet")?.setValue(this.accountsFee[0].id);
+              this.formDialogGet.get('savingAccountGet')?.setValue(this.accountsFee[0].id);
             }
           });
         }
@@ -195,7 +195,7 @@ export class AddFeeDialogComponent implements OnInit {
       this.midasClientServices.getListSavingAccountByUserId().subscribe((result) => {
         this.accountsFee = result?.result?.listSavingAccount;
 
-        const AC = value === "CA" ? 9 : 8;
+        const AC = value === 'CA' ? 9 : 8;
         // this.accountsFee = this.accountsPaid;
         let NoAccount = 0;
         this.accountsFee.map((v) => {
@@ -203,8 +203,8 @@ export class AddFeeDialogComponent implements OnInit {
             v.hide = true;
           } else {
             v.hide = false;
-            if (NoAccount == 0) {
-              this.formDialogGet.get("savingAccountGet")?.setValue(v.id);
+            if (NoAccount === 0) {
+              this.formDialogGet.get('savingAccountGet')?.setValue(v.id);
             }
             NoAccount += 1;
           }
@@ -214,7 +214,7 @@ export class AddFeeDialogComponent implements OnInit {
   }
 
   displaySavingAccount(externalId: string, accountNo: string) {
-    let result = "";
+    let result = '';
     if (!accountNo) {
       result = externalId;
     } else {
@@ -232,12 +232,12 @@ export class AddFeeDialogComponent implements OnInit {
     this.transactionService.getFeePaidTransactionByTnRefNo(this.txnCode).subscribe((result) => {
       this.transactions = result.result?.listTransactionFee;
       this.clientId = this.transactions[0].customerId;
-      this.transactionFee = this.transactions.find((v) => v.txnPaymentType === "IN");
-      this.transactionPaid = this.transactions.find((v) => v.txnPaymentType === "OUT");
-      this.selectedPaymentTypePaid = "FT";
+      this.transactionFee = this.transactions.find((v) => v.txnPaymentType === 'IN');
+      this.transactionPaid = this.transactions.find((v) => v.txnPaymentType === 'OUT');
+      this.selectedPaymentTypePaid = 'FT';
 
-      this.savingsService.getListPartner().subscribe((result: any) => {
-        this.partners = result?.result?.listPartner;
+      this.savingsService.getListPartner().subscribe((partnerList: any) => {
+        this.partners = partnerList.result.listPartner;
       });
 
       // check is get amount paid from booking
@@ -254,42 +254,42 @@ export class AddFeeDialogComponent implements OnInit {
       }
 
       if (this.feeAmount <= 0 && this.paidAmount <= 0) {
-        this.messageError = "Tài khoản không khả dụng";
+        this.messageError = 'Tài khoản không khả dụng';
       }
 
-      if (this.transactionPaid && this.transactionPaid.txnType === "BATCH") {
+      if (this.transactionPaid && this.transactionPaid.txnType === 'BATCH') {
         this.showCashAccountPaid = false;
         this.showGet = false;
         this.isBATCH = true;
-        this.selectedPaymentTypePaid = "DE";
+        this.selectedPaymentTypePaid = 'DE';
         this.paidAmount = this.paidAmount - this.feeAmount;
-        this.formDialogPaid.get("amountPaid")?.setValue(this.paidAmount);
+        this.formDialogPaid.get('amountPaid')?.setValue(this.paidAmount);
       }
-      this.formDialogGet.get("amountGet")?.setValue(this.feeAmount);
-      this.formDialogPaid.get("paymentCode")?.setValue(this.selectedPaymentTypePaid);
+      this.formDialogGet.get('amountGet')?.setValue(this.feeAmount);
+      this.formDialogPaid.get('paymentCode')?.setValue(this.selectedPaymentTypePaid);
 
-      if (this.transactionFee && this.transactionFee.txnType === "ROLLTERM") {
-        this.formDialogGet.get("paymentCodeGet")?.setValue("AM");
+      if (this.transactionFee && this.transactionFee.txnType === 'ROLLTERM') {
+        this.formDialogGet.get('paymentCodeGet')?.setValue('AM');
       } else {
-        this.formDialogGet.get("paymentCodeGet")?.setValue("FT");
+        this.formDialogGet.get('paymentCodeGet')?.setValue('FT');
       }
 
       // this.clientService.getClientAccountData()
-      this.transactionService.getPaymentTypes().subscribe((result) => {
-        this.paidPaymentType = result?.result?.listPayment;
+      this.transactionService.getPaymentTypes().subscribe((paymentType: any) => {
+        this.paidPaymentType = paymentType.result.listPayment;
 
-        if (this.transactionPaid && this.transactionPaid.txnType === "ROLLTERM") {
+        if (this.transactionPaid && this.transactionPaid.txnType === 'ROLLTERM') {
           this.paidPaymentType.splice(
-            this.paidPaymentType.findIndex((x) => x.code === "DE"),
+            this.paidPaymentType.findIndex((x) => x.code === 'DE'),
             1
           );
           this.maxAmount =
-            this.currentUser?.appSettingModule?.maxAmountTransferRollTerm > 0
+            this.currentUser.appSettingModule.maxAmountTransferRollTerm > 0
               ? this.currentUser.appSettingModule.maxAmountTransferRollTerm
               : 1000000000;
         }
-        this.midasClientServices.getListSavingAccountByUserId().subscribe((result) => {
-          this.accountsFee = result?.result?.listSavingAccount;
+        this.midasClientServices.getListSavingAccountByUserId().subscribe((savingList: any) => {
+          this.accountsFee = savingList.result.listSavingAccount;
           this.accountsPaid = this.accountsFee;
           this.checkAccountAndAmountPaid();
           this.checkAccountFee();
@@ -302,13 +302,13 @@ export class AddFeeDialogComponent implements OnInit {
 
   formatCurrency(value: string) {
     value = String(value);
-    const neg = value.startsWith("-");
-    value = value.replace(/[-\D]/g, "");
-    value = value.replace(/(\d{3})$/, ",$1");
-    value = value.replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
-    value = value !== "" ? "" + value : "";
+    const neg = value.startsWith('-');
+    value = value.replace(/[-\D]/g, '');
+    value = value.replace(/(\d{3})$/, ',$1');
+    value = value.replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
+    value = value !== '' ? '' + value : '';
     if (neg) {
-      value = "-".concat(value);
+      value = '-'.concat(value);
     }
 
     return value;
@@ -320,19 +320,19 @@ export class AddFeeDialogComponent implements OnInit {
       this.formDialogGet.markAllAsTouched();
       return;
     }
-    let amountPaidFee = this.formDialogPaid.get("amountPaid")?.value;
+    const amountPaidFee = this.formDialogPaid.get('amountPaid')?.value;
     if (this.maxAmount > 0 && this.maxAmount < amountPaidFee) {
       this.alertServices.alert({
         message: `Số tiền chi Advance không được vuợt quá ${this.formatCurrency(String(this.maxAmount))} /1 lần`,
-        msgClass: "cssDanger",
-        hPosition: "center",
+        msgClass: 'cssDanger',
+        hPosition: 'center',
       });
       return;
     }
 
-    if (this.formDialogPaid.get("paymentCode")?.value == "DE") {
-      this.formDialogPaid.get("amountPaid")?.enable();
-      this.formDialogGet.get("amountGet")?.setValue("");
+    if (this.formDialogPaid.get('paymentCode')?.value === 'DE') {
+      this.formDialogPaid.get('amountPaid')?.enable();
+      this.formDialogGet.get('amountGet')?.setValue('');
     } else {
     }
 
@@ -343,7 +343,7 @@ export class AddFeeDialogComponent implements OnInit {
 
     };
 
-    if (this.bookingId){
+    if (this.bookingId) {
       form = {
         ...this.formDialogGet.value,
         ...this.formDialogPaid.value,
@@ -353,8 +353,8 @@ export class AddFeeDialogComponent implements OnInit {
 
     const dialog = this.dialog.open(ConfirmDialogComponent, {
       data: {
-        message: "Bạn chắc chắn muốn lưu giao dịch",
-        title: "Hoàn thành giao dịch",
+        message: 'Bạn chắc chắn muốn lưu giao dịch',
+        title: 'Hoàn thành giao dịch',
       },
     });
     dialog.afterClosed().subscribe((data) => {
@@ -363,7 +363,7 @@ export class AddFeeDialogComponent implements OnInit {
         this.isLoading = true;
         this.transactionService.paidFeeForTransaction(form).subscribe((result) => {
           this.isLoading = false;
-          const message = "🎉🎉 Thanh toán phí thành công";
+          const message = '🎉🎉 Thanh toán phí thành công';
           const resCheck = this.savingsService.handleResponseApiSavingTransaction(result, message, false);
 
           if (resCheck) {

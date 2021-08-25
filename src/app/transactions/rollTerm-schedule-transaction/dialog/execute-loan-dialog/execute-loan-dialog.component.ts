@@ -1,16 +1,16 @@
-import { Component, Inject, OnInit } from "@angular/core";
-import { FormBuilder, FormGroup } from "@angular/forms";
-import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
-import { ClientsService } from "app/clients/clients.service";
-import { AlertService } from "app/core/alert/alert.service";
-import { MidasClientService } from "app/midas-client/midas-client.service";
-import { SavingsService } from "app/savings/savings.service";
-import { TransactionService } from "app/transactions/transaction.service";
+import { Component, Inject, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { ClientsService } from 'app/clients/clients.service';
+import { AlertService } from 'app/core/alert/alert.service';
+import { MidasClientService } from 'app/midas-client/midas-client.service';
+import { SavingsService } from 'app/savings/savings.service';
+import { TransactionService } from 'app/transactions/transaction.service';
 
 @Component({
-  selector: "midas-execute-loan-dialog",
-  templateUrl: "./execute-loan-dialog.component.html",
-  styleUrls: ["./execute-loan-dialog.component.scss"],
+  selector: 'midas-execute-loan-dialog',
+  templateUrl: './execute-loan-dialog.component.html',
+  styleUrls: ['./execute-loan-dialog.component.scss'],
 })
 export class ExecuteLoanDialogComponent implements OnInit {
   paidPaymentType: any[] = [];
@@ -31,10 +31,10 @@ export class ExecuteLoanDialogComponent implements OnInit {
   ) {
     this.refId = data.refId;
     this.formDialogPaid = this.formBuilder.group({
-      paymentCode: ["AM"],
-      amountPaid: [""],
-      savingAccountPaid: [""],
-      fromClientId: [""],
+      paymentCode: ['AM'],
+      amountPaid: [''],
+      savingAccountPaid: [''],
+      fromClientId: [''],
 
     });
   }
@@ -45,11 +45,11 @@ export class ExecuteLoanDialogComponent implements OnInit {
       this.accountsPaid = result.result?.listSavingAccount;
       this.posTransaction = result.result?.posTransaction;
 
-      this.accountsPaid.forEach((result) => {
-          if (result.productId == 12){
-            this.formDialogPaid.get("savingAccountPaid")?.setValue(result.id);
+      this.accountsPaid.forEach((accResult: any) => {
+          if (accResult.productId === 12) {
+            this.formDialogPaid.get('savingAccountPaid')?.setValue(result.id);
           }
-      })
+      });
 
       this.formDialogPaid.get('fromClientId')?.setValue(
         this.posTransaction.custId
@@ -71,7 +71,7 @@ export class ExecuteLoanDialogComponent implements OnInit {
     form.txnCode = this.refId;
     this.transactionService.ExecuteRollTermTransactionByTrnRefNo(form).subscribe((result) => {
 
-      let message = "🎉🎉 Xử lý thành công" ;
+      const message = '🎉🎉 Xử lý thành công' ;
       this.savingsService.handleResponseApiSavingTransaction(result, message, false);
       this.dialogRef.close({ status: true });
     });

@@ -1,24 +1,24 @@
-import { Component, Inject, OnInit } from "@angular/core";
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { animate, state, style, transition, trigger } from "@angular/animations";
-import { MatDialog, MAT_DIALOG_DATA } from "@angular/material/dialog";
-import { FormfieldBase } from "app/shared/form-dialog/formfield/model/formfield-base";
-import { BookingService } from "app/booking-manage/booking.service";
-import { Router } from "@angular/router";
-import { MatTableDataSource } from "@angular/material/table";
-import { DatePipe } from "@angular/common";
-import { AlertService } from "app/core/alert/alert.service";
-import { TransactionService } from "../../../transaction.service";
+import { Component, Inject, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { animate, state, style, transition, trigger } from '@angular/animations';
+import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { FormfieldBase } from 'app/shared/form-dialog/formfield/model/formfield-base';
+import { BookingService } from 'app/booking-manage/booking.service';
+import { Router } from '@angular/router';
+import { MatTableDataSource } from '@angular/material/table';
+import { DatePipe } from '@angular/common';
+import { AlertService } from 'app/core/alert/alert.service';
+import { TransactionService } from '../../../transaction.service';
 
 @Component({
-  selector: "midas-create-roll-term-schedule-dialog",
-  templateUrl: "./create-roll-term-schedule-dialog.component.html",
-  styleUrls: ["./create-roll-term-schedule-dialog.component.scss"],
+  selector: 'midas-create-roll-term-schedule-dialog',
+  templateUrl: './create-roll-term-schedule-dialog.component.html',
+  styleUrls: ['./create-roll-term-schedule-dialog.component.scss'],
   animations: [
-    trigger("detailExpand", [
-      state("collapsed", style({ height: "0px", minHeight: "0" })),
-      state("expanded", style({ height: "*" })),
-      transition("expanded <=> collapsed", animate("225ms cubic-bezier(0.4, 0.0, 0.2, 1)")),
+    trigger('detailExpand', [
+      state('collapsed', style({ height: '0px', minHeight: '0' })),
+      state('expanded', style({ height: '*' })),
+      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
     ]),
   ],
 })
@@ -26,9 +26,9 @@ export class CreateRollTermScheduleDialogComponent implements OnInit {
   expandedElement: any;
   requestAmount: any;
   info: any;
-  totalBookingAmount: number =0;
+  totalBookingAmount = 0;
   dataSource: MatTableDataSource<any>;
-  displayedColumns: string[] = ["transaction", "txnDate", "amount", "actions"];
+  displayedColumns: string[] = ['transaction', 'txnDate', 'amount', 'actions'];
   transactionInfo: any;
   listRollTermBooking: any[] = [];
   form: FormGroup;
@@ -48,20 +48,20 @@ export class CreateRollTermScheduleDialogComponent implements OnInit {
     this.dataSource = new MatTableDataSource();
 
     this.form = this.formBuilder.group({
-      requestAmount: ["", Validators.required],
-      feeRate: ["", Validators.required],
-      rollTermBooking: ["", Validators.required],
+      requestAmount: ['', Validators.required],
+      feeRate: ['', Validators.required],
+      rollTermBooking: ['', Validators.required],
     });
-    this.form.get("feeRate")?.valueChanges.subscribe((value) => {
+    this.form.get('feeRate')?.valueChanges.subscribe((value) => {
       this.calculateFee();
     });
 
-    this.form.get("requestAmount")?.valueChanges.subscribe((value) => {
+    this.form.get('requestAmount')?.valueChanges.subscribe((value) => {
       this.listRollTermBooking = [];
       this.dataSource.data = this.listRollTermBooking;
       for (let index = 0; index < 4; index++) {
-        let amountOnPerBooking = value * 0.25;
-        let BookingRollTerm = {
+        const amountOnPerBooking = value * 0.25;
+        const BookingRollTerm = {
           txnDate: new Date(),
           amountBooking: amountOnPerBooking,
         };
@@ -72,7 +72,7 @@ export class CreateRollTermScheduleDialogComponent implements OnInit {
       this.totalBookingAmount = value;
       this.calculateFee();
 
-      this.form.get("rollTermBooking")?.setValue(this.listRollTermBooking);
+      this.form.get('rollTermBooking')?.setValue(this.listRollTermBooking);
     });
   }
 
@@ -90,7 +90,7 @@ export class CreateRollTermScheduleDialogComponent implements OnInit {
     });
 
     this.listRollTermBooking[this.listRollTermBooking.length - 1].amountBooking =
-      this.form.get("requestAmount")?.value - lastBookingAmountExceptLast;
+      this.form.get('requestAmount')?.value - lastBookingAmountExceptLast;
     this.listRollTermBooking.forEach((booking: any) => {
       totalBookingAmountTmp += booking.amountBooking;
     });
@@ -99,22 +99,22 @@ export class CreateRollTermScheduleDialogComponent implements OnInit {
     this.dataSource.data = this.listRollTermBooking;
   }
 
-  addBookingRow (){
-    let BookingRollTerm = {
+  addBookingRow () {
+    const BookingRollTerm = {
       txnDate: new Date(),
       amountBooking: 0,
     };
     this.listRollTermBooking.push(BookingRollTerm);
     this.calculateTotalBookingAmount();
-  };
+  }
 
   removeBookingRow(index: number) {
     this.listRollTermBooking.forEach((rollTerm: any) => {
-      let indexMember = this.listRollTermBooking.findIndex((elementIdex: any) => elementIdex === rollTerm);
+      const indexMember = this.listRollTermBooking.findIndex((elementIdex: any) => elementIdex === rollTerm);
 
-      if (indexMember == index) {
+      if (indexMember === index) {
         this.listRollTermBooking.splice(
-          this.listRollTermBooking.findIndex((item: any) => item == rollTerm),
+          this.listRollTermBooking.findIndex((item: any) => item === rollTerm),
           1
         );
       }
@@ -127,8 +127,8 @@ export class CreateRollTermScheduleDialogComponent implements OnInit {
     if (this.form.invalid) {
       return;
     }
-    let requestAmount =  this.form.get("requestAmount")?.value ;
-    let feeRate =  this.form.get("feeRate")?.value;
+    const requestAmount =  this.form.get('requestAmount')?.value ;
+    const feeRate =  this.form.get('feeRate')?.value;
     this.info.feeAmount = (requestAmount * feeRate / 100).toFixed(0) ;
-  };
+  }
 }

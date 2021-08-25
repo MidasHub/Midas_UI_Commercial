@@ -16,7 +16,7 @@ export class MemberInGroupResolver implements Resolve<Object> {
 
   resolve(route: ActivatedRouteSnapshot): any {
     const groupId = route.paramMap.get('groupId');
-    return groupId; // this.transactionServices.getMembersInGroup(groupId);
+    return this.transactionServices.getMembersInGroup(groupId);
   }
 
 }

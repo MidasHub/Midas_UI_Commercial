@@ -1,27 +1,27 @@
-import { ChangeDetectorRef, Component, Inject, OnInit } from "@angular/core";
-import { FormBuilder, FormGroup } from "@angular/forms";
-import { animate, state, style, transition, trigger } from "@angular/animations";
-import { MatDialog, MatDialogConfig, MAT_DIALOG_DATA } from "@angular/material/dialog";
-import { FormfieldBase } from "app/shared/form-dialog/formfield/model/formfield-base";
-import { BookingService } from "app/booking-manage/booking.service";
-import { Router } from "@angular/router";
-import { AddFeeDialogComponent } from "app/transactions/dialog/add-fee-dialog/add-fee-dialog.component";
-import { TransactionService } from "app/transactions/transaction.service";
-import { AlertService } from "app/core/alert/alert.service";
-import { ViewFeePaidTransactionDialogComponent } from "app/transactions/dialog/view-fee-paid-transaction-dialog/view-fee-paid-transaction-dialog.component";
-import { DatePipe } from "@angular/common";
-import { AuthenticationService } from "app/core/authentication/authentication.service";
-import { ConfirmDialogComponent } from "app/transactions/dialog/confirm-dialog/confirm-dialog.component";
+import { ChangeDetectorRef, Component, Inject, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { animate, state, style, transition, trigger } from '@angular/animations';
+import { MatDialog, MatDialogConfig, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { FormfieldBase } from 'app/shared/form-dialog/formfield/model/formfield-base';
+import { BookingService } from 'app/booking-manage/booking.service';
+import { Router } from '@angular/router';
+import { AddFeeDialogComponent } from 'app/transactions/dialog/add-fee-dialog/add-fee-dialog.component';
+import { TransactionService } from 'app/transactions/transaction.service';
+import { AlertService } from 'app/core/alert/alert.service';
+import { ViewFeePaidTransactionDialogComponent } from 'app/transactions/dialog/view-fee-paid-transaction-dialog/view-fee-paid-transaction-dialog.component';
+import { DatePipe } from '@angular/common';
+import { AuthenticationService } from 'app/core/authentication/authentication.service';
+import { ConfirmDialogComponent } from 'app/transactions/dialog/confirm-dialog/confirm-dialog.component';
 
 @Component({
-  selector: "midas-roll-term-schedule-dialog",
-  templateUrl: "./roll-term-schedule-dialog.component.html",
-  styleUrls: ["./roll-term-schedule-dialog.component.scss"],
+  selector: 'midas-roll-term-schedule-dialog',
+  templateUrl: './roll-term-schedule-dialog.component.html',
+  styleUrls: ['./roll-term-schedule-dialog.component.scss'],
   animations: [
-    trigger("detailExpand", [
-      state("collapsed", style({ height: "0px", minHeight: "0" })),
-      state("expanded", style({ height: "*" })),
-      transition("expanded <=> collapsed", animate("225ms cubic-bezier(0.4, 0.0, 0.2, 1)")),
+    trigger('detailExpand', [
+      state('collapsed', style({ height: '0px', minHeight: '0' })),
+      state('expanded', style({ height: '*' })),
+      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
     ]),
   ],
 })
@@ -30,12 +30,12 @@ export class RollTermScheduleDialogComponent implements OnInit {
   transactionInfo: any;
   dataSource!: any[];
   isLoading = false;
-  displayedColumns: string[] = ["transaction", "txnDate", "amount", "feePaid", "fee", "getAmount", "actions"];
+  displayedColumns: string[] = ['transaction', 'txnDate', 'amount', 'feePaid', 'fee', 'getAmount', 'actions'];
   rollTermId: string;
   form!: FormGroup;
   pristine?: boolean;
   currentUser: any;
-  permitFee: boolean = false;
+  permitFee = false;
 
   constructor(
     private router: Router,
@@ -57,8 +57,8 @@ export class RollTermScheduleDialogComponent implements OnInit {
   }
 
   checkPermissionMakeRepayment() {
-    const permitREFINANCE_MAKE_PAYMENT = this.currentUser.permissions.includes("REFINANCE_MAKE_PAYMENT");
-    const permitREFINANCE_EXECUTIVE = this.currentUser.permissions.includes("REFINANCE_EXECUTIVE");
+    const permitREFINANCE_MAKE_PAYMENT = this.currentUser.permissions.includes('REFINANCE_MAKE_PAYMENT');
+    const permitREFINANCE_EXECUTIVE = this.currentUser.permissions.includes('REFINANCE_EXECUTIVE');
 
     if (permitREFINANCE_MAKE_PAYMENT && permitREFINANCE_EXECUTIVE) {
       this.permitFee = true;
@@ -69,34 +69,34 @@ export class RollTermScheduleDialogComponent implements OnInit {
     }
   }
 
-  routeToMakeRollTermGetCash(tranId: string, bookingId: string, remainValue: string) {
+  routeToMakeRollTermGetCash(tranId: string, bookingId: string, remainValue: any) {
     if (this.transactionInfo?.totalAmountPaid <= this.transactionInfo?.totalAmountGet) {
-      const message = "Vui lòng thực hiện chi tiền trước!";
+      const message = 'Vui lòng thực hiện chi tiền trước!';
       this.alertService.alert({
-        msgClass: "cssDanger",
+        msgClass: 'cssDanger',
         message: message,
       });
       return;
     }
-    this.router.navigate(["/transaction/create"], {
+    this.router.navigate(['/transaction/create'], {
       queryParams: {
         tranId: tranId,
         bookingId: bookingId,
         remainValue: remainValue,
-        type: "rollTermGetCash",
+        type: 'rollTermGetCash',
       },
     });
   }
 
   formatCurrency(value: string) {
     value = String(value);
-    const neg = value.startsWith("-");
-    value = value.replace(/[-\D]/g, "");
-    value = value.replace(/(\d{3})$/, ",$1");
-    value = value.replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
-    value = value !== "" ? "" + value : "";
+    const neg = value.startsWith('-');
+    value = value.replace(/[-\D]/g, '');
+    value = value.replace(/(\d{3})$/, ',$1');
+    value = value.replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
+    value = value !== '' ? '' + value : '';
     if (neg) {
-      value = "-".concat(value);
+      value = '-'.concat(value);
     }
 
     return value;
@@ -154,8 +154,8 @@ export class RollTermScheduleDialogComponent implements OnInit {
       this.viewFeeDialog(txnCode);
     } else {
       this.transactionService.getTransactionDetail(txnCode).subscribe((result) => {
-        let txnCode = result?.result?.detailTransactionDto?.trnRefNo;
-        this.viewFeeDialog(txnCode);
+        const txnCodeService = result?.result?.detailTransactionDto?.trnRefNo;
+        this.viewFeeDialog(txnCodeService);
       });
     }
   }
@@ -176,9 +176,9 @@ export class RollTermScheduleDialogComponent implements OnInit {
   }
   addFeeDialog(txnCode: string, bookingId: number) {
     if (!txnCode) {
-      const message = "Vui lòng thực hiện giao dịch thu hồi trước!";
+      const message = 'Vui lòng thực hiện giao dịch thu hồi trước!';
       this.alertService.alert({
-        msgClass: "cssDanger",
+        msgClass: 'cssDanger',
         message: message,
       });
       return;
@@ -199,17 +199,17 @@ export class RollTermScheduleDialogComponent implements OnInit {
     });
   }
   menuOpened() {
-    console.log("menuOpened");
+    console.log('menuOpened');
   }
 
   menuClosed() {
-    console.log("menuClosed");
+    console.log('menuClosed');
   }
 
   calculateTotalBookingAmount(indexEdit: number) {
     let lastAmountBooking = 0;
     let totalBookingAmountTmp = 0;
-    let bookingEdited = this.dataSource[indexEdit];
+    const bookingEdited = this.dataSource[indexEdit];
     for (let index = 0; index < this.dataSource.length; index++) {
       totalBookingAmountTmp += this.dataSource[index].bookingAmount;
     }
@@ -217,9 +217,9 @@ export class RollTermScheduleDialogComponent implements OnInit {
 
     // check valid amount change
     if (totalBookingAmountTmp > this.transactionInfo.reqAmount + lastAmountBooking) {
-      const message = "Tổng số tiền lịch Advance sau điều chỉnh không thể vượt quá giá trị khoản Advance! ";
+      const message = 'Tổng số tiền lịch Advance sau điều chỉnh không thể vượt quá giá trị khoản Advance! ';
       this.alertService.alert({
-        msgClass: "cssDanger",
+        msgClass: 'cssDanger',
         message: message,
       });
 
@@ -227,9 +227,9 @@ export class RollTermScheduleDialogComponent implements OnInit {
       return;
     } else {
       if (bookingEdited.trnRefNo && bookingEdited.totalGet > bookingEdited.bookingAmount) {
-        const message = "Số tiền điều chỉnh không thể nhỏ hơn số tiền đã thu hồi! ";
+        const message = 'Số tiền điều chỉnh không thể nhỏ hơn số tiền đã thu hồi! ';
         this.alertService.alert({
-          msgClass: "cssDanger",
+          msgClass: 'cssDanger',
           message: message,
         });
 
@@ -249,43 +249,43 @@ export class RollTermScheduleDialogComponent implements OnInit {
   addBookingRow () {
     const dialog = this.dialog.open(ConfirmDialogComponent, {
       data: {
-        message: "Bạn chắc chắn muốn thêm một dòng lịch Advance mới",
-        title: "Xác nhận",
+        message: 'Bạn chắc chắn muốn thêm một dòng lịch Advance mới',
+        title: 'Xác nhận',
       },
     });
     dialog.afterClosed().subscribe((data: any) => {
       if (data) {
-        let BookingRollTerm = {
-          txnDate: this.datePipe.transform(new Date(), "dd/MM/yyyy"),
+        const BookingRollTerm = {
+          txnDate: this.datePipe.transform(new Date(), 'dd/MM/yyyy'),
           amountBooking: 0,
           bookingRefNo: this.dataSource[0].bookingRefNo,
           isIsTmpBooking: false,
-          productId: "AL01",
+          productId: 'AL01',
           rollTermId: this.rollTermId,
           cardId: this.dataSource[0].identifierId,
           clientId: this.dataSource[0].customerId,
         };
-        this.bookingService.addRowBookingInternalOnRollTermSchedule(BookingRollTerm).subscribe((data: any) => {
+        this.bookingService.addRowBookingInternalOnRollTermSchedule(BookingRollTerm).subscribe((dataBookingRT: any) => {
           this.getRollTermScheduleAndCardDueDayInfo(this.rollTermId);
         });
       }
     });
-  };
+  }
 
   removeBookingRow(index: number) {
     const dialog = this.dialog.open(ConfirmDialogComponent, {
       data: {
-        message: "Bạn chắc chắn muốn xoá dòng lịch Advance này",
-        title: "Xác nhận",
+        message: 'Bạn chắc chắn muốn xoá dòng lịch Advance này',
+        title: 'Xác nhận',
       },
     });
     dialog.afterClosed().subscribe((data: any) => {
       if (data) {
-        let bookingInfo = this.dataSource[index];
-        let BookingRollTerm = {
+        const bookingInfo = this.dataSource[index];
+        const BookingRollTerm = {
           bookingInternalId: bookingInfo.refid,
         };
-        this.bookingService.removeRowBookingInternalOnRollTermSchedule(BookingRollTerm).subscribe((data: any) => {
+        this.bookingService.removeRowBookingInternalOnRollTermSchedule(BookingRollTerm).subscribe((dataBookingRT: any) => {
           this.getRollTermScheduleAndCardDueDayInfo(this.rollTermId);
         });
       }
@@ -295,18 +295,18 @@ export class RollTermScheduleDialogComponent implements OnInit {
   editBookingRow(booking: any) {
     const dialog = this.dialog.open(ConfirmDialogComponent, {
       data: {
-        message: "Bạn chắc chắn muốn chỉnh sửa dòng lịch Advance này",
-        title: "Xác nhận",
+        message: 'Bạn chắc chắn muốn chỉnh sửa dòng lịch Advance này',
+        title: 'Xác nhận',
       },
     });
     dialog.afterClosed().subscribe((data: any) => {
       if (data) {
-        let BookingRollTerm = {
+        const BookingRollTerm = {
           bookingInternalId: booking.refid,
           amountBooking: booking.bookingAmount,
-          txnDate: this.datePipe.transform(booking.txnDate, "dd/MM/yyyy"),
+          txnDate: this.datePipe.transform(booking.txnDate, 'dd/MM/yyyy'),
         };
-        this.bookingService.editBookingInternalOnRollTermSchedule(BookingRollTerm).subscribe((data: any) => {
+        this.bookingService.editBookingInternalOnRollTermSchedule(BookingRollTerm).subscribe((dataBookingRT: any) => {
           this.getRollTermScheduleAndCardDueDayInfo(this.rollTermId);
         });
       }

@@ -1,45 +1,45 @@
-import { animate, state, style, transition, trigger } from "@angular/animations";
-import { DatePipe } from "@angular/common";
-import { Component, OnInit, ViewChild } from "@angular/core";
-import { FormBuilder, FormGroup } from "@angular/forms";
-import { MatDialog, MatDialogConfig } from "@angular/material/dialog";
-import { MatPaginator } from "@angular/material/paginator";
-import { MatSort } from "@angular/material/sort";
-import { CentersService } from "app/centers/centers.service";
-import { AddLimitIdentitiesExtraInfoComponent } from "app/clients/clients-view/identities-tab/dialog-add-limit-extra-info/dialog-add-limit-extra-info.component";
-import { AlertService } from "app/core/alert/alert.service";
-import { AuthenticationService } from "app/core/authentication/authentication.service";
-import { SavingsService } from "app/savings/savings.service";
-import { SettingsService } from "app/settings/settings.service";
-import { TransactionService } from "app/transactions/transaction.service";
-import { BanksService } from "../../../banks/banks.service";
-import { AdvanceFeeRollTermComponent } from "../dialog/advance-fee-roll-term/advance-fee-roll-term.component";
-import { CreateRollTermScheduleDialogComponent } from "../dialog/create-roll-term-schedule/create-roll-term-schedule-dialog.component";
-import { TransactionHistoryDialogComponent } from "../dialog/transaction-history/transaction-history-dialog.component";
+import { animate, state, style, transition, trigger } from '@angular/animations';
+import { DatePipe } from '@angular/common';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { CentersService } from 'app/centers/centers.service';
+import { AddLimitIdentitiesExtraInfoComponent } from 'app/clients/clients-view/identities-tab/dialog-add-limit-extra-info/dialog-add-limit-extra-info.component';
+import { AlertService } from 'app/core/alert/alert.service';
+import { AuthenticationService } from 'app/core/authentication/authentication.service';
+import { SavingsService } from 'app/savings/savings.service';
+import { SettingsService } from 'app/settings/settings.service';
+import { TransactionService } from 'app/transactions/transaction.service';
+import { BanksService } from '../../../banks/banks.service';
+import { AdvanceFeeRollTermComponent } from '../dialog/advance-fee-roll-term/advance-fee-roll-term.component';
+import { CreateRollTermScheduleDialogComponent } from '../dialog/create-roll-term-schedule/create-roll-term-schedule-dialog.component';
+import { TransactionHistoryDialogComponent } from '../dialog/transaction-history/transaction-history-dialog.component';
 
 @Component({
-  selector: "midas-due-day-card-transaction",
-  templateUrl: "./due-day-card-tab.component.html",
-  styleUrls: ["./due-day-card-tab.component.scss"],
+  selector: 'midas-due-day-card-transaction',
+  templateUrl: './due-day-card-tab.component.html',
+  styleUrls: ['./due-day-card-tab.component.scss'],
   animations: [
-    trigger("detailExpand", [
-      state("collapsed", style({ height: "0px", minHeight: "0" })),
-      state("expanded", style({ height: "*" })),
-      transition("expanded <=> collapsed", animate("225ms cubic-bezier(0.4, 0.0, 0.2, 1)")),
+    trigger('detailExpand', [
+      state('collapsed', style({ height: '0px', minHeight: '0' })),
+      state('expanded', style({ height: '*' })),
+      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
     ]),
   ],
 })
 export class DueDayCardTabComponent implements OnInit {
   expandedElement: any;
   displayedColumns: string[] = [
-    "panHolderName",
-    "phone",
-    "cardNumber",
-    "dueDay",
-    "isHold",
-    "status",
-    "note",
-    "actions",
+    'panHolderName',
+    'phone',
+    'cardNumber',
+    'dueDay',
+    'isHold',
+    'status',
+    'note',
+    'actions',
   ];
   isLoading: Boolean = false;
   formDate: FormGroup;
@@ -63,7 +63,7 @@ export class DueDayCardTabComponent implements OnInit {
   filterData?: any[];
   today = new Date();
   @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
-  @ViewChild(MatSort, { static: true }) sort!: MatSort;
+  @ViewChild(MatSort, { static: true }) sort: MatSort | any;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -85,28 +85,28 @@ export class DueDayCardTabComponent implements OnInit {
     });
     this.cardHoldOption = [
       {
-        code: "ALL",
-        description: "Tất cả",
+        code: 'ALL',
+        description: 'Tất cả',
       },
       {
-        code: "200",
-        description: "Giử Thẻ",
+        code: '200',
+        description: 'Giử Thẻ',
       },
       {
-        code: "100",
-        description: "Không giử thẻ",
+        code: '100',
+        description: 'Không giử thẻ',
       },
     ];
 
     this.formFilter = this.formBuilder.group({
-      OfficeFilter: [""],
-      staffFilter: ["ALL"],
-      cardHoldFilter: ["ALL"],
-      bankName: ["ALL"],
-      cardType: ["ALL"],
-      statusFilter: ["ALL"],
-      stageFilter: ["ALL"],
-      query: [""],
+      OfficeFilter: [''],
+      staffFilter: ['ALL'],
+      cardHoldFilter: ['ALL'],
+      bankName: ['ALL'],
+      cardType: ['ALL'],
+      statusFilter: ['ALL'],
+      stageFilter: ['ALL'],
+      query: [''],
       viewDoneTransaction: [false],
     });
   }
@@ -124,16 +124,16 @@ export class DueDayCardTabComponent implements OnInit {
     this.bankService.getListOfficeCommon().subscribe((offices: any) => {
       this.offices = offices.result.listOffice;
       this.offices?.unshift({
-        id: "",
-        name: "Tất cả",
+        id: '',
+        name: 'Tất cả',
       });
 
-      this.formFilter.get("OfficeFilter")?.valueChanges.subscribe((value) => {
+      this.formFilter.get('OfficeFilter')?.valueChanges.subscribe((value) => {
         this.centersService.getStaff(value).subscribe((staffs: any) => {
-          this.staffs = staffs?.staffOptions.filter((staff: any) => staff.displayName.startsWith("R"));
+          this.staffs = staffs?.staffOptions.filter((staff: any) => staff.displayName.startsWith('R'));
           this.staffs?.unshift({
-            id: "ALL",
-            displayName: "Tất cả",
+            id: 'ALL',
+            displayName: 'Tất cả',
           });
         });
       });
@@ -145,12 +145,12 @@ export class DueDayCardTabComponent implements OnInit {
         this.statusOption = data.result.listSaleStage;
         this.cardTypeOption = data.result.listCard;
         this.noteOption?.unshift({
-          refid: "ALL",
-          value: "Tất cả",
+          refid: 'ALL',
+          value: 'Tất cả',
         });
         this.statusOption?.unshift({
-          refid: "ALL",
-          value: "Tất cả",
+          refid: 'ALL',
+          value: 'Tất cả',
         });
       }
     });
@@ -159,7 +159,7 @@ export class DueDayCardTabComponent implements OnInit {
   advanceCash(cardId: string, clientId: string) {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.data = {
-      title: "Ứng tiền cho khách hàng",
+      title: 'Ứng tiền cho khách hàng',
       currentUser: this.currentUser,
       clientId: clientId,
     };
@@ -178,7 +178,7 @@ export class DueDayCardTabComponent implements OnInit {
         })
         .subscribe((result: any) => {
           const message = `Ứng tiền thành công cho tài khoản: ${clientAdvanceCash} với số tiền ${
-            String(amountAdvance).replace(/\\B(?=(\\d{3})+(?!\\d))/g, ",") + " đ"
+            String(amountAdvance).replace(/\\B(?=(\\d{3})+(?!\\d))/g, ',') + ' đ'
           }`;
           this.savingsService.handleResponseApiSavingTransaction(result, message, false);
           this.getRollTermScheduleAndCardDueDayInfo();
@@ -194,7 +194,7 @@ export class DueDayCardTabComponent implements OnInit {
       panNumber: card.cardNumber,
       identifierId: card.cardId,
     };
-    const dialog = this.dialog.open(CreateRollTermScheduleDialogComponent, { height: "auto", width: "80%", data });
+    const dialog = this.dialog.open(CreateRollTermScheduleDialogComponent, { height: 'auto', width: '80%', data });
     dialog.afterClosed().subscribe((response: any) => {
       const { rollTermBooking, requestAmount, feeRate } = response?.data?.value;
       if (!card.limit || !card.cardClass) {
@@ -208,28 +208,28 @@ export class DueDayCardTabComponent implements OnInit {
   }
 
   submitTransactionRollTerm(card: any, rollTermBooking: any, requestAmount: any, feeRate: any) {
-    let info: any = {};
+    const info: any = {};
     rollTermBooking.forEach((booking: any) => {
       booking.amountBooking = booking.amountBooking;
-      booking.txnDate = this.datePipe.transform(booking.txnDate, "dd/MM/yyyy");
+      booking.txnDate = this.datePipe.transform(booking.txnDate, 'dd/MM/yyyy');
     });
     const listBookingRollTerm = JSON.stringify(rollTermBooking, function (key: string, value: string) {
-      if (key === "$$hashKey") {
+      if (key === '$$hashKey') {
         return undefined;
       }
       return value;
     });
 
     // prepare value for create schedule roll term transaction
-    info.type = "rollTerm";
-    info.productId = "AL01";
+    info.type = 'rollTerm';
+    info.productId = 'AL01';
     info.rate = feeRate;
     info.requestAmount = requestAmount;
     info.BookingInternalDtoListString = listBookingRollTerm;
     info.clientName = card.clientName;
     info.panNumber = card.cardNumber;
     info.identifierId = card.cardId;
-    info.groupId = card.groupId ? card.groupId : "0";
+    info.groupId = card.groupId ? card.groupId : '0';
     info.cardType = card.cardType;
     info.bankCode = card.bankCode;
     info.bookingId = card.bookingId;
@@ -241,8 +241,8 @@ export class DueDayCardTabComponent implements OnInit {
       const transactionRefNo = data.result.tranRefNo;
       this.alertService.alert({
         message: `Tạo giao dịch ${transactionRefNo} thành công!`,
-        msgClass: "cssSuccess",
-        hPosition: "center",
+        msgClass: 'cssSuccess',
+        hPosition: 'center',
       });
 
       this.getRollTermScheduleAndCardDueDayInfo();
@@ -252,7 +252,7 @@ export class DueDayCardTabComponent implements OnInit {
   addIdentifierExtraInfo(card: any, rollTermBooking: any, requestAmount: any, feeRate: any) {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.data = {
-      title: "Thông tin bổ sung cho thẻ",
+      title: 'Thông tin bổ sung cho thẻ',
       clientIdentifierTemplate: card,
     };
     dialogConfig.minWidth = 400;
@@ -260,7 +260,7 @@ export class DueDayCardTabComponent implements OnInit {
     addIdentifierDialogRef.afterClosed().subscribe((response: any) => {
       if (response.data) {
         const { limitCard, classCard } = response.data.value;
-        const expiredDateString = this.datePipe.transform(card.expiredDate, "MMyy");
+        const expiredDateString = this.datePipe.transform(card.expiredDate, 'MMyy');
 
         this.transactionService
           .updateCardTrackingState({
@@ -279,9 +279,9 @@ export class DueDayCardTabComponent implements OnInit {
               this.submitTransactionRollTerm(card, rollTermBooking, requestAmount, feeRate);
             } else {
               this.alertService.alert({
-                message: res2.result.message ? res2.result.message : "Lỗi thêm thông tin hạn mức, hạng thẻ!",
-                msgClass: "cssError",
-                hPosition: "center",
+                message: res2.result.message ? res2.result.message : 'Lỗi thêm thông tin hạn mức, hạng thẻ!',
+                msgClass: 'cssError',
+                hPosition: 'center',
               });
               return;
             }
@@ -291,23 +291,23 @@ export class DueDayCardTabComponent implements OnInit {
   }
 
   displayCardStatusId(type: string) {
-    return this.statusOption.find((v) => v.value === type)?.label || "N/A";
+    return this.statusOption.find((v) => v.value === type)?.label || 'N/A';
   }
 
   getRollTermScheduleAndCardDueDayInfo() {
     const dateFormat = this.settingsService.dateFormat;
-    let fromDate = this.formDate.get("fromDate")?.value;
-    let toDate = this.formDate.get("toDate")?.value;
-    const stageFilter = this.formFilter.get("stageFilter")?.value;
-    const statusFilter = this.formFilter.get("statusFilter")?.value;
-    const staffFilter = this.formFilter.get("staffFilter")?.value;
-    const cardHoldFilter = this.formFilter.get("cardHoldFilter")?.value;
-    const bankName = this.formFilter.get("bankName")?.value;
-    const cardType = this.formFilter.get("cardType")?.value;
-    const query = this.formFilter.get("query")?.value;
+    let fromDate = this.formDate.get('fromDate')?.value;
+    let toDate = this.formDate.get('toDate')?.value;
+    const stageFilter = this.formFilter.get('stageFilter')?.value;
+    const statusFilter = this.formFilter.get('statusFilter')?.value;
+    const staffFilter = this.formFilter.get('staffFilter')?.value;
+    const cardHoldFilter = this.formFilter.get('cardHoldFilter')?.value;
+    const bankName = this.formFilter.get('bankName')?.value;
+    const cardType = this.formFilter.get('cardType')?.value;
+    const query = this.formFilter.get('query')?.value;
     const limit = this.paginator.pageSize ? this.paginator.pageSize : 10;
     const offset = this.paginator.pageIndex * limit;
-    const viewDoneTransaction = this.formFilter.get("viewDoneTransaction")?.value;
+    const viewDoneTransaction = this.formFilter.get('viewDoneTransaction')?.value;
 
     if (fromDate) {
       fromDate = this.datePipe.transform(fromDate, dateFormat);
@@ -337,14 +337,14 @@ export class DueDayCardTabComponent implements OnInit {
         this.transactionsData = result?.result;
         this.dataSource = result?.result.lisCardTransactionTracking;
         this.dataSource?.forEach((item) => {
-          item.expiredDateString = this.datePipe.transform(item.expiredDate, "MMyy");
+          item.expiredDateString = this.datePipe.transform(item.expiredDate, 'MMyy');
         });
       });
   }
 
   get fromDateAndToDate() {
-    const fromDate = this.formDate.get("fromDate")?.value;
-    const toDate = this.formDate.get("toDate")?.value;
+    const fromDate = this.formDate.get('fromDate')?.value;
+    const toDate = this.formDate.get('toDate')?.value;
     if (fromDate && toDate) {
       return true;
     }
@@ -352,17 +352,17 @@ export class DueDayCardTabComponent implements OnInit {
   }
 
   updateCardTrackingState(index: number) {
-    let updateData = this.dataSource[index];
+    const updateData = this.dataSource[index];
 
-    let fromDate = this.formDate.get("fromDate")?.value;
-    updateData.month = this.datePipe.transform(fromDate, "MM");
-    updateData.year = this.datePipe.transform(fromDate, "yyyy");
+    const fromDate = this.formDate.get('fromDate')?.value;
+    updateData.month = this.datePipe.transform(fromDate, 'MM');
+    updateData.year = this.datePipe.transform(fromDate, 'yyyy');
 
     this.isLoading = true;
     this.transactionService.updateCardTrackingState(updateData).subscribe((result) => {
       this.isLoading = false;
       const message = `Cập nhật thành công cho thẻ: ${updateData.cardNumber} `;
-      this.alertService.alert({ message: message, msgClass: "cssInfo" });
+      this.alertService.alert({ message: message, msgClass: 'cssInfo' });
     });
   }
 

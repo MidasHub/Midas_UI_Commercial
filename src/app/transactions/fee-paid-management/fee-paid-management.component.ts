@@ -1,34 +1,34 @@
-import { Component, OnInit, ViewChild } from "@angular/core";
-import { animate, state, style, transition, trigger } from "@angular/animations";
-import { FormBuilder, FormGroup } from "@angular/forms";
-import { MatPaginator } from "@angular/material/paginator";
-import { MatSort } from "@angular/material/sort";
-import { TransactionService } from "../transaction.service";
-import { DatePipe } from "@angular/common";
-import { SettingsService } from "../../settings/settings.service";
-import { AuthenticationService } from "../../core/authentication/authentication.service";
-import { SavingsService } from "../../savings/savings.service";
-import { MatDialog, MatDialogConfig } from "@angular/material/dialog";
-import { ClientsService } from "../../clients/clients.service";
-import { merge } from "rxjs";
-import { tap } from "rxjs/operators";
-import { ConfirmDialogComponent } from "../dialog/confirm-dialog/confirm-dialog.component";
-import { UploadBillComponent } from "../dialog/upload-bill/upload-bill.component";
-import { FormfieldBase } from "../../shared/form-dialog/formfield/model/formfield-base";
-import { InputBase } from "../../shared/form-dialog/formfield/model/input-base";
-import { FormDialogComponent } from "../../shared/form-dialog/form-dialog.component";
-import { AddFeeDialogComponent } from "../dialog/add-fee-dialog/add-fee-dialog.component";
-import { ViewFeePaidTransactionDialogComponent } from "../dialog/view-fee-paid-transaction-dialog/view-fee-paid-transaction-dialog.component";
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { animate, state, style, transition, trigger } from '@angular/animations';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { TransactionService } from '../transaction.service';
+import { DatePipe } from '@angular/common';
+import { SettingsService } from '../../settings/settings.service';
+import { AuthenticationService } from '../../core/authentication/authentication.service';
+import { SavingsService } from '../../savings/savings.service';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { ClientsService } from '../../clients/clients.service';
+import { merge } from 'rxjs';
+import { tap } from 'rxjs/operators';
+import { ConfirmDialogComponent } from '../dialog/confirm-dialog/confirm-dialog.component';
+import { UploadBillComponent } from '../dialog/upload-bill/upload-bill.component';
+import { FormfieldBase } from '../../shared/form-dialog/formfield/model/formfield-base';
+import { InputBase } from '../../shared/form-dialog/formfield/model/input-base';
+import { FormDialogComponent } from '../../shared/form-dialog/form-dialog.component';
+import { AddFeeDialogComponent } from '../dialog/add-fee-dialog/add-fee-dialog.component';
+import { ViewFeePaidTransactionDialogComponent } from '../dialog/view-fee-paid-transaction-dialog/view-fee-paid-transaction-dialog.component';
 
 @Component({
-  selector: "midas-fee-paid-management",
-  templateUrl: "./fee-paid-management.component.html",
-  styleUrls: ["./fee-paid-management.component.scss"],
+  selector: 'midas-fee-paid-management',
+  templateUrl: './fee-paid-management.component.html',
+  styleUrls: ['./fee-paid-management.component.scss'],
   animations: [
-    trigger("detailExpand", [
-      state("collapsed", style({ height: "0px", minHeight: "0" })),
-      state("expanded", style({ height: "*" })),
-      transition("expanded <=> collapsed", animate("225ms cubic-bezier(0.4, 0.0, 0.2, 1)")),
+    trigger('detailExpand', [
+      state('collapsed', style({ height: '0px', minHeight: '0' })),
+      state('expanded', style({ height: '*' })),
+      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
     ]),
   ],
 })
@@ -36,43 +36,43 @@ export class FeePaidManagementComponent implements OnInit {
   expandedElement: any;
   transactionType: any[] = [
     {
-      label: "Tất cả",
-      shortName: "Tất cả",
-      value: "",
+      label: 'Tất cả',
+      shortName: 'Tất cả',
+      value: '',
     },
     {
-      label: "Giao dịch Cash",
-      shortName: "Cash",
-      value: "CASH",
+      label: 'Giao dịch Cash',
+      shortName: 'Cash',
+      value: 'CASH',
     },
     {
-      label: "Giao dịch Advance",
-      shortName: "Advance",
-      value: "ROLLTERM",
+      label: 'Giao dịch Advance',
+      shortName: 'Advance',
+      value: 'ROLLTERM',
     },
     {
-      label: "Giao dịch lô",
-      shortName: "Lô",
-      value: "BATCH",
+      label: 'Giao dịch lô',
+      shortName: 'Lô',
+      value: 'BATCH',
     }
   ];
   displayedColumns: string[] = [
-    "txnDate",
-    "officeName",
-    "txnType",
-    "batchNo",
-    "customerName",
-    "txnAmount",
-    "DEAmount",
-    "feeSum",
-    "feePaid",
-    "feeRemain",
-    "actions",
+    'txnDate',
+    'officeName',
+    'txnType',
+    'batchNo',
+    'customerName',
+    'txnAmount',
+    'DEAmount',
+    'feeSum',
+    'feePaid',
+    'feeRemain',
+    'actions',
   ];
   formDate: FormGroup;
   formFilter: FormGroup;
-  dataSource?: any[];
-  isLoading: boolean = false;
+  dataSource: any[] = [];
+  isLoading = false;
   transactionsData: any[] = [];
   currentUser: any;
 
@@ -81,34 +81,34 @@ export class FeePaidManagementComponent implements OnInit {
 
   paymentTypes: any[] = [
     {
-      label: "Tất cả",
-      value: "",
+      label: 'Tất cả',
+      value: '',
     },
     {
-      label: "Thu",
-      value: "IN",
+      label: 'Thu',
+      value: 'IN',
     },
     {
-      label: "Chi",
-      value: "OUT",
+      label: 'Chi',
+      value: 'OUT',
     },
   ];
   statusOption: any[] = [
     {
-      label: "Tất cả",
-      value: "",
+      label: 'Tất cả',
+      value: '',
     },
     {
-      label: "Chưa xong",
-      value: "A",
+      label: 'Chưa xong',
+      value: 'A',
     },
     {
-      label: "Đã xong",
-      value: "C",
+      label: 'Đã xong',
+      value: 'C',
     },
     {
-      label: "Đã hủy",
-      value: "V",
+      label: 'Đã hủy',
+      value: 'V',
     },
   ];
   partners?: any[];
@@ -119,12 +119,12 @@ export class FeePaidManagementComponent implements OnInit {
   totalFeePaidDE = 0;
   totalFeeRemain = 0;
   panelOpenState = true;
-  filterData?: any[];
+  filterData: any[] = [];
   groupData: any;
-  searchText = "";
+  searchText = '';
   today = new Date();
-  @ViewChild(MatPaginator, { static: true }) paginator?: MatPaginator;
-  @ViewChild(MatSort, { static: true }) sort?: MatSort;
+  @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
+  @ViewChild(MatSort, { static: true }) sort!: MatSort;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -142,18 +142,18 @@ export class FeePaidManagementComponent implements OnInit {
       toDate: [new Date()],
     });
     this.formFilter = this.formBuilder.group({
-      status: ["A"],
-      txnType: [""],
-      officeName: [""],
-      agencyName: [""],
-      customerName: [""],
-      traceNo: [""],
-      batchNo: [""],
-      txnPaymentCode: [""],
-      txnPaymentType: [""],
+      status: ['A'],
+      txnType: [''],
+      officeName: [''],
+      agencyName: [''],
+      customerName: [''],
+      traceNo: [''],
+      batchNo: [''],
+      txnPaymentCode: [''],
+      txnPaymentType: [''],
       RetailsChoose: [true],
       wholesaleChoose: [true],
-      createdBy: [""],
+      createdBy: [''],
     });
 
     this.formFilter.valueChanges.subscribe((value) => {
@@ -162,13 +162,13 @@ export class FeePaidManagementComponent implements OnInit {
   }
 
   colorOfType(type: string) {
-    if (type === "IN") {
-      return "color: green; font-weight: bold;";
+    if (type === 'IN') {
+      return 'color: green; font-weight: bold;';
     }
-    if (type === "OUT") {
-      return "color: red;  font-weight: bold;";
+    if (type === 'OUT') {
+      return 'color: red;  font-weight: bold;';
     }
-    return "";
+    return '';
   }
 
   ngOnInit(): void {
@@ -177,21 +177,21 @@ export class FeePaidManagementComponent implements OnInit {
     this.savingsService.getListPartner().subscribe((partner) => {
       this.partners = partner?.result?.listPartner;
       // @ts-ignore
-      this.partners.unshift({ code: "", desc: "Tất cả" });
+      this.partners.unshift({ code: '', desc: 'Tất cả' });
     });
     this.clientServices.getListUserTeller(this.currentUser.officeId).subscribe((result: any) => {
-      this.staffs = result?.result?.listStaff.filter((staff: any) => staff.displayName.startsWith("R"));
+      this.staffs = result?.result?.listStaff.filter((staff: any) => staff.displayName.startsWith('R'));
       this.staffs?.unshift({
-        id: "",
-        displayName: "Tất cả",
+        id: '',
+        displayName: 'Tất cả',
       });
     });
 
     this.transactionService.getPaymentTypes().subscribe((result) => {
       this.paidPaymentType = result?.result?.listPayment;
       this.paidPaymentType.unshift({
-        code: "",
-        desc: "Tất cả",
+        code: '',
+        desc: 'Tất cả',
       });
     });
 
@@ -200,16 +200,16 @@ export class FeePaidManagementComponent implements OnInit {
 
   // tslint:disable-next-line:use-lifecycle-interface
   ngAfterViewInit() {
-    this.sort?.sortChange.subscribe(() => (this.paginator!.pageIndex = 0));
-    merge(this.sort!.sortChange, this.paginator!.page)
+    this.sort?.sortChange.subscribe(() => (this.paginator.pageIndex = 0));
+    merge(this.sort.sortChange, this.paginator.page)
       .pipe(tap(() => this.filterTransaction()))
       .subscribe();
   }
 
   getTransaction() {
     const dateFormat = this.settingsService.dateFormat;
-    let fromDate = this.formDate.get("fromDate")?.value;
-    let toDate = this.formDate.get("toDate")?.value;
+    let fromDate = this.formDate.get('fromDate')?.value;
+    let toDate = this.formDate.get('toDate')?.value;
     if (fromDate) {
       fromDate = this.datePipe.transform(fromDate, dateFormat);
     }
@@ -223,12 +223,12 @@ export class FeePaidManagementComponent implements OnInit {
       this.transactionsData = result?.result?.listFeeTransaction;
       this.transactionsData.map((v) => {
         if (!v.agencyId) {
-          v.agencyId = "#";
+          v.agencyId = '#';
         }
         v.DEAmount = 0;
 
-        v.customerName = v.txnType == "BATCH" ? v.txnCode : v.customerName;
-        if (v.txnPaymentType === "OUT") {
+        v.customerName = v.txnType === 'BATCH' ? v.txnCode : v.customerName;
+        if (v.txnPaymentType === 'OUT') {
           v.DEAmount = v.txnAmount - v.feeSum;
         }
       });
@@ -242,8 +242,8 @@ export class FeePaidManagementComponent implements OnInit {
   }
 
   filterTransaction() {
-    const limit = this.paginator!.pageSize;
-    const offset = this.paginator!.pageIndex * limit;
+    const limit = this.paginator.pageSize;
+    const offset = this.paginator.pageIndex * limit;
     const form = this.formFilter.value;
     const wholesaleChoose = form.wholesaleChoose;
     const RetailsChoose = form.RetailsChoose;
@@ -251,17 +251,17 @@ export class FeePaidManagementComponent implements OnInit {
     this.filterData = this.transactionsData.filter((v) => {
 
       for (const key of keys) {
-        if (["wholesaleChoose", "RetailsChoose"].indexOf(key) === -1) {
+        if (['wholesaleChoose', 'RetailsChoose'].indexOf(key) === -1) {
           if (form[key]) {
             if (!v[key]) {
               return false;
             }
-            if ("customerName".indexOf(key) != -1) {
+            if ('customerName'.indexOf(key) !== -1) {
               if (!this.clientServices.preProcessText(String(v[key])).toUpperCase().includes(this.clientServices.preProcessText(String(form[key])).toUpperCase())) {
                 return false;
               }
             }
-            if ("customerName".indexOf(key) === -1) {
+            if ('customerName'.indexOf(key) === -1) {
               if (!String(v[key])?.toLowerCase().includes(String(form[key])?.toLowerCase())) {
                 return false;
               }
@@ -269,8 +269,8 @@ export class FeePaidManagementComponent implements OnInit {
           }
         }
       }
-      const check_wholesaleChoose = wholesaleChoose ? v.txnType.startsWith("B") : false;
-      const check_RetailsChoose = RetailsChoose ? v.txnType === "CASH" || v.txnType === "ROLLTERM" : false;
+      const check_wholesaleChoose = wholesaleChoose ? v.txnType.startsWith('B') : false;
+      const check_RetailsChoose = RetailsChoose ? v.txnType === 'CASH' || v.txnType === 'ROLLTERM' : false;
       if (!check_wholesaleChoose && !check_RetailsChoose) {
         return false;
       }
@@ -296,7 +296,7 @@ export class FeePaidManagementComponent implements OnInit {
     this.totalFeePaidDE = this.filterData.reduce((total: any, num: any) => {
 
       let  DEAmount = 0;
-      if (num.txnPaymentCode == 'DE'){
+      if (num.txnPaymentCode === 'DE') {
           DEAmount = num?.txnAmount - num?.feeSum;
       }
       return total + Math.round(DEAmount);
@@ -332,8 +332,8 @@ export class FeePaidManagementComponent implements OnInit {
   }
 
   get fromDateAndToDate() {
-    const fromDate = this.formDate.get("fromDate")?.value;
-    const toDate = this.formDate.get("toDate")?.value;
+    const fromDate = this.formDate.get('fromDate')?.value;
+    const toDate = this.formDate.get('toDate')?.value;
     if (fromDate && toDate) {
       return true;
     }
@@ -341,23 +341,23 @@ export class FeePaidManagementComponent implements OnInit {
   }
 
   menuOpened() {
-    console.log("menuOpened");
+    console.log('menuOpened');
   }
 
   menuClosed() {
-    console.log("menuClosed");
+    console.log('menuClosed');
   }
 
   displayStatus(status: string) {
     switch (status) {
-      case "C":
-        return "Thành công";
-      case "P":
-        return "Chờ đợi";
-      case "V":
-        return "Hủy";
+      case 'C':
+        return 'Thành công';
+      case 'P':
+        return 'Chờ đợi';
+      case 'V':
+        return 'Hủy';
       default:
-        return "";
+        return '';
     }
   }
 
@@ -399,7 +399,7 @@ export class FeePaidManagementComponent implements OnInit {
   }
 
   checkShowButton(txnCode: string) {
-    const txn = this.getDataOfGroupTxnCode(txnCode).find((v: any) => v.status == "A") || false;
+    const txn = this.getDataOfGroupTxnCode(txnCode).find((v: any) => v.status === 'A') || false;
     return txn;
   }
 
@@ -409,10 +409,10 @@ export class FeePaidManagementComponent implements OnInit {
   }
 
   exportTransactionFeePaid() {
-    const refids = this.filterData!.map((v) => {
+    const refids = this.filterData.map((v) => {
       return v.refid;
     });
-    const re = refids.toString().split(",").join("-");
+    const re = refids.toString().split(',').join('-');
     this.transactionService.exportTransactionFeePaid(re);
   }
 }

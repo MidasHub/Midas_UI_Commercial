@@ -26,7 +26,7 @@ export class ViewFeePaidTransactionDialogComponent implements OnInit {
   today = new Date();
   expandedElement: any;
   displayedColumns: string[] = ['txnSavingResource',
-    'createdDate', 'txnSavingType', 'txnPaymentCode', 'txnSavingId', 'paidAmount', "routingCode",
+    'createdDate', 'txnSavingType', 'txnPaymentCode', 'txnSavingId', 'paidAmount', 'routingCode',
     'actions',
   ];
 
@@ -54,12 +54,12 @@ export class ViewFeePaidTransactionDialogComponent implements OnInit {
 
   }
 
-  revertTransaction(txnSavingResource: string, createdDate :any) {
+  revertTransaction(txnSavingResource: string, createdDate: any) {
     const dateFormat = this.settingsService.dateFormat;
     const todayString = this.datePipe.transform(this.today, dateFormat);
     const createdDateString = this.datePipe.transform(createdDate, dateFormat);
 
-    if (todayString != createdDateString){
+    if (todayString !== createdDateString) {
       this.alertServices.alert({
         type: '🚨🚨🚨🚨 Lỗi ',
         msgClass: 'cssBig',

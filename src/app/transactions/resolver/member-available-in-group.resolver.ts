@@ -13,7 +13,7 @@ export class MemberAvailableInGroupResolver implements Resolve<Object> {
   constructor(private transactionServices: TransactionService) { }
 
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
-    const groupId = route.paramMap.get('groupId') ||'';
+    const groupId = route.paramMap.get('groupId') ;
     return this.transactionServices.getMembersAvailableGroup(groupId);
   }
 

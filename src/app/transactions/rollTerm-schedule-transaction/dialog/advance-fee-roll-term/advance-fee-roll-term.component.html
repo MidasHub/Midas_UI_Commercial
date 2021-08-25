@@ -10,7 +10,7 @@
         {{ saving.externalId }}
       </mat-option>
     </mat-select>
-    <mat-error *ngIf="client.hasError('required')">
+    <mat-error *ngIf="client!.hasError('required')">
       Yêu cầu: chọn khách hàng
     </mat-error>
   </mat-form-field>

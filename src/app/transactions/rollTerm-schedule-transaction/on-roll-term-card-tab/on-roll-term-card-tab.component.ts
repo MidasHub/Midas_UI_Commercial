@@ -45,7 +45,7 @@ export class OnRollTermCardTabComponent implements OnInit {
     'note',
     'actions',
   ];
-  isLoading: boolean = false;
+  isLoading = false;
   formDate: FormGroup;
   formFilter: FormGroup;
   dataSource!: any[];
@@ -200,7 +200,7 @@ export class OnRollTermCardTabComponent implements OnInit {
   addIdentifierExtraInfo(card: any, rollTermBooking: any, requestAmount: any, feeRate: any) {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.data = {
-      title: "Thông tin bổ sung cho thẻ",
+      title: 'Thông tin bổ sung cho thẻ',
       clientIdentifierTemplate: card,
     };
     dialogConfig.minWidth = 400;
@@ -208,7 +208,7 @@ export class OnRollTermCardTabComponent implements OnInit {
     addIdentifierDialogRef.afterClosed().subscribe((response: any) => {
       if (response.data) {
         const { limitCard, classCard } = response.data.value;
-        const expiredDateString = this.datePipe.transform(card.expiredDate, "MMyy");
+        const expiredDateString = this.datePipe.transform(card.expiredDate, 'MMyy');
 
         this.transactionService
           .updateCardTrackingState({
@@ -227,9 +227,9 @@ export class OnRollTermCardTabComponent implements OnInit {
               this.submitTransactionRollTerm(card, rollTermBooking, requestAmount, feeRate);
             } else {
               this.alertService.alert({
-                message: res2.result.message ? res2.result.message : "Lỗi thêm thông tin hạn mức, hạng thẻ!",
-                msgClass: "cssError",
-                hPosition: "center",
+                message: res2.result.message ? res2.result.message : 'Lỗi thêm thông tin hạn mức, hạng thẻ!',
+                msgClass: 'cssError',
+                hPosition: 'center',
               });
               return;
             }
@@ -238,13 +238,13 @@ export class OnRollTermCardTabComponent implements OnInit {
     });
   }
 
-  submitTransactionRollTerm(card: any, rollTermBooking: any, requestAmount: any, feeRate: any){
-    let info: any = {};
+  submitTransactionRollTerm(card: any, rollTermBooking: any, requestAmount: any, feeRate: any) {
+    const info: any = {};
     rollTermBooking.forEach((booking: any) => {
       booking.amountBooking = booking.amountBooking;
       booking.txnDate = this.datePipe.transform(booking.txnDate, 'dd/MM/yyyy');
     });
-    const listBookingRollTerm = JSON.stringify(rollTermBooking, function (key, value) {
+    const listBookingRollTerm = JSON.stringify(rollTermBooking,  (key, value) => {
       if (key === '$$hashKey') {
         return undefined;
       }
@@ -269,7 +269,7 @@ export class OnRollTermCardTabComponent implements OnInit {
     this.isLoading = true;
     this.transactionService.submitTransactionRollTermOnDialog(info).subscribe((data: any) => {
       this.isLoading = false;
-      let transactionRefNo = data.result.tranRefNo;
+      const transactionRefNo = data.result.tranRefNo;
       this.alertService.alert({
         message: `Tạo giao dịch ${transactionRefNo} thành công!`,
         msgClass: 'cssSuccess',
@@ -295,7 +295,7 @@ export class OnRollTermCardTabComponent implements OnInit {
       if (!card.limit || !card.cardClass) {
         this.addIdentifierExtraInfo(card, rollTermBooking, requestAmount, feeRate);
         return;
-      } else{
+      } else {
         this.submitTransactionRollTerm(card, rollTermBooking, requestAmount, feeRate);
         return;
       }
@@ -303,7 +303,7 @@ export class OnRollTermCardTabComponent implements OnInit {
   }
 
   updateCardTrackingState(index: number) {
-    let updateData = this.dataSource[index];
+    const updateData = this.dataSource[index];
     this.isLoading = true;
     this.transactionService.updateCardTrackingState(updateData).subscribe((result) => {
       this.isLoading = false;

@@ -1,16 +1,16 @@
 /** Angular Imports */
-import { Component, OnInit } from "@angular/core";
-import { MatDialog } from "@angular/material/dialog";
-import { ActivatedRoute } from "@angular/router";
-import { TransactionService } from "../transaction.service";
+import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { ActivatedRoute } from '@angular/router';
+import { TransactionService } from '../transaction.service';
 
 /**
  * transaction Component.
  */
 @Component({
-  selector: "midas-view-transaction",
-  templateUrl: "./view-transaction.component.html",
-  styleUrls: ["./view-transaction.component.scss"],
+  selector: 'midas-view-transaction',
+  templateUrl: './view-transaction.component.html',
+  styleUrls: ['./view-transaction.component.scss'],
 })
 export class ViewTransactionComponent implements OnInit {
   transactionInfo: any = {};
@@ -33,7 +33,7 @@ export class ViewTransactionComponent implements OnInit {
   ngOnInit() {
     this.route.queryParamMap.subscribe((params: any) => {
 
-      const tranId = params.get("tranId");
+      const tranId = params.get('tranId');
       this.isLoading = true;
       this.transactionService.getTransactionDetail(tranId).subscribe((data: any) => {
 
@@ -55,13 +55,13 @@ export class ViewTransactionComponent implements OnInit {
 
   formatCurrency(value: string) {
     value = String(value);
-    const neg = value.startsWith("-");
-    value = value.replace(/[-\D]/g, "");
-    value = value.replace(/(\d{3})$/, ",$1");
-    value = value.replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
-    value = value !== "" ? "" + value : "";
+    const neg = value.startsWith('-');
+    value = value.replace(/[-\D]/g, '');
+    value = value.replace(/(\d{3})$/, ',$1');
+    value = value.replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
+    value = value !== '' ? '' + value : '';
     if (neg) {
-      value = "-".concat(value);
+      value = '-'.concat(value);
     }
 
     return value;

@@ -73,7 +73,8 @@ import { AddSubmitTransactionDialogComponent } from './dialog/add-submit-transac
     ValidCheckTransactionHistoryDialogComponent,
     ManageIcTransactionComponent,
     ConfirmHoldTransactionDialogComponent,
-    AddSubmitTransactionDialogComponent
+    AddSubmitTransactionDialogComponent,
+    MainboardComponent
   ],
 
   imports: [

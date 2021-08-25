@@ -4,7 +4,7 @@ import { environment } from 'environments/environment';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 /** rxjs Imports */
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { CommonHttpParams } from 'app/shared/CommonHttpParams';
 
 /**
@@ -130,8 +130,7 @@ export class TransactionService {
     httpParams = httpParams.set('classCard', updateData.classCard ? updateData.classCard : '');
     httpParams = httpParams.set('isHold', updateData.isHold ? '200' : '100');
     httpParams = httpParams.set('year', updateData.year);
-    httpParams = httpParams.set('month', updateData.month );
-
+    httpParams = httpParams.set('month', updateData.month);
 
     return this.http.put<any>(`${this.GatewayApiUrlPrefix}/card/update_card_on_due_day`, httpParams);
   }
@@ -205,7 +204,6 @@ export class TransactionService {
     httpParams = httpParams.set('customerName', transactionInfo.clientDto.displayName);
     httpParams = httpParams.set('terminalId', transactionInfo.terminalId);
     httpParams = httpParams.set('toClientId', transactionInfo.clientId);
-
 
     return this.http.post<any>(
       `${this.GatewayApiUrlPrefix}/transaction/create_retail_cash_from_rollTerm_transaction`,
@@ -334,10 +332,10 @@ export class TransactionService {
     toDate: string;
     limit: number;
     offset: number;
-    stageFilter: string,
+    stageFilter: string;
     statusFilter: string;
     staffFilter: string;
-    cardHoldFilter: string,
+    cardHoldFilter: string;
     bankName: string;
     cardType: string;
     query: string;
@@ -352,7 +350,10 @@ export class TransactionService {
     httpParams = httpParams.set('trackingState', payload.stageFilter === 'ALL' ? `%%` : `%${payload.stageFilter}%`);
     httpParams = httpParams.set('trackingStatus', payload.statusFilter === 'ALL' ? `%%` : `%${payload.statusFilter}%`);
     httpParams = httpParams.set('staffFilter', payload.staffFilter === 'ALL' ? `%%` : `${payload.staffFilter}`);
-    httpParams = httpParams.set('cardHoldFilter', payload.cardHoldFilter === 'ALL' ? `%%` : `${payload.cardHoldFilter}`);
+    httpParams = httpParams.set(
+      'cardHoldFilter',
+      payload.cardHoldFilter === 'ALL' ? `%%` : `${payload.cardHoldFilter}`
+    );
     httpParams = httpParams.set('bankName', payload.bankName === 'ALL' ? `%%` : `${payload.bankName}`);
     httpParams = httpParams.set('cardType', payload.cardType === 'ALL' ? `%%` : `${payload.cardType}`);
     httpParams = httpParams.set('viewDoneTransaction', `${payload.viewDoneTransaction}`);
@@ -476,10 +477,7 @@ export class TransactionService {
     return this.http.post<any>(`${this.GatewayApiUrlPrefix}/transaction/revert_transaction`, httpParams);
   }
 
-  uploadBillForBranchBooking(
-    bookingRefNo: string,
-    base64Image: string,
-  ): Observable<any> {
+  uploadBillForBranchBooking(bookingRefNo: string, base64Image: string): Observable<any> {
     const httpParams = this.commonHttpParams.getCommonHttpParams();
     const Params = {
       createdBy: httpParams.get('createdBy'),
@@ -488,7 +486,6 @@ export class TransactionService {
       staffId: httpParams.get('staffId'),
       bookingRefNo: bookingRefNo,
       fileSubmitBase64: base64Image,
-
     };
 
     return this.http.post<any>(`${this.GatewayApiUrlPrefix}/transaction/upload_bill_file_branch_booking`, Params);
@@ -723,18 +720,29 @@ export class TransactionService {
     return this.http.post<any>(`${this.GatewayApiUrlPrefix}/transaction/get_list_batch_transaction`, httpParams);
   }
 
-  getMembersInGroup(groupId: string): Observable<any> {
+  getMembersInGroup(groupId?: string | null): Observable<any> {
     let httpParams = this.commonHttpParams.getCommonHttpParams();
-    httpParams = httpParams.set('groupId', groupId);
+    if (groupId) {
+      httpParams = httpParams.set('groupId', groupId);
 
-    return this.http.post<any>(`${this.GatewayApiUrlPrefix}/groups/get_list_member_group`, httpParams);
+      return this.http.post<any>(`${this.GatewayApiUrlPrefix}/groups/get_list_member_group`, httpParams);
+    } else {
+      return of();
+    }
   }
 
-  getMembersAvailableGroup(groupId: string): Observable<any> {
+  getMembersAvailableGroup(groupId?: string | null): Observable<any> {
     let httpParams = this.commonHttpParams.getCommonHttpParams();
-    httpParams = httpParams.set('groupId', groupId);
+    if (groupId) {
+      httpParams = httpParams.set('groupId', groupId);
 
-    return this.http.post<any>(`${this.GatewayApiUrlPrefix}/groups/get_list_member_group_with_identifier`, httpParams);
+      return this.http.post<any>(
+        `${this.GatewayApiUrlPrefix}/groups/get_list_member_group_with_identifier`,
+        httpParams
+      );
+    } else {
+      return of();
+    }
   }
 
   getShippersCardTransfer(): Observable<any> {
