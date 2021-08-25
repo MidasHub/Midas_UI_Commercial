@@ -1,15 +1,16 @@
-import { Component, OnInit, ViewChild } from "@angular/core";
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { MatTableDataSource } from "@angular/material/table";
-import { MatSort } from "@angular/material/sort";
-import { ActivatedRoute, Router } from "@angular/router";
-import { TerminalsService } from "../terminals.service";
-import { ErrorDialogComponent } from "app/shared/error-dialog/error-dialog.component";
-import { MatDialog } from "@angular/material/dialog";
-import { Location } from "@angular/common";
-import { BanksService } from "app/banks/banks.service";
-import { AlertService } from "app/core/alert/alert.service";
-import { SavingsService } from "app/savings/savings.service";
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatSort } from '@angular/material/sort';
+import { ActivatedRoute, Router } from '@angular/router';
+import { TerminalsService } from '../terminals.service';
+import { ErrorDialogComponent } from 'app/shared/error-dialog/error-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
+import { Location } from '@angular/common';
+import { BanksService } from 'app/banks/banks.service';
+import { AlertService } from 'app/core/alert/alert.service';
+import { SavingsService } from 'app/savings/savings.service';
+import { filter } from 'lodash';
 export interface PeriodicElements {
   officeId: number;
   officeName: string;
@@ -26,9 +27,9 @@ export interface PeriodicElements {
 const initialData: PeriodicElements[] = [
   {
     officeId: 0,
-    officeName: "NaN",
-    cardCode: "NaN",
-    cardDescription: "NaN",
+    officeName: 'NaN',
+    cardCode: 'NaN',
+    cardDescription: 'NaN',
     costPercentage: 0,
     cogsPercentage: 0,
     txnRateMin: 0,
@@ -39,23 +40,23 @@ const initialData: PeriodicElements[] = [
   },
 ];
 @Component({
-  selector: "midas-create-terminals",
-  templateUrl: "./create-terminals.component.html",
-  styleUrls: ["./create-terminals.component.scss"],
+  selector: 'midas-create-terminals',
+  templateUrl: './create-terminals.component.html',
+  styleUrls: ['./create-terminals.component.scss'],
 })
 export class CreateTerminalsComponent implements OnInit {
   @ViewChild(MatSort) sort: MatSort | any;
   // @ViewChild(MatPaginator) paginator: MatPaginator;
 
   displayedColumns: string[] = [
-    "Office",
-    "CardType",
-    "FeeCost",
-    "FeePOS",
-    "FeeMin",
-    "FeeMax",
-    "MaxLimitAmountTransaction",
-    "LevelTransactionCard",
+    'Office',
+    'CardType',
+    'FeeCost',
+    'FeePOS',
+    'FeeMin',
+    'FeeMax',
+    'MaxLimitAmountTransaction',
+    'LevelTransactionCard',
   ];
 
   dataSource = new MatTableDataSource(initialData);
@@ -70,13 +71,13 @@ export class CreateTerminalsComponent implements OnInit {
   data: any;
   banks: any[] = [];
   posLimits: PeriodicElements[] = [];
-  typeOfTransactions : typeOfTransaction[] = [
-    {value:'ALL', valueDesc:'khách hàng Sỉ & Lẻ'},
-    {value:'SI', valueDesc:'khách hàng Sỉ'},
-    {value:'LE', valueDesc:'khách hàng Lẻ'}
+  typeOfTransactions: TypeOfTransaction[] = [
+    {value: 'ALL', valueDesc: 'khách hàng Sỉ & Lẻ'},
+    {value: 'SI', valueDesc: 'khách hàng Sỉ'},
+    {value: 'LE', valueDesc: 'khách hàng Lẻ'}
   ];
 
-  applyFeeForOffice:boolean = false;
+  applyFeeForOffice = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -116,31 +117,31 @@ export class CreateTerminalsComponent implements OnInit {
 
   createEditTerminalForm() {
     this.createTerminalForm = this.formBuilder.group({
-      terminalId: ["", [Validators.required, Validators.pattern("^([^!@#$%^&*()+=<>,.?/]*)$")]],
-      terminalCode: ["", [Validators.required]],
-      terminalName: ["", [Validators.required]],
-      merchantId: ["", [Validators.required]],
-      officeId: ["", [Validators.required]],
-      bankCode: ["", [Validators.required]],
-      timeChargeValid: ["", [Validators.required, Validators.min(1)]],
+      terminalId: ['', [Validators.required, Validators.pattern('^([^!@#$%^&*()+=<>,.?/]*)$')]],
+      terminalCode: ['', [Validators.required]],
+      terminalName: ['', [Validators.required]],
+      merchantId: ['', [Validators.required]],
+      officeId: ['', [Validators.required]],
+      bankCode: ['', [Validators.required]],
+      timeChargeValid: ['', [Validators.required, Validators.min(1)]],
       status: [true],
       isMappingBill: [true],
-      minFeeDefault: ["", [Validators.required, Validators.min(0),Validators.max(1000000)]],
-      costPercentage: ["", [Validators.max(100), Validators.min(0)]],
-      cogsPercentage: ["", [Validators.max(100), Validators.min(0)]],
-      txnRateMin: ["", [Validators.max(100), Validators.min(0)]],
-      txnRateMax: ["", [Validators.max(100), Validators.min(0)]],
-      maxLimitAmount: ["", [Validators.required, Validators.min(1000000),Validators.max(100000000000)]],
-      levelLimit: ["", [Validators.required, Validators.min(1)]],
-      limitAmount: ["", [Validators.required,Validators.min(1000000),Validators.max(100000000000)]],
-      officeSelect:[""],
-      typeOfTransaction:["ALL"],
+      minFeeDefault: ['', [Validators.required, Validators.min(0), Validators.max(1000000)]],
+      costPercentage: ['', [Validators.max(100), Validators.min(0)]],
+      cogsPercentage: ['', [Validators.max(100), Validators.min(0)]],
+      txnRateMin: ['', [Validators.max(100), Validators.min(0)]],
+      txnRateMax: ['', [Validators.max(100), Validators.min(0)]],
+      maxLimitAmount: ['', [Validators.required, Validators.min(1000000), Validators.max(100000000000)]],
+      levelLimit: ['', [Validators.required, Validators.min(1)]],
+      limitAmount: ['', [Validators.required, Validators.min(1000000), Validators.max(100000000000)]],
+      officeSelect: [''],
+      typeOfTransaction: ['ALL'],
       banksCheck: [[]],
       cardsCheck: [[]],
     });
-    this.createTerminalForm.get("terminalId")!.valueChanges.subscribe(data => {
-      this.createTerminalForm.get("terminalCode")?.setValue(data);
-    })
+    this.createTerminalForm.get('terminalId')?.valueChanges.subscribe(data => {
+      this.createTerminalForm.get('terminalCode')?.setValue(data);
+    });
   }
 
   setDefaultFeeSettingPos() {
@@ -158,7 +159,7 @@ export class CreateTerminalsComponent implements OnInit {
     this.posLimits = [];
     this.offices.forEach((office: any) => {
       this.cardTypes.forEach((card: any) => {
-        let limit = {
+        const limit = {
           officeId: office.officeId,
           officeName: office.name,
           cardCode: card.code,
@@ -178,57 +179,61 @@ export class CreateTerminalsComponent implements OnInit {
     this.dataSource.sort = this.sort;
   }
 
-  applyFilter(filterValue: string) {
+  applyFilter(e: Event) {
+    // TODO: Chỗ này cần chuyển thành biết Event, rồi trong hàm filter mới check để làm filter
+    let filterValue = (<HTMLInputElement>e.target).value || '';
+    if (filterValue) {
     filterValue = filterValue.trim();
     filterValue = filterValue.toLowerCase();
     this.dataSource.filter = filterValue;
+    }
   }
 
-  submit() {
+  submit(): any {
     if (!this.createTerminalForm.valid) {
       return false;
     }
-    var formData = this.createTerminalForm.value;
-    formData.status = formData.status == true ? "A" : "D";
-    formData.isMappingBill = formData.isMappingBill == true ? 1 : 0;
+    const formData = this.createTerminalForm.value;
+    formData.status = formData.status  === true ? 'A' : 'D';
+    formData.isMappingBill = formData.isMappingBill  === true ? 1 : 0;
 
     const data = {
       ...this.createTerminalForm.value,
-      dateFormat: "dd/MM/yyyy",
+      dateFormat: 'dd/MM/yyyy',
       listLimit: JSON.stringify(this.dataSource.data),
     };
 
     this.terminalsService.save(data).subscribe((response: any) => {
-      if (response.status != "200") {
+      if (response.status !== '200') {
 
         this.alertService.alert({
           message: `Lỗi xảy ra : ${response.error}`,
-          msgClass: "cssDanger",
-          hPosition: "center",
+          msgClass: 'cssDanger',
+          hPosition: 'center',
         });
 
       } else {
-        this.router.navigate(["terminals"]);
+        this.router.navigate(['terminals']);
       }
     });
   }
 
   validateNumber(event: any, element: any) {
-    let name_input = event.target.id;
+    const name_input = event.target.id;
     let value_input = event.target.value;
-    const index = name_input.split("_")[0];
+    const index = name_input.split('_')[0];
 
-    value_input = value_input.replace(/[^0-9\.]/g, "");
-    if (value_input.split(".").length > 2) value_input = value_input.replace(/\.+$/, "");
+    value_input = value_input.replace(/[^0-9\.]/g, '');
+    if (value_input.split('.').length > 2) { value_input = value_input.replace(/\.+$/, ''); }
 
-    let dataCopy = this.dataSource.data;
-    var e = element;
-    Object.keys(element).forEach(function (key) {
-      if (name_input.split("_")[1] == key) {
+    const dataCopy = this.dataSource.data;
+    const e = element;
+    Object.keys(element).forEach( (key) => {
+      if (name_input.split('_')[1]  === key) {
         e[key] = Number(value_input);
       }
     });
-    dataCopy.splice(index -1, 1, e);
+    dataCopy.splice(index - 1, 1, e);
     this.dataSource.data = dataCopy;
   }
 
@@ -236,8 +241,8 @@ export class CreateTerminalsComponent implements OnInit {
     this._location.back();
   }
 
-  setDefaultFeeSettingPosForOffice(){
-    const officeId =this.createTerminalForm.value.officeSelect;
+  setDefaultFeeSettingPosForOffice() {
+    const officeId = this.createTerminalForm.value.officeSelect;
     const costPercentage  = this.createTerminalForm.value.costPercentage;
     const cogsPercentage  = this.createTerminalForm.value.cogsPercentage;
     const txnRateMin      = this.createTerminalForm.value.txnRateMin;
@@ -282,7 +287,7 @@ export class CreateTerminalsComponent implements OnInit {
     }
 }
 
-interface typeOfTransaction{
-  value:string;
-  valueDesc:string;
+interface TypeOfTransaction {
+  value: string;
+  valueDesc: string;
 }

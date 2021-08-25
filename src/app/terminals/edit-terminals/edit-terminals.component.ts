@@ -1,16 +1,16 @@
-import { filter } from "rxjs/operators";
-import { Component, OnInit, ChangeDetectorRef, ViewChild, AfterViewInit } from "@angular/core";
-import { ActivatedRoute, Router } from "@angular/router";
-import { FormBuilder, FormGroup, Validators, FormControl } from "@angular/forms";
-import { TerminalsService } from "../terminals.service";
-import { ErrorDialogComponent } from "app/shared/error-dialog/error-dialog.component";
-import { MatDialog } from "@angular/material/dialog";
+import { filter } from 'rxjs/operators';
+import { Component, OnInit, ChangeDetectorRef, ViewChild, AfterViewInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
+import { TerminalsService } from '../terminals.service';
+import { ErrorDialogComponent } from 'app/shared/error-dialog/error-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
 
-import { MatTableDataSource } from "@angular/material/table";
-import { MatPaginator } from "@angular/material/paginator";
-import { MatSort, Sort } from "@angular/material/sort";
-import { BanksService } from "app/banks/banks.service";
-import { AlertService } from "app/core/alert/alert.service";
+import { MatTableDataSource } from '@angular/material/table';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort, Sort } from '@angular/material/sort';
+import { BanksService } from 'app/banks/banks.service';
+import { AlertService } from 'app/core/alert/alert.service';
 export interface PeriodicElements {
   officeId: number;
   officeName: string;
@@ -25,9 +25,9 @@ export interface PeriodicElements {
   limitAmount: number;
 }
 @Component({
-  selector: "midas-edit-terminals",
-  templateUrl: "./edit-terminals.component.html",
-  styleUrls: ["./edit-terminals.component.scss"],
+  selector: 'midas-edit-terminals',
+  templateUrl: './edit-terminals.component.html',
+  styleUrls: ['./edit-terminals.component.scss'],
 })
 export class EditTerminalsComponent implements OnInit, AfterViewInit {
   @ViewChild(MatSort) sort: MatSort | any;
@@ -37,7 +37,7 @@ export class EditTerminalsComponent implements OnInit, AfterViewInit {
   offices: any;
   terminalData: any;
   merchants: any;
-  isOwner: boolean = false;
+  isOwner = false;
   cardTypes: any;
   ItemPosLimitList: any;
   ItemPosBranch: any;
@@ -47,20 +47,20 @@ export class EditTerminalsComponent implements OnInit, AfterViewInit {
   posLimitDefault: PeriodicElements[] = [];
   dataSource = new MatTableDataSource();
   displayedColumns: string[] = [
-    "officeName",
-    "CardType",
-    "FeeCost",
-    "FeeCOGS",
-    "FeeMin",
-    "FeeMax",
-    "MaxLimitAmountTransaction",
-    "LevelTransactionCard",
+    'officeName',
+    'CardType',
+    'FeeCost',
+    'FeeCOGS',
+    'FeeMin',
+    'FeeMax',
+    'MaxLimitAmountTransaction',
+    'LevelTransactionCard',
   ];
 
-  typeOfTransactions: typeOfTransaction[] = [
-    { value: "ALL", valueDesc: "khách hàng Sỉ & Lẻ" },
-    { value: "SI", valueDesc: "khách hàng Sỉ" },
-    { value: "LE", valueDesc: "khách hàng Lẻ" },
+  typeOfTransactions: TypeOfTransaction[] = [
+    { value: 'ALL', valueDesc: 'khách hàng Sỉ & Lẻ' },
+    { value: 'SI', valueDesc: 'khách hàng Sỉ' },
+    { value: 'LE', valueDesc: 'khách hàng Lẻ' },
   ];
   commonCardBanks: any[] = this.bankService.documentCardBanks;
   commonCardTypes: any[] = this.bankService.documentCardTypes;
@@ -77,12 +77,12 @@ export class EditTerminalsComponent implements OnInit, AfterViewInit {
   ) {}
 
   showOfficeName(officeId: number) {
-    let officeInfo = this.offices?.filter((o: any) => o.officeId == officeId);
+    const officeInfo = this.offices?.filter((o: any) => o.officeId  === officeId);
     return officeInfo[0]?.name;
   }
 
   showCardName(cardCode: number) {
-    let cardInfo = this.cardTypes?.filter((c: any) => c.code == cardCode);
+    const cardInfo = this.cardTypes?.filter((c: any) => c.code  === cardCode);
     return cardInfo[0]?.description;
   }
 
@@ -129,12 +129,12 @@ export class EditTerminalsComponent implements OnInit, AfterViewInit {
       timeChargeValid: this.ItemPos.timeChargeValid,
       minFeeDefault: this.ItemPos.minFeeDefault,
       merchantId: this.ItemPosBranch.merchantId,
-      status: this.ItemPos.status == "A" ? true : false,
-      isMappingBill: this.ItemPos.isMappingBill == 1 ? true : false,
-      costPercentage: this.ItemPosLimitList ? this.ItemPosLimitList[0]?.costPercentage : "",
-      cogsPercentage: this.ItemPosLimitList ? this.ItemPosLimitList[0]?.cogsPercentage : "",
-      txnRateMin: this.ItemPosLimitList ? this.ItemPosLimitList[0]?.txnRateMin : "",
-      txnRateMax: this.ItemPosLimitList ? this.ItemPosLimitList[0]?.txnRateMax : "",
+      status: this.ItemPos.status  === 'A' ? true : false,
+      isMappingBill: this.ItemPos.isMappingBill  === 1 ? true : false,
+      costPercentage: this.ItemPosLimitList ? this.ItemPosLimitList[0]?.costPercentage : '',
+      cogsPercentage: this.ItemPosLimitList ? this.ItemPosLimitList[0]?.cogsPercentage : '',
+      txnRateMin: this.ItemPosLimitList ? this.ItemPosLimitList[0]?.txnRateMin : '',
+      txnRateMax: this.ItemPosLimitList ? this.ItemPosLimitList[0]?.txnRateMax : '',
       maxLimitAmount: this.ItemPos.maxLimitAmount,
       levelLimit: this.ItemPos.levelLimit,
       typeOfTransaction: this.ItemPos.typeOfTransaction,
@@ -145,24 +145,24 @@ export class EditTerminalsComponent implements OnInit, AfterViewInit {
 
   createEditTerminalForm() {
     this.editTerminalForm = this.formBuilder.group({
-      terminalId: ["", [Validators.required, Validators.pattern("^([^!@#$%^&*()+=<>,.?/]*)$")]],
-      terminalCode: ["", [Validators.required]],
-      terminalName: ["", [Validators.required]],
-      merchantId: ["", [Validators.required]],
-      officeId: ["", [Validators.required]],
-      bankCode: ["", [Validators.required]],
-      timeChargeValid: ["", [Validators.required, Validators.min(1)]],
+      terminalId: ['', [Validators.required, Validators.pattern('^([^!@#$%^&*()+=<>,.?/]*)$')]],
+      terminalCode: ['', [Validators.required]],
+      terminalName: ['', [Validators.required]],
+      merchantId: ['', [Validators.required]],
+      officeId: ['', [Validators.required]],
+      bankCode: ['', [Validators.required]],
+      timeChargeValid: ['', [Validators.required, Validators.min(1)]],
       status: [true],
       isMappingBill: [true],
-      minFeeDefault: ["", [Validators.required, Validators.min(0), Validators.max(1000000)]],
-      costPercentage: ["", [Validators.max(100), Validators.min(0)]],
-      cogsPercentage: ["", [Validators.max(100), Validators.min(0)]],
-      txnRateMin: ["", [Validators.max(100), Validators.min(0)]],
-      txnRateMax: ["", [Validators.max(100), Validators.min(0)]],
-      maxLimitAmount: ["", [Validators.required, Validators.min(1000000), Validators.max(100000000000)]],
-      levelLimit: ["", [Validators.required, Validators.min(1)]],
-      limitAmount: ["", [Validators.required, Validators.min(1000000), Validators.max(100000000000)]],
-      typeOfTransaction: [""],
+      minFeeDefault: ['', [Validators.required, Validators.min(0), Validators.max(1000000)]],
+      costPercentage: ['', [Validators.max(100), Validators.min(0)]],
+      cogsPercentage: ['', [Validators.max(100), Validators.min(0)]],
+      txnRateMin: ['', [Validators.max(100), Validators.min(0)]],
+      txnRateMax: ['', [Validators.max(100), Validators.min(0)]],
+      maxLimitAmount: ['', [Validators.required, Validators.min(1000000), Validators.max(100000000000)]],
+      levelLimit: ['', [Validators.required, Validators.min(1)]],
+      limitAmount: ['', [Validators.required, Validators.min(1000000), Validators.max(100000000000)]],
+      typeOfTransaction: [''],
       banksCheck: [this.terminalData.bankCheckEntitys.map((bank: any) => bank.bankCode)],
       cardsCheck: [this.terminalData.cardCheckEntitys.map((card: any) => card.cardType)],
     });
@@ -184,13 +184,13 @@ export class EditTerminalsComponent implements OnInit, AfterViewInit {
         let rateCardType: any[] = [];
         if (!this.isOwner) {
           rateCardType = this.terminalData.reqTransfer.listDefaultRate.filter((rateCard: any) => {
-            return rateCard.cardType == card.code;
+            return rateCard.cardType  === card.code;
           });
-          if (rateCardType.length == 0) {
+          if (rateCardType.length  === 0) {
             this.alertService.alert({
               message: `Lỗi truy xuất phí gốc từ đối tác`,
-              msgClass: "cssDanger",
-              hPosition: "center",
+              msgClass: 'cssDanger',
+              hPosition: 'center',
             });
             return;
           }
@@ -234,13 +234,13 @@ export class EditTerminalsComponent implements OnInit, AfterViewInit {
       let rateCardType: any[] = [];
       if (!this.isOwner) {
         rateCardType = this.terminalData.reqTransfer.listDefaultRate.filter((rateCard: any) => {
-          return rateCard.cardType == card.code;
+          return rateCard.cardType  === card.code;
         });
-        if (rateCardType.length == 0) {
+        if (rateCardType.length  === 0) {
           this.alertService.alert({
             message: `Lỗi truy xuất phí gốc từ đối tác`,
-            msgClass: "cssDanger",
-            hPosition: "center",
+            msgClass: 'cssDanger',
+            hPosition: 'center',
           });
           return;
         }
@@ -269,10 +269,15 @@ export class EditTerminalsComponent implements OnInit, AfterViewInit {
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
   }
-  applyFilter(filterValue: string) {
+
+  applyFilter(e : Event) {
+    // TODO: Chỗ này cần chuyển thành biết Event, rồi trong hàm filter mới check để làm filter
+    let filterValue = (<HTMLInputElement>e.target).value || '';
+    if (filterValue) {
     filterValue = filterValue.trim();
     filterValue = filterValue.toLowerCase();
     this.dataSource.filter = filterValue;
+    }
   }
 
   reset() {
@@ -281,28 +286,28 @@ export class EditTerminalsComponent implements OnInit, AfterViewInit {
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
   }
-  submit() {
+  submit(): any {
     if (!this.editTerminalForm.valid) {
       return false;
     }
     const formData = this.editTerminalForm.value;
-    formData.status = formData.status == true ? "A" : "D";
-    formData.isMappingBill = formData.isMappingBill == true ? 1 : 0;
+    formData.status = formData.status  === true ? 'A' : 'D';
+    formData.isMappingBill = formData.isMappingBill  === true ? 1 : 0;
     const data = {
       ...this.editTerminalForm.value,
-      dateFormat: "dd/MM/yyyy",
+      dateFormat: 'dd/MM/yyyy',
       listLimit: JSON.stringify(this.dataSource.data),
     };
 
     this.terminalsService.update(data).subscribe((response: any) => {
-      if (response.status != "200") {
+      if (response.status !== '200') {
         this.alertService.alert({
           message: `Lỗi xảy ra : ${response.error}`,
-          msgClass: "cssDanger",
-          hPosition: "center",
+          msgClass: 'cssDanger',
+          hPosition: 'center',
         });
       } else {
-        this.router.navigate(["terminals"]);
+        this.router.navigate(['terminals']);
       }
       // this.router.navigate(['../terminals'], { relativeTo: this.route });
     });
@@ -311,17 +316,17 @@ export class EditTerminalsComponent implements OnInit, AfterViewInit {
   validateNumberFoElement(event: any, element: any) {
     const name_input = event.target.id;
     let value_input = event.target.value;
-    const index = name_input.split("_")[0];
+    const index = name_input.split('_')[0];
 
-    value_input = value_input.replace(/[^0-9\.]/g, "");
-    if (value_input.split(".").length > 2) {
-      value_input = value_input.replace(/\.+$/, "");
+    value_input = value_input.replace(/[^0-9\.]/g, '');
+    if (value_input.split('.').length > 2) {
+      value_input = value_input.replace(/\.+$/, '');
     }
 
     const dataCopy = this.dataSource.data;
     const e = element;
     Object.keys(element).forEach(function (key: any) {
-      if (name_input.split("_")[1] === key) {
+      if (name_input.split('_')[1] === key) {
         e[key] = Number(value_input);
       }
     });
@@ -329,7 +334,7 @@ export class EditTerminalsComponent implements OnInit, AfterViewInit {
     this.dataSource.data = dataCopy;
   }
 }
-interface typeOfTransaction {
+interface TypeOfTransaction {
   value: string;
   valueDesc: string;
 }

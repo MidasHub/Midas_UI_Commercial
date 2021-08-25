@@ -27,7 +27,7 @@
 
           <mat-form-field fxFlex="98%">
             <mat-label>{{ "Terminal_Component.FormTransfer.labelOffice" | translate }}</mat-label>
-            <mat-select disabled required formControlName="officeName">
+            <mat-select  required formControlName="officeName" class="disabled" readonly>
               <mat-option *ngFor="let office of offices" [value]="office.officeId">
                 {{ office.name }}
               </mat-option>
@@ -36,7 +36,7 @@
 
           <mat-form-field fxFlex="98%">
             <mat-label>{{ "Terminal_Component.FormTransfer.labelLimitRemain" | translate }}</mat-label>
-            <input matInput currencyMask disabled formControlName="limitRemain" type="text" />
+            <input matInput currencyMask  formControlName="limitRemain" type="text" class="disabled" readonly/>
           </mat-form-field>
 
           <!-- <mat-form-field fxFlex="98%" *ngIf="transferTerminalForm.contains('rate')"> -->

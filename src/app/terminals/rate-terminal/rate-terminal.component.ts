@@ -12,7 +12,8 @@ import { TerminalsService } from '../terminals.service';
 export class RateTerminalComponent implements OnInit {
   dataSource: any[] = [];
   terminalId: any;
-  displayedColumns: any[] = ["transferId", "cardType", "rate"];
+  displayedColumns: any[] = ['transferId', 'cardType', 'rate'];
+  expandedElement: any;
 
   constructor(
     private router: Router,
@@ -26,7 +27,7 @@ export class RateTerminalComponent implements OnInit {
     this.getTerminalRate(this.terminalId);
   }
 
-  getTerminalRate(terminalId: any){
+  getTerminalRate(terminalId: any) {
     this.terminalsService.getTerminalRate(terminalId).subscribe((data: any) => {
       this.dataSource = data.result.rateDefaultEntity;
     });
@@ -34,6 +35,10 @@ export class RateTerminalComponent implements OnInit {
 
   onNoClick(): void {
     this.dialogRef.close();
+  }
+
+  openDialog(a: any) {
+// TODO: Không biết sao lại cần gọi hàm này trong html mà trong file ts ko định nghĩa
   }
 
 }

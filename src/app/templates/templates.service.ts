@@ -29,7 +29,7 @@ export class TemplatesService {
    * @param templateId Template ID.
    * @returns {Observable<any>} Fetches Template.
    */
-  getTemplate(templateId: string): Observable<any> {
+  getTemplate(templateId?: string|null): Observable<any> {
     return this.http.get(`/templates/${templateId}`);
   }
 
@@ -44,7 +44,7 @@ export class TemplatesService {
    * @param templateId Template Id.
    * @returns {Observable<any>}.
    */
-  getEditTemplateData(templateId: string): Observable<any> {
+  getEditTemplateData(templateId?: string|null): Observable<any> {
     return this.http.get(`/templates/${templateId}/template`);
   }
 

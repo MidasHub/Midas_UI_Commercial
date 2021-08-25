@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Data, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 
 /** Custom Services */
@@ -33,7 +33,7 @@ export class ViewTemplateComponent {
               private templatesService: TemplatesService,
               private router: Router,
               private dialog: MatDialog) {
-    this.route.data.subscribe((data: { template?: any }) => {
+    this.route.data.subscribe((data: { template: any } |Data) => {
       this.templateData = data.template;
     });
   }

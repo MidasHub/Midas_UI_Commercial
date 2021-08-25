@@ -24,7 +24,7 @@ export class EditTemplateResolver implements Resolve<Object> {
    * @returns {Observable<any>}
    */
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
-    const templateId = route.paramMap.get('id')||'';
+    const templateId = route.paramMap.get('id') ;
     return this.templatesService.getEditTemplateData(templateId);
   }
 
