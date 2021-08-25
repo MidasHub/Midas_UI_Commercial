@@ -1,7 +1,7 @@
 /** Keyboard Shortcuts Button Configuration */
 export class KeyboardShortcutsConfiguration {
 
-    buttonsArray: {
+    buttonsArray!: {
         title: string,
         ctrlKey: boolean,
         shiftKey: boolean,

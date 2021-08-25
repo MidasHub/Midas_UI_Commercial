@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Data, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 
 /** Custom Services */
@@ -27,19 +27,19 @@ export class LoansViewComponent implements OnInit {
   /** Recalculate Interest */
   recalculateInterest: any;
   /** Status */
-  status: string;
+  status!: string;
   /** Loan Id */
   loanId: number;
   /** Client Id */
   clientId: any;
   /** Button Configuration */
-  buttonConfig: LoansAccountButtonConfiguration;
+  buttonConfig!: LoansAccountButtonConfiguration;
 
   constructor(private route: ActivatedRoute,
               private router: Router,
               public loansService: LoansService,
               public dialog: MatDialog) {
-    this.route.data.subscribe((data: { loanDetailsData: any, loanDatatables: any}) => {
+    this.route.data.subscribe((data: { loanDetailsData: any, loanDatatables: any} | Data) => {
       this.loanDetailsData = data.loanDetailsData;
       this.loanDatatables = data.loanDatatables;
     });
