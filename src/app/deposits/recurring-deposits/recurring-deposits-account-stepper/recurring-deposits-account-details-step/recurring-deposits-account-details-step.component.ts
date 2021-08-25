@@ -30,7 +30,7 @@ export class RecurringDepositsAccountDetailsStepComponent implements OnInit {
   /** For edit recurring deposits form */
   isFieldOfficerPatched = false;
   /** Recurring Deposits Account Details Form */
-  recurringDepositAccountDetailsForm: FormGroup;
+  recurringDepositAccountDetailsForm!: FormGroup;
 
   /** Recurring Deposits Account Template with product data  */
   @Output() recurringDepositsAccountProductTemplate = new EventEmitter();
@@ -75,15 +75,15 @@ export class RecurringDepositsAccountDetailsStepComponent implements OnInit {
    */
   buildDependencies() {
     const clientId = this.recurringDepositsAccountTemplate.clientId;
-    this.recurringDepositAccountDetailsForm.get('productId').valueChanges.subscribe((productId: string) => {
+    this.recurringDepositAccountDetailsForm.get('productId')?.valueChanges.subscribe((productId: string) => {
       this.recurringDepositsService.getRecurringDepositsAccountTemplate(clientId, productId).subscribe((response: any) => {
         this.recurringDepositsAccountProductTemplate.emit(response);
         this.fieldOfficerData = response.fieldOfficerOptions;
         if (!this.isFieldOfficerPatched && this.recurringDepositsAccountTemplate.fieldOfficerId) {
-          this.recurringDepositAccountDetailsForm.get('fieldOfficerId').patchValue(this.recurringDepositsAccountTemplate.fieldOfficerId);
+          this.recurringDepositAccountDetailsForm.get('fieldOfficerId')?.patchValue(this.recurringDepositsAccountTemplate.fieldOfficerId);
           this.isFieldOfficerPatched = true;
         } else {
-          this.recurringDepositAccountDetailsForm.get('fieldOfficerId').patchValue('');
+          this.recurringDepositAccountDetailsForm.get('fieldOfficerId')?.patchValue('');
         }
       });
     });

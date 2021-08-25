@@ -17,7 +17,7 @@ import { RecurringDepositsService } from '../../recurring-deposits.service';
 export class UndoApprovalRecurringDepositsAccountComponent implements OnInit {
 
   /** Undo Approval Recurring Deposits Account form. */
-  undoApprovalRecurringDepositsAccountForm: FormGroup;
+  undoApprovalRecurringDepositsAccountForm!: FormGroup;
   /** Recurring Deposits Account Id */
   accountId: any;
 
@@ -31,7 +31,7 @@ export class UndoApprovalRecurringDepositsAccountComponent implements OnInit {
     private recurringDepositsService: RecurringDepositsService,
     private route: ActivatedRoute,
     private router: Router) {
-    this.accountId = this.route.parent.snapshot.params['recurringDepositAccountId'];
+    this.accountId = this.route.parent?.snapshot.params['recurringDepositAccountId'];
   }
 
   /**

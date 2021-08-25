@@ -2,7 +2,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { DatePipe } from '@angular/common';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Data, Router } from '@angular/router';
 
 /** Custom Services */
 import { RecurringDepositsService } from '../../recurring-deposits.service';
@@ -25,7 +25,7 @@ export class CloseRecurringDepositsAccountComponent implements OnInit {
   /** Payment Types */
   paymentTypes: any;
   /** Title */
-  title: string;
+  title!: string;
   /** Account Id */
   accountId: string;
   /** Show payment details */
@@ -35,7 +35,7 @@ export class CloseRecurringDepositsAccountComponent implements OnInit {
   /** Maximum Date allowed. */
   maxDate = new Date();
   /** Close Recurring Deposit Account form. */
-  closeRecurringDepositForm: FormGroup;
+  closeRecurringDepositForm!: FormGroup;
 
   /**
    * Retrieves action details template data from `resolve`
@@ -53,7 +53,7 @@ export class CloseRecurringDepositsAccountComponent implements OnInit {
     private recurringDepositsService: RecurringDepositsService,
     private settingsService: SettingsService
   ) {
-    this.route.data.subscribe((data: { recurringDepositsAccountActionData: any }) => {
+    this.route.data.subscribe((data: { recurringDepositsAccountActionData: any }| Data) => {
       this.maturityAmount = data.recurringDepositsAccountActionData.maturityAmount;
       this.onAccountClosureOptions = data.recurringDepositsAccountActionData.onAccountClosureOptions;
       this.paymentTypes = data.recurringDepositsAccountActionData.paymentTypeOptions;
@@ -63,7 +63,7 @@ export class CloseRecurringDepositsAccountComponent implements OnInit {
         this.title = 'Recurring Deposit Closure';
       }
     });
-    this.accountId = this.route.parent.snapshot.params['recurringDepositAccountId'];
+    this.accountId = this.route.parent?.snapshot.params['recurringDepositAccountId'];
   }
 
   ngOnInit() {

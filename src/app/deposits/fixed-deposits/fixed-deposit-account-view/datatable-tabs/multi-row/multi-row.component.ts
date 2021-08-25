@@ -33,7 +33,7 @@ export class MultiRowComponent implements OnInit, OnChanges {
   @Input() dataObject: any;
 
   /** Data Table Name */
-  datatableName: string;
+  datatableName!: string;
   /** Data Table Columns */
   datatableColumns: string[] = [];
   /** Data Table Data */
@@ -41,10 +41,10 @@ export class MultiRowComponent implements OnInit, OnChanges {
   /** Account Id */
   accountId: string;
   /** Toggle button visibility */
-  showDeleteBotton: boolean;
+  showDeleteBotton!: boolean;
 
   /** Data Table Reference */
-  @ViewChild('dataTable', { static: true }) dataTableRef: MatTable<Element>;
+  @ViewChild('dataTable', { static: true }) dataTableRef!: MatTable<Element>;
 
   /**
    * Fetches savings account Id from parent route params.
@@ -57,7 +57,7 @@ export class MultiRowComponent implements OnInit, OnChanges {
               private datePipe: DatePipe,
               private savingsService: SavingsService,
               private dialog: MatDialog) {
-    this.accountId = this.route.parent.parent.snapshot.paramMap.get('fixedDepositAccountId');
+    this.accountId = this.route.parent?.parent?.snapshot.paramMap.get('fixedDepositAccountId') || '';
   }
 
   /**
@@ -90,7 +90,7 @@ export class MultiRowComponent implements OnInit, OnChanges {
     const columns = this.dataObject.columnHeaders.filter((column: any) => {
       return ((column.columnName !== 'id') && (column.columnName !== 'savings_account_id'));
     });
-    const formfields: FormfieldBase[] = columns.map((column: any) => {
+    const formfields: FormfieldBase[] = columns.map((column: any): any => {
       switch (column.columnDisplayType) {
         case 'INTEGER':
         case 'STRING':

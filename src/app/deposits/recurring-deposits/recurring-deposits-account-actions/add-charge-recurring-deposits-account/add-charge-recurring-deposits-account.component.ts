@@ -1,7 +1,7 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute, Data } from '@angular/router';
 import { DatePipe } from '@angular/common';
 
 /** Custom Services */
@@ -24,7 +24,7 @@ export class AddChargeRecurringDepositsAccountComponent implements OnInit {
   /** Maximum Due Date allowed. */
   maxDate = new Date();
   /** Add Recurring Deposits Charge form. */
-  recurringDepositsChargeForm: FormGroup;
+  recurringDepositsChargeForm!: FormGroup;
   /** savings charge options. */
   savingsChargeOptions: any;
   /** savings Id of the savings account. */
@@ -48,10 +48,10 @@ export class AddChargeRecurringDepositsAccountComponent implements OnInit {
     private savingsService: SavingsService,
     private settingsService: SettingsService
   ) {
-    this.route.data.subscribe((data: { recurringDepositsAccountActionData: any }) => {
+    this.route.data.subscribe((data: { recurringDepositsAccountActionData: any }|Data) => {
       this.savingsChargeOptions = data.recurringDepositsAccountActionData.chargeOptions;
     });
-    this.recurringDepositAccountId = this.route.parent.snapshot.params['recurringDepositAccountId'];
+    this.recurringDepositAccountId = this.route.parent?.snapshot.params['recurringDepositAccountId'];
   }
 
   /**

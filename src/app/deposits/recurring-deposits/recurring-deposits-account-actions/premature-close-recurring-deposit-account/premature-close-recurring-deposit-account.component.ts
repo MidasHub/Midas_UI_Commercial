@@ -24,7 +24,7 @@ export class PrematureCloseRecurringDepositAccountComponent implements OnInit {
   /** Maximum date allowed. */
   maxDate = new Date();
   /** premature close Recurring Deposits Account form. */
-  prematureCloseRecurringDepositsAccountForm: FormGroup;
+  prematureCloseRecurringDepositsAccountForm!: FormGroup;
   /** Recurring Deposits Account Id */
   accountId: any;
 
@@ -42,7 +42,7 @@ export class PrematureCloseRecurringDepositAccountComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private settingsService: SettingsService, ) {
-    this.accountId = this.route.parent.snapshot.params['recurringDepositAccountId'];
+    this.accountId = this.route.parent?.snapshot.params['recurringDepositAccountId'];
   }
 
   /**

@@ -17,7 +17,7 @@ import { SavingsService } from 'app/savings/savings.service';
 export class UndoApprovalFixedDepositsAccountComponent implements OnInit {
 
   /** Undo Approval Fixed Deposits Account form. */
-  undoApprovalFixedDepositsAccountForm: FormGroup;
+  undoApprovalFixedDepositsAccountForm!: FormGroup;
   /** Fixed Deposits Account Id */
   accountId: any;
 
@@ -32,7 +32,7 @@ export class UndoApprovalFixedDepositsAccountComponent implements OnInit {
               private savingsService: SavingsService,
               private route: ActivatedRoute,
               private router: Router) {
-    this.accountId = this.route.parent.snapshot.params['fixedDepositAccountId'];
+    this.accountId = this.route.parent?.snapshot.params['fixedDepositAccountId'];
   }
 
   /**

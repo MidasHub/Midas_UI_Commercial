@@ -2,7 +2,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource, MatTable } from '@angular/material/table';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Data } from '@angular/router';
 
 /** Custom Services */
 import { RecurringDepositsService } from 'app/deposits/recurring-deposits/recurring-deposits.service';
@@ -25,14 +25,14 @@ export class StandingInstructionsTabComponent implements OnInit {
   /** Recurring Deposits Data */
   recurringDepositsData: any;
   /** Instructions Data */
-  instructionsData: any[];
+  instructionsData: any[] = [];
   /** Data source for instructions table. */
   dataSource = new MatTableDataSource();
   /** Columns to be displayed in instructions table. */
   displayedColumns: string[] = ['client', 'fromAccount', 'beneficiary', 'toAccount', 'amount', 'validity', 'actions'];
 
   /** Instruction Table Reference */
-  @ViewChild('instructionsTable', { static: true }) instructionTableRef: MatTable<Element>;
+  @ViewChild('instructionsTable', { static: true }) instructionTableRef!: MatTable<Element>;
 
   /**
    * Retrieves Recurring Deposits Account Data from `resolve`.
@@ -43,7 +43,7 @@ export class StandingInstructionsTabComponent implements OnInit {
     private dialog: MatDialog,
     private accountTransfersService: AccountTransfersService,
     private settingsService: SettingsService, ) {
-    this.route.parent.data.subscribe((data: { recurringDepositsAccountData: any }) => {
+    this.route.parent?.data.subscribe((data: { recurringDepositsAccountData: any }|Data) => {
       this.recurringDepositsData = data.recurringDepositsAccountData;
     });
   }

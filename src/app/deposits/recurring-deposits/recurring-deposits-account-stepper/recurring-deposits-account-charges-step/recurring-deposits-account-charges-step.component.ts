@@ -26,8 +26,8 @@ export class RecurringDepositsAccountChargesStepComponent implements OnInit, OnC
 
   @Input() recurringDepositsAccountTemplate: any;
   @Input() recurringDepositsAccountProductTemplate: any;
-  @Input() currencyCode: FormControl;
-  @Input() recurringDepositAccountFormValid: boolean;
+  @Input() currencyCode?: FormControl;
+  @Input() recurringDepositAccountFormValid?: boolean;
 
   /** Charges Data */
   chargeData: any;
@@ -46,7 +46,7 @@ export class RecurringDepositsAccountChargesStepComponent implements OnInit, OnC
   }
 
   ngOnInit() {
-    this.currencyCode.valueChanges.subscribe(() => {
+    this.currencyCode?.valueChanges.subscribe(() => {
       if (!this.isChargesPatched && this.recurringDepositsAccountTemplate.charges) {
         this.chargesDataSource = this.recurringDepositsAccountTemplate.charges.map((charge: any) => ({ ...charge, id: charge.chargeId })) || [];
         this.isChargesPatched = true;

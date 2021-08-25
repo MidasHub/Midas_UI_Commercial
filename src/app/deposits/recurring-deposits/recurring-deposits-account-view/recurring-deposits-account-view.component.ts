@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Data, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { DatePipe } from '@angular/common';
 
@@ -29,7 +29,7 @@ export class RecurringDepositsAccountViewComponent implements OnInit {
   /** RecurringDeposits Account Data */
   recurringDepositsAccountData: any;
   /** Button Configuration */
-  buttonConfig: RecurringDepositsButtonsConfiguration;
+  buttonConfig!: RecurringDepositsButtonsConfiguration;
   /** Charges Data */
   charges: any;
   /** Savings Data Tables */
@@ -48,7 +48,7 @@ export class RecurringDepositsAccountViewComponent implements OnInit {
               private recurringDepositsService: RecurringDepositsService,
               private savingsService: SavingsService,
               public dialog: MatDialog) {
-    this.route.data.subscribe((data: { recurringDepositsAccountData: any, savingsDatatables: any }) => {
+    this.route.data.subscribe((data: { recurringDepositsAccountData: any, savingsDatatables: any }| Data) => {
       this.recurringDepositsAccountData = data.recurringDepositsAccountData;
       this.charges = this.recurringDepositsAccountData.charges;
       this.savingsDatatables = data.savingsDatatables;

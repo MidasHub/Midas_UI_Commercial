@@ -1,11 +1,11 @@
 /** Fixed Deposits Account Buttons Configuration */
 export class FixedDepositsButtonsConfiguration {
 
-  optionArray: {
+  optionArray!: {
     name: string
   }[];
 
-  buttonsArray: {
+  buttonsArray!: {
     name: string,
     icon: string,
   }[];

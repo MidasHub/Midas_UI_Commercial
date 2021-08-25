@@ -17,7 +17,7 @@ export class RecurringDepositsAccountCurrencyStepComponent implements OnInit, On
   @Input() recurringDepositsAccountProductTemplate: any;
 
   /** Recurring Deposit Account Currency Form */
-  recurringDepositAccountCurrencyForm: FormGroup;
+  recurringDepositAccountCurrencyForm?: FormGroup;
   /** Currency Data */
   currencyData: any;
 
@@ -30,7 +30,7 @@ export class RecurringDepositsAccountCurrencyStepComponent implements OnInit, On
 
   ngOnChanges() {
     if (this.recurringDepositsAccountProductTemplate) {
-      this.recurringDepositAccountCurrencyForm.patchValue({
+      this.recurringDepositAccountCurrencyForm?.patchValue({
         'currencyCode': this.recurringDepositsAccountProductTemplate.currency.code,
         'decimalPlaces': this.recurringDepositsAccountProductTemplate.currency.decimalPlaces
       });
@@ -48,7 +48,7 @@ export class RecurringDepositsAccountCurrencyStepComponent implements OnInit, On
    * Returns Recurring Deposits Account Currency Form
    */
   get recurringDepositAccountCurrency() {
-    return this.recurringDepositAccountCurrencyForm.value;
+    return this.recurringDepositAccountCurrencyForm?.value;
   }
 
 }

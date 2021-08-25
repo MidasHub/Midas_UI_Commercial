@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Data, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { DatePipe } from '@angular/common';
 
@@ -40,7 +40,7 @@ export class ViewTransactionComponent {
     private router: Router,
     public dialog: MatDialog,
     private settingsService: SettingsService, ) {
-    this.route.data.subscribe((data: { recurringDepositsAccountTransaction: any }) => {
+    this.route.data.subscribe((data: { recurringDepositsAccountTransaction: any }| Data) => {
       this.transactionData = data.recurringDepositsAccountTransaction;
     });
   }
@@ -49,7 +49,7 @@ export class ViewTransactionComponent {
    * Undo the recurring deposits transaction
    */
   undoTransaction() {
-    const accountId = this.route.parent.snapshot.params['recurringDepositAccountId'];
+    const accountId = this.route.parent?.snapshot.params['recurringDepositAccountId'];
     const undoTransactionAccountDialogRef = this.dialog.open(RecurringDepositConfirmationDialogComponent, { data: { heading: 'Undo Transaction', dialogContext: 'Are you sure you want to undo this transaction ?' } });
     undoTransactionAccountDialogRef.afterClosed().subscribe((response: any) => {
       if (response.confirm) {

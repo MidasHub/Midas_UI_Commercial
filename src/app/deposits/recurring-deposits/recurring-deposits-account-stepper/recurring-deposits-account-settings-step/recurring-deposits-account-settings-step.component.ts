@@ -19,7 +19,7 @@ export class RecurringDepositsAccountSettingsStepComponent implements OnInit, On
   @Input() recurringDepositsAccountProductTemplate: any;
 
   /** Recurring Deposits Account Settings Form */
-  recurringDepositAccountSettingsForm: FormGroup;
+  recurringDepositAccountSettingsForm!: FormGroup;
   /** Minimum date allowed. */
   minDate = new Date(2000, 0, 1);
   /** Maximum date allowed. */
@@ -63,15 +63,15 @@ export class RecurringDepositsAccountSettingsStepComponent implements OnInit, On
       });
       if (this.recurringDepositsAccountProductTemplate.withHoldTax) {
         this.recurringDepositAccountSettingsForm.addControl('withHoldTax', new FormControl(false));
-        this.recurringDepositAccountSettingsForm.get('withHoldTax').valueChanges.subscribe((value: boolean) => {
+        this.recurringDepositAccountSettingsForm.get('withHoldTax')?.valueChanges.subscribe((value: boolean) => {
           if (value) {
             this.recurringDepositAccountSettingsForm.addControl('taxGroupId', new FormControl({ value: '', disabled: true }));
-            this.recurringDepositAccountSettingsForm.get('taxGroupId').patchValue(this.recurringDepositsAccountProductTemplate.taxGroup && this.recurringDepositsAccountProductTemplate.taxGroup.name);
+            this.recurringDepositAccountSettingsForm.get('taxGroupId')?.patchValue(this.recurringDepositsAccountProductTemplate.taxGroup && this.recurringDepositsAccountProductTemplate.taxGroup.name);
           } else {
             this.recurringDepositAccountSettingsForm.removeControl('taxGroupId');
           }
         });
-        this.recurringDepositAccountSettingsForm.get('withHoldTax').patchValue(this.recurringDepositsAccountTemplate.withHoldTax);
+        this.recurringDepositAccountSettingsForm.get('withHoldTax')?.patchValue(this.recurringDepositsAccountTemplate.withHoldTax);
       } else {
         this.recurringDepositAccountSettingsForm.removeControl('withHoldTax');
       }
@@ -133,7 +133,7 @@ export class RecurringDepositsAccountSettingsStepComponent implements OnInit, On
    * Subscribes to value changes and sets new form controls accordingly.
    */
   buildDependencies() {
-    this.recurringDepositAccountSettingsForm.get('isCalendarInherited').valueChanges.subscribe((isCalendarInherited: any) => {
+    this.recurringDepositAccountSettingsForm.get('isCalendarInherited')?.valueChanges.subscribe((isCalendarInherited: any) => {
       if (isCalendarInherited) {
         this.recurringDepositAccountSettingsForm.removeControl('expectedFirstDepositOnDate');
         this.recurringDepositAccountSettingsForm.removeControl('recurringFrequency');

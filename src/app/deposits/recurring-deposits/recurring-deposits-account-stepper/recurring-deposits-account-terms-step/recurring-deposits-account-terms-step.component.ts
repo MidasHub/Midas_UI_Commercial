@@ -20,7 +20,7 @@ export class RecurringDepositsAccountTermsStepComponent implements OnInit, OnCha
   /** Maximum date allowed. */
   maxDate = new Date();
   /** Recurring Deposits Account Terms Form */
-  recurringDepositAccountTermsForm: FormGroup;
+  recurringDepositAccountTermsForm!: FormGroup;
   /** Interest Compounding Period Type Data */
   interestCompoundingPeriodTypeData: any;
   /** Interest Posting Period Type Data */

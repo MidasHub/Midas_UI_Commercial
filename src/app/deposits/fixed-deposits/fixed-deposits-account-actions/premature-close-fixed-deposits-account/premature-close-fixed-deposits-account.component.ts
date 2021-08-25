@@ -22,7 +22,7 @@ export class PrematureCloseFixedDepositsAccountComponent implements OnInit {
   /** Maximum date allowed. */
   maxDate = new Date();
   /** Premature Close FD Account form. */
-  prematureCloseAccountForm: FormGroup;
+  prematureCloseAccountForm!: FormGroup;
   /** Savings Account Data */
   savingsAccountsData: any;
   /** On account Closure Options */
@@ -45,7 +45,7 @@ export class PrematureCloseFixedDepositsAccountComponent implements OnInit {
               private datePipe: DatePipe,
               private route: ActivatedRoute,
               private router: Router) {
-    this.accountId = this.route.parent.snapshot.params['fixedDepositAccountId'];
+    this.accountId = this.route.parent?.snapshot.params['fixedDepositAccountId'];
   }
 
   /**
@@ -69,7 +69,7 @@ export class PrematureCloseFixedDepositsAccountComponent implements OnInit {
    * Subscribes to value changes of parent control.
    */
   buildDependencies() {
-    this.prematureCloseAccountForm.get('closedOnDate').valueChanges.subscribe((value: Date) => {
+    this.prematureCloseAccountForm.get('closedOnDate')?.valueChanges.subscribe((value: Date) => {
       if (!this.isSubmitted) {
         this.calculatePrematureAmount(value);
       }
@@ -96,7 +96,7 @@ export class PrematureCloseFixedDepositsAccountComponent implements OnInit {
         this.prematureCloseAccountForm.addControl('maturityAmount', new FormControl({value: '', disabled: true}));
         this.prematureCloseAccountForm.addControl('onAccountClosureId', new FormControl('', Validators.required));
         this.prematureCloseAccountForm.addControl('note', new FormControl(''));
-        this.prematureCloseAccountForm.get('maturityAmount').patchValue(response.maturityAmount);
+        this.prematureCloseAccountForm.get('maturityAmount')?.patchValue(response.maturityAmount);
         this.addTransferDetails();
       });
 
@@ -106,7 +106,7 @@ export class PrematureCloseFixedDepositsAccountComponent implements OnInit {
    * Subscribes to value changes of `onAccountClosureId` adds and removes transfer details accordingly.
    */
   addTransferDetails() {
-    this.prematureCloseAccountForm.get('onAccountClosureId').valueChanges.subscribe((id: any) => {
+    this.prematureCloseAccountForm.get('onAccountClosureId')?.valueChanges.subscribe((id: any) => {
       if (id === 200) {
         this.prematureCloseAccountForm.addControl('toSavingsAccountId', new FormControl('', Validators.required));
         this.prematureCloseAccountForm.addControl('transferDescription', new FormControl(''));

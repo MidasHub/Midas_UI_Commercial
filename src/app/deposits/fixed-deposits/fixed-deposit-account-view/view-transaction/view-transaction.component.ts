@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Data } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 
 /**
@@ -23,7 +23,7 @@ export class ViewTransactionComponent {
    */
   constructor(private route: ActivatedRoute,
               public dialog: MatDialog) {
-    this.route.data.subscribe((data: { fixedDepositsAccountTransaction: any }) => {
+    this.route.data.subscribe((data: { fixedDepositsAccountTransaction: any } | Data) => {
       this.transactionData = data.fixedDepositsAccountTransaction;
     });
   }

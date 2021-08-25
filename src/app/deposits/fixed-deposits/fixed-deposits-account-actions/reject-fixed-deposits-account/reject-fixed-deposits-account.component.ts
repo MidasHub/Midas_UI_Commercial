@@ -22,7 +22,7 @@ export class RejectFixedDepositsAccountComponent implements OnInit {
   /** Maximum date allowed. */
   maxDate = new Date();
   /** Reject Fixed Deposit Account form. */
-  rejectFixedDepositsAccountForm: FormGroup;
+  rejectFixedDepositsAccountForm!: FormGroup;
   /** Fixed Deposits Account Id */
   accountId: any;
 
@@ -38,7 +38,7 @@ export class RejectFixedDepositsAccountComponent implements OnInit {
               private datePipe: DatePipe,
               private route: ActivatedRoute,
               private router: Router) {
-    this.accountId = this.route.parent.snapshot.params['fixedDepositAccountId'];
+    this.accountId = this.route.parent?.snapshot.params['fixedDepositAccountId'];
   }
 
   /**

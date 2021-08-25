@@ -1,12 +1,12 @@
 /** Recurring Deposits Account Buttons Configuration */
 export class RecurringDepositsButtonsConfiguration {
 
-  optionArray: {
+  optionArray!: {
     name: string,
     taskPermissionName?: string,
   }[];
 
-  buttonsArray: {
+  buttonsArray!: {
     name: string,
     icon: string,
     taskPermissionName?: string,

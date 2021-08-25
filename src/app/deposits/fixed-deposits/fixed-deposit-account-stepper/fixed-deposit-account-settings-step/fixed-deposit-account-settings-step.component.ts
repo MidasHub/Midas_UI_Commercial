@@ -22,7 +22,7 @@ export class FixedDepositAccountSettingsStepComponent implements OnInit, OnChang
   /** Maximum date allowed. */
   maxDate = new Date();
   /** Fixed Deposits Account Settings Form */
-  fixedDepositAccountSettingsForm: FormGroup;
+  fixedDepositAccountSettingsForm!: FormGroup;
   /** Lockin Period Frequency Type Data */
   lockinPeriodFrequencyTypeData: any;
   /** Period Frequency Type Data */
@@ -55,15 +55,15 @@ export class FixedDepositAccountSettingsStepComponent implements OnInit, OnChang
       });
       if (this.fixedDepositsAccountProductTemplate.withHoldTax) {
         this.fixedDepositAccountSettingsForm.addControl('withHoldTax', new FormControl(false));
-        this.fixedDepositAccountSettingsForm.get('withHoldTax').valueChanges.subscribe((value: boolean) => {
+        this.fixedDepositAccountSettingsForm.get('withHoldTax')?.valueChanges.subscribe((value: boolean) => {
           if (value) {
             this.fixedDepositAccountSettingsForm.addControl('taxGroupId', new FormControl({ value: '', disabled: true }));
-            this.fixedDepositAccountSettingsForm.get('taxGroupId').patchValue(this.fixedDepositsAccountProductTemplate.taxGroup && this.fixedDepositsAccountProductTemplate.taxGroup.name);
+            this.fixedDepositAccountSettingsForm.get('taxGroupId')?.patchValue(this.fixedDepositsAccountProductTemplate.taxGroup && this.fixedDepositsAccountProductTemplate.taxGroup.name);
           } else {
             this.fixedDepositAccountSettingsForm.removeControl('taxGroupId');
           }
         });
-        this.fixedDepositAccountSettingsForm.get('withHoldTax').patchValue(this.fixedDepositsAccountTemplate.withHoldTax);
+        this.fixedDepositAccountSettingsForm.get('withHoldTax')?.patchValue(this.fixedDepositsAccountTemplate.withHoldTax);
       } else {
         this.fixedDepositAccountSettingsForm.removeControl('withHoldTax');
       }
@@ -105,10 +105,10 @@ export class FixedDepositAccountSettingsStepComponent implements OnInit, OnChang
    * Subscribes to value changes and sets new form controls accordingly.
    */
   buildDependencies() {
-    this.fixedDepositAccountSettingsForm.get('transferInterestToSavings').valueChanges.subscribe((value: boolean) => {
+    this.fixedDepositAccountSettingsForm.get('transferInterestToSavings')?.valueChanges.subscribe((value: boolean) => {
       if (value) {
         this.fixedDepositAccountSettingsForm.addControl('linkAccountId', new FormControl('', Validators.required));
-        this.fixedDepositAccountSettingsForm.get('linkAccountId').patchValue(this.fixedDepositsAccountTemplate.linkedAccount && this.fixedDepositsAccountTemplate.linkedAccount.id);
+        this.fixedDepositAccountSettingsForm.get('linkAccountId')?.patchValue(this.fixedDepositsAccountTemplate.linkedAccount && this.fixedDepositsAccountTemplate.linkedAccount.id);
       } else {
         this.fixedDepositAccountSettingsForm.removeControl('linkAccountId');
       }

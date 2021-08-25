@@ -1,7 +1,7 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Data, Router } from '@angular/router';
 
 /**
  * Transactions Tab Component.
@@ -20,7 +20,7 @@ export class TransactionsTabComponent implements OnInit {
   /** Columns to be displayed in transactions table. */
   displayedColumns: string[] = ['id', 'transactionDate', 'transactionType', 'debit', 'credit', 'balance'];
   /** Data source for transactions table. */
-  dataSource: MatTableDataSource<any>;
+  dataSource!: MatTableDataSource<any>;
 
   /**
    * Retrieves fixed deposits account data from `resolve`.
@@ -29,7 +29,7 @@ export class TransactionsTabComponent implements OnInit {
    */
   constructor(private route: ActivatedRoute,
               private router: Router) {
-    this.route.parent.data.subscribe((data: { fixedDepositsAccountData: any }) => {
+    this.route.parent?.data.subscribe((data: { fixedDepositsAccountData: any }|Data) => {
       this.transactionsData = data.fixedDepositsAccountData.transactions;
       this.status = data.fixedDepositsAccountData.status.value;
     });

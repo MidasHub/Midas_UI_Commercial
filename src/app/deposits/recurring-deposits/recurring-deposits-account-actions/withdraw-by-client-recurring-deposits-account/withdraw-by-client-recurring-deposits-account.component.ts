@@ -22,7 +22,7 @@ export class WithdrawByClientRecurringDepositsAccountComponent implements OnInit
   /** Maximum date allowed. */
   maxDate = new Date();
   /** Withdraw Recurring Deposits Account form. */
-  withdrawRecurringDepositsAccountForm: FormGroup;
+  withdrawRecurringDepositsAccountForm!: FormGroup;
   /** Recurring Deposits Account Id */
   accountId: any;
 
@@ -40,7 +40,7 @@ export class WithdrawByClientRecurringDepositsAccountComponent implements OnInit
     private route: ActivatedRoute,
     private router: Router,
     private settingsService: SettingsService, ) {
-    this.accountId = this.route.parent.snapshot.params['recurringDepositAccountId'];
+    this.accountId = this.route.parent?.snapshot.params['recurringDepositAccountId'];
   }
 
   /**

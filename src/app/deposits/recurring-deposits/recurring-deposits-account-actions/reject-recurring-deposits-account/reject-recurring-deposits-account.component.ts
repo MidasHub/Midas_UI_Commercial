@@ -24,7 +24,7 @@ export class RejectRecurringDepositsAccountComponent implements OnInit {
   /** Maximum date allowed. */
   maxDate = new Date();
   /** Reject Recurring Deposits Account form. */
-  rejectRecurringDepositsAccountForm: FormGroup;
+  rejectRecurringDepositsAccountForm!: FormGroup;
   /** Recurring Deposits Account Id */
   accountId: any;
 
@@ -42,7 +42,7 @@ export class RejectRecurringDepositsAccountComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private settingsService: SettingsService) {
-    this.accountId = this.route.parent.snapshot.params['recurringDepositAccountId'];
+    this.accountId = this.route.parent?.snapshot.params['recurringDepositAccountId'];
   }
 
   /**

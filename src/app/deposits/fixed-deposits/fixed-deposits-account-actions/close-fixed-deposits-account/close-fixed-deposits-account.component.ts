@@ -2,7 +2,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { DatePipe } from '@angular/common';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Data, Router } from '@angular/router';
 
 /** Custom Services */
 import { FixedDepositsService } from '../../fixed-deposits.service';
@@ -22,7 +22,7 @@ export class CloseFixedDepositsAccountComponent implements OnInit {
   /** Maximum date allowed. */
   maxDate = new Date();
   /** Close on maturity FD Account form. */
-  closeOnMaturityAccountForm: FormGroup;
+  closeOnMaturityAccountForm!: FormGroup;
   /** Savings Account Data */
   savingsAccountsData: any;
   /** On account Closure Options */
@@ -45,12 +45,12 @@ export class CloseFixedDepositsAccountComponent implements OnInit {
               private datePipe: DatePipe,
               private route: ActivatedRoute,
               private router: Router) {
-    this.route.data.subscribe((data: { fixedDepositsAccountActionData: any }) => {
+    this.route.data.subscribe((data: { fixedDepositsAccountActionData: any }|Data) => {
       this.savingsAccountsData = data.fixedDepositsAccountActionData.savingsAccounts;
       this.onAccountClosureOptions = data.fixedDepositsAccountActionData.onAccountClosureOptions;
       this.maturityAmount = data.fixedDepositsAccountActionData.maturityAmount;
     });
-    this.accountId = this.route.parent.snapshot.params['fixedDepositAccountId'];
+    this.accountId = this.route.parent?.snapshot.params['fixedDepositAccountId'];
   }
 
   /**
@@ -77,7 +77,7 @@ export class CloseFixedDepositsAccountComponent implements OnInit {
    * Subscribes to value changes of `onAccountClosureId` adds and removes transfer details accordingly.
    */
   addTransferDetails() {
-    this.closeOnMaturityAccountForm.get('onAccountClosureId').valueChanges.subscribe((id: any) => {
+    this.closeOnMaturityAccountForm.get('onAccountClosureId')?.valueChanges.subscribe((id: any) => {
       if (id === 200) {
         this.closeOnMaturityAccountForm.addControl('toSavingsAccountId', new FormControl('', Validators.required));
         this.closeOnMaturityAccountForm.addControl('transferDescription', new FormControl(''));

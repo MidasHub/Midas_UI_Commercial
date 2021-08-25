@@ -2,7 +2,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource, MatTable } from '@angular/material/table';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Data } from '@angular/router';
 
 /** Custom Services */
 import { FixedDepositsService } from 'app/deposits/fixed-deposits/fixed-deposits.service';
@@ -24,7 +24,7 @@ export class StandingInstructionsTabComponent implements OnInit {
   /** Fixed Deposits Data */
   fixedDepositsData: any;
   /** Instructions Data */
-  instructionsData: any[];
+  instructionsData: any[] = [];
   /** Data source for instructions table. */
   dataSource = new MatTableDataSource();
   /** Columns to be displayed in instructions table. */
@@ -39,7 +39,7 @@ export class StandingInstructionsTabComponent implements OnInit {
   ];
 
   /** Instruction Table Reference */
-  @ViewChild('instructionsTable', { static: true }) instructionTableRef: MatTable<Element>;
+  @ViewChild('instructionsTable', { static: true }) instructionTableRef!: MatTable<Element>;
 
   /**
    * Retrieves Fixed Deposits Account Data from `resolve`.
@@ -52,7 +52,7 @@ export class StandingInstructionsTabComponent implements OnInit {
               private fixedDepositsService: FixedDepositsService,
               private dialog: MatDialog,
               private accountTransfersService: AccountTransfersService) {
-    this.route.parent.data.subscribe((data: { fixedDepositsAccountData: any }) => {
+    this.route.parent?.data.subscribe((data: { fixedDepositsAccountData: any }| Data) => {
       this.fixedDepositsData = data.fixedDepositsAccountData;
     });
   }

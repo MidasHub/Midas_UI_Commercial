@@ -1,7 +1,7 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute, Data } from '@angular/router';
 import { DatePipe } from '@angular/common';
 
 /** Custom Services */
@@ -23,9 +23,9 @@ export class EditTransactionComponent implements OnInit {
   /** Maximum Due Date allowed. */
   maxDate = new Date();
   /** Recurring Deposits transaction form. */
-  editTransactionForm: FormGroup;
+  editTransactionForm!: FormGroup;
   /** Recurring Deposits transaction payment options. */
-  paymentTypeOptions: {
+  paymentTypeOptions!: {
     id: number,
     name: string,
     description: string,
@@ -54,11 +54,11 @@ export class EditTransactionComponent implements OnInit {
     private datePipe: DatePipe,
     private recurringDepositsService: RecurringDepositsService,
     private settingsService: SettingsService, ) {
-    this.route.data.subscribe((data: { recurringDepositsAccountTransactionTemplate: any }) => {
+    this.route.data.subscribe((data: { recurringDepositsAccountTransactionTemplate: any }| Data) => {
       this.transactionTemplateData = data.recurringDepositsAccountTransactionTemplate;
       this.paymentTypeOptions = this.transactionTemplateData.paymentTypeOptions;
     });
-    this.recurringDepositAccountId = this.route.parent.parent.snapshot.params['recurringDepositAccountId'];
+    this.recurringDepositAccountId = this.route.parent?.parent?.snapshot.params['recurringDepositAccountId'];
   }
 
   /**

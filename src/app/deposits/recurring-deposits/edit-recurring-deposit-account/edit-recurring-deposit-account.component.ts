@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Data, Router } from '@angular/router';
 import { DatePipe } from '@angular/common';
 
 /** Custom Services */
@@ -25,11 +25,11 @@ import { RecurringDepositsAccountChargesStepComponent } from '../recurring-depos
 export class EditRecurringDepositAccountComponent implements OnInit {
 
   /** Imports all the step component */
-  @ViewChild(RecurringDepositsAccountDetailsStepComponent, { static: true }) recurringDepositsAccountDetailsStep: RecurringDepositsAccountDetailsStepComponent;
-  @ViewChild(RecurringDepositsAccountCurrencyStepComponent, { static: true }) recurringDepositAccountCurrencyStep: RecurringDepositsAccountCurrencyStepComponent;
-  @ViewChild(RecurringDepositsAccountTermsStepComponent, { static: true }) recurringDepositAccountTermsStep: RecurringDepositsAccountTermsStepComponent;
-  @ViewChild(RecurringDepositsAccountSettingsStepComponent, { static: true }) recurringDepositAccountSettingsStep: RecurringDepositsAccountSettingsStepComponent;
-  @ViewChild(RecurringDepositsAccountChargesStepComponent, { static: true }) recurringDepositAccountChargesStep: RecurringDepositsAccountChargesStepComponent;
+  @ViewChild(RecurringDepositsAccountDetailsStepComponent, { static: true }) recurringDepositsAccountDetailsStep!: RecurringDepositsAccountDetailsStepComponent;
+  @ViewChild(RecurringDepositsAccountCurrencyStepComponent, { static: true }) recurringDepositAccountCurrencyStep!: RecurringDepositsAccountCurrencyStepComponent;
+  @ViewChild(RecurringDepositsAccountTermsStepComponent, { static: true }) recurringDepositAccountTermsStep!: RecurringDepositsAccountTermsStepComponent;
+  @ViewChild(RecurringDepositsAccountSettingsStepComponent, { static: true }) recurringDepositAccountSettingsStep!: RecurringDepositsAccountSettingsStepComponent;
+  @ViewChild(RecurringDepositsAccountChargesStepComponent, { static: true }) recurringDepositAccountChargesStep!: RecurringDepositsAccountChargesStepComponent;
 
   /** Recurring Deposits Account And Template */
   recurringDepositsAccountAndTemplate: any;
@@ -42,7 +42,7 @@ export class EditRecurringDepositAccountComponent implements OnInit {
     private recurringDepositsService: RecurringDepositsService,
     private settingsService: SettingsService,
   ) {
-    this.route.data.subscribe((data: { recurringDepositsAccountAndTemplate: any }) => {
+    this.route.data.subscribe((data: { recurringDepositsAccountAndTemplate: any }|Data) => {
       this.recurringDepositsAccountAndTemplate = data.recurringDepositsAccountAndTemplate;
     });
   }

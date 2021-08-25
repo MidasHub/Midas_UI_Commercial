@@ -2,7 +2,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { DatePipe } from '@angular/common';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Data, Router } from '@angular/router';
 
 /** Custom Services */
 import { RecurringDepositsService } from '../../recurring-deposits.service';
@@ -33,7 +33,7 @@ export class DepositRecurringDepositsAccountComponent implements OnInit {
   /** Maximum Date allowed. */
   maxDate = new Date();
   /** Deposits Recurring Deposit Account form. */
-  depositRecurringDepositForm: FormGroup;
+  depositRecurringDepositForm!: FormGroup;
 
   /**
    * Retrieves action details transactions template data from `resolve`
@@ -51,7 +51,7 @@ export class DepositRecurringDepositsAccountComponent implements OnInit {
     private recurringDepositsService: RecurringDepositsService,
     private settingsService: SettingsService
   ) {
-    this.route.data.subscribe((data: { recurringDepositsAccountActionData: any }) => {
+    this.route.data.subscribe((data: { recurringDepositsAccountActionData: any }| Data) => {
       this.transactionAmount = data.recurringDepositsAccountActionData.amount;
       this.paymentTypes = data.recurringDepositsAccountActionData.paymentTypeOptions;
       if (data.recurringDepositsAccountActionData.outstandingChargeAmount && data.recurringDepositsAccountActionData.outstandingChargeAmount > 0) {
@@ -59,7 +59,7 @@ export class DepositRecurringDepositsAccountComponent implements OnInit {
         this.transactionAmount = this.transactionAmount + this.outstandingChargeAmount;
       }
     });
-    this.accountId = this.route.parent.snapshot.params['recurringDepositAccountId'];
+    this.accountId = this.route.parent?.snapshot.params['recurringDepositAccountId'];
   }
 
   ngOnInit() {

@@ -22,7 +22,7 @@ export class FixedDepositAccountTermsStepComponent implements OnInit, OnChanges 
   /** Maximum date allowed. */
   maxDate = new Date();
   /** Fixed Deposits Account Terms Form */
-  fixedDepositAccountTermsForm: FormGroup;
+  fixedDepositAccountTermsForm!: FormGroup;
   /** Interest Compounding Period Type Data */
   interestCompoundingPeriodTypeData: any;
   /** Interest Posting Period Type Data */

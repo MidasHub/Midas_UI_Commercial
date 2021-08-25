@@ -37,7 +37,7 @@ export class RecurringDepositsAccountPreviewStepComponent implements OnChanges {
   /** Additional Column to disblac incentives table  */
   chartSlabsIncentivesDisplayedColumns: string[] = ['incentives'];
   /** Expand Chart Slab Index used in the view */
-  expandChartSlabIndex: number;
+  expandChartSlabIndex!: number;
 
   constructor() { }
 

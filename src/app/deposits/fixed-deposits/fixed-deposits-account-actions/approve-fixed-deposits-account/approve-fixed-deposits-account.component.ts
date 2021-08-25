@@ -22,7 +22,7 @@ export class ApproveFixedDepositsAccountComponent implements OnInit {
   /** Maximum date allowed. */
   maxDate = new Date();
   /** Approve Fixed Deposits Account form. */
-  approveFixedDepositsAccountForm: FormGroup;
+  approveFixedDepositsAccountForm!: FormGroup;
   /** Fixed Deposits Account Id */
   accountId: any;
 
@@ -38,7 +38,7 @@ export class ApproveFixedDepositsAccountComponent implements OnInit {
               private datePipe: DatePipe,
               private route: ActivatedRoute,
               private router: Router) {
-    this.accountId = this.route.parent.snapshot.params['fixedDepositAccountId'];
+    this.accountId = this.route.parent?.snapshot.params['fixedDepositAccountId'];
   }
 
   /**

@@ -22,7 +22,7 @@ export class FixedDepositsService {
    * @param accountId Account Id.
    * @returns {Observable<any>} Fixed Deposits data.
    */
-  getFixedDepositsAccountData(accountId: string): Observable<any> {
+  getFixedDepositsAccountData(accountId?: string|null): Observable<any> {
     const httpParams = new HttpParams().set('associations', 'all');
     return this.http.get(`/fixeddepositaccounts/${accountId}`, { params: httpParams });
   }
@@ -51,7 +51,7 @@ export class FixedDepositsService {
    * @param {string} transactionId Transaction Id
    * @returns {Observable<any>}
    */
-  getFixedDepositsAccountTransaction(accountId: string, transactionId: string): Observable<any> {
+  getFixedDepositsAccountTransaction(accountId?: string|null, transactionId?: string|null): Observable<any> {
     return this.http.get(`/fixeddepositaccounts/${accountId}/transactions/${transactionId}`);
   }
 
@@ -84,10 +84,14 @@ export class FixedDepositsService {
    * @param clientId Client Id assosciated with fixed deposits account.
    * @returns {Observable<any>} Fixed Deposits account template.
    */
-  getFixedDepositsAccountTemplate(clientId: string, productId?: string): Observable<any> {
+  getFixedDepositsAccountTemplate(clientId?: string | null, productId?: string | null): Observable<any> {
+    if ((clientId)&&(productId)) {
     let httpParams = new HttpParams().set('clientId', clientId);
     httpParams = productId ? httpParams.set('productId', productId) : httpParams;
     return this.http.get('/fixeddepositaccounts/template', { params: httpParams });
+    } else {
+      return of();
+    }
   }
 
   /**

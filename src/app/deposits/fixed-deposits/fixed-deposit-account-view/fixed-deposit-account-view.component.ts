@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Data, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 
 /** Custom Dialogs */
@@ -31,7 +31,7 @@ export class FixedDepositAccountViewComponent implements OnInit {
   /** Savings Data Tables */
   savingsDatatables: any;
   /** Button Configurations */
-  buttonConfig: FixedDepositsButtonsConfiguration;
+  buttonConfig!: FixedDepositsButtonsConfiguration;
 
   /**
    * Fetches fixed deposits account data from `resolve`
@@ -46,7 +46,7 @@ export class FixedDepositAccountViewComponent implements OnInit {
               private fixedDepositsService: FixedDepositsService,
               private savingsService: SavingsService,
               public dialog: MatDialog) {
-    this.route.data.subscribe((data: { fixedDepositsAccountData: any, savingsDatatables: any  }) => {
+    this.route.data.subscribe((data: { fixedDepositsAccountData: any, savingsDatatables: any  }|Data) => {
       this.fixedDepositsAccountData = data.fixedDepositsAccountData;
       this.savingsDatatables = data.savingsDatatables;
     });

@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Data } from '@angular/router';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 
 /**
@@ -29,7 +29,7 @@ export class InterestRateChartTabComponent {
   /** Additional Column to display in incentives table  */
   chartSlabsIncentivesDisplayedColumns: string[] = ['incentives'];
   /** Expand Chart Slab Index used in the view */
-  expandChartSlabIndex: number;
+  expandChartSlabIndex!: number;
 
 
   /**
@@ -37,7 +37,7 @@ export class InterestRateChartTabComponent {
    * @param {ActivatedRoute} route Activated Route.
    */
   constructor(private route: ActivatedRoute) {
-    this.route.parent.data.subscribe((data: { recurringDepositsAccountData: any }) => {
+    this.route.parent?.data.subscribe((data: { recurringDepositsAccountData: any } | Data) => {
       this.interestRateChartData = data.recurringDepositsAccountData.accountChart.chartSlabs;
     });
   }
