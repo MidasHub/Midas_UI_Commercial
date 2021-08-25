@@ -2,7 +2,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { DatePipe } from '@angular/common';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Data, Router } from '@angular/router';
 
 /** Custom Services */
 import { SavingsService } from 'app/savings/savings.service';
@@ -23,7 +23,7 @@ export class SavingsAccountAssignStaffComponent implements OnInit {
   /** Maximum date allowed. */
   maxDate = new Date();
   /** Savings Account Assign Staff form. */
-  savingsAssignStaffForm: FormGroup;
+  savingsAssignStaffForm!: FormGroup;
   /** Savings Account Id */
   accountId: any;
   /** Field Officer Data */
@@ -45,8 +45,8 @@ export class SavingsAccountAssignStaffComponent implements OnInit {
               private route: ActivatedRoute,
               private router: Router,
               private settingsService: SettingsService) {
-    this.accountId = this.route.parent.snapshot.params['savingAccountId'];
-    this.route.data.subscribe((data: { savingsAccountActionData: any }) => {
+    this.accountId = this.route.parent?.snapshot.params['savingAccountId'];
+    this.route.data.subscribe((data: { savingsAccountActionData: any } | Data) => {
       this.savingsAccountData = data.savingsAccountActionData;
     });
   }

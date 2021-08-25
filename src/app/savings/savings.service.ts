@@ -97,25 +97,33 @@ export class SavingsService {
     );
   }
 
-  getIcSavingsAccountNoTransactions(accountId: string): Observable<any> {
-    let httpParams = this.commonHttpParams.getCommonHttpParams();
-    httpParams = httpParams.set('accountId', accountId);
+  getIcSavingsAccountNoTransactions(accountId?: string | null): Observable<any> {
+    if (accountId) {
+      let httpParams = this.commonHttpParams.getCommonHttpParams();
+      httpParams = httpParams.set('accountId', accountId);
 
-    return this.http.post(`${this.IcGatewayApiUrlPrefix}/savingTransaction/get_ic_account_Saving`, httpParams);
+      return this.http.post(`${this.IcGatewayApiUrlPrefix}/savingTransaction/get_ic_account_Saving`, httpParams);
+    } else {
+      return of();
+    }
   }
 
   /**
    * @param {string} savingAccountId is saving account"s Id.
    * @returns {Observable<any>}
    */
-  getIcSavingsTransactionTemplateResource(savingAccountId: string): Observable<any> {
-    let httpParams = this.commonHttpParams.getCommonHttpParams();
-    httpParams = httpParams.set('accountId', savingAccountId);
+  getIcSavingsTransactionTemplateResource(savingAccountId?: string | null): Observable<any> {
+    if (savingAccountId) {
+      let httpParams = this.commonHttpParams.getCommonHttpParams();
+      httpParams = httpParams.set('accountId', savingAccountId);
 
-    return this.http.post(
-      `${this.IcGatewayApiUrlPrefix}/savingTransaction/get_ic_account_Saving_transaction_template`,
-      httpParams
-    );
+      return this.http.post(
+        `${this.IcGatewayApiUrlPrefix}/savingTransaction/get_ic_account_Saving_transaction_template`,
+        httpParams
+      );
+    } else {
+      return of();
+    }
   }
 
   handleResponseApiSavingTransaction(res: any, messageReceived: string, refresh: boolean) {
@@ -271,7 +279,7 @@ export class SavingsService {
    * @param {string} savingAccountId is saving account"s Id.
    * @returns {Observable<any>}
    */
-  getSavingsTransactionTemplateResource(savingAccountId: string): Observable<any> {
+  getSavingsTransactionTemplateResource(savingAccountId?: string | null): Observable<any> {
     return this.http.get(`/savingsaccounts/${savingAccountId}/transactions/template`);
   }
 
@@ -279,7 +287,7 @@ export class SavingsService {
    * @param {string} savingAccountId saving account id.
    * @returns {Observable<any>}
    */
-  getSavingsChargeTemplateResource(savingAccountId?: string|null): Observable<any> {
+  getSavingsChargeTemplateResource(savingAccountId?: string | null): Observable<any> {
     if (savingAccountId) {
       return this.http.get(`/savingsaccounts/${savingAccountId}/charges/template`);
     } else {
@@ -490,7 +498,7 @@ export class SavingsService {
    * @param accountId Savings Account Id of account to get data for.
    * @returns {Observable<any>} Savings data.
    */
-  getSavingsAccountNoTransactions(accountId: string): Observable<any> {
+  getSavingsAccountNoTransactions(accountId?: string | null): Observable<any> {
     const httpParams = new HttpParams().set('associations', 'charges');
     return this.http.get(`/savingsaccounts/${accountId}`, { params: httpParams });
   }
@@ -499,9 +507,13 @@ export class SavingsService {
    * @param accountId Savings Account Id of account to get data for.
    * @returns {Observable<any>} Savings account and template.
    */
-  getSavingsAccountAndTemplate(accountId: string, template: boolean): Observable<any> {
-    const httpParams = new HttpParams().set('template', template.toString()).set('associations', 'charges');
-    return this.http.get(`/savingsaccounts/${accountId}`, { params: httpParams });
+  getSavingsAccountAndTemplate(accountId?: string | null, template?: boolean): Observable<any> {
+    if (accountId && template) {
+      const httpParams = new HttpParams().set('template', template.toString()).set('associations', 'charges');
+      return this.http.get(`/savingsaccounts/${accountId}`, { params: httpParams });
+    } else {
+      return of();
+    }
   }
 
   /**
@@ -542,7 +554,7 @@ export class SavingsService {
    * @param datatableName Data table name.
    * @returns {Observable<any>}
    */
-  getSavingsDatatable(accountId: string, datatableName: string): Observable<any> {
+  getSavingsDatatable(accountId?: string | null, datatableName?: string | null): Observable<any> {
     const httpParams = new HttpParams().set('genericResultSet', 'true');
     return this.http.get(`/datatables/${datatableName}/${accountId}`, { params: httpParams });
   }
@@ -605,10 +617,14 @@ export class SavingsService {
    * @param entityId Entity Id assosciated with savings account.
    * @returns {Observable<any>} Savings account template.
    */
-  getSavingsAccountTemplate(entityId: string, productId?: string, isGroup?: boolean): Observable<any> {
-    let httpParams = new HttpParams().set(isGroup ? 'groupId' : 'clientId', entityId);
-    httpParams = productId ? httpParams.set('productId', productId) : httpParams;
-    return this.http.get('/savingsaccounts/template', { params: httpParams });
+  getSavingsAccountTemplate(entityId?: string | null, productId?: string | null, isGroup?: boolean): Observable<any> {
+    if (entityId && productId) {
+      let httpParams = new HttpParams().set(isGroup ? 'groupId' : 'clientId', entityId);
+      httpParams = productId ? httpParams.set('productId', productId) : httpParams;
+      return this.http.get('/savingsaccounts/template', { params: httpParams });
+    } else {
+      return of();
+    }
   }
 
   /**
@@ -662,7 +678,7 @@ export class SavingsService {
    * @param {string} transactionId Transaction Id
    * @returns {Observable<any>}
    */
-  getSavingsAccountTransaction(accountId: string, transactionId: string): Observable<any> {
+  getSavingsAccountTransaction(accountId?: string | null, transactionId?: string | null): Observable<any> {
     return this.http.get(`/savingsaccounts/${accountId}/transactions/${transactionId}`);
   }
 
@@ -671,9 +687,13 @@ export class SavingsService {
    * @param {string} transactionId Transaction Id
    * @returns {Observable<any>}
    */
-  getSavingsAccountTransactionTemplate(accountId: string, transactionId: string): Observable<any> {
-    const httpParams = new HttpParams().set('template', 'true');
-    return this.http.get(`/savingsaccounts/${accountId}/transactions/${transactionId}`, { params: httpParams });
+  getSavingsAccountTransactionTemplate(accountId?: string | null, transactionId?: string | null): Observable<any> {
+    if (accountId && transactionId) {
+      const httpParams = new HttpParams().set('template', 'true');
+      return this.http.get(`/savingsaccounts/${accountId}/transactions/${transactionId}`, { params: httpParams });
+    } else {
+      return of();
+    }
   }
 
   /**
@@ -716,7 +736,7 @@ export class SavingsService {
    * @param {string} chargeId savings charge Id
    * @returns {Observable<any>}
    */
-  getSavingsAccountCharge(accountId: string, chargeId: string): Observable<any> {
+  getSavingsAccountCharge(accountId?: string | null, chargeId?: string | null): Observable<any> {
     return this.http.get(`/savingsaccounts/${accountId}/charges/${chargeId}`);
   }
 

@@ -1,25 +1,25 @@
 import { forEach } from 'lodash';
 /** Angular Imports */
-import { Component, OnInit } from "@angular/core";
-import { FormGroup, FormBuilder, Validators, FormControl } from "@angular/forms";
-import { Router, ActivatedRoute } from "@angular/router";
-import { DatePipe } from "@angular/common";
+import { Component, OnInit } from '@angular/core';
+import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
+import { Router, ActivatedRoute, Data } from '@angular/router';
+import { DatePipe } from '@angular/common';
 
 /** Custom Services */
-import { SavingsService } from "../../savings.service";
-import { AlertService } from "app/core/alert/alert.service";
-import { SettingsService } from "app/settings/settings.service";
-import { ClientsService } from "app/clients/clients.service";
-import { AuthenticationService } from "app/core/authentication/authentication.service";
-import { CollectionsService } from "app/collections/collections.service";
+import { SavingsService } from '../../savings.service';
+import { AlertService } from 'app/core/alert/alert.service';
+import { SettingsService } from 'app/settings/settings.service';
+import { ClientsService } from 'app/clients/clients.service';
+import { AuthenticationService } from 'app/core/authentication/authentication.service';
+import { CollectionsService } from 'app/collections/collections.service';
 
 /**
  * Create savings account transactions component.
  */
 @Component({
-  selector: "mifosx-savings-transactions",
-  templateUrl: "./savings-account-transactions.component.html",
-  styleUrls: ["./savings-account-transactions.component.scss"],
+  selector: 'mifosx-savings-transactions',
+  templateUrl: './savings-account-transactions.component.html',
+  styleUrls: ['./savings-account-transactions.component.scss'],
 })
 export class SavingsAccountTransactionsComponent implements OnInit {
   /** Minimum Due Date allowed. */
@@ -27,9 +27,9 @@ export class SavingsAccountTransactionsComponent implements OnInit {
   /** Maximum Due Date allowed. */
   maxDate = new Date();
   /** Savings account transaction form. */
-  savingAccountTransactionForm: FormGroup;
+  savingAccountTransactionForm!: FormGroup;
   /** savings account transaction payment options. */
-  paymentTypeOptions: {
+  paymentTypeOptions!: {
     id: number;
     name: string;
     description: string;
@@ -40,18 +40,18 @@ export class SavingsAccountTransactionsComponent implements OnInit {
   limitInfo: any;
   /** Flag to enable payment details fields. */
   addPaymentDetailsFlag: Boolean = false;
-  paymentTypeIdGroup: string = "!Expense";
+  paymentTypeIdGroup = '!Expense';
   /** transaction type flag to render required UI */
   transactionType: { deposit: boolean; withdrawal: boolean } = { deposit: false, withdrawal: false };
   /** transaction command for submit request */
   transactionCommand: string;
   /** saving account's Id */
   savingAccountId: string;
-  showStaffChoose: boolean = false;
+  showStaffChoose = false;
   filteredOptions: any = [];
   offices: any = [];
-  paymentTypeDescription: string;
-  isInterchangeClient: boolean = false;
+  paymentTypeDescription?: string;
+  isInterchangeClient = false;
   currentUser: any;
   /**
    * Retrieves the Saving Account transaction template data from `resolve`.
@@ -74,7 +74,7 @@ export class SavingsAccountTransactionsComponent implements OnInit {
   ) {
     this.currentUser = this.authenticationService.getCredentials();
 
-    this.route.data.subscribe((data: { savingsAccountActionData: any }) => {
+    this.route.data.subscribe((data: { savingsAccountActionData: any } | Data) => {
       if (data.savingsAccountActionData.result) {
         this.isInterchangeClient = true;
         this.paymentTypeOptions = data.savingsAccountActionData.result.savingTemplate.paymentTypeOptions;
@@ -82,9 +82,9 @@ export class SavingsAccountTransactionsComponent implements OnInit {
         this.paymentTypeOptions = data.savingsAccountActionData.paymentTypeOptions;
       }
     });
-    this.transactionCommand = this.route.snapshot.params["name"].toLowerCase();
+    this.transactionCommand = this.route.snapshot.params['name'].toLowerCase();
     this.transactionType[this.transactionCommand] = true;
-    this.savingAccountId = this.route.parent.snapshot.params["savingAccountId"];
+    this.savingAccountId = this.route.parent?.snapshot.params['savingAccountId'];
     this.clientService.getOffices().subscribe((offices: any) => {
       this.offices = offices;
     });
@@ -103,18 +103,18 @@ export class SavingsAccountTransactionsComponent implements OnInit {
   createSavingAccountTransactionForm() {
     this.savingAccountTransactionForm = this.formBuilder.group({
       transactionDate: [new Date(), Validators.required],
-      transactionAmount: ["", Validators.required],
-      paymentTypeGroup: ["", Validators.required],
-      paymentTypeId: ["", Validators.required],
-      note: [""],
+      transactionAmount: ['', Validators.required],
+      paymentTypeGroup: ['', Validators.required],
+      paymentTypeId: ['', Validators.required],
+      note: [''],
     });
 
     // **SÁNG** filter payment type by group
-    this.savingAccountTransactionForm.get("paymentTypeGroup").valueChanges.subscribe((value) => {
+    this.savingAccountTransactionForm.get('paymentTypeGroup')?.valueChanges.subscribe((value) => {
       this.filterPaymentType();
     });
 
-    this.savingAccountTransactionForm.get("paymentTypeId").valueChanges.subscribe((value) => {
+    this.savingAccountTransactionForm.get('paymentTypeId')?.valueChanges.subscribe((value) => {
       this.changePaymentType();
     });
 
@@ -125,69 +125,68 @@ export class SavingsAccountTransactionsComponent implements OnInit {
   }
 
   filterPaymentType() {
-    this.paymentTypeDescription = "";
-    let groupId = String(this.savingAccountTransactionForm.get("paymentTypeGroup").value);
+    this.paymentTypeDescription = '';
+    const groupId = String(this.savingAccountTransactionForm.get('paymentTypeGroup')?.value);
 
     if (!this.isInterchangeClient) {
-      if (groupId == "Expense-Equity") {
+      if (groupId === 'Expense-Equity') {
         this.showStaffChoose = true;
-        this.savingAccountTransactionForm.get("accountNumber").setValue("51");
+        this.savingAccountTransactionForm.get('accountNumber')?.setValue('51');
       } else {
         this.showStaffChoose = false;
-        this.savingAccountTransactionForm.get("accountNumber").setValue(null);
+        this.savingAccountTransactionForm.get('accountNumber')?.setValue(null);
       }
     }
 
 
 
     this.filteredOptions = this.paymentTypeOptions.filter((item) => {
-      if (groupId.startsWith("!")) {
-        return item.name.indexOf(groupId.substring(1)) == -1;
+      if (groupId.startsWith('!')) {
+        return item.name.indexOf(groupId.substring(1)) === -1;
       } else {
         return item.name.includes(groupId);
       }
     });
-    this.savingAccountTransactionForm.get("paymentTypeId").setValue(null);
+    this.savingAccountTransactionForm.get('paymentTypeId')?.setValue(null);
   }
 
   changePaymentType() {
-    let paymentTypeId = this.savingAccountTransactionForm.get("paymentTypeId").value;
+    const paymentTypeId = this.savingAccountTransactionForm.get('paymentTypeId')?.value;
     if (!paymentTypeId) {
       return;
     }
 
-    let paymentTypeDescription = "";
-    this.paymentTypeOptions.forEach(function (paymentType) {
-      if (paymentType.id == paymentTypeId) {
+    let paymentTypeDescription = '';
+    this.paymentTypeOptions.forEach( (paymentType) => {
+      if (paymentType.id === paymentTypeId) {
         paymentTypeDescription = paymentType.description;
       }
     });
     this.paymentTypeDescription = paymentTypeDescription;
-    const  officeId = this.savingAccountTransactionForm.get("bankNumber").value;
+    const  officeId = this.savingAccountTransactionForm.get('bankNumber')?.value;
 
-    if (this.transactionCommand == "withdrawal" && !this.isInterchangeClient) {
+    if (this.transactionCommand === 'withdrawal' && !this.isInterchangeClient) {
 
       if (this.showStaffChoose) {
-        let staffId = this.savingAccountTransactionForm.get("accountNumber").value;
+        const staffId = this.savingAccountTransactionForm.get('accountNumber')?.value;
         this.checkValidAmountWithdrawalTransaction(paymentTypeId, officeId, staffId);
       } else {
         this.checkValidAmountWithdrawalTransaction(paymentTypeId, officeId);
       }
-    }
-    else {
-      if (this.transactionCommand != "withdrawal" && !this.isInterchangeClient) {
+    } else {
+      if (this.transactionCommand !== 'withdrawal' && !this.isInterchangeClient) {
 
-      if (paymentTypeId == 69){
+      if (paymentTypeId === 69) {
         this.showStaffChoose = true;
         this.collectionsService.getStaffs(officeId).subscribe((result: any) => {
-          let listStaff = result?.filter((staff: any) => staff.isLoanOfficer);
-          listStaff?.forEach((staff:any) => {
+          const listStaff = result?.filter((staff: any) => staff.isLoanOfficer);
+          listStaff?.forEach((staff: any) => {
             staff.staffId = staff.id;
-          })
+          });
 
           this.limitInfo = {
             listStaff : listStaff
-          }
+          };
 
         });
       } else {
@@ -210,25 +209,25 @@ export class SavingsAccountTransactionsComponent implements OnInit {
   addPaymentDetails() {
     this.addPaymentDetailsFlag = !this.addPaymentDetailsFlag;
     if (this.addPaymentDetailsFlag) {
-      this.savingAccountTransactionForm.addControl("accountNumber", new FormControl(""));
-      this.savingAccountTransactionForm.addControl("checkNumber", new FormControl(""));
-      this.savingAccountTransactionForm.addControl("routingCode", new FormControl(""));
-      this.savingAccountTransactionForm.addControl("receiptNumber", new FormControl(""));
-      this.savingAccountTransactionForm.addControl("bankNumber", new FormControl(String(this.currentUser.officeId)));
+      this.savingAccountTransactionForm.addControl('accountNumber', new FormControl(''));
+      this.savingAccountTransactionForm.addControl('checkNumber', new FormControl(''));
+      this.savingAccountTransactionForm.addControl('routingCode', new FormControl(''));
+      this.savingAccountTransactionForm.addControl('receiptNumber', new FormControl(''));
+      this.savingAccountTransactionForm.addControl('bankNumber', new FormControl(String(this.currentUser.officeId)));
 
-      this.savingAccountTransactionForm.get("accountNumber").valueChanges.subscribe((value) => {
+      this.savingAccountTransactionForm.get('accountNumber')?.valueChanges.subscribe((value) => {
         this.changePaymentType();
       });
 
-      this.savingAccountTransactionForm.get("bankNumber").valueChanges.subscribe((value) => {
+      this.savingAccountTransactionForm.get('bankNumber')?.valueChanges.subscribe((value) => {
         this.changePaymentType();
       });
     } else {
-      this.savingAccountTransactionForm.removeControl("accountNumber");
-      this.savingAccountTransactionForm.removeControl("checkNumber");
-      this.savingAccountTransactionForm.removeControl("routingCode");
-      this.savingAccountTransactionForm.removeControl("receiptNumber");
-      this.savingAccountTransactionForm.removeControl("bankNumber");
+      this.savingAccountTransactionForm.removeControl('accountNumber');
+      this.savingAccountTransactionForm.removeControl('checkNumber');
+      this.savingAccountTransactionForm.removeControl('routingCode');
+      this.savingAccountTransactionForm.removeControl('receiptNumber');
+      this.savingAccountTransactionForm.removeControl('bankNumber');
     }
   }
 
@@ -252,7 +251,7 @@ export class SavingsAccountTransactionsComponent implements OnInit {
       // }
     }
     // remove un use controller
-    this.savingAccountTransactionForm.removeControl("paymentTypeGroup");
+    this.savingAccountTransactionForm.removeControl('paymentTypeGroup');
 
     const prevTransactionDate: Date = this.savingAccountTransactionForm.value.transactionDate;
     // TODO: Update once language and date settings are setup
@@ -268,7 +267,7 @@ export class SavingsAccountTransactionsComponent implements OnInit {
       this.savingsService
         .executeSavingsAccountTransactionsCommand(this.savingAccountId, this.transactionCommand, transactionData)
         .subscribe((res) => {
-          this.router.navigate(["../../"], { relativeTo: this.route });
+          this.router.navigate(['../../'], { relativeTo: this.route });
         });
     } else {
       this.savingsService
@@ -276,7 +275,7 @@ export class SavingsAccountTransactionsComponent implements OnInit {
         .subscribe((res) => {
           const message = `Thực hiện thành công!`;
           this.savingsService.handleResponseApiSavingTransaction(res, message, false);
-          this.router.navigate([`/clients/ic-client/savings-accounts/ic`, this.savingAccountId, "transactions"]);
+          this.router.navigate([`/clients/ic-client/savings-accounts/ic`, this.savingAccountId, 'transactions']);
         });
     }
   }

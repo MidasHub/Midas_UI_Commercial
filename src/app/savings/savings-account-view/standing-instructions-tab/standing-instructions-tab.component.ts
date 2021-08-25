@@ -2,7 +2,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource, MatTable } from '@angular/material/table';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Data } from '@angular/router';
 
 /** Custom Services */
 import { SavingsService } from 'app/savings/savings.service';
@@ -25,7 +25,7 @@ export class StandingInstructionsTabComponent implements OnInit {
   /** Savings Data */
   savingsData: any;
   /** Instructions Data */
-  instructionsData: any[];
+  instructionsData: any[] = [];
   /** Data source for instructions table. */
   dataSource = new MatTableDataSource();
   /** Columns to be displayed in instructions table. */
@@ -40,7 +40,7 @@ export class StandingInstructionsTabComponent implements OnInit {
   ];
 
   /** Instruction Table Reference */
-  @ViewChild('instructionsTable', { static: true }) instructionTableRef: MatTable<Element>;
+  @ViewChild('instructionsTable', { static: true }) instructionTableRef!: MatTable<Element>;
 
   /**
    * Retrieves Savings Account Data from `resolve`.
@@ -52,7 +52,7 @@ export class StandingInstructionsTabComponent implements OnInit {
               private dialog: MatDialog,
               private accountTransfersService: AccountTransfersService,
               private settingsService: SettingsService) {
-    this.route.parent.data.subscribe((data: { savingsAccountData: any }) => {
+    this.route.parent?.data.subscribe((data: { savingsAccountData: any }|Data) => {
       this.savingsData = data.savingsAccountData;
     });
   }

@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Resolve, ActivatedRouteSnapshot } from '@angular/router';
 
 /** rxjs Imports */
-import { Observable, forkJoin } from 'rxjs';
+import { Observable, forkJoin, of } from 'rxjs';
 
 /** Custom Services */
 import { SavingsService } from '../savings.service';
@@ -26,7 +26,7 @@ export class IcSavingsAccountActionsResolver implements Resolve<Object> {
    */
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
     const actionName = route.paramMap.get('name');
-    const savingAccountId = route.parent.paramMap.get('savingAccountId');
+    const savingAccountId = route.parent?.paramMap.get('savingAccountId');
     switch (actionName) {
       // case 'Assign Staff':
       //   return this.savingsService.getSavingsAccountAndTemplate(savingAccountId, true);
@@ -43,7 +43,8 @@ export class IcSavingsAccountActionsResolver implements Resolve<Object> {
       // case 'Apply Annual Fees':
       //   return this.savingsService.getSavingsAccountNoTransactions(savingAccountId);
       default:
-        return undefined;
+        // return undefined;
+        return of();
     }
   }
 }

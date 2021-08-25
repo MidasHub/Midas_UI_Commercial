@@ -2,7 +2,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { DatePipe } from '@angular/common';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Data, Router } from '@angular/router';
 
 /** Custom Services */
 import { SavingsService } from 'app/savings/savings.service';
@@ -23,7 +23,7 @@ export class CloseSavingsAccountComponent implements OnInit {
   /** Maximum date allowed. */
   maxDate = new Date();
   /** Close Savings Account form. */
-  closeSavingsAccountForm: FormGroup;
+  closeSavingsAccountForm!: FormGroup;
   /** Savings Account Id */
   accountId: any;
   /** Flag to enable payment details fields. */
@@ -47,11 +47,11 @@ export class CloseSavingsAccountComponent implements OnInit {
               private route: ActivatedRoute,
               private router: Router,
               private settingsService: SettingsService) {
-    this.route.data.subscribe((data: { savingsAccountActionData: any }) => {
+    this.route.data.subscribe((data: { savingsAccountActionData: any } | Data) => {
       this.paymentTypeOptions = data.savingsAccountActionData[0].paymentTypeOptions;
       this.transactionAmount = data.savingsAccountActionData[1].summary.accountBalance;
     });
-    this.accountId = this.route.parent.snapshot.params['savingAccountId'];
+    this.accountId = this.route.parent?.snapshot.params['savingAccountId'];
   }
 
   /**
@@ -78,7 +78,7 @@ export class CloseSavingsAccountComponent implements OnInit {
    * Subscribe to value changes of withdraw balance checkbox.
    */
   buildDependencies() {
-    this.closeSavingsAccountForm.get('withdrawBalance').valueChanges.subscribe((value: boolean) => {
+    this.closeSavingsAccountForm.get('withdrawBalance')?.valueChanges.subscribe((value: boolean) => {
       if (value) {
         this.closeSavingsAccountForm.addControl('amount', new FormControl({value: this.transactionAmount, disabled: true}));
         this.closeSavingsAccountForm.addControl('paymentTypeId', new FormControl(''));

@@ -23,7 +23,7 @@ export class WithdrawByClientSavingsAccountComponent implements OnInit {
   /** Maximum date allowed. */
   maxDate = new Date();
   /** Withdraw Savings Account form. */
-  withdrawSavingsAccountForm: FormGroup;
+  withdrawSavingsAccountForm!: FormGroup;
   /** Savings Account Id */
   accountId: any;
 
@@ -41,7 +41,7 @@ export class WithdrawByClientSavingsAccountComponent implements OnInit {
               private route: ActivatedRoute,
               private router: Router,
               private settingsService: SettingsService) {
-    this.accountId = this.route.parent.snapshot.params['savingAccountId'];
+    this.accountId = this.route.parent?.snapshot.params['savingAccountId'];
   }
 
   /**

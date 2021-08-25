@@ -1,7 +1,7 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute, Data } from '@angular/router';
 import { DatePipe } from '@angular/common';
 
 /** Custom Services */
@@ -22,7 +22,7 @@ export class AddChargeSavingsAccountComponent implements OnInit {
   /** Maximum Due Date allowed. */
   maxDate = new Date();
   /** Add Savings Charge form. */
-  savingsChargeForm: FormGroup;
+  savingsChargeForm!: FormGroup;
   /** savings charge options. */
   savingsChargeOptions: any;
   /** savings Id of the savings account. */
@@ -45,10 +45,10 @@ export class AddChargeSavingsAccountComponent implements OnInit {
     private datePipe: DatePipe,
     private savingsService: SavingsService
   ) {
-    this.route.data.subscribe((data: { savingsAccountActionData: any }) => {
+    this.route.data.subscribe((data: { savingsAccountActionData: any }| Data) => {
       this.savingsChargeOptions = data.savingsAccountActionData.chargeOptions;
     });
-    this.savingAccountId = this.route.parent.snapshot.params['savingAccountId'];
+    this.savingAccountId = this.route.parent?.snapshot.params['savingAccountId'];
   }
 
   /**

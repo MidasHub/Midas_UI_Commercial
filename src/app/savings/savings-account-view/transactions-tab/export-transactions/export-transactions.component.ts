@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { FormBuilder, Validators } from '@angular/forms';
 import { DatePipe } from '@angular/common';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Data } from '@angular/router';
 
 /** Custom Services */
 import { ReportsService } from 'app/reports/reports.service';
@@ -44,7 +44,7 @@ export class ExportTransactionsComponent implements OnInit {
               private formBuilder: FormBuilder,
               private datePipe: DatePipe,
               private route: ActivatedRoute) {
-    this.route.parent.parent.data.subscribe((data: { savingsAccountData: any }) => {
+    this.route.parent?.parent?.data.subscribe((data: { savingsAccountData: any }|Data) => {
       this.savingsAccountId = data.savingsAccountData.accountNo;
     });
   }

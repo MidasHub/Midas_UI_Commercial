@@ -23,7 +23,7 @@ export class ApproveSavingsAccountComponent implements OnInit {
   /** Maximum date allowed. */
   maxDate = new Date();
   /** Approve Savings Account form. */
-  approveSavingsAccountForm: FormGroup;
+  approveSavingsAccountForm!: FormGroup;
   /** Savings Account Id */
   accountId: any;
 
@@ -41,7 +41,7 @@ export class ApproveSavingsAccountComponent implements OnInit {
               private route: ActivatedRoute,
               private router: Router,
               private settingsService: SettingsService) {
-    this.accountId = this.route.parent.snapshot.params['savingAccountId'];
+    this.accountId = this.route.parent?.snapshot.params['savingAccountId'];
   }
 
   /**

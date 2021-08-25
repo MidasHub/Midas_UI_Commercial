@@ -1,24 +1,24 @@
 /** Angular Imports */
-import { Component, ViewChild } from "@angular/core";
-import { Router, ActivatedRoute } from "@angular/router";
-import { DatePipe } from "@angular/common";
+import { Component, ViewChild } from '@angular/core';
+import { Router, ActivatedRoute, Data } from '@angular/router';
+import { DatePipe } from '@angular/common';
 
 /** Custom Components */
-import { SavingsAccountDetailsStepComponent } from "../savings-account-stepper/savings-account-details-step/savings-account-details-step.component";
-import { SavingsAccountTermsStepComponent } from "../savings-account-stepper/savings-account-terms-step/savings-account-terms-step.component";
-import { SavingsAccountChargesStepComponent } from "../savings-account-stepper/savings-account-charges-step/savings-account-charges-step.component";
+import { SavingsAccountDetailsStepComponent } from '../savings-account-stepper/savings-account-details-step/savings-account-details-step.component';
+import { SavingsAccountTermsStepComponent } from '../savings-account-stepper/savings-account-terms-step/savings-account-terms-step.component';
+import { SavingsAccountChargesStepComponent } from '../savings-account-stepper/savings-account-charges-step/savings-account-charges-step.component';
 
 /** Custom Services */
-import { SavingsService } from "../savings.service";
-import { SettingsService } from "app/settings/settings.service";
+import { SavingsService } from '../savings.service';
+import { SettingsService } from 'app/settings/settings.service';
 
 /**
  * Create Savings Account Component
  */
 @Component({
-  selector: "mifosx-create-savings-account",
-  templateUrl: "./create-savings-account.component.html",
-  styleUrls: ["./create-savings-account.component.scss"],
+  selector: 'mifosx-create-savings-account',
+  templateUrl: './create-savings-account.component.html',
+  styleUrls: ['./create-savings-account.component.scss'],
 })
 export class CreateSavingsAccountComponent {
   /** Savings Account Template */
@@ -27,13 +27,13 @@ export class CreateSavingsAccountComponent {
   savingsAccountProductTemplate: any;
   /** Savings Account Details Step */
   @ViewChild(SavingsAccountDetailsStepComponent, { static: true })
-  savingsAccountDetailsStep: SavingsAccountDetailsStepComponent;
+  savingsAccountDetailsStep!: SavingsAccountDetailsStepComponent;
   /** Savings Account Terms Step */
   @ViewChild(SavingsAccountTermsStepComponent, { static: true })
-  savingsAccountTermsStep: SavingsAccountTermsStepComponent;
+  savingsAccountTermsStep!: SavingsAccountTermsStepComponent;
   /** Savings Account Charges Step */
   @ViewChild(SavingsAccountChargesStepComponent, { static: true })
-  savingsAccountChargesStep: SavingsAccountChargesStepComponent;
+  savingsAccountChargesStep!: SavingsAccountChargesStepComponent;
 
   /**
    * Fetches savings account template from `resolve`
@@ -50,7 +50,7 @@ export class CreateSavingsAccountComponent {
     private savingsService: SavingsService,
     private settingsService: SettingsService
   ) {
-    this.route.data.subscribe((data: { savingsAccountTemplate: any }) => {
+    this.route.data.subscribe((data: { savingsAccountTemplate: any }| Data) => {
       if (data.savingsAccountTemplate.result) {
         this.savingsAccountTemplate = data.savingsAccountTemplate.result.clientAccountTemplate;
         this.savingsAccountTemplate.isIcClient = true;
@@ -108,12 +108,12 @@ export class CreateSavingsAccountComponent {
 
     if (this.savingsAccountTemplate.isIcClient) {
       this.savingsService.createSavingsAccountIc(this.savingsAccount.productId, this.savingsAccount.externalId).subscribe((response: any) => {
-        this.router.navigate([`/clients/ic-client/savings-accounts/ic`, response.result.clientAccount.resourceId, "transactions"]);
+        this.router.navigate([`/clients/ic-client/savings-accounts/ic`, response.result.clientAccount.resourceId, 'transactions']);
       });
     } else {
       const locale = this.settingsService.language.code;
       const dateFormat = this.settingsService.dateFormat;
-      const monthDayFormat = "dd/MM";
+      const monthDayFormat = 'dd/MM';
       const savingsAccount = {
         ...this.savingsAccount,
         charges: this.savingsAccount.charges.map((charge: any) => ({
@@ -134,7 +134,7 @@ export class CreateSavingsAccountComponent {
         savingsAccount.groupId = this.savingsAccountTemplate.groupId;
       }
       this.savingsService.createSavingsAccount(savingsAccount).subscribe((response: any) => {
-        this.router.navigate(["../", response.resourceId], { relativeTo: this.route });
+        this.router.navigate(['../', response.resourceId], { relativeTo: this.route });
       });
     }
   }

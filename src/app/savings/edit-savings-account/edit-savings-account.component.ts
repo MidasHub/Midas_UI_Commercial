@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component, ViewChild } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute, Data } from '@angular/router';
 import { DatePipe } from '@angular/common';
 
 /** Custom Components */
@@ -28,11 +28,11 @@ export class EditSavingsAccountComponent {
   savingsAccountProductTemplate: any;
 
   /** Savings Account Details Step */
-  @ViewChild(SavingsAccountDetailsStepComponent, { static: true }) savingsAccountDetailsStep: SavingsAccountDetailsStepComponent;
+  @ViewChild(SavingsAccountDetailsStepComponent, { static: true }) savingsAccountDetailsStep!: SavingsAccountDetailsStepComponent;
   /** Savings Account Terms Step */
-  @ViewChild(SavingsAccountTermsStepComponent, { static: true }) savingsAccountTermsStep: SavingsAccountTermsStepComponent;
+  @ViewChild(SavingsAccountTermsStepComponent, { static: true }) savingsAccountTermsStep!: SavingsAccountTermsStepComponent;
   /** Savings Account Charges Step */
-  @ViewChild(SavingsAccountChargesStepComponent, { static: true }) savingsAccountChargesStep: SavingsAccountChargesStepComponent;
+  @ViewChild(SavingsAccountChargesStepComponent, { static: true }) savingsAccountChargesStep!: SavingsAccountChargesStepComponent;
 
   /**
    * Fetches savings account template from `resolve`
@@ -48,7 +48,7 @@ export class EditSavingsAccountComponent {
               private savingsService: SavingsService,
               private settingsService: SettingsService
               ) {
-    this.route.data.subscribe((data: { savingsAccountAndTemplate: any }) => {
+    this.route.data.subscribe((data: { savingsAccountAndTemplate: any }| Data) => {
       this.savingsAccountAndTemplate = data.savingsAccountAndTemplate;
     });
   }

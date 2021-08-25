@@ -23,7 +23,7 @@ export class SavingsAccountUnassignStaffComponent implements OnInit {
   /** Maximum date allowed. */
   maxDate = new Date();
   /** Savings Account Unassign Staff form. */
-  savingsUnassignStaffForm: FormGroup;
+  savingsUnassignStaffForm!: FormGroup;
   /** Savings Account Id */
   accountId: any;
 
@@ -41,7 +41,7 @@ export class SavingsAccountUnassignStaffComponent implements OnInit {
               private route: ActivatedRoute,
               private router: Router,
               private settingsService: SettingsService) {
-    this.accountId = this.route.parent.snapshot.params['savingAccountId'];
+    this.accountId = this.route.parent?.snapshot.params['savingAccountId'];
   }
 
   /**

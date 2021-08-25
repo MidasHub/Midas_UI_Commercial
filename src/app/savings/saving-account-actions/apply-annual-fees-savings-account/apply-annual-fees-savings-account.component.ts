@@ -2,7 +2,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { DatePipe } from '@angular/common';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Data, Router } from '@angular/router';
 
 /** Custom Services */
 import { SavingsService } from 'app/savings/savings.service';
@@ -23,7 +23,7 @@ export class ApplyAnnualFeesSavingsAccountComponent implements OnInit {
   /** Maximum date allowed. */
   maxDate = new Date();
   /** Apply annual fees form. */
-  applyAnnualFeesForm: FormGroup;
+  applyAnnualFeesForm!: FormGroup;
   /** Savings Account Id */
   accountId: any;
   /** Annual Fees charge Id */
@@ -45,8 +45,8 @@ export class ApplyAnnualFeesSavingsAccountComponent implements OnInit {
               private route: ActivatedRoute,
               private router: Router,
               private settingsService: SettingsService) {
-    this.accountId = this.route.parent.snapshot.params['savingAccountId'];
-    this.route.data.subscribe((data: { savingsAccountActionData: any }) => {
+    this.accountId = this.route.parent?.snapshot.params['savingAccountId'];
+    this.route.data.subscribe((data: { savingsAccountActionData: any } | Data) => {
       this.savingsAccountData = data.savingsAccountActionData;
     });
   }
@@ -77,7 +77,7 @@ export class ApplyAnnualFeesSavingsAccountComponent implements OnInit {
       charges.forEach((charge: any) => {
         if (charge.name === 'Annual fee - INR') {
           this.chargeId = charge.id;
-          this.applyAnnualFeesForm.get('amount').patchValue(charge.amount);
+          this.applyAnnualFeesForm.get('amount')?.patchValue(charge.amount);
         }
       });
   }

@@ -23,7 +23,7 @@ export class PostInterestAsOnSavingsAccountComponent implements OnInit {
   /** Maximum date allowed. */
   maxDate = new Date();
   /** Post Interest Savings Account form. */
-  postInterestSavingsAccountForm: FormGroup;
+  postInterestSavingsAccountForm!: FormGroup;
   /** Savings Account Id */
   accountId: any;
 
@@ -41,7 +41,7 @@ export class PostInterestAsOnSavingsAccountComponent implements OnInit {
               private route: ActivatedRoute,
               private router: Router,
               private settingsService: SettingsService) {
-    this.accountId = this.route.parent.snapshot.params['savingAccountId'];
+    this.accountId = this.route.parent?.snapshot.params['savingAccountId'];
   }
 
   /**

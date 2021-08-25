@@ -1,7 +1,7 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute, Data } from '@angular/router';
 import { DatePipe } from '@angular/common';
 
 /** Custom Services */
@@ -23,9 +23,9 @@ export class EditTransactionComponent implements OnInit {
   /** Maximum Due Date allowed. */
   maxDate = new Date();
   /** Savings account transaction form. */
-  editTransactionForm: FormGroup;
+  editTransactionForm!: FormGroup;
   /** savings account transaction payment options. */
-  paymentTypeOptions: {
+  paymentTypeOptions!: {
     id: number,
     name: string,
     description: string,
@@ -54,11 +54,11 @@ export class EditTransactionComponent implements OnInit {
               private datePipe: DatePipe,
               private savingsService: SavingsService,
               private settingsService: SettingsService) {
-    this.route.data.subscribe((data: { savingsAccountTransactionTemplate: any }) => {
+    this.route.data.subscribe((data: { savingsAccountTransactionTemplate: any } | Data) => {
       this.transactionTemplateData = data.savingsAccountTransactionTemplate;
       this.paymentTypeOptions = this.transactionTemplateData.paymentTypeOptions;
     });
-    this.savingAccountId = this.route.parent.snapshot.params['savingAccountId'];
+    this.savingAccountId = this.route.parent?.snapshot.params['savingAccountId'];
   }
 
   /**

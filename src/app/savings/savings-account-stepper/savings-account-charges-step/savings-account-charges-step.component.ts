@@ -27,7 +27,7 @@ export class SavingsAccountChargesStepComponent implements OnInit, OnChanges {
   /** Savings Account Template */
   @Input() savingsAccountTemplate: any;
   /** Currency Code */
-  @Input() currencyCode: FormControl;
+  @Input() currencyCode?: FormControl;
 
   /** Charge Data */
   chargeData: any = [];
@@ -47,7 +47,7 @@ export class SavingsAccountChargesStepComponent implements OnInit, OnChanges {
               private datePipe: DatePipe) {}
 
    ngOnInit() {
-    this.currencyCode.valueChanges.subscribe(() => {
+    this.currencyCode?.valueChanges.subscribe(() => {
       if (!this.isChargesPatched && this.savingsAccountTemplate.charges) {
         this.chargesDataSource = this.savingsAccountTemplate.charges.map((charge: any) => ({...charge, id: charge.chargeId})) || [];
         this.isChargesPatched = true;

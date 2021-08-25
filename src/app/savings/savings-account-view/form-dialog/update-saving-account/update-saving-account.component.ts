@@ -49,21 +49,21 @@ export class UpdateSavingAccountComponent implements OnInit {
           // if (paymentDetailData[key]) {
             switch (key) {
               case 'paymentType':
-                this.form.get('paymentTypeId').setValue(paymentDetailData?.paymentType?.id);
+                this.form.get('paymentTypeId')?.setValue(paymentDetailData?.paymentType?.id);
                 break;
               case 'note':
-                this.form.get('note').setValue(this.payments?.note);
+                this.form.get('note')?.setValue(this.payments?.note);
                 break;
               default:
-                this.form.get(key).setValue(paymentDetailData[key]);
+                this.form.get(key)?.setValue(paymentDetailData[key]);
             }
           // }
         }
         if (date && date.length === 3) {
-          this.form.get('transactionDate').setValue(moment(date[0], date[1], date[2]).format('dd/MM/yyyy'));
+          this.form.get('transactionDate')?.setValue(moment(date[0], date[1], date[2]).format('dd/MM/yyyy'));
         }
         if (amount) {
-          this.form.get('transactionAmount').setValue(amount);
+          this.form.get('transactionAmount')?.setValue(amount);
         }
       }
     });

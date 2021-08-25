@@ -1,31 +1,31 @@
 /** Angular Imports */
-import {  Component, OnInit, ViewChild } from "@angular/core";
-import { ActivatedRoute, Params, Router } from "@angular/router";
-import { FormBuilder, FormControl, FormGroup } from "@angular/forms";
-import { SavingsService } from "../../savings.service";
-import { SettingsService } from "../../../settings/settings.service";
-import { DatePipe } from "@angular/common";
-import * as moment from "moment";
-import { animate, state, style, transition, trigger } from "@angular/animations";
-import { MatDialog } from "@angular/material/dialog";
-import { UpdateSavingAccountComponent } from "../form-dialog/update-saving-account/update-saving-account.component";
-import { AlertService } from "../../../core/alert/alert.service";
-import { MatPaginator } from "@angular/material/paginator";
-import { MatSort } from "@angular/material/sort";
-import { TerminalsService } from "app/terminals/terminals.service";
+import {  Component, OnInit, ViewChild } from '@angular/core';
+import { ActivatedRoute, Data, Params, Router } from '@angular/router';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { SavingsService } from '../../savings.service';
+import { SettingsService } from '../../../settings/settings.service';
+import { DatePipe } from '@angular/common';
+import * as moment from 'moment';
+import { animate, state, style, transition, trigger } from '@angular/animations';
+import { MatDialog } from '@angular/material/dialog';
+import { UpdateSavingAccountComponent } from '../form-dialog/update-saving-account/update-saving-account.component';
+import { AlertService } from '../../../core/alert/alert.service';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { TerminalsService } from 'app/terminals/terminals.service';
 
 /**
  * Transactions Tab Component.
  */
 @Component({
-  selector: "mifosx-transactions-tab",
-  templateUrl: "./transactions-tab.component.html",
-  styleUrls: ["./transactions-tab.component.scss"],
+  selector: 'mifosx-transactions-tab',
+  templateUrl: './transactions-tab.component.html',
+  styleUrls: ['./transactions-tab.component.scss'],
   animations: [
-    trigger("detailExpand", [
-      state("collapsed", style({ height: "0px", minHeight: "0" })),
-      state("expanded", style({ height: "*" })),
-      transition("expanded <=> collapsed", animate("225ms cubic-bezier(0.4, 0.0, 0.2, 1)")),
+    trigger('detailExpand', [
+      state('collapsed', style({ height: '0px', minHeight: '0' })),
+      state('expanded', style({ height: '*' })),
+      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
     ]),
   ],
 })
@@ -36,45 +36,45 @@ export class TransactionsTabComponent implements OnInit {
   transactionsData: any;
   /** Columns to be displayed in transactions table. */
   displayedColumns: string[] = [
-    "id",
-    "transactionDate",
-    "transactionType",
-    "debit",
-    "credit",
-    "type",
-    "note",
-    "actions",
+    'id',
+    'transactionDate',
+    'transactionType',
+    'debit',
+    'credit',
+    'type',
+    'note',
+    'actions',
   ];
   /** Data source for transactions table. */
   dataSource: any;
   transactionDateFrom = new FormControl(new Date());
   /** Đến ngày form control. */
   transactionDateTo = new FormControl(new Date());
-  form: FormGroup;
-  isLoading: boolean = false;
+  form!: FormGroup;
+  isLoading = false;
   transactions: any[] = [];
-  partners: any[]=[];
+  partners: any[] = [];
   savingsAccountData: any;
-  totalTransactions: number = 0;
+  totalTransactions = 0;
   totalDeposit = 0;
   totalWithdraw = 0;
   transactionType: any[] = [
     {
-      id: "",
-      name: "Tất cả",
+      id: '',
+      name: 'Tất cả',
     },
     {
-      id: "D",
-      name: "Saving_Account_Component.tabTransactions.lblDeposit",
+      id: 'D',
+      name: 'Saving_Account_Component.tabTransactions.lblDeposit',
     },
     {
-      id: "W",
-      name: "Saving_Account_Component.tabTransactions.lblWithdraw",
+      id: 'W',
+      name: 'Saving_Account_Component.tabTransactions.lblWithdraw',
     },
   ];
 
-  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
-  @ViewChild(MatSort, { static: true }) sort: MatSort;
+  @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
+  @ViewChild(MatSort, { static: true }) sort!: MatSort;
   /**
    * Retrieves savings account data from `resolve`.
    * @param {ActivatedRoute} route Activated Route.
@@ -89,7 +89,7 @@ export class TransactionsTabComponent implements OnInit {
     public dialog: MatDialog,
     private alterServices: AlertService,
   ) {
-    this.route.parent.parent.data.subscribe((data: { savingsAccountData: any }) => {
+    this.route.parent?.parent?.data.subscribe((data: { savingsAccountData: any }| Data) => {
       this.savingsAccountData = data.savingsAccountData;
       // .transactions?.filter((transaction: any) => !transaction.reversed);
       this.status = data.savingsAccountData.status.value;
@@ -97,16 +97,16 @@ export class TransactionsTabComponent implements OnInit {
   }
 
   changeTabTransaction($event: any) {
-    let isRevert: number = 0;
-    if ($event.index == 0) {
+    let isRevert = 0;
+    if ($event.index === 0) {
       isRevert = 0;
     } else {
-      if ($event.index == 1) {
+      if ($event.index === 1) {
         isRevert = 1;
       }
     }
     this.paginator.pageIndex = 0;
-    this.form.get("isRevert").setValue(isRevert);
+    this.form.get('isRevert')?.setValue(isRevert);
     this.getData();
   }
 
@@ -122,11 +122,11 @@ export class TransactionsTabComponent implements OnInit {
     }
     this.totalDeposit = 0;
     this.totalWithdraw = 0;
-    const note = this.form.get("note").value;
-    const txnCode = this.form.get("txnCode").value;
-    const paymentDetail = this.form.get("paymentDetail").value;
-    const isRevert = this.form.get("isRevert").value;
-    const routingCode = this.form.get("routingCode").value;
+    const note = this.form.get('note')?.value;
+    const txnCode = this.form.get('txnCode')?.value;
+    const paymentDetail = this.form.get('paymentDetail')?.value;
+    const isRevert = this.form.get('isRevert')?.value;
+    const routingCode = this.form.get('routingCode')?.value;
     const limit = this.paginator.pageSize ? this.paginator.pageSize : 10;
     const offset = this.paginator.pageIndex * limit;
 
@@ -151,10 +151,10 @@ export class TransactionsTabComponent implements OnInit {
         this.transactionsData = result?.result?.listDetailTransaction;
         this.totalTransactions = result?.result?.totalTransactions;
         this.transactionsData.forEach((item: any) => {
-          if (item.txnCode === "D") {
+          if (item.txnCode === 'D') {
             this.totalDeposit += Number(item.amount);
           }
-          if (item.txnCode === "W") {
+          if (item.txnCode === 'W') {
             this.totalWithdraw += Number(item.amount);
           }
         });
@@ -176,11 +176,11 @@ export class TransactionsTabComponent implements OnInit {
     if (toDate) {
       toDate = this.datePipe.transform(toDate, dateFormat);
     }
-    const note = this.form.get("note").value;
-    const txnCode = this.form.get("txnCode").value;
-    const paymentDetail = this.form.get("paymentDetail").value;
-    const routingCode = this.form.get("routingCode").value;
-    const isRevert = this.form.get("isRevert").value;
+    const note = this.form.get('note')?.value;
+    const txnCode = this.form.get('txnCode')?.value;
+    const paymentDetail = this.form.get('paymentDetail')?.value;
+    const routingCode = this.form.get('routingCode')?.value;
+    const isRevert = this.form.get('isRevert')?.value;
 
     this.savingsService.downloadReport(
       this.savingsAccountData.id,
@@ -195,10 +195,10 @@ export class TransactionsTabComponent implements OnInit {
 
   ngOnInit() {
     this.form = this.formBuilder.group({
-      note: [""],
-      txnCode: [""],
-      paymentDetail: [""],
-      routingCode: [""],
+      note: [''],
+      txnCode: [''],
+      paymentDetail: [''],
+      routingCode: [''],
       isRevert: [0],
     });
     // @ts-ignore
@@ -206,19 +206,19 @@ export class TransactionsTabComponent implements OnInit {
     if (value) {
       const { txnCode, paymentDetail, note, fromDate, toDate } = value;
       if (txnCode) {
-        this.form.get("txnCode").setValue(txnCode);
+        this.form.get('txnCode')?.setValue(txnCode);
       }
       if (paymentDetail) {
-        this.form.get("paymentDetail").setValue(paymentDetail);
+        this.form.get('paymentDetail')?.setValue(paymentDetail);
       }
       if (note) {
-        this.form.get("note").setValue(note);
+        this.form.get('note')?.setValue(note);
       }
       if (fromDate) {
-        this.transactionDateFrom.setValue(moment(fromDate, "DD/MM/YYYY").toDate());
+        this.transactionDateFrom.setValue(moment(fromDate, 'DD/MM/YYYY').toDate());
       }
       if (toDate) {
-        this.transactionDateTo.setValue(moment(toDate, "DD/MM/YYYY").toDate());
+        this.transactionDateTo.setValue(moment(toDate, 'DD/MM/YYYY').toDate());
       }
     }
     this.getData();
@@ -242,12 +242,12 @@ export class TransactionsTabComponent implements OnInit {
    */
   checkStatus() {
     if (
-      this.status === "Active" ||
-      this.status === "Closed" ||
-      this.status === "Transfer in progress" ||
-      this.status === "Transfer on hold" ||
-      this.status === "Premature Closed" ||
-      this.status === "Matured"
+      this.status === 'Active' ||
+      this.status === 'Closed' ||
+      this.status === 'Transfer in progress' ||
+      this.status === 'Transfer on hold' ||
+      this.status === 'Premature Closed' ||
+      this.status === 'Matured'
     ) {
       return true;
     }
@@ -271,7 +271,7 @@ export class TransactionsTabComponent implements OnInit {
     const transaction = this.transactionsData.find((v: any) => v.txnId === txnId);
     const dialog = this.dialog.open(UpdateSavingAccountComponent, {
       data: transaction,
-      width: "400px",
+      width: '400px',
     });
     dialog.afterClosed().subscribe((result) => {
       if (result) {
@@ -280,7 +280,7 @@ export class TransactionsTabComponent implements OnInit {
           .updateAccountTransactions(transaction.accountId, txnId, data?.paymentTypeId, data?.note)
           .subscribe((response) => {
             if (response && response?.result?.status) {
-              this.alterServices.alert({ message: "Cập nhập tài khoản thành công", msgClass: "cssSuccess" });
+              this.alterServices.alert({ message: 'Cập nhập tài khoản thành công', msgClass: 'cssSuccess' });
               this.getData();
             }
           });

@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Data, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource, MatTable } from '@angular/material/table';
 import { DatePipe } from '@angular/common';
@@ -33,9 +33,9 @@ export class ChargesTabComponent implements OnInit {
   /** Savings Account Data */
   savingsAccountData: any;
   /** Charges Data */
-  chargesData: any[];
+  chargesData: any[] =[];
   /** Data source for charges table. */
-  dataSource: MatTableDataSource<any>;
+  dataSource!: MatTableDataSource<any>;
   /** Toggles Charges Table */
   showInactiveCharges = false;
   /** Columns to be displayed in charges table. */
@@ -54,7 +54,7 @@ export class ChargesTabComponent implements OnInit {
   ];
 
   /** Charges Table Reference */
-  @ViewChild('chargesTable', { static: true }) chargesTableRef: MatTable<Element>;
+  @ViewChild('chargesTable', { static: true }) chargesTableRef!: MatTable<Element>;
 
   /**
    * Retrieves the Savings account data from `resolve`.
@@ -71,7 +71,7 @@ export class ChargesTabComponent implements OnInit {
               private router: Router,
               public dialog: MatDialog,
               private settingsService: SettingsService) {
-    this.route.parent.data.subscribe((data: { savingsAccountData: any }) => {
+    this.route.parent?.data.subscribe((data: { savingsAccountData: any } | Data) => {
       this.savingsAccountData = data.savingsAccountData;
       this.chargesData = this.savingsAccountData.charges;
     });

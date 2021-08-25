@@ -1,13 +1,13 @@
 /** Savings Account Buttons Configuration */
 export class SavingsButtonsConfiguration {
 
-  optionArray: {
+  optionArray!: {
     name: string,
     taskPermissionName: string,
     action: string
   }[];
 
-  buttonsArray: {
+  buttonsArray!: {
     name: string,
     icon: string,
     taskPermissionName: string,
@@ -51,13 +51,13 @@ export class SavingsButtonsConfiguration {
             name: 'Modify Application',
             icon: 'fa fa-pencil ',
             taskPermissionName: 'UPDATE_SAVINGSACCOUNT',
-            action: "Modify Application"
+            action: 'Modify Application'
           },
           {
             name: 'Approve',
             icon: 'fa fa-check',
             taskPermissionName: 'APPROVE_SAVINGSACCOUNT',
-            action: "Approve"
+            action: 'Approve'
           }
         ];
         break;
@@ -67,13 +67,13 @@ export class SavingsButtonsConfiguration {
             name: 'Undo Approval',
             icon: 'fa fa-undo',
             taskPermissionName: 'APPROVALUNDO_SAVINGSACCOUNT',
-            action: "Undo Approval"
+            action: 'Undo Approval'
           },
           {
             name: 'Activate',
             icon: 'fa fa-check',
             taskPermissionName: 'ACTIVATE_SAVINGSACCOUNT',
-            action: "Activate"
+            action: 'Activate'
           },
           // {
           //   name: 'Add Charge',
@@ -91,7 +91,7 @@ export class SavingsButtonsConfiguration {
   setOptions(status: string, isIcAccount: boolean) {
     switch (status) {
       case 'Active':
-        if (isIcAccount){
+        if (isIcAccount) {
           this.optionArray = [
             // {
             //   name: 'Post Interest',

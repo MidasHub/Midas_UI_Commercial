@@ -22,7 +22,7 @@ export class SavingsAccountTermsStepComponent implements OnChanges {
   /** Maximum date allowed. */
   maxDate = new Date();
   /** Savings Account Terms Form */
-  savingsAccountTermsForm: FormGroup;
+  savingsAccountTermsForm!: FormGroup;
   /** Lockin Period Frequency Type Data */
   lockinPeriodFrequencyTypeData: any;
   /** Interest Compounding Period Type Data */
@@ -115,7 +115,7 @@ export class SavingsAccountTermsStepComponent implements OnChanges {
    */
   buildDependencies() {
 
-    this.savingsAccountTermsForm.get('allowOverdraft').valueChanges.subscribe((allowOverdraft: any) => {
+    this.savingsAccountTermsForm.get('allowOverdraft')?.valueChanges.subscribe((allowOverdraft: any) => {
       if (allowOverdraft) {
         this.savingsAccountTermsForm.addControl('minOverdraftForInterestCalculation', new FormControl(''));
         this.savingsAccountTermsForm.addControl('nominalAnnualInterestRateOverdraft', new FormControl(''));

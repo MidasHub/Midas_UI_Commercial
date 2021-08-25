@@ -34,9 +34,9 @@ export class SingleRowComponent implements OnInit {
   @Input() dataObject: any;
 
   /** Data Table Name */
-  datatableName: string;
+  datatableName!: string;
   /** Savings Id */
-  savingAccountId: string;
+  savingAccountId!: string;
 
   /**
    * Fetches savings account Id from parent route params.
@@ -51,7 +51,7 @@ export class SingleRowComponent implements OnInit {
               private dialog: MatDialog,
               private savingsService: SavingsService,
               private settingsService: SettingsService) {
-    this.savingAccountId = this.route.parent.parent.snapshot.paramMap.get('savingAccountId');
+    this.savingAccountId = this.route.parent?.parent?.snapshot.paramMap.get('savingAccountId') || '';
   }
 
   /**
@@ -155,7 +155,7 @@ export class SingleRowComponent implements OnInit {
    * @param {any} dataTableEntryObject Additional data table details.
    */
   getFormfields(columns: any, dateTransformColumns: string[], dataTableEntryObject: any) {
-    return columns.map((column: any) => {
+    return columns.map((column: any): any => {
       switch (column.columnDisplayType) {
         case 'INTEGER':
         case 'STRING':
