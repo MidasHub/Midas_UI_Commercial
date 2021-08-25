@@ -11,12 +11,12 @@ import { SettingsService } from 'app/settings/settings.service';
 })
 export class BillposSelectorComponent implements OnInit {
   /** Billpos Settings. */
-  billposServers: string[];
+  billposServers: string[] = [];
 
   /** Billpos Setting */
   serverBillposSelector =  new FormControl('');
 
-  
+
 
   constructor(private settingsService: SettingsService) { }
 

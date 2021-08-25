@@ -27,8 +27,8 @@ export class UserAccountInfoComponent implements OnInit, OnDestroy {
   unreadNotifications: any[] = [];
   /** Timer to refetch notifications every 60 seconds */
   timer: any;
-  listSaving: [];
-  totalBalance: number;
+  listSaving: any[] = [];
+  totalBalance = 0;
 
   /**
    * @param {NotificationsService} notificationsService Notifications Service

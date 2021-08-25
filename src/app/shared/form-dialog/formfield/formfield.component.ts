@@ -10,8 +10,8 @@ import { FormfieldBase } from './model/formfield-base';
 })
 export class FormfieldComponent implements OnInit {
 
-  @Input() form: FormGroup;
-  @Input() formfield: FormfieldBase;
+  @Input() form?: FormGroup;
+  @Input() formfield?: FormfieldBase;
 
   constructor() { }
 

@@ -12,7 +12,7 @@ import { KeyboardShortcutsConfiguration } from '../../keyboards-shortcut-config'
 })
 export class KeyboardShortcutsDialogComponent implements OnInit {
 
-  buttonConfig: KeyboardShortcutsConfiguration;
+  buttonConfig?: KeyboardShortcutsConfiguration;
 
   /**
    * @param {MatDialogRef} dialogRef Component reference to dialog.

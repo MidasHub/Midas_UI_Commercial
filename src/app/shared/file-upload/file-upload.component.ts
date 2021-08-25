@@ -14,7 +14,7 @@ export class FileUploadComponent {
   /** Form field flex dimension */
   @Input() flex: any;
   /** Selected file name */
-  fileName: File;
+  fileName?: File;
 
   constructor() { }
 

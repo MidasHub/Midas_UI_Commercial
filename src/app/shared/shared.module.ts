@@ -39,7 +39,7 @@ import {DirectivesModule} from '../directives/directives.module';
 import { UserAccountInfoComponent } from './user-account-info/user-account-info.component';
 import { MainboardComponent } from 'app/home/mainboard/mainboard.component';
 import { RouterModule } from '@angular/router';
-import { EcoFabSpeedDialModule} from "@ecodev/fab-speed-dial";
+import { EcoFabSpeedDialModule} from '@ecodev/fab-speed-dial';
 import { TourMatMenuModule } from 'ngx-tour-md-menu';
 
 const maskConfig: Partial<IConfig> = {
@@ -104,29 +104,29 @@ const customCurrencyMaskConfig = {
     SearchToolComponent,
     ServerSelectorComponent,
     BillposSelectorComponent,
-    MatSelectSearchComponent,
+    // MatSelectSearchComponent,
     UserAccountInfoComponent,
     MainboardComponent,
   ],
   exports: [
-    FileUploadComponent,
-    FooterComponent,
-    LanguageSelectorComponent,
-    ServerSelectorComponent,
-    BillposSelectorComponent,
-    ThemePickerComponent,
-    NotificationsTrayComponent,
-    UserAccountInfoComponent,
-    SearchToolComponent,
-    ErrorDialogComponent,
+    // FileUploadComponent,
+    // FooterComponent,
+    // LanguageSelectorComponent,
+    // ServerSelectorComponent,
+    // BillposSelectorComponent,
+    // ThemePickerComponent,
+    // NotificationsTrayComponent,
+    // UserAccountInfoComponent,
+    // SearchToolComponent,
+    // ErrorDialogComponent,
+    // MatSelectSearchComponent,
+    // MainboardComponent,
     CommonModule,
     IconsModule,
     MaterialModule,
     FormsModule,
     ReactiveFormsModule,
     TranslateModule,
-    MatSelectSearchComponent,
-    MainboardComponent,
     NgxMaskModule,
     NgxCurrencyModule,
     DirectivesModule,

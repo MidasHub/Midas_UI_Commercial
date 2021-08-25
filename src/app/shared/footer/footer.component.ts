@@ -14,7 +14,7 @@ import { environment } from 'environments/environment';
 })
 export class FooterComponent implements OnInit {
 
-  /** MIDAS X version. */
+  /** MIDAS version. */
   version: string = environment.version;
 
   constructor() { }

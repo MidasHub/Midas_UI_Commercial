@@ -41,7 +41,7 @@ export class ThemeStorageService {
    * @returns current theme from local storage
    */
   getTheme(): Theme {
-    return JSON.parse(localStorage.getItem(this.themeStorageKey));
+    return JSON.parse(localStorage.getItem(this.themeStorageKey) || sessionStorage.getItem(this.themeStorageKey) || '');
   }
 
   /**

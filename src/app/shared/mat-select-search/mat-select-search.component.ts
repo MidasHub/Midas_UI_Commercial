@@ -1,14 +1,23 @@
 import {
   AfterViewInit,
-  ChangeDetectionStrategy, ChangeDetectorRef,
-  Component, ElementRef, EventEmitter, forwardRef, Inject, Input, OnDestroy, OnInit, QueryList,
-  ViewChild
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  ElementRef,
+  EventEmitter,
+  forwardRef,
+  Inject,
+  Input,
+  OnDestroy,
+  OnInit,
+  QueryList,
+  ViewChild,
 } from '@angular/core';
-import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
-import {  MatSelect} from '@angular/material/select';
-import {Subject} from 'rxjs';
-import {take, takeUntil} from 'rxjs/operators';
-import {MatOption} from '@angular/material/core';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { MatSelect } from '@angular/material/select';
+import { Subject } from 'rxjs';
+import { take, takeUntil } from 'rxjs/operators';
+import { MatOption } from '@angular/material/core';
 
 /* tslint:disable:member-ordering */
 /**
@@ -88,7 +97,7 @@ import {MatOption} from '@angular/material/core';
  * }
  */
 @Component({
-  // tslint:disable-next-line:component-selector
+
   selector: 'mat-select-search',
   templateUrl: './mat-select-search.component.html',
   styleUrls: ['./mat-select-search.component.scss'],
@@ -96,38 +105,35 @@ import {MatOption} from '@angular/material/core';
     {
       provide: NG_VALUE_ACCESSOR,
       useExisting: forwardRef(() => MatSelectSearchComponent),
-      multi: true
-    }
+      multi: true,
+    },
   ],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MatSelectSearchComponent implements OnInit, OnDestroy, AfterViewInit, ControlValueAccessor {
-
   /** Label of the search placeholder */
-  @Input() placeholderLabel = 'Suche';
+  @Input() placeholderLabel = '';
 
   /** Label to be shown when no entries are found. Set to null if no message should be shown. */
-  @Input() noEntriesFoundLabel = 'Keine Optionen gefunden';
+  @Input() noEntriesFoundLabel = '';
 
   /** Reference to the search input field */
-  @ViewChild('searchSelectInput', {read: ElementRef}) searchSelectInput: ElementRef;
+  @ViewChild('searchSelectInput', { read: ElementRef }) searchSelectInput!: ElementRef;
 
   /** Current search value */
   get value(): string {
     return this._value;
   }
 
-  private _value: string;
+  private _value!: string;
 
-  onChange: Function = (_: any) => {
-  }
-  onTouched: Function = (_: any) => {
-  }
+  onChange: Function = (_: any) => {};
+  onTouched: Function = (_: any) => {};
 
   /** Reference to the MatSelect options */
-  public _options: QueryList<MatOption>;
+  public _options!: QueryList<MatOption>;
 
-  private previousSelectedValues: any[];
+  private previousSelectedValues: any[] = [];
 
   /** Whether the backdrop class has been set */
   private overlayClassSet = false;
@@ -138,12 +144,7 @@ export class MatSelectSearchComponent implements OnInit, OnDestroy, AfterViewIni
   /** Subject that emits when the component has been destroyed. */
   private _onDestroy = new Subject<void>();
 
-
-  constructor(@Inject(MatSelect) public matSelect: MatSelect,
-              private changeDetectorRef: ChangeDetectorRef) {
-
-
-  }
+  constructor(@Inject(MatSelect) public matSelect: MatSelect, private changeDetectorRef: ChangeDetectorRef) {}
 
   ngOnInit() {
     // set custom panel class
@@ -161,17 +162,15 @@ export class MatSelectSearchComponent implements OnInit, OnDestroy, AfterViewIni
     }
 
     // when the select dropdown panel is opened or closed
-    this.matSelect.openedChange
-      .pipe(takeUntil(this._onDestroy))
-      .subscribe((opened) => {
-        if (opened) {
-          // focus the search field when opening
-          this._focus();
-        } else {
-          // clear it when closing
-          this._reset();
-        }
-      });
+    this.matSelect.openedChange.pipe(takeUntil(this._onDestroy)).subscribe((opened) => {
+      if (opened) {
+        // focus the search field when opening
+        this._focus();
+      } else {
+        // clear it when closing
+        this._reset();
+      }
+    });
 
     // set the first item active after the options changed
     this.matSelect.openedChange
@@ -179,25 +178,21 @@ export class MatSelectSearchComponent implements OnInit, OnDestroy, AfterViewIni
       .pipe(takeUntil(this._onDestroy))
       .subscribe(() => {
         this._options = this.matSelect.options;
-        this._options.changes
-          .pipe(takeUntil(this._onDestroy))
-          .subscribe(() => {
-            const keyManager = this.matSelect._keyManager;
-            if (keyManager && this.matSelect.panelOpen) {
-              // avoid "expression has been changed" error
-              setTimeout(() => {
-                keyManager.setFirstItemActive();
-              });
-            }
-          });
+        this._options.changes.pipe(takeUntil(this._onDestroy)).subscribe(() => {
+          const keyManager = this.matSelect._keyManager;
+          if (keyManager && this.matSelect.panelOpen) {
+            // avoid "expression has been changed" error
+            setTimeout(() => {
+              keyManager.setFirstItemActive();
+            });
+          }
+        });
       });
 
     // detect changes when the input changes
-    this.change
-      .pipe(takeUntil(this._onDestroy))
-      .subscribe(() => {
-        this.changeDetectorRef.detectChanges();
-      });
+    this.change.pipe(takeUntil(this._onDestroy)).subscribe(() => {
+      this.changeDetectorRef.detectChanges();
+    });
 
     this.initMultipleHandling();
   }
@@ -222,9 +217,7 @@ export class MatSelectSearchComponent implements OnInit, OnDestroy, AfterViewIni
       // do not propagate spaces to MatSelect, as this would select the currently active option
       event.stopPropagation();
     }
-
   }
-
 
   writeValue(value: string) {
     const valueChanged = value !== this._value;
@@ -301,17 +294,15 @@ export class MatSelectSearchComponent implements OnInit, OnDestroy, AfterViewIni
     }
     const overlayClass = 'cdk-overlay-pane-select-search';
 
-    this.matSelect.overlayDir.attach
-      .pipe(takeUntil(this._onDestroy))
-      .subscribe(() => {
-        // note: this is hacky, but currently there is no better way to do this
-        this.searchSelectInput.nativeElement.parentElement.parentElement
-          .parentElement.parentElement.parentElement.classList.add(overlayClass);
-      });
+    this.matSelect.overlayDir.attach.pipe(takeUntil(this._onDestroy)).subscribe(() => {
+      // note: this is hacky, but currently there is no better way to do this
+      this.searchSelectInput.nativeElement.parentElement.parentElement.parentElement.parentElement.parentElement.classList.add(
+        overlayClass
+      );
+    });
 
     this.overlayClassSet = true;
   }
-
 
   /**
    * Initializes handling <mat-select [multiple]="true">
@@ -321,34 +312,35 @@ export class MatSelectSearchComponent implements OnInit, OnDestroy, AfterViewIni
     // if <mat-select [multiple]="true">
     // store previously selected values and restore them when they are deselected
     // because the option is not available while we are currently filtering
-    this.matSelect.valueChange
-      .pipe(takeUntil(this._onDestroy))
-      .subscribe((values) => {
-        if (this.matSelect.multiple) {
-          let restoreSelectedValues = false;
-          if (this._value && this._value.length
-            && this.previousSelectedValues && Array.isArray(this.previousSelectedValues)) {
-            if (!values || !Array.isArray(values)) {
-              values = [];
+    this.matSelect.valueChange.pipe(takeUntil(this._onDestroy)).subscribe((values) => {
+      if (this.matSelect.multiple) {
+        let restoreSelectedValues = false;
+        if (
+          this._value &&
+          this._value.length &&
+          this.previousSelectedValues &&
+          Array.isArray(this.previousSelectedValues)
+        ) {
+          if (!values || !Array.isArray(values)) {
+            values = [];
+          }
+          const optionValues = this.matSelect.options.map((option) => option.value);
+          this.previousSelectedValues.forEach((previousValue) => {
+            if (values.indexOf(previousValue) === -1 && optionValues.indexOf(previousValue) === -1) {
+              // if a value that was selected before is deselected and not found in the options, it was deselected
+              // due to the filtering, so we restore it.
+              values.push(previousValue);
+              restoreSelectedValues = true;
             }
-            const optionValues = this.matSelect.options.map(option => option.value);
-            this.previousSelectedValues.forEach(previousValue => {
-              if (values.indexOf(previousValue) === -1 && optionValues.indexOf(previousValue) === -1) {
-                // if a value that was selected before is deselected and not found in the options, it was deselected
-                // due to the filtering, so we restore it.
-                values.push(previousValue);
-                restoreSelectedValues = true;
-              }
-            });
-          }
-
-          if (restoreSelectedValues) {
-            this.matSelect._onChange(values);
-          }
-
-          this.previousSelectedValues = values;
+          });
         }
-      });
-  }
 
+        if (restoreSelectedValues) {
+          this.matSelect._onChange(values);
+        }
+
+        this.previousSelectedValues = values;
+      }
+    });
+  }
 }

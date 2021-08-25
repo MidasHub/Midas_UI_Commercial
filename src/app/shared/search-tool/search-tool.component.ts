@@ -6,7 +6,7 @@ import { FormControl } from '@angular/forms';
 
 
 /** Custome service */
-import {I18nService} from '../../core/i18n/i18n.service'
+import {I18nService} from '../../core/i18n/i18n.service';
 
 /**
  * Search Tool Component
@@ -68,7 +68,7 @@ export class SearchToolComponent {
    * @param {Router} router Router
    */
   constructor(private router: Router,
-              private i18nService:I18nService) {
+              private i18nService: I18nService) {
     this.resource.patchValue('clients,clientIdentifiers,groups,savings,shares,loans');
   }
 

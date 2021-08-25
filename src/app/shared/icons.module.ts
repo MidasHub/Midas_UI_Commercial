@@ -109,12 +109,12 @@ import {
  * Angular Font Awesome module is exported here.
  */
 @NgModule({
-  exports: [FontAwesomeModule,]
+  exports: [FontAwesomeModule, ]
 })
 export class IconsModule {
 
   constructor(library: FaIconLibrary) {
-    library.addIconPacks(fas)
+    library.addIconPacks(fas);
     // library.addIcons(
     //   faAnchor,
     //   faArchive,

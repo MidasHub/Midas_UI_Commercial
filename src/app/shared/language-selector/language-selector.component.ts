@@ -18,30 +18,12 @@ import { I18nService } from '../../core/i18n/i18n.service';
 })
 export class LanguageSelectorComponent implements OnInit {
 
-  /** Language selector form control. */
-  languageSelector = new FormControl();
-
   /**
    * Sets the language of the application in the selector on initial setup.
    * @param {I18nService} i18nService Internationalization Service.
    */
   constructor(private i18nService: I18nService) {
-    this.languageSelector.setValue(this.currentLanguage);//
-  }
-
-
-
-  ngOnInit() {
-  }
-
-  selectedlang:string;
-  /**
-   * Sets a new language to be used by the application.
-   * @param {string} language New language.
-   */
-  setLanguage(language: string) {
-    console.log('[Language from selector]:',language)
-    this.i18nService.language = language;
+    this.languageSelector.setValue(this.currentLanguage);
   }
 
   /**
@@ -58,6 +40,24 @@ export class LanguageSelectorComponent implements OnInit {
    */
   get languages(): string[] {
     return this.i18nService.supportedLanguages;
+  }
+
+  /** Language selector form control. */
+  languageSelector = new FormControl();
+
+  selectedlang?: string;
+
+
+
+  ngOnInit() {
+  }
+  /**
+   * Sets a new language to be used by the application.
+   * @param {string} language New language.
+   */
+  setLanguage(language: string) {
+    console.log('[Language from selector]:', language );
+    this.i18nService.language = language;
   }
 
   // changeLocale(locale: string) {

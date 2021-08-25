@@ -16,7 +16,7 @@ import { SettingsService } from 'app/settings/settings.service';
 export class ServerSelectorComponent implements OnInit {
 
   /** Server Settings. */
-  servers: string[];
+  servers: string[] = [];
 
   /** Server Setting */
   serverSelector =  new FormControl('');

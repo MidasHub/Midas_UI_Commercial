@@ -17,9 +17,9 @@ import { CommonModule } from '@angular/common';
     MatSelectSearchComponent
   ],
   exports: [
-    MatButtonModule,
-    MatInputModule,
-    MatSelectSearchComponent
+    // MatButtonModule,
+    // MatInputModule,
+    // MatSelectSearchComponent
   ]
 })
 export class MatSelectSearchModule { }

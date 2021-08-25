@@ -1,26 +1,26 @@
-import { Component, OnInit, Inject } from "@angular/core";
-import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
-import { FormGroup } from "@angular/forms";
+import { Component, OnInit, Inject } from '@angular/core';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { FormGroup } from '@angular/forms';
 
-import { FormfieldBase } from "./formfield/model/formfield-base";
+import { FormfieldBase } from './formfield/model/formfield-base';
 
-import { FormGroupService } from "./form-group.service";
+import { FormGroupService } from './form-group.service';
 
-import { I18nService } from "app/core/i18n/i18n.service";
-import { ClientsService } from "app/clients/clients.service";
+import { I18nService } from 'app/core/i18n/i18n.service';
+import { ClientsService } from 'app/clients/clients.service';
 
 const layoutGap = 2;
 
 @Component({
-  selector: "mifosx-form-dialog",
-  templateUrl: "./form-dialog.component.html",
-  styleUrls: ["./form-dialog.component.scss"],
+  selector: 'mifosx-form-dialog',
+  templateUrl: './form-dialog.component.html',
+  styleUrls: ['./form-dialog.component.scss'],
 })
 export class FormDialogComponent implements OnInit {
   layout: {
     columns: number;
     columnWidth?: number;
-    flex?: number;
+    flex: number;
     gap?: number;
     cancelButtonText?: string;
     addButtonText?: string;
@@ -28,11 +28,11 @@ export class FormDialogComponent implements OnInit {
     columns: 1,
     columnWidth: 400,
     flex: 100,
-    cancelButtonText: this.i18n.getTranslate("Shared_Component.FormDialog.btnCancel"), //'Cancel',
-    addButtonText: this.i18n.getTranslate("Shared_Component.FormDialog.btnAdd"), // 'Add'
+    cancelButtonText: this.i18n.getTranslate('Shared_Component.FormDialog.btnCancel'), // 'Cancel',
+    addButtonText: this.i18n.getTranslate('Shared_Component.FormDialog.btnAdd'), // 'Add'
   };
 
-  form: FormGroup;
+  form!: FormGroup;
   formfields: FormfieldBase[];
   pristine: boolean;
   cardTypes: any[];
@@ -56,23 +56,23 @@ export class FormDialogComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.dialogRef.updateSize(`${this.layout.columnWidth * this.layout.columns}px`);
+    this.dialogRef.updateSize(`${(this.layout.columnWidth ? this.layout.columnWidth : 0) * this.layout.columns}px`);
     this.form = this.formGroupService.createFormGroup(this.formfields);
-    this.form?.controls["binCode"]?.valueChanges.subscribe((value) => {
+    this.form?.controls['binCode']?.valueChanges.subscribe((value) => {
       for (const typeCard of this.cardTypes) {
         if (String(value).startsWith(String(typeCard.codeDigit))) {
-          this.form.controls["cardType"].setValue(typeCard.code);
+          this.form.controls['cardType'].setValue(typeCard.code);
         }
       }
     });
-    this.form?.controls["amountSubmit"]?.valueChanges.subscribe((value) => {
-      this.form.get("amountSubmit").patchValue(this.formatCurrency(value), { emitEvent: false });
+    this.form?.controls['amountSubmit']?.valueChanges.subscribe((value) => {
+      this.form.get('amountSubmit')?.patchValue(this.formatCurrency(value), { emitEvent: false });
     });
     if (!this.pristine) {
       this.form.markAsDirty();
     }
 
-    this.form?.controls["stateProvinceId"]?.valueChanges.subscribe((value) => {
+    this.form?.controls['stateProvinceId']?.valueChanges.subscribe((value) => {
       this.clientService.getClientDistrict(value).subscribe((res: any) => {
         this.formfields.map((item: any) => {
           if (item.controlName === 'countyDistrict') {
@@ -83,7 +83,7 @@ export class FormDialogComponent implements OnInit {
       });
     });
 
-    this.form?.controls["countyDistrict"]?.valueChanges.subscribe((value) => {
+    this.form?.controls['countyDistrict']?.valueChanges.subscribe((value) => {
       this.clientService.getClientTownVillage(value).subscribe((res: any) => {
         this.formfields.map((item: any) => {
           if (item.controlName === 'townVillage') {
@@ -97,13 +97,13 @@ export class FormDialogComponent implements OnInit {
   }
   formatCurrency(value: string) {
     value = String(value);
-    const neg = value.startsWith("-");
-    value = value.replace(/[-\D]/g, "");
-    value = value.replace(/(\d{3})$/, ",$1");
-    value = value.replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
-    value = value !== "" ? "" + value : "";
+    const neg = value.startsWith('-');
+    value = value.replace(/[-\D]/g, '');
+    value = value.replace(/(\d{3})$/, ',$1');
+    value = value.replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
+    value = value !== '' ? '' + value : '';
     if (neg) {
-      value = "-".concat(value);
+      value = '-'.concat(value);
     }
 
     return value;
