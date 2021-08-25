@@ -154,7 +154,7 @@ export class SingleRowComponent implements OnInit {
    * @param {any} dataTableEntryObject Additional data table details.
    */
   getFormfields(columns: any, dateTransformColumns: string[], dataTableEntryObject: any) {
-    return columns.map((column: any) => {
+    return columns.map((column: any): any => {
       switch (column.columnDisplayType) {
         case 'INTEGER':
         case 'STRING':

@@ -1,7 +1,7 @@
 /** Angular Imports */
 import { Component, OnInit, Input } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Data } from '@angular/router';
 
 /** Custom Services */
 import { CentersService } from '../../../centers.service';
@@ -26,7 +26,7 @@ export class StaffAssignmentHistoryComponent implements OnInit {
    */
   constructor(private sanitizer: DomSanitizer,
     private route: ActivatedRoute) {
-    this.route.data.subscribe((data: { centersActionData: any }) => {
+    this.route.data.subscribe((data: { centersActionData: any }| Data) => {
       this.staffAssignmentHistoryData = data.centersActionData;
     });
   }

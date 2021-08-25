@@ -93,7 +93,7 @@ export class MultiRowComponent implements OnInit, OnChanges {
     const columns = this.dataObject.columnHeaders.filter((column: any) => {
       return ((column.columnName !== 'id') && (column.columnName !== 'center_id'));
     });
-    const formfields: FormfieldBase[] = columns.map((column: any) => {
+    const formfields: FormfieldBase[] = columns.map((column: any): any => {
       switch (column.columnDisplayType) {
         case 'INTEGER':
         case 'STRING':
