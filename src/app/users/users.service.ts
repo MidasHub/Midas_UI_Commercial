@@ -53,7 +53,7 @@ export class UsersService {
    * @param {string} userId user ID of user.
    * @returns {Observable<any>} User.
    */
-  getUser(userId: string): Observable<any> {
+  getUser(userId?: string|null): Observable<any> {
     return this.http.get(`/users/${userId}`);
   }
 

@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Data, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 
 /** Custom Services */
@@ -34,7 +34,7 @@ export class ViewUserComponent implements OnInit {
               private route: ActivatedRoute,
               private router: Router,
               private dialog: MatDialog) {
-    this.route.data.subscribe((data: { user?: any }) => {
+    this.route.data.subscribe((data: { user: any }|Data) => {
       this.userData = data.user;
     });
   }

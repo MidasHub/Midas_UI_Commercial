@@ -99,7 +99,7 @@ export class CreateUserComponent implements OnInit {
         this.userForm.addControl('repeatPassword', new FormControl('', Validators.required));
         this.userForm.get('email')?.setValidators([Validators.email]);
       }
-      this.userForm.get('email')!.updateValueAndValidity();
+      this.userForm.get('email')?.updateValueAndValidity();
     });
   }
 
