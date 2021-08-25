@@ -1,48 +1,48 @@
 /** Angular Imports */
-import { Component, Input, OnInit, ViewChild } from "@angular/core";
-import { Router, ActivatedRoute } from "@angular/router";
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { Router, ActivatedRoute, Data } from '@angular/router';
 
 /** Custom Services */
-import { ClientsService } from "../clients.service";
+import { ClientsService } from '../clients.service';
 
 /** Custom Components */
-import { ClientGeneralStepComponent } from "../client-stepper/client-general-step/client-general-step.component";
-import { ClientFamilyMembersStepComponent } from "../client-stepper/client-family-members-step/client-family-members-step.component";
-import { ClientAddressStepComponent } from "../client-stepper/client-address-step/client-address-step.component";
+import { ClientGeneralStepComponent } from '../client-stepper/client-general-step/client-general-step.component';
+import { ClientFamilyMembersStepComponent } from '../client-stepper/client-family-members-step/client-family-members-step.component';
+import { ClientAddressStepComponent } from '../client-stepper/client-address-step/client-address-step.component';
 
 /** Custom Services */
-import { SettingsService } from "app/settings/settings.service";
-import { AlertService } from "app/core/alert/alert.service";
-import { I18nService } from "app/core/i18n/i18n.service";
-import * as _ from "lodash";
-import { faBackspace } from "@fortawesome/free-solid-svg-icons";
+import { SettingsService } from 'app/settings/settings.service';
+import { AlertService } from 'app/core/alert/alert.service';
+import { I18nService } from 'app/core/i18n/i18n.service';
+import * as _ from 'lodash';
+import { faBackspace } from '@fortawesome/free-solid-svg-icons';
 
-import { GroupsService } from "app/groups/groups.service";
-import { FormBuilder, Validators } from "@angular/forms";
-import { DatePipe } from "@angular/common";
-import { SavingsService } from "app/savings/savings.service";
+import { GroupsService } from 'app/groups/groups.service';
+import { FormBuilder, Validators } from '@angular/forms';
+import { DatePipe } from '@angular/common';
+import { SavingsService } from 'app/savings/savings.service';
 
 /**
  * Create Client Component.
  */
 @Component({
-  selector: "mifosx-create-client",
-  templateUrl: "./create-client.component.html",
-  styleUrls: ["./create-client.component.scss"],
+  selector: 'mifosx-create-client',
+  templateUrl: './create-client.component.html',
+  styleUrls: ['./create-client.component.scss'],
 })
 export class CreateClientComponent implements OnInit {
   /** Client General Step */
-  @ViewChild(ClientGeneralStepComponent, { static: true }) clientGeneralStep: ClientGeneralStepComponent;
+  @ViewChild(ClientGeneralStepComponent, { static: true }) clientGeneralStep!: ClientGeneralStepComponent;
   /** Client Family Members Step */
   @ViewChild(ClientFamilyMembersStepComponent, { static: true })
-  clientFamilyMembersStep: ClientFamilyMembersStepComponent;
+  clientFamilyMembersStep!: ClientFamilyMembersStepComponent;
   /** Client Address Step */
-  @ViewChild(ClientAddressStepComponent, { static: true }) clientAddressStep: ClientAddressStepComponent;
+  @ViewChild(ClientAddressStepComponent, { static: true }) clientAddressStep!: ClientAddressStepComponent;
 
   /** Historical page from URL */
   go_back: any;
-  mgmId: string;
-  mgmRelationId: string;
+  mgmId!: string;
+  mgmRelationId!: string;
   clientMGM: any;
   /** Client Template */
   clientTemplate: any;
@@ -51,7 +51,7 @@ export class CreateClientComponent implements OnInit {
   clientIdentifierTemplate: any;
   familyMemberForm: any;
 
-  groupId: string;
+  groupId!: string;
   /**
    * Fetches client and address template from `resolve`
    * @param {ActivatedRoute} route Activated Route
@@ -78,7 +78,7 @@ export class CreateClientComponent implements OnInit {
         clientAddressFieldConfig: any;
         clientIdentifierTemplate: any;
         currentUser: any;
-      }) => {
+      }|Data) => {
         this.clientTemplate = data.clientTemplate;
         this.clientAddressFieldConfig = data.clientAddressFieldConfig;
         this.clientIdentifierTemplate = data.clientIdentifierTemplate;
@@ -93,10 +93,10 @@ export class CreateClientComponent implements OnInit {
     });
 
     this.route.queryParams.subscribe((params) => {
-      console.log("Called Constructor = ======", params["group"]);
-      this.groupId = params["group"];
-      this.mgmId = params["mgmId"];
-      this.mgmRelationId = params["mgmRelationId"];
+      console.log('Called Constructor = ======', params['group']);
+      this.groupId = params['group'];
+      this.mgmId = params['mgmId'];
+      this.mgmRelationId = params['mgmRelationId'];
 
       if (this.mgmId) {
         this.clientsService.getClientCross(this.mgmId).subscribe((response: any) => {
@@ -107,16 +107,16 @@ export class CreateClientComponent implements OnInit {
                 this.clientMGM = client;
               } else {
                 this.alertService.alert({
-                  message: " [MGM] Tài khoản khách hàng không khả dụng, Vui lòng liên hệ IT support để được hộ trợ.",
-                  msgClass: "cssError",
+                  message: ' [MGM] Tài khoản khách hàng không khả dụng, Vui lòng liên hệ IT support để được hộ trợ.',
+                  msgClass: 'cssError',
                 });
                 return;
               }
             });
           } else {
             this.alertService.alert({
-              message: " [MGM] Thông tin khách hàng không hợp lệ, Vui lòng liên hệ IT support để được hộ trợ.",
-              msgClass: "cssError",
+              message: ' [MGM] Thông tin khách hàng không hợp lệ, Vui lòng liên hệ IT support để được hộ trợ.',
+              msgClass: 'cssError',
             });
             return;
           }
@@ -155,7 +155,7 @@ export class CreateClientComponent implements OnInit {
   }
 
   get checkFormInvalid() {
-    return this.clientGeneralStep.createClientForm.valid && this.clientGeneralStep.files?.files?.length === 2;
+    return this.clientGeneralStep.createClientForm?.valid && this.clientGeneralStep.files?.files?.length === 2;
   }
 
   resizeImage(file: File, maxWidth: number, maxHeight: number): Promise<File> {
@@ -181,13 +181,13 @@ export class CreateClientComponent implements OnInit {
           newHeight = maxHeight;
         }
 
-        const canvas = document.createElement("canvas");
+        const canvas = document.createElement('canvas');
         canvas.width = newWidth;
         canvas.height = newHeight;
 
-        const context = canvas.getContext("2d");
+        const context = canvas.getContext('2d');
 
-        context.drawImage(image, 0, 0, newWidth, newHeight);
+        context?.drawImage(image, 0, 0, newWidth, newHeight);
 
         canvas.toBlob((b) => {
           return resolve(<File>b);
@@ -197,19 +197,19 @@ export class CreateClientComponent implements OnInit {
     });
   }
 
-  createFamilyMember(data: any) {
+  createFamilyMember(data: any): any {
     this.familyMemberForm = this.formBuilder.group({
       firstName: [data.firstName, Validators.required],
       lastName: [data.lastName, Validators.required],
-      qualification: [data.qualification ? data.qualification : ""],
-      age: [""],
-      isDependent: [""],
+      qualification: [data.qualification ? data.qualification : ''],
+      age: [''],
+      isDependent: [''],
       relationshipId: [data.mgmRelationId ? data.mgmRelationId : data.maritalStatus, Validators.required],
-      genderId: [""],
-      professionId: [""],
-      maritalStatusId: [""],
-      dateOfBirth: [""],
-      mobileNumber: [""],
+      genderId: [''],
+      professionId: [''],
+      maritalStatusId: [''],
+      dateOfBirth: [''],
+      mobileNumber: [''],
     });
     const locale = this.settingsService.language.code;
     const dateFormat = this.settingsService.dateFormat;
@@ -221,7 +221,7 @@ export class CreateClientComponent implements OnInit {
       locale,
     };
     for (const key in familyMember) {
-      if (familyMember[key] === "" || familyMember[key] === undefined) {
+      if (familyMember[key] === '' || familyMember[key] === undefined) {
         delete familyMember[key];
       }
     }
@@ -239,8 +239,8 @@ export class CreateClientComponent implements OnInit {
     const dateFormat = this.settingsService.dateFormat;
     // TODO: Update once language and date settings are setup
     let data = this.client;
-    let clientFamilyMembers: any[] = [];
-    if (data.maritalStatus != 0) {
+    const clientFamilyMembers: any[] = [];
+    if (data.maritalStatus !== 0) {
       const dataRelation = {
         firstName: data.firstname,
         lastName: data.lastname,
@@ -290,19 +290,19 @@ export class CreateClientComponent implements OnInit {
             documentTypeId: this.client.documentTypeId,
             documentKey: this.client.externalId,
             description: this.client.documentTypeId,
-            status: "Active",
+            status: 'Active',
           };
           // let done = 0;
           this.clientsService.addClientIdentifier(response.clientId, identities_value).subscribe(async (res: any) => {
             const { resourceId } = res;
             for (const file of this.client.files) {
               if (file) {
-                console.log("file ", file);
+                console.log('file ', file);
                 const item = await this.resizeImage(file, 500, 600);
                 const formData: FormData = new FormData();
-                formData.append("name", file.name);
-                formData.append("file", item);
-                formData.append("fileName", file.name);
+                formData.append('name', file.name);
+                formData.append('file', item);
+                formData.append('fileName', file.name);
                 this.clientsService.uploadClientIdentifierDocument(resourceId, formData).subscribe((ssss: any) => {
                   // done += 1;
                 });
@@ -313,11 +313,11 @@ export class CreateClientComponent implements OnInit {
 
         if (this.groupId) {
           this.groupsService
-            .executeGroupCommand(this.groupId, "associateClients", { clientMembers: [response.clientId] })
+            .executeGroupCommand(this.groupId, 'associateClients', { clientMembers: [response.clientId] })
             .subscribe(() => {
               this.alertService.alert({
-                message: "Added Client to group",
-                msgClass: "cssSuccess",
+                message: 'Added Client to group',
+                msgClass: 'cssSuccess',
               });
             });
         }
@@ -328,14 +328,14 @@ export class CreateClientComponent implements OnInit {
             .subscribe((mgmResponse) => {
               if (mgmResponse?.result?.status) {
                 this.alertService.alert({
-                  type: "🎉🎉🎉 Thành công !!!",
-                  message: "🎉🎉 Áp dụng chương trình MGM thành công!",
-                  msgClass: "cssSuccess",
+                  type: '🎉🎉🎉 Thành công !!!',
+                  message: '🎉🎉 Áp dụng chương trình MGM thành công!',
+                  msgClass: 'cssSuccess',
                 });
               } else {
                 this.alertService.alert({
-                  type: "🚨🚨🚨🚨 Lỗi ",
-                  msgClass: "cssDanger",
+                  type: '🚨🚨🚨🚨 Lỗi ',
+                  msgClass: 'cssDanger',
                   message: mgmResponse?.error,
                 });
               }
@@ -344,10 +344,10 @@ export class CreateClientComponent implements OnInit {
 
         this.alertService.alert({
           message:
-            this.i18n.getTranslate("Client_Component.ClientStepper.lblCustomerCreated") + response.resourceId + "!",
-          msgClass: "cssSuccess",
+            this.i18n.getTranslate('Client_Component.ClientStepper.lblCustomerCreated') + response.resourceId + '!',
+          msgClass: 'cssSuccess',
         });
-        this.router.navigate(["../", response.resourceId, 'identities'], { relativeTo: this.route });
+        this.router.navigate(['../', response.resourceId, 'identities'], { relativeTo: this.route });
 
       }
     });
@@ -355,11 +355,11 @@ export class CreateClientComponent implements OnInit {
 
   /** do Cancel */
   doCancel() {
-    this.alertService.alert({ message: "Bạn vừa hủy tạo khách hàng.", msgClass: "cssInfo" });
-    if (this.go_back === "home") {
-      this.router.navigate(["/home"]);
+    this.alertService.alert({ message: 'Bạn vừa hủy tạo khách hàng.', msgClass: 'cssInfo' });
+    if (this.go_back === 'home') {
+      this.router.navigate(['/home']);
     } else {
-      this.router.navigate([".."], { relativeTo: this.route });
+      this.router.navigate(['..'], { relativeTo: this.route });
     }
   }
 }

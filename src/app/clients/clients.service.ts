@@ -49,18 +49,26 @@ export class ClientsService {
     return this.http.get(url, { responseType: 'blob' });
   }
 
-  getClientCross(clientId: string): Observable<any> {
+  getClientCross(clientId?: string | null): Observable<any> {
+    if (clientId) {
     let httpParams = this.commonHttpParams.getCommonHttpParams();
     httpParams = httpParams.set('id', clientId);
 
     return this.http.post<any>(`${this.GatewayApiUrlPrefix}/client/get_client_midas_by_id`, httpParams);
+    } else {
+      return of();
+    }
   }
 
-  getIdentifierClientCross(clientId: string): Observable<any> {
+  getIdentifierClientCross(clientId?: string|null): Observable<any> {
+    if (clientId) {
     let httpParams = this.commonHttpParams.getCommonHttpParams();
     httpParams = httpParams.set('clientId', clientId);
 
     return this.http.post<any>(`${this.GatewayApiUrlPrefix}/client/get_identifier_midas_by_client`, httpParams);
+    } else {
+      return of();
+    }
   }
 
   getFilteredClients(
@@ -204,7 +212,7 @@ export class ClientsService {
     return this.http.delete(`/clients/${clientId}`);
   }
 
-  getClientDataAndTemplate(clientId: string) {
+  getClientDataAndTemplate(clientId?: string|null) {
     const httpParams = new HttpParams().set('template', 'true').set('staffInSelectedOfficeOnly', 'true');
     return this.http.get(`/clients/${clientId}`, { params: httpParams });
   }
@@ -214,7 +222,7 @@ export class ClientsService {
     return this.http.get(`/datatables`, { params: httpParams });
   }
 
-  getClientDatatable(clientId?: string |null, datatableName?: string): Observable<any>  {
+  getClientDatatable(clientId?: string |null, datatableName?: string|null): Observable<any>  {
     const httpParams = new HttpParams().set('genericResultSet', 'true');
     if ((clientId) && (datatableName)) {
     return this.http.get(`/datatables/${datatableName}/${clientId}`, { params: httpParams });
@@ -261,11 +269,15 @@ export class ClientsService {
     return this.http.post<any>(`${this.GatewayApiUrlPrefix}/client/get_client_by_id`, httpParams);
   }
 
-  getClientAccountDataCross(clientId: string): Observable<any> {
+  getClientAccountDataCross(clientId?: string|null): Observable<any> {
+    if (clientId) {
     let httpParams = this.commonHttpParams.getCommonHttpParams();
     httpParams = httpParams.set('id', clientId);
 
     return this.http.post<any>(`${this.GatewayApiUrlPrefix}/client/get_client_account_by_id`, httpParams);
+    } else {
+      return of();
+    }
   }
 
   getClientOfStaff(): Observable<any> {
@@ -274,12 +286,12 @@ export class ClientsService {
     return this.http.post<any>(`${this.GatewayApiUrlPrefix}/client/get_client_of_staff`, httpParams);
   }
 
-  getClientChargesData(clientId: string) {
+  getClientChargesData(clientId?: string|null) {
     const httpParams = new HttpParams().set('pendingPayment', 'true');
     return this.http.get(`/clients/${clientId}/charges`, { params: httpParams });
   }
 
-  getSelectedChargeData(clientId: string, chargeId: string) {
+  getSelectedChargeData(clientId?: string|null, chargeId?: string|null) {
     const httpParams = new HttpParams().set('associations', 'all');
     return this.http.get(`/clients/${clientId}/charges/${chargeId}`, { params: httpParams });
   }
@@ -320,7 +332,7 @@ export class ClientsService {
    * @param clientId Client Id of payer.
    * @param chargeId Charge Id of the charge to be paid.
    */
-  getClientTransactionPay(clientId: string, chargeId: string) {
+  getClientTransactionPay(clientId?: string|null, chargeId?: string|null) {
     return this.http.get(`/clients/${clientId}/charges/${chargeId}`);
   }
 
@@ -336,9 +348,13 @@ export class ClientsService {
     });
   }
 
-  getClientSummary(clientId: string) {
+  getClientSummary(clientId?: string|null) {
+    if (clientId) {
     const httpParams = new HttpParams().set('R_clientId', clientId).set('genericResultSet', 'false');
     return this.http.get(`/runreports/ClientSummary`, { params: httpParams });
+    } else {
+      return of ();
+    }
   }
 
   getClientProfileImage(clientId: string) {
@@ -383,11 +399,11 @@ export class ClientsService {
     });
   }
 
-  getClientFamilyMembers(clientId: string) {
+  getClientFamilyMembers(clientId?: string|null) {
     return this.http.get(`/clients/${clientId}/familymembers`);
   }
 
-  getClientFamilyMember(clientId: string, familyMemberId: string) {
+  getClientFamilyMember(clientId?: string|null, familyMemberId?: string|null) {
     return this.http.get(`/clients/${clientId}/familymembers/${familyMemberId}`);
   }
 
@@ -437,7 +453,7 @@ export class ClientsService {
     return this.http.post(`/client_identifiers/${identifierId}/documents`, documentData);
   }
 
-  getClientDocuments(clientId: string) {
+  getClientDocuments(clientId?: string|null) {
     return this.http.get(`/clients/${clientId}/documents`);
   }
 
@@ -460,11 +476,11 @@ export class ClientsService {
     return this.http.delete(`/clients/${parentEntityId}/documents/${documentId}`);
   }
 
-  getClientNotes(clientId: string) {
+  getClientNotes(clientId?: string|null) {
     return this.http.get(`/clients/${clientId}/notes`);
   }
 
-  createClientNote(clientId: string, noteData: any) {
+  createClientNote(clientId?: string|null, noteData?: any) {
     return this.http.post(`/clients/${clientId}/notes`, noteData);
   }
 
@@ -480,7 +496,7 @@ export class ClientsService {
     return this.http.get(`/fieldconfiguration/ADDRESS`);
   }
 
-  getClientAddressData(clientId: string) {
+  getClientAddressData(clientId?: string|null) {
     return this.http.get(`/client/${clientId}/addresses`);
   }
 
@@ -544,7 +560,7 @@ export class ClientsService {
    * returns the list of survey data of the particular Client
    * @param clientId
    */
-  getSurveys(clientId: string) {
+  getSurveys(clientId?: string|null) {
     return this.http.get(`/surveys/scorecards/clients/${clientId}`);
   }
 

@@ -19,8 +19,8 @@ export class ClientsDataSource implements DataSource<any> {
   private recordsSubject = new BehaviorSubject<number>(0);
   /** Records observable which can be subscribed to get the value of total number of filtered clients records. */
   public records$ = this.recordsSubject.asObservable();
-  public old_key: string;
-  public old_result: any[];
+  public old_key?: string;
+  public old_result: any[] = [];
 
   /**
    * @param {ClientsService} clientsService Clients Service
@@ -36,8 +36,8 @@ export class ClientsDataSource implements DataSource<any> {
    * @param {number} pageIndex Page number.
    * @param {number} limit Number of clients within the page.
    */
-  getClients(clientType:string='22',orderBy: string = '', sortOrder: string = '',
-            pageIndex: number = 0, limit: number = 10, clientActive: boolean = true, officeFilter: string = null, staffFilter: string = null ) {
+  getClients(clientType: string= '22', orderBy: string = '', sortOrder: string = '',
+            pageIndex: number = 0, limit: number = 10, clientActive: boolean = true, officeFilter: string = '', staffFilter: string = '' ) {
     this.clientsSubject.next([]);
     let sqlSearch = '';
     if (clientActive) {
@@ -88,10 +88,10 @@ export class ClientsDataSource implements DataSource<any> {
    * @param {number} limit Number of clients within the page.
    */
   filterClients(filter: string, orderBy: string = '', sortOrder: string = '', pageIndex: number = 0,
-  limit: number = 10, clientActive: boolean = true,clientType:string='22', officeFilter: string = null, staffFilter: string = null) {
+  limit: number = 10, clientActive: boolean = true, clientType: string= '22', officeFilter: string  = '', staffFilter: string = '') {
     this.clientsSubject.next([]);
     if (!filter) {
-      this.getClients(clientType,'', '', 0, 10, clientActive, officeFilter, staffFilter);
+      this.getClients(clientType, '', '', 0, 10, clientActive, officeFilter, staffFilter);
     } else {
       filter = String(filter).normalize('NFD')
         .replace(/[\u0300-\u036f]/g, '')

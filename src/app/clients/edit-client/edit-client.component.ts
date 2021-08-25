@@ -1,8 +1,8 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Data, Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
-import { DatePipe,Location } from '@angular/common';
+import { DatePipe, Location } from '@angular/common';
 
 /** Custom Services */
 import { ClientsService } from '../clients.service';
@@ -27,7 +27,7 @@ export class EditClientComponent implements OnInit {
   /** Client Data and Template */
   clientDataAndTemplate: any;
   /** Edit Client Form */
-  editClientForm: FormGroup;
+  editClientForm!: FormGroup;
 
   /** Office Options */
   officeOptions: any;
@@ -64,7 +64,7 @@ export class EditClientComponent implements OnInit {
               private datePipe: DatePipe,
               private settingsService: SettingsService,
               private location: Location) {
-    this.route.data.subscribe((data: { clientDataAndTemplate: any }) => {
+    this.route.data.subscribe((data: { clientDataAndTemplate: any }| Data) => {
       this.clientDataAndTemplate = data.clientDataAndTemplate;
     });
   }
@@ -97,8 +97,8 @@ export class EditClientComponent implements OnInit {
   createEditClientForm() {
     this.currentUser = this.authenticationService.getCredentials();
     const { permissions } = this.currentUser;
-    const permit_manager = permissions.includes("ASSIGNSTAFF_CLIENT") || permissions.includes("ALL_FUNCTIONS");
-    const permit_IT = permissions.includes("SYSTEM_CONFIG") ;
+    const permit_manager = permissions.includes('ASSIGNSTAFF_CLIENT') || permissions.includes('ALL_FUNCTIONS');
+    const permit_IT = permissions.includes('SYSTEM_CONFIG') ;
 
     this.editClientForm = this.formBuilder.group({
       'officeId': [{ value: '', disabled: !permit_IT ? true : false }],
@@ -136,25 +136,25 @@ export class EditClientComponent implements OnInit {
    * Adds controls conditionally.
    */
   buildDependencies() {
-    this.editClientForm.get('legalFormId').valueChanges.subscribe((legalFormId: any) => {
+    this.editClientForm.get('legalFormId')?.valueChanges.subscribe((legalFormId: any) => {
       if (legalFormId === 1) {
         this.editClientForm.removeControl('fullname');
         this.editClientForm.removeControl('clientNonPersonDetails');
-        //Jean changed from "Validators.required" to "[Validators.required, Validators.pattern('^([^!@#$%^&*()+=<>,?\/]*)$')]"
+        // J ean changed from "Validators.required" to "[Validators.required, Validators.pattern('^([^!@#$%^&*()+=<>,?\/]*)$')]"
         this.editClientForm.addControl('firstname', new FormControl(this.clientDataAndTemplate.firstname, [Validators.required]));
         this.editClientForm.addControl('middlename', new FormControl(this.clientDataAndTemplate.middlename,  [Validators.required]));
         this.editClientForm.addControl('lastname', new FormControl(this.clientDataAndTemplate.lastname,  [Validators.required]));
 
-        this.editClientForm.get('firstname').valueChanges.subscribe( (value: string) => {
-          this.editClientForm.get('firstname').patchValue( value.toUpperCase(), {emitEvent: false} );
+        this.editClientForm.get('firstname')?.valueChanges.subscribe( (value: string) => {
+          this.editClientForm.get('firstname')?.patchValue( value.toUpperCase(), {emitEvent: false} );
 
-        })
-        this.editClientForm.get('middlename').valueChanges.subscribe( (value: string) => {
-          this.editClientForm.get('middlename').patchValue( value.toUpperCase(), {emitEvent: false} );
-        })
-        this.editClientForm.get('lastname').valueChanges.subscribe( (value: string) => {
-          this.editClientForm.get('lastname').patchValue( value.toUpperCase(), {emitEvent: false} );
-        })
+        });
+        this.editClientForm.get('middlename')?.valueChanges.subscribe( (value: string) => {
+          this.editClientForm.get('middlename')?.patchValue( value.toUpperCase(), {emitEvent: false} );
+        });
+        this.editClientForm.get('lastname')?.valueChanges.subscribe( (value: string) => {
+          this.editClientForm.get('lastname')?.patchValue( value.toUpperCase(), {emitEvent: false} );
+        });
 
       } else {
         this.editClientForm.removeControl('firstname');
@@ -169,10 +169,10 @@ export class EditClientComponent implements OnInit {
           'remarks': [this.clientDataAndTemplate.clientNonPersonDetails.remarks]
         }));
 
-        this.editClientForm.get('fullname').valueChanges.subscribe( (value: string) => {
-          this.editClientForm.get('fullname').patchValue( value.toUpperCase(), {emitEvent: false} );
+        this.editClientForm.get('fullname')?.valueChanges.subscribe( (value: string) => {
+          this.editClientForm.get('fullname')?.patchValue( value.toUpperCase(), {emitEvent: false} );
 
-        })
+        });
       }
     });
   }
@@ -209,8 +209,8 @@ export class EditClientComponent implements OnInit {
     });
   }
 
-  goback(){
-    this.location.back()
+  goback() {
+    this.location.back();
   }
 
 }

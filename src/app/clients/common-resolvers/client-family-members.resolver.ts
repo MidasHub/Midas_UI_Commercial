@@ -24,7 +24,7 @@ export class ClientFamilyMembersResolver implements Resolve<Object> {
      * @returns {Observable<any>}
      */
     resolve(route: ActivatedRouteSnapshot): Observable<any> {
-        const clientId = route.parent.parent.paramMap.get('clientId');
+        const clientId = route.parent?.parent?.paramMap.get('clientId');
         return this.clientsService.getClientFamilyMembers(clientId);
     }
 

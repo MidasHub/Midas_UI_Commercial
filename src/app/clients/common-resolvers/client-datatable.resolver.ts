@@ -24,7 +24,7 @@ export class ClientDatatableResolver implements Resolve<Object> {
      * @returns {Observable<any>}
      */
     resolve(route: ActivatedRouteSnapshot): Observable<any> {
-        const clientId = route.parent.parent.paramMap.get('clientId');
+        const clientId = route.parent?.parent?.paramMap.get('clientId');
         const datatableName = route.paramMap.get('datatableName');
         return this.clientsService.getClientDatatable(clientId, datatableName);
     }

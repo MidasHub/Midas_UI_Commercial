@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Data } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
@@ -25,11 +25,11 @@ export class NotesTabComponent implements OnInit {
   /** Client ID */
   clientId: string;
   /** Username */
-  username: string;
+  username?: string;
   /** Client Notes */
   clientNotes: any;
   /** Note Form */
-  noteForm: FormGroup;
+  noteForm!: FormGroup;
 
   /** Notes Form Reference */
   @ViewChild('formRef', { static: true }) formRef: any;
@@ -47,9 +47,9 @@ export class NotesTabComponent implements OnInit {
               private authenticationService: AuthenticationService,
               public dialog: MatDialog) {
     const credentials = this.authenticationService.getCredentials();
-    this.username = credentials.username;
-    this.clientId = this.route.parent.snapshot.params['clientId'];
-    this.route.data.subscribe((data: { clientNotes: any }) => {
+    this.username = credentials?.username;
+    this.clientId = this.route.parent?.snapshot.params['clientId'];
+    this.route.data.subscribe((data: { clientNotes: any }|Data) => {
       this.clientNotes = data.clientNotes;
     });
   }

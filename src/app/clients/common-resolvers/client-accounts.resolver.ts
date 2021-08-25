@@ -1,12 +1,12 @@
 /** Angular Imports */
-import { Injectable } from "@angular/core";
-import { Resolve, ActivatedRouteSnapshot } from "@angular/router";
+import { Injectable } from '@angular/core';
+import { Resolve, ActivatedRouteSnapshot } from '@angular/router';
 
 /** rxjs Imports */
-import { Observable } from "rxjs";
+import { Observable } from 'rxjs';
 
 /** Custom Services */
-import { ClientsService } from "../clients.service";
+import { ClientsService } from '../clients.service';
 
 /**
  * Client Accounts data resolver.
@@ -23,7 +23,7 @@ export class ClientAccountsResolver implements Resolve<Object> {
    * @returns {Observable<any>}
    */
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
-    const clientId = route.parent.paramMap.get("clientId");
+    const clientId = route.parent?.paramMap.get('clientId');
     return this.clientsService.getClientAccountDataCross(clientId);
   }
 }

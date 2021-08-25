@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Resolve, ActivatedRouteSnapshot } from '@angular/router';
 
 /** rxjs Imports */
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 
 /** Custom Services */
 import { ClientsService } from '../clients.service';
@@ -26,7 +26,7 @@ export class ClientActionsResolver implements Resolve<Object> {
    */
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
     const actionName = route.paramMap.get('name');
-    const clientId = route.paramMap.get('clientId') || route.parent.parent.paramMap.get('clientId');
+    const clientId = route.paramMap.get('clientId') || route.parent?.parent?.paramMap.get('clientId');
     switch (actionName) {
       case 'Survey':
         return this.clientsService.getSurveys(clientId);
@@ -54,7 +54,8 @@ export class ClientActionsResolver implements Resolve<Object> {
       case 'Create Self Service User':
         return this.clientsService.getClientData(clientId);
       default:
-        return undefined;
+        // return undefined;
+        return of();
     }
   }
 

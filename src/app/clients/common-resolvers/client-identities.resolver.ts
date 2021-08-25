@@ -23,10 +23,10 @@ export class ClientIdentitiesResolver implements Resolve<Object> {
      * @returns {Observable<any>}
      */
     resolve(route: ActivatedRouteSnapshot): Observable<any> {
-        const clientId = route.parent.paramMap.get('clientId');
+        const clientId = route.parent?.paramMap.get('clientId');
         let identitiesData: any;
         return this.clientsService.getIdentifierClientCross(clientId).pipe(map((identities: any) => {
-        //return this.clientsService.getClientIdentifiers(clientId).pipe(map((identities: any) => {
+        // return this.clientsService.getClientIdentifiers(clientId).pipe(map((identities: any) => {
         // identitiesData = identities;
         identitiesData = identities.result.listIdentifier;
             const docObservable: Observable<any>[] = [];
@@ -44,29 +44,29 @@ export class ClientIdentitiesResolver implements Resolve<Object> {
     }
 
     LoadImageIdentifier(identitiesData: any) {
-      let listPersonalIdentifier: any = [];
+      const listPersonalIdentifier: any = [];
       identitiesData.forEach((element: any) => {
         if (element.documentType.id >= 1 && element.documentType.id <= 3) {
-          let imageIds = element.documents;
+          const imageIds = element.documents;
           imageIds.forEach((image: any) => {
 
            this.clientsService.loadImageIdentifier(element.id, image.id)
             .subscribe((imageResult: any) => {
 
-            var reader = new FileReader();
+            const reader = new FileReader();
             reader.readAsDataURL(imageResult);
             reader.onloadend = function () {
-                var base64data = reader.result;
-                let object = {
+                const base64data = reader.result;
+                const object = {
                   key: element.description,
                   base64data: base64data
-                }
+                };
                 listPersonalIdentifier.push(object);
-            }
+            };
             image.imageIdentifier = listPersonalIdentifier;
             });
 
-          })
+          });
         }
       });
     }
