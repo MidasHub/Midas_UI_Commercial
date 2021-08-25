@@ -18,9 +18,6 @@ import { merge } from 'rxjs';
 import html2canvas from 'html2canvas';
 import jspdf from 'jspdf';
 
-
-
-
 export interface Element {
   transferDate: Date;
   customerName: string;
@@ -29,32 +26,40 @@ export interface Element {
   shipper: string;
   receiverStaff: string;
   note: string;
-  }
+}
 
 @Component({
   selector: 'midas-export-transfer',
   templateUrl: './export-transfer.component.html',
   styleUrls: ['./export-transfer.component.scss'],
   animations: [
-    trigger("detailExpand", [
-      state("collapsed", style({ height: "0px", minHeight: "0" })),
-      state("expanded", style({ height: "100px" })),
-      transition("expanded <=> collapsed", animate("225ms cubic-bezier(0.4, 0.0, 0.2, 1)")),
+    trigger('detailExpand', [
+      state('collapsed', style({ height: '0px', minHeight: '0' })),
+      state('expanded', style({ height: '100px' })),
+      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
     ]),
   ],
 })
 export class ExportTransferComponent implements OnInit {
-  displayedColumns: string[] = ['transferDate', 'customerName', 'cardNumber', 'senderStaff', 'shipper', 'receiverStaff', 'note'];
+  displayedColumns: string[] = [
+    'transferDate',
+    'customerName',
+    'cardNumber',
+    'senderStaff',
+    'shipper',
+    'receiverStaff',
+    'note',
+  ];
   dataSource: any[] = [];
   dataTemp: any[] = [];
-  //dataSource = new MatTableDataSource<Element>();
-  //dataSource = new MatTableDataSource();
-  shipperFilter = new FormControl("");
-  deliverFilter = new FormControl("");
-  staffFilter = new FormControl("");
+  // dataSource = new MatTableDataSource<Element>();
+  // dataSource = new MatTableDataSource();
+  shipperFilter = new FormControl('');
+  deliverFilter = new FormControl('');
+  staffFilter = new FormControl('');
 
   currentUser: any;
-  isRequiredTraceBatchNo: boolean = true;
+  isRequiredTraceBatchNo = true;
   product: any;
   isLoading: Boolean = false;
   shipper: any;
@@ -63,6 +68,8 @@ export class ExportTransferComponent implements OnInit {
   transferRefNo: any;
   officeId: any;
   today = new Date();
+  currentNav!: any;
+  expandedElement!: any;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -76,16 +83,17 @@ export class ExportTransferComponent implements OnInit {
     private datePipe: DatePipe,
     private terminalsService: TerminalsService,
     private changeDetectorRefs: ChangeDetectorRef,
-    private router:Router, private activatedRoute:ActivatedRoute,
-  )
-  {
+    private router: Router,
+    private activatedRoute: ActivatedRoute
+  ) {
     this.currentUser = this.authenticationService.getCredentials();
     const { permissions } = this.currentUser;
-    const permit_manager = permissions.includes("POS_UPDATE");
+    const permit_manager = permissions.includes('POS_UPDATE');
     if (permit_manager) {
       this.isRequiredTraceBatchNo = false;
     }
-    this.router.getCurrentNavigation().extras.state;
+    // TODO: look like this is an unused variable.
+    this.currentNav = this.router.getCurrentNavigation()?.extras.state;
     this.officeId = this.currentUser.officeId;
   }
 
@@ -98,11 +106,11 @@ export class ExportTransferComponent implements OnInit {
     this.senderStaffName = this.route.snapshot.queryParams['senderStaffName'];
     this.receiverStaffName = this.route.snapshot.queryParams['receiverStaffName'];
     this.transferRefNo = this.route.snapshot.queryParams['transferRefNo'];
-    //let str = this.route.snapshot.queryParams['dataSource'];
+    // let str = this.route.snapshot.queryParams['dataSource'];
 
     this.transactionServices.getDetailByTransferRefNo(this.transferRefNo, this.officeId).subscribe((data) => {
       this.dataSource = data.result.listDetailRequest;
-      console.log("this.dataSource: ", this.dataSource);
+      console.log('this.dataSource: ', this.dataSource);
     });
 
     // this.dataTemp = JSON.parse(str);
@@ -120,7 +128,7 @@ export class ExportTransferComponent implements OnInit {
       senderStaff: '..................',
       shipper: '..................',
       receiverStaff: '..................',
-      note: '..................'
+      note: '..................',
     };
   }
 
@@ -133,17 +141,19 @@ export class ExportTransferComponent implements OnInit {
 
   openPdf() {
     this.transactionServices.exportCardTransferRequest(this.transferRefNo, this.officeId).subscribe((data) => {
-      console.log("Export PDF statusCode: ", data.statusCode);
+      console.log('Export PDF statusCode: ', data.statusCode);
     });
-    var data = document.getElementById('contentToConvert');
-    html2canvas(data).then(canvas => {
-      var imgWidth = 208;
-      var imgHeight = canvas.height * imgWidth / canvas.width;
-      const contentDataURL = canvas.toDataURL('image/png')
-      let pdf = new jspdf('p', 'mm', 'a4');
-      var position = 0;
-      pdf.addImage(contentDataURL, 'PNG', 0, position, imgWidth, imgHeight)
-      pdf.save('newPDF.pdf');
-    });
+    const elementData = document.getElementById('contentToConvert');
+    if (elementData) {
+      html2canvas(elementData).then((canvas) => {
+        const imgWidth = 208;
+        const imgHeight = (canvas.height * imgWidth) / canvas.width;
+        const contentDataURL = canvas.toDataURL('image/png');
+        const pdf = new jspdf('p', 'mm', 'a4');
+        const position = 0;
+        pdf.addImage(contentDataURL, 'PNG', 0, position, imgWidth, imgHeight);
+        pdf.save('newPDF.pdf');
+      });
+    }
   }
 }

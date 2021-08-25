@@ -52,6 +52,7 @@ export class CreateTransferComponent implements OnInit {
     this.currentUser = this.authenticationService.getCredentials();
     this.officeId = this.currentUser.officeId;
   }
+  expandedElement: any;
   dataSource: any[] = []; // reset
   cardFilter = new FormControl('');
   shipperFilter = new FormControl('');
@@ -106,16 +107,16 @@ export class CreateTransferComponent implements OnInit {
     });
   }
 
-  displayClient(client: any): string | undefined {
-    return client ? `${client.id} ~ ${client.displayName} ~ ${client.documentKey}` : undefined;
+  displayClient(client: any): string  {
+    return client ? `${client.id} ~ ${client.displayName} ~ ${client.documentKey}` : '';
   }
 
-  displayShipper(shipper: any): string | undefined {
-    return shipper ? `${shipper.displayName}` : undefined;
+  displayShipper(shipper: any): string  {
+    return shipper ? `${shipper.displayName}` : '';
   }
 
-  displayStaff(staff: any): string | undefined {
-    return staff ? `${staff.displayName}` : undefined;
+  displayStaff(staff: any): string  {
+    return staff ? `${staff.displayName}` : '';
   }
 
   resetAutoCompleteClients() {

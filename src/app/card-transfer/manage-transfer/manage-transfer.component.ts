@@ -2,24 +2,24 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
 import { DatePipe } from '@angular/common';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { MatPaginator } from "@angular/material/paginator";
-import { MatSort } from "@angular/material/sort";
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AlertService } from 'app/core/alert/alert.service';
 import { AuthenticationService } from 'app/core/authentication/authentication.service';
 import { TransactionService } from 'app/transactions/transaction.service';
-import { merge } from "rxjs";
-import { tap } from "rxjs/operators";
+import { merge } from 'rxjs';
+import { tap } from 'rxjs/operators';
 
 @Component({
   selector: 'midas-manage-transfer',
   templateUrl: './manage-transfer.component.html',
   styleUrls: ['./manage-transfer.component.scss'],
   animations: [
-    trigger("detailExpand", [
-      state("collapsed", style({ height: "0px", minHeight: "0" })),
-      state("expanded", style({ height: "100px" })),
-      transition("expanded <=> collapsed", animate("225ms cubic-bezier(0.4, 0.0, 0.2, 1)")),
+    trigger('detailExpand', [
+      state('collapsed', style({ height: '0px', minHeight: '0' })),
+      state('expanded', style({ height: '100px' })),
+      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
     ]),
   ],
 })
@@ -27,7 +27,7 @@ export class ManageTransferComponent implements OnInit {
   dataSource: any[] = [];
   dataFilter: any[] = [];
   dataShow: any[] = [];
-  displayedColumns: any[] = ["transferDate", "transferRefNo", "senderStaffName", "actionStaffName", "receiverStaffName", "action"];
+  displayedColumns: any[] = ['transferDate', 'transferRefNo', 'senderStaffName', 'actionStaffName', 'receiverStaffName', 'action'];
 
   currentUser: any;
   officeId: any;
@@ -37,9 +37,10 @@ export class ManageTransferComponent implements OnInit {
   isExported: any;
   formDate: FormGroup;
   formFilter: FormGroup;
+  expandedElement!: any;
 
-  @ViewChild(MatPaginator, { static: true }) paginator?: MatPaginator;
-  @ViewChild(MatSort, { static: true }) sort?: MatSort;
+  @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
+  @ViewChild(MatSort, { static: true }) sort!: MatSort;
 
   constructor(
     private authenticationService: AuthenticationService,
@@ -49,8 +50,7 @@ export class ManageTransferComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private formBuilder: FormBuilder,
-  )
-  {
+  ) {
     this.currentUser = this.authenticationService.getCredentials();
     this.officeId = this.currentUser.officeId;
     this.formDate = this.formBuilder.group({
@@ -58,16 +58,17 @@ export class ManageTransferComponent implements OnInit {
       toDate: [new Date()],
     });
     this.formFilter = this.formBuilder.group({
-      transferRefNo: [""],
-      actionStaffName: [""],
-      senderStaffName: [""],
-      receiverStaffName: [""]
+      transferRefNo: [''],
+      actionStaffName: [''],
+      senderStaffName: [''],
+      receiverStaffName: ['']
     });
   }
 
+  // tslint:disable-next-line: use-lifecycle-interface
   ngAfterViewInit() {
-    this.sort?.sortChange.subscribe(() => (this.paginator!.pageIndex = 0));
-    merge(this.sort!.sortChange, this.paginator!.page)
+    this.sort.sortChange.subscribe(() => (this.paginator.pageIndex = 0));
+    merge(this.sort.sortChange, this.paginator.page)
       .pipe(tap(() => this.loadData()))
       .subscribe();
   }
@@ -81,24 +82,24 @@ export class ManageTransferComponent implements OnInit {
   }
 
   get fromDateAndToDate() {
-    const fromDate = this.formDate.get("fromDate")?.value;
-    const toDate = this.formDate.get("toDate")?.value;
+    const fromDate = this.formDate.get('fromDate')?.value;
+    const toDate = this.formDate.get('toDate')?.value;
     if (fromDate && toDate) {
       return true;
     }
     return false;
   }
 
-  reset(){
-    this.formFilter.get('transferRefNo')?.setValue("");
-    this.formFilter.get('actionStaffName')?.setValue("");
-    this.formFilter.get('senderStaffName')?.setValue("");
-    this.formFilter.get('receiverStaffName')?.setValue("");
+  reset() {
+    this.formFilter.get('transferRefNo')?.setValue('');
+    this.formFilter.get('actionStaffName')?.setValue('');
+    this.formFilter.get('senderStaffName')?.setValue('');
+    this.formFilter.get('receiverStaffName')?.setValue('');
   }
 
-  getListTransfer(){
-    this.fromDate = this.datePipe.transform(this.formDate.get("fromDate")?.value, 'dd/MM/yyyy');
-    this.toDate = this.datePipe.transform(this.formDate.get("toDate")?.value, 'dd/MM/yyyy');
+  getListTransfer() {
+    this.fromDate = this.datePipe.transform(this.formDate.get('fromDate')?.value, 'dd/MM/yyyy');
+    this.toDate = this.datePipe.transform(this.formDate.get('toDate')?.value, 'dd/MM/yyyy');
     this.transactionServices.getListTransfer(this.fromDate, this.toDate, this.officeId).subscribe((data) => {
       this.dataSource = data.result.listRequest;
       this.dataFilter = this.dataSource;
@@ -107,8 +108,8 @@ export class ManageTransferComponent implements OnInit {
   }
 
   loadData() {
-    const pageIndex = this.paginator!.pageIndex;
-    const pageSize = this.paginator!.pageSize;
+    const pageIndex = this.paginator.pageIndex;
+    const pageSize = this.paginator.pageSize;
     this.dataShow = this.dataFilter.slice(pageIndex * pageSize, pageIndex * pageSize + pageSize);
   }
 
@@ -123,46 +124,44 @@ export class ManageTransferComponent implements OnInit {
       }
       return true;
     });
-    this.paginator!.pageIndex = 0;
+    this.paginator.pageIndex = 0;
     this.loadData();
   }
 
   sortData(sort: any) {
     this.dataFilter = this.dataFilter.sort((a, b) => {
-      const isAsc = sort.direction === "asc";
+      const isAsc = sort.direction === 'asc';
       switch (sort.active) {
-        case "transferDate":
+        case 'transferDate':
           return this.compare(a.transferDate, b.transferDate, isAsc);
-        case "transferRefNo":
+        case 'transferRefNo':
           return this.compare(a.transferRefNo, b.transferRefNo, isAsc);
-        case "senderStaffName":
+        case 'senderStaffName':
           return this.compare(a.senderStaffName, b.senderStaffName, isAsc);
-        case "actionStaffName":
+        case 'actionStaffName':
           return this.compare(a.actionStaffName, b.actionStaffName, isAsc);
-        case "receiverStaffName":
+        case 'receiverStaffName':
           return this.compare(a.receiverStaffName, b.receiverStaffName, isAsc);
         default:
           return 0;
       }
     });
-    this.paginator!.pageIndex = 0;
+    this.paginator.pageIndex = 0;
     this.loadData();
   }
 
   deleteCardTransferRequest(form: any) {
-    if (form.isExported==1) {
+    if (form.isExported === 1) {
       this.alertService.alert({message: 'Biên bản đã in, không thể chỉnh sửa.', msgClass: 'cssError'});
-    }
-    else{
-      let dataResult: any[] = [];
-      let listCardId: any[] = [];
-      //delete card transfer request by transferRefNo
+    } else {
+      const dataResult: any[] = [];
+      const listCardId: any[] = [];
+      // delete card transfer request by transferRefNo
       this.transactionServices.deleteCardTransferRequest(form.transferRefNo, this.officeId).subscribe((dataDelete) => {
-      if (dataDelete.statusCode=="success") {
+      if (dataDelete.statusCode === 'success') {
         this.alertService.alert({message: 'Xóa thành công.', msgClass: 'cssSuccess'});
         this.dataSource = this.dataSource.filter((v) => v.transferRefNo !== form.transferRefNo);
-      }
-      else{
+      } else {
         this.alertService.alert({message: 'Xóa thất bại.', msgClass: 'cssError'});
       }
     });
@@ -174,10 +173,9 @@ export class ManageTransferComponent implements OnInit {
   }
 
   editCardTransferRequest(form: any) {
-    if (form.isExported==1) {
+    if (form.isExported === 1) {
       this.alertService.alert({message: 'Biên bản đã in, không thể chỉnh sửa.', msgClass: 'cssError'});
-    }
-    else{
+    } else {
       const queryParams: any = {
         transferRefNo: form.transferRefNo
       };
