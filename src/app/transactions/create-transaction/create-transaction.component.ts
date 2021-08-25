@@ -332,12 +332,15 @@ export class CreateTransactionComponent implements OnInit {
 
   onchangeRate(rate: string) {
     this.transactionInfo.rate = rate;
-    const terminalId = this.transactionCreateForm.controls["terminalAmount"].value;
-    if (terminalId) {
+    this.transactionCreateForm.get("rate").setValue(rate);
+
+    const terminalId = this.transactionCreateForm.controls["terminalAmount"]?.value;
+    if (terminalId || this.transactionInfo.type === "rollTerm") {
       this.CheckValidRate();
     }
   }
   CheckValidRate() {
+
     if (this.transactionInfo.rate == null || String(this.transactionInfo.rate).length === 0) {
       return;
     }
@@ -393,7 +396,7 @@ export class CreateTransactionComponent implements OnInit {
       )
       .subscribe((data: any) => {
         this.productFee = data.result.feeTransaction;
-        if (this.productFee) {
+        if (this.productFee &&  this.transactionInfo.type != 'rollTermGetCash') {
           let messageInfoProductFee = "";
 
           if (this.productFee.feeType == 1) {

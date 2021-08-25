@@ -27,8 +27,8 @@
   <mat-form-field fxFlex="96%" *ngIf="form.contains('typeAdvanceCash')">
     <mat-label>{{'Saving_Account_Component.clientAdvanceCash.labelTypes' |translate}}</mat-label>
     <mat-select required formControlName="typeAdvanceCash">
-      <mat-option *ngFor="let type of typeAdvanceCashes" [value]="type.id">
-        {{ type.value }}
+      <mat-option *ngFor="let type of typeAdvanceCashes" [value]="type.paymentType">
+        {{ type.codeValue }}
       </mat-option>
     </mat-select>
   </mat-form-field>

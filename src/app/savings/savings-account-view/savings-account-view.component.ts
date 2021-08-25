@@ -142,11 +142,9 @@ export class SavingsAccountViewComponent implements OnInit {
           taskPermissionName: "POSTINTEREST_SAVINGSACCOUNT",
           action: "advanceCashPartnerTransaction",
         });
-
       }
 
       if (["CCA0", "ACA0"].indexOf(this.savingProduct.shortName) === -1) {
-
         this.buttonConfig.addButton({
           name: "Chuyển tiền nội bộ",
           icon: "fas fa-exchange-alt",
@@ -214,7 +212,7 @@ export class SavingsAccountViewComponent implements OnInit {
         } else {
           let savingAccountId = null;
           for (let index = 0; index < ListAccount.length; index++) {
-            if (ListAccount[index].status.id == 300) {
+            if (ListAccount[index].status.id == 300 && ListAccount[index].productId == 2) {
               savingAccountId = ListAccount[index].id;
             }
           }
@@ -242,7 +240,7 @@ export class SavingsAccountViewComponent implements OnInit {
         } else {
           let savingAccountId = null;
           for (let index = 0; index < ListAccount.length; index++) {
-            if (ListAccount[index].status.id == 300) {
+            if (ListAccount[index].status.id == 300 && ListAccount[index].productId == 7) {
               savingAccountId = ListAccount[index].id;
             }
           }
@@ -273,13 +271,8 @@ export class SavingsAccountViewComponent implements OnInit {
     const refDialog = this.dialog.open(AdvanceComponent, dialogConfig);
     refDialog.afterClosed().subscribe((response: any) => {
       if (response) {
-        const {
-          entityAdvanceCash,
-          clientAdvanceCash,
-          noteAdvance,
-          amountAdvance,
-          typeAdvanceCash,
-        } = response?.data?.value;
+        const { entityAdvanceCash, clientAdvanceCash, noteAdvance, amountAdvance, typeAdvanceCash } =
+          response?.data?.value;
 
         this.checkHaveSavingAccountActive(
           entityAdvanceCash,
@@ -317,12 +310,11 @@ export class SavingsAccountViewComponent implements OnInit {
           })
           .subscribe((res: any) => {
             const message = `Thực hiện thành công!`;
-            this.savingsService.handleResponseApiSavingTransaction(res, message, true );
-        });
+            this.savingsService.handleResponseApiSavingTransaction(res, message, true);
+          });
       }
     });
   }
-
 
   AdvanceCashAction(
     clientAdvanceCash: any,
@@ -339,13 +331,13 @@ export class SavingsAccountViewComponent implements OnInit {
         buSavingAccount: this.savingsAccountData.id,
         clientSavingAccount: SavingClientId,
         noteAdvance: clientAdvanceCash.displayName
-          ? `${clientAdvanceCash.displayName} - ${noteAdvance}`
-          : `${clientAdvanceCash.name} - ${noteAdvance}`,
+          ? `${clientAdvanceCash.displayName}${noteAdvance ? ` - ${noteAdvance}` : `` }`
+          : `${clientAdvanceCash.name}${noteAdvance ? ` - ${noteAdvance}` : `` }`,
         amountAdvanceCash: amountAdvance,
         typeAdvanceCash: typeAdvanceCash,
       })
       .subscribe((result: any) => {
-        const message = ` ${this.displayDescription(typeAdvanceCash)} thành công cho : ${
+        const message = `Thực hiên công nợ thành công cho : ${
           clientAdvanceCash.displayName
             ? ` khách hàng ${clientAdvanceCash.displayName} `
             : ` đại lý ${clientAdvanceCash.name} `
@@ -438,7 +430,6 @@ export class SavingsAccountViewComponent implements OnInit {
             // this.alertService.alertMsgTop({alertMsg: message});
             // this.alertService.alert({ message: message, msgClass: "cssInfo" });
             this.savingsService.handleResponseApiSavingTransaction(res, message, true);
-
           });
       }
     });

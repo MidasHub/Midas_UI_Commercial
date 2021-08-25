@@ -4,9 +4,7 @@ import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms"
 import { MAT_DIALOG_DATA } from "@angular/material/dialog";
 import { GroupsService } from "app/groups/groups.service";
 import { SavingsService } from "app/savings/savings.service";
-import { MatInputModule } from "@angular/material/input";
-import { MatFormFieldModule } from "@angular/material/form-field";
-import { BanksService } from "app/banks/banks.service";
+
 @Component({
   // tslint:disable-next-line:component-selector
   selector: "midas-advance",
@@ -34,28 +32,16 @@ export class AdvanceComponent implements OnInit {
       value: "Đại lý",
     },
   ];
-
-  typeAdvanceCashes: any[] = [
-    {
-      id: "19",
-      value: "Ứng tiền phí",
-    },
-    {
-      id: "62",
-      value: "Thu hộ",
-    },
-    {
-      id: "-62",
-      value: "Chi hộ",
-    },
-  ];
+  typeAdvanceCashes: any[] = [];
+  typeAdvanceCashesClient: any[] = [];
+  typeAdvanceCashesGroup: any[] = [];
 
   constructor(
     private serviceClient: ClientsService,
+    private savingsService: SavingsService,
     private groupService: GroupsService,
     @Inject(MAT_DIALOG_DATA) public data: any,
-    private formBuilder: FormBuilder,
-    private bankService: BanksService
+    private formBuilder: FormBuilder
   ) {
     this.currentUser = data.currentUser;
     this.disable = data.disableUser;
@@ -66,8 +52,10 @@ export class AdvanceComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.bankService.getListOfficeCommon().subscribe((offices: any) => {
-      this.offices = offices.result.listOffice;
+    this.savingsService.getAdvanceFeeTemplate().subscribe((template: any) => {
+      this.offices = template.result.listOffice;
+      this.typeAdvanceCashesClient = template.result.typeAdvanceCashesClient;
+      this.typeAdvanceCashesGroup = template.result.typeAdvanceCashesGroup;
     });
 
     this.form = this.formBuilder.group({
@@ -95,9 +83,11 @@ export class AdvanceComponent implements OnInit {
         this.serviceClient.getStaffsByOffice(this.currentUser.officeId).subscribe((result) => {
           this.staffs = result.result.listStaff;
         });
+        this.typeAdvanceCashes = this.typeAdvanceCashesClient;
       } else {
         this.form.removeControl("staff");
         this.form.removeControl("office");
+        this.typeAdvanceCashes = this.typeAdvanceCashesGroup;
       }
 
       this.getClientAgencyFilter(this.currentUser.staffId);
