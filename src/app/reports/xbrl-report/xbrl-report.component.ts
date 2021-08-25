@@ -24,7 +24,7 @@ export class XBRLReportComponent implements OnInit {
   /** Maximum Due Date allowed. */
   maxDate = new Date();
   /** XBRL Form */
-  xbrlForm: FormGroup;
+  xbrlForm!: FormGroup;
   /** XML response from API */
   rawXml: any;
   /** Parsed xml data */
@@ -71,9 +71,9 @@ export class XBRLReportComponent implements OnInit {
   buildXMLTable(response: any) {
     const parser = new DOMParser();
     const xml = parser.parseFromString(response, 'text/xml');
-    xml.querySelectorAll('[contextRef]').forEach( (element: HTMLElement) => {
+    xml.querySelectorAll('[contextRef]').forEach( (element: HTMLElement|any) => {
       const contextId = element.getAttribute('contextRef');
-      const scenario = xml.querySelector(`#${contextId}`).querySelector('scenario');
+      const scenario = xml.querySelector(`#${contextId}`)?.querySelector('scenario');
       const context = scenario ? scenario.textContent : undefined;
       const entry = {
         name: element.tagName,
@@ -111,7 +111,7 @@ export class XBRLReportComponent implements OnInit {
   submit() {
     const parser = new DOMParser();
     const xmlDOM = parser.parseFromString(this.rawXml, 'text/xml');
-    xmlDOM.querySelectorAll('[contextRef]').forEach( (element: HTMLElement) => {
+    xmlDOM.querySelectorAll('[contextRef]').forEach( (element: HTMLElement | any) => {
       this.xmlData.forEach( (entry: any) => {
         if (entry.name === element.tagName) {
           element.textContent = entry.value.value;

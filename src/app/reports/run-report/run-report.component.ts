@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Data } from '@angular/router';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 
@@ -64,11 +64,11 @@ export class RunReportComponent implements OnInit {
                private settingsService: SettingsService,
               private datePipe: DatePipe) {
     this.report.name = this.route.snapshot.params['name'];
-    this.route.queryParams.subscribe((queryParams: { type: any, id: any }) => {
+    this.route.queryParams.subscribe((queryParams: { type: any, id: any }| Data) => {
       this.report.type = queryParams.type;
       this.report.id = queryParams.id;
     });
-    this.route.data.subscribe((data: { reportParameters: ReportParameter[] }) => {
+    this.route.data.subscribe((data: { reportParameters: ReportParameter[] } | Data) => {
       this.paramData = data.reportParameters;
     });
   }
@@ -93,10 +93,11 @@ export class RunReportComponent implements OnInit {
             this.fetchSelectOptions(param, param.name);
           }
         } else { // Child Parameter
-          const parent: ReportParameter = this.paramData
-            .find((entry: any) => entry.name === param.parentParameterName);
-          parent.childParameters.push(param);
+
+          const parent: ReportParameter| undefined = this.paramData.find((entry: any) => entry.name === param.parentParameterName);
+          parent?.childParameters.push(param);
           this.updateParentParameters(parent);
+
         }
       });
     if (this.report.type === 'Pentaho') {
@@ -111,7 +112,8 @@ export class RunReportComponent implements OnInit {
    * Updates the array of parent parameters.
    * @param {ReportParameter} parent Parent report parameter
    */
-  updateParentParameters(parent: ReportParameter) {
+  updateParentParameters(parent: ReportParameter| undefined) {
+    if (parent) {
     const parentNames = this.parentParameters.map(parameter => parameter.name);
     if (!parentNames.includes(parent.name)) { // Parent's first child.
       this.parentParameters.push(parent);
@@ -120,6 +122,7 @@ export class RunReportComponent implements OnInit {
       this.parentParameters[index] = parent;
     }
   }
+  }
 
   /**
    * Maps pentaho specific names to form-control names.
@@ -127,9 +130,10 @@ export class RunReportComponent implements OnInit {
   mapPentahoParams() {
     this.reportsService.getPentahoParams(this.report.id).subscribe((data: any) => {
       data.forEach((entry: any) => {
-        const param: ReportParameter = this.paramData
-         .find((_entry: any) => _entry.name === entry.parameterName);
+        const param: ReportParameter | undefined = this.paramData.find((_entry: any) => _entry.name === entry.parameterName);
+        if (param) {
         param.pentahoName = `R_${entry.reportParameterName}`;
+        }
       });
     });
   }
@@ -139,7 +143,7 @@ export class RunReportComponent implements OnInit {
    */
   setChildControls() {
     this.parentParameters.forEach((param: ReportParameter) => {
-      this.reportForm.get(param.name).valueChanges.subscribe((option: any) => {
+      this.reportForm.get(param.name)?.valueChanges.subscribe((option: any) => {
         param.childParameters.forEach((child: ReportParameter) => {
           if (child.displayType === 'none') {
             this.reportForm.addControl(child.name, new FormControl(child.defaultVal));
@@ -181,15 +185,16 @@ export class RunReportComponent implements OnInit {
         formattedResponse['output-type'] = value;
         continue;
       }
-      const param: ReportParameter = this.paramData
-        .find((_entry: any) => _entry.name === key);
-      newKey = this.report.type === 'Pentaho' ? param.pentahoName : param.inputName;
-      switch (param.displayType) {
+      const param: ReportParameter | undefined = this.paramData.find((_entry: any) => _entry.name === key);
+      newKey = this.report.type === 'Pentaho' ? param?.pentahoName : param?.inputName;
+      switch (param?.displayType) {
         case 'text':
           formattedResponse[newKey] = value;
           break;
         case 'select':
-          formattedResponse[newKey] = value['id'];
+          // formattedResponse[newKey] = value['id'];
+          // TODO: Must find a way to solve the error here
+          formattedResponse[newKey] = value;
           break;
         case 'date':
           const dateFormat = this.settingsService.dateFormat;

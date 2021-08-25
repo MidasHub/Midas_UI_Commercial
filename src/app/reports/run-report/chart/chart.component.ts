@@ -28,7 +28,7 @@ export class ChartComponent implements OnChanges {
   /** substitute for resolver */
   hideOutput = true;
   /** Data object for witching charts in view. */
-  inputData: ChartData;
+  inputData!: ChartData;
 
   /**
    * @param {ReportsService} reportsService Reports Service

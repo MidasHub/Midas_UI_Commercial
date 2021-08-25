@@ -3,7 +3,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Data, Router } from '@angular/router';
 
 /**
  * Reports component.
@@ -25,9 +25,9 @@ export class ReportsComponent implements OnInit {
   dataSource = new MatTableDataSource();
 
   /** Paginator for reports table. */
-  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+  @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
   /** Sorter for reports table. */
-  @ViewChild(MatSort, { static: true }) sort: MatSort;
+  @ViewChild(MatSort, { static: true }) sort!: MatSort;
 
   /**
    * Retrieves the reports data from `resolve`.
@@ -38,7 +38,7 @@ export class ReportsComponent implements OnInit {
   constructor(private route: ActivatedRoute,
               private router: Router) {
     this.router.routeReuseStrategy.shouldReuseRoute = () => false;
-    this.route.data.subscribe(( data: { reports: any }) => {
+    this.route.data.subscribe(( data: { reports: any }|Data) => {
       this.reportsData = data.reports;
     });
     this.filter = this.route.snapshot.params['filter'];
