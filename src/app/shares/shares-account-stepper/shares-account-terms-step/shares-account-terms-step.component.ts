@@ -22,7 +22,7 @@ export class SharesAccountTermsStepComponent implements OnChanges, OnInit {
   /** Maximum date allowed. */
   maxDate = new Date();
   /** Shares Account Terms Form */
-  sharesAccountTermsForm: FormGroup;
+  sharesAccountTermsForm!: FormGroup;
   /** Minimum Active Period Frequency Type Data */
   minimumActivePeriodFrequencyTypeData: any;
   /** Lockin Period Frequency Type Data */
@@ -51,7 +51,7 @@ export class SharesAccountTermsStepComponent implements OnChanges, OnInit {
       this.setOptions();
       if (this.sharesAccountTemplate) {
         if (!this.isSavingsPatched && this.sharesAccountTemplate.savingsAccountId) {
-          this.sharesAccountTermsForm.get('savingsAccountId').patchValue(this.sharesAccountTemplate.savingsAccountId);
+          this.sharesAccountTermsForm.get('savingsAccountId')?.patchValue(this.sharesAccountTemplate.savingsAccountId);
           this.isSavingsPatched = true;
         }
       }

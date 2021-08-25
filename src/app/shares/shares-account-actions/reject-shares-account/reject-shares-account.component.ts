@@ -22,7 +22,7 @@ export class RejectSharesAccountComponent implements OnInit {
   /** Maximum date allowed. */
   maxDate = new Date();
   /** Reject Share Account form. */
-  rejectSharesAccountForm: FormGroup;
+  rejectSharesAccountForm!: FormGroup;
   /** Shares Account Id */
   accountId: any;
 
@@ -38,7 +38,7 @@ export class RejectSharesAccountComponent implements OnInit {
               private datePipe: DatePipe,
               private route: ActivatedRoute,
               private router: Router) {
-    this.accountId = this.route.parent.snapshot.params['shareAccountId'];
+    this.accountId = this.route.parent?.snapshot.params['shareAccountId'];
   }
 
   /**

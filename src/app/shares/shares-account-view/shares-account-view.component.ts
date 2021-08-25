@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Data, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 
 /** Custom Dialogs */
@@ -25,7 +25,7 @@ export class SharesAccountViewComponent implements OnInit {
   /** Shares Account Data */
   sharesAccountData: any;
   /** Button Configurations */
-  buttonConfig: SharesButtonsConfiguration;
+  buttonConfig!: SharesButtonsConfiguration;
 
   /**
    * Fetches shares account data from `resolve`
@@ -38,7 +38,7 @@ export class SharesAccountViewComponent implements OnInit {
               private router: Router,
               private sharesService: SharesService,
               public dialog: MatDialog) {
-    this.route.data.subscribe((data: { sharesAccountData: any }) => {
+    this.route.data.subscribe((data: { sharesAccountData: any }| Data) => {
       this.sharesAccountData = data.sharesAccountData;
     });
   }

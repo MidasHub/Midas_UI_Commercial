@@ -1,12 +1,12 @@
 /** Shares Account Buttons Configuration */
 export class SharesButtonsConfiguration {
 
-  optionArray: {
+  optionArray!: {
     name: string,
     taskPermissionName: string,
   }[];
 
-  buttonsArray: {
+  buttonsArray!: {
     name: string,
     icon: string,
     taskPermissionName: string,

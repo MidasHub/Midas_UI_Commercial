@@ -22,7 +22,7 @@ export class ActivateSharesAccountComponent implements OnInit {
   /** Maximum date allowed. */
   maxDate = new Date();
   /** Activate Share Account form. */
-  activateSharesAccountForm: FormGroup;
+  activateSharesAccountForm!: FormGroup;
   /** Shares Account Id */
   accountId: any;
 
@@ -38,7 +38,7 @@ export class ActivateSharesAccountComponent implements OnInit {
               private datePipe: DatePipe,
               private route: ActivatedRoute,
               private router: Router) {
-    this.accountId = this.route.parent.snapshot.params['shareAccountId'];
+    this.accountId = this.route.parent?.snapshot.params['shareAccountId'];
   }
 
   /**

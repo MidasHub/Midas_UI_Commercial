@@ -22,7 +22,7 @@ export class CloseSharesAccountComponent implements OnInit {
   /** Maximum date allowed. */
   maxDate = new Date();
   /** Close Share Account form. */
-  closeSharesAccountForm: FormGroup;
+  closeSharesAccountForm!: FormGroup;
   /** Shares Account Id */
   accountId: any;
 
@@ -38,7 +38,7 @@ export class CloseSharesAccountComponent implements OnInit {
               private datePipe: DatePipe,
               private route: ActivatedRoute,
               private router: Router) {
-    this.accountId = this.route.parent.snapshot.params['shareAccountId'];
+    this.accountId = this.route.parent?.snapshot.params['shareAccountId'];
   }
 
   /**

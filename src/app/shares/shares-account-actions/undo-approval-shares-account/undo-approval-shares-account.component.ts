@@ -26,7 +26,7 @@ export class UndoApprovalSharesAccountComponent {
   constructor(private sharesService: SharesService,
               private route: ActivatedRoute,
               private router: Router) {
-    this.accountId = this.route.parent.snapshot.params['shareAccountId'];
+    this.accountId = this.route.parent?.snapshot.params['shareAccountId'];
   }
 
   /**

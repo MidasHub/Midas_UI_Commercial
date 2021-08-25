@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Resolve, ActivatedRouteSnapshot } from '@angular/router';
 
 /** rxjs Imports */
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 
 /** Custom Services */
 import { SharesService } from '../shares.service';
@@ -26,7 +26,7 @@ export class ShareAccountActionsResolver implements Resolve<Object> {
    */
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
     const actionName = route.paramMap.get('name');
-    const shareAccountId = route.paramMap.get('shareAccountId') || route.parent.parent.paramMap.get('shareAccountId');
+    const shareAccountId = route.paramMap.get('shareAccountId') || route.parent?.parent?.paramMap.get('shareAccountId');
     switch (actionName) {
       case 'Apply Additional Shares':
       case 'Redeem Shares':
@@ -34,7 +34,8 @@ export class ShareAccountActionsResolver implements Resolve<Object> {
       case 'Reject Additional Shares':
         return this.sharesService.getSharesAccountData(shareAccountId, true);
       default:
-        return undefined;
+        // return undefined;
+        return of();
     }
   }
 

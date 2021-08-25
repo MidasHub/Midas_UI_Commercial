@@ -25,7 +25,7 @@ export class SharesAccountDetailsStepComponent implements OnInit {
   /** Product Data */
   productData: any;
   /** Shares Account Details Form */
-  sharesAccountDetailsForm: FormGroup;
+  sharesAccountDetailsForm!: FormGroup;
 
   /** Shares Account Template with product data  */
   @Output() sharesAccountProductTemplate = new EventEmitter();
@@ -70,7 +70,7 @@ export class SharesAccountDetailsStepComponent implements OnInit {
    */
   buildDependencies() {
     const clientId = this.sharesAccountTemplate.clientId;
-    this.sharesAccountDetailsForm.get('productId').valueChanges.subscribe((productId: string) => {
+    this.sharesAccountDetailsForm.get('productId')?.valueChanges.subscribe((productId: string) => {
       this.sharesService.getSharesAccountTemplate(clientId, productId).subscribe((response: any) => {
         this.sharesAccountProductTemplate.emit(response);
       });

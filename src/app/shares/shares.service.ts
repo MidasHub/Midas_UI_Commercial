@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 
 /** rxjs Imports */
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 
 /**
  * Shares Service.
@@ -23,9 +23,13 @@ export class SharesService {
    * @param {boolean} template Shares account template required?.
    * @returns {Observable<any>} Shares data.
    */
-  getSharesAccountData(accountId: string, template: boolean): Observable<any> {
+  getSharesAccountData(accountId?: string| null, template?: boolean|null): Observable<any> {
+    if ((accountId) && (template)) {
     const httpParams = new HttpParams().set('template', template.toString());
     return this.http.get(`/accounts/share/${accountId}`, { params: httpParams });
+    } else {
+      return of();
+    }
   }
 
   /**
@@ -33,10 +37,14 @@ export class SharesService {
    * @param {string} productId Product Id
    * @returns {Observable<any>} Shares account template.
    */
-  getSharesAccountTemplate(clientId: string, productId?: string): Observable<any> {
+  getSharesAccountTemplate(clientId?: string | null, productId?: string|null): Observable<any> {
+    if ((clientId) && (productId)) {
     let httpParams = new HttpParams().set('clientId', clientId);
     httpParams = productId ? httpParams.set('productId', productId) : httpParams;
     return this.http.get('/accounts/share/template', { params: httpParams });
+    } else {
+      return of();
+    }
   }
 
   /**

@@ -2,7 +2,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { DatePipe } from '@angular/common';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Data, Router } from '@angular/router';
 
 /** Custom Services */
 import { SharesService } from 'app/shares/shares.service';
@@ -25,7 +25,7 @@ export class ApplySharesComponent implements OnInit {
   /** Maximum date allowed. */
   maxDate = new Date();
   /** Apply Share Account form. */
-  applySharesForm: FormGroup;
+  applySharesForm!: FormGroup;
   /** Shares Account Id */
   accountId: any;
 
@@ -41,8 +41,8 @@ export class ApplySharesComponent implements OnInit {
               private datePipe: DatePipe,
               private route: ActivatedRoute,
               private router: Router) {
-    this.accountId = this.route.parent.snapshot.params['shareAccountId'];
-    this.route.data.subscribe((data: { shareAccountActionData: any }) => {
+    this.accountId = this.route.parent?.snapshot.params['shareAccountId'];
+    this.route.data.subscribe((data: { shareAccountActionData: any }| Data) => {
       this.sharesAccountData = data.shareAccountActionData;
     });
   }
@@ -54,7 +54,7 @@ export class ApplySharesComponent implements OnInit {
    */
   ngOnInit() {
     this.createApplySharesAccountForm();
-    this.applySharesForm.get('unitPrice').patchValue(this.sharesAccountData.currentMarketPrice || '');
+    this.applySharesForm.get('unitPrice')?.patchValue(this.sharesAccountData.currentMarketPrice || '');
   }
 
   /**
@@ -82,7 +82,7 @@ export class ApplySharesComponent implements OnInit {
     });
     const data = {
       ...this.applySharesForm.value,
-      unitPrice: this.applySharesForm.get('unitPrice').value,
+      unitPrice: this.applySharesForm.get('unitPrice')?.value,
       dateFormat,
       locale
     };

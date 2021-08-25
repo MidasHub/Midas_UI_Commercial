@@ -1,7 +1,7 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Data } from '@angular/router';
 
 /**
  * Transactions Tab Component.
@@ -18,7 +18,7 @@ export class TransactionsTabComponent implements OnInit {
   /** Transactions Data */
   transactionsData: any;
   /** Data source for transactions table. */
-  dataSource: MatTableDataSource<any>;
+  dataSource!: MatTableDataSource<any>;
   /** Columns to be displayed in transactions table. */
   displayedColumns: string[] = [
     'transactionDate',
@@ -34,7 +34,7 @@ export class TransactionsTabComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route.
    */
   constructor(private route: ActivatedRoute) {
-    this.route.parent.data.subscribe((data: { sharesAccountData: any }) => {
+    this.route.parent?.data.subscribe((data: { sharesAccountData: any }|Data) => {
       this.shareAccountData = data.sharesAccountData;
       this.transactionsData = this.shareAccountData.purchasedShares;
     });

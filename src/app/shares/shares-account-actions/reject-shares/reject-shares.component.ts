@@ -3,7 +3,7 @@ import { Component, OnInit, ViewChild, Input } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Data } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTable } from '@angular/material/table';
 
@@ -29,18 +29,18 @@ export class RejectSharesComponent implements OnInit {
   /** Shares account Id */
   accountId: any;
   /** Shares account data. */
-  sharesData: any[];
+  sharesData: any[] = [];
   /** Columns to be displayed in shares table. */
   displayedColumns: string[] = ['transactionDate', 'totalShares', 'redeemedPrice', 'status', 'reject'];
   /** Data source for shares table. */
-  dataSource: MatTableDataSource<any>;
+  dataSource!: MatTableDataSource<any>;
 
   /** Paginator for shares table. */
-  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+  @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
   /** Sorter for shares table. */
-  @ViewChild(MatSort, { static: true }) sort: MatSort;
+  @ViewChild(MatSort, { static: true }) sort!: MatSort;
   /** Shares table reference */
-  @ViewChild('sharesTable', { static: true }) sharesTableRef: MatTable<Element>;
+  @ViewChild('sharesTable', { static: true }) sharesTableRef!: MatTable<Element>;
 
   /**
    * @param {SharesService} sharesService Shares Service
@@ -50,8 +50,8 @@ export class RejectSharesComponent implements OnInit {
   constructor(private sharesService: SharesService,
               private route: ActivatedRoute,
               public dialog: MatDialog) {
-    this.accountId = this.route.parent.snapshot.params['shareAccountId'];
-    this.route.data.subscribe((data: { shareAccountActionData: any }) => {
+    this.accountId = this.route.parent?.snapshot.params['shareAccountId'];
+    this.route.data.subscribe((data: { shareAccountActionData: any } | Data) => {
       this.sharesAccountData = data.shareAccountActionData;
     });
   }

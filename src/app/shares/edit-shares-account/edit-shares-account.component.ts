@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component, ViewChild } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute, Data } from '@angular/router';
 import { DatePipe } from '@angular/common';
 
 /** Custom Components */
@@ -27,11 +27,11 @@ export class EditSharesAccountComponent {
   sharesAccountProductTemplate: any;
 
   /** Shares Account Details Step */
-  @ViewChild(SharesAccountDetailsStepComponent, { static: true }) sharesAccountDetailsStep: SharesAccountDetailsStepComponent;
+  @ViewChild(SharesAccountDetailsStepComponent, { static: true }) sharesAccountDetailsStep!: SharesAccountDetailsStepComponent;
   /** Shares Account Terms Step */
-  @ViewChild(SharesAccountTermsStepComponent, { static: true }) sharesAccountTermsStep: SharesAccountTermsStepComponent;
+  @ViewChild(SharesAccountTermsStepComponent, { static: true }) sharesAccountTermsStep!: SharesAccountTermsStepComponent;
   /** Shares Account Charges Step */
-  @ViewChild(SharesAccountChargesStepComponent, { static: true }) sharesAccountChargesStep: SharesAccountChargesStepComponent;
+  @ViewChild(SharesAccountChargesStepComponent, { static: true }) sharesAccountChargesStep!: SharesAccountChargesStepComponent;
 
   /**
    * Fetches shares account template from `resolve`
@@ -44,7 +44,7 @@ export class EditSharesAccountComponent {
               private router: Router,
               private datePipe: DatePipe,
               private sharesService: SharesService) {
-    this.route.data.subscribe((data: { sharesAccountAndTemplate: any }) => {
+    this.route.data.subscribe((data: { sharesAccountAndTemplate: any } | Data) => {
       this.sharesAccountAndTemplate = data.sharesAccountAndTemplate;
     });
   }
@@ -110,7 +110,7 @@ export class EditSharesAccountComponent {
       charges: this.sharesAccount.charges.map((charge: any) => ({ chargeId: charge.chargeId, amount: charge.amount })),
       applicationDate: this.datePipe.transform(this.sharesAccount.applicationDate, dateFormat),
       submittedDate: this.datePipe.transform(this.sharesAccount.submittedDate, dateFormat),
-      unitPrice: this.sharesAccountTermsForm.get('unitPrice').value,
+      unitPrice: this.sharesAccountTermsForm.get('unitPrice')?.value,
       dateFormat,
       locale
     };
