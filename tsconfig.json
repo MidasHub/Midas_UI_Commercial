@@ -15,9 +15,12 @@
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "noImplicitAny": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
     "suppressImplicitAnyIndexErrors": true,
-    "target": "es5",
     "strict":true,
+    "target": "es5",
+    // "target": "es2017",
     "typeRoots": [
       "node_modules/@types",
       "src/typings.d.ts"
