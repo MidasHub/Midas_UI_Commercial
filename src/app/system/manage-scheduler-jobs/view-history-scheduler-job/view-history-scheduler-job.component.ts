@@ -10,10 +10,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 @Component({
   selector: 'mifosx-view-history-scheduler-job',
   templateUrl: './view-history-scheduler-job.component.html',
-  styleUrls: ['./view-history-scheduler-job.component.scss']
+  styleUrls: ['./view-history-scheduler-job.component.scss'],
 })
 export class ViewHistorySchedulerJobComponent implements OnInit {
-
   /** Job History data. */
   jobHistoryData: any;
   /** Columns to be displayed in Scheduler Job History. */
@@ -30,24 +29,27 @@ export class ViewHistorySchedulerJobComponent implements OnInit {
    * Retrieves the scheduler Job History data from `resolve`.
    * @param {ActivatedRoute} route Activated Route.
    */
-  constructor(private route: ActivatedRoute,
-              private dialog: MatDialog,
-              private router: Router ) {
-    this.route.data.subscribe(( data: { jobsSchedulerHistory?: any }) => {
+  constructor(private route: ActivatedRoute, private dialog: MatDialog, private router: Router) {
+    this.route.data.subscribe((data: { jobsSchedulerHistory?: any }) => {
       this.jobHistoryData = data.jobsSchedulerHistory;
     });
-   }
+  }
 
   /**
    * Filters data in scheduler Job History table based on passed value.
    * @param {string} filterValue Value to filter data.
    */
-  applyFilter(filterValue: string) {
-    const filterObject = [{
-      id: 'version',
-      value: filterValue
-    }];
-    this.dataSource.filter = JSON.stringify(filterObject);
+  applyFilter(e: Event) {
+    const filterValue = (<HTMLInputElement>e.target).value || '';
+    if (filterValue) {
+      const filterObject = [
+        {
+          id: 'version',
+          value: filterValue,
+        },
+      ];
+      this.dataSource.filter = JSON.stringify(filterObject);
+    }
   }
 
   ngOnInit() {
@@ -61,8 +63,7 @@ export class ViewHistorySchedulerJobComponent implements OnInit {
     this.dataSource = new MatTableDataSource(this.jobHistoryData.pageItems);
     this.dataSource.paginator = this.paginator;
     /** Search By Version */
-    this.dataSource.filterPredicate =
-    (data: any, filtersJson: string) => {
+    this.dataSource.filterPredicate = (data: any, filtersJson: string) => {
       const matchFilter: any[] = [];
       const filters = JSON.parse(filtersJson);
       filters.forEach((filter: any) => {
@@ -73,7 +74,7 @@ export class ViewHistorySchedulerJobComponent implements OnInit {
           matchFilter.push(val.toString().toLowerCase().includes(filter.value.toLowerCase()));
         }
       });
-        return matchFilter.every(Boolean);
+      return matchFilter.every(Boolean);
     };
   }
 
@@ -84,11 +85,10 @@ export class ViewHistorySchedulerJobComponent implements OnInit {
   openError(version: any) {
     const openErrorLogDialog = this.dialog.open(ErrorDialogComponent, {
       width: '400px',
-      data: this.jobHistoryData.pageItems.filter( (data: any) => data.version === version )[0].jobRunErrorLog
+      data: this.jobHistoryData.pageItems.filter((data: any) => data.version === version)[0].jobRunErrorLog,
     });
     openErrorLogDialog.afterClosed().subscribe((response: any) => {
       this.router.navigate(['']);
     });
   }
-
 }

@@ -71,8 +71,15 @@ export class EntityDataTableChecksComponent implements OnInit {
    * Filters data in entity data table checks table based on passed value.
    * @param {string} filterValue Value to filter data.
    */
-  applyFilter(filterValue: string) {
+  // applyFilter(filterValue: string) {
+  //   this.dataSource.filter = filterValue.trim().toLowerCase();
+  // }
+  applyFilter(e: Event) {
+    const filterValue = (<HTMLInputElement>e.target).value || '';
+    if (filterValue) {
+    // Your code here
     this.dataSource.filter = filterValue.trim().toLowerCase();
+    }
   }
 
   /**

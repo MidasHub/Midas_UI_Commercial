@@ -69,12 +69,12 @@ export class CheckerInboxComponent implements OnInit {
       this.makerCheckerTemplate = data.makerCheckerTemplate;
       this.uniqueEntityName = this.makerCheckerTemplate.map((item: any) => {
         return item.entityName;
-      })
+      });
       this.uniqueActionName = this.makerCheckerTemplate.map((item: any) => {
         return item.actionName;
-      })
-      this.uniqueEntityName = this.uniqueEntityName!.filter((v, i, a) => a.indexOf(v) === i);
-      this.uniqueActionName = this.uniqueActionName!.filter((v, i, a) => a.indexOf(v) === i);
+      });
+      this.uniqueEntityName = this.uniqueEntityName?.filter((v, i, a) => a.indexOf(v) === i);
+      this.uniqueActionName = this.uniqueActionName?.filter((v, i, a) => a.indexOf(v) === i);
 
       this.dataSource = new MatTableDataSource(this.searchData);
       this.selection = new SelectionModel<any>(true, []);
@@ -200,8 +200,11 @@ export class CheckerInboxComponent implements OnInit {
     });
   }
 
-  applyFilter(filterValue: string = '') {
+  applyFilter(e: Event) {
+    const filterValue = (<HTMLInputElement>e.target).value || '';
+    if (filterValue) {
     this.dataSource.filter = filterValue.trim().toLowerCase();
+    }
   }
 
   /**

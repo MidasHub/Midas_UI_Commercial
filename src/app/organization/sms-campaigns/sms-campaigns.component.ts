@@ -3,7 +3,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Data } from '@angular/router';
 
 /** rxjs Imports */
 import { of } from 'rxjs';
@@ -23,19 +23,19 @@ export class SmsCampaignsComponent implements OnInit {
   /** Columns to be displayed in sms campaigns table. */
   displayedColumns: string[] = ['campaignName', 'campaignMessage', 'campaignType.value', 'triggerType.value', 'campaignStatus.value', 'smsCampaignTimeLine.submittedByUsername'];
   /** Data source for SMS campaigns table. */
-  dataSource: MatTableDataSource<any>;
+  dataSource!: MatTableDataSource<any>;
 
   /** Paginator for SMS campaigns table. */
-  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+  @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
   /** Sorter for SMS campaigns table. */
-  @ViewChild(MatSort, { static: true }) sort: MatSort;
+  @ViewChild(MatSort, { static: true }) sort!: MatSort;
 
   /**
    * Retrieves the SMS campaigns data from `resolve`.
    * @param {ActivatedRoute} route Activated Route.
    */
   constructor(private route: ActivatedRoute) {
-    this.route.data.subscribe(( data: { smsCampaigns: any }) => {
+    this.route.data.subscribe(( data: { smsCampaigns: any } | Data) => {
       this.smsCampaignsData = data.smsCampaigns.pageItems;
     });
   }
@@ -44,8 +44,15 @@ export class SmsCampaignsComponent implements OnInit {
    * Filters data in SMS campaigns table based on passed value.
    * @param {string} filterValue Value to filter data.
    */
-  applyFilter(filterValue: string) {
+  // applyFilter(filterValue: string) {
+  //   this.dataSource.filter = filterValue.trim().toLowerCase();
+  // }
+  applyFilter(e: Event) {
+    const filterValue = (<HTMLInputElement>e.target).value || '';
+    if (filterValue) {
+    // Your code here
     this.dataSource.filter = filterValue.trim().toLowerCase();
+    }
   }
 
   /**

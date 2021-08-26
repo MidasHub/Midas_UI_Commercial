@@ -68,7 +68,7 @@ export class RescheduleLoanComponent implements OnInit {
   masterToggle() {
     this.isAllSelected() ?
       this.selection.clear() :
-      this.dataSource.data.forEach((row?: any) => this.selection.select(row!));
+      this.dataSource.data.forEach((row?: any) => this.selection.select(row));
   }
 
   /** The label for the checkbox on the passed row */
@@ -113,8 +113,12 @@ export class RescheduleLoanComponent implements OnInit {
     });
   }
 
-  applyFilter(filterValue: string = '') {
+  applyFilter(e: Event) {
+      // TODO: Chỗ này cần chuyển thành biết Event, rồi trong hàm filter mới check để làm filter
+  const filterValue = (<HTMLInputElement>e.target).value || '';
+  if (filterValue) {
     this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
   }
 
   /**

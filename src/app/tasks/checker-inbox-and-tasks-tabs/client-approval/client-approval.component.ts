@@ -62,7 +62,7 @@ export class ClientApprovalComponent {
   }
 
   /** Whether the number of selected elements matches the total number of rows. */
-  isAllSelected(dataSource2: any) {
+  isAllSelected(dataSource2: any): any {
     if (dataSource2) {
       const numSelected = this.selection.selected;
       return _.difference(dataSource2, numSelected).length === 0;
@@ -127,7 +127,7 @@ export class ClientApprovalComponent {
       const url = 'clients/' + element.id + '?command=activate';
       const bodyData = JSON.stringify(formData);
       const batchData = { requestId: reqId++, relativeUrl: url, method: 'POST', body: bodyData };
-      this.batchRequests!.push(batchData);
+      this.batchRequests?.push(batchData);
     });
     this.tasksService.submitBatchData(this.batchRequests).subscribe((response: any) => {
       response.forEach((responseEle: any) => {
@@ -142,8 +142,12 @@ export class ClientApprovalComponent {
     });
   }
 
-  applyFilter(filterValue: string = '') {
+  applyFilter(e: Event) {
+      // TODO: Chỗ này cần chuyển thành biết Event, rồi trong hàm filter mới check để làm filter
+  const filterValue = (<HTMLInputElement>e.target).value || '';
+  if (filterValue) {
     this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
   }
 
   /**

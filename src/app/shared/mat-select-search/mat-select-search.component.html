@@ -7,8 +7,8 @@
          class="mat-select-search-input"
          #searchSelectInput
          (keydown)="_handleKeydown($event)"
-         (input)="onInputChange($event.target.value)"
-         (blur)="onBlur($event.target.value)"
+         (input)="onInputChange($event)"
+         (blur)="onBlur($event)"
          [placeholder]="placeholderLabel"
   />
   <button mat-button *ngIf="value"

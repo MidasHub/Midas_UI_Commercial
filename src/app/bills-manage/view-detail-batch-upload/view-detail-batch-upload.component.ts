@@ -44,9 +44,16 @@ export class ViewDetailBatchUploadComponent implements OnInit, AfterViewInit {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }
-  applyFilter(filterValue: string) {
-    filterValue = filterValue.trim();
-    filterValue = filterValue.toLowerCase();
-    this.dataSource.filter = filterValue;
+  // applyFilter(filterValue: string) {
+  //   filterValue = filterValue.trim();
+  //   filterValue = filterValue.toLowerCase();
+  //   this.dataSource.filter = filterValue;
+  // }
+  applyFilter(e: Event) {
+    const filterValue = (<HTMLInputElement>e.target).value || '';
+    if (filterValue) {
+    // Your code here
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+    }
   }
 }

@@ -32,7 +32,7 @@
             <mat-form-field>
               <input matInput [placeholder]="'Client_Component.inputPlaceholderClosedCIF'| translate"
                      midasAfterValueChanged
-                     (delayedInput)="applyFilter($event.target.value)">
+                     (delayedInput)="applyFilter($event)">
             </mat-form-field>
             <mat-checkbox #showClosedAccounts labelPosition="after">{{ 'Client_Component.checkBoxShowClosedAccount'| translate}}
             </mat-checkbox>
@@ -41,9 +41,10 @@
             <!-- <button mat-raised-button color="primary" [routerLink]="['../', 'organization', 'bulk-import', 'Clients']" *midasHasPermission="'CREATE_CLIENT'">
               <fa-icon icon="download"></fa-icon>&nbsp;&nbsp;{{ 'Client_Component.buttonImportClient'| translate}}
             </button> -->
-        <!-- <button mat-raised-button color="primary" [routerLink]="['create']" *midasHasPermission="'CREATE_CLIENT'">
+          <!-- <button mat-raised-button color="primary" [routerLink]="['create']" *midasHasPermission="'CREATE_CLIENT'">
               <fa-icon icon="plus"></fa-icon>&nbsp;&nbsp;{{ 'Client_Component.buttonCreateClient'| translate}}
             </button> -->
+          </div>
         <button mat-raised-button color="primary" [routerLink]="['../create']" *midasHasPermission="'CREATE_CLIENT'">
           <fa-icon icon="plus"></fa-icon>&nbsp;&nbsp;{{ this.createButtonName }}
         </button>

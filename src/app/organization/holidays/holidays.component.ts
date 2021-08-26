@@ -18,10 +18,9 @@ import { OrganizationService } from '../organization.service';
 @Component({
   selector: 'mifosx-holidays',
   templateUrl: './holidays.component.html',
-  styleUrls: ['./holidays.component.scss']
+  styleUrls: ['./holidays.component.scss'],
 })
 export class HolidaysComponent implements OnInit {
-
   /** Office selector. */
   officeSelector = new FormControl();
   /** Holidays data. */
@@ -44,9 +43,8 @@ export class HolidaysComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route.
    * @param {FormBuilder} formBuilder Form Builder.
    */
-  constructor(private organizationService: OrganizationService,
-              private route: ActivatedRoute) {
-    this.route.data.subscribe(( data: { offices: any }| Data) => {
+  constructor(private organizationService: OrganizationService, private route: ActivatedRoute) {
+    this.route.data.subscribe((data: { offices: any } | Data) => {
       this.officeData = data.offices;
     });
   }
@@ -55,8 +53,12 @@ export class HolidaysComponent implements OnInit {
    * Filters data in holidays table based on passed value.
    * @param {string} filterValue Value to filter data.
    */
-  applyFilter(filterValue: string) {
-    this.dataSource.filter = filterValue.trim().toLowerCase();
+  applyFilter(e: Event) {
+    // TODO: Chỗ này cần chuyển thành biết Event, rồi trong hàm filter mới check để làm filter
+    const filterValue = (<HTMLInputElement>e.target).value || '';
+    if (filterValue) {
+      this.dataSource.filter = filterValue.trim().toLowerCase();
+    }
   }
 
   /**
@@ -87,5 +89,4 @@ export class HolidaysComponent implements OnInit {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }
-
 }

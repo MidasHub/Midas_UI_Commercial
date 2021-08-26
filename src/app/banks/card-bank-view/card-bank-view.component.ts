@@ -48,8 +48,16 @@ export class CardBankViewComponent implements OnInit {
     }
   }
 
-  applyFilter(text: string = '') {
-    this.textSearch = String(text).toLowerCase();
+  // applyFilter(text: string = '') {
+  //   this.textSearch = String(text).toLowerCase();
+  //   this.filterData();
+  // }
+  applyFilter(e: Event) {
+    const filterValue = (<HTMLInputElement>e.target).value || '';
+    if (filterValue) {
+    // Your code here
+    this.textSearch = filterValue.trim().toLowerCase();
     this.filterData();
+    }
   }
 }

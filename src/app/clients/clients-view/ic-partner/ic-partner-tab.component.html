@@ -4,7 +4,7 @@
 
       <!-- <div class="search-box">
         <mat-form-field class="filter">
-          <input matInput #filter (keyup)="applyFilter($event.target.value)" placeholder="{{ 'Terminal_Component.labelFilter'| translate}}">
+          <input matInput #filter (keyup)="applyFilter($event)" placeholder="{{ 'Terminal_Component.labelFilter'| translate}}">
           <button mat-icon-button matSuffix aria-label="clear" *ngIf="filter.value" (click)="filter.value=''; applyFilter('');">
             <mat-icon>close</mat-icon>
           </button>

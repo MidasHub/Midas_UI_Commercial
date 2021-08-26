@@ -224,8 +224,8 @@ export class BanksComponent implements OnInit, AfterViewInit {
     }
   }
 
-  applyFilter(text: string) {
-    this.textSearch = String(text).toLowerCase();
+  applyFilter(e: Event) {
+    this.textSearch = String((<HTMLInputElement>e.target).value).toLowerCase();
     this.filterData();
   }
 
@@ -252,17 +252,17 @@ export class BanksComponent implements OnInit, AfterViewInit {
     return this.cardTypes.find((v: any) => v.code === type)?.description || 'N/A';
   }
 
-  applyFilterCard(text: string) {
-    this.textSearchCard = String(text).toLowerCase();
+  applyFilterCard(e: Event) {
+    this.textSearchCard = String((<HTMLInputElement>e.target).value).toLowerCase();
     this.paginator.pageSize = 0;
     this.cards_active = this.bank_active.cards.filter((v: any) => {
-      if (!text) {
+      if (!(<HTMLInputElement>e.target).value) {
         return true;
       }
       const keys = Object.keys(v);
       for (const key of keys) {
         if (v[key]) {
-          if (String(v[key]).toLowerCase().indexOf(text) !== -1) {
+          if (String(v[key]).toLowerCase().indexOf((<HTMLInputElement>e.target).value) !== -1) {
             return true;
           }
         }

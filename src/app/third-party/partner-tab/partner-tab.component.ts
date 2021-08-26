@@ -101,7 +101,9 @@ export class PartnerTabComponent implements OnInit {
 
   applyFilter(e: Event) {
     const filterValue = (<HTMLInputElement>e.target).value || '';
+    if (filterValue) {
     this.dataSource.filter = filterValue.trim().toLowerCase();
+    }
   }
 
   nextStep(partner: any) {

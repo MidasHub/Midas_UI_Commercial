@@ -15,10 +15,9 @@ import { OrganizationService } from 'app/organization/organization.service';
 @Component({
   selector: 'mifosx-transactions',
   templateUrl: './transactions.component.html',
-  styleUrls: ['./transactions.component.scss']
+  styleUrls: ['./transactions.component.scss'],
 })
 export class TransactionsComponent implements OnInit {
-
   /** Currency selector. */
   currencySelector = new FormControl();
   /** Cashier Id */
@@ -44,9 +43,8 @@ export class TransactionsComponent implements OnInit {
    * @param {OrganizationService} organizationService Organization Service.
    * @param {ActivatedRoute} route Activated Route.
    */
-  constructor(private organizationService: OrganizationService,
-              private route: ActivatedRoute) {
-    this.route.data.subscribe(( data: { currencies: any } | Data) => {
+  constructor(private organizationService: OrganizationService, private route: ActivatedRoute) {
+    this.route.data.subscribe((data: { currencies: any } | Data) => {
       this.currencyData = data.currencies.selectedCurrencyOptions;
     });
     this.tellerId = this.route.parent?.parent?.parent?.snapshot.params['id'];
@@ -57,8 +55,12 @@ export class TransactionsComponent implements OnInit {
    * Filters data in transactions table based on passed value.
    * @param {string} filterValue Value to filter data.
    */
-  applyFilter(filterValue: string) {
-    this.dataSource.filter = filterValue.trim().toLowerCase();
+  applyFilter(e: Event) {
+    // TODO: Chỗ này cần chuyển thành biết Event, rồi trong hàm filter mới check để làm filter
+    const filterValue = (<HTMLInputElement>e.target).value || '';
+    if (filterValue) {
+      this.dataSource.filter = filterValue.trim().toLowerCase();
+    }
   }
 
   /**
@@ -73,7 +75,8 @@ export class TransactionsComponent implements OnInit {
    */
   onChangeCurrency() {
     this.currencySelector.valueChanges.subscribe((currencyCode: any) => {
-      this.organizationService.getCashierSummaryAndTransactions(this.tellerId, this.cashierId, currencyCode)
+      this.organizationService
+        .getCashierSummaryAndTransactions(this.tellerId, this.cashierId, currencyCode)
         .subscribe((response: any) => {
           this.cashierData = response;
           this.setTransactions();
@@ -89,5 +92,4 @@ export class TransactionsComponent implements OnInit {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }
-
 }

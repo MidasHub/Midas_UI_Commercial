@@ -11,10 +11,9 @@ import { ActivatedRoute } from '@angular/router';
 @Component({
   selector: 'mifosx-templates',
   templateUrl: './templates.component.html',
-  styleUrls: ['./templates.component.scss']
+  styleUrls: ['./templates.component.scss'],
 })
 export class TemplatesComponent implements OnInit {
-
   /** Templates data. */
   templatesData: any;
   /** Columns to be displayed in templates table. */
@@ -32,7 +31,7 @@ export class TemplatesComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route.
    */
   constructor(private route: ActivatedRoute) {
-    this.route.data.subscribe(( data: { templates?: any }) => {
+    this.route.data.subscribe((data: { templates?: any }) => {
       this.templatesData = data.templates;
     });
   }
@@ -41,8 +40,12 @@ export class TemplatesComponent implements OnInit {
    * Filters data in templates table based on passed value.
    * @param {string} filterValue Value to filter data.
    */
-  applyFilter(filterValue: string) {
-    this.dataSource.filter = filterValue.trim().toLowerCase();
+  applyFilter(e: Event) {
+    // TODO: Chỗ này cần chuyển thành biết Event, rồi trong hàm filter mới check để làm filter
+    const filterValue = (<HTMLInputElement>e.target).value || '';
+    if (filterValue) {
+      this.dataSource.filter = filterValue.trim().toLowerCase();
+    }
   }
 
   /**
@@ -60,5 +63,4 @@ export class TemplatesComponent implements OnInit {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }
-
 }

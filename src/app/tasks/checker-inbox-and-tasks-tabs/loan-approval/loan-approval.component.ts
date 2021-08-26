@@ -30,7 +30,7 @@ export class LoanApprovalComponent {
   /** Data source for loans approval table. */
   dataSource!: MatTableDataSource<any>;
   /** Row Selection Data */
-  selection?: SelectionModel<any>;
+  selection!: SelectionModel<any>;
   /** Map data */
   idToNodeMap = {};
   /** Grouped Office Data */
@@ -95,9 +95,9 @@ export class LoanApprovalComponent {
   }
 
   /** Whether the number of selected elements matches the total number of rows. */
-  isAllSelected(dataSource2: any) {
+  isAllSelected(dataSource2: any): any {
     if (dataSource2) {
-      const numSelected = this.selection!.selected;
+      const numSelected = this.selection?.selected || [];
       return _.difference(dataSource2, numSelected).length === 0;
     }
   }
@@ -106,8 +106,8 @@ export class LoanApprovalComponent {
   masterToggle(dataSource3: any) {
     if (dataSource3) {
       this.isAllSelected(dataSource3) ?
-        dataSource3.forEach((row: any) => this.selection!.deselect(row)) :
-        dataSource3.forEach((row: any) => this.selection!.select(row));
+        dataSource3.forEach((row: any) => this.selection?.deselect(row)) :
+        dataSource3.forEach((row: any) => this.selection?.select(row));
     }
   }
 
@@ -116,7 +116,7 @@ export class LoanApprovalComponent {
     if (!row) {
       return `${this.isAllSelected(row) ? 'select' : 'deselect'} all`;
     }
-    return `${this.selection!.isSelected(row) ? 'deselect' : 'select'} row ${row.position + 1}`;
+    return `${this.selection?.isSelected(row) ? 'deselect' : 'select'} row ${row.position + 1}`;
   }
 
   approveLoan() {
@@ -139,8 +139,8 @@ export class LoanApprovalComponent {
       approvedOnDate,
       locale
     };
-    const selectedAccounts = this.selection!.selected.length;
-    const listSelectedAccounts = this.selection!.selected;
+    const selectedAccounts = this.selection?.selected.length;
+    const listSelectedAccounts = this.selection?.selected || [];
     let approvedAccounts = 0;
     this.batchRequests = [];
     let reqId = 1;
@@ -148,7 +148,7 @@ export class LoanApprovalComponent {
       const url = 'loans/' + element.id + '?command=approve';
       const bodyData = JSON.stringify(formData);
       const batchData = { requestId: reqId++, relativeUrl: url, method: 'POST', body: bodyData };
-      this.batchRequests!.push(batchData);
+      this.batchRequests?.push(batchData);
     });
     this.tasksService.submitBatchData(this.batchRequests).subscribe((response: any) => {
       response.forEach((responseEle: any) => {
@@ -164,8 +164,12 @@ export class LoanApprovalComponent {
     });
   }
 
-  applyFilter(filterValue: string = '') {
+  applyFilter(e: Event) {
+     // TODO: Chỗ này cần chuyển thành biết Event, rồi trong hàm filter mới check để làm filter
+  const filterValue = (<HTMLInputElement>e.target).value || '';
+  if (filterValue) {
     this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
   }
 
   loanResource() {

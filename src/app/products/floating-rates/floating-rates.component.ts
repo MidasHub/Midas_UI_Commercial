@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Data } from '@angular/router';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -20,19 +20,19 @@ export class FloatingRatesComponent implements OnInit {
   /** Columns to be displayed in floating rates table. */
   displayedColumns: string[] = ['name', 'createdBy', 'isBaseLendingRate', 'isActive'];
   /** Data source for floating rates table. */
-  dataSource: MatTableDataSource<any>;
+  dataSource!: MatTableDataSource<any>;
 
   /** Paginator for floating rates table. */
-  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+  @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
   /** Sorter for floating rates table. */
-  @ViewChild(MatSort, { static: true }) sort: MatSort;
+  @ViewChild(MatSort, { static: true }) sort!: MatSort;
 
   /**
    * Retrieves the floating rates data from `resolve`.
    * @param {ActivatedRoute} route Activated Route.
    */
   constructor(private route: ActivatedRoute) {
-    this.route.data.subscribe(( data: { floatingrates: any } ) => {
+    this.route.data.subscribe(( data: { floatingrates: any } | Data) => {
       this.floatingRatesData = data.floatingrates;
     });
    }
@@ -41,8 +41,15 @@ export class FloatingRatesComponent implements OnInit {
    * Filters data in floating rates table based on passed value.
    * @param {string} filterValue Value to filter data.
    */
-  applyFilter(filterValue: string) {
+  // applyFilter(filterValue: string) {
+  //   this.dataSource.filter = filterValue.trim().toLowerCase();
+  // }
+  applyFilter(e: Event) {
+    const filterValue = (<HTMLInputElement>e.target).value || '';
+    if (filterValue) {
+    // Your code here
     this.dataSource.filter = filterValue.trim().toLowerCase();
+    }
   }
 
   /**

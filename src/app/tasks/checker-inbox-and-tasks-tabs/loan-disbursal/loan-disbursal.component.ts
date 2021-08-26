@@ -16,10 +16,9 @@ import { SettingsService } from 'app/settings/settings.service';
 @Component({
   selector: 'mifosx-loan-disbursal',
   templateUrl: './loan-disbursal.component.html',
-  styleUrls: ['./loan-disbursal.component.scss']
+  styleUrls: ['./loan-disbursal.component.scss'],
 })
 export class LoanDisbursalComponent {
-
   /** Loans Data */
   loans: any;
   /** Batch Requests */
@@ -27,7 +26,7 @@ export class LoanDisbursalComponent {
   /** Datasource for loans disbursal table */
   dataSource!: MatTableDataSource<any>;
   /** Row Selection */
-  selection?: SelectionModel<any>;
+  selection!: SelectionModel<any>;
   /** Displayed Columns for loan disbursal data */
   displayedColumns: string[] = ['select', 'client', 'loanAccountNumber', 'loanProduct', 'principal'];
 
@@ -40,15 +39,17 @@ export class LoanDisbursalComponent {
    * @param {SettingsService} settingsService Settings Service.
    * @param {TasksService} tasksService Tasks Service.
    */
-  constructor(private route: ActivatedRoute,
+  constructor(
+    private route: ActivatedRoute,
     private dialog: MatDialog,
     private datePipe: DatePipe,
     private settingsService: SettingsService,
-    private tasksService: TasksService) {
+    private tasksService: TasksService
+  ) {
     this.route.data.subscribe((data: { loansData?: any }) => {
       this.loans = data.loansData.pageItems;
       this.loans = this.loans.filter((account: any) => {
-        return (account.status.waitingForDisbursal === true);
+        return account.status.waitingForDisbursal === true;
       });
       this.dataSource = new MatTableDataSource(this.loans);
       this.selection = new SelectionModel<any>(true, []);
@@ -64,9 +65,9 @@ export class LoanDisbursalComponent {
 
   /** Selects all rows if they are not all selected; otherwise clear selection. */
   masterToggle() {
-    this.isAllSelected() ?
-      this.selection?.clear() :
-      this.dataSource.data.forEach((row: any) => this.selection?.select(row));
+    this.isAllSelected()
+      ? this.selection?.clear()
+      : this.dataSource.data.forEach((row: any) => this.selection?.select(row));
   }
 
   /** The label for the checkbox on the passed row */
@@ -79,7 +80,7 @@ export class LoanDisbursalComponent {
 
   disburseLoan() {
     const disburseLoanDialogRef = this.dialog.open(ConfirmationDialogComponent, {
-      data: { heading: 'Loan Disbursal', dialogContext: 'Are you sure you want to Disburse Loan' }
+      data: { heading: 'Loan Disbursal', dialogContext: 'Are you sure you want to Disburse Loan' },
     });
     disburseLoanDialogRef.afterClosed().subscribe((response: { confirm: any }) => {
       if (response.confirm) {
@@ -95,7 +96,7 @@ export class LoanDisbursalComponent {
     const formData = {
       dateFormat,
       approvedOnDate,
-      locale
+      locale,
     };
     const selectedAccounts = this.selection?.selected.length;
     const listSelectedAccounts = this.selection?.selected;
@@ -110,7 +111,7 @@ export class LoanDisbursalComponent {
     });
     this.tasksService.submitBatchData(this.batchRequests).subscribe((response: any) => {
       response.forEach((responseEle: any) => {
-        if (responseEle.statusCode = '200') {
+        if ((responseEle.statusCode = '200')) {
           approvedAccounts++;
           responseEle.body = JSON.parse(responseEle.body);
           if (selectedAccounts === approvedAccounts) {
@@ -125,15 +126,18 @@ export class LoanDisbursalComponent {
     this.tasksService.getAllLoans().subscribe((response: any) => {
       this.loans = response.pageItems;
       this.loans = this.loans.filter((account: any) => {
-        return (account.status.waitingForDisbursal === true);
+        return account.status.waitingForDisbursal === true;
       });
       this.dataSource = new MatTableDataSource(this.loans);
       this.selection = new SelectionModel<any>(true, []);
     });
   }
 
-  applyFilter(filterValue: string = '') {
-    this.dataSource.filter = filterValue.trim().toLowerCase();
+  applyFilter(e: Event) {
+    // TODO: Chỗ này cần chuyển thành biết Event, rồi trong hàm filter mới check để làm filter
+    const filterValue = (<HTMLInputElement>e.target).value || '';
+    if (filterValue) {
+      this.dataSource.filter = filterValue.trim().toLowerCase();
+    }
   }
-
 }

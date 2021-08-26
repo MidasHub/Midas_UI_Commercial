@@ -69,7 +69,7 @@ export class XBRLComponent implements OnInit, AfterViewInit {
   ngAfterViewInit() {
     this.mixtaxonomyArray.forEach((taxonomy: any) => {
       taxonomy.mapping?.valueChanges.subscribe( (value: string) => {
-        this.filteredGlAccounts = this.applyFilter(value);
+        this.filteredGlAccounts = this.applyFilterString(value);
       });
     });
   }
@@ -99,11 +99,18 @@ export class XBRLComponent implements OnInit, AfterViewInit {
    * Filter for GL Account AutoComplete.
    * @param {string} value Filter Value.
    */
-  applyFilter(value: string) {
+  applyFilterString(value: string) {
     const filterValue = value.toLowerCase();
     return this.glAccounts.filter(
       (entry: any) => entry.name.toLowerCase().includes(filterValue) || entry.glCode.includes(filterValue)
     );
+  }
+  applyFilter(e : Event){
+    // TODO: Chỗ này cần chuyển thành biết Event, rồi trong hàm filter mới check để làm filter
+  const filterValue = (<HTMLInputElement>e.target).value || '';
+  if (filterValue) {
+    this.applyFilterString(filterValue);
+  }
   }
 
   /**

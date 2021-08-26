@@ -93,8 +93,14 @@ export class ChartOfAccountsComponent implements AfterViewInit, OnInit {
    * Filters data in chart of accounts table based on passed value.
    * @param {string} filterValue Value to filter data.
    */
-  applyFilter(filterValue: string) {
+  // applyFilter(filterValue: string) {
+  //   this.tableDataSource.filter = filterValue.trim().toLowerCase();
+  // }
+  applyFilter(e: Event) {
+    const filterValue = (<HTMLInputElement>e.target).value || '';
+    if (filterValue) {
     this.tableDataSource.filter = filterValue.trim().toLowerCase();
+    }
   }
 
   /**

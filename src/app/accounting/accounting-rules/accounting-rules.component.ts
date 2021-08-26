@@ -68,8 +68,14 @@ export class AccountingRulesComponent implements OnInit {
    * Filters data in accounting rules table based on passed value.
    * @param {string} filterValue Value to filter data.
    */
-  applyFilter(filterValue: string) {
-    this.dataSource.filter = filterValue.trim().toLowerCase();
+  // applyFilter(filterValue: string) {
+  //   this.dataSource.filter = filterValue.trim().toLowerCase();
+  // }
+  applyFilter(e: Event) {
+    const filterValue = (<HTMLInputElement>e.target).value || '';
+    if (filterValue) {
+      this.dataSource.filter = filterValue.trim().toLowerCase();
+    }
   }
 
 }

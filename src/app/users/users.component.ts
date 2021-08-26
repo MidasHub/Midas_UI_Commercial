@@ -3,7 +3,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Data } from '@angular/router';
 
 /** rxjs Imports */
 import { of } from 'rxjs';
@@ -14,10 +14,9 @@ import { of } from 'rxjs';
 @Component({
   selector: 'mifosx-users',
   templateUrl: './users.component.html',
-  styleUrls: ['./users.component.scss']
+  styleUrls: ['./users.component.scss'],
 })
 export class UsersComponent implements OnInit {
-
   /** Users data. */
   usersData: any;
   /** Columns to be displayed in users table. */
@@ -28,14 +27,14 @@ export class UsersComponent implements OnInit {
   /** Paginator for users table. */
   @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
   /** Sorter for users table. */
-  @ViewChild(MatSort, { static: true }) sort!: MatSort;
+  @ViewChild(MatSort, { static: true }) sort: MatSort | any;
 
   /**
    * Retrieves the users data from `resolve`.
    * @param {ActivatedRoute} route Activated Route.
    */
   constructor(private route: ActivatedRoute) {
-    this.route.data.subscribe(( data: { users?: any }) => {
+    this.route.data.subscribe((data: { users: any } | Data) => {
       this.usersData = data.users;
     });
   }
@@ -44,8 +43,12 @@ export class UsersComponent implements OnInit {
    * Filters data in users table based on passed value.
    * @param {string} filterValue Value to filter data.
    */
-  applyFilter(filterValue: string) {
-    this.dataSource.filter = filterValue.trim().toLowerCase();
+  applyFilter(e: Event) {
+    // TODO: Chỗ này cần chuyển thành biết Event, rồi trong hàm filter mới check để làm filter
+    const filterValue = (<HTMLInputElement>e.target).value || '';
+    if (filterValue) {
+      this.dataSource.filter = filterValue.trim().toLowerCase();
+    }
   }
 
   /**
@@ -63,5 +66,4 @@ export class UsersComponent implements OnInit {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }
-
 }

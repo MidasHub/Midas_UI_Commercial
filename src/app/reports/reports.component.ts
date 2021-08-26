@@ -11,10 +11,9 @@ import { ActivatedRoute, Data, Router } from '@angular/router';
 @Component({
   selector: 'mifosx-reports',
   templateUrl: './reports.component.html',
-  styleUrls: ['./reports.component.scss']
+  styleUrls: ['./reports.component.scss'],
 })
 export class ReportsComponent implements OnInit {
-
   /** Reports data. */
   reportsData: any;
   /** Report category filter. */
@@ -35,10 +34,9 @@ export class ReportsComponent implements OnInit {
    * Prevents reuse of route parameter `filter`.
    * @param {Router} router: Router.
    */
-  constructor(private route: ActivatedRoute,
-              private router: Router) {
+  constructor(private route: ActivatedRoute, private router: Router) {
     this.router.routeReuseStrategy.shouldReuseRoute = () => false;
-    this.route.data.subscribe(( data: { reports: any }|Data) => {
+    this.route.data.subscribe((data: { reports: any } | Data) => {
       this.reportsData = data.reports;
     });
     this.filter = this.route.snapshot.params['filter'];
@@ -56,12 +54,16 @@ export class ReportsComponent implements OnInit {
    * Switches filterPredicate if filterValue is not null.
    * @param {string} filterValue filter string for mat-table.
    */
-  applyFilter(filterValue: string) {
-    if (filterValue.length) {
+  applyFilter(e: Event) {
+    // TODO: Chỗ này cần chuyển thành biết Event, rồi trong hàm filter mới check để làm filter
+    const filterValue = (<HTMLInputElement>e.target).value || '';
+    if (filterValue) {
+      if (filterValue.length) {
         this.setCustomFilterPredicate();
         this.dataSource.filter = filterValue.trim().toLowerCase();
-    } else {
-      this.filterReportsByCategory();
+      } else {
+        this.filterReportsByCategory();
+      }
     }
   }
 
@@ -89,22 +91,23 @@ export class ReportsComponent implements OnInit {
    */
   setCustomFilterPredicate() {
     this.dataSource.filterPredicate = (data: any, filter: string) => {
-        /** Transform the data into a lowercase string of all property values. */
-        const dataStr = Object.keys(data).reduce(function (currentTerm: string, key: string) {
-            /** Use an obscure Unicode character to delimit the words in the concatenated string.
-             * This avoids matches where the values of two columns combined will match the user's query
-             */
-            return currentTerm + ((/** @type {any} */ (data)))[key] + '◬';
-        }, '').toLowerCase();
-        /** Transform the filter by converting it to lowercase and removing whitespace. */
-        const transformedFilter = filter.trim().toLowerCase();
-        /* Seperates filter for All reports page.*/
-        if (this.filter) {
-          return dataStr.indexOf(transformedFilter) !== -1 && data.reportCategory === this.filter;
-        } else {
-          return dataStr.indexOf(transformedFilter) !== -1;
-        }
+      /** Transform the data into a lowercase string of all property values. */
+      const dataStr = Object.keys(data)
+        .reduce(function (currentTerm: string, key: string) {
+          /** Use an obscure Unicode character to delimit the words in the concatenated string.
+           * This avoids matches where the values of two columns combined will match the user's query
+           */
+          return currentTerm + /** @type {any} */ data[key] + '◬';
+        }, '')
+        .toLowerCase();
+      /** Transform the filter by converting it to lowercase and removing whitespace. */
+      const transformedFilter = filter.trim().toLowerCase();
+      /* Seperates filter for All reports page.*/
+      if (this.filter) {
+        return dataStr.indexOf(transformedFilter) !== -1 && data.reportCategory === this.filter;
+      } else {
+        return dataStr.indexOf(transformedFilter) !== -1;
+      }
     };
   }
-
 }

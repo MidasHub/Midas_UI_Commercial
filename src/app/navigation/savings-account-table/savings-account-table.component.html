@@ -1,7 +1,7 @@
 <div fxLayout="row" fxLayoutAlign="space-between center">
   <mat-form-field fxFlex="50%">
     <mat-label>Filter</mat-label>
-    <input matInput (keyup)="applyFilter($event.target.value)">
+    <input matInput (keyup)="applyFilter($event)">
   </mat-form-field>
   <button mat-raised-button color="primary" (click)="toggleClosed()">
     {{ showClosed ? 'View Active' : 'View Closed' }}

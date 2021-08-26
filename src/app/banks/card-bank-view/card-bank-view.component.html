@@ -3,9 +3,10 @@
   <div fxLayout="row wrap" fxLayout.lt-md="column">
     <div class="search-box" fxFlex.gt-md="48%">
       <mat-form-field>
+
         <input matInput [placeholder]="'Client_Component.inputPlaceholderClosedCIF'| translate"
                midasAfterValueChanged
-               (delayedInput)="applyFilter($event.target.value)">
+               (delayedInput)="applyFilter($event)">
       </mat-form-field>
     </div>
   </div>

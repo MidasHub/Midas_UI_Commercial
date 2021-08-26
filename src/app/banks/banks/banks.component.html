@@ -2,9 +2,9 @@
   <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
     <div fxFlex="20%" fxLayout="column">
       <mat-form-field>
-        <input matInput [placeholder]="'Search ...'"
+         <input matInput [placeholder]="'Search ...'"
                midasAfterValueChanged
-               (delayedInput)="applyFilter($event.target.value)">
+               (delayedInput)="applyFilter($event)">
       </mat-form-field>
       <div fxLayout="column" class="banks">
         <mat-card
@@ -89,7 +89,7 @@
               <mat-form-field fxFlex="75%">
                 <input matInput [placeholder]="'Search ...'"
                        midasAfterValueChanged
-                       (delayedInput)="applyFilterCard($event.target.value)">
+                       (delayedInput)="applyFilterCard($event)">
               </mat-form-field>
               <div fxFlex="20%">
                 <button

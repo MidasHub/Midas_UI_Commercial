@@ -314,13 +314,13 @@
 
       <div class="mat-elevation-z8">
         <mat-form-field class="filter">
-          <input matInput #filter (keyup)="applyFilter($event.target.value)" placeholder="Filter" />
+          <input matInput #filter (keyup)="applyFilter($event)" placeholder="Filter" />
           <button
             mat-icon-button
             matSuffix
             aria-label="clear"
             *ngIf="filter.value"
-            (click)="filter.value = ''; applyFilter('')"
+            (click)="filter.value = ''; applyFilter($event)"
           >
             <mat-icon>close</mat-icon>
           </button>

@@ -7,7 +7,7 @@
           <mat-form-field>
             <input matInput [placeholder]="'Client_Component.inputPlaceholderClosedCIF'| translate"
                    midasAfterValueChanged
-                   (delayedInput)="applyFilter($event.target.value)">
+                   (delayedInput)="applyFilter($event)">
           </mat-form-field>
           <mat-checkbox #showClosedAccounts labelPosition="after">{{ 'Client_Component.checkBoxShowClosedAccount'| translate}}
           </mat-checkbox>
@@ -21,7 +21,7 @@
           </button>
         </div>
       </div>
-    
+
       <div >
         <table class="mat-elevation-z8" mat-table [dataSource]="dataSource" matSort multiTemplateDataRows>-->
           <!-- Name Column -->
@@ -29,7 +29,7 @@
             <th mat-header-cell  *matHeaderCellDef mat-sort-header='displayName'> {{ 'Client_Component.tblColName'| translate}}</th>
             <td mat-cell *matCellDef="let row"> {{row.displayName}} </td>
           </ng-container> -->
-    
+
           <!-- Account no Column -->
           <!-- <ng-container matColumnDef="clientno">
             <th mat-header-cell fxHide fxShow.gt-md  *matHeaderCellDef mat-sort-header='accountNo'> {{ 'Client_Component.tblColAccount'| translate}}  </th>
@@ -41,7 +41,7 @@
             <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header='externalId'> {{ 'Client_Component.tblColExternalID'| translate}}  </th>
             <td mat-cell fxHide fxShow.gt-md *matCellDef="let row"> {{row.externalId}} </td>
           </ng-container> -->
-    
+
           <!-- Status Column -->
           <!-- <ng-container matColumnDef="status">
             <th mat-header-cell  *matHeaderCellDef> {{ 'Client_Component.tblColStatus'| translate}}  </th>
@@ -51,32 +51,32 @@
               </div>
             </td>
           </ng-container> -->
-    
+
           <!-- Mobile Number Column-->
           <!-- <ng-container matColumnDef="mobileNo">
             <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header> {{ 'Client_Component.tblColMobileNumber'| translate}} </th>
             <td mat-cell fxHide fxShow.gt-md *matCellDef="let client"> {{ client.mobileNo }} </td>
           </ng-container> -->
-    
+
           <!--Gender column-->
           <!-- <ng-container matColumnDef="gender">
             <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef> {{ 'Client_Component.tblColGender'| translate}}  </th>
             <td mat-cell fxHide fxShow.gt-md  *matCellDef="let client"> {{ client.gender.name }} </td>
           </ng-container> -->
-    
+
           <!-- Color Column -->
           <!-- <ng-container matColumnDef="office">
             <th mat-header-cell fxHide fxShow.gt-md  *matHeaderCellDef mat-sort-header='officeName'> {{ 'Client_Component.tblColOfficeName'| translate}}  </th>
             <td mat-cell fxHide fxShow.gt-md *matCellDef="let row"> {{row.officeName}} </td>
           </ng-container> -->
-    
+
           <!-- ID Column -->
           <!--
           <ng-container matColumnDef="staff">
             <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header='staffName'> {{ 'Client_Component.tblColStaffName'| translate}}  </th>
             <td mat-cell fxHide fxShow.gt-md  *matCellDef="let row"> {{row.staffName}} </td>
           </ng-container>
-    
+
           <ng-container matColumnDef="expandedDetail">
             <td mat-cell fxShow fxHide.gt-md *matCellDef="let element" [attr.colspan]="displayedColumns.length">
               <div class="example-element-detail"
@@ -104,16 +104,16 @@
               </div>
             </td>
           </ng-container>
-    
+
           <ng-container matColumnDef="link">
             <th mat-header-cell  *matHeaderCellDef></th>
             <td mat-cell *matCellDef="let row"  >
               <button mat-mini-fab color="primary" [routerLink]="[row.id,'identities']" [queryParams]="{ typeViewClient: 'view'}"
-    
+
                     [matTooltip]="'ShareLabel.lblViewDetail'| translate" matTooltipPosition="above">
                 <i class="fa fa-address-card" aria-hidden="true"></i></button></td>
           </ng-container>
-    
+
           <tr mat-header-row  *matHeaderRowDef="displayedColumns"></tr>
           <tr mat-row *matRowDef="let element; columns: displayedColumns;"
               class="example-element-row"
@@ -122,17 +122,17 @@
           </tr>
           <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
         </table>
-    
+
         <mat-paginator [length]="dataSource?.records$ | async" [pageSize]="10" [pageSizeOptions]="[10, 25, 50, 100]"
                        showFirstLastButtons></mat-paginator>
       </div>
-    
+
     </mat-card>
   </mat-tab>
   <mat-tab label="Nhân viên"></mat-tab>
   <mat-tab label="Đối tác dùng máy"></mat-tab>
-  
- 
+
+
 </mat-tab-group> -->
 <nav mat-tab-nav-bar>
   <a mat-tab-link

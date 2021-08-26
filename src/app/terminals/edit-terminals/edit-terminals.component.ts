@@ -272,11 +272,9 @@ export class EditTerminalsComponent implements OnInit, AfterViewInit {
 
   applyFilter(e : Event) {
     // TODO: Chỗ này cần chuyển thành biết Event, rồi trong hàm filter mới check để làm filter
-    let filterValue = (<HTMLInputElement>e.target).value || '';
+    const filterValue = (<HTMLInputElement>e.target).value || '';
     if (filterValue) {
-    filterValue = filterValue.trim();
-    filterValue = filterValue.toLowerCase();
-    this.dataSource.filter = filterValue;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
     }
   }
 

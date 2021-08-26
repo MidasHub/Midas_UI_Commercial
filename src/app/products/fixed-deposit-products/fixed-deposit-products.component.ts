@@ -3,7 +3,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Data } from '@angular/router';
 
 /** rxjs Imports */
 import { of } from 'rxjs';
@@ -23,19 +23,19 @@ export class FixedDepositProductsComponent implements OnInit {
   /** Columns to be displayed in fixed deposit products table. */
   displayedColumns: string[] = ['name', 'shortName'];
   /** Data source for fixed deposit products table. */
-  dataSource: MatTableDataSource<any>;
+  dataSource!: MatTableDataSource<any>;
 
   /** Paginator for fixed deposit products table. */
-  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+  @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
   /** Sorter for fixed deposit products table. */
-  @ViewChild(MatSort, { static: true }) sort: MatSort;
+  @ViewChild(MatSort, { static: true }) sort!: MatSort;
 
   /**
    * Retrieves the fixed deposit products data from `resolve`.
    * @param {ActivatedRoute} route Activated Route.
    */
   constructor(private route: ActivatedRoute) {
-    this.route.data.subscribe(( data: { fixedDepositProducts: any }) => {
+    this.route.data.subscribe(( data: { fixedDepositProducts: any } |Data) => {
       this.fixedDepositProductData = data.fixedDepositProducts;
     });
   }
@@ -44,8 +44,15 @@ export class FixedDepositProductsComponent implements OnInit {
    * Filters data in fixed deposit products table based on passed value.
    * @param {string} filterValue Value to filter data.
    */
-  applyFilter(filterValue: string) {
+  // applyFilter(filterValue: string) {
+  //   this.dataSource.filter = filterValue.trim().toLowerCase();
+  // }
+  applyFilter(e: Event) {
+    const filterValue = (<HTMLInputElement>e.target).value || '';
+    if (filterValue) {
+    // Your code here
     this.dataSource.filter = filterValue.trim().toLowerCase();
+    }
   }
 
   /**

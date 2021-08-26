@@ -12,7 +12,7 @@
   <div fxLayout="row" fxLayoutGap="20px">
     <mat-form-field fxFlex>
       <mat-label>Filter</mat-label>
-      <input matInput (keyup)="applyFilter($event.target.value)">
+      <input matInput (keyup)="applyFilter($event)">
     </mat-form-field>
   </div>
 
@@ -49,7 +49,7 @@
           <button class="cashier-action-button" mat-raised-button color="primary" matTooltip="View Transactions"
             (click)="routeEdit($event)" [routerLink]="[cashier.id, 'transactions']" *midasHasPermission="'ALLOCATECASHIER_TELLER'">
             <i class="fa fa-eye"></i>
-          </button>   
+          </button>
         </td>
       </ng-container>
 

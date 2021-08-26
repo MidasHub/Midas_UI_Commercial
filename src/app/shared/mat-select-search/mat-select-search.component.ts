@@ -97,7 +97,6 @@ import { MatOption } from '@angular/material/core';
  * }
  */
 @Component({
-
   selector: 'mat-select-search',
   templateUrl: './mat-select-search.component.html',
   styleUrls: ['./mat-select-search.component.scss'],
@@ -227,18 +226,26 @@ export class MatSelectSearchComponent implements OnInit, OnDestroy, AfterViewIni
     }
   }
 
-  onInputChange(value: any) {
-    const valueChanged = value !== this._value;
-    if (valueChanged) {
-      this._value = value;
-      this.onChange(value);
-      this.change.emit(value);
+  onInputChange(e: Event) {
+    // TODO: Chỗ này cần chuyển thành biết Event, rồi trong hàm filter mới check để làm filter
+    const filterValue = (<HTMLInputElement>e.target).value || '';
+    if (filterValue) {
+      const valueChanged = filterValue !== this._value;
+      if (valueChanged) {
+        this._value = filterValue;
+        this.onChange(filterValue);
+        this.change.emit(filterValue);
+      }
     }
   }
 
-  onBlur(value: string) {
-    this.writeValue(value);
-    this.onTouched();
+  onBlur(e: Event) {
+    // TODO: Chỗ này cần chuyển thành biết Event, rồi trong hàm filter mới check để làm filter
+    const value = (<HTMLInputElement>e.target).value || '';
+    if (value) {
+      this.writeValue(value);
+      this.onTouched();
+    }
   }
 
   registerOnChange(fn: Function) {
@@ -278,7 +285,10 @@ export class MatSelectSearchComponent implements OnInit, OnDestroy, AfterViewIni
       return;
     }
     this.searchSelectInput.nativeElement.value = '';
-    this.onInputChange('');
+    // this.onInputChange('');
+    this._value = '';
+    this.onChange('');
+    this.change.emit('');
     if (focus) {
       this._focus();
     }
