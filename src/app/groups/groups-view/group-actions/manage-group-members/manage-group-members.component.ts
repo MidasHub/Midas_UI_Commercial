@@ -13,7 +13,7 @@ import { MatDialog, MatDialogConfig, MatDialogRef, MAT_DIALOG_DATA } from '@angu
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
-import { ViewChild } from '@angular/core'; 
+import { ViewChild } from '@angular/core';
 import { Inject } from '@angular/core';
 /**
  * Manage Group Members Component
@@ -94,7 +94,7 @@ export class ManageGroupMembersComponent implements AfterViewInit,OnInit {
       this.groupsService.executeGroupCommand(this.groupData.id, 'associateClients', {clientMembers: [this.clientChoice.value.id]})
           .subscribe(() => { this.clientMembers.push(this.clientChoice.value); this.dataSource.data = this.clientMembers;});
     }
-    
+
   }
 
   /**
@@ -109,8 +109,8 @@ export class ManageGroupMembersComponent implements AfterViewInit,OnInit {
     removeMemberDialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {
         this.groupsService.executeGroupCommand(this.groupData.id, 'disassociateClients', {clientMembers: [client.id]})
-          .subscribe(() => { 
-            this.clientMembers.splice(index, 1); 
+          .subscribe(() => {
+            this.clientMembers.splice(index, 1);
             this.dataSource.data = this.clientMembers;
           });
       }
@@ -139,14 +139,14 @@ export class ManageGroupMembersComponent implements AfterViewInit,OnInit {
     });
     //dialogRef.afterClosed().subscribe();
   }
- 
+
   doFilterGroupClients(filterValue: string) {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
   getClientIdSelect(clientSelect:any){
     this.displayAddClient = true;
-    this.clientMembers.forEach((item)=>{ 
+    this.clientMembers?.forEach((item)=>{
       if(item.id === clientSelect.id){
         this.displayAddClient = false;
       }

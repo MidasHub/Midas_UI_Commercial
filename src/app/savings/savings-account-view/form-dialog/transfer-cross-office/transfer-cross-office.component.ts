@@ -19,21 +19,28 @@ export class TransferCrossOfficeComponent implements OnInit {
   savingsAccountData: any;
   isLoading: boolean = false;
   offices: any[] = [];
+  clientOfGroup: any[] = [];
   partners: any[] = [];
   partnersLocal: any[] = [];
   transferIc: boolean = false;
   transferToIc: boolean = false;
+  transferFromGroup: boolean = false;
+  groupId: string = null;
+  noteSuggest: string = null;
 
   constructor(
     private serviceClient: ClientsService,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private formBuilder: FormBuilder,
-    private bankService: BanksService,
     private savingsService: SavingsService,
-    private clientsService: ClientsService
+    private clientsService: ClientsService,
+    private groupsService: GroupsService
+
   ) {
     this.transferIc = data.transferIc;
     this.transferToIc = data.transferToIc;
+    this.transferFromGroup = data.transferFromGroup ? data.transferFromGroup : this.transferFromGroup ;
+    this.groupId = data.groupId;
     this.form = this.formBuilder.group({
       typeAdvanceCashes: ["", Validators.required],
       office: ["", Validators.required],
@@ -48,20 +55,7 @@ export class TransferCrossOfficeComponent implements OnInit {
     this.savingsAccountData = data.savingsAccountData;
   }
 
-  typeAdvanceCashes: any[] = [
-    {
-      id: "6",
-      name: "Chuyển tiền liên chi nhánh",
-    },
-    {
-      id: "7",
-      name: "Chuyển tiền nội bộ chi nhánh",
-    },
-    {
-      id: "8",
-      name: "Chuyển quỹ cuối ngày",
-    },
-  ];
+  typeAdvanceCashes: any[] = [];
 
   form: FormGroup;
   clients: any;
@@ -111,70 +105,84 @@ export class TransferCrossOfficeComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    if (this.transferIc && !this.transferToIc) {
-      this.typeAdvanceCashes = [
-        {
-          id: "58",
-          name: "Interchange: Chuyển tiền toàn cầu",
-        },
-        {
-          id: "59",
-          name: "Interchange: Chuyển tiền nội bộ IC",
-        },
-        {
-          id: "60",
-          name: "Interchange: Chuyển tiền về Chi nhánh",
-        },
-      ];
+    this.savingsService.getTransferFundTemplate().subscribe((result) => {
+      this.partnersLocal = result?.result?.listPartner;
+      this.offices = result.result.listOffice;
+      this.typeAdvanceCashes = result.result.listTransferOption;
+      if (!this.transferIc) {
 
-      this.form = this.formBuilder.group({
-        typeAdvanceCashes: ["58", Validators.required],
-        partner: ["", Validators.required],
-        office: ["", Validators.required],
-        client: ["", Validators.required],
-        savingAccountId: ["", Validators.required],
-        amount: ["", Validators.required],
-        note: [""],
-      });
-      this.modifiedForm();
+        if (this.transferFromGroup) {
+          this.typeAdvanceCashes = result.result.listTransferOptionFromGroupToClient;
 
-      this.form.get("typeAdvanceCashes")?.valueChanges.subscribe((value) => {
-        this.modifiedForm();
-      });
+          this.form = this.formBuilder.group({
+            typeAdvanceCashes: [this.typeAdvanceCashes[0].paymentType, Validators.required],
+            clientOfGroup: ["", Validators.required],
+            savingAccountId: ["", Validators.required],
+            amount: ["", Validators.required],
+            note: [""],
+          });
 
-      this.savingsService.getListIcPartner().subscribe((response: any) => {
-        this.partners = response.result.listClient;
-      });
-    } else {
-      if (this.transferIc && this.transferToIc) {
-        this.typeAdvanceCashes = [
-          {
-            id: "61",
-            name: "Interchange: Chuyển tiền về Ic",
-          },
-        ];
+          this.groupsService.getGroupMemberData(this.groupId).subscribe((result) => {
+            this.noteSuggest = `Đại lý ${result.name} thanh toán phí cho KH `;
+            this.clientOfGroup = result.clientMembers;
+          });
 
-        this.savingsService.getListPartner().subscribe((result: any) => {
-          this.partnersLocal = result?.result?.listPartner;
-        });
+          this.form.get("clientOfGroup")?.valueChanges.subscribe((value) => {
+            const clientChosen = this.clientOfGroup.filter((client: any) => client.id == value);
+            this.form.get('note').setValue(`${this.noteSuggest} ${clientChosen[0]?.displayName}`)
+            this.clientsService.getClientAccountDataCross(value).subscribe((savings) => {
+              const ListAccount = savings?.result?.clientAccount?.savingsAccounts;
+              this.accounts = ListAccount.filter((account: any) => account.status.id == 300);
+            });
+          });
 
-        this.form = this.formBuilder.group({
-          typeAdvanceCashes: ["61", Validators.required],
-          partnerLocal: ["", Validators.required],
-          savingAccountId: ["", Validators.required],
-          amount: ["", Validators.required],
-          note: [""],
-        });
+        }
 
-        this.clientsService.getICClientAccount().subscribe((res) => {
-          this.accounts = res.result.clientAccount.savingsAccounts;
-          this.accounts = this.accounts.filter((account) => account.status.id == 300);
-        });
+      } else {
+        if (this.transferIc && !this.transferToIc) {
+          this.typeAdvanceCashes = result.result.listTransferOptionFromIC;
+
+          this.form = this.formBuilder.group({
+            typeAdvanceCashes: [this.typeAdvanceCashes[0].paymentType, Validators.required],
+            partner: ["", Validators.required],
+            office: ["", Validators.required],
+            client: ["", Validators.required],
+            savingAccountId: ["", Validators.required],
+            amount: ["", Validators.required],
+            note: [""],
+          });
+          this.modifiedForm();
+
+          this.form.get("typeAdvanceCashes")?.valueChanges.subscribe((value) => {
+            this.modifiedForm();
+          });
+
+          this.savingsService.getListIcPartner().subscribe((response: any) => {
+            this.partners = response.result.listClient;
+          });
+        } else {
+          if (this.transferIc && this.transferToIc) {
+            this.typeAdvanceCashes = result.result.listTransferOptionToIC;
+
+            this.form = this.formBuilder.group({
+              typeAdvanceCashes: [this.typeAdvanceCashes[0].paymentType, Validators.required],
+              partnerLocal: ["", Validators.required],
+              savingAccountId: ["", Validators.required],
+              amount: ["", Validators.required],
+              note: [""],
+            });
+
+            this.clientsService.getICClientAccount().subscribe((res) => {
+              this.accounts = res.result.clientAccount.savingsAccounts;
+              this.accounts = this.accounts.filter((account) => account.status.id == 300);
+            });
+          }
+        }
       }
-    }
-    this.bankService.getListOfficeCommon().subscribe((offices: any) => {
-      this.offices = offices.result.listOffice;
     });
+    // this.bankService.getListOfficeCommon().subscribe((offices: any) => {
+    //   this.offices = offices.result.listOffice;
+    // });
 
     this.form.get("office")?.valueChanges.subscribe((value) => {
       this.serviceClient.getStaffsByOffice(value).subscribe((result) => {

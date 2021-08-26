@@ -45,9 +45,7 @@ export class SavingsAccountViewComponent implements OnInit {
   isBankAcccount = false;
   isCCA = false;
   isCash = false;
-
   currentUser: any;
-
   savingProduct: any;
   isIcAccount: boolean = false;
 
@@ -78,6 +76,7 @@ export class SavingsAccountViewComponent implements OnInit {
       }
       this.savingsDatatables = data.savingsDatatables;
     });
+
     if (this.router.url.includes("clients")) {
       this.entityType = "Client";
     } else if (this.router.url.includes("groups")) {
@@ -106,7 +105,6 @@ export class SavingsAccountViewComponent implements OnInit {
           this.iconBank = `assets/images/banks/${name}.png`;
         }
       }
-      console.log("----------" + this.isBankAcccount);
     }
     this.productsService.getSavingProduct(savingsProductId).subscribe((data: any) => {
       this.savingProduct = data;
@@ -132,6 +130,17 @@ export class SavingsAccountViewComponent implements OnInit {
           taskPermissionName: "CREATE_ACCOUNTTRANSFER",
           icon: "fa fa-paper-plane",
           action: "Transfer Funds",
+        });
+      }
+
+      if (["ACA0"].indexOf(this.savingProduct.shortName) !== -1) {
+        this.buttonConfig.addButton({
+          name: this.i18n.getTranslate(
+            "Saving_Account_Component.ViewSavingAccount.buttonTransferFundsFromGroupToClient"
+          ),
+          taskPermissionName: "CREATE_ACCOUNTTRANSFER",
+          icon: "fa fa-paper-plane",
+          action: "transferFromGroupToClient",
         });
       }
 
@@ -172,24 +181,6 @@ export class SavingsAccountViewComponent implements OnInit {
       }
     });
     this.setConditionalButtons();
-  }
-
-  displayDescription(type: string) {
-    let typeAdvanceCashes: any[] = [
-      {
-        id: "19",
-        value: "Ứng tiền phí",
-      },
-      {
-        id: "62",
-        value: "Thu hộ",
-      },
-      {
-        id: "-62",
-        value: "Chi hộ",
-      },
-    ];
-    return typeAdvanceCashes.find((v) => v.id === type)?.value || "N/A";
   }
 
   checkHaveSavingAccountActive(
@@ -285,6 +276,38 @@ export class SavingsAccountViewComponent implements OnInit {
     });
   }
 
+  transferFromGroupToClient() {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.data = {
+      transferFromGroup: true,
+      groupId: this.savingsAccountData.groupId,
+      savingsAccountData: this.savingsAccountData,
+    };
+
+    dialogConfig.minWidth = 400;
+    dialogConfig.disableClose = true;
+    const refDialog = this.dialog.open(TransferCrossOfficeComponent, dialogConfig);
+    refDialog.afterClosed().subscribe((response: any) => {
+      if (response) {
+        const { typeAdvanceCashes, savingAccountId, note, amount } = response?.data?.value;
+
+        this.savingsService
+          .transferCrossOfficeCashTransaction({
+            buSavingAccount: this.savingsAccountData.id,
+            clientSavingAccount: savingAccountId,
+            note: note,
+            amountAdvanceCash: amount,
+            paymentTypeId: typeAdvanceCashes,
+            groupId: this.savingsAccountData.groupId,
+          })
+          .subscribe((res: any) => {
+            const message = `Thực hiện thành công!`;
+            this.savingsService.handleResponseApiSavingTransaction(res, message, true);
+          });
+      }
+    });
+  }
+
   transferIc(ToIc: boolean) {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.data = {
@@ -331,8 +354,8 @@ export class SavingsAccountViewComponent implements OnInit {
         buSavingAccount: this.savingsAccountData.id,
         clientSavingAccount: SavingClientId,
         noteAdvance: clientAdvanceCash.displayName
-          ? `${clientAdvanceCash.displayName}${noteAdvance ? ` - ${noteAdvance}` : `` }`
-          : `${clientAdvanceCash.name}${noteAdvance ? ` - ${noteAdvance}` : `` }`,
+          ? `${clientAdvanceCash.displayName}${noteAdvance ? ` - ${noteAdvance}` : ``}`
+          : `${clientAdvanceCash.name}${noteAdvance ? ` - ${noteAdvance}` : ``}`,
         amountAdvanceCash: amountAdvance,
         typeAdvanceCash: typeAdvanceCash,
       })
@@ -525,6 +548,9 @@ export class SavingsAccountViewComponent implements OnInit {
         break;
       case "advanceCashPartnerTransaction":
         this.advanceCashPartnerTransaction();
+        break;
+      case "transferFromGroupToClient":
+        this.transferFromGroupToClient();
         break;
       case "transferCrossOfficeCash":
         this.transferCrossOfficeCash();

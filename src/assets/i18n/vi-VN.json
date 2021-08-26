@@ -541,6 +541,7 @@
       "labelAccount": "Tài khoản",
       "labelAccountSummary": "Tóm tắt tài khoản",
       "buttonTransferFunds": "Chuyển tiền",
+      "buttonTransferFundsFromGroupToClient": "Chuyển tiền phí cho thành viên",
       "buttonWithdraw": "Rút tiền",
       "buttonDeposit": "Nộp tiền",
       "buttonMore": "Khác",

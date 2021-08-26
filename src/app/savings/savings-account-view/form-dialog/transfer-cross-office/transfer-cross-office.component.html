@@ -11,8 +11,8 @@
   <mat-form-field fxFlex="96%" *ngIf="form.contains('typeAdvanceCashes')">
     <mat-label>Loại </mat-label>
     <mat-select required formControlName="typeAdvanceCashes">
-      <mat-option *ngFor="let type of typeAdvanceCashes" [value]="type.id">
-        {{ type.name }}
+      <mat-option *ngFor="let type of typeAdvanceCashes" [value]="type.paymentType">
+        {{ type.codeValue }}
       </mat-option>
     </mat-select>
   </mat-form-field>
@@ -25,10 +25,18 @@
     </mat-select>
   </mat-form-field>
   <mat-form-field class="select-book" *ngIf="form.contains('client')">
-    <mat-label>Nhân viên</mat-label>
+    <mat-label>Nhân viên nhận</mat-label>
     <mat-select required formControlName="client">
       <mat-option *ngFor="let staff of staffs" [value]="staff.staffId">
         {{ staff.displayName }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field class="select-book" *ngIf="form.contains('clientOfGroup')">
+    <mat-label>khách hàng nhận</mat-label>
+    <mat-select required formControlName="clientOfGroup">
+      <mat-option *ngFor="let client of clientOfGroup" [value]="client.id">
+        {{ client.displayName }}
       </mat-option>
     </mat-select>
   </mat-form-field>
@@ -52,7 +60,7 @@
     <mat-label>Tài khoản</mat-label>
     <mat-select required formControlName="savingAccountId">
       <mat-option *ngFor="let account of accounts" [value]="account.id">
-        {{ account.externalId }}
+        {{ account.externalId ? account.externalId : account.accountNo }}
       </mat-option>
     </mat-select>
   </mat-form-field>

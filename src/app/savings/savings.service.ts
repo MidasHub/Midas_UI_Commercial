@@ -43,6 +43,12 @@ export class SavingsService {
     this.environment = environment;
   }
 
+  getTransferFundTemplate(): Observable<any> {
+    let httpParams = this.commonHttpParams.getCommonHttpParams();
+
+    return this.http.post(`${this.GatewayApiUrlPrefix}/savingTransaction/get_transfer_fund_template`, httpParams);
+  }
+
   getAdvanceFeeTemplate(): Observable<any> {
     let httpParams = this.commonHttpParams.getCommonHttpParams();
 
@@ -51,10 +57,12 @@ export class SavingsService {
 
   getAdvanceFeeOnDueDayCardTemplate(clientId: string): Observable<any> {
     let httpParams = this.commonHttpParams.getCommonHttpParams();
-    httpParams = httpParams.set('clientId', clientId);
+    httpParams = httpParams.set("clientId", clientId);
 
-
-    return this.http.post(`${this.GatewayApiUrlPrefix}/savingTransaction/get_advance_fee_on_due_day_card_template`, httpParams);
+    return this.http.post(
+      `${this.GatewayApiUrlPrefix}/savingTransaction/get_advance_fee_on_due_day_card_template`,
+      httpParams
+    );
   }
 
   makeFunForMarketing(accountSavingIdFrom: string, clientName: string): Observable<any> {
@@ -200,6 +208,9 @@ export class SavingsService {
     httpParams = httpParams.set("note", info.note);
     httpParams = httpParams.set("amountAdvanceCash", info.amountAdvanceCash);
     httpParams = httpParams.set("clientSavingAccount", info.clientSavingAccount);
+    if (info.groupId) {
+      httpParams = httpParams.set("groupId", info.groupId);
+    }
 
     return this.http.post(
       `${this.GatewayApiUrlPrefix}/savingTransaction/transfer_cross_office_transaction`,

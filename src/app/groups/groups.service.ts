@@ -115,6 +115,16 @@ export class GroupsService {
   }
 
   /**
+   * @param {string} groupId Group Id of group to get data for.
+   * @param {string} template? Is template data required.
+   * @returns {Observable<any>} Group data.
+   */
+   getGroupMemberData(groupId: string, template?: string): Observable<any> {
+    let httpParams = new HttpParams().set('associations', 'clientMembers');
+    return this.http.get(`/groups/${groupId}`, { params: httpParams });
+  }
+
+  /**
    * @param groupId Group Id of group to get data for.
    * @returns {Observable<any>} Group Summary data.
    */
