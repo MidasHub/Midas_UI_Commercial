@@ -26,7 +26,7 @@ export class SharesAccountChargesStepComponent implements OnInit, OnChanges {
   /** Shares Account Template */
   @Input() sharesAccountTemplate: any;
   /** Currency Code */
-  @Input() currencyCode?: FormControl;
+  @Input() currencyCode: FormControl = new FormControl();
 
   /** Charge Data */
   chargeData: any = [];
@@ -45,7 +45,7 @@ export class SharesAccountChargesStepComponent implements OnInit, OnChanges {
   constructor(public dialog: MatDialog) {}
 
   ngOnInit() {
-    this.currencyCode?.valueChanges.subscribe(() => {
+    this.currencyCode.valueChanges.subscribe(() => {
       if (!this.isChargesPatched && this.sharesAccountTemplate.charges) {
         this.chargesDataSource = this.sharesAccountTemplate.charges;
         this.isChargesPatched = true;

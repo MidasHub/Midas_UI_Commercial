@@ -16,7 +16,7 @@ import { trigger, state, transition, animate, style } from '@angular/animations'
 export class FixedDepositProductPreviewStepComponent implements OnInit {
 
   @Input() fixedDepositProductsTemplate: any;
-  @Input() chartSlabsDisplayedColumns?: any[];
+  @Input() chartSlabsDisplayedColumns: any[]=[];
   @Input() accountingRuleData: any;
   @Input() fixedDepositProduct: any;
   @Output() submit = new EventEmitter();

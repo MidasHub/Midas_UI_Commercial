@@ -37,13 +37,13 @@ export class ToolbarComponent implements OnInit {
   /** Sets the initial state of sidenav as collapsed. Not collapsed if false. */
   sidenavCollapsed = true;
   currentUser: any = {};
-  userFullname: string;
-  isHandset: boolean;
-  isDesktop: boolean;
+  userFullname!: string;
+  isHandset!: boolean;
+  isDesktop!: boolean;
   isCommercial: boolean = environment.isCommercial;
 
   /** Instance of sidenav. */
-  @Input() sidenav: MatSidenav;
+  @Input() sidenav!: MatSidenav;
   /** Sidenav collapse event. */
   @Output() collapse = new EventEmitter<boolean>();
 

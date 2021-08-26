@@ -12,7 +12,7 @@ import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.co
 export class RecurringDepositProductChargesStepComponent implements OnInit {
 
   @Input() recurringDepositProductsTemplate: any;
-  @Input() currencyCode?: FormControl;
+  @Input() currencyCode: FormControl = new FormControl();
 
   chargeData: any;
 
@@ -29,7 +29,7 @@ export class RecurringDepositProductChargesStepComponent implements OnInit {
     } else {
       this.chargesDataSource = [];
     }
-    this.currencyCode?.valueChanges.subscribe(() => this.chargesDataSource = []);
+    this.currencyCode.valueChanges.subscribe(() => this.chargesDataSource = []);
   }
 
   addCharge(charge: any) {

@@ -31,7 +31,7 @@ import { tap } from 'rxjs/operators';
 export class SpendingLimitComponent implements OnInit, AfterViewInit {
   displayedColumns: any[] = ['refid', 'month', 'year', 'status', 'paymentTypeId', 'action'];
 
-  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
+  @ViewChild(MatPaginator, {static: true}) paginator!: MatPaginator;
   formSearch: FormGroup;
   data: any = {};
   offices: any[] = [];
@@ -45,7 +45,7 @@ export class SpendingLimitComponent implements OnInit, AfterViewInit {
       'month': [new Date().getMonth() + 1]
     });
   }
-  textFilter: string;
+  textFilter!: string;
   dataSource: any[] = [];
   ngOnInit(): void {
     this.getData();
@@ -64,7 +64,7 @@ export class SpendingLimitComponent implements OnInit, AfterViewInit {
       const  m = this.data?.listSavingLimitConfig.filter((item: any) => {
         const keys = Object.keys(item);
         for (const key of keys) {
-          console.log(item[key], this.textFilter)
+          console.log(item[key], this.textFilter);
           switch (key) {
             case 'paymentTypeId':
               if (String(this.getPaymetType(item[key])).indexOf(this.textFilter) !== -1) {
@@ -84,10 +84,13 @@ export class SpendingLimitComponent implements OnInit, AfterViewInit {
       this.dataSource = this.data.listSavingLimitConfig.slice(offces, offces + this.paginator.pageSize);
     }
   }
-  applyFilter(text: string) {
+  applyFilter(e: Event) {
+    const text = (<HTMLInputElement>e.target).value || '';
+  if (text) {
     console.log(text);
     this.textFilter = String(text).toLowerCase();
     this.loadPage();
+  }
   }
 
   getPaymetType(type: string) {
@@ -141,8 +144,8 @@ export class SpendingLimitComponent implements OnInit, AfterViewInit {
   }
   getData() {
     const date = new Date();
-    let year = this.formSearch.get('year').value;
-    let month = this.formSearch.get('month').value;
+    let year = this.formSearch.get('year')?.value;
+    let month = this.formSearch.get('month')?.value;
     if (!year) {
       year = date.getFullYear();
     }
@@ -154,7 +157,7 @@ export class SpendingLimitComponent implements OnInit, AfterViewInit {
       console.log(data);
       if (data) {
         const offces = this.paginator.pageIndex * this.paginator.pageSize;
-        console.log(offces, this.paginator.pageIndex , this.paginator.pageSize)
+        console.log(offces, this.paginator.pageIndex , this.paginator.pageSize);
         this.data = data?.data;
         this.offices = this.data?.listOffice;
         this.paymetTypes = this.data?.listPaymentType;

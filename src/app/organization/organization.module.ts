@@ -143,7 +143,7 @@ import { CreateHolidayComponent } from './holidays/create-holiday/create-holiday
     EditLoanProvisioningCriteriaComponent,
     StandingInstructionsHistoryComponent,
     FundMappingComponent,
-    CreateHolidayComponent,
+    CreateHolidayComponent
   ]
 })
 export class OrganizationModule { }

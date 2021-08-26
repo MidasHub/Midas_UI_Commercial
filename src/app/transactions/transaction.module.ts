@@ -33,7 +33,7 @@ import {MemberInGroupResolver} from './resolver/member-in-group.resolver';
 import {MemberAvailableInGroupResolver} from './resolver/member-available-in-group.resolver';
 import { AddInformationCardBatchComponent } from './dialog/add-information-card-batch/add-information-card-batch.component';
 import { CreateSuccessTransactionDialogComponent } from './dialog/create-success-transaction-dialog/create-success-transaction-dialog.component';
-import { MainboardComponent } from 'app/home/mainboard/mainboard.component';
+// import { MainboardComponent } from 'app/home/mainboard/mainboard.component';
 import { MakeFeeOnAdvanceComponent } from './dialog/make-fee-on-advance/make-fee-on-advance.component';
 import { ValidCheckTransactionHistoryDialogComponent } from './dialog/valid-check-transaction-history/valid-check-transaction-history-dialog.component';
 import { ManageIcTransactionComponent } from './manage-ic-transaction/manage-ic-transaction.component';
@@ -73,8 +73,8 @@ import { AddSubmitTransactionDialogComponent } from './dialog/add-submit-transac
     ValidCheckTransactionHistoryDialogComponent,
     ManageIcTransactionComponent,
     ConfirmHoldTransactionDialogComponent,
-    AddSubmitTransactionDialogComponent,
-    MainboardComponent
+    AddSubmitTransactionDialogComponent
+    // MainboardComponent
   ],
 
   imports: [

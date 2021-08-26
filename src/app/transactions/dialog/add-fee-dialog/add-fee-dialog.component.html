@@ -44,7 +44,8 @@
         </mat-form-field>
         <mat-form-field fxFlex="96%">
           <mat-label>Ghi chú</mat-label>
-          <textarea matTextareaAutosize matInput formControlName="notePaid"></textarea>
+          <textarea cdkTextareaAutosize
+          #autosize="cdkTextareaAutosize" matInput formControlName="notePaid"></textarea>
         </mat-form-field>
       </div>
     </div>
@@ -80,7 +81,10 @@
 
         <mat-form-field *ngIf="formDialogGet.contains('noteGet')" fxFlex="96%">
           <mat-label>Ghi chú</mat-label>
-          <textarea matTextareaAutosize matInput formControlName="noteGet"></textarea>
+          <!-- <textarea matTextareaAutosize matInput formControlName="noteGet"></textarea> -->
+          <textarea matInput cdkTextareaAutosize
+          #autosize="cdkTextareaAutosize"
+          formControlName="noteGet"></textarea>
         </mat-form-field>
       </div>
     </div>

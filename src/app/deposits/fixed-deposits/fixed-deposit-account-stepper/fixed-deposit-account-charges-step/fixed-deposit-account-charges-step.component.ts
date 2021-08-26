@@ -29,7 +29,7 @@ export class FixedDepositAccountChargesStepComponent implements OnInit, OnChange
   /** Validity of fixed depsits account form */
   @Input() fixedDepositAccountFormValid?: boolean;
   /** Currency Code */
-  @Input() currencyCode?: FormControl;
+  @Input() currencyCode: FormControl = new FormControl();
 
   /** Charges Data */
   chargeData: any;
@@ -50,7 +50,7 @@ export class FixedDepositAccountChargesStepComponent implements OnInit, OnChange
               private datePipe: DatePipe) { }
 
   ngOnInit() {
-    this.currencyCode?.valueChanges.subscribe(() => {
+    this.currencyCode.valueChanges.subscribe(() => {
       if (!this.isChargesPatched && this.fixedDepositsAccountTemplate.charges) {
         this.chargesDataSource = this.fixedDepositsAccountTemplate.charges.map((charge: any) => ({...charge, id: charge.chargeId})) || [];
         this.isChargesPatched = true;

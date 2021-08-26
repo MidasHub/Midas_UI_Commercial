@@ -12,7 +12,7 @@ import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.co
 export class LoanProductChargesStepComponent implements OnInit {
 
   @Input() loanProductsTemplate: any;
-  @Input() currencyCode?: FormControl;
+  @Input() currencyCode: FormControl = new FormControl();
   @Input() multiDisburseLoan?: FormControl;
 
   chargeData: any;
@@ -33,7 +33,7 @@ export class LoanProductChargesStepComponent implements OnInit {
     this.chargesDataSource = this.loanProductsTemplate.charges || [];
     this.pristine = true;
 
-    this.currencyCode?.valueChanges.subscribe(() => this.chargesDataSource = []);
+    this.currencyCode.valueChanges.subscribe(() => this.chargesDataSource = []);
     this.multiDisburseLoan?.valueChanges.subscribe(() => this.chargesDataSource = []);
   }
 
