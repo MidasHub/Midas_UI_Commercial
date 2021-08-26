@@ -27,12 +27,11 @@ const colors: any = {
   styleUrls: ['./calendar.component.scss'],
 })
 export class CalendarComponent {
-
   constructor(private alertService: AlertService, private bankService: BanksService) {
     this.setEvents();
   }
   events: CalendarEvent[] = [];
-  @ViewChild('modalContent', { static: true }) modalContent: TemplateRef<any>|any;
+  @ViewChild('modalContent', { static: true }) modalContent: TemplateRef<any> | any;
 
   view: CalendarView = CalendarView.Month;
 
@@ -78,26 +77,28 @@ export class CalendarComponent {
 
   setEvents() {
     this.bankService?.getAllCardOnDueDay().subscribe((response: any) => {
-      this.events = [];
-      const listCard = response.result.listCard;
-      listCard.forEach((element: any) => {
-        const date: Date = new Date();
-        date.setDate(element.dueDay);
-        const event = {
-          start: date,
-          end: date,
-          title: `Có ${element.numOfCard} thẻ đến hạn`,
-          color: colors.red,
-          actions: this.actions,
-          allDay: true,
-          resizable: {
-            beforeStart: true,
-            afterEnd: true,
-          },
-          draggable: true,
-        };
-        this.events.push(event);
-      });
+      if (response.result) {
+        this.events = [];
+        const listCard = response.result.listCard;
+        listCard.forEach((element: any) => {
+          const date: Date = new Date();
+          date.setDate(element.dueDay);
+          const event = {
+            start: date,
+            end: date,
+            title: `Có ${element.numOfCard} thẻ đến hạn`,
+            color: colors.red,
+            actions: this.actions,
+            allDay: true,
+            resizable: {
+              beforeStart: true,
+              afterEnd: true,
+            },
+            draggable: true,
+          };
+          this.events.push(event);
+        });
+      }
     });
   }
 

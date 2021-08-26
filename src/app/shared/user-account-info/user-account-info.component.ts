@@ -59,9 +59,10 @@ export class UserAccountInfoComponent implements OnInit, OnDestroy {
   fetchSavingAccountOfUser() {
     this.midasClientService.getInfoSavingAccountByUserId()
     .subscribe((response: any) => {
-
+      if (response.result) {
       this.listSaving = response.result.listSavingAccount ;
       this.totalBalance = response.result.totalBalance ;
+      }
 
     });
 

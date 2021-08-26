@@ -258,18 +258,20 @@ export class AuthenticationService {
    * Checks if the setting module available.
    * @returns {boolean} True if the two factor access token is valid or two factor authentication is not required.
    */
-  checkAppModuleSetting(moduleName: string|null): boolean {
+  checkAppModuleSetting(moduleName: string | null): boolean {
     const credentials = this.getCredentials();
-    if (credentials && (moduleName !== null)) {
+    if (credentials && moduleName !== null) {
       if (!credentials.appSettingModule) {
         this.midasClientService
           .getInfoModuleActive(credentials.userId, credentials.officeId, credentials.base64EncodedAuthenticationKey)
           .subscribe((response: any) => {
-            credentials.appSettingModule = response?.result?.appSettingModule;
+            if (response.result) {
+              credentials.appSettingModule = response.result.appSettingModule;
 
-            this.storage.setItem(this.credentialsStorageKey, JSON.stringify(credentials));
+              this.storage.setItem(this.credentialsStorageKey, JSON.stringify(credentials));
 
-            this.checkAppModuleService(moduleName, credentials);
+              this.checkAppModuleService(moduleName, credentials);
+            }
           });
       } else {
         return this.checkAppModuleService(moduleName, credentials);
@@ -277,8 +279,10 @@ export class AuthenticationService {
 
       if (!credentials.officeHierarchy) {
         this.organizationService.getOffice(String(credentials.officeId)).subscribe((response: any) => {
+          if (response.hierarchy) {
           credentials.officeHierarchy = response.hierarchy;
           this.storage.setItem(this.credentialsStorageKey, JSON.stringify(credentials));
+          }
         });
       }
     }
