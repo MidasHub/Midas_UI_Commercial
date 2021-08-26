@@ -25,7 +25,7 @@ export class EditUserComponent implements OnInit {
   /** Roles Data */
   rolesData: any;
   /** Edit User form. */
-  editUserForm!: FormGroup;
+  editUserForm: FormGroup = new FormGroup({});
 
   /**
    * Retrieves the offices data from `resolve`.

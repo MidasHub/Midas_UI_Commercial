@@ -22,7 +22,7 @@ export class AddLoanChargeComponent implements OnInit {
   /** Maximum Due Date allowed. */
   maxDate = new Date();
   /** Add Loan Charge form. */
-  loanChargeForm!: FormGroup;
+  loanChargeForm: FormGroup = new FormGroup({});
   /** loan charge options. */
   loanChargeOptions!: {
     id: number;

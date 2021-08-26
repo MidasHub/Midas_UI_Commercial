@@ -23,7 +23,7 @@ export class CloseGroupComponent implements OnInit {
   /** Maximum date allowed. */
   maxDate = new Date();
   /** Close Group form. */
-  closeGroupForm!: FormGroup;
+  closeGroupForm: FormGroup = new FormGroup({});
   /** Group Closure Data */
   closureData: any;
   /** Group Id */

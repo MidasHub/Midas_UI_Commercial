@@ -25,7 +25,7 @@ export class SharesAccountDetailsStepComponent implements OnInit {
   /** Product Data */
   productData: any;
   /** Shares Account Details Form */
-  sharesAccountDetailsForm!: FormGroup;
+  sharesAccountDetailsForm: FormGroup = new FormGroup({});
 
   /** Shares Account Template with product data  */
   @Output() sharesAccountProductTemplate = new EventEmitter();

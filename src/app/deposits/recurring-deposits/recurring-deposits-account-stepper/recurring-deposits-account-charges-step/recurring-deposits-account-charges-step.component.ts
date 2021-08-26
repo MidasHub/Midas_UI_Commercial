@@ -26,7 +26,7 @@ export class RecurringDepositsAccountChargesStepComponent implements OnInit, OnC
 
   @Input() recurringDepositsAccountTemplate: any;
   @Input() recurringDepositsAccountProductTemplate: any;
-  @Input() currencyCode: FormControl = new FormControl();
+  @Input() currencyCode: FormControl | any;
   @Input() recurringDepositAccountFormValid?: boolean;
 
   /** Charges Data */

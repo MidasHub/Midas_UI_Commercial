@@ -33,7 +33,7 @@ export class PrepayLoanComponent implements OnInit {
   /** Maximum Date allowed. */
   maxDate = new Date();
   /** Prepay Loan form. */
-  prepayLoanForm!: FormGroup;
+  prepayLoanForm: FormGroup = new FormGroup({});
 
   /**
    * @param {FormBuilder} formBuilder Form Builder.

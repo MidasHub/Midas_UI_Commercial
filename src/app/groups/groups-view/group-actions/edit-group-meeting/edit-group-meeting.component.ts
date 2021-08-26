@@ -23,7 +23,7 @@ export class EditGroupMeetingComponent implements OnInit {
   /** Maximum date allowed. */
   maxDate = new Date();
   /** Group Meeting form. */
-  groupEditMeetingForm!: FormGroup;
+  groupEditMeetingForm: FormGroup = new FormGroup({});
   /** Calendar Template Data */
   calendarTemplate: any;
   /** Group Id */

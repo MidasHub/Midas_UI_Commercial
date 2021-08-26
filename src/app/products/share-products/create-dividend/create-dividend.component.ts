@@ -18,7 +18,7 @@ import { ProductsService } from 'app/products/products.service';
 export class CreateDividendComponent implements OnInit {
 
   /** Create Dividend Form. */
-  createDividendForm!: FormGroup;
+  createDividendForm: FormGroup = new FormGroup({});
   /** Share Product data. */
   shareProductData: any;
   /** Minimum Date allowed. */

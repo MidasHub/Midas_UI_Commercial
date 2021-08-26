@@ -25,7 +25,7 @@ export class EditStandingInstructionsComponent implements OnInit {
   /** Allow Client Edit */
   allowclientedit = false;
   /** Edit Standing Instructions form. */
-  editStandingInstructionsForm!: FormGroup;
+  editStandingInstructionsForm: FormGroup = new FormGroup({});
   /** Priority Type Data */
   priorityTypeData: any;
   /** Status Type Data */

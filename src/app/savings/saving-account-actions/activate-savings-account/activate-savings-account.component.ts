@@ -23,7 +23,7 @@ export class ActivateSavingsAccountComponent implements OnInit {
   /** Maximum date allowed. */
   maxDate = new Date();
   /** Activate Savings Account form. */
-  activateSavingsAccountForm!: FormGroup;
+  activateSavingsAccountForm: FormGroup = new FormGroup({});
   /** Savings Account Id */
   accountId: any;
 

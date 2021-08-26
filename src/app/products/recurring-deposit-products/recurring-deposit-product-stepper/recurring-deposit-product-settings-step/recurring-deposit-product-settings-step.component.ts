@@ -10,7 +10,7 @@ export class RecurringDepositProductSettingsStepComponent implements OnInit {
 
   @Input() recurringDepositProductsTemplate: any;
 
-  recurringDepositProductSettingsForm!: FormGroup;
+  recurringDepositProductSettingsForm: FormGroup = new FormGroup({});
 
   lockinPeriodFrequencyTypeData: any;
   periodFrequencyTypeData: any;

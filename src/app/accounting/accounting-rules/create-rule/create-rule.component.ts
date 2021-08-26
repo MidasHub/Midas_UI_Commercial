@@ -20,7 +20,7 @@ import { oneOfTheFieldsIsRequiredValidator } from '../one-of-the-fields-is-requi
 export class CreateRuleComponent implements OnInit {
 
   /** Accounting rule form. */
-  accountingRuleForm!: FormGroup;
+  accountingRuleForm: FormGroup = new FormGroup({});
   /** Office data. */
   officeData: any;
   /** GL Account data. */

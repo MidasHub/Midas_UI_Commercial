@@ -17,7 +17,7 @@ import { ClientsService } from 'app/clients/clients.service';
 export class UpdateClientSavingsAccountComponent implements OnInit {
 
   /** Client Update Savings Account form. */
-  clientSavingsAccountForm!: FormGroup;
+  clientSavingsAccountForm: FormGroup = new FormGroup({});
   /** Savings Accounts Data */
   savingsAccounts: any;
   /** Client Data */

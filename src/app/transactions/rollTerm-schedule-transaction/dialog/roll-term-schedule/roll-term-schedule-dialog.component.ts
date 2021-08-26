@@ -32,7 +32,7 @@ export class RollTermScheduleDialogComponent implements OnInit {
   isLoading = false;
   displayedColumns: string[] = ['transaction', 'txnDate', 'amount', 'feePaid', 'fee', 'getAmount', 'actions'];
   rollTermId: string;
-  form!: FormGroup;
+  form: FormGroup = new FormGroup({});
   pristine?: boolean;
   currentUser: any;
   permitFee = false;

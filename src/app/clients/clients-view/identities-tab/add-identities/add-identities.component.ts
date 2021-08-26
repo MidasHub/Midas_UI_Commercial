@@ -17,7 +17,7 @@ const log = new Logger('-Add-Identities-');
   styleUrls: ['./add-identities.component.scss'],
 })
 export class AddIdentitiesComponent implements OnInit {
-  form!: FormGroup;
+  form: FormGroup = new FormGroup({});
   documentTypes: any[];
   statusOptions: any[] = [
     { value: 'Active', description: 'Giử thẻ' },

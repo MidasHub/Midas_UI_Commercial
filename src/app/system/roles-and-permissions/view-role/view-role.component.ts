@@ -40,9 +40,9 @@ export class ViewRoleComponent implements OnInit {
   /** Role ID */
   roleId: any;
   /** Creates permission form  */
-  formGroup!: FormGroup;
+  formGroup: FormGroup = new FormGroup({});
   /** Creates Backup form */
-  backupform!: FormGroup;
+  backupform: FormGroup = new FormGroup({});
   /** Temporarily stores Permission data */
   tempPermissionUIData!: {
     permissions: { code: string }[]

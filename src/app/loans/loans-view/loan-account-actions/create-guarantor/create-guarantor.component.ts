@@ -20,7 +20,7 @@ export class CreateGuarantorComponent implements OnInit, AfterViewInit {
 
   @Input() dataObject: any;
   /** New Guarantor Form */
-  newGuarantorForm!: FormGroup;
+  newGuarantorForm: FormGroup = new FormGroup({});
   /** Loan ID */
   loanId: string;
   /** Relation Types */

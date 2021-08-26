@@ -17,7 +17,7 @@ import { ClientsService } from 'app/clients/clients.service';
 export class RejectClientTransferComponent implements OnInit {
 
   /** Reject Client Transfer form. */
-  rejectClientTransferForm!: FormGroup;
+  rejectClientTransferForm: FormGroup = new FormGroup({});
   /** Client Id */
   clientId: any;
   /** Transfer Date */

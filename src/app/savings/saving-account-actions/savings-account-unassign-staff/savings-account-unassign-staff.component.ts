@@ -23,7 +23,7 @@ export class SavingsAccountUnassignStaffComponent implements OnInit {
   /** Maximum date allowed. */
   maxDate = new Date();
   /** Savings Account Unassign Staff form. */
-  savingsUnassignStaffForm!: FormGroup;
+  savingsUnassignStaffForm: FormGroup = new FormGroup({});
   /** Savings Account Id */
   accountId: any;
 

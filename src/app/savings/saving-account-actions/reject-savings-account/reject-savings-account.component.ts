@@ -23,7 +23,7 @@ export class RejectSavingsAccountComponent implements OnInit {
   /** Maximum date allowed. */
   maxDate = new Date();
   /** Reject Saving Account form. */
-  rejectSavingsAccountForm!: FormGroup;
+  rejectSavingsAccountForm: FormGroup = new FormGroup({});
   /** Savings Account Id */
   accountId: any;
 

@@ -22,7 +22,7 @@ export class FixedDepositAccountSettingsStepComponent implements OnInit, OnChang
   /** Maximum date allowed. */
   maxDate = new Date();
   /** Fixed Deposits Account Settings Form */
-  fixedDepositAccountSettingsForm!: FormGroup;
+  fixedDepositAccountSettingsForm: FormGroup = new FormGroup({});
   /** Lockin Period Frequency Type Data */
   lockinPeriodFrequencyTypeData: any;
   /** Period Frequency Type Data */

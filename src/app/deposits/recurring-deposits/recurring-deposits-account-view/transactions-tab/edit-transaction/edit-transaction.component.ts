@@ -23,7 +23,7 @@ export class EditTransactionComponent implements OnInit {
   /** Maximum Due Date allowed. */
   maxDate = new Date();
   /** Recurring Deposits transaction form. */
-  editTransactionForm!: FormGroup;
+  editTransactionForm: FormGroup = new FormGroup({});
   /** Recurring Deposits transaction payment options. */
   paymentTypeOptions!: {
     id: number,

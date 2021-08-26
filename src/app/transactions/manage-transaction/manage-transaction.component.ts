@@ -118,8 +118,8 @@ export class ManageTransactionComponent implements OnInit {
     'terminalAmount_feeAmount',
   ]; // pnlAmount
   officesOptions: any;
-  formDate!: FormGroup;
-  formFilter!: FormGroup;
+  formDate: FormGroup = new FormGroup({});
+  formFilter: FormGroup = new FormGroup({});
   dataSource: any[] = [];
   isLoading = false;
   transactionsData: any[] = [];

@@ -19,7 +19,7 @@ export class LoanScreenReportsComponent implements OnInit {
 
   @Input() dataObject: any;
   /** Loan Screen Reportform. */
-  loanScreenReportForm!: FormGroup;
+  loanScreenReportForm: FormGroup = new FormGroup({});
   /** Templates Data */
   templatesData: any;
   /** Loan Id */

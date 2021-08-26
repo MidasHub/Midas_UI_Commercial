@@ -62,7 +62,7 @@ export class EntityToEntityMappingComponent implements OnInit {
   entityMappingsListData!: MatTableDataSource<any>;
 
   /** Filter Preference Form */
-  filterPreferenceForm?: FormGroup;
+  filterPreferenceForm: FormGroup = new FormGroup({});
   /** List of Entity to Entity Mapping */
   displayedColumns: string[] = ['entitymapping'];
   /** Columns for details of a chosen mapping */

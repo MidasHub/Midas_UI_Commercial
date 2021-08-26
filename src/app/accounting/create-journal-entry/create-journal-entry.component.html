@@ -44,7 +44,8 @@
                     {{ affectedGLEntryDebit.name + ' (' + affectedGLEntryDebit.glCode + ')' }}
                   </mat-option>
                 </mat-select>
-                <mat-error *ngIf="debits.at(i).controls.glAccountId.hasError('required')">
+                <!-- <mat-error *ngIf="debits.at(i).controls.glAccountId.hasError('required')"> -->
+                  <mat-error *ngIf="debits.at(i).get('glAccountId')!.hasError('required')">
                   Affected GL Entry (Debit) is <strong>required</strong>
                 </mat-error>
               </mat-form-field>
@@ -52,7 +53,8 @@
               <mat-form-field fxFlex="43%">
                 <mat-label>Debit Amount</mat-label>
                 <input type="number" matInput required formControlName="amount">
-                <mat-error *ngIf="debits.at(i).controls.amount.hasError('required')">
+                <!-- <mat-error *ngIf="debits.at(i).controls.amount.hasError('required')"> -->
+                  <mat-error *ngIf="debits.at(i).get('amount')!.hasError('required')">
                   Debit Amount is <strong>required</strong>
                 </mat-error>
               </mat-form-field>
@@ -82,7 +84,8 @@
                     {{ affectedGLEntryCredit.name + ' (' + affectedGLEntryCredit.glCode + ')' }}
                   </mat-option>
                 </mat-select>
-                <mat-error *ngIf="credits.at(i).controls.glAccountId.hasError('required')">
+                <!-- <mat-error *ngIf="credits.at(i).controls.glAccountId.hasError('required')"> -->
+                  <mat-error *ngIf="credits.at(i).get('glAccountId')!.hasError('required')">
                   Affected GL Entry (Credit) is <strong>required</strong>
                 </mat-error>
               </mat-form-field>
@@ -90,7 +93,8 @@
               <mat-form-field fxFlex="43%">
                 <mat-label>Credit Amount</mat-label>
                 <input type="number" matInput required formControlName="amount">
-                <mat-error *ngIf="credits.at(i).controls.amount.hasError('required')">
+                <!-- <mat-error *ngIf="credits.at(i).controls.amount.hasError('required')"> -->
+                  <mat-error *ngIf="credits.at(i).get('amount')!.hasError('required')">
                   Credit Amount is <strong>required</strong>
                 </mat-error>
               </mat-form-field>

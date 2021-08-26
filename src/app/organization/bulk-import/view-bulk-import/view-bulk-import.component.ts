@@ -29,7 +29,7 @@ export class ViewBulkImportComponent implements OnInit {
   /** imports Data */
   importsData: any;
   /** bulk-import form. */
-  bulkImportForm!: FormGroup;
+  bulkImportForm: FormGroup = new FormGroup({});
   /** array of deined bulk-imports */
   bulkImportsArray = BulkImports;
   /** bulk-import which user navigated to */

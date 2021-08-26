@@ -22,7 +22,7 @@ export class ApproveSharesAccountComponent implements OnInit {
   /** Maximum date allowed. */
   maxDate = new Date();
   /** Approve Share Account form. */
-  approveSharesAccountForm!: FormGroup;
+  approveSharesAccountForm: FormGroup = new FormGroup({});
   /** Shares Account Id */
   accountId: any;
 

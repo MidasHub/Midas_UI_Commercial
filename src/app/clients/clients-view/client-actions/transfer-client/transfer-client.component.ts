@@ -23,7 +23,7 @@ export class TransferClientComponent implements OnInit {
   /** Maximum date allowed. */
   maxDate = new Date();
   /** Transfer Client form. */
-  transferClientForm!: FormGroup;
+  transferClientForm: FormGroup = new FormGroup({});
   /** Client Data */
   officeData: any;
   /** Client Id */

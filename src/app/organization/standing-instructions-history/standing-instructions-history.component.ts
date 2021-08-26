@@ -26,7 +26,7 @@ export class StandingInstructionsHistoryComponent implements OnInit {
   /** Maximum Date allowed. */
   maxDate = new Date();
   /** Instruction  form. */
-  instructionForm!: FormGroup;
+  instructionForm: FormGroup = new FormGroup({});
   /** Standing Instructions Template */
   standingInstructionsTemplate: any;
   /** Toggles b/w form and table */

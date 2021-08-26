@@ -28,7 +28,7 @@ export class FixedDepositProductInterestRateChartStepComponent implements OnInit
 
   @Input() fixedDepositProductsTemplate: any;
 
-  fixedDepositProductInterestRateChartForm!: FormGroup;
+  fixedDepositProductInterestRateChartForm: FormGroup = new FormGroup({});
 
   periodTypeData: any;
   entityTypeData: any;
@@ -226,11 +226,11 @@ export class FixedDepositProductInterestRateChartStepComponent implements OnInit
       });
   }
 
-  getIncentives(chartSlabs: FormArray, chartSlabIndex: number): FormArray {
+  getIncentives(chartSlabs: any, chartSlabIndex: number): FormArray {
     return chartSlabs.at(chartSlabIndex).get('incentives') as FormArray;
   }
 
-  addChartSlab(chartSlabs: FormArray) {
+  addChartSlab(chartSlabs: any) {
     const data = { ...this.getData('Slab') };
     const dialogRef = this.dialog.open(FormDialogComponent, { data });
     dialogRef.afterClosed().subscribe((response: any) => {
@@ -241,7 +241,7 @@ export class FixedDepositProductInterestRateChartStepComponent implements OnInit
     });
   }
 
-  addIncentive(incentives: FormArray) {
+  addIncentive(incentives: any) {
     const data = { ...this.getData('Incentive'), entityType: this.entityTypeData[0].id };
     const dialogRef = this.dialog.open(DepositProductIncentiveFormDialogComponent, { data });
     dialogRef.afterClosed().subscribe((response: any) => {
@@ -251,7 +251,7 @@ export class FixedDepositProductInterestRateChartStepComponent implements OnInit
     });
   }
 
-  editChartSlab(chartSlabs: FormArray, chartSlabIndex: number) {
+  editChartSlab(chartSlabs: any, chartSlabIndex: number) {
     const data = { ...this.getData('Slab', chartSlabs.at(chartSlabIndex).value), layout: { addButtonText: 'Edit' } };
     const dialogRef = this.dialog.open(FormDialogComponent, { data });
     dialogRef.afterClosed().subscribe((response: any) => {
@@ -261,7 +261,8 @@ export class FixedDepositProductInterestRateChartStepComponent implements OnInit
     });
   }
 
-  editIncentive(incentives: FormArray, incentiveIndex: number) {
+
+  editIncentive(incentives: any, incentiveIndex: number) {
     const data = { ...this.getData('Incentive', incentives.at(incentiveIndex).value), layout: { addButtonText: 'Edit' } };
     const dialogRef = this.dialog.open(DepositProductIncentiveFormDialogComponent, { data });
     dialogRef.afterClosed().subscribe((response: any) => {
@@ -271,7 +272,7 @@ export class FixedDepositProductInterestRateChartStepComponent implements OnInit
     });
   }
 
-  delete(formArray: FormArray, index: number) {
+  delete(formArray: any, index: number) {
     const dialogRef = this.dialog.open(DeleteDialogComponent, {
       data: { deleteContext: `this` }
     });
@@ -282,7 +283,7 @@ export class FixedDepositProductInterestRateChartStepComponent implements OnInit
     });
   }
 
-  getData(formType: string, values?: any): any{
+  getData(formType: string, values?: any): any {
     switch (formType) {
       case 'Slab': return  { title: 'Slab', formfields: this.getSlabFormfields(values) };
       case 'Incentive': return { values, chartTemplate: this.fixedDepositProductsTemplate.chartTemplate };

@@ -23,7 +23,7 @@ export class ActivateRecurringDepositsAccountComponent implements OnInit {
   /** Maximum date allowed. */
   maxDate = new Date();
   /** Activate Recurring Deposits Account form. */
-  activateRecurringDepositsAccountForm!: FormGroup;
+  activateRecurringDepositsAccountForm: FormGroup = new FormGroup({});
   /** Recurring Deposits Account Id */
   accountId: any;
 

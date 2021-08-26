@@ -25,7 +25,7 @@ export class AllocateCashComponent implements OnInit {
   /** Cashier data. */
   cashierData: any;
   /** Cashier Form. */
-  allocateCashForm!: FormGroup;
+  allocateCashForm: FormGroup = new FormGroup({});
 
   /**
    * Get cashier data from `Resolver`.

@@ -17,7 +17,7 @@ import { ClientsService } from 'app/clients/clients.service';
 export class UndoClientTransferComponent implements OnInit {
 
   /** Undo Client Transfer form. */
-  undoClientTransferForm!: FormGroup;
+  undoClientTransferForm: FormGroup = new FormGroup({});
   /** Client Id */
   clientId: any;
   /** Transfer Date */

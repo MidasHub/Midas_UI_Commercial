@@ -10,7 +10,7 @@ import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms'
 export class UploadDocumentDialogComponent implements OnInit {
 
   /** Upload Document form. */
-  uploadDocumentForm!: FormGroup;
+  uploadDocumentForm: FormGroup = new FormGroup({});
   /** Upload Document Data */
   uploadDocumentData: any = [];
   /** Triggers description field */

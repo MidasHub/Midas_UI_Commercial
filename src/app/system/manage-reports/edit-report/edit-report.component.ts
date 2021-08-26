@@ -38,7 +38,7 @@ export class EditReportComponent implements OnInit {
       reportParameterName: undefined
     };
   /** Report Form. */
-  reportForm!: FormGroup;
+  reportForm: FormGroup = new FormGroup({});
   /** Columns to be displayed in report parameters table. */
   displayedColumns: string[] = ['parameterName', 'parameterNamePassed', 'actions'];
   /** Data source for report parameters table. */

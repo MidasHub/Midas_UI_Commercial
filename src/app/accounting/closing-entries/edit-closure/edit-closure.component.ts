@@ -17,7 +17,7 @@ import { AccountingService } from '../../accounting.service';
 export class EditClosureComponent implements OnInit {
 
   /** Accounting closure form. */
-  accountingClosureForm!: FormGroup;
+  accountingClosureForm: FormGroup = new FormGroup({});
   /** GL Account closure. */
   glAccountClosure: any;
   /** Office data. */

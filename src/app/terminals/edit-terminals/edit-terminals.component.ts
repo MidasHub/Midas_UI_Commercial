@@ -32,7 +32,7 @@ export interface PeriodicElements {
 export class EditTerminalsComponent implements OnInit, AfterViewInit {
   @ViewChild(MatSort) sort: MatSort | any;
   @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
-  editTerminalForm!: FormGroup;
+  editTerminalForm: FormGroup = new FormGroup({});
   officeSelect = new FormControl();
   offices: any;
   terminalData: any;

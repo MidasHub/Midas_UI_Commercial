@@ -23,7 +23,7 @@ export class CreateEmployeeComponent implements OnInit {
   /** Maximum joining date allowed. */
   maxDate = new Date();
   /** Employee form. */
-  employeeForm!: FormGroup;
+  employeeForm: FormGroup = new FormGroup({});
   /** Office data. */
   officeData: any;
 

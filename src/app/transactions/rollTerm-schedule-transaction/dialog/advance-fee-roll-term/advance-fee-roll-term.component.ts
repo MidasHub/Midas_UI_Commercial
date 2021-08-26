@@ -37,7 +37,7 @@ export class AdvanceFeeRollTermComponent implements OnInit {
       value: 'Chi hộ',
     },
   ];
-  form!: FormGroup;
+  form: FormGroup = new FormGroup({});
   listSavingAccount: any;
   buSavingAccounts: any;
   filteredClient: any[] = [];

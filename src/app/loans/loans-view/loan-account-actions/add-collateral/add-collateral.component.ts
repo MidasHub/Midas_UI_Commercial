@@ -19,7 +19,7 @@ export class AddCollateralComponent implements OnInit {
   @Input() dataObject: any;
 
   /** Collateral form. */
-  collateralForm!: FormGroup;
+  collateralForm: FormGroup = new FormGroup({});
   /** Loan Id. */
   loanId?: string;
 

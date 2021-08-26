@@ -1,5 +1,6 @@
+/* tslint:disable */
 import { Component, OnInit, Input } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormArray, AbstractControl } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
 import { animate, state, style, transition, trigger } from '@angular/animations';
@@ -28,7 +29,7 @@ export class RecurringDepositProductInterestRateChartStepComponent implements On
 
   @Input() recurringDepositProductsTemplate: any;
 
-  recurringDepositProductInterestRateChartForm!: FormGroup;
+  recurringDepositProductInterestRateChartForm: FormGroup ;
 
   periodTypeData: any;
   entityTypeData: any;
@@ -53,7 +54,9 @@ export class RecurringDepositProductInterestRateChartStepComponent implements On
   constructor(private formBuilder: FormBuilder,
     public dialog: MatDialog,
     private datePipe: DatePipe) {
-    this.createrecurringDepositProductInterestRateChartForm();
+    this.recurringDepositProductInterestRateChartForm = this.formBuilder.group({
+      'charts': this.formBuilder.array([])
+    });;
   }
 
   ngOnInit() {
@@ -85,7 +88,7 @@ export class RecurringDepositProductInterestRateChartStepComponent implements On
     this.getChartsDetailsData();
 
     // Iterates for every chart in charts
-    this.charts.controls.forEach((chartDetailControl: FormGroup|any, i: number) => {
+    this.charts.controls.forEach((chartDetailControl: any, i: number) => {
 
       // Iterate for every chartSlab in chart
       this.chartsDetail[i].chartSlabs.forEach((chartSlabDetail: any, j: number) => {
@@ -227,11 +230,17 @@ export class RecurringDepositProductInterestRateChartStepComponent implements On
       });
   }
 
-  getIncentives(chartSlabs: FormArray, chartSlabIndex: number): FormArray {
+
+  getIncentives(chartSlabs: any , chartSlabIndex: number): FormArray {
     return chartSlabs.at(chartSlabIndex).get('incentives') as FormArray;
   }
 
-  addChartSlab(chartSlabs: FormArray) {
+  getIncentivesByChart(chart: any , chartSlabIndex: number) {
+    return this.getIncentives(chart.controls.chartSlabs,chartSlabIndex)
+  }
+
+
+  addChartSlab(chartSlabs: any) {
     const data = { ...this.getData('Slab') };
     const dialogRef = this.dialog.open(FormDialogComponent, { data });
     dialogRef.afterClosed().subscribe((response: any) => {
@@ -252,7 +261,7 @@ export class RecurringDepositProductInterestRateChartStepComponent implements On
     });
   }
 
-  editChartSlab(chartSlabs: FormArray, chartSlabIndex: number) {
+  editChartSlab(chartSlabs: any, chartSlabIndex: number) {
     const data = { ...this.getData('Slab', chartSlabs.at(chartSlabIndex).value), layout: { addButtonText: 'Edit' } };
     const dialogRef = this.dialog.open(FormDialogComponent, { data });
     dialogRef.afterClosed().subscribe((response: any) => {
@@ -262,7 +271,7 @@ export class RecurringDepositProductInterestRateChartStepComponent implements On
     });
   }
 
-  editIncentive(incentives: FormArray, incentiveIndex: number) {
+  editIncentive(incentives: any, incentiveIndex: number) {
     const data = { ...this.getData('Incentive', incentives.at(incentiveIndex).value), layout: { addButtonText: 'Edit' } };
     const dialogRef = this.dialog.open(DepositProductIncentiveFormDialogComponent, { data });
     dialogRef.afterClosed().subscribe((response: any) => {
@@ -272,7 +281,7 @@ export class RecurringDepositProductInterestRateChartStepComponent implements On
     });
   }
 
-  delete(formArray: FormArray, index: number) {
+  delete(formArray: any, index: number) {
     const dialogRef = this.dialog.open(DeleteDialogComponent, {
       data: { deleteContext: `this` }
     });
@@ -353,7 +362,7 @@ export class RecurringDepositProductInterestRateChartStepComponent implements On
     const dateFormat = 'yyyy-MM-dd';
     const locale = 'en';
     const recurringDepositProductInterestRateChart = this.recurringDepositProductInterestRateChartForm.value;
-    for (const chart of recurringDepositProductInterestRateChart.charts) {
+    for (const  chart of recurringDepositProductInterestRateChart.charts ) {
       chart.dateFormat = dateFormat;
       chart.locale = locale;
       chart.fromDate = this.datePipe.transform(chart.fromDate, dateFormat);

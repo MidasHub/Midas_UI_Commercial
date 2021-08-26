@@ -16,8 +16,8 @@ import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.compone
 })
 export class AddFeeDialogComponent implements OnInit {
   paidPaymentType: any[] = [];
-  formDialogPaid!: FormGroup;
-  formDialogGet!: FormGroup;
+  formDialogPaid: FormGroup = new FormGroup({});
+  formDialogGet: FormGroup = new FormGroup({});
   accountsFee: any[] = [];
   txnCode: string;
   partners: any[] = [];

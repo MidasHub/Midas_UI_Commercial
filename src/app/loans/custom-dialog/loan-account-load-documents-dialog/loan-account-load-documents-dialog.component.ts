@@ -10,7 +10,7 @@ import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms'
 export class LoanAccountLoadDocumentsDialogComponent implements OnInit {
 
   /** Upload Document form. */
-  uploadDocumentForm!: FormGroup;
+  uploadDocumentForm: FormGroup = new FormGroup({});
 
   /**
    * @param {MatDialogRef} dialogRef Dialog reference element

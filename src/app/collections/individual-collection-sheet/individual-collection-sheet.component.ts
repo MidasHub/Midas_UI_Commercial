@@ -42,7 +42,7 @@ export class IndividualCollectionSheetComponent implements OnInit {
   /** Maximum Date allowed. */
   maxDate = new Date();
   /** Collection Sheet form. */
-  collectionSheetForm!: FormGroup;
+  collectionSheetForm: FormGroup = new FormGroup({});
   /** Toggles b/w form and table */
   isCollapsed = false;
   /** Collections Sheet Data */

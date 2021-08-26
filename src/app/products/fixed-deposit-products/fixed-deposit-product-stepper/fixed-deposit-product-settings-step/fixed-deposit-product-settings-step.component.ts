@@ -10,7 +10,7 @@ export class FixedDepositProductSettingsStepComponent implements OnInit {
 
   @Input() fixedDepositProductsTemplate: any;
 
-  fixedDepositProductSettingsForm!: FormGroup;
+  fixedDepositProductSettingsForm: FormGroup = new FormGroup({});
 
   lockinPeriodFrequencyTypeData: any;
   periodFrequencyTypeData: any;

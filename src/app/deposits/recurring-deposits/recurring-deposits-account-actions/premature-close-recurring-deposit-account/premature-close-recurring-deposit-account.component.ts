@@ -24,7 +24,7 @@ export class PrematureCloseRecurringDepositAccountComponent implements OnInit {
   /** Maximum date allowed. */
   maxDate = new Date();
   /** premature close Recurring Deposits Account form. */
-  prematureCloseRecurringDepositsAccountForm!: FormGroup;
+  prematureCloseRecurringDepositsAccountForm: FormGroup = new FormGroup({});
   /** Recurring Deposits Account Id */
   accountId: any;
 

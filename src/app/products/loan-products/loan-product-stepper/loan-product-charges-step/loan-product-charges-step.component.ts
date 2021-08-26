@@ -12,13 +12,13 @@ import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.co
 export class LoanProductChargesStepComponent implements OnInit {
 
   @Input() loanProductsTemplate: any;
-  @Input() currencyCode: FormControl = new FormControl();
-  @Input() multiDisburseLoan?: FormControl;
+  @Input() currencyCode: FormControl | any;
+  @Input() multiDisburseLoan: FormControl | any;
 
   chargeData: any;
   overdueChargeData: any;
 
-  chargesDataSource?: {}[];
+  chargesDataSource: {}[] = [];
   displayedColumns: string[] = ['name', 'chargeCalculationType', 'amount', 'chargeTimeType', 'action'];
 
   pristine = true;
@@ -34,11 +34,11 @@ export class LoanProductChargesStepComponent implements OnInit {
     this.pristine = true;
 
     this.currencyCode.valueChanges.subscribe(() => this.chargesDataSource = []);
-    this.multiDisburseLoan?.valueChanges.subscribe(() => this.chargesDataSource = []);
+    this.multiDisburseLoan.valueChanges.subscribe(() => this.chargesDataSource = []);
   }
 
   addCharge(charge: any) {
-    this.chargesDataSource = this.chargesDataSource?.concat([charge.value]);
+    this.chargesDataSource = this.chargesDataSource.concat([charge.value]);
     charge.value = '';
     this.pristine = false;
   }
@@ -49,8 +49,8 @@ export class LoanProductChargesStepComponent implements OnInit {
     });
     deleteChargeDialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {
-        this.chargesDataSource?.splice(this.chargesDataSource?.indexOf(charge), 1);
-        this.chargesDataSource = this.chargesDataSource?.concat([]);
+        this.chargesDataSource.splice(this.chargesDataSource.indexOf(charge), 1);
+        this.chargesDataSource = this.chargesDataSource.concat([]);
         this.pristine = false;
       }
     });

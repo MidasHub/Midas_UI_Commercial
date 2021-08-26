@@ -23,7 +23,7 @@ export class ActivateGroupComponent implements OnInit {
   /** Maximum date allowed. */
   maxDate = new Date();
   /** Activate group form. */
-  activateGroupForm!: FormGroup;
+  activateGroupForm: FormGroup = new FormGroup({});
   /** Group Id */
   groupId: any;
 

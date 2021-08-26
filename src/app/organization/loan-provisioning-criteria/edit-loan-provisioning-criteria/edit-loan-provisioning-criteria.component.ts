@@ -28,7 +28,7 @@ import { SettingsService } from 'app/settings/settings.service';
 export class EditLoanProvisioningCriteriaComponent implements OnInit {
 
   /** Loan Provisioning Criteria form. */
-  provisioningCriteriaForm!: FormGroup;
+  provisioningCriteriaForm: FormGroup = new FormGroup({});
   /** Loan Provisioning Criteria Template */
   loanProvisioningCriteriaAndTemplate: any;
   /** Liability Accounts */

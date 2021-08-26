@@ -23,7 +23,7 @@ export class CloseCenterComponent implements OnInit {
   /** Maximum date allowed. */
   maxDate = new Date();
   /** Close Share Account form. */
-  closeCenterForm!: FormGroup;
+  closeCenterForm: FormGroup = new FormGroup({});
   /** Center Data */
   closureData: any;
   /** Center Id */

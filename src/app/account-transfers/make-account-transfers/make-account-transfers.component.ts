@@ -25,7 +25,7 @@ export class MakeAccountTransfersComponent implements OnInit, AfterViewInit {
   /** Maximum date allowed. */
   maxDate = new Date(2100, 0, 1);
   /** Edit Standing Instructions form. */
-  makeAccountTransferForm!: FormGroup;
+  makeAccountTransferForm: FormGroup = new FormGroup({});
   /** To Office Type Data */
   toOfficeTypeData: any;
   /** To Client Type Data */

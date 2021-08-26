@@ -23,7 +23,7 @@ export class PostInterestAsOnSavingsAccountComponent implements OnInit {
   /** Maximum date allowed. */
   maxDate = new Date();
   /** Post Interest Savings Account form. */
-  postInterestSavingsAccountForm!: FormGroup;
+  postInterestSavingsAccountForm: FormGroup = new FormGroup({});
   /** Savings Account Id */
   accountId: any;
 

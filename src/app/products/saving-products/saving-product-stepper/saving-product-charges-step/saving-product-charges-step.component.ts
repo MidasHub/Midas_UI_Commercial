@@ -12,7 +12,7 @@ import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.co
 export class SavingProductChargesStepComponent implements OnInit {
 
   @Input() savingProductsTemplate: any;
-  @Input() currencyCode: FormControl = new FormControl();
+  @Input() currencyCode: FormControl | any;
 
   chargeData: any;
 

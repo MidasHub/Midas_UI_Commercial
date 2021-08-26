@@ -23,7 +23,7 @@ export class RejectClientComponent implements OnInit {
   /** Maximum date allowed. */
   maxDate = new Date();
   /** Reject Share Account form. */
-  rejectClientForm!: FormGroup;
+  rejectClientForm: FormGroup = new FormGroup({});
   /** Client Data */
   rejectionData: any;
   /** Client Id */

@@ -24,7 +24,7 @@ export class EditTellerComponent implements OnInit {
   /** Maximum date allowed. */
   maxDate = new Date();
   /** Teller form. */
-  tellerForm!: FormGroup;
+  tellerForm: FormGroup = new FormGroup({});
   /** Office data. */
   officeData: any;
   /** TellerStatuses data. */

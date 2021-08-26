@@ -20,7 +20,7 @@ import { confirmPasswordValidator } from '../../login/reset-password/confirm-pas
 export class CreateUserComponent implements OnInit {
 
   /** User form. */
-  userForm!: FormGroup;
+  userForm: FormGroup = new FormGroup({});
   /** Offices data. */
   officesData: any;
   /** Roles data. */

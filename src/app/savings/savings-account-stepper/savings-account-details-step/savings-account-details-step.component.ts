@@ -29,7 +29,7 @@ export class SavingsAccountDetailsStepComponent implements OnInit {
   /** For edit savings form */
   isFieldOfficerPatched = false;
   /** Savings Account Details Form */
-  savingsAccountDetailsForm!: FormGroup;
+  savingsAccountDetailsForm: FormGroup = new FormGroup({});
   banks: any;
   isSelectBank: boolean;
   /** Savings Account Template with product data  */

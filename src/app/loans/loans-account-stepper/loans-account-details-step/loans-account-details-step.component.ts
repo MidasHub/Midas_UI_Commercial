@@ -36,7 +36,7 @@ export class LoansAccountDetailsStepComponent implements OnInit {
   /** For edit loan accounts form */
   isFieldOfficerPatched = false;
   /** Loans Account Details Form */
-  loansAccountDetailsForm!: FormGroup;
+  loansAccountDetailsForm: FormGroup = new FormGroup({});
 
   /** Loans Account Template with product data  */
   @Output() loansAccountProductTemplate = new EventEmitter();

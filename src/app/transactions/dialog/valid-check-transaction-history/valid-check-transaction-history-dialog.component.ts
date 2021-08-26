@@ -13,7 +13,7 @@ export class ValidCheckTransactionHistoryDialogComponent implements OnInit {
   message: string;
   displayedColumns: string[] = ['no', 'amount', 'terminal', 'txnDate', 'createdBy'];
 
-  form!: FormGroup;
+  form: FormGroup = new FormGroup({});
   pristine?: boolean;
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: any) {

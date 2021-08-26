@@ -24,7 +24,7 @@ export class RejectRecurringDepositsAccountComponent implements OnInit {
   /** Maximum date allowed. */
   maxDate = new Date();
   /** Reject Recurring Deposits Account form. */
-  rejectRecurringDepositsAccountForm!: FormGroup;
+  rejectRecurringDepositsAccountForm: FormGroup = new FormGroup({});
   /** Recurring Deposits Account Id */
   accountId: any;
 

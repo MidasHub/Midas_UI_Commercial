@@ -15,7 +15,7 @@ export class LoansAccountCloseComponent implements OnInit {
   @Input() dataObject: any;
 
   /** Close form. */
-  closeLoanForm!: FormGroup;
+  closeLoanForm: FormGroup = new FormGroup({});
   /** Loan Id */
   loanId: any;
   /** Minimum Date allowed. */

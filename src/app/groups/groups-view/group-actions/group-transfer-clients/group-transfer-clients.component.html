@@ -31,7 +31,7 @@
               Destination Group is <strong>required</strong>
             </mat-error>
           </mat-form-field>
-  
+
         </div>
 
         <mat-autocomplete autoActiveFirstOption #groupsAutocomplete="matAutocomplete" [displayWith]="displayGroup">
@@ -40,29 +40,29 @@
           </mat-option>
         </mat-autocomplete>
 
-        <div class="mat-table" *ngIf="transferClientsForm.get('destinationGroupId').value">
+        <div class="mat-table" *ngIf="transferClientsForm.get('destinationGroupId')!.value!">
           <div class="mat-header-row">
             <div class="mat-header-cell">Destination Group Details</div>
           </div>
           <div class="mat-row">
             <div class="mat-cell">Name</div>
-            <div class="mat-cell">{{transferClientsForm.get('destinationGroupId').value.name}}</div>
+            <div class="mat-cell">{{transferClientsForm.get('destinationGroupId')!.value!.name}}</div>
           </div>
           <div class="mat-row">
             <div class="mat-cell">Id</div>
-            <div class="mat-cell">{{transferClientsForm.get('destinationGroupId').value.id}}</div>
+            <div class="mat-cell">{{transferClientsForm.get('destinationGroupId')!.value!.id}}</div>
           </div>
           <div class="mat-row">
             <div class="mat-cell">Activation Date</div>
-            <div class="mat-cell">{{(transferClientsForm.get('destinationGroupId').value.activationDate | date) || 'Not Activated'}}</div>
+            <div class="mat-cell">{{(transferClientsForm.get('destinationGroupId')!.value!.activationDate | date) || 'Not Activated'}}</div>
           </div>
           <div class="mat-row">
             <div class="mat-cell">Staff</div>
-            <div class="mat-cell">{{transferClientsForm.get('destinationGroupId').value.staffName || 'Unassigned'}}</div>
+            <div class="mat-cell">{{transferClientsForm.get('destinationGroupId')!.value!.staffName || 'Unassigned'}}</div>
           </div>
           <div class="mat-row">
             <div class="mat-cell">External Id</div>
-            <div class="mat-cell">{{transferClientsForm.get('destinationGroupId').value.externalId || 'Unassigned'}}</div>
+            <div class="mat-cell">{{transferClientsForm.get('destinationGroupId')!.value!.externalId || 'Unassigned'}}</div>
           </div>
         </div>
 

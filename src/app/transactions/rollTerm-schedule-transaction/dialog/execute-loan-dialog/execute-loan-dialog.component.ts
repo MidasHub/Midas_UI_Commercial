@@ -14,8 +14,8 @@ import { TransactionService } from 'app/transactions/transaction.service';
 })
 export class ExecuteLoanDialogComponent implements OnInit {
   paidPaymentType: any[] = [];
-  formDialogPaid!: FormGroup;
-  formDialogGet!: FormGroup;
+  formDialogPaid: FormGroup = new FormGroup({});
+  formDialogGet: FormGroup = new FormGroup({});
   accountsFee: any[] = [];
   refId: number;
   posTransaction: any;

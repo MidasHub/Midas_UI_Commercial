@@ -10,7 +10,7 @@ export class RecurringDepositProductDetailsStepComponent implements OnInit {
 
   @Input() recurringDepositProductsTemplate: any;
 
-  recurringDepositProductDetailsForm!: FormGroup;
+  recurringDepositProductDetailsForm: FormGroup = new FormGroup({});
 
   constructor(private formBuilder: FormBuilder) {
     this.createrecurringDepositProductDetailsForm();

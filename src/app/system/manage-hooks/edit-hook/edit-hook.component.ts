@@ -29,7 +29,7 @@ export class EditHookComponent implements OnInit {
   /** Hook Data. */
   hookData: any;
   /** Hook Form. */
-  hookForm!: FormGroup;
+  hookForm: FormGroup = new FormGroup({});
   /** Columns to be displayed in events table. */
   displayedColumns: string[] = ['entityName', 'actionName', 'actions'];
   /** Data source for events table. */

@@ -20,7 +20,7 @@ export class WaiveInterestComponent implements OnInit {
   @Input() dataObject: any;
 
   /** Loan Interest form. */
-  loanInterestForm!: FormGroup;
+  loanInterestForm: FormGroup = new FormGroup({});
   /** Minimum Date allowed. */
   minDate = new Date(2000, 0, 1);
   /** Maximum Date allowed. */

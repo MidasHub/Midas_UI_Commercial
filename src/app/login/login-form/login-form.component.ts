@@ -25,7 +25,7 @@ const log = new Logger('Login Page');
 export class LoginFormComponent implements OnInit {
 
   /** Login form group. */
-  loginForm!: FormGroup;
+  loginForm: FormGroup = new FormGroup({});
   /** Password input field type. */
   passwordInputType!: string;
   /** True if loading. */

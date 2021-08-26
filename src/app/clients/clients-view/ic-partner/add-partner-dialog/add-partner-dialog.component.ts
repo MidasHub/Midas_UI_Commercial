@@ -14,7 +14,7 @@ import { AlertService } from 'app/core/alert/alert.service';
 })
 export class AddPartnerDialogComponent implements OnInit {
 
-addPartnerForm!: FormGroup;
+addPartnerForm: FormGroup = new FormGroup({});
 addPartnerData: any = [];
 documentIdentifier = false;
 displayName!: string;

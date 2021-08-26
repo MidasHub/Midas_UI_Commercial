@@ -10,6 +10,7 @@ import { SystemService } from '../../system.service';
 
 /** Custom Components */
 import { CancelDialogComponent } from '../../../shared/cancel-dialog/cancel-dialog.component';
+import { retry } from 'rxjs/operators';
 
 /**
  * Create survey component.
@@ -22,7 +23,13 @@ import { CancelDialogComponent } from '../../../shared/cancel-dialog/cancel-dial
 export class CreateSurveyComponent implements OnInit {
 
   /** Survey form. */
-  surveyForm!: FormGroup;
+  surveyForm: FormGroup = this.formBuilder.group({
+        'key': ['', Validators.required],
+        'name': ['', Validators.required],
+        'countryCode': ['', [Validators.required, Validators.pattern('^\\s*([A-Za-z]{2})?\\s*$')]],
+        'description': [''],
+        'questionDatas': this.formBuilder.array([])
+      });
 
   /**
    * @param {FormBuilder} formBuilder Form Builder.
@@ -41,21 +48,21 @@ export class CreateSurveyComponent implements OnInit {
    * Creates the survey form.
    */
   ngOnInit() {
-    this.createSurveyForm();
+    // this.createSurveyForm();
   }
 
   /**
    * Creates the survey form.
    */
-  createSurveyForm() {
-    this.surveyForm = this.formBuilder.group({
-      'key': ['', Validators.required],
-      'name': ['', Validators.required],
-      'countryCode': ['', [Validators.required, Validators.pattern('^\\s*([A-Za-z]{2})?\\s*$')]],
-      'description': [''],
-      'questionDatas': this.formBuilder.array([])
-    });
-  }
+  // createSurveyForm() {
+  //   this.surveyForm = this.formBuilder.group({
+  //     'key': ['', Validators.required],
+  //     'name': ['', Validators.required],
+  //     'countryCode': ['', [Validators.required, Validators.pattern('^\\s*([A-Za-z]{2})?\\s*$')]],
+  //     'description': [''],
+  //     'questionDatas': this.formBuilder.array([])
+  //   });
+  // }
 
   /**
    * Gets the questions form array.
@@ -187,6 +194,14 @@ export class CreateSurveyComponent implements OnInit {
     this.systemService.createSurvey(this.surveyForm.value).subscribe((response: any) => {
       this.router.navigate(['../'], { relativeTo: this.route });
     });
+  }
+
+  /**
+   * Check if the survey form is valid
+   */
+  checkIsValid():boolean {
+    // tslint:disable-next-line: no-non-null-assertion
+    return !(this.surveyForm.get('key')!.valid && this.surveyForm.get('name')!.valid && this.surveyForm.get('countryCode')!.valid);
   }
 
 }

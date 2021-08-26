@@ -11,7 +11,7 @@ export class ShareProductTermsStepComponent implements OnInit {
 
   @Input() shareProductsTemplate: any;
 
-  shareProductTermsForm!: FormGroup;
+  shareProductTermsForm: FormGroup = new FormGroup({});
 
   constructor(private formBuilder: FormBuilder) {
     this.createShareProductTermsForm();

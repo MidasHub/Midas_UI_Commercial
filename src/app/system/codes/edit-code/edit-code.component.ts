@@ -17,7 +17,7 @@ import { SystemService } from '../../system.service';
 export class EditCodeComponent implements OnInit {
 
   /** Code Form */
-  codeForm!: FormGroup;
+  codeForm: FormGroup = new FormGroup({});
   /** Code Data */
   codeData: any;
 

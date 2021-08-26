@@ -26,7 +26,7 @@ export class DetailBranchBookingDialogComponent implements OnInit {
   transactionInfo: any;
   dataSource!: any[];
   displayedColumns: string[] = ['terminal', 'batchNo', 'amount', 'bill'];
-  form!: FormGroup;
+  form: FormGroup = new FormGroup({});
   pristine!: boolean ;
 
   constructor(

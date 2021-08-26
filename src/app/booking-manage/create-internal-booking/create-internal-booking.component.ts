@@ -30,7 +30,7 @@ export class CreateInternalBookingComponent implements OnInit {
   totalBooking: any;
   staffBookingInfo: any;
   dataSource: any[] = [];
-  formFilter!: FormGroup;
+  formFilter: FormGroup = new FormGroup({});
   formDate: FormGroup;
   BookingFilter: any[] = [];
   BookingList: any[] = [];

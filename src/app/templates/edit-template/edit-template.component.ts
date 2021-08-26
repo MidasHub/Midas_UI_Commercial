@@ -28,7 +28,7 @@ export class EditTemplateComponent implements OnInit {
   @ViewChild('ckEditor', { static: true }) ckEditor: any;
 
   /** Template form. */
-  templateForm!: FormGroup;
+  templateForm: FormGroup = new FormGroup({});
   /** Edit Template Data. */
   editTemplateData: any;
   /** Template Mappers */

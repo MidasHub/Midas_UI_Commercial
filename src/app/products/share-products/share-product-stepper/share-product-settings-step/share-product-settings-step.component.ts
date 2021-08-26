@@ -10,7 +10,7 @@ export class ShareProductSettingsStepComponent implements OnInit {
 
   @Input() shareProductsTemplate: any;
 
-  shareProductSettingsForm!: FormGroup;
+  shareProductSettingsForm: FormGroup = new FormGroup({});
 
   minimumActivePeriodFrequencyTypeData: any;
   lockinPeriodFrequencyTypeData: any;

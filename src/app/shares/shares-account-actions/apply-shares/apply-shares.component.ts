@@ -25,7 +25,7 @@ export class ApplySharesComponent implements OnInit {
   /** Maximum date allowed. */
   maxDate = new Date();
   /** Apply Share Account form. */
-  applySharesForm!: FormGroup;
+  applySharesForm: FormGroup = new FormGroup({});
   /** Shares Account Id */
   accountId: any;
 

@@ -26,7 +26,7 @@ export class FundMappingComponent implements OnInit {
   /** Maximum Date allowed. */
   maxDate = new Date();
   /** Fund mapping form. */
-  fundMappingForm!: FormGroup;
+  fundMappingForm: FormGroup = new FormGroup({});
   /** Advance Search Template */
   advanceSearchTemplate: any;
   /** Toggles b/w form and table */

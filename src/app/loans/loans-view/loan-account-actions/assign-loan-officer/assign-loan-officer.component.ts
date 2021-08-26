@@ -21,7 +21,7 @@ export class AssignLoanOfficerComponent implements OnInit {
   /** Maximum Date allowed. */
   maxDate = new Date();
   /** Assign loan Officer form. */
-  assignOfficerForm!: FormGroup;
+  assignOfficerForm: FormGroup = new FormGroup({});
 
   /**
    * @param {FormBuilder} formBuilder Form Builder.

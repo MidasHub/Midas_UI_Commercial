@@ -10,7 +10,7 @@ export class FixedDepositProductDetailsStepComponent implements OnInit {
 
   @Input() fixedDepositProductsTemplate: any;
 
-  fixedDepositProductDetailsForm!: FormGroup;
+  fixedDepositProductDetailsForm: FormGroup = new FormGroup({});
 
   constructor(private formBuilder: FormBuilder) {
     this.createFixedDepositProductDetailsForm();

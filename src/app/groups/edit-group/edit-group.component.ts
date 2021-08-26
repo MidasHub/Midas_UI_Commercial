@@ -33,7 +33,7 @@ export class EditGroupComponent implements OnInit {
   /** Maximum date allowed. */
   maxDate = new Date();
   /** Edit Group form. */
-  editGroupForm!: FormGroup;
+  editGroupForm: FormGroup = new FormGroup({});
   /** Staff data. */
   staffData: any;
   /** Group Data */

@@ -25,7 +25,7 @@ import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.co
 export class CreateReportComponent implements OnInit {
 
   /** Report Form. */
-  reportForm!: FormGroup;
+  reportForm: FormGroup = new FormGroup({});
   /** Report Template Data. */
   reportTemplateData: any;
   /** Data passed to dialog. */

@@ -17,7 +17,7 @@ import { SystemService } from '../../system.service';
 export class EditConfigurationComponent implements OnInit {
 
   /** Global Configuration form. */
-  configurationForm!: FormGroup;
+  configurationForm: FormGroup = new FormGroup({});
   /** Configuration. */
   configuration: any;
 

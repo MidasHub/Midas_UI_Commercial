@@ -1,7 +1,7 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute, Data } from '@angular/router';
 
 /** Custom Services */
 import { AccountingService } from '../accounting.service';
@@ -21,7 +21,7 @@ export class FrequentPostingsComponent implements OnInit {
   /** Maximum transaction date allowed. */
   maxDate = new Date();
   /** Frequent postings form. */
-  frequentPostingsForm!: FormGroup;
+  frequentPostingsForm: FormGroup = new FormGroup({});
   /** Office data. */
   officeData: any;
   /** Accounting rule data. */
@@ -55,7 +55,7 @@ export class FrequentPostingsComponent implements OnInit {
         accountingRules: any,
         currencies: any,
         paymentTypes: any
-      }|any) => {
+      }|Data) => {
         this.officeData = data.offices;
         this.accountingRuleData = data.accountingRules;
         this.currencyData = data.currencies.selectedCurrencyOptions;
@@ -184,4 +184,8 @@ export class FrequentPostingsComponent implements OnInit {
     });
   }
 
+   /** Check if obj hasError */
+   checkHasError(obj: any, i: any , condition: string ): boolean {
+    return obj.at(i).controls.glAccountId.hasError(condition)
+  }
 }

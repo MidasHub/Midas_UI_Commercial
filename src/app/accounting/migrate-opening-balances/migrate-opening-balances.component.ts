@@ -24,7 +24,7 @@ export class MigrateOpeningBalancesComponent implements OnInit {
   /** Maximum opening balances date allowed. */
   maxDate = new Date();
   /** Opening balances form. */
-  openingBalancesForm!: FormGroup;
+  openingBalancesForm: FormGroup = new FormGroup({});
   /** Opening balances data. */
   openingBalancesData: any;
   /** Office data. */

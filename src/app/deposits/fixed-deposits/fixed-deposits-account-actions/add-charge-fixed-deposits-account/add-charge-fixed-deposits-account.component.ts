@@ -23,7 +23,7 @@ export class AddChargeFixedDepositsAccountComponent implements OnInit {
   /** Maximum Due Date allowed. */
   maxDate = new Date();
   /** Add Fixed Deposits Charge form. */
-  fixedDepositsChargeForm!: FormGroup;
+  fixedDepositsChargeForm: FormGroup = new FormGroup({});
   /** savings charge options. */
   savingsChargeOptions: any;
   /** savings Id of the savings account. */

@@ -23,7 +23,7 @@ export class WithdrawByClientSavingsAccountComponent implements OnInit {
   /** Maximum date allowed. */
   maxDate = new Date();
   /** Withdraw Savings Account form. */
-  withdrawSavingsAccountForm!: FormGroup;
+  withdrawSavingsAccountForm: FormGroup = new FormGroup({});
   /** Savings Account Id */
   accountId: any;
 

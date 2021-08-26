@@ -23,7 +23,7 @@ export class ApproveRecurringDepositsAccountComponent implements OnInit {
   /** Maximum date allowed. */
   maxDate = new Date();
   /** Approve Recurring Deposits Account form. */
-  approveRecurringDepositsAccountForm!: FormGroup;
+  approveRecurringDepositsAccountForm: FormGroup = new FormGroup({});
   /** Recurring Deposits Account Id */
   accountId: any;
 

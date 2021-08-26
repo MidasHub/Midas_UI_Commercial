@@ -16,7 +16,7 @@ import { SystemService } from '../../system.service';
 })
 export class EditRoleComponent implements OnInit {
   /** Role Form */
-  roleForm!: FormGroup;
+  roleForm: FormGroup = new FormGroup({});
   /** Role Data */
   roleData: any;
 

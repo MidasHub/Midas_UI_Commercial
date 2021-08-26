@@ -19,7 +19,7 @@ import { SettingsService } from 'app/settings/settings.service';
 export class EditHolidayComponent implements OnInit {
 
   /** Edit Holiday form. */
-  holidayForm!: FormGroup;
+  holidayForm: FormGroup = new FormGroup({});
   /** Holiday data. */
   holidayData: any;
   /** Rescheduling Type. */

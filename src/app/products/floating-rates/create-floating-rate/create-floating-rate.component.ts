@@ -30,7 +30,7 @@ export class CreateFloatingRateComponent implements OnInit {
   /** Minimum floating rate period date allowed. */
   minDate = new Date();
   /** Floating Rate Form. */
-  floatingRateForm!: FormGroup;
+  floatingRateForm: FormGroup = new FormGroup({});
   /** Columns to be displayed in floating rate periods table. */
   displayedColumns: string[] = ['fromDate', 'interestRate', 'isDifferential', 'actions'];
   /** Data source for floating rate periods table. */

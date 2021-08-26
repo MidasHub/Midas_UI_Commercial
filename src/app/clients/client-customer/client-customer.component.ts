@@ -55,7 +55,7 @@ export class ClientCustomerComponent implements OnInit, AfterViewInit {
   currentUser: any;
   staffs: any[] = [];
   offices: any = [];
-  formFilter!: FormGroup;
+  formFilter: FormGroup = new FormGroup({});
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator |any;
   @ViewChild(MatSort, { static: true }) sort: MatSort | any;

@@ -24,7 +24,7 @@ export class TransactionHistoryDialogComponent implements OnInit {
   dataSource!: any[];
   displayedColumns: string[] = ['cardNumber', 'type', 'amount', 'txnDate', 'actions'];
 
-  form!: FormGroup;
+  form: FormGroup = new FormGroup({});
   pristine?: boolean;
 
   constructor(

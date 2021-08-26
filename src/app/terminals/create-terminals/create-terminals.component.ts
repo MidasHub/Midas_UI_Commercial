@@ -60,7 +60,7 @@ export class CreateTerminalsComponent implements OnInit {
   ];
 
   dataSource = new MatTableDataSource(initialData);
-  createTerminalForm!: FormGroup;
+  createTerminalForm: FormGroup = new FormGroup({});
   offices: any;
   terminalData: any;
   merchants: any;

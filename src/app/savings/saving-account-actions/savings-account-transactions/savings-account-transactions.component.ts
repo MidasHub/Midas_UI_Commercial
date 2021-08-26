@@ -27,7 +27,7 @@ export class SavingsAccountTransactionsComponent implements OnInit {
   /** Maximum Due Date allowed. */
   maxDate = new Date();
   /** Savings account transaction form. */
-  savingAccountTransactionForm!: FormGroup;
+  savingAccountTransactionForm: FormGroup = new FormGroup({});
   /** savings account transaction payment options. */
   paymentTypeOptions!: {
     id: number;

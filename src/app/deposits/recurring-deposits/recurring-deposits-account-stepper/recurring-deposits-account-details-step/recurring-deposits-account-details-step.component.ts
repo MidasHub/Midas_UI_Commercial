@@ -30,7 +30,7 @@ export class RecurringDepositsAccountDetailsStepComponent implements OnInit {
   /** For edit recurring deposits form */
   isFieldOfficerPatched = false;
   /** Recurring Deposits Account Details Form */
-  recurringDepositAccountDetailsForm!: FormGroup;
+  recurringDepositAccountDetailsForm: FormGroup = new FormGroup({});
 
   /** Recurring Deposits Account Template with product data  */
   @Output() recurringDepositsAccountProductTemplate = new EventEmitter();

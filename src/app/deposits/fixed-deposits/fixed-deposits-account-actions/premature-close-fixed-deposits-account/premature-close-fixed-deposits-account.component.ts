@@ -22,7 +22,7 @@ export class PrematureCloseFixedDepositsAccountComponent implements OnInit {
   /** Maximum date allowed. */
   maxDate = new Date();
   /** Premature Close FD Account form. */
-  prematureCloseAccountForm!: FormGroup;
+  prematureCloseAccountForm: FormGroup = new FormGroup({});
   /** Savings Account Data */
   savingsAccountsData: any;
   /** On account Closure Options */

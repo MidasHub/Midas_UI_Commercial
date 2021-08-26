@@ -17,7 +17,7 @@ import { ProductsService } from '../../products.service';
 export class CreateProductMixComponent implements OnInit {
 
   /** Product mix form. */
-  productMixForm!: FormGroup;
+  productMixForm: FormGroup = new FormGroup({});
   /** Products mix template data. */
   productsMixTemplateData: any;
   /** Product option data. */

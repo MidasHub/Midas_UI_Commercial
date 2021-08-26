@@ -22,7 +22,7 @@ export class SharesAccountTermsStepComponent implements OnChanges, OnInit {
   /** Maximum date allowed. */
   maxDate = new Date();
   /** Shares Account Terms Form */
-  sharesAccountTermsForm!: FormGroup;
+  sharesAccountTermsForm: FormGroup = new FormGroup({});
   /** Minimum Active Period Frequency Type Data */
   minimumActivePeriodFrequencyTypeData: any;
   /** Lockin Period Frequency Type Data */

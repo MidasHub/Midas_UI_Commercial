@@ -25,7 +25,7 @@ export class WithdrawnByClientComponent implements OnInit {
   /** Maximum Date allowed. */
   maxDate = new Date();
   /** Withdrawn By Applicant Loan Form */
-  withdrawnByClientLoanForm!: FormGroup;
+  withdrawnByClientLoanForm: FormGroup = new FormGroup({});
 
   /**
    * @param {FormBuilder} formBuilder Form Builder.

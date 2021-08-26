@@ -18,7 +18,7 @@ export class LoanProductTermsStepComponent implements OnInit {
 
   @Input() loanProductsTemplate: any;
 
-  loanProductTermsForm!: FormGroup;
+  loanProductTermsForm: FormGroup = new FormGroup({});
 
   valueConditionTypeData: any;
   floatingRateData: any;

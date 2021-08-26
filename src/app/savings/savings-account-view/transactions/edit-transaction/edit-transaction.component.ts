@@ -23,7 +23,7 @@ export class EditTransactionComponent implements OnInit {
   /** Maximum Due Date allowed. */
   maxDate = new Date();
   /** Savings account transaction form. */
-  editTransactionForm!: FormGroup;
+  editTransactionForm: FormGroup = new FormGroup({});
   /** savings account transaction payment options. */
   paymentTypeOptions!: {
     id: number,

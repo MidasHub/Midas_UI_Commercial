@@ -22,7 +22,7 @@ export class EditCenterMeetingComponent implements OnInit {
   /** Maximum date allowed. */
   maxDate = new Date();
   /** Center Meeting form. */
-  centerEditMeetingForm!: FormGroup;
+  centerEditMeetingForm: FormGroup = new FormGroup({});
   /** Calendar Template Data */
   calendarTemplate: any;
   /** Center Id */

@@ -18,7 +18,7 @@ export class AdvanceComponent implements OnInit {
   disable = false;
   savingsAccountData: any;
   isLoading = false;
-  form!: FormGroup;
+  form: FormGroup = new FormGroup({});
   clients: any;
   filteredClient!: any[];
   staffs: any;

@@ -27,7 +27,7 @@ export class EditCenterComponent implements OnInit {
   /** Maximum date allowed. */
   maxDate = new Date();
   /** Activate center form. */
-  editCenterForm!: FormGroup;
+  editCenterForm: FormGroup = new FormGroup({});
 
   /**
    * Retrieves the center and template data from `resolve`.

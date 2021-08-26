@@ -32,7 +32,7 @@ export class CheckerInboxComponent implements OnInit {
   /** Checks if there is any checker data */
   checkerData = false;
   /** Maker Checker Search Form */
-  makerCheckerSearchForm!: FormGroup;
+  makerCheckerSearchForm: FormGroup = new FormGroup({});
   /** Minimum date allowed. */
   minDate = new Date(2000, 0, 1);
   /** Maximum date allowed. */

@@ -25,7 +25,7 @@ export class ViewCodeComponent implements OnInit {
   /** Code Values Data */
   codeValuesData!: any[];
   /** Code Values Form */
-  codeValuesForm!: FormGroup;
+  codeValuesForm: FormGroup = new FormGroup({});
   /** Code Value Row Status */
   codeValueRowStatus: string[] = [];
 
@@ -203,4 +203,10 @@ export class ViewCodeComponent implements OnInit {
     this.codeValueRowStatus[index] = 'edit';
   }
 
+  /**
+   * Check if the form is valid
+   */
+  checkIsValid(obj: any, i: any) {
+    return !obj.get('codeValues').at(i).valid;
+  }
 }

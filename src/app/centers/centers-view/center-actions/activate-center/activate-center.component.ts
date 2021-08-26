@@ -23,7 +23,7 @@ export class ActivateCenterComponent implements OnInit {
   /** Maximum date allowed. */
   maxDate = new Date();
   /** Activate center form. */
-  activateCenterForm!: FormGroup;
+  activateCenterForm: FormGroup = new FormGroup({});
   /** Group Account Id */
   centerId: any;
 

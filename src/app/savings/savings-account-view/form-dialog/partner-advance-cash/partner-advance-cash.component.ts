@@ -12,7 +12,7 @@ import { ClientsService } from 'app/clients/clients.service';
   styleUrls: ['./partner-advance-cash.component.scss'],
 })
 export class PartnerAdvanceCashComponent implements OnInit {
-  form!: FormGroup;
+  form: FormGroup = new FormGroup({});
   advanceCashPaymentTypes: any[] = [
     {
       id: '18',

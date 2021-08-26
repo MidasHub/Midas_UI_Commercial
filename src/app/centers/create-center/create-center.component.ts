@@ -24,7 +24,7 @@ export class CreateCenterComponent implements OnInit {
   /** Maximum date allowed. */
   maxDate = new Date();
   /** Center form. */
-  centerForm!: FormGroup;
+  centerForm: FormGroup = new FormGroup({});
   /** Office data. */
   officeData: any;
   /** Group data. */

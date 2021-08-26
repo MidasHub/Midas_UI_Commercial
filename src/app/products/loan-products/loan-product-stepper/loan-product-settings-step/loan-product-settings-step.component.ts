@@ -9,9 +9,9 @@ import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms'
 export class LoanProductSettingsStepComponent implements OnInit {
 
   @Input() loanProductsTemplate: any;
-  @Input() isLinkedToFloatingInterestRates!: FormControl;
+  @Input() isLinkedToFloatingInterestRates: FormControl | any;
 
-  loanProductSettingsForm!: FormGroup;
+  loanProductSettingsForm: FormGroup = new FormGroup({});
 
   amortizationTypeData: any;
   interestTypeData: any;

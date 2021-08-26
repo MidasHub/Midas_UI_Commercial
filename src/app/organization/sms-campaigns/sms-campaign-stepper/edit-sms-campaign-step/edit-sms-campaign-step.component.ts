@@ -24,7 +24,7 @@ export class EditSmsCampaignStepComponent implements OnInit {
   @Input() smsCampaign: any;
 
   /** SMS Campaign Form */
-  smsCampaignDetailsForm!: FormGroup;
+  smsCampaignDetailsForm: FormGroup = new FormGroup({});
   /** Data to be passed to sub component */
   paramData: any;
   /** Trigger types options */

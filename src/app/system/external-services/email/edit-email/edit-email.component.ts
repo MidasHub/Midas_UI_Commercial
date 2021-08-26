@@ -19,7 +19,7 @@ export class EditEmailComponent implements OnInit {
   /** Email Configuration data */
   emailConfigurationData: any;
   /** Email Configuration Form */
-  emailConfigurationForm!: FormGroup;
+  emailConfigurationForm: FormGroup = new FormGroup({});
 
   /**
    * Retrieves the Email configuration data from `resolve`.

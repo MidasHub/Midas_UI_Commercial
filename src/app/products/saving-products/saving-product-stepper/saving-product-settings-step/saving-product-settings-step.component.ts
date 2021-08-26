@@ -10,7 +10,7 @@ export class SavingProductSettingsStepComponent implements OnInit {
 
   @Input() savingProductsTemplate: any;
 
-  savingProductSettingsForm!: FormGroup;
+  savingProductSettingsForm: FormGroup| any;
 
   lockinPeriodFrequencyTypeData: any;
   taxGroupData: any;
@@ -83,7 +83,7 @@ export class SavingProductSettingsStepComponent implements OnInit {
         }
       });
 
-    this.savingProductSettingsForm.get('isDormancyTrackingActive')?.valueChanges
+    this.savingProductSettingsForm.get('isDormancyTrackingActive').valueChanges
       .subscribe((isDormancyTrackingActive: any) => {
         if (isDormancyTrackingActive) {
           this.savingProductSettingsForm.addControl('daysToInactive', new FormControl('', Validators.required));

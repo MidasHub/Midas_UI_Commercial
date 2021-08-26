@@ -13,7 +13,7 @@ export class ForeclosureComponent implements OnInit {
 
 
   loanId: any;
-  foreclosureForm!: FormGroup;
+  foreclosureForm: FormGroup = new FormGroup({});
   /** Minimum Date allowed. */
   minDate = new Date(2000, 0, 1);
   /** Maximum Date allowed. */

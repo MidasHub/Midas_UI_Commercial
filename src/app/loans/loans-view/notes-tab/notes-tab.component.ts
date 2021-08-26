@@ -21,7 +21,7 @@ export class NotesTabComponent implements OnInit {
   loanId: string;
   username: string | undefined;
   loanNotes: any;
-  noteForm!: FormGroup;
+  noteForm: FormGroup = new FormGroup({});
   @ViewChild('formRef', { static: true }) formRef: any;
 
 

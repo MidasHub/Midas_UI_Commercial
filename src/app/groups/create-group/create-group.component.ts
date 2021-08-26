@@ -32,14 +32,14 @@ export class CreateGroupComponent implements OnInit, AfterViewInit {
   /** Maximum date allowed. */
   maxDate = new Date();
   /** Group form. */
-  groupForm!: FormGroup;
+  groupForm: FormGroup = new FormGroup({});
   /** Office data. */
   officeData: any;
   /** Client data. */
   clientsData: any = [];
   /** Staff data. */
   staffData: any;
-  activateAndApproveAccountForm!: FormGroup;
+  activateAndApproveAccountForm: FormGroup = new FormGroup({});
   /** Client Members. */
   clientMembers: any[] = [];
   /** ClientChoice. */
@@ -56,7 +56,7 @@ export class CreateGroupComponent implements OnInit, AfterViewInit {
   dataSource = new MatTableDataSource<any>();
   cards: PeriodicElement[] = [];
   /** Savings Account Details Form */
-  savingsAccountDetailsForm!: FormGroup;
+  savingsAccountDetailsForm: FormGroup = new FormGroup({});
   /**
    * Retrieves the offices data from `resolve`.
    * @param {FormBuilder} formBuilder Form Builder.

@@ -17,7 +17,7 @@ import { GroupsService } from 'app/groups/groups.service';
 export class GroupAssignStaffComponent implements OnInit {
 
   /** Group Assign Staff form. */
-  groupAssignStaffForm!: FormGroup;
+  groupAssignStaffForm: FormGroup = new FormGroup({});
   /** Staff Data */
   staffData: any;
   /** Group Data */

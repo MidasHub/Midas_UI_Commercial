@@ -33,7 +33,7 @@ export class ViewCampaignComponent implements OnInit {
   /** Maximum date allowed. */
   maxDate = new Date();
   /** SMS form. */
-  smsForm!: FormGroup;
+  smsForm: FormGroup = new FormGroup({});
   /** SMS Campaign data. */
   smsCampaignData: any;
   /** Message Status */

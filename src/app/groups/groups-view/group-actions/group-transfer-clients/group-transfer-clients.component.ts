@@ -18,7 +18,11 @@ import { SettingsService } from 'app/settings/settings.service';
 export class GroupTransferClientsComponent implements OnInit, AfterViewInit {
 
   /** Transfer Clients form. */
-  transferClientsForm!: FormGroup;
+  transferClientsForm: FormGroup = this.formBuilder.group({
+    'clients': ['', Validators.required],
+    'inheritDestinationGroupLoanOfficer': [false],
+    'destinationGroupId': ['', Validators.required]
+  });
   /** Group Data */
   groupData: any;
   /** Group data. */
@@ -48,14 +52,15 @@ export class GroupTransferClientsComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
-    this.createTransferClientsForm();
+    // this.createTransferClientsForm();
   }
 
   /**
    * Subscribes to Groups search filter:
    */
   ngAfterViewInit() {
-    this.transferClientsForm.get('destinationGroupId')?.valueChanges.subscribe( (value: string) => {
+    // tslint:disable-next-line: no-non-null-assertion
+    this.transferClientsForm.get('destinationGroupId')!.valueChanges.subscribe( (value: string) => {
       if (value.length >= 2) {
         this.groupsService.getFilteredGroups('name', 'ASC', value, this.groupData.officeId)
           .subscribe( (data: any) => {
@@ -68,21 +73,21 @@ export class GroupTransferClientsComponent implements OnInit, AfterViewInit {
   /**
    * Creates the transfer clients form.
    */
-  createTransferClientsForm() {
-    this.transferClientsForm = this.formBuilder.group({
-      'clients': ['', Validators.required],
-      'inheritDestinationGroupLoanOfficer': [false],
-      'destinationGroupId': ['', Validators.required]
-    });
-  }
+  // createTransferClientsForm() {
+  //   this.transferClientsForm = this.formBuilder.group({
+  //     'clients': ['', Validators.required],
+  //     'inheritDestinationGroupLoanOfficer': [false],
+  //     'destinationGroupId': ['', Validators.required]
+  //   });
+  // }
 
   /**
    * Displays Group name in form control input.
    * @param {any} group Group data.
    * @returns {string} Group name if valid otherwise undefined.
    */
-  displayGroup(group: any): string | undefined {
-    return group ? group.name : undefined;
+  displayGroup(group: any): string  {
+    return group ? group.name : '';
   }
 
   /**

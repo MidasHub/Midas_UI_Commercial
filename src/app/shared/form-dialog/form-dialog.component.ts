@@ -32,7 +32,7 @@ export class FormDialogComponent implements OnInit {
     addButtonText: this.i18n.getTranslate('Shared_Component.FormDialog.btnAdd'), // 'Add'
   };
 
-  form!: FormGroup;
+  form: FormGroup = new FormGroup({});
   formfields: FormfieldBase[];
   pristine: boolean;
   cardTypes: any[];

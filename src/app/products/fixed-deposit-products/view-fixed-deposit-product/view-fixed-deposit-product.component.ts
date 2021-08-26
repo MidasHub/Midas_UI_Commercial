@@ -26,6 +26,7 @@ export class ViewFixedDepositProductComponent implements OnInit {
   /** Fixed Deposit Product data. */
   fixedDepositProductData: any;
   fixedDepositProductsTemplate: any;
+  expandChartSlabIndex: any;
 
   chartSlabsIncentivesDisplayedColumns: string[] = ['incentives'];
   chartSlabsDisplayedColumns: string[] = ['period', 'amountRange', 'annualInterestRate', 'description', 'actions'];

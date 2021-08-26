@@ -23,7 +23,7 @@ export class LoansAccountTermsStepComponent implements OnInit, OnChanges {
   /** Maximum date allowed. */
   maxDate = new Date();
   /** Loans Account Terms Form */
-  loansAccountTermsForm!: FormGroup;
+  loansAccountTermsForm: FormGroup = new FormGroup({});
   /** Term Frequency Type Data */
   termFrequencyTypeData: any;
   /** Repayment Frequency Nth Day Type Data */

@@ -22,7 +22,7 @@ export class CloseSharesAccountComponent implements OnInit {
   /** Maximum date allowed. */
   maxDate = new Date();
   /** Close Share Account form. */
-  closeSharesAccountForm!: FormGroup;
+  closeSharesAccountForm: FormGroup = new FormGroup({});
   /** Shares Account Id */
   accountId: any;
 

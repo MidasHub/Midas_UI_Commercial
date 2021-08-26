@@ -14,7 +14,7 @@ import { forEach } from "lodash";
   styleUrls: ["./transfer-terminal.component.scss"],
 })
 export class TransferTerminalComponent implements OnInit {
-  transferTerminalForm!: FormGroup;
+  transferTerminalForm: FormGroup = new FormGroup({});
   listLimitPos?: any[];
   offices?: any[];
   listPartner?: any[];

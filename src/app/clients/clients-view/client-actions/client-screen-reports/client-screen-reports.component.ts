@@ -18,7 +18,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 export class ClientScreenReportsComponent implements OnInit {
 
   /** Client Screen Reportform. */
-  clientScreenReportForm!: FormGroup;
+  clientScreenReportForm: FormGroup = new FormGroup({});
   /** Templates Data */
   templatesData: any;
   /** Client Id */

@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Data, Router } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 /** Custom Services */
@@ -19,7 +19,7 @@ export class EditAmazonS3Component implements OnInit {
   /** Amazon S3 Configuration data */
   amazonS3ConfigurationData: any;
   /** Amazon S3 Configuration Form */
-  amazonS3ConfigurationForm?: FormGroup;
+  amazonS3ConfigurationForm: FormGroup = new FormGroup({});
 
   /**
    * Retrieves the Amazon S3 configuration data from `resolve`.
@@ -32,7 +32,7 @@ export class EditAmazonS3Component implements OnInit {
               private systemService: SystemService,
               private route: ActivatedRoute,
               private router: Router) {
-    this.route.data.subscribe((data: { amazonS3Configuration?: any }) => {
+    this.route.data.subscribe((data: { amazonS3Configuration: any } | Data) => {
       this.amazonS3ConfigurationData = data.amazonS3Configuration;
     });
   }
@@ -61,7 +61,7 @@ export class EditAmazonS3Component implements OnInit {
    */
   submit() {
     this.systemService
-      .updateExternalConfiguration('S3', this.amazonS3ConfigurationForm?.value)
+      .updateExternalConfiguration('S3', this.amazonS3ConfigurationForm.value)
       .subscribe((response: any) => {
         this.router.navigate(['../'], { relativeTo: this.route });
       });

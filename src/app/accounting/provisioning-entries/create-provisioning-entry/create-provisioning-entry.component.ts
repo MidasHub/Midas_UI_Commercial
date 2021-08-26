@@ -21,7 +21,7 @@ export class CreateProvisioningEntryComponent implements OnInit {
   /** Maximum provisioning date allowed. */
   maxDate = new Date();
   /** Provisioning entry form. */
-  provisioningEntryForm!: FormGroup;
+  provisioningEntryForm: FormGroup = new FormGroup({});
 
   /**
    * @param {FormBuilder} formBuilder Form Builder.

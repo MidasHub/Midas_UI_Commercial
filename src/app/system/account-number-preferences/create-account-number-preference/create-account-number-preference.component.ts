@@ -17,7 +17,7 @@ import { SystemService } from '../../system.service';
 export class CreateAccountNumberPreferenceComponent implements OnInit {
 
   /** Account Number Preferences Form */
-  accountNumberPreferenceForm!: FormGroup;
+  accountNumberPreferenceForm: FormGroup = new FormGroup({});
   /** Account Number Preferences Template Data */
   accountNumberPreferencesTemplateData: any;
   /** Prefix Type Data */

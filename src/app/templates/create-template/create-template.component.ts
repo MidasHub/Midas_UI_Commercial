@@ -28,7 +28,7 @@ export class CreateTemplateComponent implements OnInit {
   @ViewChild('ckEditor', { static: true }) ckEditor: any;
 
   /** Template form. */
-  templateForm!: FormGroup;
+  templateForm: FormGroup = new FormGroup({});
   /** Create Template Data. */
   createTemplateData: any;
   /** Template Mappers */

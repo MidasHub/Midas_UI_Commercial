@@ -23,7 +23,7 @@ export class AttachCenterMeetingComponent implements OnInit {
   /** Maximum date allowed. */
   maxDate = new Date();
   /** Center Meeting form. */
-  centerMeetingForm!: FormGroup;
+  centerMeetingForm: FormGroup = new FormGroup({});
   /** Calnedar Template Data */
   calendarTemplate: any;
   /** Center Id */

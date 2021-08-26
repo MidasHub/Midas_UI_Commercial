@@ -14,7 +14,7 @@ import { ClientsService } from 'app/clients/clients.service';
 })
 export class CreateSelfServiceUserComponent implements OnInit {
 
-  createSelfServiceForm!: FormGroup;
+  createSelfServiceForm: FormGroup = new FormGroup({});
   clientData: any;
   hidePasswordField = true;
 

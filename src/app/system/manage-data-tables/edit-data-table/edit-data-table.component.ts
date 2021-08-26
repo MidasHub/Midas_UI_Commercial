@@ -28,7 +28,7 @@ import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.co
 export class EditDataTableComponent implements OnInit {
 
   /** Data Table Form. */
-  dataTableForm!: FormGroup;
+  dataTableForm: FormGroup = new FormGroup({});
   /** Data Table Data. */
   dataTableData: any;
   /** Column Data. */

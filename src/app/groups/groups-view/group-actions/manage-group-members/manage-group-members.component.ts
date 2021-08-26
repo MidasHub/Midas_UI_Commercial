@@ -122,8 +122,8 @@ export class ManageGroupMembersComponent implements AfterViewInit, OnInit {
    * @param {any} client Client data.
    * @returns {string} Client name if valid otherwise undefined.
    */
-  displayClient(client: any): string | undefined {
-    return client ? client.displayName : undefined;
+  displayClient(client: any): string  {
+    return client ? client.displayName : '';
   }
 
 
@@ -140,8 +140,11 @@ export class ManageGroupMembersComponent implements AfterViewInit, OnInit {
     // dialogRef.afterClosed().subscribe();
   }
 
-  doFilterGroupClients(filterValue: string) {
+  doFilterGroupClients(e: Event) {
+    const filterValue = (<HTMLInputElement>e.target).value || '';
+    if (filterValue) {
     this.dataSource.filter = filterValue.trim().toLowerCase();
+    }
   }
 
   getClientIdSelect(clientSelect: any) {

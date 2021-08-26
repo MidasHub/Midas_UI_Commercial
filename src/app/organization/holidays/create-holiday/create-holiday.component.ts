@@ -20,7 +20,7 @@ import { SettingsService } from 'app/settings/settings.service';
 export class CreateHolidayComponent implements OnInit {
 
   /** Create Holiday form. */
-  holidayForm!: FormGroup;
+  holidayForm: FormGroup = new FormGroup({});
   /** Repayment Scheduling data. */
   repaymentSchedulingTypes: any;
   /** Offices Data */

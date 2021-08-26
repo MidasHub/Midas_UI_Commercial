@@ -17,7 +17,7 @@ import { GroupsService } from '../../groups.service';
 export class AddRoleComponent implements OnInit {
 
   /** Groups Add Role Form */
-  groupsAddRoleForm!: FormGroup;
+  groupsAddRoleForm: FormGroup = new FormGroup({});
   /** Client Member Data */
   clientMemberData: any;
   /** Role Data */

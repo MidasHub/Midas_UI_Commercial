@@ -20,7 +20,7 @@ export class EditTaxComponentComponent implements OnInit {
   /** Minimum date allowed. */
   minDate = new Date(2000, 0, 1);
   /** Tax Component form. */
-  taxComponentForm!: FormGroup;
+  taxComponentForm: FormGroup = new FormGroup({});
   /** Tax Component data. */
   taxComponentData: any;
 

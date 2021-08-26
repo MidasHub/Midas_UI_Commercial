@@ -17,7 +17,7 @@ import { OrganizationService } from '../../organization.service';
 export class CreateAdhocQueryComponent implements OnInit {
 
   /** Adhoc Query form. */
-  adhocQueryForm!: FormGroup;
+  adhocQueryForm: FormGroup = new FormGroup({});
   /** Adhoc Query template data. */
   adhocQueryTemplateData: any;
   /** Report run frequencies data. */

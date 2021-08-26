@@ -19,7 +19,7 @@ export class RecurringDepositProductAccountingStepComponent implements OnInit {
   @Input() accountingRuleData: any;
   @Input() recurringDepositProductFormValid?: boolean;
 
-  recurringDepositProductAccountingForm!: FormGroup;
+  recurringDepositProductAccountingForm: FormGroup = new FormGroup({});
 
   chargeData: any;
   penaltyData: any;

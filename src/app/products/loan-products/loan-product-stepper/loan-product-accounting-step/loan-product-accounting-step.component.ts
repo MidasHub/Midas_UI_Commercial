@@ -18,7 +18,7 @@ export class LoanProductAccountingStepComponent implements OnInit {
   @Input() accountingRuleData: any;
   @Input() loanProductFormValid?: boolean;
 
-  loanProductAccountingForm!: FormGroup;
+  loanProductAccountingForm: FormGroup = new FormGroup({});
 
   chargeData: any;
   penaltyData: any;

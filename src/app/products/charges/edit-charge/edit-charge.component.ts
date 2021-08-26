@@ -19,7 +19,7 @@ export class EditChargeComponent implements OnInit {
   /** Selected Data. */
   chargeData: any;
   /** Charge form. */
-  chargeForm!: FormGroup;
+  chargeForm: FormGroup = new FormGroup({});
   /** Select Income. */
   selectedIncome: any;
   /** Select Time Type. */

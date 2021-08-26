@@ -52,7 +52,7 @@ export class RollTermScheduleTabComponent implements OnInit {
     'actions',
   ];
   formDate: FormGroup;
-  formFilter!: FormGroup;
+  formFilter: FormGroup = new FormGroup({});
   dataSource!: any[];
   transactionsData: any;
   currentUser: any;

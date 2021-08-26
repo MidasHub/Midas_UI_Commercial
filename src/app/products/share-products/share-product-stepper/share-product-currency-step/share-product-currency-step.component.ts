@@ -10,7 +10,7 @@ export class ShareProductCurrencyStepComponent implements OnInit {
 
   @Input() shareProductsTemplate: any;
 
-  shareProductCurrencyForm!: FormGroup;
+  shareProductCurrencyForm: FormGroup = new FormGroup({});
 
   currencyData: any;
 

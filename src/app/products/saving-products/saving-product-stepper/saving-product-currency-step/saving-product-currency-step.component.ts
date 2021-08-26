@@ -10,7 +10,7 @@ export class SavingProductCurrencyStepComponent implements OnInit {
 
   @Input() savingProductsTemplate: any;
 
-  savingProductCurrencyForm!: FormGroup;
+  savingProductCurrencyForm: FormGroup = new FormGroup({});
 
   currencyData: any;
 

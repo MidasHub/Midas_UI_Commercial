@@ -17,7 +17,7 @@ import { SavingsService } from 'app/savings/savings.service';
 export class UndoApprovalFixedDepositsAccountComponent implements OnInit {
 
   /** Undo Approval Fixed Deposits Account form. */
-  undoApprovalFixedDepositsAccountForm!: FormGroup;
+  undoApprovalFixedDepositsAccountForm: FormGroup = new FormGroup({});
   /** Fixed Deposits Account Id */
   accountId: any;
 

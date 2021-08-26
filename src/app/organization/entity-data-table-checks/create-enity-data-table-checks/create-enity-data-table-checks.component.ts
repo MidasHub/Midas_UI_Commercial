@@ -17,7 +17,7 @@ import { OrganizationService } from 'app/organization/organization.service';
 export class CreateEnityDataTableChecksComponent implements OnInit {
 
   /** Create Entity Datatable Checks form. */
-  createEntityForm!: FormGroup;
+  createEntityForm: FormGroup = new FormGroup({});
   /** Entity Datatable Checks data. */
   createEntityData: any;
   /** Selected entity type. */

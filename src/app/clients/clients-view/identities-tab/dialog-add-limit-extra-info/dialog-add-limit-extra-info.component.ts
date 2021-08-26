@@ -14,7 +14,7 @@ const log = new Logger('-Add card extra info-');
   styleUrls: ['./dialog-add-limit-extra-info.component.scss'],
 })
 export class AddLimitIdentitiesExtraInfoComponent implements OnInit {
-  form!: FormGroup;
+  form: FormGroup = new FormGroup({});
   documentTypes: any[];
   statusOptions: any[] = [{ value: 'Active' }, { value: 'Inactive' }];
   documentCardBanks!: any[];

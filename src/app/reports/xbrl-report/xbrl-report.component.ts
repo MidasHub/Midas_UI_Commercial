@@ -24,7 +24,7 @@ export class XBRLReportComponent implements OnInit {
   /** Maximum Due Date allowed. */
   maxDate = new Date();
   /** XBRL Form */
-  xbrlForm!: FormGroup;
+  xbrlForm: FormGroup = new FormGroup({});
   /** XML response from API */
   rawXml: any;
   /** Parsed xml data */

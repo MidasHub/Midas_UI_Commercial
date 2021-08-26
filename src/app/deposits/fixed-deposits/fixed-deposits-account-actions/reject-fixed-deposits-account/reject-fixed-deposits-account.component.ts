@@ -22,7 +22,7 @@ export class RejectFixedDepositsAccountComponent implements OnInit {
   /** Maximum date allowed. */
   maxDate = new Date();
   /** Reject Fixed Deposit Account form. */
-  rejectFixedDepositsAccountForm!: FormGroup;
+  rejectFixedDepositsAccountForm: FormGroup = new FormGroup({});
   /** Fixed Deposits Account Id */
   accountId: any;
 

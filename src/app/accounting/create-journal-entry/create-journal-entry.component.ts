@@ -21,7 +21,7 @@ export class CreateJournalEntryComponent implements OnInit {
   /** Maximum transaction date allowed. */
   maxDate = new Date();
   /** Journal entry form. */
-  journalEntryForm!: FormGroup;
+  journalEntryForm: FormGroup = new FormGroup({});
   /** Office data. */
   officeData: any;
   /** Currency data. */
@@ -152,5 +152,4 @@ export class CreateJournalEntryComponent implements OnInit {
       this.router.navigate(['../transactions/view', response.transactionId], { relativeTo: this.route });
     });
   }
-
 }

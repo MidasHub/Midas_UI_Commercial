@@ -19,10 +19,10 @@ export class SavingProductAccountingStepComponent implements OnInit {
 
   @Input() savingProductsTemplate: any;
   @Input() accountingRuleData: any;
-  @Input() isDormancyTrackingActive?: FormControl;
+  @Input() isDormancyTrackingActive: FormControl | any;
   @Input() savingProductFormValid?: boolean;
 
-  savingProductAccountingForm!: FormGroup;
+  savingProductAccountingForm: FormGroup = new FormGroup({});
 
   chargeData: any;
   penaltyData: any;

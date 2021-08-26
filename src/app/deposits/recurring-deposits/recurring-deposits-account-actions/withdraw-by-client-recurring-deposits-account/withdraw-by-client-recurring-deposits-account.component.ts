@@ -22,7 +22,7 @@ export class WithdrawByClientRecurringDepositsAccountComponent implements OnInit
   /** Maximum date allowed. */
   maxDate = new Date();
   /** Withdraw Recurring Deposits Account form. */
-  withdrawRecurringDepositsAccountForm!: FormGroup;
+  withdrawRecurringDepositsAccountForm: FormGroup = new FormGroup({});
   /** Recurring Deposits Account Id */
   accountId: any;
 

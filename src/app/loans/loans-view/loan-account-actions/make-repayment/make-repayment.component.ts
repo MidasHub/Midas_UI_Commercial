@@ -29,7 +29,7 @@ export class MakeRepaymentComponent implements OnInit {
   /** Maximum Date allowed. */
   maxDate = new Date();
   /** Repayment Loan Form */
-  repaymentLoanForm!: FormGroup;
+  repaymentLoanForm: FormGroup = new FormGroup({});
 
   /**
    * @param {FormBuilder} formBuilder Form Builder.

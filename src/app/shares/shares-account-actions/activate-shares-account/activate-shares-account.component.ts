@@ -22,7 +22,7 @@ export class ActivateSharesAccountComponent implements OnInit {
   /** Maximum date allowed. */
   maxDate = new Date();
   /** Activate Share Account form. */
-  activateSharesAccountForm!: FormGroup;
+  activateSharesAccountForm: FormGroup = new FormGroup({});
   /** Shares Account Id */
   accountId: any;
 

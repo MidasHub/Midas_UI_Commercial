@@ -15,7 +15,7 @@ import * as moment from 'moment';
   styleUrls: ['./create-booking-marketing.component.scss']
 })
 export class CreateBookingMarketingComponent implements OnInit {
-  fromGroup!: FormGroup;
+  fromGroup: FormGroup = new FormGroup({});
   minDate = new Date(2000, 0, 1);
   /** Maximum closing date allowed. */
   maxDate = new Date();

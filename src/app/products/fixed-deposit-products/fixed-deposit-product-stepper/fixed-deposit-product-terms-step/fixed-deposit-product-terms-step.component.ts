@@ -10,7 +10,7 @@ export class FixedDepositProductTermsStepComponent implements OnInit {
 
   @Input() fixedDepositProductsTemplate: any;
 
-  fixedDepositProductTermsForm!: FormGroup;
+  fixedDepositProductTermsForm: FormGroup = new FormGroup({});
 
   interestCompoundingPeriodTypeData: any;
   interestPostingPeriodTypeData: any;

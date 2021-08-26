@@ -23,7 +23,7 @@ export class UndoClientRejectionComponent implements OnInit {
   /** Maximum date allowed. */
   maxDate = new Date();
   /** Undo Client Rejection form. */
-  undoClientRejectionForm!: FormGroup;
+  undoClientRejectionForm: FormGroup = new FormGroup({});
   /** Client Id */
   clientId: any;
 

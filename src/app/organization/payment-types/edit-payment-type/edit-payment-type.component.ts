@@ -17,7 +17,7 @@ import { OrganizationService } from 'app/organization/organization.service';
 export class EditPaymentTypeComponent implements OnInit {
 
   /** Payment Type form. */
-  paymentTypeForm!: FormGroup;
+  paymentTypeForm: FormGroup = new FormGroup({});
   /** Payment Type Data. */
   paymentTypeData: any;
 

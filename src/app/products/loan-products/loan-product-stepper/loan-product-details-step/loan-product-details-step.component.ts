@@ -11,7 +11,7 @@ export class LoanProductDetailsStepComponent implements OnInit {
 
   @Input() loanProductsTemplate: any;
 
-  loanProductDetailsForm!: FormGroup;
+  loanProductDetailsForm: FormGroup = new FormGroup({});
 
   fundData: any;
 

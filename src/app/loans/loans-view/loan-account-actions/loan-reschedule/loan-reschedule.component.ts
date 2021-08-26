@@ -14,7 +14,7 @@ export class LoanRescheduleComponent implements OnInit {
 
   @Input() dataObject: any;
   loanId: any;
-  rescheduleLoanForm!: FormGroup;
+  rescheduleLoanForm: FormGroup = new FormGroup({});
 
   /** Minimum Date allowed. */
   minDate = new Date(2000, 0, 1);

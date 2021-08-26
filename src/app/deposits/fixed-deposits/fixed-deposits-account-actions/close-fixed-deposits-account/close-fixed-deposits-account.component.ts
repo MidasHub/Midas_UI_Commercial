@@ -22,7 +22,7 @@ export class CloseFixedDepositsAccountComponent implements OnInit {
   /** Maximum date allowed. */
   maxDate = new Date();
   /** Close on maturity FD Account form. */
-  closeOnMaturityAccountForm!: FormGroup;
+  closeOnMaturityAccountForm: FormGroup = new FormGroup({});
   /** Savings Account Data */
   savingsAccountsData: any;
   /** On account Closure Options */

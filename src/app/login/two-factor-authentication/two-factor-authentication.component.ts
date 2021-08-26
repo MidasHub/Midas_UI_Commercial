@@ -27,9 +27,9 @@ export class TwoFactorAuthenticationComponent implements OnInit {
   /** Time for which OTP is valid. */
   tokenValidityTime!: number;
   /** Two factor authentication delivery method form group. */
-  twoFactorAuthenticationDeliveryMethodForm!: FormGroup;
+  twoFactorAuthenticationDeliveryMethodForm: FormGroup = new FormGroup({});
   /** Two factor authentication form group. */
-  twoFactorAuthenticationForm!: FormGroup;
+  twoFactorAuthenticationForm: FormGroup = new FormGroup({});
   /** True if loading. */
   loading = false;
   /** True if loading. */

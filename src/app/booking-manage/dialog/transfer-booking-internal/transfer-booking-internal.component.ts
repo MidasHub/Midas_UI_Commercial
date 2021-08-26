@@ -19,7 +19,7 @@ export class TransferBookingInternalComponent implements OnInit {
     this.bookingInfo = data;
   }
 
-  form!: FormGroup;
+  form: FormGroup = new FormGroup({});
   listSavingAccount: any;
   buSavingAccounts: any;
   filteredClient!: any[];

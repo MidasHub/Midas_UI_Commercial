@@ -22,7 +22,7 @@ export class RejectSharesAccountComponent implements OnInit {
   /** Maximum date allowed. */
   maxDate = new Date();
   /** Reject Share Account form. */
-  rejectSharesAccountForm!: FormGroup;
+  rejectSharesAccountForm: FormGroup = new FormGroup({});
   /** Shares Account Id */
   accountId: any;
 

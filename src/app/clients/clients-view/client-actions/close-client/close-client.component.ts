@@ -23,7 +23,7 @@ export class CloseClientComponent implements OnInit {
   /** Maximum date allowed. */
   maxDate = new Date();
   /** Close Client form. */
-  closeClientForm!: FormGroup;
+  closeClientForm: FormGroup = new FormGroup({});
   /** Client Data */
   closureData: any;
   /** Client Id */

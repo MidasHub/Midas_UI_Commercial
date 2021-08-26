@@ -19,7 +19,7 @@ export class FixedDepositProductAccountingStepComponent implements OnInit {
   @Input() accountingRuleData: any;
   @Input() fixedDepositProductFormValid?: boolean;
 
-  fixedDepositProductAccountingForm!: FormGroup;
+  fixedDepositProductAccountingForm: FormGroup = new FormGroup({});
 
   chargeData: any;
   penaltyData: any;

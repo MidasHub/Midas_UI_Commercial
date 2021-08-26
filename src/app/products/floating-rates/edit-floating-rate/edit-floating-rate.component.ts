@@ -26,7 +26,7 @@ import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.co
 export class EditFloatingRateComponent implements OnInit {
 
   /** Floating Rate Form. */
-  floatingRateForm!: FormGroup;
+  floatingRateForm: FormGroup = new FormGroup({});
   /** Floating Rate Data. */
   floatingRateData: any;
   /** Minimum floating rate period date allowed. */

@@ -26,7 +26,7 @@ export class SharesAccountChargesStepComponent implements OnInit, OnChanges {
   /** Shares Account Template */
   @Input() sharesAccountTemplate: any;
   /** Currency Code */
-  @Input() currencyCode: FormControl = new FormControl();
+  @Input() currencyCode: FormControl | any;
 
   /** Charge Data */
   chargeData: any = [];

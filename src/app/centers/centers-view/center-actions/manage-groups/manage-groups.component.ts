@@ -96,8 +96,8 @@ export class ManageGroupsComponent implements AfterViewInit {
    * @param {any} group Group data.
    * @returns {string} Group name if valid otherwise undefined.
    */
-  displayGroup(group: any): string | undefined {
-    return group ? group.name : undefined;
+  displayGroup(group: any): string  {
+    return group ? group.name : '';
   }
 
 }

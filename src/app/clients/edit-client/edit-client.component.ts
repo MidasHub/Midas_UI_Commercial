@@ -27,7 +27,7 @@ export class EditClientComponent implements OnInit {
   /** Client Data and Template */
   clientDataAndTemplate: any;
   /** Edit Client Form */
-  editClientForm!: FormGroup;
+  editClientForm: FormGroup = new FormGroup({});
 
   /** Office Options */
   officeOptions: any;

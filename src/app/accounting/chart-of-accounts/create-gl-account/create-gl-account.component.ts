@@ -17,7 +17,7 @@ import { AccountingService } from '../../accounting.service';
 export class CreateGlAccountComponent implements OnInit {
 
   /** GL account form. */
-  glAccountForm!: FormGroup;
+  glAccountForm: FormGroup = new FormGroup({});
   /** Chart of accounts data. */
   chartOfAccountsData: any;
   /** Account type data. */

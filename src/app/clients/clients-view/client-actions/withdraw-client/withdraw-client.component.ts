@@ -23,7 +23,7 @@ export class WithdrawClientComponent implements OnInit {
   /** Maximum date allowed. */
   maxDate = new Date();
   /** Withdraw Client form. */
-  withdrawClientForm!: FormGroup;
+  withdrawClientForm: FormGroup = new FormGroup({});
   /** Client Data */
   withdrawalData: any;
   /** Client Id */

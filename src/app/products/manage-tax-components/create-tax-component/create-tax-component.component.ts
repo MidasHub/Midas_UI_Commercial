@@ -22,7 +22,7 @@ export class CreateTaxComponentComponent implements OnInit {
   /** Maximum start date allowed. */
   maxDate = new Date(new Date().setFullYear(new Date().getFullYear() + 10));
   /** Tax Component form. */
-  taxComponentForm!: FormGroup;
+  taxComponentForm: FormGroup = new FormGroup({});
   /** Tax Component template data. */
   taxComponentTemplateData: any;
   /** Credit Account Type data. */

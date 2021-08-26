@@ -13,7 +13,7 @@ const log = new Logger('-Add card extra info-');
   styleUrls: ['./add-identities-extra-info.component.scss'],
 })
 export class AddIdentitiesExtraInfoComponent implements OnInit {
-  form!: FormGroup;
+  form: FormGroup = new FormGroup({});
   documentTypes: any[];
   statusOptions: any[] = [{ value: 'Active' }, { value: 'Inactive' }];
   documentCardBanks!: any[];

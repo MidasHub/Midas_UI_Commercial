@@ -19,7 +19,7 @@ import { oneOfTheFieldsIsRequiredValidator } from '../one-of-the-fields-is-requi
 })
 export class EditRuleComponent implements OnInit {
   /** Accounting rule form. */
-  accountingRuleForm!: FormGroup;
+  accountingRuleForm: FormGroup = new FormGroup({});
   /** Accounting rule. */
   accountingRule: any;
   /** Office data. */

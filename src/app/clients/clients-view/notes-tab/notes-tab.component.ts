@@ -29,7 +29,7 @@ export class NotesTabComponent implements OnInit {
   /** Client Notes */
   clientNotes: any;
   /** Note Form */
-  noteForm!: FormGroup;
+  noteForm: FormGroup = new FormGroup({});
 
   /** Notes Form Reference */
   @ViewChild('formRef', { static: true }) formRef: any;

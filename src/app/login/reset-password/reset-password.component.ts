@@ -23,7 +23,7 @@ import { confirmPasswordValidator } from './confirm-password.validator';
 export class ResetPasswordComponent implements OnInit {
 
   /** Reset password form group. */
-  resetPasswordForm!: FormGroup;
+  resetPasswordForm: FormGroup = new FormGroup({});
   /** Password input field type. */
   passwordInputType!: string;
   /** True if loading. */

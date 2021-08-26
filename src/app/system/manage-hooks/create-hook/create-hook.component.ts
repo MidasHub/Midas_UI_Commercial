@@ -27,7 +27,7 @@ export class CreateHookComponent implements OnInit {
   /** Hooks Template Data. */
   hooksTemplateData: any;
   /** Hook Form. */
-  hookForm!: FormGroup;
+  hookForm: FormGroup = new FormGroup({});
   /** Columns to be displayed in events table. */
   displayedColumns: string[] = ['entityName', 'actionName', 'actions'];
   /** Data source for events table. */

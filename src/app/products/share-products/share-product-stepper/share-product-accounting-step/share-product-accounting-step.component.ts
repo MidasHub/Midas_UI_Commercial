@@ -12,7 +12,7 @@ export class ShareProductAccountingStepComponent implements OnInit {
   @Input() accountingRuleData: any;
   @Input() shareProductFormValid?: boolean;
 
-  shareProductAccountingForm!: FormGroup;
+  shareProductAccountingForm: FormGroup = new FormGroup({});
 
   assetAccountData: any;
   incomeAccountData: any;

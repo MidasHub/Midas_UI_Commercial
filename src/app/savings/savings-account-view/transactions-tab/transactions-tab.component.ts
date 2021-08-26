@@ -50,7 +50,7 @@ export class TransactionsTabComponent implements OnInit {
   transactionDateFrom = new FormControl(new Date());
   /** Đến ngày form control. */
   transactionDateTo = new FormControl(new Date());
-  form!: FormGroup;
+  form: FormGroup = new FormGroup({});
   isLoading = false;
   transactions: any[] = [];
   partners: any[] = [];

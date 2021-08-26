@@ -24,7 +24,7 @@ export class AddChargeRecurringDepositsAccountComponent implements OnInit {
   /** Maximum Due Date allowed. */
   maxDate = new Date();
   /** Add Recurring Deposits Charge form. */
-  recurringDepositsChargeForm!: FormGroup;
+  recurringDepositsChargeForm: FormGroup = new FormGroup({});
   /** savings charge options. */
   savingsChargeOptions: any;
   /** savings Id of the savings account. */

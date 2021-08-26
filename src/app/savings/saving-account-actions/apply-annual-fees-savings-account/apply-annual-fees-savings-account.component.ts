@@ -23,7 +23,7 @@ export class ApplyAnnualFeesSavingsAccountComponent implements OnInit {
   /** Maximum date allowed. */
   maxDate = new Date();
   /** Apply annual fees form. */
-  applyAnnualFeesForm!: FormGroup;
+  applyAnnualFeesForm: FormGroup = new FormGroup({});
   /** Savings Account Id */
   accountId: any;
   /** Annual Fees charge Id */

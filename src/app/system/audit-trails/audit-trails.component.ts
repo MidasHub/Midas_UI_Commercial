@@ -282,8 +282,8 @@ export class AuditTrailsComponent implements OnInit, AfterViewInit {
    * @param {any} user User data.
    * @returns {string} User name if valid otherwise undefined.
    */
-  displayUserName(user?: any): string | undefined {
-    return user ? user.name : undefined;
+  displayUserName(user?: any): string  {
+    return user ? user.name : '';
   }
 
   /**
@@ -291,8 +291,8 @@ export class AuditTrailsComponent implements OnInit, AfterViewInit {
    * @param {any} action Action data.
    * @returns {string} Action name if valid otherwise undefined.
    */
-  displayActionName(action?: any): string | undefined {
-    return action ? action : undefined;
+  displayActionName(action?: any): string  {
+    return action ? action : '';
   }
 
   /**
@@ -300,8 +300,8 @@ export class AuditTrailsComponent implements OnInit, AfterViewInit {
    * @param {any} entity Entity data.
    * @returns {string} Entity name if valid otherwise undefined.
    */
-  displayEntityName(entity?: any): string | undefined {
-    return entity ? entity : undefined;
+  displayEntityName(entity?: any): string  {
+    return entity ? entity : '';
   }
 
   /**

@@ -14,7 +14,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 export class AddEventDialogComponent implements OnInit {
 
   /** Event Form. */
-  eventForm!: FormGroup;
+  eventForm: FormGroup = new FormGroup({});
   /** Entity Data. */
   entityData: Array<any> = new Array<any>();
   /** Action Data. */

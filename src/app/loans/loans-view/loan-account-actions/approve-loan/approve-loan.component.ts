@@ -19,7 +19,7 @@ import { LoansService } from 'app/loans/loans.service';
 export class ApproveLoanComponent implements OnInit {
 
   /** Approve Loan form. */
-  approveLoanForm!: FormGroup;
+  approveLoanForm: FormGroup = new FormGroup({});
   /** Loan data. */
   loanData: any = new Object();
   /** Association Data */

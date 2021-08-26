@@ -241,8 +241,8 @@ export class SearchJournalEntryComponent implements OnInit, AfterViewInit {
    * @param {any} office Office data.
    * @returns {string} Office name if valid otherwise undefined.
    */
-  displayOfficeName(office?: any): string | undefined {
-    return office ? office.name : undefined;
+  displayOfficeName(office?: any): string  {
+    return office ? office.name : '';
   }
 
   /**
@@ -250,8 +250,8 @@ export class SearchJournalEntryComponent implements OnInit, AfterViewInit {
    * @param {any} glAccount Gl Account data.
    * @returns {string} Gl Account name if valid otherwise undefined.
    */
-  displayGLAccount(glAccount?: any): string | undefined {
-    return glAccount ? glAccount.name + ' (' + glAccount.glCode + ')' : undefined;
+  displayGLAccount(glAccount?: any): string  {
+    return glAccount ? glAccount.name + ' (' + glAccount.glCode + ')' : '';
   }
 
   /**

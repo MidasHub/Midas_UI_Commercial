@@ -33,7 +33,7 @@ export class DepositRecurringDepositsAccountComponent implements OnInit {
   /** Maximum Date allowed. */
   maxDate = new Date();
   /** Deposits Recurring Deposit Account form. */
-  depositRecurringDepositForm!: FormGroup;
+  depositRecurringDepositForm: FormGroup = new FormGroup({});
 
   /**
    * Retrieves action details transactions template data from `resolve`

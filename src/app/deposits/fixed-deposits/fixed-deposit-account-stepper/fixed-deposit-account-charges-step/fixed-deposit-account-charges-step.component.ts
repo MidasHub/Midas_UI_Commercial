@@ -29,7 +29,7 @@ export class FixedDepositAccountChargesStepComponent implements OnInit, OnChange
   /** Validity of fixed depsits account form */
   @Input() fixedDepositAccountFormValid?: boolean;
   /** Currency Code */
-  @Input() currencyCode: FormControl = new FormControl();
+  @Input() currencyCode: FormControl | any;
 
   /** Charges Data */
   chargeData: any;

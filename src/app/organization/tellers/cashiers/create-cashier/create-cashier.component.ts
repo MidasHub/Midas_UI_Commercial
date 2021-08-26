@@ -25,7 +25,7 @@ export class CreateCashierComponent implements OnInit {
   /** Cashier Template. */
   cashierTemplate: any;
   /** Create cashier form. */
-  createCashierForm!: FormGroup;
+  createCashierForm: FormGroup = new FormGroup({});
 
   /**
    * Fetches cashier template from `resolve`

@@ -23,7 +23,7 @@ export class ActivateClientComponent implements OnInit {
   /** Maximum date allowed. */
   maxDate = new Date();
   /** Activate client form. */
-  activateClientForm!: FormGroup;
+  activateClientForm: FormGroup = new FormGroup({});
   /** Client Id */
   clientId: any;
 

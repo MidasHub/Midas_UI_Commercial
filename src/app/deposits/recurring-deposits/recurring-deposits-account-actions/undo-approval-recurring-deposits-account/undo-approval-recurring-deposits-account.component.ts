@@ -17,7 +17,7 @@ import { RecurringDepositsService } from '../../recurring-deposits.service';
 export class UndoApprovalRecurringDepositsAccountComponent implements OnInit {
 
   /** Undo Approval Recurring Deposits Account form. */
-  undoApprovalRecurringDepositsAccountForm!: FormGroup;
+  undoApprovalRecurringDepositsAccountForm: FormGroup = new FormGroup({});
   /** Recurring Deposits Account Id */
   accountId: any;
 

@@ -17,7 +17,7 @@ import { columnTypeData } from '../column-type-data';
 export class ColumnDialogComponent implements OnInit {
 
   /** Column Form. */
-  columnForm!: FormGroup;
+  columnForm: FormGroup = new FormGroup({});
   /** Column Type Data */
   columnTypeData = columnTypeData;
 

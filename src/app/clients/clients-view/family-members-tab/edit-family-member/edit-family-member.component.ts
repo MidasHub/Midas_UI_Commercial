@@ -23,7 +23,7 @@ export class EditFamilyMemberComponent implements OnInit {
   /** Maximum Due Date allowed. */
   maxDate = new Date();
   /** Add family member form. */
-  editFamilyMemberForm!: FormGroup;
+  editFamilyMemberForm: FormGroup = new FormGroup({});
   /** Add family member template. */
   addFamilyMemberTemplate: any;
   /** Family Members Details */

@@ -21,7 +21,7 @@ export class EditCashierComponent implements OnInit {
   /** Cashier Data. */
   cashierData: any = new Object();
   /** Edit cashier form. */
-  editCashierForm!: FormGroup;
+  editCashierForm: FormGroup = new FormGroup({});
   /** Is Staff ID present. */
   isStaffId = true;
   /** Minimum Date allowed. */

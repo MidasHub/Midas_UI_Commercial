@@ -29,7 +29,7 @@ export class RecoveryRepaymentComponent implements OnInit {
   /** Maximum Date allowed. */
   maxDate = new Date();
   /** Recovery Repayment Loan Form */
-  recoveryRepaymentLoanForm!: FormGroup;
+  recoveryRepaymentLoanForm: FormGroup = new FormGroup({});
 
   /**
    * @param {FormBuilder} formBuilder Form Builder.

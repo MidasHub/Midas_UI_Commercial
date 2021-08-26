@@ -29,7 +29,7 @@ export class DisburseComponent implements OnInit {
   /** Maximum Date allowed. */
   maxDate = new Date();
   /** Disbursement Loan Form */
-  disbursementLoanForm!: FormGroup;
+  disbursementLoanForm: FormGroup = new FormGroup({});
 
   /**
    * @param {FormBuilder} formBuilder Form Builder.

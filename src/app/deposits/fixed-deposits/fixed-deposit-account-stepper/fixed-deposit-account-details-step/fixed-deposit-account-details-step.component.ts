@@ -29,7 +29,7 @@ export class FixedDepositAccountDetailsStepComponent implements OnInit {
   /** For edit savings form */
   isFieldOfficerPatched = false;
   /** Fixed Deposits Account Details Form */
-  fixedDepositAccountDetailsForm!: FormGroup;
+  fixedDepositAccountDetailsForm: FormGroup = new FormGroup({});
 
   /** Fixed Deposits Account Template with product data  */
   @Output() fixedDepositsAccountProductTemplate = new EventEmitter();

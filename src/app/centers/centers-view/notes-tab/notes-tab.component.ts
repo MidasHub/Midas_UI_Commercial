@@ -20,7 +20,7 @@ export class NotesTabComponent implements OnInit {
   centerId: string;
   username?: string ;
   centerNotes: any;
-  noteForm!: FormGroup;
+  noteForm: FormGroup = new FormGroup({});
   @ViewChild('formRef', { static: true }) formRef: any;
 
 

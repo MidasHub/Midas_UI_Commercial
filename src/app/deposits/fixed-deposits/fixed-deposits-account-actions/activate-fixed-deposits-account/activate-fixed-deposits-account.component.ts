@@ -22,7 +22,7 @@ export class ActivateFixedDepositsAccountComponent implements OnInit {
   /** Maximum date allowed. */
   maxDate = new Date();
   /** Activate Fixed Deposits Account form. */
-  activateFixedDepositsAccountForm!: FormGroup;
+  activateFixedDepositsAccountForm: FormGroup = new FormGroup({});
   /** Fixed Deposits Account Id */
   accountId: any;
 

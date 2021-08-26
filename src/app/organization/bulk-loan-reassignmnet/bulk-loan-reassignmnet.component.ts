@@ -19,7 +19,7 @@ import { SettingsService } from 'app/settings/settings.service';
 export class BulkLoanReassignmnetComponent implements OnInit {
 
   /** Bulk Loan form. */
-  bulkLoanForm!: FormGroup;
+  bulkLoanForm: FormGroup = new FormGroup({});
   /** Office data. */
   offices: any;
   /** To Loan Officers. */

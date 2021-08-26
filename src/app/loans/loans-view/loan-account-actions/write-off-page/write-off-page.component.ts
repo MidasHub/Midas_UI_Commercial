@@ -24,7 +24,7 @@ export class WriteOffPageComponent implements OnInit {
   maxDate = new Date();
 
   /** Write Off form. */
-  writeOffForm!: FormGroup;
+  writeOffForm: FormGroup = new FormGroup({});
 
   /**
    * Get data from `Resolver`.

@@ -21,7 +21,7 @@ export class CreateClosureComponent implements OnInit {
   /** Maximum closing date allowed. */
   maxDate = new Date();
   /** Accounting closure form. */
-  accountingClosureForm!: FormGroup;
+  accountingClosureForm: FormGroup = new FormGroup({});
   /** Office data. */
   officeData: any;
 

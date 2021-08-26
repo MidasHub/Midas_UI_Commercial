@@ -20,8 +20,8 @@ export class ConfigureMakerCheckerTasksComponent implements OnInit {
   previousGrouping = '';
   checkboxesChanged: Boolean = false;
   currentGrouping!: string;
-  formGroup!: FormGroup;
-  backupform!: FormGroup;
+  formGroup: FormGroup = new FormGroup({});
+  backupform: FormGroup = new FormGroup({});
 
   permissions!: {
     permissions: { code: string, id: number }[]

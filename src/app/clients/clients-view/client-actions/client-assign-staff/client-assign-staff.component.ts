@@ -17,7 +17,7 @@ import { ClientsService } from 'app/clients/clients.service';
 export class ClientAssignStaffComponent implements OnInit {
 
   /** Client Assign Staff form. */
-  clientAssignStaffForm!: FormGroup;
+  clientAssignStaffForm: FormGroup = new FormGroup({});
   /** Staff Data */
   staffData: any;
   /** Client Data */

@@ -17,7 +17,7 @@ import { SystemService } from 'app/system/system.service';
 export class EditAccountNumberPreferenceComponent implements OnInit {
 
   /** Account Number Preference Form */
-  accountNumberPreferenceForm!: FormGroup;
+  accountNumberPreferenceForm: FormGroup = new FormGroup({});
   /** Account Number Preference Data */
   accountNumberPreferenceData: any;
   /** Account Number Preferences Template Data */

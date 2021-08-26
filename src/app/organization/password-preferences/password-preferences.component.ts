@@ -17,7 +17,7 @@ import { OrganizationService } from '../organization.service';
 export class PasswordPreferencesComponent implements OnInit {
 
   /** Password preferences form. */
-  passwordPreferencesForm!: FormGroup;
+  passwordPreferencesForm: FormGroup = new FormGroup({});
   /** Password preferences data. */
   passwordPreferencesData: any;
 

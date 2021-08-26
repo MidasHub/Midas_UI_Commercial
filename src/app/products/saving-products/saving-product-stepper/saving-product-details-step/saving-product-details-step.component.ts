@@ -10,7 +10,7 @@ export class SavingProductDetailsStepComponent implements OnInit {
 
   @Input() savingProductsTemplate: any;
 
-  savingProductDetailsForm!: FormGroup;
+  savingProductDetailsForm: FormGroup = new FormGroup({});
 
   constructor(private formBuilder: FormBuilder) {
     this.createSavingProductDetailsForm();

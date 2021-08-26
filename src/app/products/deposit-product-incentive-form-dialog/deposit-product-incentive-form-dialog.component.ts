@@ -15,7 +15,7 @@ export class DepositProductIncentiveFormDialogComponent implements OnInit {
     addButtonText: 'Add'
   };
 
-  depositProductIncentiveForm!: FormGroup;
+  depositProductIncentiveForm: FormGroup = new FormGroup({});
 
   title?: string;
 

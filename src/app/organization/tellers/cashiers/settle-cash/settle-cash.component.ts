@@ -22,7 +22,7 @@ export class SettleCashComponent implements OnInit {
   /** Cashier data. */
   cashierData: any;
   /** Cashier Form. */
-  settleCashForm!: FormGroup;
+  settleCashForm: FormGroup = new FormGroup({});
 
   /**
    * Get cashier data from `Resolver`.

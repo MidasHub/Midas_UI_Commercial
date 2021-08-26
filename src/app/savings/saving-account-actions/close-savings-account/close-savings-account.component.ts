@@ -23,7 +23,7 @@ export class CloseSavingsAccountComponent implements OnInit {
   /** Maximum date allowed. */
   maxDate = new Date();
   /** Close Savings Account form. */
-  closeSavingsAccountForm!: FormGroup;
+  closeSavingsAccountForm: FormGroup = new FormGroup({});
   /** Savings Account Id */
   accountId: any;
   /** Flag to enable payment details fields. */

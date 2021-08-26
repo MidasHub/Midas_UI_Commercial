@@ -22,7 +22,7 @@ export class AddChargeSavingsAccountComponent implements OnInit {
   /** Maximum Due Date allowed. */
   maxDate = new Date();
   /** Add Savings Charge form. */
-  savingsChargeForm!: FormGroup;
+  savingsChargeForm: FormGroup = new FormGroup({});
   /** savings charge options. */
   savingsChargeOptions: any;
   /** savings Id of the savings account. */

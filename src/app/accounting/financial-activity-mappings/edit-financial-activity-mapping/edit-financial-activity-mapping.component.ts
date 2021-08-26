@@ -17,7 +17,7 @@ import { AccountingService } from '../../accounting.service';
 export class EditFinancialActivityMappingComponent implements OnInit {
 
   /** Financial activity mapping form. */
-  financialActivityMappingForm!: FormGroup;
+  financialActivityMappingForm: FormGroup = new FormGroup({});
   /** GL Account options. */
   glAccountOptions: any;
   /** GL Account data. */

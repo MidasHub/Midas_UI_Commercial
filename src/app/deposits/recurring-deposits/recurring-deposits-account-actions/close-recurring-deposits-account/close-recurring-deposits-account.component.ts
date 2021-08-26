@@ -35,7 +35,7 @@ export class CloseRecurringDepositsAccountComponent implements OnInit {
   /** Maximum Date allowed. */
   maxDate = new Date();
   /** Close Recurring Deposit Account form. */
-  closeRecurringDepositForm!: FormGroup;
+  closeRecurringDepositForm: FormGroup = new FormGroup({});
 
   /**
    * Retrieves action details template data from `resolve`

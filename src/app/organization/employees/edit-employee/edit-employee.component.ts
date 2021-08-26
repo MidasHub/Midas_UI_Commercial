@@ -25,7 +25,7 @@ export class EditEmployeeComponent implements OnInit {
   /** Maximum joining date allowed. */
   maxDate = new Date();
   /** Employee form. */
-  editEmployeeForm!: FormGroup;
+  editEmployeeForm: FormGroup = new FormGroup({});
   /** Office data. */
   officeData: any;
 

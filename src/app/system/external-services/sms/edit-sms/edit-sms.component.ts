@@ -19,7 +19,7 @@ export class EditSMSComponent implements OnInit {
   /** SMS Configuration data */
   smsConfigurationData: any;
   /** SMS Configuration Form */
-  smsConfigurationForm!: FormGroup;
+  smsConfigurationForm: FormGroup = new FormGroup({});
 
   /**
    * Retrieves the SMS configuration data from `resolve`.

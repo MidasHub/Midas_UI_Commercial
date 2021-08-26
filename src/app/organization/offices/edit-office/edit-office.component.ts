@@ -21,7 +21,7 @@ export class EditOfficeComponent implements OnInit {
   /** Selected Data. */
   officeData: any;
   /** Office form. */
-  officeForm!: FormGroup;
+  officeForm: FormGroup = new FormGroup({});
   /** Minimum Date allowed. */
   minDate = new Date(2000, 0, 1);
   /** Maximum Date allowed. */

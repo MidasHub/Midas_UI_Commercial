@@ -18,7 +18,7 @@ import { ProductsService } from '../../products.service';
 export class CreateChargeComponent implements OnInit {
 
   /** Charge form. */
-  chargeForm!: FormGroup;
+  chargeForm: FormGroup = new FormGroup({});
   /** Charges template data. */
   chargesTemplateData: any;
   /** Charge time type data. */

@@ -51,9 +51,9 @@ export class ManageIcTransactionComponent implements OnInit {
     'batchNo',
     'terminalAmount_feeAmount',
   ]; // pnlAmount
-  formDate!: FormGroup;
-  formFilter!: FormGroup;
-  formFilterPartner!: FormGroup;
+  formDate: FormGroup = new FormGroup({});
+  formFilter: FormGroup = new FormGroup({});
+  formFilterPartner: FormGroup = new FormGroup({});
   dataSource!: any[];
   isLoading = false;
   transactionsData: any[] = [];

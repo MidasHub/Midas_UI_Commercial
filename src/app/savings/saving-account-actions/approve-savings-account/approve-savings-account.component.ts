@@ -23,7 +23,7 @@ export class ApproveSavingsAccountComponent implements OnInit {
   /** Maximum date allowed. */
   maxDate = new Date();
   /** Approve Savings Account form. */
-  approveSavingsAccountForm!: FormGroup;
+  approveSavingsAccountForm: FormGroup = new FormGroup({});
   /** Savings Account Id */
   accountId: any;
 

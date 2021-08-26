@@ -22,7 +22,7 @@ export class SavingsAccountTermsStepComponent implements OnChanges {
   /** Maximum date allowed. */
   maxDate = new Date();
   /** Savings Account Terms Form */
-  savingsAccountTermsForm!: FormGroup;
+  savingsAccountTermsForm: FormGroup = new FormGroup({});
   /** Lockin Period Frequency Type Data */
   lockinPeriodFrequencyTypeData: any;
   /** Interest Compounding Period Type Data */

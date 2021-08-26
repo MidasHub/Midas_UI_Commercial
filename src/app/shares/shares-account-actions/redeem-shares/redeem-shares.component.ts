@@ -25,7 +25,7 @@ export class RedeemSharesComponent implements OnInit {
   /** Maximum date allowed. */
   maxDate = new Date();
   /** Redeem Share Account form. */
-  redeemSharesForm!: FormGroup;
+  redeemSharesForm: FormGroup = new FormGroup({});
   /** Shares Account Id */
   accountId: any;
 

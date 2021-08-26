@@ -24,7 +24,7 @@ export class DisburseLoanAccountComponent implements OnInit {
   /** Maximum Date allowed. */
   maxDate = new Date();
   /** Disbursement Loan form. */
-  disbursementForm!: FormGroup;
+  disbursementForm: FormGroup = new FormGroup({});
 
   /**
    * Get data from `Resolver`.

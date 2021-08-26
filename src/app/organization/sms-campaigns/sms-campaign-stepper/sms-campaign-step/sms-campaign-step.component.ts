@@ -32,7 +32,7 @@ export class SmsCampaignStepComponent implements OnInit {
   maxDate = new Date(new Date().setFullYear(new Date().getFullYear() + 10));
 
   /** SMS Campaign Form */
-  smsCampaignDetailsForm!: FormGroup;
+  smsCampaignDetailsForm: FormGroup = new FormGroup({});
   /** Data to be passed to sub component */
   paramData: any;
   /** Trigger types options */

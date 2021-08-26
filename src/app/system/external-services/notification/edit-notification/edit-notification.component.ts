@@ -19,7 +19,7 @@ export class EditNotificationComponent implements OnInit {
   /** Notification Configuration data */
   notificationConfigurationData: any;
   /** Notification Configuration Form */
-  notificationConfigurationForm!: FormGroup;
+  notificationConfigurationForm: FormGroup = new FormGroup({});
 
   /**
    * Retrieves the Notification configuration data from `resolve`.

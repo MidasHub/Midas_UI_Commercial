@@ -19,7 +19,7 @@ import { SettingsService } from 'app/settings/settings.service';
 export class CreateOfficeComponent implements OnInit {
 
   /** Office form. */
-  officeForm!: FormGroup;
+  officeForm: FormGroup = new FormGroup({});
   /** Office Data */
   officeData: any;
   /** Minimum Date allowed. */

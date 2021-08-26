@@ -23,7 +23,7 @@ export class AttachGroupMeetingComponent implements OnInit {
   /** Maximum date allowed. */
   maxDate = new Date();
   /** Group Meeting form. */
-  groupMeetingForm!: FormGroup;
+  groupMeetingForm: FormGroup = new FormGroup({});
   /** Calnedar Template Data */
   calendarTemplate: any;
   /** Group Id */

@@ -30,7 +30,7 @@ export class EditTaxGroupComponent implements OnInit {
   /** Maximum start date allowed. */
   maxDate = new Date(2100, 0, 1);
   /** Tax Group form. */
-  taxGroupForm!: FormGroup;
+  taxGroupForm: FormGroup = new FormGroup({});
   /** Tax Group template data. */
   taxGroupData: any;
   /** Tax Component Data Source */

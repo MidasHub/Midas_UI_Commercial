@@ -23,7 +23,7 @@ export class AddClientChargeComponent implements OnInit {
   /** Maximum Due Date allowed. */
   maxDate = new Date();
   /** Add Clients Charge form. */
-  clientChargeForm!: FormGroup;
+  clientChargeForm: FormGroup = new FormGroup({});
   /** clients charge options. */
   clientChargeOptions: any;
   /** clients Id */

@@ -17,7 +17,7 @@ import { CentersService } from 'app/centers/centers.service';
 export class CenterAssignStaffComponent implements OnInit {
 
   /** Center Assign Staff form. */
-  centerAssignStaffForm!: FormGroup;
+  centerAssignStaffForm: FormGroup = new FormGroup({});
   /** Field Officer Data */
   staffData: any;
   /** Center Data */

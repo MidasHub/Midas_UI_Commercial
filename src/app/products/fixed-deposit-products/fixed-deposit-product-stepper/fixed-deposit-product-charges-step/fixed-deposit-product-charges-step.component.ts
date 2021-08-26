@@ -12,11 +12,11 @@ import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.co
 export class FixedDepositProductChargesStepComponent implements OnInit {
 
   @Input() fixedDepositProductsTemplate: any;
-  @Input() currencyCode!: FormControl;
+  @Input() currencyCode: FormControl | any;
 
   chargeData: any;
 
-  chargesDataSource?: {}[];
+  chargesDataSource: {}[] = [];
   displayedColumns: string[] = ['name', 'chargeCalculationType', 'amount', 'chargeTimeType', 'action'];
 
   constructor(public dialog: MatDialog) {
@@ -33,7 +33,7 @@ export class FixedDepositProductChargesStepComponent implements OnInit {
   }
 
   addCharge(charge: any) {
-    this.chargesDataSource = this.chargesDataSource?.concat([charge.value]);
+    this.chargesDataSource = this.chargesDataSource.concat([charge.value]);
     charge.value = '';
   }
 
@@ -43,8 +43,8 @@ export class FixedDepositProductChargesStepComponent implements OnInit {
     });
     deleteChargeDialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {
-        this.chargesDataSource?.splice(this.chargesDataSource?.indexOf(charge), 1);
-        this.chargesDataSource = this.chargesDataSource?.concat([]);
+        this.chargesDataSource.splice(this.chargesDataSource.indexOf(charge), 1);
+        this.chargesDataSource = this.chargesDataSource.concat([]);
       }
     });
   }

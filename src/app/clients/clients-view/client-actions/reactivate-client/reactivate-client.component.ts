@@ -23,7 +23,7 @@ export class ReactivateClientComponent implements OnInit {
   /** Maximum date allowed. */
   maxDate = new Date();
   /** Reactivate client form. */
-  reactivateClientForm!: FormGroup;
+  reactivateClientForm: FormGroup = new FormGroup({});
   /** Client Account Id */
   clientId: any;
 

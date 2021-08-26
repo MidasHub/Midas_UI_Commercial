@@ -21,7 +21,7 @@ export class PeriodicAccrualsComponent implements OnInit {
   /** Maximum accrue date allowed. */
   maxDate = new Date();
   /** Periodic accruals form. */
-  periodicAccrualsForm!: FormGroup;
+  periodicAccrualsForm: FormGroup = new FormGroup({});
 
   /**
    * @param {FormBuilder} formBuilder Form Builder.

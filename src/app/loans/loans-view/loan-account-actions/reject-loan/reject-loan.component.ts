@@ -20,7 +20,7 @@ export class RejectLoanComponent implements OnInit {
   /** Loan Id. */
   loanId: any;
   /** Reject Loan form. */
-  rejectLoanForm!: FormGroup;
+  rejectLoanForm: FormGroup = new FormGroup({});
   /** Minimum Date allowed. */
   minDate = new Date(2000, 0, 1);
   /** Maximum Date allowed. */

@@ -18,6 +18,7 @@ export class ViewRecurringDepositProductComponent implements OnInit {
 
   recurringDepositProduct: any;
   recurringDepositProductTemplate: any;
+  expandChartSlabIndex: any;
 
   chartSlabsIncentivesDisplayedColumns: string[] = ['incentives'];
   chartSlabsDisplayedColumns: string[] = ['period', 'amountRange', 'annualInterestRate', 'description', 'actions'];
