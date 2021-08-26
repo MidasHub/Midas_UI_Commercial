@@ -23,7 +23,7 @@ export class TerminalsService {
     private authenticationService: AuthenticationService
   ) {
     this.accessToken = JSON.parse(
-      sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey) || ''
+      sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey)!
     );
     this.GatewayApiUrlPrefix = environment.GatewayApiUrlPrefix;
     this.IcGatewayApiUrlPrefix = environment.IcGatewayApiUrlPrefix;
@@ -112,7 +112,7 @@ export class TerminalsService {
 
   save(data: any): Observable<any> {
     this.accessToken = JSON.parse(
-      sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey) || ''
+      sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey)!
     );
     const httpParams = {
       createdBy: this.accessToken.userId,
@@ -124,7 +124,7 @@ export class TerminalsService {
 
   update(data: any): Observable<any> {
     this.accessToken = JSON.parse(
-      sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey) || ''
+      sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey)!
     );
     const httpParams = {
       createdBy: this.accessToken.userId,

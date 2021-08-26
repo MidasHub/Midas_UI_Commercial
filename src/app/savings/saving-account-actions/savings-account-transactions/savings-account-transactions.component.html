@@ -92,7 +92,7 @@
         <mat-form-field *ngIf="savingAccountTransactionForm.controls['bankNumber']">
           <mat-label>Chi nhánh</mat-label>
           <mat-select formControlName="bankNumber">
-            <mat-option *ngFor="let office of offices" selected label="{{ office.name }}" value="{{ office.id }}">
+            <mat-option *ngFor="let office of offices" selected  value="{{ office.id }}">
               {{ office.name }}
             </mat-option>
           </mat-select>
@@ -104,7 +104,7 @@
         <mat-form-field *ngIf="savingAccountTransactionForm.controls['accountNumber'] && showStaffChoose">
           <mat-label>Nhân viên</mat-label>
           <mat-select formControlName="accountNumber">
-            <mat-option *ngFor="let staff of limitInfo?.listStaff" selected label="{{ staff.displayName }}" value="{{ staff.staffId }}">
+            <mat-option *ngFor="let staff of limitInfo?.listStaff" selected  value="{{ staff.staffId }}">
               {{ staff.displayName }}
             </mat-option>
           </mat-select>

@@ -45,7 +45,7 @@ export class LanguageSelectorComponent implements OnInit {
   /** Language selector form control. */
   languageSelector = new FormControl();
 
-  selectedlang?: string;
+  selectedlang!: string;
 
 
 

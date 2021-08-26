@@ -173,8 +173,8 @@ export class MakeAccountTransfersComponent implements OnInit, AfterViewInit {
    * @param {any} client Client data.
    * @returns {string} Client name if valid otherwise undefined.
    */
-  displayClient(client: any): string | undefined {
-    return client ? client.displayName : undefined;
+  displayClient(client: any): string  {
+    return client ? client.displayName : '';
   }
 
   /**
@@ -182,7 +182,7 @@ export class MakeAccountTransfersComponent implements OnInit, AfterViewInit {
    */
   submit() {
     this.accessToken = JSON.parse(
-      sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey) || ''
+      sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey)!
     );
     const dateFormat = this.settingsService.dateFormat;
     const locale = this.settingsService.language.code;

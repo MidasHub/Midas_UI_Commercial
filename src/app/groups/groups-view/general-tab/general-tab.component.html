@@ -133,7 +133,7 @@
     <div class="fix-table-client">
       <div fxLayout fxLayoutAlign="start center">
         <mat-form-field fxFlex="40%">
-          <input matInput type="text" (keyup)="doFilterGroupClientMembersSameOffice($event.target.value)" placeholder="Filter">
+          <input matInput type="text" (keyup)="doFilterGroupClientMembersSameOffice($event)" placeholder="Filter">
         </mat-form-field>
       </div>
 
@@ -182,7 +182,7 @@
     <div class="fix-table1-client">
       <div fxLayout fxLayoutAlign="start center">
         <mat-form-field fxFlex="40%">
-          <input matInput type="text" (keyup)="doFilterGroupClientMembersDiffidentOffice($event.target.value)" placeholder="Filter">
+          <input matInput type="text" (keyup)="doFilterGroupClientMembersDiffidentOffice($event)" placeholder="Filter">
         </mat-form-field>
       </div>
       <table mat-table [dataSource]="groupClientMembersDiffidentOffice"

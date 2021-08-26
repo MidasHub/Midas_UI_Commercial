@@ -23,7 +23,7 @@
         {{ cl.desc }}
       </mat-option>
     </mat-autocomplete>
-    <mat-error *ngIf="partner.hasError('required')"> Yêu cầu: chọn đối tác </mat-error>
+    <mat-error *ngIf="partner!.hasError('required')"> Yêu cầu: chọn đối tác </mat-error>
   </mat-form-field>
 
   <mat-form-field fxFlex="96%" *ngIf="form.contains('partnerPaymentType')">

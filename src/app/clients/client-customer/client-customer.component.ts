@@ -21,6 +21,7 @@ import { AuthenticationService } from 'app/core/authentication/authentication.se
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { CentersService } from 'app/centers/centers.service';
 import { BanksService } from 'app/banks/banks.service';
+import { filter } from 'lodash';
 const log = new Logger('Client-customer');
 
 @Component({
@@ -161,7 +162,7 @@ export class ClientCustomerComponent implements OnInit, AfterViewInit {
     if (!this.sort.direction) {
       delete this.sort.active;
     }
-    if (this.searchValue !== "") {
+    if (this.searchValue !== '') {
       this.applyFilter(this.searchValue);
     } else {
       const queryParams: Params = { i: this.paginator.pageIndex, s: this.paginator.pageSize };
@@ -207,9 +208,9 @@ export class ClientCustomerComponent implements OnInit, AfterViewInit {
    * Filter Client Data
    * @param {string} filterValue Value to filter data.
    */
-  applyFilter(filterValue: string = "") {
-    const officeId = this.formFilter.get("officeId")?.value ? this.formFilter.get("officeId")?.value : null;
-    const staffId = this.formFilter.get("staffId")?.value ? this.formFilter.get("staffId")?.value : null;
+  applyFilter(filterValue: string = '') {
+    const officeId = this.formFilter.get('officeId')?.value ? this.formFilter.get('officeId')?.value : null;
+    const staffId = this.formFilter.get('staffId')?.value ? this.formFilter.get('staffId')?.value : null;
     this.searchValue = filterValue;
     this.dataSource.filterClients(
       filterValue,
@@ -223,5 +224,13 @@ export class ClientCustomerComponent implements OnInit, AfterViewInit {
       staffId
     );
     // this.paginator.pageIndex = 0;
+  }
+
+  /** wrapper for applyFilter */
+  applyFilterEvent(e:Event){
+    const filterValue = (<HTMLInputElement>e.target).value;
+    if(filterValue){
+      this.applyFilter(filterValue.trim().toLowerCase());
+    }
   }
 }

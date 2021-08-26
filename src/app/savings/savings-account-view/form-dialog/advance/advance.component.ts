@@ -156,7 +156,7 @@ export class AdvanceComponent implements OnInit {
     return result;
   }
 
-  displayFn(client?: any): string | undefined {
+  displayFn(client?: any): string {
     return this.disable ? client : client.displayName ? client.displayName : client.name;
   }
 

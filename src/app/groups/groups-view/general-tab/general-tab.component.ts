@@ -103,12 +103,18 @@ export class GeneralTabComponent implements AfterViewInit {
     $event.stopPropagation();
   }
 
-  public doFilterGroupClientMembersSameOffice = (value: string) => {
-    this.groupClientMembersSameOffice.filter = value.trim().toLocaleLowerCase();
+   doFilterGroupClientMembersSameOffice (e: Event) {
+    const filterValue = (<HTMLInputElement>e.target).value || '';
+    if (filterValue) {
+    this.groupClientMembersSameOffice.filter = filterValue.trim().toLocaleLowerCase();
+    }
   }
 
-  public doFilterGroupClientMembersDiffidentOffice = (value: string) => {
-    this.groupClientMembersDiffidentOffice.filter = value.trim().toLocaleLowerCase();
+   doFilterGroupClientMembersDiffidentOffice (e: Event) {
+    const filterValue = (<HTMLInputElement>e.target).value || '';
+    if (filterValue) {
+    this.groupClientMembersDiffidentOffice.filter = filterValue.trim().toLocaleLowerCase();
+    }
   }
 
   addIdentifier(element: any) {

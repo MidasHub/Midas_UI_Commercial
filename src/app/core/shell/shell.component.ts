@@ -25,10 +25,11 @@ export class ShellComponent implements OnInit, OnDestroy {
   isHandset$: Observable<boolean> = this.breakpointObserver
     .observe(Breakpoints.Handset)
     .pipe(map((result) => result.matches));
+  _isHandset = false;
   /** Sets the initial state of sidenav as collapsed. Not collapsed if false. */
   sidenavCollapsed = true;
   /** Progress bar mode. */
-  progressBarMode!: string;
+  progressBarMode: any;
   /** Subscription to progress bar. */
   progressBar$!: Subscription;
 
@@ -56,6 +57,8 @@ export class ShellComponent implements OnInit, OnDestroy {
       this.progressBarMode = mode;
       this.cdr.detectChanges();
     });
+
+    this.isHandset$.subscribe(value => this._isHandset = value );
     /** Tour guide */
     if (!localStorage.getItem('MidasTour') && this.isDesktop) {
       this.tourService.initialize(

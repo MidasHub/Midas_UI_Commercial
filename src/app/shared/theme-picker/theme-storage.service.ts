@@ -41,7 +41,8 @@ export class ThemeStorageService {
    * @returns current theme from local storage
    */
   getTheme(): Theme {
-    return JSON.parse(localStorage.getItem(this.themeStorageKey) || sessionStorage.getItem(this.themeStorageKey) || '');
+    // tslint:disable-next-line: no-non-null-assertion
+    return JSON.parse(localStorage.getItem(this.themeStorageKey) || sessionStorage.getItem(this.themeStorageKey)!);
   }
 
   /**

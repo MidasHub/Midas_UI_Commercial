@@ -17,7 +17,7 @@ export class BillsService {
   private IcGatewayApiUrlPrefix: any;
   constructor(private http: HttpClient, private commonHttpParams: CommonHttpParams) {
     this.accessToken = JSON.parse(
-      sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey) || ''
+      sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey)!
     );
     this.IcGatewayApiUrlPrefix = environment.IcGatewayApiUrlPrefix;
   }
@@ -25,7 +25,7 @@ export class BillsService {
   uploadBills(formData: any): Observable<any> {
 
     this.accessToken = JSON.parse(
-      sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey) || ''
+      sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey)!
     );
 
     formData.append('createdBy', this.accessToken.userId);

@@ -30,7 +30,7 @@ export class ClientsService {
    */
   constructor(private http: HttpClient, private commonHttpParams: CommonHttpParams) {
     this.accessToken = JSON.parse(
-      sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey) || ''
+      sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey)!
     );
     this.GatewayApiUrlPrefix = environment.GatewayApiUrlPrefix;
     this.IcGatewayApiUrlPrefix = environment.IcGatewayApiUrlPrefix;
@@ -124,7 +124,7 @@ export class ClientsService {
     staffFilter?: string
   ): Observable<any> {
     this.accessToken = JSON.parse(
-      sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey) || ''
+      sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey)!
     );
 
     if (!this.accessToken.permissions.includes('POS_UPDATE')) {
@@ -146,7 +146,7 @@ export class ClientsService {
       .set('sqlSearch', sqlSearch ? sqlSearch : '');
 
     this.accessToken = JSON.parse(
-      sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey) || ''
+      sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey)!
     );
 
     return this.http.get('/clients', { params: httpParams });

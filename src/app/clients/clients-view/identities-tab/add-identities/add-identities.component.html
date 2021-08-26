@@ -41,7 +41,7 @@
 
   <mat-form-field *ngIf="form.contains('documentCardType')" fxFlex="96%">
     <mat-label>{{ "Client_Component.ViewClient.TabIdentities.selectCardType" | translate }}</mat-label>
-    <mat-select required disabled formControlName="documentCardType">
+    <mat-select required [disabled]="true" formControlName="documentCardType">
       <mat-option *ngFor="let sa of documentCardTypes" [value]="sa.code">
         {{ sa.description }}
       </mat-option>

@@ -25,7 +25,7 @@ export class MidasClientService {
 
     this.accessToken = JSON.parse(
       sessionStorage.getItem(this.credentialsStorageKey)
-      || localStorage.getItem(this.credentialsStorageKey) || ''
+      || localStorage.getItem(this.credentialsStorageKey)!
     );
     this.GatewayApiUrlPrefix = environment.GatewayApiUrlPrefix ;
     this.environment = environment ;

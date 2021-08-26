@@ -27,7 +27,7 @@ export class SavingsAccountChargesStepComponent implements OnInit, OnChanges {
   /** Savings Account Template */
   @Input() savingsAccountTemplate: any;
   /** Currency Code */
-  @Input() currencyCode: FormControl =  new FormControl();
+  @Input() currencyCode: any;
 
   /** Charge Data */
   chargeData: any = [];

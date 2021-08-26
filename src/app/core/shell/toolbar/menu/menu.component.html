@@ -1,6 +1,6 @@
 <!-- Floating Menu -->
-<eco-fab-speed-dial #myFAB fixed="true" [open]="isMenuOpen">
-  <eco-fab-speed-dial-trigger spin="true" spin360>
+<eco-fab-speed-dial #myFAB [fixed]="true" [open]="isMenuOpen">
+  <eco-fab-speed-dial-trigger [spin]="true" spin360>
     <button color="accent" mat-fab (click)="doAction('trigger')" matTooltip="Menu tác vụ" matTooltipPosition="before">
       <mat-icon class="spin360">menu</mat-icon>
     </button>

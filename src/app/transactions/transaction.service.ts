@@ -25,7 +25,7 @@ export class TransactionService {
    */
   constructor(private http: HttpClient, private commonHttpParams: CommonHttpParams) {
     this.accessToken = JSON.parse(
-      sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey) || '' || ''
+      sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey)! || ''
     );
     this.GatewayApiUrlPrefix = environment.GatewayApiUrlPrefix;
     this.IcGatewayApiUrlPrefix = environment.IcGatewayApiUrlPrefix;
@@ -417,7 +417,7 @@ export class TransactionService {
 
   downloadVoucher(transactionId: string) {
     this.accessToken = JSON.parse(
-      sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey) || '' || ''
+      sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey)! || ''
     );
     const url = `${this.environment.GatewayApiUrl}${this.GatewayApiUrlPrefix}/export/download_voucher?id=${transactionId}&accessToken=${this.accessToken.base64EncodedAuthenticationKey}&createdBy=${this.accessToken.userId}`;
     const xhr = new XMLHttpRequest();
@@ -443,7 +443,7 @@ export class TransactionService {
 
   downloadBill(clientId: string, documentId: string) {
     this.accessToken = JSON.parse(
-      sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey) || '' || ''
+      sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey)! || ''
     );
     const xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function () {
@@ -591,7 +591,7 @@ export class TransactionService {
 
   exportTransactionForPartner(query: string) {
     this.accessToken = JSON.parse(
-      sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey) || '' || ''
+      sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey)! || ''
     );
     // tslint:disable-next-line:max-line-length
     const fileUrl = `${this.environment.GatewayApiUrl}${this.environment.GatewayApiUrlPrefix}/export/export_transaction_partner?ext5=ALL&typeExport=transaction&accessToken=${this.accessToken.base64EncodedAuthenticationKey}&createdBy=${this.accessToken.userId}&${query}`;
@@ -606,7 +606,7 @@ export class TransactionService {
 
   exportTransaction(query: string) {
     this.accessToken = JSON.parse(
-      sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey) || '' || ''
+      sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey)! || ''
     );
     // tslint:disable-next-line:max-line-length
     const fileUrl = `${this.environment.GatewayApiUrl}${this.environment.GatewayApiUrlPrefix}/export/export_transaction?ext5=ALL&typeExport=transaction&accessToken=${this.accessToken.base64EncodedAuthenticationKey}&createdBy=${this.accessToken.userId}&staffId=${this.accessToken.staffId}&${query}`;
@@ -674,7 +674,7 @@ export class TransactionService {
 
   exportTransactionFeePaid(transactions: string) {
     this.accessToken = JSON.parse(
-      sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey) || '' || ''
+      sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey)! || ''
     );
     const { permissions, officeId } = this.accessToken;
     const permit = permissions.includes('TXN_CREATE');
@@ -748,7 +748,7 @@ export class TransactionService {
   getShippersCardTransfer(): Observable<any> {
     // let httpParams = this.commonHttpParams.getCommonHttpParams();
     this.accessToken = JSON.parse(
-      sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey) || '' || ''
+      sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey)! || ''
     );
     const Params = {
       createdBy: this.accessToken.userId,
@@ -760,7 +760,7 @@ export class TransactionService {
   saveCardTransfer(data: any) {
     // let httpParams = this.commonHttpParams.getCommonHttpParams();
     this.accessToken = JSON.parse(
-      sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey) || '' || ''
+      sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey)! || ''
     );
     const Params = {
       createdBy: this.accessToken.userId,
@@ -777,7 +777,7 @@ export class TransactionService {
   getDetailByTransferRefNo(transferRefNo: any, officeId: any) {
     // let httpParams = this.commonHttpParams.getCommonHttpParams();
     this.accessToken = JSON.parse(
-      sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey) || ''
+      sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey)!
     );
     const Params = {
       createdBy: this.accessToken.userId,
@@ -792,7 +792,7 @@ export class TransactionService {
   exportCardTransferRequest(transferRefNo: any, officeId: any) {
     // let httpParams = this.commonHttpParams.getCommonHttpParams();
     this.accessToken = JSON.parse(
-      sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey) || ''
+      sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey)!
     );
     const Params = {
       createdBy: this.accessToken.userId,
@@ -806,7 +806,7 @@ export class TransactionService {
 
   getListTransfer(fromDate: any, toDate: any, officeId: any) {
     this.accessToken = JSON.parse(
-      sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey) || ''
+      sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey)!
     );
     const Params = {
       createdBy: this.accessToken.userId,
@@ -822,7 +822,7 @@ export class TransactionService {
 
   deleteCardTransferRequest(transferRefNo: any, officeId: any) {
     this.accessToken = JSON.parse(
-      sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey) || ''
+      sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey)!
     );
     const Params = {
       createdBy: this.accessToken.userId,
@@ -837,7 +837,7 @@ export class TransactionService {
 
   addDetailCardTransfer(transferRefNo: any, officeId: any, listCardId: any) {
     this.accessToken = JSON.parse(
-      sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey) || ''
+      sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey)!
     );
     const Params = {
       createdBy: this.accessToken.userId,
@@ -853,7 +853,7 @@ export class TransactionService {
 
   deleteDetailCardTransfer(transferRefNo: any, officeId: any, listCardId: any) {
     this.accessToken = JSON.parse(
-      sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey) || ''
+      sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey)!
     );
     const Params = {
       createdBy: this.accessToken.userId,
@@ -936,7 +936,7 @@ export class TransactionService {
 
   exportAsExcelFile(exportType: string, data: any) {
     this.accessToken = JSON.parse(
-      sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey) || ''
+      sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey)!
     );
 
     // tslint:disable-next-line:max-line-length
@@ -978,7 +978,7 @@ export class TransactionService {
 
   exportDataFile(exportType: string, data: any) {
     this.accessToken = JSON.parse(
-      sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey) || ''
+      sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey)!
     );
 
     // tslint:disable-next-line:max-line-length
@@ -991,7 +991,7 @@ export class TransactionService {
 
   exportRollTermScheduleTab(exportType: string, data: any) {
     this.accessToken = JSON.parse(
-      sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey) || ''
+      sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey)!
     );
 
     // tslint:disable-next-line:max-line-length

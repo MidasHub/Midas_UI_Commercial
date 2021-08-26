@@ -30,7 +30,7 @@
 
           <mat-form-field fxFlex="48%">
             <mat-label>{{ "Client_Component.ClientStepper.GeneralStep.labelLegalForm" | translate }}</mat-label>
-            <mat-select disabled formControlName="legalFormId">
+            <mat-select [disabled]="true" formControlName="legalFormId">
               <mat-option *ngFor="let legalForm of legalFormOptions" [value]="legalForm.id">
                 {{ legalForm.value }}
               </mat-option>
@@ -39,7 +39,7 @@
           <mat-checkbox
             *ngIf="createClientForm.value.legalFormId === 1"
             [disabled]="isTeller"
-            checked="false"
+            [checked]="false"
             fxFlex="48%"
             labelPosition="before"
             formControlName="isStaff"
@@ -221,7 +221,7 @@
               </mat-option>
             </mat-select>
           </mat-form-field>
-          <mat-checkbox disabled fxFlex="48%" labelPosition="before" formControlName="active" class="margin-v">
+          <mat-checkbox [disabled]="true" fxFlex="48%" labelPosition="before" formControlName="active" class="margin-v">
             {{ "Client_Component.ClientStepper.GeneralStep.checkboxIsActivate" | translate }}
           </mat-checkbox>
           <mat-form-field fxFlex="48%">
@@ -235,7 +235,7 @@
               [innerHTML]="'Client_Component.ClientStepper.GeneralStep.labelClientActivatedDateMsg' | translate"
             ></mat-error>
           </mat-form-field>
-          <mat-checkbox disabled fxFlex="48%" labelPosition="before" formControlName="addSavings" class="margin-v">
+          <mat-checkbox [disabled]="true" fxFlex="48%" labelPosition="before" formControlName="addSavings" class="margin-v">
             {{ "Client_Component.ClientStepper.GeneralStep.checkboxOpenAccount" | translate }}
           </mat-checkbox>
           <mat-form-field *ngIf="createClientForm.contains('savingsProductId')" fxFlex="48%">

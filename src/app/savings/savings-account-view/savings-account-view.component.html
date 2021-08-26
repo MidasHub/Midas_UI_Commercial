@@ -52,7 +52,7 @@
           <i class="{{button.icon}}"></i> {{button.name | translate}}</button>
       </ng-container>
 
-      <ng-container *ngIf="buttonConfig?.options.length > 0">
+      <ng-container *ngIf="buttonConfig.options.length > 0">
         <button mat-raised-button
                 [matMenuTriggerFor]="More"><i class="fas fa-tasks"></i> {{ 'Saving_Account_Component.ViewSavingAccount.buttonMore'| translate}}</button>
         <mat-menu #More="matMenu">

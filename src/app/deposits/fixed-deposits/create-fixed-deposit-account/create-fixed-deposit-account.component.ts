@@ -12,6 +12,7 @@ import { FixedDepositAccountCurrencyStepComponent } from '../fixed-deposit-accou
 import { FixedDepositAccountTermsStepComponent } from '../fixed-deposit-account-stepper/fixed-deposit-account-terms-step/fixed-deposit-account-terms-step.component';
 import { FixedDepositAccountSettingsStepComponent } from '../fixed-deposit-account-stepper/fixed-deposit-account-settings-step/fixed-deposit-account-settings-step.component';
 import { FixedDepositAccountChargesStepComponent } from '../fixed-deposit-account-stepper/fixed-deposit-account-charges-step/fixed-deposit-account-charges-step.component';
+import { CdkStep } from '@angular/cdk/stepper';
 
 /**
  * Create Fixed Deposit Account Component
@@ -141,5 +142,4 @@ export class CreateFixedDepositAccountComponent {
       this.router.navigate(['../', response.resourceId], { relativeTo: this.route });
     });
   }
-
 }

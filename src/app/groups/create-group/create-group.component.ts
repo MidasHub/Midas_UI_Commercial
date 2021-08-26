@@ -187,8 +187,8 @@ export class CreateGroupComponent implements OnInit, AfterViewInit {
    * @param {any} client Client data.
    * @returns {string} Client name if valid otherwise undefined.
    */
-  displayClient(client: any): string | undefined {
-    return client ? client.displayName : undefined;
+  displayClient(client: any): string  {
+    return client ? client.displayName : '';
   }
 
   /**

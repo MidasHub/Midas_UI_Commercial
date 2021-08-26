@@ -175,7 +175,7 @@ export class ClientsViewComponent implements OnInit {
     }
   }
 
-  private printComponent() {
+   printComponent() {
 
     // const WindowPrt = window.open('', '', 'left=0,top=0,width=900,height=900,toolbar=0,scrollbars=0,status=0');
     const WindowPrt = this.popupwindow('', '', 1024, 900);

@@ -81,7 +81,7 @@ export class AuthenticationService {
     this.rememberMe = false;
     this.storage = sessionStorage;
     const savedCredentials = JSON.parse(
-      sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey) || ''
+      sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey)!
     );
     if (savedCredentials) {
       if (savedCredentials.rememberMe) {
@@ -333,7 +333,7 @@ export class AuthenticationService {
   isAuthenticated(): boolean {
     return !!(
       JSON.parse(
-        sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey) || ''
+        sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey)!
       ) && this.twoFactorAccessTokenIsValid()
     );
   }

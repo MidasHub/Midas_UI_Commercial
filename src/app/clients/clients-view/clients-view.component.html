@@ -86,7 +86,7 @@
                     <a [routerLink]="['/groups', group.id, 'general']">{{ group.name }}</a
                     >&nbsp;
                   </span>
-                  <span *ngIf="!clientViewData.groups.length > 0">{{
+                  <span *ngIf="!(clientViewData.groups.length > 0)">{{
                     "Client_Component.ViewClient.lblUnassigned" | translate
                   }}</span>
                 </label>

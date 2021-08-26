@@ -8,7 +8,7 @@
   matTooltip="Tổng số dư tài khoản ngân hàng"
   [matMenuTriggerFor]="UserSavingMenu"
 >
- 
+
 <i class="fas fa-dollar-sign"></i><span>: {{ totalBalance | money }}</span>
 </button>
 
@@ -20,7 +20,7 @@
           <strong style="color: red;">(Không có tài khoản)</strong>
         </li>
       </ul>
-      <ul class="dropdown-menu" *ngIf="listSaving?.length > 0">
+      <ul class="dropdown-menu" *ngIf="listSaving.length > 0">
         <li style="padding: 10px 0; margin: 2px 0 0; pointer-events: auto " *ngFor="let account of listSaving">
           <label >
             <a href="#/clients/{{ account.clientId }}/savings-accounts/{{ account.id }}">

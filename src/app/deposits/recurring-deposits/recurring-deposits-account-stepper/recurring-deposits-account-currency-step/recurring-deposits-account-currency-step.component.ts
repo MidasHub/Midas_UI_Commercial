@@ -17,12 +17,16 @@ export class RecurringDepositsAccountCurrencyStepComponent implements OnInit, On
   @Input() recurringDepositsAccountProductTemplate: any;
 
   /** Recurring Deposit Account Currency Form */
-  recurringDepositAccountCurrencyForm?: FormGroup;
+  recurringDepositAccountCurrencyForm: FormGroup;
   /** Currency Data */
   currencyData: any;
 
   constructor(private formBuilder: FormBuilder) {
-    this.createRecurringDepositAccountCurrencyForm();
+    // this.createRecurringDepositAccountCurrencyForm();
+    this.recurringDepositAccountCurrencyForm = this.formBuilder.group({
+      'currencyCode': [{ value: '', disabled: true }],
+      'decimalPlaces': [{ value: '', disabled: true }]
+    });
   }
 
   ngOnInit() {
@@ -37,12 +41,12 @@ export class RecurringDepositsAccountCurrencyStepComponent implements OnInit, On
     }
   }
 
-  createRecurringDepositAccountCurrencyForm() {
-    this.recurringDepositAccountCurrencyForm = this.formBuilder.group({
-      'currencyCode': [{ value: '', disabled: true }],
-      'decimalPlaces': [{ value: '', disabled: true }]
-    });
-  }
+  // createRecurringDepositAccountCurrencyForm() {
+  //   this.recurringDepositAccountCurrencyForm = this.formBuilder.group({
+  //     'currencyCode': [{ value: '', disabled: true }],
+  //     'decimalPlaces': [{ value: '', disabled: true }]
+  //   });
+  // }
 
   /**
    * Returns Recurring Deposits Account Currency Form

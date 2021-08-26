@@ -107,8 +107,8 @@ export class PartnerAdvanceCashComponent implements OnInit {
     });
   }
 
-  displayFn(client?: any): string | undefined {
-    return client ? client.desc : undefined;
+  displayFn(client?: any): string  {
+    return client ? client.desc : '';
   }
 
   /* Chỗ này check type hơi tối nghĩa nên Jean chỉnh lại chút */

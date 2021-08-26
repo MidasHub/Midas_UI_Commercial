@@ -37,7 +37,7 @@ export class CreateTransactionComponent implements OnInit {
   listRollTermBooking: any = [];
   isLoading = false;
   transactionCreateForm: FormGroup;
-  activateAndApproveAccountForm?: FormGroup;
+  activateAndApproveAccountForm: FormGroup ;
   totalBookingAmount = 0;
   currentUser: any;
   @ViewChild('listBookingRollTermTable') listBookingRollTermTable?: MatTable<Element>;
@@ -71,6 +71,7 @@ export class CreateTransactionComponent implements OnInit {
       batchNo: new FormControl(),
       traceNo: new FormControl(),
     });
+    this.activateAndApproveAccountForm = new FormGroup({});
   }
 
   ngOnInit() {

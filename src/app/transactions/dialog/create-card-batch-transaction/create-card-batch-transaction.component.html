@@ -36,7 +36,7 @@
     </mat-form-field>
     <mat-form-field fxFlex="30%" *ngIf="formDialog.contains('bank')" class="input_custom">
       <mat-label>Ngân hàng</mat-label>
-      <mat-select disabled formControlName="bank">
+      <mat-select [disabled]="true" formControlName="bank">
         <mat-option *ngFor="let type of banks" [value]="type.bankCode">
           {{ type.bankName }}
         </mat-option>
@@ -45,7 +45,7 @@
 
     <mat-form-field fxFlex="20%" *ngIf="formDialog.contains('cardType')" class="input_custom">
       <mat-label>Loại thẻ</mat-label>
-      <mat-select disabled formControlName="cardType">
+      <mat-select [disabled]="true" formControlName="cardType">
         <mat-option *ngFor="let type of typeCards" [value]="type.code">
           {{ type.description }}
         </mat-option>

@@ -69,4 +69,8 @@ export class LoanTrancheDetailsComponent implements OnInit {
     }
     return false;
   }
+
+  delete(){
+    //TODO: Jean, let study to know what to do in this function
+  }
 }

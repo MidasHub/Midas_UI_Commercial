@@ -18,7 +18,7 @@ export class ChargesOverviewComponent implements OnInit {
   /** Columns to be displayed in charge overview table. */
   displayedColumns: string[] = ['name', 'dueAsOf', 'due', 'paid', 'waived', 'outstanding'];
   /** Data source for charge overview table. */
-  dataSource?: MatTableDataSource<any> ;
+  dataSource!: MatTableDataSource<any> ;
   /** Charge Overview data */
   chargeOverviewData: any;
 

@@ -33,7 +33,7 @@
 
     </mat-step>
 
-    <mat-step [stepControl]="fixedDepositAccountDetailsForm.get('productId')">
+    <mat-step [stepControl]="fixedDepositAccountDetailsForm?.get('productId')! ">
 
       <ng-template matStepLabel>CURRENCY</ng-template>
 
@@ -85,7 +85,7 @@
         [fixedDepositsAccountTemplate]="fixedDepositsAccountTemplate"
         [fixedDepositsAccountProductTemplate]="fixedDepositsAccountProductTemplate"
         [fixedDepositAccountFormValid]="fixedDepositAccountFormValid"
-        [currencyCode]="fixedDepositAccountCurrencyForm.get('currencyCode') || ''">
+        [currencyCode]="fixedDepositAccountCurrencyForm!.get('currencyCode')">
       </mifosx-fixed-deposit-account-charges-step>
 
     </mat-step>

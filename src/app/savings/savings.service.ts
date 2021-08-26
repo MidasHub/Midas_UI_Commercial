@@ -36,7 +36,7 @@ export class SavingsService {
     private alertService: AlertService
   ) {
     this.accessToken = JSON.parse(
-      sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey) || ''
+      sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey)!
     );
     this.GatewayApiUrlPrefix = environment.GatewayApiUrlPrefix;
     this.IcGatewayApiUrlPrefix = environment.IcGatewayApiUrlPrefix;
@@ -443,7 +443,7 @@ export class SavingsService {
     routingCode: string
   ) {
     this.accessToken = JSON.parse(
-      sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey) || ''
+      sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey)!
     );
     const url = `${environment.GatewayApiUrl}${this.GatewayApiUrlPrefix}/export/download_export_transaction_saving?accessToken=${this.accessToken.base64EncodedAuthenticationKey}&fromDate=${fromDate}&toDate=${toDate}&accountId=${accountId}&note=${note}&txnCode=${txnCode}&paymentDetail=${paymentDetail}&routingCode=${routingCode}&createdBy=${this.accessToken.userId}`;
     this.getExportExcelFile(url, false).subscribe((data: any) => {
@@ -464,7 +464,7 @@ export class SavingsService {
     paymentDetail: string
   ) {
     this.accessToken = JSON.parse(
-      sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey) || ''
+      sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey)!
     );
     const url = `${environment.IcGatewayApiUrl}${this.IcGatewayApiUrlPrefix}/export/download_export_transaction_saving?accessToken=${this.accessToken.base64EncodedAuthenticationKey}&fromDate=${fromDate}&toDate=${toDate}&accountId=${accountId}&note=${note}&txnCode=${txnCode}&paymentDetail=${paymentDetail}&createdBy=${this.accessToken.userId}`;
     this.getExportExcelFile(url, true).subscribe((data: any) => {

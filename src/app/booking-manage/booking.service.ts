@@ -24,7 +24,7 @@ export class BookingService {
    */
   constructor(private http: HttpClient, private commonHttpParams: CommonHttpParams) {
     this.accessToken = JSON.parse(
-      sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey) || ''
+      sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey)!
     );
     this.GatewayApiUrlPrefix = environment.GatewayApiUrlPrefix;
     this.environment = environment;
@@ -145,7 +145,7 @@ export class BookingService {
   getManageBookingInternal(officeName: string, staffName: string, fromDate: string, toDate: string): Observable<any> {
 
     this.accessToken = JSON.parse(
-      sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey) || ''
+      sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey)!
     );
     officeName = officeName === '' ? '%%' : `%${officeName}%`;
     staffName = staffName === '' ? '%%' : `%${staffName}%`;
@@ -172,7 +172,7 @@ export class BookingService {
     toDate: string
   ): Observable<any> {
     this.accessToken = JSON.parse(
-      sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey) || ''
+      sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey)!
     );
     officeName = officeName === '' ? '%%' : `%${officeName}%`;
     staffName = staffName === '' ? '%%' : `%${staffName}%`;
@@ -207,7 +207,7 @@ export class BookingService {
   getManageBookingBranch( fromDate: string, toDate: string): Observable<any> {
 
     this.accessToken = JSON.parse(
-      sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey) || ''
+      sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey)!
     );
     // officeName = officeName === "" ? "%%" : `%${officeName}%`;
     let httpParams = this.commonHttpParams.getCommonHttpParams();
@@ -259,7 +259,7 @@ export class BookingService {
 
   exportTransaction(query: string) {
     this.accessToken = JSON.parse(
-      sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey) || ''
+      sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey)!
     );
     const xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function () {

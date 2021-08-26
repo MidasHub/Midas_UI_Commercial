@@ -29,7 +29,7 @@ export class FixedDepositAccountDetailsStepComponent implements OnInit {
   /** For edit savings form */
   isFieldOfficerPatched = false;
   /** Fixed Deposits Account Details Form */
-  fixedDepositAccountDetailsForm: FormGroup = new FormGroup({});
+  fixedDepositAccountDetailsForm: FormGroup ;
 
   /** Fixed Deposits Account Template with product data  */
   @Output() fixedDepositsAccountProductTemplate = new EventEmitter();
@@ -41,7 +41,12 @@ export class FixedDepositAccountDetailsStepComponent implements OnInit {
    */
   constructor(private formBuilder: FormBuilder,
               private fixedDepositsService: FixedDepositsService) {
-    this.createFixedDepositsAccountDetailsForm();
+    // this.createFixedDepositsAccountDetailsForm();
+    this.fixedDepositAccountDetailsForm = this.formBuilder.group({
+      'productId': ['', Validators.required],
+      'submittedOnDate': ['', Validators.required],
+      'fieldOfficerId': ['']
+    });
   }
 
   ngOnInit() {
@@ -60,13 +65,13 @@ export class FixedDepositAccountDetailsStepComponent implements OnInit {
   /**
    * Creates fixed deposits account details form.
    */
-  createFixedDepositsAccountDetailsForm() {
-    this.fixedDepositAccountDetailsForm = this.formBuilder.group({
-      'productId': ['', Validators.required],
-      'submittedOnDate': ['', Validators.required],
-      'fieldOfficerId': ['']
-    });
-  }
+  // createFixedDepositsAccountDetailsForm() {
+  //   this.fixedDepositAccountDetailsForm = this.formBuilder.group({
+  //     'productId': ['', Validators.required],
+  //     'submittedOnDate': ['', Validators.required],
+  //     'fieldOfficerId': ['']
+  //   });
+  // }
 
   /**
    * Fetches fixed deposits account product template on productId value changes

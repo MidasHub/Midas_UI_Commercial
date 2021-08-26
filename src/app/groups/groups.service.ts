@@ -22,7 +22,7 @@ export class GroupsService {
   public pending_limit: any;
   constructor(private http: HttpClient, private commonHttpParams: CommonHttpParams) {
     this.accessToken = JSON.parse(
-      sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey) || ''
+      sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey)!
     );
     this.GatewayApiUrlPrefix = environment.GatewayApiUrlPrefix;
   }
@@ -273,7 +273,7 @@ export class GroupsService {
   }
   createFeeGroup(groupId: any, listFeeGroup: any): Observable<any> {
     this.accessToken = JSON.parse(
-      sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey) || ''
+      sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey)!
     );
     const httpParams = {
       createdBy: this.accessToken.userId,
@@ -286,7 +286,7 @@ export class GroupsService {
 
   updateFeeGroup(groupId: any, listFeeGroup: any): Observable<any> {
     this.accessToken = JSON.parse(
-      sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey) || ''
+      sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey)!
     );
     const httpParams = {
       createdBy: this.accessToken.userId,

@@ -71,7 +71,6 @@ import { BottomMenuComponent } from './shell/toolbar/bottom-menu/bottom-menu.com
       useClass: AuthenticationInterceptor,
       multi: true
     },
-    I18nService,
     HttpCacheService,
     ApiPrefixInterceptor,
     ErrorHandlerInterceptor,
@@ -89,7 +88,8 @@ import { BottomMenuComponent } from './shell/toolbar/bottom-menu/bottom-menu.com
     {
       provide: RouteReuseStrategy,
       useClass: RouteReusableStrategy
-    }
+    },
+    I18nService,
   ]
 })
 export class CoreModule {

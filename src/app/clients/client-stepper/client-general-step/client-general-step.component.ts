@@ -35,7 +35,7 @@ export class ClientGeneralStepComponent implements OnInit {
   currentUser: any;
 
   /** Create Client Form */
-  createClientForm?: FormGroup ;
+  createClientForm: FormGroup ;
 
   /** Office Options */
   officeOptions: any;
@@ -79,19 +79,7 @@ export class ClientGeneralStepComponent implements OnInit {
               private centersService: CentersService) {
 
     this.currentUser = this.authenticationService.getCredentials();
-    this.setClientForm();
-  }
-
-  ngOnInit() {
-    this.setOptions();
-    this.buildDependencies();
-  }
-
-  /**
-   * Creates the client form.
-   */
-  setClientForm() {
-
+    // this.setClientForm();
     this.createClientForm = this.formBuilder.group({
       'officeId': [this.currentUser.officeId, Validators.required],
       'staffId': [this.currentUser.staffId],
@@ -116,6 +104,43 @@ export class ClientGeneralStepComponent implements OnInit {
       'lastname': [''],
       'legalFormId': [1]
     });
+    this.setClientForm();
+  }
+
+  ngOnInit() {
+    this.setOptions();
+    this.buildDependencies();
+  }
+
+  /**
+   * Creates the client form.
+   */
+  setClientForm() {
+
+    // this.createClientForm = this.formBuilder.group({
+    //   'officeId': [this.currentUser.officeId, Validators.required],
+    //   'staffId': [this.currentUser.staffId],
+    //   'isStaff': [false],
+    //   'active': [true],
+    //   'addSavings': [true],
+    //   'accountNo': [''],
+    //   'externalId': [''],
+    //   'maritalStatus': ['', Validators.required],
+    //   'genderId': [''],
+    //   'mobileNo': [''],
+    //   'dateOfBirth': [''],
+    //   'clientTypeId': [21],
+    //   'clientClassificationId': [20],
+    //   // 'submittedOnDate': [{value: '', disabled: true}],
+    //   'staff_code': [''],
+    //   'documentTypeId': [''],
+    //   // 'activationDate': [{value: '', disabled: true}],
+    //   'savingsProductId': [2],
+    //   'firstname': [''],
+    //   'middlename': [''],
+    //   'lastname': [''],
+    //   'legalFormId': [1]
+    // });
     this.createClientForm.addControl('activationDate', new FormControl(new Date()));
     this.createClientForm.addControl('submittedOnDate', new FormControl(new Date()));
     this.createClientForm.get('officeId')?.valueChanges.subscribe((value: any) => {
