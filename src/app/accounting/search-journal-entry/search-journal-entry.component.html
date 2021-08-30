@@ -1,17 +1,17 @@
 <div class="container" fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
 
   <mat-form-field fxFlex="31%">
-    <mat-label>Office Name</mat-label>
+    <mat-label>{{ "Accounting.SearchJournalEntryComponent.officeName" | translate }}</mat-label>
     <input matInput [formControl]="officeName" [matAutocomplete]="officeNameAutocomplete">
   </mat-form-field>
 
   <mat-form-field fxFlex="31%">
-    <mat-label>GL Account Name or Code</mat-label>
+    <mat-label>{{ "Accounting.SearchJournalEntryComponent.glAccount" | translate }}</mat-label>
     <input matInput [formControl]="glAccount" [matAutocomplete]="glAccountAutocomplete">
   </mat-form-field>
 
   <mat-form-field fxFlex="31%">
-    <mat-label>Filter</mat-label>
+    <mat-label>{{ "Accounting.SearchJournalEntryComponent.Filter" | translate }}</mat-label>
     <mat-select [formControl]="entryTypeFilter" (selectionChange)="applyFilter($event.value, 'manualEntriesOnly')">
       <mat-option *ngFor="let filter of entryTypeFilterData" [value]="filter.value">
         {{ filter.option }}
@@ -20,21 +20,21 @@
   </mat-form-field>
 
   <mat-form-field fxFlex="31%">
-    <mat-label>Từ ngày</mat-label>
+    <mat-label>{{ "Accounting.SearchJournalEntryComponent.transactionDateFrom" | translate }}</mat-label>
     <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="transactionDateFromPicker" [formControl]="transactionDateFrom">
     <mat-datepicker-toggle matSuffix [for]="transactionDateFromPicker"></mat-datepicker-toggle>
     <mat-datepicker #transactionDateFromPicker></mat-datepicker>
   </mat-form-field>
 
   <mat-form-field fxFlex="31%">
-    <mat-label>Đến ngày</mat-label>
+    <mat-label>{{ "Accounting.SearchJournalEntryComponent.transactionDateTo" | translate }}</mat-label>
     <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="transactionDateToPicker" [formControl]="transactionDateTo">
     <mat-datepicker-toggle matSuffix [for]="transactionDateToPicker"></mat-datepicker-toggle>
     <mat-datepicker #transactionDateToPicker></mat-datepicker>
   </mat-form-field>
 
   <mat-form-field fxFlex="31%">
-    <mat-label>Transaction ID</mat-label>
+    <mat-label>{{ "Accounting.SearchJournalEntryComponent.transactionId" | translate }}</mat-label>
     <input matInput [formControl]="transactionId">
   </mat-form-field>
 
@@ -60,52 +60,52 @@
   <table mat-table [dataSource]="dataSource" matSort>
 
     <ng-container matColumnDef="id">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Entry ID </th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ "Accounting.SearchJournalEntryComponent.table.id" | translate }} </th>
       <td mat-cell *matCellDef="let journalEntry"> {{ journalEntry.id }} </td>
     </ng-container>
 
     <ng-container matColumnDef="officeName">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Office </th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ "Accounting.SearchJournalEntryComponent.table.officeName" | translate }} </th>
       <td mat-cell *matCellDef="let journalEntry"> {{ journalEntry.officeName }} </td>
     </ng-container>
 
     <ng-container matColumnDef="transactionId">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Transaction ID </th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ "Accounting.SearchJournalEntryComponent.table.transactionId" | translate }} </th>
       <td mat-cell *matCellDef="let journalEntry"> {{ journalEntry.transactionId }} </td>
     </ng-container>
 
     <ng-container matColumnDef="transactionDate">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Transaction Date </th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ "Accounting.SearchJournalEntryComponent.table.transactionDate" | translate }} </th>
       <td mat-cell *matCellDef="let journalEntry"> {{ journalEntry.transactionDate }} </td>
     </ng-container>
 
     <ng-container matColumnDef="glAccountType">
-      <th mat-header-cell *matHeaderCellDef> Type </th>
+      <th mat-header-cell *matHeaderCellDef> {{ "Accounting.SearchJournalEntryComponent.table.glAccountType" | translate }} </th>
       <td mat-cell *matCellDef="let journalEntry"> {{ journalEntry.glAccountType.value }} </td>
     </ng-container>
 
     <ng-container matColumnDef="createdByUserName">
-      <th mat-header-cell *matHeaderCellDef> Created by </th>
+      <th mat-header-cell *matHeaderCellDef> {{ "Accounting.SearchJournalEntryComponent.table.createdByUserName" | translate }} </th>
       <td mat-cell *matCellDef="let journalEntry"> {{ journalEntry.createdByUserName }} </td>
     </ng-container>
 
     <ng-container matColumnDef="glAccountCode">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Account Code </th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ "Accounting.SearchJournalEntryComponent.table.glAccountCode" | translate }} </th>
       <td mat-cell *matCellDef="let journalEntry"> {{ journalEntry.glAccountCode }} </td>
     </ng-container>
 
     <ng-container matColumnDef="glAccountName">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Account Name </th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ "Accounting.SearchJournalEntryComponent.table.glAccountName" | translate }} </th>
       <td mat-cell *matCellDef="let journalEntry"> {{ journalEntry.glAccountName }} </td>
     </ng-container>
 
     <ng-container matColumnDef="debit">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Debit </th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ "Accounting.SearchJournalEntryComponent.table.debit" | translate }} </th>
       <td mat-cell *matCellDef="let journalEntry"><span *ngIf="journalEntry.entryType.value === 'DEBIT'"> {{ (journalEntry.currency.displaySymbol || journalEntry.currency.code) + ' ' + journalEntry.amount }} </span></td>
     </ng-container>
 
     <ng-container matColumnDef="credit">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Credit </th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ "Accounting.SearchJournalEntryComponent.table.credit" | translate }} </th>
       <td mat-cell *matCellDef="let journalEntry"><span *ngIf="journalEntry.entryType.value === 'CREDIT'"> {{ (journalEntry.currency.displaySymbol || journalEntry.currency.code) + ' ' + journalEntry.amount }} </span></td>
     </ng-container>
 

@@ -9,26 +9,26 @@
         <div fxLayout="column">
 
           <mat-form-field>
-            <mat-label>Financial Activity</mat-label>
+            <mat-label>{{ "Accounting.FinancialActivityMappingsComponent.CreateFinancialActivityMappingComponent.financialActivityId" | translate }}</mat-label>
             <mat-select required formControlName="financialActivityId">
               <mat-option *ngFor="let financialActivity of financialActivityData" [value]="financialActivity.id">
                 {{ financialActivity.name }}
               </mat-option>
             </mat-select>
             <mat-error *ngIf="financialActivityMappingForm.controls.financialActivityId.hasError('required')">
-              Financial Activity is <strong>required</strong>
+              {{ "Accounting.FinancialActivityMappingsComponent.CreateFinancialActivityMappingComponent.errfinancialActivityId" | translate }}<strong>{{ "Accounting.strongRequire" | translate }}</strong>
             </mat-error>
           </mat-form-field>
 
           <mat-form-field>
-            <mat-label>Account</mat-label>
+            <mat-label>{{ "Accounting.FinancialActivityMappingsComponent.CreateFinancialActivityMappingComponent.glAccountId" | translate }}</mat-label>
             <mat-select required formControlName="glAccountId">
               <mat-option *ngFor="let glAccount of glAccountData" [value]="glAccount.id">
                 {{ glAccount.name + ' (' + glAccount.glCode + ')' }}
               </mat-option>
             </mat-select>
             <mat-error *ngIf="financialActivityMappingForm.controls.glAccountId.hasError('required')">
-              Account is <strong>required</strong>
+              {{ "Accounting.FinancialActivityMappingsComponent.CreateFinancialActivityMappingComponent.errglAccountId" | translate }}<strong>{{ "Accounting.strongRequire" | translate }}</strong>
             </mat-error>
           </mat-form-field>
 
@@ -37,8 +37,8 @@
       </mat-card-content>
 
       <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
-        <button type="button" mat-raised-button [routerLink]="['../']">Cancel</button>
-        <button mat-raised-button color="primary" [disabled]="!financialActivityMappingForm.valid" *midasHasPermission="'CREATE_FINANCIALACTIVITYACCOUNT'">Submit</button>
+        <button type="button" mat-raised-button [routerLink]="['../']">{{ "ShareButton.CancelEng" | translate }}</button>
+        <button mat-raised-button color="primary" [disabled]="!financialActivityMappingForm.valid" *midasHasPermission="'CREATE_FINANCIALACTIVITYACCOUNT'">{{ "ShareButton.Submit" | translate }}</button>
       </mat-card-actions>
 
     </form>

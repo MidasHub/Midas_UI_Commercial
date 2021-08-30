@@ -1,11 +1,11 @@
 <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column" class="container m-b-20">
   <button mat-raised-button color="primary" [routerLink]="['edit']">
     <fa-icon icon="edit"></fa-icon>&nbsp;&nbsp;
-    Edit
+    {{ "ShareButton.Edit" | translate }}
   </button>
   <button mat-raised-button color="warn" (click)="deleteAccountingClosure()" *midasHasPermission="'DELETE_GLCLOSURE'">
     <fa-icon icon="trash"></fa-icon>&nbsp;&nbsp;
-    Delete
+    {{ "ShareButton.DeleteEng" | translate }}
   </button>
 </div>
 
@@ -18,7 +18,7 @@
       <div fxLayout="row wrap" class="content">
 
         <div fxFlex="50%" class="header">
-          Office
+          {{ "Accounting.ClosingEntriesComponent.EditClosureComponent.officeName" | translate }}
         </div>
 
         <div fxFlex="50%">
@@ -26,7 +26,7 @@
         </div>
 
         <div fxFlex="50%" class="header">
-          Closure Date
+          {{ "Accounting.ClosingEntriesComponent.EditClosureComponent.closingDate" | translate }}
         </div>
 
         <div fxFlex="50%">
@@ -34,7 +34,7 @@
         </div>
 
         <div fxFlex="50%" class="header">
-          Closed By
+          {{ "Accounting.ClosingEntriesComponent.EditClosureComponent.createdByUsername" | translate }}
         </div>
 
         <div fxFlex="50%">
@@ -42,7 +42,7 @@
         </div>
 
         <div fxFlex="50%" class="header">
-          Updated By
+          {{ "Accounting.ClosingEntriesComponent.EditClosureComponent.lastUpdatedByUsername" | translate }}
         </div>
 
         <div fxFlex="50%">
@@ -50,7 +50,7 @@
         </div>
 
         <div fxFlex="50%" class="header">
-          Updated On
+          {{ "Accounting.ClosingEntriesComponent.EditClosureComponent.lastUpdatedDate" | translate }}
         </div>
 
         <div fxFlex="50%">
@@ -58,7 +58,7 @@
         </div>
 
         <div fxFlex="50%" class="header">
-          Closure Creation Date
+          {{ "Accounting.ClosingEntriesComponent.EditClosureComponent.createdDate" | translate }}
         </div>
 
         <div fxFlex="50%">
@@ -66,7 +66,7 @@
         </div>
 
         <div fxFlex="50%" class="header">
-          Comments
+          {{ "Accounting.ClosingEntriesComponent.EditClosureComponent.comments" | translate }}
         </div>
 
         <div fxFlex="50%">
