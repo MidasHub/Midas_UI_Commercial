@@ -7,20 +7,20 @@
       <mat-card-content>
 
           <mat-form-field fxFlex>
-            <mat-label>Activated On Date</mat-label>
+            <mat-label>{{'Client_Component.ViewClient.Actions.ActivateClient.activationDate' |translate}}</mat-label>
             <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="activationDatePicker" required formControlName="activationDate">
             <mat-datepicker-toggle matSuffix [for]="activationDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #activationDatePicker></mat-datepicker>
             <mat-error *ngIf="activateClientForm.controls.activationDate.hasError('required')">
-              Activated On Date is <strong>required</strong>
+              {{'Client_Component.ViewClient.Actions.ActivateClient.erractivationDate' |translate}}<strong>{{'Client_Component.ViewClient.Actions.strongRequired' |translate}}</strong>
             </mat-error>
           </mat-form-field>
 
       </mat-card-content>
 
       <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
-        <button type="button" mat-raised-button [routerLink]="['../../']">Cancel</button>
-        <button mat-raised-button color="accent" [disabled]="!activateClientForm.valid">Confirm</button>
+        <button type="button" mat-raised-button [routerLink]="['../../']">{{ "ShareButton.CancelEng" | translate }}</button>
+        <button mat-raised-button color="accent" [disabled]="!activateClientForm.valid">{{ "ShareButton.ConfirmEng" | translate }}</button>
       </mat-card-actions>
 
     </form>

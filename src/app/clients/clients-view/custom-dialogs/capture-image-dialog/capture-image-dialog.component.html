@@ -1,6 +1,6 @@
 <div fxLayout="column" fxLayoutGap="2%">
 
-  <h1 mat-dialog-title align="center">Capture Client Image</h1>
+  <h1 mat-dialog-title align="center">{{'Client_Component.ViewClient.CustomDialog.Capture.h1' |translate}}</h1>
 
   <video #video width="540" height="480" autoplay></video>
 
@@ -12,16 +12,16 @@
 
   <div fxFlex="20%" align="center">
     <button #captureButton *ngIf="!isCaptured" mat-stroked-button color="primary" (click)="capture()">
-      Capture
+      {{'Client_Component.ViewClient.CustomDialog.Capture.btnCapture' |translate}}
     </button>
     <button *ngIf="isCaptured" mat-stroked-button color="primary" (click)="recapture()">
-      <fa-icon icon="undo" size="sm"></fa-icon>&nbsp;&nbsp;Recapture
+      <fa-icon icon="undo" size="sm"></fa-icon>&nbsp;&nbsp;{{'Client_Component.ViewClient.CustomDialog.Capture.btnRecapture' |translate}}
     </button>
   </div>
 
   <mat-dialog-actions align="end">
-    <button mat-raised-button mat-dialog-close>Cancel</button>
-    <button [disabled]="!isCaptured" mat-raised-button color="primary" [mat-dialog-close]="clientImageDataURL">Upload</button>
+    <button mat-raised-button mat-dialog-close>{{ "ShareButton.CancelEng" | translate }}</button>
+    <button [disabled]="!isCaptured" mat-raised-button color="primary" [mat-dialog-close]="clientImageDataURL">{{ "ShareButton.Upload" | translate }}</button>
   </mat-dialog-actions>
 
 </div>

@@ -9,12 +9,12 @@
   fxLayoutGap.lt-md="0%"
 >
   <mat-form-field fxFlex="48%">
-    <mat-label>Ngày thanh toán:</mat-label>
+    <mat-label>{{ "Client_Component.ViewClient.TabIdentities.AddIdentitiesExtra.dueDay" | translate }}</mat-label>
     <input pattern required maxlength="2" matInput type="number" max="31" min="1" formControlName="dueDay" />
   </mat-form-field>
 
   <mat-form-field fxFlex="48%">
-    <mat-label>Ngày hết hạn thẻ:</mat-label>
+    <mat-label>{{ "Client_Component.ViewClient.TabIdentities.AddIdentitiesExtra.expiredDate" | translate }}</mat-label>
     <input
       matInput
       maxlength="5"
@@ -28,12 +28,12 @@
   </mat-form-field>
 
   <mat-form-field fxFlex="48%">
-    <mat-label>Hạn mức thẻ:</mat-label>
+    <mat-label>{{ "Client_Component.ViewClient.TabIdentities.AddIdentitiesExtra.limitCard" | translate }}</mat-label>
     <input currencyMask required matInput type="text" formControlName="limitCard" />
   </mat-form-field>
 
   <mat-form-field fxFlex="48%">
-    <mat-label>Hạng thẻ:</mat-label>
+    <mat-label>{{ "Client_Component.ViewClient.TabIdentities.AddIdentitiesExtra.rankCard" | translate }}</mat-label>
     <!-- <input
       matInput
       type="text"
@@ -41,7 +41,7 @@
       formControlName="classCard"> -->
 
     <mat-select matNativeControl formControlName="classCard" name="car">
-      <mat-option value="" selected>-----Chọn hạng thẻ-----</mat-option>
+      <mat-option value="" selected>{{ "Client_Component.ViewClient.TabIdentities.AddIdentitiesExtra.optionRankCard" | translate }}</mat-option>
       <mat-option *ngFor="let cCARD of classCardEnum" [value]="cCARD">
         {{ cCARD }}
       </mat-option>

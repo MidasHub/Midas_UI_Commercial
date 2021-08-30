@@ -7,28 +7,28 @@
       <div fxLayout="column">
 
         <mat-form-field>
-          <mat-label> Amount </mat-label>
+          <mat-label> {{'Client_Component.ViewClient.Charges.Pay.due' |translate}} </mat-label>
           <input matInput currencyMask type="text" required autofocus formControlName="amount">
           <mat-error *ngIf="transactionForm.controls.amount.hasError('required')">
-            Amount <strong>is required</strong>
+            {{'Client_Component.ViewClient.Charges.Pay.due' |translate}} <strong>{{ "Client_Component.ViewClient.Charges.strongRequire" | translate }}</strong>
           </mat-error>
         </mat-form-field>
 
         <mat-form-field>
-          <mat-label> Transaction date </mat-label>
+          <mat-label> {{'Client_Component.ViewClient.Charges.Pay.transactionDate' |translate}} </mat-label>
           <input matInput [min]="minDate" [matDatepicker]="transactionDatePicker" required formControlName="transactionDate">
           <mat-datepicker-toggle matSuffix [for]="transactionDatePicker"></mat-datepicker-toggle>
           <mat-datepicker #transactionDatePicker></mat-datepicker>
           <mat-error *ngIf="transactionForm.controls.transactionDate.hasError('required')">
-            Transaction date <strong>is required</strong>
+            {{'Client_Component.ViewClient.Charges.Pay.transactionDate' |translate}} <strong>{{ "Client_Component.ViewClient.Charges.strongRequire" | translate }}</strong>
           </mat-error>
         </mat-form-field>
 
       </div>
 
       <div fxLayout="row" fxLayoutAlign="center" fxLayoutGap="5px">
-        <button type="button" mat-raised-button [routerLink]="['../','general']">Cancel</button>
-        <button mat-raised-button color="primary" [disabled]="!transactionForm.valid">Submit</button>
+        <button type="button" mat-raised-button [routerLink]="['../','general']">{{ "ShareButton.CancelEng" | translate }}</button>
+        <button mat-raised-button color="primary" [disabled]="!transactionForm.valid">{{ "ShareButton.Submit" | translate }}</button>
       </div>
 
     </form>

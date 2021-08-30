@@ -1,6 +1,6 @@
 a<!-- <div fxLayout="row" fxLayout.lt-md="column" class="fluidcontainer " fxLayoutAlign="space-around start "> -->
   <mat-tab-group mat-align-tabs="center" >
-    <mat-tab label="Danh sách công nợ phải trả (tạm ứng) của khách hàng">
+    <mat-tab [label]="'ClientsComponent.BalanceAccountClientComponent.label'| translate">
       <mat-card class="container">
         <mat-card  fxFlex="100" class="m-b-10" >
           <mat-card-header>
@@ -9,23 +9,23 @@ a<!-- <div fxLayout="row" fxLayout.lt-md="column" class="fluidcontainer " fxLayo
                 <div class="fix_header" fxLayout="row" >
                   <img src="../../../assets/images/icons/transaction_total.svg">
                   <div style="margin: 5px; margin-top: 20px;">
-                    <h3 style="margin: 5px;">Số lượng giao dịch: {{totalAccOfUser}}</h3>
+                    <h3 style="margin: 5px;">{{ "ClientsComponent.BalanceAccountClientComponent.totalAccOfUser" | translate }} {{totalAccOfUser}}</h3>
                   </div>
                 </div>
                 <div class="fix_header" fxLayout="row" >
                   <img src="../../../assets/images/icons/money.svg">
                   <div style="margin: 5px; margin-top: 20px;">
-                    <h3 style="margin: 5px;">Số tiền giao dich: <b style="color: green;">{{totalAmountDerivedOfUser | money}}</b></h3>
+                    <h3 style="margin: 5px;">{{ "ClientsComponent.BalanceAccountClientComponent.totalAmountDerivedOfUser" | translate }}<b style="color: green;">{{totalAmountDerivedOfUser | money}}</b></h3>
                   </div>
                 </div>
 
               <mat-form-field fxFlex="32">
-                <mat-label>Tên khách hàng</mat-label>
+                <mat-label>{{ "ClientsComponent.BalanceAccountClientComponent.customer_name" | translate }}</mat-label>
                 <input matInput formControlName="customer_name">
               </mat-form-field>
 
               <mat-form-field fxFlex="32">
-                <mat-label>Nhân viên</mat-label>
+                <mat-label>{{ "ClientsComponent.BalanceAccountClientComponent.staff_name" | translate }}</mat-label>
                 <input matInput formControlName="staff_name">
                 <!-- <mat-select formControlName="staff_id" >
                   <mat-option *ngFor="let option of staffs" [value]="option.staffId">
@@ -35,7 +35,7 @@ a<!-- <div fxLayout="row" fxLayout.lt-md="column" class="fluidcontainer " fxLayo
               </mat-form-field>
 
               <mat-form-field fxFlex="32">
-                <mat-label>Chi nhánh</mat-label>
+                <mat-label>{{ "ClientsComponent.BalanceAccountClientComponent.officeName" | translate }}</mat-label>
                 <input matInput formControlName="officeName">
               </mat-form-field>
             </div>
@@ -45,32 +45,32 @@ a<!-- <div fxLayout="row" fxLayout.lt-md="column" class="fluidcontainer " fxLayo
                   [dataSource]="accountsShow" matSort>
 
               <ng-container matColumnDef="customer_name">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header>Tên khách hàng</th>
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ "ClientsComponent.BalanceAccountClientComponent.customer_name" | translate }}</th>
                 <td mat-cell
                     *matCellDef="let account"><a [routerLink]="['../../clients',account.client_id,'general']"
                                                 [queryParams]="{ typeViewClient: 'view'}"> {{ account.customer_name}}</a></td>
               </ng-container>
 
               <ng-container matColumnDef="staff_name">
-                <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>Nhân viên phụ trách</th>
+                <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>{{ "ClientsComponent.BalanceAccountClientComponent.staff_name2" | translate }}</th>
                 <td mat-cell fxHide fxShow.gt-md
                     *matCellDef="let account"> {{ account.staff_name}} </td>
               </ng-container>
 
               <ng-container matColumnDef="officeName">
-                <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>Chi nhánh</th>
+                <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>{{ "ClientsComponent.BalanceAccountClientComponent.officeName" | translate }}</th>
                 <td mat-cell fxHide fxShow.gt-md
                     *matCellDef="let account"> {{ account.officeName}} </td>
               </ng-container>
 
               <ng-container matColumnDef="account_no">
-                <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>Số tài khoản</th>
+                <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>{{ "ClientsComponent.BalanceAccountClientComponent.account_no" | translate }}</th>
                 <td mat-cell fxHide fxShow.gt-md
                     *matCellDef="let account"> <a [routerLink]="['../', 'savings-accounts', account.account_id, 'transactions']"> {{account.account_no}}</a> </td>
               </ng-container>
 
               <ng-container matColumnDef="account_balance_derived">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header>Tổng số dư:&emsp;<p style="color: green; font-weight: bold; margin: 0;">{{ totalAmountDerived | money}}</p></th>
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ "ClientsComponent.BalanceAccountClientComponent.account_balance_derived" | translate }}&emsp;<p style="color: green; font-weight: bold; margin: 0;">{{ totalAmountDerived | money}}</p></th>
                 <td mat-cell
                     *matCellDef="let account"> {{ account.account_balance_derived | money}} </td>
               </ng-container>
@@ -83,12 +83,12 @@ a<!-- <div fxLayout="row" fxLayout.lt-md="column" class="fluidcontainer " fxLayo
                     <div class="example-element-description" fxLayout="column">
                       <div>
                               <span style="font-weight: bold;">
-                                Nhân viên phụ trách :</span>&nbsp;
+                                {{ "ClientsComponent.BalanceAccountClientComponent.staff_name3" | translate }}</span>&nbsp;
                         &nbsp;{{ element.staff_name }}
                       </div>
                       <div>
                               <span style="font-weight: bold;">
-                                Số tài khoản :</span>&nbsp;
+                                {{ "ClientsComponent.BalanceAccountClientComponent.account_no2" | translate }}</span>&nbsp;
                         &nbsp;{{ element.account_no }}
                       </div>
                     </div>
@@ -113,7 +113,7 @@ a<!-- <div fxLayout="row" fxLayout.lt-md="column" class="fluidcontainer " fxLayo
 
     </mat-tab>
 
-    <mat-tab label="Danh sách công nợ phải thu của khách hàng">
+    <mat-tab [label]="'ClientsComponent.BalanceAccountClientComponent.label2'| translate">
       <mat-card class="container">
         <mat-card  fxFlex="100" class="m-b-10">
           <mat-card-header>
@@ -121,22 +121,22 @@ a<!-- <div fxLayout="row" fxLayout.lt-md="column" class="fluidcontainer " fxLayo
               <div class="fix_header" fxLayout="row" >
                 <img src="../../../assets/images/icons/transaction_total.svg">
                 <div style="margin: 5px; margin-top: 20px;">
-                  <h3 style="margin: 5px;">Số lượng giao dịch: {{totalAccOfUser2}}</h3>
+                  <h3 style="margin: 5px;">{{ "ClientsComponent.BalanceAccountClientComponent.totalAccOfUser2" | translate }} {{totalAccOfUser2}}</h3>
                 </div>
               </div>
               <div class="fix_header" fxLayout="row" >
                 <img src="../../../assets/images/icons/money.svg">
                 <div style="margin: 5px; margin-top: 20px;">
-                  <h3 style="margin: 5px;">Số tiền giao dich: <b style="color: red;">{{totalAmountDerivedOfUser2 | money}}</b></h3>
+                  <h3 style="margin: 5px;">{{ "ClientsComponent.BalanceAccountClientComponent.totalAmountDerivedOfUser2" | translate }} <b style="color: red;">{{totalAmountDerivedOfUser2 | money}}</b></h3>
                 </div>
               </div>
             <mat-form-field fxFlex="32">
-              <mat-label>Tên khách hàng</mat-label>
+              <mat-label>{{ "ClientsComponent.BalanceAccountClientComponent.customer_name" | translate }}</mat-label>
               <input matInput formControlName="customer_name">
             </mat-form-field>
 
             <mat-form-field fxFlex="32">
-              <mat-label>Nhân viên</mat-label>
+              <mat-label>{{ "ClientsComponent.BalanceAccountClientComponent.staff_name" | translate }}</mat-label>
               <input matInput formControlName="staff_name">
               <!-- <mat-select formControlName="staff_id">
                 <mat-option *ngFor="let option of staffs" [value]="option.staffId">
@@ -146,7 +146,7 @@ a<!-- <div fxLayout="row" fxLayout.lt-md="column" class="fluidcontainer " fxLayo
             </mat-form-field>
 
             <mat-form-field fxFlex="32">
-              <mat-label>Chi nhánh</mat-label>
+              <mat-label>{{ "ClientsComponent.BalanceAccountClientComponent.officeName" | translate }}</mat-label>
               <input matInput formControlName="officeName">
             </mat-form-field>
           </div>
@@ -158,32 +158,32 @@ a<!-- <div fxLayout="row" fxLayout.lt-md="column" class="fluidcontainer " fxLayo
             <table mat-table matSort class="mat-elevation-z8" multiTemplateDataRows [dataSource]="accountsShow2" (matSortChange)="sortData2($event)" #Table2Sort="matSort">
 
               <ng-container matColumnDef="customer_name">
-                <th mat-header-cell *matHeaderCellDef>Tên khách hàng</th>
+                <th mat-header-cell *matHeaderCellDef>{{ "ClientsComponent.BalanceAccountClientComponent.customer_name" | translate }}</th>
                 <td mat-cell
                     *matCellDef="let account"> <a [routerLink]="['../../clients',account.client_id,'general']"
                     [queryParams]="{ typeViewClient: 'view'}"> {{ account.customer_name}}</a></td>
               </ng-container>
 
               <ng-container matColumnDef="staff_name">
-                <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef>Nhân viên phụ trách</th>
+                <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef>{{ "ClientsComponent.BalanceAccountClientComponent.staff_name2" | translate }}</th>
                 <td mat-cell fxHide fxShow.gt-md
                     *matCellDef="let account"> {{ account.staff_name}} </td>
               </ng-container>
 
               <ng-container matColumnDef="officeName">
-                <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>Chi nhánh</th>
+                <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>{{ "ClientsComponent.BalanceAccountClientComponent.officeName" | translate }}</th>
                 <td mat-cell fxHide fxShow.gt-md
                     *matCellDef="let account"> {{ account.officeName}} </td>
               </ng-container>
 
               <ng-container matColumnDef="account_no">
-                <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef>Số tài khoản</th>
+                <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef>{{ "ClientsComponent.BalanceAccountClientComponent.account_no2" | translate }}</th>
                 <td mat-cell fxHide fxShow.gt-md
                     *matCellDef="let account"> <a [routerLink]="['../', 'savings-accounts', account.account_id, 'transactions']"> {{account.account_no}}</a></td>
               </ng-container>
 
               <ng-container matColumnDef="account_balance_derived">
-                <th mat-header-cell *matHeaderCellDef>Tổng số dư:&emsp;<p style="color: red; font-weight: bold; margin: 0;">{{ totalAmountDerived2 | money}}</p></th>
+                <th mat-header-cell *matHeaderCellDef>{{ "ClientsComponent.BalanceAccountClientComponent.account_balance_derived" | translate }}&emsp;<p style="color: red; font-weight: bold; margin: 0;">{{ totalAmountDerived2 | money}}</p></th>
                 <td mat-cell
                     *matCellDef="let account"> {{ account.account_balance_derived | money}} </td>
               </ng-container>
@@ -196,12 +196,12 @@ a<!-- <div fxLayout="row" fxLayout.lt-md="column" class="fluidcontainer " fxLayo
                     <div class="example-element-description" fxLayout="column">
                       <div>
                               <span style="font-weight: bold;">
-                                Nhân viên phụ trách :</span>&nbsp;
+                                {{ "ClientsComponent.BalanceAccountClientComponent.staff_name3" | translate }}</span>&nbsp;
                         &nbsp;{{ element.staff_name }}
                       </div>
                       <div>
                               <span style="font-weight: bold;">
-                                Số tài khoản :</span>&nbsp;
+                                {{ "ClientsComponent.BalanceAccountClientComponent.account_no2" | translate }}</span>&nbsp;
                         &nbsp;{{ element.account_no }}
                       </div>
                     </div>

@@ -9,14 +9,14 @@
         <div>
 
           <mat-form-field fxFlex>
-            <mat-label>Client Screen Reports</mat-label>
+            <mat-label>{{'Client_Component.ViewClient.Actions.ClientScreenReports.labelClientScreenReports' |translate}}</mat-label>
             <mat-select formControlName="templateId">
               <mat-option *ngFor="let template of templatesData" [value]="template.id">
                 {{ template.name }}
               </mat-option>
             </mat-select>
             <mat-error *ngIf="clientScreenReportForm.controls.templateId.hasError('required')">
-              Screen Report is <strong>required</strong>
+              {{'Client_Component.ViewClient.Actions.ClientScreenReports.errlabelClientScreenReports' |translate}}<strong>{{'Client_Component.ViewClient.Actions.strongRequired' |translate}}</strong>
             </mat-error>
           </mat-form-field>
 
@@ -25,9 +25,9 @@
       </mat-card-content>
 
       <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
-        <button type="button" mat-raised-button [routerLink]="['../../']">Cancel</button>
+        <button type="button" mat-raised-button [routerLink]="['../../']">{{ "ShareButton.CancelEng" | translate }}</button>
         <button mat-raised-button color="primary" [disabled]="!clientScreenReportForm.valid">
-          <fa-icon icon="cogs" size="sm"></fa-icon>&nbsp;&nbsp;Generate Report</button>
+          <fa-icon icon="cogs" size="sm"></fa-icon>&nbsp;&nbsp;{{'Client_Component.ViewClient.Actions.ClientScreenReports.btnGenerateReport' |translate}}</button>
       </mat-card-actions>
 
     </form>
@@ -43,12 +43,12 @@
     <div fxLayoutAlign="end">
       <button mat-stroked-button color="primary" [disabled]="!template" (click)="print()">
         <fa-icon icon="file"></fa-icon>&nbsp;&nbsp;
-        Print
+        {{'Client_Component.ViewClient.Actions.ClientScreenReports.btnPrint' |translate}}
       </button>
     </div>
 
     <div #screenReport fxLayoutAlign="center">
-      <p>Please select a screen report.</p>
+      <p>{{'Client_Component.ViewClient.Actions.ClientScreenReports.p' |translate}}</p>
     </div>
 
   </mat-card>
