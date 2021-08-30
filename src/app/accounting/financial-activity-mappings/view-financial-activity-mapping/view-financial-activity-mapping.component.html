@@ -1,11 +1,11 @@
 <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" class="container m-b-20">
   <button mat-raised-button color="primary" [routerLink]="['edit']" *midasHasPermission="'UPDATE_FINANCIALACTIVITYACCOUNT'">
     <fa-icon icon="edit"></fa-icon>&nbsp;&nbsp;
-    Edit
+    {{ "ShareButton.Edit" | translate }}
   </button>
   <button mat-raised-button color="warn" (click)="deleteFinancialActivityAccount()" *midasHasPermission="'DELETE_FINANCIALACTIVITYACCOUNT'">
     <fa-icon icon="trash"></fa-icon>&nbsp;&nbsp;
-    Delete
+    {{ "ShareButton.DeleteEng" | translate }}
   </button>
 </div>
 
@@ -18,7 +18,7 @@
       <div fxLayout="row wrap" class="content">
 
         <div fxFlex="50%" class="header">
-          Financial Activity
+          {{ "Accounting.FinancialActivityMappingsComponent.ViewFinancialActivityMappingComponent.financialActivity" | translate }}
         </div>
 
         <div fxFlex="50%">
@@ -26,7 +26,7 @@
         </div>
 
         <div fxFlex="50%" class="header">
-          Account Name
+          {{ "Accounting.FinancialActivityMappingsComponent.ViewFinancialActivityMappingComponent.accountName" | translate }}
         </div>
 
         <div fxFlex="50%">

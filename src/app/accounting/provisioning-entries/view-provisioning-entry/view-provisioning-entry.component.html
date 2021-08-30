@@ -3,7 +3,7 @@
   <div class="m-b-20" fxLayout="row" fxLayoutAlign="end" fxLayoutGap="20px">
     <button mat-raised-button color="primary" (click)="createProvisioningJournalEntries()" [disabled]="provisioningEntry.journalEntry" *midasHasPermission="'CREATE_JOURNAL_ENTRY'">
       <fa-icon icon="plus"></fa-icon>&nbsp;&nbsp;
-      Create Journal Entries
+      {{ "Accounting.ProvisioningEntriesComponent.ViewProvisioningEntryComponent.btnCreateJournalEntries" | translate }}
     </button>
   </div>
 
@@ -14,7 +14,7 @@
       <div fxLayout="row wrap" class="content" fxLayout.lt-md="column">
 
         <div fxFlex="16%" class="header">
-          Created By
+          {{ "Accounting.ProvisioningEntriesComponent.ViewProvisioningEntryComponent.createdUser" | translate }}
         </div>
 
         <div fxFlex="16%">
@@ -22,7 +22,7 @@
         </div>
 
         <div fxFlex="16%" class="header">
-          Created On
+          {{ "Accounting.ProvisioningEntriesComponent.ViewProvisioningEntryComponent.createdDate" | translate }}
         </div>
 
         <div fxFlex="16%">
@@ -30,7 +30,7 @@
         </div>
 
         <div fxFlex="18%" class="header">
-          Amount to be Reserved
+          {{ "Accounting.ProvisioningEntriesComponent.ViewProvisioningEntryComponent.reservedAmount" | translate }}
         </div>
 
         <div fxFlex="18%">
@@ -49,17 +49,17 @@
 <div class="container m-t-20" fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
 
   <mat-form-field fxFlex="31%">
-    <mat-label>Office Name</mat-label>
+    <mat-label>{{ "Accounting.ProvisioningEntriesComponent.ViewProvisioningEntryComponent.officeName" | translate }}</mat-label>
     <input matInput [formControl]="officeName" [matAutocomplete]="officeNameAutocomplete">
   </mat-form-field>
 
   <mat-form-field fxFlex="31%">
-    <mat-label>Loan Product</mat-label>
+    <mat-label>{{ "Accounting.ProvisioningEntriesComponent.ViewProvisioningEntryComponent.loanProduct" | translate }}</mat-label>
     <input matInput [formControl]="loanProduct" [matAutocomplete]="loanProductAutocomplete">
   </mat-form-field>
 
   <mat-form-field fxFlex="31%">
-    <mat-label>Provisioning Category</mat-label>
+    <mat-label>{{ "Accounting.ProvisioningEntriesComponent.ViewProvisioningEntryComponent.provisioningCategory" | translate }}</mat-label>
     <input matInput [formControl]="provisioningCategory" [matAutocomplete]="provisioningCategoryAutocomplete">
   </mat-form-field>
 
@@ -91,37 +91,37 @@
   <table mat-table [dataSource]="dataSource" matSort>
 
     <ng-container matColumnDef="officeName">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Office Name </th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ "Accounting.ProvisioningEntriesComponent.ViewProvisioningEntryComponent.table.officeName" | translate }} </th>
       <td mat-cell *matCellDef="let provisioningEntry"> {{ provisioningEntry.officeName }} </td>
     </ng-container>
 
     <ng-container matColumnDef="productName">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Product Name </th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ "Accounting.ProvisioningEntriesComponent.ViewProvisioningEntryComponent.table.productName" | translate }} </th>
       <td mat-cell *matCellDef="let provisioningEntry"> {{ provisioningEntry.productName }} </td>
     </ng-container>
 
     <ng-container matColumnDef="currencyCode">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Currency Code </th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ "Accounting.ProvisioningEntriesComponent.ViewProvisioningEntryComponent.table.currencyCode" | translate }} </th>
       <td mat-cell *matCellDef="let provisioningEntry"> {{ provisioningEntry.currencyCode }} </td>
     </ng-container>
 
     <ng-container matColumnDef="categoryName">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Category Name </th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ "Accounting.ProvisioningEntriesComponent.ViewProvisioningEntryComponent.table.categoryName" | translate }} </th>
       <td mat-cell *matCellDef="let provisioningEntry"> {{ provisioningEntry.categoryName }} </td>
     </ng-container>
 
     <ng-container matColumnDef="amountreserved">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Provisioning Amount </th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ "Accounting.ProvisioningEntriesComponent.ViewProvisioningEntryComponent.table.amountreserved" | translate }} </th>
       <td mat-cell *matCellDef="let provisioningEntry"> {{ provisioningEntry.amountreserved | money}} </td>
     </ng-container>
 
     <ng-container matColumnDef="liabilityAccountName">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Liability Account (CR) </th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ "Accounting.ProvisioningEntriesComponent.ViewProvisioningEntryComponent.table.liabilityAccountName" | translate }} </th>
       <td mat-cell *matCellDef="let provisioningEntry"> {{ provisioningEntry.liabilityAccountName }} </td>
     </ng-container>
 
     <ng-container matColumnDef="expenseAccountName">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Expense Account (DR) </th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ "Accounting.ProvisioningEntriesComponent.ViewProvisioningEntryComponent.table.expenseAccountName" | translate }} </th>
       <td mat-cell *matCellDef="let provisioningEntry"> {{ provisioningEntry.expenseAccountName }} </td>
     </ng-container>
 

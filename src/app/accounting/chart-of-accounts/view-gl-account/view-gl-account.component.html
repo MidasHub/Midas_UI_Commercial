@@ -2,30 +2,30 @@
   <span *midasHasPermission="'CREATE_GLACCOUNT'">
     <button mat-raised-button color="primary" *ngIf="glAccount.usage.value === 'HEADER'" [routerLink]="['/accounting/chart-of-accounts/gl-accounts/create']" [queryParams]="{ parent: glAccount.id, accountType: glAccount.type.id }">
       <fa-icon icon="plus"></fa-icon>&nbsp;&nbsp;
-      Subledger Account
+      {{ "Accounting.ChartOfAccounts.ViewGlAccountComponent.btnSubledgerAccount" | translate }}
     </button>
   </span>
   <span *midasHasPermission="'UPDATE_GLACCOUNT'">
     <button mat-raised-button color="primary" [routerLink]="['edit']">
       <fa-icon icon="edit"></fa-icon>&nbsp;&nbsp;
-      Edit
+      {{ "Accounting.ChartOfAccounts.ViewGlAccountComponent.btnEdit" | translate }}
     </button>
   </span>
   <span *midasHasPermission="'UPDATE_GLACCOUNT'">
     <button mat-raised-button color="warn" *ngIf="!glAccount.disabled" (click)="changeGlAccountState()">
       <fa-icon icon="lock"></fa-icon>&nbsp;&nbsp;
-      Disable
+      {{ "Accounting.ChartOfAccounts.ViewGlAccountComponent.btnDisable" | translate }}
     </button>
   </span>
   <span *midasHasPermission="'UPDATE_GLACCOUNT'">
     <button mat-raised-button color="accent" *ngIf="glAccount.disabled" (click)="changeGlAccountState()">
       <fa-icon icon="lock-open"></fa-icon>&nbsp;&nbsp;
-      Enable
+      {{ "Accounting.ChartOfAccounts.ViewGlAccountComponent.btnEnable" | translate }}
     </button>
   </span>
   <button mat-raised-button color="warn" (click)="deleteGlAccount()" *midasHasPermission="'DELETE_GLACCOUNT'">
     <fa-icon icon="trash"></fa-icon>&nbsp;&nbsp;
-    Delete
+    {{ "Accounting.ChartOfAccounts.ViewGlAccountComponent.btnDelete" | translate }}
   </button>
 </div>
 
@@ -38,7 +38,7 @@
       <div fxLayout="row wrap" class="content">
 
         <div fxFlex="50%" class="header">
-          Account Type
+          {{ "Accounting.ChartOfAccounts.ViewGlAccountComponent.type" | translate }}
         </div>
 
         <div fxFlex="50%">
@@ -46,7 +46,7 @@
         </div>
 
         <div fxFlex="50%" class="header">
-          GL Code
+          {{ "Accounting.ChartOfAccounts.ViewGlAccountComponent.glCode" | translate }}
         </div>
 
         <div fxFlex="50%">
@@ -54,7 +54,7 @@
         </div>
 
         <div fxFlex="50%" class="header" *ngIf="glAccount.parent">
-          Parent Account Name
+          {{ "Accounting.ChartOfAccounts.ViewGlAccountComponent.parent" | translate }}
         </div>
 
         <div fxFlex="50%" *ngIf="glAccount.parent">
@@ -62,7 +62,7 @@
         </div>
 
         <div fxFlex="50%" class="header" *ngIf="glAccount.tagId.id">
-          Tag
+          {{ "Accounting.ChartOfAccounts.ViewGlAccountComponent.tagId" | translate }}
         </div>
 
         <div fxFlex="50%" *ngIf="glAccount.tagId.id">
@@ -70,7 +70,7 @@
         </div>
 
         <div fxFlex="50%" class="header">
-          Account Usage
+          {{ "Accounting.ChartOfAccounts.ViewGlAccountComponent.usage" | translate }}
         </div>
 
         <div fxFlex="50%">
@@ -78,7 +78,7 @@
         </div>
 
         <div fxFlex="50%" class="header">
-          Manual Entries Allowed
+          {{ "Accounting.ChartOfAccounts.ViewGlAccountComponent.manualEntriesAllowed" | translate }}
         </div>
 
         <div fxFlex="50%">
@@ -86,7 +86,7 @@
         </div>
 
         <div fxFlex="50%" class="header" *ngIf="glAccount.description">
-          Description
+          {{ "Accounting.ChartOfAccounts.ViewGlAccountComponent.description" | translate }}
         </div>
 
         <div fxFlex="50%" *ngIf="glAccount.description">

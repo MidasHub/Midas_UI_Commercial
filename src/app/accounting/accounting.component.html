@@ -12,40 +12,40 @@
             <mat-icon matListIcon>
               <fa-icon icon="sync" size="sm"></fa-icon>
             </mat-icon>
-            <h4 matLine>Frequent Postings</h4>
-            <p matLine>These are predefined postings</p>
+            <h4 matLine>{{ "Accounting.frequentPostings" | translate }}</h4>
+            <p matLine>{{ "Accounting.predefinedPostings" | translate }}</p>
           </mat-list-item>
 
           <mat-list-item *midasHasPermission="'CREATE_JOURNALENTRY'" [routerLink]="['journal-entries/create']">
             <mat-icon matListIcon>
               <fa-icon icon="plus" size="sm"></fa-icon>
             </mat-icon>
-            <h4 matLine>Create Journal Entries</h4>
-            <p matLine>Manual journal entry transactions recorded in a journal</p>
+            <h4 matLine>{{ "Accounting.createJournalEntries" | translate }}</h4>
+            <p matLine>{{ "Accounting.journalEntryTransactions" | translate }}</p>
           </mat-list-item>
 
           <mat-list-item *midasHasPermission="'READ_JOURNALENTRY'" [routerLink]="['journal-entries']">
             <mat-icon matListIcon>
               <fa-icon icon="search" size="sm"></fa-icon>
             </mat-icon>
-            <h4 matLine>Search Journal Entries</h4>
-            <p matLine>Advanced search option for journal entries</p>
+            <h4 matLine>{{ "Accounting.searchJournalEntries" | translate }}</h4>
+            <p matLine>{{ "Accounting.advancedSearch" | translate }}</p>
           </mat-list-item>
 
           <mat-list-item *midasHasPermission="'READ_FINANCIALACTIVITYACCOUNT'" [routerLink]="['financial-activity-mappings']">
             <mat-icon matListIcon>
               <fa-icon icon="link" size="sm"></fa-icon>
             </mat-icon>
-            <h4 matLine>Accounts Linked to Financial Activities</h4>
-            <p matLine>List of Financial Activities and GL Account Mappings</p>
+            <h4 matLine>{{ "Accounting.accountsLinkedFinancialActivities" | translate }}</h4>
+            <p matLine>{{ "Accounting.listOfFinancialActivitiesAndGL" | translate }}</p>
           </mat-list-item>
 
           <mat-list-item *midasHasPermission="'READ_JOURNALENTRY'" [routerLink]="['migrate-opening-balances']">
             <mat-icon matListIcon>
               <fa-icon icon="hand-holding-usd" size="sm"></fa-icon>
             </mat-icon>
-            <h4 matLine>Migrate Opening Balances (Office-wise)</h4>
-            <p matLine>Set or update office-level opening balances for GL accounts</p>
+            <h4 matLine>{{ "Accounting.migrateOpeningBalances" | translate }}</h4>
+            <p matLine>{{ "Accounting.setOrUpdateOfficeLevelOpeningBalances" | translate }}</p>
           </mat-list-item>
 
         </mat-nav-list>
@@ -60,40 +60,40 @@
             <mat-icon matListIcon>
               <fa-icon icon="sitemap" size="sm"></fa-icon>
             </mat-icon>
-            <h4 matLine>Chart of Accounts</h4>
-            <p matLine>List of accounts used by the organization</p>
+            <h4 matLine>{{ "Accounting.chartOfAccounts" | translate }}</h4>
+            <p matLine>{{ "Accounting.listOfAccounts" | translate }}List of accounts used by the organization</p>
           </mat-list-item>
 
           <mat-list-item *midasHasPermission="'READ_GLCLOSURE'" [routerLink]="['closing-entries']">
             <mat-icon matListIcon>
               <fa-icon icon="archive" size="sm"></fa-icon>
             </mat-icon>
-            <h4 matLine>Closing Entries</h4>
-            <p matLine>Journal entries made at the end of accounting period</p>
+            <h4 matLine>{{ "Accounting.closingEntries" | translate }}</h4>
+            <p matLine>{{ "Accounting.journalEntries" | translate }}</p>
           </mat-list-item>
 
           <mat-list-item *midasHasPermission="'READ_ACCOUNTINGRULE'" [routerLink]="['accounting-rules']">
             <mat-icon matListIcon>
               <fa-icon icon="list" size="sm"></fa-icon>
             </mat-icon>
-            <h4 matLine>Accounting Rules</h4>
-            <p matLine>List of all accounting rules</p>
+            <h4 matLine>{{ "Accounting.accountingRules" | translate }}</h4>
+            <p matLine>{{ "Accounting.ListOfAllAccountingRules" | translate }}</p>
           </mat-list-item>
 
           <mat-list-item *midasHasPermission="'EXECUTE_PERIODICACCRUALACCOUNTING'" [routerLink]="['periodic-accruals']">
             <mat-icon matListIcon>
               <fa-icon icon="calendar" size="sm"></fa-icon>
             </mat-icon>
-            <h4 matLine>Accruals</h4>
-            <p matLine>Accrues income, expenses and liabilities as on the provided date</p>
+            <h4 matLine>{{ "Accounting.accruals" | translate }}</h4>
+            <p matLine>{{ "Accounting.accruesIncomeExpensesAndLiabilities" | translate }}</p>
           </mat-list-item>
 
           <mat-list-item *midasHasPermission="'VIEW_PROVISIONING_ENTRIES'" [routerLink]="['provisioning-entries']">
             <mat-icon matListIcon>
               <fa-icon icon="cogs" size="sm"></fa-icon>
             </mat-icon>
-            <h4 matLine>Provisioning Entries</h4>
-            <p matLine>Create provisioning entries</p>
+            <h4 matLine>{{ "Accounting.provisioningEntries" | translate }}</h4>
+            <p matLine>{{ "Accounting.createProvisioningEntries" | translate }}</p>
           </mat-list-item>
 
         </mat-nav-list>

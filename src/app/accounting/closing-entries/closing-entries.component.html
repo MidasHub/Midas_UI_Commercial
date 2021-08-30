@@ -1,13 +1,13 @@
 <div class="container m-b-20" fxLayout="row" fxLayoutAlign="end" fxLayoutGap="20px">
   <button mat-raised-button color="primary" [routerLink]="['create']" *midasHasPermission="'CREATE_GLCLOSURE'">
     <fa-icon icon="plus"></fa-icon>&nbsp;&nbsp;
-    Create Closure
+    {{ "Accounting.ClosingEntriesComponent.btnCreateClosure" | translate }}
   </button>
 </div>
 
 <div class="container" fxLayout="row">
   <mat-form-field fxFlex>
-    <mat-label>Office Name</mat-label>
+    <mat-label>{{ "Accounting.ClosingEntriesComponent.officeName" | translate }}</mat-label>
     <input matInput [formControl]="officeName" [matAutocomplete]="officeNameAutocomplete">
   </mat-form-field>
 </div>
@@ -26,22 +26,22 @@
     <table mat-table [dataSource]="dataSource" matSort>
 
       <ng-container matColumnDef="officeName">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Office </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ "Accounting.ClosingEntriesComponent.table.officeName" | translate }} </th>
         <td mat-cell *matCellDef="let glAccountClosure"> {{ glAccountClosure.officeName }} </td>
       </ng-container>
 
       <ng-container matColumnDef="closingDate">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Closure Date </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ "Accounting.ClosingEntriesComponent.table.closingDate" | translate }} </th>
         <td mat-cell *matCellDef="let glAccountClosure"> {{ glAccountClosure.closingDate }} </td>
       </ng-container>
 
       <ng-container matColumnDef="comments">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Comments </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ "Accounting.ClosingEntriesComponent.table.comments" | translate }} </th>
         <td mat-cell *matCellDef="let glAccountClosure"> {{ glAccountClosure.comments }} </td>
       </ng-container>
 
       <ng-container matColumnDef="createdByUsername">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Created By </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ "Accounting.ClosingEntriesComponent.table.createdByUsername" | translate }} </th>
         <td mat-cell *matCellDef="let glAccountClosure">{{ glAccountClosure.createdByUsername }}</td>
       </ng-container>
 
