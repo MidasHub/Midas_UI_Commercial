@@ -1,18 +1,18 @@
 <div class="tab-container mat-typography">
 
-  <h3>Ghi chú</h3>
+  <h3>{{ "Client_Component.ViewClient.TabNote.h3" | translate }}</h3>
 
   <div>
-    
+
     <form #formRef="ngForm" [formGroup]="noteForm" fxLayout="row" fxLayoutAlign="start baseline" fxLayoutGap="20px"
       (ngSubmit)="submit()">
 
       <mat-form-field fxFlex="calc(90%-20px)">
-        <textarea formControlName="note" matInput placeholder="Write a note ...."></textarea>
+        <textarea formControlName="note" matInput [matTooltip]="'Client_Component.ViewClient.TabNote.placeholderWriteNote'| translate"></textarea>
       </mat-form-field>
 
-      <button mat-raised-button fxFlex color="primary" [disabled]="!noteForm.valid" *midasHasPermission="'CREATE_CLIENTNOTE'" matTooltip="Thêm ghi chú">
-        <fa-icon icon="plus"></fa-icon>&nbsp;&nbsp; Thêm
+      <button mat-raised-button fxFlex color="primary" [disabled]="!noteForm.valid" *midasHasPermission="'CREATE_CLIENTNOTE'" [matTooltip]="'Client_Component.ViewClient.TabNote.ToolTipAddNote'| translate">
+        <fa-icon icon="plus"></fa-icon>&nbsp;&nbsp; {{ "Client_Component.ViewClient.TabNote.btnAdd" | translate }}
       </button>
 
     </form>
@@ -25,8 +25,8 @@
       <fa-icon icon="sticky-note" matListIcon></fa-icon>
       <h3 matLine>{{clientNote.note}} </h3>
       <p matLine>
-        <span>Tạo bởi: {{clientNote.createdByUsername}}</span><br />
-        <span>Ngày: {{clientNote.createdOn | date}}</span>
+        <span>{{ "Client_Component.ViewClient.TabNote.createdByUsername" | translate }}{{clientNote.createdByUsername}}</span><br />
+        <span>{{ "Client_Component.ViewClient.TabNote.createdOn" | translate }} {{clientNote.createdOn | date}}</span>
       </p>
       <div fxLayout="row" fxLayoutAlign="flex-start">
         <button mat-button color="primary" (click)="editNote(clientNote.id,clientNote.note,i)" *midasHasPermission="'CREATE_CLIENTNOTE'">

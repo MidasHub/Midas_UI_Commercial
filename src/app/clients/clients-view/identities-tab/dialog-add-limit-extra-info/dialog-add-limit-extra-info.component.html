@@ -1,10 +1,10 @@
-<h1 mat-dialog-title>{{'Client_Component.ViewClient.TabIdentities.dialogIdentifierTitleExtra' |translate}}</h1>
+<h1 mat-dialog-title>{{'Client_Component.ViewClient.TabIdentities.AddLimitExtra.dialogIdentifierTitleExtra' |translate}}</h1>
 
 <div mat-dialog-content [formGroup]="form" [fxLayout]="'column'" fxLayout.lt-md="column" [fxLayoutGap]="'1%'"
      fxLayoutGap.lt-md="0%">
 
   <mat-form-field  fxFlex="48%">
-    <mat-label>Hạn mức thẻ:</mat-label>
+    <mat-label>{{ "Client_Component.ViewClient.TabIdentities.AddLimitExtra.limitCard" | translate }}</mat-label>
     <input
       currencyMask
       required
@@ -12,7 +12,7 @@
   </mat-form-field>
 
   <mat-form-field  fxFlex="48%">
-    <mat-label>Hạng thẻ:</mat-label>
+    <mat-label>{{ "Client_Component.ViewClient.TabIdentities.AddLimitExtra.classCard" | translate }}</mat-label>
     <input
       matInput
       type="text"

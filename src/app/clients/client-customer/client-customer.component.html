@@ -2,7 +2,7 @@
   <mat-card>
     <div fxLayout="row wrap" fxLayout.lt-md="column" [formGroup]="formFilter">
       <mat-form-field fxFlex="18%">
-        <mat-label>Chi nhánh</mat-label>
+        <mat-label>{{ 'Client_Component.lableOffice'| translate}}</mat-label>
         <mat-select formControlName="officeId">
           <mat-option *ngFor="let office of offices" [value]="office.officeId">
             {{ office.name }}
@@ -12,7 +12,7 @@
 
         <div fxLayout="row wrap" fxLayout.lt-md="column">
           <mat-form-field fxFlex="18%">
-            <mat-label>Chi nhánh</mat-label>
+            <mat-label>{{ 'Client_Component.lableOffice'| translate}}</mat-label>
             <mat-select formControlName="officeId">
               <mat-option *ngFor="let office of offices" [value]="office.id">
                 {{ office.name }}
@@ -21,7 +21,7 @@
           </mat-form-field>
 
           <mat-form-field fxFlex="18%">
-            <mat-label>Nhân viên</mat-label>
+            <mat-label>{{ 'Client_Component.lableStaff'| translate}}</mat-label>
             <mat-select formControlName="staffId">
               <mat-option *ngFor="let type of staffs" [value]="type.userId">
                 {{ type.displayName }}
@@ -44,10 +44,11 @@
         <!-- <button mat-raised-button color="primary" [routerLink]="['create']" *midasHasPermission="'CREATE_CLIENT'">
               <fa-icon icon="plus"></fa-icon>&nbsp;&nbsp;{{ 'Client_Component.buttonCreateClient'| translate}}
             </button> -->
-        <button mat-raised-button color="primary" [routerLink]="['../create']" *midasHasPermission="'CREATE_CLIENT'">
-          <fa-icon icon="plus"></fa-icon>&nbsp;&nbsp;{{ this.createButtonName }}
-        </button>
-      </div>
+            <button mat-raised-button color="primary" [routerLink]="['../create']" *midasHasPermission="'CREATE_CLIENT'">
+              <fa-icon icon="plus"></fa-icon>&nbsp;&nbsp;{{ this.createButtonName }}
+            </button>
+          </div>
+        </div>
     </div>
 
     <div>

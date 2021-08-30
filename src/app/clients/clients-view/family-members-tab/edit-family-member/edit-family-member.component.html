@@ -5,36 +5,36 @@
     <div fxLayout="row wrap" fxLayout.lt-md="column" fxLayoutAlign="start center">
 
       <mat-form-field fxFlex="calc(50% - 25px)">
-        <mat-label>First Name</mat-label>
+        <mat-label>{{'Client_Component.ViewClient.FamilyMember.AddMember.firstName' |translate}}</mat-label>
         <input formControlName="firstName" required matInput />
         <mat-error *ngIf="editFamilyMemberForm.controls.firstName.hasError('required')">
-          First Name is <strong>required</strong>
+          <strong>{{'Client_Component.ViewClient.FamilyMember.errfirstName' |translate}}</strong>
         </mat-error>
       </mat-form-field>
 
       <mat-form-field fxFlex="calc(50% - 25px)">
-        <mat-label>Middle Name</mat-label>
+        <mat-label>{{'Client_Component.ViewClient.FamilyMember.middleName' |translate}}</mat-label>
         <input formControlName="middleName" matInput />
       </mat-form-field>
 
       <mat-form-field fxFlex="calc(50% - 25px)">
-        <mat-label>Last Name</mat-label>
+        <mat-label>{{'Client_Component.ViewClient.FamilyMember.lastName' |translate}}</mat-label>
         <input formControlName="lastName" required matInput />
         <mat-error *ngIf="editFamilyMemberForm.controls.lastName.hasError('required')">
-          Last Name is <strong>required</strong>
+          {{'Client_Component.ViewClient.FamilyMember.errlastName' |translate}}<strong>{{'Client_Component.ViewClient.FamilyMember.firstName' |translate}}</strong>
         </mat-error>
       </mat-form-field>
 
       <mat-form-field fxFlex="calc(50% - 25px)">
-        <mat-label>Qualification</mat-label>
+        <mat-label>{{'Client_Component.ViewClient.FamilyMember.qualification' |translate}}</mat-label>
         <input formControlName="qualification" matInput />
       </mat-form-field>
 
       <mat-form-field fxFlex="calc(50% - 25px)">
-        <mat-label>Age</mat-label>
+        <mat-label>{{'Client_Component.ViewClient.FamilyMember.age' |translate}}</mat-label>
         <input type="number" formControlName="age" required matInput />
         <mat-error *ngIf="editFamilyMemberForm.controls.age.hasError('required')">
-          Age is <strong>required</strong>
+          {{'Client_Component.ViewClient.FamilyMember.errage' |translate}}<strong>{{'Client_Component.ViewClient.FamilyMember.firstName' |translate}}</strong>
         </mat-error>
       </mat-form-field>
 
@@ -42,31 +42,31 @@
       </mat-checkbox>
 
       <mat-form-field fxFlex="calc(50% - 25px)">
-        <mat-label>Relationship</mat-label>
+        <mat-label>{{'Client_Component.ViewClient.FamilyMember.relationshipId' |translate}}</mat-label>
         <mat-select formControlName="relationshipId" required>
           <mat-option *ngFor="let relation of addFamilyMemberTemplate.relationshipIdOptions" [value]="relation.id">
             {{ relation.name  }}
           </mat-option>
         </mat-select>
         <mat-error *ngIf="editFamilyMemberForm.controls.relationshipId.hasError('required')">
-          Relationship is <strong>required</strong>
+          {{'Client_Component.ViewClient.FamilyMember.errrelationshipId' |translate}}<strong>{{'Client_Component.ViewClient.FamilyMember.firstName' |translate}}</strong>
         </mat-error>
       </mat-form-field>
 
       <mat-form-field fxFlex="calc(50% - 25px)">
-        <mat-label>Gender</mat-label>
+        <mat-label>{{'Client_Component.ViewClient.FamilyMember.genderId' |translate}}</mat-label>
         <mat-select formControlName="genderId" required>
           <mat-option *ngFor="let gender of addFamilyMemberTemplate.genderIdOptions" [value]="gender.id">
             {{ gender.name }}
           </mat-option>
         </mat-select>
         <mat-error *ngIf="editFamilyMemberForm.controls.genderId.hasError('required')">
-          Gender is <strong>required</strong>
+          {{'Client_Component.ViewClient.FamilyMember.errgenderId' |translate}}<strong>{{'Client_Component.ViewClient.FamilyMember.firstName' |translate}}</strong>
         </mat-error>
       </mat-form-field>
 
       <mat-form-field fxFlex="calc(50% - 25px)">
-        <mat-label>Profession</mat-label>
+        <mat-label>{{'Client_Component.ViewClient.FamilyMember.professionId' |translate}}</mat-label>
         <mat-select formControlName="professionId">
           <mat-option *ngFor="let profession of addFamilyMemberTemplate.professionIdOptions" [value]="profession.id">
             {{ profession.name }}
@@ -75,7 +75,7 @@
       </mat-form-field>
 
       <mat-form-field fxFlex="calc(50% - 25px)">
-        <mat-label>Marital Status</mat-label>
+        <mat-label>{{'Client_Component.ViewClient.FamilyMember.maritalStatusId' |translate}}</mat-label>
         <mat-select formControlName="maritalStatusId">
           <mat-option *ngFor="let maritalStatus of addFamilyMemberTemplate.maritalStatusIdOptions"
             [value]="maritalStatus.id">
@@ -86,22 +86,21 @@
 
 
       <mat-form-field fxFlex>
-        <mat-label>Date Of Birth</mat-label>
+        <mat-label>{{'Client_Component.ViewClient.FamilyMember.dateOfBirth' |translate}}</mat-label>
         <input formControlName="dateOfBirth" matInput [min]="minDate" [max]="maxDate" [matDatepicker]="dueDatePicker"
           required>
         <mat-datepicker-toggle matSuffix [for]="dueDatePicker"></mat-datepicker-toggle>
         <mat-datepicker #dueDatePicker></mat-datepicker>
         <mat-error *ngIf="editFamilyMemberForm.controls.dateOfBirth.hasError('required')">
-          Date of birth
-          is <strong>required</strong>
+          {{'Client_Component.ViewClient.FamilyMember.errdateOfBirth' |translate}}<strong>{{'Client_Component.ViewClient.FamilyMember.firstName' |translate}}</strong>
         </mat-error>
       </mat-form-field>
 
     </div>
-    
+
     <div fxLayout="row" fxLayoutGap="32px" fxLayoutAlign="center">
-      <button type="button" mat-raised-button [routerLink]="['../../']">Cancel</button>
-      <button type="submit" mat-raised-button color="primary" [disabled]="editFamilyMemberForm.pristine||!editFamilyMemberForm.valid">Submit</button>
+      <button type="button" mat-raised-button [routerLink]="['../../']">{{ "ShareButton.CancelEng" | translate }}</button>
+      <button type="submit" mat-raised-button color="primary" [disabled]="editFamilyMemberForm.pristine||!editFamilyMemberForm.valid">{{ "ShareButton.Submit" | translate }}</button>
     </div>
 
   </form>

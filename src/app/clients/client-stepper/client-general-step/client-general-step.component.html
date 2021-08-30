@@ -2,7 +2,7 @@
   <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
     <mat-card class="card-custom" fxFlex="96%">
       <mat-card-header>
-        <mat-card-title>Thông tin đại lý:</mat-card-title>
+        <mat-card-title>{{ "Client_Component.ClientStepper.GeneralStep.title" | translate }}</mat-card-title>
       </mat-card-header>
       <mat-card-content>
         <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
@@ -54,17 +54,18 @@
     <mat-card class="card-custom" fxFlex="96%">
       <mat-card-header>
         <mat-card-title
-          ><span class="material-icons">perm_contact_calendar</span>&nbsp; Thông tin cơ bản:
+          ><span class="material-icons">{{ "Client_Component.ClientStepper.GeneralStep.spanCalendar" | translate }}</span>&nbsp;
+          {{ "Client_Component.ClientStepper.GeneralStep.titleInfo" | translate }}
         </mat-card-title>
       </mat-card-header>
       <mat-card-content>
         <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column" fxFlex="96%">
 
           <div fxFlex="96%" *ngIf="createClientForm.contains('maritalStatus')" >
-            <mat-label fxFlex="30%">Tình trạng hôn nhân *</mat-label>
+            <mat-label fxFlex="30%">{{ "Client_Component.ClientStepper.GeneralStep.labelPersonalStatus" | translate }}</mat-label>
             <mat-radio-group  fxFlex="66%" fxLayout="row" fxLayoutGap="5%" formControlName="maritalStatus">
-              <mat-radio-button value="0">Độc thân</mat-radio-button>
-              <mat-radio-button value="5">Kết hôn</mat-radio-button>
+              <mat-radio-button value="0">{{ "Client_Component.ClientStepper.GeneralStep.radiobtnAlone" | translate }}</mat-radio-button>
+              <mat-radio-button value="5">{{ "Client_Component.ClientStepper.GeneralStep.radiobtnMarried" | translate }}</mat-radio-button>
             </mat-radio-group>
             <mat-error fxFlex="100%"
               *ngIf="createClientForm.controls.maritalStatus.hasError('required')" >Bắt buộc!</mat-error>
@@ -160,15 +161,15 @@
           </mat-form-field>
 
           <div fxFlex="48%" fxLayout="column" class="custom-files-input">
-            <mat-label for="file">CMND mặt trước </mat-label>
-            <input placeholder="CMND mặt trước" type="file" accept="image/*" (change)="fileChangeBefore($event)" />
+            <mat-label for="file">{{ "Client_Component.ClientStepper.GeneralStep.fileChangeBefore" | translate }} </mat-label>
+            <input [placeholder]="'Client_Component.ClientStepper.GeneralStep.fileChangeBefore'| translate" type="file" accept="image/*" (change)="fileChangeBefore($event)" />
             <div *ngIf="clientFilesDataBefore">
               <img src="{{ clientFilesDataBefore.path }}" width="95%" height="300" />
             </div>
           </div>
           <div fxFlex="48%" fxLayout="column" class="custom-files-input">
-            <mat-label for="file">CMND mặt sau </mat-label>
-            <input placeholder="CMND mặt sau" type="file" accept="image/*" (change)="fileChangeAfter($event)" />
+            <mat-label for="file">{{ "Client_Component.ClientStepper.GeneralStep.fileChangeAfter" | translate }} </mat-label>
+            <input [placeholder]="'Client_Component.ClientStepper.GeneralStep.fileChangeAfter'| translate" type="file" accept="image/*" (change)="fileChangeAfter($event)" />
             <div *ngIf="clientFilesDataAfter">
               <img src="{{ clientFilesDataAfter.path }}" width="95%" height="300" />
             </div>
