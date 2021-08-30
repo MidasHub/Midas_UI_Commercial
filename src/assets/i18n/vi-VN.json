@@ -25,6 +25,7 @@
       "buttonNext": "Kế tiếp",
       "buttonPrevious": "Quay lại",
       "GeneralStep": {
+        "title": "Thông tin đại lý:",
         "labelOffice": "Chi nhánh",
         "labelOfficeMsg": "<strong> Yêu cầu: </strong>  chọn Chi nhánh",
         "labelStaff": "Nhân viên quản lý",
@@ -66,7 +67,14 @@
         "labelSelectAccountForPayment": "Tài khoản thanh toán",
         "labelSelectDocumentTypes": "Loại giấy tờ",
         "labelInputFileDocument": "Hình ảnh",
-        "labelAccountNo": "Mã CIF"
+        "labelAccountNo": "Mã CIF",
+        "spanCalendar": "perm_contact_calendar",
+        "titleInfo": "Thông tin cơ bản:",
+        "labelPersonalStatus": "Tình trạng hôn nhân *",
+        "radiobtnAlone": "Độc thân",
+        "radiobtnMarried": "Kết hôn",
+        "fileChangeBefore": "CMND mặt trước",
+        "fileChangeAfter": "CMND mặt sau"
       },
       "FamilyMember": {
         "Dialog": {
@@ -184,6 +192,8 @@
         "labelAddressStateProvince": "Tỉnh"
       }
     },
+    "lableOffice": "Chi nhánh",
+    "lableStaff": "Nhân viên",
     "buttonImportClient": "Nhập list khách hàng",
     "buttonCreateClient": "Tạo khách hàng mới",
     "checkBoxShowClosedAccount": "Hiện các CIF đã đóng",
@@ -247,6 +257,300 @@
       "tipUploadImage": "Tải hình lên",
       "tipCaptureImage": "Chụp hình ",
       "tipDeleteImage": "Xóa hình",
+
+      "Charges": {
+        "strongRequire": "is required",
+        "Charge": {
+          "h2": "Charges Overview",
+          "name": "Name",
+          "dueAsOf": "Due as of",
+          "due": "Due",
+          "paid": "Paid",
+          "waived": "Waived",
+          "outstanding": "Outstanding"
+        },
+        "Pay": {
+          "amount": "Amount",
+          "transactionDate": "Transaction date"
+        },
+        "View": {
+          "btnPay": "Pay",
+          "btnWaiveCharge": "Waive Charge",
+          "btnDelete": "Delete",
+          "currency": "Currency",
+          "chargeTimeType": "Charge Time Type",
+          "chargeCalculationType": "Charge Calculation Type",
+          "dueDate": "Due as of",
+          "amount": "Due",
+          "amountPaid": "Paid",
+          "amountWaived": "Waived",
+          "amountOutstanding": "Outstanding",
+          "h2": "Transactions",
+          "id": "ID",
+          "officeName": "Office Name",
+          "type": "Type",
+          "transactionDate": "Transaction Date",
+          "amount_2": "Amount",
+          "actions": "Actions"
+        }
+      },
+
+      "Actions": {
+        "strongIsRequire": "is required",
+        "strongRequired": "required",
+        "AcceptClientTransfer": {
+          "transferDate": "Transfer Date",
+          "Note": "Note"
+        },
+        "ActivateClient": {
+          "activationDate": "Activated On Date",
+          "erractivationDate": "Activated On Date is "
+        },
+        "AddClientCharge": {
+          "chargeId": "Charge",
+          "errchargeId": "Charge is ",
+          "amount": "Amount",
+          "erramount": "Amount is ",
+          "chargeCalculationType": "Charge Calculation",
+          "chargeTimeType": "Charge time type",
+          "dueDate": "Due for collection on",
+          "errdueDate": "Due for collection on is ",
+          "feeOnMonthDay": "Due On",
+          "errfeeOnMonthDay": "Due Date is ",
+          "Note": "Repeats Every"
+        },
+        "ClientAssignStaff": {
+          "staffId": "Staff",
+          "errstaffId": "Staff is "
+        },
+        "ClientScreenReports": {
+          "labelClientScreenReports": "Client Screen Reports",
+          "errlabelClientScreenReports": "Screen Report is ",
+          "btnGenerateReport": "Generate Report",
+          "btnPrint": "Print",
+          "p": "Please select a screen report."
+        },
+        "CloseClient": {
+          "closureDate": "Closed On Date",
+          "errclosureDate": "Closed On Date is ",
+          "closureReasonId": "Closure Reason",
+          "errclosureReasonId": "Closure Reason is "
+        },
+        "CreateSelf": {
+          "username": "User Name",
+          "errusername": "User Name is ",
+          "firstname": "First Name",
+          "errfirstname": "First Name is ",
+          "lastname": "Last Name",
+          "errlastname": "Last Name is ",
+          "email": "Email",
+          "erremail": "Email is ",
+          "Emailshouldbe": "Email should be a  ",
+          "strongValid": "valid",
+          "noteEmail": " email.",
+          "AutoGeneratePassword": "Auto Generate Password",
+          "OverridePasswordExpirePolicy": "Override Password Expire Policy ?",
+          "password": "Password",
+          "errpassword": "Password is ",
+          "repeatPassword": "Repeat Password",
+          "errrepeatPassword": "Repeat password is ",
+          "Passwordsshouldbe ": "Passwords should be ",
+          "matched": "matched",
+          "status": "Status",
+          "btnActivate": "Activate Self Service User"
+        },
+        "ReactivateClient": {
+          "reactivationDate": "Re Activation On Date",
+          "errstrongRequired": "Reactivation Date is "
+        },
+        "RejectClient": {
+          "reactivationDate": "Rejection Date",
+          "errreactivationDate": "Rejection Date is ",
+          "rejectionReasonId": "Rejection Reason",
+          "errrejectionReasonId": "Rejection Reason is "
+        },
+        "RejectClientTransfer": {
+          "transferDate": "Transfer Date",
+          "note": "Note"
+        },
+        "TakeSurvey": {
+          "surveyOption": "Survey Name",
+          "answer": "Your answer is: "
+        },
+        "TransferClient": {
+          "destinationOfficeId": "Office",
+          "errdestinationOfficeId": "Office is ",
+          "transferDate": "Transfer Date",
+          "errtransferDate": "Transfer Date is ",
+          "note": "Note"
+        },
+        "UndoClientRejection": {
+          "reopenedDate": "Reopened On Date",
+          "errreopenedDate": "Reopened On Date is "
+        },
+        "UndoClientTransfer": {
+          "transferDate": "Transfer Date",
+          "note": "Note"
+        },
+        "UpdateClientSavingAccount": {
+          "savingsAccountId": "Default Savings Account",
+          "errsavingsAccountId": "Account is "
+        },
+        "ViewSurvey": {
+          "btnTakeSurvey": "Take Survey",
+          "Filter": "Filter",
+          "surveyName": "Survey",
+          "createdBy": "Created By",
+          "date": "Date",
+          "score": "Score"
+        },
+        "WithdrawClient": {
+          "withdrawalDate": "Withdrawal Date",
+          "errwithdrawalDate": "Withdrawal Date is ",
+          "withdrawalReasonId": "Withdrawal Reason",
+          "errwithdrawalReasonId": "Withdrawal Reason is "
+        }
+      },
+      "CustomDialog": {
+        "strongRequire": "is required",
+        "Capture": {
+          "h1": "Capture Client Image",
+          "btnCapture": "Capture",
+          "btnRecapture": "Recapture"
+        },
+        "DeleteSignature": {
+          "p": "Are you sure you want to delete this clients signature ?",
+          "p_2": "Client Signature is not provided.",
+          "h1": "Delete Client Signature"
+        },
+        "EditNote": {
+          "h1": "Edit Note"
+        },
+        "UnassignStaff": {
+          "h1": "Unassign Staff",
+          "p": "Are you sure you want to unassign staff for this client ?"
+        },
+        "UploadDocument": {
+          "h1": "Upload Client Documents",
+          "fileName": "File Name",
+          "errfileName": "File Name is ",
+          "description": "Description"
+        },
+        "UploadImage": {
+          "h1": "Upload Client Image"
+        },
+        "UploadSignature": {
+          "h1": "Upload Client Signature"
+        },
+        "ViewSignature": {
+          "h1": "View Client Signature",
+          "p": "Client Signature is not provided."
+        }
+      },
+      "DataTable": {
+        "SingleRow": {
+          "h3": "Thông tin bổ sung"
+        }
+      },
+      "Document": {
+        "h3": "Hồ sơ khách hàng",
+        "btnAdd": "Thêm",
+        "name": "Tên",
+        "description": "Mô tả",
+        "fileName": "Tên file",
+        "actions": "Hành động"
+      },
+      "FamilyMember": {
+        "strongRequire": "required",
+        "h3": "Người liên quan",
+        "btnAdd": "Thêm",
+        "firstName": "Họ : ",
+        "middleName": "Tên Lót : ",
+        "lastName": "Tên : ",
+        "dateOfBirth": "Date Of Birth : ",
+        "age": "Tuổi : ",
+        "mobileNumber": "ĐTDD : ",
+        "isDependent": "Là người phụ thuộc : ",
+        "maritalStatus": "Tình trạng hôn nhân : ",
+        "gender": "Giới tính : ",
+        "profession": "Chuyên môn : ",
+        "qualification": "Trình độ : ",
+        "AddMember": {
+          "firstName": "Họ",
+          "strongRequest": "Yêu cầu:",
+          "alert": " nhập họ của khách hàng",
+          "middleName": "Tên lót",
+          "lastName": "Tên",
+          "alert2": " nhập Tên của người liên quan",
+          "relationshipId": "Quan hệ với khách hàng",
+          "alert3": " nhập mối quan hệ giữa người liên quan và khách hàng.",
+          "genderId": "Giới tính",
+          "alert4": " nhập giới tính của người liên quan",
+          "maritalStatusId": "Tình trạng hôn nhân",
+          "qualification": "Trình độ",
+          "professionId": "Chuyên môn",
+          "dateOfBirth": "Ngày sinh",
+          "alert5": "Nhập ngày sinh của người liên quan",
+          "age": "Tuổi",
+          "alert6": " nhập tuổi của người liên quan",
+          "isDependent": "Là người phụ thuộc:"
+        },
+        "EditMember": {
+          "firstName": "First Name",
+          "errfirstName": "First Name is ",
+          "middleName": "Middle Name",
+          "lastName": "Last Name",
+          "errlastName": "Last Name is ",
+          "qualification": "Qualification",
+          "age": "Age",
+          "errage": "Age is ",
+          "relationshipId": "Relationship",
+          "errrelationshipId": "Relationship is ",
+          "genderId": "Gender",
+          "errgenderId": "Gender is ",
+          "professionId": "Profession",
+          "maritalStatusId": "Marital Status",
+          "dateOfBirth": "Date Of Birth",
+          "errdateOfBirth": "Date of birth is "
+        }
+      },
+      "IcPartner": {
+        "btnAdd": "Thêm đối tác",
+        "name": "đối tác",
+        "partner": "Mã định danh",
+        "rangeDay": "Ngày thêm",
+        "Action": "Thao tác",
+        "btnDelete": "Xóa",
+        "AddPartner": {
+          "partnerName": "Nhập Tên Đối Tác:",
+          "btnSearch": "Tìm",
+          "externalId": "Mã đối tác: ",
+          "displayName": "Tên Đối tác:",
+          "btnAdd": "Thêm đối tác"
+        }
+      },
+      "Identities": {
+        "listCard": "Danh sách thẻ giao dịch:",
+        "ToolTipCreate": "Tạo thêm thông tin thẻ",
+        "documentKey": "Số thẻ",
+        "ToolTipDeleteCardInfo": "Hủy thông tin thẻ",
+        "ToolTipCardInfo": "Thông tin chi tiết của thẻ",
+        "description": "Thông tin thẻ",
+        "type": "Loại",
+        "documents": "Đính kèm",
+        "status": "Trạng thái giữ thẻ",
+        "actions": "Hành động",
+        "ToolTipCash": "Cash",
+        "ToolTipAdvance": "Advance",
+        "title": "Danh sách tài khoản thanh toán/CMND/CCCD:",
+        "id": "Id",
+        "documentKe2y": "Số CMND/CCCD |TK Bank",
+        "description2": "Miêu tả",
+        "type2": "Loại",
+        "documents2": "Đính kèm",
+        "h3": "Hình ảnh CMND/CCCD/PASSPORT:"
+      },
+
       "TabIdentities": {
         "selectDocumentType": "Loại tài liệu",
         "inputDocumentCardBank": "Số thẻ|CMND/CCCD| TKBank",
@@ -257,7 +561,32 @@
         "selectCardType": "Chọn loại thẻ",
         "selectStatus": "Trạng thái",
         "dialogIdentifierTitle": "Thêm thẻ mới | CMND/CCCD | TK Bank",
-        "dialogIdentifierTitleExtra": "Thông tin bổ sung cho thẻ"
+        "dialogIdentifierTitleExtra": "Thông tin bổ sung cho thẻ",
+        "dueDay": "Ngày thanh toán(vd: 03 --> ngày 3 hàng tháng):",
+        "expiredDate": "Ngày hết hạn (vd: 10/24 --> tháng 10 năm 2024):",
+        "limitCard": "Hạn mức thẻ:",
+        "rankCard": "Hạng thẻ:",
+        "optionRankCard": "-----Chọn hạng thẻ-----",
+        "AddIdentitiesExtra": {
+          "dueDay": "Ngày thanh toán:",
+          "expiredDate": "Ngày hết hạn thẻ:",
+          "limitCard": "Hạn mức thẻ:",
+          "rankCard": "Hạng thẻ:",
+          "optionRankCard": "-----Chọn hạng thẻ-----"
+        },
+        "AddLimitExtra": {
+          "limitCard": "Hạn mức thẻ:",
+          "classCard": "Hạng thẻ:",
+          "dialogIdentifierTitleExtra": "Thông tin bổ sung cho thẻ"
+        }
+      },
+      "TabNote": {
+        "h3": "Ghi chú",
+        "placeholderWriteNote": "Write a note ....",
+        "ToolTipAddNote": "Thêm ghi chú",
+        "btnAdd": "Thêm",
+        "createdByUsername": "Tạo bởi: ",
+        "createdOn": "Ngày: "
       },
       "TabGeneral": {
         "lblPerformanceHistory": "Lịch sử hoạt động ",
@@ -801,6 +1130,17 @@
     "Search": "Tìm kiếm",
     "Save": "Save",
     "Close": "Đóng",
+    "Submit": "Submit",
+    "Filter": "Filter",
+    "DeleteEng": "Delete",
+    "DeleteAllEng": "Delete All",
+    "ViewEng": "View",
+    "RecreateEng": "Recreate",
+    "CloseEng": "Close",
+    "ConfirmEng": "Confirm",
+    "BackEng": "Back",
+    "AddEng": "Add",
+    "UploadEng": "Upload",
     "CancelEng": "Cancel"
   },
 
@@ -988,4 +1328,725 @@
       }
     }
   },
+  "AccountTransfers": {
+    "CreateStandingInstructions": {
+      "name": "Name",
+      "errorName": "Name is ",
+      "strongRequire": "required",
+      "applicant": "Applicant",
+      "transferType": "Type",
+      "errorType": "Transfer Type is ",
+      "errorPriority": "Priority is ",
+      "priority": "Priority",
+      "status": "Status",
+      "errorStatus": "Status is ",
+      "fromAccountType": "From Account Type",
+      "errorFromAccountType": "From Account Type is ",
+      "fromAccountId": "From Account",
+      "errorFromAccountId": "From Account is ",
+      "destination": "Destination",
+      "errorDestination": "Destination is ",
+      "toOfficeId": "To Office",
+      "errorToOfficeId": "To Office is ",
+      "toClientId": "Beneficiary",
+      "errorToClientId": "Beneficiary is ",
+      "toAccountType": "To Account Type",
+      "errorToAccountType": "To Account Type is ",
+      "toAccountId": "To Account",
+      "errorToAccountId": "To Account is ",
+      "instructionType": "Standing Instruction Type",
+      "errorInstructionType": "Standing Instruction Type is ",
+      "amount": "Amount",
+      "errorAmount": "Amount is ",
+      "validFrom": "Validity From",
+      "errorValidFrom": "Valid From Date is ",
+      "validTill": "Validity To",
+      "errorValidTill": "Valid Till Date is ",
+      "recurrenceType": "Recurrence Type",
+      "errorRecurrenceType": "Recurrence Type is ",
+      "recurrenceInterval": "Interval",
+      "errorRecurrenceInterval": "Recurrence Interval is ",
+      "recurrenceFrequency": "Recurrence Frequency",
+      "errorRecurrenceFrequency": "Recurrence Frequency is ",
+      "recurrenceOnMonthDay": "On Month Day",
+      "errorRecurrenceOnMonthDay": "On Month Day is "
+    },
+    "EditStandingInstructions": {
+      "name": "Name",
+      "strongRequire": "required",
+      "applicant": "Applicant",
+      "type": "Type",
+      "fromAccountType": "From Account Type",
+      "priority": "Priority",
+      "errpriority": "Priority is ",
+      "status": "Status",
+      "errstatus": "Status is ",
+      "fromAccount": "From Account",
+      "destination": "Destination",
+      "toOffice": "To Office",
+      "toClientId": "Beneficiary",
+      "toAccountType": "To Account Type",
+      "toAccount": "To Account",
+      "instructionType": "Standing Instruction Type",
+      "amount": "Amount",
+      "validFrom": "Validity From",
+      "errvalidFrom": "Valid From Date is ",
+      "validTill": "Validity To",
+      "errvalidTill": "Valid Till Date is ",
+      "recurrenceType": "Recurrence Type",
+      "errrecurrenceType": "Recurrence Type is ",
+      "recurrenceInterval": "Interval",
+      "recurrenceFrequency": "Recurrence Frequency",
+      "recurrenceOnMonthDay": "On Month Day"
+    },
+    "ListStandingInstructions": {
+      "h3": "Client Name",
+      "inputPlaceholderClientName": "ClientName",
+      "inputPlaceholderFromClientId": "From Client Id",
+      "transferType": "Type",
+      "inputPlaceholderFromAccountId": "From Account Id",
+      "table": {
+        "client": "Client",
+        "fromAccount": "From Account",
+        "beneficiary": "Beneficiary",
+        "toAccount": "To Account",
+        "amount": "Amount",
+        "validity": "Validity",
+        "actions": "Actions",
+        "ToolTipDelete": "Delete Standing Instruction",
+        "ToolTipView": "View Standing Instruction",
+        "ToolTipEdit": "Edit Standing Instruction"
+      }
+    },
+    "ListTransactions": {
+      "fromAccount": "From Account",
+      "toAccount": "To Account",
+      "Destination": "Destination",
+      "table": {
+        "transactionDate": "Transaction Date",
+        "amount": "Amount",
+        "notes": "Notes",
+        "reversed": "Reversed"
+      }
+    },
+    "ViewAccountTransfer": {
+      "h3": "Transaction Details",
+      "transferAmount": "Transaction Amount:",
+      "transferDate": "Transaction Date:",
+      "transferDescription": "Description:",
+      "h3_2": "Transferred From",
+      "fromOfficeName": "Office:",
+      "fromClientDisplayName": "Client:",
+      "fromAccountType": "Account Type:",
+      "accountNo": "Account #:",
+      "h3_3": "Transferred To",
+      "toOfficeName": "Office:",
+      "toClientDisplayName": "Client:",
+      "toAccountType": "Account Type:",
+      "toAccountNo": "Account #:"
+    },
+    "ViewStandingInstructions": {
+      "btnViewTransHis": "View Transactions History",
+      "fromClientDisplayName": "Applicant:",
+      "transferType": "Type:",
+      "priority": "Priority:",
+      "status": "Status:",
+      "fromAccountType": "From Account Type:",
+      "fromAccountNo": "From Account:",
+      "Destination": "Destination:",
+      "toOfficeName": "To Office:",
+      "toClientDisplayName": "Beneficiary:",
+      "toAccountType": "To Account Type:",
+      "toAccountNo": "To Account:",
+      "instructionType": "Standing Instruction Type:",
+      "amount": "Amount:",
+      "Validity": "Validity:",
+      "recurrenceType": "Recurrence type:",
+      "recurrenceInterval": "Interval:",
+      "recurrenceFrequency": "Recurrence Frequency:",
+      "recurrenceOnMonthDay": "On Month Day:"
+    }
+  },
+  "Accounting": {
+    "frequentPostings": "Frequent Postings",
+    "predefinedPostings": "These are predefined postings",
+    "createJournalEntries": "Create Journal Entries",
+    "journalEntryTransactions": "Manual journal entry transactions recorded in a journal",
+    "searchJournalEntries": "Search Journal Entries",
+    "advancedSearch": "Advanced search option for journal entries",
+    "accountsLinkedFinancialActivities": "Accounts Linked to Financial Activities",
+    "listOfFinancialActivitiesAndGL": "List of Financial Activities and GL Account Mappings",
+    "migrateOpeningBalances": "Migrate Opening Balances (Office-wise)",
+    "setOrUpdateOfficeLevelOpeningBalances": "Set or update office-level opening balances for GL accounts",
+    "chartOfAccounts": "Chart of Accounts",
+    "listOfAccounts": "List of accounts used by the organization",
+    "closingEntries": "Closing Entries",
+    "journalEntries": "Journal entries made at the end of accounting period",
+    "accountingRules": "Accounting Rules",
+    "ListOfAllAccountingRules": "List of all accounting rules",
+    "accruals": "Accruals",
+    "accruesIncomeExpensesAndLiabilities": "Accrues income, expenses and liabilities as on the provided date",
+    "provisioningEntries": "Provisioning Entries",
+    "createProvisioningEntries": "Create provisioning entries",
+    "strongRequire": "required",
+
+    "Rules": {
+      "name": "Name",
+      "officeName": "Office",
+      "debitTags": "Debit Tags",
+      "debitAccounts": "Debit Account",
+      "creditTags": "Credit Tags",
+      "creditAccounts": "Credit Account",
+
+      "CreateRuleComponent": {
+        "name": "Accounting Rule Name",
+        "errname": "Accounting Rule Name is ",
+        "officeId": "Office",
+        "errofficeId": "Office is ",
+        "affectedGlEntry": "Affected GL Entry (Debit) Rule Type *",
+        "fixedAccount": "Fixed Account",
+        "listOfAccounts": "List of Accounts",
+        "accountToDebit": "Account to Debit",
+        "debitTags": "Debit Tags",
+        "creditRuleType": "Affected GL Entry (Credit) Rule Type *",
+        "accountToCredit": "Account to Credit",
+        "creditTags": "Credit Tags",
+        "allowMultipleCreditEntries": "Multiple Credit Entries Allowed",
+        "description": "Description"
+      },
+      "EditRuleComponent": {
+        "name": "Accounting Rule Name",
+        "officeId": "Office",
+        "errofficeId": "Office is ",
+        "debitRuleType": "Affected GL Entry (Debit) Rule Type *",
+        "fixedAccount": "Fixed Account",
+        "listOfAccounts": "List of Accounts",
+        "accountToDebit": "Account to Debit",
+        "debitTags": "Debit Tags",
+        "allowMultipleDebitEntries": "Multiple Debit Entries Allowed",
+        "creditRuleType": "Affected GL Entry (Credit) Rule Type *",
+        "accountToCredit": "Account to Credit",
+        "creditTags": "Credit Tags",
+        "allowMultipleCreditEntries": "Multiple Credit Entries Allowed",
+        "description": "Description"
+      },
+      "ViewRuleComponent": {
+        "officeName": "Office",
+        "description": "Description",
+        "allowMultipleDebitEntries": "Multiple Debit Entries Allowed",
+        "allowMultipleCreditEntries": "Multiple Credit Entries Allowed",
+        "debitTags": "Debit Tags",
+        "debitAccounts": "Debit Account Name",
+        "creditTags": "Credit Tags",
+        "creditAccounts": "Credit Account Name"
+      }
+    },
+    "ChartOfAccounts": {
+      "btnAddAccount": "Add Account",
+      "Filter": "Filter",
+      "name": "Account",
+      "glCode": "GL Code",
+      "glAccountType": "Type",
+      "disabled": "Disabled",
+      "manualEntriesAllowed": "Manual Entries Allowed",
+      "usedAs": "Used as",
+      "btnExpandAll": "Expand All",
+      "btnCollapseAll": "Collapse All",
+      "accountName": "Account Name",
+      "glAccountCode": "GL Code",
+      "glAccountType2": "Account Type",
+      "glAccountUsage": "Account Usage",
+      "glAccountManualEntriesAllowed": "Manual Entries Allowed",
+      "description": "Description",
+
+      "CreateGlAccountComponent": {
+        "type": "Account Type",
+        "errtype": "Account Type is ",
+        "name": "Account Name",
+        "errname": "Account Name is ",
+        "usage": "Account Usage",
+        "errusage": "Account Usage is ",
+        "glCode": "GL Code",
+        "errglCode": "GL Code is ",
+        "parentId": "Parent",
+        "tagId": "Tag",
+        "manualEntriesAllowed": "Manual Entries Allowed",
+        "description": "Description"
+      },
+      "EditGlAccountComponent": {
+        "type": "Account Type",
+        "errtype": "Account Type is ",
+        "name": "Account Name",
+        "errname": "Account Name is ",
+        "usage": "Account Usage",
+        "errusage": "Account Usage is ",
+        "glCode": "GL Code",
+        "errglCode": "GL Code is ",
+        "parentId": "Parent",
+        "tagId": "Tag",
+        "manualEntriesAllowed": "Manual Entries Allowed",
+        "description": "Description"
+      },
+      "ViewGlAccountComponent": {
+        "btnSubledgerAccount": "Subledger Account",
+        "btnEdit": "Edit",
+        "btnDisable": "Disable",
+        "btnEnable": "Enable",
+        "btnDelete": "Delete",
+        "type": "Account Type",
+        "glCode": "GL Code",
+        "parent": "Parent Account Name",
+        "tagId": "Tag",
+        "usage": "Account Usage",
+        "manualEntriesAllowed": "Manual Entries Allowed",
+        "description": "Description"
+      }
+    },
+    "ClosingEntriesComponent": {
+      "btnCreateClosure": "Create Closure",
+      "officeName": "Office Name",
+      "table": {
+        "officeName": "Office",
+        "closingDate": "Closure Date",
+        "comments": "Comments",
+        "createdByUsername": "Created By"
+      },
+
+      "CreateClosureComponent": {
+        "officeId": "Office",
+        "errofficeId": "Office is ",
+        "closingDate": "Closing Date",
+        "errclosingDate": "Closing Date is ",
+        "comments": "Comments"
+      },
+      "EditClosureComponent": {
+        "officeId": "Office",
+        "closingDate": "Closing Date",
+        "comments": "Comments"
+      },
+      "ViewClosureComponent": {
+        "officeName": "Office",
+        "closingDate": "Closure Date",
+        "createdByUsername": "Closed By",
+        "lastUpdatedByUsername": "Updated By",
+        "lastUpdatedDate": "Updated On",
+        "createdDate": "Closure Creation Date",
+        "comments": "Comments"
+      }
+    },
+    "CreateJournalEntryComponent": {
+      "officeId": "Office",
+      "errofficeId": "Office is ",
+      "currencyCode": "Currency",
+      "errcurrencyCode": "Currency is ",
+      "glAccountId": "Affected GL Entry (Debit)",
+      "errglAccountId": "Affected GL Entry (Debit) is ",
+      "amount": "Debit Amount",
+      "erramount": "Debit Amount is ",
+      "glAccountIdCredit": "Affected GL Entry (Credit)",
+      "errglAccountIdCredit": "Affected GL Entry (Credit) is ",
+      "amountCredit": "Credit Amount",
+      "erramountCredit": "Credit Amount is ",
+      "referenceNumber": "Reference Number",
+      "transactionDate": "Transaction Date",
+      "errtransactionDate": "Transaction Date is ",
+      "paymentTypeId": "Payment Type",
+      "accountNumber": "Account Number",
+      "checkNumber": "Cheque Number",
+      "routingCode": "Routing Code",
+      "receiptNumber": "Receipt Number",
+      "bankNumber": "Bank Number",
+      "comments": "Comments"
+    },
+    "FinancialActivityMappingsComponent": {
+      "financialActivity": "Financial Activity",
+      "glAccountName": "Account Name",
+      "glAccountCode": "Account Code",
+      "defineNewMapping": "Define New Mapping",
+
+      "CreateFinancialActivityMappingComponent": {
+        "financialActivityId": "Financial Activity",
+        "errfinancialActivityId": "Financial Activity is ",
+        "glAccountId": "Account",
+        "errglAccountId": "Account is "
+      },
+      "EditFinancialActivityMappingComponent": {
+        "financialActivityId": "Financial Activity",
+        "glAccountId": "Account"
+      },
+      "ViewFinancialActivityMappingComponent": {
+        "financialActivity": "Financial Activity",
+        "accountName": "Account Name"
+      }
+    },
+    "FrequentPostingsComponent": {
+      "officeId": "Office",
+      "errofficeId": "Office is ",
+      "accountingRule": "Accounting Rule",
+      "erraccountingRule": "Accounting Rule is ",
+      "currencyCode": "Currency",
+      "errcurrencyCode": "Currency is ",
+      "glAccountId": "Affected GL Entry (Debit)",
+      "errglAccountId": "Affected GL Entry (Debit) is ",
+      "amountDebit": "Debit Amount",
+      "erramountDebit": "Debit Amount is ",
+      "glAccountIdCredit": "Affected GL Entry (Credit)",
+      "errglAccountIdCredit": "Affected GL Entry (Credit) is ",
+      "amountCredit": "Credit Amount",
+      "erramountCredit": "Credit Amount is ",
+      "referenceNumber": "Reference Number",
+      "transactionDate": "Transaction Date",
+      "errtransactionDate": "Transaction Date is ",
+      "paymentTypeId": "Payment Type",
+      "accountNumber": "Account Number",
+      "checkNumber": "Cheque Number",
+      "routingCode": "Routing Code",
+      "receiptNumber": "Receipt Number",
+      "bankNumber": "Bank Number",
+      "comments": "Comments"
+    },
+    "MigrateOpeningBalancesComponent": {
+      "officeId": "Office",
+      "errofficeId": "Office is ",
+      "currencyCode": "Currency",
+      "errcurrencyCode": "Currency is ",
+      "transactionDate": "Opening Balances Date",
+      "errtransactionDate": "Opening Balances Date is ",
+      "Type": "Type",
+      "GLCode": "GL Code",
+      "Account": "Account",
+      "TotalDebit": "Total Debit: ",
+      "TotalCredit": "Total Credit: ",
+      "debit": "Debit",
+      "credit": "Credit"
+    },
+    "PeriodicAccrualsComponent": {
+      "tillDate": "Accrue Till Date",
+      "errtillDate": "Accrue Date is ",
+      "btnRunPeriodicAccruals": "Run Periodic Accruals"
+    },
+    "ProvisioningEntriesComponent": {
+      "btnCreateProvisioningEntry": "Create Provisioning Entry",
+      "Filter": "Filter",
+      "table": {
+        "createdUser": "Created By",
+        "createdDate": "Created On",
+        "journalEntry": "Journal Entry Created",
+        "viewReport": "View Report",
+        "recreateProvisioning": "Recreate Provisioning",
+        "viewJournalEntry": "View Journal Entry"
+      },
+
+      "CreateProvisioningEntryComponent": {
+        "date": "Date",
+        "errdate": "Date is ",
+        "createjournalentries": "Create Journal Entries"
+      },
+      "ViewProvisioningEntryComponent": {
+        "btnCreateJournalEntries": "Create Journal Entries",
+        "createdUser": "Created By",
+        "createdDate": " Created On",
+        "reservedAmount": "Amount to be Reserved",
+        "officeName": "Office Name",
+        "loanProduct": "Loan Product",
+        "provisioningCategory": "Provisioning Category",
+        "table": {
+          "officeName": "Office Name",
+          "productName": "Product Name",
+          "currencyCode": "Currency Code",
+          "categoryName": "Category Name",
+          "amountreserved": "Provisioning Amount",
+          "liabilityAccountName": "Liability Account (CR)",
+          "expenseAccountName": "Expense Account (DR)"
+        }
+      },
+      "ViewProvisioningJournalEntriesComponent": {
+        "Filter": "Filter",
+        "id": "Entry ID",
+        "officeName": "Office",
+        "transactionDate": "Transaction Date",
+        "transactionId": "Transaction ID",
+        "glAccountType": "Type",
+        "createdByUserName": "Type",
+        "glAccountCode": "Account Code",
+        "glAccountName": "Account Name",
+        "debit": "Debit",
+        "credit": "Credit"
+      }
+    },
+    "RevertTransactionComponent": {
+      "p": "Are you sure you want to revert this transaction?",
+      "comments": "Comments",
+      "h1": "Transaction Reverted",
+      "h4": "Success!",
+      "p_2": "A new journal entry has been created to reverse this transaction:",
+      "p_3": "Transaction ID: ",
+      "btnRedirectToNewTransaction": "Redirect to New Transaction"
+    },
+    "SearchJournalEntryComponent": {
+      "officeName": "Office Name",
+      "glAccount": "GL Account Name or Code",
+      "Filter": "Filter",
+      "transactionDateFrom": "Từ ngày",
+      "transactionDateTo": "Đến ngày",
+      "transactionId": "Transaction ID",
+      "table": {
+        "id": "Entry ID",
+        "officeName": "Office",
+        "transactionId": "Transaction ID",
+        "transactionDate": "Transaction Date",
+        "glAccountType": "Type",
+        "createdByUserName": "Created by",
+        "glAccountCode": "Account Code",
+        "glAccountName": "Account Name",
+        "debit": "Debit",
+        "credit": "Credit"
+      }
+    },
+    "ViewJournalEntryComponent": {
+      "h1": "View Journal Entry",
+      "officeName": "Office",
+      "id": "Entry ID",
+      "transactionId": "Transaction ID",
+      "transactionDate": "Transaction Date",
+      "glAccountType": "Type",
+      "glAccountId": "Account Code",
+      "glAccountName": "Account Name",
+      "Credit": "Credit",
+      "Debit": "Debit",
+      "referenceNumber": "Reference Number",
+      "comments": "Comments",
+      "paymentDetails": "Payment Details",
+      "paymentType": "Payment Type",
+      "accountNumber": "Account Number",
+      "checkNumber": "Cheque Number",
+      "routingCode": "Routing Code",
+      "receiptNumber": "Receipt Number",
+      "bankNumber": "Bank Number",
+      "createdByUserName": "Created by",
+      "createdDate": "Created on"
+    },
+    "ViewTransactionComponent": {
+      "spanRevertTransaction": "Revert Transaction",
+      "spanTransactionReverted": "Transaction Reverted",
+      "officeName": "Office",
+      "transactionDate": "Transaction Date",
+      "createdByUserName": "Created By",
+      "createdDate": "Created On",
+      "table": {
+        "createdDate": "Entry ID",
+        "glAccountType": "Type",
+        "glAccountCode": "Account Code",
+        "glAccountName": "Account Name",
+        "debit": "Debit",
+        "credit": "Credit"
+      }
+    }
+  },
+  "CentersComponent": {
+    "strongRequire": "required",
+    "checkboxShowClosedCenters": "Show Closed Centers",
+    "btnImportCenter": "Import Center",
+    "btnCreateCenter": "Create Center",
+    "table": {
+      "name": "Name",
+      "accountNo": "Account #",
+      "externalId": "ExternalID",
+      "status": "Status",
+      "officeName": "Office Name"
+    },
+
+    "CentersViewComponent": {
+      "h3": "Center Name : ",
+      "accountNo": "Account #:",
+      "externalId": "External Id: ",
+      "staffName": "Staff: ",
+      "activationDate": "Activation Date :",
+      "nextTenRecurringDates": "Next Meeting on: ",
+      "frequency": "Meeting Frequency: ",
+      "p1": "Next Meeting on: Unassigned",
+      "p2": "Meeting Frequency: N/A",
+      "btnActivate": "Activate",
+      "btnEdit": "Edit",
+      "btnManageGroups": "Manage Groups",
+      "CentersSavingApplication": "Centers Saving Application",
+      "btnMore": "More",
+      "btnAttendance": "",
+      "btnAssignStaff": "",
+      "btnUnassignStaff": "",
+      "btnDelete": "",
+      "btnClose": "",
+      "btnAttachMeeting": "",
+      "btnStaffAssignmentHistory": "",
+      "General": "General",
+      "Notes": "Notes",
+
+      "CenterActionsComponent": {
+        "ActivateCenterComponent": {
+          "activationDate": "Activated On Date",
+          "erractivationDate": "Activated On Date is "
+        },
+        "AttachCenterMeetingComponent": {
+          "startDate": "Meeting Start Date",
+          "errstartDate": "Start Date is ",
+          "repeating": "Repeats?",
+          "frequency": "Repetition Frequency",
+          "errfrequency": "Repetition Frequency is ",
+          "interval": "Repetition Interval",
+          "errinterval": "Repeition Interval is ",
+          "repeatsOnDay": "Repeats on Day",
+          "Atleast": "At least ",
+          "one": "one",
+          "dayMustBeSelected": " day must be selected"
+        },
+        "CenterAssignStaffComponent": {
+          "staffId": "Staff",
+          "errstaffId": "Staff is "
+        },
+        "CenterAttendanceComponent": {
+          "meetingDate": "Meeting Date",
+          "hint": "Next Meeting on: ",
+          "name": "Name",
+          "attendance": "Attendance",
+          "Present": "Present",
+          "Absent": "Absent",
+          "Approved": "Approved",
+          "Leave": "Leave",
+          "Late": "Late"
+        },
+        "CloseCenterComponent": {
+          "closureDate": "Closed On Date",
+          "errclosureDate": "Closed On Date is ",
+          "closureReasonId": "Closure Reason",
+          "errclosureReasonId": "CLosure Reason is "
+        },
+        "EditCenterMeetingComponent": {
+          "btnEditSchedule": "Edit Schedule",
+          "frequency": "Repetition Frequency",
+          "errfrequency": "Repetition Frequency is ",
+          "interval": "Repetition Interval",
+          "errinterval": "Repeition Interval is ",
+          "repeatsOnDay": "Repeats on Day",
+          "Atleast ": "At least ",
+          "one": "one",
+          "dayMustBeSelected": " day must be selected",
+          "startDate": "Above Changes are Effective from",
+          "errstartDate": "Changes Affection Date is ",
+          "hint": "Note: 'Repeats' and 'Repeats every' cannot not be modified if there are active accounts ",
+          "hint_2": "(JLG Loans, Recurring Deposits etc) dependent on this meeting."
+        },
+        "EditCenterMeetingScheduleComponent": {
+          "presentMeetingDate": "Existing Meeting Date",
+          "errpresentMeetingDate": "Existing Meeting Date is ",
+          "newMeetingDate": "Revised Meeting Date",
+          "errnewMeetingDate": "Revised Meeting Date is "
+        },
+        "ManageGroupsComponent": {
+          "groupChoice": "Add Groups",
+          "groupDetail": "Group Details",
+          "name": "Name",
+          "id": "Id",
+          "officeName": "Office",
+          "h3": "Group Members"
+        }
+      },
+      "DatatableTabComponent": {
+        "MultiRowComponent": {
+          "btnDeleteAll": "Delete All"
+        }
+      },
+      "GeneralTabComponent": {
+        "h3": "Center Closed",
+        "h3_2": "Summary Details",
+        "activeClients": "Active Clients: ",
+        "activeGroupLoans": "Active Group Loans: ",
+        "activeClientLoans": "Active Client Loans: ",
+        "overdueGroupLoans": "Active Overdue Group Loans: ",
+        "activeGroupBorrowers": "Active Group Borrowers: ",
+        "activeClientBorrowers": "Active Client Borrowers: ",
+        "overdueClientLoans": "Active Overdue Client Loans: ",
+        "h3_3": "Groups",
+        "accountNoGroups": "Account Number",
+        "nameGroups": "Group Name",
+        "officeNameGroups": "Office Name",
+        "submittedOnDateGroups": "Submitted On",
+        "h3_4": "Savings Account Overview",
+        "accountNo": "Account No",
+        "productName": "Products",
+        "accountBalance": "Balance",
+        "Actions": "Actions",
+        "Deposit": "Deposit",
+        "Withdraw": "Withdraw",
+        "Approve": "Approve",
+        "UndoApprove": "Undo Approve",
+        "Activate": "Activate"
+      },
+      "NotesTabComponent": {
+        "createdByUsername": "Created by: ",
+        "createdOn": "Date: "
+      }
+    },
+    "CreateCenterComponent": {
+      "name": "Name",
+      "errname": "Center Name is ",
+      "CenterName ": "Center Name ",
+      "cannot": "cannot",
+      "alert": " begin with a special character or number",
+      "officeId": "Office",
+      "errofficeId": "Office is ",
+      "staffId": "Staff",
+      "active": "Active",
+      "activationDate": "Activation Date",
+      "erractivationDate": "Activation Date is ",
+      "externalId": "External id",
+      "submittedOnDate": "Submitted on",
+      "errsubmittedOnDate": "Submission Date is ",
+      "groupChoice": "Select and Add groups",
+      "groupDetails": "Group Details",
+      "groupChoiceName": "Name",
+      "groupChoiceId": "Id",
+      "groupChoiceOfficeName": "Office",
+      "h3": "Selected Groups"
+    },
+    "EditCenterComponent": {
+      "name": "Name",
+      "errname": "Center Name is ",
+      "CenterName ": "Center Name ",
+      "cannot": "cannot",
+      "alert": " begin with a special character or number",
+      "staffId": "Staff",
+      "externalId": "External id",
+      "activationDate": "Activation date",
+      "erractivationDate": "Activation Date is "
+    }
+  },
+
+  "ClientsComponent": {
+    "BalanceAccountClientComponent": {
+      "label": "Danh sách công nợ phải trả (tạm ứng) của khách hàng",
+      "totalAccOfUser": "Số lượng giao dịch: ",
+      "totalAmountDerivedOfUser": "Số tiền giao dich: ",
+      "customer_name": "Tên khách hàng",
+      "staff_name": "Nhân viên",
+      "officeName": "Chi nhánh",
+      "staff_name2": "Nhân viên phụ trách",
+      "account_no": "Số tài khoản",
+      "account_balance_derived": "Tổng số dư:",
+      "staff_name3": "Nhân viên phụ trách :",
+      "account_no2": "Số tài khoản :",
+      "label2": "Danh sách công nợ phải thu của khách hàng",
+      "totalAccOfUser2": "Số lượng giao dịch: ",
+      "totalAmountDerivedOfUser2": "Số tiền giao dich: "
+    },
+    "BalanceAccountTellerComponent": {
+      "h3": "Số tài khoản: ",
+      "totalBalanceAmount": "Số dư: ",
+      "tellerSourceName": "Tên teller",
+      "sourceInfo": "Tên tài khoản",
+      "officeName": "Chi nhánh",
+      "accountNo": "Mã tài khoản",
+      "savingIdAndSourceInfo": "Tên tài khoản - số dư > 0",
+      "balance": "Số dư"
+    }
+  }
 }
