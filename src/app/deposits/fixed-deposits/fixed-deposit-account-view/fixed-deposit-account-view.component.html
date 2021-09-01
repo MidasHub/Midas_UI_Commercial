@@ -16,15 +16,15 @@
         <mat-card-title>
           <h3>
             <i class="fa fa-stop" [ngClass]="fixedDepositsAccountData.status.code | statusLookup" [matTooltip]="fixedDepositsAccountData.status.value"></i>
-              Account Name : {{fixedDepositsAccountData.depositProductName}}
+            {{ "Deposits.Fixed.View.depositProductName" | translate }}{{fixedDepositsAccountData.depositProductName}}
           </h3>
         </mat-card-title>
         <mat-card-subtitle>
           <p>
-            Account #: {{fixedDepositsAccountData.accountNo}} | Client Name: {{fixedDepositsAccountData.clientName}}<br/>
+            {{ "Deposits.Fixed.View.accountNo" | translate }}{{fixedDepositsAccountData.accountNo}} | Client Name: {{fixedDepositsAccountData.clientName}}<br/>
             <span *ngIf="!fixedDepositsAccountData.status.rejected && !fixedDepositsAccountData.status.submittedAndPendingApproval">
-              Current Balance: {{fixedDepositsAccountData.currency.displaySymbol}}&nbsp;{{fixedDepositsAccountData.summary.accountBalance | money}}<br/>
-              Deposit Amount: {{fixedDepositsAccountData.currency.displaySymbol}}&nbsp;{{fixedDepositsAccountData.depositAmount | money}}<br/>
+              {{ "Deposits.Fixed.View.CurrentBalance" | translate }}{{fixedDepositsAccountData.currency.displaySymbol}}&nbsp;{{fixedDepositsAccountData.summary.accountBalance | money}}<br/>
+              {{ "Deposits.Fixed.View.DepositAmount" | translate }}{{fixedDepositsAccountData.currency.displaySymbol}}&nbsp;{{fixedDepositsAccountData.depositAmount | money}}<br/>
             </span>
           </p>
         </mat-card-subtitle>
@@ -40,7 +40,7 @@
       </ng-container>
 
       <ng-container *ngIf="buttonConfig.options.length">
-        <button mat-raised-button [matMenuTriggerFor]="More">More</button>
+        <button mat-raised-button [matMenuTriggerFor]="More">{{ "Deposits.Fixed.View.btnMore" | translate }}</button>
         <mat-menu #More="matMenu">
         <span *ngFor="let option of buttonConfig.options">
           <button mat-menu-item (click)="doAction(option.name)">{{option.name}}</button>
@@ -59,31 +59,31 @@
       <div fxFlex="49%" fxLayout="column" fxLayoutGap="4%">
 
         <div>
-          <h4 class="table-headers">Fixed Deposit Details</h4>
+          <h4 class="table-headers">{{ "Deposits.Fixed.View.h4" | translate }}</h4>
           <table>
             <tbody>
               <tr>
-                <td>Activated On</td>
+                <td>{{ "Deposits.Fixed.View.activatedOnDate" | translate }}</td>
                 <td>{{fixedDepositsAccountData.timeline.activatedOnDate ? (fixedDepositsAccountData.timeline.activatedOnDate | date) : 'Not Activated'}}</td>
               </tr>
               <tr *ngIf="fixedDepositsAccountData.timeline.closedOnDate">
-                <td>Closed On</td>
+                <td>{{ "Deposits.Fixed.View.closedOnDate" | translate }}</td>
                 <td>{{fixedDepositsAccountData.timeline.closedOnDate | date}}</td>
               </tr>
               <tr>
-                <td>Field Officer</td>
+                <td>{{ "Deposits.Fixed.View.fieldOfficerName" | translate }}</td>
                 <td>{{fixedDepositsAccountData.fieldOfficerName ? fixedDepositsAccountData.fieldOfficerName : 'Unassigned'}}</td>
               </tr>
               <tr>
-                <td>Maturity Date</td>
+                <td>{{ "Deposits.Fixed.View.maturityDate" | translate }}</td>
                 <td>{{fixedDepositsAccountData.maturityDate ? (fixedDepositsAccountData.maturityDate | date) : 'N/A'}}</td>
               </tr>
               <tr>
-                <td>Deposit Period</td>
+                <td>{{ "Deposits.Fixed.View.depositPeriod" | translate }}</td>
                 <td>{{fixedDepositsAccountData.depositPeriod}}&nbsp;{{fixedDepositsAccountData.depositPeriodFrequency.value}}</td>
               </tr>
               <tr *ngIf="fixedDepositsAccountData.withHoldTax">
-                <td>Tax Group</td>
+                <td>{{ "Deposits.Fixed.View.taxGroup" | translate }}</td>
                 <td>{{fixedDepositsAccountData.taxGroup.name}}</td>
               </tr>
             </tbody>
@@ -91,31 +91,31 @@
         </div>
 
         <div>
-          <h4 class="table-headers">Interest Details</h4>
+          <h4 class="table-headers">{{ "Deposits.Fixed.View.h4_2" | translate }}</h4>
           <table>
             <tbody>
               <tr>
-                <td>Interest Rate</td>
+                <td>{{ "Deposits.Fixed.View.nominalAnnualInterestRate" | translate }}</td>
                 <td>{{fixedDepositsAccountData.nominalAnnualInterestRate}}%</td>
               </tr>
               <tr>
-                <td>Interest Compounding Period</td>
+                <td>{{ "Deposits.Fixed.View.interestCompoundingPeriodType" | translate }}</td>
                 <td>{{fixedDepositsAccountData.interestCompoundingPeriodType.value}}</td>
               </tr>
               <tr>
-                <td>Interest Posting Period</td>
+                <td>{{ "Deposits.Fixed.View.interestPostingPeriodType" | translate }}</td>
                 <td>{{fixedDepositsAccountData.interestPostingPeriodType.value}}</td>
               </tr>
               <tr>
-                <td>Interest Calculated Using</td>
+                <td>{{ "Deposits.Fixed.View.interestCalculationType" | translate }}</td>
                 <td>{{fixedDepositsAccountData.interestCalculationType.value}}</td>
               </tr>
               <tr>
-                <td>No. of Days in Year</td>
+                <td>{{ "Deposits.Fixed.View.interestCalculationDaysInYearType" | translate }}</td>
                 <td>{{fixedDepositsAccountData.interestCalculationDaysInYearType.value}}</td>
               </tr>
               <tr *ngIf="fixedDepositsAccountData.preClosurePenalApplicable">
-                <td>Pre-cloure Penal</td>
+                <td>{{ "Deposits.Fixed.View.preClosurePenalApplicable" | translate }}</td>
                 <td>{{fixedDepositsAccountData.preClosurePenalInterest}} % on {{fixedDepositsAccountData.preClosurePenalInterestOnType.value}}</td>
               </tr>
           </table>
@@ -126,27 +126,27 @@
       <div fxFlex="49%">
 
         <div *ngIf="!fixedDepositsAccountData.status.rejected && !fixedDepositsAccountData.status.submittedAndPendingApproval; else otherDetails">
-          <h4 class="table-headers">Performance History</h4>
+          <h4 class="table-headers">{{ "Deposits.Fixed.View.h4_3" | translate }}</h4>
           <table>
             <tbody>
               <tr>
-                <td>Principal Amount</td>
+                <td>{{ "Deposits.Fixed.View.depositAmount" | translate }}</td>
                 <td>{{fixedDepositsAccountData.currency.displaySymbol}}&nbsp;{{fixedDepositsAccountData.depositAmount | money}}</td>
               </tr>
               <tr>
-                <td>Maturity Amount</td>
+                <td>{{ "Deposits.Fixed.View.maturityAmount" | translate }}</td>
                 <td>{{fixedDepositsAccountData.currency.displaySymbol}}&nbsp;{{fixedDepositsAccountData.maturityAmount | money}}</td>
               </tr>
               <tr *ngIf="fixedDepositsAccountData.summary.totalDeposits">
-                <td>Total Deposits</td>
+                <td>{{ "Deposits.Fixed.View.totalDeposits" | translate }}</td>
                 <td>{{fixedDepositsAccountData.currency.displaySymbol}}&nbsp;{{fixedDepositsAccountData.summary.totalDeposits | money}}</td>
               </tr>
               <tr *ngIf="fixedDepositsAccountData.summary.totalWithdrawals">
-                <td>Total Withdrawals</td>
+                <td>{{ "Deposits.Fixed.View.totalWithdrawals" | translate }}</td>
                 <td>{{fixedDepositsAccountData.currency.displaySymbol}}&nbsp;{{fixedDepositsAccountData.summary.totalWithdrawals | money}}</td>
               </tr>
               <tr *ngIf="fixedDepositsAccountData.summary.totalInterestEarned >= 0">
-                <td>Total Interest Earned</td>
+                <td>{{ "Deposits.Fixed.View.totalInterestEarned" | translate }}</td>
                 <td>{{fixedDepositsAccountData.currency.displaySymbol}}&nbsp;{{fixedDepositsAccountData.summary.totalInterestEarned | money}}</td>
               </tr>
           </table>
@@ -154,15 +154,15 @@
 
         <ng-template #otherDetails>
           <div>
-            <h4 class="table-headers">Other Details</h4>
+            <h4 class="table-headers">{{ "Deposits.Fixed.View.h4_4" | translate }}</h4>
             <table>
               <tbody>
                 <tr>
-                  <td>Principal Amount</td>
+                  <td>{{ "Deposits.Fixed.View.depositAmount2" | translate }}</td>
                   <td>{{fixedDepositsAccountData.currency.displaySymbol}}&nbsp;{{fixedDepositsAccountData.depositAmount}}</td>
                 </tr>
                 <tr>
-                  <td>Maturity Amount</td>
+                  <td>{{ "Deposits.Fixed.View.maturityAmount2" | translate }}</td>
                   <td>{{fixedDepositsAccountData.currency.displaySymbol}}&nbsp;{{fixedDepositsAccountData.maturityAmount}}</td>
                 </tr>
               </tbody>
@@ -177,19 +177,19 @@
     <nav mat-tab-nav-bar class="navigation-tabs">
       <a mat-tab-link [routerLink]="['./interest-rate-chart']" routerLinkActive #IRC="routerLinkActive"
       [active]="IRC.isActive">
-        Interest Rate Chart
+      {{ "Deposits.Fixed.View.IRC" | translate }}
       </a>
       <a mat-tab-link [routerLink]="['./transactions']" routerLinkActive #transactions="routerLinkActive"
       [active]="transactions.isActive">
-        Transactions
+      {{ "Deposits.Fixed.View.transactions" | translate }}
       </a>
       <a mat-tab-link [routerLink]="['./charges']" routerLinkActive #charges="routerLinkActive"
       [active]="charges.isActive">
-        Charges
+      {{ "Deposits.Fixed.View.charges" | translate }}
       </a>
       <a mat-tab-link [routerLink]="['./standing-instructions']" routerLinkActive #standingInstructions="routerLinkActive"
         [active]="standingInstructions.isActive" *ngIf="fixedDepositsAccountData.clientId">
-        Standing Instructions
+        {{ "Deposits.Fixed.View.standingInstructions" | translate }}
       </a>
       <ng-container *ngFor="let savingsDatatable of savingsDatatables">
         <a mat-tab-link *midasHasPermission="'READ_' + savingsDatatable.registeredTableName"

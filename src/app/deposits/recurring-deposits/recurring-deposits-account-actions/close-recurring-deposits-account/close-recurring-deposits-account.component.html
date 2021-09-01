@@ -11,26 +11,26 @@
           <h3 class="mat-h3" fxFlexFill>{{title}}</h3>
 
           <mat-form-field>
-            <mat-label>Closed On</mat-label>
+            <mat-label>{{ "Deposits.Recurring.Actions.Close.closedOnDate" | translate }}</mat-label>
             <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="closedOnDatePicker" required
               formControlName="closedOnDate">
             <mat-datepicker-toggle matSuffix [for]="closedOnDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #closedOnDatePicker></mat-datepicker>
             <mat-error *ngIf="closeRecurringDepositForm.controls.closedOnDate.hasError('required')">
-              Closed On <strong>is required</strong>
+              {{ "Deposits.Recurring.Actions.Close.errclosedOnDate" | translate }}<strong>{{ "Deposits.strongIsRequired" | translate }}</strong>
             </mat-error>
           </mat-form-field>
 
           <mat-form-field>
-            <mat-label>Maturity Amount</mat-label>
+            <mat-label>{{ "Deposits.Recurring.Actions.Close.maturityAmount" | translate }}</mat-label>
             <input matInput currencyMask type="text" required formControlName="maturityAmount">
             <mat-error *ngIf="closeRecurringDepositForm.controls.maturityAmount.hasError('required')">
-              Maturity Amount <strong>is required</strong>
+              {{ "Deposits.Recurring.Actions.Close.errmaturityAmount" | translate }}<strong>{{ "Deposits.strongIsRequired" | translate }}</strong>
             </mat-error>
           </mat-form-field>
 
           <mat-form-field>
-            <mat-label>Action</mat-label>
+            <mat-label>{{ "Deposits.Recurring.Actions.Close.onAccountClosureId" | translate }}</mat-label>
             <mat-select formControlName="onAccountClosureId" required>
               <mat-option *ngFor="let onAccountClosureOption of onAccountClosureOptions"
                 [value]="onAccountClosureOption.id">
@@ -38,24 +38,24 @@
               </mat-option>
             </mat-select>
             <mat-error *ngIf="closeRecurringDepositForm.controls.onAccountClosureId.hasError('required')">
-              Action <strong>is required</strong>
+              {{ "Deposits.Recurring.Actions.Close.erronAccountClosureId" | translate }}<strong>{{ "Deposits.strongIsRequired" | translate }}</strong>
             </mat-error>
           </mat-form-field>
 
           <mat-form-field>
-            <mat-label>Payment Type Id</mat-label>
+            <mat-label>{{ "Deposits.Recurring.Actions.Close.paymentTypeId" | translate }}</mat-label>
             <mat-select formControlName="paymentTypeId" required>
               <mat-option *ngFor="let paymentType of paymentTypes" [value]="paymentType.id">
                 {{ paymentType.name }}
               </mat-option>
             </mat-select>
             <mat-error *ngIf="closeRecurringDepositForm.controls.paymentTypeId.hasError('required')">
-              Payment Type <strong>is required</strong>
+              {{ "Deposits.Recurring.Actions.Close.errpaymentTypeId" | translate }}<strong>{{ "Deposits.strongIsRequired" | translate }}</strong>
             </mat-error>
           </mat-form-field>
 
           <div fxFlexFill>
-            <span fxFlex="25%">Show Payment Details</span>
+            <span fxFlex="25%">{{ "Deposits.Recurring.Actions.Close.expandCollapsebutton" | translate }}</span>
             <span fxFlex="75%" class="expandCollapsebutton" (click)="toggleDisplay()">
               <button mat-raised-button color="primary" *ngIf="showPaymentDetails">
                 <i class="fa fa-minus"></i>
@@ -68,33 +68,33 @@
 
           <ng-container *ngIf="showPaymentDetails">
             <mat-form-field>
-              <mat-label> Account #</mat-label>
+              <mat-label> {{ "Deposits.Recurring.Actions.Close.accountNumber" | translate }}</mat-label>
               <input matInput formControlName="accountNumber">
             </mat-form-field>
 
             <mat-form-field>
-              <mat-label>Cheque #</mat-label>
+              <mat-label>{{ "Deposits.Recurring.Actions.Close.chequeNumber" | translate }}</mat-label>
               <input matInput formControlName="chequeNumber">
             </mat-form-field>
 
             <mat-form-field>
-              <mat-label>Routing Code</mat-label>
+              <mat-label>{{ "Deposits.Recurring.Actions.Close.routingCode" | translate }}</mat-label>
               <input matInput formControlName="routingCode">
             </mat-form-field>
 
             <mat-form-field>
-              <mat-label>Reciept #</mat-label>
+              <mat-label>{{ "Deposits.Recurring.Actions.Close.receiptNumber" | translate }}</mat-label>
               <input matInput formControlName="receiptNumber">
             </mat-form-field>
 
             <mat-form-field>
-              <mat-label>Bank #</mat-label>
+              <mat-label>{{ "Deposits.Recurring.Actions.Close.bankNumber" | translate }}</mat-label>
               <input matInput formControlName="bankNumber">
             </mat-form-field>
           </ng-container>
 
           <mat-form-field>
-            <mat-label>Note</mat-label>
+            <mat-label>{{ "Deposits.Recurring.Actions.Close.note" | translate }}</mat-label>
             <textarea matInput formControlName="note"></textarea>
           </mat-form-field>
 
@@ -103,8 +103,8 @@
       </mat-card-content>
 
       <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
-        <button type="button" mat-raised-button [routerLink]="['../general']">Cancel</button>
-        <button mat-raised-button color="primary" [disabled]="!closeRecurringDepositForm.valid">Submit</button>
+        <button type="button" mat-raised-button [routerLink]="['../general']">{{ "ShareButton.CancelEng" | translate }}</button>
+        <button mat-raised-button color="primary" [disabled]="!closeRecurringDepositForm.valid">{{ "ShareButton.Submit" | translate }}</button>
       </mat-card-actions>
 
     </form>

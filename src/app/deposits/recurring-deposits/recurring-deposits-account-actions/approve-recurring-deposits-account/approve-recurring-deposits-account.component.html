@@ -9,18 +9,18 @@
         <div fxLayout="column">
 
           <mat-form-field>
-            <mat-label>Approved On Date</mat-label>
+            <mat-label>{{ "Deposits.Recurring.Actions.Approve.approvedOnDate" | translate }}</mat-label>
             <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="approvedOnDatePicker" required
               formControlName="approvedOnDate">
             <mat-datepicker-toggle matSuffix [for]="approvedOnDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #approvedOnDatePicker></mat-datepicker>
             <mat-error *ngIf="approveRecurringDepositsAccountForm.controls.approvedOnDate.hasError('required')">
-              Approved On Date is <strong>required</strong>
+              {{ "Deposits.Recurring.Actions.Approve.errapprovedOnDate" | translate }}<strong>{{ "Deposits.strongRequired" | translate }}</strong>
             </mat-error>
           </mat-form-field>
 
           <mat-form-field>
-            <mat-label>Note</mat-label>
+            <mat-label>{{ "Deposits.Recurring.Actions.Approve.note" | translate }}</mat-label>
             <textarea matInput formControlName="note"></textarea>
           </mat-form-field>
 
@@ -29,8 +29,8 @@
       </mat-card-content>
 
       <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
-        <button type="button" mat-raised-button [routerLink]="['../../']">Cancel</button>
-        <button mat-raised-button color="accent" [disabled]="!approveRecurringDepositsAccountForm">Confirm</button>
+        <button type="button" mat-raised-button [routerLink]="['../../']">{{ "ShareButton.CancelEng" | translate }}</button>
+        <button mat-raised-button color="accent" [disabled]="!approveRecurringDepositsAccountForm">{{ "ShareButton.ConfirmEng" | translate }}</button>
       </mat-card-actions>
 
     </form>
