@@ -9,38 +9,38 @@
         <div fxLayout="column">
 
           <mat-form-field>
-            <mat-label>Transaction Date</mat-label>
+            <mat-label>{{ "Deposits.Recurring.Actions.Deposit.transactionDate" | translate }}</mat-label>
             <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="transactionDatePicker" required
               formControlName="transactionDate">
             <mat-datepicker-toggle matSuffix [for]="transactionDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #transactionDatePicker></mat-datepicker>
             <mat-error *ngIf="depositRecurringDepositForm.controls.transactionDate.hasError('required')">
-              Transaction Date <strong>is required</strong>
+              {{ "Deposits.Recurring.Actions.Deposit.errtransactionDate" | translate }}<strong>{{ "Deposits.strongIsRequired" | translate }}</strong>
             </mat-error>
           </mat-form-field>
 
           <mat-form-field>
-            <mat-label>Transaction Amount</mat-label>
+            <mat-label>{{ "Deposits.Recurring.Actions.Deposit.transactionAmount" | translate }}</mat-label>
             <input matInput required formControlName="transactionAmount">
             <mat-error *ngIf="depositRecurringDepositForm.controls.transactionAmount.hasError('required')">
-              Transaction Amount <strong>is required</strong>
+              {{ "Deposits.Recurring.Actions.Deposit.errtransactionAmount" | translate }}<strong>{{ "Deposits.strongIsRequired" | translate }}</strong>
             </mat-error>
           </mat-form-field>
 
           <mat-form-field>
-            <mat-label>Payment Type Id</mat-label>
+            <mat-label>{{ "Deposits.Recurring.Actions.Deposit.paymentTypeId" | translate }}</mat-label>
             <mat-select formControlName="paymentTypeId" required>
               <mat-option *ngFor="let paymentType of paymentTypes" [value]="paymentType.id">
                 {{ paymentType.name }}
               </mat-option>
             </mat-select>
             <mat-error *ngIf="depositRecurringDepositForm.controls.paymentTypeId.hasError('required')">
-              Payment Type <strong>is required</strong>
+              {{ "Deposits.Recurring.Actions.Deposit.errpaymentTypeId" | translate }}<strong>{{ "Deposits.strongIsRequired" | translate }}</strong>
             </mat-error>
           </mat-form-field>
 
           <div fxFlexFill>
-            <span fxFlex="25%">Show Payment Details</span>
+            <span fxFlex="25%">{{ "Deposits.Recurring.Actions.Deposit.expandCollapsebutton" | translate }}</span>
             <span fxFlex="75%" class="expandCollapsebutton" (click)="toggleDisplay()">
               <button mat-raised-button color="primary" *ngIf="showPaymentDetails">
                 <i class="fa fa-minus"></i>
@@ -53,33 +53,33 @@
 
           <ng-container *ngIf="showPaymentDetails">
             <mat-form-field>
-              <mat-label> Account #</mat-label>
+              <mat-label> {{ "Deposits.Recurring.Actions.Deposit.accountNumber" | translate }}</mat-label>
               <input matInput formControlName="accountNumber">
             </mat-form-field>
 
             <mat-form-field>
-              <mat-label>Cheque #</mat-label>
+              <mat-label>{{ "Deposits.Recurring.Actions.Deposit.chequeNumber" | translate }}</mat-label>
               <input matInput formControlName="chequeNumber">
             </mat-form-field>
 
             <mat-form-field>
-              <mat-label>Routing Code</mat-label>
+              <mat-label>{{ "Deposits.Recurring.Actions.Deposit.routingCode" | translate }}</mat-label>
               <input matInput formControlName="routingCode">
             </mat-form-field>
 
             <mat-form-field>
-              <mat-label>Reciept #</mat-label>
+              <mat-label>{{ "Deposits.Recurring.Actions.Deposit.receiptNumber" | translate }}</mat-label>
               <input matInput formControlName="receiptNumber">
             </mat-form-field>
 
             <mat-form-field>
-              <mat-label>Bank #</mat-label>
+              <mat-label>{{ "Deposits.Recurring.Actions.Deposit.bankNumber" | translate }}</mat-label>
               <input matInput formControlName="bankNumber">
             </mat-form-field>
           </ng-container>
 
           <mat-form-field>
-            <mat-label>Note</mat-label>
+            <mat-label>{{ "Deposits.Recurring.Actions.Deposit.note" | translate }}</mat-label>
             <textarea matInput formControlName="note"></textarea>
           </mat-form-field>
 
@@ -88,8 +88,8 @@
       </mat-card-content>
 
       <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
-        <button type="button" mat-raised-button [routerLink]="['../general']">Cancel</button>
-        <button mat-raised-button color="primary" [disabled]="!depositRecurringDepositForm.valid">Submit</button>
+        <button type="button" mat-raised-button [routerLink]="['../general']">{{ "ShareButton.CancelEng" | translate }}</button>
+        <button mat-raised-button color="primary" [disabled]="!depositRecurringDepositForm.valid">{{ "ShareButton.Submit" | translate }}</button>
       </mat-card-actions>
 
     </form>

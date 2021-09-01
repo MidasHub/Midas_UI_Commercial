@@ -2,7 +2,7 @@
 
   <div fxLayout="row" fxLayoutAlign="start">
     <div class="m-b-10">
-      <h3>All Charges</h3>
+      <h3>{{ "Deposits.Fixed.View.ChargesTab.h3" | translate }}</h3>
     </div>
     <div class="action-button m-b-20" *ngIf="this.chargesData">
       <button mat-raised-button color="primary" (click)="toggleCharges()">
@@ -15,57 +15,57 @@
     <table mat-table #chargesTable [dataSource]="dataSource" >
 
       <ng-container matColumnDef="name">
-        <th mat-header-cell *matHeaderCellDef> Name </th>
+        <th mat-header-cell *matHeaderCellDef> {{ "Deposits.Fixed.View.ChargesTab.name" | translate }} </th>
         <td mat-cell *matCellDef="let charge"> {{ charge.name }} </td>
       </ng-container>
 
       <ng-container matColumnDef="feeOrPenalty">
-        <th mat-header-cell *matHeaderCellDef> Fee/Penalty </th>
+        <th mat-header-cell *matHeaderCellDef> {{ "Deposits.Fixed.View.ChargesTab.feeOrPenalty" | translate }} </th>
         <td mat-cell *matCellDef="let charge"> {{ charge.penalty === true ? 'Penalty' : 'Fee' }} </td>
       </ng-container>
 
       <ng-container matColumnDef="paymentDueAt">
-        <th mat-header-cell *matHeaderCellDef> Payment Due At </th>
+        <th mat-header-cell *matHeaderCellDef> {{ "Deposits.Fixed.View.ChargesTab.paymentDueAt" | translate }} </th>
         <td mat-cell *matCellDef="let charge"> {{ charge.chargeTimeType.value }} </td>
       </ng-container>
 
       <ng-container matColumnDef="dueAsOf">
-        <th mat-header-cell *matHeaderCellDef> Due As Of </th>
+        <th mat-header-cell *matHeaderCellDef> {{ "Deposits.Fixed.View.ChargesTab.dueAsOf" | translate }} </th>
         <td mat-cell *matCellDef="let charge"> {{ charge.dueDate | date }} </td>
       </ng-container>
 
       <ng-container matColumnDef="repeatsOn">
-        <th mat-header-cell *matHeaderCellDef> Repeats On </th>
+        <th mat-header-cell *matHeaderCellDef> {{ "Deposits.Fixed.View.ChargesTab.repeatsOn" | translate }} </th>
         <td mat-cell *matCellDef="let charge"> {{charge.feeOnMonthDay ? ([2000].concat(charge.feeOnMonthDay) | date: 'dd/MM') : 'Unassigned'}} </td>
       </ng-container>
 
       <ng-container matColumnDef="calculationType">
-        <th mat-header-cell *matHeaderCellDef> Calculation Type </th>
+        <th mat-header-cell *matHeaderCellDef> {{ "Deposits.Fixed.View.ChargesTab.calculationType" | translate }} </th>
         <td mat-cell *matCellDef="let charge"> {{charge.chargeCalculationType.value}} </td>
       </ng-container>
 
       <ng-container matColumnDef="due">
-        <th mat-header-cell *matHeaderCellDef> Due </th>
+        <th mat-header-cell *matHeaderCellDef> {{ "Deposits.Fixed.View.ChargesTab.due" | translate }} </th>
         <td mat-cell *matCellDef="let charge"> {{charge.currency.displaySymbol}}&nbsp;{{charge.amount | money}} </td>
       </ng-container>
 
       <ng-container matColumnDef="paid">
-        <th mat-header-cell *matHeaderCellDef> Paid </th>
+        <th mat-header-cell *matHeaderCellDef> {{ "Deposits.Fixed.View.ChargesTab.paid" | translate }} </th>
         <td mat-cell *matCellDef="let charge"> {{charge.currency.displaySymbol}}&nbsp;{{charge.amountPaid | money}} </td>
       </ng-container>
 
       <ng-container matColumnDef="waived">
-        <th mat-header-cell *matHeaderCellDef> Waived </th>
+        <th mat-header-cell *matHeaderCellDef> {{ "Deposits.Fixed.View.ChargesTab.waived" | translate }} </th>
         <td mat-cell *matCellDef="let charge"> {{charge.currency.displaySymbol}}&nbsp;{{charge.amountWaived | money}} </td>
       </ng-container>
 
       <ng-container matColumnDef="outstanding">
-        <th mat-header-cell *matHeaderCellDef> Outstanding </th>
+        <th mat-header-cell *matHeaderCellDef> {{ "Deposits.Fixed.View.ChargesTab.outstanding" | translate }} </th>
         <td mat-cell *matCellDef="let charge"> {{charge.currency.displaySymbol}}&nbsp;{{charge.amountOutstanding | money}} </td>
       </ng-container>
 
       <ng-container matColumnDef="actions">
-        <th mat-header-cell *matHeaderCellDef> Actions </th>
+        <th mat-header-cell *matHeaderCellDef> {{ "Deposits.Fixed.View.ChargesTab.actions" | translate }} </th>
         <td mat-cell *matCellDef="let charge">
           <span *ngIf="fixedDepositsAccountData.status.value === 'Submitted and pending approval'">
             <button class="account-action-button" mat-raised-button color="primary" matTooltip="Edit Charge"
