@@ -2,7 +2,7 @@
 
 <div mat-dialog-content [formGroup]="formDialog" [fxLayout]="'column'" fxLayout.lt-md="column" [fxLayoutGap]="'1%'" fxLayoutGap.lt-md="0%">
     <mat-form-field>
-        <mat-label>Ngân hàng</mat-label>
+        <mat-label>{{ 'Group_Component.Create_Group_Component.CreateEditSpending.officeId'| translate}}</mat-label>
         <select matSelect required matNativeControl formControlName="officeId">
           <option *ngFor="let office of data?.listOffice" [value]="office.id">
             {{ office.name }}
@@ -10,7 +10,7 @@
         </select>
     </mat-form-field>
     <mat-form-field>
-        <mat-label>Loại chi tiêu</mat-label>
+        <mat-label>{{ 'Group_Component.Create_Group_Component.CreateEditSpending.paymentTypeId'| translate}}</mat-label>
         <select matSelect required matNativeControl formControlName="paymentTypeId">
           <option *ngFor="let office of data?.listPaymentType" [value]="office.id">
             {{ office.value }}
@@ -18,7 +18,7 @@
         </select>
     </mat-form-field>
     <mat-form-field>
-        <mat-label>Nhân viên</mat-label>
+        <mat-label>{{ 'Group_Component.Create_Group_Component.CreateEditSpending.staffId'| translate}}</mat-label>
         <select matSelect required matNativeControl formControlName="staffId">
           <option *ngFor="let staff of staffs" [value]="staff.staffId">
             {{  staff.displayName }}
@@ -26,7 +26,7 @@
         </select>
     </mat-form-field>
     <mat-form-field>
-        <mat-label>Loại hạn mức</mat-label>
+        <mat-label>{{ 'Group_Component.Create_Group_Component.CreateEditSpending.limitType'| translate}}</mat-label>
         <select matSelect required matNativeControl formControlName="limitType">
         <option *ngFor="let type of limitTypes" [value]="type.id">
           {{  type.value }}
@@ -34,15 +34,15 @@
       </select>
     </mat-form-field>
     <mat-form-field>
-        <mat-label>Hạn mức mặc định</mat-label>
+        <mat-label>{{ 'Group_Component.Create_Group_Component.CreateEditSpending.limitDefault'| translate}}</mat-label>
         <input required currencyMask matInput formControlName="limitDefault" />
     </mat-form-field>
     <mat-form-field>
-        <mat-label>Năm</mat-label>
+        <mat-label>{{ 'Group_Component.Create_Group_Component.CreateEditSpending.year'| translate}}</mat-label>
         <input required matInput formControlName="year" />
     </mat-form-field>
     <mat-form-field>
-        <mat-label>Tháng</mat-label>
+        <mat-label>{{ 'Group_Component.Create_Group_Component.CreateEditSpending.month'| translate}}</mat-label>
         <input required matInput formControlName="month" />
     </mat-form-field>
 </div>
