@@ -1141,6 +1141,8 @@
     "BackEng": "Back",
     "AddEng": "Add",
     "UploadEng": "Upload",
+    "PreviousEng": "Previous",
+    "NextEng": "Next",
     "CancelEng": "Cancel"
   },
 
@@ -2047,6 +2049,746 @@
       "accountNo": "Mã tài khoản",
       "savingIdAndSourceInfo": "Tên tài khoản - số dư > 0",
       "balance": "Số dư"
+    }
+  },
+  "Deposits": {
+    "strongRequired": "required",
+    "strongIsRequired": "is required",
+    "Fixed": {
+      "Create": {
+        "DETAILS": "DETAILS",
+        "CURRENCY": "CURRENCY",
+        "TERMS": "TERMS",
+        "SETTINGS": "SETTINGS",
+        "INTERESTRATECHART": "INTEREST RATE CHART",
+        "CHARGES": "CHARGES",
+        "PREVIEW": "PREVIEW"
+      },
+      "Edit": {
+        "DETAILS": "DETAILS",
+        "CURRENCY": "CURRENCY",
+        "TERMS": "TERMS",
+        "SETTINGS": "SETTINGS",
+        "INTERESTRATECHART": "INTEREST RATE CHART",
+        "CHARGES": "CHARGES",
+        "PREVIEW": "PREVIEW"
+      },
+      "Stepper": {
+        "Charges": {
+          "Charge": "Charge",
+          "name": "Name",
+          "chargeCalculationType": "Type",
+          "amount": "Amount",
+          "chargeTimeType": "Collected On",
+          "date": "Date",
+          "repaymentsEvery": "Repayments Every",
+          "action": "Actions"
+        },
+        "Currency": {
+          "currencyCode": "Currency",
+          "decimalPlaces": "Decimal Places",
+          "currencyMultiple": "Currency Multiple"
+        },
+        "Details": {
+          "productId": "Product Name",
+          "errproductId": "Product Name is ",
+          "submittedOnDate": "Submitted On",
+          "errsubmittedOnDate": "Submission Date is ",
+          "fieldOfficerId": "Field Officer"
+        },
+        "InterestRate": {
+          "name": "Name:",
+          "fromDate": "Valid from Date:",
+          "endDate": "End Date:",
+          "description": "Description:",
+          "isPrimaryGroupingByAmount": "Primary Grouping by Amount:",
+          "period": "Period",
+          "amountRange": "Amount Range",
+          "interest": "Interest",
+          "description2": "Description",
+          "actions": "Actions",
+          "btnViewIncentives": "View Incentives",
+          "btnHideIncentives": "Hide Incentives",
+          "table": {
+            "h4": "Incentives",
+            "entityType": "Entity Type",
+            "attributeName": "Attribute Name",
+            "conditionType": "Condition Type",
+            "attributeValue": "Attribute Value",
+            "incentiveType": "Incentive Type",
+            "amount": "Interest"
+          }
+        },
+        "Preview": {
+          "h3": "Details",
+          "Product": "Product",
+          "submittedOnDate": "Submitted On",
+          "FieldOfficer": "Field Officer",
+          "h3_2": "Currency",
+          "Currency": "Currency",
+          "inMultiplesOf": "Currency Multiple",
+          "decimalPlaces": "Decimal Places",
+          "Terms": "Terms",
+          "depositAmount": "Fixed Deposit Amount:",
+          "depositPeriod": "Deposit Period:",
+          "interestCompoundingPeriod": "Interest Compounding Period:",
+          "interestPostingPeriod": "Interest Posting Period:",
+          "interestCalculation": "Interest Calculated using:",
+          "interestCalculationDaysInYear": "Days in Year:",
+          "Settings": "Settings",
+          "lockinPeriod": "Lock-in Period:",
+          "minDepositTerm": "Minimum Deposit Term:",
+          "inMultiplesOfDepositTerm": "In Multiples Of:",
+          "maxDepositTerm": "Maximum Deposit Term",
+          "transferInterestToSavings": "Transfer Interest to Savings Account?",
+          "LinkedSavingsAccount": "Linked Savings Account",
+          "preClosurePenalApplicable": "Apply Penal Interest (less):",
+          "PenalInterest": "Penal Interest (%):",
+          "withHoldTax": "Withhold Tax is Applicable:",
+          "InterestRateChart": "Interest Rate Chart",
+          "name": "Name:",
+          "fromDate": "Valid from Date:",
+          "endDate": "End Date:",
+          "description": "Description:",
+          "isPrimaryGroupingByAmount": "Primary Grouping by Amount:",
+          "table": {
+            "period": "Period",
+            "amountRange": "Amount Range",
+            "interest": "Interest",
+            "description": "Description",
+            "actions": "Actions",
+            "btnViewIncentives": "View Incentives",
+            "btnHideIncentives": "Hide Incentives",
+            "entityType": "Entity Type",
+            "attributeName": "Attribute Name",
+            "conditionType": "Condition Type",
+            "attributeValue": "Attribute Value",
+            "incentiveType": "Incentive Type",
+            "amount": "Interest"
+          },
+          "h3_3": "Charges:",
+          "tableCharges": {
+            "name": "Name",
+            "chargeCalculationType": "Type",
+            "amount": "Amount",
+            "date": "Date",
+            "repaymentsEvery": "Repayments Every",
+            "chargeTimeType": "Collected On"
+          }
+        },
+        "Settings": {
+          "h4": "Lock-in Period",
+          "lockinPeriodFrequency": "Frequency",
+          "lockinPeriodFrequencyType": "Type",
+          "h4_2": "Minimum Deposit Term",
+          "minDepositTerm": "Frequency",
+          "errminDepositTerm": "Minimum Deposit Term Frequency is ",
+          "minDepositTermTypeId": "Frequency Type",
+          "errminDepositTermTypeId": "Minimum Deposit Term Frequency Type is ",
+          "h4_3": "And thereafter, in Multiples of",
+          "inMultiplesOfDepositTerm": "Frequency",
+          "inMultiplesOfDepositTermTypeId": "Type",
+          "h4_4": "Maximum Deposit Term",
+          "maxDepositTerm": "Frequency",
+          "maxDepositTermTypeId": "Type",
+          "h3": "Interest Transfer",
+          "transferInterestToSavings": "Transfer Interest to Linked Savings Account?",
+          "linkAccountId": "Link Savings Account",
+          "errlinkAccountId": "Linked Savings Account is ",
+          "h4_5": "For Pre-mature closure",
+          "preClosurePenalApplicable": "Apply Penal Interest (less)",
+          "preClosurePenalInterest": "Penal Interest (%)",
+          "preClosurePenalInterestOnTypeId": "Period",
+          "withHoldTax": "Is Withhold Tax Applicable?",
+          "taxGroupId": "Tax Group"
+        },
+        "Terms": {
+          "depositAmount": "Deposit Amount",
+          "errdepositAmount": "Fixed Deposit Amount is ",
+          "depositPeriod": "Deposit Period Frequency",
+          "errdepositPeriod": "Deposit Period Frequency is ",
+          "depositPeriodFrequencyId": "Deposit Period Type",
+          "errdepositPeriodFrequencyId": "Deposit Period Type is ",
+          "interestCompoundingPeriodType": "Interest Compounding Period",
+          "errinterestCompoundingPeriodType": "Interest Compounding Period is ",
+          "interestPostingPeriodType": "Interest Posting Period",
+          "errinterestPostingPeriodType": "Interest Posting Period is ",
+          "interestCalculationType": "Interest Calculated using",
+          "errinterestCalculationType": "Interest Calculated using is ",
+          "interestCalculationDaysInYearType": "Days in Year",
+          "errinterestCalculationDaysInYearType": "Days in Year is "
+        }
+      },
+      "View": {
+        "depositProductName": "Account Name : ",
+        "accountNo": "Account #: ",
+        "CurrentBalance": "Current Balance: ",
+        "DepositAmount": "Deposit Amount: ",
+        "btnMore": "More",
+        "h4": "Fixed Deposit Details",
+        "activatedOnDate": "Activated On",
+        "closedOnDate": "Closed On",
+        "fieldOfficerName": "Field Officer",
+        "maturityDate": "Maturity Date",
+        "depositPeriod": "Deposit Period",
+        "taxGroup": "Tax Group",
+        "h4_2": "Interest Details",
+        "nominalAnnualInterestRate": "Interest Rate",
+        "interestCompoundingPeriodType": "Interest Compounding Period",
+        "interestPostingPeriodType": "Interest Posting Period",
+        "interestCalculationType": "Interest Calculated Using",
+        "interestCalculationDaysInYearType": "No. of Days in Year",
+        "preClosurePenalApplicable": "Pre-cloure Penal",
+        "h4_3": "Performance History",
+        "depositAmount": "Principal Amount",
+        "maturityAmount": "Maturity Amount",
+        "totalDeposits": "Total Deposits",
+        "totalWithdrawals": "Total Withdrawals",
+        "totalInterestEarned": "Total Interest Earned",
+        "h4_4": "Other Details",
+        "depositAmount2": "Principal Amount",
+        "maturityAmount2": "Maturity Amount",
+        "IRC": "Interest Rate Chart",
+        "transactions": "Transactions",
+        "charges": "Charges",
+        "standingInstructions": "Standing Instructions",
+
+        "ChargesTab": {
+          "h3": "All Charges",
+          "name": "Name",
+          "feeOrPenalty": "Fee/Penalty",
+          "paymentDueAt": "Payment Due At",
+          "dueAsOf": "Due As Of",
+          "repeatsOn": "Repeats On",
+          "calculationType": "Calculation Type",
+          "due": "Due",
+          "paid": "Paid",
+          "waived": "Waived",
+          "outstanding": "Outstanding",
+          "actions": "Actions"
+        },
+        "CustomDialog": {
+          "CalculateInterest": {
+            "p": "Are you sure you want to calculate interest ?"
+          },
+          "InactiveCharge": {
+            "h1": "Inactivate Charge",
+            "p": "Are you sure you want to inactivate charge with id: "
+          },
+          "PostInterest": {
+            "h1": "Post Interest",
+            "p": "Are you sure you want to post interest ?"
+          },
+          "ToggleWithholdTax": {
+            "h1": "Withhold Tax",
+            "p": "withhold tax for this account ?",
+            "p2": "Are you sure you want to "
+          },
+          "WaiveCharge": {
+            "h1": "Waive Charge",
+            "p": "Are you sure you want to waive charge with id: "
+          }
+        },
+        "InterestRateChargeTab": {
+          "h3": "All Interest Rates",
+          "period": "Period",
+          "amountRange": "Amount Range",
+          "interest": "Interest",
+          "description": "Description",
+          "actions": "Actions",
+          "ViewIncentives": "View Incentives",
+          "HideIncentives": "Hide Incentives",
+          "h4": "Incentives",
+          "entityType": "Entity Type",
+          "attributeName": "Attribute Name",
+          "conditionType": "Condition Type",
+          "attributeValue": "Attribute Value",
+          "incentiveType": "Incentive Type",
+          "amount": "Interest"
+        },
+        "StandingInstructionsTab": {
+          "h3": "All Standing Instructions",
+          "client": "Client",
+          "fromAccount": "From Account",
+          "beneficiary": "Beneficiary",
+          "toAccount": "To Account",
+          "amount": "Amount",
+          "validity": "Validity",
+          "actions": "Actions"
+        },
+        "TransactionsTab": {
+          "h3": "All Transactions",
+          "id": "ID",
+          "transactionDate": "Transaction Date",
+          "transactionType": "Transaction Type",
+          "debit": "Debit",
+          "credit": "Credit",
+          "balance": "Balance"
+        },
+        "ViewTransaction": {
+          "id": "Transaction Id",
+          "transactionType": "Type",
+          "date": "Transaction Date",
+          "currency": "Currency",
+          "amount": "Amount",
+          "note": "Note",
+          "paymentType": "Payment Type",
+          "accountNumber": "Account No.",
+          "checkNumber": "Cheque Number",
+          "routingCode": "Routing Code",
+          "receiptNumber": "Receipt No.",
+          "bankNumber": "Bank No."
+        }
+      },
+      "Actions": {
+        "Activate": {
+          "activatedOnDate": "Activated On Date",
+          "erractivatedOnDate": "Activated On Date is "
+        },
+        "AddCharge": {
+          "chargeId": "Charge",
+          "errchargeId": "Charge is ",
+          "amount": "Amount",
+          "erramount": "Amount is",
+          "chargeCalculationType": "Charge Calculation",
+          "chargeTimeType": "Charge time type",
+          "dueDate": "Due for collection on",
+          "errdueDate": "Due for collection on is ",
+          "feeOnMonthDay": "Due On",
+          "errfeeOnMonthDay": "Due Date is ",
+          "feeInterval": "Repeats Every"
+        },
+        "Approve": {
+          "approvedOnDate": "Approved On Date",
+          "errapprovedOnDate": "Approved On Date is ",
+          "note": "Note"
+        },
+        "Close": {
+          "closedOnDate": "Closed On Date",
+          "errclosedOnDate": "Closed On Date is ",
+          "maturityAmount": "Maturity Amount",
+          "onAccountClosureId": "Action",
+          "erronAccountClosureId": "Account action is ",
+          "toSavingsAccountId": "Transfer to Savings",
+          "errtoSavingsAccountId": "Transfer to savings account is ",
+          "transferDescription": "Transfer Description",
+          "note": "Note"
+        },
+        "Premature": {
+          "closedOnDate": "Premature Close Date",
+          "errclosedOnDate": "Premature Close Date is ",
+          "maturityAmount": "Maturity Amount",
+          "onAccountClosureId": "Action",
+          "erronAccountClosureId": "Account action is ",
+          "toSavingsAccountId": "Transfer to Savings",
+          "errtoSavingsAccountId": "Transfer to savings account is ",
+          "transferDescription": "Transfer Description",
+          "note": "Note"
+        },
+        "Reject": {
+          "rejectedOnDate": "Rejected On Date",
+          "errclosedOnDate": "Rejected On Date is ",
+          "name": "Note"
+        },
+        "Undo": {
+          "note": "Note"
+        },
+        "Withdraw": {
+          "withdrawnOnDate": "Withdrawn On Date",
+          "errwithdrawnOnDate": "Withdrawn On Date is ",
+          "note": "Note"
+        }
+      }
+    },
+    "Recurring": {
+      "Create": {
+        "DETAILS": "DETAILS",
+        "CURRENCY": "CURRENCY",
+        "TERMS": "TERMS",
+        "SETTINGS": "SETTINGS",
+        "INTERESTRATECHART": "INTEREST RATE CHART",
+        "CHARGES": "CHARGES",
+        "PREVIEW": "PREVIEW"
+      },
+      "Edit": {
+        "DETAILS": "DETAILS",
+        "CURRENCY": "CURRENCY",
+        "TERMS": "TERMS",
+        "SETTINGS": "SETTINGS",
+        "INTERESTRATECHART": "INTEREST RATE CHART",
+        "CHARGES": "CHARGES",
+        "PREVIEW": "PREVIEW"
+      },
+      "Actions": {
+        "Activate": {
+          "activatedOnDate": "Activated On Date",
+          "erractivatedOnDate": "Activated On Date is "
+        },
+        "AddCharge": {
+          "chargeId": "Charge",
+          "errchargeId": "Charge is ",
+          "amount": "Amount",
+          "erramount": "Amount is ",
+          "chargeCalculationType": "Charge Calculation",
+          "chargeTimeType": "Charge time type",
+          "dueDate": "Due for collection on",
+          "errdueDate": "Due for collection on is ",
+          "feeOnMonthDay": "Due On",
+          "errfeeOnMonthDay": "Due Date is ",
+          "feeInterval": "Repeats Every"
+        },
+        "Approve": {
+          "approvedOnDate": "Approved On Date",
+          "errapprovedOnDate": "Approved On Date is ",
+          "note": "Note"
+        },
+        "Close": {
+          "closedOnDate": "Closed On",
+          "errclosedOnDate": "Closed On ",
+          "maturityAmount": "Maturity Amount",
+          "errmaturityAmount": "Maturity Amount ",
+          "onAccountClosureId": "Action",
+          "erronAccountClosureId": "Action ",
+          "paymentTypeId": "Payment Type Id",
+          "errpaymentTypeId": "Payment Type ",
+          "expandCollapsebutton": "Show Payment Details",
+          "accountNumber": "Account #",
+          "chequeNumber": "Cheque #",
+          "routingCode": "Routing Code",
+          "receiptNumber": "Reciept #",
+          "bankNumber": "Bank #",
+          "note": "Note"
+        },
+        "Deposit": {
+          "transactionDate": "Transaction Date",
+          "errtransactionDate": "Transaction Date ",
+          "transactionAmount": "Transaction Amount",
+          "errtransactionAmount": "Transaction Amount ",
+          "paymentTypeId": "Payment Type Id",
+          "errpaymentTypeId": "Payment Type ",
+          "expandCollapsebutton": "Show Payment Details",
+          "accountNumber": "Account #",
+          "chequeNumber": "Cheque #",
+          "routingCode": "Routing Code",
+          "receiptNumber": "Reciept #",
+          "bankNumber": "Bank #",
+          "note": "Note"
+        },
+        "Premature": {
+          "closedOnDate": "Closed On",
+          "errclosedOnDate": "Closed On Date is "
+        },
+        "Reject": {
+          "rejectedOnDate": "Rejected On Date",
+          "errrejectedOnDate": "Rejected On Date is ",
+          "note": "Note"
+        },
+        "Undo": {
+          "note": "Note"
+        },
+        "Withdraw": {
+          "withdrawnOnDate": "Withdrawn On Date",
+          "errwithdrawnOnDate": "Withdrawn On Date is ",
+          "note": "Note"
+        }
+      },
+      "Stepper": {
+        "Charge": {
+          "chargeName": "Charge",
+          "btnAdd": "Add",
+          "name": "Name",
+          "chargeCalculationType": "Type",
+          "amount": "Amount",
+          "chargeTimeType": "Collected On",
+          "date": "Date",
+          "repaymentsEvery": "Repayments Every",
+          "action": "Actions"
+        },
+        "Currency": {
+          "currencyCode": "Currency",
+          "decimalPlaces": "Decimal Places"
+        },
+        "Details": {
+          "productId": "Product Name",
+          "errproductId": "Product Name is ",
+          "submittedOnDate": "Submitted On",
+          "errsubmittedOnDate": "Submission Date is ",
+          "fieldOfficerId": "Field Officer"
+        },
+        "InterestRate": {
+          "name": "Name:",
+          "fromDate": "Valid from Date:",
+          "endDate": "End Date:",
+          "description": "Description:",
+          "isPrimaryGroupingByAmount": "Primary Grouping by Amount:",
+          "periodType": "Period",
+          "amountRangeTo": "Amount Range",
+          "annualInterestRate": "Interest",
+          "description2": "Description",
+          "actions": "Actions",
+          "ViewIncentives": "View Incentives",
+          "HideIncentives": "Hide Incentives",
+          "entityType": "Entity Type",
+          "attributeName": "Attribute Name",
+          "conditionType": "Condition Type",
+          "attributeValue": "Attribute Value",
+          "incentiveType": "Incentive Type",
+          "amount": "Interest"
+        },
+        "Preview": {
+          "h3": "Details",
+          "Product": "Product",
+          "submittedOnDate": "Submitted On",
+          "FieldOfficer": "Field Officer",
+          "h3_2": "Currency",
+          "currencyCode": "Currency",
+          "decimalPlaces": "Decimal Places",
+          "inMultiplesOf": "Currency In Multiples Of",
+          "h3_3": "Terms",
+          "InterestCompoundingPeriod": "Interest Compounding Period:",
+          "InterestPostingPeriod": "Interest Posting Period:",
+          "InterestCalculated": "Interest Calculated using:",
+          "DaysInYear": "Days in Year:",
+          "h3_4": "Settings",
+          "lockinPeriodFrequency": "Lock-in Period:",
+          "mandatoryRecommendedDepositAmount": "Recurring Deposit Amount:",
+          "depositPeriod": "Deposit Period:",
+          "isCalendarInherited": "Deposit Frequency Same as Group/Center meeting:",
+          "expectedFirstDepositOnDate": "Deposit Start Date:",
+          "recurringFrequency": "Deposit Frequency:",
+          "minDepositTerm": "Minimum Deposit Term:",
+          "inMultiplesOfDepositTerm": "In Multiples Of:",
+          "maxDepositTerm": "Maximum Deposit Term",
+          "h3_5": "Interest Rate Chart",
+          "name": "Name:",
+          "fromDate": "Valid from Date:",
+          "endDate": "End Date:",
+          "description": "Description:",
+          "isPrimaryGroupingByAmount": "Primary Grouping by Amount:",
+          "table": {
+            "period": "Period",
+            "amountRangeTo": "Amount Range",
+            "annualInterestRate": "Interest",
+            "description": "Description",
+            "actions": "Actions",
+            "ViewIncentives": "View Incentives",
+            "HideIncentives": "Hide Incentives",
+            "h4": "Incentives",
+            "entityType": "Entity Type",
+            "attributeName": "Attribute Name",
+            "conditionType": "Condition Type",
+            "attributeValue": "Attribute Value",
+            "incentiveType": "Incentive Type",
+            "amount": "Interest"
+          },
+          "h3_6": "Charges",
+          "tableCharges": {
+            "name": "Name",
+            "chargeCalculationType": "Type",
+            "amount": "Amount",
+            "date": "Date",
+            "repaymentsEvery": "Repayments Every",
+            "chargeTimeType": "Collected On"
+          }
+        },
+        "Settings": {
+          "isMandatoryDeposit": "Is Mandatory Deposit?",
+          "adjustAdvanceTowardsFuturePayments": "Adjust advance payments toward future installments?",
+          "allowWithdrawal": "Allow Withdrawals?",
+          "h4": "Lock-in Period",
+          "lockinPeriodFrequency": "Frequency",
+          "lockinPeriodFrequencyType": "Type",
+          "h4_2": "Recurring Deposit Details",
+          "mandatoryRecommendedDepositAmount": "Recurring Deposit Amount",
+          "errmandatoryRecommendedDepositAmount": "Recurring Deposit Amount is ",
+          "h4_3": "Deposit Period",
+          "depositPeriod": "Deposit Period",
+          "depositPeriodFrequencyId": "Type",
+          "isCalendarInherited": "Deposit Frequency Same as Group/Center meeting",
+          "expectedFirstDepositOnDate": "Deposit Start Date",
+          "h4_4": "Deposit Frequency",
+          "recurringFrequency": "Deposit Frequency",
+          "errrecurringFrequency": "Deposit Frequency is ",
+          "recurringFrequencyType": "Type",
+          "errrecurringFrequencyType": "Deposit Frequency Type is ",
+          "h4_5": "Minimum Deposit Term",
+          "minDepositTerm": "Frequency",
+          "errminDepositTerm": "Minimum Deposit Term Frequency is ",
+          "minDepositTermTypeId": "Frequency Type",
+          "errminDepositTermTypeId": "Minimum Deposit Term Frequency Type is ",
+          "h4_6": "And thereafter, in Multiples of",
+          "inMultiplesOfDepositTerm": "Frequency",
+          "inMultiplesOfDepositTermTypeId": "Type",
+          "h4_7": "Maximum Deposit Term",
+          "maxDepositTerm": "Frequency",
+          "maxDepositTermTypeId": "Type",
+          "h4_8": "For Pre-mature closure",
+          "preClosurePenalApplicable": "Apply Penal Interest (less)",
+          "preClosurePenalInterest": "Penal Interest (%)",
+          "preClosurePenalInterestOnTypeId": "Period",
+          "minBalanceForInterestCalculation": "Minimum Balance For Interest Calculation",
+          "h4_9": "Tax Group",
+          "withHoldTax": "Is Withhold Tax Applicable?",
+          "taxGroupId": "Tax Group"
+        },
+        "Terms": {
+          "interestCompoundingPeriodType": "Interest Compounding Period",
+          "errinterestCompoundingPeriodType": "Interest Compounding Period is ",
+          "interestPostingPeriodType": "Interest Posting Period",
+          "errinterestPostingPeriodType": "Interest Posting Period is ",
+          "interestCalculationType": "Interest Calculated using",
+          "errinterestCalculationType": "Interest Calculated using is ",
+          "interestCalculationDaysInYearType": "Days in Year",
+          "errinterestCalculationDaysInYearType": "Days in Year is "
+        }
+      },
+      "View": {
+        "depositProductName": "Account Name : ",
+        "accountNo": "Account #: ",
+        "clientName": "Client Name:",
+        "accountBalance": "Current Balance:",
+        "availableBalance": "Available Balance:",
+        "btnMore": "More",
+        "h4": "Savings Details",
+        "table1": {
+          "fieldOfficerName": "Field Officer",
+          "spanUnassigned": "Unassigned",
+          "activatedOnDate": "Activation date",
+          "maturityDate": "Maturity Date",
+          "closedOnDate": "Closed on Date",
+          "depositPeriod": "Period",
+          "recurringFrequency": "Deposit Frequency",
+          "minBalanceForInterestCalculation": "Balance Required For Interest Calculation",
+          "witdHoldTax": "Witdhold Tax Group"
+        },
+        "h4_2": "Performance History",
+        "table2": {
+          "depositAmount": "Principal Amount",
+          "maturityAmount": "Maturity Amount",
+          "mandatoryRecommendedDepositAmount": "Recurring Deposit Amount",
+          "totalDeposits": "Deposits till Date",
+          "totalWithdrawals": "Withdrwals till Date",
+          "totalInterestEarned": "Interest Earned"
+        },
+        "table3": {
+          "depositPeriod": "Period",
+          "maturityDate": "Maturity Date",
+          "totalDeposits": "Total Deposits",
+          "accountBalance": "Actual Available Balance",
+          "mandatoryRecommendedDepositAmount": "Recurring Deposits Amount",
+          "totalInterestEarned": "Interests Earned",
+          "totalWithdrawals": "Total Withdrawls",
+          "minBalanceForInterestCalculation": "Balance Required For Interest Calculation"
+        },
+        "table4": {
+          "depositAmount": "Principal Amount",
+          "nominalAnnualInterestRate": "Rate of Interest",
+          "maturityAmount": "Maturity Amount",
+          "totalWithdrawals": "Total Withdrawls",
+          "closedOnDate": "Closed on Date",
+          "recurringFrequency": "Deposits Frequency",
+          "totalInterestEarned": "Interests Posted"
+        },
+        "h4_3": "Interest Details",
+        "table5": {
+          "nominalAnnualInterestRate": "Interest Rate",
+          "interestCompoundingPeriodType": "Interest Compounding period",
+          "interestPostingPeriodType": "Interest Posting period",
+          "interestCalculationType": "Interest calculated using",
+          "interestCalculationDaysInYearType": "# Days in Year",
+          "preClosurePenalApplicable": "Pre-closure penal Interest (less)"
+        },
+        "table6": {
+          "interestCompoundingPeriodType": "Interest Compounding Period",
+          "interestPostingPeriodType": "Interest Posting period",
+          "interestCalculationType": "Interest calculated using",
+          "interestCalculationDaysInYearType": "# Days in Year",
+          "preClosurePenalApplicable": "Pre-closure penal Interest (less)",
+          "witdHoldTax": "Witdhold Tax Group"
+        },
+        "IRC": "Interest Rate Chart",
+        "transactions": "Transactions",
+        "charges": "Charges",
+        "standingInstructions": "Standing Instructions",
+
+        "ChargesTab": {
+          "h3": "All Charges",
+          "name": "Name",
+          "feeOrPenalty": "Fee/Penalty",
+          "paymentDueAt": "Payment Due At",
+          "dueAsOf": "Due As Of",
+          "repeatsOn": "Repeats On",
+          "calculationType": "Calculation Type",
+          "due": "Due",
+          "paid": "Paid",
+          "waived": "Waived",
+          "outstanding": "Outstanding",
+          "actions": "Actions"
+        },
+        "InterestRateChartTab": {
+          "period": "Period",
+          "amountRange": "Amount Range",
+          "interest": "Interest",
+          "description": "Description",
+          "actions": "Actions",
+          "ViewIncentives": "View Incentives",
+          "HideIncentives": "Hide Incentives",
+          "h4": "Incentives",
+          "entityType": "Entity Type",
+          "attributeName": "Attribute Name",
+          "conditionType": "Condition Type",
+          "attributeValue": "Attribute Value",
+          "incentiveType": "Incentive Type",
+          "amount": "Interest"
+        },
+        "StandingInstructionsTab": {
+          "client": "Client",
+          "fromAccount": "From Account",
+          "beneficiary": "Beneficiary",
+          "toAccount": "To Account",
+          "amount": "Amount",
+          "validity": "Validity",
+          "actions": "Actions"
+        },
+        "TransactionsTab": {
+          "id": "ID",
+          "transactionDate": "Transaction Date",
+          "transactionType": "Transaction Type",
+          "debit": "Debit",
+          "credit": "Credit",
+          "balance": "Balance",
+
+          "EditTransactions": {
+            "transactionDate": "Transaction Date",
+            "errtransactionDate": "Transaction Date is ",
+            "transactionAmount": "Transaction Amount",
+            "errtransactionAmount": "Transaction Amount is ",
+            "paymentTypeId": "Payment Type",
+            "ShowPaymentDetails": "Show Payment Details",
+            "accountNumber": "Account Number",
+            "checkNumber": "Cheque",
+            "routingCode": "Routing Code",
+            "receiptNumber": "Receipt Number",
+            "bankNumber": "Bank"
+          },
+          "ViewTransactions": {
+            "btnEdit": "Edit",
+            "btnUndo": "Undo",
+            "id": "Transaction Id",
+            "transactionType": "Type",
+            "date": "Transaction Date",
+            "Currency": "Currency",
+            "amount": "Amount",
+            "note": "Note",
+            "paymentType": "Payment Type",
+            "accountNumber": "Account No.",
+            "checkNumber": "Cheque Number",
+            "routingCode": "Routing Code",
+            "receiptNumber": "Receipt No.",
+            "bankNumber": "Bank No."
+          }
+        }
+      }
     }
   }
 }
