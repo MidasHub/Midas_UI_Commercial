@@ -1,8 +1,8 @@
-<h1 mat-dialog-title>Unassign Staff</h1>
+<h1 mat-dialog-title>{{ 'Group_Component.Create_Group_Component.GroupView.CustomDialog.UnassignStaff.h1'| translate}}</h1>
 <div mat-dialog-content>
-  <p>Are you sure you want to unassign staff for this group ?</p>
+  <p>{{ 'Group_Component.Create_Group_Component.GroupView.CustomDialog.UnassignStaff.p'| translate}}</p>
 </div>
 <mat-dialog-actions align="end">
-  <button mat-raised-button mat-dialog-close>Cancel</button>
-  <button mat-raised-button color="warn" [mat-dialog-close]="{ confirm: true }">Confirm</button>
+  <button mat-raised-button mat-dialog-close>{{ "ShareButton.CancelEng" | translate }}</button>
+  <button mat-raised-button color="warn" [mat-dialog-close]="{ confirm: true }">{{ "ShareButton.ConfirmEng" | translate }}</button>
 </mat-dialog-actions>
