@@ -9,52 +9,52 @@
         <div fxLayout="column">
 
           <mat-form-field>
-            <mat-label>Transaction Date</mat-label>
+            <mat-label>{{'Loans.View.Actions.ForeCloseure.transactionDate'| translate }}</mat-label>
             <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="transactionsDatePicker" required
               formControlName="transactionDate">
             <mat-datepicker-toggle matSuffix [for]="transactionsDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #transactionsDatePicker></mat-datepicker>
             <mat-error *ngIf="foreclosureForm.controls.transactionDate.hasError('required')">
-              Transaction Date <strong>is required</strong>
+              {{'Loans.View.Actions.ForeCloseure.errtransactionDate'| translate }}<strong>{{'Loans.strongIsRequired'| translate }}</strong>
             </mat-error>
           </mat-form-field>
 
           <mat-form-field>
-            <mat-label>Principal</mat-label>
+            <mat-label>{{'Loans.View.Actions.ForeCloseure.outstandingPrincipalPortion'| translate }}</mat-label>
             <input matInput required formControlName="outstandingPrincipalPortion">
           </mat-form-field>
 
           <mat-form-field>
-            <mat-label>Interest</mat-label>
+            <mat-label>{{'Loans.View.Actions.ForeCloseure.outstandingInterestPortion'| translate }}</mat-label>
             <input matInput required formControlName="outstandingInterestPortion">
           </mat-form-field>
 
           <mat-form-field>
-            <mat-label>Fee Amount</mat-label>
+            <mat-label>{{'Loans.View.Actions.ForeCloseure.outstandingFeeChargesPortion'| translate }}</mat-label>
             <input matInput currencyMask type="text" required formControlName="outstandingFeeChargesPortion">
           </mat-form-field>
 
           <mat-form-field>
-            <mat-label>Penalty Amount</mat-label>
+            <mat-label>{{'Loans.View.Actions.ForeCloseure.outstandingPenaltyChargesPortion'| translate }}</mat-label>
             <input matInput currencyMask type="text" required formControlName="outstandingPenaltyChargesPortion">
           </mat-form-field>
 
           <mat-form-field>
-            <mat-label>Transaction Amount</mat-label>
+            <mat-label>{{'Loans.View.Actions.ForeCloseure.transactionAmount'| translate }}</mat-label>
             <input matInput currencyMask type="text" required formControlName="transactionAmount">
           </mat-form-field>
 
           <mat-form-field>
-            <mat-label>Note</mat-label>
+            <mat-label>{{'Loans.View.Actions.ForeCloseure.note'| translate }}</mat-label>
             <textarea matInput formControlName="note"></textarea>
           </mat-form-field>
 
         </div>
 
         <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
-          <button type="button" mat-raised-button [routerLink]="['../../general']">Cancel</button>
+          <button type="button" mat-raised-button [routerLink]="['../../general']">{{ "ShareButton.CancelEng" | translate }}</button>
           <button mat-raised-button color="primary" [disabled]="!foreclosureForm.valid"
-            *midasHasPermission="'FORECLOSURE_LOAN'">Foreclosure</button>
+            *midasHasPermission="'FORECLOSURE_LOAN'">{{'Loans.View.Actions.ForeCloseure.btnForeclosure'| translate }}</button>
         </mat-card-actions>
 
       </mat-card-content>
