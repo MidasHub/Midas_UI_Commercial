@@ -4,21 +4,21 @@
     <div fxFlex="55" fxLayout.lt-md="column" fxLayoutAlign.lt-md="center center" >
       <mat-button-toggle-group name="fontStyle" aria-label="Font Style" style="width: 300px;">
         <mat-button-toggle  (click)="setView(CalendarView.Month)" [class.active]="view === CalendarView.Month"
-          style="width: 100px;"><i class="fas fa-calendar"></i> Lịch tháng
+          style="width: 100px;"><i class="fas fa-calendar"></i> {{'Home_Component.Calendar.Month'| translate }}
         </mat-button-toggle>
         <mat-button-toggle (click)="setView(CalendarView.Week)" [class.active]="view === CalendarView.Week"
-          style="width: 100px;"><i class="fas fa-calendar-week"></i> Lịch tuần
+          style="width: 100px;"><i class="fas fa-calendar-week"></i> {{'Home_Component.Calendar.Week'| translate }}
         </mat-button-toggle>
         <mat-button-toggle (click)="setView(CalendarView.Day)" [class.active]="view === CalendarView.Day"
-          style="width: 100px;"><i class="fas fa-calendar-day"></i> Lịch ngày
+          style="width: 100px;"><i class="fas fa-calendar-day"></i> {{'Home_Component.Calendar.Day'| translate }}
         </mat-button-toggle>
       </mat-button-toggle-group>
       <mat-button-toggle-group name="fontStyle" aria-label="Font Style" style="width: 300px;">
         <mat-button-toggle mwlCalendarPreviousView [view]="view" [(viewDate)]="viewDate"
-          (viewDateChange)="closeOpenMonthViewDay()" style="width: 100px;"> <i class="fas fa-angle-double-left"></i> Trước</mat-button-toggle>
-        <mat-button-toggle mwlCalendarToday [(viewDate)]="viewDate" style="width: 100px;">Hiện tại</mat-button-toggle>
+          (viewDateChange)="closeOpenMonthViewDay()" style="width: 100px;"> <i class="fas fa-angle-double-left"></i> {{'Home_Component.Calendar.Previous'| translate }}</mat-button-toggle>
+        <mat-button-toggle mwlCalendarToday [(viewDate)]="viewDate" style="width: 100px;">{{'Home_Component.Calendar.Today'| translate }}</mat-button-toggle>
         <mat-button-toggle mwlCalendarNextView [view]="view" [(viewDate)]="viewDate"
-          (viewDateChange)="closeOpenMonthViewDay()" style="width: 100px;">Sau <i class="fas fa-angle-double-right"></i></mat-button-toggle>
+          (viewDateChange)="closeOpenMonthViewDay()" style="width: 100px;">{{'Home_Component.Calendar.Next'| translate }} <i class="fas fa-angle-double-right"></i></mat-button-toggle>
       </mat-button-toggle-group>
     </div>
     <div fxFlex fxFlexAlign="center center">

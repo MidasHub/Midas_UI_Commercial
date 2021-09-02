@@ -1,13 +1,13 @@
 <mat-card>
   <div class="example-container">
     <mat-form-field style="width: 100%">
-      <mat-label>Nhập từ khóa để Tìm thông tin khách hàng</mat-label>
+      <mat-label>{{'Home_Component.Mainboard.inputKeyWord'| translate }}</mat-label>
       <input
         type="text"
         matInput
         #querySearchAll
         (change)="this.searchClientAndGroup(querySearchAll.value)"
-        placeholder="Tìm kiếm theo tên, số CMND/CCCD , số điện thoại ..."
+        [placeholder]="'Home_Component.Mainboard.placeholderSearchKey'| translate"
       />
     </mat-form-field>
   </div>
@@ -18,25 +18,25 @@
       <ng-container matColumnDef="id">
         <mat-header-cell *matHeaderCellDef mat-sort-header>Id</mat-header-cell>
         <mat-cell *matCellDef="let row">
-          <span class="mobile-label">Id:</span>
+          <span class="mobile-label">{{'Home_Component.Mainboard.inputKeyWord'| translate }}Id:</span>
           <span>{{ row.id }}</span>
         </mat-cell>
       </ng-container>
       <ng-container matColumnDef="status">
-        <mat-header-cell *matHeaderCellDef mat-sort-header>Trạng thái</mat-header-cell>
+        <mat-header-cell *matHeaderCellDef mat-sort-header>{{'Home_Component.Mainboard.status'| translate }}</mat-header-cell>
         <mat-cell *matCellDef="let row">
-          <span class="mobile-label">Trạng thái:</span>
+          <span class="mobile-label">{{'Home_Component.Mainboard.spanStatus'| translate }}</span>
 
-          <span *ngIf="row.statusEnum == 300" style="color: green; font-weight: bold;">Hoạt động</span>
-          <span *ngIf="row.statusEnum != 300" style="color: red; font-weight: bold;" >Đóng</span>
+          <span *ngIf="row.statusEnum == 300" style="color: green; font-weight: bold;">{{'Home_Component.Mainboard.Active'| translate }}</span>
+          <span *ngIf="row.statusEnum != 300" style="color: red; font-weight: bold;" >{{'Home_Component.Mainboard.Close'| translate }}</span>
 
 
         </mat-cell>
       </ng-container>
       <ng-container matColumnDef="officeName">
-        <mat-header-cell *matHeaderCellDef mat-sort-header>Chi nhánh</mat-header-cell>
+        <mat-header-cell *matHeaderCellDef mat-sort-header>{{'Home_Component.Mainboard.officeName'| translate }}</mat-header-cell>
         <mat-cell *matCellDef="let row">
-          <span class="mobile-label">Chi nhánh:</span>
+          <span class="mobile-label">{{'Home_Component.Mainboard.spanOfficeName'| translate }}</span>
 
           <span>{{ row.officeName }}</span>
         </mat-cell>
@@ -44,38 +44,38 @@
 
       <!-- Progress Column -->
       <ng-container matColumnDef="displayName">
-        <mat-header-cell *matHeaderCellDef mat-sort-header>Tên khách hàng</mat-header-cell>
+        <mat-header-cell *matHeaderCellDef mat-sort-header>{{'Home_Component.Mainboard.displayName'| translate }}</mat-header-cell>
         <mat-cell *matCellDef="let row">
-          <span class="mobile-label">Khách hàng:</span>
+          <span class="mobile-label">{{'Home_Component.Mainboard.spanCustomerName'| translate }}</span>
           <span
             >{{ row.displayName }}
-            <div *ngIf="row.isBad" style="color: red; font-weight: bold">LỪA ĐẢO</div>
+            <div *ngIf="row.isBad" style="color: red; font-weight: bold">{{'Home_Component.Mainboard.isBad'| translate }}</div>
           </span>
         </mat-cell>
       </ng-container>
 
       <!-- Name Column -->
       <ng-container matColumnDef="mobileNo">
-        <mat-header-cell *matHeaderCellDef mat-sort-header>Số ĐT</mat-header-cell>
+        <mat-header-cell *matHeaderCellDef mat-sort-header>{{'Home_Component.Mainboard.mobileNo'| translate }}</mat-header-cell>
         <mat-cell *matCellDef="let row">
-          <span class="mobile-label">Số ĐT:</span>
+          <span class="mobile-label">{{'Home_Component.Mainboard.spanMobileNo'| translate }}</span>
           <span>{{ row.mobileNo }}</span>
         </mat-cell>
       </ng-container>
 
       <!-- Color Column -->
       <ng-container matColumnDef="documentKey">
-        <mat-header-cell *matHeaderCellDef mat-sort-header>Thẻ</mat-header-cell>
+        <mat-header-cell *matHeaderCellDef mat-sort-header>{{'Home_Component.Mainboard.documentKey'| translate }}</mat-header-cell>
         <mat-cell *matCellDef="let row">
-          <span class="mobile-label">Thẻ:</span>
+          <span class="mobile-label">{{'Home_Component.Mainboard.spanDocumentKey'| translate }}</span>
           <span>{{ row.documentKey }}</span>
         </mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="bankName">
-        <mat-header-cell *matHeaderCellDef mat-sort-header>Ngân hàng</mat-header-cell>
+        <mat-header-cell *matHeaderCellDef mat-sort-header>{{'Home_Component.Mainboard.bankName'| translate }}</mat-header-cell>
         <mat-cell *matCellDef="let row">
-          <span class="mobile-label">Ngân hàng:</span>
+          <span class="mobile-label">{{'Home_Component.Mainboard.spanBankName'| translate }}</span>
           <span>{{ row.bankName }}</span>
         </mat-cell>
       </ng-container>
