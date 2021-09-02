@@ -9,26 +9,26 @@
         <div fxLayout="column">
 
           <mat-form-field>
-            <mat-label>Disbursed On</mat-label>
+            <mat-label>{{'Loans.View.Actions.Disburse.actualDisbursementDate'| translate }}</mat-label>
             <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="actualDisbursementDatePicker" required
               formControlName="actualDisbursementDate">
             <mat-datepicker-toggle matSuffix [for]="actualDisbursementDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #actualDisbursementDatePicker></mat-datepicker>
             <mat-error *ngIf="disbursementLoanForm.controls.actualDisbursementDate.hasError('required')">
-              Disbursed On Date<strong>is required</strong>
+              {{'Loans.View.Actions.Disburse.erractualDisbursementDate'| translate }}<strong>{{'Loans.strongIsRequired'| translate }}</strong>
             </mat-error>
           </mat-form-field>
 
           <mat-form-field>
-            <mat-label>Transaction Amount</mat-label>
+            <mat-label>{{'Loans.View.Actions.Disburse.transactionAmount'| translate }}</mat-label>
             <input matInput required formControlName="transactionAmount">
             <mat-error *ngIf="disbursementLoanForm.controls.transactionAmount.hasError('required')">
-              Transaction Amount <strong>is required</strong>
+              {{'Loans.View.Actions.Disburse.errtransactionAmount'| translate }}<strong>{{'Loans.strongIsRequired'| translate }}</strong>
             </mat-error>
           </mat-form-field>
 
           <mat-form-field>
-            <mat-label>Payment Type</mat-label>
+            <mat-label>{{'Loans.View.Actions.Disburse.paymentTypeId'| translate }}</mat-label>
             <mat-select formControlName="paymentTypeId">
               <mat-option *ngFor="let paymentType of paymentTypes" [value]="paymentType.id">
                 {{ paymentType.name }}
@@ -37,7 +37,7 @@
           </mat-form-field>
 
           <div fxFlexFill>
-            <span fxFlex="25%">Show Payment Details</span>
+            <span fxFlex="25%">{{'Loans.View.Actions.Disburse.showPaymentDetails'| translate }}</span>
             <span fxFlex="75%" class="expandCollapsebutton" (click)="addPaymentDetails()">
               <button mat-raised-button color="primary" *ngIf="showPaymentDetails">
                 <i class="fa fa-minus"></i>
@@ -50,42 +50,42 @@
 
           <ng-container *ngIf="showPaymentDetails">
             <mat-form-field>
-              <mat-label> Account #</mat-label>
+              <mat-label> {{'Loans.View.Actions.Disburse.accountNumber'| translate }}</mat-label>
               <input matInput formControlName="accountNumber">
             </mat-form-field>
 
             <mat-form-field>
-              <mat-label>Cheque #</mat-label>
+              <mat-label>{{'Loans.View.Actions.Disburse.checkNumber'| translate }}</mat-label>
               <input matInput formControlName="checkNumber">
             </mat-form-field>
 
             <mat-form-field>
-              <mat-label>Routing Code</mat-label>
+              <mat-label>{{'Loans.View.Actions.Disburse.routingCode'| translate }}</mat-label>
               <input matInput formControlName="routingCode">
             </mat-form-field>
 
             <mat-form-field>
-              <mat-label>Reciept #</mat-label>
+              <mat-label>{{'Loans.View.Actions.Disburse.receiptNumber'| translate }}</mat-label>
               <input matInput formControlName="receiptNumber">
             </mat-form-field>
 
             <mat-form-field>
-              <mat-label>Bank #</mat-label>
+              <mat-label>{{'Loans.View.Actions.Disburse.bankNumber'| translate }}</mat-label>
               <input matInput formControlName="bankNumber">
             </mat-form-field>
           </ng-container>
 
           <mat-form-field>
-            <mat-label>Note</mat-label>
+            <mat-label>{{'Loans.View.Actions.Disburse.note'| translate }}</mat-label>
             <textarea matInput formControlName="note"></textarea>
           </mat-form-field>
 
         </div>
 
         <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
-          <button type="button" mat-raised-button [routerLink]="['../../general']">Cancel</button>
+          <button type="button" mat-raised-button [routerLink]="['../../general']">{{ "ShareButton.CancelEng" | translate }}</button>
           <button mat-raised-button color="primary" [disabled]="!disbursementLoanForm.valid"
-            *midasHasPermission="'DISBURSE_LOAN'">Submit</button>
+            *midasHasPermission="'DISBURSE_LOAN'">{{ "ShareButton.Submit" | translate }}</button>
         </mat-card-actions>
 
       </mat-card-content>

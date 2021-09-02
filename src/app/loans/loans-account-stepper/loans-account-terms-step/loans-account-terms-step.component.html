@@ -3,64 +3,64 @@
     <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
 
       <mat-form-field fxFlex="48%">
-        <mat-label>Principal {{loansAccountProductTemplate?.currency.displaySymbol}}</mat-label>
+        <mat-label>{{'Loans.Stepper.Preview.principal'| translate }} {{loansAccountProductTemplate?.currency.displaySymbol}}</mat-label>
         <input type="number" matInput formControlName="principal"  >
         <mat-error *ngIf="loansAccountTermsForm.controls.principal.hasError('required')">
-          Principal is <strong>required</strong>
+          {{'Loans.Stepper.Preview.errprincipal'| translate }}<strong>{{'Loans.strongRequired'| translate }}</strong>
         </mat-error>
       </mat-form-field>
 
-      <h4 fxFlex="98%" class="mat-h4">Term Options</h4>
+      <h4 fxFlex="98%" class="mat-h4">{{'Loans.Stepper.Preview.TermOptions'| translate }}</h4>
 
       <mat-form-field fxFlex="48%">
-        <mat-label>Loan Term</mat-label>
+        <mat-label>{{'Loans.Stepper.Preview.loanTermFrequency'| translate }}</mat-label>
         <input matInput required formControlName="loanTermFrequency">
         <mat-error *ngIf="loansAccountTermsForm.controls.loanTermFrequency.hasError('required')">
-          Loan Term is <strong>required</strong>
+          {{'Loans.Stepper.Preview.errloanTermFrequency'| translate }}<strong>{{'Loans.strongRequired'| translate }}</strong>
         </mat-error>
       </mat-form-field>
 
       <mat-form-field fxFlex="48%">
-        <mat-label>Frequency</mat-label>
+        <mat-label>{{'Loans.Stepper.Preview.loanTermFrequencyType'| translate }}</mat-label>
         <mat-select required formControlName="loanTermFrequencyType">
           <mat-option *ngFor="let type of termFrequencyTypeData" [value]="type.id">
             {{ type.value }}
           </mat-option>
         </mat-select>
         <mat-error *ngIf="loansAccountTermsForm.controls.loanTermFrequencyType.hasError('required')">
-          Frequency is <strong>required</strong>
+          {{'Loans.Stepper.Preview.errloanTermFrequencyType'| translate }}<strong>{{'Loans.strongRequired'| translate }}</strong>
         </mat-error>
       </mat-form-field>
 
       <mat-form-field fxFlex="48%">
-        <mat-label>Number of repayments</mat-label>
+        <mat-label>{{'Loans.Stepper.Preview.numberOfRepayments'| translate }}</mat-label>
         <input type="number" matInput formControlName="numberOfRepayments">
         <mat-error *ngIf="loansAccountTermsForm.controls.numberOfRepayments.hasError('required')">
-          Number of repayments is <strong>required</strong>
+          {{'Loans.Stepper.Preview.errnumberOfRepayments'| translate }}<strong>{{'Loans.strongRequired'| translate }}</strong>
         </mat-error>
       </mat-form-field>
 
       <mat-form-field fxFlex="48%">
-        <mat-label>First repayment on</mat-label>
+        <mat-label>{{'Loans.Stepper.Preview.repaymentsStartingFromDate'| translate }}</mat-label>
         <input matInput [min]="minDate" [matDatepicker]="repaymentsPicker"
           formControlName="repaymentsStartingFromDate">
         <mat-datepicker-toggle matSuffix [for]="repaymentsPicker"></mat-datepicker-toggle>
         <mat-datepicker #repaymentsPicker></mat-datepicker>
       </mat-form-field>
 
-      <h4 fxFlex="98%" class="mat-h4">Repaid Every</h4>
+      <h4 fxFlex="98%" class="mat-h4">{{'Loans.Stepper.Preview.repaymentsStartingFromDate'| translate }}</h4>
 
       <mat-form-field fxFlex="48%">
-        <mat-label>Repaid every</mat-label>
+        <mat-label>{{'Loans.Stepper.Preview.RepaidEvery'| translate }}Repaid every</mat-label>
         <input matInput required formControlName="repaymentEvery"
           [disabled]="!loansAccountProductTemplate?.product.allowAttributeOverrides.repaymentEvery">
         <mat-error *ngIf="loansAccountTermsForm.controls.repaymentEvery.hasError('required')">
-          Repaid every is <strong>required</strong>
+          {{'Loans.Stepper.Preview.errRepaidEvery'| translate }}<strong>{{'Loans.strongRequired'| translate }}</strong>
         </mat-error>
       </mat-form-field>
 
       <mat-form-field fxFlex="48%">
-        <mat-label>Frequency</mat-label>
+        <mat-label>{{'Loans.Stepper.Preview.repaymentFrequencyType'| translate }}</mat-label>
         <mat-select formControlName="repaymentFrequencyType" required
           [disabled]="!loansAccountProductTemplate?.product.allowAttributeOverrides.repaymentEvery">
           <mat-option *ngFor="let repaymentFrequencyType of termFrequencyTypeData"
@@ -71,7 +71,7 @@
       </mat-form-field>
 
       <mat-form-field fxFlex="48%" *ngIf="loansAccountTermsForm.controls.repaymentFrequencyType.value == 2">
-        <mat-label>Select Week in Month</mat-label>
+        <mat-label>{{'Loans.Stepper.Preview.repaymentFrequencyNthDayType'| translate }}</mat-label>
         <mat-select formControlName="repaymentFrequencyNthDayType" >
           <mat-option
             *ngFor="let repaymentFrequencyNthDayType of repaymentFrequencyNthDayTypeData"
@@ -82,7 +82,7 @@
       </mat-form-field>
 
       <mat-form-field fxFlex="48%" *ngIf="loansAccountTermsForm.controls.repaymentFrequencyType.value == 2 && loansAccountTermsForm.controls.repaymentFrequencyNthDayType.value != ''" >
-        <mat-label>Select Day in week </mat-label>
+        <mat-label>{{'Loans.Stepper.Preview.repaymentFrequencyDayOfWeekType'| translate }} </mat-label>
         <mat-select formControlName="repaymentFrequencyDayOfWeekType" >
           <mat-option
             *ngFor="let repaymentFrequencyDayOfWeekType of repaymentFrequencyDaysOfWeekTypeData"
@@ -93,7 +93,7 @@
       </mat-form-field>
 
       <mat-form-field fxFlex="48%">
-        <mat-label>Interest charged from</mat-label>
+        <mat-label>{{'Loans.Stepper.Preview.interestChargedFromDate'| translate }}</mat-label>
         <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="interestPicker"
           formControlName="interestChargedFromDate">
         <mat-datepicker-toggle matSuffix [for]="interestPicker"></mat-datepicker-toggle>
@@ -103,12 +103,12 @@
     <ng-container *ngIf="!loansAccountProductTemplate?.isLoanProductLinkedToFloatingRate">
 
       <mat-form-field fxFlex="48%">
-        <mat-label>Nominal interest rate</mat-label>
+        <mat-label>{{'Loans.Stepper.Preview.interestRatePerPeriod'| translate }}</mat-label>
         <input type="number" matInput formControlName="interestRatePerPeriod">
       </mat-form-field>
 
         <mat-form-field fxFlex="48%">
-          <mat-label>Interest method</mat-label>
+          <mat-label>{{'Loans.Stepper.Preview.interestType'| translate }}</mat-label>
           <mat-select [disabled]="!loansAccountProductTemplate?.product.allowAttributeOverrides.interestType"
             formControlName="interestType">
             <mat-option *ngFor="let interestType of interestTypeData"
@@ -120,7 +120,7 @@
 
         <mat-checkbox fxFlex="48%" formControlName="isEqualAmortization"
           [checked]="loansAccountProductTemplate?.isEqualAmortization">
-          <p>Is Equal Amortization</p>
+          <p>{{'Loans.Stepper.Preview.isEqualAmortization'| translate }}</p>
         </mat-checkbox>
 
     </ng-container>
@@ -135,7 +135,7 @@
       <div fxFlex="48%" fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
 
         <mat-form-field fxFlex="48%">
-          <mat-label>Interest Method</mat-label>
+          <mat-label>{{'Loans.Stepper.Preview.interestType2'| translate }}</mat-label>
           <mat-select formControlName="interestType">
             <mat-option [disabled]="!loansAccountProductTemplate?.product.allowAttributeOverrides.interestType"
               *ngFor="let interestType of interestTypeData" [value]="interestType.id">
@@ -145,7 +145,7 @@
         </mat-form-field>
 
         <mat-checkbox fxFlex="48%" formControlName="isFloatingInterestRate">
-          <p>Is Floating Rate?</p>
+          <p>{{'Loans.Stepper.Preview.isFloatingInterestRate'| translate }}</p>
         </mat-checkbox>
 
       </div>
@@ -153,7 +153,7 @@
     </ng-container>
 
     <mat-form-field fxFlex="48%">
-      <mat-label>Amortization</mat-label>
+      <mat-label>{{'Loans.Stepper.Preview.amortizationType'| translate }}</mat-label>
       <mat-select required [disabled]="!loansAccountProductTemplate?.product.allowAttributeOverrides.amortizationType"
         formControlName="amortizationType">
         <mat-option *ngFor="let amortizationType of amortizationTypeData"
@@ -162,14 +162,14 @@
         </mat-option>
       </mat-select>
       <mat-error *ngIf="loansAccountTermsForm.controls.amortizationType.hasError('required')">
-        Amortization Type is <strong>required</strong>
+        {{'Loans.Stepper.Preview.erramortizationType'| translate }} <strong>{{'Loans.strongRequired'| translate }}</strong>
       </mat-error>
     </mat-form-field>
 
-    <h4 fxFlex="98%" class="mat-h4">Interest Calculations</h4>
+    <h4 fxFlex="98%" class="mat-h4">{{'Loans.Stepper.Preview.InterestCalculations'| translate }}</h4>
 
     <mat-form-field fxFlex="48%">
-      <mat-label>Interest calculation period</mat-label>
+      <mat-label>{{'Loans.Stepper.Preview.interestCalculationPeriodType'| translate }}</mat-label>
       <mat-select
         [disabled]="!loansAccountProductTemplate?.product.allowAttributeOverrides.interestCalculationPeriodType"
         formControlName="interestCalculationPeriodType">
@@ -184,23 +184,23 @@
     <!-- <mat-checkbox *ngIf="interestCalculationPeriodType != 0" fxFlex="48%" -->
     <mat-checkbox fxFlex="48%" formControlName="allowPartialPeriodInterestCalcualtion"
       [disabled]="!loansAccountProductTemplate?.product.allowAttributeOverrides.interestCalculationPeriodType">
-      <p>Calculate interest for exact days in partial period</p>
+      <p>{{'Loans.Stepper.Preview.principal'| translate }}</p>
     </mat-checkbox>
 
     <mat-form-field fxFlex="48%">
-      <mat-label>Arrears tolerance {{loansAccountProductTemplate?.currency.displaySymbol}}</mat-label>
+      <mat-label>{{'Loans.Stepper.Preview.inArrearsTolerance'| translate }}Arrears tolerance {{loansAccountProductTemplate?.currency.displaySymbol}}</mat-label>
       <input matInput type="number"
         [attr.disabled]="!loansAccountProductTemplate?.product.allowAttributeOverrides.inArrearsTolerance"
         formControlName="inArrearsTolerance">
     </mat-form-field>
 
     <mat-form-field fxFlex="48%">
-      <mat-label>Interest free period</mat-label>
+      <mat-label>{{'Loans.Stepper.Preview.graceOnInterestCharged'| translate }}</mat-label>
       <input matInput formControlName="graceOnInterestCharged">
     </mat-form-field>
 
     <mat-form-field fxFlex="48%">
-      <mat-label>Repayment strategy</mat-label>
+      <mat-label>{{'Loans.Stepper.Preview.transactionProcessingStrategyId'| translate }}</mat-label>
       <mat-select required
         [disabled]="!loansAccountProductTemplate?.product.allowAttributeOverrides.transactionProcessingStrategyId"
         formControlName="transactionProcessingStrategyId">
@@ -211,40 +211,40 @@
         </mat-option>
       </mat-select>
       <mat-error *ngIf="loansAccountTermsForm.controls.transactionProcessingStrategyId.hasError('required')">
-        Repayment Strategy is <strong>required</strong>
+        {{'Loans.Stepper.Preview.errtransactionProcessingStrategyId'| translate }}<strong>{{'Loans.strongRequired'| translate }}</strong>
       </mat-error>
     </mat-form-field>
 
-    <h4 fxFlex="98%" class="mat-h4">Moratorium</h4>
+    <h4 fxFlex="98%" class="mat-h4">{{'Loans.Stepper.Preview.Moratorium'| translate }}</h4>
 
     <mat-checkbox fxFlex="23%" labelPosition="before" formControlName="graceOnPrincipalPayment" class="margin-v"
     [disabled]="!loansAccountProductTemplate?.product.allowAttributeOverrides.graceOnPrincipalAndInterestPayment">
-      On Principal Payment
+    {{'Loans.Stepper.Preview.graceOnPrincipalPayment'| translate }}
     </mat-checkbox>
 
     <mat-checkbox fxFlex="23%" labelPosition="before" formControlName="graceOnInterestPayment" class="margin-v"
     [disabled]="!loansAccountProductTemplate?.product.allowAttributeOverrides.graceOnPrincipalAndInterestPayment">
-      On Interest Payment
+    {{'Loans.Stepper.Preview.graceOnInterestPayment'| translate }}
     </mat-checkbox>
 
     <mat-checkbox fxFlex="23%" labelPosition="before" formControlName="graceOnArrearsAgeing" class="margin-v"
     [disabled]="!loansAccountProductTemplate?.product.allowAttributeOverrides.graceOnArrearsAgeing">
-      On Arreas Aging
+    {{'Loans.Stepper.Preview.graceOnArrearsAgeing'| translate }}
     </mat-checkbox>
 
     <mat-form-field fxFlex="48%" *ngIf="loansAccountProductTemplate?.canDefineInstallmentAmount">
-      <mat-label>Installment Amount</mat-label>
+      <mat-label>{{'Loans.Stepper.Preview.principal'| translate }}Installment Amount</mat-label>
       <input currencyMask type="text" matInput formControlName="fixedEmiAmount">
     </mat-form-field>
 
     <ng-container *ngIf="loansAccountProductTemplate?.canUseForTopup">
 
       <mat-checkbox fxFlex="48%" formControlName="isTopup">
-        <p>Is Topup Loan?</p>
+        <p>{{'Loans.Stepper.Preview.isTopup'| translate }}</p>
       </mat-checkbox>
 
       <mat-form-field fxFlex="48%" *ngIf="loansAccountTermsForm.controls.isTopup.value">
-        <mat-label>Loan closed with Topup</mat-label>
+        <mat-label>{{'Loans.Stepper.Preview.loanIdToClose'| translate }}</mat-label>
         <mat-select formControlName="loanIdToClose">
           <mat-option *ngFor="let clientActiveLoan of clientActiveLoanData"
             [value]="clientActiveLoan.id">
@@ -255,13 +255,13 @@
 
       <mat-form-field fxFlex="48%"
         *ngIf="loansAccountProductTemplate.isInterestRecalculationEnabled && loansAccountProductTemplate.interestRecalculationData.interestRecalculationCompoundingType.id != 0 && loansAccountProductTemplate.interestRecalculationData.recalculationCompoundingFrequencyType.id != 1">
-        <mat-label>Frequency Date for recalculation</mat-label>
+        <mat-label>{{'Loans.Stepper.Preview.recalculationCompoundingFrequencyDate'| translate }}</mat-label>
         <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="recalculationCompoundingFrequencyDatePicker"
           formControlName="recalculationCompoundingFrequencyDate">
         <mat-datepicker-toggle matSuffix [for]="recalculationCompoundingFrequencyDatePicker"></mat-datepicker-toggle>
         <mat-datepicker #recalculationCompoundingFrequencyDatePicker></mat-datepicker>
         <mat-error *ngIf="loansAccountTermsForm.controls.recalculationCompoundingFrequencyDate.hasError('required')">
-          Frequency Data for recalculation is <strong>required</strong>
+          {{'Loans.Stepper.Preview.errrecalculationCompoundingFrequencyDate'| translate }}<strong>{{'Loans.strongRequired'| translate }}</strong>
         </mat-error>
       </mat-form-field>
 
@@ -270,24 +270,24 @@
     <mat-divider fxFlex="98%"></mat-divider>
 
     <div fxFlexFill>
-      <span fxFlex="40%">Recalculate Interest</span>
+      <span fxFlex="40%">{{'Loans.Stepper.Preview.isInterestRecalculationEnabled'| translate }}</span>
       <span fxFlex="60%">{{ loansAccountProductTemplate?.isInterestRecalculationEnabled? 'Yes' : 'No' }}</span>
     </div>
 
     <div fxFlexFill *ngIf="loansAccountProductTemplate?.isInterestRecalculationEnabled">
-      <span fxFlex="40%">Days in year</span>
+      <span fxFlex="40%">{{'Loans.Stepper.Preview.daysInYearType'| translate }}</span>
       <span fxFlex="60%">{{ loansAccountProductTemplate?.daysInYearType.value}}</span>
     </div>
 
     <ng-container *ngIf="loansAccountProductTemplate?.isInterestRecalculationEnabled">
 
       <div fxFlexFill *ngIf="loansAccountProductTemplate?.isInterestRecalculationEnabled">
-        <span fxFlex="40%">Advance payments adjustment type</span>
+        <span fxFlex="40%">{{'Loans.Stepper.Preview.rescheduleStrategyType'| translate }}</span>
         <span fxFlex="60%">{{ loansAccountProductTemplate?.interestRecalculationData.rescheduleStrategyType.value }}</span>
       </div>
 
       <div fxFlexFill *ngIf="loansAccountProductTemplate?.isInterestRecalculationEnabled">
-        <span fxFlex="40%">Days in month</span>
+        <span fxFlex="40%">{{'Loans.Stepper.Preview.daysInMonthType'| translate }}</span>
         <span fxFlex="60%">{{ loansAccountProductTemplate?.daysInMonthType.value }}</span>
       </div>
 
@@ -296,12 +296,12 @@
     <ng-container *ngIf="loansAccountProductTemplate?.isInterestRecalculationEnabled">
 
       <div fxFlexFill>
-        <span fxFlex="40%">Interest recalculation compounding on</span>
+        <span fxFlex="40%">{{'Loans.Stepper.Preview.interestRecalculationCompoundingType'| translate }}</span>
         <span fxFlex="60%">{{ loansAccountProductTemplate?.interestRecalculationData.interestRecalculationCompoundingType.value }}</span>
       </div>
 
       <div fxFlexFill>
-        <span fxFlex="40%">Frequency Interval for recalculation</span>
+        <span fxFlex="40%">{{'Loans.Stepper.Preview.FrequencyIntervalForRecalculation'| translate }}</span>
         <span fxFlex="60%">
           <span>{{ loansAccountProductTemplate?.interestRecalculationData.recalculationRestFrequencyType.value}}</span>
           <span *ngIf="loansAccountProductTemplate?.interestRecalculationData.recalculationRestFrequencyType.id == 3 &&
@@ -321,7 +321,7 @@
     </ng-container>
 
     <div fxFlexFill *ngIf="loansAccountProductTemplate?.isInterestRecalculationEnabled && loansAccountProductTemplate?.interestRecalculationData.recalculationRestFrequencyType.id != 1">
-      <span fxFlex="40%">Frequency Interval for recalculation</span>
+      <span fxFlex="40%">{{'Loans.Stepper.Preview.FrequencyIntervalForRecalculation'| translate }}</span>
       <span fxFlex="60%">{{ loansAccountProductTemplate?.interestRecalculationData.recalculationRestFrequencyInterval}}</span>
     </div>
 
@@ -329,7 +329,7 @@
       *ngIf="loansAccountProductTemplate?.isInterestRecalculationEnabled  && loansAccountProductTemplate?.interestRecalculationData.interestRecalculationCompoundingType.id != 0">
 
       <div fxFlexFill>
-        <span fxFlex="40%">Frequency for compounding</span>
+        <span fxFlex="40%">{{'Loans.Stepper.Preview.FrequencyForCompounding'| translate }}</span>
         <span fxFlex="60%">{{ loansAccountProductTemplate?.interestRecalculationData.recalculationCompoundingFrequencyType.value}}
           <span *ngIf="loansAccountProductTemplate?.interestRecalculationData.recalculationCompoundingFrequencyType.id == 3 &&
             loansAccountProductTemplate?.interestRecalculationData.recalculationCompoundingFrequencyWeekday != null">
@@ -351,7 +351,7 @@
     </ng-container>
 
     <div fxFlexFill *ngIf="loansAccountProductTemplate?.isInterestRecalculationEnabled && loansAccountProductTemplate?.interestRecalculationData.interestRecalculationCompoundingType.id != 0 && loansAccountProductTemplate?.interestRecalculationData.recalculationCompoundingFrequencyType.id != 1">
-      <span fxFlex="40%">Frequency Interval for compounding</span>
+      <span fxFlex="40%">{{'Loans.Stepper.Preview.FrequencyIntervalFoCompounding'| translate }}</span>
       <span fxFlex="60%">{{ loansAccountProductTemplate?.interestRecalculationData.recalculationCompoundingFrequencyInterval}}</span>
     </div>
 
@@ -359,10 +359,10 @@
     <div fxLayout="row" class="margin-t" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="2%">
       <button mat-raised-button matStepperPrevious>
         <fa-icon icon="arrow-left"></fa-icon>&nbsp;&nbsp;
-        Previous
+        {{ "ShareButton.PreviousEng" | translate }}
       </button>
       <button mat-raised-button matStepperNext>
-        Next&nbsp;&nbsp;
+        {{ "ShareButton.NextEng" | translate }}&nbsp;&nbsp;
         <fa-icon icon="arrow-right"></fa-icon>
       </button>
     </div>

@@ -9,18 +9,18 @@
         <div fxLayout="column">
 
           <mat-form-field>
-            <mat-label>Approved On</mat-label>
+            <mat-label>{{'Loans.View.Actions.ApproveLoan.approvedOnDate'| translate }}</mat-label>
             <input matInput [min]="minDate" [matDatepicker]="approvedDatePicker" required
               formControlName="approvedOnDate">
             <mat-datepicker-toggle matSuffix [for]="approvedDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #approvedDatePicker></mat-datepicker>
             <mat-error *ngIf="approveLoanForm.controls.approvedOnDate.hasError('required')">
-              Approved Date <strong>is required</strong>
+              {{'Loans.View.Actions.ApproveLoan.errapprovedOnDate'| translate }}<strong>{{'Loans.View.strongRequired'| translate }}</strong>
             </mat-error>
           </mat-form-field>
 
           <mat-form-field>
-            <mat-label>Expected disbursement on</mat-label>
+            <mat-label>{{'Loans.View.Actions.ApproveLoan.expectedDisbursementDate'| translate }}</mat-label>
             <input matInput [min]="minDate" [matDatepicker]="disbursementDatePicker"
               formControlName="expectedDisbursementDate">
             <mat-datepicker-toggle matSuffix [for]="disbursementDatePicker"></mat-datepicker-toggle>
@@ -28,29 +28,29 @@
           </mat-form-field>
 
           <mat-form-field>
-            <mat-label>Approved Amount</mat-label>
+            <mat-label>{{'Loans.View.Actions.ApproveLoan.approvedLoanAmount'| translate }}</mat-label>
             <input matInput currencyMask type="text" formControlName="approvedLoanAmount">
           </mat-form-field>
 
           <mat-form-field>
-            <mat-label>Transaction Amount</mat-label>
+            <mat-label>{{'Loans.View.Actions.ApproveLoan.TransactionAmount'| translate }}</mat-label>
             <input matInput currencyMask type="text" required formControlName="approvedLoanAmount" required>
             <mat-error *ngIf="approveLoanForm.controls.approvedLoanAmount.hasError('required')">
-              Transaction Amount is <strong>required</strong>
+              {{'Loans.View.Actions.ApproveLoan.errTransactionAmount'| translate }}<strong>{{'Loans.View.strongRequired'| translate }}</strong>
             </mat-error>
           </mat-form-field>
 
           <mat-form-field>
-            <mat-label>Note</mat-label>
+            <mat-label>{{'Loans.View.Actions.ApproveLoan.note'| translate }}</mat-label>
             <textarea matInput formControlName="note"></textarea>
           </mat-form-field>
 
         </div>
 
         <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
-          <button type="button" mat-raised-button [routerLink]="['../../general']">Cancel</button>
+          <button type="button" mat-raised-button [routerLink]="['../../general']">{{ "ShareButton.CancelEng" | translate }}</button>
           <button mat-raised-button color="primary" [disabled]="!approveLoanForm.valid"
-            *midasHasPermission="'APPROVE_LOAN'">Submit</button>
+            *midasHasPermission="'APPROVE_LOAN'">{{ "ShareButton.Submit" | translate }}</button>
         </mat-card-actions>
 
       </mat-card-content>

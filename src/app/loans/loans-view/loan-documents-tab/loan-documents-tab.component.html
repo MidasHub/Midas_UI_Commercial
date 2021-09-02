@@ -4,7 +4,7 @@
     <div fxLayout="column" fxFlex="100%">
       <div fxLayout="row" fxLayoutAlign="flex-end">
         <button mat-raised-button color="primary" (click)="uploadDocument()" *ngIf="choice">
-          <fa-icon icon="plus"></fa-icon>&nbsp;&nbsp;Upload
+          <fa-icon icon="plus"></fa-icon>&nbsp;&nbsp;{{'Loans.View.LoanDocument.btnUpload'| translate }}
         </button>
       </div>
     </div>
@@ -15,26 +15,26 @@
     <table mat-table #documentsTable [dataSource]="dataSource" matSort>
 
       <ng-container matColumnDef="name">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{'Loans.View.LoanDocument.Name'| translate }} </th>
         <td mat-cell *matCellDef="let document"> {{ document.name }} </td>
       </ng-container>
 
       <ng-container matColumnDef="description">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Description </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{'Loans.View.LoanDocument.Description'| translate }} </th>
         <td mat-cell *matCellDef="let document"> {{ document.description }} </td>
       </ng-container>
 
       <ng-container matColumnDef="filename">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> File Name </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{'Loans.View.LoanDocument.filename'| translate }} </th>
         <td mat-cell *matCellDef="let document"> {{ document.fileName }} </td>
       </ng-container>
 
       <ng-container matColumnDef="actions">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Actions </th>
-        
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{'Loans.View.LoanDocument.Actions'| translate }} </th>
+
         <td mat-cell *matCellDef="let document; let index">
           <button class="document-action-button" mat-raised-button color="primary" (click)="download(document.parentEntityId,document.id)">
-            <fa-icon icon="cloud-download-alt" matTooltip="Tải về"></fa-icon>
+            <fa-icon icon="cloud-download-alt" [matTooltip]="'Loans.View.LoanDocument.ToolTipDownload'| translate"></fa-icon>
             </button>
 
           <button class="loan-document-action-button" mat-raised-button color="warn"
