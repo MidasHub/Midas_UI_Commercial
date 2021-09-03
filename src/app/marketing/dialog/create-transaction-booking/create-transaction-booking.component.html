@@ -1,27 +1,25 @@
-<h1 mat-dialog-title>Thêm booking</h1>
+<h1 mat-dialog-title>{{'Marketing.CreateTransactionMarketing.AddBooking'| translate }}</h1>
 <div mat-dialog-content>
   <div fxLayout="column" [formGroup]="formDialog">
     <mat-form-field *ngIf="!booking">
-      <mat-label>Người đăng ký (Telegram Id)</mat-label>
+      <mat-label>{{'Marketing.CreateTransactionMarketing.userNameTelegram'| translate }}</mat-label>
       <input
         matInput
         required
         formControlName="userNameTelegram">
-      <mat-error *ngIf="formDialog.controls.userNameTelegram.hasError('required')">Vui lòng thêm thông tin trước khi
-        thực
-        hiện
+      <mat-error *ngIf="formDialog.controls.userNameTelegram.hasError('required')">
+        {{'Marketing.CreateTransactionMarketing.alert'| translate }}
       </mat-error>
     </mat-form-field>
     <mat-form-field>
-      <mat-label>Số tiền</mat-label>
+      <mat-label>{{'Marketing.CreateTransactionMarketing.bookingAmount'| translate }}</mat-label>
       <input
         matInput
         required
         currencyMask
         formControlName="bookingAmount">
-      <mat-error *ngIf="formDialog.controls.bookingAmount.hasError('required')">Vui lòng thêm thông tin trước khi
-        thực
-        hiện
+      <mat-error *ngIf="formDialog.controls.bookingAmount.hasError('required')">
+        {{'Marketing.CreateTransactionMarketing.alert'| translate }}
       </mat-error>
     </mat-form-field>
   </div>

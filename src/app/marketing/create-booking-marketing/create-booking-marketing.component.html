@@ -1,26 +1,26 @@
 <mat-card class="container" [formGroup]="fromGroup">
   <mat-form-field style="width: 90%;">
-    <mat-label>Tên chiến dịch</mat-label>
+    <mat-label>{{'Marketing.CreateBookingMarketing.PosCampaignName'| translate }}</mat-label>
     <input matInput required formControlName="PosCampaignName">
   </mat-form-field>
   <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
 
     <mat-form-field fxFlex="23%">
-      <mat-label>Thời gian thông báo</mat-label>
+      <mat-label>{{'Marketing.CreateBookingMarketing.notifyDate'| translate }}</mat-label>
       <input matInput required formControlName="notifyDate" [owlDateTime]="dt2" [owlDateTimeTrigger]="dt2"
              placeholder="Thời gian thông báo">
       <mat-icon matSuffix><img src="assets/images/icons/warning.svg" height="22" width="22"></mat-icon>
       <owl-date-time #dt2></owl-date-time>
     </mat-form-field>
     <mat-form-field fxFlex="23%">
-      <mat-label>Thời gian bắt đầu</mat-label>
+      <mat-label>{{'Marketing.CreateBookingMarketing.fromDate'| translate }}</mat-label>
       <input matInput required formControlName="fromDate" [owlDateTime]="dt0" [owlDateTimeTrigger]="dt0"
              placeholder="Thời gian bắt đầu">
       <mat-icon matSuffix><img src="assets/images/icons/start.svg" height="22" width="22"></mat-icon>
       <owl-date-time #dt0></owl-date-time>
     </mat-form-field>
     <mat-form-field fxFlex="23%">
-      <mat-label>Thời gian kết thúc</mat-label>
+      <mat-label>{{'Marketing.CreateBookingMarketing.toDate'| translate }}</mat-label>
       <input matInput required formControlName="toDate" [owlDateTime]="dt1" [min]="minDateTo()"
              [owlDateTimeTrigger]="dt1"
              placeholder="Thời gian kết thúc">
@@ -28,7 +28,7 @@
       <owl-date-time #dt1></owl-date-time>
     </mat-form-field>
     <mat-form-field fxFlex="23%">
-      <mat-label>Thời gian booking</mat-label>
+      <mat-label>{{'Marketing.CreateBookingMarketing.secondRemain'| translate }}</mat-label>
       <input matInput type="number" required formControlName="secondRemain">
       <mat-icon matSuffix><img src="assets/images/icons/end.svg" height="22" width="22"></mat-icon>
     </mat-form-field>
@@ -43,20 +43,20 @@
           </div>
         </mat-form-field>
         <div fxLayout="column">
-          <label class="example-margin">Chính sách tiền:</label>
+          <label class="example-margin">{{'Marketing.CreateBookingMarketing.cashRule'| translate }}</label>
           <mat-radio-group formControlName="cashRule">
             <mat-radio-button class="example-margin" value="1">
               <div fxLayout="row" style="margin: 8px;">
                 <img src="assets/images/icons/delay.svg" height="22" width="22">
                 <p
-                  style="font-size: 18px; font-weight: bold; margin: 2px;">Chờ</p>
+                  style="font-size: 18px; font-weight: bold; margin: 2px;">{{'Marketing.CreateBookingMarketing.PosCampaignName'| translate }}Chờ</p>
               </div>
             </mat-radio-button>
             <mat-radio-button class="example-margin" value="-1">
               <div fxLayout="row" style="margin: 8px;">
                 <img src="assets/images/icons/fast-delivery.svg" width="22" height="22">
                 <p
-                  style="font-size: 18px; font-weight: bold; margin: 2px;">Ngay</p>
+                  style="font-size: 18px; font-weight: bold; margin: 2px;">{{'Marketing.CreateBookingMarketing.PosCampaignName'| translate }}Ngay</p>
               </div>
             </mat-radio-button>
           </mat-radio-group>
@@ -74,7 +74,7 @@
           <!-- Name Column -->
           <ng-container matColumnDef="description">
             <th mat-header-cell *matHeaderCellDef
-            >Thẻ
+            >{{'Marketing.CreateBookingMarketing.description'| translate }}
             </th>
             <td mat-cell *matCellDef="let row" [formGroup]="row">
               {{row.get('description').value}}
@@ -84,7 +84,7 @@
           <!-- Account no Column -->
           <ng-container matColumnDef="costRate">
             <th mat-header-cell *matHeaderCellDef
-            > Phí POS
+            > {{'Marketing.CreateBookingMarketing.costRate'| translate }}
             </th>
             <td mat-cell *matCellDef="let row" [formGroup]="row">
               <mat-form-field class="input-card">
@@ -96,7 +96,7 @@
           <!-- External ID Column -->
           <ng-container matColumnDef="cogsRate">
             <th mat-header-cell d *matHeaderCellDef
-            > Phí Vốn
+            > {{'Marketing.CreateBookingMarketing.cogsRate'| translate }}
             </th>
             <td mat-cell *matCellDef="let row" [formGroup]="row">
               <mat-form-field class="input-card">
@@ -106,7 +106,7 @@
           </ng-container>
           <ng-container matColumnDef="rate">
             <th mat-header-cell *matHeaderCellDef
-            >Phí GD
+            >{{'Marketing.CreateBookingMarketing.rate'| translate }}
             </th>
             <td mat-cell *matCellDef="let row" [formGroup]="row">
               <mat-form-field class="input-card">
@@ -116,7 +116,7 @@
           </ng-container>
           <ng-container matColumnDef="select" style="width: 50px;">
             <th mat-header-cell *matHeaderCellDef
-            >Status
+            >{{'Marketing.CreateBookingMarketing.Status'| translate }}
             </th>
             <td mat-cell *matCellDef="let row" [formGroup]="row">
               <mat-checkbox formControlName="select" class="margin-v">
@@ -133,11 +133,11 @@
   </mat-card>
   <mat-card style="margin-top: 20px;">
     <mat-tab-group>
-      <mat-tab label="Chi nhánh">
+      <mat-tab [label]="'Marketing.CreateBookingMarketing.officeName'| translate">
         <mat-card-content>
           <div fxLayout="row wrap" [formGroup]="fromGroup" fxLayoutGap="2%" cdkDropListGroup>
             <div fxFlex="44%" class="example-container">
-              <h3>Chi nhánh</h3>
+              <h3>{{'Marketing.CreateBookingMarketing.officeName'| translate }}</h3>
               <hr/>
               <div style="margin: 12px;">
                 <input matInput placeholder="Search">
@@ -178,7 +178,7 @@
               </div>
             </div>
             <div fxFlex="44%" class="example-container">
-              <h3>Áp dụng với chi nhánh</h3>
+              <h3>{{'Marketing.CreateBookingMarketing.Search'| translate }}</h3>
               <hr/>
               <div style="margin: 12px;">
                 <input matInput placeholder="Search">
@@ -201,7 +201,7 @@
         <mat-card-content>
           <div fxLayout="row wrap" [formGroup]="fromGroup" fxLayoutGap="2%" cdkDropListGroup>
             <div fxFlex="44%" class="example-container">
-              <h3>máy bán hàng</h3>
+              <h3>{{'Marketing.CreateBookingMarketing.terminalName'| translate }}</h3>
               <hr/>
               <div style="margin: 12px;">
                 <input matInput placeholder="Search">
@@ -240,7 +240,7 @@
               </div>
             </div>
             <div fxFlex="44%" class="example-container">
-              <h3>Áp dụng với máy POST</h3>
+              <h3>{{'Marketing.CreateBookingMarketing.terminalId'| translate }}</h3>
               <hr/>
               <div style="margin: 12px;">
                 <input matInput placeholder="Search">
@@ -262,13 +262,13 @@
   </mat-card>
   <mat-card-actions align="center">
     <button mat-raised-button>
-      Hủy
+      {{'Marketing.CreateBookingMarketing.btnCancel'| translate }}
     </button>
     <button mat-raised-button
             (click)="onSubmit()"
             color="primary">
-      <span *ngIf="!campaign">Tạo chiến dịch</span>
-      <span *ngIf="campaign">Cập nhập chiến dịch</span>
+      <span *ngIf="!campaign">{{'Marketing.CreateBookingMarketing.spanCreate'| translate }}</span>
+      <span *ngIf="campaign">{{'Marketing.CreateBookingMarketing.spanUpdate'| translate }}</span>
     </button>
   </mat-card-actions>
 </mat-card>
