@@ -23,7 +23,7 @@
 </form>
 
 <!-- Show input for OTP -->
-<p *ngIf="otpRequested">Please enter the OTP:</p>
+<p *ngIf="otpRequested">{{'Login_Component.twoFactor.p'| translate }}</p>
 
 <form fxLayout="column" *ngIf="otpRequested" [formGroup]="twoFactorAuthenticationForm" class="two-factor-auth-form"
   (ngSubmit)="validateOTP()">
@@ -32,28 +32,28 @@
     <span matPrefix>
       <fa-icon icon="user-shield"></fa-icon>&nbsp;&nbsp;
     </span>
-    <mat-label>OTP</mat-label>
+    <mat-label>{{'Login_Component.twoFactor.OTP'| translate }}</mat-label>
     <input type="password" matInput autocomplete="off" required formControlName="otp">
     <mat-hint align="start">
-      <strong>Delivery Method:</strong> {{ selectedTwoFactorAuthenticationDeliveryMethod.name }}
+      <strong>{{'Login_Component.twoFactor.DeliveryMethod'| translate }}</strong> {{ selectedTwoFactorAuthenticationDeliveryMethod.name }}
     </mat-hint>
     <mat-hint align="end">
-      <strong>Validity:</strong> {{ tokenValidityTime / 60 }} mins
+      <strong>{{'Login_Component.twoFactor.Validity'| translate }}</strong> {{ tokenValidityTime / 60 }}{{'Login_Component.twoFactor.mins'| translate }}
     </mat-hint>
     <mat-error *ngIf="twoFactorAuthenticationForm.controls.otp.hasError('required')">
-      OTP is <strong>required</strong>
+      {{'Login_Component.twoFactor.OTPis'| translate }}<strong>{{'Login_Component.twoFactor.required'| translate }}</strong>
     </mat-error>
   </mat-form-field>
 
   <button mat-raised-button color="primary" fxFlexAlign="center" class="two-factor-auth-button"
     [disabled]="!twoFactorAuthenticationForm.valid">
-    Validate OTP
+    {{'Login_Component.twoFactor.btnValidateOTP'| translate }}
     <mat-spinner [diameter]="20" *ngIf="loading"></mat-spinner>
   </button>
 
   <button type="button" mat-button fxFlexAlign="center" class="two-factor-auth-button" (click)="resendOTP()"
     [disabled]="loading || resendOTPLoading">
-    Resend OTP
+    {{'Login_Component.twoFactor.btnResendOTP'| translate }}
     <mat-spinner [diameter]="20" *ngIf="resendOTPLoading"></mat-spinner>
   </button>
 
