@@ -1,6 +1,6 @@
 <div fxLayout="row" fxLayoutAlign="space-between center">
   <mat-form-field fxFlex="50%">
-    <mat-label>Filter</mat-label>
+    <mat-label>{{'Navigation.LoanAccount.Filter'| translate }}</mat-label>
     <input matInput (keyup)="applyFilter($event)">
   </mat-form-field>
   <button mat-raised-button color="primary" (click)="toggleClosed()">
@@ -11,24 +11,24 @@
 <table mat-table [dataSource]="dataSource" matSort>
 
   <ng-container matColumnDef="accountNo">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header> Account Number </th>
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> {{'Navigation.LoanAccount.accountNo'| translate }} </th>
     <td mat-cell *matCellDef="let loanAccount">{{ loanAccount.accountNo }}</td>
   </ng-container>
 
   <ng-container matColumnDef="productName">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header> Loan Account </th>
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> {{'Navigation.LoanAccount.productName'| translate }} </th>
     <td mat-cell *matCellDef="let loanAccount">{{ loanAccount.productName }}</td>
   </ng-container>
 
   <ng-container matColumnDef="Type">
-    <th mat-header-cell *matHeaderCellDef> Type </th>
+    <th mat-header-cell *matHeaderCellDef> {{'Navigation.LoanAccount.Type'| translate }} </th>
     <td mat-cell *matCellDef="let loanAccount">
       <fa-icon matTooltip="{{ loanAccount.loanType.value }}" matTooltipPosition="right" [icon]="(loanAccount.loanType.code === 'accountType.individual') ? 'user' : 'users'" size="lg"></fa-icon>
     </td>
   </ng-container>
 
   <ng-container matColumnDef="Status">
-    <th mat-header-cell *matHeaderCellDef> Status </th>
+    <th mat-header-cell *matHeaderCellDef> {{'Navigation.LoanAccount.Status'| translate }} </th>
     <td mat-cell *matCellDef="let loanAccount">
       <span [className]="loanAccount.inArrears?'status-active-overdue' : (loanAccount.status.code | statusLookup)">
         <fa-icon matTooltip="{{ loanAccount.status.value }}" matTooltipPosition="right" icon="circle" size="1x"></fa-icon>
