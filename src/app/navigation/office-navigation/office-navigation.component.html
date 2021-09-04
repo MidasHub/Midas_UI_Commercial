@@ -4,7 +4,7 @@
     <div class="mat-typography">
       <mat-card-title>
         <h2>
-          {{ officeData.name }} 
+          {{ officeData.name }}
         </h2>
       </mat-card-title>
       <mat-card-subtitle>
@@ -13,14 +13,14 @@
         </p>
       </mat-card-subtitle>
     </div>
-  </mat-card-title-group>      
+  </mat-card-title-group>
 </mat-card-header>
 
 <mat-card-content>
   <div fxLayout="row wrap" class="content">
 
     <div fxFlex="50%" class="mat-body-strong">
-      Opened On
+      {{'Navigation.Office.openingDate'| translate }}
     </div>
 
     <div fxFlex="50%">
@@ -28,7 +28,7 @@
     </div>
 
     <div fxFlex="50%" class="mat-body-strong" *ngIf="officeData.parentName">
-      Parent officeData
+      {{'Navigation.Office.parentName'| translate }}
     </div>
 
     <div fxFlex="50%" *ngIf="officeData.parentName">
@@ -36,7 +36,7 @@
     </div>
 
     <div fxFlex="50%" class="mat-body-strong">
-      Number of Staff
+      {{'Navigation.Office.length'| translate }}
     </div>
 
     <div fxFlex="50%">
