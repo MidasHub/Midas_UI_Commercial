@@ -1,11 +1,11 @@
 <div fxLayout="column">
 
   <mat-form-field fxFlex="98%">
-    <mat-label>Campaign Message</mat-label>
+    <mat-label>{{'Organization.SmsCampaigns.SmsStepper.Message.message'| translate }}</mat-label>
     <textarea matInput [formControl]="message"></textarea>
   </mat-form-field>
 
-  <h3 fxFlex="98%" class="mat-h3">Template Parameters</h3>
+  <h3 fxFlex="98%" class="mat-h3">{{'Organization.SmsCampaigns.SmsStepper.Message.TemplateParameters'| translate }}</h3>
 
   <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutAlign="center">
     <button mat-stroked-button color="primary" class="parameter"
@@ -17,10 +17,10 @@
   <div fxLayout="row" class="margin-t" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="2%">
     <button mat-raised-button matStepperPrevious>
       <fa-icon icon="arrow-left"></fa-icon>&nbsp;&nbsp;
-      Previous
+      {{ "ShareButton.PreviousEng" | translate }}
     </button>
     <button mat-raised-button matStepperNext [disabled]="!smsCampaignFormValid">
-      Next&nbsp;&nbsp;
+      {{ "ShareButton.NextEng" | translate }}&nbsp;&nbsp;
       <fa-icon icon="arrow-right"></fa-icon>
     </button>
   </div>

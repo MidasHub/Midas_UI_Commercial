@@ -9,37 +9,37 @@
         <div fxLayout="column">
 
           <mat-form-field>
-            <mat-label>Offices</mat-label>
+            <mat-label>{{'Organization.Offices.Edit.Offices'| translate }}</mat-label>
             <input matInput required formControlName="name">
             <mat-error *ngIf="officeForm.controls.name.hasError('required')">
-              Office <strong>is required</strong>
+              {{'Organization.Offices.Edit.errOffices'| translate }}<strong>{{'Organization.strongRequired'| translate }}</strong>
             </mat-error>
           </mat-form-field>
 
           <mat-form-field *ngIf="officeForm.contains('parentId')">
-            <mat-label>Parent Office</mat-label>
+            <mat-label>{{'Organization.Offices.Edit.parentId'| translate }}</mat-label>
             <mat-select required formControlName="parentId">
               <mat-option *ngFor="let office of officeData.allowedParents" [value]="office.id">
                 {{ office.name }}
               </mat-option>
             </mat-select>
             <mat-error *ngIf="officeForm.controls.parentId.hasError('required')">
-              Parent Office <strong>is required</strong>
+              {{'Organization.Offices.Edit.errparentId'| translate }}<strong>{{'Organization.strongRequired'| translate }}</strong>
             </mat-error>
           </mat-form-field>
 
           <mat-form-field>
-            <mat-label>Opened On</mat-label>
+            <mat-label>{{'Organization.Offices.Edit.openingDate'| translate }}</mat-label>
             <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="openingDatePicker" required formControlName="openingDate">
             <mat-datepicker-toggle matSuffix [for]="openingDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #openingDatePicker></mat-datepicker>
             <mat-error *ngIf="officeForm.controls.openingDate.hasError('required')">
-              Date <strong>is required</strong>
+              {{'Organization.Offices.Edit.erropeningDate'| translate }}<strong>{{'Organization.strongRequired'| translate }}</strong>
             </mat-error>
           </mat-form-field>
 
           <mat-form-field>
-            <mat-label>External ID</mat-label>
+            <mat-label>{{'Organization.Offices.Edit.externalId'| translate }}</mat-label>
             <input matInput formControlName="externalId" formControlName="externalId">
           </mat-form-field>
 
@@ -48,8 +48,8 @@
       </mat-card-content>
 
       <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
-        <button type="button" mat-raised-button [routerLink]="['../general']">Cancel</button>
-        <button mat-raised-button color="primary" [disabled]="!officeForm.valid" *midasHasPermission="'UPDATE_OFFICE'">Submit</button>
+        <button type="button" mat-raised-button [routerLink]="['../general']">{{ "ShareButton.CancelEng" | translate }}</button>
+        <button mat-raised-button color="primary" [disabled]="!officeForm.valid" *midasHasPermission="'UPDATE_OFFICE'">{{ "ShareButton.Submit" | translate }}</button>
       </mat-card-actions>
 
     </form>

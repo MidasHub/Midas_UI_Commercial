@@ -1,11 +1,11 @@
 <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column" class="container m-b-20">
   <button mat-raised-button color="primary" [routerLink]="['edit']" *midasHasPermission="'UPDATE_ADHOC'">
     <fa-icon icon="edit"></fa-icon>&nbsp;&nbsp;
-    Edit
+    {{ "ShareButton.Edit" | translate }}
   </button>
   <button mat-raised-button color="warn" (click)="deleteAdhocQuery()" *midasHasPermission="'DELETE_ADHOC'">
     <fa-icon icon="trash"></fa-icon>&nbsp;&nbsp;
-    Delete
+    {{ "ShareButton.DeleteEng" | translate }}
   </button>
 </div>
 
@@ -18,7 +18,7 @@
       <div fxLayout="row wrap" class="content">
 
         <div fxFlex="50%" class="mat-body-strong">
-          Name
+          {{'Organization.AdhocQuery.View.Name'| translate }}
         </div>
 
         <div fxFlex="50%">
@@ -26,7 +26,7 @@
         </div>
 
         <div fxFlex="50%" class="mat-body-strong">
-          Query
+          {{'Organization.AdhocQuery.View.Query'| translate }}
         </div>
 
         <div fxFlex="50%">
@@ -34,7 +34,7 @@
         </div>
 
         <div fxFlex="50%" class="mat-body-strong">
-          Table Affected
+          {{'Organization.AdhocQuery.View.tableName'| translate }}
         </div>
 
         <div fxFlex="50%">
@@ -42,7 +42,7 @@
         </div>
 
         <div fxFlex="50%" class="mat-body-strong" *ngIf="adhocQueryData.reportRunFrequency">
-          Report Run Frequency
+          {{'Organization.AdhocQuery.View.reportRunFrequency'| translate }}
         </div>
 
         <div fxFlex="50%" *ngIf="adhocQueryData.reportRunFrequency">
@@ -50,7 +50,7 @@
         </div>
 
         <div fxFlex="50%" class="mat-body-strong">
-          Status
+          {{'Organization.AdhocQuery.View.Status'| translate }}
         </div>
 
         <div fxFlex="50%">
@@ -58,7 +58,7 @@
         </div>
 
         <div fxFlex="50%" class="mat-body-strong">
-          Created By
+          {{'Organization.AdhocQuery.View.createdBy'| translate }}
         </div>
 
         <div fxFlex="50%">

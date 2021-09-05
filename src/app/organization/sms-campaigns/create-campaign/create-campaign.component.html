@@ -24,9 +24,9 @@
 
     <mat-step [stepControl]="smsCampaignForm">
 
-      <ng-template matStepLabel>CAMPAIGN</ng-template>
+      <ng-template matStepLabel>{{'Organization.SmsCampaigns.Create.CAMPAIGN'| translate }}</ng-template>
 
-      <mifosx-sms-campaign-step 
+      <mifosx-sms-campaign-step
         [smsCampaignTemplate]="smsCampaignTemplate"
         (templateParameters)="setParameters($event)"
       >
@@ -36,7 +36,7 @@
 
     <mat-step>
 
-      <ng-template matStepLabel>MESSAGE</ng-template>
+      <ng-template matStepLabel>{{'Organization.SmsCampaigns.Create.MESSAGE'| translate }}</ng-template>
 
       <mifosx-campaign-message-step
         [templateParameters]="templateParameters"
@@ -48,9 +48,9 @@
 
     <mat-step state="preview" *ngIf="smsCampaignForm.valid" completed>
 
-      <ng-template matStepLabel>PREVIEW</ng-template>
+      <ng-template matStepLabel>{{'Organization.SmsCampaigns.Create.PREVIEW'| translate }}</ng-template>
 
-      <mifosx-campaign-preview-step 
+      <mifosx-campaign-preview-step
         [smsCampaignTemplate]="smsCampaignTemplate"
         [campaign]="smsCampaign" (submit)="submit()"
       >
