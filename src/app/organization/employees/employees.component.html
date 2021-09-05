@@ -2,12 +2,12 @@
 
   <button mat-raised-button color="primary" *midasHasPermission="'CREATE_STAFF'" [routerLink]="['../', 'organization', 'bulk-import', 'Employees']">
     <fa-icon icon="upload"></fa-icon>&nbsp;&nbsp;
-    Import Employees
+    {{'Organization.Emplouees.btnImportEmployees'| translate }}
   </button>
 
   <button mat-raised-button color="primary" [routerLink]="['create']" *midasHasPermission="'CREATE_STAFF'">
     <fa-icon icon="plus"></fa-icon>&nbsp;&nbsp;
-    Create Employee
+    {{'Organization.Emplouees.btnCreateEmployee'| translate }}
   </button>
 
 </div>
@@ -16,7 +16,7 @@
 
   <div fxLayout="row" fxLayoutGap="20px">
     <mat-form-field fxFlex>
-      <mat-label>Filter</mat-label>
+      <mat-label>{{'Organization.Emplouees.Filter'| translate }}</mat-label>
       <input matInput (keyup)="applyFilter($event.target.value)">
     </mat-form-field>
   </div>
@@ -26,12 +26,12 @@
     <table mat-table [dataSource]="dataSource" matSort>
 
       <ng-container matColumnDef="displayName">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{'Organization.Emplouees.Name'| translate }} </th>
         <td mat-cell *matCellDef="let employee"> {{ employee.displayName }} </td>
       </ng-container>
 
       <ng-container matColumnDef="isLoanOfficer">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Loan Officer </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{'Organization.Emplouees.isLoanOfficer'| translate }} </th>
         <td mat-cell *matCellDef="let employee">
           <div [className]="employee.isLoanOfficer === true ? 'true' : 'false'">
             <fa-icon *ngIf="employee.isLoanOfficer" icon="check-circle" size="lg" matTooltip="Yes" matTooltipPosition="right"></fa-icon>
@@ -41,12 +41,12 @@
       </ng-container>
 
       <ng-container matColumnDef="officeName">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Office </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{'Organization.Emplouees.Office'| translate }} </th>
         <td mat-cell *matCellDef="let employees"> {{ employees.officeName }} </td>
       </ng-container>
 
       <ng-container matColumnDef="isActive">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Status </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{'Organization.Emplouees.Status'| translate }} </th>
         <td mat-cell *matCellDef="let employee">
           <div [className]="employee.isActive === true ? 'true' : 'false'">
             <fa-icon matTooltip="{{ employee.isActive === true ? 'Active' : 'Inactive' }}" matTooltipPosition="right" icon="circle" size="lg"></fa-icon>

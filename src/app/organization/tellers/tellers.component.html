@@ -11,7 +11,7 @@
 
   <div fxLayout="row" fxLayoutGap="20px">
     <mat-form-field fxFlex>
-      <mat-label>Filter</mat-label>
+      <mat-label>{{'Organization.Tellers.Filter'| translate }}</mat-label>
       <input matInput (keyup)="applyFilter($event.target.value)">
     </mat-form-field>
   </div>
@@ -21,34 +21,34 @@
     <table mat-table [dataSource]="dataSource" matSort>
 
       <ng-container matColumnDef="officeName">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Branch </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{'Organization.Tellers.Branch'| translate }} </th>
         <td mat-cell *matCellDef="let teller"> {{ teller.officeName }} </td>
       </ng-container>
 
       <ng-container matColumnDef="name">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Teller Name </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{'Organization.Tellers.name'| translate }} </th>
         <td mat-cell *matCellDef="let teller"> {{ teller.name }} </td>
       </ng-container>
 
       <ng-container matColumnDef="status">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Status </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{'Organization.Tellers.Status'| translate }} </th>
         <td mat-cell *matCellDef="let teller">
           <div [className]="teller.status === 'ACTIVE' ? 'true' : 'false'">
             <fa-icon matTooltip="{{ teller.status === 'ACTIVE' ? 'Active' : 'Inactive' }}" matTooltipPosition="right" icon="circle" size="lg"></fa-icon>
-          </div>    
+          </div>
         </td>
       </ng-container>
 
       <ng-container matColumnDef="startDate">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Started On </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{'Organization.Tellers.startDate'| translate }} </th>
         <td mat-cell *matCellDef="let teller"> {{ teller.startDate | date }} </td>
       </ng-container>
 
       <ng-container matColumnDef="actions">
-        <th mat-header-cell *matHeaderCellDef> Actions </th>
+        <th mat-header-cell *matHeaderCellDef> {{'Organization.Tellers.Actions'| translate }} </th>
         <td mat-cell *matCellDef="let teller" (click)="$event.stopPropagation()">
           <button mat-button color="primary" [routerLink]="[teller.id,'cashiers']">
-            <fa-icon icon="eye"></fa-icon>&nbsp;&nbsp;View Cashiers
+            <fa-icon icon="eye"></fa-icon>&nbsp;&nbsp;{{'Organization.Tellers.btnViewCashiers'| translate }}
           </button>
         </td>
       </ng-container>

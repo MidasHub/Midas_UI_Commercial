@@ -8,18 +8,18 @@
         fxFlex="48%" (ngSubmit)="addCurrency()">
 
         <mat-form-field fxFlex="calc(90%-20px)">
-            <mat-label>Currency</mat-label>
+            <mat-label>{{'Organization.Currencies.ManageCurrencies.Currency'| translate }}</mat-label>
             <mat-select required formControlName="currency">
               <mat-option *ngFor="let currency of currencyData" [value]="currency">
                 {{ currency.name }}
               </mat-option>
             </mat-select>
             <mat-error *ngIf="currencyForm.controls.currency.hasError('required')">
-              Currency is <strong>required</strong>
+              {{'Organization.Currencies.ManageCurrencies.errCurrency'| translate }}<strong>{{'Organization.strongRequired'| translate }}</strong>
             </mat-error>
         </mat-form-field>
 
-        <button mat-raised-button fxFlex color="primary" 
+        <button mat-raised-button fxFlex color="primary"
           [disabled]="!currencyForm.valid" *midasHasPermission="'UPDATE_CURRENCY'">
           <fa-icon icon="plus"></fa-icon>
         </button>

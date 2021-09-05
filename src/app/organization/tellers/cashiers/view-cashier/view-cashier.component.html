@@ -1,11 +1,11 @@
 <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column" class="container m-b-20">
   <button mat-raised-button color="primary" [routerLink]="['edit']" *midasHasPermission="'UPDATE_CASHIER'">
     <fa-icon icon="edit"></fa-icon>&nbsp;&nbsp;
-    Edit
+    {{ "ShareButton.Edit" | translate }}
   </button>
   <button mat-raised-button color="warn" (click)="deleteCashier()" *midasHasPermission="'DELETECASHIER_TELLER'">
     <fa-icon icon="trash"></fa-icon>&nbsp;&nbsp;
-    Delete
+    {{ "ShareButton.DeleteEng" | translate }}
   </button>
 </div>
 
@@ -19,7 +19,7 @@
       <div fxLayout="row wrap" class="content">
 
         <div fxFlex="50%" class="header">
-          Name
+          {{'Organization.Tellers.Cashiers.View.Name'| translate }}
         </div>
 
         <div fxFlex="50%">
@@ -27,7 +27,7 @@
         </div>
 
         <div fxFlex="50%" class="header">
-          Teller
+          {{'Organization.Tellers.Cashiers.View.Teller'| translate }}
         </div>
 
         <div fxFlex="50%">
@@ -35,7 +35,7 @@
         </div>
 
         <div fxFlex="50%" class="header" *ngIf="cashierData.description !== ''">
-          Description
+          {{'Organization.Tellers.Cashiers.View.Description'| translate }}
         </div>
 
         <div fxFlex="50%" *ngIf="cashierData.description !== ''">
@@ -43,7 +43,7 @@
         </div>
 
         <div fxFlex="50%" class="header">
-          Start Date
+          {{'Organization.Tellers.Cashiers.View.startDate'| translate }}
         </div>
 
         <div fxFlex="50%">
@@ -51,7 +51,7 @@
         </div>
 
         <div fxFlex="50%" class="header">
-          End Date
+          {{'Organization.Tellers.Cashiers.View.endDate'| translate }}
         </div>
 
         <div fxFlex="50%">
@@ -59,7 +59,7 @@
         </div>
 
         <div fxFlex="50%" class="header">
-          Full Day?
+          {{'Organization.Tellers.Cashiers.View.isFullDay'| translate }}
         </div>
 
         <div fxFlex="50%">

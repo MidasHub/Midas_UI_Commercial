@@ -1,11 +1,11 @@
 <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column" class="container m-b-20">
   <button mat-raised-button color="primary" [routerLink]="['edit']" *midasHasPermission="'UPDATE_TELLER'">
     <fa-icon icon="edit"></fa-icon>&nbsp;&nbsp;
-    Edit
+    {{ "ShareButton.Edit" | translate }}
   </button>
   <button mat-raised-button color="warn" (click)="deleteTeller()" *midasHasPermission="'DELETE_TELLER'">
     <fa-icon icon="trash"></fa-icon>&nbsp;&nbsp;
-    Delete
+    {{ "ShareButton.DeleteEng" | translate }}
   </button>
 </div>
 
@@ -18,15 +18,15 @@
       <div fxLayout="row wrap" class="content">
 
         <div fxFlex="50%" class="mat-body-strong">
-          Teller Name
+          {{'Organization.Tellers.View.name'| translate }}
         </div>
 
         <div fxFlex="50%">
           {{ tellerData.name }}
         </div>
-        
+
         <div fxFlex="50%" class="mat-body-strong">
-          Office
+          {{'Organization.Tellers.View.Office'| translate }}
         </div>
 
         <div fxFlex="50%">
@@ -34,7 +34,7 @@
         </div>
 
         <div fxFlex="50%" class="mat-body-strong" *ngIf="tellerData.description">
-          Description
+          {{'Organization.Tellers.View.Description'| translate }}
         </div>
 
         <div fxFlex="50%" *ngIf="tellerData.description">
@@ -42,7 +42,7 @@
         </div>
 
         <div fxFlex="50%" class="mat-body-strong">
-          Start Date
+          {{'Organization.Tellers.View.startDate'| translate }}
         </div>
 
         <div fxFlex="50%">
@@ -50,7 +50,7 @@
         </div>
 
         <div fxFlex="50%" class="mat-body-strong" *ngIf="tellerData.endDate">
-          End Date
+          {{'Organization.Tellers.View.endDate'| translate }}
         </div>
 
         <div fxFlex="50%" *ngIf="tellerData.endDate">
@@ -58,7 +58,7 @@
         </div>
 
         <div fxFlex="50%" class="mat-body-strong">
-          Status
+          {{'Organization.Tellers.View.Status'| translate }}
         </div>
 
         <div fxFlex="50%">

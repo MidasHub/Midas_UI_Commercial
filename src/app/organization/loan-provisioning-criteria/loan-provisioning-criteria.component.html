@@ -1,7 +1,7 @@
 <div class="container m-b-20" fxLayout="row" fxLayoutAlign="end" fxLayoutGap="20px">
   <button mat-raised-button color="primary" [routerLink]="['create']" *midasHasPermission="'CREATE_PROVISIONING_CRITERIA'">
     <fa-icon icon="plus"></fa-icon>&nbsp;&nbsp;
-    Create Provisioning Criteria
+    {{'Organization.LoanProvisioning.CreateProvisioningCriteria'| translate }}
   </button>
 </div>
 
@@ -9,7 +9,7 @@
 
   <div fxLayout="row" fxLayoutGap="20px">
     <mat-form-field fxFlex>
-      <mat-label>Filter</mat-label>
+      <mat-label>{{'Organization.LoanProvisioning.Filter'| translate }}</mat-label>
       <input matInput (keyup)="applyFilter($event.target.value)">
     </mat-form-field>
   </div>
@@ -19,12 +19,12 @@
     <table mat-table [dataSource]="dataSource" matSort>
 
       <ng-container matColumnDef="criteriaName">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{'Organization.LoanProvisioning.Name'| translate }} </th>
         <td mat-cell *matCellDef="let loanProvisioningCriteria"> {{ loanProvisioningCriteria.criteriaName }} </td>
       </ng-container>
 
       <ng-container matColumnDef="createdBy">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Created By </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{'Organization.LoanProvisioning.createdBy'| translate }} </th>
         <td mat-cell *matCellDef="let loanProvisioningCriteria"> {{ loanProvisioningCriteria.createdBy }} </td>
       </ng-container>
 
