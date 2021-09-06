@@ -264,8 +264,8 @@ export class CreateTransactionComponent implements OnInit {
       )
       .subscribe((data: any) => {
         if (data.status != 200) {
-          if (data.statusCode == 401) {
-            if (data.error == "Unauthorize with Midas") {
+          if (data.status == 401) {
+            if (data.error == 'Unauthorize with Midas') {
               this.alertService.alert({
                 message: "Phiên làm việc hết hạn vui lòng đăng nhập lại để tiếp tục",
                 msgClass: "cssDanger",
@@ -274,8 +274,8 @@ export class CreateTransactionComponent implements OnInit {
             }
           }
 
-          if (data.statusCode == 666) {
-            if (typeof data.error !== "undefined" && data.error !== "") {
+          if (data.status == 666) {
+            if (typeof data.error !== 'undefined' && data.error !== '') {
               this.alertService.alert({
                 message: `${data.error}`,
                 msgClass: "cssDanger",
@@ -529,7 +529,7 @@ export class CreateTransactionComponent implements OnInit {
     let traceNo = this.transactionCreateForm.get("traceNo").value;
     let batchNo = this.transactionCreateForm.get("batchNo").value;
 
-    if (!traceNo || !batchNo || traceNo.trim().length == 0 || batchNo.trim().length == 0) {
+    if (!traceNo || !batchNo || String(traceNo).trim().length === 0 || String(batchNo).trim().length === 0) {
       messageConfirm = `Hệ thống ghi nhận đây là giao dịch treo (do không có mã lô và mã hóa đơn), bạn chắc chắn muốn lưu giao dịch?`;
     }
 

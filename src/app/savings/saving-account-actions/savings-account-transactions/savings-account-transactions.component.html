@@ -38,7 +38,7 @@
             </mat-option> -->
             <mat-option label="Chi phí khác" value="!Expense"> Chi phí khác </mat-option>
             <mat-option label="Định phí" value="Expense-Fixed"> Định phí </mat-option>
-            <mat-option label="Biến phí" value="Expense-Variabled"> Biến phí </mat-option>
+            <mat-option label="Biến phí" value="Expense-Variable"> Biến phí </mat-option>
             <mat-option label="Tạm ứng thù lao" value="Expense-Equity"> Tạm ứng thù lao </mat-option>
           </mat-select>
           <mat-error *ngIf="savingAccountTransactionForm?.controls?.paymentTypeGroup?.hasError('required')">
@@ -92,7 +92,7 @@
         <mat-form-field *ngIf="savingAccountTransactionForm.controls['bankNumber']">
           <mat-label>Chi nhánh</mat-label>
           <mat-select formControlName="bankNumber">
-            <mat-option *ngFor="let office of offices" selected label="{{ office.name }}" value="{{ office.id }}">
+            <mat-option *ngFor="let office of offices" selected  value="{{ office.id }}">
               {{ office.name }}
             </mat-option>
           </mat-select>
@@ -104,7 +104,7 @@
         <mat-form-field *ngIf="savingAccountTransactionForm.controls['accountNumber'] && showStaffChoose">
           <mat-label>Nhân viên</mat-label>
           <mat-select formControlName="accountNumber">
-            <mat-option *ngFor="let staff of limitInfo?.listStaff" selected label="{{ staff.displayName }}" value="{{ staff.staffId }}">
+            <mat-option *ngFor="let staff of limitInfo?.listStaff" selected  value="{{ staff.staffId }}">
               {{ staff.displayName }}
             </mat-option>
           </mat-select>

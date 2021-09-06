@@ -497,7 +497,7 @@ export class CreateBatchTransactionComponent implements OnInit {
               }
             }
 
-            if (result2.statusCode == 666) {
+            if (result2.status == 666) {
               if (typeof result2.error !== "undefined" && result2.error !== "") {
                 this.alertService.alert({
                   message: `${result2.error}`,
@@ -665,7 +665,7 @@ export class CreateBatchTransactionComponent implements OnInit {
     let traceNo = form.get("tid").value;
     let batchNo = form.get("batchNo").value;
 
-    if (!traceNo || !batchNo || traceNo.trim().length == 0 || batchNo.trim().length == 0) {
+    if (!traceNo || !batchNo || String(traceNo).trim().length == 0 || String(batchNo).trim().length == 0) {
       messageConfirm = `Hệ thống ghi nhận đây là giao dịch treo (do không có mã lô và mã hóa đơn), bạn chắc chắn muốn lưu giao dịch?`;
     }
 
