@@ -497,7 +497,7 @@ export class CreateBatchTransactionComponent implements OnInit {
               }
             }
 
-            if (result2.statusCode == 666) {
+            if (result2.status == 666) {
               if (typeof result2.error !== "undefined" && result2.error !== "") {
                 this.alertService.alert({
                   message: `${result2.error}`,
