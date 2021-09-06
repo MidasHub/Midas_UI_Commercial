@@ -223,7 +223,7 @@
           <td mat-cell fxHide fxShow.gt-md *matCellDef="let form" [formGroup]="form" style="text-align: center">
             <mat-form-field *ngIf="form.contains('batchNo') && !form.contains('saved')" class="no-input">
               <mat-label>Batch No</mat-label>
-              <input [required]="isRequiredTraceBatchNo" matInput formControlName="batchNo" />
+              <input [required]="isRequiredTraceBatchNo" type="number" matInput formControlName="batchNo" />
             </mat-form-field>
             <span *ngIf="form.contains('saved')">{{ form.get("batchNo").value }}</span>
           </td>
@@ -234,7 +234,7 @@
           <td mat-cell fxHide fxShow.gt-md *matCellDef="let form" [formGroup]="form" style="text-align: center">
             <mat-form-field *ngIf="form.contains('tid') && !form.contains('saved')" class="no-input">
               <mat-label>Trace No</mat-label>
-              <input [required]="isRequiredTraceBatchNo" matInput formControlName="tid" />
+              <input [required]="isRequiredTraceBatchNo" type="number" matInput formControlName="tid" />
             </mat-form-field>
             <span *ngIf="form.contains('saved')">{{ form.get("tid").value }}</span>
           </td>
