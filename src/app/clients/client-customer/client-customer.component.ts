@@ -70,7 +70,6 @@ export class ClientCustomerComponent implements OnInit, AfterViewInit {
     private midasClientService: MidasClientService,
     private authenticationService: AuthenticationService,
     private formBuilder: FormBuilder,
-    private centersService: CentersService
 
   ) {}
 
