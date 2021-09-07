@@ -1,8 +1,8 @@
-<h1 mat-dialog-title>Cancel</h1>
+<h1 mat-dialog-title>{{'Shared.CancelDialog.Cancel'| translate}}</h1>
 <div mat-dialog-content>
-  <p>Are you sure you want to leave this page and lose all inputted data?</p>
+  <p>{{'Shared.CancelDialog.ask'| translate}}</p>
 </div>
 <mat-dialog-actions align="end">
-  <button mat-raised-button mat-dialog-close>No</button>
-  <button mat-raised-button color="warn" [mat-dialog-close]="{ cancel: true }">Yes</button>
+  <button mat-raised-button mat-dialog-close>{{'Shared.CancelDialog.No'| translate}}</button>
+  <button mat-raised-button color="warn" [mat-dialog-close]="{ cancel: true }">{{'Shared.CancelDialog.Yes'| translate}}</button>
 </mat-dialog-actions>

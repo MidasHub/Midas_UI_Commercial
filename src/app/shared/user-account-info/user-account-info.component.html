@@ -5,10 +5,10 @@
   class=" aligned-with-icons "
   color="primary"
   mat-stroked-button
-  matTooltip="Tổng số dư tài khoản ngân hàng"
+  [matTooltip]="'Shared.UserAccountInfo.ToolTipTotalBalance'| translate"
   [matMenuTriggerFor]="UserSavingMenu"
 >
- 
+
 <i class="fas fa-dollar-sign"></i><span>: {{ totalBalance | money }}</span>
 </button>
 
@@ -17,7 +17,7 @@
     <mat-card-content>
       <ul class="dropdown-menu" *ngIf="listSaving?.length == 0">
         <li style="padding: 10px 0; margin: 2px 0 0; pointer-events: auto ">
-          <strong style="color: red;">(Không có tài khoản)</strong>
+          <strong style="color: red;">{{'Shared.UserAccountInfo.noAccount'| translate}}</strong>
         </li>
       </ul>
       <ul class="dropdown-menu" *ngIf="listSaving?.length > 0">
