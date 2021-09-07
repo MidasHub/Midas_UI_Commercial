@@ -2786,14 +2786,36 @@
       "labelClientCash": "Tài khoản tạm ứng của khách hàng",
       "labelTypes": "Loại",
       "labelAmountAdvance": "Số tiền ứng",
-      "labelNoteAdvance": "Ghi chú"
+      "labelNoteAdvance": "Ghi chú",
+      "entityAdvanceCash": "Loại",
+      "office": "Chi nhánh",
+      "staff": "Nhân viên"
     },
     "PartnerAdvanceCash": {
       "partnerTitle": "Điều chuyển tiền từ đối tác",
       "labelTypes": "Loại",
       "labelAmountAdvance": "Số tiền",
       "labelOfficeReciver": "Chi nhánh",
-      "labelAccountReciver": "Tài khoản nhận"
+      "labelAccountReciver": "Tài khoản nhận",
+      "partnerAdvanceCash": "Chọn đối tác",
+      "errpartnerAdvanceCash": "Yêu cầu: chọn đối tác"
+    },
+    "TransferCrossOffice": {
+      "title": "ĐIỀU CHUYỂN TIỀN",
+      "typeAdvanceCashes": "Loại",
+      "office": "Chi nhánh nhận",
+      "staff": "Nhân viên",
+      "partner": "Đối tác ghi nhân",
+      "partnerLocal": "Đối tác ghi nhân",
+      "savingAccount": "Tài khoản",
+      "amount": "Số tiền",
+      "note": "Ghi chú",
+      "btnConfirm": "Thực hiện"
+    },
+    "UpdateSavingAccount": {
+      "title": "Chỉnh sửa tài khoản",
+      "paymentType": "Loại",
+      "note": "Ghi chú"
     }
   },
   "Account_Transfer_Component": {
@@ -6156,7 +6178,7 @@
     "XbrlComponent": {
       "SavedSuccessfully": "Saved Successfully",
       "GenerateReport": "Generate Report",
-      "SaveChanges ": "Save Changes ",
+      "SaveChanges ": "Save Changes "
     },
     "XbrlReport": {
       "startDate": "Start Date",
@@ -6165,6 +6187,323 @@
       "Name": "Name",
       "Dimension": "Dimension",
       "Value": "Value"
+    }
+  },
+  "Savings": {
+    "strongRequired": "required",
+    "CreateSavingAccount": {
+      "DETAILS": "DETAILS",
+      "TERMS": "TERMS",
+      "CHARGES": "CHARGES",
+      "PREVIEW": "PREVIEW"
+    },
+    "EditSavingAccount": {
+      "DETAILS": "DETAILS",
+      "TERMS": "TERMS",
+      "CHARGES": "CHARGES",
+      "PREVIEW": "PREVIEW"
+    },
+    "Actions": {
+      "Activate": {
+        "activatedOnDate": "Activated On Date",
+        "erractivatedOnDate": "Activated On Date is "
+      },
+      "AddCharge": {
+        "Charge": "Charge",
+        "errCharge": "Charge is ",
+        "Amount": "Amount",
+        "errAmount": "Amount is ",
+        "chargeCalculationType": "Charge Calculation",
+        "chargeTimeType": "Charge time type",
+        "dueDate": "Due for collection on",
+        "errdueDate": "Due for collection on is ",
+        "feeOnMonthDay": "Due On",
+        "errfeeOnMonthDay": "Due Date is ",
+        "feeInterval": "Repeats Every"
+      },
+      "ApplyAnnualFees": {
+        "dueDate": "Annual Fees Transaction Date",
+        "errdueDate": "Due Date is ",
+        "Amount": "Amount",
+        "errAmount": "Amount is "
+      },
+      "Approve": {
+        "approvedOnDate": "Approved On Date",
+        "errapprovedOnDate": "Approved On Date is ",
+        "Note": "Note"
+      },
+      "Close": {
+        "closedOnDate": "Closed On Date",
+        "errclosedOnDate": "Closed On Date is ",
+        "withdrawBalance": "Withdraw Balance",
+        "postInterestValidationOnClosure": "Is Interest Posting required on closure date?",
+        "amount": "Transaction Amount",
+        "PaymentType": "Payment Type",
+        "ShowPaymentDetails": "Show Payment Details",
+        "accountNumber": "Account Number",
+        "Cheque": "Cheque",
+        "routingCode": "Routing Code",
+        "receiptNumber": "Receipt Number",
+        "Bank": "Bank",
+        "Note": "Note"
+      },
+      "PostInterest": {
+        "transactionDate": "Transaction Date",
+        "errtransactionDate": "Transaction Date is "
+      },
+      "Reject": {
+        "rejectedOnDate": "Rejected On Date",
+        "errrejectedOnDate": "Rejected On Date is ",
+        "Note": "Note"
+      },
+      "AssignStaff": {
+        "toSavingsOfficerId": "To Savings Officer",
+        "assignmentDate": "Assignment Date",
+        "errassignmentDate": "Assignment Date is "
+      },
+      "Transactions": {
+        "title": "Rút tiền từ tài khoản thanh toán",
+        "title2": "Nộp tiền vào tài khoản thanh toán",
+        "transactionDate": "Ngày giao dịch",
+        "errtransactionDate": "Ngày giao dịch ",
+        "required": "bắt buộc",
+        "transactionAmount": "Số tiền",
+        "errtransactionAmount": "Số tiền ",
+        "paymentTypeGroup": "Nhóm chi phí",
+        "Expense": "Chi phí khác",
+        "Fixed": "Định phí",
+        "Variabled": "Biến phí",
+        "Equity": "Tạm ứng thù lao",
+        "errpaymentTypeGroup": "Nhóm chi phí ",
+        "paymentType": "Loại chi phí",
+        "errpaymentType": "Loại chi phí ",
+        "limitConfig": "Định mức tháng này:",
+        "limitUsed": "Hiện tại đã chi:",
+        "limitAvailable": "Định mức còn lại:",
+        "office": "Chi nhánh",
+        "accountNumber": "Account Number",
+        "accountNumber2": "Nhân viên",
+        "Cheque": "Cheque",
+        "routingCode": "Routing Code",
+        "receiptNumber": "Receipt Number",
+        "note": "Ghi chú",
+        "Cancel": "Trở về",
+        "Confirm": "Thực hiện"
+      },
+      "UnassignStaff": {
+        "unassignedDate": "Unassignment Date",
+        "errunassignedDate": "Unassignment Date is "
+      },
+      "UndoApproval": {
+        "Note": "Note"
+      },
+      "Withdraw": {
+        "withdrawnOnDate": "Withdrawn On Date",
+        "errwithdrawnOnDate": "Withdrawn On Date is ",
+        "Note": "Note"
+      }
+    },
+    "Stepper": {
+      "Charges": {
+        "Charge": "Charge",
+        "Add": "Add",
+        "Name": "Name",
+        "Type": "Type",
+        "Amount": "Amount",
+        "chargeTimeType": "Collected On",
+        "Date": "Date",
+        "NA": "N/A",
+        "repaymentsEvery": "Repayments Every",
+        "Actions": "Actions"
+      },
+      "Details": {
+        "productId": "Product Name",
+        "errproductId": "Product Name is ",
+        "submittedOnDate": "Submitted On",
+        "errsubmittedOnDate": "Submission Date is ",
+        "fieldOfficerId": "Field Officer",
+        "Bank": "Bank",
+        "bankNo": "Bank No",
+        "externalId": "External ID"
+      },
+      "Preview": {
+        "Details": "Details",
+        "Product": "Product",
+        "submittedOnDate": "Submitted On",
+        "externalId": "External Id",
+        "FieldOfficer": "Field Officer",
+        "Terms": "Terms",
+        "Currency": "Currency",
+        "decimal": "Decimal Places",
+        "currencyMultiple": "Currency in multiples of",
+        "nominalAnnualInterestRate": "Nominal Annual Interest Rate:",
+        "interestCompoundingPeriodType": "Interest Compounding Period:",
+        "interestPostingPeriodType": "Interest Posting Period:",
+        "interestCalculationType": "Interest Calculated using:",
+        "DaysInYear": "Days in Year:",
+        "minRequiredOpeningBalance": "Minimum Opening Balance:",
+        "withdrawalFeeForTransfers": "Apply Withdrawal Fee for Transfers:",
+        "lockinPeriodFrequency": "Lock-in Period:",
+        "allowOverdraft": "Is Overdraft Allowed:",
+        "minOverdraftForInterestCalculation": "Minimum Overdraft Required for Interest Calculation:",
+        "nominalAnnualInterestRateOverdraft": "Nominal Annual Interest for Overdraft:",
+        "overdraftLimit": "Maximum Overdraft Amount Limit:",
+        "enforceMinRequiredBalance": "Enforce Minimum Balance:",
+        "minRequiredBalance": "Minimum Balance:",
+        "Charges": "Charges",
+        "Name": "Name",
+        "Type": "Type",
+        "Amount": "Amount",
+        "Date": "Date",
+        "NA": "N/A",
+        "repaymentsEvery": "Repayments Every",
+        "chargeTimeType": "Collected On"
+      },
+      "Term": {
+        "Currency": "Currency",
+        "decimal": "Decimal Places",
+        "nominalAnnualInterestRate": "Nominal Annual Interest Rate",
+        "errnominalAnnualInterestRate": "Nominal Annual Interest is ",
+        "interestCompoundingPeriodType": "Interest Compounding Period",
+        "errinterestCompoundingPeriodType": "Interest Compounding Period is ",
+        "currencyMultiple": "Currency in multiples of",
+        "interestPostingPeriodType": "Interest Posting Period",
+        "errinterestPostingPeriodType": "Interest Posting Period is ",
+        "interestCalculationType": "Interest Calculated using",
+        "errinterestCalculationType": "Interest Calculated using is ",
+        "DaysInYear": "Days in Year",
+        "errDaysInYear": "Days in Year is ",
+        "minRequiredOpeningBalance": "Minimum Opening Balance",
+        "withdrawalFeeForTransfers": "Apply Withdrawal Fee for Transfers",
+        "LockInPeriod": "Lock-in Period",
+        "Frequency": "Frequency",
+        "Type": "Type",
+        "Overdraft": "Overdraft",
+        "allowOverdraft": "Is Overdraft Allowed?",
+        "minOverdraftForInterestCalculation": "Minimum Overdraft Required for Interest Calculation",
+        "nominalAnnualInterestRateOverdraft": "Nominal Annual Interest for Overdraft",
+        "overdraftLimit": "Maximum Overdraft Amount Limit",
+        "enforceMinRequiredBalance": "Enforce Minimum Balance",
+        "minRequiredBalance": "Minimum Balance",
+        "minBalanceForInterestCalculation": "Balance Required for Interest Calculation"
+      }
+    },
+    "View": {
+      "ChargesTab": {
+        "AllCharges": "All Charges",
+        "Name": "Name",
+        "feeOrPenalty": "Fee/Penalty",
+        "paymentDueAt": "Payment Due At",
+        "dueAsOf": "Due As Of",
+        "repeatsOn": "Repeats On (M/d)",
+        "calculationType": "Calculation Type",
+        "Due": "Due",
+        "Paid": "Paid",
+        "Waived": "Waived",
+        "Outstanding": "Outstanding",
+        "Actions": "Actions"
+      },
+      "CustomDialog": {
+        "CalculateInterest": {
+          "content": "Are you sure you want to calculate interest ?"
+        },
+        "InactiveCharge": {
+          "content": "Are you sure you want to inactivate charge with id:"
+        },
+        "PostInterest": {
+          "content": "Are you sure you want to post interest ?",
+          "PostInterest": "Post Interest"
+        },
+        "ToggleWitholdTax": {
+          "title": "Withhold Tax",
+          "content": "Are you sure you want to ",
+          "content2": "withhold tax for this account ?"
+        },
+        "UndoTransaction": {
+          "title": "Undo Transaction",
+          "content": "Are you sure you want to undo this transaction ?"
+        },
+        "WaiveCharge": {
+          "title": "Waive Charge",
+          "content": "Are you sure you want to waive charge with id: "
+        }
+      },
+      "StandingInstructions": {
+        "AllStandingInstructions": "All Standing Instructions",
+        "Client": "Client",
+        "fromAccount": "From Account",
+        "Beneficiary": "Beneficiary",
+        "toAccount": "To Account",
+        "Amount": "Amount",
+        "Validity": "Validity",
+        "Actions": "Actions"
+      },
+      "Transactions": {
+        "Edit": {
+          "transactionDate": "Transaction Date",
+          "errtransactionDate": "Transaction Date is ",
+          "transactionAmount": "Transaction Amount",
+          "errtransactionAmount": "Transaction Amount is ",
+          "paymentType": "Payment Type",
+          "ShowPaymentDetails": "Show Payment Details",
+          "accountNumber": "Account Number",
+          "Cheque": "Cheque",
+          "routingCode": "Routing Code",
+          "receiptNumber": "Receipt Number",
+          "Bank": "Bank"
+        },
+        "ViewTransaction": {
+          "Edit": "Edit",
+          "Undo": "Undo",
+          "id": "Transaction Id",
+          "Type": "Type",
+          "date": "Transaction Date",
+          "Currency": "Currency",
+          "Amount": "Amount",
+          "Note": "Note",
+          "paymentType": "Payment Type",
+          "accountNumber": "Account No.",
+          "checkNumber": "Cheque Number",
+          "routingCode": "Routing Code",
+          "receiptNumber": "Receipt No.",
+          "bankNumber": "Bank No."
+        }
+      },
+      "TransactionIcTab": {
+        "ExportTransactionIc": {
+          "fromDate": "From Date",
+          "errfromDate": "From date is ",
+          "toDate": "To Date",
+          "errtoDate": "To date is ",
+          "Cancel": "Cancel",
+          "GenerateReport": "Generate Report"
+        }
+      },
+      "TransactionTab": {
+        "ExportTransaction": {
+          "fromDate": "From Date",
+          "errfromDate": "From date is ",
+          "toDate": "To Date",
+          "errtoDate": "To date is ",
+          "Cancel": "Cancel",
+          "GenerateReport": "Generate Report"
+        }
+      },
+      "ViewCharge": {
+        "Pay": "Pay",
+        "Waive": "Waive",
+        "Inactivate": "Inactivate",
+        "Name": "Name",
+        "ChargeType": "Charge Type",
+        "Currency": "Currency",
+        "chargeTimeType": "Payment due at",
+        "dueDate": "Payment due as of",
+        "chargeCalculationType": "Calculation Type",
+        "Due": "Due",
+        "Paid": "Paid",
+        "Waived": "Waived",
+        "Outstanding": "Outstanding"
+      }
     }
   }
 }
