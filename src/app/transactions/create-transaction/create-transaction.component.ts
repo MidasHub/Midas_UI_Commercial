@@ -264,7 +264,7 @@ export class CreateTransactionComponent implements OnInit {
       )
       .subscribe((data: any) => {
         if (data.status != 200) {
-          if (data.status == 401) {
+          if (data.statusCode == 401) {
             if (data.error == 'Unauthorize with Midas') {
               this.alertService.alert({
                 message: "Phiên làm việc hết hạn vui lòng đăng nhập lại để tiếp tục",
@@ -274,7 +274,7 @@ export class CreateTransactionComponent implements OnInit {
             }
           }
 
-          if (data.status == 666) {
+          if (data.statusCode == 666) {
             if (typeof data.error !== 'undefined' && data.error !== '') {
               this.alertService.alert({
                 message: `${data.error}`,
