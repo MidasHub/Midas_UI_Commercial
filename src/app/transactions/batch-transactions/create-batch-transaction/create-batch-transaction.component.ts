@@ -486,7 +486,7 @@ export class CreateBatchTransactionComponent implements OnInit {
         .mappingInvoiceWithTransaction(form.data.binCodeInfo.cardType, form.data.binCodeInfo.bankCode, documentKey, documentId, amount, result)
         .subscribe((result2: any) => {
           if (result2.status !== 200) {
-            if (result2.status === 401) {
+            if (result2.statusCode == 401) {
               if (result2.error === 'Unauthorize with Midas') {
                 this.alertService.alert({
                   message: 'Phiên làm việc hết hạn vui lòng đăng nhập lại để tiếp tục',
@@ -496,7 +496,7 @@ export class CreateBatchTransactionComponent implements OnInit {
               }
             }
 
-            if (result2.status == 666) {
+            if (result2.statusCode == 666) {
               if (typeof result2.error !== "undefined" && result2.error !== "") {
                 this.alertService.alert({
                   message: `${result2.error}`,
