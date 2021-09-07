@@ -2,19 +2,19 @@
   <!-- TODO: Update to show only Activate/Inactivate button at a time according to status of user. -->
   <button mat-raised-button color="primary" [routerLink]="['edit']">
     <fa-icon icon="edit"></fa-icon>&nbsp;&nbsp;
-    Edit
+    {{'SelfService.Users.View.Edit'| translate}}
   </button>
   <button mat-raised-button color="primary" (click)="changeUserPassword()">
     <fa-icon icon="cog"></fa-icon>&nbsp;&nbsp;
-    Change Password
+    {{'SelfService.Users.View.ChangePassword'| translate}}
   </button>
   <button mat-raised-button color="accent">
     <fa-icon icon="lock-open"></fa-icon>&nbsp;&nbsp;
-    Activate
+    {{'SelfService.Users.View.Activate'| translate}}
   </button>
   <button mat-raised-button color="warn">
     <fa-icon icon="lock"></fa-icon>&nbsp;&nbsp;
-    Deactivate
+    {{'SelfService.Users.View.Deactivate'| translate}}
   </button>
 </div>
 
@@ -28,11 +28,11 @@
 
         <div fxFlex="100%" class="header">
           <fa-icon icon="circle" size="lg" matTooltip="{{ user.status }}" matTooltipPosition="above"></fa-icon>&nbsp;&nbsp;
-          ID: {{ user.id }}
+          {{'SelfService.Users.View.ID'| translate}}{{ user.id }}
         </div>
 
         <div fxFlex="50%" class="header">
-          Username
+          {{'SelfService.Users.View.Username'| translate}}
         </div>
 
         <div fxFlex="50%">
@@ -40,7 +40,7 @@
         </div>
 
         <div fxFlex="50%" class="header">
-          First Name
+          {{'SelfService.Users.View.firstName'| translate}}
         </div>
 
         <div fxFlex="50%">
@@ -48,7 +48,7 @@
         </div>
 
         <div fxFlex="50%" class="header">
-          Last Name
+          {{'SelfService.Users.View.lastName'| translate}}
         </div>
 
         <div fxFlex="50%">
@@ -56,7 +56,7 @@
         </div>
 
         <div fxFlex="50%" class="header">
-          Gender
+          {{'SelfService.Users.View.Gender'| translate}}
         </div>
 
         <div fxFlex="50%">
@@ -64,7 +64,7 @@
         </div>
 
         <div fxFlex="50%" class="header">
-          Date of Birth
+          {{'SelfService.Users.View.dateOfBirth'| translate}}
         </div>
 
         <div fxFlex="50%">
@@ -72,7 +72,7 @@
         </div>
 
         <div fxFlex="50%" class="header">
-          Email
+          {{'SelfService.Users.View.Email'| translate}}
         </div>
 
         <div fxFlex="50%">
@@ -80,7 +80,7 @@
         </div>
 
         <div fxFlex="50%" class="header">
-          Mobile
+          {{'SelfService.Users.View.Mobile'| translate}}
         </div>
 
         <div fxFlex="50%">
@@ -88,7 +88,7 @@
         </div>
 
         <div fxFlex="50%" class="header">
-          Office
+          {{'SelfService.Users.View.Office'| translate}}
         </div>
 
         <div fxFlex="50%">
@@ -96,7 +96,7 @@
         </div>
 
         <div fxFlex="50%" class="header">
-          Staff
+          {{'SelfService.Users.View.Staff'| translate}}
         </div>
 
         <div fxFlex="50%">
@@ -104,7 +104,7 @@
         </div>
 
         <div fxFlex="50%" class="header">
-          Activation Date
+          {{'SelfService.Users.View.activationDate'| translate}}
         </div>
 
         <div fxFlex="50%">
