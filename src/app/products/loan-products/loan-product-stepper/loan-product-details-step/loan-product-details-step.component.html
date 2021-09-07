@@ -3,23 +3,23 @@
   <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column" fxLayoutAlign.gt-sm="start center">
 
     <mat-form-field fxFlex="48%">
-      <mat-label>Product Name</mat-label>
+      <mat-label>{{'Product_Component.LoanProduct.LoanStepper.Details.name'| translate}}</mat-label>
       <input matInput formControlName="name" required>
       <mat-error>
-        Product Name is <strong>required</strong>
+        {{'Product_Component.LoanProduct.LoanStepper.Details.errname'| translate}}<strong>{{'Product_Component.strongRequired'| translate }}</strong>
       </mat-error>
     </mat-form-field>
 
     <mat-form-field fxFlex="48%">
-      <mat-label>Short Name</mat-label>
+      <mat-label>{{'Product_Component.LoanProduct.LoanStepper.Details.shortName'| translate}}</mat-label>
       <input matInput formControlName="shortName" maxlength="4" required>
       <mat-error>
-        Short Name is <strong>required</strong>
+        {{'Product_Component.LoanProduct.LoanStepper.Details.errshortName'| translate}}<strong>{{'Product_Component.strongRequired'| translate }}</strong>
       </mat-error>
     </mat-form-field>
 
     <mat-form-field fxFlex="48%">
-      <mat-label>Fund</mat-label>
+      <mat-label>{{'Product_Component.LoanProduct.LoanStepper.Details.Fund'| translate}}</mat-label>
       <mat-select formControlName="fundId">
         <mat-option *ngFor="let fund of fundData" [value]="fund.id">
           {{ fund.name }}
@@ -28,25 +28,25 @@
     </mat-form-field>
 
     <mat-checkbox labelPosition="before" formControlName="includeInBorrowerCycle" fxFlex="48%">
-      Include in Customer Loan Counter
+      {{'Product_Component.LoanProduct.LoanStepper.Details.includeInBorrowerCycle'| translate}}
     </mat-checkbox>
 
     <mat-form-field fxFlex="48%">
-      <mat-label>Start Date</mat-label>
+      <mat-label>{{'Product_Component.LoanProduct.LoanStepper.Details.startDate'| translate}}</mat-label>
       <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="startDatePicker" formControlName="startDate">
       <mat-datepicker-toggle matSuffix [for]="startDatePicker"></mat-datepicker-toggle>
       <mat-datepicker #startDatePicker></mat-datepicker>
     </mat-form-field>
 
     <mat-form-field fxFlex="48%">
-      <mat-label>Close Date</mat-label>
+      <mat-label>{{'Product_Component.LoanProduct.LoanStepper.Details.closeDate'| translate}}</mat-label>
       <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="closeDatePicker" formControlName="closeDate">
       <mat-datepicker-toggle matSuffix [for]="closeDatePicker"></mat-datepicker-toggle>
       <mat-datepicker #closeDatePicker></mat-datepicker>
     </mat-form-field>
 
     <mat-form-field fxFlex="98%">
-      <mat-label>Description</mat-label>
+      <mat-label>{{'Product_Component.LoanProduct.LoanStepper.Details.Description'| translate}}</mat-label>
       <textarea matInput formControlName="description"></textarea>
     </mat-form-field>
 
@@ -55,10 +55,10 @@
   <div fxLayout="row" class="margin-t" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="2%">
     <button mat-raised-button matStepperPrevious disabled>
       <fa-icon icon="arrow-left"></fa-icon>&nbsp;&nbsp;
-      Previous
+      {{ "ShareButton.PreviousEng" | translate }}
     </button>
     <button mat-raised-button matStepperNext>
-      Next&nbsp;&nbsp;
+      {{ "ShareButton.NextEng" | translate }}&nbsp;&nbsp;
       <fa-icon icon="arrow-right"></fa-icon>
     </button>
   </div>

@@ -3,14 +3,14 @@
   <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column" fxLayoutAlign.gt-sm="start center">
 
     <mat-form-field fxFlex="48%">
-      <mat-label>Minimum Opening Balance</mat-label>
+      <mat-label>{{'Product_Component.savingProductComponent.savingProductStepper.Settings.minRequiredOpeningBalance'| translate}}</mat-label>
       <input currencyMask type="text" matInput formControlName="minRequiredOpeningBalance">
     </mat-form-field>
 
     <span fxFlex="48%" fxHide.lt-md></span>
 
     <mat-form-field fxFlex="48%">
-      <mat-label>Lock-in Period</mat-label>
+      <mat-label>{{'Product_Component.savingProductComponent.savingProductStepper.Settings.lockinPeriodFrequency'| translate}}</mat-label>
       <input type="number" matInput formControlName="lockinPeriodFrequency">
     </mat-form-field>
 
@@ -23,61 +23,61 @@
     </mat-form-field>
 
     <mat-checkbox fxFlex="48%" labelPosition="before" formControlName="withdrawalFeeForTransfers" class="margin-v">
-      Apply Withdrawal Fee for Transfers
+      {{'Product_Component.savingProductComponent.savingProductStepper.Settings.withdrawalFeeForTransfers'| translate}}
     </mat-checkbox>
 
     <mat-form-field fxFlex="48%">
-      <mat-label>Balance Required for Interest Calculation</mat-label>
+      <mat-label>{{'Product_Component.savingProductComponent.savingProductStepper.Settings.minBalanceForInterestCalculation'| translate}}</mat-label>
       <input currencyMask type="text" matInput formControlName="minBalanceForInterestCalculation">
     </mat-form-field>
 
     <mat-checkbox fxFlex="48%" labelPosition="before" formControlName="enforceMinRequiredBalance" class="margin-v">
-      Enforce Minimum Balance
+      {{'Product_Component.savingProductComponent.savingProductStepper.Settings.enforceMinRequiredBalance'| translate}}
     </mat-checkbox>
 
     <mat-form-field fxFlex="48%">
-      <mat-label>Minimum Balance</mat-label>
+      <mat-label>{{'Product_Component.savingProductComponent.savingProductStepper.Settings.minRequiredBalance'| translate}}</mat-label>
       <input currencyMask type="text" matInput formControlName="minRequiredBalance">
     </mat-form-field>
 
     <mat-checkbox fxFlex="48%" labelPosition="before" formControlName="withHoldTax" class="margin-v">
-      Is Withhold Tax Applicable?
+      {{'Product_Component.savingProductComponent.savingProductStepper.Settings.withHoldTax'| translate}}
     </mat-checkbox>
 
     <mat-form-field fxFlex="48%" *ngIf="savingProductSettingsForm.value.withHoldTax">
-      <mat-label>Tax Group</mat-label>
+      <mat-label>{{'Product_Component.savingProductComponent.savingProductStepper.Settings.taxGroup'| translate}}</mat-label>
       <mat-select formControlName="taxGroupId" required>
         <mat-option *ngFor="let taxGroup of taxGroupData" [value]="taxGroup.id">
           {{ taxGroup.name }}
         </mat-option>
       </mat-select>
       <mat-error>
-        Tax Group is <strong>required</strong>
+        {{'Product_Component.savingProductComponent.savingProductStepper.Settings.errtaxGroup'| translate}}<strong>{{'Product_Component.strongRequired'| translate }}</strong>
       </mat-error>
     </mat-form-field>
 
     <mat-divider fxFlex="98%"></mat-divider>
 
-    <h3 fxFlex="23%" class="mat-h3">Overdraft</h3>
+    <h3 fxFlex="23%" class="mat-h3">{{'Product_Component.savingProductComponent.savingProductStepper.Settings.Overdraft'| translate}}</h3>
 
     <mat-checkbox fxFlex="73%" labelPosition="before" formControlName="allowOverdraft" class="margin-b">
-      Is Overdraft Allowed?
+      {{'Product_Component.savingProductComponent.savingProductStepper.Settings.allowOverdraft'| translate}}
     </mat-checkbox>
 
     <div *ngIf="savingProductSettingsForm.value.allowOverdraft" fxFlexFill fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
 
       <mat-form-field fxFlex="31%">
-        <mat-label>Minimum Overdraft Required for Interest Calculation</mat-label>
+        <mat-label>{{'Product_Component.savingProductComponent.savingProductStepper.Settings.minOverdraftForInterestCalculation'| translate}}</mat-label>
         <input type="number" matInput formControlName="minOverdraftForInterestCalculation">
       </mat-form-field>
 
       <mat-form-field fxFlex="31%">
-        <mat-label>Nominal Annual Interest for Overdraft</mat-label>
+        <mat-label>{{'Product_Component.savingProductComponent.savingProductStepper.Settings.nominalAnnualInterestRateOverdraft'| translate}}</mat-label>
         <input type="number" matInput formControlName="nominalAnnualInterestRateOverdraft">
       </mat-form-field>
 
       <mat-form-field fxFlex="31%">
-        <mat-label>Maximum Overdraft Amount Limit</mat-label>
+        <mat-label>{{'Product_Component.savingProductComponent.savingProductStepper.Settings.overdraftLimit'| translate}}</mat-label>
         <input type="number" matInput formControlName="overdraftLimit">
       </mat-form-field>
 
@@ -85,35 +85,35 @@
 
     <mat-divider fxFlex="98%"></mat-divider>
 
-    <h3 fxFlex="23%" class="mat-h3">Dormancy Tracking</h3>
+    <h3 fxFlex="23%" class="mat-h3">{{'Product_Component.savingProductComponent.savingProductStepper.Settings.DormancyTracking'| translate}}</h3>
 
     <mat-checkbox fxFlex="73%" labelPosition="before" formControlName="isDormancyTrackingActive" class="margin-b">
-      Enable Dormancy Tracking
+      {{'Product_Component.savingProductComponent.savingProductStepper.Settings.EnableDormancyTracking'| translate}}
     </mat-checkbox>
 
     <div *ngIf="savingProductSettingsForm.value.isDormancyTrackingActive" fxFlexFill fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
 
       <mat-form-field fxFlex="31%">
-        <mat-label>Number of Days to Inactive sub-status</mat-label>
+        <mat-label>{{'Product_Component.savingProductComponent.savingProductStepper.Settings.daysToInactive'| translate}}</mat-label>
         <input type="number" matInput formControlName="daysToInactive" required>
         <mat-error>
-          Number of Days to Inactive sub-status is <strong>required</strong>
+          {{'Product_Component.savingProductComponent.savingProductStepper.Settings.errdaysToInactive'| translate}}<strong>{{'Product_Component.strongRequired'| translate }}</strong>
         </mat-error>
       </mat-form-field>
 
       <mat-form-field fxFlex="31%">
-        <mat-label>Number of Days to Dormant sub-status</mat-label>
+        <mat-label>{{'Product_Component.savingProductComponent.savingProductStepper.Settings.daysToDormancy'| translate}}</mat-label>
         <input type="number" matInput formControlName="daysToDormancy" required>
         <mat-error>
-          Number of Days to Dormant sub-status is <strong>required</strong>
+          {{'Product_Component.savingProductComponent.savingProductStepper.Settings.'| translate}}<strong>{{'Product_Component.strongRequired'| translate }}</strong>
         </mat-error>
       </mat-form-field>
 
       <mat-form-field fxFlex="31%">
-        <mat-label>Number of Days to Escheat</mat-label>
+        <mat-label>{{'Product_Component.savingProductComponent.savingProductStepper.Settings.daysToEscheat'| translate}}</mat-label>
         <input type="number" matInput formControlName="daysToEscheat" required>
         <mat-error>
-          Number of Days to Escheat is <strong>required</strong>
+          {{'Product_Component.savingProductComponent.savingProductStepper.Settings.errdaysToEscheat'| translate}}<strong>{{'Product_Component.strongRequired'| translate }}</strong>
         </mat-error>
       </mat-form-field>
 
@@ -124,10 +124,10 @@
   <div fxLayout="row" class="margin-t" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="2%">
     <button mat-raised-button matStepperPrevious>
       <fa-icon icon="arrow-left"></fa-icon>&nbsp;&nbsp;
-      Previous
+      {{ "ShareButton.PreviousEng" | translate }}
     </button>
     <button mat-raised-button matStepperNext>
-      Next&nbsp;&nbsp;
+      {{ "ShareButton.NextEng" | translate }}&nbsp;&nbsp;
       <fa-icon icon="arrow-right"></fa-icon>
     </button>
   </div>

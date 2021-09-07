@@ -1,7 +1,7 @@
 <div class="container m-b-20" fxLayout="row" fxLayout.lt-md="column" fxLayoutAlign="end" fxLayoutGap="2%">
   <button mat-raised-button color="primary" [routerLink]="['edit']" *midasHasPermission="'UPDATE_TAXGROUP'">
     <fa-icon icon="edit"></fa-icon>&nbsp;&nbsp;
-    Edit
+    {{ "ShareButton.Edit" | translate }}
   </button>
 </div>
 
@@ -14,7 +14,7 @@
       <div fxLayout="row wrap" class="content">
 
         <div fxFlex="33%" class="mat-body-strong">
-          Name
+          {{'Product_Component.ManageTaxGroups.View.Name'| translate}}
         </div>
 
         <div fxFlex="67%">
@@ -22,15 +22,15 @@
         </div>
 
         <div fxFlex="34%" class="mat-body-strong">
-          Tax-Component Name
+          {{'Product_Component.ManageTaxGroups.View.TaxName'| translate}}
         </div>
 
         <div fxFlex="33%" class="mat-body-strong">
-          Start Date
+          {{'Product_Component.ManageTaxGroups.View.StartDate'| translate}}
         </div>
 
         <div fxFlex="33%" class="mat-body-strong">
-          End Date
+          {{'Product_Component.ManageTaxGroups.View.EndDate'| translate}}
         </div>
 
       </div>

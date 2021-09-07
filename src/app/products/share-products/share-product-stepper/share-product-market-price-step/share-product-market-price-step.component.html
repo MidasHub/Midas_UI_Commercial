@@ -1,32 +1,32 @@
 <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
 
-  <h4 fxFlex="23%" class="mat-h4">Market Price Periods</h4>
+  <h4 fxFlex="23%" class="mat-h4">{{'Product_Component.ShareProducts.ShareStepper.MarketPrice.MarketPricePeriods'| translate}}</h4>
 
   <div fxFlex="73%">
     <button type="button" mat-raised-button color="primary" (click)="addMarketPricePeriod()">
       <fa-icon icon="plus"></fa-icon>&nbsp;&nbsp;
-      Add
+      {{ "ShareButton.AddEng" | translate }}
     </button>
   </div>
 
   <table fxFlex="98%" class="mat-elevation-z1" mat-table [dataSource]="marketPricePeriods.value" *ngIf="marketPricePeriods.value.length">
 
     <ng-container matColumnDef="fromDate">
-      <th mat-header-cell *matHeaderCellDef> From Date </th>
+      <th mat-header-cell *matHeaderCellDef> {{'Product_Component.ShareProducts.ShareStepper.MarketPrice.fromDate'| translate}} </th>
       <td mat-cell *matCellDef="let marketPricePeriod">
         {{ marketPricePeriod.fromDate | date }}
       </td>
     </ng-container>
 
     <ng-container matColumnDef="shareValue">
-      <th mat-header-cell *matHeaderCellDef> Nominal/Unit Price </th>
+      <th mat-header-cell *matHeaderCellDef> {{'Product_Component.ShareProducts.ShareStepper.MarketPrice.shareValue'| translate}} </th>
       <td mat-cell *matCellDef="let marketPricePeriod">
         {{ marketPricePeriod.shareValue }}
       </td>
     </ng-container>
 
     <ng-container matColumnDef="actions">
-      <th mat-header-cell *matHeaderCellDef> Actions </th>
+      <th mat-header-cell *matHeaderCellDef> {{'Product_Component.ShareProducts.ShareStepper.MarketPrice.Actions'| translate}} </th>
       <td mat-cell *matCellDef="let variation; let i = index">
         <button mat-icon-button color="primary" (click)="editMarketPricePeriod(i)">
           <fa-icon icon="edit"></fa-icon>
@@ -47,10 +47,10 @@
 <div fxLayout="row" class="margin-t" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="2%">
   <button mat-raised-button matStepperPrevious>
     <fa-icon icon="arrow-left"></fa-icon>&nbsp;&nbsp;
-    Previous
+    {{ "ShareButton.PreviousEng" | translate }}
   </button>
   <button mat-raised-button matStepperNext>
-    Next&nbsp;&nbsp;
+    {{ "ShareButton.NextEng" | translate }}&nbsp;&nbsp;
     <fa-icon icon="arrow-right"></fa-icon>
   </button>
 </div>

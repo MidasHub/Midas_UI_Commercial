@@ -3,30 +3,30 @@
   <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
 
     <mat-form-field fxFlex="48%">
-      <mat-label>Currency</mat-label>
+      <mat-label>{{'Product_Component.FixedDeposit.Fixed.Currency.Currency'| translate}}</mat-label>
       <mat-select formControlName="currencyCode" required>
         <mat-option *ngFor="let currency of currencyData" [value]="currency.code">
           {{ currency.name }}
         </mat-option>
       </mat-select>
       <mat-error>
-        Currency is <strong>required</strong>
+        {{'Product_Component.FixedDeposit.Fixed.Currency.errCurrency'| translate}}<strong>{{'Product_Component.strongRequired'| translate }}</strong>
       </mat-error>
     </mat-form-field>
 
     <mat-form-field fxFlex="48%">
-      <mat-label>Decimal Places</mat-label>
+      <mat-label>{{'Product_Component.FixedDeposit.Fixed.Currency.digitsAfterDecimal'| translate}}</mat-label>
       <input type="number" matInput formControlName="digitsAfterDecimal" required>
       <mat-error>
-        Decimal Places is <strong>required</strong>
+        {{'Product_Component.FixedDeposit.Fixed.Currency.errdigitsAfterDecimal'| translate}}<strong>{{'Product_Component.strongRequired'| translate }}</strong>
       </mat-error>
     </mat-form-field>
 
     <mat-form-field fxFlex="48%">
-      <mat-label>Currency in multiples of</mat-label>
+      <mat-label>{{'Product_Component.FixedDeposit.Fixed.Currency.inMultiplesOf'| translate}}</mat-label>
       <input type="number" matInput formControlName="inMultiplesOf" required>
       <mat-error>
-        Currency in multiples of is <strong>required</strong>
+        {{'Product_Component.FixedDeposit.Fixed.Currency.errinMultiplesOf'| translate}}<strong>{{'Product_Component.strongRequired'| translate }}</strong>
       </mat-error>
     </mat-form-field>
 
@@ -35,10 +35,10 @@
   <div fxLayout="row" class="margin-t" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="2%">
     <button mat-raised-button matStepperPrevious>
       <fa-icon icon="arrow-left"></fa-icon>&nbsp;&nbsp;
-      Previous
+      {{ "ShareButton.PreviousEng" | translate }}
     </button>
     <button mat-raised-button matStepperNext>
-      Next&nbsp;&nbsp;
+      {{ "ShareButton.NextEng" | translate }}&nbsp;&nbsp;
       <fa-icon icon="arrow-right"></fa-icon>
     </button>
   </div>

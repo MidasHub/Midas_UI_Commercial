@@ -1,11 +1,11 @@
 <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column" class="container m-b-20">
   <button mat-raised-button color="primary" [routerLink]="['edit']" *midasHasPermission="'UPDATE_CHARGE'">
     <fa-icon icon="edit"></fa-icon>&nbsp;&nbsp;
-    Edit
+    {{ "ShareButton.Edit" | translate }}
   </button>
   <button mat-raised-button color="warn" (click)="deleteCharge()" *midasHasPermission="'DELETE_CHARGE'">
     <fa-icon icon="trash"></fa-icon>&nbsp;&nbsp;
-    Delete
+    {{ "ShareButton.DeleteEng" | translate }}
   </button>
 </div>
 
@@ -18,7 +18,7 @@
       <div fxLayout="row wrap" class="content">
 
         <div fxFlex="50%" class="mat-body-strong">
-          Charge Type
+          {{'Product_Component.ChargesComponent.ViewChargeComponent.ChargeType'| translate}}
         </div>
 
         <div fxFlex="50%">
@@ -26,7 +26,7 @@
         </div>
 
         <div fxFlex="50%" class="mat-body-strong">
-          Currency
+          {{'Product_Component.ChargesComponent.ViewChargeComponent.Currency'| translate}}
         </div>
 
         <div fxFlex="50%">
@@ -34,7 +34,7 @@
         </div>
 
         <div fxFlex="50%" class="mat-body-strong">
-          Amount
+          {{'Product_Component.ChargesComponent.ViewChargeComponent.Amount'| translate}}
         </div>
 
         <div fxFlex="50%">
@@ -42,7 +42,7 @@
         </div>
 
         <div fxFlex="50%" class="mat-body-strong">
-          Charge Time Type
+          {{'Product_Component.ChargesComponent.ViewChargeComponent.chargeTimeType'| translate}}
         </div>
 
         <div fxFlex="50%">
@@ -50,7 +50,7 @@
         </div>
 
         <div fxFlex="50%" class="mat-body-strong">
-          Charge Applies to
+          {{'Product_Component.ChargesComponent.ViewChargeComponent.chargeAppliesTo'| translate}}
         </div>
 
         <div fxFlex="50%">
@@ -58,7 +58,7 @@
         </div>
 
         <div fxFlex="50%" class="mat-body-strong">
-          Charge Calculation Type
+          {{'Product_Component.ChargesComponent.ViewChargeComponent.chargeCalculationType'| translate}}
         </div>
 
         <div fxFlex="50%">
@@ -66,7 +66,7 @@
         </div>
 
         <div fxFlex="50%" class="mat-body-strong">
-          Charge Payment Mode
+          {{'Product_Component.ChargesComponent.ViewChargeComponent.chargePaymentMode'| translate}}
         </div>
 
         <div fxFlex="50%">
@@ -74,7 +74,7 @@
         </div>
 
         <div fxFlex="50%" class="mat-body-strong">
-          Active
+          {{'Product_Component.ChargesComponent.ViewChargeComponent.Active'| translate}}
         </div>
 
         <div fxFlex="50%">
@@ -82,7 +82,7 @@
         </div>
 
         <div fxFlex="50%" class="mat-body-strong" *ngIf="chargeData.chargeTimeType.id == 9 && chargeData.feeFrequency">
-          Fee Frequency
+          {{'Product_Component.ChargesComponent.ViewChargeComponent.feeFrequency'| translate}}
         </div>
 
         <div fxFlex="50%" *ngIf="chargeData.chargeTimeType.id == 9 && chargeData.feeFrequency && chargeData.feeFrequency">
@@ -90,7 +90,7 @@
         </div>
 
         <div fxFlex="50%" class="mat-body-strong" *ngIf="chargeData.chargeTimeType.id == 9 && chargeData.feeInterval">
-          Frequency Interval
+          {{'Product_Component.ChargesComponent.ViewChargeComponent.feeInterval'| translate}}
         </div>
 
         <div fxFlex="50%" *ngIf="chargeData.chargeTimeType.id == 9 && chargeData.feeInterval">
@@ -98,7 +98,7 @@
         </div>
 
         <div fxFlex="50%" class="mat-body-strong" *ngIf="chargeData.incomeOrLiabilityAccount">
-          Income from Charges
+          {{'Product_Component.ChargesComponent.ViewChargeComponent.incomeOrLiabilityAccount'| translate}}
         </div>
 
         <div fxFlex="50%" *ngIf="chargeData.incomeOrLiabilityAccount">
@@ -106,7 +106,7 @@
         </div>
 
         <div fxFlex="50%" class="mat-body-strong" *ngIf="chargeData.taxGroup">
-          Tax Group
+          {{'Product_Component.ChargesComponent.ViewChargeComponent.taxGroup'| translate}}
         </div>
 
         <div fxFlex="50%" *ngIf="chargeData.taxGroup">

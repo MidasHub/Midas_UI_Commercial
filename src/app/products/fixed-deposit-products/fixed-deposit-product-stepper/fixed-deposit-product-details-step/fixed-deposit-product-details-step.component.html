@@ -3,26 +3,26 @@
   <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
 
     <mat-form-field fxFlex="48%">
-      <mat-label>Product Name</mat-label>
+      <mat-label>{{'Product_Component.FixedDeposit.Fixed.Details.name'| translate}}</mat-label>
       <input matInput formControlName="name" required>
       <mat-error *ngIf="fixedDepositProductDetailsForm.controls.name.hasError('required')">
-        Product Name is <strong>required</strong>
+        {{'Product_Component.FixedDeposit.Fixed.Details.errname'| translate}}<strong>{{'Product_Component.strongRequired'| translate }}</strong>
       </mat-error>
     </mat-form-field>
 
     <mat-form-field fxFlex="48%">
-      <mat-label>Short Name</mat-label>
+      <mat-label>{{'Product_Component.FixedDeposit.Fixed.Details.shortName'| translate}}</mat-label>
       <input matInput formControlName="shortName" maxlength="4" required>
       <mat-error *ngIf="fixedDepositProductDetailsForm.controls.shortName.hasError('required')">
-        Short Name is <strong>required</strong>
+        {{'Product_Component.FixedDeposit.Fixed.Details.errshortName'| translate}}<strong>{{'Product_Component.strongRequired'| translate }}</strong>
       </mat-error>
     </mat-form-field>
 
     <mat-form-field fxFlex="98%">
-      <mat-label>Description</mat-label>
+      <mat-label>{{'Product_Component.FixedDeposit.Fixed.Details.Description'| translate}}</mat-label>
       <textarea matInput formControlName="description"></textarea>
       <mat-error *ngIf="fixedDepositProductDetailsForm.controls.description.hasError('required')">
-        Description is <strong>required</strong>
+        {{'Product_Component.FixedDeposit.Fixed.Details.errDescription'| translate}}<strong>{{'Product_Component.strongRequired'| translate }}</strong>
       </mat-error>
     </mat-form-field>
 
@@ -31,10 +31,10 @@
   <div fxLayout="row" class="margin-t" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="2%">
     <button mat-raised-button matStepperPrevious disabled>
       <fa-icon icon="arrow-left"></fa-icon>&nbsp;&nbsp;
-      Previous
+      {{ "ShareButton.PreviousEng" | translate }}
     </button>
     <button mat-raised-button matStepperNext>
-      Next&nbsp;&nbsp;
+      {{ "ShareButton.NextEng" | translate }}&nbsp;&nbsp;
       <fa-icon icon="arrow-right"></fa-icon>
     </button>
   </div>

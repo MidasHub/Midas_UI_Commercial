@@ -12,127 +12,127 @@
 
     <div *ngIf="fixedDepositProductAccountingForm.value.accountingRule === 2" fxFlexFill fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
 
-      <h4 fxFlex="98%" class="mat-h4">Assets</h4>
+      <h4 fxFlex="98%" class="mat-h4">{{'Product_Component.FixedDeposit.Fixed.Acocunting.Assets'| translate}}</h4>
 
       <mat-form-field fxFlex="48%">
-        <mat-label>Saving reference</mat-label>
+        <mat-label>{{'Product_Component.FixedDeposit.Fixed.Acocunting.savingsReferenceAccountId'| translate}}</mat-label>
         <mat-select formControlName="savingsReferenceAccountId" required>
           <mat-option *ngFor="let assetAccount of assetAccountData" [value]="assetAccount.id">
             {{ assetAccount.name }}
           </mat-option>
         </mat-select>
         <mat-error>
-          Saving reference is <strong>required</strong>
+          {{'Product_Component.FixedDeposit.Fixed.Acocunting.errsavingsReferenceAccountId'| translate}}<strong>{{'Product_Component.strongRequired'| translate }}</strong>
         </mat-error>
       </mat-form-field>
 
       <mat-divider fxFlex="98%"></mat-divider>
 
-      <h4 fxFlex="98%" class="mat-h4">Liabilities</h4>
+      <h4 fxFlex="98%" class="mat-h4">{{'Product_Component.FixedDeposit.Fixed.Acocunting.Liabilities'| translate}}</h4>
 
       <mat-form-field fxFlex="48%">
-        <mat-label>Saving control</mat-label>
+        <mat-label>{{'Product_Component.FixedDeposit.Fixed.Acocunting.Assets'| translate}}Saving control</mat-label>
         <mat-select formControlName="savingsControlAccountId" required>
           <mat-option *ngFor="let liabilityAccount of liabilityAccountData" [value]="liabilityAccount.id">
             {{ liabilityAccount.name }}
           </mat-option>
         </mat-select>
         <mat-error>
-          Saving control is <strong>required</strong>
+          {{'Product_Component.FixedDeposit.Fixed.Acocunting.errLiabilities'| translate}}<strong>{{'Product_Component.strongRequired'| translate }}</strong>
         </mat-error>
       </mat-form-field>
 
       <mat-form-field fxFlex="48%">
-        <mat-label>Savings transfers in suspense</mat-label>
+        <mat-label>{{'Product_Component.FixedDeposit.Fixed.Acocunting.transfersInSuspenseAccountId'| translate}}</mat-label>
         <mat-select formControlName="transfersInSuspenseAccountId" required>
           <mat-option *ngFor="let liabilityAccount of liabilityAccountData" [value]="liabilityAccount.id">
             {{ liabilityAccount.name }}
           </mat-option>
         </mat-select>
         <mat-error>
-          Savings transfers in suspense is <strong>required</strong>
+          {{'Product_Component.FixedDeposit.Fixed.Acocunting.errtransfersInSuspenseAccountId'| translate}}<strong>{{'Product_Component.strongRequired'| translate }}</strong>
         </mat-error>
       </mat-form-field>
 
       <mat-divider fxFlex="98%"></mat-divider>
 
-      <h4 fxFlex="98%" class="mat-h4">Expenses</h4>
+      <h4 fxFlex="98%" class="mat-h4">{{'Product_Component.FixedDeposit.Fixed.Acocunting.Expenses'| translate}}</h4>
 
       <mat-form-field fxFlex="48%">
-        <mat-label>Interest on savings</mat-label>
+        <mat-label>{{'Product_Component.FixedDeposit.Fixed.Acocunting.interestOnSavingsAccountId'| translate}}</mat-label>
         <mat-select formControlName="interestOnSavingsAccountId" required>
           <mat-option *ngFor="let expenseAccount of expenseAccountData" [value]="expenseAccount.id">
             {{ expenseAccount.name }}
           </mat-option>
         </mat-select>
         <mat-error>
-          Interest on savings is <strong>required</strong>
+          {{'Product_Component.FixedDeposit.Fixed.Acocunting.errinterestOnSavingsAccountId'| translate}}<strong>{{'Product_Component.strongRequired'| translate }}</strong>
         </mat-error>
       </mat-form-field>
 
       <mat-divider fxFlex="98%"></mat-divider>
 
-      <h4 fxFlex="98%" class="mat-h4">Income</h4>
+      <h4 fxFlex="98%" class="mat-h4">{{'Product_Component.FixedDeposit.Fixed.Acocunting.Income'| translate}}</h4>
 
       <mat-form-field fxFlex="48%">
-        <mat-label>Income from fees</mat-label>
+        <mat-label>{{'Product_Component.FixedDeposit.Fixed.Acocunting.incomeFromFeeAccountId'| translate}}</mat-label>
         <mat-select formControlName="incomeFromFeeAccountId" required>
           <mat-option *ngFor="let incomeAccount of incomeAccountData" [value]="incomeAccount.id">
             {{ incomeAccount.name }}
           </mat-option>
         </mat-select>
         <mat-error>
-          Income from fees Repayments is <strong>required</strong>
+          {{'Product_Component.FixedDeposit.Fixed.Acocunting.errincomeFromFeeAccountId'| translate}}<strong>{{'Product_Component.strongRequired'| translate }}</strong>
         </mat-error>
       </mat-form-field>
 
       <mat-form-field fxFlex="48%">
-        <mat-label>Income from penalties</mat-label>
+        <mat-label>{{'Product_Component.FixedDeposit.Fixed.Acocunting.incomeFromPenaltyAccountId'| translate}}</mat-label>
         <mat-select formControlName="incomeFromPenaltyAccountId" required>
           <mat-option *ngFor="let incomeAccount of incomeAccountData" [value]="incomeAccount.id">
             {{ incomeAccount.name }}
           </mat-option>
         </mat-select>
         <mat-error>
-          Income from penalties is <strong>required</strong>
+          {{'Product_Component.FixedDeposit.Fixed.Acocunting.errincomeFromPenaltyAccountId'| translate}}<strong>{{'Product_Component.strongRequired'| translate }}</strong>
         </mat-error>
       </mat-form-field>
 
       <mat-divider fxFlex="98%"></mat-divider>
 
-      <h3 fxFlex="23%" class="mat-h3">Advanced Accounting Rules</h3>
+      <h3 fxFlex="23%" class="mat-h3">{{'Product_Component.FixedDeposit.Fixed.Acocunting.AdvancedAccountingRules'| translate}}</h3>
 
       <mat-checkbox fxFlex="73%" formControlName="advancedAccountingRules"></mat-checkbox>
 
       <div *ngIf="fixedDepositProductAccountingForm.value.advancedAccountingRules" fxFlexFill fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
 
-        <h4 fxFlex="33%" class="mat-h4">Configure Fund Sources for Payment Channels</h4>
+        <h4 fxFlex="33%" class="mat-h4">{{'Product_Component.FixedDeposit.Fixed.Acocunting.ConfigureFund'| translate}}</h4>
 
         <div fxFlex="63%">
           <button type="button" mat-raised-button color="primary" (click)="add('PaymentFundSource', paymentChannelToFundSourceMappings)">
             <fa-icon icon="plus"></fa-icon>&nbsp;&nbsp;
-            Add
+            {{'Product_Component.FixedDeposit.Fixed.Acocunting.Add'| translate}}
           </button>
         </div>
 
         <table fxFlex="98%" class="mat-elevation-z1" mat-table [dataSource]="paymentChannelToFundSourceMappings.value" *ngIf="paymentChannelToFundSourceMappings.value.length !== 0">
 
           <ng-container matColumnDef="paymentTypeId">
-            <th mat-header-cell *matHeaderCellDef> Payment Type </th>
+            <th mat-header-cell *matHeaderCellDef> {{'Product_Component.FixedDeposit.Fixed.Acocunting.paymentTypeId'| translate}} </th>
             <td mat-cell *matCellDef="let paymentFundSource">
               {{ paymentFundSource.paymentTypeId | find:paymentTypeData:'id':'name' }}
             </td>
           </ng-container>
 
           <ng-container matColumnDef="fundSourceAccountId">
-            <th mat-header-cell *matHeaderCellDef> Fund Source </th>
+            <th mat-header-cell *matHeaderCellDef> {{'Product_Component.FixedDeposit.Fixed.Acocunting.fundSourceAccountId'| translate}} </th>
             <td mat-cell *matCellDef="let paymentFundSource">
               {{ paymentFundSource.fundSourceAccountId | find:assetAccountData:'id':'name' }}
             </td>
           </ng-container>
 
           <ng-container matColumnDef="actions">
-            <th mat-header-cell *matHeaderCellDef> Actions </th>
+            <th mat-header-cell *matHeaderCellDef> {{'Product_Component.FixedDeposit.Fixed.Acocunting.Actions'| translate}} </th>
             <td mat-cell *matCellDef="let paymentFundSource; let i = index">
               <button mat-icon-button color="primary" (click)="edit('PaymentFundSource', paymentChannelToFundSourceMappings, i)">
                 <fa-icon icon="edit"></fa-icon>
@@ -148,33 +148,33 @@
 
         </table>
 
-        <h4 fxFlex="33%" class="mat-h4">Map Fees to Specific Income Accounts</h4>
+        <h4 fxFlex="33%" class="mat-h4">{{'Product_Component.FixedDeposit.Fixed.Acocunting.MapFees'| translate}}</h4>
 
         <div fxFlex="63%">
           <button type="button" mat-raised-button color="primary" (click)="add('FeesIncome', feeToIncomeAccountMappings)">
             <fa-icon icon="plus"></fa-icon>&nbsp;&nbsp;
-            Add
+            {{'Product_Component.FixedDeposit.Fixed.Acocunting.Add'| translate}}
           </button>
         </div>
 
         <table fxFlex="98%" class="mat-elevation-z1" mat-table [dataSource]="feeToIncomeAccountMappings.value" *ngIf="feeToIncomeAccountMappings.value.length !== 0">
 
           <ng-container matColumnDef="chargeId">
-            <th mat-header-cell *matHeaderCellDef> Fees </th>
+            <th mat-header-cell *matHeaderCellDef> {{'Product_Component.FixedDeposit.Fixed.Acocunting.Fees'| translate}} </th>
             <td mat-cell *matCellDef="let feesIncome">
               {{ feesIncome.chargeId | find:chargeData:'id':'name' }}
             </td>
           </ng-container>
 
           <ng-container matColumnDef="incomeAccountId">
-            <th mat-header-cell *matHeaderCellDef> Income Account </th>
+            <th mat-header-cell *matHeaderCellDef> {{'Product_Component.FixedDeposit.Fixed.Acocunting.incomeAccountId'| translate}} </th>
             <td mat-cell *matCellDef="let feesIncome">
               {{ feesIncome.incomeAccountId | find:incomeAccountData:'id':'name' }}
             </td>
           </ng-container>
 
           <ng-container matColumnDef="actions">
-            <th mat-header-cell *matHeaderCellDef> Actions </th>
+            <th mat-header-cell *matHeaderCellDef> {{'Product_Component.FixedDeposit.Fixed.Acocunting.Actions'| translate}} </th>
             <td mat-cell *matCellDef="let feesIncome; let i = index">
               <button mat-icon-button color="primary" (click)="edit('FeesIncome', feeToIncomeAccountMappings, i)">
                 <fa-icon icon="edit"></fa-icon>
@@ -190,12 +190,12 @@
 
         </table>
 
-        <h4 fxFlex="33%" class="mat-h4">Map Penalties to Specific Income Accounts</h4>
+        <h4 fxFlex="33%" class="mat-h4">{{'Product_Component.FixedDeposit.Fixed.Acocunting.MapPenalties'| translate}}</h4>
 
         <div fxFlex="63%">
           <button type="button" mat-raised-button color="primary" (click)="add('PenaltyIncome', penaltyToIncomeAccountMappings)">
             <fa-icon icon="plus"></fa-icon>&nbsp;&nbsp;
-            Add
+            {{'Product_Component.FixedDeposit.Fixed.Acocunting.Add'| translate}}
           </button>
         </div>
 
@@ -203,21 +203,21 @@
         <table fxFlex="98%" class="mat-elevation-z1" mat-table [dataSource]="penaltyToIncomeAccountMappings.value" *ngIf="penaltyToIncomeAccountMappings.value.length !== 0">
 
           <ng-container matColumnDef="chargeId">
-            <th mat-header-cell *matHeaderCellDef> Penalty </th>
+            <th mat-header-cell *matHeaderCellDef> {{'Product_Component.FixedDeposit.Fixed.Acocunting.Penalty'| translate}} </th>
             <td mat-cell *matCellDef="let penaltyIncome">
               {{ penaltyIncome.chargeId | find:penaltyData:'id':'name' }}
             </td>
           </ng-container>
 
           <ng-container matColumnDef="incomeAccountId">
-            <th mat-header-cell *matHeaderCellDef> Income Account </th>
+            <th mat-header-cell *matHeaderCellDef> {{'Product_Component.FixedDeposit.Fixed.Acocunting.incomeAccountId'| translate}} </th>
             <td mat-cell *matCellDef="let penaltyIncome">
               {{ penaltyIncome.incomeAccountId | find:incomeAccountData:'id':'name' }}
             </td>
           </ng-container>
 
           <ng-container matColumnDef="actions">
-            <th mat-header-cell *matHeaderCellDef> Actions </th>
+            <th mat-header-cell *matHeaderCellDef> {{'Product_Component.FixedDeposit.Fixed.Acocunting.Actions'| translate}} </th>
             <td mat-cell *matCellDef="let penaltyIncome; let i = index">
               <button mat-icon-button color="primary" (click)="edit('PenaltyIncome', penaltyToIncomeAccountMappings, i)">
                 <fa-icon icon="edit"></fa-icon>
@@ -242,10 +242,10 @@
   <div fxLayout="row" class="margin-t" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="2%">
     <button mat-raised-button matStepperPrevious>
       <fa-icon icon="arrow-left"></fa-icon>&nbsp;&nbsp;
-      Previous
+      {{ "ShareButton.PreviousEng" | translate }}
     </button>
     <button mat-raised-button matStepperNext [disabled]="!fixedDepositProductFormValid">
-      Next&nbsp;&nbsp;
+      {{ "ShareButton.NextEng" | translate }}&nbsp;&nbsp;
       <fa-icon icon="arrow-right"></fa-icon>
     </button>
   </div>

@@ -1,7 +1,7 @@
 <div class="container m-b-20" fxLayout="row" fxLayoutAlign="end" fxLayoutGap="20px">
   <button mat-raised-button color="primary" [routerLink]="['create']" *midasHasPermission="'CREATE_FIXEDDEPOSITPRODUCT'">
     <fa-icon icon="plus"></fa-icon>&nbsp;&nbsp;
-    Create Fixed Deposit Product
+    {{'Product_Component.FixedDeposit.btnCreate'| translate}}
   </button>
 </div>
 
@@ -9,7 +9,7 @@
 
   <div fxLayout="row" fxLayoutGap="20px">
     <mat-form-field fxFlex>
-      <mat-label>Filter</mat-label>
+      <mat-label>{{'Product_Component.FixedDeposit.Filter'| translate}}</mat-label>
       <input matInput (keyup)="applyFilter($event.target.value)">
     </mat-form-field>
   </div>
@@ -19,12 +19,12 @@
     <table mat-table [dataSource]="dataSource" matSort>
 
       <ng-container matColumnDef="name">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{'Product_Component.FixedDeposit.Name'| translate}} </th>
         <td mat-cell *matCellDef="let fixedDepositProduct"> {{ fixedDepositProduct.name }} </td>
       </ng-container>
 
       <ng-container matColumnDef="shortName">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Short Name </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{'Product_Component.FixedDeposit.shortName'| translate}} </th>
         <td mat-cell *matCellDef="let fixedDepositProduct"> {{ fixedDepositProduct.shortName }} </td>
       </ng-container>
 

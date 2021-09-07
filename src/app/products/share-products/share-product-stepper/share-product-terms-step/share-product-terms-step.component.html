@@ -3,34 +3,34 @@
   <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
 
     <mat-form-field fxFlex="48%">
-      <mat-label>Total Number of Shares</mat-label>
+      <mat-label>{{'Product_Component.ShareProducts.ShareStepper.Term.totalShares'| translate}}</mat-label>
       <input type="number" matInput formControlName="totalShares" required>
       <mat-error>
-        Total Number of Shares is <strong>required</strong>
+        {{'Product_Component.ShareProducts.ShareStepper.Term.errtotalShares'| translate}}<strong>{{'Product_Component.strongRequired'| translate }}</strong>
       </mat-error>
     </mat-form-field>
 
     <mat-form-field fxFlex="48%">
-      <mat-label>Shares to be Issued</mat-label>
+      <mat-label>{{'Product_Component.ShareProducts.ShareStepper.Term.sharesIssued'| translate}}</mat-label>
       <input type="number" matInput formControlName="sharesIssued" required>
       <mat-error>
-        Shares to be Issued is <strong>required</strong>
+        {{'Product_Component.ShareProducts.ShareStepper.Term.errsharesIssued'| translate}}<strong>{{'Product_Component.strongRequired'| translate }}</strong>
       </mat-error>
     </mat-form-field>
 
     <mat-form-field fxFlex="48%">
-      <mat-label>Nominal/Unit Price</mat-label>
+      <mat-label>{{'Product_Component.ShareProducts.ShareStepper.Term.unitPrice'| translate}}</mat-label>
       <input type="number" matInput formControlName="unitPrice" required>
       <mat-error>
-        Nominal Price is <strong>required</strong>
+        {{'Product_Component.ShareProducts.ShareStepper.Term.errunitPrice'| translate}}<strong>{{'Product_Component.strongRequired'| translate }}</strong>
       </mat-error>
     </mat-form-field>
 
     <mat-form-field fxFlex="48%">
-      <mat-label>Capital Value</mat-label>
+      <mat-label>{{'Product_Component.ShareProducts.ShareStepper.Term.shareCapital'| translate}}</mat-label>
       <input type="number" matInput formControlName="shareCapital" readonly>
       <mat-hint>
-        Shares to be Issued * Nominal Price (Auto calculated)
+        {{'Product_Component.ShareProducts.ShareStepper.Term.hintshareCapital'| translate}}
       </mat-hint>
     </mat-form-field>
 
@@ -39,10 +39,10 @@
   <div fxLayout="row" class="margin-t" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="2%">
     <button mat-raised-button matStepperPrevious>
       <fa-icon icon="arrow-left"></fa-icon>&nbsp;&nbsp;
-      Previous
+      {{ "ShareButton.PreviousEng" | translate }}
     </button>
     <button mat-raised-button matStepperNext>
-      Next&nbsp;&nbsp;
+      {{ "ShareButton.NextEng" | translate }}&nbsp;&nbsp;
       <fa-icon icon="arrow-right"></fa-icon>
     </button>
   </div>
