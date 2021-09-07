@@ -3,13 +3,13 @@
   <mat-card *ngIf="!isCollapsed">
 
     <form [formGroup]="reportForm" (ngSubmit)="run()">
-      
+
       <mat-card-content fxLayout="column">
 
         <ng-container  *ngFor="let param of paramData" [ngSwitch]="param.displayType">
-  
+
           <ng-container *ngIf="reportForm.contains(param.name)">
-  
+
             <mat-form-field fxFlex *ngSwitchCase="'text'">
               <mat-label>{{param.label}}</mat-label>
               <input matInput required [formControlName]="param.name">
@@ -17,7 +17,7 @@
                 {{param.label}} is <strong>required</strong>
               </mat-error>
             </mat-form-field>
-    
+
             <mat-form-field fxFlex *ngSwitchCase="'date'">
               <mat-label>{{param.label}}</mat-label>
               <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="runReportDatePicker" required
@@ -28,7 +28,7 @@
                 {{param.label}} is <strong>required</strong>
               </mat-error>
             </mat-form-field>
-    
+
             <mat-form-field fxFlex *ngSwitchCase="'select'">
               <mat-label>{{param.label}}</mat-label>
               <mat-select required [formControlName]="param.name">
@@ -40,13 +40,13 @@
                 {{param.label}} is <strong>required</strong>
               </mat-error>
             </mat-form-field>
-  
+
           </ng-container>
-  
+
         </ng-container>
-  
+
         <mat-form-field fxFlex>
-          <mat-label>Decimal Places</mat-label>
+          <mat-label>{{'ReportComponent.RunReport.decimalChoice'| translate}}</mat-label>
           <mat-select [formControl]="decimalChoice">
             <mat-option value="0">0</mat-option>
             <mat-option value="1">1</mat-option>
@@ -55,32 +55,32 @@
             <mat-option value="4">4</mat-option>
           </mat-select>
         </mat-form-field>
-  
+
         <mat-form-field fxFlex *ngIf="report.type === 'Pentaho' && reportForm.contains('outputType')">
-          <mat-label>Output Type</mat-label>
+          <mat-label>{{'ReportComponent.RunReport.outputType'| translate}}</mat-label>
           <mat-select formControlName="outputType" value="HTML">
-            <mat-option value="HTML">Normal format</mat-option>
-            <mat-option value="XLS">Excel format</mat-option>
-            <mat-option value="XLSX">Excel 2007 format</mat-option>
-            <mat-option value="CSV">CSV format</mat-option>
-            <mat-option value="PDF">PDF format</mat-option>
+            <mat-option value="HTML">{{'ReportComponent.RunReport.HTML'| translate}}</mat-option>
+            <mat-option value="XLS">{{'ReportComponent.RunReport.XLS'| translate}}</mat-option>
+            <mat-option value="XLSX">{{'ReportComponent.RunReport.XLSX'| translate}}</mat-option>
+            <mat-option value="CSV">{{'ReportComponent.RunReport.CSV'| translate}}</mat-option>
+            <mat-option value="PDF">{{'ReportComponent.RunReport.PDF'| translate}}</mat-option>
           </mat-select>
         </mat-form-field>
 
       </mat-card-content>
 
       <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
-        <button type="button" mat-raised-button [routerLink]="['/reports']">Cancel</button>
+        <button type="button" mat-raised-button [routerLink]="['/reports']">{{'ReportComponent.RunReport.Cancel'| translate}}</button>
         <button mat-raised-button color="primary" [disabled]="!reportForm.valid" id="runReport">
           <fa-icon icon="cogs"></fa-icon>
-          &nbsp; Run Report
+          &nbsp; {{'ReportComponent.RunReport.RunReport'| translate}}
         </button>
       </mat-card-actions>
 
     </form>
 
   </mat-card>
-  
+
 </div>
 
 <div class="container output" *ngIf="isCollapsed">
@@ -89,7 +89,7 @@
 
     <div class="m-b-20">
       <button mat-raised-button color="primary" (click)="isCollapsed = false">
-        Parameters
+        {{'ReportComponent.RunReport.Parameters'| translate}}
       </button>
     </div>
 
