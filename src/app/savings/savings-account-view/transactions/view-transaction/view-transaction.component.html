@@ -5,13 +5,13 @@
       *ngIf="transactionData.transactionType.value == 'Transfer' || transactionData.reversed == 'true'
         || transactionData.transactionType.id==3 || transactionData.transactionType.id==17"
       [routerLink]="'edit'">
-      <fa-icon icon="edit"></fa-icon>&nbsp;&nbsp;Edit
+      <fa-icon icon="edit"></fa-icon>&nbsp;&nbsp;{{'Savings.View.Transactions.ViewTransaction.Edit'| translate}}
     </button>
   </span>
   <button mat-raised-button color="warn"
     *midasHasPermission="'POS_UPDATE'"
     (click)="undoTransaction()">
-    <fa-icon icon="undo"></fa-icon>&nbsp;&nbsp;Undo
+    <fa-icon icon="undo"></fa-icon>&nbsp;&nbsp;{{'Savings.View.Transactions.ViewTransaction.Undo'| translate}}
   </button>
 </div>
 
@@ -24,7 +24,7 @@
       <div fxLayout="row wrap" class="content">
 
         <div fxFlex="50%" class="mat-body-strong">
-          Transaction Id
+          {{'Savings.View.Transactions.ViewTransaction.id'| translate}}
         </div>
 
         <div fxFlex="50%">
@@ -32,7 +32,7 @@
         </div>
 
         <div fxFlex="50%" class="mat-body-strong">
-          Type
+          {{'Savings.View.Transactions.ViewTransaction.Type'| translate}}
         </div>
 
         <div fxFlex="50%">
@@ -40,7 +40,7 @@
         </div>
 
         <div fxFlex="50%" class="mat-body-strong">
-          Transaction Date
+          {{'Savings.View.Transactions.ViewTransaction.date'| translate}}
         </div>
 
         <div fxFlex="50%">
@@ -48,7 +48,7 @@
         </div>
 
         <div fxFlex="50%" class="mat-body-strong">
-          Currency
+          {{'Savings.View.Transactions.ViewTransaction.Currency'| translate}}
         </div>
 
         <div fxFlex="50%">
@@ -56,7 +56,7 @@
         </div>
 
         <div fxFlex="50%" class="mat-body-strong">
-          Amount
+          {{'Savings.View.Transactions.ViewTransaction.Amount'| translate}}
         </div>
 
         <div fxFlex="50%">
@@ -64,7 +64,7 @@
         </div>
 
         <div fxFlex="50%" class="mat-body-strong">
-          Note
+          {{'Savings.View.Transactions.ViewTransaction.Note'| translate}}
         </div>
 
         <div fxFlex="50%">
@@ -74,7 +74,7 @@
         <ng-container *ngIf="transactionData.paymentDetailData">
 
           <div *ngIf="transactionData.paymentDetailData.paymentType" fxFlex="50%" class="mat-body-strong">
-            Payment Type
+            {{'Savings.View.Transactions.ViewTransaction.paymentType'| translate}}
           </div>
 
           <div *ngIf="transactionData.paymentDetailData.paymentType" fxFlex="50%">
@@ -82,7 +82,7 @@
           </div>
 
           <div *ngIf="transactionData.paymentDetailData.accountNumber" fxFlex="50%" class="mat-body-strong">
-            Account No.
+            {{'Savings.View.Transactions.ViewTransaction.accountNumber'| translate}}
           </div>
 
           <div *ngIf="transactionData.paymentDetailData.accountNumber" fxFlex="50%">
@@ -90,7 +90,7 @@
           </div>
 
           <div *ngIf="transactionData.paymentDetailData.checkNumber" fxFlex="50%" class="mat-body-strong">
-            Cheque Number
+            {{'Savings.View.Transactions.ViewTransaction.checkNumber'| translate}}
           </div>
 
           <div *ngIf="transactionData.paymentDetailData.checkNumber" fxFlex="50%">
@@ -98,7 +98,7 @@
           </div>
 
           <div *ngIf="transactionData.paymentDetailData.routingCode" fxFlex="50%" class="mat-body-strong">
-            Routing Code
+            {{'Savings.View.Transactions.ViewTransaction.routingCode'| translate}}
           </div>
 
           <div *ngIf="transactionData.paymentDetailData.routingCode" fxFlex="50%">
@@ -106,7 +106,7 @@
           </div>
 
           <div *ngIf="transactionData.paymentDetailData.receiptNumber" fxFlex="50%" class="mat-body-strong">
-            Receipt No.
+            {{'Savings.View.Transactions.ViewTransaction.receiptNumber'| translate}}
           </div>
 
           <div *ngIf="transactionData.paymentDetailData.receiptNumber" fxFlex="50%">
@@ -114,7 +114,7 @@
           </div>
 
           <div *ngIf="transactionData.paymentDetailData.bankNumber" fxFlex="50%" class="mat-body-strong">
-            Bank No.
+            {{'Savings.View.Transactions.ViewTransaction.bankNumber'| translate}}
           </div>
 
           <div *ngIf="transactionData.paymentDetailData.bankNumber" fxFlex="50%">

@@ -1,8 +1,9 @@
-<h1 mat-dialog-title>{{ data.isEnable ? 'Enable' : 'Disable' }} Withhold Tax</h1>
+<h1 mat-dialog-title>{{ data.isEnable ? 'Enable' : 'Disable' }} {{'Savings.View.CustomDialog.ToggleWitholdTax.title'| translate}}</h1>
 <div mat-dialog-content>
-  <p>Are you sure you want to {{ data.isEnable ? 'enable' : 'disable' }} withhold tax for this account ?</p>
+  <p>{{'Savings.View.CustomDialog.ToggleWitholdTax.content'| translate}}{{ data.isEnable ? 'enable' : 'disable' }}
+    {{'Savings.View.CustomDialog.ToggleWitholdTax.content2'| translate}}</p>
 </div>
 <mat-dialog-actions align="end">
-  <button mat-raised-button mat-dialog-close>Cancel</button>
-  <button mat-raised-button color="{{ data.isEnable ? 'accent' : 'warn' }}" [mat-dialog-close]="{ confirm: true }">Confirm</button>
+  <button mat-raised-button mat-dialog-close>{{ "ShareButton.CancelEng" | translate }}</button>
+  <button mat-raised-button color="{{ data.isEnable ? 'accent' : 'warn' }}" [mat-dialog-close]="{ confirm: true }">{{ "ShareButton.ConfirmEng" | translate }}</button>
 </mat-dialog-actions>

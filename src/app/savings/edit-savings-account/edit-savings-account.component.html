@@ -24,10 +24,10 @@
 
     <mat-step [stepControl]="savingsAccountDetailsForm">
 
-      <ng-template matStepLabel>DETAILS</ng-template>
+      <ng-template matStepLabel>{{'Savings.EditSavingAccount.DETAILS'| translate}}</ng-template>
 
       <mifosx-savings-account-details-step
-        [savingsAccountTemplate]="savingsAccountAndTemplate" 
+        [savingsAccountTemplate]="savingsAccountAndTemplate"
         (savingsAccountProductTemplate)="setTemplate($event)"
       >
       </mifosx-savings-account-details-step>
@@ -36,9 +36,9 @@
 
     <mat-step [stepControl]="savingsAccountTermsForm">
 
-      <ng-template matStepLabel>TERMS</ng-template>
+      <ng-template matStepLabel>{{'Savings.EditSavingAccount.TERMS'| translate}}</ng-template>
 
-      <mifosx-savings-account-terms-step 
+      <mifosx-savings-account-terms-step
         [savingsAccountProductTemplate]="savingsAccountProductTemplate"
         [savingsAccountTemplate]="savingsAccountAndTemplate"
       ></mifosx-savings-account-terms-step>
@@ -47,7 +47,7 @@
 
     <mat-step>
 
-      <ng-template matStepLabel>CHARGES</ng-template>
+      <ng-template matStepLabel>{{'Savings.EditSavingAccount.CHARGES'| translate}}</ng-template>
 
       <mifosx-savings-account-charges-step
         [savingsAccountProductTemplate]="savingsAccountProductTemplate"
@@ -60,7 +60,7 @@
 
     <mat-step *ngIf="savingsAccountFormValidAndNotPristine" completed>
 
-      <ng-template matStepLabel>PREVIEW</ng-template>
+      <ng-template matStepLabel>{{'Savings.EditSavingAccount.PREVIEW'| translate}}</ng-template>
 
       <mifosx-savings-account-preview-step
         [savingsAccountProductTemplate]="savingsAccountProductTemplate"

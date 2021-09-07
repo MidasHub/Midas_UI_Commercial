@@ -9,7 +9,7 @@
   fxLayoutGap.lt-md="0%"
 >
   <mat-form-field class="select-book">
-    <mat-label>Chọn đối tác</mat-label>
+    <mat-label>{{ "Saving_Account_Component.PartnerAdvanceCash.partnerAdvanceCash" | translate }}</mat-label>
     <input
       required
       type="text"
@@ -23,7 +23,7 @@
         {{ cl.desc }}
       </mat-option>
     </mat-autocomplete>
-    <mat-error *ngIf="partner.hasError('required')"> Yêu cầu: chọn đối tác </mat-error>
+    <mat-error *ngIf="partner.hasError('required')"> {{ "Saving_Account_Component.PartnerAdvanceCash.errpartnerAdvanceCash" | translate }} </mat-error>
   </mat-form-field>
 
   <mat-form-field fxFlex="96%" *ngIf="form.contains('partnerPaymentType')">

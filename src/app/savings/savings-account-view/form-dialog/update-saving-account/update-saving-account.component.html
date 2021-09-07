@@ -1,9 +1,9 @@
-<h1 mat-dialog-title>Chỉnh sửa tài khoản [{{templateData?.accountNo}}]</h1>
+<h1 mat-dialog-title>{{ "Saving_Account_Component.UpdateSavingAccount.title" | translate }} [{{templateData?.accountNo}}]</h1>
 
 <div mat-dialog-content [formGroup]="form" [fxLayout]="'column'" fxLayout.lt-md="column" [fxLayoutGap]="'1%'"
      fxLayoutGap.lt-md="0%">
   <mat-form-field *ngIf="form.contains('paymentTypeId')" fxFlex="48%">
-    <mat-label>Loại</mat-label>
+    <mat-label>{{ "Saving_Account_Component.UpdateSavingAccount.paymentType" | translate }}</mat-label>
     <mat-select formControlName="paymentTypeId">
       <mat-option *ngFor="let type of templateData?.paymentTypeOptions" [value]="type.id">
         {{ type.name }}
@@ -11,7 +11,7 @@
     </mat-select>
   </mat-form-field>
   <mat-form-field *ngIf="form.contains('note')" fxFlex="48%">
-    <mat-label>Ghi chú</mat-label>
+    <mat-label>{{ "Saving_Account_Component.UpdateSavingAccount.note" | translate }}</mat-label>
     <input matInput formControlName="note">
   </mat-form-field>
 

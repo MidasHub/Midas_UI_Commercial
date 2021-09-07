@@ -1,8 +1,8 @@
-<h1 mat-dialog-title>Waive Charge</h1>
+<h1 mat-dialog-title>{{'Savings.View.CustomDialog.WaiveCharge.title'| translate}}</h1>
 <div mat-dialog-content>
-  <p>Are you sure you want to waive charge with id: {{ data.id }} ?</p>
+  <p>{{'Savings.View.CustomDialog.WaiveCharge.content'| translate}}{{ data.id }} ?</p>
 </div>
 <mat-dialog-actions align="end">
-  <button mat-raised-button mat-dialog-close>Cancel</button>
-  <button mat-raised-button color="primary" [mat-dialog-close]="{ confirm: true }">Confirm</button>
+  <button mat-raised-button mat-dialog-close>{{ "ShareButton.CancelEng" | translate }}</button>
+  <button mat-raised-button color="primary" [mat-dialog-close]="{ confirm: true }">{{ "ShareButton.ConfirmEng" | translate }}</button>
 </mat-dialog-actions>

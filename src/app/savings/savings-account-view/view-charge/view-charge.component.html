@@ -4,16 +4,16 @@
   fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column" class="container m-b-20">
     <button mat-raised-button color="accent" *midasHasPermission="'PAY_SAVINGSACCOUNTCHARGE'" (click)="payCharge()">
       <fa-icon icon="dollar-sign"></fa-icon>&nbsp;&nbsp;
-      Pay
+      {{'Savings.View.ViewCharge.Pay'| translate}}
     </button>
     <button mat-raised-button color="primary" *midasHasPermission="'WAIVE_SAVINGSACCOUNTCHARGE'" (click)="waiveCharge()">
       <fa-icon icon="flag"></fa-icon>&nbsp;&nbsp;
-      Waive
+      {{'Savings.View.ViewCharge.Waive'| translate}}
     </button>
     <span *ngIf="isRecurringCharge()">
       <button mat-raised-button color="warn" *midasHasPermission="'INACTIVATE_SAVINGSACCOUNTCHARGE'" (click)="inactivateCharge()">
         <fa-icon icon="trash"></fa-icon>&nbsp;&nbsp;
-        Inactivate
+        {{'Savings.View.ViewCharge.Inactivate'| translate}}
       </button>
     </span>
 </div>
@@ -22,11 +22,11 @@
   fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column" class="container m-b-20">
     <button mat-raised-button color="primary" *midasHasPermission="'UPDATE_SAVINGSACCOUNTCHARGE'" (click)="editCharge()">
       <fa-icon icon="edit"></fa-icon>&nbsp;&nbsp;
-      Edit
+      {{ "ShareButton.Edit" | translate }}
     </button>
     <button mat-raised-button color="warn" *midasHasPermission="'DELETE_SAVINGSACCOUNTCHARGE'" (click)="deleteCharge()">
       <fa-icon icon="trash"></fa-icon>&nbsp;&nbsp;
-      Delete
+      {{ "ShareButton.DeleteEng" | translate }}
     </button>
 </div>
 
@@ -39,7 +39,7 @@
       <div fxLayout="row wrap" class="content">
 
         <div fxFlex="50%" class="mat-body-strong">
-          Name
+          {{'Savings.View.ViewCharge.Name'| translate}}
         </div>
 
         <div fxFlex="50%">
@@ -47,7 +47,7 @@
         </div>
 
         <div fxFlex="50%" class="mat-body-strong">
-          Charge Type
+          {{'Savings.View.ViewCharge.ChargeType'| translate}}
         </div>
 
         <div fxFlex="50%">
@@ -55,7 +55,7 @@
         </div>
 
         <div fxFlex="50%" class="mat-body-strong">
-          Currency
+          {{'Savings.View.ViewCharge.Currency'| translate}}
         </div>
 
         <div fxFlex="50%">
@@ -63,7 +63,7 @@
         </div>
 
         <div fxFlex="50%" class="mat-body-strong">
-          Payment due at
+          {{'Savings.View.ViewCharge.chargeTimeType'| translate}}
         </div>
 
         <div fxFlex="50%">
@@ -71,7 +71,7 @@
         </div>
 
         <div fxFlex="50%" class="mat-body-strong">
-          Payment due as of
+          {{'Savings.View.ViewCharge.dueDate'| translate}}
         </div>
 
         <div fxFlex="50%">
@@ -79,7 +79,7 @@
         </div>
 
         <div fxFlex="50%" class="mat-body-strong">
-          Calculation Type
+          {{'Savings.View.ViewCharge.chargeCalculationType'| translate}}
         </div>
 
         <div fxFlex="50%">
@@ -87,7 +87,7 @@
         </div>
 
         <div fxFlex="50%" class="mat-body-strong">
-          Due
+          {{'Savings.View.ViewCharge.Due'| translate}}
         </div>
 
         <div fxFlex="50%">
@@ -95,7 +95,7 @@
         </div>
 
         <div fxFlex="50%" class="mat-body-strong">
-          Paid
+          {{'Savings.View.ViewCharge.Paid'| translate}}
         </div>
 
         <div fxFlex="50%">
@@ -103,7 +103,7 @@
         </div>
 
         <div fxFlex="50%" class="mat-body-strong">
-          Waived
+          {{'Savings.View.ViewCharge.Waived'| translate}}
         </div>
 
         <div fxFlex="50%">
@@ -111,7 +111,7 @@
         </div>
 
         <div fxFlex="50%" class="mat-body-strong">
-          Outstanding
+          {{'Savings.View.ViewCharge.Outstanding'| translate}}
         </div>
 
         <div fxFlex="50%">
