@@ -3,43 +3,43 @@
   <mat-card fxLayout="column" fxLayoutGap="2%">
 
     <form [formGroup]="templateForm">
-  
+
       <mat-card-content>
-  
+
         <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
-  
+
           <mat-form-field fxFlex="48%">
-            <mat-label>Entity</mat-label>
+            <mat-label>{{'TemplatesComponent.EditTemplateComponent.Entity'| translate }}</mat-label>
             <mat-select formControlName="entity">
               <mat-option *ngFor="let entity of editTemplateData.entities" [value]="entity.id">
                 {{ entity.name }}
               </mat-option>
             </mat-select>
-          </mat-form-field>		
-  
+          </mat-form-field>
+
           <mat-form-field fxFlex="48%">
-            <mat-label>Type</mat-label>
+            <mat-label>{{'TemplatesComponent.EditTemplateComponent.Type'| translate }}</mat-label>
             <mat-select formControlName="type">
               <mat-option *ngFor="let type of editTemplateData.types" [value]="type.id">
                 {{ type.name }}
               </mat-option>
             </mat-select>
           </mat-form-field>
-  
+
           <mat-form-field fxFlex="48%">
-            <mat-label>Name</mat-label>
+            <mat-label>{{'TemplatesComponent.EditTemplateComponent.Name'| translate }}</mat-label>
             <input matInput formControlName="name">
           </mat-form-field>
-  
+
         </div>
-  
+
       </mat-card-content>
 
     </form>
 
     <div role="toggle" fxFlex="13%">
 
-      <button mat-raised-button color="primary" (click)="showAdvanceOptions = !showAdvanceOptions">Advance Options</button>
+      <button mat-raised-button color="primary" (click)="showAdvanceOptions = !showAdvanceOptions">{{'TemplatesComponent.EditTemplateComponent.xxx'| translate }}Advance Options</button>
 
     </div>
 
@@ -48,20 +48,20 @@
       <div *ngFor="let mapper of mappers; index as i" fxLayout="row" fxLayoutGap="2%">
 
         <mat-form-field fxFlex="43%">
-          <mat-label>Mapper Key</mat-label>
+          <mat-label>{{'TemplatesComponent.EditTemplateComponent.mapperskey'| translate }}</mat-label>
           <input matInput [formControl]="mapper.mapperskey">
         </mat-form-field>
 
         <mat-form-field fxFlex="43%">
-          <mat-label>Mapper Value</mat-label>
+          <mat-label>{{'TemplatesComponent.EditTemplateComponent.mappersvalue'| translate }}</mat-label>
           <input matInput [formControl]="mapper.mappersvalue">
         </mat-form-field>
 
         <button *ngIf="i === 0" class="mapper-button" fxFlex="8%" mat-raised-button color="primary" (click)="addMapper()">
-          <fa-icon icon="plus"></fa-icon>&nbsp;&nbsp;Add
+          <fa-icon icon="plus"></fa-icon>&nbsp;&nbsp;{{'TemplatesComponent.EditTemplateComponent.Add'| translate }}
         </button>
         <button *ngIf="!(i === 0)" class="mapper-button" fxFlex="9%" mat-raised-button color="primary" (click)="removeMapper(i)">
-          <fa-icon icon="minus"></fa-icon>&nbsp;&nbsp;Remove
+          <fa-icon icon="minus"></fa-icon>&nbsp;&nbsp;{{'TemplatesComponent.EditTemplateComponent.Remove'| translate }}
         </button>
 
       </div>
@@ -79,47 +79,47 @@
       <mat-accordion>
 
         <mat-expansion-panel *ngIf="templateForm.controls.entity.value === 0">
-  
+
           <mat-expansion-panel-header>
             <mat-panel-title>
-              Client Parameters
+              {{'TemplatesComponent.EditTemplateComponent.ClientParameters'| translate }}
             </mat-panel-title>
           </mat-expansion-panel-header>
-          
+
           <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutAlign="center">
             <button mat-stroked-button color="primary" class="parameter"
               *ngFor="let label of clientParameterLabels" (click)="addText(label)">
               {{ label }}
             </button>
           </div>
-  
+
         </mat-expansion-panel>
 
         <mat-expansion-panel *ngIf="templateForm.controls.entity.value === 1">
-  
+
           <mat-expansion-panel-header>
             <mat-panel-title>
-              Loan Parameters
+              {{'TemplatesComponent.EditTemplateComponent.LoanParameters'| translate }}
             </mat-panel-title>
           </mat-expansion-panel-header>
-          
+
           <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutAlign="center">
             <button mat-stroked-button color="primary" class="parameter"
               *ngFor="let label of loanParameterLabels" (click)="addText(label)">
               {{ label }}
             </button>
           </div>
-  
+
         </mat-expansion-panel>
 
         <mat-expansion-panel *ngIf="templateForm.controls.entity.value === 1">
-  
+
           <mat-expansion-panel-header>
             <mat-panel-title>
-              Repayment Schedule Parameters
+              {{'TemplatesComponent.EditTemplateComponent.RepaymentScheduleParameters'| translate }}
             </mat-panel-title>
           </mat-expansion-panel-header>
-          
+
           <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutAlign="center">
             <button mat-stroked-button color="primary" class="parameter"
               *ngFor="let label of repaymentParameterLabels" (click)="addText(label)">
@@ -128,16 +128,16 @@
           </div>
 
         </mat-expansion-panel>
-  
+
       </mat-accordion>
 
     </div>
 
     <mat-card-actions class="m-b-20" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
-      <button type="button" mat-raised-button [routerLink]="['../']">Cancel</button>
-      <button mat-raised-button color="primary" (click)="submit()">Submit</button>
+      <button type="button" mat-raised-button [routerLink]="['../']">{{ "ShareButton.CancelEng" | translate }}</button>
+      <button mat-raised-button color="primary" (click)="submit()">{{ "ShareButton.Submit" | translate }}</button>
     </mat-card-actions>
-  
+
   </mat-card>
 
 </div>

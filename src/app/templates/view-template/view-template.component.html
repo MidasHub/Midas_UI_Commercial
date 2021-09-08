@@ -2,12 +2,12 @@
 
   <button mat-raised-button color="primary" [routerLink]="['edit']" *midasHasPermission="'UPDATE_TEMPLATE'">
     <fa-icon icon="edit"></fa-icon>&nbsp;&nbsp;
-    Edit
+    {{ "ShareButton.Edit" | translate }}
   </button>
 
   <button mat-raised-button color="warn" (click)="delete()" *midasHasPermission="'DELETE_TEMPLATE'">
     <fa-icon icon="trash"></fa-icon>&nbsp;&nbsp;
-    Delete
+    {{ "ShareButton.DeleteEng" | translate }}
   </button>
 
 </div>
@@ -21,7 +21,7 @@
       <div fxLayout="row wrap" class="content">
 
         <div fxFlex="50%" class="mat-body-strong">
-          Name
+          {{'TemplatesComponent.ViewTemplateComponent.Name'| translate }}
         </div>
 
         <div fxFlex="50%">
@@ -29,7 +29,7 @@
         </div>
 
         <div fxFlex="50%" class="mat-body-strong">
-          Entity
+          {{'TemplatesComponent.ViewTemplateComponent.Entity'| translate }}
         </div>
 
         <div fxFlex="50%">
@@ -37,7 +37,7 @@
         </div>
 
         <div fxFlex="50%" class="mat-body-strong">
-          Type
+          {{'TemplatesComponent.ViewTemplateComponent.Type'| translate }}
         </div>
 
         <div fxFlex="50%">
@@ -45,7 +45,7 @@
         </div>
 
         <div fxFlex="50%" class="mat-body-strong">
-          Text
+          {{'TemplatesComponent.ViewTemplateComponent.Text'| translate }}
         </div>
 
         <div fxFlex="50%" [innerHTML]="templateData.text"></div>
