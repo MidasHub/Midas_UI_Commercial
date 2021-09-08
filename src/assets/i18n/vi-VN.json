@@ -6849,5 +6849,628 @@
         "amountRecievedOrReturned": "Amount Recieved/Returned"
       }
     }
+  },
+  "System": {
+    "strongRequired": "required",
+    "ManageDataTables": "Manage Data tables",
+    "AddNewExtraFields": "Add new extra fields to any entity in the form of data table",
+    "ManageCodes": "Manage Codes",
+    "CodesAre": "Codes are used to define drop down values",
+    "ManageRolesAndPermissions": "Manage Roles and Permissions",
+    "DefineOrModifyRoles": "Define or modify roles and associated permissions",
+    "ConfigureMaker": "Configure Maker Checker Tasks",
+    "DefineOrModifyMaker": "Define or modify Maker Checker tasks",
+    "ManageHooks": "Manage Hooks",
+    "DefineHooks": "Define Hooks",
+    "EntityMapping": "Entity to Entity Mapping",
+    "DefineOrModifyMapping": "Define or modify entity to entity mappings",
+    "ManageSurveys": "Manage Surveys",
+    "ManageServices": "Manage your Services",
+    "AuditTrails": "Audit Trails",
+    "AuditLogs": "Audit logs of all the activities, such as create client, disburse loans etc",
+    "ManageReports": "Manage Reports",
+    "AddReport": "Add new report and classify reports",
+    "SchedulerJobs": "Scheduler Jobs",
+    "ScheduleModifyDeleteJob": "Schedule a job, modify or delete jobs",
+    "Configurations": "Configurations",
+    "GlobalConfigurations": "Global configurations and Cache settings",
+    "AccountNumberPreferences": "Account Number Preferences",
+    "Preferences": "Preferences for generating account numbers for client, loan and savings accounts",
+    "ExternalServices": "External Services",
+    "ExternalServicesConfiguration": "External Services Configuration",
+    "TwoFactorConfiguration": "Two-Factor Configuration",
+    "TwoFactorConfigurationSettings": "Two-factor authentication configuration settings",
+
+    "AccountNumberPreferencesComponent": {
+      "CreatePreference": "Create Preference",
+      "Filter": "Filter",
+      "AccountNumberPreferences": "Account Number Preferences",
+
+      "Create": {
+        "accountType": "Account Type",
+        "erraccountType": "Account Type is ",
+        "prefixType": "Prefix Field"
+      },
+      "Edit": {
+        "accountType": "Account Type",
+        "erraccountType": "Account Type is ",
+        "prefixType": "Prefix Field"
+      },
+      "View": {
+        "accountType": "Account Type",
+        "prefixType": "Prefix Type"
+      }
+    },
+    "AuditTrailsComponent": {
+      "downloadCSV": "Download CSV",
+      "resourceId": "Resource ID",
+      "Status": "Status",
+      "User": "User",
+      "Action": "Action",
+      "Entity": "Entity",
+      "Checker": "Checker",
+      "fromDate": "Maker From Date",
+      "toDate": "Maker To Date",
+      "checkedFromDate": "Checker From Date",
+      "checkedToDate": "Checked To Date",
+      "id": "Trail ID",
+      "maker": "Made By",
+      "Office": "Office",
+      "madeOnDate": "Made Date",
+      "checkedOnDate": "Checked Date",
+
+      "ViewAudit": {
+        "ID": "ID",
+        "Status": "Status",
+        "User": "User",
+        "Action": "Action",
+        "Entity": "Entity",
+        "resourceId": "Resource ID",
+        "Date": "Date",
+        "Office": "Office",
+        "savingsAccountNo": "Savings Account No",
+        "groupLevelName": "Group Level",
+        "Command": "Command",
+        "commandValue": "Command Value"
+      }
+    },
+    "CodeComponent": {
+      "CreateCode": "Create Code",
+      "Filter": "Filter",
+      "CodeName": "Code Name",
+      "systemDefined": "System Defined",
+
+      "Create": {
+        "CodeName": "Code Name",
+        "errCodeName": "Code Name is "
+      },
+      "Edit": {
+        "CodeName": "Code Name",
+        "errCodeName": "Code Name is "
+      },
+      "View": {
+        "AddCodeValue": "Add Code Value",
+        "EditCode": "Edit Code",
+        "DeleteCode": "Delete Code",
+        "Name": "Name",
+        "errName": "Name is ",
+        "Description": "Description",
+        "Position": "Position",
+        "Active": "Active"
+      }
+    },
+    "EntityToEntityMappingComponent": {
+      "office_access_to_loan_products": "Offices --> Loan Products",
+      "office_access_to_savings_products": "Offices --> Savings Products",
+      "office_access_to_fees": "Offices --> Charges/Fees",
+      "role_access_to_loan_products": "Roles --> Loan Products",
+      "role_access_to_savings_products": "Roles --> Savings Products",
+      "title": "access to ",
+      "All": "All",
+      "is": "is ",
+      "startdate": "Start Date",
+      "endDate": "End Date"
+    },
+    "ExternalServicesComponent": {
+      "S3AmazonExternalService": "S3 Amazon External Service",
+      "S3AmazonServiceConfiguration": "S3AmazonServiceConfiguration",
+      "SMSExternalService": "SMS External Service",
+      "SMSServiceConfiguration": "SMS Service Configuration",
+      "EmailExternalService": "Email External Service",
+      "EmailServiceConfiguration": "Email Service Configuration",
+      "NotificationExternalService": "Notification External Service",
+      "NotificationServiceConfiguration": "NotificationServiceConfiguration",
+
+      "AmazonS3": {
+        "Name": "Name",
+        "Value": "Value",
+
+        "EditAmazonS3": {
+          "s3_access_key": "S3 Access Key",
+          "errs3_access_key": "S3 Access Key is ",
+          "s3_bucket_name": "S3 Bucket Name",
+          "errs3_bucket_name": "S3 Bucket Name is ",
+          "s3_secret_key": "S3 Secret Key",
+          "errs3_secret_key": "S3 Secret Key is "
+        }
+      },
+      "Email": {
+        "Name": "Name",
+        "Value": "Value",
+
+        "EditEmail": {
+          "Username": "Username",
+          "errUsername": "Username is ",
+          "Password": "Password",
+          "errPassword": "Password is ",
+          "Host": "Host",
+          "errHost": "Host is ",
+          "Port": "Port",
+          "errPort": "Port is ",
+          "useTLS": "Use TLS",
+          "erruseTLS": "Use TLS is "
+        }
+      },
+      "Notification": {
+        "Name": "Name",
+        "Value": "Value",
+
+        "EditNotification": {
+          "server_key": "Server Key",
+          "errserver_key": "Server Key is ",
+          "gcm_end_point": "GCM End Point",
+          "errgcm_end_point": "GCM End Point is ",
+          "fcm_end_point": "FCM End Point",
+          "errfcm_end_point": "FCM End Point is "
+        }
+      },
+      "SMS": {
+        "Name": "Name",
+        "Value": "Value",
+
+        "EditSMS": {
+          "host_name": "Host Name",
+          "errhost_name": "Host Name is ",
+          "port_number": "Port Number",
+          "errport_number": "Port Number is ",
+          "end_point": "End Point",
+          "errend_point": "End Point is ",
+          "tenant_app_key": "Tenant App Key",
+          "errtenant_app_key": "Tenant App Key is "
+        }
+      }
+    },
+    "GlobalConfigurationsComponent": {
+      "Filter": "Filter",
+      "Name": "Name",
+      "Status": "Status",
+      "Value": "Value",
+      "Action": "Action",
+      "Enable": "Enable",
+      "Disable": "Disable",
+      "Edit": "Edit",
+
+      "EditConfigurationsComponent": {
+        "name": "Configuration Name",
+        "value": "Configuration Value",
+        "errvalue": "Configuration Value is "
+      }
+    },
+    "ManageDataTable": {
+      "btnCreateDataTable": "Create Data Table",
+      "Filter": "Filter",
+      "registeredTableName": "Data Table Name",
+      "applicationTableName": "Associated With",
+
+      "ColumnDialog": {
+        "name": "Column Name",
+        "errname": "Column Name is ",
+        "type": "Column Type",
+        "Mandatory": "Mandatory",
+        "length": "Column Length",
+        "code": "Column Code"
+      },
+      "CreateDataTable": {
+        "datatableName": "Data Table Name",
+        "errdatatableName": "Data Table Name is ",
+        "apptableName": "Application Table Name",
+        "errapptableName": "Application Table Name is ",
+        "MultiRow": "Multi Row",
+        "Columns": "Columns",
+        "AddColumn": "Add Column",
+        "Name": "Name",
+        "Type": "Type",
+        "Mandatory": "Mandatory",
+        "Length": "Length",
+        "Code": "Code",
+        "Actions": "Actions"
+      },
+      "EditDataTable": {
+        "datatableName": "Data Table Name",
+        "apptableName": "Application Table Name",
+        "errapptableName": "Application Table Name is ",
+        "Columns": "Columns",
+        "AddColumn": "Add Column",
+        "Name": "Name",
+        "Type": "Type",
+        "Mandatory": "Mandatory",
+        "Length": "Length",
+        "Code": "Code",
+        "Actions": "Actions"
+      },
+      "ViewDataTable": {
+        "applicationTableName": "Associated With",
+        "FieldName": "Field Name",
+        "Type": "Type",
+        "Length": "Length",
+        "Code": "Code",
+        "Mandatory": "Mandatory"
+      }
+    },
+    "ManageHooksComponent": {
+      "btnCreateHook": "Create Hook",
+      "Filter": "Filter",
+      "name": "Hook Template",
+      "displayName": "Hook Name",
+      "Status": "Status",
+
+      "AddEventDialog": {
+        "grouping": "Select Grouping",
+        "errgrouping": "Grouping is ",
+        "entity": "Select Entity",
+        "errentity": "Entity is ",
+        "action": "Select Action",
+        "erraction": "Action is "
+      },
+      "CreateHook": {
+        "name": "Hook Template",
+        "errname": "Hook Template is ",
+        "displayName": "Display Name",
+        "errdisplayName": "Display Name is ",
+        "isActive": "Is Active?",
+        "contentType": "Content Type",
+        "json": "json",
+        "form": "form",
+        "errcontentType": "Content Type is ",
+        "phoneNumber": "Phone Number",
+        "PayloadURIs": "Payload URL is ",
+        "payloadUrl": "Payload URL",
+        "smsProvider": "SMS Provider",
+        "errsmsProvider": "SMS Provider is ",
+        "smsProviderToken": "SMS Provider Token",
+        "errsmsProviderToken": "SMS Provider Token is ",
+        "AddEvent": "Add Event",
+        "entityName": "Entity Name",
+        "actionName": "Action Name",
+        "Actions": "Actions"
+      },
+      "EditHook": {
+        "name": "Hook Template",
+        "errname": "Hook Template is ",
+        "displayName": "Display Name",
+        "errdisplayName": "Display Name is ",
+        "isActive": "Is Active?",
+        "contentType": "Content Type",
+        "json": "json",
+        "form": "form",
+        "errcontentType": "Content Type is ",
+        "phoneNumber": "Phone Number",
+        "PayloadURLIs": "Payload URL is ",
+        "payloadUrl": "Payload URL",
+        "smsProvider": "SMS Provider",
+        "errsmsProvider": "SMS Provider is ",
+        "smsProviderToken": "SMS Provider Token",
+        "errsmsProviderToken": "SMS Provider Token is ",
+        "Events": "Events",
+        "AddEvent": "Add Event",
+        "entityName": "Entity Name",
+        "actionName": "Action Name",
+        "Actions": "Actions"
+      },
+      "ViewHook": {
+        "displayName": "Hook Name:",
+        "Status": "Status:",
+        "createdAt": "Activation Date:",
+        "updatedAt": "Updated on:",
+        "Events": "Events:",
+        "ContentType": "Content Type:",
+        "PayloadURL": "Payload URL:",
+        "PhoneNumber": "Phone Number:",
+        "SMSProvider": "SMS Provider:",
+        "SMSProviderAccountID": "SMS Provider Account ID:",
+        "SMSProviderToken": "SMS Provider Token:"
+      }
+    },
+    "ManageReportsComponent": {
+      "btnCreateReport": "Create Report",
+      "Filter": "Filter",
+      "reportName": "Report Name",
+      "reportType": "Report Type",
+      "reportSubType": "Report Sub Type",
+      "reportCategory": "Report Category",
+      "coreReport": "Core Report",
+      "userReport": "User Report",
+
+      "Create": {
+        "reportName": "Report Name",
+        "errreportName": "Report Name is ",
+        "reportType": "Report Type",
+        "errreportType": "Report Type is ",
+        "reportSubType": "Report Sub Type",
+        "reportCategory": "Report Category",
+        "useReport": "User Report (UI)",
+        "Description": "Description",
+        "SQL": "SQL",
+        "errSQL": "SQL is ",
+        "ReportParameters": "Report Parameters",
+        "AddReportParameter": "Add Report Parameter",
+        "Parameter": "Parameter",
+        "parameterNamePassed": "Parameter Name Passed to Pentaho",
+        "Actions": "Actions"
+      },
+      "Edit": {
+        "reportName": "Report Name",
+        "errreportName": "Report Name is ",
+        "reportType": "Report Type",
+        "errreportType": "Report Type is ",
+        "reportSubType": "Report Sub Type",
+        "reportCategory": "Report Category",
+        "useReport": "User Report (UI)",
+        "Description": "Description",
+        "SQL": "SQL",
+        "errSQL": "SQL is ",
+        "ReportParameters": "Report Parameters",
+        "AddReportParameter": "Add Report Parameter",
+        "Parameter": "Parameter",
+        "parameterNamePassed": "Parameter Name Passed to Pentaho",
+        "Actions": "Actions"
+      },
+      "Parameter": {
+        "parameterName": "Select allowed parameter",
+        "errparameterName": "Report Parameter is ",
+        "reportParameterName": "Parameter name passed to Pentaho"
+      },
+      "View": {
+        "reportType": "Report Type:",
+        "reportSubType": "Report Subtype:",
+        "reportCategory": "Report Category:",
+        "coreReport": "Core Report:",
+        "useReport": "User Report:"
+      }
+    },
+    "ManageSchedulerJobs": {
+      "Suspend": "Suspend",
+      "Filter": "Filter",
+      "Name": "Name",
+      "nextRunTime": "Next Run",
+      "previousRunTime": "Previous Run",
+      "previousRunStatus": "Previous Run Status",
+      "currentlyRunning": "Currently Running",
+      "errorLog": "Error Log",
+      "RunSelectedJobs": "Run Selected Jobs",
+      "Refresh": "Refresh",
+
+      "EditSchedulerJob": {
+        "displayName": "Job Name",
+        "errdisplayName": "Job Name is ",
+        "cronExpression": "Cron Expression",
+        "errcronExpression": "Cron Expression is ",
+        "activexxx": "Is job active?"
+      },
+      "ViewHistorySchedulerJob": {
+        "FilterByVersion": "Filter By Version",
+        "Version": "Version",
+        "run_start_time": "Run Start Time",
+        "Status": "Status",
+        "run_type": "Run Type",
+        "error_log": "Error Log"
+      },
+      "ViewSchedulerJob": {
+        "Edit": "Edit",
+        "ViewHistory": "View History",
+        "displayName": "Job Name",
+        "cronExpression": "Cron Expression",
+        "active": "Is Active Job?",
+        "Follow": "Follow",
+        "ClickHere": "Click Here To Generate Cron Expression"
+      }
+    },
+    "ManageSurveysComponent": {
+      "CreateSurveys": "Create Surveys",
+      "Filter": "Filter",
+      "Key": "Key",
+      "Name": "Name",
+      "Description": "Description",
+      "countryCode": "Country Code",
+      "Status": "Status",
+      "Action": "Action",
+      "Activate": "Activate",
+      "Deactivate": "Deactivate",
+
+      "CreateSurvey": {
+        "Key": "Key",
+        "errKey": "Key is ",
+        "Name": "Name",
+        "errName": "Name is ",
+        "countryCode": "Country Code",
+        "errcountryCode": "Country Code is ",
+        "errcountryCode2": "Country Code ",
+        "Description": "Description",
+        "Cancel": "Cancel",
+        "Proceed": "Proceed",
+        "DeleteQuestion": "Delete Question",
+        "Text": "Text",
+        "errText": "Text is ",
+        "Options": "Options",
+        "AddOption": "Add Option",
+        "Value": "Value",
+        "errValue": "Value is ",
+        "alertValue": "must be an integer between -9999 and 9999",
+        "AddQuestion": "Add Question",
+        "Submit": "Submit"
+      },
+      "ViewSurvey": {
+        "Survey": "Survey",
+        "key": "Key:",
+        "name": "Name:",
+        "countryCode": "Country Code:",
+        "description": "Description:",
+        "Questions": "Questions",
+        "Question2": "Question: ",
+        "key2": "Key:",
+        "Text": "Text:",
+        "Option": "Option: "
+      }
+    },
+    "RolesAndPermissions": {
+      "AddRole": "Add Role",
+      "Filter": "Filter",
+      "Name": "Name",
+      "Description": "Description",
+      "Status": "Status",
+      "Actions": "Actions",
+      "Edit": "Edit",
+
+      "AddRoleComponent": {
+        "Name": "Name",
+        "errName": "Role Name is ",
+        "Description": "Description",
+        "errDescription": "Role Description is "
+      },
+      "EditRoleComponent": {
+        "name": "Role Name",
+        "description": "Role Description",
+        "errdescription": "Description is "
+      },
+      "ViewRoleComponent": {
+        "EditRole": "Edit Role",
+        "DisableRole": "Disable Role",
+        "EnableRole": "Enable Role",
+        "DeleteRole": "Delete Role",
+        "Name": "Name",
+        "Description": "Description",
+        "Permissions": "Permissions",
+        "SelectAll": "Select All",
+        "DeselectAll": "Deselect All"
+      }
+    }
+  },
+  "Task": {
+    "CheckerInboxAndTasks": {
+      "CheckerInbox": "Checker Inbox",
+      "ClientApproval": "Client Approval",
+      "LoanApproval": "Loan Approval",
+      "LoanDisbursal": "Loan Disbursal",
+      "RescheduleLoan": "Reschedule Loan"
+    },
+    "CheckerInboxAndTasksTab": {
+      "CheckerInbox": {
+        "Approve": "Approve",
+        "Delete": "Delete",
+        "Reject": "Reject",
+        "makerDateTimeFrom": "From Date",
+        "makerDateTimeto": "To Date",
+        "Action": "Action",
+        "Entity": "Entity",
+        "resourceId": "Resource ID",
+        "Search": "Search",
+        "ID": "ID",
+        "madeOnDate": "Made on Date",
+        "Status": "Status",
+        "User": "User",
+        "message1": "No checker inbox data available for this search.",
+        "message2": "No checker inbox data available for this account."
+      },
+      "ClientApproval": {
+        "Approve": "Approve",
+        "Name": "Name",
+        "AccountNumber": "AccountNumber",
+        "Staff": "Staff",
+        "message": "No pending loans for approval."
+      },
+      "LoanApproval": {
+        "Approve": "Approve",
+        "Client": "Client",
+        "Loan": "Loan",
+        "Amount": "Amount",
+        "message": "No pending loans for approval."
+      },
+      "LoanDisbursal": {
+        "Disburse": "Disburse",
+        "client": "Client Name",
+        "loanAccountNumber": "Loan Account#",
+        "loanProduct": "Loan Product",
+        "Principal": "Principal",
+        "message": "No pending loan available for disbursal."
+      },
+      "RescheduleLoan": {
+        "Approve": "Approve",
+        "rescheduleRequestNo": "Reschedule Request#",
+        "loanAccountNo": "Loan Account#",
+        "rescheduleForm": "Reschedule Form",
+        "rescheduleReason": "Reschedule Reason",
+        "message": "No pending rescheduled loan available for this account."
+      }
+    },
+    "ViewCheckerInbox": {
+      "Approve": "Approve",
+      "Delete": "Delete",
+      "Reject": "Reject",
+      "ViewCheckerInbox": "View Checker Inbox",
+      "Details": "Details",
+      "ID": "ID",
+      "Status": "Status",
+      "User": "User",
+      "Action": "Action",
+      "Entity": "Entity",
+      "resourceId": "Resource ID",
+      "Date": "Date",
+      "Office": "Office",
+      "savingsAccountNo": "Savings Account Number",
+      "Command": "Command"
+    }
+  },
+  "TemplatesComponent": {
+    "strongRequired": "required",
+    "CreateTemplate": "Create Template",
+    "Filter": "Filter",
+    "Entity": "Entity",
+    "Type": "Type",
+    "Name": "Name",
+
+    "CreateTemplateComponent": {
+      "Entity": "Entity",
+      "errEntity": "Entity is ",
+      "Type": "Type",
+      "errType": "Type is ",
+      "Name": "Name",
+      "errName": "Name is ",
+      "AdvanceOptions": "Advance Options",
+      "mapperskey": "Mapper Key",
+      "mappersvalue": "Mapper Value",
+      "Add": "Add",
+      "Remove": "Remove",
+      "ClientParameters": "Client Parameters",
+      "LoanParameters": "Loan Parameters",
+      "RepaymentScheduleParameters": "Repayment Schedule Parameters"
+    },
+    "EditTemplateComponent": {
+      "Entity": "Entity",
+      "Type": "Type",
+      "Name": "Name",
+      "mapperskey": "Mapper Key",
+      "mappersvalue": "Mapper Value",
+      "Add": "Add",
+      "Remove": "Remove",
+      "ClientParameters": "Client Parameters",
+      "LoanParameters": "Loan Parameters",
+      "RepaymentScheduleParameters": "Repayment Schedule Parameters"
+    },
+    "ViewTemplateComponent": {
+      "Name": "Name",
+      "Entity": "Entity",
+      "Type": "Type",
+      "Text": "Text"
+    }
   }
 }
