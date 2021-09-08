@@ -9,7 +9,7 @@
     <div fxFlex="60%">
       <button mat-raised-button color="success" *midasHasPermission="'APPROVE_LOANRESCHEDULE'"
         (click)="approveBulkLoanReschedule()">
-        <fa-icon icon="check"></fa-icon>&nbsp;&nbsp;Approve
+        <fa-icon icon="check"></fa-icon>&nbsp;&nbsp;{{'Task.CheckerInboxAndTasksTab.RescheduleLoan.Approve'| translate }}
       </button>
     </div>
   </div>
@@ -30,27 +30,27 @@
     </ng-container>
 
     <ng-container matColumnDef="client">
-      <th mat-header-cell *matHeaderCellDef> Client </th>
+      <th mat-header-cell *matHeaderCellDef> {{'Task.CheckerInboxAndTasksTab.RescheduleLoan.xxx'| translate }}Client </th>
       <td mat-cell *matCellDef="let loan" class="view-details" [routerLink]="['../../clients', loan.clientId , 'general']"> {{loan.clientName}} </td>
     </ng-container>
 
     <ng-container matColumnDef="rescheduleRequestNo">
-      <th mat-header-cell *matHeaderCellDef> Reschedule Request# </th>
+      <th mat-header-cell *matHeaderCellDef> {{'Task.CheckerInboxAndTasksTab.RescheduleLoan.rescheduleRequestNo'| translate }} </th>
       <td mat-cell *matCellDef="let loan"> {{loan.id}} </td>
     </ng-container>
 
     <ng-container matColumnDef="loanAccountNo">
-      <th mat-header-cell *matHeaderCellDef> Loan Account# </th>
+      <th mat-header-cell *matHeaderCellDef> {{'Task.CheckerInboxAndTasksTab.RescheduleLoan.loanAccountNo'| translate }} </th>
       <td mat-cell *matCellDef="let loan" class="view-details" [routerLink]="['../../clients', loan.clientId , 'loans', loan.loanId, 'general']"> {{loan.loanAccountNumber}} </td>
     </ng-container>
 
     <ng-container matColumnDef="rescheduleForm">
-      <th mat-header-cell *matHeaderCellDef> Reschedule Form </th>
+      <th mat-header-cell *matHeaderCellDef> {{'Task.CheckerInboxAndTasksTab.RescheduleLoan.rescheduleForm'| translate }} </th>
       <td mat-cell *matCellDef="let loan"> {{loan.rescheduleFromDate | date}} </td>
     </ng-container>
 
     <ng-container matColumnDef="rescheduleReason">
-      <th mat-header-cell *matHeaderCellDef> Reschedule Reason </th>
+      <th mat-header-cell *matHeaderCellDef> {{'Task.CheckerInboxAndTasksTab.RescheduleLoan.rescheduleReason'| translate }} </th>
       <td mat-cell *matCellDef="let loan"> {{loan.rescheduleReasonCodeValue.name}} </td>
     </ng-container>
 
@@ -65,7 +65,7 @@
 
   <div class="message">
     <i class="fa fa-exclamation-circle alert-check"></i>
-    No pending rescheduled loan available for this account.
+    {{'Task.CheckerInboxAndTasksTab.RescheduleLoan.message'| translate }}
   </div>
 
 </div>

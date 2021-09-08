@@ -8,7 +8,7 @@
     </div>
     <div fxFlex="60%">
       <button mat-raised-button color="success" *midasHasPermission="'APPROVE_LOAN'" (click)="disburseLoan()">
-        <fa-icon icon="check"></fa-icon>&nbsp;&nbsp;Disburse
+        <fa-icon icon="check"></fa-icon>&nbsp;&nbsp;{{'Task.CheckerInboxAndTasksTab.LoanDisbursal.Disburse'| translate }}
       </button>
     </div>
   </div>
@@ -29,22 +29,22 @@
     </ng-container>
 
     <ng-container matColumnDef="client">
-      <th mat-header-cell *matHeaderCellDef> Client Name </th>
+      <th mat-header-cell *matHeaderCellDef> {{'Task.CheckerInboxAndTasksTab.LoanDisbursal.client'| translate }} </th>
       <td mat-cell *matCellDef="let loan" class="view-details" [routerLink]="['../../clients', loan.clientId, 'general']"> {{loan.clientName}} </td>
     </ng-container>
 
     <ng-container matColumnDef="loanAccountNumber">
-      <th mat-header-cell *matHeaderCellDef> Loan Account# </th>
+      <th mat-header-cell *matHeaderCellDef> {{'Task.CheckerInboxAndTasksTab.LoanDisbursal.loanAccountNumber'| translate }} </th>
       <td mat-cell *matCellDef="let loan" class="view-details" [routerLink]="['../../clients', loan.clientId, 'loans-accounts', loan.id, 'general']"> {{loan.accountNo}} </td>
     </ng-container>
 
     <ng-container matColumnDef="loanProduct">
-      <th mat-header-cell *matHeaderCellDef> Loan Product </th>
+      <th mat-header-cell *matHeaderCellDef> {{'Task.CheckerInboxAndTasksTab.LoanDisbursal.loanProduct'| translate }} </th>
       <td mat-cell *matCellDef="let loan" class="view-details" [routerLink]="['../../clients', loan.clientId, 'loans-accounts', loan.id, 'general']"> {{loan.loanProductName}} </td>
     </ng-container>
 
     <ng-container matColumnDef="principal">
-      <th mat-header-cell *matHeaderCellDef> Principal </th>
+      <th mat-header-cell *matHeaderCellDef> {{'Task.CheckerInboxAndTasksTab.LoanDisbursal.Principal'| translate }} </th>
       <td mat-cell *matCellDef="let loan"> {{loan.principal | number}} </td>
     </ng-container>
 
@@ -59,7 +59,7 @@
 
   <div class="message">
     <i class="fa fa-exclamation-circle alert-check"></i>
-    No pending loan available for disbursal.
+    {{'Task.CheckerInboxAndTasksTab.LoanDisbursal.message'| translate }}
   </div>
 
 </div>

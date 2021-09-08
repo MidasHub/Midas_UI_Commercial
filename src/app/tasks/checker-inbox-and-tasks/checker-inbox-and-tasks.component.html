@@ -7,23 +7,23 @@
       <nav mat-tab-nav-bar class="navigation-tabs">
         <a mat-tab-link [routerLink]="['./checker-inbox']" routerLinkActive #checkerInbox="routerLinkActive"
         [active]="checkerInbox.isActive" *midasHasPermission="'ALL_FUNCTIONS_READ'">
-          Checker Inbox
+        {{'Task.CheckerInboxAndTasks.CheckerInbox'| translate }}
         </a>
         <a mat-tab-link [routerLink]="['./client-approval']" routerLinkActive #clientApproval="routerLinkActive"
           [active]="clientApproval.isActive" *midasHasPermission="'READ_CLIENT'">
-          Client Approval
+          {{'Task.CheckerInboxAndTasks.ClientApproval'| translate }}
         </a>
         <a mat-tab-link [routerLink]="['./loan-approval']" routerLinkActive #loanApproval="routerLinkActive"
           [active]="loanApproval.isActive" *midasHasPermission="'READ_LOAN'">
-          Loan Approval
+          {{'Task.CheckerInboxAndTasks.LoanApproval'| translate }}
         </a>
         <a mat-tab-link [routerLink]="['./loan-disbursal']" routerLinkActive #loanDisbursal="routerLinkActive"
           [active]="loanDisbursal.isActive" *midasHasPermission="'READ_LOAN'">
-          Loan Disbursal
+          {{'Task.CheckerInboxAndTasks.LoanDisbursal'| translate }}
         </a>
         <a mat-tab-link [routerLink]="['./reschedule-loan']" routerLinkActive #rescheduleLoan="routerLinkActive"
           [active]="rescheduleLoan.isActive" *midasHasPermission="'RESCHEDULE_LOAN'">
-          Reschedule Loan
+          {{'Task.CheckerInboxAndTasks.RescheduleLoan'| translate }}
         </a>
       </nav>
 
