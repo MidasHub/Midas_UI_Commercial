@@ -45,14 +45,13 @@ export const environment = {
   }
   ,
   firebase: {
-    apiKey: "AIzaSyAtCSdklLZJKt7t2sjd4edRbofqZL7-UCw",
-    authDomain: "kiotthe-307407.firebaseapp.com",
-    projectId: "kiotthe-307407",
-    databaseURL:"https://kiotthe-307407-default-rtdb.firebaseio.com/",
-    storageBucket: "kiotthe-307407.appspot.com",
-    messagingSenderId: "83286799966",
-    appId: "1:83286799966:web:b46ce89fcbbdf4c0f2e6cf",
-    measurementId: "G-866JPR188B"
+    apiKey: 'AIzaSyBpNno5SqMfjhfgDFjAJFNoJ48ibGKzp-w',
+    authDomain: 'kiottheapp.firebaseapp.com',
+    projectId: 'kiottheapp',
+    storageBucket: 'kiottheapp.appspot.com',
+    messagingSenderId: '978912393065',
+    appId: '1:978912393065:web:371cdff154d2b8141b2ff8',
+    measurementId: 'G-N0CWQ1E2RP'
   },
   GA_TRACKING_ID: 'G-WML6QQ48CQ',
   applyLuhnAlgorithm: true
