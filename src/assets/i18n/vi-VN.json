@@ -6505,5 +6505,349 @@
         "Outstanding": "Outstanding"
       }
     }
+  },
+  "Search": {
+    "SearchPageComponent": {
+      "SearchedQuery": "Searched query resulted more than 200 records, showing first 200 records."
+    }
+  },
+  "SelfService": {
+    "AppConfiguration": {
+      "title": "Main Configuration",
+      "NameOrganization": "Name of the Organization",
+      "Description": "Description",
+      "Summary": "Summary",
+      "DefaultLanguage": "Default Language",
+      "dateFormat": "Default Date Format",
+      "Images": "Images",
+      "Favicon": "Favicon",
+      "CoverImage": "Cover Image",
+      "Logo": "Logo",
+      "LogoOrganization": "Logo with Organization Name",
+      "ThemeAndFont": "Theme and Font",
+      "MobileBankingApp": "Mobile Banking App",
+      "mobileAppThemes": "Default Theme",
+      "font": "Default Font",
+      "OnlineBankingApp": "Online Banking App",
+      "onlineBankingAppThemes": "Default Theme",
+      "onlineBankingAppFonts": "Default Font",
+      "ContactInformation": "Contact Information",
+      "Website": "Website",
+      "Email": "Email",
+      "ContactNo": "Contact No"
+    },
+    "Users": {
+      "Activate": "Activate",
+      "Deactivate": "Deactivate",
+      "CreateUser": "Create User",
+      "Filter": "Filter",
+      "Name": "Name",
+      "id": "User ID",
+      "email": "Email ID",
+      "Status": "Status",
+      "Office": "Office",
+      "Staff": "Staff",
+
+      "Create": {
+        "Office": "Office",
+        "Staff": "Staff",
+        "Client": "Client",
+        "Cancel": "Cancel",
+        "Activate": "Activate Self Service User",
+        "Username": "Username",
+        "FirstName": "First Name",
+        "LastName": "Last Name",
+        "Gender": "Gender",
+        "DateOfBirth": "Date of Birth",
+        "Email": "Email",
+        "MobileNo": "Mobile No"
+      },
+      "Edit": {
+        "Office": "Office",
+        "Staff": "Staff",
+        "Username": "Username",
+        "FirstName": "First Name",
+        "LastName": "Last Name",
+        "Gender": "Gender",
+        "DateOfBirth": "Date of Birth",
+        "Email": "Email",
+        "MobileNo": "Mobile No"
+      },
+      "View": {
+        "Edit": "Edit",
+        "ChangePassword": "Change Password",
+        "Activate": "Activate",
+        "Deactivate": "Deactivate",
+        "ID": "ID: ",
+        "Username": "Username",
+        "firstName": "First Name",
+        "lastName": "Last Name",
+        "Gender": "Gender",
+        "dateOfBirth": "Date of Birth",
+        "Email": "Email",
+        "Mobile": "Mobile",
+        "Office": "Office",
+        "Staff": "Staff",
+        "activationDate": "Activation Date"
+      }
+    }
+  },
+  "SettingsComponent": {
+    "title": "Main Configuration",
+    "NameOrganization": "Name of the Organization",
+    "Description": "Description",
+    "Summary": "Summary",
+    "Language": "Default Language",
+    "dateFormat": "Default Date Format",
+    "Images": "Images",
+    "Favicon": "Favicon",
+    "CoverImage": "Cover Image",
+    "Logo": "Logo",
+    "LogoOrganization": "Logo with Organization Name",
+    "ThemeFont": "Theme and Font",
+    "Theme": "Theme",
+    "DefaultFont": "Default Font",
+    "ContactInformation": "Contact Information",
+    "Website": "Website",
+    "Email": "Email",
+    "ContactNo": "Contact No"
+  },
+  "Shared": {
+    "strongRequired": "required",
+    "BillposSelector": {
+      "serverBillposSelector": "Billpos Service Server"
+    },
+    "CancelDialog": {
+      "Cancel": "Cancel",
+      "ask": "Are you sure you want to leave this page and lose all inputted data?",
+      "No": "No",
+      "Yes": "Yes"
+    },
+    "ChangePasswordDialog": {
+      "title": "Change Password",
+      "Password": "Password",
+      "errPassword": "Password is",
+      "errPassword2": "Password should be at least ",
+      "alert": "8 characters long",
+      "errPassword3": "Password should not be more than ",
+      "alert2": "50 characters long",
+      "errPassword4": "Password should include a ",
+      "numeral": "numeral",
+      "andAt": " and at",
+      "alert3": "least one uppercase, lowercase and special character",
+      "repeatPassword": "Repeat Password",
+      "errPassword5": "Password is",
+      "alert4": "does not match"
+    },
+    "DisableDialog": {
+      "Disable": "Disable",
+      "ask": "Are you sure you want to disable "
+    },
+    "EnableDialog": {
+      "Enable": "Enable",
+      "ask": "Are you sure you want to enable "
+    },
+    "ErrorDialog": {
+      "ErrorLog": "Error Log"
+    },
+    "FileUpload": {
+      "Browse": "Browse"
+    },
+    "KeyboardShortcutsDialog": {
+      "KeyboardShortcuts": "Keyboard Shortcuts",
+      "Ctrl": "Ctrl",
+      "Shift": "Shift",
+      "xxx": "Alt"
+    },
+    "LanguageSelector": {
+      "Language": "Language"
+    },
+    "MatSelectSearch": {
+      "close": "close"
+    },
+    "ServerSelector": {
+      "CoreServer": "Core Server"
+    },
+    "UserAccountInfo": {
+      "ToolTipTotalBalance": "Tổng số dư tài khoản ngân hàng",
+      "noAccount": "(Không có tài khoản)"
+    }
+  },
+  "Shares": {
+    "strongRequired": "required",
+    "Create": {
+      "DETAILS": "DETAILS",
+      "TERMS": "TERMS",
+      "CHARGES": "CHARGES",
+      "PREVIEW": "PREVIEW"
+    },
+    "Edit": {
+      "DETAILS": "DETAILS",
+      "TERMS": "TERMS",
+      "CHARGES": "CHARGES",
+      "PREVIEW": "PREVIEW"
+    },
+    "Actions": {
+      "ActivateShares": {
+        "activatedDate": "Activated On Date",
+        "erractivatedDate": "Activated On Date is "
+      },
+      "ApplyShares": {
+        "requestedDate": "Request Date",
+        "errrequestedDate": "Request Date is ",
+        "requestedShares": "Total No. of Shares",
+        "errrequestedShares": "Requested Shares is ",
+        "unitPrice": "Today's Price"
+      },
+      "ApproveShares": {
+        "transactionDate": "Transaction Date",
+        "totalShares": "Total Shares",
+        "redeemedPrice": "Purchased/Redeemed Price",
+        "Status": "Status",
+        "approve": "Confirm Approve",
+
+        "ApproveSharesDialog": {
+          "title": "Approve Share",
+          "content": "Are you sure you want to approve share with id: "
+        }
+      },
+      "ApproveSharesAccount": {
+        "approvedDate": "Approved On Date",
+        "errapprovedDate": "Approved On Date is ",
+        "Note": "Note"
+      },
+      "CloseShares": {
+        "closedDate": "Closed On Date",
+        "errclosedDate": "Closed On Date is ",
+        "Note": "Note"
+      },
+      "RedeemShares": {
+        "requestedDate": "Request Date",
+        "errrequestedDate": "Request Date is ",
+        "requestedShares": "Total No. of Shares",
+        "errrequestedShares": "Requested Shares is ",
+        "unitPrice": "Today's Price"
+      },
+      "RejectShares": {
+        "transactionDate": "Transaction Date",
+        "totalShares": "Total Shares",
+        "redeemedPrice": "Purchased/Redeemed Price",
+        "Status": "Status",
+        "reject": "Confirm Reject",
+        "RejectSharesDialog": {
+          "title": "Reject Share",
+          "content": "Are you sure you want to reject share with id: "
+        }
+      },
+      "RejectSharesAccount": {
+        "rejectedDate": "Rejected On Date",
+        "errrejectedDate": "Rejected On Date is ",
+        "Note": "Note"
+      },
+      "UndoApprovalSharesAccount": {
+        "ask": "Are you sure you want to undo approval of shares account with ID: "
+      }
+    },
+    "Stepper": {
+      "SharesAccountCharges": {
+        "Charge": "Charge",
+        "Name": "Name",
+        "Type": "Type",
+        "Amount": "Amount",
+        "chargeTimeType": "Collected On",
+        "Actions": "Actions"
+      },
+      "SharesAccountDetails": {
+        "productId": "Product Name",
+        "errproductId": "Product Name is ",
+        "submittedDate": "Submitted On",
+        "errsubmittedDate": "Submission Date is ",
+        "externalId": "External ID"
+      },
+      "SharesAccountPreview": {
+        "Details": "Details",
+        "Product": "Product",
+        "submittedDate": "Submitted On",
+        "externalId": "External Id",
+        "Terms": "Terms",
+        "Currency": "Currency",
+        "decimal": "Decimal Places",
+        "requestedShares": "Total Number of Shares",
+        "unitPrice": "Today's Price",
+        "currencyMultiple": "Currency in multiples of",
+        "DefaultSavingsAccount": "Default Savings Account",
+        "MinimumActivePeriod": "Minimum Active Period",
+        "lockinPeriodFrequency": "Lock-in Period",
+        "applicationDate": "Application Date",
+        "allowDividendCalculationForInactiveClients": "Allow dividends for inactive clients",
+        "Charges": "Charges",
+        "Name": "Name",
+        "Type": "Type",
+        "Amount": "Amount",
+        "chargeTimeType": "Collected On"
+      },
+      "SharesAccountTerms": {
+        "Currency": "Currency",
+        "decimal": "Decimal Places",
+        "requestedShares": "Total Number of Shares",
+        "errrequestedShares": "Total Number of Shares is ",
+        "unitPrice": "Today's Price",
+        "currencyMultiple": "Currency in multiples of",
+        "savingsAccount": "Default Savings Account",
+        "errsavingsAccount": "Default Savings Account is ",
+        "applicationDate": "Application Date",
+        "errapplicationDate": "Application Date is ",
+        "allowDividendCalculationForInactiveClients": "Allow dividends for inactive clients",
+        "MinimumActivePeriod": "Minimum Active Period",
+        "Frequency": "Frequency",
+        "LockInPeriod": "Lock-in Period",
+        "Type": "Type"
+      }
+    },
+    "View": {
+      "productName": "Account Name : ",
+      "accountNo": "Account #: ",
+      "clientName": "Client Name: ",
+      "currentMarketPrice": "Current Market Price: ",
+      "lockinPeriod": "Lockin Period: ",
+      "More": "More",
+      "SharesDetails": "Shares Details",
+      "activatedOnDate": "Activated On",
+      "Currency": "Currency",
+      "externalId": "External Id",
+      "savingsAccountNumber": "Linked Savings Account(Dividend Posting)",
+      "AccountSummary": "Account Summary",
+      "ApprovedShares": "Approved Shares",
+      "totalPendingForApprovalShares": "Pending for Approval Shares",
+      "Transactions": "Transactions",
+      "Charges": "Charges",
+      "Dividends": "Dividends",
+
+      "ChargesTab": {
+        "AllCharges": "All Charges",
+        "Name": "Name",
+        "feeOrPenalty": "Fee/Penalty",
+        "paymentDueAt": "Payment Due At",
+        "calculationType": "Calculation Type",
+        "Due": "Due",
+        "Paid": "Paid",
+        "Waived": "Waived",
+        "Outstanding": "Outstanding"
+      },
+      "DividendsTab": {
+        "transactionDate": "Transaction Date",
+        "Amount": "Amount",
+        "transactionReference": "Transaction Reference",
+        "status": "status"
+      },
+      "TransactionsTab": {
+        "transactionDate": "Transaction Date",
+        "transactionType": "Transaction Type",
+        "totalShares": "Total Shares",
+        "purchasedOrRedeemedPrice": "Purhcased/Redeemed Price",
+        "chargeAmount": "Charge Amount",
+        "amountRecievedOrReturned": "Amount Recieved/Returned"
+      }
+    }
   }
 }
