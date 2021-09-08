@@ -2,37 +2,37 @@
   <mat-card>
     <form [formGroup]="partnerForm">
       <mat-card-content>
-        <h3 class="mat-h3" fxFlexFill>Thông tin đối tác</h3>
+        <h3 class="mat-h3" fxFlexFill>{{'ThirdParty.Dialog.PartnerDialog.PartnerInfo' |translate}}</h3>
         <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
           <mat-form-field fxFlex="98%">
-            <mat-label>mã đối tác </mat-label>
+            <mat-label>{{'ThirdParty.Dialog.PartnerDialog.code' |translate}} </mat-label>
             <input [readonly]="editable" matInput required formControlName="code" />
           </mat-form-field>
 
           <mat-form-field fxFlex="98%">
-            <mat-label>Tên đối tác</mat-label>
+            <mat-label>{{'ThirdParty.Dialog.PartnerDialog.desc' |translate}}</mat-label>
             <input matInput required formControlName="desc" />
           </mat-form-field>
 
-          <label labelPosition="before" class="entries"> Kiểm tra giao dịch thuộc đối tác/HKD </label>
+          <label labelPosition="before" class="entries"> {{'ThirdParty.Dialog.PartnerDialog.typeCheckValid' |translate}} </label>
           <mat-radio-group formControlName="typeCheckValid">
-            <mat-radio-button  [checked]="partnerForm.get('typeCheckValid').value=='0'" style="margin-right: 10px" value="0">Đối tác</mat-radio-button>
-            <mat-radio-button  [checked]="partnerForm.get('typeCheckValid').value=='1'" value="1">Hộ Kinh doanh</mat-radio-button>
+            <mat-radio-button  [checked]="partnerForm.get('typeCheckValid').value=='0'" style="margin-right: 10px" value="0">{{'ThirdParty.Dialog.PartnerDialog.partner' |translate}}</mat-radio-button>
+            <mat-radio-button  [checked]="partnerForm.get('typeCheckValid').value=='1'" value="1">{{'ThirdParty.Dialog.PartnerDialog.HouseHoldBusiness' |translate}}</mat-radio-button>
           </mat-radio-group>
 
           <mat-form-field fxFlex="98%">
-            <mat-label>Số lân cà thẻ cho phép (không sử dụng: nhập "-1")</mat-label>
+            <mat-label>{{'ThirdParty.Dialog.PartnerDialog.limit' |translate}}</mat-label>
             <input matInput required formControlName="limit" type="number" />
           </mat-form-field>
 
           <mat-checkbox labelPosition="before" formControlName="active" class="entries">
-            kích hoạt đối tác
+            {{'ThirdParty.Dialog.PartnerDialog.active' |translate}}
           </mat-checkbox>
         </div>
         <div style="text-align: center">
           <button mat-raised-button color="primary" (click)="action === 'edit' ? update() : submit()">
             <fa-icon icon="check"></fa-icon>
-            Thực hiện
+            {{'ThirdParty.Dialog.PartnerDialog.submit' |translate}}
           </button>
         </div>
       </mat-card-content>

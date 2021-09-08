@@ -1,6 +1,6 @@
 <!-- [(selectedIndex)]="selectedIndex" (selectedTabChange)="onTabChanged($event);"> -->
 
     <mat-tab-group mat-align-tabs="center" [(selectedIndex)]="selectedIndex" (selectedTabChange)="onTabChanged($event);">
-        <mat-tab label="Danh sách đối tác"> <midas-partner-tab></midas-partner-tab> </mat-tab>
-        <mat-tab label="Danh sách hộ khinh doanh"> <midas-merchant-tab></midas-merchant-tab> </mat-tab>
+        <mat-tab [label]="'ThirdParty.labelPartnerList'| translate"> <midas-partner-tab></midas-partner-tab> </mat-tab>
+        <mat-tab [label]="'ThirdParty.labelHouseHoldBussiness'| translate"> <midas-merchant-tab></midas-merchant-tab> </mat-tab>
     </mat-tab-group>

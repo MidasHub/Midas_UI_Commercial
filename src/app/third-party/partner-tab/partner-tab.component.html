@@ -9,11 +9,11 @@
           </button>
         </mat-form-field>
 
-        <mat-checkbox labelPosition="after" (change)="changeShowClosedPartners($event.checked)">Hiển thị đối tác đã đóng</mat-checkbox>
+        <mat-checkbox labelPosition="after" (change)="changeShowClosedPartners($event.checked)">{{'ThirdParty.PartnerTab.closeList' |translate}}</mat-checkbox>
       </div>
       <div class="action-button" fxLayoutGap="25px">
         <button mat-raised-button color="primary" (click)="createPartner()">
-          <fa-icon icon="plus"></fa-icon>&nbsp;&nbsp;Tạo đối tác
+          <fa-icon icon="plus"></fa-icon>&nbsp;&nbsp;{{'ThirdParty.PartnerTab.createPartner' |translate}}
         </button>
       </div>
     </div>
@@ -21,22 +21,22 @@
     <table mat-table [dataSource]="dataSource" matSort>
 
       <ng-container matColumnDef="code">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Mã đối tác  </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{'ThirdParty.PartnerTab.code' |translate}}  </th>
         <td mat-cell *matCellDef="let partner"> {{ partner.code}} </td>
       </ng-container>
 
       <ng-container matColumnDef="desc">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Mô tả </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{'ThirdParty.PartnerTab.desc' |translate}} </th>
         <td mat-cell *matCellDef="let partner"> {{ partner.desc }} </td>
       </ng-container>
 
       <ng-container matColumnDef="typeCheckValid">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>Kiểm tra giao dịch thuộc</th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>{{'ThirdParty.PartnerTab.typeCheckValid' |translate}}</th>
         <td mat-cell *matCellDef="let partner"> {{partner.typeCheckValid == 1 ? 'HKD' : 'Đối tác'}} </td>
       </ng-container>
 
       <ng-container matColumnDef="limit">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>limit</th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>{{'ThirdParty.PartnerTab.limit' |translate}}</th>
         <td mat-cell *matCellDef="let partner"> {{ partner.limit }} </td>
       </ng-container>
 
@@ -52,7 +52,7 @@
                 class="example-margin"
                 [color]="primary"
                 [checked]="partner.status === 'O' ? true : false ">
-                Slide to update status!
+                {{'ThirdParty.PartnerTab.xxx' |translate}}Slide to update status!
               </mat-slide-toggle>
             </section>
         </td>
@@ -77,14 +77,14 @@
       <ng-container matColumnDef="action">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'Terminal_Component.labelAction'| translate}} </th>
         <td mat-cell *matCellDef="let partner, let i = index">
-          <button mat-raised-button title="Cập nhật thông tin" color="primary" (click)="editPartner(partner, i)" >
+          <button mat-raised-button [title]="'ThirdParty.PartnerTab.titleUpdate'| translate" color="primary" (click)="editPartner(partner, i)" >
             <fa-icon icon="edit"></fa-icon>
           </button>
           <!-- <button mat-raised-button color="primary" (click)="banPartner(partner.code)">
             <fa-icon icon="ban"></fa-icon>
           </button> -->
 
-          <button mat-raised-button title="Xem hộ kinh doanh đã liên kết" color="primary" (click)="nextStep(partner)">
+          <button mat-raised-button [title]="'ThirdParty.PartnerTab.titleView'| translate" color="primary" (click)="nextStep(partner)">
             <!-- <mat-icon>format_indent_increase</mat-icon> -->
             <fa-icon icon="eye"></fa-icon>
           </button>

@@ -6,18 +6,18 @@
         <mat-form-field class="filter">
           <input matInput #filter (keyup)="applyFilter($event.target.value)" placeholder="{{ 'Terminal_Component.labelFilter'| translate}}">
           <button mat-icon-button matSuffix aria-label="clear" *ngIf="filter.value" (click)="filter.value=''; applyFilter('');">
-            <mat-icon>close</mat-icon>
+            <mat-icon>{{ "ShareButton.CloseEng" | translate }}</mat-icon>
           </button>
         </mat-form-field>
 
-        <mat-checkbox labelPosition="after" (change)="changeShowClosedMerchants($event.checked)">Hiển thị đại lý đã đóng</mat-checkbox>
+        <mat-checkbox labelPosition="after" (change)="changeShowClosedMerchants($event.checked)">{{'ThirdParty.MerchantTab.closeList' |translate}}</mat-checkbox>
       </div>
       <div class="action-button" fxLayoutGap="25px">
-        <button mat-raised-button title="Quay lại trang đối tác" color="primary" (click)="previousStep()">
+        <button mat-raised-button [title]="'ThirdParty.MerchantTab.titlePageBack'| translate" color="primary" (click)="previousStep()">
           <fa-icon icon="backward"></fa-icon>
         </button>
         <button mat-raised-button color="primary" (click)="createMerchant()">
-          <fa-icon icon="plus"></fa-icon>&nbsp;&nbsp;Tạo Hộ kinh doanh
+          <fa-icon icon="plus"></fa-icon>&nbsp;&nbsp;{{'ThirdParty.MerchantTab.create' |translate}}
         </button>
       </div>
     </div>
@@ -25,17 +25,17 @@
     <table mat-table [dataSource]="dataSource" matSort>
 
       <ng-container matColumnDef="name">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Tên HKD  </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{'ThirdParty.MerchantTab.name' |translate}}  </th>
         <td mat-cell *matCellDef="let partner"> {{ partner.name}} </td>
       </ng-container>
 
       <ng-container matColumnDef="partner">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Đối tác </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{'ThirdParty.MerchantTab.partner' |translate}} </th>
         <td mat-cell *matCellDef="let partner"> {{ partner.partnerName }} </td>
       </ng-container>
 
       <ng-container matColumnDef="rangeDay">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>Thời gian kiểm tra giao dịch/ thẻ</th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>{{'ThirdParty.MerchantTab.rangeDay' |translate}}</th>
         <td mat-cell *matCellDef="let partner"> {{partner.rangeDay}} </td>
       </ng-container>
 
@@ -62,10 +62,10 @@
 
         </th>
         <td mat-cell *matCellDef="let partner,let i = index">
-          <button  mat-raised-button matTooltip="Cập nhật thông tin HKD" color="primary" (click)="editMerchant(partner, i)">
+          <button  mat-raised-button [matTooltip]="'ThirdParty.MerchantTab.toolTipUpdate'| translate" color="primary" (click)="editMerchant(partner, i)">
             <fa-icon icon="edit"></fa-icon>
           </button>
-          <button matTooltip="Xóa bill chưa sử dụng" mat-raised-button color="primary" (click)="inactiveBillsMerchant(partner.name)">
+          <button [matTooltip]="'ThirdParty.MerchantTab.toolTipDelete'| translate" mat-raised-button color="primary" (click)="inactiveBillsMerchant(partner.name)">
             <fa-icon icon="ban"></fa-icon>
           </button>
 

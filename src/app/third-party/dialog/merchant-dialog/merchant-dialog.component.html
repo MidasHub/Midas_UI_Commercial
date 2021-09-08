@@ -5,11 +5,11 @@
       <form [formGroup]="merchantForm">
 
         <mat-card-content>
-          <h3 class="mat-h3" fxFlexFill>Thông tin ho kinh doanh</h3>
+          <h3 class="mat-h3" fxFlexFill>{{'ThirdParty.Dialog.MerchantDialog.Info' |translate}}</h3>
           <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
 
             <mat-form-field fxFlex="98%">
-                <mat-label>Mã </mat-label>
+                <mat-label>{{'ThirdParty.Dialog.MerchantDialog.name' |translate}} </mat-label>
                 <input matInput required [readonly]="action === 'edit'? true:false" formControlName="name">
             </mat-form-field>
 
@@ -25,11 +25,11 @@
             </mat-form-field>
 
             <mat-form-field  fxFlex="48%">
-                <mat-label>Thời gian giữa 2 giao dịch cho phép</mat-label>
+                <mat-label>{{'ThirdParty.Dialog.MerchantDialog.rangeDay' |translate}}</mat-label>
                 <input matInput  required formControlName="rangeDay" type="number">
             </mat-form-field>
             <mat-form-field fxFlex="48%">
-              <mat-label>Đơn vị</mat-label>
+              <mat-label>{{'ThirdParty.Dialog.MerchantDialog.unitType' |translate}}</mat-label>
               <mat-select required formControlName="unitType">
                   <mat-option *ngFor="let type of timeTypes" [value]="type.code">
                     {{ type.desc }}
@@ -40,14 +40,14 @@
             </mat-form-field>
 
             <mat-checkbox labelPosition="before" *ngIf="merchantForm.contains('active')" formControlName="active" class="entries">
-                kích hoạt đối tác
+              {{'ThirdParty.Dialog.MerchantDialog.active' |translate}}
             </mat-checkbox>
 
           </div>
             <div style="text-align: center">
                 <button mat-raised-button color="primary" (click)="action === 'edit'? update():submit()">
                 <fa-icon icon="check"></fa-icon>
-                Thực hiện
+                {{'ThirdParty.Dialog.MerchantDialog.submit' |translate}}
                 </button>
             </div>
         </mat-card-content>
