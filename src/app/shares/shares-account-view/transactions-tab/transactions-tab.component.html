@@ -9,32 +9,32 @@
     <table mat-table [dataSource]="dataSource">
 
       <ng-container matColumnDef="transactionDate">
-        <th mat-header-cell *matHeaderCellDef> Transaction Date </th>
+        <th mat-header-cell *matHeaderCellDef> {{'Shares.View.TransactionsTab.transactionDate'| translate}} </th>
         <td mat-cell *matCellDef="let transaction"> {{transaction.purchasedDate | date}} </td>
       </ng-container>
 
       <ng-container matColumnDef="transactionType">
-        <th mat-header-cell *matHeaderCellDef> Transaction Type </th>
+        <th mat-header-cell *matHeaderCellDef> {{'Shares.View.TransactionsTab.transactionType'| translate}} </th>
         <td mat-cell *matCellDef="let transaction"> {{transaction.type.value}} {{transaction.type.value !== "Charge Payment" ? ('(' + transaction.status.value + ')') : ''}}</td>
       </ng-container>
 
       <ng-container matColumnDef="totalShares">
-        <th mat-header-cell *matHeaderCellDef> Total Shares </th>
+        <th mat-header-cell *matHeaderCellDef> {{'Shares.View.TransactionsTab.totalShares'| translate}} </th>
         <td mat-cell *matCellDef="let transaction"> {{transaction.numberOfShares}} </td>
       </ng-container>
 
       <ng-container matColumnDef="purchasedOrRedeemedPrice">
-        <th mat-header-cell *matHeaderCellDef> Purhcased/Redeemed Price </th>
+        <th mat-header-cell *matHeaderCellDef> {{'Shares.View.TransactionsTab.purchasedOrRedeemedPrice'| translate}} </th>
         <td mat-cell *matCellDef="let transaction">{{shareAccountData.currency.displaySymbol}}&nbsp;{{transaction.purchasedPrice}}</td>
       </ng-container>
 
       <ng-container matColumnDef="chargeAmount">
-        <th mat-header-cell *matHeaderCellDef> Charge Amount </th>
+        <th mat-header-cell *matHeaderCellDef> {{'Shares.View.TransactionsTab.chargeAmount'| translate}} </th>
         <td mat-cell *matCellDef="let transaction">{{shareAccountData.currency.displaySymbol}}&nbsp;{{transaction.type.value === "Charge Payment" ? transaction.amount : transaction.chargeAmount}}</td>
       </ng-container>
 
       <ng-container matColumnDef="amountRecievedOrReturned">
-        <th mat-header-cell *matHeaderCellDef> Amount Recieved/Returned </th>
+        <th mat-header-cell *matHeaderCellDef> {{'Shares.View.TransactionsTab.amountRecievedOrReturned'| translate}} </th>
         <td mat-cell *matCellDef="let transaction">{{shareAccountData.currency.displaySymbol}}&nbsp;{{transaction.amount | money}}</td>
       </ng-container>
 

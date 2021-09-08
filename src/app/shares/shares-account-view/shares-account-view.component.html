@@ -16,15 +16,15 @@
         <mat-card-title>
           <h3>
             <i class="fa fa-stop" [ngClass]="sharesAccountData.status.code | statusLookup" [matTooltip]="sharesAccountData.status.value"></i>
-              Account Name : {{sharesAccountData.productName}}
+            {{'Shares.View.productName'| translate}}{{sharesAccountData.productName}}
           </h3>
         </mat-card-title>
         <mat-card-subtitle>
           <p>
-            Account #: {{sharesAccountData.accountNo}} | Client Name: {{sharesAccountData.clientName}}<br/>
-            Current Market Price: {{sharesAccountData.currency.displaySymbol}}&nbsp;{{sharesAccountData.currentMarketPrice}}<br/>
-            Lockin Period: {{sharesAccountData.lockinPeriod ? sharesAccountData.lockinPeriod : 'N/A'}} 
-            {{sharesAccountData.lockinPeriod ? sharesAccountData.lockPeriodTypeEnum.value : ''}} 
+            {{'Shares.View.accountNo'| translate}}{{sharesAccountData.accountNo}} | {{'Shares.View.xxx'| translate}}{{sharesAccountData.clientName}}<br/>
+            {{'Shares.View.currentMarketPrice'| translate}}{{sharesAccountData.currency.displaySymbol}}&nbsp;{{sharesAccountData.currentMarketPrice}}<br/>
+            {{'Shares.View.lockinPeriod'| translate}}{{sharesAccountData.lockinPeriod ? sharesAccountData.lockinPeriod : 'N/A'}}
+            {{sharesAccountData.lockinPeriod ? sharesAccountData.lockPeriodTypeEnum.value : ''}}
           </p>
         </mat-card-subtitle>
       </div>
@@ -37,16 +37,16 @@
         <button mat-raised-button *midasHasPermission="button.taskPermissionName" (click)="doAction(button.name)">
           <i class="{{button.icon}}"></i> {{button.name}}</button>
       </ng-container>
-  
+
       <ng-container *ngIf="buttonConfig.options.length">
-        <button mat-raised-button [matMenuTriggerFor]="More">More</button>
+        <button mat-raised-button [matMenuTriggerFor]="More">{{'Shares.View.More'| translate}}</button>
         <mat-menu #More="matMenu">
         <span *ngFor="let option of buttonConfig.options">
           <button mat-menu-item *midasHasPermission="option.taskPermissionName" (click)="doAction(option.name)">{{option.name}}</button>
         </span>
         </mat-menu>
       </ng-container>
-  
+
     </mat-card-actions>
 
   </mat-card-header>
@@ -56,23 +56,23 @@
     <div class="shares-account-tables" fxLayout="row" fxLayoutGap="2%">
 
       <div fxFlex="49%">
-        <h4 class="table-headers">Shares Details</h4>
+        <h4 class="table-headers">{{'Shares.View.SharesDetails'| translate}}</h4>
         <table>
           <tbody>
             <tr>
-              <td>Activated On</td>
+              <td>{{'Shares.View.activatedOnDate'| translate}}</td>
               <td>{{sharesAccountData.timeline.activatedOnDate ? (sharesAccountData.timeline.activatedOnDate | date) : 'Not Activated'}}</td>
             </tr>
             <tr>
-              <td>Currency</td>
+              <td>{{'Shares.View.Currency'| translate}}</td>
               <td>{{sharesAccountData.currency.name}} [{{sharesAccountData.currency.code}}]</td>
             </tr>
             <tr>
-              <td>External Id</td>
+              <td>{{'Shares.View.externalId'| translate}}</td>
               <td>{{sharesAccountData.externalId ? sharesAccountData.externalId : 'Not Provided'}}</td>
             </tr>
             <tr>
-              <td>Linked Savings Account(Dividend Posting)</td>
+              <td>{{'Shares.View.savingsAccountNumber'| translate}}</td>
               <td>{{sharesAccountData.savingsAccountNumber ? sharesAccountData.savingsAccountNumber : 'Unassigned'}}</td>
             </tr>
           </tbody>
@@ -80,15 +80,15 @@
       </div>
 
       <div fxFlex="49%">
-        <h4 class="table-headers">Account Summary</h4>
+        <h4 class="table-headers">{{'Shares.View.AccountSummary'| translate}}</h4>
         <table>
           <tbody>
             <tr>
-              <td>Approved Shares</td>
+              <td>{{'Shares.View.ApprovedShares'| translate}}</td>
               <td>{{sharesAccountData.summary.totalApprovedShares}}</td>
             </tr>
             <tr>
-              <td>Pending for Approval Shares</td>
+              <td>{{'Shares.View.totalPendingForApprovalShares'| translate}}</td>
               <td>{{sharesAccountData.summary.totalPendingForApprovalShares}}</td>
             </tr>
           </tbody>
@@ -100,15 +100,15 @@
     <nav mat-tab-nav-bar class="navigation-tabs">
       <a mat-tab-link [routerLink]="['./transactions']" routerLinkActive #transactions="routerLinkActive"
       [active]="transactions.isActive" *midasHasPermission="'READ_SHAREACCOUNTPURCHASE'">
-        Transactions
+      {{'Shares.View.Transactions'| translate}}
       </a>
       <a mat-tab-link [routerLink]="['./charges']" routerLinkActive #charges="routerLinkActive"
       [active]="charges.isActive" *midasHasPermission="'READ_SHAREACCOUNTCHARGE'">
-        Charges
+      {{'Shares.View.Charges'| translate}}
       </a>
       <a mat-tab-link [routerLink]="['./dividends']" routerLinkActive #dividends="routerLinkActive"
       [active]="dividends.isActive" *midasHasPermission="'READ_SHAREACCOUNTDIVIDENDS'">
-        Dividends
+      {{'Shares.View.Dividends'| translate}}
       </a>
     </nav>
 

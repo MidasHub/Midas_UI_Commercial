@@ -1,109 +1,109 @@
 <div fxLayout="row wrap" fxLayout.lt-md="column">
 
-  <h3 class="mat-h3" fxFlexFill>Details</h3>
+  <h3 class="mat-h3" fxFlexFill>{{'Shares.Stepper.SharesAccountPreview.Details'| translate}}</h3>
 
   <mat-divider fxFlexFill></mat-divider>
 
   <div fxFlexFill>
-    <span fxFlex="40%">Product</span>
+    <span fxFlex="40%">{{'Shares.Stepper.SharesAccountPreview.Product'| translate}}</span>
     <span fxFlex="60%">{{ sharesAccount.productId | find:sharesAccountTemplate.productOptions:'id':'name' }}</span>
   </div>
 
   <div fxFlexFill>
-    <span fxFlex="40%">Submitted On</span>
+    <span fxFlex="40%">{{'Shares.Stepper.SharesAccountPreview.submittedDate'| translate}}</span>
     <span fxFlex="60%">{{ sharesAccount.submittedDate | date }}</span>
   </div>
 
   <div fxFlexFill>
-    <span fxFlex="40%">External Id</span>
+    <span fxFlex="40%">{{'Shares.Stepper.SharesAccountPreview.externalId'| translate}}</span>
     <span fxFlex="60%">{{ sharesAccount.externalId || 'Unassigned' }}</span>
   </div>
 
-  <h3 class="mat-h3" fxFlexFill>Terms</h3>
+  <h3 class="mat-h3" fxFlexFill>{{'Shares.Stepper.SharesAccountPreview.Terms'| translate}}</h3>
 
   <mat-divider fxFlexFill></mat-divider>
 
   <div fxFlexFill>
-    <span fxFlex="40%">Currency</span>
+    <span fxFlex="40%">{{'Shares.Stepper.SharesAccountPreview.Currency'| translate}}</span>
     <span fxFlex="60%">{{ sharesAccountTermsForm.get('currencyCode').value | find:[sharesAccountProductTemplate.currency]:'code':'displayLabel' }}</span>
   </div>
 
   <div fxFlexFill>
-    <span fxFlex="40%">Decimal Places</span>
+    <span fxFlex="40%">{{'Shares.Stepper.SharesAccountPreview.decimal'| translate}}</span>
     <span fxFlex="60%">{{ sharesAccountTermsForm.get('decimal').value }}</span>
   </div>
 
   <div fxFlexFill>
-    <span fxFlex="40%">Total Number of Shares</span>
+    <span fxFlex="40%">{{'Shares.Stepper.SharesAccountPreview.requestedShares'| translate}}</span>
     <span fxFlex="60%">{{ sharesAccount.requestedShares }}</span>
   </div>
 
   <div fxFlexFill>
-    <span fxFlex="40%">Today's Price</span>
+    <span fxFlex="40%">{{'Shares.Stepper.SharesAccountPreview.unitPrice'| translate}}</span>
     <span fxFlex="60%">{{ sharesAccountTermsForm.get('unitPrice').value }}</span>
   </div>
 
   <div fxFlexFill>
-    <span fxFlex="40%">Currency in multiples of</span>
+    <span fxFlex="40%">{{'Shares.Stepper.SharesAccountPreview.currencyMultiple'| translate}}</span>
     <span fxFlex="60%">{{ sharesAccountTermsForm.get('currencyMultiple').value }}</span>
   </div>
 
   <div fxFlexFill>
-    <span fxFlex="40%">Default Savings Account</span>
+    <span fxFlex="40%">{{'Shares.Stepper.SharesAccountPreview.DefaultSavingsAccount'| translate}}</span>
     <span fxFlex="60%">{{ sharesAccount.savingsAccountId | find:sharesAccountProductTemplate.clientSavingsAccounts:'id':'accountNo' }}</span>
   </div>
 
   <div fxFlexFill *ngIf="sharesAccount.minimumActivePeriod">
-    <span fxFlex="40%">Minimum Active Period</span>
+    <span fxFlex="40%">{{'Shares.Stepper.SharesAccountPreview.MinimumActivePeriod'| translate}}</span>
     <span fxFlex="60%">{{sharesAccount.minimumActivePeriod}}&nbsp;{{sharesAccount.minimumActivePeriodFrequencyType | find:sharesAccountProductTemplate.minimumActivePeriodFrequencyTypeOptions:'id':'value'}}</span>
   </div>
 
   <div fxFlexFill *ngIf="sharesAccount.lockinPeriodFrequency">
-    <span fxFlex="40%">Lock-in Period</span>
+    <span fxFlex="40%">{{'Shares.Stepper.SharesAccountPreview.lockinPeriodFrequency'| translate}}</span>
     <span fxFlex="60%">{{sharesAccount.lockinPeriodFrequency}}&nbsp;{{sharesAccount.lockinPeriodFrequencyType | find:sharesAccountProductTemplate.lockinPeriodFrequencyTypeOptions:'id':'value'}}</span>
   </div>
 
   <div fxFlexFill>
-    <span fxFlex="40%">Application Date</span>
+    <span fxFlex="40%">{{'Shares.Stepper.SharesAccountPreview.applicationDate'| translate}}</span>
     <span fxFlex="60%">{{ sharesAccount.applicationDate | date }}</span>
   </div>
 
   <div fxFlexFill>
-    <span fxFlex="40%">Allow dividends for inactive clients</span>
+    <span fxFlex="40%">{{'Shares.Stepper.SharesAccountPreview.allowDividendCalculationForInactiveClients'| translate}}</span>
     <span fxFlex="60%">{{ sharesAccount.allowDividendCalculationForInactiveClients }}</span>
   </div>
 
   <div fxFlexFill *ngIf="sharesAccount.charges.length" fxLayout="row wrap" fxLayout.lt-md="column">
 
-    <h3 class="mat-h3" fxFlexFill>Charges</h3>
+    <h3 class="mat-h3" fxFlexFill>{{'Shares.Stepper.SharesAccountPreview.Charges'| translate}}</h3>
 
     <mat-divider fxFlexFill></mat-divider>
 
     <table fxFlexFill class="mat-elevation-z1" mat-table [dataSource]="sharesAccount.charges">
 
       <ng-container matColumnDef="name">
-        <th mat-header-cell *matHeaderCellDef> Name </th>
+        <th mat-header-cell *matHeaderCellDef> {{'Shares.Stepper.SharesAccountPreview.Name'| translate}} </th>
         <td mat-cell *matCellDef="let charge">
           {{ charge.name + ', ' + charge.currency.displaySymbol }}
         </td>
       </ng-container>
 
       <ng-container matColumnDef="chargeCalculationType">
-        <th mat-header-cell *matHeaderCellDef> Type </th>
+        <th mat-header-cell *matHeaderCellDef> {{'Shares.Stepper.SharesAccountPreview.Type'| translate}} </th>
         <td mat-cell *matCellDef="let charge">
           {{ charge.chargeCalculationType.value }}
         </td>
       </ng-container>
 
       <ng-container matColumnDef="amount">
-        <th mat-header-cell *matHeaderCellDef> Amount </th>
+        <th mat-header-cell *matHeaderCellDef> {{'Shares.Stepper.SharesAccountPreview.Amount'| translate}} </th>
         <td mat-cell *matCellDef="let charge">
           {{ charge.amount || charge.amountOrPercentage }}
         </td>
       </ng-container>
 
       <ng-container matColumnDef="chargeTimeType">
-        <th mat-header-cell *matHeaderCellDef> Collected On </th>
+        <th mat-header-cell *matHeaderCellDef> {{'Shares.Stepper.SharesAccountPreview.chargeTimeType'| translate}} </th>
         <td mat-cell *matCellDef="let charge">
           {{ charge.chargeTimeType.value }}
         </td>
@@ -121,12 +121,12 @@
 <div fxLayout="row" class="margin-t" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="2%">
   <button mat-raised-button matStepperPrevious>
     <fa-icon icon="arrow-left"></fa-icon>&nbsp;&nbsp;
-    Previous
+    {{ "ShareButton.PreviousEng" | translate }}
   </button>
   <button mat-raised-button [routerLink]="['../']">
-    Cancel
+    {{ "ShareButton.CancelEng" | translate }}
   </button>
   <button mat-raised-button color="primary" (click)="submit.emit()">
-    Submit
+    {{ "ShareButton.Submit" | translate }}
   </button>
 </div>

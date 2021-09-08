@@ -9,17 +9,17 @@
         <div fxLayout="column">
 
           <mat-form-field>
-            <mat-label>Approved On Date</mat-label>
+            <mat-label>{{'Shares.Actions.ApproveSharesAccount.approvedDate'| translate}}</mat-label>
             <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="approvedDatePicker" required formControlName="approvedDate">
             <mat-datepicker-toggle matSuffix [for]="approvedDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #approvedDatePicker></mat-datepicker>
             <mat-error *ngIf="approveSharesAccountForm.controls.approvedDate.hasError('required')">
-              Approved On Date is <strong>required</strong>
+              {{'Shares.Actions.ApproveSharesAccount.errapprovedDate'| translate}}<strong>{{'Shares.strongRequired'| translate }}</strong>
             </mat-error>
           </mat-form-field>
 
           <mat-form-field>
-            <mat-label>Note</mat-label>
+            <mat-label>{{'Shares.Actions.ApproveSharesAccount.Note'| translate}}</mat-label>
             <textarea matInput formControlName="note"></textarea>
           </mat-form-field>
 
@@ -28,8 +28,8 @@
       </mat-card-content>
 
       <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
-        <button type="button" mat-raised-button [routerLink]="['../../']">Cancel</button>
-        <button mat-raised-button color="accent" [disabled]="!approveSharesAccountForm.valid">Confirm</button>
+        <button type="button" mat-raised-button [routerLink]="['../../']">{{ "ShareButton.CancelEng" | translate }}</button>
+        <button mat-raised-button color="accent" [disabled]="!approveSharesAccountForm.valid">{{ "ShareButton.ConfirmEng" | translate }}</button>
       </mat-card-actions>
 
     </form>

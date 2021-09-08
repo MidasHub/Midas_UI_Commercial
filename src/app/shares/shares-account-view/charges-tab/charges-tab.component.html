@@ -1,7 +1,7 @@
 <div class="tab-container mat-typography">
 
   <div class="m-b-10">
-    <h3>All Charges</h3>
+    <h3>{{'Shares.View.ChargesTab.AllCharges'| translate}}</h3>
   </div>
 
   <div class="mat-elevation-z1 m-b-25">
@@ -9,42 +9,42 @@
     <table mat-table [dataSource]="dataSource">
 
       <ng-container matColumnDef="name">
-        <th mat-header-cell *matHeaderCellDef> Name </th>
+        <th mat-header-cell *matHeaderCellDef> {{'Shares.View.ChargesTab.Name'| translate}} </th>
         <td mat-cell *matCellDef="let charge"> {{ charge.name }} </td>
       </ng-container>
 
       <ng-container matColumnDef="feeOrPenalty">
-        <th mat-header-cell *matHeaderCellDef> Fee/Penalty </th>
+        <th mat-header-cell *matHeaderCellDef> {{'Shares.View.ChargesTab.feeOrPenalty'| translate}} </th>
         <td mat-cell *matCellDef="let charge"> {{ charge.penalty === true ? 'Penalty' : 'Fee' }} </td>
       </ng-container>
 
       <ng-container matColumnDef="paymentDueAt">
-        <th mat-header-cell *matHeaderCellDef> Payment Due At </th>
+        <th mat-header-cell *matHeaderCellDef> {{'Shares.View.ChargesTab.paymentDueAt'| translate}} </th>
         <td mat-cell *matCellDef="let charge"> {{ charge.chargeTimeType.value }} </td>
       </ng-container>
 
       <ng-container matColumnDef="calculationType">
-        <th mat-header-cell *matHeaderCellDef> Calculation Type </th>
+        <th mat-header-cell *matHeaderCellDef> {{'Shares.View.ChargesTab.calculationType'| translate}} </th>
         <td mat-cell *matCellDef="let charge"> {{charge.chargeCalculationType.value}} </td>
       </ng-container>
 
       <ng-container matColumnDef="due">
-        <th mat-header-cell *matHeaderCellDef> Due </th>
+        <th mat-header-cell *matHeaderCellDef> {{'Shares.View.ChargesTab.Due'| translate}} </th>
         <td mat-cell *matCellDef="let charge"> {{charge.currency.displaySymbol}}&nbsp;{{charge.amount | money}} </td>
       </ng-container>
 
       <ng-container matColumnDef="paid">
-        <th mat-header-cell *matHeaderCellDef> Paid </th>
+        <th mat-header-cell *matHeaderCellDef> {{'Shares.View.ChargesTab.Paid'| translate}} </th>
         <td mat-cell *matCellDef="let charge"> {{charge.currency.displaySymbol}}&nbsp;{{charge.amountPaid | money}} </td>
       </ng-container>
 
       <ng-container matColumnDef="waived">
-        <th mat-header-cell *matHeaderCellDef> Waived </th>
+        <th mat-header-cell *matHeaderCellDef> {{'Shares.View.ChargesTab.Waived'| translate}} </th>
         <td mat-cell *matCellDef="let charge"> {{charge.currency.displaySymbol}}&nbsp;{{charge.amountWaived | money}} </td>
       </ng-container>
 
       <ng-container matColumnDef="outstanding">
-        <th mat-header-cell *matHeaderCellDef> Outstanding </th>
+        <th mat-header-cell *matHeaderCellDef> {{'Shares.View.ChargesTab.Outstanding'| translate}} </th>
         <td mat-cell *matCellDef="let charge"> {{charge.currency.displaySymbol}}&nbsp;{{charge.amountOutstanding | money}} </td>
       </ng-container>
 
