@@ -9,7 +9,7 @@
         <div fxLayout="row wrap" class="content">
 
           <div fxFlex="50%" class="mat-body-strong">
-            ID
+            {{'System.AuditTrailsComponent.ViewAudit.ID'| translate }}
           </div>
 
           <div fxFlex="50%">
@@ -17,7 +17,7 @@
           </div>
 
           <div fxFlex="50%" class="mat-body-strong">
-            Status
+            {{'System.AuditTrailsComponent.ViewAudit.Status'| translate }}
           </div>
 
           <div fxFlex="50%">
@@ -25,7 +25,7 @@
           </div>
 
           <div fxFlex="50%" class="mat-body-strong">
-            User
+            {{'System.AuditTrailsComponent.ViewAudit.User'| translate }}
           </div>
 
           <div fxFlex="50%">
@@ -33,7 +33,7 @@
           </div>
 
           <div fxFlex="50%" class="mat-body-strong">
-            Action
+            {{'System.AuditTrailsComponent.ViewAudit.Action'| translate }}
           </div>
 
           <div fxFlex="50%">
@@ -41,7 +41,7 @@
           </div>
 
           <div fxFlex="50%" class="mat-body-strong">
-            Entity
+            {{'System.AuditTrailsComponent.ViewAudit.Entity'| translate }}
           </div>
 
           <div fxFlex="50%">
@@ -49,7 +49,7 @@
           </div>
 
           <div fxFlex="50%" class="mat-body-strong">
-            Resource ID
+            {{'System.AuditTrailsComponent.ViewAudit.resourceId'| translate }}
           </div>
 
           <div fxFlex="50%">
@@ -57,7 +57,7 @@
           </div>
 
           <div fxFlex="50%" class="mat-body-strong">
-            Date
+            {{'System.AuditTrailsComponent.ViewAudit.Date'| translate }}
           </div>
 
           <div fxFlex="50%">
@@ -65,7 +65,7 @@
           </div>
 
           <div fxFlex="50%" class="mat-body-strong" *ngIf="auditTrailData.officeName">
-            Office
+            {{'System.AuditTrailsComponent.ViewAudit.Office'| translate }}
           </div>
 
           <div fxFlex="50%" *ngIf="auditTrailData.officeName">
@@ -73,7 +73,7 @@
           </div>
 
           <div fxFlex="50%" class="mat-body-strong" *ngIf="auditTrailData.savingsAccountNo">
-            Savings Account No
+            {{'System.AuditTrailsComponent.ViewAudit.savingsAccountNo'| translate }}
           </div>
 
           <div fxFlex="50%" *ngIf="auditTrailData.savingsAccountNo">
@@ -81,7 +81,7 @@
           </div>
 
           <div fxFlex="50%" class="mat-body-strong" *ngIf="auditTrailData.groupLevelName">
-            Group Level
+            {{'System.AuditTrailsComponent.ViewAudit.groupLevelName'| translate }}
           </div>
 
           <div fxFlex="50%" *ngIf="auditTrailData.groupLevelName">
@@ -101,12 +101,12 @@
     <table mat-table [dataSource]="dataSource" matSort>
 
       <ng-container matColumnDef="command">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Command </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{'System.AuditTrailsComponent.ViewAudit.Command'| translate }} </th>
         <td mat-cell *matCellDef="let auditTrailCommand"> {{ auditTrailCommand.command }} </td>
       </ng-container>
 
       <ng-container matColumnDef="commandValue">
-        <th mat-header-cell *matHeaderCellDef> Command Value </th>
+        <th mat-header-cell *matHeaderCellDef> {{'System.AuditTrailsComponent.ViewAudit.commandValue'| translate }} </th>
         <td mat-cell *matCellDef="let auditTrailCommand" class="column-value-wrapper"> {{ auditTrailCommand.commandValue }} </td>
       </ng-container>
 

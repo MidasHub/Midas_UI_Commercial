@@ -1,7 +1,7 @@
 <div class="container m-b-20" fxLayout="row" fxLayoutAlign="end" fxLayoutGap="20px">
   <button mat-raised-button color="primary" [routerLink]="['edit']">
     <fa-icon icon="edit"></fa-icon>&nbsp;&nbsp;
-    Edit
+    {{ "ShareButton.Edit" | translate }}
   </button>
 </div>
 
@@ -10,12 +10,12 @@
   <table mat-table [dataSource]="dataSource" matSort>
 
     <ng-container matColumnDef="name">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> {{'System.ExternalServicesComponent.Notification.Name'| translate }} </th>
       <td mat-cell *matCellDef="let configuration"> {{ configuration.name }} </td>
     </ng-container>
 
     <ng-container matColumnDef="value">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Value </th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> {{'System.ExternalServicesComponent.Notification.Value'| translate }} </th>
       <td mat-cell *matCellDef="let configuration"> {{ configuration.value }} </td>
     </ng-container>
 

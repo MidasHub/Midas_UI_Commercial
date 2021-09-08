@@ -2,13 +2,13 @@
 
   <button mat-raised-button color="primary" [routerLink]="['edit']" *midasHasPermission="'UPDATE_REPORT'">
     <fa-icon icon="edit"></fa-icon>&nbsp;&nbsp;
-    Edit
+    {{ "ShareButton.Edit" | translate }}
   </button>
 
   <span *ngIf="!reportData.coreReport">
     <button mat-raised-button color="warn" (click)="delete()" *midasHasPermission="'DELETE_REPORT'">
       <fa-icon icon="trash"></fa-icon>&nbsp;&nbsp;
-      Delete
+      {{ "ShareButton.DeleteEng" | translate }}
     </button>
   </span>
 
@@ -25,7 +25,7 @@
       <div fxLayout="row wrap" class="content">
 
         <div fxFlex="50%" class="mat-body-strong">
-          Report Type:
+          {{'System.ManageReportsComponent.View.reportType'| translate }}
         </div>
 
         <div fxFlex="50%">
@@ -33,7 +33,7 @@
         </div>
 
         <div fxFlex="50%" class="mat-body-strong">
-          Report Subtype:
+          {{'System.ManageReportsComponent.View.reportSubType'| translate }}
         </div>
 
         <div fxFlex="50%">
@@ -41,7 +41,7 @@
         </div>
 
         <div fxFlex="50%" class="mat-body-strong">
-          Report Category:
+          {{'System.ManageReportsComponent.View.reportCategory'| translate }}
         </div>
 
         <div fxFlex="50%">
@@ -49,7 +49,7 @@
         </div>
 
         <div fxFlex="50%" class="mat-body-strong">
-          Core Report:
+          {{'System.ManageReportsComponent.View.coreReport'| translate }}
         </div>
 
         <div fxFlex="50%">
@@ -57,7 +57,7 @@
         </div>
 
         <div fxFlex="50%" class="mat-body-strong">
-          User Report:
+          {{'System.ManageReportsComponent.View.useReport'| translate }}
         </div>
 
         <div fxFlex="50%">

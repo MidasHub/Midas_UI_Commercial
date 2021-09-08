@@ -2,7 +2,7 @@
 
   <div fxLayout="row">
     <mat-form-field fxFlex>
-      <mat-label>Filter</mat-label>
+      <mat-label>{{'System.GlobalConfigurationsComponent.Filter'| translate }}</mat-label>
       <input matInput (keyup)="applyFilter($event.target.value)">
     </mat-form-field>
   </div>
@@ -12,14 +12,14 @@
     <table mat-table [dataSource]="dataSource" matSort>
 
       <ng-container matColumnDef="name">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{'System.GlobalConfigurationsComponent.Name'| translate }} </th>
         <td mat-cell *matCellDef="let configuration"> {{ configuration.name }}&nbsp;&nbsp;
         <fa-icon icon="question-circle" matTooltip="{{ configuration.description === undefined ? 'No Description' : configuration.description }}" matTooltipPosition="right"></fa-icon>
         </td>
       </ng-container>
 
       <ng-container matColumnDef="enabled">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Status </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{'System.GlobalConfigurationsComponent.Status'| translate }} </th>
         <td mat-cell *matCellDef="let configuration">
           <div [className]="configuration.enabled ? 'enabled' : 'disabled'">
             <fa-icon icon="circle" size="lg" matTooltip="{{ configuration.enabled ? 'Enabled' : 'Disabled' }}" matTooltipPosition="right"></fa-icon>
@@ -28,24 +28,24 @@
       </ng-container>
 
       <ng-container matColumnDef="value">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Value </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{'System.GlobalConfigurationsComponent.Value'| translate }} </th>
         <td mat-cell *matCellDef="let configuration"> {{ configuration.value }}</td>
       </ng-container>
 
       <ng-container matColumnDef="action">
-        <th mat-header-cell *matHeaderCellDef> Action </th>
+        <th mat-header-cell *matHeaderCellDef> {{'System.GlobalConfigurationsComponent.Action'| translate }} </th>
         <td mat-cell *matCellDef="let configuration">
           <button mat-button *ngIf="!configuration.enabled" color="accent" (click)="toggleStatus(configuration)">
-            <fa-icon icon="lock-open"></fa-icon>&nbsp;&nbsp;Enable
+            <fa-icon icon="lock-open"></fa-icon>&nbsp;&nbsp;{{'System.GlobalConfigurationsComponent.Enable'| translate }}
           </button>
           <button mat-button *ngIf="configuration.enabled" color="warn" (click)="toggleStatus(configuration)">
-            <fa-icon icon="lock"></fa-icon>&nbsp;&nbsp;Disable
+            <fa-icon icon="lock"></fa-icon>&nbsp;&nbsp;{{'System.GlobalConfigurationsComponent.Disable'| translate }}
           </button>
         </td>
       </ng-container>
 
       <ng-container matColumnDef="edit">
-        <th mat-header-cell *matHeaderCellDef> Edit </th>
+        <th mat-header-cell *matHeaderCellDef> {{'System.GlobalConfigurationsComponent.Edit'| translate }} </th>
         <td mat-cell *matCellDef="let configuration">
           <button mat-button color="primary" [routerLink]="[configuration.id, 'edit']">
             <fa-icon icon="edit"></fa-icon>

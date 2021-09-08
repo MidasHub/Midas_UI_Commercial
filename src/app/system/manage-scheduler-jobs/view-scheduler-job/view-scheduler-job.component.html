@@ -1,10 +1,10 @@
 <div class="container m-b-20" fxLayout="row" fxLayout.lt-md="column" fxLayoutAlign="end" fxLayoutGap="2%">
   <button mat-raised-button color="primary" [routerLink]="['edit']">
     <fa-icon icon="edit"></fa-icon>&nbsp;&nbsp;
-    Edit
+    {{'System.ManageSchedulerJobs.ViewSchedulerJob.Edit'| translate }}
   </button>
   <button mat-raised-button color="primary" [routerLink]="['viewhistory']">
-    View History
+    {{'System.ManageSchedulerJobs.ViewSchedulerJob.ViewHistory'| translate }}
   </button>
 </div>
 
@@ -17,15 +17,15 @@
       <div fxLayout="row wrap" class="content">
 
         <div fxFlex="50%" class="mat-body-strong">
-          Job Name
+          {{'System.ManageSchedulerJobs.ViewSchedulerJob.displayName'| translate }}
         </div>
-          
+
         <div fxFlex="50%">
           {{ jobData.displayName }}
         </div>
 
         <div fxFlex="50%" class="mat-body-strong">
-          Cron Expression
+          {{'System.ManageSchedulerJobs.ViewSchedulerJob.cronExpression'| translate }}
         </div>
 
         <div fxFlex="50%">
@@ -33,7 +33,7 @@
         </div>
 
         <div fxFlex="50%" class="mat-body-strong">
-          Is Active Job?
+          {{'System.ManageSchedulerJobs.ViewSchedulerJob.active'| translate }}
         </div>
 
         <div fxFlex="50%">
@@ -41,11 +41,11 @@
         </div>
 
         <div fxFlex="50%" class="mat-body-strong">
-          Follow
+          {{'System.ManageSchedulerJobs.ViewSchedulerJob.Follow'| translate }}
         </div>
 
         <div fxFlex="50%">
-          <a href="http://www.cronmaker.com/">	Click Here To Generate Cron Expression </a>
+          <a href="http://www.cronmaker.com/">	{{'System.ManageSchedulerJobs.ViewSchedulerJob.ClickHere'| translate }} </a>
         </div>
 
       </div>

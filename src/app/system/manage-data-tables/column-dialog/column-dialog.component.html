@@ -7,15 +7,15 @@
     <div fxLayout="column">
 
       <mat-form-field>
-        <mat-label>Column Name</mat-label>
+        <mat-label>{{'System.ManageDataTable.ColumnDialog.name'| translate }}</mat-label>
         <input matInput required formControlName="name">
         <mat-error *ngIf="columnForm.controls.name.hasError('required')">
-          Column Name is <strong>required</strong>
+          {{'System.ManageDataTable.ColumnDialog.errname'| translate }}<strong>{{'System.strongRequired'| translate }}</strong>
         </mat-error>
       </mat-form-field>
 
       <mat-form-field>
-        <mat-label>Column Type</mat-label>
+        <mat-label>{{'System.ManageDataTable.ColumnDialog.type'| translate }}</mat-label>
         <mat-select required formControlName="type">
           <mat-option *ngFor="let columnType of columnTypeData" [value]="columnType.value">
             {{ columnType.displayValue }}
@@ -24,16 +24,16 @@
       </mat-form-field>
 
       <div>
-        <mat-checkbox labelPosition="before" formControlName="mandatory">Mandatory</mat-checkbox>
+        <mat-checkbox labelPosition="before" formControlName="mandatory">{{'System.ManageDataTable.ColumnDialog.Mandatory'| translate }}</mat-checkbox>
       </div>
 
       <mat-form-field>
-        <mat-label>Column Length</mat-label>
+        <mat-label>{{'System.ManageDataTable.ColumnDialog.length'| translate }}</mat-label>
         <input matInput required type="number" formControlName="length">
       </mat-form-field>
 
       <mat-form-field>
-        <mat-label>Column Code</mat-label>
+        <mat-label>{{'System.ManageDataTable.ColumnDialog.code'| translate }}</mat-label>
         <mat-select required formControlName="code">
           <mat-option *ngFor="let columnCode of data.columnCodes" [value]="columnCode.name">
             {{ columnCode.name }}
@@ -48,7 +48,7 @@
 </mat-dialog-content>
 
 <mat-dialog-actions align="end">
-  <button mat-button mat-dialog-close>Cancel</button>
+  <button mat-button mat-dialog-close>{{ "ShareButton.CancelEng" | translate }}</button>
   <button mat-raised-button color="primary" [disabled]="!columnForm.valid || columnForm.pristine"
-    (click)="submit()">Submit</button>
+    (click)="submit()">{{ "ShareButton.Submit" | translate }}</button>
 </mat-dialog-actions>

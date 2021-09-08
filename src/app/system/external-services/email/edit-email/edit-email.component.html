@@ -9,42 +9,42 @@
         <div fxLayout="column">
 
           <mat-form-field>
-            <mat-label>Username</mat-label>
+            <mat-label>{{'System.ExternalServicesComponent.Email.EditEmail.Username'| translate }}</mat-label>
             <input matInput required formControlName="username">
             <mat-error *ngIf="emailConfigurationForm.controls.username.hasError('required')">
-              Username is <strong>required</strong>
+              {{'System.ExternalServicesComponent.Email.EditEmail.errUsername'| translate }}<strong>{{'System.strongRequired'| translate }}</strong>
             </mat-error>
           </mat-form-field>
 
           <mat-form-field>
-            <mat-label>Password</mat-label>
+            <mat-label>{{'System.ExternalServicesComponent.Email.EditEmail.Password'| translate }}</mat-label>
             <input matInput required formControlName="password">
             <mat-error *ngIf="emailConfigurationForm.controls.password.hasError('required')">
-              Password is <strong>required</strong>
+              {{'System.ExternalServicesComponent.Email.EditEmail.errPassword'| translate }}<strong>{{'System.strongRequired'| translate }}</strong>
             </mat-error>
           </mat-form-field>
 
           <mat-form-field>
-            <mat-label>Host</mat-label>
+            <mat-label>{{'System.ExternalServicesComponent.Email.EditEmail.Host'| translate }}</mat-label>
             <input matInput required formControlName="host">
             <mat-error *ngIf="emailConfigurationForm.controls.host.hasError('required')">
-              Host is <strong>required</strong>
+              {{'System.ExternalServicesComponent.Email.EditEmail.errHost'| translate }}<strong>{{'System.strongRequired'| translate }}</strong>
             </mat-error>
           </mat-form-field>
 
           <mat-form-field>
-            <mat-label>Port</mat-label>
+            <mat-label>{{'System.ExternalServicesComponent.Email.EditEmail.Port'| translate }}</mat-label>
             <input matInput required formControlName="port">
             <mat-error *ngIf="emailConfigurationForm.controls.port.hasError('required')">
-              Port is <strong>required</strong>
+              {{'System.ExternalServicesComponent.Email.EditEmail.errPort'| translate }}<strong>{{'System.strongRequired'| translate }}</strong>
             </mat-error>
           </mat-form-field>
 
           <mat-form-field>
-            <mat-label>Use TLS</mat-label>
+            <mat-label>{{'System.ExternalServicesComponent.Email.EditEmail.useTLS'| translate }}</mat-label>
             <input matInput required formControlName="useTLS">
             <mat-error *ngIf="emailConfigurationForm.controls.useTLS.hasError('required')">
-              Use TLS is <strong>required</strong>
+              {{'System.ExternalServicesComponent.Email.EditEmail.erruseTLS'| translate }}<strong>{{'System.strongRequired'| translate }}</strong>
             </mat-error>
           </mat-form-field>
 
@@ -53,8 +53,8 @@
       </mat-card-content>
 
       <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
-        <button type="button" mat-raised-button [routerLink]="['../']">Cancel</button>
-        <button mat-raised-button color="primary" [disabled]="!emailConfigurationForm.valid || emailConfigurationForm.pristine">Submit</button>
+        <button type="button" mat-raised-button [routerLink]="['../']">{{ "ShareButton.CancelEng" | translate }}</button>
+        <button mat-raised-button color="primary" [disabled]="!emailConfigurationForm.valid || emailConfigurationForm.pristine">{{ "ShareButton.Submit" | translate }}</button>
       </mat-card-actions>
 
     </form>

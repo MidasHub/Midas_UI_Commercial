@@ -1,56 +1,56 @@
 <div class="container">
 
     <mat-card>
-  
+
       <form [formGroup]="smsConfigurationForm" (ngSubmit)="submit()">
-  
+
         <mat-card-content>
-  
+
           <div fxLayout="column">
-  
+
             <mat-form-field>
-              <mat-label>Host Name</mat-label>
+              <mat-label>{{'System.ExternalServicesComponent.SMS.EditSMS.host_name'| translate }}</mat-label>
               <input matInput required formControlName="host_name">
               <mat-error *ngIf="smsConfigurationForm.controls.host_name.hasError('required')">
-                Host Name is <strong>required</strong>
-              </mat-error>
-            </mat-form-field>
-  
-            <mat-form-field>
-              <mat-label>Port Number</mat-label>
-              <input matInput required formControlName="port_number">
-              <mat-error *ngIf="smsConfigurationForm.controls.port_number.hasError('required')">
-                Port Number is <strong>required</strong>
-              </mat-error>
-            </mat-form-field>
-  
-            <mat-form-field>
-              <mat-label>End Point</mat-label>
-              <input matInput required formControlName="end_point">
-              <mat-error *ngIf="smsConfigurationForm.controls.end_point.hasError('required')">
-                End Point is <strong>required</strong>
+                {{'System.ExternalServicesComponent.SMS.EditSMS.errhost_name'| translate }}<strong>{{'System.strongRequired'| translate }}</strong>
               </mat-error>
             </mat-form-field>
 
             <mat-form-field>
-                <mat-label>Tenant App Key</mat-label>
+              <mat-label>{{'System.ExternalServicesComponent.SMS.EditSMS.port_number'| translate }}</mat-label>
+              <input matInput required formControlName="port_number">
+              <mat-error *ngIf="smsConfigurationForm.controls.port_number.hasError('required')">
+                {{'System.ExternalServicesComponent.SMS.EditSMS.errport_number'| translate }}<strong>{{'System.strongRequired'| translate }}</strong>
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field>
+              <mat-label>{{'System.ExternalServicesComponent.SMS.EditSMS.end_point'| translate }}</mat-label>
+              <input matInput required formControlName="end_point">
+              <mat-error *ngIf="smsConfigurationForm.controls.end_point.hasError('required')">
+                {{'System.ExternalServicesComponent.SMS.EditSMS.errend_point'| translate }}<strong>{{'System.strongRequired'| translate }}</strong>
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field>
+                <mat-label>{{'System.ExternalServicesComponent.SMS.EditSMS.tenant_app_key'| translate }}</mat-label>
                 <input matInput required formControlName="tenant_app_key">
                 <mat-error *ngIf="smsConfigurationForm.controls.tenant_app_key.hasError('required')">
-                  Tenant App Key is <strong>required</strong>
+                  {{'System.ExternalServicesComponent.SMS.EditSMS.errtenant_app_key'| translate }}<strong>{{'System.strongRequired'| translate }}</strong>
                 </mat-error>
               </mat-form-field>
-  
+
           </div>
-  
+
         </mat-card-content>
-  
+
         <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
-          <button type="button" mat-raised-button [routerLink]="['../']">Cancel</button>
-          <button mat-raised-button color="primary" [disabled]="!smsConfigurationForm.valid || smsConfigurationForm.pristine">Submit</button>
+          <button type="button" mat-raised-button [routerLink]="['../']">{{ "ShareButton.CancelEng" | translate }}</button>
+          <button mat-raised-button color="primary" [disabled]="!smsConfigurationForm.valid || smsConfigurationForm.pristine">{{ "ShareButton.Submit" | translate }}</button>
         </mat-card-actions>
-  
+
       </form>
-  
+
     </mat-card>
-  
+
   </div>

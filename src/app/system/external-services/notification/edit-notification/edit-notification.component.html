@@ -9,26 +9,26 @@
         <div fxLayout="column">
 
           <mat-form-field>
-            <mat-label>Server Key</mat-label>
+            <mat-label>{{'System.ExternalServicesComponent.Notification.EditNotification.server_key'| translate }}</mat-label>
             <input matInput required formControlName="server_key">
             <mat-error *ngIf="notificationConfigurationForm.controls.server_key.hasError('required')">
-              Server Key is <strong>required</strong>
+              {{'System.ExternalServicesComponent.Notification.EditNotification.errserver_key'| translate }}<strong>{{'System.strongRequired'| translate }}</strong>
             </mat-error>
           </mat-form-field>
 
           <mat-form-field>
-            <mat-label>GCM End Point</mat-label>
+            <mat-label>{{'System.ExternalServicesComponent.Notification.EditNotification.gcm_end_point'| translate }}</mat-label>
             <input matInput required formControlName="gcm_end_point">
             <mat-error *ngIf="notificationConfigurationForm.controls.gcm_end_point.hasError('required')">
-              GCM End Point is <strong>required</strong>
+              {{'System.ExternalServicesComponent.Notification.EditNotification.errgcm_end_point'| translate }}<strong>{{'System.strongRequired'| translate }}</strong>
             </mat-error>
           </mat-form-field>
 
           <mat-form-field>
-            <mat-label>FCM End Point</mat-label>
+            <mat-label>{{'System.ExternalServicesComponent.Notification.EditNotification.fcm_end_point'| translate }}</mat-label>
             <input matInput required formControlName="fcm_end_point">
             <mat-error *ngIf="notificationConfigurationForm.controls.fcm_end_point.hasError('required')">
-              FCM End Point is <strong>required</strong>
+              {{'System.ExternalServicesComponent.Notification.EditNotification.errfcm_end_point'| translate }}<strong>{{'System.strongRequired'| translate }}</strong>
             </mat-error>
           </mat-form-field>
 
@@ -37,8 +37,8 @@
       </mat-card-content>
 
       <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
-        <button type="button" mat-raised-button [routerLink]="['../']">Cancel</button>
-        <button mat-raised-button color="primary" [disabled]="!notificationConfigurationForm.valid || notificationConfigurationForm.pristine">Submit</button>
+        <button type="button" mat-raised-button [routerLink]="['../']">{{ "ShareButton.CancelEng" | translate }}</button>
+        <button mat-raised-button color="primary" [disabled]="!notificationConfigurationForm.valid || notificationConfigurationForm.pristine">{{ "ShareButton.Submit" | translate }}</button>
       </mat-card-actions>
 
     </form>
