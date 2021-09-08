@@ -77,7 +77,7 @@ const customCurrencyMaskConfig = {
     MaterialModule,
     RouterModule,
     ReactiveFormsModule,
-    // TranslateModule.forChild(),
+    TranslateModule.forChild(),
     NgxMaskModule.forRoot(maskConfig),
     NgxCurrencyModule.forRoot(customCurrencyMaskConfig),
     DirectivesModule,
@@ -106,6 +106,7 @@ const customCurrencyMaskConfig = {
     BillposSelectorComponent,
     UserAccountInfoComponent,
     MainboardComponent,
+    MatSelectSearchComponent
   ],
   exports: [
     FileUploadComponent,

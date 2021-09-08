@@ -69,7 +69,7 @@
         <i class="fa fa-file"></i> {{ "CentersComponent.CentersViewComponent." | translate }}
       </button>
       </span>
-      <button mat-raised-button [matMenuTrCentersSavingApplicationiggerFor]="More"> {{ "CentersComponent.btnMore." | translate }} </button>
+      <button mat-raised-button [matMenuTriggerFor]="More"> {{ "CentersComponent.btnMore." | translate }} </button>
       <mat-menu #More="matMenu">
         <span *ngIf="centerViewData.collectionMeetingCalendar">
           <button mat-menu-item *midasHasPermission="'SAVEORUPDATEATTENDANCE_MEETING'" (click)="doAction('Attendance')"> {{ "CentersComponent.CentersViewComponent.btnAttendance" | translate }} </button>
