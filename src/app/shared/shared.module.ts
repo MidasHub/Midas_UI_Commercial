@@ -77,7 +77,7 @@ const customCurrencyMaskConfig = {
     MaterialModule,
     RouterModule,
     ReactiveFormsModule,
-    TranslateModule,
+    // TranslateModule.forChild(),
     NgxMaskModule.forRoot(maskConfig),
     NgxCurrencyModule.forRoot(customCurrencyMaskConfig),
     DirectivesModule,

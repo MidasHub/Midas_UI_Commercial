@@ -63,28 +63,28 @@ import { CommonHttpParams } from './shared/CommonHttpParams';
 /**
  * Import Vietnamese locale for built-in pipe like DatePipe, CurrencyPipe...
  */
-import { registerLocaleData } from '@angular/common';
-import localeVi from '@angular/common/locales/vi';
-import { LOCALE_ID } from '@angular/core';
+// import { registerLocaleData } from '@angular/common';
+// import localeVi from '@angular/common/locales/vi';
+// import { LOCALE_ID } from '@angular/core';
 
-registerLocaleData(localeVi, 'vi');
+// registerLocaleData(localeVi, 'vi');
 
 /**
  * Gooogle Firebase
  */
 
-import { AngularFireMessagingModule } from '@angular/fire/messaging';
-import { AngularFireDatabaseModule } from '@angular/fire/database';
-import { AngularFireAuthModule } from '@angular/fire/auth';
-import { AngularFireModule } from '@angular/fire';
-import { FireBaseMessagingService } from './firebase/fire-base-messaging.service';
+// import { AngularFireMessagingModule } from '@angular/fire/messaging';
+// import { AngularFireDatabaseModule } from '@angular/fire/database';
+// import { AngularFireAuthModule } from '@angular/fire/auth';
+// import { AngularFireModule } from '@angular/fire';
+// import { FireBaseMessagingService } from './firebase/fire-base-messaging.service';
 import { AsyncPipe } from '@angular/common';
 
 /** Tour guide for self study */
 import { TourMatMenuModule } from 'ngx-tour-md-menu';
 
 /** Google Analytics  */
-import { GoogleAnalyticsService } from './firebase/google-analytics.service';
+// import { GoogleAnalyticsService } from './firebase/google-analytics.service';
 
 
 
@@ -100,18 +100,18 @@ import { GoogleAnalyticsService } from './firebase/google-analytics.service';
     HttpClientModule,
     ServiceWorkerModule.register('./ngsw-worker.js', { enabled: environment.production }),
     TranslateModule.forRoot({
+      defaultLanguage: 'vi-VN',
       loader: {
         provide: TranslateLoader,
         useFactory: HttpLoaderFactory,
         deps: [HttpClient],
-      },
-      isolate: true,
+      }
     }),
     TourMatMenuModule.forRoot(),
-    AngularFireDatabaseModule,
-    AngularFireAuthModule,
-    AngularFireMessagingModule,
-    AngularFireModule.initializeApp(environment.firebase),
+    // AngularFireDatabaseModule,
+    // AngularFireAuthModule,
+    // AngularFireMessagingModule,
+    // AngularFireModule.initializeApp(environment.firebase),
     CoreModule,
     HomeModule,
     LoginModule,
@@ -147,12 +147,12 @@ import { GoogleAnalyticsService } from './firebase/google-analytics.service';
   declarations: [WebAppComponent, NotFoundComponent],
   providers: [
     CommonHttpParams,
-    {
-      provide: LOCALE_ID,
-      useValue: 'vi',
-    },
-    FireBaseMessagingService,
-    GoogleAnalyticsService,
+    // {
+    //   provide: LOCALE_ID,
+    //   useValue: 'vi',
+    // },
+    // FireBaseMessagingService,
+    // GoogleAnalyticsService,
     AsyncPipe,
   ],
   bootstrap: [WebAppComponent],

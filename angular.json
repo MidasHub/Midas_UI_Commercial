@@ -28,7 +28,6 @@
               "src/favicon.ico",
               "src/robots.txt",
               "src/manifest.json",
-              "src/firebase-messaging-sw.js",
               "src/assets",
               "src/assets/i18n"
             ],
@@ -162,7 +161,6 @@
               "src/favicon.ico",
               "src/robots.txt",
               "src/manifest.json",
-              "src/firebase-messaging-sw.js",
               "src/assets"
             ]
           }

@@ -27,11 +27,6 @@ import { BanksService } from './banks/banks.service';
 import { Alert } from './core/alert/alert.model';
 import { KeyboardShortcutsConfiguration } from './keyboards-shortcut-config';
 
-/**
- * Firebase Messaging
- */
-
-import { FireBaseMessagingService } from './firebase/fire-base-messaging.service';
 
 /** Initialize Logger */
 import { Logger } from './core/logger/logger.service';
@@ -41,8 +36,6 @@ const log = new Logger('Midas');
 import { DeviceDetectorService } from 'ngx-device-detector';
 import { TourService } from 'ngx-tour-core';
 
-/** Google Analytics */
-declare const gtag: Function;
 
 /**
  * Main web app component.
@@ -81,24 +74,14 @@ export class WebAppComponent implements OnInit {
     private alertService: AlertService,
     private settingsService: SettingsService,
     private authenticationService: AuthenticationService,
-    private messagingService: FireBaseMessagingService,
+    // private messagingService: FireBaseMessagingService,
     private deviceService: DeviceDetectorService,
     private tourService: TourService
   ) {
-    /** Activate GoogleAnalytic */
-    this.addGAScript();
-
     this.router.events.pipe(filter((event) => event instanceof NavigationEnd)).subscribe((event) => {
       /** START : Code to Track Page View  */
       const event_ = event as NavigationEnd;
       log.info('GA: ', event_?.urlAfterRedirects);
-      gtag('event', 'page_view_' + window.location.hostname + event_?.urlAfterRedirects.replace('/', '#'), {
-        page_path: event_?.urlAfterRedirects,
-      });
-      // gtag('config', environment.GA_TRACKING_ID, {'page_path': event.urlAfterRedirects});
-      /** Multi GA testing */
-      // gtag('config', environment.firebase.measurementId, {'page_path': event.urlAfterRedirects});
-      /** END */
     });
   }
 
@@ -226,11 +209,7 @@ export class WebAppComponent implements OnInit {
       }
     }
 
-    // Firebase Message
 
-    this.messagingService.requestPermission();
-    this.messagingService.receiveMessage();
-    this.message = this.messagingService.currentMessage;
 
     // Get client location
     this.getLocation();
@@ -238,36 +217,12 @@ export class WebAppComponent implements OnInit {
     // ----- End ngOnInit
   }
 
-  /** Add Google Analytics Script Dynamically */
-  addGAScript() {
-    // register google tag manager
-    const gTagManagerScript = document.createElement('script');
-    gTagManagerScript.async = true;
-    gTagManagerScript.src = `https://www.googletagmanager.com/gtag/js?id=${environment.firebase.measurementId}`;
-    document.head.appendChild(gTagManagerScript);
-
-    // register google analytics
-    const gaScript = document.createElement('script');
-    gaScript.innerHTML = `
-      window.dataLayer = window.dataLayer || [];
-      function gtag() { dataLayer.push(arguments); }
-      gtag('js', new Date());
-      gtag('config', '${environment.firebase.measurementId}', {'page_path': ''});
-    `;
-    if (gaScript) {
-      document?.head?.appendChild(gaScript);
-    }
-  }
 
   loadDeviceData() {
     this.deviceInfo = this.deviceService.getDeviceInfo();
     if (!sessionStorage.getItem('midasDevice')) {
       this.settingsService.setDeviceData(this.deviceInfo);
     }
-
-    // sessionStorage.setItem('isMobile', JSON.stringify(this.deviceService.isMobile()));
-    // sessionStorage.setItem('isTablet', JSON.stringify(this.deviceService.isTablet()));
-    // sessionStorage.setItem('isDesktop', JSON.stringify(this.deviceService.isDesktop()));
   }
 
   getLocation() {
@@ -291,7 +246,6 @@ export class WebAppComponent implements OnInit {
 
   help() {
     window.open('https://drive.google.com/drive/folders/1-J4JQyaaxBz2QSfZMzC4bPrPwWlksFWw?usp=sharing', '_blank');
-    // window.open('https://mifosforge.jira.com/wiki/spaces/docs/pages/52035622/User+Manual', '_blank');ng
   }
 
   // Monitor all keyboard events and excute keyboard shortcuts
