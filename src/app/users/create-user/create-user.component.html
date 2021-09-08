@@ -9,93 +9,93 @@
         <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
 
           <mat-form-field fxFlex="48%">
-            <mat-label>Username</mat-label>
+            <mat-label>{{'UsersComponent.CreateUserComponent.Username'|translate}}</mat-label>
             <input matInput required formControlName="username">
             <mat-error *ngIf="userForm.controls.username.hasError('required')">
-              Username is <strong>required</strong>
+              {{'UsersComponent.CreateUserComponent.errUsername'|translate}}<strong>{{'UsersComponent.strongRequired'| translate }}</strong>
             </mat-error>
           </mat-form-field>
 
           <mat-form-field fxFlex="48%">
-            <mat-label>Email</mat-label>
+            <mat-label>{{'UsersComponent.CreateUserComponent.Email'|translate}}</mat-label>
             <input matInput [required]="userForm.controls.sendPasswordToEmail.value" formControlName="email">
             <mat-error *ngIf="userForm.controls.email.hasError('email')">
-              Email is <strong>invalid</strong>
+              {{'UsersComponent.CreateUserComponent.errEmail'|translate}}<strong>{{'UsersComponent.CreateUserComponent.invalid'|translate}}</strong>
             </mat-error>
             <mat-error *ngIf="userForm.controls.email.hasError('required')">
-              Email is <strong>required</strong>
+              {{'UsersComponent.CreateUserComponent.errEmail'|translate}}<strong>{{'UsersComponent.strongRequired'| translate }}</strong>
             </mat-error>
           </mat-form-field>
 
           <mat-form-field fxFlex="48%">
-            <mat-label>First Name</mat-label>
+            <mat-label>{{'UsersComponent.CreateUserComponent.firstname'|translate}}</mat-label>
             <input matInput required formControlName="firstname">
             <mat-error *ngIf="userForm.controls.firstname.hasError('pattern')">
-              First Name <strong>cannot begin with a special character or number</strong>
+              {{'UsersComponent.CreateUserComponent.firstname'|translate}} <strong>{{'UsersComponent.CreateUserComponent.xxx'|translate}}</strong>
             </mat-error>
             <mat-error *ngIf="userForm.controls.firstname.hasError('required')">
-              First Name is <strong>required</strong>
+              {{'UsersComponent.CreateUserComponent.errfirstname'|translate}}<strong>{{'UsersComponent.strongRequired'| translate }}</strong>
             </mat-error>
           </mat-form-field>
 
           <mat-form-field fxFlex="48%">
-            <mat-label>Last Name</mat-label>
+            <mat-label>{{'UsersComponent.CreateUserComponent.lastname'|translate}}</mat-label>
             <input matInput required formControlName="lastname">
             <mat-error *ngIf="userForm.controls.lastname.hasError('pattern')">
-              Last Name <strong>cannot begin with a special character or number</strong>
+              {{'UsersComponent.CreateUserComponent.lastname'|translate}} <strong>{{'UsersComponent.CreateUserComponent.alert'|translate}}</strong>
             </mat-error>
             <mat-error *ngIf="userForm.controls.lastname.hasError('required')">
-              Last Name is <strong>required</strong>
+              {{'UsersComponent.CreateUserComponent.errlastname'|translate}}<strong>{{'UsersComponent.strongRequired'| translate }}</strong>
             </mat-error>
           </mat-form-field>
 
           <div fxFlex="48%" class="password-never-expires-wrapper">
             <mat-checkbox labelPosition="before" formControlName="passwordNeverExpires" >
-              Override password expiry policy
+              {{'UsersComponent.CreateUserComponent.passwordNeverExpires'|translate}}
             </mat-checkbox>
           </div>
 
           <div fxFlex="48%" class="send-password-to-email-wrapper">
             <mat-checkbox labelPosition="before" formControlName="sendPasswordToEmail">
-              Auto generate password
+              {{'UsersComponent.CreateUserComponent.sendPasswordToEmail'|translate}}
             </mat-checkbox>
           </div>
 
           <mat-form-field fxFlex="48%" *ngIf="!userForm.controls.sendPasswordToEmail.value">
-            <mat-label>Password</mat-label>
+            <mat-label>{{'UsersComponent.CreateUserComponent.Password'|translate}}</mat-label>
             <input matInput required type="password" formControlName="password">
             <mat-error *ngIf="userForm.controls.password.hasError('required')">
-              Password is <strong>required</strong>
+              {{'UsersComponent.CreateUserComponent.errPassword'|translate}}<strong>{{'UsersComponent.strongRequired'| translate }}</strong>
             </mat-error>
           </mat-form-field>
 
           <mat-form-field fxFlex="48%" *ngIf="!userForm.controls.sendPasswordToEmail.value">
-            <mat-label>Repeat Password</mat-label>
+            <mat-label>{{'UsersComponent.CreateUserComponent.repeatPassword'|translate}}</mat-label>
             <input matInput required type="password" formControlName="repeatPassword">
             <mat-error *ngIf="userForm.controls.repeatPassword.hasError('required')">
-              Password is <strong>required</strong>
+              {{'UsersComponent.CreateUserComponent.errrepeatPassword'|translate}}<strong>{{'UsersComponent.strongRequired'| translate }}</strong>
             </mat-error>
           </mat-form-field>
 
           <p fxFlex="98%" class="reset-password-error" *ngIf="userForm.errors?.passwordsDoNotMatch &&
           (!userForm.controls.password.hasError('required') && !userForm.controls.repeatPassword.hasError('required'))">
-          Passwords <strong>do not match</strong>
-          </p>      
+          {{'UsersComponent.CreateUserComponent.Passwords'|translate}} <strong>{{'UsersComponent.CreateUserComponent.notMatch'|translate}}</strong>
+          </p>
 
           <mat-form-field fxFlex="48%">
-            <mat-label>Office</mat-label>
+            <mat-label>{{'UsersComponent.CreateUserComponent.Office'|translate}}</mat-label>
             <mat-select required formControlName="officeId">
               <mat-option *ngFor="let office of officesData" [value]="office.id">
                 {{ office.name }}
               </mat-option>
             </mat-select>
             <mat-error *ngIf="userForm.controls.officeId.hasError('required')">
-              Office is <strong>required</strong>
+              {{'UsersComponent.CreateUserComponent.errOffice'|translate}}<strong>{{'UsersComponent.strongRequired'| translate }}</strong>
             </mat-error>
           </mat-form-field>
 
           <mat-form-field fxFlex="48%">
-            <mat-label>Staff</mat-label>
+            <mat-label>{{'UsersComponent.CreateUserComponent.Staff'|translate}}</mat-label>
             <mat-select formControlName="staffId">
               <mat-option *ngFor="let staff of staffData" [value]="staff.id">
                 {{ staff.displayName }}
@@ -104,14 +104,14 @@
           </mat-form-field>
 
           <mat-form-field fxFlex="48%">
-            <mat-label>Roles</mat-label>
+            <mat-label>{{'UsersComponent.CreateUserComponent.Roles'|translate}}</mat-label>
             <mat-select required formControlName="roles" multiple>
               <mat-option *ngFor="let role of rolesData" [value]="role.id">
                 {{ role.name }}
               </mat-option>
             </mat-select>
             <mat-error *ngIf="userForm.controls.roles.hasError('required')">
-              At least one role <strong>must be selected</strong>
+              {{'UsersComponent.CreateUserComponent.atLeast'|translate}}<strong>{{'UsersComponent.CreateUserComponent.mustBeSelected'|translate}}</strong>
             </mat-error>
           </mat-form-field>
 
@@ -120,8 +120,8 @@
       </mat-card-content>
 
       <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
-        <button type="button" mat-raised-button [routerLink]="['../']">Cancel</button>
-        <button mat-raised-button color="primary" [disabled]="!userForm.valid">Submit</button>
+        <button type="button" mat-raised-button [routerLink]="['../']">{{ "ShareButton.CancelEng" | translate }}</button>
+        <button mat-raised-button color="primary" [disabled]="!userForm.valid">{{ "ShareButton.Submit" | translate }}</button>
       </mat-card-actions>
 
     </form>
