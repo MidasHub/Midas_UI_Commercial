@@ -1,10 +1,10 @@
-<h1 mat-dialog-title>Xử lý chênh lệch Advance giao dịch - {{ refId }}</h1>
+<h1 mat-dialog-title>{{'Transactions.RollTernSchedule.Dialog.ExcuteLoanDialog.title'|translate}} - {{ refId }}</h1>
 <div mat-dialog-content>
   <div class="custom-files-input" fxLayout="column">
     <div fxLayout="column" [formGroup]="formDialogPaid">
       <div fxLayout="row swap" fxLayoutAlign.lt-sm="center" fxLayoutGap="2%" fxLayout.lt-sm="column">
         <mat-form-field fxFlex="30%" *ngIf="formDialogPaid.contains('paymentCode')" class="input_custom">
-          <mat-label>Lựa chọn phương thức</mat-label>
+          <mat-label>{{'Transactions.RollTernSchedule.Dialog.ExcuteLoanDialog.paymentCode'|translate}}</mat-label>
           <mat-select required formControlName="paymentCode">
             <mat-option *ngFor="let type of paidPaymentType" [fxShow]="type.code === 'AM'" [value]="type.code">
               {{ type.desc }}
@@ -13,7 +13,7 @@
         </mat-form-field>
 
         <mat-form-field fxFlex="30%" class="input_custom">
-          <mat-label>Lựa chọn tài khoản</mat-label>
+          <mat-label>{{'Transactions.RollTernSchedule.Dialog.ExcuteLoanDialog.savingAccountPaid'|translate}}</mat-label>
           <mat-select required formControlName="savingAccountPaid">
             <mat-option *ngFor="let type of accountsPaid" [value]="type.id">
               {{ type.externalId }} ( {{ type.balance | money }} )
@@ -21,7 +21,7 @@
           </mat-select>
         </mat-form-field>
         <mat-form-field fxFlex="30%">
-          <mat-label>Số tiền</mat-label>
+          <mat-label>{{'Transactions.RollTernSchedule.Dialog.ExcuteLoanDialog.amount'|translate}}</mat-label>
           <input matInput disabled [value]="this.posTransaction.principal - this.posTransaction.amountPaid | money" />
         </mat-form-field>
       </div>

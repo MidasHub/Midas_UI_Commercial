@@ -2,14 +2,14 @@
   <mat-card-content>
     <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column" [formGroup]="formDate">
       <mat-form-field fxFlex="31%">
-        <mat-label>Từ ngày</mat-label>
+        <mat-label>{{'Transactions.FeePaidManagement.fromDate'|translate}}</mat-label>
         <input matInput [matDatepicker]="transactionDateFromPicker" formControlName="fromDate" />
         <mat-datepicker-toggle matSuffix [for]="transactionDateFromPicker"></mat-datepicker-toggle>
         <mat-datepicker #transactionDateFromPicker></mat-datepicker>
       </mat-form-field>
 
       <mat-form-field fxFlex="31%">
-        <mat-label>Đến ngày</mat-label>
+        <mat-label>{{'Transactions.FeePaidManagement.toDate'|translate}}</mat-label>
         <input matInput [matDatepicker]="transactionDateToPicker" formControlName="toDate" />
         <mat-datepicker-toggle matSuffix [for]="transactionDateToPicker"></mat-datepicker-toggle>
         <mat-datepicker #transactionDateToPicker></mat-datepicker>
@@ -22,10 +22,10 @@
           color="primary"
           mat-raised-button
         >
-          Tìm kiếm &nbsp;<i class="fa fa-search" aria-hidden="true"></i>
+        {{'Transactions.FeePaidManagement.search'|translate}} &nbsp;<i class="fa fa-search" aria-hidden="true"></i>
         </button>
         <h3 *ngIf="!fromDateAndToDate">
-          Vui lòng chọn thời gian &nbsp; <i class="fa fa-calendar" style="align-self: center" aria-hidden="true"></i>
+          {{'Transactions.FeePaidManagement.selectTime'|translate}}&nbsp; <i class="fa fa-calendar" style="align-self: center" aria-hidden="true"></i>
         </h3>
       </div>
     </div>
@@ -38,35 +38,35 @@
           <img src="assets/images/icons/transaction_total.svg" />
           <div fxLayout="column">
             <span class="money-total">{{ getLengthSource() }}</span>
-            <span>Tổng giao dịch </span>
+            <span>{{'Transactions.FeePaidManagement.totalTransaction'|translate}} </span>
           </div>
         </div>
         <div fxLayout="row wrap" fxFlex="15%" class="container m-b-20">
           <img src="assets/images/icons/money.svg" width="40" height="40" />
           <div style="display: flex" fxLayout="column">
             <span style="font-size: 16px; margin-top: 1px; padding-top: 2px">{{ totalFeeSum | money }}</span>
-            <span>&nbsp;Tổng thu chi</span>
+            <span>&nbsp;{{'Transactions.FeePaidManagement.totalFeeSum'|translate}}</span>
           </div>
         </div>
         <div fxLayout="row wrap" fxFlex="15%" class="container m-b-20">
           <img src="assets/images/icons/transaction.svg" width="40" height="40" />
           <div style="display: flex" fxLayout="column">
             <span style="font-size: 16px; margin-top: 1px; padding-top: 2px">{{ totalFeePaid | money }}</span>
-            <span>&nbsp;Đã thu/chi</span>
+            <span>&nbsp;{{'Transactions.FeePaidManagement.totalFeePaid'|translate}}</span>
           </div>
         </div>
         <div fxLayout="row wrap" fxFlex="15%" class="container m-b-20">
           <img src="assets/images/icons/transaction.svg" width="40" height="40" />
           <div style="display: flex" fxLayout="column">
             <span style="font-size: 16px; margin-top: 1px; padding-top: 2px">{{ totalFeePaidDE | money }}</span>
-            <span>&nbsp;Đã cấn trừ</span>
+            <span>&nbsp;{{'Transactions.FeePaidManagement.totalFeePaidDE'|translate}}</span>
           </div>
         </div>
         <div fxLayout="row wrap" fxFlex="15%" class="container m-b-20">
           <img src="assets/images/icons/capital.svg" width="40" height="40" />
           <div style="display: flex" fxLayout="column">
             <span style="font-size: 16px; margin-top: 1px; padding-top: 2px">{{ totalFeeRemain | money }}</span>
-            <span>&nbsp;Cần thu/chi</span>
+            <span>&nbsp;{{'Transactions.FeePaidManagement.totalFeeRemain'|translate}}</span>
           </div>
         </div>
       </div>
@@ -75,11 +75,11 @@
   <mat-accordion>
     <mat-expansion-panel expanded="false" (opened)="panelOpenState = true" (closed)="panelOpenState = false">
       <mat-expansion-panel-header>
-        <mat-panel-title> Xem theo </mat-panel-title>
+        <mat-panel-title> {{'Transactions.FeePaidManagement.title'|translate}} </mat-panel-title>
       </mat-expansion-panel-header>
       <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column" [formGroup]="formFilter">
         <mat-form-field fxFlex="18%">
-          <mat-label>Lựa chọn trạng thái</mat-label>
+          <mat-label>{{'Transactions.FeePaidManagement.status'|translate}}</mat-label>
           <mat-select formControlName="status">
             <mat-option *ngFor="let type of statusOption" [value]="type.value">
               {{ type.label }}
@@ -87,7 +87,7 @@
           </mat-select>
         </mat-form-field>
         <mat-form-field fxFlex="18%">
-          <mat-label>Loại giao dịch</mat-label>
+          <mat-label>{{'Transactions.FeePaidManagement.txnType'|translate}}</mat-label>
           <mat-select formControlName="txnType">
             <mat-option *ngFor="let type of transactionType" [value]="type.value">
               {{ type.label }}
@@ -95,7 +95,7 @@
           </mat-select>
         </mat-form-field>
         <mat-form-field fxFlex="18%">
-          <mat-label>Loại (thu/chi)</mat-label>
+          <mat-label>{{'Transactions.FeePaidManagement.txnPaymentType'|translate}}</mat-label>
           <mat-select formControlName="txnPaymentType">
             <mat-option *ngFor="let type of paymentTypes" [value]="type.value">
               {{ type.label }}
@@ -104,32 +104,32 @@
         </mat-form-field>
 
         <mat-form-field fxFlex="18%">
-          <mat-label>Chi nhánh</mat-label>
+          <mat-label>{{'Transactions.FeePaidManagement.officeName'|translate}}</mat-label>
           <input matInput formControlName="officeName" />
         </mat-form-field>
 
         <mat-form-field fxFlex="18%">
-          <mat-label>Đại lý</mat-label>
+          <mat-label>{{'Transactions.FeePaidManagement.agencyName'|translate}}</mat-label>
           <input matInput formControlName="agencyName" />
         </mat-form-field>
 
         <mat-form-field fxFlex="18%">
-          <mat-label>Chủ thể</mat-label>
+          <mat-label>{{'Transactions.FeePaidManagement.customerName'|translate}}</mat-label>
           <input matInput formControlName="customerName" />
         </mat-form-field>
 
         <mat-form-field fxFlex="18%">
-          <mat-label>Số batch</mat-label>
+          <mat-label>{{'Transactions.FeePaidManagement.batchNo'|translate}}</mat-label>
           <input matInput formControlName="batchNo" />
         </mat-form-field>
 
         <mat-form-field fxFlex="18%">
-          <mat-label>Số trace</mat-label>
+          <mat-label>{{'Transactions.FeePaidManagement.traceNo'|translate}}</mat-label>
           <input matInput formControlName="traceNo" />
         </mat-form-field>
 
         <mat-form-field fxFlex="18%">
-          <mat-label>Lựa chọn phương thức</mat-label>
+          <mat-label>{{'Transactions.FeePaidManagement.txnPaymentCode'|translate}}</mat-label>
           <mat-select formControlName="txnPaymentCode">
             <mat-option *ngFor="let type of paidPaymentType" [value]="type.code">
               {{ type.desc }}
@@ -138,7 +138,7 @@
         </mat-form-field>
 
         <mat-form-field fxFlex="18%">
-          <mat-label>Nhân viên</mat-label>
+          <mat-label>{{'Transactions.FeePaidManagement.createdBy'|translate}}</mat-label>
           <mat-select formControlName="createdBy">
             <mat-option *ngFor="let type of staffs" [value]="type.userId">
               {{ type.displayName }}
@@ -147,10 +147,10 @@
         </mat-form-field>
         <div fxFlex="18%" fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
           <mat-checkbox fxFlex="100%" labelPosition="before" formControlName="RetailsChoose" class="margin-v">
-            Giao dịch lẻ
+            {{'Transactions.FeePaidManagement.RetailsChoose'|translate}}
           </mat-checkbox>
           <mat-checkbox fxFlex="100%" labelPosition="before" formControlName="wholesaleChoose" class="margin-v">
-            Giao dịch lô
+            {{'Transactions.FeePaidManagement.wholesaleChoose'|translate}}
           </mat-checkbox>
         </div>
         <div fxFlex="18%">
@@ -160,7 +160,7 @@
             color="primary"
             mat-raised-button
           >
-            Export
+          {{'Transactions.FeePaidManagement.Export'|translate}}
           </button>
         </div>
       </div>
@@ -170,7 +170,9 @@
   <mat-card-content>
     <table mat-table multiTemplateDataRows class="mat-elevation-z8" [dataSource]="dataSource" matSort>
       <ng-container matColumnDef="txnDate">
-        <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>Ngày /<br />Mã giao dịch</th>
+        <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>
+          {{'Transactions.FeePaidManagement.txnDate'|translate}}<br />
+          {{'Transactions.FeePaidManagement.TxnCode'|translate}}</th>
         <td mat-cell fxHide fxShow.gt-md *matCellDef="let transaction">
           <span [ngSwitch]="getDataOfGroupTxnCode(transaction)[0].status">
             <img *ngSwitchCase="'C'" src="assets/images/icons/check.svg" />
@@ -186,9 +188,9 @@
       <ng-container matColumnDef="officeName">
         <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>
           <label>
-            Chi nhánh
+            {{'Transactions.FeePaidManagement.officeName'|translate}}
             <hr />
-            Người tạo
+            {{'Transactions.FeePaidManagement.createdByName'|translate}}
           </label>
         </th>
         <td mat-cell fxHide fxShow.gt-md *matCellDef="let transaction">
@@ -198,10 +200,10 @@
       </ng-container>
 
       <ng-container matColumnDef="txnType">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>Loại GD</th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>{{'Transactions.FeePaidManagement.txnType2'|translate}}</th>
         <td mat-cell *matCellDef="let transaction" [ngSwitch]="getDataOfGroupTxnCode(transaction)[0].txnType">
           <button *ngSwitchCase="'CASH'" style="background: green; color: white" mat-button class="btn btn-success">
-            Cash
+            {{'Transactions.FeePaidManagement.Cash'|translate}}
           </button>
           <button
             *ngSwitchCase="'ROLLTERM'"
@@ -209,10 +211,10 @@
             mat-button
             class="btn btn-success"
           >
-            Advance
+          {{'Transactions.FeePaidManagement.Advance'|translate}}
           </button>
           <button *ngSwitchCase="'BATCH'" style="background: #e74c3c; color: white" mat-button class="btn btn-success">
-            Lô
+            {{'Transactions.FeePaidManagement.BATCH'|translate}}
           </button>
 
           <button *ngSwitchDefault class="btn btn-success">
@@ -228,9 +230,9 @@
 
       <ng-container matColumnDef="batchNo">
         <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef>
-          Số batch
+          {{'Transactions.FeePaidManagement.batchNo2'|translate}}
           <hr />
-          Số trace
+          {{'Transactions.FeePaidManagement.traceNo2'|translate}}
         </th>
         <td
           mat-cell
@@ -257,8 +259,8 @@
 
       <ng-container matColumnDef="customerName">
         <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>
-          Chủ thể /<br />
-          Đại lý
+          {{'Transactions.FeePaidManagement.customerName2'|translate}}<br />
+          {{'Transactions.FeePaidManagement.agencyName2'|translate}}
         </th>
         <td mat-cell fxHide fxShow.gt-md *matCellDef="let transaction">
           {{ getDataOfGroupTxnCode(transaction)[0].customerName }}
@@ -272,7 +274,7 @@
       </ng-container>
 
       <ng-container matColumnDef="txnAmount">
-        <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>Số tiền GD</th>
+        <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>{{'Transactions.FeePaidManagement.txnAmount'|translate}}</th>
         <td mat-cell fxHide fxShow.gt-md *matCellDef="let transaction">
           <ul *ngIf="getDataOfGroupTxnCode(transaction)">
             <li>
@@ -285,7 +287,7 @@
       </ng-container>
 
       <ng-container matColumnDef="DEAmount">
-        <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>Số tiền cấn trừ</th>
+        <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>{{'Transactions.FeePaidManagement.DEAmount'|translate}}</th>
         <td mat-cell fxHide fxShow.gt-md *matCellDef="let transaction">
           <ul *ngFor="let tra of getDataOfGroupTxnCode(transaction)">
             <li *ngIf="tra.txnPaymentType === 'OUT'" [style]="colorOfType(tra.txnPaymentType)">
@@ -298,7 +300,7 @@
       </ng-container>
 
       <ng-container matColumnDef="feeSum">
-        <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>Tổng thu/chi</th>
+        <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>{{'Transactions.FeePaidManagement.feeSum'|translate}}</th>
         <td mat-cell fxHide fxShow.gt-md *matCellDef="let transaction">
           <ul>
             <li *ngFor="let tra of getDataOfGroupTxnCode(transaction)" [style]="colorOfType(tra.txnPaymentType)">
@@ -309,7 +311,7 @@
       </ng-container>
 
       <ng-container matColumnDef="feePaid">
-        <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>Đã thu/chi</th>
+        <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>{{'Transactions.FeePaidManagement.feePaid'|translate}}</th>
         <td mat-cell fxHide fxShow.gt-md *matCellDef="let transaction">
           <ul>
             <li *ngFor="let tra of getDataOfGroupTxnCode(transaction)" [style]="colorOfType(tra.txnPaymentType)">
@@ -320,7 +322,7 @@
       </ng-container>
 
       <ng-container matColumnDef="feeRemain">
-        <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>Cần thu/chi</th>
+        <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>{{'Transactions.FeePaidManagement.feeRemain'|translate}}</th>
         <td mat-cell fxHide fxShow.gt-md *matCellDef="let transaction">
           <ul>
             <li *ngFor="let tra of getDataOfGroupTxnCode(transaction)" [style]="colorOfType(tra.txnPaymentType)">
@@ -350,47 +352,47 @@
           <div class="example-element-detail" [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
             <div class="example-element-description" fxLayout="column">
               <div>
-                <span style="font-weight: bold"> Ngày giao dịch :</span>&nbsp; &nbsp;{{
+                <span style="font-weight: bold"> {{'Transactions.FeePaidManagement.txnDate2'|translate}}</span>&nbsp; &nbsp;{{
                   getDataOfGroupTxnCode(element)[0].txnDate | date: "dd-MM-yyyy HH:mm:ss"
                 }}
               </div>
               <div>
-                <span style="font-weight: bold"> Trạng thái:</span>&nbsp; &nbsp;{{
+                <span style="font-weight: bold"> {{'Transactions.FeePaidManagement.status2'|translate}}</span>&nbsp; &nbsp;{{
                   getDataOfGroupTxnCode(element)[0].status
                 }}
               </div>
               <div>
-                <span style="font-weight: bold"> Số batch :</span>&nbsp; &nbsp;{{
+                <span style="font-weight: bold"> {{'Transactions.FeePaidManagement.batchNo3'|translate}}</span>&nbsp; &nbsp;{{
                   getDataOfGroupTxnCode(element)[0].batchNo
                 }}
               </div>
               <div>
-                <span style="font-weight: bold"> Số trace:</span>&nbsp; &nbsp;{{
+                <span style="font-weight: bold"> {{'Transactions.FeePaidManagement.traceNo3'|translate}}</span>&nbsp; &nbsp;{{
                   getDataOfGroupTxnCode(element)[0].traceNo
                 }}
               </div>
               <div>
-                <span style="font-weight: bold"> Chi nhánh :</span>&nbsp; &nbsp;{{
+                <span style="font-weight: bold"> {{'Transactions.FeePaidManagement.officeName2'|translate}}</span>&nbsp; &nbsp;{{
                   getDataOfGroupTxnCode(element)[0].officeName
                 }}
               </div>
               <div>
-                <span style="font-weight: bold"> Chủ thể :</span>&nbsp; &nbsp;{{
+                <span style="font-weight: bold"> {{'Transactions.FeePaidManagement.customerName3'|translate}}</span>&nbsp; &nbsp;{{
                   getDataOfGroupTxnCode(element)[0].customerName
                 }}
               </div>
               <div *ngFor="let tra of getDataOfGroupTxnCode(element)" [style]="colorOfType(tra.txnPaymentType)">
-                <span style="font-weight: bold"> Số tiền GD :</span>&nbsp; ({{ tra.txnPaymentType }})&nbsp;{{
+                <span style="font-weight: bold"> {{'Transactions.FeePaidManagement.txnAmount2'|translate}}</span>&nbsp; ({{ tra.txnPaymentType }})&nbsp;{{
                   tra.txnAmount | money
                 }}
               </div>
               <div *ngFor="let tra of getDataOfGroupTxnCode(element)" [style]="colorOfType(tra.txnPaymentType)">
-                <span style="font-weight: bold"> Đã thu/chi :</span>&nbsp; ({{ tra.txnPaymentType }})&nbsp;{{
+                <span style="font-weight: bold"> {{'Transactions.FeePaidManagement.feePaid2'|translate}}</span>&nbsp; ({{ tra.txnPaymentType }})&nbsp;{{
                   tra.feePaid | money
                 }}
               </div>
               <div *ngFor="let tra of getDataOfGroupTxnCode(element)" [style]="colorOfType(tra.txnPaymentType)">
-                <span style="font-weight: bold"> Cần thu/chi :</span>&nbsp; ({{ tra.txnPaymentType }})&nbsp;{{
+                <span style="font-weight: bold"> {{'Transactions.FeePaidManagement.feeRemain2'|translate}}</span>&nbsp; ({{ tra.txnPaymentType }})&nbsp;{{
                   tra.feeRemain | money
                 }}
               </div>
@@ -416,14 +418,14 @@
       <label *ngIf="checkShowButton(txnCode)" for="">
         <button (click)="addFeeDialog(txnCode)" mat-menu-item>
           <img src="assets/images/icons/hammer.svg" />
-          &nbsp;Thu, chi tiền
+          &nbsp;{{'Transactions.FeePaidManagement.addFeeDialog'|translate}}
         </button>
       </label>
 
       <label *ngIf="checkFeePaid(txnCode)" for="">
         <button (click)="viewFeeDialog(txnCode)" mat-menu-item>
           <img src="assets/images/icons/completed-task.svg" />
-          &nbsp;Danh sách đã thu/chi tiền
+          &nbsp;{{'Transactions.FeePaidManagement.viewFeeDialog'|translate}}
         </button>
       </label>
       <label>
@@ -433,7 +435,7 @@
           [routerLink]="['/transaction/batch-transaction/', getDataOfGroupTxnCode(txnCode)[0].agencyId]"
           [queryParams]="{ batchTxnName: getDataOfGroupTxnCode(txnCode)[0].txnCode }"
         >
-          <img src="assets/images/icons/next.svg" />&nbsp;Chi tiết/tiếp tục Giao dịch sỉ
+          <img src="assets/images/icons/next.svg" />&nbsp;{{'Transactions.FeePaidManagement.getDataOfGroupTxnCode'|translate}}
         </button>
       </label>
     </ng-template>

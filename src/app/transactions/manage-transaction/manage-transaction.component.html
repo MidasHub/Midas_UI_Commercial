@@ -6,14 +6,14 @@
           fxLayoutGap="2%"
           [formGroup]="formDate">
       <mat-form-field fxFlex.gt-sm="31" fxFlex="95%">
-        <mat-label>Từ ngày</mat-label>
+        <mat-label>{{'Transactions.ManageTransactionComponent.fromDate'|translate}}</mat-label>
         <input matInput [matDatepicker]="transactionDateFromPicker" formControlName="fromDate" />
         <mat-datepicker-toggle matSuffix [for]="transactionDateFromPicker"></mat-datepicker-toggle>
         <mat-datepicker #transactionDateFromPicker></mat-datepicker>
       </mat-form-field>
 
       <mat-form-field fxFlex.gt-sm="31" fxFlex="95%">
-        <mat-label>Đến ngày</mat-label>
+        <mat-label>{{'Transactions.ManageTransactionComponent.toDate'|translate}}</mat-label>
         <input matInput [matDatepicker]="transactionDateToPicker" formControlName="toDate" />
         <mat-datepicker-toggle matSuffix [for]="transactionDateToPicker"></mat-datepicker-toggle>
         <mat-datepicker #transactionDateToPicker></mat-datepicker>
@@ -26,7 +26,7 @@
           color="primary"
           mat-raised-button
         >
-          Tìm kiếm &nbsp;<i class="fa fa-search" aria-hidden="true"></i>
+        {{'Transactions.ManageTransactionComponent.search'|translate}} &nbsp;<i class="fa fa-search" aria-hidden="true"></i>
         </button>
         <!-- <div fxFlex="18%">
           <button style="margin: 5px; height: 40px" (click)="openPDF()" color="primary" mat-raised-button>
@@ -34,7 +34,7 @@
           </button>
         </div> -->
         <h3 *ngIf="!fromDateAndToDate">
-          Vui lòng chọn thời gian &nbsp; <i class="fa fa-calendar" style="align-self: center" aria-hidden="true"></i>
+          {{'Transactions.ManageTransactionComponent.selectTime'|translate}}&nbsp; <i class="fa fa-calendar" style="align-self: center" aria-hidden="true"></i>
         </h3>
 
         <button
@@ -44,7 +44,7 @@
           color=""
           mat-raised-button
         >
-          Chốt số &nbsp;<i class="fa fa-archive" aria-hidden="true"></i>
+        {{'Transactions.ManageTransactionComponent.confirm'|translate}} &nbsp;<i class="fa fa-archive" aria-hidden="true"></i>
         </button>
       </div>
     </div>
@@ -62,21 +62,21 @@
           <img src="assets/images/icons/transaction_total.svg" />
           <div fxLayout="column">
             <span class="sum-value">{{ filterData?.length }}</span>
-            <span class="sum-lable">Tổng giao dịch </span>
+            <span class="sum-lable">{{'Transactions.ManageTransactionComponent.total'|translate}} </span>
           </div>
         </div>
         <div fxLayout="row wrap" fxFlex="20%" class="sum-item">
           <img src="assets/images/icons/money.svg" />
           <div  fxLayout="column">
             <span class="sum-value">{{ totalTerminalAmount | money }}</span>
-            <span class="sum-lable">Tổng tiền giao dịch</span>
+            <span class="sum-lable">{{'Transactions.ManageTransactionComponent.totalTerminalAmount'|translate}}</span>
           </div>
         </div>
         <div fxLayout="row wrap" fxFlex="20%" class="sum-item">
           <img src="assets/images/icons/transaction.svg" />
           <div fxLayout="column">
             <span class="sum-value">{{ totalFeeAmount | money }}</span>
-            <span class="sum-lable">Phí thu được ({{ (totalFeeAmount / totalTerminalAmount) * 100 | number: "1.0-2" }}%)</span>
+            <span class="sum-lable">{{'Transactions.ManageTransactionComponent.totalFeeAmount'|translate}}({{ (totalFeeAmount / totalTerminalAmount) * 100 | number: "1.0-2" }}%)</span>
           </div>
         </div>
         <!-- <div fxLayout="row wrap" *midasHasPermission="'POS_UPDATE'" fxFlex="20%" class="sum-item">
@@ -90,7 +90,7 @@
           <img src="assets/images/icons/pnlAmount.svg" />
           <div fxLayout="column">
             <span class="sum-value">{{ totalPnlAmount | money }}</span>
-            <span class="sum-lable">PNL</span>
+            <span class="sum-lable">{{'Transactions.ManageTransactionComponent.PNL'|translate}}</span>
           </div>
         </div>
       </mat-card-content>
@@ -100,12 +100,12 @@
     <mat-accordion class="search-area">
       <mat-expansion-panel expanded="false" (opened)="panelOpenState = true" (closed)="panelOpenState = false">
         <mat-expansion-panel-header>
-          <mat-panel-title> Xem theo </mat-panel-title>
+          <mat-panel-title> {{'Transactions.ManageTransactionComponent.title'|translate}}</mat-panel-title>
         </mat-expansion-panel-header>
         <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column" [formGroup]="formFilter">
 
           <mat-form-field fxFlex="18%" >
-            <mat-label>Chi nhánh</mat-label>
+            <mat-label>{{'Transactions.ManageTransactionComponent.officeId'|translate}}</mat-label>
             <input placeholder="Tìm chi nhánh" formControlName="officeId"
               matInput
               (click)="this.resetAutoCompleteOffice()"
@@ -120,7 +120,7 @@
           </mat-autocomplete>
 
           <mat-form-field fxFlex="18%">
-            <mat-label>Loại gia dịch</mat-label>
+            <mat-label>{{'Transactions.ManageTransactionComponent.productId'|translate}}</mat-label>
             <mat-select formControlName="productId">
               <mat-option *ngFor="let type of transactionType" [value]="type.value">
                 {{ type.label }}
@@ -129,7 +129,7 @@
           </mat-form-field>
 
           <mat-form-field fxFlex="18%">
-            <mat-label>Trạng thái giao dịch</mat-label>
+            <mat-label>{{'Transactions.ManageTransactionComponent.status'|translate}}</mat-label>
             <mat-select formControlName="status">
               <mat-option *ngFor="let type of statusOption" [value]="type.value">
                 {{ type.label }}
@@ -138,7 +138,7 @@
           </mat-form-field>
 
           <mat-form-field fxFlex="18%">
-            <mat-label>Đối tác</mat-label>
+            <mat-label>{{'Transactions.ManageTransactionComponent.partnerCode'|translate}}</mat-label>
             <mat-select formControlName="partnerCode">
               <mat-option *ngFor="let type of partners" [value]="type.code">
                 {{ type.desc }}
@@ -147,17 +147,17 @@
           </mat-form-field>
 
           <mat-form-field fxFlex="18%">
-            <mat-label>Đại lý</mat-label>
+            <mat-label>{{'Transactions.ManageTransactionComponent.agencyName'|translate}}</mat-label>
             <input matInput formControlName="agencyName" />
           </mat-form-field>
 
           <mat-form-field fxFlex="18%">
-            <mat-label>Khách hàng</mat-label>
+            <mat-label>{{'Transactions.ManageTransactionComponent.panHolderName'|translate}}</mat-label>
             <input matInput formControlName="panHolderName" />
           </mat-form-field>
 
           <mat-form-field fxFlex="18%">
-            <mat-label>Mã máy</mat-label>
+            <mat-label>{{'Transactions.ManageTransactionComponent.terminalId'|translate}}</mat-label>
             <input matInput formControlName="terminalId" />
             <!-- <mat-select formControlName="terminalId">
               <mat-option *ngFor="let terminal of terminals" [value]="terminal.terminalId">
@@ -167,27 +167,27 @@
           </mat-form-field>
 
           <mat-form-field fxFlex="18%">
-            <mat-label>Trace No</mat-label>
+            <mat-label>{{'Transactions.ManageTransactionComponent.traceNo'|translate}}</mat-label>
             <input matInput formControlName="traceNo" />
           </mat-form-field>
 
           <mat-form-field fxFlex="18%">
-            <mat-label>Batch No</mat-label>
+            <mat-label>{{'Transactions.ManageTransactionComponent.batchNo'|translate}}</mat-label>
             <input matInput formControlName="batchNo" />
           </mat-form-field>
 
           <mat-form-field fxFlex="18%">
-            <mat-label>Mã lô</mat-label>
+            <mat-label>{{'Transactions.ManageTransactionComponent.trnRefNo'|translate}}</mat-label>
             <input matInput formControlName="trnRefNo" />
           </mat-form-field>
 
           <mat-form-field fxFlex="18%">
-            <mat-label>Tiền giao dịch</mat-label>
+            <mat-label>{{'Transactions.ManageTransactionComponent.terminalAmount'|translate}}</mat-label>
             <input matInput formControlName="terminalAmount" />
           </mat-form-field>
 
           <mat-form-field fxFlex="18%">
-            <mat-label>Nhân viên</mat-label>
+            <mat-label>{{'Transactions.ManageTransactionComponent.userId'|translate}}</mat-label>
             <mat-select formControlName="userId">
               <mat-option *ngFor="let type of staffs" [value]="type.userId">
                 {{ type.displayName }}
@@ -197,19 +197,19 @@
 
           <div fxFlex="18%" fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
             <mat-checkbox fxFlex="100%" labelPosition="before" formControlName="RetailsChoose" class="margin-v">
-              Giao dịch lẻ
+              {{'Transactions.ManageTransactionComponent.RetailsChoose'|translate}}
             </mat-checkbox>
             <mat-checkbox fxFlex="100%" labelPosition="before" formControlName="wholesaleChoose" class="margin-v">
-              Giao dịch sỉ
+              {{'Transactions.ManageTransactionComponent.wholesaleChoose'|translate}}
             </mat-checkbox>
             <mat-checkbox fxFlex="100%" labelPosition="before" formControlName="holdTransaction" class="margin-v">
-              Giao dịch treo
+              {{'Transactions.ManageTransactionComponent.holdTransaction'|translate}}
             </mat-checkbox>
           </div>
 
           <div fxFlex="18%">
             <button style="margin: 5px; height: 40px" (click)="exportTransaction()" color="primary" mat-raised-button>
-              Export
+              {{'Transactions.ManageTransactionComponent.Export'|translate}}
             </button>
             <!-- <button style="margin: 5px; height: 40px" (click)="exportData()" color="primary" mat-raised-button>
               Export
@@ -221,7 +221,7 @@
               color="primary"
               mat-raised-button
             >
-              Export Cho đối tác
+            {{'Transactions.ManageTransactionComponent.exportTransactionForPartner'|translate}}
             </button>
 
             <!-- <button style="margin: 5px; height: 40px" (click)="exportAsXLSX()" color="primary" mat-raised-button>
@@ -243,7 +243,7 @@
       matSort
     >
       <ng-container matColumnDef="productId">
-        <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>Loại giao dịch</th>
+        <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>{{'Transactions.ManageTransactionComponent.productId2'|translate}}</th>
         <td mat-cell fxHide fxShow.gt-md *matCellDef="let transaction" style="width: 100px">
           <span
             *ngIf="transaction.isHold != '0'"
@@ -261,7 +261,7 @@
       </ng-container>
 
       <ng-container matColumnDef="txnDate">
-        <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>Ngày giao dịch</th>
+        <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>{{'Transactions.ManageTransactionComponent.txnDate'|translate}}</th>
         <td mat-cell fxHide fxShow.gt-md style="word-wrap: break-word; width: 150px" *matCellDef="let journalEntry">
           <span [ngSwitch]="journalEntry.status">
             <img *ngSwitchCase="'C'" src="assets/images/icons/check.svg" />
@@ -281,8 +281,8 @@
 
       <ng-container matColumnDef="officeName">
         <th fxHide fxShow.gt-md mat-header-cell *matHeaderCellDef mat-sort-header>
-          Người tạo / <br />
-          máy bán hàng
+          {{'Transactions.ManageTransactionComponent.createdByName'|translate}}<br />
+          {{'Transactions.ManageTransactionComponent.terminalId2'|translate}}
         </th>
         <td fxHide fxShow.gt-md mat-cell *matCellDef="let journalEntry" style="word-wrap: break-word; width: 200px">
           <!-- {{ journalEntry.officeName }} <br /> -->
@@ -293,7 +293,7 @@
       </ng-container>
 
       <ng-container matColumnDef="panHolderName">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>Khách hàng</th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>{{'Transactions.ManageTransactionComponent.panHolderName2'|translate}}</th>
         <td mat-cell *matCellDef="let journalEntry">
           {{ journalEntry.panHolderName }} <br />
           <span class="green_text">{{ journalEntry.agencyName == "#" ? "" : journalEntry.agencyName }}</span>
@@ -302,8 +302,8 @@
 
       <ng-container matColumnDef="panBank">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>
-          Thẻ /<br />
-          Ngân hàng
+          {{'Transactions.ManageTransactionComponent.panNumber'|translate}}<br />
+          {{'Transactions.ManageTransactionComponent.panBank'|translate}}
         </th>
         <td mat-cell *matCellDef="let journalEntry">
           {{ journalEntry.panNumber.replace("XXX-XXX", "X") }} <br />
@@ -312,7 +312,7 @@
       </ng-container>
 
       <ng-container matColumnDef="terminalAmount">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>Số tiền giao dịch</th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>{{'Transactions.ManageTransactionComponent.terminalAmount2'|translate}}</th>
         <td mat-cell style="padding: 6px; text-align: right;" *matCellDef="let transaction" >
           {{ transaction.terminalAmount | money }}
 
@@ -327,27 +327,27 @@
             style="color: white; font-weight: bold; background-color: black;"
 
           >
-          Đã chốt số
+          {{'Transactions.ManageTransactionComponent.confirmed'|translate}}
           </span>
         </td>
       </ng-container>
 
       <ng-container matColumnDef="feeAmount">
-        <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>Phí thu được</th>
+        <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>{{'Transactions.ManageTransactionComponent.feeAmount'|translate}}</th>
         <td mat-cell fxHide fxShow.gt-md *matCellDef="let journalEntry" style="padding: 6px; text-align: right;">
           <label>{{ journalEntry.feeAmount | money }}</label>
         </td>
       </ng-container>
 
       <ng-container matColumnDef="terminalAmount_feeAmount">
-        <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>Tỉ lệ phí</th>
+        <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>{{'Transactions.ManageTransactionComponent.terminalAmount_feeAmount'|translate}}</th>
         <td mat-cell fxHide fxShow.gt-md *matCellDef="let journalEntry" style="padding: 6px; text-align: right;">
           {{ journalEntry.terminalAmount_feeAmount | number }}%
         </td>
       </ng-container>
 
       <ng-container matColumnDef="pnlAmount">
-        <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>PNL</th>
+        <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>{{'Transactions.ManageTransactionComponent.PNL2'|translate}}</th>
         <td mat-cell fxHide fxShow.gt-md *matCellDef="let transaction" style="padding: 6px; text-align: right;">
           <span *midasHasPermission="'POS_UPDATE'">{{ transaction.pnlAmount | money }}</span>
         </td>
@@ -370,17 +370,17 @@
         <td mat-cell fxShow fxHide.gt-md *matCellDef="let element" [attr.colspan]="displayedColumns.length">
           <div class="example-element-detail" [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
             <ul class="example-element-description" fxLayout="column">
-              <li><span style="font-weight: bold"> Loại giao dịch :</span>&nbsp;{{ element.productId }}</li>
-              <li><span style="font-weight: bold">Người tạo :</span> {{ element.createdByName }}</li>
-              <li><span style="font-weight: bold">Máy bán hàng :</span> {{ element.terminalId }}</li>
+              <li><span style="font-weight: bold"> {{'Transactions.ManageTransactionComponent.productId3'|translate}}</span>&nbsp;{{ element.productId }}</li>
+              <li><span style="font-weight: bold">{{'Transactions.ManageTransactionComponent.createdByName2'|translate}}</span> {{ element.createdByName }}</li>
+              <li><span style="font-weight: bold">{{'Transactions.ManageTransactionComponent.terminalId3'|translate}}</span> {{ element.terminalId }}</li>
               <li>
-                <span style="font-weight: bold"> Ngày giao dịch :</span>&nbsp; &nbsp;{{
+                <span style="font-weight: bold"> {{'Transactions.ManageTransactionComponent.txnDate2'|translate}}</span>&nbsp; &nbsp;{{
                 element.txnDate | date: "dd-MM-yyyy HH:ss"
                 }}
               </li>
-              <li><span style="font-weight: bold"> Số giao dịch :</span>&nbsp; &nbsp;{{ element.trnRefNo }}</li>
+              <li><span style="font-weight: bold"> {{'Transactions.ManageTransactionComponent.trnRefNo2'|translate}}</span>&nbsp; &nbsp;{{ element.trnRefNo }}</li>
               <li>
-                <span style="font-weight: bold"> Trạng thái:</span>&nbsp; &nbsp;
+                <span style="font-weight: bold"> {{'Transactions.ManageTransactionComponent.status2'|translate}}</span>&nbsp; &nbsp;
                 <span [ngSwitch]="element.status">
                   <img *ngSwitchCase="'C'" src="assets/images/icons/check.svg" />
                   <img *ngSwitchCase="'P'" src="assets/images/icons/pending.svg" />
@@ -389,11 +389,11 @@
                 </span>
               </li>
               <li>
-                 <span style="font-weight: bold"> Phí thu được :</span>&nbsp; &nbsp;{{ element.feeAmount | money }}
+                 <span style="font-weight: bold"> {{'Transactions.ManageTransactionComponent.feeAmount2'|translate}}</span>&nbsp; &nbsp;{{ element.feeAmount | money }}
               </li>
-              <li><span style="font-weight: bold"> CP vốn :</span>&nbsp; &nbsp;{{ element.cogsAmount | money }}</li>
+              <li><span style="font-weight: bold"> {{'Transactions.ManageTransactionComponent.cogsAmount'|translate}}</span>&nbsp; &nbsp;{{ element.cogsAmount | money }}</li>
               <li *midasHasPermission="'POS_UPDATE'">
-                <span style="font-weight: bold"> PNL :</span>&nbsp; &nbsp;{{ element.pnlAmount | money }}
+                <span style="font-weight: bold"> {{'Transactions.ManageTransactionComponent.PNL3'|translate}}</span>&nbsp; &nbsp;{{ element.pnlAmount | money }}
               </li>
             </ul>
           </div>
@@ -450,7 +450,7 @@
       <div *ngIf="isHold != '0'">
         <div *midasHasPermission="'POS_UPDATE'">
           <button *ngIf="status == 'C'" mat-menu-item (click)="updateIsHoldTransaction(trnRefNo, refid)">
-            <i class="fa fa-anchor" aria-hidden="true"></i> &nbsp;Cập nhật tra soát
+            <i class="fa fa-anchor" aria-hidden="true"></i> &nbsp;{{'Transactions.ManageTransactionComponent.updateIsHoldTransaction'|translate}}
           </button>
         </div>
         <button
@@ -464,10 +464,10 @@
             (today | date: 'dd/MM/yyyy') == (txnDate | date: 'dd/MM/yyyy')
           "
         >
-          <img src="assets/images/icons/next.svg" />&nbsp;Tiếp tục giao dịch
+          <img src="assets/images/icons/next.svg" />&nbsp;{{'Transactions.ManageTransactionComponent.next'|translate}}
         </button>
         <button mat-menu-item [routerLink]="['/transaction', 'view']" [queryParams]="{ tranId: refid }">
-          <i class="fa fa-eye" aria-hidden="true"></i>&nbsp;Chi tiết
+          <i class="fa fa-eye" aria-hidden="true"></i>&nbsp;{{'Transactions.ManageTransactionComponent.details'|translate}}
         </button>
       </div>
       <div *ngIf="isHold == '0'">
@@ -482,20 +482,20 @@
             (today | date: 'dd/MM/yyyy') == (txnDate | date: 'dd/MM/yyyy')
           "
         >
-          <img src="assets/images/icons/next.svg" />&nbsp;Tiếp tục giao dịch
+          <img src="assets/images/icons/next.svg" />&nbsp;{{'Transactions.ManageTransactionComponent.next2'|translate}}
         </button>
         <button mat-menu-item [routerLink]="['/transaction', 'view']" [queryParams]="{ tranId: refid }">
-          <i class="fa fa-eye" aria-hidden="true"></i>&nbsp;Chi tiết
+          <i class="fa fa-eye" aria-hidden="true"></i>&nbsp;{{'Transactions.ManageTransactionComponent.details2'|translate}}
         </button>
         <button
           *midasHasPermission="'TRACE_BATCH_NO_UPDATE'"
           mat-menu-item
           (click)="addPosInformation(trnRefNo, batchNo, traceNo)"
         >
-          <img src="assets/images/icons/add.svg" /> Cập nhật Thông tin bill nhiệt
+          <img src="assets/images/icons/add.svg" /> {{'Transactions.ManageTransactionComponent.addPosInformation'|translate}}
         </button>
         <button mat-menu-item (click)="downloadVoucher(refid)">
-          <img *ngIf="status != 'V'" src="assets/images/icons/order.svg" />&nbsp; Tải xuống hóa đơn
+          <img *ngIf="status != 'V'" src="assets/images/icons/order.svg" />&nbsp; {{'Transactions.ManageTransactionComponent.downloadVoucher'|translate}}
         </button>
         <hr />
         <button
@@ -508,14 +508,14 @@
           "
           (click)="undoRevertTransaction(refid)"
         >
-          <i class="fa fa-undo" aria-hidden="true"></i> &nbsp;Hoàn tác giao dịch
+          <i class="fa fa-undo" aria-hidden="true"></i> &nbsp;{{'Transactions.ManageTransactionComponent.undoRevertTransaction'|translate}}
         </button>
         <button
           mat-menu-item
           *ngIf="status != 'V' && (today | date: 'dd/MM/yyyy') == (txnDate | date: 'dd/MM/yyyy') && isSubmit == 0"
           (click)="revertTransaction(refid, trnRefNo)"
         >
-          <i class="fa fa-ban" aria-hidden="true"></i> &nbsp;Hủy giao dịch
+          <i class="fa fa-ban" aria-hidden="true"></i> &nbsp;{{'Transactions.ManageTransactionComponent.revertTransaction'|translate}}
         </button>
       </div>
     </ng-template>

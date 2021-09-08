@@ -1,12 +1,12 @@
-<h1 mat-dialog-title>Thêm thu/chi tiền cho giao dịch [{{ txnCode }}]</h1>
+<h1 mat-dialog-title>{{ "Transactions.Dialog.AddFee.title" | translate }} [{{ txnCode }}]</h1>
 <div mat-dialog-content>
   <span style="color: #e74c3c">{{ messageError }}</span>
   <div class="custom-files-input" fxLayout="column">
     <div fxLayout="column" *ngIf="transactionPaid && transactionPaid.status == 'A' " [formGroup]="formDialogPaid">
-      <h3>Tài khoản chi</h3>
+      <h3>{{ "Transactions.Dialog.AddFee.accountPay" | translate }}</h3>
       <div fxLayout="row swap" fxLayoutAlign.lt-sm="center" fxLayoutGap="2%" fxLayout.lt-sm="column">
         <mat-form-field fxFlex="30%" *ngIf="formDialogPaid.contains('paymentCode')" class="input_custom">
-          <mat-label>Lựa chọn phương thức</mat-label>
+          <mat-label>{{ "Transactions.Dialog.AddFee.paymentCode" | translate }}</mat-label>
           <mat-select [disabled]="isBATCH" required formControlName="paymentCode">
             <mat-option
               *ngFor="let type of paidPaymentType"
@@ -19,7 +19,7 @@
         </mat-form-field>
 
         <mat-form-field fxFlex="40%" *ngIf="formDialogPaid.contains('savingAccountPaid')" class="input_custom">
-          <mat-label>Lựa chọn tài khoản</mat-label>
+          <mat-label>{{ "Transactions.Dialog.AddFee.savingAccountPaid" | translate }}</mat-label>
           <mat-select required formControlName="savingAccountPaid">
             <mat-option *ngFor="let type of accountsPaid" [fxHide]="type.hide" [value]="type.id">
               {{ displaySavingAccount(type.externalId, type.accountNo) }}
@@ -28,14 +28,14 @@
           </mat-select>
         </mat-form-field>
         <mat-form-field fxFlex="20%">
-          <mat-label>Số tiền ({{ paidAmount | money }})</mat-label>
+          <mat-label>{{ "Transactions.Dialog.AddFee.amountPaid" | translate }}({{ paidAmount | money }})</mat-label>
           <input matInput required currencyMask formControlName="amountPaid" />
           <mat-error *ngIf="formDialogPaid.controls.amountPaid.hasError('required')"
-            >Vui lòng thêm thông tin trước khi thực hiện
+            >{{ "Transactions.Dialog.AddFee.erramountPaid" | translate }}
           </mat-error>
         </mat-form-field>
         <mat-form-field fxFlex="96%" *ngIf="formDialogPaid.contains('routingCodePartner')" class="input_custom">
-          <mat-label>Lựa chọn đối tác</mat-label>
+          <mat-label>{{ "Transactions.Dialog.AddFee.routingCodePartner" | translate }}</mat-label>
           <mat-select required formControlName="routingCodePartner">
             <mat-option *ngFor="let partner of partners"  [value]="partner.code">
               {{ partner.desc }}
@@ -43,16 +43,16 @@
           </mat-select>
         </mat-form-field>
         <mat-form-field fxFlex="96%">
-          <mat-label>Ghi chú</mat-label>
+          <mat-label>{{ "Transactions.Dialog.AddFee.notePaid" | translate }}</mat-label>
           <textarea matTextareaAutosize matInput formControlName="notePaid"></textarea>
         </mat-form-field>
       </div>
     </div>
     <div fxLayout="column" *ngIf="transactionFee && showGet && transactionFee.status == 'A'" [formGroup]="formDialogGet">
-      <h3>Tài khoản nhận</h3>
+      <h3>{{ "Transactions.Dialog.AddFee.accountReceive" | translate }}</h3>
       <div fxLayout="row swap" fxLayoutAlign.lt-sm="center" fxLayoutGap="2%" fxLayout.lt-sm="column">
         <mat-form-field fxFlex="30%" *ngIf="formDialogGet.contains('paymentCodeGet')" class="input_custom">
-          <mat-label>Lựa chọn phương thức</mat-label>
+          <mat-label>{{ "Transactions.Dialog.AddFee.paymentCodeGet" | translate }}c</mat-label>
           <mat-select required formControlName="paymentCodeGet">
             <mat-option *ngFor="let type of paidPaymentType" [fxHide]="type.code === 'DE'" [value]="type.code">
               {{ type.desc }}
@@ -61,7 +61,7 @@
         </mat-form-field>
 
         <mat-form-field fxFlex="40%" *ngIf="formDialogGet.contains('savingAccountGet')" class="input_custom">
-          <mat-label>Lựa chọn tài khoản</mat-label>
+          <mat-label>{{ "Transactions.Dialog.AddFee.savingAccountGet" | translate }}</mat-label>
           <mat-select required formControlName="savingAccountGet">
             <mat-option *ngFor="let type of accountsFee" [fxHide]="type.hide" [value]="type.id">
               {{ displaySavingAccount(type.externalId, type.accountNo) }}
@@ -71,15 +71,15 @@
         </mat-form-field>
 
         <mat-form-field *ngIf="formDialogGet.contains('amountGet')" fxFlex="20%">
-          <mat-label>Số tiền ({{ feeAmount | money }})</mat-label>
+          <mat-label>{{ "Transactions.Dialog.AddFee.amountGet" | translate }}({{ feeAmount | money }})</mat-label>
           <input required currencyMask matInput formControlName="amountGet" />
           <mat-error *ngIf="formDialogGet.controls.amountGet.hasError('required')"
-            >Vui lòng thêm thông tin trước khi thực hiện
+            >{{ "Transactions.Dialog.AddFee.erramountGet" | translate }}
           </mat-error>
         </mat-form-field>
 
         <mat-form-field *ngIf="formDialogGet.contains('noteGet')" fxFlex="96%">
-          <mat-label>Ghi chú</mat-label>
+          <mat-label>{{ "Transactions.Dialog.AddFee.noteGet" | translate }}</mat-label>
           <textarea matTextareaAutosize matInput formControlName="noteGet"></textarea>
         </mat-form-field>
       </div>

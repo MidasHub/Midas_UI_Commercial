@@ -2,14 +2,14 @@
   <mat-card-content>
     <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column" [formGroup]="formDate">
       <mat-form-field fxFlex="31%">
-        <mat-label>Từ ngày</mat-label>
+        <mat-label>{{'Transactions.ManageIcTransactionComponent.fromDate'|translate}}</mat-label>
         <input matInput [matDatepicker]="transactionDateFromPicker" formControlName="fromDate" />
         <mat-datepicker-toggle matSuffix [for]="transactionDateFromPicker"></mat-datepicker-toggle>
         <mat-datepicker #transactionDateFromPicker></mat-datepicker>
       </mat-form-field>
 
       <mat-form-field fxFlex="31%">
-        <mat-label>Đến ngày</mat-label>
+        <mat-label>{{'Transactions.ManageIcTransactionComponent.toDate'|translate}}</mat-label>
         <input matInput [matDatepicker]="transactionDateToPicker" formControlName="toDate" />
         <mat-datepicker-toggle matSuffix [for]="transactionDateToPicker"></mat-datepicker-toggle>
         <mat-datepicker #transactionDateToPicker></mat-datepicker>
@@ -22,19 +22,19 @@
           color="primary"
           mat-raised-button
         >
-          Tìm kiếm &nbsp;<i class="fa fa-search" aria-hidden="true"></i>
+        {{'Transactions.ManageIcTransactionComponent.search'|translate}} &nbsp;<i class="fa fa-search" aria-hidden="true"></i>
         </button>
         <button style="margin: 5px; height: 40px" (click)="exportAsXLSX()" color="primary" mat-raised-button>
-          Tải danh sách giao dịch
+          {{'Transactions.ManageIcTransactionComponent.exportAsXLSX'|translate}}
         </button>
         <h3 *ngIf="!fromDateAndToDate">
-          Vui lòng chọn thời gian &nbsp; <i class="fa fa-calendar" style="align-self: center" aria-hidden="true"></i>
+          {{'Transactions.ManageIcTransactionComponent.selectTime'|translate}}&nbsp; <i class="fa fa-calendar" style="align-self: center" aria-hidden="true"></i>
         </h3>
       </div>
     </div>
     <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column" [formGroup]="formFilterPartner">
       <mat-form-field fxFlex="18%">
-        <mat-label>Đối tác</mat-label>
+        <mat-label>{{'Transactions.ManageIcTransactionComponent.partnerCode'|translate}}</mat-label>
         <mat-select formControlName="partnerCode">
           <mat-option *ngFor="let partner of partners" [value]="partner.externalId">
             {{ partner.displayName }}
@@ -43,7 +43,7 @@
       </mat-form-field>
 
       <mat-form-field fxFlex="18%">
-        <mat-label>Ngân hàng</mat-label>
+        <mat-label>{{'Transactions.ManageIcTransactionComponent.bankCode'|translate}}</mat-label>
         <mat-select required formControlName="bankCode">
           <mat-option *ngFor="let bank of banks" [value]="bank.bankCode">
             {{ bank.bankName }}
@@ -52,7 +52,7 @@
       </mat-form-field>
 
       <mat-form-field fxFlex="36%">
-        <mat-label>Mã máy</mat-label>
+        <mat-label>{{'Transactions.ManageIcTransactionComponent.terminalId'|translate}}</mat-label>
         <mat-select formControlName="terminalId">
           <mat-option *ngFor="let terminal of terminals" [value]="terminal.terminalId">
             {{ terminal.terminalName }}
@@ -69,21 +69,21 @@
           <img src="assets/images/icons/transaction_total.svg" />
           <div fxLayout="column">
             <span class="money-total">{{ filterData?.length }}</span>
-            <span>Tổng giao dịch </span>
+            <span>{{'Transactions.ManageIcTransactionComponent.length'|translate}} </span>
           </div>
         </div>
         <div fxLayout="row wrap" fxFlex="20%" class="container m-b-20">
           <img src="assets/images/icons/money.svg" />
           <div style="display: flex" fxLayout="column">
             <span style="font-size: 20px; margin-top: 8px; padding-top: 5px">{{ totalTerminalAmount | money }}</span>
-            <span>&nbsp;Tổng tiền giao dịch</span>
+            <span>&nbsp;{{'Transactions.ManageIcTransactionComponent.totalTerminalAmount'|translate}}</span>
           </div>
         </div>
         <div fxLayout="row wrap" fxFlex="20%" class="container m-b-20">
           <img src="assets/images/icons/transaction.svg" />
           <div style="display: flex" fxLayout="column">
             <span style="font-size: 20px; margin-top: 8px; padding-top: 5px">{{ totalFeeAmount | money }}</span>
-            <span>&nbsp;Phí thu được ({{ (totalFeeAmount / totalTerminalAmount) * 100 | number: "1.0-2" }}%)</span>
+            <span>&nbsp;{{'Transactions.ManageIcTransactionComponent.totalFeeAmount'|translate}}({{ (totalFeeAmount / totalTerminalAmount) * 100 | number: "1.0-2" }}%)</span>
           </div>
         </div>
         <!-- <div fxLayout="row wrap" *midasHasPermission="'POS_UPDATE'" fxFlex="20%" class="container m-b-20">
@@ -114,7 +114,7 @@
       </ng-container>
       -->
       <ng-container matColumnDef="txnDate">
-        <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>Ngày giao dịch</th>
+        <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>{{'Transactions.ManageIcTransactionComponent.txnDate'|translate}}</th>
 
         <td mat-cell fxHide fxShow.gt-md style="word-wrap: break-word" *matCellDef="let journalEntry">
           <span [ngSwitch]="journalEntry.status">
@@ -135,8 +135,8 @@
 
       <ng-container matColumnDef="terminalName">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>
-          máy bán hàng / <br />
-          Đối tác
+          {{'Transactions.ManageIcTransactionComponent.terminalName'|translate}}<br />
+          {{'Transactions.ManageIcTransactionComponent.partner'|translate}}
         </th>
 
         <td mat-cell *matCellDef="let journalEntry" style="word-wrap: break-word; width: 200px">
@@ -146,40 +146,40 @@
       </ng-container>
 
       <ng-container matColumnDef="bankName">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>Ngân hàng</th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>{{'Transactions.ManageIcTransactionComponent.bankName'|translate}}</th>
         <td mat-cell *matCellDef="let journalEntry" style="word-wrap: break-word; width: 200px">
           <span class="green_text">{{ displayBankPos(journalEntry.terminalId) }}</span>
         </td>
       </ng-container>
 
       <ng-container matColumnDef="panHolderName">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>Khách hàng</th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>{{'Transactions.ManageIcTransactionComponent.panHolderName'|translate}}</th>
         <td mat-cell *matCellDef="let journalEntry">{{ journalEntry.panHolderName }} <br /></td>
       </ng-container>
 
       <ng-container matColumnDef="terminalAmount">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>Số tiền giao dịch</th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>{{'Transactions.ManageIcTransactionComponent.terminalAmount'|translate}}</th>
         <td mat-cell style="padding: 6px" *matCellDef="let transaction">
           {{ transaction.terminalAmount | money }}
         </td>
       </ng-container>
 
       <ng-container matColumnDef="traceNo">
-        <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>Số hóa đơn</th>
+        <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>{{'Transactions.ManageIcTransactionComponent.traceNo'|translate}}</th>
         <td mat-cell fxHide fxShow.gt-md *matCellDef="let journalEntry">
           <label>{{ journalEntry.traceNo }}</label>
         </td>
       </ng-container>
 
       <ng-container matColumnDef="batchNo">
-        <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>Số lô</th>
+        <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>{{'Transactions.ManageIcTransactionComponent.batchNo'|translate}}</th>
         <td mat-cell fxHide fxShow.gt-md *matCellDef="let journalEntry">
           <label>{{ journalEntry.batchNo }}</label>
         </td>
       </ng-container>
 
       <ng-container matColumnDef="terminalAmount_feeAmount">
-        <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>Phí POs</th>
+        <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>{{'Transactions.ManageIcTransactionComponent.terminalAmount_feeAmount'|translate}}</th>
         <td mat-cell fxHide fxShow.gt-md *matCellDef="let journalEntry">
           {{ journalEntry.feeAmount | money }}
         </td>
@@ -204,13 +204,13 @@
             <div class="example-element-description" fxLayout="column">
               <!-- <div><span style="font-weight: bold"> Loại giao dịch :</span>&nbsp;{{ element.productId }}</div> -->
               <div>
-                <span style="font-weight: bold"> Ngày giao dịch :</span>&nbsp; &nbsp;{{
+                <span style="font-weight: bold"> {{'Transactions.ManageIcTransactionComponent.txnDate2'|translate}}</span>&nbsp; &nbsp;{{
                   element.txnDate | date: "dd-MM-yyyy HH:ss"
                 }}
               </div>
               <!-- <div><span style="font-weight: bold"> Số giao dịch :</span>&nbsp; &nbsp;{{ element.trnRefNo }}</div> -->
               <div>
-                <span style="font-weight: bold"> Trạng thái:</span>&nbsp; &nbsp;
+                <span style="font-weight: bold"> {{'Transactions.ManageIcTransactionComponent.status'|translate}}</span>&nbsp; &nbsp;
                 <span [ngSwitch]="element.status">
                   <img *ngSwitchCase="'C'" src="assets/images/icons/check.svg" />
                   <img *ngSwitchCase="'P'" src="assets/images/icons/pending.svg" />
@@ -219,11 +219,11 @@
                 </span>
               </div>
               <div>
-                <span style="font-weight: bold"> Phí thu được :</span>&nbsp; &nbsp;{{ element.feeAmount | money }}
+                <span style="font-weight: bold"> {{'Transactions.ManageIcTransactionComponent.feeAmount'|translate}}</span>&nbsp; &nbsp;{{ element.feeAmount | money }}
               </div>
-              <div><span style="font-weight: bold"> SP vốn :</span>&nbsp; &nbsp;{{ element.cogsAmount | money }}</div>
+              <div><span style="font-weight: bold"> {{'Transactions.ManageIcTransactionComponent.cogsAmount'|translate}}</span>&nbsp; &nbsp;{{ element.cogsAmount | money }}</div>
               <div *midasHasPermission="'POS_UPDATE'">
-                <span style="font-weight: bold"> PNL :</span>&nbsp; &nbsp;{{ element.pnlAmount | money }}
+                <span style="font-weight: bold"> {{'Transactions.ManageIcTransactionComponent.pnlAmount'|translate}}</span>&nbsp; &nbsp;{{ element.pnlAmount | money }}
               </div>
             </div>
           </div>
@@ -268,25 +268,25 @@
           (today | date: 'dd/MM/yyyy') == (txnDate | date: 'dd/MM/yyyy')
         "
       >
-        <img src="assets/images/icons/next.svg" />&nbsp;Tiếp tục giao dịch
+        <img src="assets/images/icons/next.svg" />&nbsp;{{'Transactions.ManageIcTransactionComponent.nextTransaction'|translate}}
       </button>
       <button mat-menu-item [routerLink]="['/transaction', 'view']" [queryParams]="{ tranId: refid }">
-        <i class="fa fa-eye" aria-hidden="true"></i>&nbsp;Chi tiết
+        <i class="fa fa-eye" aria-hidden="true"></i>&nbsp;{{'Transactions.ManageIcTransactionComponent.details'|translate}}
       </button>
       <button
         *midasHasPermission="'TRACE_BATCH_NO_UPDATE'"
         mat-menu-item
         (click)="addPosInformation(trnRefNo, batchNo, traceNo)"
       >
-        <img src="assets/images/icons/add.svg" /> Cập nhật Thông tin bill nhiệt
+        <img src="assets/images/icons/add.svg" /> {{'Transactions.ManageIcTransactionComponent.addPosInformation'|translate}}
       </button>
 
       <hr />
       <button mat-menu-item *ngIf="status == 'V' && type != 'rollTerm'" (click)="undoRevertTransaction(refid)">
-        <i class="fa fa-undo" aria-hidden="true"></i> &nbsp;Hoàn tác giao dịch
+        <i class="fa fa-undo" aria-hidden="true"></i> &nbsp;{{'Transactions.ManageIcTransactionComponent.undoRevertTransaction'|translate}}
       </button>
       <button mat-menu-item *ngIf="status != 'V'" (click)="revertTransaction(refid)">
-        <i class="fa fa-ban" aria-hidden="true"></i> &nbsp;Hủy giao dịch
+        <i class="fa fa-ban" aria-hidden="true"></i> &nbsp;{{'Transactions.ManageIcTransactionComponent.revertTransaction'|translate}}
       </button>
     </ng-template>
   </mat-menu>

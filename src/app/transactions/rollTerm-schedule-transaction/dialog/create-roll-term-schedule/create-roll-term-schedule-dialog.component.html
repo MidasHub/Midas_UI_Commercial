@@ -1,7 +1,7 @@
 <mat-card>
   <mat-card-content>
     <h1 mat-dialog-title uppercase>
-      Tạo lịch Advance của {{ info?.panNumber }} - {{ info?.panHolderName | uppercase }}
+      {{'Transactions.RollTernSchedule.Dialog.CreateRollTermSchedule.title'|translate}}{{ info?.panNumber }} - {{ info?.panHolderName | uppercase }}
     </h1>
     <div
       [formGroup]="form"
@@ -13,18 +13,18 @@
     >
       <mat-form-field fxFlex="20%">
         <input type="text" matInput required currencyMask formControlName="requestAmount" />
-        <mat-error>Thông tin bắt buộc!</mat-error>
-        <span matPrefix>Số tiền Advance:&nbsp;</span>
+        <mat-error>{{'Transactions.RollTernSchedule.Dialog.CreateRollTermSchedule.requireInfo'|translate}}</mat-error>
+        <span matPrefix>{{'Transactions.RollTernSchedule.Dialog.CreateRollTermSchedule.requestAmount'|translate}}&nbsp;</span>
       </mat-form-field>
       <mat-form-field fxFlex="10%">
         <input matInput type="text" required formControlName="feeRate" />
-        <mat-error>Thông tin bắt buộc!</mat-error>
-        <span matPrefix> - Phí:&nbsp;</span>
+        <mat-error>{{'Transactions.RollTernSchedule.Dialog.CreateRollTermSchedule.requireInfo'|translate}}</mat-error>
+        <span matPrefix> - {{'Transactions.RollTernSchedule.Dialog.CreateRollTermSchedule.feeRate'|translate}}&nbsp;</span>
         <span matSuffix>%</span>
       </mat-form-field>
       <mat-form-field fxFlex="20%">
         <input matInput disabled [value]="info?.feeAmount | money" />
-        <span matPrefix> - Tiền phí cần thu:&nbsp;</span>
+        <span matPrefix> - {{'Transactions.RollTernSchedule.Dialog.CreateRollTermSchedule.feeAmount'|translate}}&nbsp;</span>
       </mat-form-field>
     </div>
   </mat-card-content>
@@ -34,14 +34,14 @@
     <mat-card-content>
       <table mat-table multiTemplateDataRows class="mat-elevation-z8" [dataSource]="dataSource" matSort>
         <ng-container matColumnDef="transaction">
-          <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>Giao dịch</th>
+          <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>{{'Transactions.RollTernSchedule.Dialog.CreateRollTermSchedule.transaction'|translate}}</th>
           <td mat-cell fxHide fxShow.gt-md *matCellDef="let booking; let i = dataIndex">
             {{ i == 0 ? "Test thẻ" : "Lần " + i }}
           </td>
         </ng-container>
 
         <ng-container matColumnDef="txnDate">
-          <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>Ngày giao dịch</th>
+          <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>{{'Transactions.RollTernSchedule.Dialog.CreateRollTermSchedule.txnDate'|translate}}</th>
           <td mat-cell fxHide fxShow.gt-md *matCellDef="let booking">
             <mat-form-field>
               <input
@@ -60,7 +60,7 @@
 
         <ng-container matColumnDef="amount">
           <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>
-            Số tiền - Tổng: {{ totalBookingAmount | money }}
+            {{'Transactions.RollTernSchedule.Dialog.CreateRollTermSchedule.amount'|translate}}{{ totalBookingAmount | money }}
           </th>
           <td mat-cell fxHide fxShow.gt-md *matCellDef="let booking; let i = dataIndex">
             <mat-form-field>
@@ -104,14 +104,14 @@
           >
             <div class="example-element-detail" [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
               <div class="example-element-description" fxLayout="column">
-                <div><span style="font-weight: bold"> Giao dịch :</span>{{ i == 0 ? "Test thẻ" : "Lần " + i }}</div>
+                <div><span style="font-weight: bold"> {{'Transactions.RollTernSchedule.Dialog.CreateRollTermSchedule.description'|translate}}</span>{{ i == 0 ? "Test thẻ" : "Lần " + i }}</div>
                 <div>
-                  <span style="font-weight: bold"> Ngày giao dịch :</span>&nbsp; &nbsp;{{
+                  <span style="font-weight: bold"> {{'Transactions.RollTernSchedule.Dialog.CreateRollTermSchedule.txnDate2'|translate}}</span>&nbsp; &nbsp;{{
                     element.txnDate | date: "dd-MM-yyyy HH:ss"
                   }}
                 </div>
                 <div>
-                  <span style="font-weight: bold"> Số tiền:</span>
+                  <span style="font-weight: bold"> {{'Transactions.RollTernSchedule.Dialog.CreateRollTermSchedule.amountBooking'|translate}}</span>
                   {{ element.amountBooking }}
                 </div>
               </div>
@@ -132,6 +132,6 @@
 </div>
 <div class="container" fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column"></div>
 <mat-dialog-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="2%">
-  <button mat-raised-button mat-dialog-close>Đóng</button>
-  <button mat-raised-button [mat-dialog-close]="{ data: form }" [disabled]="!form.valid || form.pristine">Tạo</button>
+  <button mat-raised-button mat-dialog-close>{{'Transactions.RollTernSchedule.Dialog.CreateRollTermSchedule.close'|translate}}</button>
+  <button mat-raised-button [mat-dialog-close]="{ data: form }" [disabled]="!form.valid || form.pristine">{{'Transactions.RollTernSchedule.Dialog.CreateRollTermSchedule.create'|translate}}</button>
 </mat-dialog-actions>

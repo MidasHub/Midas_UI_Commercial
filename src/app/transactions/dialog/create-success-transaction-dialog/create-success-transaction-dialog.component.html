@@ -1,25 +1,25 @@
 <div mat-dialog-content id="transaction-successful-dialog">
-  <h1 style="color: green">Chúc mừng! Bạn đã thực hiện giao dịch [{{ transactionInfo.trnRefNo }}] thành công</h1>
-  <h2>Bạn sẽ</h2>
+  <h1 style="color: green">{{'Transactions.Dialog.CreateSuccessTransaction.notify1'|translate}}[{{ transactionInfo.trnRefNo }}] {{'Transactions.Dialog.CreateSuccessTransaction.notify2'|translate}}</h1>
+  <h2>{{'Transactions.Dialog.CreateSuccessTransaction.youWill'|translate}}</h2>
   <mat-dialog-actions align="center">
     <button (click)="this.downloadVoucherTransaction()" mat-raised-button color="primary">
-      <fa-icon icon="download"></fa-icon>&nbsp;&nbsp; Tải hóa đơn
+      <fa-icon icon="download"></fa-icon>&nbsp;&nbsp; {{'Transactions.Dialog.CreateSuccessTransaction.downBill'|translate}}
     </button>
     <button (click)="this.addFeeDialog()" mat-raised-button color="warn">
-      <fa-icon icon="check"></fa-icon>&nbsp;&nbsp; Thực hiện thu/chi
+      <fa-icon icon="check"></fa-icon>&nbsp;&nbsp; {{'Transactions.Dialog.CreateSuccessTransaction.process'|translate}}
     </button>
   </mat-dialog-actions>
 
-  <h2>Hay là</h2>
+  <h2>{{'Transactions.Dialog.CreateSuccessTransaction.or'|translate}}</h2>
   <ul>
     <li>
-      Tiếp tục giao dịch với thẻ {{ transactionInfo.panNumber }} của khách hàng {{ transactionInfo.clientName }}.
+      {{'Transactions.Dialog.CreateSuccessTransaction.notify3'|translate}}{{ transactionInfo.panNumber }} {{'Transactions.Dialog.CreateSuccessTransaction.notify4'|translate}}{{ transactionInfo.clientName }}.
       <a mat-dialog-close mat-mini-fab color="primary">
         <fa-icon icon="arrow-alt-circle-left"> </fa-icon>
       </a>
     </li>
     <li>
-      Chọn thẻ khác của khách hàng {{ transactionInfo.clientName }} để tiếp tục thực hiện giao dịch.
+      {{'Transactions.Dialog.CreateSuccessTransaction.selectCard'|translate}}{{ transactionInfo.clientName }} {{'Transactions.Dialog.CreateSuccessTransaction.selectCard2'|translate}}
       <a
         mat-dialog-close
         mat-mini-fab
@@ -29,7 +29,7 @@
       </a>
     </li>
     <li *ngIf="transactionInfo.type != 'cash'">
-      Trở về màn hình Advance
+      {{'Transactions.Dialog.CreateSuccessTransaction.backAdvancePage'|translate}}
       <a mat-dialog-close mat-mini-fab href="#/transaction/rollTermSchedule">
         <fa-icon icon="arrow-alt-circle-down"> </fa-icon>
       </a>
@@ -38,7 +38,7 @@
 
   <br />
 
-  <h2>Tìm kiếm khách hàng khác đề tiếp tục giao dịch</h2>
+  <h2>{{'Transactions.Dialog.CreateSuccessTransaction.searchClient'|translate}}</h2>
   <midas-mainboard> </midas-mainboard>
 </div>
 <mat-dialog-actions align="center">
@@ -48,6 +48,6 @@
       <fa-icon icon="home"></fa-icon>
     </a>
     <br />
-    <span>Quay lại trang chủ</span>
+    <span>{{'Transactions.Dialog.CreateSuccessTransaction.homePage'|translate}}</span>
   </p>
 </mat-dialog-actions>

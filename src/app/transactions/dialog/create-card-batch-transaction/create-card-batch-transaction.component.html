@@ -1,7 +1,7 @@
 <div mat-dialog-title>
   <div fxLayout="row swap" fxLayoutAlign.lt-sm="center" fxLayoutGap="25%" fxLayout.lt-sm="row" [formGroup]="formDialog">
     <mat-form-field fxFlex="50%" *ngIf="formDialog.contains('clientId')" class="input_custom">
-      <mat-label>Chọn khách hàng cần thêm thẻ</mat-label>
+      <mat-label>{{'Transactions.Dialog.CreateCardBatchTransaction.clientId'|translate}}</mat-label>
       <mat-select required formControlName="clientId">
         <mat-option *ngFor="let type of clients" [value]="type.clientId">
           {{ type.fullName }}
@@ -19,7 +19,7 @@
     [formGroup]="formDialog"
   >
     <mat-form-field fxFlex="20%" *ngIf="formDialog.contains('documentTypeId')" class="input_custom">
-      <mat-label>Chọn thông tin cần thêm</mat-label>
+      <mat-label>{{'Transactions.Dialog.CreateCardBatchTransaction.documentTypeId'|translate}}</mat-label>
       <mat-select required formControlName="documentTypeId">
         <mat-option *ngFor="let type of documents"  [value]="type.id">
           {{ type.name }}
@@ -28,14 +28,14 @@
     </mat-form-field>
 
     <mat-form-field fxFlex="20%" *ngIf="formDialog.contains('documentKey')">
-      <mat-label>Số Thẻ*: (16 số)</mat-label>
+      <mat-label>{{'Transactions.Dialog.CreateCardBatchTransaction.documentKey'|translate}}</mat-label>
       <input matInput required mask="0000-0000-0000-0000" formControlName="documentKey" />
       <mat-error *ngIf="formDialog.controls.documentKey.hasError('required')"
-        >Vui lòng thêm thông tin trước khi thực hiện
+        >{{'Transactions.Dialog.CreateCardBatchTransaction.alert'|translate}}
       </mat-error>
     </mat-form-field>
     <mat-form-field fxFlex="30%" *ngIf="formDialog.contains('bank')" class="input_custom">
-      <mat-label>Ngân hàng</mat-label>
+      <mat-label>{{'Transactions.Dialog.CreateCardBatchTransaction.bank'|translate}}</mat-label>
       <mat-select disabled formControlName="bank">
         <mat-option *ngFor="let type of banks" [value]="type.bankCode">
           {{ type.bankName }}
@@ -44,7 +44,7 @@
     </mat-form-field>
 
     <mat-form-field fxFlex="20%" *ngIf="formDialog.contains('cardType')" class="input_custom">
-      <mat-label>Loại thẻ</mat-label>
+      <mat-label>{{'Transactions.Dialog.CreateCardBatchTransaction.cardType'|translate}}</mat-label>
       <mat-select disabled formControlName="cardType">
         <mat-option *ngFor="let type of typeCards" [value]="type.code">
           {{ type.description }}
@@ -52,10 +52,10 @@
       </mat-select>
     </mat-form-field>
     <mat-form-field fxFlex="30%" *ngIf="formDialog.contains('description')">
-      <mat-label>Ghi chú</mat-label>
+      <mat-label>{{'Transactions.Dialog.CreateCardBatchTransaction.description'|translate}}</mat-label>
       <input matInput required formControlName="description" />
       <mat-error *ngIf="formDialog.controls.description.hasError('required')"
-        >Vui lòng thêm thông tin trước khi thực hiện
+        >{{'Transactions.Dialog.CreateCardBatchTransaction.alert'|translate}}
       </mat-error>
     </mat-form-field>
 
@@ -63,12 +63,12 @@
       <mat-label>Ngày đến hạn</mat-label>
       <input pattern required maxlength="2" matInput type="number" max="31" min="1" formControlName="dueDay" />
       <mat-error *ngIf="formDialog.controls.description.hasError('required')"
-        >Vui lòng thêm thông tin trước khi thực hiện
+        >{{'Transactions.Dialog.CreateCardBatchTransaction.alert'|translate}}
       </mat-error>
     </mat-form-field>
 
     <mat-form-field fxFlex="10%" *ngIf="formDialog.contains('expiredDate')">
-      <mat-label>Ngày đến hạn</mat-label>
+      <mat-label>{{'Transactions.Dialog.CreateCardBatchTransaction.expiredDate'|translate}}</mat-label>
       <input
         matInput
         maxlength="5"
@@ -80,43 +80,43 @@
         formControlName="expiredDate"
       />
       <mat-error *ngIf="formDialog.controls.description.hasError('required')"
-        >Vui lòng thêm thông tin trước khi thực hiện
+        >{{'Transactions.Dialog.CreateCardBatchTransaction.alert'|translate}}
       </mat-error>
     </mat-form-field>
 
     <mat-form-field fxFlex="20%" *ngIf="formDialog.contains('limitCard')">
-      <mat-label>Hạn mức</mat-label>
+      <mat-label>{{'Transactions.Dialog.CreateCardBatchTransaction.limitCard'|translate}}</mat-label>
       <input currencyMask required matInput type="text" formControlName="limitCard" />
       <mat-error *ngIf="formDialog.controls.description.hasError('required')"
-        >Vui lòng thêm thông tin trước khi thực hiện
+        >{{'Transactions.Dialog.CreateCardBatchTransaction.alert'|translate}}
       </mat-error>
     </mat-form-field>
 
     <mat-form-field fxFlex="20%" *ngIf="formDialog.contains('classCard')">
-      <mat-label>Hạng thẻ</mat-label>
+      <mat-label>{{'Transactions.Dialog.CreateCardBatchTransaction.classCard'|translate}}</mat-label>
       <input matInput type="text" required formControlName="classCard" />
       <mat-error *ngIf="formDialog.controls.description.hasError('required')"
-        >Vui lòng thêm thông tin trước khi thực hiện
+        >{{'Transactions.Dialog.CreateCardBatchTransaction.alert'|translate}}
       </mat-error>
     </mat-form-field>
   </div>
   <button (click)="addRow()" mat-button style="background: #0f36e4; color: white; margin: 5px">
-    <img src="assets/images/icons/add_info.svg" />Thêm thông tin
+    <img src="assets/images/icons/add_info.svg" />{{'Transactions.Dialog.CreateCardBatchTransaction.addInfo'|translate}}
   </button>
   <mat-card-content>
     <table mat-table class="mat-elevation-z8" multiTemplateDataRows [dataSource]="getData()" matSort>
       <ng-container matColumnDef="documentTypeId">
-        <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>Thông tin</th>
+        <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>{{'Transactions.Dialog.CreateCardBatchTransaction.documentTypeId2'|translate}}</th>
         <td mat-cell fxHide fxShow.gt-md *matCellDef="let form">{{ getTypeDocument(form.documentTypeId) }}</td>
       </ng-container>
 
       <ng-container matColumnDef="documentKey">
-        <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>Số id</th>
+        <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>{{'Transactions.Dialog.CreateCardBatchTransaction.documentKey2'|translate}}</th>
         <td mat-cell fxHide fxShow.gt-md *matCellDef="let form">{{ form.documentKey }}</td>
       </ng-container>
 
       <ng-container matColumnDef="description">
-        <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>Thông tin chi tiết</th>
+        <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>{{'Transactions.Dialog.CreateCardBatchTransaction.description2'|translate}}</th>
         <td mat-cell fxHide fxShow.gt-md *matCellDef="let form">{{ form.description }}</td>
       </ng-container>
 

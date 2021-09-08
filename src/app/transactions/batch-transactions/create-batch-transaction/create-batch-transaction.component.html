@@ -1,4 +1,4 @@
-<h1 class="m-l-10">Đại lý: {{ group?.name }}</h1>
+<h1 class="m-l-10">{{ "Transactions.CreateBatchTransactionComponent.groupName" | translate }}{{ group?.name }}</h1>
 <mat-divider></mat-divider>
 
 <mat-card class="mat-elevation-z2 batchTxnCss">
@@ -13,14 +13,14 @@
       <img src="assets/images/icons/transaction_total.svg" />
       <div fxLayout="column">
         <span class="money-total">{{ dataSource.length }}</span>
-        <span>Tổng giao dịch </span>
+        <span>{{ "Transactions.CreateBatchTransactionComponent.total" | translate }} </span>
       </div>
     </div>
     <div fxLayout="row" fxFlex="30%" class="export-item">
       <img src="assets/images/icons/trading.svg" />
       <div fxLayout="column">
         <span class="money-total">{{ totalAmount | money }}</span>
-        <span>Tiền đã ứng trước</span>
+        <span>{{ "Transactions.CreateBatchTransactionComponent.totalAmount" | translate }}</span>
         <div fxLayout="row">
           <button
             mat-button
@@ -30,7 +30,7 @@
             style="background: hsl(0, 66%, 47%); color: white; max-height: 50px; width: 100%; margin-top: 8px"
             color="warn"
           >
-            <img src="assets/images/icons/money.svg" width="25" height="25" />&nbsp; Ứng tiền trước
+            <img src="assets/images/icons/money.svg" width="25" height="25" />&nbsp; {{ "Transactions.CreateBatchTransactionComponent.totalAdvanceAmount" | translate }}
           </button>
         </div>
       </div>
@@ -40,14 +40,14 @@
       <img src="assets/images/icons/fees.svg" />
       <div fxLayout="column">
         <span class="money-total">{{ totalFee | money }}</span>
-        <span>Phí thu</span>
+        <span>{{ "Transactions.CreateBatchTransactionComponent.totalFee" | translate }}</span>
       </div>
     </div>
     <div fxLayout="row" fxFlex="18%" class="export-item">
       <img src="assets/images/icons/invoice.svg" />
       <div fxLayout="column">
         <span class="money-total">{{ totalTerminalAmount | money }}</span>
-        <span>Tổng số bill trên POS</span>
+        <span>{{ "Transactions.CreateBatchTransactionComponent.totalTerminalAmount" | translate }}</span>
       </div>
     </div>
   </mat-card-header>
@@ -55,7 +55,7 @@
   <mat-card-content>
     <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
       <mat-form-field fxFlex="30%">
-        <mat-label>Khách hàng</mat-label>
+        <mat-label>{{ "Transactions.CreateBatchTransactionComponent.client" | translate }}</mat-label>
         <input
           matInput
           [formControl]="formFilter"
@@ -77,7 +77,7 @@
           (click)="addRow()"
           style="background: #3b74ff; color: white; max-height: 50px; margin-top: 8px; width: 100%"
         >
-          <img src="assets/images/icons/add-while.svg" />&nbsp; Thêm
+          <img src="assets/images/icons/add-while.svg" />&nbsp; {{ "Transactions.CreateBatchTransactionComponent.Add" | translate }}
         </button>
       </div>
       <div fxFlex="10%">
@@ -87,7 +87,7 @@
           type="button"
           style="background: #3b74ff; color: white; max-height: 50px; width: 100%; margin-top: 8px"
         >
-          <img src="assets/images/icons/credit-card-while.svg" />&nbsp; Thêm thẻ
+          <img src="assets/images/icons/credit-card-while.svg" />&nbsp; {{ "Transactions.CreateBatchTransactionComponent.AddCard" | translate }}
         </button>
       </div>
 
@@ -100,7 +100,7 @@
           style="background: #3b74ff; color: white; max-height: 50px; width: 100%; margin-top: 8px"
         >
           <img src="assets/images/icons/money.svg" width="25" height="25" />
-          &nbsp; Kết lô thu/chi
+          &nbsp; {{ "Transactions.CreateBatchTransactionComponent.completeBatch" | translate }}
         </button>
       </div>
       <div fxFlex="15%">
@@ -111,7 +111,7 @@
           *ngIf="batchTxnName"
           style="background: #3b74ff; color: white; max-height: 50px; width: 100%; margin-top: 8px"
         >
-          <img src="assets/images/icons/transactions.svg" width="25" height="25" />&nbsp;Xuất báo cáo
+          <img src="assets/images/icons/transactions.svg" width="25" height="25" />&nbsp;{{ "Transactions.CreateBatchTransactionComponent.exportTransactions" | translate }}
         </button>
       </div>
     </div>
@@ -119,7 +119,7 @@
     <div class="example-table-container mat-elevation-z8" fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-sm="column">
       <table mat-table class="mat-elevation-z8 example-table" multiTemplateDataRows [dataSource]="dataSource" matSort>
         <ng-container matColumnDef="clientName">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header>Tên khách hàng</th>
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ "Transactions.CreateBatchTransactionComponent.clientName" | translate }}</th>
           <td mat-cell *matCellDef="let form" style="max-width: 200px; word-break: break-word; text-align: left">
             <label>
               {{ form.get("clientName")?.value }}
@@ -132,10 +132,10 @@
         </ng-container>
 
         <ng-container matColumnDef="productId">
-          <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>Dịch vụ</th>
+          <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>>{{ "Transactions.CreateBatchTransactionComponent.service" | translate }}</th>
           <td mat-cell fxHide fxShow.gt-md *matCellDef="let form" [formGroup]="form">
             <mat-form-field *ngIf="form.contains('productId') && !form.contains('saved')" class="select-custom">
-              <mat-label>Dịch vụ</mat-label>
+              <mat-label>{{ "Transactions.CreateBatchTransactionComponent.service" | translate }}</mat-label>
               <mat-select required formControlName="productId">
                 <mat-option *ngFor="let type of batchProducts" [value]="type.value">
                   {{ type.label }}
@@ -147,13 +147,13 @@
         </ng-container>
 
         <ng-container matColumnDef="rate">
-          <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>Tỉ lệ Phí</th>
+          <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>{{ "Transactions.CreateBatchTransactionComponent.rate" | translate }}</th>
           <td mat-cell fxHide fxShow.gt-md *matCellDef="let form" [formGroup]="form">
             <mat-form-field
               *ngIf="form.contains('rate') && !form.contains('saved')"
               style="width: 60px; padding-right: 8px; padding-left: 8px"
             >
-              <mat-label>Tỉ lệ phí</mat-label>
+              <mat-label>{{ "Transactions.CreateBatchTransactionComponent.rate" | translate }}</mat-label>
               <input matInput required formControlName="rate" />
             </mat-form-field>
             <span *ngIf="form.contains('saved')">{{ form.get("rate").value }}</span>
@@ -161,10 +161,10 @@
         </ng-container>
 
         <ng-container matColumnDef="amount">
-          <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>Số tiền giao dịch</th>
+          <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>{{ "Transactions.CreateBatchTransactionComponent.amount" | translate }}</th>
           <td mat-cell fxHide fxShow.gt-md *matCellDef="let form" [formGroup]="form">
             <mat-form-field *ngIf="form.contains('requestAmount') && !form.contains('saved')" class="input-custom">
-              <mat-label>Số tiền giao dịch</mat-label>
+              <mat-label>{{ "Transactions.CreateBatchTransactionComponent.xxx" | translate }}Số tiền giao dịch</mat-label>
               <input matInput required currencyMask formControlName="requestAmount" (click)="clearRequestAmount()" />
             </mat-form-field>
             <span *ngIf="form.contains('saved')">{{ form.get("requestAmount").value | money }}</span>
@@ -172,7 +172,7 @@
         </ng-container>
 
         <ng-container matColumnDef="terminalId">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header>máy bán hàng</th>
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ "Transactions.CreateBatchTransactionComponent.terminalId" | translate }}</th>
           <td mat-cell *matCellDef="let form" [formGroup]="form">
             <mat-form-field
               style="width: 100% !important"
@@ -180,7 +180,7 @@
               *ngIf="form.contains('terminalId') && !form.contains('saved')"
               class="select-custom"
             >
-              <mat-label>Chọn máy bán hàng</mat-label>
+              <mat-label>{{ "Transactions.CreateBatchTransactionComponent.selectTerminal" | translate }}</mat-label>
               <mat-select [required]="form?.data?.terminals?.length > 0" formControlName="terminalId">
                 <mat-option *ngFor="let type of form?.data?.terminals" [value]="type.terminalId">
                   {{ type.terminalName }} -
@@ -193,14 +193,14 @@
         </ng-container>
 
         <ng-container matColumnDef="invoiceAmount">
-          <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>Số tiền đề xuất</th>
+          <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>{{ "Transactions.CreateBatchTransactionComponent.invoiceAmount" | translate }}</th>
           <td mat-cell fxHide fxShow.gt-md *matCellDef="let form" class="money-cell">
             <label> {{ form.get("invoiceAmount")?.value | money }} </label>
           </td>
         </ng-container>
 
         <ng-container matColumnDef="fee">
-          <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>Phí thu</th>
+          <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>{{ "Transactions.CreateBatchTransactionComponent.fee" | translate }}</th>
           <td mat-cell fxHide fxShow.gt-md *matCellDef="let form" class="money-cell">
             {{ form.get("fee")?.value | money }}
           </td>
@@ -218,11 +218,11 @@
 
         <ng-container matColumnDef="batchNo">
           <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header style="text-align: center">
-            Batch No
+            {{ "Transactions.CreateBatchTransactionComponent.batchNo" | translate }}
           </th>
           <td mat-cell fxHide fxShow.gt-md *matCellDef="let form" [formGroup]="form" style="text-align: center">
             <mat-form-field *ngIf="form.contains('batchNo') && !form.contains('saved')" class="no-input">
-              <mat-label>Batch No</mat-label>
+              <mat-label>{{ "Transactions.CreateBatchTransactionComponent.batchNo" | translate }}</mat-label>
               <input [required]="isRequiredTraceBatchNo" matInput formControlName="batchNo" />
             </mat-form-field>
             <span *ngIf="form.contains('saved')">{{ form.get("batchNo").value }}</span>
@@ -230,10 +230,10 @@
         </ng-container>
 
         <ng-container matColumnDef="tid" style="text-align: center">
-          <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>Trace No</th>
+          <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>{{ "Transactions.CreateBatchTransactionComponent.TraceNo" | translate }}</th>
           <td mat-cell fxHide fxShow.gt-md *matCellDef="let form" [formGroup]="form" style="text-align: center">
             <mat-form-field *ngIf="form.contains('tid') && !form.contains('saved')" class="no-input">
-              <mat-label>Trace No</mat-label>
+              <mat-label>{{ "Transactions.CreateBatchTransactionComponent.TraceNo" | translate }}</mat-label>
               <input [required]="isRequiredTraceBatchNo" matInput formControlName="tid" />
             </mat-form-field>
             <span *ngIf="form.contains('saved')">{{ form.get("tid").value }}</span>
@@ -241,10 +241,10 @@
         </ng-container>
 
         <ng-container matColumnDef="terminalAmount">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header>Số tiền trên bill</th>
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ "Transactions.CreateBatchTransactionComponent.terminalAmount" | translate }}</th>
           <td mat-cell *matCellDef="let form" [formGroup]="form">
             <mat-form-field *ngIf="form.contains('terminalAmount') && !form.contains('saved')" class="input-custom">
-              <mat-label>Số tiền trên bill</mat-label>
+              <mat-label>{{ "Transactions.CreateBatchTransactionComponent.terminalAmount" | translate }}</mat-label>
               <input matInput required currencyMask formControlName="terminalAmount" />
             </mat-form-field>
             <span *ngIf="form.contains('saved')" style="text-align: right">{{

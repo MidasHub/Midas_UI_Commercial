@@ -1,23 +1,23 @@
 <mat-card>
   <mat-card-content>
     <h1 mat-dialog-title uppercase>
-      Lịch Advance của {{ transactionInfo?.panNumber }} - {{ transactionInfo?.panHolderName | uppercase }}
+      {{'Transactions.RollTernSchedule.Dialog.RollTermScheduleComponent.title'|translate}}{{ transactionInfo?.panNumber }} - {{ transactionInfo?.panHolderName | uppercase }}
     </h1>
     <div class="header-booking" [fxLayout]="'row'" fxLayout.lt-md="column" [fxLayoutGap]="'1%'" fxLayoutGap.lt-md="0%">
       <mat-form-field fxFlex="20%">
         <input matInput disabled [value]="transactionInfo?.reqAmount | money" />
-        <span matPrefix>Số tiền Advance:&nbsp;</span>
+        <span matPrefix>{{'Transactions.RollTernSchedule.Dialog.RollTermScheduleComponent.reqAmount'|translate}}&nbsp;</span>
       </mat-form-field>
       <mat-form-field fxFlex="20%">
         <input matInput disabled [value]="transactionInfo?.totalAmountPaid | money" />
         <span matPrefix
-          >Đã chi:&nbsp;
-          <a href="javascript:void(0)" (click)="viewFeeDialogHistory(false, transactionInfo.rollTermId)">Chi tiết</a>
+          >{{'Transactions.RollTernSchedule.Dialog.RollTermScheduleComponent.totalAmountPaid'|translate}}&nbsp;
+          <a href="javascript:void(0)" (click)="viewFeeDialogHistory(false, transactionInfo.rollTermId)">{{'Transactions.RollTernSchedule.Dialog.RollTermScheduleComponent.xxx'|translate}}Chi tiết</a>
         </span>
       </mat-form-field>
       <mat-form-field fxFlex="20%">
         <input matInput disabled [value]="transactionInfo?.totalAmountGet | money" />
-        <span matPrefix>Đã thu hồi:&nbsp;</span>
+        <span matPrefix>{{'Transactions.RollTernSchedule.Dialog.RollTermScheduleComponent.totalAmountGet'|translate}}&nbsp;</span>
       </mat-form-field>
 
       <mat-form-field fxFlex="10%">
@@ -27,12 +27,12 @@
           (change)="transactionInfo.feePercentage = feeModel.value"
           [ngModel]="transactionInfo?.feePercentage"
         />
-        <span matPrefix>Phí:&nbsp;</span>
+        <span matPrefix>{{'Transactions.RollTernSchedule.Dialog.RollTermScheduleComponent.fee'|translate}}&nbsp;</span>
         <span matSuffix>%</span>
       </mat-form-field>
       <mat-form-field fxFlex="20%">
         <input matInput disabled [value]="transactionInfo?.feeAmount | money" />
-        <span matPrefix> - Tiền phí cần thu:&nbsp;</span>
+        <span matPrefix> - {{'Transactions.RollTernSchedule.Dialog.RollTermScheduleComponent.feeAmount'|translate}}&nbsp;</span>
       </mat-form-field>
     </div>
   </mat-card-content>
@@ -42,7 +42,7 @@
     <mat-card-content>
       <table mat-table multiTemplateDataRows class="mat-elevation-z8" [dataSource]="dataSource">
         <ng-container matColumnDef="transaction">
-          <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef>Giao dịch</th>
+          <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef>{{'Transactions.RollTernSchedule.Dialog.RollTermScheduleComponent.transaction'|translate}}</th>
           <td mat-cell fxHide fxShow.gt-md *matCellDef="let booking; let i = dataIndex">
             <mat-label>
               {{ i == 0 ? "Test thẻ" : "Lần " + i }}
@@ -64,7 +64,7 @@
         </ng-container>
 
         <ng-container matColumnDef="txnDate">
-          <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef>Ngày giao dịch</th>
+          <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef>{{'Transactions.RollTernSchedule.Dialog.RollTermScheduleComponent.txnDate'|translate}}</th>
           <td mat-cell fxHide fxShow.gt-md *matCellDef="let booking">
             <!-- {{ booking.txnDate | date: "dd-MM-yyyy" }} -->
             <mat-form-field>
@@ -88,7 +88,7 @@
         </ng-container>
 
         <ng-container matColumnDef="amount">
-          <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef>Số tiền</th>
+          <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef>{{'Transactions.RollTernSchedule.Dialog.RollTermScheduleComponent.amount'|translate}}</th>
           <td mat-cell fxHide fxShow.gt-md *matCellDef="let booking; let i = dataIndex">
             <mat-form-field>
               <input
@@ -104,8 +104,8 @@
         </ng-container>
         <ng-container matColumnDef="feePaid">
           <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef>
-            Đã chi / <br />
-            (Đối tác)
+            {{'Transactions.RollTernSchedule.Dialog.RollTermScheduleComponent.feePaid'|translate}}<br />
+            {{'Transactions.RollTernSchedule.Dialog.RollTermScheduleComponent.partner'|translate}}
           </th>
           <td mat-cell fxHide fxShow.gt-md *matCellDef="let booking">
             {{ booking?.totalPaid | money }} <br />
@@ -115,19 +115,19 @@
           </td>
         </ng-container>
         <ng-container matColumnDef="fee">
-          <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef>Phí thực tế</th>
+          <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef>{{'Transactions.RollTernSchedule.Dialog.RollTermScheduleComponent.feePercentage'|translate}}</th>
           <td mat-cell fxHide fxShow.gt-md *matCellDef="let booking">{{ transactionInfo?.feePercentage }}%</td>
         </ng-container>
 
         <ng-container matColumnDef="getAmount">
-          <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef>Đã thu hồi</th>
+          <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef>{{'Transactions.RollTernSchedule.Dialog.RollTermScheduleComponent.totalGet'|translate}}</th>
           <td mat-cell fxHide fxShow.gt-md *matCellDef="let booking">{{ booking?.totalGet | money }}</td>
         </ng-container>
 
         <ng-container matColumnDef="actions" style="width: 25px">
           <th mat-header-cell *matHeaderCellDef>
             <button color="primary" (click)="this.addBookingRow()" title="Thêm dòng booking" mat-raised-button>
-              <fa-icon style="color: green; font-weight: bold" icon="plus"></fa-icon> Thêm
+              <fa-icon style="color: green; font-weight: bold" icon="plus"></fa-icon> {{'Transactions.RollTernSchedule.Dialog.RollTermScheduleComponent.addBookingRow'|translate}}
             </button>
           </th>
           <td mat-cell *matCellDef="let transaction">
@@ -140,7 +140,7 @@
                 addFeeDialogByTransactionId(false, transaction.rollTermId, transaction.bookingAmount, transaction.refid)
               "
             >
-              attach_money
+            {{'Transactions.RollTernSchedule.Dialog.RollTermScheduleComponent.attach_money'|translate}}
             </mat-icon>
 
             <mat-icon
@@ -184,18 +184,18 @@
           <td mat-cell fxShow fxHide.gt-md *matCellDef="let element" [attr.colspan]="displayedColumns.length">
             <div class="example-element-detail" [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
               <div class="example-element-description" fxLayout="column">
-                <div><span style="font-weight: bold"> Giao dịch :</span>&nbsp;{{ element.panHolderName }}</div>
+                <div><span style="font-weight: bold"> {{'Transactions.RollTernSchedule.Dialog.RollTermScheduleComponent.panHolderName'|translate}}</span>&nbsp;{{ element.panHolderName }}</div>
                 <div>
-                  <span style="font-weight: bold"> Ngày giao dịch :</span>&nbsp; &nbsp;{{
+                  <span style="font-weight: bold"> {{'Transactions.RollTernSchedule.Dialog.RollTermScheduleComponent.createdDate'|translate}}</span>&nbsp; &nbsp;{{
                     element.createdDate | date: "dd-MM-yyyy HH:ss"
                   }}
                 </div>
-                <div><span style="font-weight: bold"> Số tiền:</span>&nbsp; &nbsp;{{ element?.terminalAmount }}</div>
-                <div><span style="font-weight: bold"> Phí thực tế:</span>&nbsp; &nbsp;{{ element?.identifierId }}</div>
+                <div><span style="font-weight: bold"> {{'Transactions.RollTernSchedule.Dialog.RollTermScheduleComponent.terminalAmount'|translate}}</span>&nbsp; &nbsp;{{ element?.terminalAmount }}</div>
+                <div><span style="font-weight: bold"> {{'Transactions.RollTernSchedule.Dialog.RollTermScheduleComponent.identifierId'|translate}}</span>&nbsp; &nbsp;{{ element?.identifierId }}</div>
                 <div>
-                  <span style="font-weight: bold"> Đã chi :</span>&nbsp; &nbsp;{{ element?.officeName | money }}
+                  <span style="font-weight: bold"> {{'Transactions.RollTernSchedule.Dialog.RollTermScheduleComponent.officeName'|translate}}</span>&nbsp; &nbsp;{{ element?.officeName | money }}
                 </div>
-                <div><span style="font-weight: bold"> Đã thu hồi :</span>&nbsp; &nbsp;{{ element?.agencyName }}</div>
+                <div><span style="font-weight: bold"> {{'Transactions.RollTernSchedule.Dialog.RollTermScheduleComponent.agencyName'|translate}}</span>&nbsp; &nbsp;{{ element?.agencyName }}</div>
               </div>
             </div>
           </td>
@@ -217,5 +217,5 @@
 </div>
 <div class="container" fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column"></div>
 <mat-dialog-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="2%">
-  <button mat-raised-button mat-dialog-close>Đóng</button>
+  <button mat-raised-button mat-dialog-close>{{'Transactions.RollTernSchedule.Dialog.RollTermScheduleComponent.close'|translate}}</button>
 </mat-dialog-actions>

@@ -2,7 +2,7 @@
   <mat-card>
 <mat-card-header  fxLayout="row" fxLayout.lt-md="column" fxLayoutAlign="end" fxLayoutGap="1%">
   <div fxFlex="100%" align="center" class="header">
-    <h2 class="m-5">MÀN HÌNH GIAO DỊCH - THÔNG TIN GIAO DỊCH</h2>
+    <h2 class="m-5">{{ "Transactions.CreateTransactionComponent.header" | translate }}</h2>
   </div>
 </mat-card-header>
 <mat-card-content  fxLayout="column" fxLayoutGap="2%">
@@ -14,25 +14,25 @@
       <div fxLayout="row wrap" fxLayout.lt-sm="column" >
         <div fxFlex.gt-sm="50%" fxLayout="row wrap" >
           <div fxFlex="100%">
-            Loại giao dịch :
-            <span style="color: green; font-weight: bold" *ngIf="transactionInfo.type == 'cash'">Cash</span>
-            <span style="color: green; font-weight: bold" *ngIf="transactionInfo.type == 'rollTerm'">Advance</span>
+            {{ "Transactions.CreateTransactionComponent.type" | translate }}
+            <span style="color: green; font-weight: bold" *ngIf="transactionInfo.type == 'cash'">{{ "Transactions.CreateTransactionComponent.Cash" | translate }}</span>
+            <span style="color: green; font-weight: bold" *ngIf="transactionInfo.type == 'rollTerm'">{{ "Transactions.CreateTransactionComponent.Advance" | translate }}</span>
             <span style="color: green; font-weight: bold" *ngIf="transactionInfo.type == 'rollTermGetCash'"
-              >THU HỒI Advance</span
+              >{{ "Transactions.CreateTransactionComponent.rollTermGetCash" | translate }}</span
             >
           </div>
           <div fxFlex="100%" fxLayout="row wrap" fxLayout.lt-sm="column">
-            <div fxFlex.gt-sm="30%">Thẻ thực hiện giao dịch</div>
+            <div fxFlex.gt-sm="30%">{{ "Transactions.CreateTransactionComponent.accountNumber" | translate }}</div>
             <div fxFlex.gt-sm="70%" style="color: blue; font-weight: bold;">
               {{ transactionInfo.identifyClientDto?.accountNumber }}
             </div>
           </div>
           <div fxFlex="100%" fxLayout="row wrap" fxLayout.lt-sm="column">
-            <div fxFlex.gt-sm="10%">Loại thẻ</div>
+            <div fxFlex.gt-sm="10%">{{ "Transactions.CreateTransactionComponent.accountType" | translate }}</div>
             <div fxFlex.gt-sm="15%" style="color: blue; font-weight: bold">
               {{ transactionInfo.identifyClientDto?.accountType }}
             </div>
-            <div fxFlex.gt-sm="20%">Của ngân hàng</div>
+            <div fxFlex.gt-sm="20%">{{ "Transactions.CreateTransactionComponent.accountBank" | translate }}</div>
             <div fxFlex.gt-sm="55%" style="color: blue; font-weight: bold">
               {{ transactionInfo.identifyClientDto?.accountBank }}
             </div>
@@ -45,7 +45,7 @@
           >
             <div fxFlex.gt-sm="50%">
               <mat-form-field appearance="fill">
-                <mat-label>Tài khoản nhận tiền</mat-label>
+                <mat-label>{{ "Transactions.CreateTransactionComponent.accountCash" | translate }}</mat-label>
                 <select
                   style="color: blue; font-weight: bold"
                   matNativeControl
@@ -61,7 +61,7 @@
             </div>
             <div fxFlex.gt-sm="50%">
               <mat-form-field appearance="fill">
-                <mat-label>Chọn loại giao dịch </mat-label>
+                <mat-label>{{ "Transactions.CreateTransactionComponent.transactionType" | translate }} </mat-label>
                 <select
                   style="color: blue; font-weight: bold"
                   matNativeControl
@@ -69,10 +69,10 @@
                   [ngModelOptions]="{ standalone: true }"
                   (change)="this.calculateFeeTransaction()"
                 >
-                  <option value="CA01">Cash thông thường</option>
-                  <option value="CA03">Cash - tiền chờ</option>
-                  <option value="TEST">Test thẻ</option>
-                  <option value="CA02">Lô lẻ</option>
+                  <option value="CA01">{{ "Transactions.CreateTransactionComponent.CA01" | translate }}</option>
+                  <option value="CA03">{{ "Transactions.CreateTransactionComponent.CA03" | translate }}</option>
+                  <option value="TEST">{{ "Transactions.CreateTransactionComponent.TEST" | translate }}</option>
+                  <option value="CA02">{{ "Transactions.CreateTransactionComponent.CA02" | translate }}</option>
                 </select>
               </mat-form-field>
             </div>
@@ -83,7 +83,7 @@
                 fxLayoutGap="2%">
 
               <mat-form-field fxFlex.gt-sm="30%" *ngIf="transactionInfo.type == 'rollTermGetCash'">
-                <mat-label>Nhu cầu giao dịch (VNĐ)</mat-label>
+                <mat-label>{{ "Transactions.CreateTransactionComponent.requestTransaction" | translate }}</mat-label>
                 <input
                   type="text"
                   class="center"
@@ -96,7 +96,7 @@
 
 
               <mat-form-field fxFlex.gt-sm="30%">
-                <mat-label>Nhập số tiền giao dịch</mat-label>
+                <mat-label>{{ "Transactions.CreateTransactionComponent.requestAmount" | translate }}</mat-label>
                 <input
                   type="text"
                   formControlName="requestAmount"
@@ -105,12 +105,12 @@
                   (keyup)="amountTransaction.value = this.formatCurrency(amountTransaction.value)"
                   #amountTransaction
                 />
-                <mat-error> Thông tin bắt buộc nhập! </mat-error>
+                <mat-error> {{ "Transactions.CreateTransactionComponent.errrequestAmount" | translate }} </mat-error>
               </mat-form-field>
 
 
               <mat-form-field fxFlex.gt-sm="30%">
-                <mat-label>Nhập phí (%/giá trị giao dịch)</mat-label>
+                <mat-label>{{ "Transactions.CreateTransactionComponent.rate" | translate }}</mat-label>
                 <input
                   type="number"
                   step="0.01"
@@ -119,55 +119,55 @@
                   formControlName="rate"
 
                 />
-                <mat-error> Thông tin bắt buộc nhập! </mat-error>
+                <mat-error> {{ "Transactions.CreateTransactionComponent.alert" | translate }} </mat-error>
               </mat-form-field>
 
           </div>
         </div>
         <div fxFlex.gt-sm="50%" fxLayout="row wrap">
           <div fxFlex="100%" fxLayout="row wrap" >
-            <div fxFlex="30%">Tên khách hàng</div>
+            <div fxFlex="30%">{{ "Transactions.CreateTransactionComponent.displayName" | translate }}</div>
             <div fxFlex="60%" style="color: blue; font-weight: bold" class="left">
               {{ transactionInfo.clientDto?.displayName | uppercase }}
             </div>
           </div>
           <div fxFlex="100%" fxLayout="row wrap" >
-            <div fxFlex="30%">Thuộc đại lý</div>
+            <div fxFlex="30%">{{ "Transactions.CreateTransactionComponent.groupName" | translate }}</div>
             <div fxFlex="60%" style="color: blue; font-weight: bold" class="left">
               {{ transactionInfo.clientDto?.groupName | uppercase }}
             </div>
           </div>
           <div fxFlex="100%" fxLayout="row wrap" >
-            <div fxFlex="30%">Chi nhánh</div>
+            <div fxFlex="30%">{{ "Transactions.CreateTransactionComponent.officeName" | translate }}</div>
             <div fxFlex="60%" style="color: blue; font-weight: bold" class="left">
               {{ transactionInfo.clientDto?.officeName | uppercase }}
             </div>
           </div>
           <div fxFlex="100%" fxLayout="row wrap">
             <div fxFlex="100%" fxLayout="row wrap" >
-              <div fxFlex="100%" style="color: green; font-weight: bold">Thông tin về giao dịch</div>
+              <div fxFlex="100%" style="color: green; font-weight: bold">{{ "Transactions.CreateTransactionComponent.transactionInfo" | translate }}</div>
             </div>
 
             <div fxFlex="100%" fxLayout="row wrap" >
-              <div fxFlex="40%">Giá trị giao dịch</div>
+              <div fxFlex="40%">{{ "Transactions.CreateTransactionComponent.txnAmount" | translate }}</div>
               <div fxFlex="20%">{{ formatCurrency(transactionInfo.txnAmount) }}</div>
-              <div fxFlex="20%">Tỉ lệ</div>
+              <div fxFlex="20%">{{ "Transactions.CreateTransactionComponent.rate2" | translate }}</div>
             </div>
             <div fxFlex="100%" style="color: red; font-weight: bold" fxLayout="row wrap" >
-              Chi tiết:
+              {{ "Transactions.CreateTransactionComponent.details" | translate }}
             </div>
             <div class="m-l-10" fxFlex="100%" fxLayout="row wrap" >
-              <div fxFlex="40%">Giá trị giao dịch</div>
+              <div fxFlex="40%">{{ "Transactions.CreateTransactionComponent.txnAmount" | translate }}</div>
               <div fxFlex="20%">{{ formatCurrency(transactionInfo.txnAmount) }}</div>
               <div fxFlex="20%"></div>
             </div>
             <div class="m-l-10" fxFlex="100%" fxLayout="row wrap" >
-              <div fxFlex="40%">Phí</div>
+              <div fxFlex="40%">{{ "Transactions.CreateTransactionComponent.feeAmount" | translate }}</div>
               <div fxFlex="20%">{{ formatCurrency(transactionInfo.feeAmount) }}</div>
               <div fxFlex="20%">{{ transactionInfo.rate }}%</div>
             </div>
             <div fxFlex="100%" fxLayout="row wrap">
-              <div style="color: red; font-weight: bold" fxFlex="40%">Giá trị giao dịch ròng</div>
+              <div style="color: red; font-weight: bold" fxFlex="40%">{{ "Transactions.CreateTransactionComponent.txnAmountAfterFee" | translate }}</div>
               <div fxFlex="20%">{{ formatCurrency(transactionInfo.txnAmountAfterFee) }}</div>
               <div fxFlex="20%"></div>
             </div>
@@ -183,13 +183,13 @@
           *ngIf="transactionInfo.type == 'cash' || transactionInfo.type == 'rollTermGetCash'"
           style="color: blue; font-weight: bold"
         >
-          Chọn máy bán hàng
+        {{ "Transactions.CreateTransactionComponent.selectTerminal" | translate }}
         </h3>
         <h3
           *ngIf="transactionInfo.type == 'rollTerm' && listRollTermBooking.length > 0"
           style="color: blue; font-weight: bold"
         >
-          Lịch thực hiện (Tổng: {{ this.transactionInfo.requestAmount }})
+        {{ "Transactions.CreateTransactionComponent.listRollTermBooking" | translate }}{{ this.transactionInfo.requestAmount }})
         </h3>
       </mat-card-header>
 
@@ -201,11 +201,11 @@
       >
         <table mat-table #listBookingRollTermTable [dataSource]="dataSource">
           <ng-container matColumnDef="no">
-            <th mat-header-cell *matHeaderCellDef>No.</th>
+            <th mat-header-cell *matHeaderCellDef>{{ "Transactions.CreateTransactionComponent.no" | translate }}</th>
             <td mat-cell *matCellDef="let booking; let i = index">{{ i + 1 }}</td>
           </ng-container>
           <ng-container matColumnDef="amountBooking">
-            <th mat-header-cell *matHeaderCellDef>Số tiền</th>
+            <th mat-header-cell *matHeaderCellDef>{{ "Transactions.CreateTransactionComponent.amountBooking" | translate }}</th>
             <td mat-cell *matCellDef="let booking; let i = index">
               <mat-form-field>
                 <input
@@ -221,10 +221,10 @@
             </td>
           </ng-container>
           <ng-container matColumnDef="txnDate">
-            <th mat-header-cell *matHeaderCellDef>Ngày</th>
+            <th mat-header-cell *matHeaderCellDef>{{ "Transactions.CreateTransactionComponent.txnDate" | translate }}</th>
             <td mat-cell *matCellDef="let booking">
               <mat-form-field>
-                <mat-label>Số tiền</mat-label>
+                <mat-label>{{ "Transactions.CreateTransactionComponent.amount" | translate }}</mat-label>
                 <input
                   matInput
                   opened="true"
@@ -277,16 +277,16 @@
 
 
             <mat-form-field fxFlex.gt-sm="30%"  >
-              <mat-label>Chọn máy bán hàng</mat-label>
+              <mat-label>{{ "Transactions.CreateTransactionComponent.selectTerminal" | translate }}</mat-label>
               <select
                 (change)="this.getFeeByTerminal()"
                 [(ngModel)]="transactionInfo.terminalId"
                 [ngModelOptions]="{ standalone: true }"
                 matNativeControl
               >
-                <option value="" disabled selected>Chọn máy bán hàng</option>
+                <option value="" disabled selected>{{ "Transactions.CreateTransactionComponent.selectTerminal" | translate }}</option>
                 <option *ngFor="let terminal of transactionInfo.listTerminal" [value]="terminal.terminalId">
-                  {{ terminal.terminalName }} - Còn lại: {{ terminal.limitRemain | money }}
+                  {{ terminal.terminalName }} - {{ "Transactions.CreateTransactionComponent.limitRemain" | translate }} {{ terminal.limitRemain | money }}
                 </option>
               </select>
             </mat-form-field>
@@ -295,15 +295,15 @@
 
 
             <mat-form-field fxFlex.gt-sm="18%" >
-              <mat-label>Giá trị giao dịch đề xuất(VNĐ)</mat-label>
+              <mat-label>{{ "Transactions.CreateTransactionComponent.txnAmount2" | translate }}</mat-label>
               <input readonly matInput formControlName="txnAmount" />
-              <mat-error> Thông tin bắt buộc nhập! </mat-error>
+              <mat-error> {{ "Transactions.CreateTransactionComponent.alert" | translate }} </mat-error>
             </mat-form-field>
 
 
 
             <mat-form-field fxFlex.gt-sm="18%" >
-              <mat-label>Giá trị giao dịch thực tế</mat-label>
+              <mat-label>{{ "Transactions.CreateTransactionComponent.terminalAmount" | translate }}</mat-label>
               <input
                 matInput
                 #amountPosBill
@@ -311,22 +311,22 @@
                 (change)="this.calculateFeeTransaction()"
                 (keyup)="amountPosBill.value = this.formatCurrency(amountPosBill.value)"
               />
-              <mat-error> Thông tin bắt buộc nhập! </mat-error>
+              <mat-error> {{ "Transactions.CreateTransactionComponent.alert" | translate }} </mat-error>
             </mat-form-field>
 
 
             <mat-form-field fxFlex.gt-sm="15%" >
-              <mat-label> Số batch</mat-label>
+              <mat-label> {{ "Transactions.CreateTransactionComponent.batchNo" | translate }}</mat-label>
               <input matInput formControlName="batchNo" />
-              <mat-error> Thông tin bắt buộc nhập! </mat-error>
+              <mat-error> {{ "Transactions.CreateTransactionComponent.alert" | translate }} </mat-error>
             </mat-form-field>
 
 
 
             <mat-form-field fxFlex.gt-sm="15%" >
-              <mat-label> Số trace</mat-label>
+              <mat-label> {{ "Transactions.CreateTransactionComponent.traceNo" | translate }}</mat-label>
               <input matInput formControlName="traceNo" />
-              <mat-error> Thông tin bắt buộc nhập! </mat-error>
+              <mat-error> {{ "Transactions.CreateTransactionComponent.alert" | translate }} </mat-error>
             </mat-form-field>
 
         <!-- <div fxFlex.gt-sm="10%" fxLayout="row wrap" class="content">
@@ -345,7 +345,7 @@
           mat-raised-button
           color="primary"
         >
-          <fa-icon icon="check"></fa-icon>&nbsp;&nbsp; Hoàn tất giao dịch
+          <fa-icon icon="check"></fa-icon>&nbsp;&nbsp; {{ "Transactions.CreateTransactionComponent.submitTransactionCash" | translate }}
         </button>
         <button
           mat-raised-button
@@ -353,7 +353,7 @@
           *ngIf="transactionInfo.type == 'rollTerm'"
           (click)="this.submitTransactionRollTerm()"
         >
-          <fa-icon icon="check"></fa-icon>&nbsp;&nbsp; Khởi tạo giao dịch
+          <fa-icon icon="check"></fa-icon>&nbsp;&nbsp; {{ "Transactions.CreateTransactionComponent.submitTransactionRollTerm" | translate }}
         </button>
       </mat-card-footer>
     </mat-card>

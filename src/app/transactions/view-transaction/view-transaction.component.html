@@ -1,6 +1,6 @@
 <div class="container m-b-5" fxLayout="row" fxLayout.lt-md="column" fxLayoutAlign="end" fxLayoutGap="1%">
   <div fxFlex="100%" align="center" class="header">
-    <h2 class="m-5">MÀN HÌNH CHI TIẾT GIAO DỊCH</h2>
+    <h2 class="m-5">{{'Transactions.ViewTransaction.transactionDetails'|translate}}</h2>
   </div>
 </div>
 <div class="container" fxLayout="column" fxLayoutGap="2%">
@@ -11,22 +11,22 @@
     <div fxLayout="row wrap" fxLayout.sm="column" fxLayout.xs="column">
       <div fxFlex.gt-sm="50%" fxLayout="row wrap" class="content">
         <div fxFlex="100%">
-          Loại giao dịch :
-          <span style="color: green; font-weight: bold" *ngIf="transactionInfo.type == 'cash'">Giao dịch thường</span>
-          <span style="color: green; font-weight: bold" *ngIf="transactionInfo.type == 'rollTerm'">Giao dịch Advance</span>
+          {{'Transactions.ViewTransaction.type'|translate}}
+          <span style="color: green; font-weight: bold" *ngIf="transactionInfo.type == 'cash'">{{'Transactions.ViewTransaction.cash'|translate}}</span>
+          <span style="color: green; font-weight: bold" *ngIf="transactionInfo.type == 'rollTerm'">{{'Transactions.ViewTransaction.rollTerm'|translate}}</span>
         </div>
         <div fxFlex="100%" fxLayout="row wrap" fxLayout.sm="column" fxLayout.xs="column">
-          <div fxFlex.gt-sm="30%">Thẻ thực hiện giao dịch</div>
+          <div fxFlex.gt-sm="30%">{{'Transactions.ViewTransaction.accountNumber'|translate}}</div>
           <div fxFlex.gt-sm="70%" style="color: blue; font-weight: bold">
             {{ transactionInfo.accountNumber }}
           </div>
         </div>
         <div fxFlex="100%" fxLayout="row wrap" fxLayout.sm="column" fxLayout.xs="column" class="content">
-          <div fxFlex.gt-sm="10%">Loại thẻ</div>
+          <div fxFlex.gt-sm="10%">{{'Transactions.ViewTransaction.cardType'|translate}}</div>
           <div fxFlex.gt-sm="15%" style="color: blue; font-weight: bold">
             {{ transactionInfo.cardType }}
           </div>
-          <div fxFlex.gt-sm="20%">Của ngân hàng</div>
+          <div fxFlex.gt-sm="20%">{{'Transactions.ViewTransaction.bankName'|translate}}</div>
           <div fxFlex.gt-sm="55%" style="color: blue; font-weight: bold">
             {{ transactionInfo.bankName }}
           </div>
@@ -40,7 +40,7 @@
         >
           <div fxFlex.gt-sm="50%">
             <mat-form-field appearance="fill">
-              <mat-label>Tài khoản thanh toán</mat-label>
+              <mat-label>{{'Transactions.ViewTransaction.accountCash'|translate}}</mat-label>
               <input
                 style="color: blue; font-weight: bold"
                 matNativeControl
@@ -51,16 +51,16 @@
           </div>
           <div fxFlex.gt-sm="50%">
             <mat-form-field appearance="fill">
-              <mat-label>Loại giao dịch </mat-label>
+              <mat-label>{{'Transactions.ViewTransaction.productId'|translate}} </mat-label>
               <select
                 style="color: blue; font-weight: bold"
                 matNativeControl
                 [(ngModel)]="transactionInfo.productId"
                 disabled
               >
-                <option value="CA01">Giao dịch thường</option>
-                <option value="TEST">Test thẻ</option>
-                <option value="CA02">Lô lẻ</option>
+                <option value="CA01">{{'Transactions.ViewTransaction.CA01'|translate}}</option>
+                <option value="TEST">{{'Transactions.ViewTransaction.TEST'|translate}}</option>
+                <option value="CA02">{{'Transactions.ViewTransaction.CA02'|translate}}</option>
               </select>
             </mat-form-field>
           </div>
@@ -69,7 +69,7 @@
         <div fxFlex="100%" fxLayout="row wrap" fxLayout.sm="column" fxLayout.xs="column">
           <div fxFlex.gt-sm="30%">
             <mat-form-field>
-              <mat-label>Số tiền giao dịch</mat-label>
+              <mat-label>{{'Transactions.ViewTransaction.requestAmount'|translate}}</mat-label>
               <input
                 type="text"
                 [ngModel]="transactionInfo.requestAmount"
@@ -82,7 +82,7 @@
           </div>
           <div fxFlex.gt-sm="10%">
             <mat-form-field>
-              <mat-label>Phí (%/giá trị giao dịch)</mat-label>
+              <mat-label>{{'Transactions.ViewTransaction.feeRate'|translate}}</mat-label>
               <input type="text" class="center" matInput disabled [ngModel]="transactionInfo.feeRate" />
             </mat-form-field>
           </div>
@@ -90,56 +90,56 @@
       </div>
       <div fxFlex.gt-sm="50%" fxLayout="row wrap">
         <div fxFlex="100%" fxLayout="row wrap" class="content">
-          <div fxFlex="30%">Tên khách hàng</div>
+          <div fxFlex="30%">{{'Transactions.ViewTransaction.customerName'|translate}}</div>
           <div fxFlex="60%" style="color: blue; font-weight: bold" class="left">
             {{ transactionInfo.customerName | uppercase }}
           </div>
         </div>
         <div fxFlex="100%" fxLayout="row wrap" class="content">
-          <div fxFlex="30%">Thuộc đại lý</div>
+          <div fxFlex="30%">{{'Transactions.ViewTransaction.groupName'|translate}}</div>
           <div fxFlex="60%" style="color: blue; font-weight: bold" class="left">
             {{ transactionInfo.groupName | uppercase }}
           </div>
         </div>
         <div fxFlex="100%" fxLayout="row wrap" class="content">
-          <div fxFlex="30%">Chi nhánh</div>
+          <div fxFlex="30%">{{'Transactions.ViewTransaction.officeName'|translate}}</div>
           <div fxFlex="60%" style="color: blue; font-weight: bold" class="left">
             {{ transactionInfo.officeName | uppercase }}
           </div>
         </div>
         <div fxFlex="100%" fxLayout="row wrap" class="content">
-          <div fxFlex="30%">Người tạo</div>
+          <div fxFlex="30%">{{'Transactions.ViewTransaction.staffName'|translate}}</div>
           <div fxFlex="60%" style="color: blue; font-weight: bold" class="left">
             {{ transactionInfo.staffName | uppercase }}
           </div>
         </div>
         <div fxFlex="100%" fxLayout="row wrap">
           <div fxFlex="100%" fxLayout="row wrap" class="content">
-            <div fxFlex="100%" style="color: green; font-weight: bold">Thông tin về thu chi </div>
+            <div fxFlex="100%" style="color: green; font-weight: bold">{{'Transactions.ViewTransaction.information'|translate}} </div>
           </div>
 
           <div fxFlex="100%" fxLayout="row wrap" class="content m-l-20">
-            <div fxFlex="40%">Giá trị giao dịch</div>
+            <div fxFlex="40%">{{'Transactions.ViewTransaction.terminalAmount'|translate}}</div>
             <div fxFlex="20%">{{ formatCurrency(transactionInfo.terminalAmount) }}</div>
             <div fxFlex="20%">Tỉ lệ</div>
           </div>
           <div fxFlex="100%" style="color: red; font-weight: bold" fxLayout="row wrap" class="content m-l-20">
-            Thu/chi bằng tiền mặt
+            {{'Transactions.ViewTransaction.byCash'|translate}}
           </div>
           <div class="m-l-10" fxFlex="100%" fxLayout="row wrap" class="m-l-20 content">
-            <div fxFlex="40%">Giá trị giao dịch ròng</div>
+            <div fxFlex="40%">{{'Transactions.ViewTransaction.terminalAmount2'|translate}}</div>
             <div fxFlex="20%">{{ formatCurrency(transactionInfo.terminalAmount) }}</div>
             <div fxFlex="20%"></div>
           </div>
           <div class="m-l-10" fxFlex="100%" fxLayout="row wrap" class="m-l-20 content">
-            <div fxFlex="40%">Phí </div>
+            <div fxFlex="40%">{{'Transactions.ViewTransaction.feeAmount'|translate}} </div>
             <div fxFlex="20%">{{ formatCurrency(transactionInfo.feeAmount) }}</div>
             <div fxFlex="20%">{{ transactionInfo.feeRate }}%</div>
           </div>
 
           <div fxFlex="100%" fxLayout="row wrap" class="content m-l-20">
             <button (click)="this.downloadVoucherTransaction()" mat-raised-button color="primary">
-              <fa-icon icon="download"></fa-icon>&nbsp;&nbsp; Tải hóa đơn
+              <fa-icon icon="download"></fa-icon>&nbsp;&nbsp; {{'Transactions.ViewTransaction.downloadVoucherTransaction'|translate}}
             </button>
           </div>
         </div>
@@ -147,13 +147,13 @@
     </div>
   </mat-card>
   <mat-card fxLayout="row wrap" class="m-0">
-    <h3 fxFlex align="center" style="color: blue; font-weight: bold">Chọn máy bán hàng</h3>
+    <h3 fxFlex align="center" style="color: blue; font-weight: bold">{{'Transactions.ViewTransaction.terminalOption'|translate}}</h3>
 
     <div fxFlex="100%" fxLayout.sm="column" fxLayout.xs="column">
       <div fxFlex.gt-sm="30%" fxLayout="row wrap" class="content">
         <div fxFlex="100%">
           <mat-form-field style="width: 80%" appearance="fill">
-            <mat-label>Máy bán hàng </mat-label>
+            <mat-label>{{'Transactions.ViewTransaction.terminalName'|translate}} </mat-label>
             <input disabled [(ngModel)]="transactionInfo.terminalName" matNativeControl />
           </mat-form-field>
         </div>
@@ -161,7 +161,7 @@
       <div fxFlex.gt-sm="16%" fxLayout="row wrap" class="content">
         <div fxFlex="100%">
           <mat-form-field>
-            <mat-label>Số tiền cần giao dịch (VNĐ)</mat-label>
+            <mat-label>{{'Transactions.ViewTransaction.invoiceAmount'|translate}}</mat-label>
             <input disabled matInput [ngModel]="transactionInfo.invoiceAmount" />
           </mat-form-field>
         </div>
@@ -169,7 +169,7 @@
       <div fxFlex.gt-sm="16%" fxLayout="row wrap" class="content">
         <div fxFlex="100%">
           <mat-form-field>
-            <mat-label>Số tiền giao dịch thực tế (VND)</mat-label>
+            <mat-label>{{'Transactions.ViewTransaction.terminalAmount3'|translate}}</mat-label>
             <input matInput #amountPosBill [ngModel]="transactionInfo.terminalAmount" disabled />
           </mat-form-field>
         </div>
@@ -177,7 +177,7 @@
       <div fxFlex.gt-sm="19%" fxLayout="row wrap" class="content">
         <div fxFlex="80%">
           <mat-form-field>
-            <mat-label> Số batch</mat-label>
+            <mat-label> {{'Transactions.ViewTransaction.batchNo'|translate}}</mat-label>
             <input matInput disabled [ngModel]="transactionInfo.batchNo" />
           </mat-form-field>
         </div>
@@ -185,7 +185,7 @@
       <div fxFlex.gt-sm="19%" fxLayout="row wrap" class="content">
         <div fxFlex="80%">
           <mat-form-field>
-            <mat-label> Số trace</mat-label>
+            <mat-label> {{'Transactions.ViewTransaction.traceNo'|translate}}</mat-label>
             <input matInput disabled [ngModel]="transactionInfo.traceNo" />
           </mat-form-field>
         </div>

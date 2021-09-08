@@ -9,7 +9,7 @@
   fxLayoutGap.lt-md="0%"
 >
   <mat-form-field fxFlex="48%">
-    <mat-label>Máy bán hàng:</mat-label>
+    <mat-label>{{ "Transactions.Dialog.AddSubmitTransaction.terminalSubmit" | translate }}</mat-label>
     <mat-select required formControlName="terminalSubmit">
       <mat-option *ngFor="let terminal of listTerminalTransaction" [value]="terminal.terminalId">
         {{ terminal.terminalName }}
@@ -18,18 +18,18 @@
   </mat-form-field>
 
   <div fxFlex="48%" *ngIf="listObjectTransactionSubmit.length > 0">
-    <mat-label>Thông tin chốt số:</mat-label>
+    <mat-label>{{ "Transactions.Dialog.AddSubmitTransaction.information" | translate }}</mat-label>
     <table mat-table #bookingBranchSubmit [dataSource]="listObjectTransactionSubmit">
       <ng-container matColumnDef="no">
-        <th mat-header-cell *matHeaderCellDef>No.</th>
+        <th mat-header-cell *matHeaderCellDef>{{ "Transactions.Dialog.AddSubmitTransaction.no" | translate }}</th>
         <td mat-cell *matCellDef="let booking; let i = index">{{ i + 1 }}</td>
       </ng-container>
 
       <ng-container matColumnDef="batchNoSubmit">
-        <th mat-header-cell *matHeaderCellDef>Số lô</th>
+        <th mat-header-cell *matHeaderCellDef>{{ "Transactions.Dialog.AddSubmitTransaction.batchNoSubmit" | translate }}</th>
         <td mat-cell *matCellDef="let booking">
           <mat-form-field>
-            <mat-label>Số lô</mat-label>
+            <mat-label>{{ "Transactions.Dialog.AddSubmitTransaction.batchNoSubmit" | translate }}</mat-label>
             <input
               style="text-align: center"
               matInput
@@ -44,10 +44,10 @@
       </ng-container>
 
       <ng-container matColumnDef="amountSubmit">
-        <th mat-header-cell *matHeaderCellDef>Số tiền</th>
+        <th mat-header-cell *matHeaderCellDef>{{ "Transactions.Dialog.AddSubmitTransaction.amountSubmit" | translate }}</th>
         <td mat-cell *matCellDef="let booking; let i = index">
           <mat-form-field>
-            <mat-label>Số tiền ({{ booking.amountSubmitSuggest | money }})</mat-label>
+            <mat-label>{{ "Transactions.Dialog.AddSubmitTransaction.amountSubmit" | translate }} ({{ booking.amountSubmitSuggest | money }})</mat-label>
             <input
               style="text-align: center"
               matInput
@@ -62,7 +62,7 @@
       </ng-container>
 
       <ng-container matColumnDef="fileSubmit">
-        <th mat-header-cell *matHeaderCellDef>Hình bill tổng</th>
+        <th mat-header-cell *matHeaderCellDef>{{ "Transactions.Dialog.AddSubmitTransaction.fileSubmit" | translate }}</th>
         <td mat-cell *matCellDef="let booking; let i = index">
           <div>
             <input

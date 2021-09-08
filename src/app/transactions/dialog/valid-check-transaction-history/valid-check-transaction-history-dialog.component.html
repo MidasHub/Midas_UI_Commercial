@@ -12,7 +12,7 @@
     matSort
   >
     <ng-container matColumnDef="no">
-      <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>No.</th>
+      <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>{{'Transactions.Dialog.ValidCheckTransactionHistory.no'|translate}}</th>
       <td mat-cell fxHide fxShow.gt-md
       *matCellDef="let transaction;
       let i = dataIndex"
@@ -22,25 +22,25 @@
       </td>
     </ng-container>
     <ng-container matColumnDef="amount">
-      <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>Số tiền</th>
+      <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>{{'Transactions.Dialog.ValidCheckTransactionHistory.amount'|translate}}</th>
       <td mat-cell fxHide fxShow.gt-md *matCellDef="let transaction; let i = dataIndex">
         {{ transaction.terminalAmount | money }}
       </td>
     </ng-container>
     <ng-container matColumnDef="terminal">
-      <th mat-header-cell *matHeaderCellDef>Máy giao dịch</th>
+      <th mat-header-cell *matHeaderCellDef>{{'Transactions.Dialog.ValidCheckTransactionHistory.terminal'|translate}}</th>
       <td mat-cell *matCellDef="let transaction">
         {{ transaction.terminalId }}
       </td>
     </ng-container>
     <ng-container matColumnDef="txnDate">
-      <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>Ngày giao dịch</th>
+      <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>{{'Transactions.Dialog.ValidCheckTransactionHistory.txnDate'|translate}}</th>
       <td mat-cell fxHide fxShow.gt-md *matCellDef="let transaction">
         {{ transaction.txnDate | date: "dd-MM-yyyy HH:mm:ss" }}
       </td>
     </ng-container>
     <ng-container matColumnDef="createdBy" style="width: 25px">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Người tạo</th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>{{'Transactions.Dialog.ValidCheckTransactionHistory.createdBy'|translate}}</th>
       <td mat-cell *matCellDef="let transaction">
         {{ transaction.createdByName }}
       </td>
@@ -52,5 +52,5 @@
 </mat-card-content>
 
 <mat-dialog-actions align="center">
-  <button mat-raised-button mat-dialog-close color="primary">Đóng</button>
+  <button mat-raised-button mat-dialog-close color="primary">{{'Transactions.Dialog.ValidCheckTransactionHistory.close'|translate}}</button>
 </mat-dialog-actions>

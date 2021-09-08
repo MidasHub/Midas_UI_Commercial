@@ -2,14 +2,14 @@
   <mat-card-content>
     <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column" [formGroup]="formDate">
       <mat-form-field fxFlex="31%">
-        <mat-label>Từ ngày:</mat-label>
+        <mat-label>{{'Transactions.RollTernSchedule.RollTermScheduleTab.fromDate'|translate}}</mat-label>
         <input matInput [matDatepicker]="transactionDateFromPicker" formControlName="fromDate" />
         <mat-datepicker-toggle matSuffix [for]="transactionDateFromPicker"></mat-datepicker-toggle>
         <mat-datepicker #transactionDateFromPicker></mat-datepicker>
       </mat-form-field>
 
       <mat-form-field fxFlex="31%">
-        <mat-label>Đến ngày:</mat-label>
+        <mat-label>{{'Transactions.RollTernSchedule.RollTermScheduleTab.toDate'|translate}}</mat-label>
         <input matInput [matDatepicker]="transactionDateToPicker" formControlName="toDate" />
         <mat-datepicker-toggle matSuffix [for]="transactionDateToPicker"></mat-datepicker-toggle>
         <mat-datepicker #transactionDateToPicker></mat-datepicker>
@@ -23,13 +23,13 @@
           color="primary"
           mat-raised-button
         >
-          Tìm kiếm &nbsp;<i class="fa fa-search" aria-hidden="true"></i>
+        {{'Transactions.RollTernSchedule.RollTermScheduleTab.search'|translate}} &nbsp;<i class="fa fa-search" aria-hidden="true"></i>
         </button>
         <button (click)="ExportExcel()" style="align-self: center; margin-left: 5px" color="primary" mat-raised-button>
-          Xuất Excel &nbsp;<i class="fa fa-search" aria-hidden="true"></i>
+          {{'Transactions.RollTernSchedule.RollTermScheduleTab.ExportExcel'|translate}} &nbsp;<i class="fa fa-search" aria-hidden="true"></i>
         </button>
         <h3 *ngIf="!fromDateAndToDate">
-          Vui lòng chọn thời gian &nbsp; <i class="fa fa-calendar" style="align-self: center" aria-hidden="true"></i>
+          {{'Transactions.RollTernSchedule.RollTermScheduleTab.selectTime'|translate}} &nbsp; <i class="fa fa-calendar" style="align-self: center" aria-hidden="true"></i>
         </h3>
       </div>
     </div>
@@ -39,7 +39,7 @@
 
   <div [formGroup]="formFilter" fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column" [formGroup]="formFilter">
     <mat-form-field fxFlex="12%" *midasHasPermission="'REFINANCE_EXECUTIVE'">
-      <mat-label>Chi nhánh</mat-label>
+      <mat-label>{{'Transactions.RollTernSchedule.RollTermScheduleTab.OfficeFilter'|translate}}</mat-label>
       <mat-select formControlName="OfficeFilter" multiple>
         <mat-option *ngFor="let office of offices" [value]="office.officeId">
           {{ office.name }}
@@ -48,7 +48,7 @@
     </mat-form-field>
 
     <mat-form-field fxFlex="25%" *midasHasPermission="'REFINANCE_EXECUTIVE'">
-      <mat-label>Nhân viên</mat-label>
+      <mat-label>{{'Transactions.RollTernSchedule.RollTermScheduleTab.createdByFilter'|translate}}</mat-label>
       <mat-select matSelect matNativeControl formControlName="createdByFilter" multiple>
         <mat-option *ngFor="let option of staffs" [value]="option.userId">
           {{ option.displayName }}
@@ -57,9 +57,9 @@
     </mat-form-field>
 
     <mat-form-field fxFlex="20%">
-      <mat-label>Ngân hàng</mat-label>
+      <mat-label>{{'Transactions.RollTernSchedule.RollTermScheduleTab.bankFilter'|translate}}</mat-label>
       <select matSelect matNativeControl formControlName="bankFilter">
-        <option value="ALL">Tất cả ngân hàng</option>
+        <option value="ALL">{{'Transactions.RollTernSchedule.RollTermScheduleTab.allBank'|translate}}</option>
         <option *ngFor="let bank of banks" [value]="bank.bankCode">
           {{ bank.bankName }}
         </option>
@@ -67,10 +67,10 @@
     </mat-form-field>
 
     <mat-form-field fxFlex="20%">
-      <mat-label>Loại thẻ</mat-label>
+      <mat-label>{{'Transactions.RollTernSchedule.RollTermScheduleTab.cardType'|translate}}</mat-label>
       <select matSelect matNativeControl formControlName="cardType">
         <option value="ALL">
-          Tất cả loại thẻ
+          {{'Transactions.RollTernSchedule.RollTermScheduleTab.allcardType'|translate}}
         </option>
         <option *ngFor="let card of cardTypeOption" [value]="card.code">
           {{ card.description }}
@@ -81,16 +81,16 @@
     <div fxFlex="10%" fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
       <mat-label ></mat-label>
       <mat-checkbox fxFlex="100%" labelPosition="after" formControlName="viewDoneTransaction" class="margin-v">
-        Đã thực hiện xong
+        {{'Transactions.RollTernSchedule.RollTermScheduleTab.viewDoneTransaction'|translate}}
       </mat-checkbox>
     </div>
 
     <mat-form-field fxFlex="20%">
-      <mat-label>Ngày đến hạn</mat-label>
+      <mat-label>{{'Transactions.RollTernSchedule.RollTermScheduleTab.dueDay'|translate}}</mat-label>
       <input  type="number" matInput #dueDay min="0" max="31"  formControlName="dueDay" />
     </mat-form-field>
     <mat-form-field fxFlex="20%">
-      <mat-label>Thông tin khách hàng</mat-label>
+      <mat-label>{{'Transactions.RollTernSchedule.RollTermScheduleTab.query'|translate}}</mat-label>
       <input matInput type="text" formControlName="query" />
     </mat-form-field>
 
@@ -105,7 +105,7 @@
             <span style="font-size: 20px; margin-top: 8px; padding-top: 5px">{{
               transactionsData?.totalRollTermAnalyticsRespone?.totalPrincipal | money
             }}</span>
-            <span>&nbsp;Tổng tiền giao dịch</span>
+            <span>&nbsp;{{'Transactions.RollTernSchedule.RollTermScheduleTab.totalPrincipal'|translate}}</span>
           </div>
         </div>
         <div fxLayout="row wrap" fxFlex="20%" class="container m-b-20">
@@ -114,7 +114,7 @@
             <span style="font-size: 20px; margin-top: 8px; padding-top: 5px">{{
               transactionsData?.totalRollTermAnalyticsRespone?.totalFeePaid | money
             }}</span>
-            <span>&nbsp;Tổng tạm ứng</span>
+            <span>&nbsp;{{'Transactions.RollTernSchedule.RollTermScheduleTab.totalFeePaid'|translate}}</span>
           </div>
         </div>
         <div fxLayout="row wrap" fxFlex="16%" class="container m-b-20">
@@ -124,7 +124,7 @@
               transactionsData?.totalRollTermAnalyticsRespone?.totalPrincipal -
                 transactionsData?.totalRollTermAnalyticsRespone?.totalFeePaid | money
             }}</span>
-            <span>&nbsp; Tổng công nợ còn lại</span>
+            <span>&nbsp; {{'Transactions.RollTernSchedule.RollTermScheduleTab.totalFeePaid2'|translate}}</span>
           </div>
         </div>
         <div fxLayout="row wrap" fxFlex="16%" class="container m-b-20">
@@ -133,7 +133,7 @@
             <span style="font-size: 20px; margin-top: 8px; padding-top: 5px">{{
               transactionsData?.totalRollTermAnalyticsRespone?.totalAmountTransaction | money
             }}</span>
-            <span> &nbsp;Tổng đã thu hồi</span>
+            <span> &nbsp;{{'Transactions.RollTernSchedule.RollTermScheduleTab.totalAmountGet'|translate}}</span>
           </div>
         </div>
         <div fxLayout="row wrap" fxFlex="16%" class="container m-b-20">
@@ -143,7 +143,7 @@
               transactionsData?.totalRollTermAnalyticsRespone?.totalFeePaid -
                 transactionsData?.totalRollTermAnalyticsRespone?.totalAmountTransaction | money
             }}</span>
-            <span> &nbsp;Tổng cần thu hồi</span>
+            <span> &nbsp;{{'Transactions.RollTernSchedule.RollTermScheduleTab.totalAmountNeedGet'|translate}}</span>
           </div>
         </div>
       </div>
@@ -152,21 +152,21 @@
   <mat-card-content>
     <table mat-table multiTemplateDataRows class="mat-elevation-z8" [dataSource]="dataSource" matSort>
       <ng-container matColumnDef="panHolderName">
-        <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>Tên khách hàng</th>
+        <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>{{'Transactions.RollTernSchedule.RollTermScheduleTab.panHolderName'|translate}}</th>
         <td mat-cell fxHide fxShow.gt-md *matCellDef="let transaction">
           <a href="/#/clients/{{ transaction.custId }}/general?typeViewClient=view">
-            <mat-icon style="color: black" title="Chi tiết">person</mat-icon>
+            <mat-icon style="color: black" title="Chi tiết">{{'Transactions.RollTernSchedule.RollTermScheduleTab.person'|translate}}</mat-icon>
             {{ transaction.panHolderName }}<br />
           </a>
           <br />
           <mat-label title="Số dư tài khoản">
-            <mat-icon style="color: green">monetization_on</mat-icon>
+            <mat-icon style="color: green">{{'Transactions.RollTernSchedule.RollTermScheduleTab.monetization_on'|translate}}</mat-icon>
 
             {{ transaction.clientBalance | money }}
           </mat-label>
           <br />
           <mat-label style="font-size: small" *ngIf="transaction.groupName">
-            <mat-icon style="color: black" title="Thuộc đại lý">groups</mat-icon>
+            <mat-icon style="color: black" title="Thuộc đại lý">{{'Transactions.RollTernSchedule.RollTermScheduleTab.groups'|translate}}</mat-icon>
             {{ transaction.groupName }}
 
             <br />
@@ -176,21 +176,21 @@
 
       <ng-container matColumnDef="createdDate">
         <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>
-          Thẻ (Ngân hàng)/ <br />
-          Ngày tạo
+          {{'Transactions.RollTernSchedule.RollTermScheduleTab.card'|translate}}<br />
+          {{'Transactions.RollTernSchedule.RollTermScheduleTab.createdDate'|translate}}
         </th>
         <td mat-cell fxHide fxShow.gt-md *matCellDef="let journalEntry">
           <label style="color: green; font-weight: bold">{{ journalEntry.panNumber.replace("XXX-XXX", "X") }} </label>
           <span style="color: red; font-weight: bold"> ({{ journalEntry.panBank }}) </span>
           <br />
-          Ngày đến hạn: <label style="color: red; font-weight: bold"> {{ journalEntry.dueDay }} </label>
+          {{'Transactions.RollTernSchedule.RollTermScheduleTab.dueDay2'|translate}}<label style="color: red; font-weight: bold"> {{ journalEntry.dueDay }} </label>
           <br />
           {{ journalEntry.createdDate | date: "dd/MM/yyyy HH:mm:ss" }}
         </td>
       </ng-container>
 
       <ng-container matColumnDef="feeAmount">
-        <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>Phí thu</th>
+        <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>{{'Transactions.RollTernSchedule.RollTermScheduleTab.feeAmount'|translate}}</th>
         <td mat-cell fxHide fxShow.gt-md *matCellDef="let journalEntry">
           {{ ((journalEntry?.feePercentage / 100) * journalEntry?.reqAmount).toFixed(0) | money }}
         </td>
@@ -205,8 +205,8 @@
 
       <ng-container matColumnDef="officeName">
         <th mat-header-cell *matHeaderCellDef>
-          Chi nhánh/ <br />
-          Người tạo
+          {{'Transactions.RollTernSchedule.RollTermScheduleTab.officeName'|translate}}<br />
+          {{'Transactions.RollTernSchedule.RollTermScheduleTab.createdByName'|translate}}
         </th>
         <td mat-cell *matCellDef="let journalEntry">
           {{ journalEntry.officeName }} <br />
@@ -221,7 +221,7 @@
 
       <ng-container matColumnDef="requestAmount">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>
-          Số tiền Tạm ứng <br />
+          {{'Transactions.RollTernSchedule.RollTermScheduleTab.requestAmount'|translate}} <br />
           (a)
         </th>
         <td mat-cell *matCellDef="let journalEntry">{{ journalEntry?.principal | money }}</td>
@@ -229,7 +229,7 @@
 
       <ng-container matColumnDef="paidAmount">
         <th mat-header-cell *matHeaderCellDef mat-sort-header class="on_hold">
-          Đã tạm ứng <br />
+          {{'Transactions.RollTernSchedule.RollTermScheduleTab.paidAmount'|translate}} <br />
           (b)
         </th>
         <td class="on_hold" mat-cell style="padding: 6px" *matCellDef="let journalEntry">
@@ -239,7 +239,7 @@
 
       <ng-container matColumnDef="remainAmount">
         <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>
-          Còn phải Tạm ứng <br />
+          {{'Transactions.RollTernSchedule.RollTermScheduleTab.remainAmount'|translate}} <br />
           (c) = (a) - (b)
         </th>
         <td mat-cell fxHide fxShow.gt-md *matCellDef="let journalEntry">
@@ -249,7 +249,7 @@
 
       <ng-container matColumnDef="txnAmount">
         <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header class="on_success">
-          Đã thu hồi <br />
+          {{'Transactions.RollTernSchedule.RollTermScheduleTab.txnAmount'|translate}} <br />
           (d)
         </th>
         <td class="on_success" mat-cell fxHide fxShow.gt-md *matCellDef="let journalEntry">
@@ -259,7 +259,7 @@
 
       <ng-container matColumnDef="waitGetAmount">
         <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header class="on_hold">
-          Cần thu hồi <br />
+          {{'Transactions.RollTernSchedule.RollTermScheduleTab.waitGetAmount'|translate}} <br />
           (e) = (b) - (d)
         </th>
         <td mat-cell fxHide fxShow.gt-md *matCellDef="let journalEntry" class="on_hold">
@@ -283,64 +283,64 @@
           <div class="example-element-detail" [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
             <div class="example-element-description" fxLayout="column">
               <div>
-                <span style="font-weight: bold"> Tên khách hàng :</span>
+                <span style="font-weight: bold"> {{'Transactions.RollTernSchedule.RollTermScheduleTab.panHolderName2'|translate}}</span>
                 <a href="/#/clients/{{ element.custId }}/general?typeViewClient=view">
-                  <mat-icon style="color: black" title="Chi tiết">person</mat-icon>
+                  <mat-icon style="color: black" title="Chi tiết">{{'Transactions.RollTernSchedule.RollTermScheduleTab.person2'|translate}}</mat-icon>
                   {{ element.panHolderName }}<br />
                 </a>
                 <br />
                 <mat-label title="Số dư tài khoản">
-                  <mat-icon style="color: green">monetization_on</mat-icon>
+                  <mat-icon style="color: green">{{'Transactions.RollTernSchedule.RollTermScheduleTab.monetization_on2'|translate}}</mat-icon>
 
                   {{ element.clientBalance | money }}
                 </mat-label>
                 <br />
                 <mat-label style="font-size: small" *ngIf="element.groupName">
-                  <mat-icon style="color: black" title="Thuộc đại lý">groups</mat-icon>
+                  <mat-icon style="color: black" title="Thuộc đại lý">{{'Transactions.RollTernSchedule.RollTermScheduleTab.groups2'|translate}}</mat-icon>
                   {{ element.groupName }}
 
                   <br />
                 </mat-label>
               </div>
               <div>
-                <span style="font-weight: bold"> Ngày tạo :</span>&nbsp; &nbsp;{{
+                <span style="font-weight: bold"> {{'Transactions.RollTernSchedule.RollTermScheduleTab.createdDate2'|translate}}</span>&nbsp; &nbsp;{{
                   element.createdDate | date: "dd-MM-yyyy HH:ss"
                 }}
               </div>
               <div>
-                <span style="font-weight: bold"> Phí thu:</span>&nbsp; &nbsp;{{
+                <span style="font-weight: bold"> {{'Transactions.RollTernSchedule.RollTermScheduleTab.fee'|translate}}</span>&nbsp; &nbsp;{{
                   ((element?.feePercentage / 100) * element?.reqAmount).toFixed(0) | money
                 }}
               </div>
-              <div><span style="font-weight: bold"> Số thẻ:</span>&nbsp; &nbsp;{{ element.panNumber }}</div>
-              <div><span style="font-weight: bold"> Chi nhánh :</span>&nbsp; &nbsp;{{ element.officeName }}</div>
+              <div><span style="font-weight: bold"> {{'Transactions.RollTernSchedule.RollTermScheduleTab.panNumber'|translate}}</span>&nbsp; &nbsp;{{ element.panNumber }}</div>
+              <div><span style="font-weight: bold"> {{'Transactions.RollTernSchedule.RollTermScheduleTab.officeName2'|translate}}</span>&nbsp; &nbsp;{{ element.officeName }}</div>
               <div>
                 <span style="font-weight: bold">
-                  Số tiền Tạm ứng <br />
+                  {{'Transactions.RollTernSchedule.RollTermScheduleTab.principal'|translate}} <br />
                   (a) :</span
                 >&nbsp; &nbsp;{{ element?.principal }}
               </div>
               <div>
                 <span style="font-weight: bold">
-                  Đã tạm ứng <br />
+                  {{'Transactions.RollTernSchedule.RollTermScheduleTab.paidAmount2'|translate}} <br />
                   (b) :</span
                 >&nbsp; &nbsp;{{ element?.paidAmount | money }}
               </div>
               <div>
                 <span style="font-weight: bold">
-                  Còn phải Tạm ứng <br />
+                  {{'Transactions.RollTernSchedule.RollTermScheduleTab.needToPay'|translate}} <br />
                   (c) = (a) - (b) :</span
                 >&nbsp; &nbsp;{{ element?.principal - element?.paidAmount | money }}
               </div>
               <div>
                 <span style="font-weight: bold">
-                  Đã thu hồi <br />
+                  {{'Transactions.RollTernSchedule.RollTermScheduleTab.amountPaid'|translate}} <br />
                   (d) :</span
                 >&nbsp; &nbsp;{{ element?.amountPaid | money }}
               </div>
               <div>
                 <span style="font-weight: bold">
-                  Cần thu hồi <br />
+                  {{'Transactions.RollTernSchedule.RollTermScheduleTab.needToGet'|translate}} <br />
                   (e)=(b) - (d) :</span
                 >&nbsp; &nbsp;{{ element.paidAmount - element.amountPaid | money }}
               </div>
@@ -376,15 +376,15 @@
       style="width: 50px"
     >
       <button (click)="showRollTermScheduleDialog(refid)" mat-menu-item>
-        <img src="assets/images/icons/add.svg" />&nbsp;Lịch tạm ứng
+        <img src="assets/images/icons/add.svg" />&nbsp;{{'Transactions.RollTernSchedule.RollTermScheduleTab.showRollTermScheduleDialog'|translate}}
       </button>
       <button mat-menu-item (click)="executeLoanManualDialog(refid)">
-        <img src="assets/images/icons/order.svg" />&nbsp;Xử lý tạm ứng
+        <img src="assets/images/icons/order.svg" />&nbsp;{{'Transactions.RollTernSchedule.RollTermScheduleTab.executeLoanManualDialog'|translate}}
       </button>
 
       <hr />
       <button mat-menu-item (click)="undoRollTermTransaction(refid, principal - paidAmount)">
-        <i class="fa fa-eye" aria-hidden="true"></i>&nbsp;Hủy tạm ứng
+        <i class="fa fa-eye" aria-hidden="true"></i>&nbsp;{{'Transactions.RollTernSchedule.RollTermScheduleTab.undoRollTermTransaction'|translate}}
       </button>
     </ng-template>
   </mat-menu>

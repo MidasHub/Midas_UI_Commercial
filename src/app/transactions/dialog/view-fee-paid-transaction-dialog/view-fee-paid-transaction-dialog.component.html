@@ -1,47 +1,47 @@
-<h1 mat-dialog-title>Danh sách thu/chi đã thực hiện [{{txnCode}}]</h1>
+<h1 mat-dialog-title>{{'Transactions.Dialog.ViewFeePaidTransaction.list'|translate}}[{{txnCode}}]</h1>
 <div mat-dialog-content>
   <table mat-table multiTemplateDataRows class="mat-elevation-z8" [dataSource]="transactions" matSort>
 
     <ng-container matColumnDef="txnSavingResource">
-      <th mat-header-cell class="mat-cell-custom"  *matHeaderCellDef>Mã</th>
+      <th mat-header-cell class="mat-cell-custom"  *matHeaderCellDef>{{'Transactions.Dialog.ViewFeePaidTransaction.txnSavingResource'|translate}}</th>
       <td mat-cell class="mat-cell-custom"
           *matCellDef="let transaction"> {{ transaction.txnSavingResource }} </td>
     </ng-container>
 
 
     <ng-container matColumnDef="createdDate">
-      <th mat-header-cell class="mat-cell-custom" fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>Thời gian</th>
+      <th mat-header-cell class="mat-cell-custom" fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>{{'Transactions.Dialog.ViewFeePaidTransaction.createdDate'|translate}}</th>
       <td mat-cell class="mat-cell-custom" fxHide fxShow.gt-md
           *matCellDef="let transaction">{{ transaction.createdDate | date:'dd-MM-yyyy HH:mm:ss'}} </td>
     </ng-container>
 
     <ng-container matColumnDef="txnSavingType">
-      <th mat-header-cell class="mat-cell-custom" *matHeaderCellDef mat-sort-header>Loại</th>
+      <th mat-header-cell class="mat-cell-custom" *matHeaderCellDef mat-sort-header>{{'Transactions.Dialog.ViewFeePaidTransaction.txnSavingType'|translate}}</th>
       <td mat-cell  class="mat-cell-custom"
           *matCellDef="let transaction">{{transaction.txnSavingType == 'W' ? 'Giảm':'Tăng' }} </td>
     </ng-container>
 
 
     <ng-container matColumnDef="txnPaymentCode">
-      <th mat-header-cell class="mat-cell-custom" fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>P.thức</th>
+      <th mat-header-cell class="mat-cell-custom" fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>{{'Transactions.Dialog.ViewFeePaidTransaction.txnPaymentCode'|translate}}</th>
       <td mat-cell fxHide fxShow.gt-md class="mat-cell-custom"
           *matCellDef="let transaction">{{ transaction.txnPaymentCode }} </td>
     </ng-container>
 
     <ng-container matColumnDef="txnSavingId">
-      <th mat-header-cell class="mat-cell-custom" fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>Tài khoản </th>
+      <th mat-header-cell class="mat-cell-custom" fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>{{'Transactions.Dialog.ViewFeePaidTransaction.txnSavingId'|translate}} </th>
       <td mat-cell fxHide fxShow.gt-md class="mat-cell-custom"
           *matCellDef="let transaction">{{ transaction.txnSavingId }} </td>
     </ng-container>
 
     <ng-container matColumnDef="paidAmount">
-      <th mat-header-cell class="mat-cell-custom"  *matHeaderCellDef mat-sort-header>Số tiền</th>
+      <th mat-header-cell class="mat-cell-custom"  *matHeaderCellDef mat-sort-header>{{'Transactions.Dialog.ViewFeePaidTransaction.paidAmount'|translate}}</th>
       <td mat-cell class="mat-cell-custom"
           *matCellDef="let transaction">{{ transaction.paidAmount | money }} </td>
     </ng-container>
 
     <ng-container matColumnDef="routingCode">
-      <th mat-header-cell class="mat-cell-custom"  *matHeaderCellDef mat-sort-header>Đối tác</th>
+      <th mat-header-cell class="mat-cell-custom"  *matHeaderCellDef mat-sort-header>{{'Transactions.Dialog.ViewFeePaidTransaction.routingCode'|translate}}</th>
       <td mat-cell class="mat-cell-custom"
           *matCellDef="let transaction">
           <label style="color: red; font-weight: bold;" for="">{{ transaction.routingCode}}</label> </td>
@@ -69,17 +69,17 @@
           <div class="example-element-description" fxLayout="column">
             <div>
                 <span style="font-weight: bold;">
-                  Thời gian :</span>&nbsp;
+                  {{'Transactions.Dialog.ViewFeePaidTransaction.createdDate2'|translate}}</span>&nbsp;
               &nbsp;{{element.createdDate |  date:'dd-MM-yyyy HH:mm:ss'}}
             </div>
             <div>
                 <span style="font-weight: bold;">
-                  P.thức :</span>&nbsp;
+                  {{'Transactions.Dialog.ViewFeePaidTransaction.txnPaymentCode2'|translate}}</span>&nbsp;
               &nbsp;{{element.txnPaymentCode}}
             </div>
             <div>
                 <span style="font-weight: bold;">
-                  Tài khoản :</span>&nbsp;
+                  {{'Transactions.Dialog.ViewFeePaidTransaction.txnSavingId2'|translate}}</span>&nbsp;
               &nbsp;{{element.txnSavingId }}
             </div>
           </div>
@@ -99,6 +99,6 @@
 <!--  <button mat-raised-button-->
 <!--  >{{'Shared_Component.DeleteDialog.buttonCancel'|translate}}</button>-->
   <button mat-raised-button color="warn"  [mat-dialog-close]="{ file: true }"
-  >Đóng</button>
+  >{{'Transactions.Dialog.ViewFeePaidTransaction.close'|translate}}</button>
   <!--  [mat-dialog-close]="{ file: true }"-->
 </mat-dialog-actions>

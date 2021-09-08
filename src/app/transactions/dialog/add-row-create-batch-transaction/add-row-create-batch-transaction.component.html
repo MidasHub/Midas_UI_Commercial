@@ -1,11 +1,11 @@
-<h1 mat-dialog-title>Thêm dòng giao dịch mới</h1>
+<h1 mat-dialog-title>{{ "Transactions.Dialog.AddRowCreateBatchTransaction.title" | translate }}</h1>
 <div mat-dialog-content [formGroup]="formDialog">
   <div fxLayout="row swap"
        fxLayoutAlign.lt-sm="center"
        fxLayoutGap="2%"
        fxLayout.lt-sm="column">
     <mat-form-field fxFlex="30%" *ngIf="formDialog.contains('productId')" class="input_custom">
-      <mat-label>Dịch vụ</mat-label>
+      <mat-label>{{ "Transactions.Dialog.AddRowCreateBatchTransaction.productId" | translate }}</mat-label>
       <mat-select required formControlName="productId">
         <mat-option *ngFor="let type of optionsProducts"
                     [value]="type.value">
@@ -14,32 +14,30 @@
       </mat-select>
     </mat-form-field>
     <mat-form-field fxFlex="30%" *ngIf="formDialog.contains('rate')">
-      <mat-label>Tỉ lệ phí </mat-label>
+      <mat-label>{{ "Transactions.Dialog.AddRowCreateBatchTransaction.rate" | translate }} </mat-label>
       <input
         matInput
         required
         formControlName="rate">
-      <mat-error *ngIf="formDialog.controls.rate.hasError('required')">Vui lòng thêm thông tin trước khi
-        thực
-        hiện
+      <mat-error *ngIf="formDialog.controls.rate.hasError('required')">
+        {{ "Transactions.Dialog.AddRowCreateBatchTransaction.alert" | translate }}
       </mat-error>
     </mat-form-field>
 
     <mat-form-field fxFlex="30%" *ngIf="formDialog.contains('amount')">
-      <mat-label>Số tiền giao dịch </mat-label>
+      <mat-label>{{ "Transactions.Dialog.AddRowCreateBatchTransaction.amount" | translate }} </mat-label>
       <input
         matInput
         required
         currencyMask
         formControlName="amount">
-      <mat-error *ngIf="formDialog.controls.amount.hasError('required')">Vui lòng thêm thông tin trước khi
-        thực
-        hiện
+      <mat-error *ngIf="formDialog.controls.amount.hasError('required')">
+        {{ "Transactions.Dialog.AddRowCreateBatchTransaction.alert" | translate }}
       </mat-error>
     </mat-form-field>
 
     <mat-form-field fxFlex="30%" *ngIf="formDialog.contains('terminalId')" class="input_custom">
-      <mat-label>Chọn máy bán hàng</mat-label>
+      <mat-label>{{ "Transactions.Dialog.AddRowCreateBatchTransaction.terminalId" | translate }}</mat-label>
       <mat-select required formControlName="terminalId">
         <mat-option *ngFor="let type of terminals"
                     [value]="type.terminalId">
@@ -49,96 +47,89 @@
     </mat-form-field>
 
     <mat-form-field fxFlex="30%" *ngIf="formDialog.contains('requestAmount')">
-      <mat-label>Số tiền đề xuất</mat-label>
+      <mat-label>{{ "Transactions.Dialog.AddRowCreateBatchTransaction.requestAmount" | translate }}</mat-label>
       <input
         matInput
         required
         currencyMask
         readonly
         formControlName="requestAmount">
-      <mat-error *ngIf="formDialog.controls.requestAmount.hasError('required')">Vui lòng thêm thông tin trước khi
-        thực
-        hiện
+      <mat-error *ngIf="formDialog.controls.requestAmount.hasError('required')">
+        {{ "Transactions.Dialog.AddRowCreateBatchTransaction.alert" | translate }}
       </mat-error>
     </mat-form-field>
 
 
     <mat-form-field fxFlex="30%" *ngIf="formDialog.contains('amountTransaction')">
-      <mat-label>Tiền thực chi</mat-label>
+      <mat-label>{{ "Transactions.Dialog.AddRowCreateBatchTransaction.amountTransaction" | translate }}</mat-label>
       <input
         matInput
         required
         currencyMask
         formControlName="amountTransaction">
-      <mat-error *ngIf="formDialog.controls.amountTransaction.hasError('required')">Vui lòng thêm thông tin trước khi
-        thực
-        hiện
+      <mat-error *ngIf="formDialog.controls.amountTransaction.hasError('required')">
+        {{ "Transactions.Dialog.AddRowCreateBatchTransaction.alert" | translate }}
       </mat-error>
     </mat-form-field>
 
 
     <mat-form-field fxFlex="30%" *ngIf="formDialog.contains('fee')">
-      <mat-label>Phí thu</mat-label>
+      <mat-label>{{ "Transactions.Dialog.AddRowCreateBatchTransaction.fee" | translate }}</mat-label>
       <input
         matInput
         required
         readonly
         currencyMask
         formControlName="fee">
-      <mat-error *ngIf="formDialog.controls.fee.hasError('required')">Vui lòng thêm thông tin trước khi
-        thực
-        hiện
+      <mat-error *ngIf="formDialog.controls.fee.hasError('required')">
+        {{ "Transactions.Dialog.AddRowCreateBatchTransaction.alert" | translate }}
       </mat-error>
     </mat-form-field>
 
     <mat-form-field fxFlex="30%" *ngIf="formDialog.contains('fee')">
-      <mat-label>Chọn C/M</mat-label>
+      <mat-label>{{ "Transactions.Dialog.AddRowCreateBatchTransaction.fee2" | translate }}</mat-label>
       <input
         matInput
         required
         formControlName="fee">
-      <mat-error *ngIf="formDialog.controls.fee.hasError('required')">Vui lòng thêm thông tin trước khi
-        thực
-        hiện
+      <mat-error *ngIf="formDialog.controls.fee.hasError('required')">
+        {{ "Transactions.Dialog.AddRowCreateBatchTransaction.alert" | translate }}
       </mat-error>
     </mat-form-field>
 
 
     <mat-form-field fxFlex="30%" *ngIf="formDialog.contains('batchNo')">
-      <mat-label>Batch No</mat-label>
+      <mat-label>{{ "Transactions.Dialog.AddRowCreateBatchTransaction.batchNo" | translate }}</mat-label>
       <input
         matInput
         required
         formControlName="batchNo">
-      <mat-error *ngIf="formDialog.controls.batchNo.hasError('required')">Vui lòng thêm thông tin trước khi
-        thực
-        hiện
+      <mat-error *ngIf="formDialog.controls.batchNo.hasError('required')">
+        {{ "Transactions.Dialog.AddRowCreateBatchTransaction.alert" | translate }}
       </mat-error>
     </mat-form-field>
 
     <mat-form-field fxFlex="30%" *ngIf="formDialog.contains('tid')">
-      <mat-label>Trace No</mat-label>
+      <mat-label>{{ "Transactions.Dialog.AddRowCreateBatchTransaction.tid" | translate }}</mat-label>
       <input
         matInput
         required
         formControlName="tid">
-      <mat-error *ngIf="formDialog.controls.tid.hasError('required')">Vui lòng thêm thông tin trước khi
-        thực
-        hiện
+      <mat-error *ngIf="formDialog.controls.tid.hasError('required')">
+        {{ "Transactions.Dialog.AddRowCreateBatchTransaction.alert" | translate }}
       </mat-error>
     </mat-form-field>
 
 
     <mat-form-field fxFlex="30%" *ngIf="formDialog.contains('terminalAmount')">
-      <mat-label>Số tiền trên bill</mat-label>
+      <mat-label>{{ "Transactions.Dialog.AddRowCreateBatchTransaction.terminalAmount" | translate }}</mat-label>
       <input
         matInput
         required
         currencyMask
         formControlName="terminalAmount">
-      <mat-error *ngIf="formDialog.controls.terminalAmount.hasError('required')">Vui lòng thêm thông tin trước khi
-        thực
-        hiện
+      <mat-error *ngIf="formDialog.controls.terminalAmount.hasError('required')">
+        {{ "Transactions.Dialog.AddRowCreateBatchTransaction.alert" | translate }}
       </mat-error>
     </mat-form-field>
 

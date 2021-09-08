@@ -1,4 +1,4 @@
-<h1 mat-dialog-title>Vui lòng chọn tài khoản chi tiền</h1>
+<h1 mat-dialog-title>{{'Transactions.Dialog.MakeFeeOnAdvance.selectAccount'|translate}}</h1>
 <div mat-dialog-content>
   <div fxLayout="row swap"
        fxLayoutAlign.lt-sm="center"
@@ -9,16 +9,14 @@
 
 
     <mat-form-field fxFlex="30%" *ngIf="formDialog.contains('amountPaid')">
-      <mat-label>Số tiền</mat-label>
+      <mat-label>{{'Transactions.Dialog.MakeFeeOnAdvance.amountPaid'|translate}}</mat-label>
       <input
         matInput
         required
         currencyMask
         formControlName="amountPaid">
-      <mat-error *ngIf="formDialog.controls.amountPaid.hasError('required')">Vui lòng thêm thông tin
-        trước khi
-        thực
-        hiện
+      <mat-error *ngIf="formDialog.controls.amountPaid.hasError('required')">
+        {{'Transactions.Dialog.MakeFeeOnAdvance.alert'|translate}}
       </mat-error>
     </mat-form-field>
 
@@ -36,7 +34,7 @@
 
     <mat-form-field fxFlex="30%" *ngIf="formDialog.contains('isAdvance')"
                     class="input_custom">
-      <mat-label>Loại chi</mat-label>
+      <mat-label>{{'Transactions.Dialog.MakeFeeOnAdvance.isAdvance'|translate}}</mat-label>
       <mat-select formControlName="isAdvance">
         <mat-option *ngFor="let type of advanceCashPaidFees"
                     [value]="type.value">
@@ -47,7 +45,7 @@
 
     <mat-form-field fxFlex="30%" *ngIf="formDialog.contains('savingAccountPaid')"
                     class="input_custom">
-      <mat-label>Tài khoản chi</mat-label>
+      <mat-label>{{'Transactions.Dialog.MakeFeeOnAdvance.savingAccountPaid'|translate}}</mat-label>
       <mat-select formControlName="savingAccountPaid">
         <mat-option *ngFor="let account of clientAccountsTeller"
                     [value]="account.id" [fxHide]="account.productId != 8">
@@ -65,40 +63,40 @@
 
 
       <ng-container matColumnDef="txnSavingResource">
-        <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>Mã</th>
+        <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>{{'Transactions.Dialog.MakeFeeOnAdvance.txnSavingResource'|translate}}</th>
         <td mat-cell fxHide fxShow.gt-md
             *matCellDef="let form"> {{form.txnSavingResource}}</td>
       </ng-container>
 
 
       <ng-container matColumnDef="createdDate">
-        <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>Thời gian</th>
+        <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>{{'Transactions.Dialog.MakeFeeOnAdvance.createdDate'|translate}}</th>
         <td mat-cell fxHide fxShow.gt-md
             *matCellDef="let form"> {{form.createdDate | date}} </td>
       </ng-container>
 
       <ng-container matColumnDef="txnSavingType">
-        <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>Loại</th>
+        <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>{{'Transactions.Dialog.MakeFeeOnAdvance.txnSavingType'|translate}}</th>
         <td mat-cell fxHide fxShow.gt-md
             *matCellDef="let form"> {{form.txnSavingType === 'W' ? 'Giảm' : 'Tăng'}}</td>
       </ng-container>
       <ng-container matColumnDef="txnPaymentCode">
-        <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>P.thức</th>
+        <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>{{'Transactions.Dialog.MakeFeeOnAdvance.txnPaymentCode'|translate}}</th>
         <td mat-cell fxHide fxShow.gt-md
             *matCellDef="let form"> {{form.txnPaymentCode}}</td>
       </ng-container>
       <ng-container matColumnDef="txnSavingId">
-        <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>TK</th>
+        <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>{{'Transactions.Dialog.MakeFeeOnAdvance.txnSavingId'|translate}}</th>
         <td mat-cell fxHide fxShow.gt-md
             *matCellDef="let form"> {{form.txnSavingId }}</td>
       </ng-container>
       <ng-container matColumnDef="paidAmount">
-        <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>Số tiền</th>
+        <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>{{'Transactions.Dialog.MakeFeeOnAdvance.paidAmount'|translate}}</th>
         <td mat-cell fxHide fxShow.gt-md
             *matCellDef="let form"> {{form.paidAmount | money}}</td>
       </ng-container>
       <ng-container matColumnDef="routingCode">
-        <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>Đối tác</th>
+        <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>{{'Transactions.Dialog.MakeFeeOnAdvance.routingCode'|translate}}</th>
         <td mat-cell fxHide fxShow.gt-md
             *matCellDef="let form"> <label style="color: red; font-weight: bold;" for="">{{form.routingCode}}</label></td>
       </ng-container>
