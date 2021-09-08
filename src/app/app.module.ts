@@ -1,17 +1,10 @@
 /** Angular Imports */
-import { NgModule } from '@angular/core';
+import { LOCALE_ID, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HttpClientModule, HttpClient } from '@angular/common/http'; // Jean
+import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { ServiceWorkerModule } from '@angular/service-worker';
 
-/** Tanslation Imports */
-import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
-import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-
-export function HttpLoaderFactory(http: HttpClient) {
-  return new TranslateHttpLoader(http, './assets/i18n/', '.json');
-}
 
 /** Environment Configuration */
 import { environment } from 'environments/environment';
@@ -62,12 +55,18 @@ import { CommonHttpParams } from './shared/CommonHttpParams';
 
 /**
  * Import Vietnamese locale for built-in pipe like DatePipe, CurrencyPipe...
+ * and import the Translate Module (@ngx-translate)
  */
-// import { registerLocaleData } from '@angular/common';
-// import localeVi from '@angular/common/locales/vi';
-// import { LOCALE_ID } from '@angular/core';
+import { registerLocaleData } from '@angular/common';
+import localeVi from '@angular/common/locales/vi';
 
-// registerLocaleData(localeVi, 'vi');
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { TranslateHttpLoader} from '@ngx-translate/http-loader';
+
+registerLocaleData(localeVi, 'vi');
+export function HttpLoaderFactory(http: HttpClient) {
+  return new TranslateHttpLoader(http, './assets/i18n/', '.json');
+}
 
 /**
  * Gooogle Firebase
@@ -147,10 +146,10 @@ import { TourMatMenuModule } from 'ngx-tour-md-menu';
   declarations: [WebAppComponent, NotFoundComponent],
   providers: [
     CommonHttpParams,
-    // {
-    //   provide: LOCALE_ID,
-    //   useValue: 'vi',
-    // },
+    {
+      provide: LOCALE_ID,
+      useValue: 'vi',
+    },
     // FireBaseMessagingService,
     // GoogleAnalyticsService,
     AsyncPipe,
