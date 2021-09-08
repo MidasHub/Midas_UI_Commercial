@@ -7,7 +7,7 @@
       <mat-card-content>
         <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
           <mat-form-field fxFlex="98%">
-            <mat-label>Loại điều chuyển</mat-label>
+            <mat-label>{{ "Terminal_Component.FormTransfer.transferType" | translate }}</mat-label>
             <mat-select required formControlName="transferType">
               <mat-option *ngFor="let option of transferOptions" [value]="option.code">
                 {{ option.value }}
@@ -46,7 +46,7 @@
               >Nhập Phí Pos áp dụng cho đơn vị nhận máy!</mat-error
             > -->
           <mat-card fxFlex="98%" *ngIf="transferTerminalForm.contains('rate')">
-            <label> Phí máy theo loại thẻ </label>
+            <label> {{ "Terminal_Component.FormTransfer.costPercentage" | translate }} </label>
             <mat-card-content>
               <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
                 <mat-form-field fxFlex="23%" *ngFor="let rateObject of listRateDefault">
@@ -67,19 +67,19 @@
               </mat-option>
             </mat-select>
             <mat-error *ngIf="transferTerminalForm.controls.officeId.hasError('required')"
-              >Cần chọn chi nhánh trước!</mat-error
+              >{{ "Terminal_Component.FormTransfer.errOfficeToTransfer" | translate }}</mat-error
             >
           </mat-form-field>
 
           <mat-form-field *ngIf="transferTerminalForm.contains('transferTarget')" fxFlex="98%">
-            <mat-label>Đối tác chuyển đến</mat-label>
+            <mat-label>{{ "Terminal_Component.FormTransfer.transferTarget" | translate }}</mat-label>
             <mat-select [disabled]="!isChoosePartner" required formControlName="transferTarget">
               <mat-option *ngFor="let partner of listPartner" [value]="partner.externalId">
                 {{ showOptionPartnerTransfer(partner.externalId, partner.displayName) }}
               </mat-option>
             </mat-select>
             <mat-error *ngIf="transferTerminalForm.controls.transferTarget.hasError('required')"
-              >Cần chọn đối tác trước!</mat-error
+              >{{ "Terminal_Component.FormTransfer.errtransferTarget" | translate }}</mat-error
             >
           </mat-form-field>
         </div>

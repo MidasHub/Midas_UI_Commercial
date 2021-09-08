@@ -79,7 +79,7 @@
           </mat-form-field>
 
           <mat-form-field *ngIf="editTerminalForm.contains('bankCode')" fxFlex="48%">
-            <mat-label>Ngân hàng</mat-label>
+            <mat-label>{{ "Terminal_Component.FormTerminal.labelBank" | translate }}</mat-label>
             <mat-select required [disabled]="!isOwner" formControlName="bankCode">
               <mat-option *ngFor="let bank of banks" [value]="bank.bankCode">
                 {{ bank.bankName }}
@@ -108,7 +108,7 @@
           </mat-form-field>
 
           <mat-form-field *ngIf="editTerminalForm.contains('typeOfTransaction')" fxFlex="25%">
-            <mat-label>Thực hiện cho giao dịch:</mat-label>
+            <mat-label>{{ "Terminal_Component.FormTerminal.labelTransaction" | translate }}</mat-label>
             <mat-select formControlName="typeOfTransaction">
               <mat-option *ngFor="let t of typeOfTransactions" [value]="t.value">
                 {{ t.valueDesc }}
@@ -127,7 +127,7 @@
           <mat-card class="card-custom" fxFlex="100%" >
             <mat-card-header>
               <mat-card-title
-                ><span class="material-icons">perm_contact_calendar</span>&nbsp; Rule giao dịch:
+                ><span class="material-icons">perm_contact_calendar</span>&nbsp; {{ "Terminal_Component.FormTerminal.labelTransactionRule" | translate }}
               </mat-card-title>
             </mat-card-header>
             <mat-card-content fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
@@ -138,16 +138,16 @@
               class="padding-fix"
               class="activeCheckBox"
               >
-              Tự động nhập hoá đơn
+              {{ "Terminal_Component.FormTerminal.labelAutoInputBill" | translate }}
             </mat-checkbox>
               <mat-form-field *ngIf="editTerminalForm.contains('timeChargeValid')" fxFlex>
-                <mat-label>Số lần giao dịch cùng ngân hàng/ngày</mat-label>
+                <mat-label>{{ "Terminal_Component.FormTerminal.labelAutoInputBill" | translate }}</mat-label>
                 <input
                   matInput
                   type="number"
                   [readonly]="!isOwner"
                   formControlName="timeChargeValid"
-                  matTooltip="Đây là cài đặt số mà thẻ được phép cà vào máy bán hàng này và các máy bán hàng khác có cùng một ngân hàng phát hàng"
+                  [matTooltip]="'Terminal_Component.FormTerminal.ToolTipSetting'| translate"
                 />
                 <mat-error
                   *ngIf="editTerminalForm.controls.timeChargeValid.hasError('required')"
@@ -168,7 +168,7 @@
                   [disabled]="!isOwner"
                   formControlName="banksCheck"
                   multiple
-                  matTooltip="Đây là ô chọn các ngân hàng mà thẻ của nó sẽ không được phép thực hiện giao dịch trên máy bán hàng này"
+                  [matTooltip]="'Terminal_Component.FormTerminal.ToolTipbankName'| translate"
                 >
                   <mat-option *ngFor="let bank of banks" [value]="bank.bankCode">
                     {{ bank.bankName }}
@@ -182,7 +182,7 @@
                   [disabled]="!isOwner"
                   multiple
                   formControlName="cardsCheck"
-                  matTooltip="Đây là ô chọn các loại thẻ sẽ không được phép thực hiện giao dịch trên máy bán hàng này"
+                  [matTooltip]="'Terminal_Component.FormTerminal.ToolTipcardsCheck'| translate"
                 >
                   <mat-option *ngFor="let type of cardTypes" [value]="type.code">
                     {{ type.description }}
@@ -198,7 +198,7 @@
         <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
           <mat-form-field *ngIf="editTerminalForm.contains('costPercentage')" fxFlex="10%">
             <mat-label>{{ "Terminal_Component.FormTerminal.labelCostPercentage" | translate }}</mat-label>
-            <input matInput [readonly]="!isOwner" formControlName="costPercentage" type="number" matTooltip="Phí phải trả cho Đối tác máy"/>
+            <input matInput [readonly]="!isOwner" formControlName="costPercentage" type="number" [matTooltip]="'Terminal_Component.FormTerminal.ToolTipcostPercentage'| translate"/>
             <mat-error
               *ngIf="editTerminalForm.controls.costPercentage.hasError('min')"
               [innerHTML]="'Terminal_Component.FormTerminal.labelMsgOutOffMin' | translate"
@@ -216,7 +216,7 @@
               required
               formControlName="cogsPercentage"
               type="number"
-              matTooltip="Phí áp dụng cho các chi nhánh"
+              [matTooltip]="'Terminal_Component.FormTerminal.ToolTipcogsPercentage'| translate"
             />
             <mat-error
               *ngIf="editTerminalForm.controls.cogsPercentage.hasError('min')"
@@ -234,7 +234,7 @@
               required
               formControlName="txnRateMin"
               type="number"
-              matTooltip="Phí thấp nhất được phép áp dụng cho khách hàng"
+              [matTooltip]="'Terminal_Component.FormTerminal.ToolTiptxnRateMin'| translate"
             />
             <mat-error
               *ngIf="editTerminalForm.controls.txnRateMin.hasError('min')"
@@ -252,7 +252,7 @@
               required
               formControlName="txnRateMax"
               type="number"
-              matTooltip="Phí thấp nhất được phép áp dụng cho khách hàng"
+              [matTooltip]="'Terminal_Component.FormTerminal.ToolTiptxnRateMax'| translate"
             />
             <mat-error
               *ngIf="editTerminalForm.controls.txnRateMax.hasError('min')"
@@ -271,7 +271,7 @@
               matInput
               required
               formControlName="maxLimitAmount"
-              matTooltip="Hạn mức giao dịch tối đa cho 1 lần cà"
+              [matTooltip]="'Terminal_Component.FormTerminal.ToolTipmaxLimitAmount'| translate"
             />
             <mat-error
               *ngIf="editTerminalForm.controls.maxLimitAmount.hasError('min')"
@@ -285,7 +285,7 @@
               required
               [readonly]="!isOwner"
               formControlName="levelLimit"
-              matTooltip="Số lần mà một thẻ được phép cà lên máy bán hàng này trong 1 ngày"
+              [matTooltip]="'Terminal_Component.FormTerminal.ToolTiplevelLimit'| translate"
             />
             <mat-error
               *ngIf="editTerminalForm.controls.levelLimit.hasError('min')"
@@ -297,7 +297,7 @@
             mat-raised-button
             color="primary"
             (click)="setDefaultFeeSettingPos()"
-            matTooltip="Khi phần bấm nút này, phần phí được thiết lập bên trái ngay lập tức sẽ được áp dụng cho tất cả các chi nhánh"
+            [matTooltip]="'Terminal_Component.FormTerminal.ToolTipsetFeeAllBranch'| translate"
           >
             <svg
               width="1em"
@@ -331,7 +331,7 @@
             mat-raised-button
             color="primary"
             (click)="setDefaultFeeSettingPosForOffice()"
-            matTooltip="Khi phần bấm nút này, phần phí được thiết lập bên trên ngay lập tức sẽ được áp dụng cho chi nhánh được chọn ở ô bên trái."
+            [matTooltip]="'Terminal_Component.FormTerminal.ToolTipsetFeeSelectedBranch'| translate"
           >
             <svg
               width="1em"
@@ -350,7 +350,7 @@
                 d="M5 10.5a.5.5 0 0 0 .5.5h5a.5.5 0 0 0 0-1H6.707l8.147-8.146a.5.5 0 0 0-.708-.708L6 9.293V5.5a.5.5 0 0 0-1 0v5z"
               />
             </svg>
-            Áp dụng cho chi nhánh
+            [matTooltip]="'Terminal_Component.FormTerminal.applyForOffice'| translate"
           </button>
 
           <button mat-raised-button (click)="reset()">
@@ -405,7 +405,7 @@
             </ng-container>
 
             <ng-container matColumnDef="FeeCost">
-              <mat-header-cell *matHeaderCellDef matTooltip="Phí phải trả cho Đối tác máy">
+              <mat-header-cell *matHeaderCellDef [matTooltip]="'Terminal_Component.FormTerminal.ToolTipFeeCost'| translate">
                 {{ "Terminal_Component.FormTerminal.tableFee.FeeCost" | translate }}
               </mat-header-cell>
               <mat-cell *matCellDef="let element; let i = index">
@@ -424,7 +424,7 @@
             </ng-container>
 
             <ng-container matColumnDef="FeeCOGS">
-              <mat-header-cell *matHeaderCellDef matTooltip="Phí áp dụng cho các chi nhánh">
+              <mat-header-cell *matHeaderCellDef [matTooltip]="'Terminal_Component.FormTerminal.ToolTipFeeCOGS'| translate">
                 {{ "Terminal_Component.FormTerminal.tableFee.FeeCogs" | translate }}
               </mat-header-cell>
               <mat-cell *matCellDef="let element; let i = index">
@@ -442,7 +442,7 @@
             </ng-container>
 
             <ng-container matColumnDef="FeeMin">
-              <mat-header-cell *matHeaderCellDef matTooltip="Phí thấp nhất được phép áp dụng cho khách hàng">
+              <mat-header-cell *matHeaderCellDef [matTooltip]="'Terminal_Component.FormTerminal.ToolTipFeeMin'| translate">
                 {{ "Terminal_Component.FormTerminal.tableFee.FeeMin" | translate }}
               </mat-header-cell>
               <mat-cell *matCellDef="let element; let i = index">
@@ -459,7 +459,7 @@
               </mat-cell>
             </ng-container>
 
-            <ng-container matColumnDef="FeeMax" matTooltip="Phí cao nhất được phép áp dụng cho khách hàng">
+            <ng-container matColumnDef="FeeMax" [matTooltip]="'Terminal_Component.FormTerminal.ToolTipFeeMax'| translate">
               <mat-header-cell *matHeaderCellDef>
                 {{ "Terminal_Component.FormTerminal.tableFee.FeeMax" | translate }}
               </mat-header-cell>

@@ -4,18 +4,18 @@
   <mat-card-header>
     <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column" [formGroup]="formFilter">
       <mat-form-field fxFlex="31%">
-        <mat-label>Chi nhánh</mat-label>
+        <mat-label>{{ "Terminal_Component.ViewLimitTerminal.officeName" | translate }}</mat-label>
         <input matInput formControlName="officeName">
       </mat-form-field>
 
       <mat-form-field fxFlex="31%">
-        <mat-label>Tên máy</mat-label>
+        <mat-label>{{ "Terminal_Component.ViewLimitTerminal.terminalName" | translate }}</mat-label>
         <input matInput formControlName="terminalName">
       </mat-form-field>
       <div>
         <div style="margin-top: 15px;" fxLayout="row">
           <div style="margin: 5px; margin-top: 20px;">
-            <span>Tổng cộng: &nbsp;</span> {{terminalFilter.length}}
+            <span>{{ "Terminal_Component.ViewLimitTerminal.length" | translate }} &nbsp;</span> {{terminalFilter.length}}
           </div>
         </div>
       </div>
@@ -32,28 +32,28 @@
           <img src="assets/images/icons/transaction_total.svg" />
           <div fxLayout="column">
             <span class="sum-value">{{ terminalFilter.length }}</span>
-            <span class="sum-lable" >&nbsp;Tổng cộng</span>
+            <span class="sum-lable" >&nbsp;{{ "Terminal_Component.ViewLimitTerminal.terminalFilterLength" | translate }}</span>
           </div>
         </div>
         <div fxLayout="row " fxFlex="25%" class="sum-item">
           <img src="assets/images/icons/pnlAmount.svg" />
           <div  fxLayout="column">
             <span class="sum-value">{{ totalLimitAmount | money }}</span>
-            <span class="sum-label">&nbsp;Tổng hạn mức</span>
+            <span class="sum-label">&nbsp;{{ "Terminal_Component.ViewLimitTerminal.totalLimitAmount" | translate }}</span>
           </div>
         </div>
         <div fxLayout="row " fxFlex="25%" class="sum-item">
           <img src="assets/images/icons/money.svg" />
           <div fxLayout="column">
             <span class="sum-value">{{ totalUsedAmount | money }}</span>
-            <span class="sum-label">&nbsp;Tổng đã dùng</span>
+            <span class="sum-label">&nbsp;{{ "Terminal_Component.ViewLimitTerminal.totalUsedAmount" | translate }}</span>
           </div>
         </div>
         <div fxLayout="row " fxFlex="25%" class="sum-item">
           <img src="assets/images/icons/transaction.svg" />
           <div fxLayout="column">
             <span class="sum-value">{{ totalBalanceAmount | money }}</span>
-            <span class="sum-label">&nbsp;Tổng khả dụng</span>
+            <span class="sum-label">&nbsp;{{ "Terminal_Component.ViewLimitTerminal.totalBalanceAmount" | translate }}</span>
           </div>
         </div>
       </mat-card-content>
@@ -70,26 +70,26 @@
            [dataSource]="terminalList" >
 
       <ng-container matColumnDef="officeName">
-        <th  mat-header-cell *matHeaderCellDef mat-sort-header> Chi nhánh</th>
+        <th  mat-header-cell *matHeaderCellDef mat-sort-header> {{ "Terminal_Component.ViewLimitTerminal.officeName" | translate }}</th>
         <td  mat-cell
             *matCellDef="let terminal"> {{ terminal.officeName}}
           </td>
       </ng-container>
 
       <ng-container matColumnDef="terminalId">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Mã máy</th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ "Terminal_Component.ViewLimitTerminal.terminalId" | translate }}</th>
         <td mat-cell
             *matCellDef="let terminal"> {{ terminal.terminalId}} </td>
       </ng-container>
 
       <ng-container matColumnDef="terminalName">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Tên máy</th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ "Terminal_Component.ViewLimitTerminal.terminalName" | translate }}</th>
         <td mat-cell
             *matCellDef="let terminal"> {{ terminal.terminalName}} </td>
       </ng-container>
 
       <ng-container matColumnDef="limitDefault">
-        <th fxHide fxShow.gt-sm mat-header-cell *matHeaderCellDef mat-sort-header> Hạn mức</th>
+        <th fxHide fxShow.gt-sm mat-header-cell *matHeaderCellDef mat-sort-header> {{ "Terminal_Component.ViewLimitTerminal.limitDefault" | translate }}</th>
         <td fxHide fxShow.gt-sm mat-cell
             *matCellDef="let terminal">
             {{ terminal.limitAmountDefault  | money }}
@@ -97,7 +97,7 @@
       </ng-container>
 
       <ng-container matColumnDef="limitMovement">
-        <th fxHide fxShow.gt-sm mat-header-cell *matHeaderCellDef mat-sort-header> Đã dùng</th>
+        <th fxHide fxShow.gt-sm mat-header-cell *matHeaderCellDef mat-sort-header> {{ "Terminal_Component.ViewLimitTerminal.limitMovement" | translate }}</th>
         <td fxHide fxShow.gt-sm mat-cell
             *matCellDef="let terminal">
             {{ terminal.limitAmountMovement  | money }}
@@ -105,7 +105,7 @@
       </ng-container>
 
       <ng-container matColumnDef="limitRemain">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Khả dụng</th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ "Terminal_Component.ViewLimitTerminal.limitRemain" | translate }}</th>
         <td mat-cell
             *matCellDef="let terminal">
             {{ terminal.limitRemain  | money }}
@@ -117,11 +117,11 @@
         <td mat-cell fxShow fxHide.gt-md *matCellDef="let element" [attr.colspan]="displayedColumns.length">
           <div class="example-element-detail" [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
             <ul class="example-element-description" fxLayout="column">
-              <li><span style="font-weight: bold;">Mã máy :</span>&nbsp;{{ element.terminalId }}</li>
-              <li><span style="font-weight: bold;">Tên máy :</span> {{ element.terminalName }}</li>
-              <li><span style="font-weight: bold;">Hạn mức :</span> {{ element.limitAmountDefault | money }}</li>
-              <li><span style="font-weight: bold;">Đã sử dụng :</span>&nbsp; &nbsp;{{element.limitAmountMovement | money}}</li>
-              <li><span style="font-weight: bold;">Hạn mức còn lại :</span>&nbsp; &nbsp;{{ element.limitRemain | money }}</li>
+              <li><span style="font-weight: bold;">{{ "Terminal_Component.ViewLimitTerminal.terminalId2" | translate }}</span>&nbsp;{{ element.terminalId }}</li>
+              <li><span style="font-weight: bold;">{{ "Terminal_Component.ViewLimitTerminal.terminalName2" | translate }}</span> {{ element.terminalName }}</li>
+              <li><span style="font-weight: bold;">{{ "Terminal_Component.ViewLimitTerminal.limitAmountDefault2" | translate }}</span> {{ element.limitAmountDefault | money }}</li>
+              <li><span style="font-weight: bold;">{{ "Terminal_Component.ViewLimitTerminal.limitAmountMovement" | translate }}</span>&nbsp; &nbsp;{{element.limitAmountMovement | money}}</li>
+              <li><span style="font-weight: bold;">{{ "Terminal_Component.ViewLimitTerminal.limitRemain2" | translate }}</span>&nbsp; &nbsp;{{ element.limitRemain | money }}</li>
             </ul>
           </div>
         </td>
