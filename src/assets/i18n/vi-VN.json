@@ -2910,7 +2910,7 @@
       "ToolTiptxnRateMax": "Phí thấp nhất được phép áp dụng cho khách hàng",
       "ToolTipmaxLimitAmount": "Hạn mức giao dịch tối đa cho 1 lần cà",
       "ToolTiplevelLimit": "Số lần mà một thẻ được phép cà lên máy bán hàng này trong 1 ngày",
-      "ToolTipsetFee": "Khi phần bấm nút này, phần phí được thiết lập bên trái ngay lập tức sẽ được áp dụng cho tất cả các chi nhánh",
+      "ToolTipsetFeeAllBranch": "Khi phần bấm nút này, phần phí được thiết lập bên trái ngay lập tức sẽ được áp dụng cho tất cả các chi nhánh",
       "ToolTipsetFeeSelectedBranch": "Khi phần bấm nút này, phần phí được thiết lập bên trên ngay lập tức sẽ được áp dụng cho chi nhánh được chọn ở ô bên trái.",
       "applyForOffice": "Áp dụng cho chi nhánh",
       "ToolTipFeeCost": "Phí phải trả cho Đối tác máy",
@@ -6215,7 +6215,7 @@
     }
   },
   "ProfileComponent": {
-    "btnPermissions": "btnPermissions",
+    "btnPermissions": "Permissions",
     "btnChangePassword": "Change Password",
     "userId": "User Id",
     "username": "User Name",
@@ -7583,6 +7583,7 @@
       "desc": "Mô tả",
       "typeCheckValid": "Kiểm tra giao dịch thuộc",
       "limit": "limit",
+      "Slide": "Slide to update status!",
       "titleUpdate": "Cập nhật thông tin",
       "titleView": "Xem hộ kinh doanh đã liên kết"
     }
