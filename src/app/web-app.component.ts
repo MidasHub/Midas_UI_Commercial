@@ -35,6 +35,8 @@ const log = new Logger('Midas');
 /** Device detector */
 import { DeviceDetectorService } from 'ngx-device-detector';
 import { TourService } from 'ngx-tour-core';
+import { SwUpdate } from '@angular/service-worker';
+import { AddToHomeScreenService } from './service-worker/add-to-home-screen.service';
 
 
 /**
@@ -51,6 +53,12 @@ export class WebAppComponent implements OnInit {
   deviceInfo: any;
   public lat?: String;
   public lng?: String;
+
+  /** Show add to home screen */
+  @HostListener('window:beforeinstallprompt', ['$event'])
+  onEventFire(e: any) {
+    this.a2hs.deferredPrompt = e;
+  }
 
   /**
    * @param {Router} router Router for navigation.
@@ -76,7 +84,9 @@ export class WebAppComponent implements OnInit {
     private authenticationService: AuthenticationService,
     // private messagingService: FireBaseMessagingService,
     private deviceService: DeviceDetectorService,
-    private tourService: TourService
+    private tourService: TourService,
+    private update: SwUpdate,
+    private a2hs: AddToHomeScreenService
   ) {
     this.router.events.pipe(filter((event) => event instanceof NavigationEnd)).subscribe((event) => {
       /** START : Code to Track Page View  */
@@ -85,8 +95,9 @@ export class WebAppComponent implements OnInit {
     });
   }
 
+
   // Variables for Firebase messsage
-  message: any;
+  // message: any;
 
   /**
    * Initial Setup:
@@ -214,6 +225,15 @@ export class WebAppComponent implements OnInit {
     // Get client location
     this.getLocation();
     this.loadDeviceData();
+
+    // Check update for service worker
+    if (this.update.isEnabled) {
+      this.update.available.subscribe(() => {
+        if (confirm('New version available. Load New Version?')) {
+          window.location.reload();
+        }
+      });
+    }
     // ----- End ngOnInit
   }
 

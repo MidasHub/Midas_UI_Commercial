@@ -5,7 +5,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { ServiceWorkerModule } from '@angular/service-worker';
 
-
 /** Environment Configuration */
 import { environment } from 'environments/environment';
 
@@ -61,7 +60,7 @@ import { registerLocaleData } from '@angular/common';
 import localeVi from '@angular/common/locales/vi';
 
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
-import { TranslateHttpLoader} from '@ngx-translate/http-loader';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
 registerLocaleData(localeVi, 'vi');
 export function HttpLoaderFactory(http: HttpClient) {
@@ -81,11 +80,12 @@ import { AsyncPipe } from '@angular/common';
 
 /** Tour guide for self study */
 import { TourMatMenuModule } from 'ngx-tour-md-menu';
+import { PromptUpdateService } from './service-worker/prompt-update.service';
+import { LogUpdateService } from './service-worker/log-update.service';
+import { CheckUpdateService } from './service-worker/check-update.service';
 
 /** Google Analytics  */
 // import { GoogleAnalyticsService } from './firebase/google-analytics.service';
-
-
 
 /**
  * App Module
@@ -97,14 +97,17 @@ import { TourMatMenuModule } from 'ngx-tour-md-menu';
     BrowserModule,
     BrowserAnimationsModule,
     HttpClientModule,
-    ServiceWorkerModule.register('./ngsw-worker.js', { enabled: environment.production }),
+    ServiceWorkerModule.register('./ngsw-worker.js', {
+      enabled: environment.production,
+      registrationStrategy: 'registerWhenStable:30000',
+    }),
     TranslateModule.forRoot({
       defaultLanguage: 'vi-VN',
       loader: {
         provide: TranslateLoader,
         useFactory: HttpLoaderFactory,
         deps: [HttpClient],
-      }
+      },
     }),
     TourMatMenuModule.forRoot(),
     // AngularFireDatabaseModule,
@@ -150,6 +153,9 @@ import { TourMatMenuModule } from 'ngx-tour-md-menu';
       provide: LOCALE_ID,
       useValue: 'vi',
     },
+    PromptUpdateService,
+    LogUpdateService,
+    CheckUpdateService,
     // FireBaseMessagingService,
     // GoogleAnalyticsService,
     AsyncPipe,

@@ -9,7 +9,12 @@ import { map } from 'rxjs/operators';
 /** Custom Services */
 import { ProgressBarService } from '../progress-bar/progress-bar.service';
 import { TourService } from 'ngx-tour-md-menu';
-
+import { DeviceDto } from './devicedto';
+import { AlertService } from '../alert/alert.service';
+import { SwPush } from '@angular/service-worker';
+import { environment } from 'environments/environment';
+import { HttpClient } from '@angular/common/http';
+import { Credentials } from '../authentication/credentials.model';
 
 /**
  * Shell component.
@@ -33,6 +38,13 @@ export class ShellComponent implements OnInit, OnDestroy {
   /** Subscription to progress bar. */
   progressBar$!: Subscription;
 
+  /** Variable for Notification Push Api */
+  private device: DeviceDto = new DeviceDto();
+  public subscription$ = this.swPush.subscription;
+  public isEnabled = this.swPush.isEnabled;
+  private VAPID_PUBLIC_KEY = '';
+  private credential: Credentials ;
+
   /**
    * @param {BreakpointObserver} breakpointObserver Breakpoint Observer to detect screen size.
    * @param {ProgressBarService} progressBarService Progress Bar Service.
@@ -44,15 +56,47 @@ export class ShellComponent implements OnInit, OnDestroy {
     private progressBarService: ProgressBarService,
     private cdr: ChangeDetectorRef,
     private tourService: TourService,
+    private swPush: SwPush,
+    private alertService: AlertService,
+    private http: HttpClient
     // private detectDevice: DeviceDetectorService
   ) {
     // this.isDesktop = this.detectDevice.isDesktop();
+    this.credential = JSON.parse(localStorage.getItem('Credentials') || sessionStorage.getItem('Credentials') ||'{}');
+    /**
+     * log info about SW
+     * and use SW to listen to push message
+     */
+     console.log('SW in navigator: ', 'serviceWorker' in navigator);
+     console.log('SwPush is Enable:: ', this.swPush.isEnabled);
+     this.swPush.messages.subscribe((msg) => this.handlePushMessage(msg));
+     this.swPush.notificationClicks.subscribe((options) =>
+       this.handlePushNotificationClick(options)
+     );
   }
 
   /**
    * Subscribes to progress bar to update its mode.
    */
   ngOnInit() {
+    /** Start Push API */
+    if (this.credential) {
+
+      this.http
+        .disableApiPrefix()
+        .get(environment.NotiGatewayURL + '/publicSigningKeyBase64')
+        .subscribe(
+          (res: any) => {
+            if (res.result) {
+              this.VAPID_PUBLIC_KEY = res.result;
+            }
+            console.log('deviceID:', navigator.mediaDevices.getSupportedConstraints.toString());
+          },
+          (e) => console.log('error: ', e),
+          () => this.requestPermission()
+        );
+      }
+
     this.progressBar$ = this.progressBarService.updateProgressBar.subscribe((mode: string) => {
       this.progressBarMode = mode;
       this.cdr.detectChanges();
@@ -165,5 +209,90 @@ export class ShellComponent implements OnInit, OnDestroy {
    */
   ngOnDestroy() {
     this.progressBar$.unsubscribe();
+  }
+
+  /** sw Message Push function */
+  handlePushNotificationClick(options: {
+    action: string;
+    notification: NotificationOptions & { title: string };
+  }): void {
+    switch (options.action) {
+      case 'open': {
+        // this.router.navigate(['notes', notification.data.noteID, { queryParams: { pushNotification: true } }]);
+        this.alertService.alert({ type: ' Thông báo ', message: 'open' });
+        break;
+      }
+      case 'cancel': {
+        this.alertService.alert({ type: ' Thông báo ', message: 'cancel' });
+        break;
+      }
+      default: {
+        // this.router.navigate(['notes', notification.data.noteID, { queryParams: { pushNotification: true } }]);
+        this.alertService.alert({ type: ' Thông báo ', message: 'default' });
+        break;
+      }
+    }
+  }
+
+  handlePushMessage({ notification }: any): void {
+    console.log(notification);
+    this.alertService.alert({
+      type: `Push notification title: ${notification.title}`,
+      message: `Message: ${notification.body}`,
+    });
+  }
+
+  async requestPermission() {
+    console.log('Request starting...');
+    console.log('Request Key: ', this.VAPID_PUBLIC_KEY);
+
+    try {
+      const sub = await this.swPush.requestSubscription({
+        serverPublicKey: this.VAPID_PUBLIC_KEY,
+      });
+      // TODO: Send to server.
+
+      // const subJSON = sub.toJSON();
+
+      this.device.username = this.credential.username;
+      this.device.officeName = this.credential.officeName;
+      this.device.subscription = sub.toJSON();
+      const subJSON = JSON.parse(JSON.stringify(this.device));
+
+      // if (subJSON.expirationTime === undefined) {
+      //   subJSON.expirationTime = null;
+      // }
+      console.log('subJson', subJSON);
+      await this.http
+        .post(environment.NotiGatewayURL + '/deviceSubscribe', subJSON)
+        .subscribe((res) => console.log('subscribe result:', res));
+      return this.alertService.alert({
+        type: 'Notification',
+        message: 'You are subscribed now!',
+      });
+    } catch (err) {
+      console.error('Could not subscribe due to:', err);
+      this.alertService.alert({
+        type: 'Notification',
+        message: 'Subscription fail',
+      });
+    }
+  }
+  requestUnsubscribe() {
+    this.swPush
+      .unsubscribe()
+      .then(() => {
+        this.alertService.alert({
+          type: 'Thông báo',
+          message: 'You are unsubscribed',
+        });
+      })
+      .catch((e) => {
+        console.error(e);
+        this.alertService.alert({
+          type: 'Thông báo',
+          message: 'unsubscribe failed',
+        });
+      });
   }
 }
