@@ -203,7 +203,7 @@ export class WebAppComponent implements OnInit {
     if (!environment.production) {
       if (!sessionStorage.getItem('midasServers')) {
         this.settingsService.setServers([
-          'https://staging.kiotthe.com',
+          'https://staging.kiotthe.app',
           'https://training.kiotthe.com',
           'https://midas.kiotthe.com',
           'https://localhost:9443',
@@ -215,7 +215,7 @@ export class WebAppComponent implements OnInit {
 
       if (!sessionStorage.getItem('midasBillposServers')) {
         this.settingsService.setBillposServers([
-          'https://staging.kiotthe.com',
+          'https://staging.kiotthe.app',
           'https://training.kiotthe.com',
           'https://midas.kiotthe.com',
           'https://hdcredit.kiotthe.com',

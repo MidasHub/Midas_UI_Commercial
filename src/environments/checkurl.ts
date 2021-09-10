@@ -1,6 +1,6 @@
 const subdomain = window.location.hostname.split('.')[0];
 
-const tenant = 'demo';
+const tenant = 'staging';
 const billpostenant = 'default';
 const ictenant = 'default';
 // let defaultIcURL = "http://localhost:8088";
