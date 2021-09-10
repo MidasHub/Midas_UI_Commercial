@@ -7,7 +7,7 @@
         <textarea formControlName="note" matInput placeholder="Write a note ...."></textarea>
       </mat-form-field>
       <button mat-raised-button fxFlex color="primary" [disabled]="!noteForm.valid" *midasHasPermission="'CREATE_GROUPNOTE'">
-        <fa-icon icon="plus"></fa-icon>&nbsp;&nbsp; Add
+        <fa-icon icon="plus"></fa-icon>&nbsp;&nbsp; {{ "ShareButton.AddEng" | translate }}
       </button>
     </form>
   </div>
@@ -16,8 +16,8 @@
       <fa-icon icon="sticky-note" matListIcon></fa-icon>
       <h3 matLine>{{centerNote.note}} </h3>
       <p matLine>
-        <span>Created by: {{centerNote.createdByUsername}}</span><br />
-        <span>Date: {{centerNote.createdOn | date}}</span>
+        <span>{{ "CentersComponent.CentersViewComponent.GeneralTabComponent.createdByUsername" | translate }}{{centerNote.createdByUsername}}</span><br />
+        <span>{{ "CentersComponent.CentersViewComponent.GeneralTabComponent.createdOn" | translate }}{{centerNote.createdOn | date}}</span>
       </p>
       <div fxLayout="row" fxLayoutAlign="flex-start">
         <button mat-button color="primary" (click)="editNote(centerNote.id,centerNote.note,i)">

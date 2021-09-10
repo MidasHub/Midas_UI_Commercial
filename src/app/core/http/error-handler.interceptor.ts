@@ -31,6 +31,7 @@ export class ErrorHandlerInterceptor implements HttpInterceptor {
    * Intercepts a Http request and adds a default error handler.
    */
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    log.debug('HTTP errorHandle starting ... ', request);
     return next.handle(request).pipe(catchError(error => this.handleError(error)));
   }
 
@@ -39,6 +40,7 @@ export class ErrorHandlerInterceptor implements HttpInterceptor {
    */
   private handleError(response: HttpErrorResponse): Observable<HttpEvent<any>> {
     const status = response.status;
+    log.debug('Have Error ...', response);
     let errorMessage = (response.error.developerMessage || response.message);
     if (response.error.errors) {
       if (response.error.errors[0]) {

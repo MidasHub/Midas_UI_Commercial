@@ -1,25 +1,25 @@
-<h1 mat-dialog-title>Upload Client Documents</h1>
+<h1 mat-dialog-title>{{'Client_Component.ViewClient.CustomDialog.UploadDocument.h1' |translate}}</h1>
 <div>
     <form [formGroup]="uploadDocumentForm" fxLayout="column">
 
         <mat-form-field fxFlex>
-            <mat-label>File Name</mat-label>
+            <mat-label>{{'Client_Component.ViewClient.CustomDialog.UploadDocument.fileName' |translate}}</mat-label>
             <input formControlName="fileName" required matInput />
             <mat-error *ngIf="uploadDocumentForm.controls.fileName.hasError('required')">
-                File Name is <strong>required</strong>
+              {{'Client_Component.ViewClient.CustomDialog.UploadDocument.errfileName' |translate}}<strong>{{'Client_Component.ViewClient.CustomDialog.strongRequire' |translate}}</strong>
             </mat-error>
         </mat-form-field>
 
         <mat-form-field fxFlex *ngIf="!documentIdentifier">
-            <mat-label>Description</mat-label>
+            <mat-label>{{'Client_Component.ViewClient.CustomDialog.UploadDocument.description' |translate}}</mat-label>
             <input formControlName="description" matInput />
         </mat-form-field>
 
         <mifosx-file-upload flex="60%" (change)="onFileSelect($event)"></mifosx-file-upload>
 
         <mat-dialog-actions align="end">
-            <button mat-raised-button mat-dialog-close>Cancel</button>
-            <button mat-raised-button color="primary" [disabled]="!uploadDocumentForm.valid" [mat-dialog-close]="uploadDocumentForm.value">Confirm</button>
+            <button mat-raised-button mat-dialog-close>{{ "ShareButton.CancelEng" | translate }}</button>
+            <button mat-raised-button color="primary" [disabled]="!uploadDocumentForm.valid" [mat-dialog-close]="uploadDocumentForm.value">{{ "ShareButton.ConfirmEng" | translate }}</button>
         </mat-dialog-actions>
 
     </form>

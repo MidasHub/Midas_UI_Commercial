@@ -67,6 +67,7 @@ export class AuthenticationInterceptor implements HttpInterceptor {
    * Intercepts a Http request and sets the request headers.
    */
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    log.debug('Authen service starting ... ',request);
     if (request.url.includes(environment.GatewayApiUrlPrefix)) {
       request = request.clone({ setHeaders: httpOptionsGateway.headers });
     } else {

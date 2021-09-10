@@ -4,11 +4,11 @@ const tenant = 'staging';
 const billpostenant = 'default';
 const ictenant = 'default';
 // let defaultIcURL = "http://localhost:8088";
-const defaultIcURL = 'https://icdev.kiotthe.com';
+const defaultIcURL = 'https://icdev.kiotthe.app';
 
-const defaultbaseURL = 'https://icdev.kiotthe.com';
-// let defaultbillposURL = "http://localhost:8088";
-const defaultbillposURL = 'https://icdev.kiotthe.com';
+const defaultbaseURL = 'https://staging.kiotthe.app';
+// let defaultbillposURL = "http://localhost:8087";
+const defaultbillposURL = 'https://staging.kiotthe.app';
 
 const apiProvider = '/midas/api';
 const apiVersion = '/v1';

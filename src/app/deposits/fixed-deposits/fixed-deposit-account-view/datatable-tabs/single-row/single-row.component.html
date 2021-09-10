@@ -5,17 +5,17 @@
   <div fxLayout="row" fxLayoutAlign="flex-end">
     <span *midasHasPermission="'CREATE_' + datatableName">
       <button mat-raised-button color="primary" (click)="add()" *ngIf="!dataObject.data[0]">
-        <fa-icon icon="plus"></fa-icon>&nbsp;&nbsp;Add
+        <fa-icon icon="plus"></fa-icon>&nbsp;&nbsp;{{ "ShareButton.AddEng" | translate }}
       </button>
     </span>
     <span *midasHasPermission="'UPDATE_' + datatableName">
       <button mat-raised-button color="primary" (click)="edit()" *ngIf="dataObject.data[0]">
-        <fa-icon icon="edit"></fa-icon>&nbsp;&nbsp;Edit
+        <fa-icon icon="edit"></fa-icon>&nbsp;&nbsp;{{ "ShareButton.Edit" | translate }}
       </button>
     </span>
     <span *midasHasPermission="'DELETE_' + datatableName" class="delete-button">
       <button mat-raised-button color="warn" (click)="delete()" *ngIf="dataObject.data[0]">
-        <fa-icon icon="trash"></fa-icon>&nbsp;&nbsp;Delete
+        <fa-icon icon="trash"></fa-icon>&nbsp;&nbsp;{{ "ShareButton.DeleteEng" | translate }}
       </button>
     </span>
   </div>

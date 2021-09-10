@@ -1,8 +1,8 @@
-<h1 mat-dialog-title>Unassign Role</h1>
+<h1 mat-dialog-title>{{ 'Group_Component.Create_Group_Component.GroupView.CustomDialog.UnassignRole.h1'| translate}}</h1>
 <div mat-dialog-content>
-  <p>Are you sure you want to unassign role for client member with id: {{ data.id }} ?</p>
+  <p>{{ 'Group_Component.Create_Group_Component.GroupView.CustomDialog.UnassignRole.p'| translate}}{{ data.id }} ?</p>
 </div>
 <mat-dialog-actions align="end">
-  <button mat-raised-button mat-dialog-close>Cancel</button>
-  <button mat-raised-button color="warn" [mat-dialog-close]="{ confirm: true }">Confirm</button>
+  <button mat-raised-button mat-dialog-close>{{ "ShareButton.CancelEng" | translate }}</button>
+  <button mat-raised-button color="warn" [mat-dialog-close]="{ confirm: true }">{{ "ShareButton.ConfirmEng" | translate }}</button>
 </mat-dialog-actions>

@@ -9,7 +9,7 @@
   </mat-button-toggle-group>
   <button mat-raised-button color="primary" [routerLink]="['gl-accounts/create']" *midasHasPermission="'CREATE_GLACCOUNT'">
     <fa-icon icon="plus"></fa-icon>&nbsp;&nbsp;
-    Add Account
+    {{ "Accounting.ChartOfAccounts.btnAddAccount" | translate }}
   </button>
 </div>
 
@@ -19,7 +19,7 @@
 
   <div fxLayout="row" fxLayoutGap="20px">
     <mat-form-field fxFlex>
-      <mat-label>Filter</mat-label>
+      <mat-label>{{ "Accounting.ChartOfAccounts.Filter" | translate }}</mat-label>
       <input matInput (keyup)="applyFilter($event)">
     </mat-form-field>
   </div>
@@ -29,22 +29,22 @@
     <table mat-table [dataSource]="tableDataSource" matSort>
 
       <ng-container matColumnDef="name">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Account </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ "Accounting.ChartOfAccounts.name" | translate }} </th>
         <td mat-cell *matCellDef="let glAccount"> {{ glAccount.name }} </td>
       </ng-container>
 
       <ng-container matColumnDef="glCode">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> GL Code </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ "Accounting.ChartOfAccounts.glCode" | translate }} </th>
         <td mat-cell *matCellDef="let glAccount"> {{ glAccount.glCode }} </td>
       </ng-container>
 
       <ng-container matColumnDef="glAccountType">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Type </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ "Accounting.ChartOfAccounts.glAccountType" | translate }} </th>
         <td mat-cell *matCellDef="let glAccount"> {{ glAccount.type.value }} </td>
       </ng-container>
 
       <ng-container matColumnDef="disabled">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Disabled </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ "Accounting.ChartOfAccounts.disabled" | translate }} </th>
         <td mat-cell *matCellDef="let glAccount">
           <div [className]="glAccount.disabled === true ? 'disabled' : 'enabled'">
             <fa-icon matTooltip="{{ glAccount.disabled === true ? 'Disabled' : 'Enabled' }}" matTooltipPosition="right" icon="circle" size="lg"></fa-icon>
@@ -53,7 +53,7 @@
       </ng-container>
 
       <ng-container matColumnDef="manualEntriesAllowed">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Manual Entries Allowed </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ "Accounting.ChartOfAccounts.manualEntriesAllowed" | translate }} </th>
         <td mat-cell *matCellDef="let glAccount">
           <fa-icon *ngIf="glAccount.manualEntriesAllowed" class="manual-entries-allowed" matTooltip="Allowed" matTooltipPosition="right" icon="check-circle" size="lg"></fa-icon>
           <fa-icon *ngIf="!glAccount.manualEntriesAllowed" class="manual-entries-not-allowed" matTooltip="Not Allowed" matTooltipPosition="right" icon="times-circle" size="lg"></fa-icon>
@@ -61,7 +61,7 @@
       </ng-container>
 
       <ng-container matColumnDef="usedAs">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Used as </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ "Accounting.ChartOfAccounts.usedAs" | translate }} </th>
         <td mat-cell *matCellDef="let glAccount"> {{ glAccount.usage.value }} </td>
       </ng-container>
 
@@ -83,10 +83,10 @@
 
   <div class="m-b-20"  fxLayout="row" fxLayoutAlign="end" fxLayoutGap="20px">
     <button mat-raised-button (click)="nestedTreeControl.expandAll()">  <!-- Bug(angular-material): https://github.com/angular/material2/issues/12170 -->
-      Expand All
+      {{ "Accounting.ChartOfAccounts.btnExpandAll" | translate }}
     </button>
     <button mat-raised-button (click)="nestedTreeControl.collapseAll()">
-      Collapse All
+      {{ "Accounting.ChartOfAccounts.btnCollapseAll" | translate }}
     </button>
   </div>
 
@@ -101,7 +101,7 @@
           <div fxLayout="row wrap" class="content">
 
             <div fxFlex="50%" class="header">
-              Account Name
+              {{ "Accounting.ChartOfAccounts.accountName" | translate }}
             </div>
 
             <div fxFlex="50%">
@@ -109,7 +109,7 @@
             </div>
 
             <div fxFlex="50%" class="header">
-              GL Code
+              {{ "Accounting.ChartOfAccounts.glAccountCode" | translate }}
             </div>
 
             <div fxFlex="50%">
@@ -117,7 +117,7 @@
             </div>
 
             <div fxFlex="50%" class="header">
-              Account Type
+              {{ "Accounting.ChartOfAccounts.glAccountType2" | translate }}
             </div>
 
             <div fxFlex="50%">
@@ -125,7 +125,7 @@
             </div>
 
             <div fxFlex="50%" class="header">
-              Account Usage
+              {{ "Accounting.ChartOfAccounts.glAccountUsage" | translate }}
             </div>
 
             <div fxFlex="50%">
@@ -133,7 +133,7 @@
             </div>
 
             <div fxFlex="50%" class="header">
-              Manual Entries Allowed
+              {{ "Accounting.ChartOfAccounts.glAccountManualEntriesAllowed" | translate }}
             </div>
 
             <div fxFlex="50%">
@@ -141,7 +141,7 @@
             </div>
 
             <div fxFlex="50%" class="header">
-              Description
+              {{ "Accounting.ChartOfAccounts.description" | translate }}
             </div>
 
             <div fxFlex="50%">

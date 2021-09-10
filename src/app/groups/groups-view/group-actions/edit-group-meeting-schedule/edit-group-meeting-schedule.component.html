@@ -9,35 +9,35 @@
         <div fxLayout="column">
 
         <mat-form-field>
-          <mat-label>Existing Meeting Date</mat-label>
+          <mat-label>{{ 'Group_Component.Create_Group_Component.GroupView.GroupActions.EditSchedule.presentMeetingDate'| translate}}</mat-label>
           <mat-select formControlName="presentMeetingDate">
             <mat-option *ngFor="let date of nextMeetingDates" [value]="date">
               {{ date | date }}
             </mat-option>
           </mat-select>
           <mat-error *ngIf="groupEditMeetingScheduleForm.controls.presentMeetingDate.hasError('repeatsOnDay')">
-            Existing Meeting Date is <strong>required</strong>
+            {{ 'Group_Component.Create_Group_Component.GroupView.GroupActions.EditSchedule.errpresentMeetingDate'| translate}}<strong>{{ 'Group_Component.strongRequired'| translate}}</strong>
           </mat-error>
         </mat-form-field>
 
         <mat-form-field>
-          <mat-label>Revised Meeting Date</mat-label>
+          <mat-label>{{ 'Group_Component.Create_Group_Component.GroupView.GroupActions.EditSchedule.newMeetingDate'| translate}}</mat-label>
           <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="newMeetingDatePicker" required formControlName="newMeetingDate">
           <mat-datepicker-toggle matSuffix [for]="newMeetingDatePicker"></mat-datepicker-toggle>
           <mat-datepicker #newMeetingDatePicker></mat-datepicker>
           <mat-error *ngIf="groupEditMeetingScheduleForm.controls.newMeetingDate.hasError('required')">
-            Revised Meeting Date is <strong>required</strong>
+            {{ 'Group_Component.Create_Group_Component.GroupView.GroupActions.EditSchedule.errnewMeetingDate'| translate}}<strong>{{ 'Group_Component.strongRequired'| translate}}</strong>
           </mat-error>
         </mat-form-field>
-  
+
         </div>
 
       </mat-card-content>
 
       <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
-        <button type="button" mat-raised-button [routerLink]="['../../']">Cancel</button>
+        <button type="button" mat-raised-button [routerLink]="['../../']">{{ "ShareButton.CancelEng" | translate }}</button>
         <button mat-raised-button color="primary" [disabled]="!groupEditMeetingScheduleForm.valid" (click)="submit()"
-          *midasHasPermission="'CREATE_MEETING'">Submit</button>
+          *midasHasPermission="'CREATE_MEETING'">{{ "ShareButton.Submit" | translate }}</button>
       </mat-card-actions>
 
     </form>

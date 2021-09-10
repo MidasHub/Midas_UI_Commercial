@@ -4,7 +4,7 @@
     <div class="mat-typography">
       <mat-card-title>
         <h2>
-          {{ centerData.name }} 
+          {{ centerData.name }}
           <span [className]="centerData.status.code | statusLookup">
             <fa-icon matTooltip="{{ centerData.status.value }}" matTooltipPosition="right" icon="circle" size="lg"></fa-icon>
           </span>
@@ -12,7 +12,7 @@
       </mat-card-title>
       <mat-card-subtitle>
         <p>
-          Account No: {{ centerData.accountNo }} | {{ centerData.externalId ? '| External ID: ' + centerData.externalId : '' }}
+          {{'Navigation.Center.accountNo'| translate }}{{ centerData.accountNo }} | {{ centerData.externalId ? '| External ID: ' + centerData.externalId : '' }}
         </p>
       </mat-card-subtitle>
     </div>
@@ -26,7 +26,7 @@
       <div fxLayout="row wrap" class="content">
 
         <div fxFlex="50%" class="mat-body-strong">
-          Activation Date
+          {{'Navigation.Center.activationDate'| translate }}
         </div>
 
         <div fxFlex="50%">
@@ -34,7 +34,7 @@
         </div>
 
         <div fxFlex="50%" class="mat-body-strong">
-          Associated Officer
+          {{'Navigation.Center.staffName'| translate }}
         </div>
 
         <div fxFlex="50%">
@@ -42,7 +42,7 @@
         </div>
 
         <div fxFlex="50%" class="mat-body-strong" *ngIf="centerSummaryData">
-          Number of Active Clients
+          {{'Navigation.Center.activeClients'| translate }}
         </div>
 
         <div fxFlex="50%" *ngIf="centerSummaryData">
@@ -50,7 +50,7 @@
         </div>
 
         <div fxFlex="50%" class="mat-body-strong" *ngIf="centerSummaryData">
-          Number of Active Client Loans
+          {{'Navigation.Center.activeClientLoans'| translate }}
         </div>
 
         <div fxFlex="50%" *ngIf="centerSummaryData">
@@ -58,7 +58,7 @@
         </div>
 
         <div fxFlex="50%" class="mat-body-strong" *ngIf="centerSummaryData">
-          Number of Active Client Borrowers
+          {{'Navigation.Center.activeClientBorrowers'| translate }}
         </div>
 
         <div fxFlex="50%" *ngIf="centerSummaryData">
@@ -66,7 +66,7 @@
         </div>
 
         <div fxFlex="50%" class="mat-body-strong" *ngIf="centerSummaryData">
-          Number of Active Overdue Group Loans
+          {{'Navigation.Center.overdueGroupLoans'| translate }}
         </div>
 
         <div fxFlex="50%" *ngIf="centerSummaryData">
@@ -74,7 +74,7 @@
         </div>
 
         <div fxFlex="50%" class="mat-body-strong" *ngIf="centerSummaryData">
-          Number of Active Overdue Client Loans
+          {{'Navigation.Center.overdueClientLoans'| translate }}
         </div>
 
         <div fxFlex="50%" *ngIf="centerSummaryData">
@@ -82,7 +82,7 @@
         </div>
 
         <div fxFlex="50%" class="mat-body-strong" *ngIf="centerData.collectionMeetingCalendar && centerData.collectionMeetingCalendar.nextTenRecurringDates[0]">
-          Next Meeting Date
+          {{'Navigation.Center.nextTenRecurringDates'| translate }}
         </div>
 
         <div fxFlex="50%" *ngIf="centerData.collectionMeetingCalendar && centerData.collectionMeetingCalendar.nextTenRecurringDates[0]">
@@ -90,7 +90,7 @@
         </div>
 
         <div fxFlex="50%" class="mat-body-strong" *ngIf="centerData.collectionMeetingCalendar && centerData.collectionMeetingCalendar.humanReadable">
-          Meeting Frequency
+          {{'Navigation.Center.humanReadable'| translate }}
         </div>
 
         <div fxFlex="50%" *ngIf="centerData.collectionMeetingCalendar && centerData.collectionMeetingCalendar.humanReadable">
@@ -98,14 +98,14 @@
         </div>
 
         <div fxFlex="50%" class="mat-body-strong">
-          Number of Groups
+          {{'Navigation.Center.length'| translate }}
         </div>
 
         <div fxFlex="50%">
           {{ groupData ? groupData.length : '' }}
         </div>
 
-      </div>    
+      </div>
     </mat-tab>
 
     <mat-tab label="Loan Accounts" *ngIf="centerAccountsData && centerAccountsData.loanAccounts">
@@ -115,7 +115,7 @@
     <mat-tab label="Savings Accounts" *ngIf="centerAccountsData && centerAccountsData.savingsAccounts">
       <mifosx-savings-account-table [savingsAccountData]="centerAccountsData.savingsAccounts"></mifosx-savings-account-table>
     </mat-tab>
-    
+
   </mat-tab-group>
 
 </mat-card-content>

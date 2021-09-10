@@ -2,24 +2,24 @@
   <mat-card>
       <mat-card-content>
         <div style="text-align: left">
-          <mat-label>Nhập Tên Đối Tác: </mat-label>
+          <mat-label>{{'Client_Component.ViewClient.IcPartner.AddPartner.partnerName' |translate}} </mat-label>
           <input [(ngModel)]="this.partnerName" style="margin-right: 15px;">
           <button mat-raised-button color="primary" (click)="search()">
-            <fa-icon icon="search"></fa-icon>Tìm
+            <fa-icon icon="search"></fa-icon>{{'Client_Component.ViewClient.IcPartner.AddPartner.btnSearch' |translate}}
           </button>
         </div>
-        <div style="text-align: left, margin-bottom: 10px; margin-top: 5px;">
-            <mat-label style="margin-right: 15px;">Mã đối tác: <b>{{partner.externalId}}</b></mat-label> 
-            <mat-label>Tên Đối tác: <b>{{partner.displayName}}</b></mat-label>            
+        <div style="text-align: left; margin-bottom: 10px; margin-top: 5px;">
+            <mat-label style="margin-right: 15px;">{{'Client_Component.ViewClient.IcPartner.AddPartner.externalId' |translate}} <b>{{partner.externalId}}</b></mat-label>
+            <mat-label>{{'Client_Component.ViewClient.IcPartner.AddPartner.displayName' |translate}} <b>{{partner.displayName}}</b></mat-label>
         </div>
         <div style="text-align: center">
             <button mat-raised-button color="primary" (click)="submit()" style="margin-right: 15px;">
               <fa-icon icon="user-plus"></fa-icon>
-              Thêm đối tác
+              {{'Client_Component.ViewClient.IcPartner.AddPartner.btnAdd' |translate}}
             </button>
             <button mat-raised-button color="primary" (click)="cancel()">
               <fa-icon icon="ban"></fa-icon>
-              Hủy
+              {{ "ShareButton.Cancel" | translate }}
             </button>
         </div>
       </mat-card-content>

@@ -9,55 +9,59 @@
         <div fxLayout="column">
 
           <mat-form-field>
-            <mat-label>Office</mat-label>
+            <mat-label>{{'Organization.Employees.Create.Office'| translate }}</mat-label>
             <mat-select required formControlName="officeId">
               <mat-option *ngFor="let office of officeData" [value]="office.id">
                 {{ office.name }}
               </mat-option>
             </mat-select>
             <mat-error *ngIf="employeeForm.controls.officeId.hasError('required')">
-              Office is <strong>required</strong>
+              {{'Organization.Employees.Create.errOffice'| translate }}<strong>{{'Organization.strongRequired'| translate }}</strong>
             </mat-error>
           </mat-form-field>
 
           <mat-form-field>
-            <mat-label>First Name</mat-label>
+            <mat-label>{{'Organization.Employees.Create.firstname'| translate }}</mat-label>
             <input matInput required formControlName="firstname">
             <mat-error *ngIf="employeeForm.controls.firstname.hasError('required')">
-              First Name is <strong>required</strong>
+              {{'Organization.Employees.Create.errfirstname'| translate }}<strong>{{'Organization.strongRequired'| translate }}</strong>
             </mat-error>
             <mat-error *ngIf="employeeForm.controls.firstname.hasError('pattern')">
-              First Name <strong>cannot</strong> begin with a special character or number
+              {{'Organization.Employees.Create.firstname'| translate }}
+              <strong>{{'Organization.Employees.Create.strongCannot'| translate }}</strong>
+              {{'Organization.Employees.Create.alert'| translate }}
             </mat-error>
           </mat-form-field>
 
           <mat-form-field>
-            <mat-label>Last Name</mat-label>
+            <mat-label>{{'Organization.Employees.Create.lastname'| translate }}</mat-label>
             <input matInput required formControlName="lastname">
             <mat-error *ngIf="employeeForm.controls.lastname.hasError('required')">
-              Last Name is <strong>required</strong>
+              {{'Organization.Employees.Create.errlastname'| translate }}<strong>{{'Organization.strongRequired'| translate }}</strong>
             </mat-error>
             <mat-error *ngIf="employeeForm.controls.lastname.hasError('pattern')">
-              Last Name <strong>cannot</strong> begin with a special character or number
+              {{'Organization.Employees.Create.lastname'| translate }}
+              <strong>{{'Organization.Employees.Create.strongCannot'| translate }}</strong>
+              {{'Organization.Employees.Create.alert'| translate }}
             </mat-error>
           </mat-form-field>
 
           <mat-checkbox labelPosition="before" formControlName="isLoanOfficer" class="loan-officer">
-            Is Loan Officer
+            {{'Organization.Employees.Create.isLoanOfficer'| translate }}
           </mat-checkbox>
 
           <mat-form-field>
-            <mat-label>Mobile Number for SMS</mat-label>
+            <mat-label>{{'Organization.Employees.Create.mobileNo'| translate }}</mat-label>
             <input matInput formControlName="mobileNo">
           </mat-form-field>
 
           <mat-form-field>
-            <mat-label>Joining Date</mat-label>
+            <mat-label>{{'Organization.Employees.Create.joiningDate'| translate }}</mat-label>
             <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="joiningDatePicker" required formControlName="joiningDate">
             <mat-datepicker-toggle matSuffix [for]="joiningDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #joiningDatePicker></mat-datepicker>
             <mat-error *ngIf="employeeForm.controls.joiningDate.hasError('required')">
-              Joining Date is <strong>required</strong>
+              {{'Organization.Employees.Create.errjoiningDate'| translate }}<strong>{{'Organization.strongRequired'| translate }}</strong>
             </mat-error>
           </mat-form-field>
 
@@ -66,8 +70,8 @@
       </mat-card-content>
 
       <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
-        <button type="button" mat-raised-button [routerLink]="['../']">Cancel</button>
-        <button mat-raised-button color="primary" [disabled]="!employeeForm.valid" *midasHasPermission="'CREATE_STAFF'">Submit</button>
+        <button type="button" mat-raised-button [routerLink]="['../']">{{ "ShareButton.CancelEng" | translate }}</button>
+        <button mat-raised-button color="primary" [disabled]="!employeeForm.valid" *midasHasPermission="'CREATE_STAFF'">{{ "ShareButton.Submit" | translate }}</button>
       </mat-card-actions>
 
     </form>

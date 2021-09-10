@@ -9,59 +9,63 @@
         <div fxLayout="column">
 
           <mat-form-field>
-            <mat-label>Office</mat-label>
+            <mat-label>{{'Organization.Employees.Edit.Office'| translate }}</mat-label>
             <mat-select required formControlName="officeId">
               <mat-option *ngFor="let office of officeData" [value]="office.id">
                 {{ office.name }}
               </mat-option>
             </mat-select>
             <mat-error *ngIf="editEmployeeForm.controls.officeId.hasError('required')">
-              Office is <strong>required</strong>
+              {{'Organization.Employees.Edit.errOffice'| translate }}<strong>{{'Organization.strongRequired'| translate }}</strong>
             </mat-error>
           </mat-form-field>
 
           <mat-form-field>
-            <mat-label>First Name</mat-label>
+            <mat-label>{{'Organization.Employees.Edit.firstname'| translate }}</mat-label>
             <input matInput required formControlName="firstname">
             <mat-error *ngIf="editEmployeeForm.controls.firstname.hasError('required')">
-              First Name is <strong>required</strong>
+              {{'Organization.Employees.Edit.errfirstname'| translate }}<strong>{{'Organization.strongRequired'| translate }}</strong>
             </mat-error>
             <mat-error *ngIf="editEmployeeForm.controls.firstname.hasError('pattern')">
-              First Name <strong>cannot</strong> begin with a special character or number
+              {{'Organization.Employees.Edit.errfirstname2'| translate }}
+              <strong>{{'Organization.Employees.Edit.strongcannot'| translate }}</strong>
+              {{'Organization.Employees.Edit.alert'| translate }}
             </mat-error>
           </mat-form-field>
 
           <mat-form-field>
-            <mat-label>Last Name</mat-label>
+            <mat-label>{{'Organization.Employees.Edit.lastname'| translate }}</mat-label>
             <input matInput required formControlName="lastname">
             <mat-error *ngIf="editEmployeeForm.controls.lastname.hasError('required')">
-              Last Name is <strong>required</strong>
+              {{'Organization.Employees.Edit.errlastname'| translate }}<strong>{{'Organization.strongRequired'| translate }}</strong>
             </mat-error>
             <mat-error *ngIf="editEmployeeForm.controls.lastname.hasError('pattern')">
-              Last Name <strong>cannot</strong> begin with a special character or number
+              {{'Organization.Employees.Edit.errlastname2'| translate }}
+              <strong>{{'Organization.Employees.Edit.strongcannot'| translate }}</strong>
+              {{'Organization.Employees.Edit.alert'| translate }}
             </mat-error>
           </mat-form-field>
 
           <mat-checkbox labelPosition="before" formControlName="isLoanOfficer" class="m-b-10">
-            Is Loan Officer
+            {{'Organization.Employees.Edit.isLoanOfficer'| translate }}
           </mat-checkbox>
 
           <mat-form-field>
-            <mat-label>Mobile Number for SMS</mat-label>
+            <mat-label>{{'Organization.Employees.Edit.mobileNo'| translate }}</mat-label>
             <input matInput formControlName="mobileNo">
           </mat-form-field>
 
           <mat-checkbox labelPosition="before" formControlName="isActive">
-            Active
+            {{'Organization.Employees.Edit.Active'| translate }}
           </mat-checkbox>
 
           <mat-form-field>
-            <mat-label>Joining Date</mat-label>
+            <mat-label>{{'Organization.Employees.Edit.joiningDate'| translate }}</mat-label>
             <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="joiningDatePicker" required formControlName="joiningDate">
             <mat-datepicker-toggle matSuffix [for]="joiningDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #joiningDatePicker></mat-datepicker>
             <mat-error *ngIf="editEmployeeForm.controls.joiningDate.hasError('required')">
-              Joining Date is <strong>required</strong>
+              {{'Organization.Employees.Edit.errjoiningDate'| translate }}<strong>{{'Organization.strongRequired'| translate }}</strong>
             </mat-error>
           </mat-form-field>
 
@@ -70,8 +74,8 @@
       </mat-card-content>
 
       <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
-        <button type="button" mat-raised-button [routerLink]="['../']">Cancel</button>
-        <button mat-raised-button color="primary" [disabled]="!editEmployeeForm.valid" *midasHasPermission="'UPDATE_STAFF'">Submit</button>
+        <button type="button" mat-raised-button [routerLink]="['../']">{{ "ShareButton.CancelEng" | translate }}</button>
+        <button mat-raised-button color="primary" [disabled]="!editEmployeeForm.valid" *midasHasPermission="'UPDATE_STAFF'">{{ "ShareButton.Submit" | translate }}</button>
       </mat-card-actions>
 
     </form>

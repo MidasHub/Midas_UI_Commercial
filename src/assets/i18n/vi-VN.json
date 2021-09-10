@@ -25,6 +25,7 @@
       "buttonNext": "Kế tiếp",
       "buttonPrevious": "Quay lại",
       "GeneralStep": {
+        "title": "Thông tin đại lý:",
         "labelOffice": "Chi nhánh",
         "labelOfficeMsg": "<strong> Yêu cầu: </strong>  chọn Chi nhánh",
         "labelStaff": "Nhân viên quản lý",
@@ -66,7 +67,14 @@
         "labelSelectAccountForPayment": "Tài khoản thanh toán",
         "labelSelectDocumentTypes": "Loại giấy tờ",
         "labelInputFileDocument": "Hình ảnh",
-        "labelAccountNo": "Mã CIF"
+        "labelAccountNo": "Mã CIF",
+        "spanCalendar": "perm_contact_calendar",
+        "titleInfo": "Thông tin cơ bản:",
+        "labelPersonalStatus": "Tình trạng hôn nhân *",
+        "radiobtnAlone": "Độc thân",
+        "radiobtnMarried": "Kết hôn",
+        "fileChangeBefore": "CMND mặt trước",
+        "fileChangeAfter": "CMND mặt sau"
       },
       "FamilyMember": {
         "Dialog": {
@@ -184,6 +192,8 @@
         "labelAddressStateProvince": "Tỉnh"
       }
     },
+    "lableOffice": "Chi nhánh",
+    "lableStaff": "Nhân viên",
     "buttonImportClient": "Nhập list khách hàng",
     "buttonCreateClient": "Tạo khách hàng mới",
     "checkBoxShowClosedAccount": "Hiện các CIF đã đóng",
@@ -247,6 +257,300 @@
       "tipUploadImage": "Tải hình lên",
       "tipCaptureImage": "Chụp hình ",
       "tipDeleteImage": "Xóa hình",
+
+      "Charges": {
+        "strongRequire": "is required",
+        "Charge": {
+          "h2": "Charges Overview",
+          "name": "Name",
+          "dueAsOf": "Due as of",
+          "due": "Due",
+          "paid": "Paid",
+          "waived": "Waived",
+          "outstanding": "Outstanding"
+        },
+        "Pay": {
+          "amount": "Amount",
+          "transactionDate": "Transaction date"
+        },
+        "View": {
+          "btnPay": "Pay",
+          "btnWaiveCharge": "Waive Charge",
+          "btnDelete": "Delete",
+          "currency": "Currency",
+          "chargeTimeType": "Charge Time Type",
+          "chargeCalculationType": "Charge Calculation Type",
+          "dueDate": "Due as of",
+          "amount": "Due",
+          "amountPaid": "Paid",
+          "amountWaived": "Waived",
+          "amountOutstanding": "Outstanding",
+          "h2": "Transactions",
+          "id": "ID",
+          "officeName": "Office Name",
+          "type": "Type",
+          "transactionDate": "Transaction Date",
+          "amount_2": "Amount",
+          "actions": "Actions"
+        }
+      },
+
+      "Actions": {
+        "strongIsRequire": "is required",
+        "strongRequired": "required",
+        "AcceptClientTransfer": {
+          "transferDate": "Transfer Date",
+          "Note": "Note"
+        },
+        "ActivateClient": {
+          "activationDate": "Activated On Date",
+          "erractivationDate": "Activated On Date is "
+        },
+        "AddClientCharge": {
+          "chargeId": "Charge",
+          "errchargeId": "Charge is ",
+          "amount": "Amount",
+          "erramount": "Amount is ",
+          "chargeCalculationType": "Charge Calculation",
+          "chargeTimeType": "Charge time type",
+          "dueDate": "Due for collection on",
+          "errdueDate": "Due for collection on is ",
+          "feeOnMonthDay": "Due On",
+          "errfeeOnMonthDay": "Due Date is ",
+          "Note": "Repeats Every"
+        },
+        "ClientAssignStaff": {
+          "staffId": "Staff",
+          "errstaffId": "Staff is "
+        },
+        "ClientScreenReports": {
+          "labelClientScreenReports": "Client Screen Reports",
+          "errlabelClientScreenReports": "Screen Report is ",
+          "btnGenerateReport": "Generate Report",
+          "btnPrint": "Print",
+          "p": "Please select a screen report."
+        },
+        "CloseClient": {
+          "closureDate": "Closed On Date",
+          "errclosureDate": "Closed On Date is ",
+          "closureReasonId": "Closure Reason",
+          "errclosureReasonId": "Closure Reason is "
+        },
+        "CreateSelf": {
+          "username": "User Name",
+          "errusername": "User Name is ",
+          "firstname": "First Name",
+          "errfirstname": "First Name is ",
+          "lastname": "Last Name",
+          "errlastname": "Last Name is ",
+          "email": "Email",
+          "erremail": "Email is ",
+          "Emailshouldbe": "Email should be a  ",
+          "strongValid": "valid",
+          "noteEmail": " email.",
+          "AutoGeneratePassword": "Auto Generate Password",
+          "OverridePasswordExpirePolicy": "Override Password Expire Policy ?",
+          "password": "Password",
+          "errpassword": "Password is ",
+          "repeatPassword": "Repeat Password",
+          "errrepeatPassword": "Repeat password is ",
+          "Passwordsshouldbe ": "Passwords should be ",
+          "matched": "matched",
+          "status": "Status",
+          "btnActivate": "Activate Self Service User"
+        },
+        "ReactivateClient": {
+          "reactivationDate": "Re Activation On Date",
+          "errstrongRequired": "Reactivation Date is "
+        },
+        "RejectClient": {
+          "reactivationDate": "Rejection Date",
+          "errreactivationDate": "Rejection Date is ",
+          "rejectionReasonId": "Rejection Reason",
+          "errrejectionReasonId": "Rejection Reason is "
+        },
+        "RejectClientTransfer": {
+          "transferDate": "Transfer Date",
+          "note": "Note"
+        },
+        "TakeSurvey": {
+          "surveyOption": "Survey Name",
+          "answer": "Your answer is: "
+        },
+        "TransferClient": {
+          "destinationOfficeId": "Office",
+          "errdestinationOfficeId": "Office is ",
+          "transferDate": "Transfer Date",
+          "errtransferDate": "Transfer Date is ",
+          "note": "Note"
+        },
+        "UndoClientRejection": {
+          "reopenedDate": "Reopened On Date",
+          "errreopenedDate": "Reopened On Date is "
+        },
+        "UndoClientTransfer": {
+          "transferDate": "Transfer Date",
+          "note": "Note"
+        },
+        "UpdateClientSavingAccount": {
+          "savingsAccountId": "Default Savings Account",
+          "errsavingsAccountId": "Account is "
+        },
+        "ViewSurvey": {
+          "btnTakeSurvey": "Take Survey",
+          "Filter": "Filter",
+          "surveyName": "Survey",
+          "createdBy": "Created By",
+          "date": "Date",
+          "score": "Score"
+        },
+        "WithdrawClient": {
+          "withdrawalDate": "Withdrawal Date",
+          "errwithdrawalDate": "Withdrawal Date is ",
+          "withdrawalReasonId": "Withdrawal Reason",
+          "errwithdrawalReasonId": "Withdrawal Reason is "
+        }
+      },
+      "CustomDialog": {
+        "strongRequire": "is required",
+        "Capture": {
+          "h1": "Capture Client Image",
+          "btnCapture": "Capture",
+          "btnRecapture": "Recapture"
+        },
+        "DeleteSignature": {
+          "p": "Are you sure you want to delete this clients signature ?",
+          "p_2": "Client Signature is not provided.",
+          "h1": "Delete Client Signature"
+        },
+        "EditNote": {
+          "h1": "Edit Note"
+        },
+        "UnassignStaff": {
+          "h1": "Unassign Staff",
+          "p": "Are you sure you want to unassign staff for this client ?"
+        },
+        "UploadDocument": {
+          "h1": "Upload Client Documents",
+          "fileName": "File Name",
+          "errfileName": "File Name is ",
+          "description": "Description"
+        },
+        "UploadImage": {
+          "h1": "Upload Client Image"
+        },
+        "UploadSignature": {
+          "h1": "Upload Client Signature"
+        },
+        "ViewSignature": {
+          "h1": "View Client Signature",
+          "p": "Client Signature is not provided."
+        }
+      },
+      "DataTable": {
+        "SingleRow": {
+          "h3": "Thông tin bổ sung"
+        }
+      },
+      "Document": {
+        "h3": "Hồ sơ khách hàng",
+        "btnAdd": "Thêm",
+        "name": "Tên",
+        "description": "Mô tả",
+        "fileName": "Tên file",
+        "actions": "Hành động"
+      },
+      "FamilyMember": {
+        "strongRequire": "required",
+        "h3": "Người liên quan",
+        "btnAdd": "Thêm",
+        "firstName": "Họ : ",
+        "middleName": "Tên Lót : ",
+        "lastName": "Tên : ",
+        "dateOfBirth": "Date Of Birth : ",
+        "age": "Tuổi : ",
+        "mobileNumber": "ĐTDD : ",
+        "isDependent": "Là người phụ thuộc : ",
+        "maritalStatus": "Tình trạng hôn nhân : ",
+        "gender": "Giới tính : ",
+        "profession": "Chuyên môn : ",
+        "qualification": "Trình độ : ",
+        "AddMember": {
+          "firstName": "Họ",
+          "strongRequest": "Yêu cầu:",
+          "alert": " nhập họ của khách hàng",
+          "middleName": "Tên lót",
+          "lastName": "Tên",
+          "alert2": " nhập Tên của người liên quan",
+          "relationshipId": "Quan hệ với khách hàng",
+          "alert3": " nhập mối quan hệ giữa người liên quan và khách hàng.",
+          "genderId": "Giới tính",
+          "alert4": " nhập giới tính của người liên quan",
+          "maritalStatusId": "Tình trạng hôn nhân",
+          "qualification": "Trình độ",
+          "professionId": "Chuyên môn",
+          "dateOfBirth": "Ngày sinh",
+          "alert5": "Nhập ngày sinh của người liên quan",
+          "age": "Tuổi",
+          "alert6": " nhập tuổi của người liên quan",
+          "isDependent": "Là người phụ thuộc:"
+        },
+        "EditMember": {
+          "firstName": "First Name",
+          "errfirstName": "First Name is ",
+          "middleName": "Middle Name",
+          "lastName": "Last Name",
+          "errlastName": "Last Name is ",
+          "qualification": "Qualification",
+          "age": "Age",
+          "errage": "Age is ",
+          "relationshipId": "Relationship",
+          "errrelationshipId": "Relationship is ",
+          "genderId": "Gender",
+          "errgenderId": "Gender is ",
+          "professionId": "Profession",
+          "maritalStatusId": "Marital Status",
+          "dateOfBirth": "Date Of Birth",
+          "errdateOfBirth": "Date of birth is "
+        }
+      },
+      "IcPartner": {
+        "btnAdd": "Thêm đối tác",
+        "name": "đối tác",
+        "partner": "Mã định danh",
+        "rangeDay": "Ngày thêm",
+        "Action": "Thao tác",
+        "btnDelete": "Xóa",
+        "AddPartner": {
+          "partnerName": "Nhập Tên Đối Tác:",
+          "btnSearch": "Tìm",
+          "externalId": "Mã đối tác: ",
+          "displayName": "Tên Đối tác:",
+          "btnAdd": "Thêm đối tác"
+        }
+      },
+      "Identities": {
+        "listCard": "Danh sách thẻ giao dịch:",
+        "ToolTipCreate": "Tạo thêm thông tin thẻ",
+        "documentKey": "Số thẻ",
+        "ToolTipDeleteCardInfo": "Hủy thông tin thẻ",
+        "ToolTipCardInfo": "Thông tin chi tiết của thẻ",
+        "description": "Thông tin thẻ",
+        "type": "Loại",
+        "documents": "Đính kèm",
+        "status": "Trạng thái giữ thẻ",
+        "actions": "Hành động",
+        "ToolTipCash": "Cash",
+        "ToolTipAdvance": "Advance",
+        "title": "Danh sách tài khoản thanh toán/CMND/CCCD:",
+        "id": "Id",
+        "documentKey2": "Số CMND/CCCD |TK Bank",
+        "description2": "Miêu tả",
+        "type2": "Loại",
+        "documents2": "Đính kèm",
+        "h3": "Hình ảnh CMND/CCCD/PASSPORT:"
+      },
+
       "TabIdentities": {
         "selectDocumentType": "Loại tài liệu",
         "inputDocumentCardBank": "Số thẻ|CMND/CCCD| TKBank",
@@ -257,7 +561,32 @@
         "selectCardType": "Chọn loại thẻ",
         "selectStatus": "Trạng thái",
         "dialogIdentifierTitle": "Thêm thẻ mới | CMND/CCCD | TK Bank",
-        "dialogIdentifierTitleExtra": "Thông tin bổ sung cho thẻ"
+        "dialogIdentifierTitleExtra": "Thông tin bổ sung cho thẻ",
+        "dueDay": "Ngày thanh toán(vd: 03 --> ngày 3 hàng tháng):",
+        "expiredDate": "Ngày hết hạn (vd: 10/24 --> tháng 10 năm 2024):",
+        "limitCard": "Hạn mức thẻ:",
+        "rankCard": "Hạng thẻ:",
+        "optionRankCard": "-----Chọn hạng thẻ-----",
+        "AddIdentitiesExtra": {
+          "dueDay": "Ngày thanh toán:",
+          "expiredDate": "Ngày hết hạn thẻ:",
+          "limitCard": "Hạn mức thẻ:",
+          "rankCard": "Hạng thẻ:",
+          "optionRankCard": "-----Chọn hạng thẻ-----"
+        },
+        "AddLimitExtra": {
+          "limitCard": "Hạn mức thẻ:",
+          "classCard": "Hạng thẻ:",
+          "dialogIdentifierTitleExtra": "Thông tin bổ sung cho thẻ"
+        }
+      },
+      "TabNote": {
+        "h3": "Ghi chú",
+        "placeholderWriteNote": "Write a note ....",
+        "ToolTipAddNote": "Thêm ghi chú",
+        "btnAdd": "Thêm",
+        "createdByUsername": "Tạo bởi: ",
+        "createdOn": "Ngày: "
       },
       "TabGeneral": {
         "lblPerformanceHistory": "Lịch sử hoạt động ",
@@ -311,7 +640,9 @@
   },
   "Home_Component": {
     "welcome": "Xin chào,  ",
+    "searchCustomer": "Tim kiếm thông tin khách hàng:",
     "searchActivity": "Tìm kiếm các hành động",
+    "timeLine": "Lịch làm việc:",
     "btnDashboard": "Dashboard ",
     "labelIncompleteRollterm": "Món Advance chưa hoàn thành",
     "btnNewCustomer": "Tạo mới khách hàng",
@@ -321,7 +652,56 @@
     },
     "lblOnDueCard": "Sẽ đến hạn trong vòng 15 ngày tới",
     "lblCards": "Thẻ",
-    "btnViewOnDueCard": "Xem chi tiết"
+    "btnViewOnDueCard": "Xem chi tiết",
+
+    "Calendar": {
+      "Month": "Lịch tháng",
+      "Week": "Lịch tuần",
+      "Day": "Lịch ngày",
+      "Previous": "Trước",
+      "Today": "Hiện tại",
+      "Next": "Sau"
+    },
+    "Dashboard": {
+      "RecentActivities": "Recent Activities",
+      "FrequentActivities": "Frequent Activities",
+      "Collected": {
+        "AmountCollected": "Amount Collected",
+        "office": "Office",
+        "NoData": "No Data"
+      },
+      "Disbursed": {
+        "AmountDisbursed": "Amount Disbursed",
+        "office": "Office",
+        "NoData": "No Data"
+      },
+      "ClientTrendsBar": {
+        "ClientTrends": "Client Trends",
+        "officeId": "Office",
+        "Day": "Day",
+        "Week": "Week",
+        "Month": "Month"
+      }
+    },
+    "Mainboard": {
+      "inputKeyWord": "Nhập từ khóa để Tìm thông tin khách hàng",
+      "placeholderSearchKey": "Tìm kiếm theo tên, số CMND/CCCD , số điện thoại ...",
+      "status": "Trạng thái",
+      "spanStatus": "Trạng thái:",
+      "Active": "Hoạt động",
+      "Close": "Đóng",
+      "officeName": "Chi nhánh",
+      "spanOfficeName": "Chi nhánh:",
+      "displayName": "Tên khách hàng",
+      "spanCustomerName": "Khách hàng:",
+      "isBad": "LỪA ĐẢO",
+      "mobileNo": "Số ĐT",
+      "spanMobileNo": "Số ĐT:",
+      "documentKey": "Thẻ",
+      "spanDocumentKey": "Thẻ:",
+      "bankName": "Ngân hàng",
+      "spanBankName": "Ngân hàng:"
+    }
   },
   "Login_Component": {
     "APP_SLOGAN": "Bứt phá mọi giới hạn của bạn",
@@ -344,6 +724,17 @@
       "Confirm Password is required": "Xác nhận mật khẩu là bắt buộc",
       "Passwords do not match": "Các mật khẩu không khớp",
       "Reset Password": "Reset lại mật khẩu"
+    },
+    "twoFactor": {
+      "enterOTP": "Please enter the OTP:",
+      "OTP": "OTP",
+      "DeliveryMethod:": "Delivery Method:",
+      "Validity": "Validity:",
+      "mins": " mins",
+      "OTPis ": "OTP is ",
+      "required": "required",
+      "btnValidateOTP": "Validate OTP",
+      "btnResendOTP": "Resend OTP"
     }
   },
   "Product_Component": {
@@ -464,10 +855,12 @@
     },
     "FormDialog": {
       "btnCancel": "Hủy",
+      "btnUpload": "Tải lên",
       "btnAdd": "Thêm"
     }
   },
   "Group_Component": {
+    "strongRequired": "required",
     "placeholderSearchByName": "Tìm theo tên Đại lý",
     "labelShowClosedGroups": "Hiển thị Đại lý đã đóng",
     "btnBulkImport": "Tải lên danh sách Đại lý",
@@ -501,7 +894,196 @@
       "labelSelectedClients": "Chọn thành viên",
       "btnCancel": "Hủy",
       "btnSubmit": "Hoàn tất",
-      "msgCreatedGroup": "Đã tạo thành công Đại lý"
+      "msgCreatedGroup": "Đã tạo thành công Đại lý",
+
+      "CreateEditSpending": {
+        "officeId": "Ngân hàng",
+        "paymentTypeId": "Loại chi tiêu",
+        "staffId": "Nhân viên",
+        "limitType": "Loại hạn mức",
+        "limitDefault": "Hạn mức mặc định",
+        "year": "Năm",
+        "month": "Tháng"
+      },
+      "GroupView": {
+        "h3": "Tên đại lý : ",
+        "id": "ID #: ",
+        "centerName": "Thuộc Trung tâm: ",
+        "staffName": "Nhân viên quản lý: ",
+        "officeName": "Tên chi nhánh: ",
+        "activationDate": "Ngày kích hoạt : ",
+        "closedOnDate": "Ngày đóng mã: ",
+        "lastTransaction": "Lần giao dịch gần nhất: ",
+        "closedOnDate2": "Tháng giao dịch gần nhất:",
+        "txnMont": "Tháng ",
+        "rev": "tổng số tiền: ",
+        "txnCount": "Số lần: ",
+        "btnBatchTransaction": "Giao dịch sỉ",
+        "btnActivate": "Kích hoạt",
+        "btnEdit": "Sửa thông tin",
+        "btnMember": "Thành viên",
+        "btnAccountApplications": "Tài khoản",
+        "btncreateMember": "Thêm thành viên",
+        "btnTransferMember": "Chuyển thành viên",
+        "btnManageMembers": "Quản lý thành viên",
+        "btnCreateSavingAccount": "Tạo tài khoản đại lý",
+        "btnMore": "Tính năng khác",
+        "btnAssignStaff": "Phân bổ nhân viên",
+        "btnUnassignStaff": "Bỏ phẩn bổ nhân viên",
+        "btnCloseGroup": "Đóng mã đại lý",
+        "btnDeleteGroup": "Xóa mã đại lý",
+        "general": "Thông tin chung",
+        "notes": "Ghi chú",
+        "committee": "Chủ sở hữu",
+
+        "AddRole": {
+          "clientId": "Chủ sở hữu của Đại lý",
+          "strongRequire": "Yêu cầu: ",
+          "alert": " Nhập thông tin Chủ sở hữu của Đại lý",
+          "role": "Vai trò",
+          "alert2": " Nhập vai trò của Chủ sở hữu",
+          "btnCancel": "Hủy",
+          "btnAccept": "Chấp nhận"
+        },
+        "CommiteeTab": {
+          "h3": "Thông tin chủ sở hữu của Đại lý",
+          "btnAdd": "Thêm",
+          "Name": "Tên",
+          "Role": "Vai trò",
+          "clientId": "Client Id",
+          "Actions": "Hành động"
+        },
+        "CustomDialog": {
+          "UnassignRole": {
+            "h1": "Unassign Role",
+            "p": "Are you sure you want to unassign role for client member with id: "
+          },
+          "UnassignStaff": {
+            "h1": "Unassign Staff",
+            "p": "Are you sure you want to unassign staff for this group ?"
+          }
+        },
+        "GenaralTab": {
+          "h3": "Thông tin về đại lý",
+          "p": "Số lượng thành viên active: ",
+          "h3_2": "Tài khoản tạm ứng",
+          "accountNo": "Số tài khoản",
+          "productName": "Loại tài khoản",
+          "lastActiveTransactionDate": "Ngày phát sinh gần nhất",
+          "accountBalance": "Số dư",
+          "Actions": "Hành động",
+          "toolTipCheckBalance": "Nếu số dư >0 là phải thu, nếu số dư <0 là phải trả",
+          "toolTipPay": "Ghi nhận phải trả",
+          "toolTipGet": "Ghi nhận phải thu",
+          "toolTipApprove": "Approve",
+          "toolTipUndoApproval": "Undo Approval",
+          "accountNo2": "Account No.",
+          "productName2": "Saving Account",
+          "closedOnDate": "Closed Date"
+        },
+        "GroupActions": {
+          "Activate": {
+            "activationDate": "Activated On Date",
+            "erractivationDate": "Activated On Date is "
+          },
+          "AttachMeeting": {
+            "startDate": "Meeting Start Date",
+            "errstartDate": "Start Date is ",
+            "repeating": "Repeats?",
+            "frequency": "Repetition Frequency",
+            "errfrequency": "Repetition Frequency is ",
+            "interval": "Repetition Interval",
+            "repeatsOnDay": "Repeats on Day",
+            "Atleast": "At least ",
+            "one": "one",
+            "dayMustBeSelected": " day must be selected"
+          },
+          "Close": {
+            "closureDate": "Closed On Date",
+            "errclosureDate": "Closed On Date is ",
+            "closureReasonId": "Closure Reason",
+            "errclosureReasonId": "Closure Reason is "
+          },
+          "Edit": {
+            "btnEditSchedule": "Edit Schedule",
+            "frequency": "Repetition Frequency",
+            "errfrequency": "Repetition Frequency is ",
+            "interval": "Repetition Interval",
+            "errinterval": "Repeition Interval is ",
+            "repeatsOnDay": "Repeats on Day",
+            "Atleast": "At least ",
+            "one": "one",
+            "dayMustBeSelected": " day must be selected",
+            "startDate": "Above Changes are Effective from",
+            "errstartDate": "Changes Affection Date is ",
+            "note": "Note: 'Repeats' and 'Repeats every' cannot not be modified if there are active accounts ",
+            "note2": "(JLG Loans, Recurring Deposits etc) dependent on this meeting."
+          },
+          "EditSchedule": {
+            "presentMeetingDate": "Existing Meeting Date",
+            "errpresentMeetingDate": "Existing Meeting Date is ",
+            "newMeetingDate": "Revised Meeting Date",
+            "errnewMeetingDate": "Revised Meeting Date is "
+          },
+          "AssignStaff": {
+            "staffId": "Staff",
+            "errstaffId": "Staff is "
+          },
+          "Attendance": {
+            "meetingDate": "Meeting Date",
+            "hintmeetingDate": "Next Meeting on: ",
+            "name": "Name",
+            "attendance": "Attendance",
+            "Present": "Present",
+            "Absent": "Absent",
+            "Approved": "Approved",
+            "Leave": "Leave",
+            "Late": "Late"
+          },
+          "TransferClients": {
+            "clients": "Select Client Members for Transfer",
+            "errclients": "Office is ",
+            "inheritDestinationGroupLoanOfficer": "Inherit Group Loan Officer?",
+            "destinationGroupId": "Destination Group",
+            "errdestinationGroupId": "Destination Group is ",
+            "DestinationGroupDetails": "Destination Group Details",
+            "name": "Name",
+            "id": "Id",
+            "activationDate": "Activation Date",
+            "staffName": "Staff",
+            "externalId": "External Id"
+          },
+          "ManageMembers": {
+            "clientChoice": "Add Clients",
+            "officeName": " - chi nhánh: ",
+            "ClientDetails": "Client Details",
+            "displayName": "Name",
+            "id": "Id",
+            "officeName2": "Office",
+            "h3": "Client Members",
+            "status": "Trạng thai",
+            "Action": "Thao tác"
+          }
+        },
+        "NoteTab": {
+          "h3": "Ghi chú",
+          "btnAdd": "Thêm",
+          "createdByUsername": "Tạo bởi: ",
+          "createdOn": "Ngày: "
+        }
+      },
+      "SpendingLimit": {
+        "year": "Năm",
+        "month": "Tháng",
+        "btnView": "Xem",
+        "placeholderSearch": "Tìm kiếm ... ",
+        "btnAddLimit": "Thêm hạn mức",
+        "refid": "Id",
+        "month2": "Tháng",
+        "year2": "Năm",
+        "paymentTypeId": "Loại",
+        "status": "Trạng thái"
+      }
     },
     "General_tab":{
       "GroupDetails":"Thông tin Đại lý",
@@ -695,5 +1277,3233 @@
   "ShareLabel": {
     "lblViewDetail": "Xem chi tiết",
     "lblMakeRepayment": "Thanh toán nợ"
+  },
+  "CardTransfer": {
+    "title": "BIÊN BẢN GIAO NHẬN THẺ",
+    "labelOffice": "Chi nhánh",
+    "labelCardInfo": "Thông tin thẻ để giao/nhận",
+    "inputPlaceholderCustomerInfo": "Tìm thẻ bằng SĐT/Tên KH/Số thẻ",
+    "labelShipper": "Shipper",
+    "inputPlaceholderShipper": "Chọn tên Shipper",
+    "labelDeliverStaff": "Nhân viên giao",
+    "labelReiceveStaff": "Nhân viên nhận",
+    "inputPlaceholderReiceveStaff": "Chọn nhân viên nhận thẻ",
+    "btnAdd": "Thêm",
+    "btnSave": "Lưu",
+    "btnCancel": "Hủy",
+    "btnDownload": "Tải biên bản",
+    "tableCardTransfer": {
+      "Today": "NGÀY GIAO",
+      "CustomerName": "TÊN KHÁCH HÀNG",
+      "CardNo": "SỐ THẺ",
+      "Action": "HÀNH ĐỘNG",
+      "ToolTipDelete": "Xóa dòng này"
+    },
+
+    "titleManage": "QUẢN LÝ BIÊN BẢN GIAO NHẬN THẺ",
+    "titleSearchQuery": "Điều kiện tìm kiếm",
+    "lableFromDate": "Từ ngày",
+    "lableToDate": "Đến ngày",
+    "btnSearch": "Tìm kiếm",
+    "lableSearchByTransferNo": "Tìm theo mã biên bản",
+    "inputPlaceholderTransferNo": "Nhập mã biên bản",
+    "lableSearchByShipper": "Tìm theo Shipper",
+    "inputPlaceholderShipperText": "Nhập tên Shipper",
+    "lableSearchByDeliverStaff": "Tìm theo nhân viên giao",
+    "inputPlaceholderDeliverStaff": "Nhập tên nhân viên giao",
+    "lableSearchByReceiveStaff": "Tìm theo nhân viên nhận",
+    "inputPlaceholderReceiveStaff": "Nhập nhân viên nhận thẻ",
+    "tableManageTransfer": {
+      "Today": "NGÀY GIAO",
+      "TransferNo": "MÃ BIÊN BẢN",
+      "DeliverStaff": "NGƯỜI GIAO",
+      "Shipper": "SHIPPER",
+      "Receiver": "NGƯỜI NHẬN",
+      "Action": "HÀNH ĐỘNG",
+      "ToolTipEdit": "Chỉnh sửa biên bản này",
+      "ToolTipDelete": "Xóa biên bản này"
+    },
+    "btnCreateTransfer": "Tạo biên bản",
+
+    "labelShipperExport": "SHIPPER",
+    "labelDeliverStaffExport": "NHÂN VIÊN GIAO",
+    "labelReiceveStaffExport": "NHÂN VIÊN NHẬN",
+    "tableExportTransfer": {
+      "Today": "NGÀY GIAO",
+      "CustName": "TÊN KHÁCH HÀNG",
+      "CardNo": "SỐ THẺ",
+      "Deliver": "BÊN GIAO",
+      "Shipper": "SHIPPER",
+      "Receiver": "BÊN NHẬN",
+      "Note": "GHI CHÚ",
+      "ToolTipDelete": "Xóa biên bản này"
+    },
+    "btnPrint": "In"
+  },
+
+  "Bank": {
+    "Edit": "Edit",
+    "ID": "ID",
+    "Bincode": "Bin Code",
+    "Type": "Loại",
+    "lableEdit": "Edit",
+    "spanBankCode": "Code",
+    "spanCard": "cards"
+  },
+
+  "BillManage": {
+    "title": "UPLOAD HÓA ĐƠN",
+    "lableFileName": "Tên file:",
+    "lableMerchant": "Hộ kinh doanh:",
+    "lablePartner": "Đối tác:",
+    "lableNote": "Mô tả:",
+    "spanSelectFile": "Chọn file upload",
+    "lableSearchQuery": "Tìm kiếm mã, tên khách hàng, số tiền(viết liền)",
+    "tableDetail": {
+      "RefNo": "Mã",
+      "CustName": "Khách hàng",
+      "Status": "Trạng thái",
+      "UploadDate": "Ngày tải lên",
+      "Merchant": "Hộ kinh doanh",
+      "Amount": "Số tiền"
+    },
+    "btnUploadBill": "Tải lên hóa đơn",
+    "Status": "Trạng thái",
+    "BillAmount": "Tổng số hóa đơn",
+    "BatchCode": "Số lô upload",
+    "UploadBy": "Người tải lên",
+    "Details": "Chi tiết"
+  },
+
+  "ShareButton": {
+    "Edit": "Edit",
+    "Cancel": "Hủy",
+    "Add": "Thêm +",
+    "Search": "Tìm kiếm",
+    "Save": "Save",
+    "Close": "Đóng",
+    "Submit": "Submit",
+    "Filter": "Filter",
+    "DeleteEng": "Delete",
+    "DeleteAllEng": "Delete All",
+    "ViewEng": "View",
+    "RecreateEng": "Recreate",
+    "CloseEng": "Close",
+    "ConfirmEng": "Confirm",
+    "BackEng": "Back",
+    "AddEng": "Add",
+    "UploadEng": "Upload",
+    "PreviousEng": "Previous",
+    "NextEng": "Next",
+    "CancelEng": "Cancel"
+  },
+
+  "ShareLable": {
+    "FromDate": "Từ ngày",
+    "ToDate": "Đến ngày",
+    "Add": "Thêm +",
+    "Search": "Tìm kiếm",
+    "Save": "Save"
+  },
+
+  "BookingManage": {
+    "h3": "Vui lòng chọn thời gian",
+    "spanTotalAmountBooking": "Tiền booking",
+    "spanTotalAmountUsed": "Đã giao dịch",
+    "spanTotalAmountAvailable": "Còn lại",
+
+    "BookingAgencyComponent": {
+      "spanTotalAmountCanceled": "Đã hủy",
+      "lableBranchName": "Chi nhánh",
+      "lableTrancheNo": "Ca tiền",
+      "lableUserNameTelegram": "Telegram user name",
+      "spanTotal": "Tổng cộng: ",
+      "tableDetail": {
+        "officeName": "Chi nhánh",
+        "txnDate": "Ngày booking",
+        "trancheNo": "Ca tiền",
+        "userIdTelegram": "Người đăng kí - telegram id",
+        "undefine": "Chưa xác định",
+        "title": "Thuộc đại lý",
+        "bookingAmount": "Số tiền",
+        "amountTransaction": "Đã giao dịch",
+        "status": "Đã hủy",
+        "totalAmountAvailable": "Còn lại",
+        "batchTxnName": "Mã giao dịch",
+        "iconTitleProcess": "Thực hiện giao dịch ",
+        "action": "Hành động"
+      }
+    },
+
+    "CreateInternalBookingComponent": {
+      "title": "MÀN HÌNH BOOKING DOANH SỐ THEO NGÀY",
+      "officeName": "Chi nhánh: ",
+      "staffName": "Nhân viên: ",
+      "totalAmountFromBooking": "Đã nhận",
+      "btnAddBooking": "Thêm booking",
+      "tableDetail": {
+        "bookingRefNo": "Mã booking",
+        "bookingAmount": "Số tiền",
+        "TotalGet": "Đã nhận",
+        "txnDate": "Ngày giao dịch",
+        "action": "Hành động",
+        "iconTitleProcess": "Thực hiện giao dịch "
+      }
+    },
+
+    "Dialog": {
+      "AddBookingInternalComponent": {
+        "title": "booking nội bộ",
+        "txnDate": "Ngày giao dịch:",
+        "bookingAmount": "Số tiền booking:",
+        "note": "Ghi chú:"
+      },
+      "DetailBookingRollTermScheduleComponent": {
+        "title": "Booking tạm ứng",
+        "type": "Loại",
+        "txnDate": "Thời gian",
+        "customerName": "Khách hàng",
+        "bookingAmount": "Số tiền"
+      },
+      "DetailBranchBookingDialogComponent": {
+        "title": "Chi tiết thông tin chốt số",
+        "terminalName": "Máy bán hàng",
+        "batchNo": "Số lô",
+        "amount": "Số tiền / Số bill con",
+        "sumaryBill": "Bill tổng",
+        "ToolTipDownload": "Tải về",
+        "h3": "Chưa có giao dịch!"
+      },
+      "EditBookingInternalComponent": {
+        "title": "booking nội bộ",
+        "txnDate": "Ngày giao dịch:",
+        "bookingAmount": "Số tiền booking:"
+      },
+      "TransferBookingInternalComponent": {
+        "title": "ĐIỀU CHUYỂN TIỀN BOOKING CHO",
+        "lableClientSavingAccount": "Tài khoản nhận tiền",
+        "lableBuSavingAccounts": "Tài khoản chi tiền",
+        "balance": " - Số dư: "
+      }
+    },
+    "ViewInternalBooking": {
+      "tab1": "Booking nội bộ",
+      "tab2": "Booking tạm ứng",
+      "tab3": "Booking chi nhánh",
+      "title": "MÀN HÌNH QUẢN LÝ BOOKING NỘI BỘ",
+      "officeName": "Chi nhánh: ",
+      "staffName": "Nhân viên: ",
+      "BranchBookingTabComponent": {
+        "lableOfficeName": "Chi nhánh",
+        "lableUserName": "Nhân viên",
+        "spanTotalAmountBooking": "Tiền booking",
+        "spanTotalAmountFromBooking": "Đã chi",
+        "spanTotalAmountAvailable": "Còn lại",
+        "bookingRef": "Mã booking/",
+        "bookingTime": "Thời gian",
+        "totalBooking": "Số tiền",
+        "status": "Trạng thái",
+        "checkedByStaff": "Chờ xác thực",
+        "totalPaid": "Đã chi",
+        "needBookedAmount": "Cần chi",
+        "officeName2": "Chi nhánh /",
+        "userName": "Người tạo",
+        "txnDate": "Ngày",
+        "action": "Hành động",
+        "iconTitleProcess": "Thực hiện chi tiền "
+      },
+      "InternalBookingTabComponent": {
+        "lableOfficeName": "Chi nhánh",
+        "lableUserName": "Nhân viên",
+        "spanTotalAmountBooking": "Tiền booking",
+        "spanTotalAmountFromBooking": "Đã nhận",
+        "spanTotalAmountPaidTransaction": "Đã giao dịch",
+        "spanTotalAmountRemain": "Còn lại",
+        "table": {
+          "bookingRefNo": "Mã booking",
+          "totalBooking": "Số tiền",
+          "totalPaid": "Đã chi",
+          "officeName": "Chi nhánh",
+          "userName": "Nhân viên",
+          "txnDate": "Ngày",
+          "action": "Hành động",
+          "iconTitleProcess": "Thực hiện chi tiền "
+        }
+      },
+      "RollTermScheduleBookingTabComponent": {
+        "title": "MÀN HÌNH QUẢN LÝ BOOKING TẠM ỨNG",
+        "lableOfficeName": "Chi nhánh",
+        "lableUserName": "Nhân viên",
+        "lableClientName": "Khách hàng",
+        "spanTotalAmountBooking": "Tiền booking",
+        "table": {
+          "bookingRefNo": "Mã booking",
+          "totalBooking": "Số tiền",
+          "officeName": "Chi nhánh",
+          "userName": "Nhân viên",
+          "clientName": "Khách hàng",
+          "action": "Hành động",
+          "iconTitleDetail": "Xem chi tiết booking "
+        }
+      }
+    }
+  },
+  "Collections": {
+    "IndividualCollectionSheet": {
+      "title": "No repayments and disbursal are available for selected client and meeting date",
+      "lableOfficeName": "Branch Office",
+      "errorOffice": "Branch Office is ",
+      "requiredStrong": "required",
+      "lableRepaymentDate": "Repayment date",
+      "errorRepaymentDate": "Repayment Date is ",
+      "lableStaff": "Staff",
+      "action": "Collection Sheet",
+      "btnParameters": "Parameters",
+      "h2Loan": "Due Collections",
+      "h2Saving": "Due Savings Collections",
+      "btnCancel": "Cancel",
+      "btnSubmit": "Submit",
+      "tableLoan": {
+        "accountId": "Loan Account#",
+        "productShortName": "Product Name",
+        "clientName": "Client Name",
+        "totalDue": "Total Due",
+        "feeDue": "Charges",
+        "Actions": "Actions",
+        "btnAddPayment": "Add Payment"
+      },
+      "tableSaving": {
+        "depositAccountType": "Deposit Account",
+        "accountId": "Savings Account #",
+        "productName": "Product Name",
+        "clientId": "Client Name",
+        "dueAmount": "Total Due",
+        "Actions": "Actions",
+        "btnAddPayment": "Add Payment"
+      }
+    }
+  },
+  "AccountTransfers": {
+    "CreateStandingInstructions": {
+      "name": "Name",
+      "errorName": "Name is ",
+      "strongRequire": "required",
+      "applicant": "Applicant",
+      "transferType": "Type",
+      "errorType": "Transfer Type is ",
+      "errorPriority": "Priority is ",
+      "priority": "Priority",
+      "status": "Status",
+      "errorStatus": "Status is ",
+      "fromAccountType": "From Account Type",
+      "errorFromAccountType": "From Account Type is ",
+      "fromAccountId": "From Account",
+      "errorFromAccountId": "From Account is ",
+      "destination": "Destination",
+      "errorDestination": "Destination is ",
+      "toOfficeId": "To Office",
+      "errorToOfficeId": "To Office is ",
+      "toClientId": "Beneficiary",
+      "errorToClientId": "Beneficiary is ",
+      "toAccountType": "To Account Type",
+      "errorToAccountType": "To Account Type is ",
+      "toAccountId": "To Account",
+      "errorToAccountId": "To Account is ",
+      "instructionType": "Standing Instruction Type",
+      "errorInstructionType": "Standing Instruction Type is ",
+      "amount": "Amount",
+      "errorAmount": "Amount is ",
+      "validFrom": "Validity From",
+      "errorValidFrom": "Valid From Date is ",
+      "validTill": "Validity To",
+      "errorValidTill": "Valid Till Date is ",
+      "recurrenceType": "Recurrence Type",
+      "errorRecurrenceType": "Recurrence Type is ",
+      "recurrenceInterval": "Interval",
+      "errorRecurrenceInterval": "Recurrence Interval is ",
+      "recurrenceFrequency": "Recurrence Frequency",
+      "errorRecurrenceFrequency": "Recurrence Frequency is ",
+      "recurrenceOnMonthDay": "On Month Day",
+      "errorRecurrenceOnMonthDay": "On Month Day is "
+    },
+    "EditStandingInstructions": {
+      "name": "Name",
+      "strongRequire": "required",
+      "applicant": "Applicant",
+      "type": "Type",
+      "fromAccountType": "From Account Type",
+      "priority": "Priority",
+      "errpriority": "Priority is ",
+      "status": "Status",
+      "errstatus": "Status is ",
+      "fromAccount": "From Account",
+      "destination": "Destination",
+      "toOffice": "To Office",
+      "toClientId": "Beneficiary",
+      "toAccountType": "To Account Type",
+      "toAccount": "To Account",
+      "instructionType": "Standing Instruction Type",
+      "amount": "Amount",
+      "validFrom": "Validity From",
+      "errvalidFrom": "Valid From Date is ",
+      "validTill": "Validity To",
+      "errvalidTill": "Valid Till Date is ",
+      "recurrenceType": "Recurrence Type",
+      "errrecurrenceType": "Recurrence Type is ",
+      "recurrenceInterval": "Interval",
+      "recurrenceFrequency": "Recurrence Frequency",
+      "recurrenceOnMonthDay": "On Month Day"
+    },
+    "ListStandingInstructions": {
+      "h3": "Client Name",
+      "inputPlaceholderClientName": "ClientName",
+      "inputPlaceholderFromClientId": "From Client Id",
+      "transferType": "Type",
+      "inputPlaceholderFromAccountId": "From Account Id",
+      "table": {
+        "client": "Client",
+        "fromAccount": "From Account",
+        "beneficiary": "Beneficiary",
+        "toAccount": "To Account",
+        "amount": "Amount",
+        "validity": "Validity",
+        "actions": "Actions",
+        "ToolTipDelete": "Delete Standing Instruction",
+        "ToolTipView": "View Standing Instruction",
+        "ToolTipEdit": "Edit Standing Instruction"
+      }
+    },
+    "ListTransactions": {
+      "fromAccount": "From Account",
+      "toAccount": "To Account",
+      "Destination": "Destination",
+      "table": {
+        "transactionDate": "Transaction Date",
+        "amount": "Amount",
+        "notes": "Notes",
+        "reversed": "Reversed"
+      }
+    },
+    "ViewAccountTransfer": {
+      "h3": "Transaction Details",
+      "transferAmount": "Transaction Amount:",
+      "transferDate": "Transaction Date:",
+      "transferDescription": "Description:",
+      "h3_2": "Transferred From",
+      "fromOfficeName": "Office:",
+      "fromClientDisplayName": "Client:",
+      "fromAccountType": "Account Type:",
+      "accountNo": "Account #:",
+      "h3_3": "Transferred To",
+      "toOfficeName": "Office:",
+      "toClientDisplayName": "Client:",
+      "toAccountType": "Account Type:",
+      "toAccountNo": "Account #:"
+    },
+    "ViewStandingInstructions": {
+      "btnViewTransHis": "View Transactions History",
+      "fromClientDisplayName": "Applicant:",
+      "transferType": "Type:",
+      "priority": "Priority:",
+      "status": "Status:",
+      "fromAccountType": "From Account Type:",
+      "fromAccountNo": "From Account:",
+      "Destination": "Destination:",
+      "toOfficeName": "To Office:",
+      "toClientDisplayName": "Beneficiary:",
+      "toAccountType": "To Account Type:",
+      "toAccountNo": "To Account:",
+      "instructionType": "Standing Instruction Type:",
+      "amount": "Amount:",
+      "Validity": "Validity:",
+      "recurrenceType": "Recurrence type:",
+      "recurrenceInterval": "Interval:",
+      "recurrenceFrequency": "Recurrence Frequency:",
+      "recurrenceOnMonthDay": "On Month Day:"
+    }
+  },
+  "Accounting": {
+    "frequentPostings": "Frequent Postings",
+    "predefinedPostings": "These are predefined postings",
+    "createJournalEntries": "Create Journal Entries",
+    "journalEntryTransactions": "Manual journal entry transactions recorded in a journal",
+    "searchJournalEntries": "Search Journal Entries",
+    "advancedSearch": "Advanced search option for journal entries",
+    "accountsLinkedFinancialActivities": "Accounts Linked to Financial Activities",
+    "listOfFinancialActivitiesAndGL": "List of Financial Activities and GL Account Mappings",
+    "migrateOpeningBalances": "Migrate Opening Balances (Office-wise)",
+    "setOrUpdateOfficeLevelOpeningBalances": "Set or update office-level opening balances for GL accounts",
+    "chartOfAccounts": "Chart of Accounts",
+    "listOfAccounts": "List of accounts used by the organization",
+    "closingEntries": "Closing Entries",
+    "journalEntries": "Journal entries made at the end of accounting period",
+    "accountingRules": "Accounting Rules",
+    "ListOfAllAccountingRules": "List of all accounting rules",
+    "accruals": "Accruals",
+    "accruesIncomeExpensesAndLiabilities": "Accrues income, expenses and liabilities as on the provided date",
+    "provisioningEntries": "Provisioning Entries",
+    "createProvisioningEntries": "Create provisioning entries",
+    "strongRequire": "required",
+
+    "Rules": {
+      "name": "Name",
+      "officeName": "Office",
+      "debitTags": "Debit Tags",
+      "debitAccounts": "Debit Account",
+      "creditTags": "Credit Tags",
+      "creditAccounts": "Credit Account",
+
+      "CreateRuleComponent": {
+        "name": "Accounting Rule Name",
+        "errname": "Accounting Rule Name is ",
+        "officeId": "Office",
+        "errofficeId": "Office is ",
+        "affectedGlEntry": "Affected GL Entry (Debit) Rule Type *",
+        "fixedAccount": "Fixed Account",
+        "listOfAccounts": "List of Accounts",
+        "accountToDebit": "Account to Debit",
+        "debitTags": "Debit Tags",
+        "creditRuleType": "Affected GL Entry (Credit) Rule Type *",
+        "accountToCredit": "Account to Credit",
+        "creditTags": "Credit Tags",
+        "allowMultipleCreditEntries": "Multiple Credit Entries Allowed",
+        "description": "Description"
+      },
+      "EditRuleComponent": {
+        "name": "Accounting Rule Name",
+        "officeId": "Office",
+        "errofficeId": "Office is ",
+        "debitRuleType": "Affected GL Entry (Debit) Rule Type *",
+        "fixedAccount": "Fixed Account",
+        "listOfAccounts": "List of Accounts",
+        "accountToDebit": "Account to Debit",
+        "debitTags": "Debit Tags",
+        "allowMultipleDebitEntries": "Multiple Debit Entries Allowed",
+        "creditRuleType": "Affected GL Entry (Credit) Rule Type *",
+        "accountToCredit": "Account to Credit",
+        "creditTags": "Credit Tags",
+        "allowMultipleCreditEntries": "Multiple Credit Entries Allowed",
+        "description": "Description"
+      },
+      "ViewRuleComponent": {
+        "officeName": "Office",
+        "description": "Description",
+        "allowMultipleDebitEntries": "Multiple Debit Entries Allowed",
+        "allowMultipleCreditEntries": "Multiple Credit Entries Allowed",
+        "debitTags": "Debit Tags",
+        "debitAccounts": "Debit Account Name",
+        "creditTags": "Credit Tags",
+        "creditAccounts": "Credit Account Name"
+      }
+    },
+    "ChartOfAccounts": {
+      "btnAddAccount": "Add Account",
+      "Filter": "Filter",
+      "name": "Account",
+      "glCode": "GL Code",
+      "glAccountType": "Type",
+      "disabled": "Disabled",
+      "manualEntriesAllowed": "Manual Entries Allowed",
+      "usedAs": "Used as",
+      "btnExpandAll": "Expand All",
+      "btnCollapseAll": "Collapse All",
+      "accountName": "Account Name",
+      "glAccountCode": "GL Code",
+      "glAccountType2": "Account Type",
+      "glAccountUsage": "Account Usage",
+      "glAccountManualEntriesAllowed": "Manual Entries Allowed",
+      "description": "Description",
+
+      "CreateGlAccountComponent": {
+        "type": "Account Type",
+        "errtype": "Account Type is ",
+        "name": "Account Name",
+        "errname": "Account Name is ",
+        "usage": "Account Usage",
+        "errusage": "Account Usage is ",
+        "glCode": "GL Code",
+        "errglCode": "GL Code is ",
+        "parentId": "Parent",
+        "tagId": "Tag",
+        "manualEntriesAllowed": "Manual Entries Allowed",
+        "description": "Description"
+      },
+      "EditGlAccountComponent": {
+        "type": "Account Type",
+        "errtype": "Account Type is ",
+        "name": "Account Name",
+        "errname": "Account Name is ",
+        "usage": "Account Usage",
+        "errusage": "Account Usage is ",
+        "glCode": "GL Code",
+        "errglCode": "GL Code is ",
+        "parentId": "Parent",
+        "tagId": "Tag",
+        "manualEntriesAllowed": "Manual Entries Allowed",
+        "description": "Description"
+      },
+      "ViewGlAccountComponent": {
+        "btnSubledgerAccount": "Subledger Account",
+        "btnEdit": "Edit",
+        "btnDisable": "Disable",
+        "btnEnable": "Enable",
+        "btnDelete": "Delete",
+        "type": "Account Type",
+        "glCode": "GL Code",
+        "parent": "Parent Account Name",
+        "tagId": "Tag",
+        "usage": "Account Usage",
+        "manualEntriesAllowed": "Manual Entries Allowed",
+        "description": "Description"
+      }
+    },
+    "ClosingEntriesComponent": {
+      "btnCreateClosure": "Create Closure",
+      "officeName": "Office Name",
+      "table": {
+        "officeName": "Office",
+        "closingDate": "Closure Date",
+        "comments": "Comments",
+        "createdByUsername": "Created By"
+      },
+
+      "CreateClosureComponent": {
+        "officeId": "Office",
+        "errofficeId": "Office is ",
+        "closingDate": "Closing Date",
+        "errclosingDate": "Closing Date is ",
+        "comments": "Comments"
+      },
+      "EditClosureComponent": {
+        "officeId": "Office",
+        "closingDate": "Closing Date",
+        "comments": "Comments"
+      },
+      "ViewClosureComponent": {
+        "officeName": "Office",
+        "closingDate": "Closure Date",
+        "createdByUsername": "Closed By",
+        "lastUpdatedByUsername": "Updated By",
+        "lastUpdatedDate": "Updated On",
+        "createdDate": "Closure Creation Date",
+        "comments": "Comments"
+      }
+    },
+    "CreateJournalEntryComponent": {
+      "officeId": "Office",
+      "errofficeId": "Office is ",
+      "currencyCode": "Currency",
+      "errcurrencyCode": "Currency is ",
+      "glAccountId": "Affected GL Entry (Debit)",
+      "errglAccountId": "Affected GL Entry (Debit) is ",
+      "amount": "Debit Amount",
+      "erramount": "Debit Amount is ",
+      "glAccountIdCredit": "Affected GL Entry (Credit)",
+      "errglAccountIdCredit": "Affected GL Entry (Credit) is ",
+      "amountCredit": "Credit Amount",
+      "erramountCredit": "Credit Amount is ",
+      "referenceNumber": "Reference Number",
+      "transactionDate": "Transaction Date",
+      "errtransactionDate": "Transaction Date is ",
+      "paymentTypeId": "Payment Type",
+      "accountNumber": "Account Number",
+      "checkNumber": "Cheque Number",
+      "routingCode": "Routing Code",
+      "receiptNumber": "Receipt Number",
+      "bankNumber": "Bank Number",
+      "comments": "Comments"
+    },
+    "FinancialActivityMappingsComponent": {
+      "financialActivity": "Financial Activity",
+      "glAccountName": "Account Name",
+      "glAccountCode": "Account Code",
+      "defineNewMapping": "Define New Mapping",
+
+      "CreateFinancialActivityMappingComponent": {
+        "financialActivityId": "Financial Activity",
+        "errfinancialActivityId": "Financial Activity is ",
+        "glAccountId": "Account",
+        "errglAccountId": "Account is "
+      },
+      "EditFinancialActivityMappingComponent": {
+        "financialActivityId": "Financial Activity",
+        "glAccountId": "Account"
+      },
+      "ViewFinancialActivityMappingComponent": {
+        "financialActivity": "Financial Activity",
+        "accountName": "Account Name"
+      }
+    },
+    "FrequentPostingsComponent": {
+      "officeId": "Office",
+      "errofficeId": "Office is ",
+      "accountingRule": "Accounting Rule",
+      "erraccountingRule": "Accounting Rule is ",
+      "currencyCode": "Currency",
+      "errcurrencyCode": "Currency is ",
+      "glAccountId": "Affected GL Entry (Debit)",
+      "errglAccountId": "Affected GL Entry (Debit) is ",
+      "amountDebit": "Debit Amount",
+      "erramountDebit": "Debit Amount is ",
+      "glAccountIdCredit": "Affected GL Entry (Credit)",
+      "errglAccountIdCredit": "Affected GL Entry (Credit) is ",
+      "amountCredit": "Credit Amount",
+      "erramountCredit": "Credit Amount is ",
+      "referenceNumber": "Reference Number",
+      "transactionDate": "Transaction Date",
+      "errtransactionDate": "Transaction Date is ",
+      "paymentTypeId": "Payment Type",
+      "accountNumber": "Account Number",
+      "checkNumber": "Cheque Number",
+      "routingCode": "Routing Code",
+      "receiptNumber": "Receipt Number",
+      "bankNumber": "Bank Number",
+      "comments": "Comments"
+    },
+    "MigrateOpeningBalancesComponent": {
+      "officeId": "Office",
+      "errofficeId": "Office is ",
+      "currencyCode": "Currency",
+      "errcurrencyCode": "Currency is ",
+      "transactionDate": "Opening Balances Date",
+      "errtransactionDate": "Opening Balances Date is ",
+      "Type": "Type",
+      "GLCode": "GL Code",
+      "Account": "Account",
+      "TotalDebit": "Total Debit: ",
+      "TotalCredit": "Total Credit: ",
+      "debit": "Debit",
+      "credit": "Credit"
+    },
+    "PeriodicAccrualsComponent": {
+      "tillDate": "Accrue Till Date",
+      "errtillDate": "Accrue Date is ",
+      "btnRunPeriodicAccruals": "Run Periodic Accruals"
+    },
+    "ProvisioningEntriesComponent": {
+      "btnCreateProvisioningEntry": "Create Provisioning Entry",
+      "Filter": "Filter",
+      "table": {
+        "createdUser": "Created By",
+        "createdDate": "Created On",
+        "journalEntry": "Journal Entry Created",
+        "viewReport": "View Report",
+        "recreateProvisioning": "Recreate Provisioning",
+        "viewJournalEntry": "View Journal Entry"
+      },
+
+      "CreateProvisioningEntryComponent": {
+        "date": "Date",
+        "errdate": "Date is ",
+        "createjournalentries": "Create Journal Entries"
+      },
+      "ViewProvisioningEntryComponent": {
+        "btnCreateJournalEntries": "Create Journal Entries",
+        "createdUser": "Created By",
+        "createdDate": " Created On",
+        "reservedAmount": "Amount to be Reserved",
+        "officeName": "Office Name",
+        "loanProduct": "Loan Product",
+        "provisioningCategory": "Provisioning Category",
+        "table": {
+          "officeName": "Office Name",
+          "productName": "Product Name",
+          "currencyCode": "Currency Code",
+          "categoryName": "Category Name",
+          "amountreserved": "Provisioning Amount",
+          "liabilityAccountName": "Liability Account (CR)",
+          "expenseAccountName": "Expense Account (DR)"
+        }
+      },
+      "ViewProvisioningJournalEntriesComponent": {
+        "Filter": "Filter",
+        "id": "Entry ID",
+        "officeName": "Office",
+        "transactionDate": "Transaction Date",
+        "transactionId": "Transaction ID",
+        "glAccountType": "Type",
+        "createdByUserName": "Type",
+        "glAccountCode": "Account Code",
+        "glAccountName": "Account Name",
+        "debit": "Debit",
+        "credit": "Credit"
+      }
+    },
+    "RevertTransactionComponent": {
+      "p": "Are you sure you want to revert this transaction?",
+      "comments": "Comments",
+      "h1": "Transaction Reverted",
+      "h4": "Success!",
+      "p_2": "A new journal entry has been created to reverse this transaction:",
+      "p_3": "Transaction ID: ",
+      "btnRedirectToNewTransaction": "Redirect to New Transaction"
+    },
+    "SearchJournalEntryComponent": {
+      "officeName": "Office Name",
+      "glAccount": "GL Account Name or Code",
+      "Filter": "Filter",
+      "transactionDateFrom": "Từ ngày",
+      "transactionDateTo": "Đến ngày",
+      "transactionId": "Transaction ID",
+      "table": {
+        "id": "Entry ID",
+        "officeName": "Office",
+        "transactionId": "Transaction ID",
+        "transactionDate": "Transaction Date",
+        "glAccountType": "Type",
+        "createdByUserName": "Created by",
+        "glAccountCode": "Account Code",
+        "glAccountName": "Account Name",
+        "debit": "Debit",
+        "credit": "Credit"
+      }
+    },
+    "ViewJournalEntryComponent": {
+      "h1": "View Journal Entry",
+      "officeName": "Office",
+      "id": "Entry ID",
+      "transactionId": "Transaction ID",
+      "transactionDate": "Transaction Date",
+      "glAccountType": "Type",
+      "glAccountId": "Account Code",
+      "glAccountName": "Account Name",
+      "Credit": "Credit",
+      "Debit": "Debit",
+      "referenceNumber": "Reference Number",
+      "comments": "Comments",
+      "paymentDetails": "Payment Details",
+      "paymentType": "Payment Type",
+      "accountNumber": "Account Number",
+      "checkNumber": "Cheque Number",
+      "routingCode": "Routing Code",
+      "receiptNumber": "Receipt Number",
+      "bankNumber": "Bank Number",
+      "createdByUserName": "Created by",
+      "createdDate": "Created on"
+    },
+    "ViewTransactionComponent": {
+      "spanRevertTransaction": "Revert Transaction",
+      "spanTransactionReverted": "Transaction Reverted",
+      "officeName": "Office",
+      "transactionDate": "Transaction Date",
+      "createdByUserName": "Created By",
+      "createdDate": "Created On",
+      "table": {
+        "createdDate": "Entry ID",
+        "glAccountType": "Type",
+        "glAccountCode": "Account Code",
+        "glAccountName": "Account Name",
+        "debit": "Debit",
+        "credit": "Credit"
+      }
+    }
+  },
+  "CentersComponent": {
+    "strongRequire": "required",
+    "checkboxShowClosedCenters": "Show Closed Centers",
+    "btnImportCenter": "Import Center",
+    "btnCreateCenter": "Create Center",
+    "table": {
+      "name": "Name",
+      "accountNo": "Account #",
+      "externalId": "ExternalID",
+      "status": "Status",
+      "officeName": "Office Name"
+    },
+
+    "CentersViewComponent": {
+      "h3": "Center Name : ",
+      "accountNo": "Account #:",
+      "externalId": "External Id: ",
+      "staffName": "Staff: ",
+      "activationDate": "Activation Date :",
+      "nextTenRecurringDates": "Next Meeting on: ",
+      "frequency": "Meeting Frequency: ",
+      "p1": "Next Meeting on: Unassigned",
+      "p2": "Meeting Frequency: N/A",
+      "btnActivate": "Activate",
+      "btnEdit": "Edit",
+      "btnManageGroups": "Manage Groups",
+      "CentersSavingApplication": "Centers Saving Application",
+      "btnMore": "More",
+      "btnAttendance": "",
+      "btnAssignStaff": "",
+      "btnUnassignStaff": "",
+      "btnDelete": "",
+      "btnClose": "",
+      "btnAttachMeeting": "",
+      "btnStaffAssignmentHistory": "",
+      "General": "General",
+      "Notes": "Notes",
+
+      "CenterActionsComponent": {
+        "ActivateCenterComponent": {
+          "activationDate": "Activated On Date",
+          "erractivationDate": "Activated On Date is "
+        },
+        "AttachCenterMeetingComponent": {
+          "startDate": "Meeting Start Date",
+          "errstartDate": "Start Date is ",
+          "repeating": "Repeats?",
+          "frequency": "Repetition Frequency",
+          "errfrequency": "Repetition Frequency is ",
+          "interval": "Repetition Interval",
+          "errinterval": "Repeition Interval is ",
+          "repeatsOnDay": "Repeats on Day",
+          "Atleast": "At least ",
+          "one": "one",
+          "dayMustBeSelected": " day must be selected"
+        },
+        "CenterAssignStaffComponent": {
+          "staffId": "Staff",
+          "errstaffId": "Staff is "
+        },
+        "CenterAttendanceComponent": {
+          "meetingDate": "Meeting Date",
+          "hint": "Next Meeting on: ",
+          "name": "Name",
+          "attendance": "Attendance",
+          "Present": "Present",
+          "Absent": "Absent",
+          "Approved": "Approved",
+          "Leave": "Leave",
+          "Late": "Late"
+        },
+        "CloseCenterComponent": {
+          "closureDate": "Closed On Date",
+          "errclosureDate": "Closed On Date is ",
+          "closureReasonId": "Closure Reason",
+          "errclosureReasonId": "CLosure Reason is "
+        },
+        "EditCenterMeetingComponent": {
+          "btnEditSchedule": "Edit Schedule",
+          "frequency": "Repetition Frequency",
+          "errfrequency": "Repetition Frequency is ",
+          "interval": "Repetition Interval",
+          "errinterval": "Repeition Interval is ",
+          "repeatsOnDay": "Repeats on Day",
+          "Atleast ": "At least ",
+          "one": "one",
+          "dayMustBeSelected": " day must be selected",
+          "startDate": "Above Changes are Effective from",
+          "errstartDate": "Changes Affection Date is ",
+          "hint": "Note: 'Repeats' and 'Repeats every' cannot not be modified if there are active accounts ",
+          "hint_2": "(JLG Loans, Recurring Deposits etc) dependent on this meeting."
+        },
+        "EditCenterMeetingScheduleComponent": {
+          "presentMeetingDate": "Existing Meeting Date",
+          "errpresentMeetingDate": "Existing Meeting Date is ",
+          "newMeetingDate": "Revised Meeting Date",
+          "errnewMeetingDate": "Revised Meeting Date is "
+        },
+        "ManageGroupsComponent": {
+          "groupChoice": "Add Groups",
+          "groupDetail": "Group Details",
+          "name": "Name",
+          "id": "Id",
+          "officeName": "Office",
+          "h3": "Group Members"
+        }
+      },
+      "DatatableTabComponent": {
+        "MultiRowComponent": {
+          "btnDeleteAll": "Delete All"
+        }
+      },
+      "GeneralTabComponent": {
+        "h3": "Center Closed",
+        "h3_2": "Summary Details",
+        "activeClients": "Active Clients: ",
+        "activeGroupLoans": "Active Group Loans: ",
+        "activeClientLoans": "Active Client Loans: ",
+        "overdueGroupLoans": "Active Overdue Group Loans: ",
+        "activeGroupBorrowers": "Active Group Borrowers: ",
+        "activeClientBorrowers": "Active Client Borrowers: ",
+        "overdueClientLoans": "Active Overdue Client Loans: ",
+        "h3_3": "Groups",
+        "accountNoGroups": "Account Number",
+        "nameGroups": "Group Name",
+        "officeNameGroups": "Office Name",
+        "submittedOnDateGroups": "Submitted On",
+        "h3_4": "Savings Account Overview",
+        "accountNo": "Account No",
+        "productName": "Products",
+        "accountBalance": "Balance",
+        "Actions": "Actions",
+        "Deposit": "Deposit",
+        "Withdraw": "Withdraw",
+        "Approve": "Approve",
+        "UndoApprove": "Undo Approve",
+        "Activate": "Activate"
+      },
+      "NotesTabComponent": {
+        "createdByUsername": "Created by: ",
+        "createdOn": "Date: "
+      }
+    },
+    "CreateCenterComponent": {
+      "name": "Name",
+      "errname": "Center Name is ",
+      "CenterName ": "Center Name ",
+      "cannot": "cannot",
+      "alert": " begin with a special character or number",
+      "officeId": "Office",
+      "errofficeId": "Office is ",
+      "staffId": "Staff",
+      "active": "Active",
+      "activationDate": "Activation Date",
+      "erractivationDate": "Activation Date is ",
+      "externalId": "External id",
+      "submittedOnDate": "Submitted on",
+      "errsubmittedOnDate": "Submission Date is ",
+      "groupChoice": "Select and Add groups",
+      "groupDetails": "Group Details",
+      "groupChoiceName": "Name",
+      "groupChoiceId": "Id",
+      "groupChoiceOfficeName": "Office",
+      "h3": "Selected Groups"
+    },
+    "EditCenterComponent": {
+      "name": "Name",
+      "errname": "Center Name is ",
+      "CenterName ": "Center Name ",
+      "cannot": "cannot",
+      "alert": " begin with a special character or number",
+      "staffId": "Staff",
+      "externalId": "External id",
+      "activationDate": "Activation date",
+      "erractivationDate": "Activation Date is "
+    }
+  },
+
+  "ClientsComponent": {
+    "BalanceAccountClientComponent": {
+      "label": "Danh sách công nợ phải trả (tạm ứng) của khách hàng",
+      "totalAccOfUser": "Số lượng giao dịch: ",
+      "totalAmountDerivedOfUser": "Số tiền giao dich: ",
+      "customer_name": "Tên khách hàng",
+      "staff_name": "Nhân viên",
+      "officeName": "Chi nhánh",
+      "staff_name2": "Nhân viên phụ trách",
+      "account_no": "Số tài khoản",
+      "account_balance_derived": "Tổng số dư:",
+      "staff_name3": "Nhân viên phụ trách :",
+      "account_no2": "Số tài khoản :",
+      "label2": "Danh sách công nợ phải thu của khách hàng",
+      "totalAccOfUser2": "Số lượng giao dịch: ",
+      "totalAmountDerivedOfUser2": "Số tiền giao dich: "
+    },
+    "BalanceAccountTellerComponent": {
+      "h3": "Số tài khoản: ",
+      "totalBalanceAmount": "Số dư: ",
+      "tellerSourceName": "Tên teller",
+      "sourceInfo": "Tên tài khoản",
+      "officeName": "Chi nhánh",
+      "accountNo": "Mã tài khoản",
+      "savingIdAndSourceInfo": "Tên tài khoản - số dư > 0",
+      "balance": "Số dư"
+    }
+  },
+  "Deposits": {
+    "strongRequired": "required",
+    "strongIsRequired": "is required",
+    "Fixed": {
+      "Create": {
+        "DETAILS": "DETAILS",
+        "CURRENCY": "CURRENCY",
+        "TERMS": "TERMS",
+        "SETTINGS": "SETTINGS",
+        "INTERESTRATECHART": "INTEREST RATE CHART",
+        "CHARGES": "CHARGES",
+        "PREVIEW": "PREVIEW"
+      },
+      "Edit": {
+        "DETAILS": "DETAILS",
+        "CURRENCY": "CURRENCY",
+        "TERMS": "TERMS",
+        "SETTINGS": "SETTINGS",
+        "INTERESTRATECHART": "INTEREST RATE CHART",
+        "CHARGES": "CHARGES",
+        "PREVIEW": "PREVIEW"
+      },
+      "Stepper": {
+        "Charges": {
+          "Charge": "Charge",
+          "name": "Name",
+          "chargeCalculationType": "Type",
+          "amount": "Amount",
+          "chargeTimeType": "Collected On",
+          "date": "Date",
+          "repaymentsEvery": "Repayments Every",
+          "action": "Actions"
+        },
+        "Currency": {
+          "currencyCode": "Currency",
+          "decimalPlaces": "Decimal Places",
+          "currencyMultiple": "Currency Multiple"
+        },
+        "Details": {
+          "productId": "Product Name",
+          "errproductId": "Product Name is ",
+          "submittedOnDate": "Submitted On",
+          "errsubmittedOnDate": "Submission Date is ",
+          "fieldOfficerId": "Field Officer"
+        },
+        "InterestRate": {
+          "name": "Name:",
+          "fromDate": "Valid from Date:",
+          "endDate": "End Date:",
+          "description": "Description:",
+          "isPrimaryGroupingByAmount": "Primary Grouping by Amount:",
+          "period": "Period",
+          "amountRange": "Amount Range",
+          "interest": "Interest",
+          "description2": "Description",
+          "actions": "Actions",
+          "btnViewIncentives": "View Incentives",
+          "btnHideIncentives": "Hide Incentives",
+          "table": {
+            "h4": "Incentives",
+            "entityType": "Entity Type",
+            "attributeName": "Attribute Name",
+            "conditionType": "Condition Type",
+            "attributeValue": "Attribute Value",
+            "incentiveType": "Incentive Type",
+            "amount": "Interest"
+          }
+        },
+        "Preview": {
+          "h3": "Details",
+          "Product": "Product",
+          "submittedOnDate": "Submitted On",
+          "FieldOfficer": "Field Officer",
+          "h3_2": "Currency",
+          "Currency": "Currency",
+          "inMultiplesOf": "Currency Multiple",
+          "decimalPlaces": "Decimal Places",
+          "Terms": "Terms",
+          "depositAmount": "Fixed Deposit Amount:",
+          "depositPeriod": "Deposit Period:",
+          "interestCompoundingPeriod": "Interest Compounding Period:",
+          "interestPostingPeriod": "Interest Posting Period:",
+          "interestCalculation": "Interest Calculated using:",
+          "interestCalculationDaysInYear": "Days in Year:",
+          "Settings": "Settings",
+          "lockinPeriod": "Lock-in Period:",
+          "minDepositTerm": "Minimum Deposit Term:",
+          "inMultiplesOfDepositTerm": "In Multiples Of:",
+          "maxDepositTerm": "Maximum Deposit Term",
+          "transferInterestToSavings": "Transfer Interest to Savings Account?",
+          "LinkedSavingsAccount": "Linked Savings Account",
+          "preClosurePenalApplicable": "Apply Penal Interest (less):",
+          "PenalInterest": "Penal Interest (%):",
+          "withHoldTax": "Withhold Tax is Applicable:",
+          "InterestRateChart": "Interest Rate Chart",
+          "name": "Name:",
+          "fromDate": "Valid from Date:",
+          "endDate": "End Date:",
+          "description": "Description:",
+          "isPrimaryGroupingByAmount": "Primary Grouping by Amount:",
+          "table": {
+            "period": "Period",
+            "amountRange": "Amount Range",
+            "interest": "Interest",
+            "description": "Description",
+            "actions": "Actions",
+            "btnViewIncentives": "View Incentives",
+            "btnHideIncentives": "Hide Incentives",
+            "entityType": "Entity Type",
+            "attributeName": "Attribute Name",
+            "conditionType": "Condition Type",
+            "attributeValue": "Attribute Value",
+            "incentiveType": "Incentive Type",
+            "amount": "Interest"
+          },
+          "h3_3": "Charges:",
+          "tableCharges": {
+            "name": "Name",
+            "chargeCalculationType": "Type",
+            "amount": "Amount",
+            "date": "Date",
+            "repaymentsEvery": "Repayments Every",
+            "chargeTimeType": "Collected On"
+          }
+        },
+        "Settings": {
+          "h4": "Lock-in Period",
+          "lockinPeriodFrequency": "Frequency",
+          "lockinPeriodFrequencyType": "Type",
+          "h4_2": "Minimum Deposit Term",
+          "minDepositTerm": "Frequency",
+          "errminDepositTerm": "Minimum Deposit Term Frequency is ",
+          "minDepositTermTypeId": "Frequency Type",
+          "errminDepositTermTypeId": "Minimum Deposit Term Frequency Type is ",
+          "h4_3": "And thereafter, in Multiples of",
+          "inMultiplesOfDepositTerm": "Frequency",
+          "inMultiplesOfDepositTermTypeId": "Type",
+          "h4_4": "Maximum Deposit Term",
+          "maxDepositTerm": "Frequency",
+          "maxDepositTermTypeId": "Type",
+          "h3": "Interest Transfer",
+          "transferInterestToSavings": "Transfer Interest to Linked Savings Account?",
+          "linkAccountId": "Link Savings Account",
+          "errlinkAccountId": "Linked Savings Account is ",
+          "h4_5": "For Pre-mature closure",
+          "preClosurePenalApplicable": "Apply Penal Interest (less)",
+          "preClosurePenalInterest": "Penal Interest (%)",
+          "preClosurePenalInterestOnTypeId": "Period",
+          "withHoldTax": "Is Withhold Tax Applicable?",
+          "taxGroupId": "Tax Group"
+        },
+        "Terms": {
+          "depositAmount": "Deposit Amount",
+          "errdepositAmount": "Fixed Deposit Amount is ",
+          "depositPeriod": "Deposit Period Frequency",
+          "errdepositPeriod": "Deposit Period Frequency is ",
+          "depositPeriodFrequencyId": "Deposit Period Type",
+          "errdepositPeriodFrequencyId": "Deposit Period Type is ",
+          "interestCompoundingPeriodType": "Interest Compounding Period",
+          "errinterestCompoundingPeriodType": "Interest Compounding Period is ",
+          "interestPostingPeriodType": "Interest Posting Period",
+          "errinterestPostingPeriodType": "Interest Posting Period is ",
+          "interestCalculationType": "Interest Calculated using",
+          "errinterestCalculationType": "Interest Calculated using is ",
+          "interestCalculationDaysInYearType": "Days in Year",
+          "errinterestCalculationDaysInYearType": "Days in Year is "
+        }
+      },
+      "View": {
+        "depositProductName": "Account Name : ",
+        "accountNo": "Account #: ",
+        "CurrentBalance": "Current Balance: ",
+        "DepositAmount": "Deposit Amount: ",
+        "btnMore": "More",
+        "h4": "Fixed Deposit Details",
+        "activatedOnDate": "Activated On",
+        "closedOnDate": "Closed On",
+        "fieldOfficerName": "Field Officer",
+        "maturityDate": "Maturity Date",
+        "depositPeriod": "Deposit Period",
+        "taxGroup": "Tax Group",
+        "h4_2": "Interest Details",
+        "nominalAnnualInterestRate": "Interest Rate",
+        "interestCompoundingPeriodType": "Interest Compounding Period",
+        "interestPostingPeriodType": "Interest Posting Period",
+        "interestCalculationType": "Interest Calculated Using",
+        "interestCalculationDaysInYearType": "No. of Days in Year",
+        "preClosurePenalApplicable": "Pre-cloure Penal",
+        "h4_3": "Performance History",
+        "depositAmount": "Principal Amount",
+        "maturityAmount": "Maturity Amount",
+        "totalDeposits": "Total Deposits",
+        "totalWithdrawals": "Total Withdrawals",
+        "totalInterestEarned": "Total Interest Earned",
+        "h4_4": "Other Details",
+        "depositAmount2": "Principal Amount",
+        "maturityAmount2": "Maturity Amount",
+        "IRC": "Interest Rate Chart",
+        "transactions": "Transactions",
+        "charges": "Charges",
+        "standingInstructions": "Standing Instructions",
+
+        "ChargesTab": {
+          "h3": "All Charges",
+          "name": "Name",
+          "feeOrPenalty": "Fee/Penalty",
+          "paymentDueAt": "Payment Due At",
+          "dueAsOf": "Due As Of",
+          "repeatsOn": "Repeats On",
+          "calculationType": "Calculation Type",
+          "due": "Due",
+          "paid": "Paid",
+          "waived": "Waived",
+          "outstanding": "Outstanding",
+          "actions": "Actions"
+        },
+        "CustomDialog": {
+          "CalculateInterest": {
+            "p": "Are you sure you want to calculate interest ?"
+          },
+          "InactiveCharge": {
+            "h1": "Inactivate Charge",
+            "p": "Are you sure you want to inactivate charge with id: "
+          },
+          "PostInterest": {
+            "h1": "Post Interest",
+            "p": "Are you sure you want to post interest ?"
+          },
+          "ToggleWithholdTax": {
+            "h1": "Withhold Tax",
+            "p": "withhold tax for this account ?",
+            "p2": "Are you sure you want to "
+          },
+          "WaiveCharge": {
+            "h1": "Waive Charge",
+            "p": "Are you sure you want to waive charge with id: "
+          }
+        },
+        "InterestRateChargeTab": {
+          "h3": "All Interest Rates",
+          "period": "Period",
+          "amountRange": "Amount Range",
+          "interest": "Interest",
+          "description": "Description",
+          "actions": "Actions",
+          "ViewIncentives": "View Incentives",
+          "HideIncentives": "Hide Incentives",
+          "h4": "Incentives",
+          "entityType": "Entity Type",
+          "attributeName": "Attribute Name",
+          "conditionType": "Condition Type",
+          "attributeValue": "Attribute Value",
+          "incentiveType": "Incentive Type",
+          "amount": "Interest"
+        },
+        "StandingInstructionsTab": {
+          "h3": "All Standing Instructions",
+          "client": "Client",
+          "fromAccount": "From Account",
+          "beneficiary": "Beneficiary",
+          "toAccount": "To Account",
+          "amount": "Amount",
+          "validity": "Validity",
+          "actions": "Actions"
+        },
+        "TransactionsTab": {
+          "h3": "All Transactions",
+          "id": "ID",
+          "transactionDate": "Transaction Date",
+          "transactionType": "Transaction Type",
+          "debit": "Debit",
+          "credit": "Credit",
+          "balance": "Balance"
+        },
+        "ViewTransaction": {
+          "id": "Transaction Id",
+          "transactionType": "Type",
+          "date": "Transaction Date",
+          "currency": "Currency",
+          "amount": "Amount",
+          "note": "Note",
+          "paymentType": "Payment Type",
+          "accountNumber": "Account No.",
+          "checkNumber": "Cheque Number",
+          "routingCode": "Routing Code",
+          "receiptNumber": "Receipt No.",
+          "bankNumber": "Bank No."
+        }
+      },
+      "Actions": {
+        "Activate": {
+          "activatedOnDate": "Activated On Date",
+          "erractivatedOnDate": "Activated On Date is "
+        },
+        "AddCharge": {
+          "chargeId": "Charge",
+          "errchargeId": "Charge is ",
+          "amount": "Amount",
+          "erramount": "Amount is",
+          "chargeCalculationType": "Charge Calculation",
+          "chargeTimeType": "Charge time type",
+          "dueDate": "Due for collection on",
+          "errdueDate": "Due for collection on is ",
+          "feeOnMonthDay": "Due On",
+          "errfeeOnMonthDay": "Due Date is ",
+          "feeInterval": "Repeats Every"
+        },
+        "Approve": {
+          "approvedOnDate": "Approved On Date",
+          "errapprovedOnDate": "Approved On Date is ",
+          "note": "Note"
+        },
+        "Close": {
+          "closedOnDate": "Closed On Date",
+          "errclosedOnDate": "Closed On Date is ",
+          "maturityAmount": "Maturity Amount",
+          "onAccountClosureId": "Action",
+          "erronAccountClosureId": "Account action is ",
+          "toSavingsAccountId": "Transfer to Savings",
+          "errtoSavingsAccountId": "Transfer to savings account is ",
+          "transferDescription": "Transfer Description",
+          "note": "Note"
+        },
+        "Premature": {
+          "closedOnDate": "Premature Close Date",
+          "errclosedOnDate": "Premature Close Date is ",
+          "maturityAmount": "Maturity Amount",
+          "onAccountClosureId": "Action",
+          "erronAccountClosureId": "Account action is ",
+          "toSavingsAccountId": "Transfer to Savings",
+          "errtoSavingsAccountId": "Transfer to savings account is ",
+          "transferDescription": "Transfer Description",
+          "note": "Note"
+        },
+        "Reject": {
+          "rejectedOnDate": "Rejected On Date",
+          "errclosedOnDate": "Rejected On Date is ",
+          "name": "Note"
+        },
+        "Undo": {
+          "note": "Note"
+        },
+        "Withdraw": {
+          "withdrawnOnDate": "Withdrawn On Date",
+          "errwithdrawnOnDate": "Withdrawn On Date is ",
+          "note": "Note"
+        }
+      }
+    },
+    "Recurring": {
+      "Create": {
+        "DETAILS": "DETAILS",
+        "CURRENCY": "CURRENCY",
+        "TERMS": "TERMS",
+        "SETTINGS": "SETTINGS",
+        "INTERESTRATECHART": "INTEREST RATE CHART",
+        "CHARGES": "CHARGES",
+        "PREVIEW": "PREVIEW"
+      },
+      "Edit": {
+        "DETAILS": "DETAILS",
+        "CURRENCY": "CURRENCY",
+        "TERMS": "TERMS",
+        "SETTINGS": "SETTINGS",
+        "INTERESTRATECHART": "INTEREST RATE CHART",
+        "CHARGES": "CHARGES",
+        "PREVIEW": "PREVIEW"
+      },
+      "Actions": {
+        "Activate": {
+          "activatedOnDate": "Activated On Date",
+          "erractivatedOnDate": "Activated On Date is "
+        },
+        "AddCharge": {
+          "chargeId": "Charge",
+          "errchargeId": "Charge is ",
+          "amount": "Amount",
+          "erramount": "Amount is ",
+          "chargeCalculationType": "Charge Calculation",
+          "chargeTimeType": "Charge time type",
+          "dueDate": "Due for collection on",
+          "errdueDate": "Due for collection on is ",
+          "feeOnMonthDay": "Due On",
+          "errfeeOnMonthDay": "Due Date is ",
+          "feeInterval": "Repeats Every"
+        },
+        "Approve": {
+          "approvedOnDate": "Approved On Date",
+          "errapprovedOnDate": "Approved On Date is ",
+          "note": "Note"
+        },
+        "Close": {
+          "closedOnDate": "Closed On",
+          "errclosedOnDate": "Closed On ",
+          "maturityAmount": "Maturity Amount",
+          "errmaturityAmount": "Maturity Amount ",
+          "onAccountClosureId": "Action",
+          "erronAccountClosureId": "Action ",
+          "paymentTypeId": "Payment Type Id",
+          "errpaymentTypeId": "Payment Type ",
+          "expandCollapsebutton": "Show Payment Details",
+          "accountNumber": "Account #",
+          "chequeNumber": "Cheque #",
+          "routingCode": "Routing Code",
+          "receiptNumber": "Reciept #",
+          "bankNumber": "Bank #",
+          "note": "Note"
+        },
+        "Deposit": {
+          "transactionDate": "Transaction Date",
+          "errtransactionDate": "Transaction Date ",
+          "transactionAmount": "Transaction Amount",
+          "errtransactionAmount": "Transaction Amount ",
+          "paymentTypeId": "Payment Type Id",
+          "errpaymentTypeId": "Payment Type ",
+          "expandCollapsebutton": "Show Payment Details",
+          "accountNumber": "Account #",
+          "chequeNumber": "Cheque #",
+          "routingCode": "Routing Code",
+          "receiptNumber": "Reciept #",
+          "bankNumber": "Bank #",
+          "note": "Note"
+        },
+        "Premature": {
+          "closedOnDate": "Closed On",
+          "errclosedOnDate": "Closed On Date is "
+        },
+        "Reject": {
+          "rejectedOnDate": "Rejected On Date",
+          "errrejectedOnDate": "Rejected On Date is ",
+          "note": "Note"
+        },
+        "Undo": {
+          "note": "Note"
+        },
+        "Withdraw": {
+          "withdrawnOnDate": "Withdrawn On Date",
+          "errwithdrawnOnDate": "Withdrawn On Date is ",
+          "note": "Note"
+        }
+      },
+      "Stepper": {
+        "Charge": {
+          "chargeName": "Charge",
+          "btnAdd": "Add",
+          "name": "Name",
+          "chargeCalculationType": "Type",
+          "amount": "Amount",
+          "chargeTimeType": "Collected On",
+          "date": "Date",
+          "repaymentsEvery": "Repayments Every",
+          "action": "Actions"
+        },
+        "Currency": {
+          "currencyCode": "Currency",
+          "decimalPlaces": "Decimal Places"
+        },
+        "Details": {
+          "productId": "Product Name",
+          "errproductId": "Product Name is ",
+          "submittedOnDate": "Submitted On",
+          "errsubmittedOnDate": "Submission Date is ",
+          "fieldOfficerId": "Field Officer"
+        },
+        "InterestRate": {
+          "name": "Name:",
+          "fromDate": "Valid from Date:",
+          "endDate": "End Date:",
+          "description": "Description:",
+          "isPrimaryGroupingByAmount": "Primary Grouping by Amount:",
+          "periodType": "Period",
+          "amountRangeTo": "Amount Range",
+          "annualInterestRate": "Interest",
+          "description2": "Description",
+          "actions": "Actions",
+          "ViewIncentives": "View Incentives",
+          "HideIncentives": "Hide Incentives",
+          "entityType": "Entity Type",
+          "attributeName": "Attribute Name",
+          "conditionType": "Condition Type",
+          "attributeValue": "Attribute Value",
+          "incentiveType": "Incentive Type",
+          "amount": "Interest"
+        },
+        "Preview": {
+          "h3": "Details",
+          "Product": "Product",
+          "submittedOnDate": "Submitted On",
+          "FieldOfficer": "Field Officer",
+          "h3_2": "Currency",
+          "currencyCode": "Currency",
+          "decimalPlaces": "Decimal Places",
+          "inMultiplesOf": "Currency In Multiples Of",
+          "h3_3": "Terms",
+          "InterestCompoundingPeriod": "Interest Compounding Period:",
+          "InterestPostingPeriod": "Interest Posting Period:",
+          "InterestCalculated": "Interest Calculated using:",
+          "DaysInYear": "Days in Year:",
+          "h3_4": "Settings",
+          "lockinPeriodFrequency": "Lock-in Period:",
+          "mandatoryRecommendedDepositAmount": "Recurring Deposit Amount:",
+          "depositPeriod": "Deposit Period:",
+          "isCalendarInherited": "Deposit Frequency Same as Group/Center meeting:",
+          "expectedFirstDepositOnDate": "Deposit Start Date:",
+          "recurringFrequency": "Deposit Frequency:",
+          "minDepositTerm": "Minimum Deposit Term:",
+          "inMultiplesOfDepositTerm": "In Multiples Of:",
+          "maxDepositTerm": "Maximum Deposit Term",
+          "h3_5": "Interest Rate Chart",
+          "name": "Name:",
+          "fromDate": "Valid from Date:",
+          "endDate": "End Date:",
+          "description": "Description:",
+          "isPrimaryGroupingByAmount": "Primary Grouping by Amount:",
+          "table": {
+            "period": "Period",
+            "amountRangeTo": "Amount Range",
+            "annualInterestRate": "Interest",
+            "description": "Description",
+            "actions": "Actions",
+            "ViewIncentives": "View Incentives",
+            "HideIncentives": "Hide Incentives",
+            "h4": "Incentives",
+            "entityType": "Entity Type",
+            "attributeName": "Attribute Name",
+            "conditionType": "Condition Type",
+            "attributeValue": "Attribute Value",
+            "incentiveType": "Incentive Type",
+            "amount": "Interest"
+          },
+          "h3_6": "Charges",
+          "tableCharges": {
+            "name": "Name",
+            "chargeCalculationType": "Type",
+            "amount": "Amount",
+            "date": "Date",
+            "repaymentsEvery": "Repayments Every",
+            "chargeTimeType": "Collected On"
+          }
+        },
+        "Settings": {
+          "isMandatoryDeposit": "Is Mandatory Deposit?",
+          "adjustAdvanceTowardsFuturePayments": "Adjust advance payments toward future installments?",
+          "allowWithdrawal": "Allow Withdrawals?",
+          "h4": "Lock-in Period",
+          "lockinPeriodFrequency": "Frequency",
+          "lockinPeriodFrequencyType": "Type",
+          "h4_2": "Recurring Deposit Details",
+          "mandatoryRecommendedDepositAmount": "Recurring Deposit Amount",
+          "errmandatoryRecommendedDepositAmount": "Recurring Deposit Amount is ",
+          "h4_3": "Deposit Period",
+          "depositPeriod": "Deposit Period",
+          "depositPeriodFrequencyId": "Type",
+          "isCalendarInherited": "Deposit Frequency Same as Group/Center meeting",
+          "expectedFirstDepositOnDate": "Deposit Start Date",
+          "h4_4": "Deposit Frequency",
+          "recurringFrequency": "Deposit Frequency",
+          "errrecurringFrequency": "Deposit Frequency is ",
+          "recurringFrequencyType": "Type",
+          "errrecurringFrequencyType": "Deposit Frequency Type is ",
+          "h4_5": "Minimum Deposit Term",
+          "minDepositTerm": "Frequency",
+          "errminDepositTerm": "Minimum Deposit Term Frequency is ",
+          "minDepositTermTypeId": "Frequency Type",
+          "errminDepositTermTypeId": "Minimum Deposit Term Frequency Type is ",
+          "h4_6": "And thereafter, in Multiples of",
+          "inMultiplesOfDepositTerm": "Frequency",
+          "inMultiplesOfDepositTermTypeId": "Type",
+          "h4_7": "Maximum Deposit Term",
+          "maxDepositTerm": "Frequency",
+          "maxDepositTermTypeId": "Type",
+          "h4_8": "For Pre-mature closure",
+          "preClosurePenalApplicable": "Apply Penal Interest (less)",
+          "preClosurePenalInterest": "Penal Interest (%)",
+          "preClosurePenalInterestOnTypeId": "Period",
+          "minBalanceForInterestCalculation": "Minimum Balance For Interest Calculation",
+          "h4_9": "Tax Group",
+          "withHoldTax": "Is Withhold Tax Applicable?",
+          "taxGroupId": "Tax Group"
+        },
+        "Terms": {
+          "interestCompoundingPeriodType": "Interest Compounding Period",
+          "errinterestCompoundingPeriodType": "Interest Compounding Period is ",
+          "interestPostingPeriodType": "Interest Posting Period",
+          "errinterestPostingPeriodType": "Interest Posting Period is ",
+          "interestCalculationType": "Interest Calculated using",
+          "errinterestCalculationType": "Interest Calculated using is ",
+          "interestCalculationDaysInYearType": "Days in Year",
+          "errinterestCalculationDaysInYearType": "Days in Year is "
+        }
+      },
+      "View": {
+        "depositProductName": "Account Name : ",
+        "accountNo": "Account #: ",
+        "clientName": "Client Name:",
+        "accountBalance": "Current Balance:",
+        "availableBalance": "Available Balance:",
+        "btnMore": "More",
+        "h4": "Savings Details",
+        "table1": {
+          "fieldOfficerName": "Field Officer",
+          "spanUnassigned": "Unassigned",
+          "activatedOnDate": "Activation date",
+          "maturityDate": "Maturity Date",
+          "closedOnDate": "Closed on Date",
+          "depositPeriod": "Period",
+          "recurringFrequency": "Deposit Frequency",
+          "minBalanceForInterestCalculation": "Balance Required For Interest Calculation",
+          "witdHoldTax": "Witdhold Tax Group"
+        },
+        "h4_2": "Performance History",
+        "table2": {
+          "depositAmount": "Principal Amount",
+          "maturityAmount": "Maturity Amount",
+          "mandatoryRecommendedDepositAmount": "Recurring Deposit Amount",
+          "totalDeposits": "Deposits till Date",
+          "totalWithdrawals": "Withdrwals till Date",
+          "totalInterestEarned": "Interest Earned"
+        },
+        "table3": {
+          "depositPeriod": "Period",
+          "maturityDate": "Maturity Date",
+          "totalDeposits": "Total Deposits",
+          "accountBalance": "Actual Available Balance",
+          "mandatoryRecommendedDepositAmount": "Recurring Deposits Amount",
+          "totalInterestEarned": "Interests Earned",
+          "totalWithdrawals": "Total Withdrawls",
+          "minBalanceForInterestCalculation": "Balance Required For Interest Calculation"
+        },
+        "table4": {
+          "depositAmount": "Principal Amount",
+          "nominalAnnualInterestRate": "Rate of Interest",
+          "maturityAmount": "Maturity Amount",
+          "totalWithdrawals": "Total Withdrawls",
+          "closedOnDate": "Closed on Date",
+          "recurringFrequency": "Deposits Frequency",
+          "totalInterestEarned": "Interests Posted"
+        },
+        "h4_3": "Interest Details",
+        "table5": {
+          "nominalAnnualInterestRate": "Interest Rate",
+          "interestCompoundingPeriodType": "Interest Compounding period",
+          "interestPostingPeriodType": "Interest Posting period",
+          "interestCalculationType": "Interest calculated using",
+          "interestCalculationDaysInYearType": "# Days in Year",
+          "preClosurePenalApplicable": "Pre-closure penal Interest (less)"
+        },
+        "table6": {
+          "interestCompoundingPeriodType": "Interest Compounding Period",
+          "interestPostingPeriodType": "Interest Posting period",
+          "interestCalculationType": "Interest calculated using",
+          "interestCalculationDaysInYearType": "# Days in Year",
+          "preClosurePenalApplicable": "Pre-closure penal Interest (less)",
+          "witdHoldTax": "Witdhold Tax Group"
+        },
+        "IRC": "Interest Rate Chart",
+        "transactions": "Transactions",
+        "charges": "Charges",
+        "standingInstructions": "Standing Instructions",
+
+        "ChargesTab": {
+          "h3": "All Charges",
+          "name": "Name",
+          "feeOrPenalty": "Fee/Penalty",
+          "paymentDueAt": "Payment Due At",
+          "dueAsOf": "Due As Of",
+          "repeatsOn": "Repeats On",
+          "calculationType": "Calculation Type",
+          "due": "Due",
+          "paid": "Paid",
+          "waived": "Waived",
+          "outstanding": "Outstanding",
+          "actions": "Actions"
+        },
+        "InterestRateChartTab": {
+          "period": "Period",
+          "amountRange": "Amount Range",
+          "interest": "Interest",
+          "description": "Description",
+          "actions": "Actions",
+          "ViewIncentives": "View Incentives",
+          "HideIncentives": "Hide Incentives",
+          "h4": "Incentives",
+          "entityType": "Entity Type",
+          "attributeName": "Attribute Name",
+          "conditionType": "Condition Type",
+          "attributeValue": "Attribute Value",
+          "incentiveType": "Incentive Type",
+          "amount": "Interest"
+        },
+        "StandingInstructionsTab": {
+          "client": "Client",
+          "fromAccount": "From Account",
+          "beneficiary": "Beneficiary",
+          "toAccount": "To Account",
+          "amount": "Amount",
+          "validity": "Validity",
+          "actions": "Actions"
+        },
+        "TransactionsTab": {
+          "id": "ID",
+          "transactionDate": "Transaction Date",
+          "transactionType": "Transaction Type",
+          "debit": "Debit",
+          "credit": "Credit",
+          "balance": "Balance",
+
+          "EditTransactions": {
+            "transactionDate": "Transaction Date",
+            "errtransactionDate": "Transaction Date is ",
+            "transactionAmount": "Transaction Amount",
+            "errtransactionAmount": "Transaction Amount is ",
+            "paymentTypeId": "Payment Type",
+            "ShowPaymentDetails": "Show Payment Details",
+            "accountNumber": "Account Number",
+            "checkNumber": "Cheque",
+            "routingCode": "Routing Code",
+            "receiptNumber": "Receipt Number",
+            "bankNumber": "Bank"
+          },
+          "ViewTransactions": {
+            "btnEdit": "Edit",
+            "btnUndo": "Undo",
+            "id": "Transaction Id",
+            "transactionType": "Type",
+            "date": "Transaction Date",
+            "Currency": "Currency",
+            "amount": "Amount",
+            "note": "Note",
+            "paymentType": "Payment Type",
+            "accountNumber": "Account No.",
+            "checkNumber": "Cheque Number",
+            "routingCode": "Routing Code",
+            "receiptNumber": "Receipt No.",
+            "bankNumber": "Bank No."
+          }
+        }
+      }
+    }
+  },
+  "Loans": {
+    "strongRequired": "required",
+    "strongIsRequired": "is required",
+    "Create": {
+      "DETAILS": "DETAILS",
+      "TERMS": "TERMS",
+      "CHARGES": "CHARGES",
+      "PREVIEW": "PREVIEW"
+    },
+    "CustomDialog": {
+      "LoadDocuments": {
+        "fileName": "File Name",
+        "errfileName": "File Name is ",
+        "description": "Description"
+      },
+      "AddCollateral": {
+        "type": "Collateral Type",
+        "errtype": "Collateral Type is ",
+        "value": "Value",
+        "errvalue": "Value is ",
+        "description": "Description",
+        "errdescription": "Description is "
+      },
+      "ViewGuarantor": {
+        "GuarantorDetail": "Guarantor Detail",
+        "firstname": "First Name:",
+        "lastname": "Last Name:",
+        "name": "Relationship:",
+        "guarantorType": "Guarantor Type:",
+        "status": "Status:",
+        "Active": "Active",
+        "Deleted": "Deleted"
+      }
+    },
+    "Edit": {
+      "DETAILS": "DETAILS",
+      "TERMS": "TERMS",
+      "CHARGES": "CHARGES",
+      "PREVIEW": "PREVIEW"
+    },
+    "Stepper": {
+      "Charges": {
+        "Charge": "Charge",
+        "btnAdd": "Add",
+        "tableCharges": {
+          "name": "Name",
+          "chargeCalculationType": "Type",
+          "amount": "Amount",
+          "chargeTimeType": "Collected On",
+          "date": "Date",
+          "action": "Actions"
+        },
+        "OverdueCharges": "Overdue Charges",
+        "tableDueCharges": {
+          "name": "Name",
+          "type": "Type",
+          "amount": "Amount",
+          "collectedon": "Collected On"
+        },
+        "CollateralsData": "Collaterals Data",
+        "tableCollateral": {
+          "type": "Type",
+          "value": "Value",
+          "description": "Description",
+          "action": "Actions"
+        }
+      },
+      "Details": {
+        "productId": "Product Name",
+        "errproductId": "Product Name is ",
+        "loanOfficerId": "Loan officer",
+        "loanPurposeId": "Loan purpose",
+        "fundId": "Fund",
+        "submittedOnDate": "Submitted on",
+        "errsubmittedOnDate": "Submitted on is ",
+        "expectedDisbursementDate": "Disbursement on",
+        "errexpectedDisbursementDate": "Disbursement on is ",
+        "externalId": "External id",
+        "SavingsLinkage": "Savings Linkage",
+        "linkAccountId": "Link savings",
+        "createStandingInstructionAtDisbursement": "Create standing instructions at disbursement"
+      },
+      "Preview": {
+        "Details": "Details",
+        "productId": "Product:",
+        "loanOfficerId": "Loan officer:",
+        "loanPurposeId": "Loan purpose:",
+        "fundId": "Fund:",
+        "submittedOnDate": "Submitted on:",
+        "expectedDisbursementDate": "Disbursement on:",
+        "External id:": "External id:",
+        "Terms": "Terms",
+        "principal": "Principal:",
+        "loanTermFrequency": "Loan term:",
+        "numberOfRepayments": "Number of repayments:",
+        "repaymentEvery": "Repaid every:",
+        "repaymentsStartingFromDate": "First repayment on:",
+        "interestChargedFromDate": "Interest charged from:",
+        "interestRatePerPeriod": "Nominal interest rate:",
+        "interestType": "Interest method:",
+        "isEqualAmortization": "Is Equal Amortization:",
+        "amortizationType": "Amortization",
+        "interestCalculationPeriodType": "Interest calculation period:",
+        "allowPartialPeriodInterestCalcualtion": "Calculate interest for exact days in partial period:",
+        "inArrearsTolerance": "Arrears tolerance: ",
+        "graceOnInterestCharged": "Interest free period:",
+        "transactionProcessingStrategyId": "Repayment strategy:",
+        "Moratorium": "Moratorium",
+        "graceOnPrincipalPayment": "On principal payment:",
+        "graceOnInterestPayment": "On interest payment:",
+        "graceOnArrearsAgeing": "On Arrears Aging:",
+        "isTopup": "Is Topup Loan?",
+        "isInterestRecalculationEnabled": "Recalculate Interest:",
+        "daysInMonthType": "Days in month:",
+        "name": "Name",
+        "chargeCalculationType": "Type",
+        "amount": "Amount",
+        "chargeTimeType": "Collected On",
+        "date": "Date",
+        "OverdueCharges": "Overdue Charges",
+        "name2": "Name",
+        "type2": "Type",
+        "amount2": "Amount",
+        "collectedon": "Collected On"
+      },
+      "Term": {
+        "principal": "Principal",
+        "errprincipal": "Principal is ",
+        "TermOptions": "Term Options",
+        "loanTermFrequency": "Loan Term",
+        "errloanTermFrequency": "Loan Term is ",
+        "loanTermFrequencyType": "Frequency",
+        "errloanTermFrequencyType": "Frequency is ",
+        "numberOfRepayments": "Number of repayments",
+        "errnumberOfRepayments": "Number of repayments is ",
+        "repaymentsStartingFromDate": "First repayment on",
+        "RepaidEvery": "Repaid Every",
+        "errRepaidEvery": "Repaid every is ",
+        "repaymentFrequencyType": "Frequency",
+        "repaymentFrequencyNthDayType": "Select Week in Month",
+        "repaymentFrequencyDayOfWeekType": "Select Day in week",
+        "interestChargedFromDate": "Interest charged from",
+        "interestRatePerPeriod": "Nominal interest rate",
+        "interestType": "Interest method",
+        "isEqualAmortization": "Is Equal Amortization",
+        "interestType2": "Interest Method",
+        "isFloatingInterestRate": "Is Floating Rate?",
+        "amortizationType": "Amortization",
+        "erramortizationType": "Amortization Type is",
+        "InterestCalculations": "Interest Calculations",
+        "interestCalculationPeriodType": "Interest calculation period",
+        "inArrearsTolerance": "Calculate interest for exact days in partial period",
+        "graceOnInterestCharged": "Interest free period",
+        "transactionProcessingStrategyId": "Repayment strategy",
+        "errtransactionProcessingStrategyId": "Repayment Strategy is ",
+        "Moratorium": "Moratorium",
+        "graceOnPrincipalPayment": "On Principal Payment",
+        "graceOnInterestPayment": "On Interest Payment",
+        "graceOnArrearsAgeing": "On Arreas Aging",
+        "isTopup": "Is Topup Loan?",
+        "loanIdToClose": "Loan closed with Topup",
+        "recalculationCompoundingFrequencyDate": "Frequency Date for recalculation",
+        "errrecalculationCompoundingFrequencyDate": "Frequency Data for recalculation is ",
+        "isInterestRecalculationEnabled": "Recalculate Interest",
+        "daysInYearType": "Days in year",
+        "rescheduleStrategyType": "Advance payments adjustment type",
+        "daysInMonthType": "Days in month",
+        "interestRecalculationCompoundingType": "Interest recalculation compounding on",
+        "FrequencyIntervalForRecalculation": "Frequency Interval for recalculation",
+        "FrequencyForCompounding": "Frequency for compounding",
+        "FrequencyIntervalFoCompounding": "Frequency Interval for compounding"
+      }
+    },
+    "View": {
+      "strongRequired": "required",
+      "loanProductName": "Loan Product: ",
+      "clientName": "Client Name:",
+      "groupName": "Group Name:",
+      "h3": "Loan Account OverView",
+      "totalOutstanding": "Current Balance: ",
+      "totalOverdue": "Arrears By: ",
+      "NotProvided": "Not Provided",
+      "More": "More",
+      "general": "General",
+      "accountdetail": "Account Details",
+      "originalSchedule": "Original Schedule",
+      "repaymentSchedule": "Repayment Schedule",
+      "transactions": "Transactions",
+      "loanCollateralDetails": "Loan Collateral Details",
+      "loanTrancheDetails": "Loan Tranche Details",
+      "overduecharges": "Overdue Charges",
+      "floatingInterestRates": "Floating Interest Rates",
+      "charges": "Charges",
+      "loanDocuments": "Loan Documents",
+      "Notes": "Notes",
+      "standingInstruction": "Standing Instruction",
+      "Account": {
+        "transactionProcessingStrategyName": "Repayment Strategy:",
+        "Repayments": "Repayments:",
+        "amortizationType": "Amortization",
+        "isEqualAmortization": "Equal Amortization",
+        "annualInterestRate": "Interest",
+        "graceOnPrincipalPayment": "Grace: On Principal Payment",
+        "Grace: On Interest Payment": "Grace: On Interest Payment",
+        "graceOnInterestPayment": "",
+        "graceOnArrearsAgeing": "Grace on Arrears Ageing",
+        "fundName": "Fund Source",
+        "graceOnInterestCharged": "Interest Free Period",
+        "interestCalculationPeriodType": "Interest Calculation Period",
+        "allowPartialPeriodInterestCalcualtion": "Allow Partial Interest Calculation with same as repayment",
+        "interestType": "Interest Type",
+        "submittedOnDate": "Submitted on",
+        "approvedOnDate": "Approved on",
+        "actualDisbursementDate": "Disbursed on",
+        "expectedMaturityDate": "Matures on",
+        "fixedEmiAmount": "Fixed EMI amount",
+        "isTopup": "Is Topup Loan?",
+        "closureLoanAccountNo": "Loan closed with Topup",
+        "topupAmount": "Topup closure amount",
+        "isInterestRecalculationEnabled": "Recalculate Interest based on new terms",
+        "daysInYearType": "Days in year",
+        "daysInMonthType": "Days in month",
+        "interestRecalculationCompoundingType": "Interest recalculation compounding on",
+        "rescheduleStrategyType": "Advance payments adjustment type",
+        "humanReadable": "Frequency for recalculate Outstanding Principal",
+        "FrequencyForCompounding": "Frequency for compounding",
+        "isVariableInstallmentsAllowed": "Variable Installments Allowed"
+      },
+      "Charges": {
+        "name": "Name",
+        "feepenalty": "Fee/Penalty",
+        "paymentdueat": "Payment due at",
+        "dueasof": "Due as of",
+        "calculationtype": "Calculation Type",
+        "due": "Due",
+        "paid": "Paid",
+        "waived": "Waived",
+        "outstanding": "Outstanding",
+        "actions": "Actions"
+      },
+      "FloatingInterestRate": {
+        "fromDate": "From Date",
+        "interestRate": "Interest Rate"
+      },
+      "GeneralTab": {
+        "PerformanceHistory": "Performance History",
+        "numberOfRepayments": "# of Repayments :",
+        "expectedMaturityDate": "Maturity Date :",
+        "LoanSummary": "Loan Summary",
+        "Original": "Original",
+        "Paid": "Paid",
+        "Waived": "Waived",
+        "WrittenOff": "Written Off",
+        "Outstanding": "Outstanding",
+        "OverDue": "Over Due",
+        "LoanDetails": "Loan Details",
+        "Key": "Key",
+        "Value": "Value",
+        "NotAvailable": "Not Available",
+        "Unassigned": "Unassigned",
+        "LoanPurpose": "Loan Purpose",
+        "LoanPurpose2": "Loan Purpose:",
+        "NotProvided": "Not Provided",
+        "proposedPrincipal": "Proposed Amount:",
+        "approvedPrincipal": "Approved Amount:",
+        "principal": "Disburse Amount:",
+        "ArrearsBy": "Arrears By:"
+      },
+      "Actions": {
+        "AddCollateral": {
+          "collateralTypeId": "Collateral Type",
+          "errcollateralTypeId": "Collateral type",
+          "value": "Value",
+          "errvalue": "Value is ",
+          "description": "Description"
+        },
+        "AddLoanCharge": {
+          "chargeId": "Charge",
+          "errchargeId": "Charge is ",
+          "amount": "Amount",
+          "erramount": "Amount is ",
+          "chargeCalculation": "Charge Calculation",
+          "chargeTime": "Charge Time",
+          "dueDate": "Due On",
+          "errdueDate": "Due Date is "
+        },
+        "ApproveLoan": {
+          "approvedOnDate": "Approved On",
+          "errapprovedOnDate": "Approved Date is ",
+          "expectedDisbursementDate": "Expected disbursement on",
+          "approvedLoanAmount": "Approved Amount",
+          "TransactionAmount": "Transaction Amount",
+          "errTransactionAmount": "Transaction Amount is ",
+          "note": "Note"
+        },
+        "AssignLoan": {
+          "toLoanOfficerId": "To Loan Officer",
+          "errtoLoanOfficerId": "Loan Officer is ",
+          "assignmentDate": "Assignment Date",
+          "errassignmentDate": "Assignment Date is "
+        },
+        "CloseAsRescheduled": {
+          "transactionDate": "Closed On",
+          "errtransactionDate": "Closed Date is ",
+          "note": "Note"
+        },
+        "CreateGuarantor": {
+          "existingClient": "Existing Client",
+          "name": "Name",
+          "errname": "Name is ",
+          "Relationship": "Relationship",
+          "Account": "Account",
+          "Amount": "Amount",
+          "firstname": "First Name",
+          "errfirstname": "First Name is ",
+          "lastname": "Last Name",
+          "errlastname": "Last Name is ",
+          "dob": "Date Of Birth",
+          "addressLine1": "Address Line 1",
+          "addressLine2": "Address Line 2",
+          "City": "City",
+          "Zip": "Zip",
+          "Mobile": "Mobile",
+          "housePhoneNumber": "Residence Phone #",
+          "ClientDetails": "Client Details",
+          "Name": "Name",
+          "Id": "Id",
+          "Office": "Office"
+        },
+        "Disburse": {
+          "actualDisbursementDate": "Disbursed On",
+          "erractualDisbursementDate": "Disbursed On Date",
+          "transactionAmount": "Transaction Amount",
+          "errtransactionAmount": "Transaction Amount ",
+          "paymentTypeId": "Payment Type",
+          "showPaymentDetails": "Show Payment Details",
+          "accountNumber": "Account #",
+          "checkNumber": "Cheque #",
+          "routingCode": "Routing Code",
+          "receiptNumber": "Reciept #",
+          "bankNumber": "Bank #",
+          "note": "Note"
+        },
+        "DisburseLoanAccount": {
+          "actualDisbursementDate": "Disbursement On",
+          "erractualDisbursementDate": "Disbursement Date is ",
+          "transactionAmount": "Transaction amount",
+          "errtransactionAmount": "Transaction Amount is ",
+          "fixedEmiAmount": "Fixed EMI amount",
+          "errfixedEmiAmount": "Fixed EMI Amount is ",
+          "note": "Note"
+        },
+        "ForeCloseure": {
+          "transactionDate": "Transaction Date",
+          "errtransactionDate": "Transaction Date ",
+          "outstandingPrincipalPortion": "Principal",
+          "outstandingInterestPortion": "Interest",
+          "outstandingFeeChargesPortion": "Fee Amount",
+          "outstandingPenaltyChargesPortion": "Penalty Amount",
+          "transactionAmount": "Transaction Amount",
+          "note": "Note",
+          "btnForeclosure": "Foreclosure"
+        },
+        "LoanReschedule": {
+          "rescheduleFromDate": "Reschedule from Installment On",
+          "errrescheduleFromDate": "Reschedule Date ",
+          "rescheduleReasonId": "Reason for Rescheduling",
+          "ReasonForRescheduling": "Reason for Rescheduling ",
+          "submittedOnDate": "Submitted On",
+          "errsubmittedOnDate": "Submitted On Date ",
+          "Comments": "Comments",
+          "changeRepaymentDate": "Change Repayment Date ",
+          "adjustedDueDate": "Installment Rescheduled to",
+          "introduceGracePeriods": "Introduce Mid-term grace periods",
+          "graceOnPrincipal": "Principal Grace Periods",
+          "graceOnInterest": "Interest Grace Periods",
+          "extendRepaymentPeriod": "Extend Repayment Period",
+          "extraTerms": "Number Of new Repayments",
+          "adjustinterestrates": "Adjust interest rates for remainder of loan",
+          "newInterestRate": "New Interest Rate"
+        },
+        "LoanScreenReport": {
+          "templateId": "Loan Screen Reports",
+          "errtemplateId": "Screen Report is ",
+          "btnCancel": "Cancel",
+          "btnGenerateReport": "Generate Report",
+          "btnPrint": "Print",
+          "p": "Please select a screen report."
+        },
+        "LoanAccountClose": {
+          "transactionDate": "Closed On",
+          "errtransactionDate": "Closed Date ",
+          "Note": "Note"
+        },
+        "MakeRepayment": {
+          "transactionDate": "Transaction Date",
+          "errtransactionDate": "Transaction Date ",
+          "transactionAmount": "Transaction Amount",
+          "errtransactionAmount": "Transaction Amount ",
+          "paymentTypeId": "Payment Type",
+          "ShowPaymentDetails": "Show Payment Details",
+          "accountNumber": "Account #",
+          "checkNumber": "Cheque #",
+          "routingCode": "Routing Code",
+          "receiptNumber": "Reciept #",
+          "bankNumber": "Bank #",
+          "Note": "Note"
+        },
+        "PrepayLoan": {
+          "transactionDate": "Transaction Date",
+          "errtransactionDate": "Transaction Date ",
+          "transactionAmount": "Transaction Amount",
+          "errtransactionAmount": "Transaction Amount ",
+          "Principal": "Principal",
+          "interestAmount": "Interest Amount",
+          "errinterestAmount": "Interest Amount ",
+          "paymentTypeId": "Payment Type",
+          "ShowPaymentDetails": "Show Payment Details",
+          "accountNumber": "Account #",
+          "checkNumber": "Cheque #",
+          "routingCode": "Routing Code",
+          "receiptNumber": "Reciept #",
+          "bankNumber": "Bank #",
+          "Note": "Note"
+        },
+        "RecoveryRepayment": {
+          "transactionDate": "Transaction Date",
+          "errtransactionDate": "Transaction Date ",
+          "transactionAmount": "Transaction Amount",
+          "errtransactionAmount": "Transaction Amount ",
+          "paymentTypeId": "Payment Type",
+          "showPaymentDetails": "Show Payment Details",
+          "accountNumber": "Account #",
+          "checkNumber": "Cheque #",
+          "routingCode": "Routing Code",
+          "receiptNumber": "Reciept #",
+          "bankNumber": "Bank #",
+          "Note": "Note"
+        },
+        "RejectLoan": {
+          "rejectedOnDate": "Rejected On",
+          "errrejectedOnDate": "Rejected Date ",
+          "Note": "Note"
+        },
+        "UndoApproval": {
+          "Note": "Note"
+        },
+        "UndoDisbursal": {
+          "Note": "Note"
+        },
+        "ViewGuarantors": {
+          "DisbursementDate": "Disbursement Date",
+          "NotAvailable": "Not Available",
+          "Currency": "Currency",
+          "loanOfficerName": "Loan Officer",
+          "Unassigned": "Unassigned",
+          "externalId": "External Id",
+          "LoanPurpose": "Loan Purpose",
+          "NotProvided": "Not Provided",
+          "approvedPrincipal": "Approved Amount",
+          "principal": "Disburse Amount",
+          "ArrearsBy": "Arrears By",
+          "GuarantorsDetails": "Guarantors Details",
+          "fullname": "Name",
+          "Relationship": "Relationship",
+          "guarantortype": "Guarantor Type",
+          "depositAccount": "Deposit Account",
+          "Amount": "Amount",
+          "remainingAmount": "Remaining Amount",
+          "Status": "Status",
+          "Active": "Active",
+          "Deleted": "Deleted",
+          "Action": "Action"
+        },
+        "WaiveInterest": {
+          "transactionDate": "Interest waived on",
+          "errtransactionDate": "Interest Date is ",
+          "transactionAmount": "Transaction amount",
+          "errtransactionAmount": "Transaction Amount is ",
+          "Note": "Note"
+        },
+        "WithdrawnByClient": {
+          "withdrawnOnDate": "Withdrawn On",
+          "errwithdrawnOnDate": "Withdrawn On Date ",
+          "Note": "Note"
+        },
+        "WriteOffPage": {
+          "transactionDate": "Write off on",
+          "errtransactionDate": "Write Off Date ",
+          "Amount": "Amount",
+          "Note": "Note"
+        }
+      },
+      "LoanCollateral": {
+        "Type": "Type",
+        "Value": "Value",
+        "Description": "Description"
+      },
+      "LoanDocument": {
+        "btnUpload": "Upload",
+        "Name": "Name",
+        "Description": "Description",
+        "filename": "File Name",
+        "Actions": "Actions",
+        "ToolTipDownload": "Tải về"
+      },
+      "LoanTranche": {
+        "maxOutstandingLoanBalance": "Maximum allowed outstanding balance:",
+        "LoanTrancheDetails": "Loan Tranche Details",
+        "btnAdd": "Add",
+        "btnDelete": "Delete",
+        "expectedDisbursementDate": "Expected Disbursement On",
+        "DisbursedOn": "Disbursed On",
+        "Principal": "Principal",
+        "Actions": "Actions",
+        "InstallmentAmountVariations": "Installment Amount Variations:",
+        "termVariationApplicableFrom": "Applicable From Date",
+        "termValue": "Installment Amount"
+      },
+      "NotesTab": {
+        "Notes": "Notes",
+        "btnAdd": "Add",
+        "createdByUsername": "Created by: ",
+        "createdOn": "Date: "
+      },
+      "OriginalSchedule": {
+        "Date": "Date",
+        "Total": "Total",
+        "principalDue": "Principal Due",
+        "balanceOfLoan": "Balance Of Loan",
+        "Interest": "Interest",
+        "Fees": "Fees",
+        "Penalties": "Penalties",
+        "Outstanding": "Outstanding",
+        "LoanAmountBalance": "Loan Amount and Balance",
+        "TotalCostLoan": "Total Cost of Loan",
+        "InstallmentTotals": "Installment Totals"
+      },
+      "OverdueCharge": {
+        "Name": "Name",
+        "Type": "Type",
+        "Amount": "Amount",
+        "collectedon": "Collected On"
+      },
+      "RepaymentSchedule": {
+        "Days": "Days",
+        "Total": "Total",
+        "Date": "Date",
+        "paiddate": "Paid Date",
+        "principalDue": "Principal Due",
+        "balanceOfLoan": "Balance Of Loan",
+        "Interest": "Interest",
+        "Fees": "Fees",
+        "Penalties": "Penalties",
+        "Due": "Due",
+        "Paid": "Paid",
+        "inadvance": "In advance",
+        "Late": "Late",
+        "Waived": "Waived",
+        "Outstanding": "Outstanding",
+        "LoanAmountBalance": "Loan Amount and Balance",
+        "TotalCostLoan": "Total Cost of Loan",
+        "InstallmentTotals": "Installment Totals"
+      },
+      "StandingInstruction": {
+        "AllStandingInstructions": "All Standing Instructions",
+        "Client": "Client",
+        "fromAccount": "From Account",
+        "Beneficiary": "Beneficiary",
+        "OwnAccount": "Own Account",
+        "toAccount": "To Account",
+        "Amount": "Amount",
+        "Validity": "Validity",
+        "Actions": "Actions"
+      },
+      "Transactions": {
+        "Edit": {
+          "transactionDate": "Transaction Date",
+          "errtransactionDate": "Transaction Date is ",
+          "transactionAmount": "Transaction Amount",
+          "errtransactionAmount": "Transaction Amount is ",
+          "paymentTypeId": "Payment Type",
+          "ShowPaymentDetails": "Show Payment Details",
+          "accountNumber": "Account Number",
+          "Cheque": "Cheque",
+          "routingCode": "Routing Code",
+          "receiptNumber": "Receipt Number"
+        },
+        "Export": {
+          "fromDate": "From Date",
+          "errfromDate": "From date is ",
+          "toDate": "To Date",
+          "errtoDate": "To date is ",
+          "btnGenerateReport": "Generate Report"
+        },
+        "ViewTransaction": {
+          "btnEdit": "Edit",
+          "btnUndo": "Undo",
+          "id": "Transaction Id",
+          "Type": "Type",
+          "date": "Transaction Date",
+          "Currency": "Currency",
+          "Amount": "Amount",
+          "paymentType": "Payment Type",
+          "accountNumber": "Account No.",
+          "checkNumber": "Cheque Number",
+          "routingCode": "Routing Code",
+          "receiptNumber": "Receipt No.",
+          "bankNumber": "Bank No."
+        }
+      },
+      "TransactionsTab": {
+        "btnExport": "Export",
+        "btnViewJournalEntries": "View Journal Entries",
+        "Date": "Date",
+        "Office": "Office",
+        "transactionDate": "Transaction Date",
+        "transactionType": "Transaction Type",
+        "Amount": "Amount",
+        "Breakdown": "Breakdown",
+        "loanBalance": "Loan Balance",
+        "Actions": "Actions",
+        "Principal": "Principal",
+        "Interest": "Interest",
+        "Fees": "Fees",
+        "Penalties": "Penalties"
+      },
+      "ViewCharge": {
+        "btnPay": "Pay",
+        "btnWaive": "Waive",
+        "btnEdit": "Edit",
+        "btnEbtnDeletedit": "Delete",
+        "Name": "Name",
+        "ChargeType": "Charge Type",
+        "Currency": "Currency",
+        "chargeTimeType": "Payment due at",
+        "dueDate": "Payment due as of",
+        "chargeCalculationType": "Calculation Type",
+        "Due": "Due",
+        "Paid": "Paid",
+        "Waived": "Waived",
+        "Outstanding": "Outstanding"
+      }
+    }
+  },
+  "Marketing": {
+    "CreateBookingMarketing": {
+      "PosCampaignName": "Tên chiến dịch",
+      "notifyDate": "Thời gian thông báo",
+      "fromDate": "Thời gian bắt đầu",
+      "toDate": "Thời gian kết thúc",
+      "secondRemain": "Thời gian booking",
+      "cashRule": "Chính sách tiền:",
+      "description": "Thẻ",
+      "costRate": "Phí POS",
+      "cogsRate": "Phí Vốn",
+      "rate": "Phí GD",
+      "Status": "Status",
+      "officeName": "Chi nhánh",
+      "Search": "Áp dụng với chi nhánh",
+      "terminalName": "máy bán hàng",
+      "terminalId": "Áp dụng với máy POST",
+      "btnCancel": "Hủy",
+      "spanCreate": "Tạo chiến dịch",
+      "spanUpdate": "Cập nhập chiến dịch"
+    },
+    "CreateTransactionMarketing": {
+      "AddBooking": "Thêm booking",
+      "userNameTelegram": "Người đăng ký (Telegram Id)",
+      "alert": "Vui lòng thêm thông tin trước khi thực hiện",
+      "bookingAmount": "Số tiền"
+    },
+    "ViewBookingMarketing": {
+      "campainName": "Chọn campaign",
+      "timeNotify": "Thông báo ",
+      "fromDate": "Áp dụng ",
+      "toDate": "Kết thúc ",
+      "secondRemain": "Kéo dài (phút)",
+      "details": "Thông tin chi tiết",
+      "budget": "Tổng hạn mức",
+      "sumBooking": "Tổng hạn mức đã đăng kí",
+      "now": "Ngay",
+      "first": "Chính sách tiền",
+      "wait": "Chờ",
+      "mins": " phút",
+      "cashRule": "Chính sách tiền",
+      "btnEdit": "Edit",
+      "cardType": "Thẻ",
+      "costRate": "Phí POS",
+      "cogsRate": "Phí Vốn",
+      "minRate": "Phí GD",
+      "bookingLength": "Tồng số: ",
+      "createdDate": "Thời gian",
+      "officeId": "Chi nhánh",
+      "userIdStaff": "Nhân viên",
+      "userNameTelegram": "Người đăng kí (TelegramId)",
+      "bookingAmount": "Số tiền đăng kí",
+      "Actions": "Actions"
+    }
+  },
+  "Navigation": {
+    "office": "Office",
+    "Center": {
+      "accountNo": "Account No: ",
+      "activationDate": "Activation Date",
+      "staffName": "Associated Officer",
+      "activeClients": "Number of Active Clients",
+      "activeClientLoans": "Number of Active Client Loans",
+      "activeClientBorrowers": "Number of Active Client Borrowers",
+      "overdueGroupLoans": "Number of Active Overdue Group Loans",
+      "overdueClientLoans": "Number of Active Overdue Client Loans",
+      "nextTenRecurringDates": "Next Meeting Date",
+      "humanReadable": "Meeting Frequency",
+      "length": "Number of Groups"
+    },
+    "Client": {
+      "accountNo": "Account No: ",
+      "firstName": "First Name",
+      "middleName": "Middle Name",
+      "lastName": "Last Name",
+      "dateOfBirth": "Date of Birth",
+      "mobileNo": "Mobile Number",
+      "activationDate": "Activation Date",
+      "officeName": "Associated Office",
+      "staffName": "Associated Staff"
+    },
+    "Group": {
+      "accountNo": "Account No: ",
+      "activationDate": "Activation Date",
+      "staffName": "Associated Officer",
+      "centerName": "Associated Center",
+      "nextTenRecurringDates": "Next Meeting Date",
+      "humanReadable": "Meeting Frequency",
+      "length": "Number of Clients"
+    },
+    "LoanAccount": {
+      "Filter": "Filter",
+      "accountNo": "Account Number",
+      "productName": "Loan Account",
+      "Type": "Type",
+      "Status": "Status"
+    },
+    "MemberGroup": {
+      "Filter": "Filter",
+      "accountNo": "Account Number",
+      "name": "Group Name"
+    },
+    "Office": {
+      "openingDate": "Opened On",
+      "parentName": "Parent officeData",
+      "length": "Number of Staff"
+    },
+    "SavingAccount": {
+      "Filter": "Filter",
+      "accountNo": "Account Number",
+      "productName": "Savings Account",
+      "Balance": "Balance",
+      "Status": "Status"
+    },
+    "ShareAccount": {
+      "Filter": "Filter",
+      "accountNo": "Account Number",
+      "productName": "Share Account",
+      "totalApprovedShares": "Approved Shares",
+      "Status": "Status"
+    },
+    "Staff": {
+      "officeName": "Associated Office: ",
+      "joiningDate": "Joined On",
+      "isLoanOfficer": "Loan Officer",
+      "mobileNo": "Mobile Number",
+      "length": "Number of Centers"
+    }
+  },
+  "NotFound": {
+    "404": "404",
+    "alert": "Something went wrong."
+  },
+  "Organization": {
+    "strongRequired": "required",
+    "strongIsRequired": "is required",
+    "strongInvalid": "invalid",
+    "ManageOffices": "Manage Offices",
+    "AddNewOrModify": "Add new office or modify or deactivate office or modify hierarchy",
+    "ManageHolidays": "Manage Holidays",
+    "Define": "Define holidays for office",
+    "ManageEmployees": "Manage Employees",
+    "noAccessToSystems": "An employee represents loan officers with no access to systems",
+    "StandingInstructionsHistory": "Standing Instructions History",
+    "View": "View logged history of standing instructions",
+    "FundMapping": "Fund Mapping",
+    "BulkEntry": "Bulk entry screen for mapping fund sources to loans",
+    "PasswordPreferences": "Password Preferences",
+    "DefineStandards": "Define standards for enforcing the usage of stronger passwords",
+    "LoanProvisioningCriteria": "Loan Provisioning Criteria",
+    "DefineLoan": "Define Loan Provisioning Criteria for Organization",
+    "EntityDataTableChecks": "Entity Data Table Checks",
+    "DefineEntity": "Define Entity Data Table Checks for Organization",
+    "CurrencyConfiguration": "Currency Configuration",
+    "CurrenciesAvailable": "Currencies available across organization for different products",
+    "ManageFunds": "Manage Funds",
+    "Funds": "Funds are associated with loans",
+    "BulkLoanReassignment": "Bulk Loan Reassignment",
+    "EasyWay": "Easy way to reassign all the loan from one LO to another LO",
+    "TellerCashier": "Teller / Cashier Management",
+    "ManageTellersCashiers": "Manage Tellers / Cashiers and Cash Allocation and Settlement",
+    "WorkingDays": "Working Days",
+    "DefineWorking": "Define working days and configure behaviour of payments due on holidays",
+    "PaymentType": "Payment Type",
+    "ManagePaymentTypes": "Manage payment types",
+    "SMSCampaigns": "SMS Campaigns",
+    "DefineSMS": "Define SMS Campaigns for Organization",
+    "AdHocQuery": "AdHocQuery",
+    "DefineAdHocQuer": "Define AdHocQuery for Organization",
+    "BulkImport": "Bulk Import",
+    "BulkData": "Bulk data import using excel spreadsheet templates for clients, offices, etc.",
+
+    "AdhocQuery": {
+      "btnCreateAdHocQuery": "Create AdHoc Query",
+      "Filter": "Filter",
+      "Name": "Name",
+      "SQLQuery": "SQL Query",
+      "tableName": "Table Affected",
+      "Email": "Email",
+      "reportRunFrequency": "Report Run Frequency",
+      "Status": "Status",
+      "createdBy": "Created By",
+
+      "Create": {
+        "name": "Name",
+        "errname": "Name is ",
+        "query": "SQL Query",
+        "errquery": "SQL Query is ",
+        "tableName": "Insert into table",
+        "errtableName": "Insert into table is ",
+        "tableFields": "Table Fields",
+        "errtableFields": "Table Fields are ",
+        "email": "Email",
+        "erremail": "Email is ",
+        "invalid": "invalid",
+        "reportRunFrequency": "Report Run Frequency",
+        "reportRunEvery": "Custom Report Run Frequency (Days)",
+        "errreportRunEvery": "Custom Report Run Frequency is ",
+        "errreportRunEvery2": "Custom Report Run Frequency ",
+        "strongAlert": "must be larger than 0",
+        "isActive": "Active"
+      },
+      "Edit": {
+        "name": "Name",
+        "errname": "Name is ",
+        "query": "SQL Query",
+        "errquery": "SQL Query is ",
+        "tableName": "Insert into table",
+        "errtableName": "Insert into table is ",
+        "tableFields": "Table Fields",
+        "errtableFields": "Table Fields are ",
+        "email": "Email",
+        "erremail": "Email is ",
+        "reportRunFrequency": "Report Run Frequency",
+        "reportRunEvery": "Custom Report Run Frequency (Days)",
+        "errreportRunEvery": "Custom Report Run Frequency is ",
+        "errreportRunEvery2": "Custom Report Run Frequency ",
+        "strongLangerThan0": "must be larger than 0",
+        "isActive": "Active"
+      },
+      "View": {
+        "Name": "Name",
+        "Query": "Query",
+        "tableName": "Table Affected",
+        "reportRunFrequency": "Report Run Frequency",
+        "Status": "Status",
+        "createdBy": "Created By"
+      }
+    },
+    "BulkImportComponent": {
+      "Offices": "Offices",
+      "Users": "Users",
+      "Groups": "Groups",
+      "LoanAccounts": "Loan Accounts",
+      "SavingsAccounts": "Savings Accounts",
+      "FixedDepositAccounts": "Fixed Deposit Accounts",
+      "ChartOfAccounts": "Chart of Accounts",
+      "ShareAccounts": "Share Accounts",
+      "Employees": "Employees",
+      "Clients": "Clients",
+      "Centers": "Centers",
+      "LoanRepayments": "Loan Repayments",
+      "SavingsTransactions": "Savings Transactions",
+      "FixedDepositTransactions": "Fixed Deposit Transactions",
+      "RecurringDepositTransactions": "Recurring Deposit Transactions",
+      "JournalEntries": "Journal Entries",
+      "Guarantors": "Guarantors",
+
+      "View": {
+        "Template": "Template",
+        "Office": "Office",
+        "Staff": "Staff",
+        "legalForm": "Legal Form",
+        "Entity": "Entity",
+        "Person": "Person",
+        "btnDownload": "Download",
+        "SelectExcelFile": "Select Excel File",
+        "hint": "Please retain the value Entity/Person in the filename.",
+        "btnUpload": "Upload",
+        "Documents": "Documents",
+        "btnRefresh": "Refresh",
+        "Name": "Name",
+        "importTime": "Import Time",
+        "endTime": "End Time",
+        "Completed": "Completed",
+        "totalRecords": "Total Records",
+        "successCount": "Success Count",
+        "failureCount": "Failure Count",
+        "Download": "Download"
+      }
+    },
+    "BulkLoan": {
+      "Office": "Office",
+      "assignmentDate": "Assignment Date",
+      "errassignmentDate": "Assignment Date is ",
+      "fromLoanOfficerId": "From loan officer",
+      "errfromLoanOfficerId": "From Loan Officer is ",
+      "toLoanOfficerId": "To loan officer",
+      "errtoLoanOfficerId": "To Loan Officer is ",
+      "Clients": "Clients",
+      "Groups": "Groups"
+    },
+    "Currencies": {
+      "btnAddEdit": "Add/Edit",
+      "Filter": "Filter",
+      "name": "Currency Name",
+      "code": "Currency Code",
+      "ManageCurrencies": {
+        "Currency": "Currency",
+        "errCurrency": "Currency is "
+      }
+    },
+    "Employees": {
+      "btnImportEmployees": "Import Employees",
+      "btnCreateEmployee": "Create Employee",
+      "Filter": "Filter",
+      "Name": "Name",
+      "isLoanOfficer": "Loan Officer",
+      "Office": "Office",
+      "Status": "Status",
+
+      "Create": {
+        "Office": "Office",
+        "errOffice": "Office is ",
+        "firstname": "First Name",
+        "errfirstname": "First Name is ",
+        "strongCannot": "cannot",
+        "alert": " begin with a special character or number",
+        "lastname": "Last Name",
+        "errlastname": "Last Name is ",
+        "isLoanOfficer": "Is Loan Officer",
+        "mobileNo": "Mobile Number for SMS",
+        "joiningDate": "Joining Date",
+        "errjoiningDate": "Joining Date is "
+      },
+      "Edit": {
+        "Office": "Office",
+        "errOffice": "Office is ",
+        "firstname": "First Name",
+        "errfirstname": "First Name is ",
+        "errfirstname2": "First Name ",
+        "strongcannot": "cannot",
+        "alert": " begin with a special character or number",
+        "lastname": "Last Name",
+        "errlastname": "Last Name is ",
+        "errlastname2": "Last Name ",
+        "isLoanOfficer": "Is Loan Officer",
+        "mobileNo": "Mobile Number for SMS",
+        "Active": "Active",
+        "joiningDate": "Joining Date",
+        "errjoiningDate": "Joining Date is "
+      },
+      "View": {
+        "firstname": "First Name",
+        "lastname": "Last Name",
+        "Office": "Office",
+        "isLoanOfficer": "Is Loan Officer",
+        "mobileNo": "Mobile Number for SMS",
+        "Status": "Status",
+        "joiningDate": "Joining Date"
+      }
+    },
+    "EntityData": {
+      "btnCreate": "Create",
+      "Filter": "Filter",
+      "Entity": "Entity",
+      "productName": "Product Name",
+      "datatableName": "Data Table",
+      "Status": "Status",
+      "systemDefined": "System Defined",
+      "Actions": "Actions",
+      "btnDelete": "Delete",
+
+      "CreateEntity": {
+        "Entity": "Entity",
+        "errEntity": "Entity is ",
+        "Status": "Status",
+        "errStatus": "Status is ",
+        "datatableName": "Data Table",
+        "errdatatableName": "Data Table is ",
+        "Products": "Products",
+        "errProducts": "Loan Product is "
+      }
+    },
+    "FundMappingComponent": {
+      "loanStatus": "Loan Status",
+      "All": "All",
+      "Active": "Active",
+      "Overpaid": "Overpaid",
+      "overpaid": "Closed (obligations met)",
+      "writeoff": "Closed (written-off)",
+      "Product": "Product",
+      "Office": "Office",
+      "loanDateOption": "Date Type",
+      "approvalDate": "Approval Date",
+      "createdDate": "Creation Date",
+      "disbursalDate": "Disbursement Date",
+      "loanFromDate": "From Date",
+      "errloanFromDate": "From Date is ",
+      "loanToDate": "To Date",
+      "errloanToDate": "To Date is ",
+      "includeOutStandingAmountPercentage": "Loan Outstanding Percentage",
+      "outStandingAmountPercentageCondition": "Comparison Condition",
+      "between": "between",
+      "ComparisonCondition": "Comparison Condition is ",
+      "minOutStandingAmountPercentage": "Minimum Value",
+      "errminOutStandingAmountPercentage": "Minimum Value is ",
+      "outStandingAmountPercentage": "Comparison Value",
+      "erroutStandingAmountPercentage": "Comparison Value is ",
+      "maxOutStandingAmountPercentage": "Maximum Value",
+      "errmaxOutStandingAmountPercentage": "Maximum Value is ",
+      "includeOutstandingAmount": "Loan Outstanding Amount",
+      "outstandingAmountCondition": "Comparison Condition",
+      "erroutstandingAmountCondition": "Comparison Condition is ",
+      "minOutstandingAmount": "Minimum Value",
+      "errminOutstandingAmount": "Minimum Value is ",
+      "outstandingAmount": "Comparison Value",
+      "erroutstandingAmount": "Comparison Value is ",
+      "maxOutstandingAmount": "Maximum Value",
+      "errmaxOutstandingAmount": "Maximum Value is ",
+      "btnCancel": "Cancel",
+      "btnSummary": "Summary",
+      "Parameters": "Parameters",
+      "officeName": "Office Name",
+      "productName": "Product Name",
+      "Count": "Count",
+      "Outstanding": "Outstanding",
+      "Percentage": "Percentage"
+    },
+    "HolidaysComponent": {
+      "btnCreateHoliday": "Create Holiday",
+      "Filter": "Filter",
+      "name": "Holiday Name",
+      "fromDate": "Start Date",
+      "toDate": "End Date",
+      "repaymentsRescheduledTo": "Repayments Scheduled To",
+      "Status": "Status",
+
+      "Create": {
+        "Name": "Name",
+        "fromDate": "From Date",
+        "toDate": "To Date",
+        "reschedulingType": "Repayment Scheduling Type",
+        "errreschedulingType": "Repayment Scheduling Type is ",
+        "repaymentsRescheduledTo": "Repayment scheduled to",
+        "errrepaymentsRescheduledTo": "Repayment Scheduled To ",
+        "Description": "Description",
+        "offices": "Applicable Offices",
+        "erroffices": "Offices is "
+      },
+      "Edit": {
+        "Name": "Name",
+        "errName": "Name is ",
+        "fromDate": "From Date",
+        "errfromDate": "From Date is ",
+        "toDate": "To Date",
+        "errtoDate": "To Date is ",
+        "reschedulingType": "Repayment Scheduling Type",
+        "errreschedulingType": "Repayment Scheduling Type is ",
+        "repaymentsRescheduledTo": "Repayment scheduled to",
+        "errrepaymentsRescheduledTo": "Repayment Scheduled To is ",
+        "Description": "Description"
+      },
+      "View": {
+        "btnActivate": "Activate",
+        "btnEdit": "Edit",
+        "btnDelete": "Delete",
+        "Name": "Name",
+        "fromDate": "From Date",
+        "toDate": "To Date",
+        "repaymentsRescheduledTo": "Repayments Scheduled To",
+        "NextRepaymentDate": "Next Repayment Date"
+      }
+    },
+    "LoanProvisioning": {
+      "CreateProvisioningCriteria": "Create Provisioning Criteria",
+      "Filter": "Filter",
+      "Name": "Name",
+      "createdBy": "Created By",
+
+      "Create": {
+        "criteriaName": "Provisioning Criteria",
+        "errcriteriaName": "Provisioning Criteria is ",
+        "loanProducts": "Selected Products",
+        "Category": "Category",
+        "minAge": "Min Age",
+        "maxAge": "Max Age",
+        "percentage": "Percentage (%)",
+        "liabilityAccount": "Liability Account",
+        "expenseAccount": "Expense Account",
+        "Actions": "Actions"
+      },
+      "Edit": {
+        "criteriaName": "Provisioning Criteria",
+        "errcriteriaName": "Provisioning Criteria is ",
+        "loanProducts": "Selected Products",
+        "provisioningCriteriaFormValid": "Please fill all provisioning criteria definitions.",
+        "Category": "Category",
+        "minAge": "Min Age",
+        "maxAge": "Max Age",
+        "percentage": "Percentage (%)",
+        "liabilityAccount": "Liability Account",
+        "expenseAccount": "Expense Account",
+        "Actions": "Actions"
+      },
+      "View": {
+        "loanProduct": "Loan Product:",
+        "Category": "Category",
+        "minAge": "Min Age",
+        "maxAge": "Max Age",
+        "Percentage": "Percentage",
+        "liabilityAccount": "Liability Account",
+        "expenseAccount": "Expense Account"
+      }
+    },
+    "ManageFund": {
+      "RequiredField": "Required field"
+    },
+    "Offices": {
+      "btnTreeView": "Tree View",
+      "btnCreateOffice": "Create Office",
+      "btnImportOffices": "Import Offices",
+      "Filter": "Filter",
+      "name": "Office Name",
+      "externalId": "External ID",
+      "parentName": "Parent Office",
+      "openingDate": "Opened On",
+
+      "Create": {
+        "Office": "Office",
+        "errOffice": "Office is ",
+        "parentId": "Parent Office",
+        "errparentId": "Parent Office is ",
+        "openingDate": "Opened On",
+        "erropeningDate": "Opening Date is ",
+        "externalId": "External ID"
+      },
+      "Edit": {
+        "Offices": "Offices",
+        "errOffices": "Office is ",
+        "parentId": "Parent Office",
+        "errparentId": "Parent Office is ",
+        "openingDate": "Opened On",
+        "erropeningDate": "Date is ",
+        "externalId": "External ID"
+      },
+      "View": {
+        "btnEditOffice": "Edit Office",
+        "General": "General"
+      }
+    },
+    "PaymentTypes": {
+      "btnCreatePaymentType": "Create Payment Type",
+      "Filter": "Filter",
+      "Name": "Name",
+      "Description": "Description",
+      "isCashPayment": "Cash Payment",
+      "Position": "Position",
+      "Actions": "Actions",
+
+      "Create": {
+        "name": "Payment Type",
+        "errname": "Payment Type is ",
+        "Description": "Description",
+        "isCashPayment": "Is Cash Payment?",
+        "Position": "Position",
+        "position": "Position is "
+      },
+      "Edit": {
+        "name": "Payment Type",
+        "errname": "Payment Type is ",
+        "Description": "Description",
+        "isCashPayment": "Is Cash Payment?",
+        "Position": "Position",
+        "errPosition": "Position is "
+      }
+    },
+    "SmsCampaigns": {
+      "btnCreateSMSCampaign": "Create SMS Campaign",
+      "Filter": "Filter",
+      "Name": "Name",
+      "campaignMessage": "Template Message",
+      "campaignType": "Campaign Type",
+      "triggerType": "Trigger Type",
+      "Status": "Status",
+      "submittedByUsername": "Approved By",
+
+      "Create": {
+        "CAMPAIGN": "CAMPAIGN",
+        "MESSAGE": "MESSAGE",
+        "PREVIEW": "PREVIEW"
+      },
+      "Edit": {
+        "CAMPAIGN": "CAMPAIGN",
+        "MESSAGE": "MESSAGE",
+        "PREVIEW": "PREVIEW"
+      },
+      "SmsStepper": {
+        "Message": {
+          "message": "Campaign Message",
+          "TemplateParameters": "Template Parameters"
+        },
+        "Preview": {
+          "campaignName": "Campaign Name : ",
+          "providerId": "SMS Provider : ",
+          "triggerType": "Trigger Type : ",
+          "BussinessRule": "Bussiness Rule : ",
+          "message": "Campaign Message :"
+        },
+        "EditSms": {
+          "campaignName": "Campaign Name",
+          "errcampaignName": "Campaign Name is ",
+          "providerId": "SMS Provider",
+          "triggerType": "Trigger Type",
+          "errtriggerType": "Trigger Type is ",
+          "isNotification": "is Notification?",
+          "recurrenceStartDate": "Schedule Date",
+          "errrecurrenceStartDate": "Schedule Date is ",
+          "runReportId": "Business Rule",
+          "errrunReportId": "Business Rule is "
+        },
+        "SmsStep": {
+          "campaignName": "Campaign Name",
+          "errcampaignName": "Campaign Name is ",
+          "providerId": "SMS Provider",
+          "triggerType": "Trigger Type",
+          "errtriggerType": "Trigger Type is ",
+          "isNotification": "is Notification?",
+          "recurrenceStartDate": "Schedule Date",
+          "errrecurrenceStartDate": "Schedule Date is ",
+          "Repeats": "Repeats",
+          "Daily": "Daily",
+          "Weekly": "Weekly",
+          "Monthly": "Monthly",
+          "Yearly": "Yearly",
+          "RepetitionFrequency": "Repetition Frequency is ",
+          "interval": "Repetition Interval",
+          "errinterval": "Repetition Interval is ",
+          "repeatsOnDay": "Repeats on Day",
+          "Monday": "Monday",
+          "Tuesday": "Tuesday",
+          "Wednesday": "Wednesday",
+          "Thursday": "Thursday",
+          "Friday": "Friday",
+          "Saturday": "Saturday",
+          "Sunday": "Sunday",
+          "Atleast": "At least ",
+          "one": "one",
+          "alert": " day must be selected",
+          "runReportId": "Business Rule",
+          "errrunReportId": "Business Rule is "
+        }
+      },
+      "View": {
+        "btnEdit": "Edit",
+        "btnActivate": "Activate",
+        "btnClose": "Close",
+        "btnReactivate": "Reactivate",
+        "btnDelete": "Delete",
+        "campaignName": "Campaign Name : ",
+        "reportName": "Report Name : ",
+        "campaignStatus": "Status : ",
+        "triggerType": "Trigger Type : ",
+        "submittedOnDate": "Submitted on : ",
+        "recurrence": "Recurrence : ",
+        "campaignMessage": "Template Message :",
+        "fromDate": "From Date",
+        "toDate": "To Date",
+        "btnSearch": "Search",
+        "Message": "Message",
+        "Status": "Status",
+        "mobileNo": "Mobile No.",
+        "campaignName2": "Campaign Name"
+      }
+    },
+    "StandingInstruction": {
+      "clientName": "Client Name",
+      "clientId": "Client Id",
+      "transferType": "Transfer Type",
+      "fromAccountType": "Account Type",
+      "fromAccountId": "From Account ID",
+      "fromDate": "From Date",
+      "toDate": "To Date",
+      "btnCancel": "Cancel",
+      "btnSearchInstructions": "Search Instructions",
+      "Parameters": "Parameters",
+      "fromClient": "From Client",
+      "fromAccount": "From Account",
+      "toClient": "To Client",
+      "toAccount": "To Account",
+      "executionTime": "Execution Time",
+      "Amount": "Amount",
+      "Status": "Status",
+      "errorLog": "Error Log"
+    },
+    "Tellers": {
+      "Filter": "Filter",
+      "Branch": "Branch",
+      "name": "Teller Name",
+      "Status": "Status",
+      "startDate": "Started On",
+      "Actions": "Actions",
+      "btnViewCashiers": "View Cashiers",
+
+      "Cashiers": {
+        "btnNewCashier": "New Cashier",
+        "Filter": "Filter",
+        "Period": "Period",
+        "staffName": "Cashier/Staff",
+        "isFullDay": "Full Day/Time",
+        "vaultActions": "Vault Actions",
+        "ToolTipAllocateCash": "Allocate Cash",
+        "ToolTipSettleCash": "Settle Cash",
+        "ToolTipViewTransactions": "View Transactions",
+        "Allocate": {
+          "Office": "Office",
+          "tellerName": "Teller Name",
+          "Cashier": "Cashier",
+          "assignmentPeriod": "Assignment Period",
+          "Date": "Date",
+          "errDate ": "Date is ",
+          "Currency": "Currency",
+          "errCurrency": "Currency is ",
+          "Amount": "Amount",
+          "errAmount": "Amount is ",
+          "txnNote": "Notes/Comments",
+          "errtxnNote": "Notes/Comments is "
+        },
+        "Create": {
+          "Office": "Office",
+          "tellerName": "Teller Name",
+          "Cashier": "Cashier",
+          "errCashier": "Cashier is ",
+          "description": "Description/Notes",
+          "From": "From",
+          "errFrom": "From Date is ",
+          "To": "To",
+          "errTo": "To Date is ",
+          "isFullDay": "Full Day?"
+        },
+        "Edit": {
+          "Office": "Office",
+          "tellerName": "Teller Name",
+          "Cashier": "Cashier",
+          "SelectOption": "Select Option",
+          "description": "Description/Notes",
+          "From": "From",
+          "errFrom": "From Date is ",
+          "To": "To",
+          "errTo": "To Date is ",
+          "isFullDay": "Full Day?"
+        },
+        "Settle": {
+          "Office": "Office",
+          "tellerName": "Teller Name",
+          "Cashier": "Cashier",
+          "assignmentPeriod": "Assignment Period",
+          "Date": "Date",
+          "errDate": "Date is ",
+          "Currency": "Currency",
+          "errCurrency": "Currency is ",
+          "Amount": "Amount",
+          "errAmount": "Amount is ",
+          "txnNote": "Notes/Comments",
+          "errtxnNote": "Notes/Comments is ",
+          "btnCancel": "Cancel",
+          "btnSettleCash": "Settle Cash"
+        },
+        "Transactions": {
+          "btnAllocateCash": "Allocate Cash",
+          "btnSettleCash": "Settle Cash",
+          "Branch": "Branch",
+          "Teller": "Teller",
+          "Cashier": "Cashier",
+          "netCash": "Net Cash",
+          "Filter": "Filter",
+          "currency": "Select Currency",
+          "Date": "Date",
+          "Transactions": "Transactions",
+          "Allocation": "Allocation",
+          "sumInwardCash": "Cash In",
+          "sumOutwardCash": "Cash Out",
+          "Settlement": "Settlement"
+        },
+        "View": {
+          "Name": "Name",
+          "Teller": "Teller",
+          "Description": "Description",
+          "startDate": "Start Date",
+          "endDate": "End Date",
+          "isFullDay": "Full Day?"
+        }
+      },
+      "Create": {
+        "name": "Teller Name",
+        "errname": "Teller Name is ",
+        "errname2": "Teller Name ",
+        "cannot": "cannot",
+        "alert": " begin with a special character or number",
+        "Office": "Office",
+        "errOffice": "Office is ",
+        "Description": "Description",
+        "startDate": "Start Date",
+        "errstartDate": "Start Date is ",
+        "endDate": "End Date",
+        "Status": "Status",
+        "errStatus": "Status is "
+      },
+      "Edit": {
+        "name": "Teller Name",
+        "errname": "Teller Name is ",
+        "errname2": "Teller Name ",
+        "cannot": "cannot",
+        "alert": " begin with a special character or number",
+        "Office": "Office",
+        "Description": "Description",
+        "startDate": "Start Date",
+        "errstartDate": "Start Date is ",
+        "endDate": "End Date",
+        "Status": "Status",
+        "errStatus": "Status is "
+      },
+      "View": {
+        "name": "Teller Name",
+        "Office": "Office",
+        "Description": "Description",
+        "startDate": "Start Date",
+        "endDate": "End Date",
+        "Status": "Status"
+      }
+    },
+    "WorkingDaysComponent": {
+      "recurrence": "Working Days",
+      "repaymentRescheduleType": "Payments due on non working days",
+      "extendTermForDailyRepayments": "Extend the term for loans following a daily repayment schedule"
+    }
   }
 }

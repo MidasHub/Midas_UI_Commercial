@@ -9,29 +9,29 @@
         <div fxLayout="column">
 
           <mat-form-field>
-            <mat-label>Office</mat-label>
+            <mat-label>{{ "Accounting.ClosingEntriesComponent.CreateClosureComponent.officeId" | translate }}</mat-label>
             <mat-select required formControlName="officeId">
               <mat-option *ngFor="let office of officeData" [value]="office.id">
                 {{ office.name }}
               </mat-option>
             </mat-select>
             <mat-error *ngIf="accountingClosureForm.controls.officeId.hasError('required')">
-              Office is <strong>required</strong>
+              {{ "Accounting.ClosingEntriesComponent.CreateClosureComponent.errofficeId" | translate }}<strong>{{ "Accounting.strongRequire" | translate }}</strong>
             </mat-error>
           </mat-form-field>
 
           <mat-form-field>
-            <mat-label>Closing Date</mat-label>
+            <mat-label>{{ "Accounting.ClosingEntriesComponent.CreateClosureComponent.closingDate" | translate }}</mat-label>
             <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="closingDatePicker" required formControlName="closingDate">
             <mat-datepicker-toggle matSuffix [for]="closingDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #closingDatePicker></mat-datepicker>
             <mat-error *ngIf="accountingClosureForm.controls.closingDate.hasError('required')">
-              Closing Date is <strong>required</strong>
+              {{ "Accounting.ClosingEntriesComponent.CreateClosureComponent.errclosingDate" | translate }}<strong>{{ "Accounting.strongRequire" | translate }}</strong>
             </mat-error>
           </mat-form-field>
 
           <mat-form-field>
-            <mat-label>Comments</mat-label>
+            <mat-label>{{ "Accounting.ClosingEntriesComponent.CreateClosureComponent.comments" | translate }}</mat-label>
             <textarea matInput formControlName="comments"></textarea>
           </mat-form-field>
 
@@ -40,8 +40,8 @@
       </mat-card-content>
 
       <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
-        <button type="button" mat-raised-button [routerLink]="['../']">Cancel</button>
-        <button mat-raised-button color="primary" [disabled]="!accountingClosureForm.valid" *midasHasPermission="'CREATE_GLCLOSURE'">Submit</button>
+        <button type="button" mat-raised-button [routerLink]="['../']">{{ "ShareButton.CancelEng" | translate }}</button>
+        <button mat-raised-button color="primary" [disabled]="!accountingClosureForm.valid" *midasHasPermission="'CREATE_GLCLOSURE'">{{ "ShareButton.Submit" | translate }}</button>
       </mat-card-actions>
 
     </form>

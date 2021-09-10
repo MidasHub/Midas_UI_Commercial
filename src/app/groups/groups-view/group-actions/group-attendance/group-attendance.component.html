@@ -3,30 +3,30 @@
   <mat-card fxLayout="column" fxLayoutGap="3%">
 
     <mat-form-field fxFlex>
-      <mat-label>Meeting Date</mat-label>
+      <mat-label>{{ 'Group_Component.Create_Group_Component.GroupView.GroupActions.Attendance.meetingDate'| translate}}</mat-label>
       <mat-select [formControl]="meetingDate">
         <mat-option *ngFor="let date of meetingDates" [value]="date">
           {{ date | date }}
         </mat-option>
       </mat-select>
-      <mat-hint>Next Meeting on: {{ this.groupData.collectionMeetingCalendar.nextTenRecurringDates[0] | date }}</mat-hint>
+      <mat-hint>{{ 'Group_Component.Create_Group_Component.GroupView.GroupActions.Attendance.hintmeetingDate'| translate}}{{ this.groupData.collectionMeetingCalendar.nextTenRecurringDates[0] | date }}</mat-hint>
     </mat-form-field>
 
     <table class="mat-elevation-z1" mat-table [dataSource]="dataSource">
 
       <ng-container matColumnDef="name">
-        <th mat-header-cell *matHeaderCellDef> Name </th>
+        <th mat-header-cell *matHeaderCellDef> {{ 'Group_Component.Create_Group_Component.GroupView.GroupActions.Attendance.name'| translate}} </th>
         <td mat-cell *matCellDef="let member"> {{ member.clientId | find:membersData:'id':'displayName' }} </td>
       </ng-container>
 
       <ng-container matColumnDef="attendance">
-        <th mat-header-cell *matHeaderCellDef> Attendance </th>
+        <th mat-header-cell *matHeaderCellDef> {{ 'Group_Component.Create_Group_Component.GroupView.GroupActions.Attendance.attendance'| translate}} </th>
         <td mat-cell *matCellDef="let member" [ngSwitch]="member.attendanceType">
-          <span *ngSwitchCase="1">Present</span>
-          <span *ngSwitchCase="2">Absent</span>
-          <span *ngSwitchCase="3">Approved</span>
-          <span *ngSwitchCase="4">Leave</span>
-          <span *ngSwitchCase="5">Late</span>
+          <span *ngSwitchCase="1">{{ 'Group_Component.Create_Group_Component.GroupView.GroupActions.Attendance.Present'| translate}}</span>
+          <span *ngSwitchCase="2">{{ 'Group_Component.Create_Group_Component.GroupView.GroupActions.Attendance.Absent'| translate}}</span>
+          <span *ngSwitchCase="3">{{ 'Group_Component.Create_Group_Component.GroupView.GroupActions.Attendance.Approved'| translate}}</span>
+          <span *ngSwitchCase="4">{{ 'Group_Component.Create_Group_Component.GroupView.GroupActions.Attendance.Leave'| translate}}</span>
+          <span *ngSwitchCase="5">{{ 'Group_Component.Create_Group_Component.GroupView.GroupActions.Attendance.Late'| translate}}</span>
           <button mat-icon-button color="primary"
             (click)="editAttendance(member)">
             <fa-icon icon="pen"></fa-icon>
@@ -40,9 +40,9 @@
     </table>
 
     <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
-      <button type="button" mat-raised-button [routerLink]="['../../']">Cancel</button>
+      <button type="button" mat-raised-button [routerLink]="['../../']">{{ "ShareButton.CancelEng" | translate }}</button>
       <button mat-raised-button color="primary" (click)="submit()"
-        *midasHasPermission="'SAVEORUPDATEATTENDANCE_MEETING'">Confirm</button>
+        *midasHasPermission="'SAVEORUPDATEATTENDANCE_MEETING'">{{ "ShareButton.ConfirmEng" | translate }}</button>
     </mat-card-actions>
 
   </mat-card>

@@ -9,16 +9,16 @@
         <div fxLayout="column">
 
           <mat-checkbox labelPosition="before" formControlName="existingClient">
-            Existing Client
+            {{'Loans.View.Actions.CreateGuarantor.existingClient'| translate }}
           </mat-checkbox>
 
           <ng-container *ngIf="!showClientDetailsForm">
 
             <mat-form-field fxFlex="30%">
-              <mat-label>Name</mat-label>
+              <mat-label>{{'Loans.View.Actions.CreateGuarantor.name'| translate }}</mat-label>
               <input matInput formControlName="name" [matAutocomplete]="clientsAutocomplete">
               <mat-error *ngIf="newGuarantorForm.controls.name.hasError('required')">
-                Name <strong>is required</strong>
+                {{'Loans.View.Actions.CreateGuarantor.errname'| translate }}<strong>{{'Loans.View.strongRequired'| translate }}</strong>
               </mat-error>
             </mat-form-field>
 
@@ -30,7 +30,7 @@
             </mat-autocomplete>
 
             <mat-form-field>
-              <mat-label>Relationship</mat-label>
+              <mat-label>{{'Loans.View.Actions.CreateGuarantor.Relationship'| translate }}</mat-label>
               <mat-select formControlName="clientRelationshipTypeId">
                 <mat-option *ngFor="let relationType of relationTypes" [value]="relationType.id">
                   {{ relationType.name }}
@@ -41,7 +41,7 @@
             <ng-container *ngIf="accountOptions.length > 0">
 
               <mat-form-field>
-                <mat-label>Account</mat-label>
+                <mat-label>{{'Loans.View.Actions.CreateGuarantor.Account'| translate }}</mat-label>
                 <mat-select formControlName="savingsId">
                   <mat-option *ngFor="let accountOption of accountOptions" [value]="accountOption.id">
                     {{ accountOption.productName }} - {{ accountOption.accountNo }}
@@ -50,7 +50,7 @@
               </mat-form-field>
 
               <mat-form-field>
-                <mat-label>Amount</mat-label>
+                <mat-label>{{'Loans.View.Actions.CreateGuarantor.Amount'| translate }}</mat-label>
                 <input currencyMask type="text" matInput required formControlName="amount" required>
               </mat-form-field>
 
@@ -61,7 +61,7 @@
           <ng-container *ngIf="showClientDetailsForm">
 
             <mat-form-field>
-              <mat-label>Relationship</mat-label>
+              <mat-label>{{'Loans.View.Actions.CreateGuarantor.Relationship'| translate }}</mat-label>
               <mat-select formControlName="clientRelationshipTypeId">
                 <mat-option *ngFor="let relationType of relationTypes" [value]="relationType.id">
                   {{ relationType.name }}
@@ -70,55 +70,55 @@
             </mat-form-field>
 
             <mat-form-field>
-              <mat-label>First Name</mat-label>
+              <mat-label>{{'Loans.View.Actions.CreateGuarantor.firstname'| translate }}</mat-label>
               <input matInput required formControlName="firstname" required>
               <mat-error *ngIf="newGuarantorForm.controls.firstname.hasError('required')">
-                First Name <strong>is required</strong>
+                {{'Loans.View.Actions.CreateGuarantor.errfirstname'| translate }}<strong>{{'Loans.View.strongRequired'| translate }}</strong>
               </mat-error>
             </mat-form-field>
 
             <mat-form-field>
-              <mat-label>Last Name</mat-label>
+              <mat-label>{{'Loans.View.Actions.CreateGuarantor.lastname'| translate }}</mat-label>
               <input matInput required formControlName="lastname" required>
               <mat-error *ngIf="newGuarantorForm.controls.lastname.hasError('required')">
-                Last Name <strong>is required</strong>
+                {{'Loans.View.Actions.CreateGuarantor.errlastname'| translate }}<strong>{{'Loans.View.strongRequired'| translate }}</strong>
               </mat-error>
             </mat-form-field>
 
             <mat-form-field>
-              <mat-label>Date Of Birth</mat-label>
+              <mat-label>{{'Loans.View.Actions.CreateGuarantor.dob'| translate }}</mat-label>
               <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="dobDatePicker" formControlName="dob">
               <mat-datepicker-toggle matSuffix [for]="dobDatePicker"></mat-datepicker-toggle>
               <mat-datepicker #dobDatePicker></mat-datepicker>
             </mat-form-field>
 
             <mat-form-field>
-              <mat-label>Address Line 1</mat-label>
+              <mat-label>{{'Loans.View.Actions.CreateGuarantor.addressLine1'| translate }}</mat-label>
               <input matInput formControlName="addressLine1">
             </mat-form-field>
 
             <mat-form-field>
-              <mat-label>Address Line 2</mat-label>
+              <mat-label>{{'Loans.View.Actions.CreateGuarantor.addressLine2'| translate }}</mat-label>
               <input matInput formControlName="addressLine2">
             </mat-form-field>
 
             <mat-form-field>
-              <mat-label>City</mat-label>
+              <mat-label>{{'Loans.View.Actions.CreateGuarantor.City'| translate }}</mat-label>
               <input matInput formControlName="city">
             </mat-form-field>
 
             <mat-form-field>
-              <mat-label>Zip</mat-label>
+              <mat-label>{{'Loans.View.Actions.CreateGuarantor.Zip'| translate }}</mat-label>
               <input matInput formControlName="zip">
             </mat-form-field>
 
             <mat-form-field>
-              <mat-label>Mobile</mat-label>
+              <mat-label>{{'Loans.View.Actions.CreateGuarantor.Mobile'| translate }}</mat-label>
               <input type="number" matInput formControlName="mobileNumber">
             </mat-form-field>
 
             <mat-form-field>
-              <mat-label>Residence Phone #</mat-label>
+              <mat-label>{{'Loans.View.Actions.CreateGuarantor.housePhoneNumber'| translate }}</mat-label>
               <input type="number" matInput formControlName="housePhoneNumber">
             </mat-form-field>
 
@@ -127,9 +127,9 @@
         </div>
 
         <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
-          <button type="button" mat-raised-button [routerLink]="['../../general']">Cancel</button>
+          <button type="button" mat-raised-button [routerLink]="['../../general']">{{ "ShareButton.CancelEng" | translate }}</button>
           <button mat-raised-button color="primary" [disabled]="!newGuarantorForm.valid"
-            *midasHasPermission="'CREATE_GUARANTOR'">Submit</button>
+            *midasHasPermission="'CREATE_GUARANTOR'">{{ "ShareButton.Submit" | translate }}</button>
         </mat-card-actions>
 
       </mat-card-content>
@@ -139,18 +139,18 @@
     <ng-container *ngIf="!(newGuarantorForm.controls.name === undefined)">
       <div class="mat-table">
         <div class="mat-header-row">
-          <div class="mat-header-cell">Client Details</div>
+          <div class="mat-header-cell">{{'Loans.View.Actions.CreateGuarantor.ClientDetails'| translate }}</div>
         </div>
         <div class="mat-row">
-          <div class="mat-cell">Name</div>
+          <div class="mat-cell">{{'Loans.View.Actions.CreateGuarantor.Name'| translate }}</div>
           <div class="mat-cell">{{newGuarantorForm.controls.name.value.displayName}}</div>
         </div>
         <div class="mat-row">
-          <div class="mat-cell">Id</div>
+          <div class="mat-cell">{{'Loans.View.Actions.CreateGuarantor.Id'| translate }}</div>
           <div class="mat-cell">{{newGuarantorForm.controls.name.value.id}}</div>
         </div>
         <div class="mat-row">
-          <div class="mat-cell">Office</div>
+          <div class="mat-cell">{{'Loans.View.Actions.CreateGuarantor.Office'| translate }}</div>
           <div class="mat-cell">{{newGuarantorForm.controls.name.value.officeName}}</div>
         </div>
       </div>

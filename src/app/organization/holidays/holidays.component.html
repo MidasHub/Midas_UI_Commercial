@@ -2,7 +2,7 @@
 
   <button mat-raised-button color="primary" [routerLink]="['create']" *midasHasPermission="'CREATE_HOLIDAY'">
     <fa-icon icon="plus"></fa-icon>&nbsp;&nbsp;
-    Create Holiday
+    {{'Organization.HolidaysComponent.btnCreateHoliday'| translate }}
   </button>
 
 </div>
@@ -12,11 +12,11 @@
   <div fxLayout="row" fxLayoutGap="20px">
 
     <mat-form-field fxFlex>
-      <mat-label>Filter</mat-label>
+      <mat-label>{{'Organization.HolidaysComponent.Filter'| translate }}</mat-label>
       <input matInput (keyup)="applyFilter($event)">
     </mat-form-field>
     <mat-form-field>
-      <mat-label> Select Office </mat-label>
+      <mat-label> {{'Organization.HolidaysComponent.btnCreateHoliday'| translate }}Select Office </mat-label>
       <mat-select [formControl]="officeSelector">
         <mat-option *ngFor="let office of officeData" [value]="office.id">
           {{ office.name }}
@@ -31,27 +31,27 @@
     <table mat-table [dataSource]="dataSource" matSort>
 
       <ng-container matColumnDef="name">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Holiday Name </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{'Organization.HolidaysComponent.name'| translate }} </th>
         <td mat-cell *matCellDef="let holidays"> {{ holidays.name }} </td>
       </ng-container>
 
       <ng-container matColumnDef="fromDate">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Start Date </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{'Organization.HolidaysComponent.fromDate'| translate }} </th>
         <td mat-cell *matCellDef="let holidays"> {{ holidays.fromDate | date }} </td>
       </ng-container>
 
       <ng-container matColumnDef="toDate">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> End Date </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{'Organization.HolidaysComponent.toDate'| translate }} </th>
         <td mat-cell *matCellDef="let holidays"> {{ holidays.toDate | date }} </td>
       </ng-container>
 
       <ng-container matColumnDef="repaymentsRescheduledTo">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Repayments Scheduled To </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{'Organization.HolidaysComponent.repaymentsRescheduledTo'| translate }} </th>
         <td mat-cell *matCellDef="let holidays"> {{ holidays.reschedulingType === 1 ? 'Next Repayment Date' : holidays.repaymentsRescheduledTo | date }} </td>
       </ng-container>
 
       <ng-container matColumnDef="status">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Status </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{'Organization.HolidaysComponent.Status'| translate }} </th>
         <td mat-cell *matCellDef="let holidays"> {{ holidays.status.value }} </td>
       </ng-container>
 

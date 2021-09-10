@@ -2,16 +2,16 @@
   <span *midasHasPermission="'ACTIVATE_HOLIDAY'">
     <button mat-raised-button color="accent" *ngIf="holidayData.status.value !== 'Active'">
       <fa-icon icon="lock-open"></fa-icon>&nbsp;&nbsp;
-      Activate
+      {{'Organization.HolidaysComponent.View.btnActivate'| translate }}
     </button>
   </span>
   <button mat-raised-button color="primary" [routerLink]="['edit']" *midasHasPermission="'UPDATE_HOLIDAY'">
     <fa-icon icon="edit"></fa-icon>&nbsp;&nbsp;
-    Edit
+    {{'Organization.HolidaysComponent.View.btnEdit'| translate }}
   </button>
   <button mat-raised-button color="warn" (click)="deleteHoliday()" *midasHasPermission="'DELETE_HOLIDAY'">
     <fa-icon icon="trash"></fa-icon>&nbsp;&nbsp;
-    Delete
+    {{'Organization.HolidaysComponent.View.btnDelete'| translate }}
   </button>
 </div>
 
@@ -24,7 +24,7 @@
       <div fxLayout="row wrap" class="content">
 
         <div fxFlex="50%" class="header">
-          Name
+          {{'Organization.HolidaysComponent.View.Name'| translate }}
         </div>
 
         <div fxFlex="50%">
@@ -32,7 +32,7 @@
         </div>
 
         <div fxFlex="50%" class="header">
-          From Date
+          {{'Organization.HolidaysComponent.View.fromDate'| translate }}
         </div>
 
         <div fxFlex="50%">
@@ -40,7 +40,7 @@
         </div>
 
         <div fxFlex="50%" class="header">
-          To Date
+          {{'Organization.HolidaysComponent.View.toDate'| translate }}
         </div>
 
         <div fxFlex="50%">
@@ -48,7 +48,7 @@
         </div>
 
         <div fxFlex="50%" class="header">
-          Repayments Scheduled To
+          {{'Organization.HolidaysComponent.View.repaymentsRescheduledTo'| translate }}
         </div>
 
         <div fxFlex="50%" *ngIf="holidayData.repaymentsRescheduledTo !== undefined && holidayData.repaymentsRescheduledTo !== null">
@@ -56,7 +56,7 @@
         </div>
 
         <div fxFlex="50%" *ngIf="holidayData.repaymentsRescheduledTo === undefined || holidayData.repaymentsRescheduledTo === null">
-          Next Repayment Date
+          {{'Organization.HolidaysComponent.View.NextRepaymentDate'| translate }}
         </div>
 
       </div>

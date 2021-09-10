@@ -1,17 +1,9 @@
 /** Angular Imports */
-import { NgModule } from '@angular/core';
+import { LOCALE_ID, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HttpClientModule, HttpClient } from '@angular/common/http'; // Jean
+import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { ServiceWorkerModule } from '@angular/service-worker';
-
-/** Tanslation Imports */
-import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
-import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-
-export function HttpLoaderFactory(http: HttpClient) {
-  return new TranslateHttpLoader(http, './assets/i18n/', '.json');
-}
 
 /** Environment Configuration */
 import { environment } from 'environments/environment';
@@ -62,31 +54,38 @@ import { CommonHttpParams } from './shared/CommonHttpParams';
 
 /**
  * Import Vietnamese locale for built-in pipe like DatePipe, CurrencyPipe...
+ * and import the Translate Module (@ngx-translate)
  */
 import { registerLocaleData } from '@angular/common';
 import localeVi from '@angular/common/locales/vi';
-import { LOCALE_ID } from '@angular/core';
+
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
 registerLocaleData(localeVi, 'vi');
+export function HttpLoaderFactory(http: HttpClient) {
+  return new TranslateHttpLoader(http, './assets/i18n/', '.json');
+}
 
 /**
  * Gooogle Firebase
  */
 
-import { AngularFireMessagingModule } from '@angular/fire/messaging';
-import { AngularFireDatabaseModule } from '@angular/fire/database';
-import { AngularFireAuthModule } from '@angular/fire/auth';
-import { AngularFireModule } from '@angular/fire';
-import { FireBaseMessagingService } from './firebase/fire-base-messaging.service';
+// import { AngularFireMessagingModule } from '@angular/fire/messaging';
+// import { AngularFireDatabaseModule } from '@angular/fire/database';
+// import { AngularFireAuthModule } from '@angular/fire/auth';
+// import { AngularFireModule } from '@angular/fire';
+// import { FireBaseMessagingService } from './firebase/fire-base-messaging.service';
 import { AsyncPipe } from '@angular/common';
 
 /** Tour guide for self study */
 import { TourMatMenuModule } from 'ngx-tour-md-menu';
+import { PromptUpdateService } from './service-worker/prompt-update.service';
+import { LogUpdateService } from './service-worker/log-update.service';
+import { CheckUpdateService } from './service-worker/check-update.service';
 
 /** Google Analytics  */
-import { GoogleAnalyticsService } from './firebase/google-analytics.service';
-
-
+// import { GoogleAnalyticsService } from './firebase/google-analytics.service';
 
 /**
  * App Module
@@ -98,20 +97,23 @@ import { GoogleAnalyticsService } from './firebase/google-analytics.service';
     BrowserModule,
     BrowserAnimationsModule,
     HttpClientModule,
-    ServiceWorkerModule.register('./ngsw-worker.js', { enabled: environment.production }),
+    ServiceWorkerModule.register('./ngsw-worker.js', {
+      enabled: environment.production,
+      registrationStrategy: 'registerWhenStable:30000',
+    }),
     TranslateModule.forRoot({
+      defaultLanguage: 'vi-VN',
       loader: {
         provide: TranslateLoader,
         useFactory: HttpLoaderFactory,
         deps: [HttpClient],
       },
-      isolate: true,
     }),
     TourMatMenuModule.forRoot(),
-    AngularFireDatabaseModule,
-    AngularFireAuthModule,
-    AngularFireMessagingModule,
-    AngularFireModule.initializeApp(environment.firebase),
+    // AngularFireDatabaseModule,
+    // AngularFireAuthModule,
+    // AngularFireMessagingModule,
+    // AngularFireModule.initializeApp(environment.firebase),
     CoreModule,
     HomeModule,
     LoginModule,
@@ -151,8 +153,11 @@ import { GoogleAnalyticsService } from './firebase/google-analytics.service';
       provide: LOCALE_ID,
       useValue: 'vi',
     },
-    FireBaseMessagingService,
-    GoogleAnalyticsService,
+    PromptUpdateService,
+    LogUpdateService,
+    CheckUpdateService,
+    // FireBaseMessagingService,
+    // GoogleAnalyticsService,
     AsyncPipe,
   ],
   bootstrap: [WebAppComponent],

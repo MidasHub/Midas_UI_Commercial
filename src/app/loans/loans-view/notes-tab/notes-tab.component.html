@@ -1,5 +1,5 @@
 <div class="tab-container mat-typography">
-  <h3>Notes</h3>
+  <h3>{{'Loans.View.NotesTab.Notes'| translate }}</h3>
   <div>
     <form #formRef="ngForm" [formGroup]="noteForm" fxLayout="row" fxLayoutAlign="start baseline" fxLayoutGap="20px"
       (ngSubmit)="submit()">
@@ -7,7 +7,7 @@
         <textarea formControlName="note" matInput placeholder="Write a note ...."></textarea>
       </mat-form-field>
       <button mat-raised-button fxFlex color="primary" [disabled]="!noteForm.valid">
-        <fa-icon icon="plus"></fa-icon>&nbsp;&nbsp; Add
+        <fa-icon icon="plus"></fa-icon>&nbsp;&nbsp; {{'Loans.View.NotesTab.btnAdd'| translate }}
       </button>
     </form>
   </div>
@@ -16,8 +16,8 @@
       <fa-icon icon="sticky-note" matListIcon></fa-icon>
       <h3 matLine>{{loanNote.note}} </h3>
       <p matLine>
-        <span>Created by: {{loanNote.createdByUsername}}</span><br />
-        <span>Date: {{loanNote.createdOn | date}}</span>
+        <span>{{'Loans.View.NotesTab.createdByUsername'| translate }}{{loanNote.createdByUsername}}</span><br />
+        <span>{{'Loans.View.NotesTab.createdOn'| translate }}{{loanNote.createdOn | date}}</span>
       </p>
       <div fxLayout="row" fxLayoutAlign="flex-start">
         <button mat-button color="primary" (click)="editNote(loanNote.id,loanNote.note,i)">

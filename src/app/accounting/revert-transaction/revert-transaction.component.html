@@ -2,9 +2,9 @@
 
   <h1 mat-dialog-title>Revert Transaction</h1>
   <div mat-dialog-content>
-    <p>Are you sure you want to revert this transaction?</p>
+    <p>{{ "Accounting.RevertTransactionComponent.p" | translate }}</p>
     <mat-form-field fxFlexFill>
-      <mat-label>Comments</mat-label>
+      <mat-label>{{ "Accounting.RevertTransactionComponent.comments" | translate }}</mat-label>
       <textarea matInput [formControl]="comments"></textarea>
     </mat-form-field>
   </div>
@@ -17,15 +17,15 @@
 
 <ng-template #reverted>
 
-    <h1 mat-dialog-title>Transaction Reverted</h1>
+    <h1 mat-dialog-title>{{ "Accounting.RevertTransactionComponent.h1" | translate }}</h1>
     <div mat-dialog-content>
-      <h4>Success!</h4>
-      <p>A new journal entry has been created to reverse this transaction:</p>
-      <p>Transaction ID: {{ data.transactionId }}</p>
+      <h4>{{ "Accounting.RevertTransactionComponent.h4" | translate }}</h4>
+      <p>{{ "Accounting.RevertTransactionComponent.p_2" | translate }}</p>
+      <p>{{ "Accounting.RevertTransactionComponent.p_3" | translate }} {{ data.transactionId }}</p>
     </div>
     <mat-dialog-actions align="end">
-      <button mat-button mat-dialog-close>Close</button>
-      <button mat-button [mat-dialog-close]="{ redirect: true }">Redirect to New Transaction</button>
+      <button mat-button mat-dialog-close>{{ "ShareButton.CloseEng" | translate }}</button>
+      <button mat-button [mat-dialog-close]="{ redirect: true }">{{ "Accounting.RevertTransactionComponent.btnRedirectToNewTransaction" | translate }}</button>
     </mat-dialog-actions>
 
 </ng-template>

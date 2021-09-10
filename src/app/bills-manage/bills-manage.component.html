@@ -3,7 +3,7 @@
     <div class="action-button">
       <button mat-raised-button color="primary" (click)="uploadBill()">
         <fa-icon icon="plus"></fa-icon>
-        Tải lên hóa đơn
+        {{ "BillManage.btnUploadBill" | translate }}
       </button>
     </div>
   </div>
@@ -11,7 +11,7 @@
 
   <table mat-table [dataSource]="dataSource" matSort>
     <ng-container matColumnDef="fileName">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Tên file</th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ "BillManage.lableFileName" | translate }}</th>
       <td mat-cell *matCellDef="let file">
         - File: {{ file.fileName }} <br />
         - Tên: {{ file.name }} <br />
@@ -20,14 +20,14 @@
     </ng-container>
 
     <ng-container matColumnDef="partner">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Đối tác</th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ "BillManage.lablePartner" | translate }}</th>
       <td mat-cell *matCellDef="let file">
         {{ file.invoiceType }}
       </td>
     </ng-container>
 
     <ng-container matColumnDef="status">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Trạng thái</th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ "BillManage.Status" | translate }}</th>
       <td mat-cell *matCellDef="let file">
         <mat-label style="color: green; font-weight: bold" *ngIf="file.status == 'C'">
           <mat-icon>check</mat-icon>
@@ -42,21 +42,21 @@
     </ng-container>
 
     <ng-container matColumnDef="createdDate">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Ngày tải lên</th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ "BillManage.tableDetail.UploadDate" | translate }}</th>
       <td mat-cell *matCellDef="let file">
         {{ file.createdDate | date: "dd/MM/yyyy HH:mm:ss" }}
       </td>
     </ng-container>
 
     <ng-container matColumnDef="merchant">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Hộ kinh doanh</th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ "BillManage.lableMerchant" | translate }}</th>
       <td mat-cell *matCellDef="let file">
         {{ file.merchantId }}
       </td>
     </ng-container>
 
     <ng-container matColumnDef="totalBill">
-      <th mat-header-cell *matHeaderCellDef>Tổng số hóa đơn</th>
+      <th mat-header-cell *matHeaderCellDef>{{ "BillManage.BillAmount" | translate }}</th>
       <td mat-cell *matCellDef="let file">
         <mat-label style="color: blue; font-weight: bold" *ngIf="file.status == 'P'">
           <mat-progress-spinner color="warn" mode="indeterminate" diameter="20"> </mat-progress-spinner>
@@ -74,21 +74,21 @@
     </ng-container>
 
     <ng-container matColumnDef="batchUpload">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Số lô upload</th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ "BillManage.BatchCode" | translate }}</th>
       <td mat-cell *matCellDef="let file">
         {{ file.batchCode }}
       </td>
     </ng-container>
 
     <ng-container matColumnDef="createdBy">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Người tải lên</th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ "BillManage.UploadBy" | translate }}</th>
       <td mat-cell *matCellDef="let file">
         {{ file.createdBy }}
       </td>
     </ng-container>
 
     <ng-container matColumnDef="actions">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Chi tiết</th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ "BillManage.Details" | translate }}</th>
       <td mat-cell *matCellDef="let file">
         <button mat-button color="primary" routerLink="/bills/{{ file.batchCode }}">
           <mat-icon size="sm"> remove_red_eye </mat-icon>

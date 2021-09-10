@@ -9,47 +9,47 @@
         <div fxLayout="column">
 
           <mat-form-field>
-            <mat-label>Name</mat-label>
+            <mat-label>{{'Organization.AdhocQuery.Edit.name'| translate }}</mat-label>
             <input matInput required formControlName="name">
             <mat-error *ngIf="editAdhocQueryForm.controls.name.hasError('required')">
-              Name is <strong>required</strong>
+              {{'Organization.AdhocQuery.Edit.errname'| translate }}<strong>{{'Organization.strongRequired'| translate }}</strong>
             </mat-error>
           </mat-form-field>
 
           <mat-form-field>
-            <mat-label>SQL Query</mat-label>
+            <mat-label>{{'Organization.AdhocQuery.Edit.query'| translate }}</mat-label>
             <textarea matInput required formControlName="query"></textarea>
             <mat-error *ngIf="editAdhocQueryForm.controls.query.hasError('required')">
-              SQL Query is <strong>required</strong>
+              {{'Organization.AdhocQuery.Edit.errquery'| translate }}<strong>{{'Organization.strongRequired'| translate }}</strong>
             </mat-error>
           </mat-form-field>
 
           <mat-form-field>
-            <mat-label>Insert into table</mat-label>
+            <mat-label>{{'Organization.AdhocQuery.Edit.tableName'| translate }}</mat-label>
             <input matInput required formControlName="tableName">
             <mat-error *ngIf="editAdhocQueryForm.controls.tableName.hasError('required')">
-              Insert into table is <strong>required</strong>
+              {{'Organization.AdhocQuery.Edit.errtableName'| translate }}<strong>{{'Organization.strongRequired'| translate }}</strong>
             </mat-error>
           </mat-form-field>
 
           <mat-form-field>
-            <mat-label>Table Fields</mat-label>
+            <mat-label>{{'Organization.AdhocQuery.Edit.tableFields'| translate }}</mat-label>
             <textarea matInput required formControlName="tableFields"></textarea>
             <mat-error *ngIf="editAdhocQueryForm.controls.tableFields.hasError('required')">
-              Table Fields are <strong>required</strong>
+              {{'Organization.AdhocQuery.Edit.errtableFields'| translate }}<strong>{{'Organization.strongRequired'| translate }}</strong>
             </mat-error>
           </mat-form-field>
 
           <mat-form-field>
-            <mat-label>Email</mat-label>
+            <mat-label>{{'Organization.AdhocQuery.Edit.email'| translate }}</mat-label>
             <input matInput formControlName="email">
             <mat-error *ngIf="editAdhocQueryForm.controls.email.hasError('email')">
-              Email is <strong>invalid</strong>
+              {{'Organization.AdhocQuery.Edit.erremail'| translate }}<strong>{{'Organization.strongRequired'| translate }}</strong>
             </mat-error>
           </mat-form-field>
 
           <mat-form-field>
-            <mat-label>Report Run Frequency</mat-label>
+            <mat-label>{{'Organization.AdhocQuery.Edit.reportRunFrequency'| translate }}</mat-label>
             <mat-select formControlName="reportRunFrequency">
               <mat-option *ngFor="let reportRunFrequency of reportRunFrequencyData" [value]="reportRunFrequency.id">
                 {{ reportRunFrequency.value }}
@@ -58,18 +58,18 @@
           </mat-form-field>
 
           <mat-form-field *ngIf="editAdhocQueryForm.controls.reportRunFrequency.value === 5">
-            <mat-label>Custom Report Run Frequency (Days)</mat-label>
+            <mat-label>{{'Organization.AdhocQuery.Edit.reportRunEvery'| translate }}</mat-label>
             <input type="number" matInput required formControlName="reportRunEvery">
             <mat-error *ngIf="editAdhocQueryForm.controls.reportRunEvery.hasError('required')">
-              Custom Report Run Frequency is <strong>required</strong>
+              {{'Organization.AdhocQuery.Edit.errreportRunEvery'| translate }}<strong>{{'Organization.strongRequired'| translate }}</strong>
             </mat-error>
             <mat-error *ngIf="editAdhocQueryForm.controls.reportRunEvery.hasError('min')">
-              Custom Report Run Frequency <strong>must be larger than 0</strong>
+              {{'Organization.AdhocQuery.Edit.errreportRunEvery2'| translate }}<strong>{{'Organization.AdhocQuery.Edit.strongLangerThan0'| translate }}</strong>
             </mat-error>
           </mat-form-field>
 
           <mat-checkbox labelPosition="before" formControlName="isActive">
-            Active
+            {{'Organization.AdhocQuery.Edit.isActive'| translate }}
           </mat-checkbox>
 
         </div>
@@ -77,8 +77,8 @@
       </mat-card-content>
 
       <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
-        <button type="button" mat-raised-button [routerLink]="['../']">Cancel</button>
-        <button mat-raised-button color="primary" [disabled]="!editAdhocQueryForm.valid" *midasHasPermission="'UPDATE_ADHOC'">Submit</button>
+        <button type="button" mat-raised-button [routerLink]="['../']">{{ "ShareButton.CancelEng" | translate }}</button>
+        <button mat-raised-button color="primary" [disabled]="!editAdhocQueryForm.valid" *midasHasPermission="'UPDATE_ADHOC'">{{ "ShareButton.Submit" | translate }}</button>
       </mat-card-actions>
 
     </form>

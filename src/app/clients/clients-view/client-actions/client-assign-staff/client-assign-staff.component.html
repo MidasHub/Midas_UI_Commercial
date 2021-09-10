@@ -9,14 +9,14 @@
         <div fxLayout="column">
 
           <mat-form-field fxFlex="48%">
-            <mat-label>Staff</mat-label>
+            <mat-label>{{'Client_Component.ViewClient.Actions.ClientAssignStaff.staffId' |translate}}</mat-label>
             <mat-select formControlName="staffId">
               <mat-option *ngFor="let staff of staffData" [value]="staff.id">
                 {{ staff.displayName }}
               </mat-option>
             </mat-select>
             <mat-error *ngIf="clientAssignStaffForm.controls.staffId.hasError('required')">
-              Staff is <strong>required</strong>
+              {{'Client_Component.ViewClient.Actions.ClientAssignStaff.errstaffId' |translate}}<strong>{{'Client_Component.ViewClient.Actions.strongRequired' |translate}}</strong>
             </mat-error>
           </mat-form-field>
 
@@ -25,8 +25,8 @@
       </mat-card-content>
 
       <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
-        <button type="button" mat-raised-button [routerLink]="['../../']">Cancel</button>
-        <button mat-raised-button color="primary" [disabled]="!clientAssignStaffForm.valid">Confirm</button>
+        <button type="button" mat-raised-button [routerLink]="['../../']">{{ "ShareButton.CancelEng" | translate }}</button>
+        <button mat-raised-button color="primary" [disabled]="!clientAssignStaffForm.valid">{{ "ShareButton.ConfirmEng" | translate }}</button>
       </mat-card-actions>
 
     </form>

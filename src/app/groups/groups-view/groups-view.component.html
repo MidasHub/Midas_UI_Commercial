@@ -16,18 +16,18 @@
           <h3>
             <i class="fa fa-stop" [ngClass]="groupViewData.status.code|statusLookup"
                [matTooltip]="groupViewData.status.value"></i>
-            Tên đại lý : {{groupViewData.name}}
+               {{ 'Group_Component.Create_Group_Component.GroupView.h3'| translate}}{{groupViewData.name}}
           </h3>
         </mat-card-title>
         <mat-card-subtitle>
           <p>
-            ID #: {{groupViewData.id}} | Thuộc Trung tâm: {{groupViewData.centerName}} |
-            Nhân viên quản lý: {{groupViewData.staffName || 'Unassigned'}}<br/>
-            Tên chi nhánh: {{groupViewData.officeName}}<br/>
-            Ngày kích hoạt : {{(groupViewData.activationDate) ? (groupViewData.activationDate|date) : 'Not Activated'}}
+            {{ 'Group_Component.Create_Group_Component.GroupView.id'| translate}}{{groupViewData.name}}{{groupViewData.id}} | {{ 'Group_Component.Create_Group_Component.GroupView.centerName'| translate}}{{groupViewData.centerName}} |
+            {{ 'Group_Component.Create_Group_Component.GroupView.staffName'| translate}}{{groupViewData.staffName || 'Unassigned'}}<br/>
+            {{ 'Group_Component.Create_Group_Component.GroupView.officeName'| translate}}{{groupViewData.officeName}}<br/>
+            {{ 'Group_Component.Create_Group_Component.GroupView.activationDate'| translate}}{{(groupViewData.activationDate) ? (groupViewData.activationDate|date) : 'Not Activated'}}
             <br/>
             <span *ngIf="!groupViewData.active">
-            Ngày đóng mã: {{groupViewData.timeline.closedOnDate | date}}
+              {{ 'Group_Component.Create_Group_Component.GroupView.closedOnDate'| translate}}{{groupViewData.timeline.closedOnDate | date}}
             </span>
           </p>
         </mat-card-subtitle>
@@ -35,11 +35,11 @@
 
       <div class="group-meeting" fxLayoutAlign="start start">
         <div class="fixRightHeader">
-          <p>Lần giao dịch gần nhất: {{lastTransaction}}</p>
+          <p>{{ 'Group_Component.Create_Group_Component.GroupView.lastTransaction'| translate}}{{lastTransaction}}</p>
           <p></p>
-          <p>Tháng giao dịch gần nhất:</p>
+          <p>{{ 'Group_Component.Create_Group_Component.GroupView.closedOnDate2'| translate}}</p>
           <p *ngFor="let item of salesLast3months; let i = index">
-            Tháng {{item.txnMont}}: tổng số tiền: {{item.rev | money}} || Số lần: {{item.txnCount}}
+            {{ 'Group_Component.Create_Group_Component.GroupView.txnMont'| translate}}{{item.txnMont}}: {{ 'Group_Component.Create_Group_Component.GroupView.rev'| translate}}{{item.rev | money}} || {{ 'Group_Component.Create_Group_Component.GroupView.txnCount'| translate}}{{item.txnCount}}
           </p>
 
         </div>
@@ -65,14 +65,14 @@
 
     <mat-card-actions class="group-actions" *ngIf="!(groupViewData.status.value==='Closed')">
       <button mat-raised-button [routerLink]="['/transaction/batch-transaction',groupViewData.id]">
-        <img src="assets/images/icons/transaction%20_batch.svg" style="margin: 5px;">Giao dịch sỉ
+        <img src="assets/images/icons/transaction%20_batch.svg" style="margin: 5px;">{{ 'Group_Component.Create_Group_Component.GroupView.btnBatchTransaction'| translate}}
       </button>
       <span *ngIf="!(groupViewData.status.value==='Active')">
           <button mat-raised-button *midasHasPermission="'UPDATE_GROUP'" (click)="doAction('Activate')">
-            <i class="fa fa-check-sign"></i>Kích hoạt</button>
+            <i class="fa fa-check-sign"></i>{{ 'Group_Component.Create_Group_Component.GroupView.btnActivate'| translate}}</button>
         </span>
       <button mat-raised-button *midasHasPermission="'UPDATE_GROUP'" (click)="doAction('Edit')">
-        <i class="fa fa-edit"></i>Sửa thông tin
+        <i class="fa fa-edit"></i>{{ 'Group_Component.Create_Group_Component.GroupView.btnEdit'| translate}}
       </button>
       <!-- <button mat-raised-button *midasHasPermission="'CREATE_CLIENT'" [routerLink]="['/clients/create/']" [queryParams]="{'group': groupViewData.id }">
         <i class="fa fa-plus"></i>Add Clients
@@ -96,43 +96,43 @@
         </button>
         <button mat-menu-item *midasHasPermission="'CREATE_LOAN'">Group Loan Application</button>
       </mat-menu> -->
-      <button mat-raised-button [matMenuTriggerFor]="Member">Thành viên</button>
+      <button mat-raised-button [matMenuTriggerFor]="Member">{{ 'Group_Component.Create_Group_Component.GroupView.btnMember'| translate}}</button>
       <button mat-raised-button *ngIf="groupViewData.active" [matMenuTriggerFor]="AccountApplications">
-        <i class="fa fa-file"></i>Tài khoản
+        <i class="fa fa-file"></i>{{ 'Group_Component.Create_Group_Component.GroupView.btnAccountApplications'| translate}}
       </button>
       <mat-menu #Member="matMenu">
         <button mat-menu-item *midasHasPermission="'CREATE_CLIENT'" [routerLink]="['/clients/create/']" [queryParams]="{'group': groupViewData.id }">
-          <i class="fa fa-plus"></i>Thêm thành viên
+          <i class="fa fa-plus"></i>{{ 'Group_Component.Create_Group_Component.GroupView.btncreateMember'| translate}}
         </button>
         <button mat-menu-item *midasHasPermission="'ASSOCIATECLIENTS_GROUP'" (click)="doAction('Transfer Clients')">
-          <i class="fa fa-exchange"></i>Chuyển thành viên
+          <i class="fa fa-exchange"></i>{{ 'Group_Component.Create_Group_Component.GroupView.btnTransferMember'| translate}}
         </button>
         <button mat-menu-item *midasHasPermission="'TRANSFERCLIENTS_GROUP'" (click)="doAction('Manage Members')">
-          <i class="fa fa-user"></i>Quản lý thành viên
+          <i class="fa fa-user"></i>{{ 'Group_Component.Create_Group_Component.GroupView.btnManageMembers'| translate}}
         </button>
 
       </mat-menu>
       <mat-menu #AccountApplications="matMenu">
         <button mat-menu-item *midasHasPermission="'CREATE_SAVINGSACCOUNT'"
-              [routerLink]="['savings-accounts', 'create']">Tạo tài khoản đại lý
+              [routerLink]="['savings-accounts', 'create']">{{ 'Group_Component.Create_Group_Component.GroupView.btnCreateSavingAccount'| translate}}
       </button>
     </mat-menu>
-      <button mat-raised-button [matMenuTriggerFor]="More">Tính năng khác</button>
+      <button mat-raised-button [matMenuTriggerFor]="More">{{ 'Group_Component.Create_Group_Component.GroupView.btnMore'| translate}}</button>
       <mat-menu #More="matMenu">
         <!-- <span *ngIf="groupViewData.collectionMeetingCalendar">
             <button mat-menu-item *midasHasPermission="'SAVEORUPDATEATTENDANCE_MEETING'"
                     (click)="doAction('Attendance')">Attendance</button>
         </span> -->
         <span *ngIf="!groupViewData.staffId">
-            <button mat-menu-item *midasHasPermission="'ASSIGNSTAFF_GROUP'" (click)="doAction('Assign Staff')">Phân bổ nhân viên</button></span>
+            <button mat-menu-item *midasHasPermission="'ASSIGNSTAFF_GROUP'" (click)="doAction('Assign Staff')">{{ 'Group_Component.Create_Group_Component.GroupView.btnAssignStaff'| translate}}</button></span>
         <span *ngIf="groupViewData.staffId">
-            <button mat-menu-item *midasHasPermission="'UNASSIGNSTAFF_GROUP'" (click)="doAction('Unassign Staff')">Bỏ phẩn bổ nhân viên</button></span>
+            <button mat-menu-item *midasHasPermission="'UNASSIGNSTAFF_GROUP'" (click)="doAction('Unassign Staff')">{{ 'Group_Component.Create_Group_Component.GroupView.btnUnassignStaff'| translate}}</button></span>
         <!-- <span
           *ngIf="!(groupViewData.centerId || groupViewData.collectionMeetingCalendar) && groupViewData.status.value==='Active'">
             <button mat-menu-item *midasHasPermission="'CREATE_MEETING'" (click)="doAction('Attach Meeting')">Attach Meeting</button>
         </span> -->
-        <button mat-menu-item *midasHasPermission="'CLOSE_GROUP'" (click)="doAction('Close')">Đóng mã đại lý</button>
-        <button mat-menu-item *midasHasPermission="'DELETE_GROUP'" (click)="doAction('Delete')">Xóa mã đại lý</button>
+        <button mat-menu-item *midasHasPermission="'CLOSE_GROUP'" (click)="doAction('Close')">{{ 'Group_Component.Create_Group_Component.GroupView.btnCloseGroup'| translate}}</button>
+        <button mat-menu-item *midasHasPermission="'DELETE_GROUP'" (click)="doAction('Delete')">{{ 'Group_Component.Create_Group_Component.GroupView.btnDeleteGroup'| translate}}</button>
       </mat-menu>
 
     </mat-card-actions>
@@ -144,16 +144,16 @@
     <nav mat-tab-nav-bar class="navigation-tabs">
       <a mat-tab-link [routerLink]="['./general']" routerLinkActive #general="routerLinkActive"
          [active]="general.isActive">
-        Thông tin chung
+         {{ 'Group_Component.Create_Group_Component.GroupView.general'| translate}}
       </a>
       <a mat-tab-link [routerLink]="['./notes']" *midasHasPermission="'READ_GROUPNOTE'" routerLinkActive
          #notes="routerLinkActive"
          [active]="notes.isActive">
-        Ghi chú
+         {{ 'Group_Component.Create_Group_Component.GroupView.notes'| translate}}
       </a>
       <a mat-tab-link [routerLink]="['./committee']" routerLinkActive #committee="routerLinkActive"
          [active]="committee.isActive">
-        Chủ sở hữu
+         {{ 'Group_Component.Create_Group_Component.GroupView.committee'| translate}}
       </a>
       <span *ngFor="let groupDatatable of groupDatatables">
         <a mat-tab-link *midasHasPermission="'READ_' + groupDatatable.registeredTableName"

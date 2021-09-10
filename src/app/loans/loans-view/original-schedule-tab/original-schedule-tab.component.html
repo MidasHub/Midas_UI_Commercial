@@ -3,43 +3,43 @@
   <table mat-table [dataSource]="originalScheduleDetails.periods" matSort>
 
     <ng-container matColumnDef="date">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Date </th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> {{'Loans.View.OriginalSchedule.Date'| translate }} </th>
       <td mat-cell *matCellDef="let ele"> {{ ele.dueDate | date}} </td>
-      <td mat-footer-cell *matFooterCellDef> <b> Total</b> </td>
+      <td mat-footer-cell *matFooterCellDef> <b> {{'Loans.View.OriginalSchedule.Total'| translate }}</b> </td>
     </ng-container>
 
     <ng-container matColumnDef="principalDue">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Principal Due </th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> {{'Loans.View.OriginalSchedule.principalDue'| translate }} </th>
       <td mat-cell *matCellDef="let ele"> {{ ele.principalDue | number }} </td>
       <td mat-footer-cell *matFooterCellDef> <b> {{ originalScheduleDetails.totalPrincipalExpected | number }} </b> </td>
     </ng-container>
 
     <ng-container matColumnDef="balanceOfLoan">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Balance Of Loan </th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> {{'Loans.View.OriginalSchedule.balanceOfLoan'| translate }} </th>
       <td mat-cell *matCellDef="let ele"> {{ ele.principalLoanBalanceOutstanding | number }} </td>
       <td mat-footer-cell *matFooterCellDef> &nbsp; </td>
     </ng-container>
 
     <ng-container matColumnDef="interest">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Interest </th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> {{'Loans.View.OriginalSchedule.Interest'| translate }} </th>
       <td mat-cell *matCellDef="let ele"> {{ ele.interestOriginalDue | number}} </td>
       <td mat-footer-cell *matFooterCellDef> <b> {{ originalScheduleDetails.totalInterestCharged | number }} </b> </td>
     </ng-container>
 
     <ng-container matColumnDef="fees">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Fees </th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> {{'Loans.View.OriginalSchedule.Fees'| translate }} </th>
       <td mat-cell *matCellDef="let ele"> {{ ele.feeChargesDue | number}} </td>
       <td mat-footer-cell *matFooterCellDef> <b> {{ originalScheduleDetails.totalFeeChargesCharged | number }} </b> </td>
     </ng-container>
 
     <ng-container matColumnDef="penalties">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Penalties </th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> {{'Loans.View.OriginalSchedule.Penalties'| translate }} </th>
       <td mat-cell *matCellDef="let ele"> {{ ele.penaltyChargesDue | number}} </td>
       <td mat-footer-cell *matFooterCellDef> <b> {{ originalScheduleDetails.totalPenaltyChargesCharged | number }} </b> </td>
     </ng-container>
 
     <ng-container matColumnDef="outstanding">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Outstanding </th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> {{'Loans.View.OriginalSchedule.Outstanding'| translate }} </th>
       <td mat-cell *matCellDef="let ele"> {{ ele.totalOutstandingForPeriod | number}} </td>
       <td mat-footer-cell *matFooterCellDef> <b> {{ originalScheduleDetails.totalRepaymentExpected | number }} </b> </td>
     </ng-container>
@@ -51,15 +51,15 @@
 
     <!-- Header row second group -->
     <ng-container matColumnDef="header-amount">
-      <th mat-header-cell *matHeaderCellDef [attr.colspan]="2"> Loan Amount and Balance </th>
+      <th mat-header-cell *matHeaderCellDef [attr.colspan]="2"> {{'Loans.View.OriginalSchedule.LoanAmountBalance'| translate }} </th>
     </ng-container>
 
     <ng-container matColumnDef="header-total-cost">
-      <th mat-header-cell *matHeaderCellDef [attr.colspan]="3"> Total Cost of Loan </th>
+      <th mat-header-cell *matHeaderCellDef [attr.colspan]="3"> {{'Loans.View.OriginalSchedule.TotalCostLoan'| translate }}</th>
     </ng-container>
 
     <ng-container matColumnDef="header-installment-totals">
-      <th mat-header-cell *matHeaderCellDef [attr.colspan]="1"> Installment Totals </th>
+      <th mat-header-cell *matHeaderCellDef [attr.colspan]="1"> {{'Loans.View.OriginalSchedule.InstallmentTotals'| translate }} </th>
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="['header', 'header-amount', 'header-total-cost', 'header-installment-totals']"></tr>

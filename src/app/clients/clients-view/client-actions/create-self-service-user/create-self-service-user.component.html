@@ -9,86 +9,89 @@
                 <div div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
 
                     <mat-form-field fxFlex="48%">
-                        <mat-label> User Name </mat-label>
+                        <mat-label> {{'Client_Component.ViewClient.Actions.CreateSelf.username' |translate}} </mat-label>
                         <input matInput required formControlName="username">
                         <mat-error *ngIf="createSelfServiceForm.controls.username.hasError('required')">
-                            User Name is <strong>required</strong>
+                          {{'Client_Component.ViewClient.Actions.CreateSelf.errusername' |translate}}<strong>{{'Client_Component.ViewClient.Actions.strongRequired' |translate}}</strong>
                         </mat-error>
                     </mat-form-field>
 
                     <mat-form-field fxFlex="48%">
-                        <mat-label> First Name </mat-label>
+                        <mat-label> {{'Client_Component.ViewClient.Actions.CreateSelf.firstname' |translate}} </mat-label>
                         <input matInput required formControlName="firstname">
                         <mat-error *ngIf="createSelfServiceForm.controls.firstname.hasError('required')">
-                            First Name is <strong>required</strong>
+                          {{'Client_Component.ViewClient.Actions.CreateSelf.errfirstname' |translate}}<strong>{{'Client_Component.ViewClient.Actions.strongRequired' |translate}}</strong>
                         </mat-error>
                     </mat-form-field>
 
                     <mat-form-field fxFlex="48%">
-                        <mat-label> Last Name </mat-label>
+                        <mat-label> {{'Client_Component.ViewClient.Actions.CreateSelf.lastname' |translate}} </mat-label>
                         <input matInput required formControlName="lastname">
                         <mat-error *ngIf="createSelfServiceForm.controls.lastname.hasError('required')">
-                            Last Name is <strong>required</strong>
+                          {{'Client_Component.ViewClient.Actions.CreateSelf.errlastname' |translate}}<strong>{{'Client_Component.ViewClient.Actions.strongRequired' |translate}}</strong>
                         </mat-error>
                     </mat-form-field>
 
                     <mat-form-field fxFlex="48%">
-                        <mat-label> Email </mat-label>
+                        <mat-label> {{'Client_Component.ViewClient.Actions.CreateSelf.email' |translate}} </mat-label>
                         <input matInput required formControlName="email">
                         <mat-error *ngIf="createSelfServiceForm.controls.email.hasError('required')">
-                            Email is <strong>required</strong>
+                          {{'Client_Component.ViewClient.Actions.CreateSelf.erremail' |translate}}<strong>{{'Client_Component.ViewClient.Actions.strongRequired' |translate}}</strong>
                         </mat-error>
                         <mat-error *ngIf="createSelfServiceForm.controls.email.hasError('email')">
-                            Email should be a  <strong>valid</strong> email.
+                          {{'Client_Component.ViewClient.Actions.CreateSelf.Emailshouldbe' |translate}}
+                          <strong>{{'Client_Component.ViewClient.Actions.CreateSelf.strongValid' |translate}}</strong>
+                          {{'Client_Component.ViewClient.Actions.CreateSelf.noteEmail' |translate}}
                         </mat-error>
                     </mat-form-field>
 
                     <mat-checkbox labelPosition="before" formControlName="sendPasswordToEmail" fxFlex="48%">
-                        Auto Generate Password
+                      {{'Client_Component.ViewClient.Actions.CreateSelf.AutoGeneratePassword' |translate}}
                     </mat-checkbox>
 
                     <div fxFlex="48%" fxLayoutGap="5px" fxLayout="row">
 
                         <mat-checkbox labelPosition="before" formControlName="passwordNeverExpires">
-                            Override Password Expire Policy ?
+                          {{'Client_Component.ViewClient.Actions.CreateSelf.OverridePasswordExpirePolicy' |translate}}
                         </mat-checkbox>
-    
+
                         <i class="fa fa-question-circle fa fa-align-left" title="Determines if passwords do not expire for this user even if global configuration for password expiry is enabled"></i>
 
                     </div>
 
                     <mat-form-field fxFlex="48%" *ngIf="!hidePasswordField">
-                        <mat-label> Password </mat-label>
+                        <mat-label> {{'Client_Component.ViewClient.Actions.CreateSelf.password' |translate}} </mat-label>
                         <input matInput required formControlName="password" type="password">
                         <mat-error *ngIf="createSelfServiceForm.controls.password.hasError('required')">
-                            Password is <strong>required</strong>
+                          {{'Client_Component.ViewClient.Actions.CreateSelf.errpassword' |translate}}<strong>{{'Client_Component.ViewClient.Actions.strongRequired' |translate}}</strong>
                         </mat-error>
                     </mat-form-field>
 
                     <mat-form-field fxFlex="48%" *ngIf="!hidePasswordField">
-                        <mat-label> Repeat Password </mat-label>
+                        <mat-label> {{'Client_Component.ViewClient.Actions.CreateSelf.repeatPassword' |translate}} </mat-label>
                         <input matInput required formControlName="repeatPassword" type="password">
                         <mat-error *ngIf="createSelfServiceForm.controls.repeatPassword.hasError('required')">
-                            Repeat password is <strong>required</strong>
+                          {{'Client_Component.ViewClient.Actions.CreateSelf.errrepeatPassword' |translate}}<strong>{{'Client_Component.ViewClient.Actions.strongRequired' |translate}}</strong>
                         </mat-error>
                         <mat-error *ngIf="createSelfServiceForm.controls.repeatPassword.hasError('notequal')">
-                            Passwords should be <strong>matched</strong>
+                          {{'Client_Component.ViewClient.Actions.CreateSelf.Passwordsshouldbe' |translate}}
+                          <strong>{{'Client_Component.ViewClient.Actions.CreateSelf.matched' |translate}}</strong>
                         </mat-error>
                     </mat-form-field>
 
                     <mat-form-field fxFlex="48%">
-                        <mat-label> Status </mat-label>
+                        <mat-label> {{'Client_Component.ViewClient.Actions.CreateSelf.status' |translate}} </mat-label>
                         <input matInput formControlName="status">
                     </mat-form-field>
 
                 </div>
-        
+
                 <mat-card-actions fxLayoutGap="5px" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center">
-                  <button type="button" mat-raised-button [routerLink]="['../../']">Cancel</button>
-                  <button mat-raised-button color="primary" [disabled]="!createSelfServiceForm.valid">Activate Self Service User</button>
+                  <button type="button" mat-raised-button [routerLink]="['../../']">{{ "ShareButton.CancelEng" | translate }}</button>
+                  <button mat-raised-button color="primary" [disabled]="!createSelfServiceForm.valid">{{'Client_Component.ViewClient.Actions.CreateSelf.btnActivate' |translate}}</button>
                   <i class="fa fa-question-circle fa-2x" title="Activate Self Service User Help"></i>
                 </mat-card-actions>
-        
+
             </mat-card-content>
 
         </form>

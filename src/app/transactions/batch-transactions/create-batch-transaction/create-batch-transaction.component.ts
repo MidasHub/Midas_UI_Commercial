@@ -486,7 +486,7 @@ export class CreateBatchTransactionComponent implements OnInit {
         .mappingInvoiceWithTransaction(form.data.binCodeInfo.cardType, form.data.binCodeInfo.bankCode, documentKey, documentId, amount, result)
         .subscribe((result2: any) => {
           if (result2.status !== 200) {
-            if (result2.status === 401) {
+            if (result2.statusCode == 401) {
               if (result2.error === 'Unauthorize with Midas') {
                 this.alertService.alert({
                   message: 'Phiên làm việc hết hạn vui lòng đăng nhập lại để tiếp tục',
@@ -496,8 +496,8 @@ export class CreateBatchTransactionComponent implements OnInit {
               }
             }
 
-            if (result2.statusCode = 666) {
-              if (typeof result2.error !== 'undefined' && result2.error !== '') {
+            if (result2.statusCode == 666) {
+              if (typeof result2.error !== "undefined" && result2.error !== "") {
                 this.alertService.alert({
                   message: `${result2.error}`,
                   msgClass: 'cssDanger',
@@ -664,7 +664,7 @@ export class CreateBatchTransactionComponent implements OnInit {
     const traceNo = form.get('tid').value;
     const batchNo = form.get('batchNo').value;
 
-    if (!traceNo || !batchNo || traceNo.trim().length === 0 || batchNo.trim().length === 0) {
+    if (!traceNo || !batchNo || String(traceNo).trim().length == 0 || String(batchNo).trim().length == 0) {
       messageConfirm = `Hệ thống ghi nhận đây là giao dịch treo (do không có mã lô và mã hóa đơn), bạn chắc chắn muốn lưu giao dịch?`;
     }
 

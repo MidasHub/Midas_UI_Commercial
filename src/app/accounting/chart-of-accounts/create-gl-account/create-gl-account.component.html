@@ -9,47 +9,47 @@
         <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
 
           <mat-form-field fxFlex="48%">
-            <mat-label>Account Type</mat-label>
+            <mat-label>{{ "Accounting.ChartOfAccounts.CreateGlAccountComponent.type" | translate }}</mat-label>
             <mat-select required formControlName="type">
               <mat-option *ngFor="let accountType of accountTypeData" [value]="accountType.id">
                 {{ accountType.value }}
               </mat-option>
             </mat-select>
             <mat-error *ngIf="glAccountForm.controls.type.hasError('required')">
-              Account Type is <strong>required</strong>
+              {{ "Accounting.ChartOfAccounts.CreateGlAccountComponent.errtype" | translate }} <strong>{{ "Accounting.strongRequire" | translate }}</strong>
             </mat-error>
           </mat-form-field>
 
           <mat-form-field fxFlex="48%">
-            <mat-label>Account Name</mat-label>
+            <mat-label>{{ "Accounting.ChartOfAccounts.CreateGlAccountComponent.name" | translate }}</mat-label>
             <input matInput required formControlName="name">
             <mat-error *ngIf="glAccountForm.controls.name.hasError('required')">
-              Account Name is <strong>required</strong>
+              {{ "Accounting.ChartOfAccounts.CreateGlAccountComponent.errname" | translate }}<strong>{{ "Accounting.strongRequire" | translate }}</strong>
             </mat-error>
           </mat-form-field>
 
           <mat-form-field fxFlex="48%">
-            <mat-label>Account Usage</mat-label>
+            <mat-label>{{ "Accounting.ChartOfAccounts.CreateGlAccountComponent.usage" | translate }}</mat-label>
             <mat-select required formControlName="usage">
               <mat-option *ngFor="let accountUsage of accountUsageData" [value]="accountUsage.id">
                 {{ accountUsage.value }}
               </mat-option>
             </mat-select>
             <mat-error *ngIf="glAccountForm.controls.usage.hasError('required')">
-              Account Usage is <strong>required</strong>
+              {{ "Accounting.ChartOfAccounts.CreateGlAccountComponent.errusage" | translate }}<strong>{{ "Accounting.strongRequire" | translate }}</strong>
             </mat-error>
           </mat-form-field>
 
           <mat-form-field fxFlex="48%">
-            <mat-label>GL Code</mat-label>
+            <mat-label>{{ "Accounting.ChartOfAccounts.CreateGlAccountComponent.glCode" | translate }}</mat-label>
             <input matInput required formControlName="glCode">
             <mat-error *ngIf="glAccountForm.controls.glCode.hasError('required')">
-              GL Code is <strong>required</strong>
+              {{ "Accounting.ChartOfAccounts.CreateGlAccountComponent.errglCode" | translate }}<strong>{{ "Accounting.strongRequire" | translate }}</strong>
             </mat-error>
           </mat-form-field>
 
           <mat-form-field fxFlex="48%">
-            <mat-label>Parent</mat-label>
+            <mat-label>{{ "Accounting.ChartOfAccounts.CreateGlAccountComponent.parentId" | translate }}</mat-label>
             <mat-select formControlName="parentId">
               <mat-option *ngFor="let parent of parentData" [value]="parent.id">
                 {{ parent.name }}
@@ -58,7 +58,7 @@
           </mat-form-field>
 
           <mat-form-field fxFlex="28%">
-            <mat-label>Tag</mat-label>
+            <mat-label>{{ "Accounting.ChartOfAccounts.CreateGlAccountComponent.tagId" | translate }}</mat-label>
             <mat-select formControlName="tagId">
               <mat-option *ngFor="let tag of tagData" [value]="tag.id">
                 {{ tag.name }}
@@ -68,12 +68,12 @@
 
           <div fxFlex="18%" class="manual-entries-allowed-wrapper">
             <mat-checkbox labelPosition="before" required formControlName="manualEntriesAllowed" class="manual-entries-allowed">
-              Manual Entries Allowed
+              {{ "Accounting.ChartOfAccounts.CreateGlAccountComponent.manualEntriesAllowed" | translate }}
             </mat-checkbox>
           </div>
 
           <mat-form-field fxFlex="98%">
-            <mat-label>Description</mat-label>
+            <mat-label>{{ "Accounting.ChartOfAccounts.CreateGlAccountComponent.description" | translate }}</mat-label>
             <textarea matInput formControlName="description"></textarea>
           </mat-form-field>
 
@@ -82,8 +82,8 @@
       </mat-card-content>
 
       <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
-        <button type="button" mat-raised-button [routerLink]="[cancelRoute]">Cancel</button>
-        <button mat-raised-button color="primary" [disabled]="!glAccountForm.valid" *midasHasPermission="'CREATE_GLACCOUNT'">Submit</button>
+        <button type="button" mat-raised-button [routerLink]="[cancelRoute]">{{ "ShareButton.CancelEng" | translate }}</button>
+        <button mat-raised-button color="primary" [disabled]="!glAccountForm.valid" *midasHasPermission="'CREATE_GLACCOUNT'">{{ "ShareButton.Submit" | translate }}</button>
       </mat-card-actions>
 
     </form>

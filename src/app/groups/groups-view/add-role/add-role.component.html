@@ -9,7 +9,7 @@
         <div fxLayout="column">
 
           <mat-form-field>
-            <mat-label>Chủ sở hữu của Đại lý</mat-label>
+            <mat-label>{{ 'Group_Component.Create_Group_Component.GroupView.AddRole.clientId'| translate}}</mat-label>
             <mat-select formControlName="clientId">
               <mat-option *ngFor="let client of clientMemberData" [value]="client.id">
                 {{ client.displayName }}
@@ -17,13 +17,14 @@
             </mat-select>
             <mat-error *ngIf="groupsAddRoleForm.controls.clientId.hasError('required')">
               <!-- Client Member is <strong>required</strong> -->
-              <strong>Yêu cầu: </strong> Nhập thông tin Chủ sở hữu của Đại lý
+              <strong>{{ 'Group_Component.Create_Group_Component.GroupView.AddRole.strongRequire'| translate}}</strong>
+              {{ 'Group_Component.Create_Group_Component.GroupView.AddRole.alert'| translate}}
             </mat-error>
           </mat-form-field>
 
           <mat-form-field>
             <!-- <mat-label>Role</mat-label> -->
-            <mat-label>Vai trò</mat-label>
+            <mat-label>{{ 'Group_Component.Create_Group_Component.GroupView.AddRole.role'| translate}}</mat-label>
             <mat-select formControlName="role">
               <mat-option *ngFor="let role of roleData" [value]="role.id">
                 {{ role.name }}
@@ -31,7 +32,8 @@
             </mat-select>
             <mat-error *ngIf="groupsAddRoleForm.controls.role.hasError('required')">
               <!-- Role is <strong>required</strong> -->
-              <strong>Yêu cầu:</strong> Nhập vai trò của Chủ sở hữu
+              <strong>{{ 'Group_Component.Create_Group_Component.GroupView.AddRole.strongRequire'| translate}}</strong>
+              {{ 'Group_Component.Create_Group_Component.GroupView.AddRole.alert2'| translate}}
             </mat-error>
           </mat-form-field>
 
@@ -40,9 +42,9 @@
       </mat-card-content>
 
       <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
-        <button type="button" mat-raised-button [routerLink]="['../']">Hủy</button>
+        <button type="button" mat-raised-button [routerLink]="['../']">{{ 'Group_Component.Create_Group_Component.GroupView.AddRole.btnCancel'| translate}}</button>
         <button mat-raised-button color="primary" [disabled]="!groupsAddRoleForm.valid"
-          *midasHasPermission="'ASSIGNROLE_GROUP'">Chấp nhận</button>
+          *midasHasPermission="'ASSIGNROLE_GROUP'">{{ 'Group_Component.Create_Group_Component.GroupView.AddRole.btnAccept'| translate}}</button>
       </mat-card-actions>
 
     </form>

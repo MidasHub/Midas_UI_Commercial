@@ -8,7 +8,7 @@
 
         <mat-card-header class="header">
           <h3><fa-icon icon="bolt"></fa-icon>
-          &nbsp;&nbsp; Recent Activities</h3>
+          &nbsp;&nbsp; {{'Home_Component.Dashboard.RecentActivities'| translate }}</h3>
         </mat-card-header>
 
         <mat-card-content>
@@ -24,7 +24,7 @@
 
         <mat-card-header class="header">
           <h3><fa-icon icon="laptop"></fa-icon>
-          &nbsp;&nbsp; Frequent Activities</h3>
+          &nbsp;&nbsp; {{'Home_Component.Dashboard.FrequentActivities'| translate }}</h3>
         </mat-card-header>
 
         <mat-card-content>
@@ -33,7 +33,7 @@
             [routerLink]="activity"> {{ activity | urlToString }} </button>
           </mat-action-list>
         </mat-card-content>
-        
+
       </mat-card>
 
       <mifosx-amount-disbursed-pie></mifosx-amount-disbursed-pie>
@@ -47,7 +47,7 @@
       <mifosx-amount-collected-pie></mifosx-amount-collected-pie>
 
     </div>
-    
+
   </mat-card>
 
 </div>

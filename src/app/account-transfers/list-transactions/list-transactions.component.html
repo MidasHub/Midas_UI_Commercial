@@ -7,7 +7,7 @@
       <div fxLayout="row wrap" class="content">
 
         <div fxFlex="25%" fxFlex.lt-md="50%" class="header">
-          From Account
+          {{ "AccountTransfers.ListTransactions.fromAccount" | translate }}
         </div>
 
         <div fxFlex="25%" fxFlex.lt-md="50%">
@@ -15,7 +15,7 @@
         </div>
 
         <div fxFlex="25%" fxFlex.lt-md="50%" class="header">
-          To Account
+          {{ "AccountTransfers.ListTransactions.toAccount" | translate }}
         </div>
 
         <div fxFlex="25%" fxFlex.lt-md="50%">
@@ -23,7 +23,7 @@
         </div>
 
         <div fxFlex="25%" fxFlex.lt-md="50%" class="header">
-          Destination
+          {{ "AccountTransfers.ListTransactions.Destination" | translate }}
         </div>
 
         <div fxFlex="25%" fxFlex.lt-md="50%">
@@ -43,22 +43,22 @@
   <table mat-table [dataSource]="dataSource">
 
     <ng-container matColumnDef="transactionDate">
-      <th mat-header-cell *matHeaderCellDef> Transaction Date </th>
+      <th mat-header-cell *matHeaderCellDef> {{ "AccountTransfers.ListTransactions.table.transactionDate" | translate }} </th>
       <td mat-cell *matCellDef="let transaction"> {{ transaction.transferDate | date }} </td>
     </ng-container>
 
     <ng-container matColumnDef="amount">
-      <th mat-header-cell *matHeaderCellDef> Amount </th>
+      <th mat-header-cell *matHeaderCellDef> {{ "AccountTransfers.ListTransactions.table.amount" | translate }} </th>
       <td mat-cell *matCellDef="let transaction"> {{ transaction.transferAmount | money}} </td>
     </ng-container>
 
     <ng-container matColumnDef="notes">
-      <th mat-header-cell *matHeaderCellDef> Notes </th>
+      <th mat-header-cell *matHeaderCellDef> {{ "AccountTransfers.ListTransactions.table.notes" | translate }} </th>
       <td mat-cell *matCellDef="let transaction"> {{ transaction.transferDescription }} </td>
     </ng-container>
 
     <ng-container matColumnDef="reversed">
-      <th mat-header-cell *matHeaderCellDef> Reversed </th>
+      <th mat-header-cell *matHeaderCellDef> {{ "AccountTransfers.ListTransactions.table.reversed" | translate }} </th>
       <td mat-cell *matCellDef="let transaction"> {{ transaction.reversed ? 'Yes' : 'No' }} </td>
     </ng-container>
 

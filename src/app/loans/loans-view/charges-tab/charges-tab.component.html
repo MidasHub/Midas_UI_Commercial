@@ -3,55 +3,55 @@
     <table mat-table [dataSource]="dataSource" matSort>
 
       <ng-container matColumnDef="name">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{'Loans.View.Charges.name'| translate }} </th>
         <td mat-cell *matCellDef="let charge"> {{ charge.name }} </td>
       </ng-container>
 
       <ng-container matColumnDef="feepenalty">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Fee/Penalty </th>
-        <td mat-cell *matCellDef="let charge"> 
-          <span *ngIf="charge.penalty">Penalty</span>  
-          <span *ngIf="!charge.penalty">Fee</span>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{'Loans.View.Charges.feepenalty'| translate }} </th>
+        <td mat-cell *matCellDef="let charge">
+          <span *ngIf="charge.penalty">{{'Loans.View.Charges.humanReadable'| translate }}Penalty</span>
+          <span *ngIf="!charge.penalty">{{'Loans.View.Charges.humanReadable'| translate }}Fee</span>
         </td>
       </ng-container>
 
       <ng-container matColumnDef="paymentdueat">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Payment due at </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{'Loans.View.Charges.paymentdueat'| translate }} </th>
         <td mat-cell *matCellDef="let charge"> {{ charge.chargeTimeType.value }} </td>
       </ng-container>
 
       <ng-container matColumnDef="dueasof">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Due as of </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{'Loans.View.Charges.dueasof'| translate }} </th>
         <td mat-cell *matCellDef="let charge"> {{ charge.dueDate| date }} </td>
       </ng-container>
 
       <ng-container matColumnDef="calculationtype">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Calculation Type </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{'Loans.View.Charges.calculationtype'| translate }} </th>
         <td mat-cell *matCellDef="let charge"> {{ charge.chargeCalculationType.value }} </td>
       </ng-container>
 
       <ng-container matColumnDef="due">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Due </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{'Loans.View.Charges.due'| translate }} </th>
         <td mat-cell *matCellDef="let charge"> {{ charge.currency.displaySymbol }}{{ charge.amount| number }} </td>
       </ng-container>
 
       <ng-container matColumnDef="paid">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Paid </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{'Loans.View.Charges.paid'| translate }} </th>
         <td mat-cell *matCellDef="let charge"> {{ charge.currency.displaySymbol }}{{ charge.amountPaid| number }} </td>
       </ng-container>
 
       <ng-container matColumnDef="waived">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Waived </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{'Loans.View.Charges.waived'| translate }} </th>
         <td mat-cell *matCellDef="let charge"> {{ charge.currency.displaySymbol }}{{ charge.amountWaived| number }} </td>
       </ng-container>
 
       <ng-container matColumnDef="outstanding">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Outstanding </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{'Loans.View.Charges.outstanding'| translate }} </th>
         <td mat-cell *matCellDef="let charge"> {{ charge.currency.displaySymbol }}{{ charge.amountOutstanding| number }} </td>
       </ng-container>
 
       <ng-container matColumnDef="actions">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Actions </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{'Loans.View.Charges.actions'| translate }} </th>
         <td mat-cell *matCellDef="let charge">
           <span *ngIf="status === 'Submitted and pending approval'">
             <button class="account-action-button" mat-raised-button color="primary" matTooltip="Edit Charge"

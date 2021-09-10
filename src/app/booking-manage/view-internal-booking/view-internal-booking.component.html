@@ -1,12 +1,12 @@
 <mat-card class="mat-elevation-z20 container-custom">
   <mat-tab-group (selectedTabChange)="changeTabTransaction($event)">
-    <mat-tab label="Booking nội bộ">
+    <mat-tab [label]="'BookingManage.ViewInternalBooking.tab1'| translate">
       <midas-internal-booking-tab></midas-internal-booking-tab>
     </mat-tab>
-    <mat-tab label="Booking tạm ứng">
+    <mat-tab [label]="'BookingManage.ViewInternalBooking.tab2'| translate">
       <midas-roll-term-schedule-booking-tab></midas-roll-term-schedule-booking-tab>
     </mat-tab>
-    <mat-tab *midasHasPermission="'ALL_FUNCTIONS'" label="Booking chi nhánh">
+    <mat-tab *midasHasPermission="'ALL_FUNCTIONS'" [label]="'BookingManage.ViewInternalBooking.tab3'| translate">
       <midas-branch-booking-tab></midas-branch-booking-tab>
     </mat-tab>
   </mat-tab-group>

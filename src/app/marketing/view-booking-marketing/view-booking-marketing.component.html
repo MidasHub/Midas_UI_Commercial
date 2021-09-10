@@ -2,7 +2,7 @@
 
   <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
     <mat-form-field fxFlex="20%">
-      <mat-label>Chọn campaign</mat-label>
+      <mat-label>{{'Marketing.ViewBookingMarketing.campainName'| translate }}</mat-label>
       <mat-select [formControl]="filterCampaign">
         <mat-option *ngFor="let campaign of campaigns" [value]="campaign">
           {{ campaign.campaign.campainName }}
@@ -15,7 +15,7 @@
         <div fxLayout="column">
           <p
             style="font-size: 18px; font-weight: bold; margin: 2px;">{{campaign.campaign.timeNotify | date:'HH:mm'}}</p>
-          <span>Thông báo ({{campaign.campaign.timeNotify | date:'dd-MM-yyyy'}})</span>
+          <span>{{'Marketing.ViewBookingMarketing.timeNotify'| translate }}({{campaign.campaign.timeNotify | date:'dd-MM-yyyy'}})</span>
         </div>
       </div>
     </div>
@@ -25,7 +25,7 @@
         <div fxLayout="column">
           <p
             style="font-size: 18px; font-weight: bold; margin: 2px;">{{campaign.campaign.fromDate | date:'HH:mm'}}</p>
-          <span>Áp dụng ({{campaign.campaign.fromDate | date:'dd-MM-yyyy'}})</span>
+          <span>{{'Marketing.ViewBookingMarketing.fromDate'| translate }}({{campaign.campaign.fromDate | date:'dd-MM-yyyy'}})</span>
         </div>
       </div>
     </div>
@@ -35,7 +35,7 @@
         <div fxLayout="column">
           <p
             style="font-size: 18px; font-weight: bold; margin: 2px;">{{campaign.campaign.toDate | date:'HH:mm'}}</p>
-          <span>Kết thúc ({{campaign.campaign.toDate | date:'dd-MM-yyyy'}})</span>
+          <span>{{'Marketing.ViewBookingMarketing.toDate'| translate }}({{campaign.campaign.toDate | date:'dd-MM-yyyy'}})</span>
         </div>
       </div>
     </div>
@@ -45,13 +45,13 @@
         <div fxLayout="column">
           <p
             style="font-size: 18px; font-weight: bold; margin: 2px;">{{campaign.campaign.secondRemain / 60}}'</p>
-          <span>Kéo dài (phút)</span>
+          <span>{{'Marketing.ViewBookingMarketing.secondRemain'| translate }}</span>
         </div>
       </div>
     </div>
   </div>
   <div>
-    <h3>Thông tin chi tiết</h3>
+    <h3>{{'Marketing.ViewBookingMarketing.details'| translate }}</h3>
     <div *ngIf="campaign" fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
       <div fxFlex="20%" fxLayout="column">
         <div fxFlex="30%" *ngIf="campaign">
@@ -60,7 +60,7 @@
             <div fxLayout="column">
               <p
                 style="font-size: 18px; font-weight: bold; margin: 2px; color: #1fb050;">{{campaign.campaign.budget | money}}</p>
-              <span>Tổng hạn mức</span>
+              <span>{{'Marketing.ViewBookingMarketing.budget'| translate }}</span>
             </div>
           </div>
         </div>
@@ -70,7 +70,7 @@
             <div fxLayout="column">
               <p
                 style="font-size: 18px; font-weight: bold; margin: 2px; color: #1fb050;">{{sumBooking | money}}</p>
-              <span>Tổng hạn mức đã đăng kí</span>
+              <span>{{'Marketing.ViewBookingMarketing.sumBooking'| translate }}</span>
             </div>
           </div>
         </div>
@@ -79,8 +79,8 @@
             <img src="assets/images/icons/fast-delivery.svg">
             <div fxLayout="column">
               <p
-                style="font-size: 18px; font-weight: bold; margin: 2px;">Ngay</p>
-              <span>Chính sách tiền</span>
+                style="font-size: 18px; font-weight: bold; margin: 2px;">{{'Marketing.ViewBookingMarketing.now'| translate }}</p>
+              <span>{{'Marketing.ViewBookingMarketing.first'| translate }}</span>
             </div>
           </div>
         </div>
@@ -89,13 +89,13 @@
             <img src="assets/images/icons/delay.svg">
             <div fxLayout="column">
               <p
-                style="font-size: 18px; font-weight: bold; margin: 2px;">Chờ  {{campaign.campaign.cashRule}} phút</p>
-              <span>Chính sách tiền</span>
+                style="font-size: 18px; font-weight: bold; margin: 2px;">{{'Marketing.ViewBookingMarketing.wait'| translate }} {{campaign.campaign.cashRule}}{{'Marketing.ViewBookingMarketing.mins'| translate }}</p>
+              <span>{{'Marketing.ViewBookingMarketing.cashRule'| translate }}</span>
             </div>
           </div>
         </div>
         <button mat-raised-button *ngIf="campaign" style="float: right;"
-                [routerLink]="['/marketing/booking',campaign.campaign.refid]">Edit
+                [routerLink]="['/marketing/booking',campaign.campaign.refid]">{{'Marketing.ViewBookingMarketing.btnEdit'| translate }}
         </button>
       </div>
       <div fxFlex="75%">
@@ -104,7 +104,7 @@
           <!-- Name Column -->
           <ng-container matColumnDef="cardType">
             <th mat-header-cell *matHeaderCellDef
-            >Thẻ
+            >{{'Marketing.ViewBookingMarketing.cardType'| translate }}
             </th>
             <td mat-cell *matCellDef="let row"> {{row.cardType}} </td>
           </ng-container>
@@ -112,7 +112,7 @@
           <!-- Account no Column -->
           <ng-container matColumnDef="costRate">
             <th mat-header-cell *matHeaderCellDef
-            > Phí POS
+            > {{'Marketing.ViewBookingMarketing.costRate'| translate }}
             </th>
             <td mat-cell fxHide fxShow.gt-md *matCellDef="let row"> {{row.costRate}} </td>
           </ng-container>
@@ -120,7 +120,7 @@
           <!-- External ID Column -->
           <ng-container matColumnDef="cogsRate">
             <th mat-header-cell d *matHeaderCellDef
-            > Phí Vốn
+            > {{'Marketing.ViewBookingMarketing.cogsRate'| translate }}
             </th>
             <td mat-cell fxHide fxShow.gt-md *matCellDef="let row"> {{row.cogsRate}} </td>
           </ng-container>
@@ -128,7 +128,7 @@
 
           <ng-container matColumnDef="minRate">
             <th mat-header-cell *matHeaderCellDef
-            >Phí GD
+            >{{'Marketing.ViewBookingMarketing.minRate'| translate }}
             </th>
             <td mat-cell fxHide fxShow.gt-md *matCellDef="let row"> {{row.minRate}} </td>
           </ng-container>
@@ -145,7 +145,7 @@
   <div *ngIf="campaign" fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column" style="margin-top: 20px;">
     <div fxFlex="96%" *ngIf="campaign">
       <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
-        <h3 fxFlex="48%">Tồng số: {{booking?.length}}</h3>
+        <h3 fxFlex="48%">{{'Marketing.ViewBookingMarketing.bookingLength'| translate }}{{booking?.length}}</h3>
         <div fxFlex="48%">
           <button style="float: right;"
                   (click)="addBookingDialog()"
@@ -156,37 +156,37 @@
       <table class="mat-elevation-z8" mat-table [dataSource]="booking" matSort multiTemplateDataRows>
         <!-- Name Column -->
         <ng-container matColumnDef="createdDate">
-          <th mat-header-cell *matHeaderCellDef> Thời gian</th>
+          <th mat-header-cell *matHeaderCellDef> {{'Marketing.ViewBookingMarketing.createdDate'| translate }}</th>
           <td mat-cell *matCellDef="let row"> {{row.createdDate | date:'dd-MM-yyyy HH:mm'}} </td>
         </ng-container>
 
         <!-- Account no Column -->
         <ng-container matColumnDef="officeId">
-          <th mat-header-cell *matHeaderCellDef> Chi nhánh</th>
+          <th mat-header-cell *matHeaderCellDef> {{'Marketing.ViewBookingMarketing.officeId'| translate }}</th>
           <td mat-cell *matCellDef="let row"> {{row.officeId}} </td>
         </ng-container>
 
         <!-- External ID Column -->
         <ng-container matColumnDef="userIdStaff">
-          <th mat-header-cell *matHeaderCellDef> Nhân viên</th>
+          <th mat-header-cell *matHeaderCellDef> {{'Marketing.ViewBookingMarketing.userIdStaff'| translate }}</th>
           <td mat-cell *matCellDef="let row"> {{row.userIdStaff}} </td>
         </ng-container>
 
         <!-- External ID Column -->
         <ng-container matColumnDef="userNameTelegram">
-          <th mat-header-cell *matHeaderCellDef> Người đăng kí (TelegramId)</th>
+          <th mat-header-cell *matHeaderCellDef> {{'Marketing.ViewBookingMarketing.userNameTelegram'| translate }}</th>
           <td mat-cell *matCellDef="let row"> {{row.userNameTelegram}}<span
             *ngIf="row.createdBy === 'S'">- {{row.userIdTelegram}}</span></td>
         </ng-container>
 
         <!-- External ID Column -->
         <ng-container matColumnDef="bookingAmount">
-          <th mat-header-cell *matHeaderCellDef>Số tiền đăng kí</th>
+          <th mat-header-cell *matHeaderCellDef>{{'Marketing.ViewBookingMarketing.bookingAmount'| translate }}</th>
           <td mat-cell *matCellDef="let row"> {{row.bookingAmount | money}} </td>
         </ng-container>
 
         <ng-container matColumnDef="actions">
-          <th mat-header-cell *matHeaderCellDef>Actions</th>
+          <th mat-header-cell *matHeaderCellDef>{{'Marketing.ViewBookingMarketing.Actions'| translate }}</th>
           <td mat-cell *matCellDef="let row">
             <div fxLayout="row">
               <span (click)="EditBookingDialog(row)" style="margin-right: 5px;"><img src="assets/images/icons/edit.svg"></span>

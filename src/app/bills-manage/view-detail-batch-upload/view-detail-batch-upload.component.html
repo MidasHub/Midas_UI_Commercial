@@ -1,35 +1,35 @@
 <mat-card class="">
   <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
     <mat-form-field fxFlex="31%" class="filter">
-      <mat-label>Tìm kiếm mã, tên khách hàng, số tiền(viết liền)</mat-label>
+      <mat-label>>{{ "BillManage.lableSearchQuery" | translate }}</mat-label>
       <input matInput #filterBill placeholder="Nhập nội dung tìm kiếm..." />
     </mat-form-field>
 
     <div class="action-button" fxFlex="31%">
       <button mat-raised-button color="primary" (click)="findBills(filterBill.value)">
         <i class="fa fa-search" aria-hidden="true"></i>
-        Tìm kiếm
+        {{ "ShareButton.Search" | translate }}
       </button>
     </div>
   </div>
 
   <table mat-table [dataSource]="dataSource" matSort>
     <ng-container matColumnDef="refNo">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Mã</th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ "BillManage.tableDetail.RefNo" | translate }}</th>
       <td mat-cell *matCellDef="let bill">
         {{ !bill?.referenceNo ? "#" : bill.referenceNo }}
       </td>
     </ng-container>
 
     <ng-container matColumnDef="customerName">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Khách hàng</th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ "BillManage.tableDetail.CustName" | translate }}</th>
       <td mat-cell *matCellDef="let bill">
         {{ bill?.referenceName }}
       </td>
     </ng-container>
 
     <ng-container matColumnDef="status">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Trạng thái</th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ "BillManage.tableDetail.Status" | translate }}</th>
       <td mat-cell *matCellDef="let bill">
         <mat-label title="Hóa đơn khả dụng" style="color: green; font-weight: bold" *ngIf="bill?.status == 'A'">
           <mat-icon>check</mat-icon>
@@ -44,21 +44,21 @@
     </ng-container>
 
     <ng-container matColumnDef="uploadDate">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Ngày tải lên</th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ "BillManage.tableDetail.UploadDate" | translate }}</th>
       <td mat-cell *matCellDef="let bill">
         {{ bill?.createdDate | date: "dd/MM/yyyy hh:MM:ss" }}
       </td>
     </ng-container>
 
     <ng-container matColumnDef="merchant">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Hộ kinh doanh</th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ "BillManage.tableDetail.Merchant" | translate }}</th>
       <td mat-cell *matCellDef="let bill">
         {{ bill?.merchantId }}
       </td>
     </ng-container>
 
     <ng-container matColumnDef="amount">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Số tiền</th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ "BillManage.tableDetail.Amount" | translate }}</th>
       <td mat-cell *matCellDef="let bill">
         {{ bill?.amount | money }}
       </td>

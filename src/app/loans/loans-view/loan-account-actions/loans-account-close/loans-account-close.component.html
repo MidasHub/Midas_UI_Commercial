@@ -9,27 +9,27 @@
         <div fxLayout="column">
 
           <mat-form-field>
-            <mat-label>Closed On</mat-label>
+            <mat-label>{{'Loans.View.Actions.LoanAccountClose.transactionDate'| translate }}</mat-label>
             <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="closedDatePicker" required
               formControlName="transactionDate">
             <mat-datepicker-toggle matSuffix [for]="closedDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #closedDatePicker></mat-datepicker>
             <mat-error *ngIf="closeLoanForm.controls.transactionDate.hasError('required')">
-              Closed Date <strong>is required</strong>
+              {{'Loans.View.Actions.LoanAccountClose.errtransactionDate'| translate }}<strong>{{'Loans.strongIsRequired'| translate }}</strong>
             </mat-error>
           </mat-form-field>
 
           <mat-form-field>
-            <mat-label>Note</mat-label>
+            <mat-label>{{'Loans.View.Actions.LoanAccountClose.Note'| translate }}</mat-label>
             <textarea matInput formControlName="note"></textarea>
           </mat-form-field>
 
         </div>
 
         <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
-          <button type="button" mat-raised-button [routerLink]="['../../general']">Cancel</button>
+          <button type="button" mat-raised-button [routerLink]="['../../general']">{{ "ShareButton.CancelEng" | translate }}</button>
           <button mat-raised-button color="primary" [disabled]="!closeLoanForm.valid"
-            *midasHasPermission="'CLOSE_LOAN'">Submit</button>
+            *midasHasPermission="'CLOSE_LOAN'">{{ "ShareButton.Submit" | translate }}</button>
         </mat-card-actions>
 
       </mat-card-content>

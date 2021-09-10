@@ -9,43 +9,43 @@
         <div fxLayout="column">
 
           <mat-form-field>
-            <mat-label>Disbursement On</mat-label>
+            <mat-label>{{'Loans.View.Actions.DisburseLoanAccount.actualDisbursementDate'| translate }}</mat-label>
             <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="disbursementDatePicker" required
               formControlName="actualDisbursementDate">
             <mat-datepicker-toggle matSuffix [for]="disbursementDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #disbursementDatePicker></mat-datepicker>
             <mat-error *ngIf="disbursementForm.controls.actualDisbursementDate.hasError('required')">
-              Disbursement Date is <strong>required</strong>
+              {{'Loans.View.Actions.DisburseLoanAccount.erractualDisbursementDate'| translate }}<strong>{{'Loans.strongRequired'| translate }}</strong>
             </mat-error>
           </mat-form-field>
 
           <mat-form-field>
-            <mat-label>Transaction amount</mat-label>
+            <mat-label>{{'Loans.View.Actions.DisburseLoanAccount.transactionAmount'| translate }}</mat-label>
             <input matInput currencyMask type="text" required formControlName="transactionAmount">
             <mat-error *ngIf="disbursementForm.controls.transactionAmount.hasError('required')">
-              Transaction Amount is <strong>required</strong>
+              {{'Loans.View.Actions.DisburseLoanAccount.errtransactionAmount'| translate }}<strong>{{'Loans.strongRequired'| translate }}</strong>
             </mat-error>
           </mat-form-field>
 
           <mat-form-field *ngIf="dataObject.fixedEmiAmount !== null || dataObject.fixedEmiAmount !== undefined">
-            <mat-label>Fixed EMI amount</mat-label>
+            <mat-label>{{'Loans.View.Actions.DisburseLoanAccount.fixedEmiAmount'| translate }}</mat-label>
             <input matInput currencyMask type="text" required formControlName="fixedEmiAmount">
             <mat-error *ngIf="disbursementForm.controls.fixedEmiAmount.hasError('required')">
-              Fixed EMI Amount is <strong>required</strong>
+              {{'Loans.View.Actions.DisburseLoanAccount.errfixedEmiAmount'| translate }}<strong>{{'Loans.strongRequired'| translate }}</strong>
             </mat-error>
           </mat-form-field>
 
           <mat-form-field>
-            <mat-label>Note</mat-label>
+            <mat-label>{{'Loans.View.Actions.DisburseLoanAccount.note'| translate }}</mat-label>
             <textarea matInput formControlName="note"></textarea>
           </mat-form-field>
 
         </div>
 
         <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
-          <button type="button" mat-raised-button [routerLink]="['../../general']">Cancel</button>
+          <button type="button" mat-raised-button [routerLink]="['../../general']">{{ "ShareButton.CancelEng" | translate }}</button>
           <button mat-raised-button color="primary" [disabled]="!disbursementForm.valid"
-            *midasHasPermission="'DISBURSETOSAVINGS_LOAN'">Submit</button>
+            *midasHasPermission="'DISBURSETOSAVINGS_LOAN'">{{ "ShareButton.Submit" | translate }}</button>
         </mat-card-actions>
 
       </mat-card-content>

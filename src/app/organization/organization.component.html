@@ -12,64 +12,64 @@
             <mat-icon matListIcon>
               <fa-icon icon="building" size="sm"></fa-icon>
             </mat-icon>
-            <h4 matLine>Manage Offices</h4>
-            <p matLine>Add new office or modify or deactivate office or modify hierarchy</p>
+            <h4 matLine>{{'Organization.ManageOffices'| translate }}</h4>
+            <p matLine>{{'Organization.AddNewOrModify'| translate }}</p>
           </mat-list-item>
 
           <mat-list-item [routerLink]="['holidays']" *midasHasPermission="'READ_HOLIDAY'">
             <mat-icon matListIcon>
               <fa-icon icon="calendar-alt" size="sm"></fa-icon>
             </mat-icon>
-            <h4 matLine>Manage Holidays</h4>
-            <p matLine>Define holidays for office</p>
+            <h4 matLine>{{'Organization.ManageHolidays'| translate }}</h4>
+            <p matLine>{{'Organization.Define'| translate }}</p>
           </mat-list-item>
 
           <mat-list-item [routerLink]="['employees']" *midasHasPermission="'READ_STAFF'">
             <mat-icon matListIcon>
               <fa-icon icon="user" size="sm"></fa-icon>
             </mat-icon>
-            <h4 matLine>Manage Employees</h4>
-            <p matLine>An employee represents loan officers with no access to systems</p>
+            <h4 matLine>{{'Organization.ManageEmployees'| translate }}</h4>
+            <p matLine>{{'Organization.noAccessToSystems'| translate }}</p>
           </mat-list-item>
 
           <mat-list-item [routerLink]="['standing-instructions-history']" *midasHasPermission="'READ_STANDINGINSTRUCTION'">
             <mat-icon matListIcon>
               <fa-icon icon="book" size="sm"></fa-icon>
             </mat-icon>
-            <h4 matLine>Standing Instructions History</h4>
-            <p matLine>View logged history of standing instructions</p>
+            <h4 matLine>{{'Organization.StandingInstructionsHistory'| translate }}</h4>
+            <p matLine>{{'Organization.View'| translate }}</p>
           </mat-list-item>
 
           <mat-list-item [routerLink]="['fund-mapping']" *midasHasPermission="'READ_OFFICE'">
             <mat-icon matListIcon>
               <fa-icon icon="money-bill-alt" size="sm"></fa-icon>
             </mat-icon>
-            <h4 matLine>Fund Mapping</h4>
-            <p matLine>Bulk entry screen for mapping fund sources to loans</p>
+            <h4 matLine>{{'Organization.FundMapping'| translate }}</h4>
+            <p matLine>{{'Organization.BulkEntry'| translate }}</p>
           </mat-list-item>
 
           <mat-list-item [routerLink]="['password-preferences']" *midasHasPermission="'READ_PASSWORD_VALIDATION_POLICY'">
             <mat-icon matListIcon>
               <fa-icon icon="lock" size="sm"></fa-icon>
             </mat-icon>
-            <h4 matLine>Password Preferences</h4>
-            <p matLine>Define standards for enforcing the usage of stronger passwords</p>
+            <h4 matLine>{{'Organization.PasswordPreferences'| translate }}</h4>
+            <p matLine>{{'Organization.DefineStandards'| translate }}</p>
           </mat-list-item>
 
           <mat-list-item [routerLink]="['provisioning-criteria']" *midasHasPermission="'VIEW_PROVISIONS'">
             <mat-icon matListIcon>
               <fa-icon icon="edit" size="sm"></fa-icon>
             </mat-icon>
-            <h4 matLine>Loan Provisioning Criteria</h4>
-            <p matLine>Define Loan Provisioning Criteria for Organization</p>
+            <h4 matLine>{{'Organization.LoanProvisioningCriteria'| translate }}</h4>
+            <p matLine>{{'Organization.DefineLoan'| translate }}</p>
           </mat-list-item>
 
           <mat-list-item [routerLink]="['entity-data-table-checks']" *midasHasPermission="'READ_ENTITY_DATATABLE_CHECK'">
             <mat-icon matListIcon>
               <fa-icon icon="check" size="sm"></fa-icon>
             </mat-icon>
-            <h4 matLine>Entity Data Table Checks </h4>
-            <p matLine>Define Entity Data Table Checks for Organization</p>
+            <h4 matLine>{{'Organization.EntityDataTableChecks'| translate }} </h4>
+            <p matLine>{{'Organization.DefineEntity'| translate }}</p>
           </mat-list-item>
 
         </mat-nav-list>
@@ -84,8 +84,8 @@
             <mat-icon matListIcon>
               <fa-icon icon="cogs" size="sm"></fa-icon>
             </mat-icon>
-            <h4 matLine>Currency Configuration</h4>
-            <p matLine>Currencies available across organization for different products</p>
+            <h4 matLine>{{'Organization.CurrencyConfiguration'| translate }}</h4>
+            <p matLine>{{'Organization.CurrenciesAvailable'| translate }}</p>
           </mat-list-item>
 
 
@@ -93,64 +93,64 @@
             <mat-icon matListIcon>
               <fa-icon icon="money-bill-alt" size="sm"></fa-icon>
             </mat-icon>
-            <h4 matLine>Manage Funds</h4>
-            <p matLine>Funds are associated with loans</p>
+            <h4 matLine>{{'Organization.ManageFunds'| translate }}</h4>
+            <p matLine>{{'Organization.Funds'| translate }}</p>
           </mat-list-item>
 
           <mat-list-item [routerLink]="['bulkloan']" *midasHasPermission="'BULKREASSIGN_LOAN'">
             <mat-icon matListIcon>
               <fa-icon icon="money-bill-alt" size="sm"></fa-icon>
             </mat-icon>
-            <h4 matLine>Bulk Loan Reassignment</h4>
-            <p matLine>Easy way to reassign all the loan from one LO to another LO</p>
+            <h4 matLine>{{'Organization.BulkLoanReassignment'| translate }}</h4>
+            <p matLine>{{'Organization.EasyWay'| translate }}</p>
           </mat-list-item>
 
           <mat-list-item [routerLink]="['tellers']" *midasHasPermission="'READ_TELLER'">
             <mat-icon matListIcon>
               <fa-icon icon="money-bill-alt" size="sm"></fa-icon>
             </mat-icon>
-            <h4 matLine>Teller / Cashier Management</h4>
-            <p matLine>Manage Tellers / Cashiers and Cash Allocation and Settlement</p>
+            <h4 matLine>{{'Organization.TellerCashier'| translate }}</h4>
+            <p matLine>{{'Organization.ManageTellersCashiers'| translate }}</p>
           </mat-list-item>
 
           <mat-list-item [routerLink]="['working-days']" *midasHasPermission="'READ_WORKINGDAYS'">
             <mat-icon matListIcon>
               <fa-icon icon="calendar-alt" size="sm"></fa-icon>
             </mat-icon>
-            <h4 matLine>Working Days</h4>
-            <p matLine>Define working days and configure behaviour of payments due on holidays</p>
+            <h4 matLine>{{'Organization.WorkingDays'| translate }}</h4>
+            <p matLine>{{'Organization.DefineWorking'| translate }}</p>
           </mat-list-item>
 
           <mat-list-item [routerLink]="['payment-types']" *midasHasPermission="'READ_PAYMENTTYPE'">
             <mat-icon matListIcon>
               <fa-icon icon="dollar-sign" size="sm"></fa-icon>
             </mat-icon>
-            <h4 matLine>Payment Type</h4>
-            <p matLine>Manage payment types</p>
+            <h4 matLine>{{'Organization.PaymentType'| translate }}</h4>
+            <p matLine>{{'Organization.ManagePaymentTypes'| translate }}</p>
           </mat-list-item>
 
           <mat-list-item [routerLink]="['sms-campaigns']" *midasHasPermission="'VIEW_SMSCAMPAIGNS'">
             <mat-icon matListIcon>
               <fa-icon icon="envelope" size="sm"></fa-icon>
             </mat-icon>
-            <h4 matLine>SMS Campaigns</h4>
-            <p matLine>Define SMS Campaigns for Organization</p>
+            <h4 matLine>{{'Organization.SMSCampaigns'| translate }}</h4>
+            <p matLine>{{'Organization.DefineSMS'| translate }}</p>
           </mat-list-item>
 
           <mat-list-item [routerLink]="['adhoc-query']" *midasHasPermission="'VIEW_ADHOC'">
             <mat-icon matListIcon>
               <fa-icon icon="chevron-right" size="sm"></fa-icon>
             </mat-icon>
-            <h4 matLine>AdHocQuery</h4>
-            <p matLine>Define AdHocQuery for Organization</p>
+            <h4 matLine>{{'Organization.AdHocQuery'| translate }}</h4>
+            <p matLine>{{'Organization.DefineAdHocQuer'| translate }}</p>
           </mat-list-item>
 
           <mat-list-item [routerLink]="['bulk-import']" *midasHasPermission="'VIEW_BULKIMPORT'">
             <mat-icon matListIcon>
               <fa-icon icon="upload" size="sm"></fa-icon>
             </mat-icon>
-            <h4 matLine>Bulk Import</h4>
-            <p matLine>Bulk data import using excel spreadsheet templates for clients, offices, etc.</p>
+            <h4 matLine>{{'Organization.BulkImport'| translate }}</h4>
+            <p matLine>{{'Organization.BulkData'| translate }}</p>
           </mat-list-item>
 
         </mat-nav-list>

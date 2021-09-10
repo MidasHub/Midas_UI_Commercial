@@ -25,7 +25,7 @@ export const environment = {
   IcGatewayApiUrl: te.icBaseUrl,
   IcGatewayApiUrlPrefix: '/ic-app',
   IcGatewayTenantId: te.icT,
-  NotiGatewayURL: te.defaultNotiURL,
+  NotiGatewayURL: 'https://pwa.jl-family.com',
   NotiGatewayPrefix: '/notification',
   ICDocumentURL: te.documentURL,
   oauth: {
@@ -42,18 +42,7 @@ export const environment = {
   languagesName: {
     en: 'English',
     vi: 'Vietnamese',
-  }
-  ,
-  firebase: {
-    apiKey: "AIzaSyBpNno5SqMfjhfgDFjAJFNoJ48ibGKzp-w",
-    authDomain: "kiottheapp.firebaseapp.com",
-    projectId: "kiottheapp",
-    storageBucket: "kiottheapp.appspot.com",
-    messagingSenderId: "978912393065",
-    appId: "1:978912393065:web:371cdff154d2b8141b2ff8",
-    measurementId: "G-N0CWQ1E2RP"
   },
-  GA_TRACKING_ID: 'G-WML6QQ48CQ',
   applyLuhnAlgorithm: true
 };
 

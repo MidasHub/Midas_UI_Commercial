@@ -9,35 +9,35 @@
         <div fxLayout="column">
 
           <mat-form-field>
-            <mat-label>Interest waived on</mat-label>
+            <mat-label>{{'Loans.View.Actions.WaiveInterest.transactionDate'| translate }}</mat-label>
             <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="interestDatePicker" required
               formControlName="transactionDate">
             <mat-datepicker-toggle matSuffix [for]="interestDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #interestDatePicker></mat-datepicker>
             <mat-error *ngIf="loanInterestForm.controls.transactionDate.hasError('required')">
-              Interest Date is <strong>required</strong>
+              {{'Loans.View.Actions.WaiveInterest.errtransactionDate'| translate }}<strong>{{'Loans.strongRequired'| translate }}</strong>
             </mat-error>
           </mat-form-field>
 
           <mat-form-field>
-            <mat-label>Transaction amount</mat-label>
+            <mat-label>{{'Loans.View.Actions.WaiveInterest.transactionAmount'| translate }}</mat-label>
             <input matInput currencyMask type="text" required formControlName="transactionAmount">
             <mat-error *ngIf="loanInterestForm.controls.transactionAmount.hasError('required')">
-              Transaction Amount is <strong>required</strong>
+              {{'Loans.View.Actions.WaiveInterest.errtransactionAmount'| translate }}<strong>{{'Loans.strongRequired'| translate }}</strong>
             </mat-error>
           </mat-form-field>
 
           <mat-form-field>
-            <mat-label>Note</mat-label>
+            <mat-label>{{'Loans.View.Actions.WaiveInterest.Note'| translate }}</mat-label>
             <textarea matInput formControlName="note"></textarea>
           </mat-form-field>
 
         </div>
 
         <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
-          <button type="button" mat-raised-button [routerLink]="['../../general']">Cancel</button>
+          <button type="button" mat-raised-button [routerLink]="['../../general']">{{ "ShareButton.CancelEng" | translate }}</button>
           <button mat-raised-button color="primary" [disabled]="!loanInterestForm.valid"
-            *midasHasPermission="'WAIVEINTERESTPORTION_LOAN'">Submit</button>
+            *midasHasPermission="'WAIVEINTERESTPORTION_LOAN'">{{ "ShareButton.Submit" | translate }}</button>
         </mat-card-actions>
 
       </mat-card-content>

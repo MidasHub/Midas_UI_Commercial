@@ -3,19 +3,19 @@
   <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
 
     <mat-form-field fxFlex="48%">
-      <mat-label>Product Name</mat-label>
+      <mat-label>{{'Loans.Stepper.Details.productId'| translate }}</mat-label>
       <mat-select formControlName="productId" required>
         <mat-option *ngFor="let product of productData" [value]="product.id">
           {{ product.name }}
         </mat-option>
       </mat-select>
       <mat-error>
-        Product Name is <strong>required</strong>
+        {{'Loans.Stepper.Details.errproductId'| translate }}<strong>{{'Loans.strongRequired'| translate }}</strong>
       </mat-error>
     </mat-form-field>
 
     <mat-form-field fxFlex="48%">
-      <mat-label>Loan officer</mat-label>
+      <mat-label>{{'Loans.Stepper.Details.loanOfficerId'| translate }}</mat-label>
       <mat-select formControlName="loanOfficerId">
         <mat-option *ngFor="let loanOfficer of loanOfficerOptions" [value]="loanOfficer.id">
           {{ loanOfficer.displayName }}
@@ -24,7 +24,7 @@
     </mat-form-field>
 
     <mat-form-field fxFlex="48%">
-      <mat-label>Loan purpose</mat-label>
+      <mat-label>{{'Loans.Stepper.Details.loanPurposeId'| translate }}</mat-label>
       <mat-select formControlName="loanPurposeId">
         <mat-option *ngFor="let loanPurpose of loanPurposeOptions" [value]="loanPurpose.id">
           {{ loanPurpose.name }}
@@ -33,7 +33,7 @@
     </mat-form-field>
 
     <mat-form-field fxFlex="48%">
-      <mat-label>Fund</mat-label>
+      <mat-label>{{'Loans.Stepper.Details.fundId'| translate }}</mat-label>
       <mat-select formControlName="fundId">
         <mat-option *ngFor="let fund of fundOptions" [value]="fund.id">
           {{ fund.name }}
@@ -42,38 +42,38 @@
     </mat-form-field>
 
     <mat-form-field fxFlex="48%">
-      <mat-label>Submitted on</mat-label>
+      <mat-label>{{'Loans.Stepper.Details.submittedOnDate'| translate }}</mat-label>
       <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="submitPicker" required
         formControlName="submittedOnDate">
       <mat-datepicker-toggle matSuffix [for]="submitPicker"></mat-datepicker-toggle>
       <mat-datepicker #submitPicker></mat-datepicker>
       <mat-error *ngIf="loansAccountDetailsForm.controls.submittedOnDate?.hasError('required')">
-        Submitted on is <strong>required</strong>
+        {{'Loans.Stepper.Details.errsubmittedOnDate'| translate }}<strong>{{'Loans.strongRequired'| translate }}</strong>
       </mat-error>
     </mat-form-field>
 
     <mat-form-field fxFlex="48%">
-      <mat-label>Disbursement on</mat-label>
+      <mat-label>{{'Loans.Stepper.Details.expectedDisbursementDate'| translate }}</mat-label>
       <input matInput [min]="minDate" [matDatepicker]="disbursementPicker" required
         formControlName="expectedDisbursementDate">
       <mat-datepicker-toggle matSuffix [for]="disbursementPicker"></mat-datepicker-toggle>
       <mat-datepicker #disbursementPicker></mat-datepicker>
       <mat-error *ngIf="loansAccountDetailsForm.controls.submittedOnDate?.hasError('required')">
-        Disbursement on is <strong>required</strong>
+        {{'Loans.Stepper.Details.errexpectedDisbursementDate'| translate }}<strong>{{'Loans.strongRequired'| translate }}</strong>
       </mat-error>
     </mat-form-field>
 
     <mat-form-field fxFlex="48%">
-      <mat-label>External id</mat-label>
+      <mat-label>{{'Loans.Stepper.Details.externalId'| translate }}</mat-label>
       <input matInput formControlName="externalId">
     </mat-form-field>
 
     <mat-divider fxFlex="98%"></mat-divider>
 
-    <h3 class="mat-h3" fxFlexFill>Savings Linkage</h3>
+    <h3 class="mat-h3" fxFlexFill>{{'Loans.Stepper.Details.SavingsLinkage'| translate }}</h3>
 
     <mat-form-field fxFlex="48%">
-      <mat-label>Link savings</mat-label>
+      <mat-label>{{'Loans.Stepper.Details.linkAccountId'| translate }}</mat-label>
       <mat-select formControlName="linkAccountId">
         <mat-option *ngFor="let savingaccount of accountLinkingOptions" [value]="savingaccount.id">
           {{ savingaccount.productName }}
@@ -82,7 +82,7 @@
     </mat-form-field>
 
     <mat-checkbox fxFlex="48%" formControlName="createStandingInstructionAtDisbursement">
-      <p>Create standing instructions at disbursement</p>
+      <p>{{'Loans.Stepper.Details.createStandingInstructionAtDisbursement'| translate }}</p>
     </mat-checkbox>
 
   </div>
@@ -90,10 +90,10 @@
   <div fxLayout="row" class="margin-t" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="2%">
     <button mat-raised-button matStepperPrevious disabled>
       <fa-icon icon="arrow-left"></fa-icon>&nbsp;&nbsp;
-      Previous
+      {{ "ShareButton.PreviousEng" | translate }}
     </button>
     <button mat-raised-button matStepperNext>
-      Next&nbsp;&nbsp;
+      {{ "ShareButton.NextEng" | translate }}&nbsp;&nbsp;
       <fa-icon icon="arrow-right"></fa-icon>
     </button>
   </div>

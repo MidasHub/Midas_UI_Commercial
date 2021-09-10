@@ -12,22 +12,22 @@
           <h3>
             <i class="fa fa-stop" matTooltip= "{{ centerViewData.status.value }}"
           [ngClass]="centerViewData.status.code |statusLookup"></i>
-          Center Name : {{centerViewData.name}}
+          {{ "CentersComponent.CentersViewComponent.h3" | translate }} {{centerViewData.name}}
           </h3>
         </mat-card-title>
         <mat-card-subtitle>
           <div fxLayout="row" fxLayout.lt-md="column">
             <div fxFlex="50%">
               <p>
-                Account #:{{centerViewData.accountNo}} <br />
+                {{ "CentersComponent.CentersViewComponent.accountNo" | translate }} {{centerViewData.accountNo}} <br />
                 Office: {{centerViewData.officeName}} <br />
                 <span *ngIf="centerViewData.externalId">
-                  External Id: {{centerViewData.externalId}} <br/>
+                  {{ "CentersComponent.CentersViewComponent.externalId" | translate }} {{centerViewData.externalId}} <br/>
                 </span>
                 <span *ngIf="centerViewData.staffName">
-                  Staff: {{centerViewData.staffName}} <br/>
+                  {{ "CentersComponent.CentersViewComponent.staffName" | translate }} {{centerViewData.externalId}}{{centerViewData.staffName}} <br/>
                 </span>
-                Activation Date :
+                {{ "CentersComponent.CentersViewComponent.activationDate" | translate }}
                 {{(centerViewData.activationDate)?(centerViewData.activationDate|date) :'Not Activated'}}<br />
               </p>
             </div>
@@ -38,19 +38,19 @@
       <div class="center-meeting" fxLayoutAlign="start start">
         <div *ngIf="centerViewData.collectionMeetingCalendar; else unassigned">
           <p>
-             Next Meeting on: {{centerViewData.collectionMeetingCalendar?.nextTenRecurringDates[0] | date}}
+            {{ "CentersComponent.CentersViewComponent.nextTenRecurringDates" | translate }}{{centerViewData.collectionMeetingCalendar?.nextTenRecurringDates[0] | date}}
              <span *ngIf="editMeeting">
               <i class="fa fa-edit" (click)="doAction('Edit Meeting')" *midasHasPermission="'UPDATE_MEETING'"></i><br />
              </span>
-             Meeting Frequency: {{centerViewData.collectionMeetingCalendar?.frequency.value | lowercase}}
+             {{ "CentersComponent.CentersViewComponent.frequency" | translate }}{{centerViewData.collectionMeetingCalendar?.frequency.value | lowercase}}
           </p>
         </div>
         <ng-template #unassigned>
           <div>
             <p>
-              Next Meeting on: Unassigned
+              {{ "CentersComponent.CentersViewComponent.p1" | translate }}
               <i class="fa fa-calendar"></i><br/>
-              Meeting Frequency: N/A
+              {{ "CentersComponent.CentersViewComponent.p2" | translate }}
           </p>
         </div>
         </ng-template>
@@ -59,35 +59,35 @@
     </mat-card-title-group>
     <mat-card-actions class="center-actions" *ngIf="!(centerViewData.status.value==='Closed')">
       <span *ngIf="!(centerViewData.status.value=='Active')">
-        <button mat-raised-button *midasHasPermission="'ACTIVATE_CENTER'" (click)="doAction('Activate')"><i class="fa fa-check-sign"></i> Activate </button>
+        <button mat-raised-button *midasHasPermission="'ACTIVATE_CENTER'" (click)="doAction('Activate')"><i class="fa fa-check-sign"></i> {{ "CentersComponent.CentersViewComponent.btnActivate" | translate }} </button>
       </span>
-      <button mat-raised-button *midasHasPermission="'UPDATE_CENTER'" (click)="doAction('Edit')"><i class="fa fa-edit"></i> Edit </button>
+      <button mat-raised-button *midasHasPermission="'UPDATE_CENTER'" (click)="doAction('Edit')"><i class="fa fa-edit"></i> {{ "CentersComponent.CentersViewComponent.btnEdit" | translate }} </button>
       <button mat-raised-button *midasHasPermission="'CREATE_GROUP'"><i class="fa fa-plus"></i> Add Group </button>
-      <button mat-raised-button *midasHasPermission="'ASSOCIATEGROUPS_CENTER'" (click)="doAction('Manage Groups')"> <i class="fa fa-edit"></i> Manage Groups </button>
+      <button mat-raised-button *midasHasPermission="'ASSOCIATEGROUPS_CENTER'" (click)="doAction('Manage Groups')"> <i class="fa fa-edit"></i> {{ "CentersComponent.CentersViewComponent.btnManageGroups" | translate }} </button>
       <span  *ngIf="centerViewData.active">
       <button mat-raised-button *midasHasPermission="'CREATE_SAVINGSACCOUNT'" [routerLink]="['savings-accounts', 'create']">
-        <i class="fa fa-file"></i> Centers Saving Application
+        <i class="fa fa-file"></i> {{ "CentersComponent.CentersViewComponent." | translate }}
       </button>
       </span>
-      <button mat-raised-button [matMenuTriggerFor]="More"> More </button>
+      <button mat-raised-button [matMenuTriggerFor]="More"> {{ "CentersComponent.btnMore." | translate }} </button>
       <mat-menu #More="matMenu">
         <span *ngIf="centerViewData.collectionMeetingCalendar">
-          <button mat-menu-item *midasHasPermission="'SAVEORUPDATEATTENDANCE_MEETING'" (click)="doAction('Attendance')"> Attendance </button>
+          <button mat-menu-item *midasHasPermission="'SAVEORUPDATEATTENDANCE_MEETING'" (click)="doAction('Attendance')"> {{ "CentersComponent.CentersViewComponent.btnAttendance" | translate }} </button>
         </span>
         <span *ngIf="!(centerViewData.staffId)">
-          <button mat-menu-item *midasHasPermission="'ASSIGNSTAFF_GROUP'" (click)="doAction('Assign Staff')"> Assign Staff </button>
+          <button mat-menu-item *midasHasPermission="'ASSIGNSTAFF_GROUP'" (click)="doAction('Assign Staff')"> {{ "CentersComponent.CentersViewComponent.btnAssignStaff" | translate }} </button>
         </span>
         <span *ngIf="centerViewData.staffId">
-          <button mat-menu-item *midasHasPermission="'UNASSIGNSTAFF_GROUP'" (click)="doAction('Unassign Staff')"> Unassign Staff </button>
+          <button mat-menu-item *midasHasPermission="'UNASSIGNSTAFF_GROUP'" (click)="doAction('Unassign Staff')"> {{ "CentersComponent.CentersViewComponent.btnUnassignStaff" | translate }} </button>
         </span>
         <span *ngIf="centerViewData.status.value==='Active'">
-          <button mat-menu-item *midasHasPermission="'DELETE_CENTER'" (click)="doAction('Delete')"> Delete </button>
+          <button mat-menu-item *midasHasPermission="'DELETE_CENTER'" (click)="doAction('Delete')"> {{ "CentersComponent.CentersViewComponent.btnDelete" | translate }} </button>
         </span>
-        <button mat-menu-item *midasHasPermission="'CLOSE_CENTER'" (click)="doAction('Close')"> Close </button>
+        <button mat-menu-item *midasHasPermission="'CLOSE_CENTER'" (click)="doAction('Close')"> {{ "CentersComponent.CentersViewComponent.btnClose" | translate }} </button>
         <span *ngIf="centerViewData.status.value==='Active' && !(centerViewData.collectionMeetingCalendar)">
-          <button mat-menu-item *midasHasPermission="'CREATE_MEETING'" (click)="doAction('Attach Meeting')"> Attach Meeting </button>
+          <button mat-menu-item *midasHasPermission="'CREATE_MEETING'" (click)="doAction('Attach Meeting')"> {{ "CentersComponent.CentersViewComponent.btnAttachMeeting" | translate }} </button>
         </span>
-        <button mat-menu-item *midasHasPermission="'READ_Staff Assignment History'" (click)="doAction('Staff Assignment History')"> Staff Assignment History </button>
+        <button mat-menu-item *midasHasPermission="'READ_Staff Assignment History'" (click)="doAction('Staff Assignment History')"> {{ "CentersComponent.CentersViewComponent.btnStaffAssignmentHistory" | translate }} </button>
       </mat-menu>
     </mat-card-actions>
   </mat-card-header>
@@ -95,11 +95,11 @@
     <nav mat-tab-nav-bar class="navigation-tabs">
       <a mat-tab-link [routerLink]="['./general']" routerLinkActive #general="routerLinkActive"
         [active]="general.isActive">
-        General
+        {{ "CentersComponent.CentersViewComponent.General" | translate }}
       </a>
       <a mat-tab-link *midasHasPermission="'READ_GROUPNOTE'" [routerLink]="['./notes']" routerLinkActive #notes="routerLinkActive"
         [active]="notes.isActive">
-        Notes
+        {{ "CentersComponent.CentersViewComponent.Notes" | translate }}
       </a>
       <span *ngFor="let centerDatatable of centerDatatables">
         <a mat-tab-link *midasHasPermission="'READ_' + centerDatatable.registeredTableName" [routerLink]="['./datatables',centerDatatable.registeredTableName]"

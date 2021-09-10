@@ -3,23 +3,23 @@
   <mat-list>
 
     <mat-list-item>
-      Campaign Name : {{ campaign.campaignName }}
+      {{'Organization.SmsCampaigns.SmsStepper.Preview.campaignName'| translate }}{{ campaign.campaignName }}
     </mat-list-item>
 
     <mat-list-item>
-      SMS Provider : {{ (campaign.providerId | find:smsProviders:'id':'name') || "Unassigned" }}
+      {{'Organization.SmsCampaigns.SmsStepper.Preview.providerId'| translate }}{{ (campaign.providerId | find:smsProviders:'id':'name') || "Unassigned" }}
     </mat-list-item>
 
     <mat-list-item>
-      Trigger Type : {{ (campaign.editFlag ? campaign.triggerType.id : campaign.triggerType) | find:triggerTypes:'id':'value' }}
+      {{'Organization.SmsCampaigns.SmsStepper.Preview.triggerType'| translate }}{{ (campaign.editFlag ? campaign.triggerType.id : campaign.triggerType) | find:triggerTypes:'id':'value' }}
     </mat-list-item>
 
     <mat-list-item>
-      Bussiness Rule : {{ campaign.editFlag ? campaign.reportName : campaign.paramValue?.reportName }}
+      {{'Organization.SmsCampaigns.SmsStepper.Preview.BussinessRule : '| translate }}{{ campaign.editFlag ? campaign.reportName : campaign.paramValue?.reportName }}
     </mat-list-item>
 
     <div fxLayout="column" fxLayoutGap="10px" class="template-message">
-      <h3>Campaign Message :</h3>
+      <h3>{{'Organization.SmsCampaigns.SmsStepper.Preview.message'| translate }}</h3>
       <textarea matInput disabled>{{ campaign.editFlag ? editedCampaignMessage : campaign.message }}</textarea>
     </div>
 
@@ -27,10 +27,10 @@
 
   <div fxLayout="row" class="margin-t" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="2%">
     <button mat-raised-button [routerLink]="['../']">
-      Cancel
+      {{ "ShareButton.CancelEng" | translate }}
     </button>
     <button mat-raised-button color="primary" (click)="submit.emit()">
-      Submit
+      {{ "ShareButton.Submit" | translate }}
     </button>
   </div>
 
