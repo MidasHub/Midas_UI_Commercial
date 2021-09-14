@@ -322,7 +322,7 @@ export class CreateClientComponent implements OnInit {
 
         if (this.mgmId && this.clientMGM) {
           this.clientsService
-            .makeFundForMGM(this.clientMGM.savingsAccountId, response.displayName)
+            .makeFundForMGM(this.clientMGM.savingsAccountId, `${this.clientMGM?.lastname} ${this.clientMGM?.middlename ? this.clientMGM?.middlename : ''} ${this.clientMGM?.firstname}`)
             .subscribe((mgmResponse) => {
               if (mgmResponse?.result?.status) {
                 this.alertService.alert({
