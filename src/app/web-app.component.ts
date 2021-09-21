@@ -202,25 +202,13 @@ export class WebAppComponent implements OnInit {
     if (!environment.production) {
       if (!sessionStorage.getItem("midasServers")) {
         this.settingsService.setServers([
-          "https://staging.kiotthe.com",
-          "https://training.kiotthe.com",
-          "https://midas.kiotthe.com",
-          "https://localhost:9443",
-          "https://ic.kiotthe.com",
-          "https://hdcredit.kiotthe.com",
-          "https://localhost:7443",
+
         ]);
       }
 
       if (!sessionStorage.getItem("midasBillposServers")) {
         this.settingsService.setBillposServers([
-          "https://staging.kiotthe.com",
-          "https://training.kiotthe.com",
-          "https://midas.kiotthe.com",
-          "https://hdcredit.kiotthe.com",
-          "http://localhost:8088",
-          "http://119.82.141.26:8088",
-          "http://localhost:8087",
+
         ]);
       }
     }
