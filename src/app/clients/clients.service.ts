@@ -109,7 +109,7 @@ export class ClientsService {
     );
 
     if (!this.accessToken.permissions.includes("POS_UPDATE")) {
-      sqlSearch += ` AND c.staff_id = ${this.accessToken.staffId} `;
+      sqlSearch += ` and c.staff_id = ${this.accessToken.staffId} `;
     }
 
     let httpParams = new HttpParams()

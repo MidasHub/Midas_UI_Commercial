@@ -102,7 +102,9 @@ export class ClientsDataSource implements DataSource<any> {
       let sqlSearch = `(display_name LIKE "%${filter}%" OR c.external_id LIKE "%${filter}%" OR  c.mobile_no LIKE "%${filter}%")`; // searchClientByNameAndExternalIdAndPhoneAndDocumentKey
 
       if (clientActive) {
-        sqlSearch = `${sqlSearch} AND c.status_enum = 300 and c.client_type_cv_id IN (${clientType})`;
+        sqlSearch = `${sqlSearch} and c.status_enum LIKE '3%' and c.client_type_cv_id IN (${clientType})`;
+      } else {
+        sqlSearch = `${sqlSearch} and c.status_enum = 600 and c.client_type_cv_id IN (${clientType})`;
       }
       this.clientsService.getClientsByOfficeOfUser('', '', pageIndex * limit, limit, sqlSearch)
         .subscribe((clients: any) => {
