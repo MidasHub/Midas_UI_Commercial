@@ -28,7 +28,9 @@
               "src/favicon.ico",
               "src/robots.txt",
               "src/manifest.json",
-              "src/assets/"
+              "src/firebase-messaging-sw.js",
+              "src/assets",
+              "src/assets/i18n"
             ],
             "styles": [
               "src/main.scss",
@@ -68,27 +70,26 @@
                 "bundleName": "theme/pictonblue-yellowgreen"
               }
             ],
-            "scripts": [],
-            "serviceWorker": true,
-            "ngswConfigPath": "ngsw-config.json"
+            "scripts": []
           },
           "configurations": {
             "production": {
               "budgets": [
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "5kb",
-                  "maximumError": "10kb"
+                  "maximumWarning": "6kb"
                 }
               ],
-              "optimization": false,
+              "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
               "extractCss": true,
-              "namedChunks": true,
+              "namedChunks": false,
+              "aot": true,
               "extractLicenses": true,
-              "vendorChunk": true,
+              "vendorChunk": false,
               "buildOptimizer": true,
+              "serviceWorker": true,
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
@@ -161,7 +162,8 @@
               "src/favicon.ico",
               "src/robots.txt",
               "src/manifest.json",
-              "src/assets/"
+              "src/firebase-messaging-sw.js",
+              "src/assets"
             ]
           }
         },
