@@ -179,10 +179,20 @@ export class ClientsService {
     return this.http.post(`${this.GatewayApiUrlPrefix}/common/getMasterDistrict`, httpParams);
   }
 
+  getAllDistrict(): Observable<any> {
+    let httpParams = this.commonHttpParams.getCommonHttpParams();
+    return this.http.post(`${this.GatewayApiUrlPrefix}/common/getAllMasterDistrict`, httpParams);
+  }
+
   getClientTownVillage(districtId: string): Observable<any> {
     let httpParams = this.commonHttpParams.getCommonHttpParams();
     httpParams = httpParams.set('districtId', districtId);
     return this.http.post(`${this.GatewayApiUrlPrefix}/common/getMasterWard`, httpParams);
+  }
+
+  getAllTownVillage(): Observable<any> {
+    let httpParams = this.commonHttpParams.getCommonHttpParams();
+    return this.http.post(`${this.GatewayApiUrlPrefix}/common/getAllMasterWard`, httpParams);
   }
 
   /* Chỗ này cần review lại để dùng bằng service-worker*/

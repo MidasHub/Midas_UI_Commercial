@@ -28,6 +28,7 @@ export const environment = {
   NotiGatewayURL: 'https://pwa.jl-family.com',
   NotiGatewayPrefix: '/notification',
   ICDocumentURL: te.documentURL,
+  remotePdbUrl: 'https://jean:Anhnh7383#@jl-family.com/couchdb/',
   oauth: {
     enabled: false,  // For connecting to Midas using OAuth2 Authentication change the value to true
     clientID: 'community-app',

@@ -12,6 +12,8 @@ import { FormDialogComponent } from 'app/shared/form-dialog/form-dialog.componen
 
 /** Custom Services */
 import { ClientsService } from '../../clients.service';
+import { PouchdbService } from '../../../pouchdb/pouchdb.service';
+import { Subject } from 'rxjs';
 
 /**
  * Clients Address Tab Component
@@ -30,24 +32,34 @@ export class AddressTabComponent {
   clientAddressTemplate: any;
   /** Client Id */
   clientId?: string | null;
+  couchdb_provinces: any[] = [];
+  couchdb_districts: any[] = [];
+  couchdb_wards: any[] = [];
   provinces: any[] = [];
+  districts: any[] = [];
+  wards: any[] = [];
 
   /**
    * @param {ActivatedRoute} route Activated Route
    * @param {ClientsService} clientService Clients Service
    * @param {MatDialog} dialog Mat Dialog
    */
-  constructor(private route: ActivatedRoute, private clientService: ClientsService, private dialog: MatDialog) {
+  constructor(private route: ActivatedRoute,
+    private clientService: ClientsService,
+    private dialog: MatDialog,
+    private pdb: PouchdbService
+  )
+  {
     this.route.data.subscribe((data: {clientAddressData: any; clientAddressFieldConfig: any; clientAddressTemplateData: any; }| Data) => {
         this.clientAddressData = data.clientAddressData;
         this.clientAddressFieldConfig = data.clientAddressFieldConfig;
         this.clientAddressTemplate = data.clientAddressTemplateData;
         this.clientId = this.route.parent?.snapshot.paramMap.get('clientId');
-
-        this.clientService.getClientProvince().subscribe((res: any) => {
-          this.provinces = res.result.listAddressProvince;
-        });
-
+        // this.clientService.getClientProvince().subscribe((res: any) => {
+        //   this.provinces = res.result.listAddressProvince;
+        // });
+        this.pdb.init("masterdata_address");
+        this.initMasterData();
         this.clientAddressData.map((item: any) => {
           this.getDistrictName(item);
           this.getTownVillageName(item);
@@ -56,27 +68,133 @@ export class AddressTabComponent {
     );
   }
 
+  initMasterData() {
+    this.getMasterDataProvinces();
+    this.getMasterDataDistricts();
+    this.getMasterDataWards();
+  }
+
+  async getMasterDataProvinces() {
+    this.couchdb_provinces = await this.pdb.getItem("masterdata_provinces", false);
+    if (this.couchdb_provinces) {
+      delete this.couchdb_provinces['_id'];
+      delete this.couchdb_provinces['_rev'];
+      delete this.couchdb_provinces['time'];
+      for (let key in this.couchdb_provinces) {
+        let value = this.couchdb_provinces[key];
+        this.provinces.push(value);
+      }
+      console.log("=====Init Master Data Provinces Success!");
+    }
+    else {
+      console.log("=====No provinces data! Reload!");
+      this.clientService.getClientProvince().subscribe((res: any) => {
+          this.provinces = res.result.listAddressProvince;
+          this.pdb.upsertItem("masterdata_provinces", this.provinces);
+          this.getMasterDataProvinces();
+      });
+    }
+  }
+
+  async getMasterDataDistricts() {
+    this.couchdb_districts = await this.pdb.getItem("masterdata_districts", false);
+    if (this.couchdb_districts) {
+      delete this.couchdb_districts['_id'];
+      delete this.couchdb_districts['_rev'];
+      delete this.couchdb_districts['time'];
+      for (let key in this.couchdb_districts) {
+        let value = this.couchdb_districts[key];
+        this.districts.push(value);
+      }
+      this.clientAddressData.map((item: any) => {
+        this.getDistrictName(item);
+      });
+      console.log("=====Init Master Data Districts Success!");
+    }
+    else {
+      console.log("=====No district data! Reload!");
+      this.clientService.getAllDistrict().subscribe((res: any) => {
+          this.couchdb_districts = res.result.listAddressDistrict;
+          this.pdb.upsertItem("masterdata_districts", this.couchdb_districts);
+          this.getMasterDataDistricts();
+      });
+    }
+  }
+
+  async getMasterDataWards() {
+    this.couchdb_wards = await this.pdb.getItem("masterdata_wards", false);
+    if (this.couchdb_wards) {
+      delete this.couchdb_wards['_id'];
+      delete this.couchdb_wards['_rev'];
+      delete this.couchdb_wards['time'];
+      for (let key in this.couchdb_wards) {
+        let value = this.couchdb_wards[key];
+        this.wards.push(value);
+      }
+      this.clientAddressData.map((item: any) => {
+        this.getTownVillageName(item);
+      });
+      console.log("=====Init Master Data Wards Success!");
+    }
+    else {
+      console.log("=====No wards data! Reload!");
+      this.clientService.getAllTownVillage().subscribe((res: any) => {
+          this.couchdb_wards = res.result.listAddressWard;
+          this.pdb.upsertItem("masterdata_wards", this.couchdb_wards);
+          this.getMasterDataWards();
+      });
+    }
+  }
+
   getDistrictName(item: any) {
-    this.clientService.getClientDistrict(item.stateProvinceId).subscribe((res: any) => {
-      item.districts = res.result.listAddressDistrict;
-      res.result.listAddressDistrict.filter((v: any) => {
+
+    let couchdb_districts: any[] = [];
+    this.districts.filter((v: any) => {
+      if (v.provinceId === Number(item.stateProvinceId)) {
+        couchdb_districts.push(v);
         if (v.refid === Number(item.countyDistrict)) {
           item.districtName = v.description;
         }
-      });
+      }
     });
+    item.districts = couchdb_districts;
   }
 
   getTownVillageName(item: any) {
-    this.clientService.getClientTownVillage(item.countyDistrict).subscribe((res: any) => {
-      item.townVillages = res.result.listAddressWard;
-      res.result.listAddressWard.filter((v: any) => {
+
+    let couchdb_wards: any[] = [];
+    this.wards.filter((v: any) => {
+      if (v.districtId === Number(item.countyDistrict)) {
+        couchdb_wards.push(v);
         if (v.refid === Number(item.townVillage)) {
           item.townVillageName = v.description;
         }
-      });
+      }
     });
+    item.townVillages = couchdb_wards;
   }
+
+  // getDistrictName(item: any) {
+  //   this.clientService.getClientDistrict(item.stateProvinceId).subscribe((res: any) => {
+  //     item.districts = res.result.listAddressDistrict;
+  //     res.result.listAddressDistrict.filter((v: any) => {
+  //       if (v.refid === Number(item.countyDistrict)) {
+  //         item.districtName = v.description;
+  //       }
+  //     });
+  //   });
+  // }
+
+  // getTownVillageName(item: any) {
+  //   this.clientService.getClientTownVillage(item.countyDistrict).subscribe((res: any) => {
+  //     item.townVillages = res.result.listAddressWard;
+  //     res.result.listAddressWard.filter((v: any) => {
+  //       if (v.refid === Number(item.townVillage)) {
+  //         item.townVillageName = v.description;
+  //       }
+  //     });
+  //   });
+  // }
 
   /**
    * Adds a client address.
@@ -122,8 +240,6 @@ export class AddressTabComponent {
     editAddressDialogRef.afterClosed().subscribe((response: any) => {
       if (response.data) {
         const addressData = response.data.value;
-        this.getDistrictName(addressData);
-        this.getTownVillageName(addressData);
         addressData.addressId = address.addressId;
         addressData.isActive = address.isActive;
         this.clientService
@@ -131,6 +247,8 @@ export class AddressTabComponent {
           .subscribe((res: any) => {
             addressData.addressTypeId = address.addressTypeId;
             addressData.addressType = address.addressType;
+            this.getDistrictName(addressData);
+            this.getTownVillageName(addressData);
             this.clientAddressData[index] = addressData;
           });
       }
@@ -273,6 +391,7 @@ export class AddressTabComponent {
           })
         );
       }
+    }
 
       if (this.isFieldEnabled('addressLine1')) {
         formfields.push(
@@ -393,7 +512,7 @@ export class AddressTabComponent {
 
       formfields = formfields.filter((field) => field !== null);
       return formfields;
-    }
+
   }
 
   refresh() {
