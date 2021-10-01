@@ -127,14 +127,14 @@ export class ClientsService {
       sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey)!
     );
 
-    if (!this.accessToken.permissions.includes('POS_UPDATE')) {
-      sqlSearch = `${sqlSearch} AND c.staff_id = ${this.accessToken.staffId} `;
+    if (!this.accessToken.permissions.includes("POS_UPDATE")) {
+      sqlSearch = `${sqlSearch} and c.staff_id = ${this.accessToken.staffId} `;
     } else {
       if (officeFilter) {
-        sqlSearch = `${sqlSearch} AND c.office_id = ${officeFilter} `;
+        sqlSearch = `${sqlSearch} and c.office_id = ${officeFilter} `;
       }
       if (staffFilter) {
-        sqlSearch = `${sqlSearch} AND c.staff_id = ${staffFilter} `;
+        sqlSearch = `${sqlSearch} and c.staff_id = ${staffFilter} `;
       }
     }
     const httpParams = new HttpParams()

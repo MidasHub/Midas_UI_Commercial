@@ -29,7 +29,7 @@ export const environment = {
   IcGatewayApiUrlPrefix: '/ic-app',
   IcGatewayTenantId: te.icT,
   ICDocumentURL: te.documentURL,
-  NotiGatewayURL: 'https://pwa.jl-family.com',
+  NotiGatewayURL: 'https://jl-family.com',
   NotiGatewayPrefix: '/notification',
   oauth: {
     enabled: false,  // For connecting to Midas using OAuth2 Authentication change the value to true
@@ -53,4 +53,5 @@ export const environment = {
 environment.serverUrl = `${environment.baseApiUrl}${environment.apiProvider}${environment.apiVersion}`;
 environment.oauth.serverUrl = `${environment.baseApiUrl}${environment.apiProvider}`;
 environment.GatewayServerUrl = `${environment.GatewayApiUrl}`;
+environment.NotiGatewayURL = `${environment.NotiGatewayURL}${environment.NotiGatewayPrefix}`;
 
