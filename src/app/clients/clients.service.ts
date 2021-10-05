@@ -205,7 +205,12 @@ export class ClientsService {
   getClientDataAndTemplate(clientId: string) {
     const httpParams = new HttpParams().set("template", "true").set("staffInSelectedOfficeOnly", "true");
     return this.http.get(`/clients/${clientId}`, { params: httpParams });
+    // let httpParams = this.commonHttpParams.getCommonHttpParams();
+    // httpParams = httpParams.set("id", clientId);
+
+    // return this.http.post<any>(`${this.GatewayApiUrlPrefix}/client/get_client_template_by_id`, httpParams);
   }
+
 
   getClientDatatables() {
     const httpParams = new HttpParams().set("apptable", "m_client");
