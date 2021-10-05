@@ -19,6 +19,7 @@ import { TransactionHistoryDialogComponent } from 'app/transactions/rollTerm-sch
 import template_hdctv from './template-contract/atom_hdctv';
 import template_hddvtv from './template-contract/atom_hddvtv';
 import * as moment from 'moment';
+import { AuthenticationService } from "app/core/authentication/authentication.service";
 @Component({
   selector: 'mifosx-clients-view',
   templateUrl: './clients-view.component.html',
@@ -29,18 +30,21 @@ export class ClientsViewComponent implements OnInit {
   clientDatatables: any;
   clientImage: any;
   clientTemplateData: any;
-  showViewClient = false;
-  typeViewClient!: string;
-  isInterchangeClient = false;
+  showViewClient: boolean = false;
+  typeViewClient: string = "";;
+  isInterchangeClient: boolean = false;
+  currentUser: any;
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private clientsService: ClientsService,
     private _sanitizer: DomSanitizer,
+    private authenticationService: AuthenticationService,
     public dialog: MatDialog
   ) {
-    this.route.data.subscribe((data: { clientViewData: any; clientTemplateData: any; clientDatatables: any }| Data) => {
+    this.currentUser = this.authenticationService.getCredentials();
+    this.route.data.subscribe((data: { clientViewData: any; clientTemplateData: any; clientDatatables: any }|any) => {
       this.clientViewData = data.clientViewData.result.clientInfo;
       this.clientDatatables = data.clientDatatables ? data.clientDatatables : {};
       this.clientTemplateData = data.clientTemplateData ? data.clientTemplateData : {};
