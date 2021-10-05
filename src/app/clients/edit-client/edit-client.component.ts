@@ -66,6 +66,7 @@ export class EditClientComponent implements OnInit {
               private location: Location) {
     this.route.data.subscribe((data: { clientDataAndTemplate: any }) => {
       this.clientDataAndTemplate = data.clientDataAndTemplate;
+      // this.clientDataAndTemplate = data.clientDataAndTemplate.result.clientTemplate;
     });
   }
 

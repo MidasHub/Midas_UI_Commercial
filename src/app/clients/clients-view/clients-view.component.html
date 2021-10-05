@@ -52,6 +52,11 @@
                   >{{ "Client_Component.ViewClient.lblExternalID" | translate }}: {{ clientViewData?.externalId }}
                   <br />
                 </label>
+                <label
+                  >Số điện thoại:
+                  <label style="font-weight: bold; color: green;"> {{ clientViewData?.mobileNo ? (clientViewData?.mobileNo == "###" ? "Đã ẩn" : clientViewData?.mobileNo) : "Chưa cung cấp" }}</label>
+                  <br />
+                </label>
                 <label *ngIf="!this.isInterchangeClient"
                   >Nhân viên quản lý: {{ clientViewData?.staffName || "Chưa phân bổ" }} <br
                 /></label>
@@ -117,7 +122,7 @@
           </span>
 
           <span *midasHasPermission="'UPDATE_CLIENT'" class="m-b-10" fxLayoutAlign="center stretch">
-            <button mat-raised-button [routerLink]="['edit']" *ngIf="!this.isInterchangeClient">
+            <button mat-raised-button  [routerLink]="['edit']" *ngIf="!this.isInterchangeClient ">
               <i class="fa fa-edit"></i>{{ "Client_Component.ViewClient.btnEdit" | translate }}
             </button>
           </span>
