@@ -27,6 +27,12 @@ export class GroupsService {
     this.GatewayApiUrlPrefix = environment.GatewayApiUrlPrefix;
   }
 
+  getBalanceAccountOfGroup(): Observable<any> {
+    let httpParams = this.commonHttpParams.getCommonHttpParams();
+
+    return this.http.post<any>(`${this.GatewayApiUrlPrefix}/savingTransaction/get_list_balance_group`, httpParams);
+  }
+
   updateDefaultSavingAccount(savingAccountInfo: any): Observable<any> {
     let httpParams = this.commonHttpParams.getCommonHttpParams();
     httpParams = httpParams.set('groupId', savingAccountInfo.groupId);

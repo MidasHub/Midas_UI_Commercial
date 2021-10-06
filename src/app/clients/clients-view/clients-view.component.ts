@@ -31,7 +31,7 @@ export class ClientsViewComponent implements OnInit {
   clientImage: any;
   clientTemplateData: any;
   showViewClient: boolean = false;
-  typeViewClient: string = "";;
+  typeViewClient: string = '';
   isInterchangeClient: boolean = false;
   currentUser: any;
 
