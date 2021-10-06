@@ -28,7 +28,7 @@ export class ClientsViewComponent implements OnInit {
   clientImage: any;
   clientTemplateData: any;
   showViewClient: boolean = false;
-  typeViewClient: string;
+  typeViewClient: string = '';
   isInterchangeClient: boolean = false;
   currentUser: any;
 
@@ -41,7 +41,7 @@ export class ClientsViewComponent implements OnInit {
     public dialog: MatDialog
   ) {
     this.currentUser = this.authenticationService.getCredentials();
-    this.route.data.subscribe((data: { clientViewData: any; clientTemplateData: any; clientDatatables: any }) => {
+    this.route.data.subscribe((data: { clientViewData: any; clientTemplateData: any; clientDatatables: any }|any) => {
       this.clientViewData = data.clientViewData.result.clientInfo;
       this.clientDatatables = data.clientDatatables ? data.clientDatatables : {};
       this.clientTemplateData = data.clientTemplateData ? data.clientTemplateData : {};
