@@ -154,29 +154,36 @@ export class TransactionService {
 
   submitTransactionCash(transactionInfo: any): Observable<any> {
     let httpParams = this.commonHttpParams.getCommonHttpParams();
-    httpParams = httpParams.set('accountNumber', transactionInfo.identifyClientDto.accountNumber);
-    httpParams = httpParams.set('accountBankId', transactionInfo.identifyClientDto.accountBankId);
-    httpParams = httpParams.set('accountTypeId', transactionInfo.identifyClientDto.accountTypeId);
-    httpParams = httpParams.set('accountCash', transactionInfo.accountCash);
-    httpParams = httpParams.set('bNo', transactionInfo.batchNo);
-    httpParams = httpParams.set('tid', transactionInfo.traceNo);
-    httpParams = httpParams.set('terminalAmount', String(this.formatLong(transactionInfo.terminalAmount)));
-    httpParams = httpParams.set('feeRate', transactionInfo.rate);
-    httpParams = httpParams.set('toClientId', transactionInfo.clientId);
-    httpParams = httpParams.set('feeAmount', transactionInfo.feeAmount);
-    httpParams = httpParams.set('cogsRate', transactionInfo.cogsRate);
-    httpParams = httpParams.set('cogsAmount', transactionInfo.feeCogs);
-    httpParams = httpParams.set('pnlAmount', transactionInfo.feePNL);
-    httpParams = httpParams.set('invoiceAmount', String(this.formatLong(transactionInfo.txnAmount)));
-    httpParams = httpParams.set('requestAmount', String(this.formatLong(transactionInfo.requestAmount)));
-    httpParams = httpParams.set('transferAmount', String(this.formatLong(transactionInfo.txnAmount)));
-    httpParams = httpParams.set('bills', transactionInfo.invoiceMapping.listInvoice);
-    httpParams = httpParams.set('productId', transactionInfo.productId);
-    httpParams = httpParams.set('groupId', transactionInfo.clientDto.groupId);
-    httpParams = httpParams.set('customerName', transactionInfo.clientDto.displayName);
-    httpParams = httpParams.set('terminalId', transactionInfo.terminalId);
-    httpParams = httpParams.set('ext2', transactionInfo.type);
-    httpParams = httpParams.set('ext4', transactionInfo.identifierId);
+    httpParams = httpParams.set("accountNumber", transactionInfo.identifyClientDto.accountNumber);
+    httpParams = httpParams.set("accountBankId", transactionInfo.identifyClientDto.accountBankId);
+    httpParams = httpParams.set("accountTypeId", transactionInfo.identifyClientDto.accountTypeId);
+    // httpParams = httpParams.set('accountCash', transactionInfo.accountCash);
+    httpParams = httpParams.set("bNo", transactionInfo.batchNo);
+    httpParams = httpParams.set("tid", transactionInfo.traceNo);
+    httpParams = httpParams.set("terminalAmount", String(this.formatLong(transactionInfo.terminalAmount)));
+    httpParams = httpParams.set("feeRate", transactionInfo.rate);
+    httpParams = httpParams.set("toClientId", transactionInfo.clientId);
+    httpParams = httpParams.set("feeAmount", transactionInfo.feeAmount);
+    httpParams = httpParams.set("cogsRate", transactionInfo.cogsRate);
+    httpParams = httpParams.set("cogsAmount", transactionInfo.feeCogs);
+    httpParams = httpParams.set("pnlAmount", transactionInfo.feePNL);
+    httpParams = httpParams.set("invoiceAmount", String(this.formatLong(transactionInfo.txnAmount)));
+    httpParams = httpParams.set("requestAmount", String(this.formatLong(transactionInfo.requestAmount)));
+    httpParams = httpParams.set("transferAmount", String(this.formatLong(transactionInfo.txnAmount)));
+    httpParams = httpParams.set("bills", transactionInfo.invoiceMapping.listInvoice);
+    httpParams = httpParams.set("productId", transactionInfo.productId);
+    httpParams = httpParams.set("groupId", transactionInfo.clientDto.groupId);
+    httpParams = httpParams.set("customerName", transactionInfo.clientDto.displayName);
+    httpParams = httpParams.set("terminalId", transactionInfo.terminalId);
+    httpParams = httpParams.set("ext2", transactionInfo.type);
+    httpParams = httpParams.set("ext4", transactionInfo.identifierId);
+
+    if (transactionInfo.minFeeApply && transactionInfo.minFeeApply > 0 && transactionInfo.minFeeApply > transactionInfo.feeAmount) {
+      httpParams = httpParams.set("minFeeApply", transactionInfo.minFeeApply);
+    }
+    if (transactionInfo.accountCash) {
+      httpParams = httpParams.set("accountCash", transactionInfo.accountCash);
+    }
 
     return this.http.post<any>(`${this.GatewayApiUrlPrefix}/transaction/create_cash_retail_transaction`, httpParams);
   }
