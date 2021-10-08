@@ -4,8 +4,8 @@ import env from './.env';
 export const environment = {
   production: true,
   version: env.mifos_x_version,
-  fineractPlatformTenantId: 'default',  // For connecting to server running elsewhere update the tenant identifier
-  baseApiUrl: JSON.parse(localStorage.getItem('mifosXServerURL')) || 'https://demo.fineract.dev',  // For connecting to server running elsewhere update the base API URL
+  fineractPlatformTenantId: 'origin',  // For connecting to server running elsewhere update the tenant identifier
+  baseApiUrl: JSON.parse(localStorage.getItem('mifosXServerURL')) || 'https://origin.kiotthe.app',  // For connecting to server running elsewhere update the base API URL
   allowServerSwitch: env.allow_switching_backend_instance,
   apiProvider: '/midas/api',
   apiVersion: '/v1',
