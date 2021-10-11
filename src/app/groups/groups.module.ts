@@ -33,6 +33,7 @@ import { EditGroupMeetingScheduleComponent } from './groups-view/group-actions/e
 import { GroupTransferClientsComponent } from './groups-view/group-actions/group-transfer-clients/group-transfer-clients.component';
 import { SpendingLimitComponent } from './spending-limit/spending-limit.component';
 import { CreateEditSpendingComponent } from './dialogs/create-edit-spending/create-edit-spending.component';
+import { BalanceAccountGroupComponent } from './balance-account-group/balance-account-group.component';
 
 /**
  * Groups Module
@@ -71,6 +72,7 @@ import { CreateEditSpendingComponent } from './dialogs/create-edit-spending/crea
     GroupTransferClientsComponent,
     SpendingLimitComponent,
     CreateEditSpendingComponent,
+    BalanceAccountGroupComponent,
   ],
   providers: [DatePipe]
 })
