@@ -1,5 +1,9 @@
 /** Angular Imports */
-import { LOCALE_ID, NgModule } from '@angular/core';
+import {APP_INITIALIZER, ErrorHandler, LOCALE_ID, NgModule } from '@angular/core';
+import { Router } from "@angular/router";
+import * as Sentry from "@sentry/angular";
+ 
+
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
@@ -159,6 +163,22 @@ import { CheckUpdateService } from './service-worker/check-update.service';
     // FireBaseMessagingService,
     // GoogleAnalyticsService,
     AsyncPipe,
+    {
+      provide: ErrorHandler,
+      useValue: Sentry.createErrorHandler({
+        showDialog: false,
+      }),
+    },
+    {
+      provide: Sentry.TraceService,
+      deps: [Router],
+    },
+    {
+      provide: APP_INITIALIZER,
+      useFactory: () => () => {},
+      deps: [Sentry.TraceService],
+      multi: true,
+    },
   ],
   bootstrap: [WebAppComponent],
 })
