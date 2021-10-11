@@ -91,9 +91,22 @@
             <input matInput formControlName="externalId" />
           </mat-form-field>
 
-          <mat-form-field fxFlex="48%" *ngIf="currentUser.permissions.includes('SYSTEM_CONFIG')" >
+          <mat-form-field
+            fxFlex="48%"
+            *ngIf="
+              currentUser?.permissions?.includes('VIEW_CLIENT_MOBILE_NO') ||
+              this?.currentUser?.staffId == this?.editClientForm?.controls?.staffId?.value
+            "
+          >
             <mat-label>{{ "Client_Component.ClientStepper.GeneralStep.labelMobile" | translate }}</mat-label>
-            <input matInput formControlName="mobileNo" />
+            <input
+              matInput
+              formControlName="mobileNo"
+              [readonly]="
+                this?.editClientForm?.controls?.mobileNo?.value != null &&
+                !this?.currentUser?.permissions?.includes('UPDATE_CLIENT_MOBILE_NO')
+              "
+            />
           </mat-form-field>
 
           <mat-form-field fxFlex="48%">
