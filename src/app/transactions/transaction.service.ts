@@ -192,7 +192,7 @@ export class TransactionService {
     httpParams = httpParams.set("ext2", transactionInfo.type);
     httpParams = httpParams.set("ext4", transactionInfo.identifierId);
 
-    if (transactionInfo.minFeeApply && transactionInfo.minFeeApply > 0) {
+    if (transactionInfo.minFeeApply && transactionInfo.minFeeApply > 0 && transactionInfo.minFeeApply > transactionInfo.feeAmount) {
       httpParams = httpParams.set("minFeeApply", transactionInfo.minFeeApply);
     }
     if (transactionInfo.accountCash) {

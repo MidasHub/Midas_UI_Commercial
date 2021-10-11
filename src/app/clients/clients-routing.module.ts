@@ -55,6 +55,7 @@ import { BalanceAccountTellerComponent } from "./balance-account-teller/balance-
 import { ClientIcAccountsResolver } from "./common-resolvers/client-ic-accounts.resolver";
 import { ClientIcViewResolver } from "./common-resolvers/client-ic-view.resolver";
 import { IcPartnerTabComponent } from "./clients-view/ic-partner/ic-partner-tab.component";
+import { BalanceAccountGroupComponent } from "app/groups/balance-account-group/balance-account-group.component";
 
 const routes: Routes = [
   Route.withShell([
@@ -69,7 +70,7 @@ const routes: Routes = [
         },
         {
           path: "balance-groups",
-          component: BalanceAccountClientComponent,
+          component: BalanceAccountGroupComponent,
           data: { title: extract("Đại lý"), breadcrumb: "Đại lý" },
         },
         {
