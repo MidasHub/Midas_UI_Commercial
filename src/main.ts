@@ -13,7 +13,7 @@ import * as Sentry from "@sentry/angular";
 import { Integrations } from "@sentry/tracing";
 
 Sentry.init({
-  dsn: "http://2d5f23664c6c4dc4915e4b957cd485e3@13.126.37.27:9000/2",
+  dsn: "https://2d5f23664c6c4dc4915e4b957cd485e3@tracking.kiotthe.app/2",
   integrations: [
     new Integrations.BrowserTracing({
       tracingOrigins: ["localhost", "https://kiotthe.app/api"],
