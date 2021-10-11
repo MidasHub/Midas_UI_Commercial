@@ -55,6 +55,7 @@ import { MarketingModule } from './marketing/marketing.module';
 import { BanksModule } from './banks/banks.module';
 import { CardTransferModule } from './card-transfer/card-transfer.module';
 import { CommonHttpParams } from './shared/CommonHttpParams';
+import { PouchdbService } from './pouchdb/pouchdb.service';
 
 /**
  * Import Vietnamese locale for built-in pipe like DatePipe, CurrencyPipe...
@@ -179,6 +180,7 @@ import { CheckUpdateService } from './service-worker/check-update.service';
       deps: [Sentry.TraceService],
       multi: true,
     },
+    PouchdbService
   ],
   bootstrap: [WebAppComponent],
 })

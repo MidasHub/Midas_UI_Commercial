@@ -62,7 +62,7 @@ export class ShellComponent implements OnInit, OnDestroy {
     // private detectDevice: DeviceDetectorService
   ) {
     // this.isDesktop = this.detectDevice.isDesktop();
-    this.credential = JSON.parse(localStorage.getItem('Credentials') || sessionStorage.getItem('Credentials') ||'{}');
+    this.credential = JSON.parse(localStorage.getItem('midasCredentials') || sessionStorage.getItem('midasCredentials') || '{}');
     /**
      * log info about SW
      * and use SW to listen to push message

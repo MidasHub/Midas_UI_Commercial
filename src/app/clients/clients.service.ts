@@ -127,14 +127,14 @@ export class ClientsService {
       sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey)!
     );
 
-    if (!this.accessToken.permissions.includes('POS_UPDATE')) {
-      sqlSearch = `${sqlSearch} AND c.staff_id = ${this.accessToken.staffId} `;
+    if (!this.accessToken.permissions.includes("POS_UPDATE")) {
+      sqlSearch = `${sqlSearch} and c.staff_id = ${this.accessToken.staffId} `;
     } else {
       if (officeFilter) {
-        sqlSearch = `${sqlSearch} AND c.office_id = ${officeFilter} `;
+        sqlSearch = `${sqlSearch} and c.office_id = ${officeFilter} `;
       }
       if (staffFilter) {
-        sqlSearch = `${sqlSearch} AND c.staff_id = ${staffFilter} `;
+        sqlSearch = `${sqlSearch} and c.staff_id = ${staffFilter} `;
       }
     }
     const httpParams = new HttpParams()
@@ -179,10 +179,20 @@ export class ClientsService {
     return this.http.post(`${this.GatewayApiUrlPrefix}/common/getMasterDistrict`, httpParams);
   }
 
+  getAllDistrict(): Observable<any> {
+    let httpParams = this.commonHttpParams.getCommonHttpParams();
+    return this.http.post(`${this.GatewayApiUrlPrefix}/common/getAllMasterDistrict`, httpParams);
+  }
+
   getClientTownVillage(districtId: string): Observable<any> {
     let httpParams = this.commonHttpParams.getCommonHttpParams();
     httpParams = httpParams.set('districtId', districtId);
     return this.http.post(`${this.GatewayApiUrlPrefix}/common/getMasterWard`, httpParams);
+  }
+
+  getAllTownVillage(): Observable<any> {
+    let httpParams = this.commonHttpParams.getCommonHttpParams();
+    return this.http.post(`${this.GatewayApiUrlPrefix}/common/getAllMasterWard`, httpParams);
   }
 
   /* Chỗ này cần review lại để dùng bằng service-worker*/
@@ -215,7 +225,12 @@ export class ClientsService {
   getClientDataAndTemplate(clientId?: string|null) {
     const httpParams = new HttpParams().set('template', 'true').set('staffInSelectedOfficeOnly', 'true');
     return this.http.get(`/clients/${clientId}`, { params: httpParams });
+    // let httpParams = this.commonHttpParams.getCommonHttpParams();
+    // httpParams = httpParams.set("id", clientId);
+
+    // return this.http.post<any>(`${this.GatewayApiUrlPrefix}/client/get_client_template_by_id`, httpParams);
   }
+
 
   getClientDatatables() {
     const httpParams = new HttpParams().set('apptable', 'm_client');

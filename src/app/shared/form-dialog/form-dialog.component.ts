@@ -8,6 +8,7 @@ import { FormGroupService } from './form-group.service';
 
 import { I18nService } from 'app/core/i18n/i18n.service';
 import { ClientsService } from 'app/clients/clients.service';
+import { PouchdbService } from 'app/pouchdb/pouchdb.service';
 
 const layoutGap = 2;
 
@@ -36,13 +37,18 @@ export class FormDialogComponent implements OnInit {
   formfields: FormfieldBase[];
   pristine: boolean;
   cardTypes: any[];
+  couchdb_districts: any[] = [];
+  couchdb_wards: any[] = [];
+  districts: any[] = [];
+  wards: any[] = [];
 
   constructor(
     private clientService: ClientsService,
     public dialogRef: MatDialogRef<FormDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private formGroupService: FormGroupService,
-    private i18n: I18nService
+    private i18n: I18nService,
+    private pdb: PouchdbService
   ) {
     this.dialogRef.disableClose = data.disableClose !== undefined ? data.disableClose : true;
     this.formfields = data.formfields.sort(
@@ -56,6 +62,7 @@ export class FormDialogComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.initMasterData();
     this.dialogRef.updateSize(`${(this.layout.columnWidth ? this.layout.columnWidth : 0) * this.layout.columns}px`);
     this.form = this.formGroupService.createFormGroup(this.formfields);
     this.form?.controls['binCode']?.valueChanges.subscribe((value) => {
@@ -72,25 +79,45 @@ export class FormDialogComponent implements OnInit {
       this.form.markAsDirty();
     }
 
+    // this.form?.controls['stateProvinceId']?.valueChanges.subscribe((value) => {
+    //   this.clientService.getClientDistrict(value).subscribe((res: any) => {
+    //     this.formfields.map((item: any) => {
+    //       if (item.controlName === 'countyDistrict') {
+    //         item.value = res.result.listAddressDistrict ? res.result.listAddressDistrict.refid : '';
+    //         item.options = { label: 'description', value: 'refid', data: res.result.listAddressDistrict };
+    //       }
+    //     });
+    //   });
+    // });
+
+    // this.form?.controls['countyDistrict']?.valueChanges.subscribe((value) => {
+    //   this.clientService.getClientTownVillage(value).subscribe((res: any) => {
+    //     this.formfields.map((item: any) => {
+    //       if (item.controlName === 'townVillage') {
+    //         item.value = res.result.listAddressWard ? res.result.listAddressWard.refid : '';
+    //         item.options = { label: 'description', value: 'refid', data: res.result.listAddressWard };
+    //       }
+    //     });
+    //   });
+    // });
+
     this.form?.controls['stateProvinceId']?.valueChanges.subscribe((value) => {
-      this.clientService.getClientDistrict(value).subscribe((res: any) => {
-        this.formfields.map((item: any) => {
-          if (item.controlName === 'countyDistrict') {
-            item.value = res.result.listAddressDistrict ? res.result.listAddressDistrict.refid : '';
-            item.options = { label: 'description', value: 'refid', data: res.result.listAddressDistrict };
-          }
-        });
+      let listResultDistricts = this.getDistrictsByProvinceId(value);
+      this.formfields.map((item: any) => {
+        if (item.controlName === 'countyDistrict') {
+          //item.value = listResultDistricts ? listResultDistricts.refid : '';
+          item.options = { label: 'description', value: 'refid', data: listResultDistricts };
+        }
       });
     });
 
     this.form?.controls['countyDistrict']?.valueChanges.subscribe((value) => {
-      this.clientService.getClientTownVillage(value).subscribe((res: any) => {
-        this.formfields.map((item: any) => {
-          if (item.controlName === 'townVillage') {
-            item.value = res.result.listAddressWard ? res.result.listAddressWard.refid : '';
-            item.options = { label: 'description', value: 'refid', data: res.result.listAddressWard };
-          }
-        });
+      let listResultWards = this.getWardsByDistrictId(value);
+      this.formfields.map((item: any) => {
+        if (item.controlName === 'townVillage') {
+          //item.value = listResultDistricts ? listResultDistricts.refid : '';
+          item.options = { label: 'description', value: 'refid', data: listResultWards };
+        }
       });
     });
 
@@ -110,6 +137,79 @@ export class FormDialogComponent implements OnInit {
   }
   get getForm() {
     return this.form;
+  }
+
+  initMasterData() {
+    this.getMasterDataDistricts();
+    this.getMasterDataWards();
+  }
+
+  async getMasterDataDistricts() {
+    this.couchdb_districts = await this.pdb.getItem("masterdata_districts", false);
+    if (this.couchdb_districts) {
+      console.log("=====this.couchdb_districts", this.couchdb_districts);
+      delete this.couchdb_districts['_id'];
+      delete this.couchdb_districts['_rev'];
+      delete this.couchdb_districts['time'];
+      for (let key in this.couchdb_districts) {
+        let value = this.couchdb_districts[key];
+        this.districts.push(value);
+      }
+      console.log("this.districts", this.districts);
+    }
+    else {
+      console.log("=====No district data! Reload!");
+      this.clientService.getAllDistrict().subscribe((res: any) => {
+          this.couchdb_districts = res.result.listAddressDistrict;
+          this.pdb.upsertItem("masterdata_districts", this.couchdb_districts);
+          this.getMasterDataDistricts();
+      });
+    }
+  }
+
+  async getMasterDataWards() {
+    this.couchdb_wards = await this.pdb.getItem("masterdata_wards", false);
+    if (this.couchdb_wards) {
+      console.log("=====this.couchdb_wards", this.couchdb_wards);
+      delete this.couchdb_wards['_id'];
+      delete this.couchdb_wards['_rev'];
+      delete this.couchdb_wards['time'];
+      for (let key in this.couchdb_wards) {
+        let value = this.couchdb_wards[key];
+        this.wards.push(value);
+      }
+      console.log("this.wards", this.wards);
+    }
+    else {
+      console.log("=====No wards data! Reload!");
+      this.clientService.getAllTownVillage().subscribe((res: any) => {
+          this.couchdb_wards = res.result.listAddressWard;
+          this.pdb.upsertItem("masterdata_wards", this.couchdb_wards);
+          this.getMasterDataWards();
+      });
+    }
+  }
+
+  getDistrictsByProvinceId(provinceId: any) {
+    let couchdb_districts: any[] = [];
+    this.districts.filter((v: any) => {
+      if (v.provinceId === Number(provinceId)) {
+        couchdb_districts.push(v);
+      }
+    });
+    console.log("======getDistrictsByProvinceId", couchdb_districts);
+    return couchdb_districts;
+  }
+
+  getWardsByDistrictId(districtId: any) {
+    let couchdb_wards: any[] = [];
+    this.wards.filter((v: any) => {
+      if (v.districtId === Number(districtId)) {
+        couchdb_wards.push(v);
+      }
+    });
+    console.log("======getWardsByDistrictId", couchdb_wards);
+    return couchdb_wards;
   }
 
 }

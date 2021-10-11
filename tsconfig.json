@@ -19,6 +19,7 @@
     "noFallthroughCasesInSwitch": true,
     "suppressImplicitAnyIndexErrors": true,
     "strict":true,
+    "allowSyntheticDefaultImports": true,
     "target": "es5",
     // "target": "es2017",
     "typeRoots": [
