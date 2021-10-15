@@ -120,8 +120,9 @@ export class AdvanceComponent implements OnInit {
       if (!staffId) {
         sqlSearch = '';
       }
-      this.serviceClient.getClientsByStaff('', '', 0, -1, sqlSearch).subscribe((cl: any) => {
-        this.clients = cl.pageItems?.filter((v: any) => v?.accountNo?.startsWith('C'));
+      this.serviceClient.getClientsByStaff("", "", 0, -1, sqlSearch).subscribe((cl: any) => {
+        // this.clients = cl.pageItems?.filter((v: any) => v?.accountNo?.startsWith("C"));
+        this.clients = cl?.pageItems;
         this.filteredClient = this.filterClient(null).slice(0, 30);
         this.isLoading = false;
       });
