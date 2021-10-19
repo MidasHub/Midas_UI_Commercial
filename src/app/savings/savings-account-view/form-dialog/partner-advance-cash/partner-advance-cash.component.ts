@@ -48,6 +48,7 @@ export class PartnerAdvanceCashComponent implements OnInit {
   partnerOfficeAdvanceCashes!: any[];
   partnerClientVaultAdvanceCashes!: any[];
   staffs!: any[];
+  advanceCashValidator: boolean = false;
 
   constructor(
     private savingService: SavingsService,
@@ -105,10 +106,22 @@ export class PartnerAdvanceCashComponent implements OnInit {
     this.bankService.getListOfficeCommon().subscribe((result) => {
       this.partnerOfficeAdvanceCashes = result?.result?.listOffice;
     });
+    this.form.get('partnerAdvanceCash')?.valueChanges.subscribe((value) => {
+      this.checkValid();
+    });
   }
 
   displayFn(client?: any): string  {
     return client ? client.desc : '';
+  }
+
+  checkValid()  {
+    if (this.form.get('partnerAdvanceCash')?.value.refid) {
+      this.advanceCashValidator = true;
+    }
+    else {
+      this.advanceCashValidator = false;
+    }
   }
 
   /* Chỗ này check type hơi tối nghĩa nên Jean chỉnh lại chút */

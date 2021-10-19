@@ -77,7 +77,7 @@
     mat-raised-button
     color="primary"
     [mat-dialog-close]="{ data: form }"
-    [disabled]="!form.valid || form.pristine"
+    [disabled]="!form.valid || form.pristine || !advanceCashValidator"
   >
     {{ "Shared_Component.FormDialog.btnAdd" | translate }}
   </button>
