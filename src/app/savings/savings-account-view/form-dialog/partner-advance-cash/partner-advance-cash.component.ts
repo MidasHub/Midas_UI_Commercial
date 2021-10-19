@@ -43,11 +43,13 @@ export class PartnerAdvanceCashComponent implements OnInit {
       name: "Interchange: Chuyển tiền về IC",
     },
   ];
-  partnerAdvanceCashes: any[];
-  filteredPartner: any[];
-  partnerOfficeAdvanceCashes: any[];
-  partnerClientVaultAdvanceCashes: any[];
-  staffs: any[];
+
+  partnerAdvanceCashes!: any[];
+  filteredPartner!: any[];
+  partnerOfficeAdvanceCashes!: any[];
+  partnerClientVaultAdvanceCashes!: any[];
+  staffs!: any[];
+  advanceCashValidator: boolean = false;
 
   constructor(
     private savingService: SavingsService,
@@ -105,19 +107,32 @@ export class PartnerAdvanceCashComponent implements OnInit {
     this.bankService.getListOfficeCommon().subscribe((result) => {
       this.partnerOfficeAdvanceCashes = result?.result?.listOffice;
     });
+    this.form.get("partnerAdvanceCash")?.valueChanges.subscribe((value) => {
+      this.checkValid(value);
+    });
   }
 
   displayFn(client?: any): string | undefined {
     return client ? client.desc : undefined;
   }
 
-  private filterPartner(value: string | any) {
-    let filterValue = "";
+  checkValid(value: string) {
     if (value) {
-      filterValue = typeof value === "string" ? value.toLowerCase() : value.desc.toLowerCase();
+      this.advanceCashValidator = true;
+    } else {
+      this.advanceCashValidator = false;
+    }
+  }
+
+  /* Chỗ này check type hơi tối nghĩa nên Jean chỉnh lại chút */
+  private filterPartner(value: string | any) {
+    let filterValue = '';
+    if (value) {
+      filterValue = typeof value === 'string' ? value.toLowerCase() : value.desc.toLowerCase();
       return this.partnerAdvanceCashes.filter((partner: any) => partner.desc.toLowerCase().includes(filterValue));
     } else {
       return this.partnerAdvanceCashes;
     }
   }
+
 }
