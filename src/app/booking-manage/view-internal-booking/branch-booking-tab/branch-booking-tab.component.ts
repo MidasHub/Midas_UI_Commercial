@@ -1,3 +1,5 @@
+import { element } from "protractor";
+import { forEach } from "lodash";
 import { DatePipe } from "@angular/common";
 import { Component, OnInit, ViewChild } from "@angular/core";
 import { FormBuilder, FormGroup } from "@angular/forms";
@@ -9,6 +11,7 @@ import { DetailBranchBookingDialogComponent } from "app/booking-manage/dialog/de
 import { TransferBookingInternalComponent } from "app/booking-manage/dialog/transfer-booking-internal/transfer-booking-internal.component";
 import { AlertService } from "app/core/alert/alert.service";
 import { SettingsService } from "app/settings/settings.service";
+import { TerminalsService } from "app/terminals/terminals.service";
 import { ConfirmDialogComponent } from "app/transactions/dialog/confirm-dialog/confirm-dialog.component";
 import { merge } from "rxjs";
 import { tap } from "rxjs/operators";
@@ -20,11 +23,13 @@ import { tap } from "rxjs/operators";
 })
 export class BranchBookingTabComponent implements OnInit {
   expandedElement: any;
+  partners: any[];
   displayedColumns: any[] = [
     "bookingRefNo",
     "officeName",
     "status",
     "bookingAmount",
+    "partner",
     "getBookedAmount",
     "needBookedAmount",
     "txnDate",
@@ -50,7 +55,8 @@ export class BranchBookingTabComponent implements OnInit {
     private settingsService: SettingsService,
     private datePipe: DatePipe,
     private dialog: MatDialog,
-    private alertService: AlertService
+    private alertService: AlertService,
+    private terminalsService: TerminalsService
   ) {
     this.formDate = this.formBuilder.group({
       fromDate: [new Date()],
@@ -60,6 +66,7 @@ export class BranchBookingTabComponent implements OnInit {
     this.formFilter = this.formBuilder.group({
       officeName: [""],
       userName: [""],
+      partnerCode: [""],
     });
   }
   showDetailBooking(bookingRefNo: string) {
@@ -69,6 +76,11 @@ export class BranchBookingTabComponent implements OnInit {
     };
     dialogConfig.minWidth = 1200;
     this.dialog.open(DetailBranchBookingDialogComponent, dialogConfig);
+  }
+
+  displayPartnerName(code: string) {
+    const partnerInfo = this.partners?.filter((partner: any) => partner.code == code);
+    return partnerInfo ? partnerInfo[0]?.desc : code;
   }
 
   textDecorateBooking(status: string) {
@@ -86,8 +98,15 @@ export class BranchBookingTabComponent implements OnInit {
     if (toDate) {
       toDate = this.datePipe.transform(toDate, dateFormat);
     }
+
     this.bookingService.getManageBookingBranch(fromDate, toDate).subscribe((data: any) => {
       this.staffBookingInfo = data?.result?.bookingInternalResponseDto;
+      this.staffBookingInfo.lisBookingManagementDtos.forEach((detail: any) => {
+        detail.partnerCode = "";
+        detail.listSumBooking.forEach((partner: any) => {
+          detail.partnerCode += partner.partnerPos;
+        });
+      });
       this.dataSource = data?.result?.bookingInternalResponseDto?.lisBookingManagementDtos;
       this.BookingFilter = this.dataSource;
       this.loadData();
@@ -104,6 +123,11 @@ export class BranchBookingTabComponent implements OnInit {
 
   ngOnInit(): void {
     this.formFilter.valueChanges.subscribe((e) => [this.filterData()]);
+    this.terminalsService.getPartnersTerminalTemplate().subscribe((partner) => {
+      this.partners = partner?.result?.partners;
+      // @ts-ignore
+      this.partners?.unshift({ code: "ALL", desc: "Tất cả đối tác" });
+    });
   }
 
   filterData() {
@@ -112,6 +136,12 @@ export class BranchBookingTabComponent implements OnInit {
     const keys = Object.keys(form);
     this.BookingFilter = this.dataSource.filter((v) => {
       for (const key of keys) {
+        if ("partnerCode".indexOf(key) != -1) {
+          if (form[key] && form[key] == "ALL") {
+            return true;
+          }
+        }
+
         if (form[key] && !String(v[key]).trim().toLowerCase().includes(String(form[key]).trim().toLowerCase())) {
           return false;
         }
@@ -137,7 +167,7 @@ export class BranchBookingTabComponent implements OnInit {
   }
 
   checkedBranchBooking(booking: any) {
-    if (!booking){
+    if (!booking) {
       return;
     }
     const dialog = this.dialog.open(ConfirmDialogComponent, {
