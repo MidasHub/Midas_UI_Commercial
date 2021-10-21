@@ -476,16 +476,6 @@ export class ManageTransactionComponent implements OnInit {
 
             return;
           }
-
-          // if (!transaction.fileSubmitBase64) {
-          //   let messageCheckSameAmountCrossCheck = `Vui lòng cung cấp ảnh bill tổng của lô ${transaction.batchNoSubmit} trước khi thực hiện!`;
-          //   this.alertService.alert({
-          //     msgClass: "cssDanger",
-          //     message: messageCheckSameAmountCrossCheck,
-          //   });
-
-          //   return;
-          // }
         }
 
         let note = value.note;
@@ -498,9 +488,18 @@ export class ManageTransactionComponent implements OnInit {
             terminalNameSubmit = this.transactionTerminals[index].terminalName;
           }
         }
+        let fromDate = this.formDate.get("fromDate").value;
+        let toDate = this.formDate.get("toDate").value;
+        const dateFormat = this.settingsService.dateFormat;
 
+        if (fromDate) {
+          fromDate = this.datePipe.transform(fromDate, dateFormat);
+        }
+        if (toDate) {
+          toDate = this.datePipe.transform(toDate, dateFormat);
+        }
         this.transactionService
-          .submitTransactionUpToiNow(listObjectTransactionSubmit, note, terminalSubmit, terminalNameSubmit)
+          .submitTransactionUpToiNow(listObjectTransactionSubmit, note, terminalSubmit, terminalNameSubmit, fromDate, toDate)
           .subscribe((result) => {
             if (result.status === "200") {
               this.getTransaction();
