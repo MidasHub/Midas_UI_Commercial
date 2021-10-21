@@ -511,7 +511,9 @@ export class TransactionService {
     listTransactionSubmitInfo: any,
     note: string,
     terminalSubmit: string,
-    terminalNameSubmit: string
+    terminalNameSubmit: string,
+    fromDate: string,
+    toDate: string
   ): Observable<any> {
     let httpParams = this.commonHttpParams.getCommonHttpParams();
     const Params = {
@@ -523,6 +525,8 @@ export class TransactionService {
       terminalSubmit: terminalSubmit,
       terminalNameSubmit: terminalNameSubmit,
       listTransactionSubmitInfo: listTransactionSubmitInfo,
+      fromDate: fromDate,
+      toDate: toDate,
     };
 
     return this.http.post<any>(`${this.GatewayApiUrlPrefix}/transaction/submit_transaction_by_office`, Params);
