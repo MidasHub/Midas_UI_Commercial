@@ -66,7 +66,7 @@ export class BranchBookingTabComponent implements OnInit {
     this.formFilter = this.formBuilder.group({
       officeName: [""],
       userName: [""],
-      partnerCode: [""],
+      partnerCode: ["ALL"],
     });
   }
   showDetailBooking(bookingRefNo: string) {
@@ -103,11 +103,11 @@ export class BranchBookingTabComponent implements OnInit {
       this.staffBookingInfo = data?.result?.bookingInternalResponseDto;
       this.staffBookingInfo.lisBookingManagementDtos.forEach((detail: any) => {
         detail.partnerCode = "";
-        detail.listSumBooking.forEach((partner: any) => {
-          detail.partnerCode += partner.partnerPos;
+        detail.listSumBooking?.forEach((partner: any) => {
+          detail.partnerCode = partner.partnerPos;
         });
       });
-      this.dataSource = data?.result?.bookingInternalResponseDto?.lisBookingManagementDtos;
+      this.dataSource = this.staffBookingInfo.lisBookingManagementDtos;
       this.BookingFilter = this.dataSource;
       this.loadData();
     });
@@ -136,7 +136,9 @@ export class BranchBookingTabComponent implements OnInit {
     const keys = Object.keys(form);
     this.BookingFilter = this.dataSource.filter((v) => {
       for (const key of keys) {
+
         if ("partnerCode".indexOf(key) != -1) {
+
           if (form[key] && form[key] == "ALL") {
             return true;
           }
@@ -145,6 +147,8 @@ export class BranchBookingTabComponent implements OnInit {
         if (form[key] && !String(v[key]).trim().toLowerCase().includes(String(form[key]).trim().toLowerCase())) {
           return false;
         }
+
+
       }
       return true;
     });
