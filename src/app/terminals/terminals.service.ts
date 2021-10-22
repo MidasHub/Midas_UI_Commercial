@@ -61,7 +61,7 @@ export class TerminalsService {
     let httpParams = this.commonHttpParams.getCommonHttpParams();
     httpParams = httpParams.set("hierarchy", `${currentUser.officeHierarchy}%`);
 
-    return this.http.post<any>(`${this.GatewayApiUrlPrefix}/pos/get_list_limit_pos`, httpParams);
+    return this.http.post<any>(`${this.IcGatewayApiUrlPrefix}/pos/get_list_limit_pos`, httpParams);
   }
 
   getTerminals(): Observable<any> {
