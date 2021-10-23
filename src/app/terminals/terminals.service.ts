@@ -57,9 +57,11 @@ export class TerminalsService {
 
   getLimitTerminals(): Observable<any> {
     const currentUser = this.authenticationService.getCredentials();
-
+    const { permissions } = currentUser;
+    const isHavePermission = permissions.includes("ALL_FUNCTIONS");
     let httpParams = this.commonHttpParams.getCommonHttpParams();
-    httpParams = httpParams.set("hierarchy", `${currentUser.officeHierarchy}%`);
+    httpParams = httpParams.set("queryOffice", isHavePermission ? `%%` : `${currentUser.officeId}`);
+    // httpParams = httpParams.set("hierarchy", `${currentUser.officeHierarchy}%`);
 
     return this.http.post<any>(`${this.IcGatewayApiUrlPrefix}/pos/get_list_limit_pos`, httpParams);
   }
