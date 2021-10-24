@@ -116,8 +116,8 @@ export class PartnerAdvanceCashComponent implements OnInit {
     return client ? client.desc : undefined;
   }
 
-  checkValid(value: string) {
-    if (value) {
+  checkValid(value: any) {
+    if (value?.refid) {
       this.advanceCashValidator = true;
     } else {
       this.advanceCashValidator = false;
@@ -126,13 +126,12 @@ export class PartnerAdvanceCashComponent implements OnInit {
 
   /* Chỗ này check type hơi tối nghĩa nên Jean chỉnh lại chút */
   private filterPartner(value: string | any) {
-    let filterValue = '';
+    let filterValue = "";
     if (value) {
-      filterValue = typeof value === 'string' ? value.toLowerCase() : value.desc.toLowerCase();
+      filterValue = typeof value === "string" ? value.toLowerCase() : value.desc.toLowerCase();
       return this.partnerAdvanceCashes.filter((partner: any) => partner.desc.toLowerCase().includes(filterValue));
     } else {
       return this.partnerAdvanceCashes;
     }
   }
-
 }
