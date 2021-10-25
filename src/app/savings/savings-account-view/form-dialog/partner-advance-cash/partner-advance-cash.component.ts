@@ -125,20 +125,14 @@ export class PartnerAdvanceCashComponent implements OnInit {
   }
 
   /* Chỗ này check type hơi tối nghĩa nên Jean chỉnh lại chút */
-  // private filterPartner(value: string | any) {
-  //   let filterValue = '';
-  //   if (value) {
-  //     filterValue = typeof value === 'string' ? value.toLowerCase() : value.desc.toLowerCase();
-  //     return this.partnerAdvanceCashes.filter((partner: any) => partner.desc.toLowerCase().includes(filterValue));
-  //   } else {
-  //     return this.partnerAdvanceCashes;
-  //   }
-  // }
-  private filterPartner(value: string | null) {
+  private filterPartner(value: string | any) {
+    let filterValue = '';
     if (value) {
-      return this.partnerAdvanceCashes.filter((partner: any) => partner.desc.toLowerCase().includes(value.toLowerCase().trim()));
+      filterValue = typeof value === 'string' ? value.toLowerCase() : value.desc.toLowerCase();
+      return this.partnerAdvanceCashes.filter((partner: any) => partner.desc.toLowerCase().includes(filterValue));
     } else {
       return this.partnerAdvanceCashes;
     }
   }
+
 }
