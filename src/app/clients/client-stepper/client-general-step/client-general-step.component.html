@@ -133,6 +133,9 @@
           <mat-form-field fxFlex="48%">
             <mat-label>{{ "Client_Component.ClientStepper.GeneralStep.labelMobile" | translate }}</mat-label>
             <input matInput type="text" formControlName="mobileNo" />
+            <mat-error
+              *ngIf="createClientForm.controls.mobileNo.hasError('minlength') || createClientForm.controls.mobileNo.hasError('maxlength')"
+            >Số điện thoại phải đủ 10 số! </mat-error>
           </mat-form-field>
 
           <mat-form-field *ngIf="createClientForm.value.legalFormId === 1" fxFlex="48%">
