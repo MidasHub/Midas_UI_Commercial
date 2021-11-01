@@ -102,7 +102,7 @@ export class ClientGeneralStepComponent implements OnInit {
       'externalId': [''],
       'maritalStatus': ['', Validators.required],
       'genderId': [''],
-      'mobileNo': [''],
+      'mobileNo': ['',  Validators.minLength(10), Validators.maxLength(10)],
       'dateOfBirth': [''],
       'clientTypeId': [21],
       'clientClassificationId': [20],
