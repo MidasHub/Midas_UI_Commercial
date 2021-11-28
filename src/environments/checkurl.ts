@@ -3,11 +3,11 @@ const subdomain = window.location.hostname.split(".")[0];
 let tenant = "default";
 let billpostenant = "default";
 let ictenant = "default";
-let defaultIcURL = "https://ic.kiotthe.app";
+let defaultIcURL = "https://icdev.kiotthe.app";
 
 // prod TEKCOMPAY, HDCREDIT
-let defaultbaseURL = "https://midas.kiotthe.app";
-let defaultbillposURL = "https://midas.kiotthe.app";
+let defaultbaseURL = "https://staging.kiotthe.app";
+let defaultbillposURL = "https://staging.kiotthe.app";
 
 let apiProvider = "/midas/api";
 const apiVersion = "/v1";
