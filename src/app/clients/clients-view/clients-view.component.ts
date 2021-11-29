@@ -16,6 +16,7 @@ import { CaptureImageDialogComponent } from "./custom-dialogs/capture-image-dial
 /** Custom Services */
 import { ClientsService } from "../clients.service";
 import { TransactionHistoryDialogComponent } from "app/transactions/rollTerm-schedule-transaction/dialog/transaction-history/transaction-history-dialog.component";
+import { AuthenticationService } from "app/core/authentication/authentication.service";
 
 @Component({
   selector: "mifosx-clients-view",
@@ -26,6 +27,7 @@ export class ClientsViewComponent implements OnInit {
   clientViewData: any;
   clientDatatables: any;
   clientImage: any;
+  currentUser: any;
   clientTemplateData: any;
   showViewClient: boolean = false;
   typeViewClient: string;
@@ -36,7 +38,9 @@ export class ClientsViewComponent implements OnInit {
     private router: Router,
     private clientsService: ClientsService,
     private _sanitizer: DomSanitizer,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private authenticationService: AuthenticationService,
+
   ) {
     this.route.data.subscribe((data: { clientViewData: any; clientTemplateData: any; clientDatatables: any }) => {
       this.clientViewData = data.clientViewData.result.clientInfo;
@@ -76,6 +80,7 @@ export class ClientsViewComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.currentUser = this.authenticationService.getCredentials();
     this.route.queryParamMap.subscribe((params) => {
       this.typeViewClient = params.get("typeViewClient");
       // this.showViewClient = (this.typeViewClient == 'transaction');
