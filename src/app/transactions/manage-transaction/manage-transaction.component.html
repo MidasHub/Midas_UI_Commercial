@@ -332,6 +332,12 @@
                   <img src="assets/images/icons/bill.svg" />
                 </button>
               </span>
+
+              <span *ngIf="this.currentUser.officeId == 3">
+                <button title="Tải hóa đơn" mat-mini-fab (click)="downloadVoucher(transaction.refid)" color="basic">
+                  <img src="assets/images/icons/bill.svg" />
+                </button>
+              </span>
               <br />
               <span *ngIf="transaction.isSubmit == 1" style="color: white; font-weight: bold; background-color: black">
                 Đã chốt số
