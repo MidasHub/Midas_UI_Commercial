@@ -368,7 +368,7 @@
                 <span style="font-weight: bold">
                   Cần thu hồi <br />
                   (e)=(b) - (d) :</span
-                >&nbsp; &nbsp;{{ element.paidAmount - element.amountPaid | money }}
+                >&nbsp; &nbsp;{{ (element.paidAmount - element.amountPaid) | money }}
               </div>
             </div>
           </div>
@@ -398,7 +398,7 @@
       let-panHolderName="panHolderName"
       let-panNumber="panNumber"
       let-principal="principal"
-      let-paidAmount="paidAmount"
+      let-amountPaid="amountPaid"
       style="width: 50px"
     >
       <button (click)="showRollTermScheduleDialog(refid)" mat-menu-item>
