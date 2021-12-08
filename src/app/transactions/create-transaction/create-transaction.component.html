@@ -113,6 +113,12 @@
               </div>
             </div>
             <div fxFlex.gt-sm="50%" fxLayout="row wrap">
+              <div fxFlex="100%" fxLayout="row wrap" style="color: green; font-weight: bold" *ngIf="transactionInfo.type == 'rollTermGetCash'">
+                <div fxFlex="30%">Người tạo</div>
+                <div fxFlex="60%" style="color: blue; font-weight: bold" class="left">
+                  <label style="color: green; font-weight: bold">{{ transactionInfo?.staffName | uppercase }}</label>
+                </div>
+              </div>
               <div fxFlex="100%" fxLayout="row wrap">
                 <div fxFlex="30%">Tên khách hàng</div>
                 <div fxFlex="60%" style="color: blue; font-weight: bold" class="left">
