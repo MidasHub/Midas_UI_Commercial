@@ -98,6 +98,7 @@ export class CreateTransactionComponent implements OnInit {
           type != "rollTermGetCash" ? identifierId : data.result.posTransaction.identifierId;
         this.transactionInfo.clientId = type != "rollTermGetCash" ? clientId : data.result.posTransaction.custId;
         this.transactionInfo.bookingId = bookingId;
+        this.transactionInfo.staffName =  data.result.posTransaction.staffName;
         this.transactionInfo.remainValue = this.formatCurrency(remainValue);
 
         this.transactionCreateForm = this.formBuilder.group({
