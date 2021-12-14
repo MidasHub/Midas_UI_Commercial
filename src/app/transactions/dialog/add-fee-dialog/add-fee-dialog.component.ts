@@ -27,6 +27,7 @@ export class AddFeeDialogComponent implements OnInit {
   transactionFee: any;
   transactionPaid: any;
   showPaid = false;
+  lastFourCardDigit:string = "";
 
   showGet = true;
   showCashAccountPaid = true;
@@ -231,6 +232,7 @@ export class AddFeeDialogComponent implements OnInit {
   ngOnInit(): void {
     this.transactionService.getFeePaidTransactionByTnRefNo(this.txnCode).subscribe((result) => {
       this.transactions = result.result?.listTransactionFee;
+      this.lastFourCardDigit = `***${result.result?.lastFourCardDigit}`;
       this.clientId = this.transactions[0].customerId;
       this.transactionFee = this.transactions.find((v) => v.txnPaymentType === "IN");
       this.transactionPaid = this.transactions.find((v) => v.txnPaymentType === "OUT");
