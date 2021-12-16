@@ -57,6 +57,9 @@
                   <label style="font-weight: bold; color: green;"> {{ clientViewData?.mobileNo ? (clientViewData?.mobileNo == "###" ? "Đã ẩn" : clientViewData?.mobileNo) : "Chưa cung cấp" }}</label>
                   <br />
                 </label>
+                <label *ngIf="!this.isInterchangeClient"  style="font-weight: bold; color: blue;"
+                >Số bảo hiểm: {{ clientViewData?.insurance?.insuranceId || "Chưa có" }}</label>
+              <br />
                 <label *ngIf="!this.isInterchangeClient"
                   >Nhân viên quản lý: {{ clientViewData?.staffName || "Chưa phân bổ" }} <br
                 /></label>
@@ -177,6 +180,11 @@
             <div *ngIf="!this.isInterchangeClient">
               <button mat-menu-item [routerLink]="['savings-accounts', 'create']">
                 <i class="fas fa-file-invoice-dollar"></i> {{ "Client_Component.ViewClient.btnNewSaving" | translate }}
+              </button>
+            </div>
+            <div *ngIf="!this.isInterchangeClient">
+              <button mat-menu-item (click)="openReceiveInsuranceDialog()" >
+                <i class="fas fa-file-invoice-dollar"></i> {{ "Client_Component.ViewClient.btnReceiveInsurance" | translate }}
               </button>
             </div>
             <div *ngIf="!this.isInterchangeClient">
