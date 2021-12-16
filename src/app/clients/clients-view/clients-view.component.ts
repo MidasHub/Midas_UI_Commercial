@@ -1,3 +1,4 @@
+import { AlertService } from "app/core/alert/alert.service";
 /** Angular Imports */
 import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
@@ -17,6 +18,7 @@ import { CaptureImageDialogComponent } from "./custom-dialogs/capture-image-dial
 import { ClientsService } from "../clients.service";
 import { TransactionHistoryDialogComponent } from "app/transactions/rollTerm-schedule-transaction/dialog/transaction-history/transaction-history-dialog.component";
 import { AuthenticationService } from "app/core/authentication/authentication.service";
+import { ReceiveInsuranceComponent } from "./custom-dialogs/receive-insurance/receive-insurance.component";
 @Component({
   selector: "mifosx-clients-view",
   templateUrl: "./clients-view.component.html",
@@ -28,7 +30,7 @@ export class ClientsViewComponent implements OnInit {
   clientImage: any;
   clientTemplateData: any;
   showViewClient: boolean = false;
-  typeViewClient: string = '';
+  typeViewClient: string = "";
   isInterchangeClient: boolean = false;
   currentUser: any;
 
@@ -38,11 +40,14 @@ export class ClientsViewComponent implements OnInit {
     private clientsService: ClientsService,
     private _sanitizer: DomSanitizer,
     private authenticationService: AuthenticationService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    public alertService: AlertService,
+
   ) {
     this.currentUser = this.authenticationService.getCredentials();
-    this.route.data.subscribe((data: { clientViewData: any; clientTemplateData: any; clientDatatables: any }|any) => {
+    this.route.data.subscribe((data: { clientViewData: any; clientTemplateData: any; clientDatatables: any } | any) => {
       this.clientViewData = data.clientViewData.result.clientInfo;
+      this.clientViewData.insurance = data.clientViewData.result.insurance;
       this.clientDatatables = data.clientDatatables ? data.clientDatatables : {};
       this.clientTemplateData = data.clientTemplateData ? data.clientTemplateData : {};
       this.displayExtendInfoValue();
@@ -51,6 +56,9 @@ export class ClientsViewComponent implements OnInit {
 
   displayExtendInfoValue() {
     let indexCustomerSource = 0;
+    if (!this.clientDatatables[0]) {
+      return;
+    }
     this.clientsService
       .getClientDatatable(this.clientViewData.id, this.clientDatatables[0]?.registeredTableName)
       .subscribe((extendInfo: any) => {
@@ -67,9 +75,8 @@ export class ClientsViewComponent implements OnInit {
               }
             });
           } else {
-
             if (element.columnName == "nickName") {
-              let nickName = extendInfo.data[0].row[indexCustomerSource];
+              let nickName = extendInfo.data[0]?.row[indexCustomerSource];
               this.clientViewData.nickName = nickName;
             }
             indexCustomerSource += 1;
@@ -250,6 +257,32 @@ export class ClientsViewComponent implements OnInit {
       if (signature) {
         this.clientsService.uploadClientSignatureImage(this.clientViewData.id, signature).subscribe(() => {
           this.reload();
+        });
+      }
+    });
+  }
+
+  openReceiveInsuranceDialog() {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.minWidth = 500;
+    const dialog = this.dialog.open(ReceiveInsuranceComponent, dialogConfig);
+    dialog.afterClosed().subscribe((data) => {
+      if (data) {
+
+        this.clientsService.ReceiveInsurance(data.data.value, this.clientViewData.id).subscribe((response: any) => {
+          if (response.status == "200") {
+            this.alertService.alert({
+              message: `Thêm bảo hiểm cho khách hàng thành công!`,
+              msgClass: "cssSuccess",
+              hPosition: "center",
+            });
+          } else {
+            this.alertService.alert({
+              message: `${response.error}`,
+              msgClass: "cssDanger",
+              hPosition: "center",
+            });
+          }
         });
       }
     });
