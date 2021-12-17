@@ -106,7 +106,7 @@
                 color="primary"
                 (click)="routeToMakeTransaction(identity.id, 'cash', identity.documentKey)"
                 matTooltip="Cash"
-                [disabled]='!this.clientViewData.active'
+                [disabled]='!this.clientViewData?.active'
               >
                 <i class="fas fa-money-bill-wave"></i>
               </button>
@@ -117,7 +117,7 @@
                 color="warn"
                 (click)="routeToMakeTransaction(identity.id, 'rollTerm', identity.documentKey)"
                 matTooltip="Advance"
-                [disabled]='!this.clientViewData.active'
+                [disabled]='!this.clientViewData?.active'
               >
                 <i class="fas fa-hand-holding-usd"></i>
               </button>

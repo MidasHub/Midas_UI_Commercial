@@ -1,0 +1,63 @@
+<h1 mat-dialog-title>THÔNG TIN NHẬN TIỀN BẢO HIỂM</h1>
+
+<div
+  mat-dialog-content
+  [formGroup]="form"
+  [fxLayout]="'column'"
+  fxLayout.lt-md="column"
+  [fxLayoutGap]="'1%'"
+  fxLayoutGap.lt-md="0%"
+>
+  <mat-form-field class="select-book" *ngIf="form.contains('buSavingAccount')">
+    <mat-label>Tài khoản nhận tiền</mat-label>
+    <mat-select required formControlName="buSavingAccount">
+      <mat-option *ngFor="let saving of buSavingAccounts" [value]="saving.id">
+        {{ saving.externalId }} - Số dư: {{ saving.balance | money }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field fxFlex="96%" *ngIf="form.contains('amount')">
+    <mat-label>Số tiền</mat-label>
+    <input required currencyMask type="text" matInput formControlName="amount" />
+  </mat-form-field>
+
+  <mat-form-field fxFlex="96%">
+    <mat-label>Số chứng chỉ bảo hiểm</mat-label>
+    <input required type="text" matInput formControlName="insuranceId" />
+  </mat-form-field>
+  <mat-form-field fxFlex="96%">
+    <mat-label>Ngày hiệu lực:</mat-label>
+    <input isOpen="true" matInput [matDatepicker]="transactionDateFromPicker" formControlName="activeDate" />
+    <mat-datepicker-toggle matSuffix [for]="transactionDateFromPicker"></mat-datepicker-toggle>
+    <mat-datepicker #transactionDateFromPicker></mat-datepicker>
+  </mat-form-field>
+
+  <mat-form-field fxFlex="96%">
+    <mat-label>Ngày hết hạn:</mat-label>
+    <input isOpen="true" matInput [matDatepicker]="transactionDateToPicker" formControlName="expiredDate" />
+    <mat-datepicker-toggle matSuffix [for]="transactionDateToPicker"></mat-datepicker-toggle>
+    <mat-datepicker #transactionDateToPicker></mat-datepicker>
+  </mat-form-field>
+
+  <mat-form-field fxFlex="96%">
+    <mat-label>Biển số xe</mat-label>
+    <input required type="text" matInput formControlName="driverLicenseNumber" />
+  </mat-form-field>
+  <mat-form-field fxFlex="96%">
+    <mat-label>Ghi chú</mat-label>
+    <textarea matInput formControlName="note"></textarea>
+  </mat-form-field>
+</div>
+
+<mat-dialog-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="2%">
+  <button mat-raised-button mat-dialog-close>{{ "Shared_Component.FormDialog.btnCancel" | translate }}</button>
+  <button
+    mat-raised-button
+    color="primary"
+    [mat-dialog-close]="{ data: form }"
+    [disabled]="!form.valid || form.pristine"
+  >
+    Hoàn thành
+  </button>
+</mat-dialog-actions>
