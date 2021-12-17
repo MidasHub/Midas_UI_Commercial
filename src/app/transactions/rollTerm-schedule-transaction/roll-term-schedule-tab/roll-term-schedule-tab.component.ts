@@ -377,12 +377,16 @@ export class RollTermScheduleTabComponent implements OnInit {
         unPaydAmount: element.principal - element.paidAmount, //Còn phải Tạm ứng
         amountPaid: element.amountPaid, //Đã thu hồi
         needToGetAmount: element.paidAmount - element.amountPaid, //Cần thu hồi
+        dueDay: element.dueDay, //Ngày due date
+        createdByName: element.createdByName, //người sở hữu khách hàng
+        panBank: element.panBank, //tên ngân hàng
+        checkedByStaff: element.checkedByStaff //Người thực hiện món đó
+
       };
       dataCopy.push(e);
     }
     this.transactionService.exportRollTermScheduleTab("RollTermScheduleTab", dataCopy);
   }
-  
   // ExportExcel() {
   //   let dataCopy = [];
   //   let i = -1;
