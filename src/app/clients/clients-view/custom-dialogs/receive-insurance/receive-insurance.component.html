@@ -8,7 +8,7 @@
   [fxLayoutGap]="'1%'"
   fxLayoutGap.lt-md="0%"
 >
-  <mat-form-field class="select-book">
+  <mat-form-field class="select-book" *ngIf="form.contains('buSavingAccount')">
     <mat-label>Tài khoản nhận tiền</mat-label>
     <mat-select required formControlName="buSavingAccount">
       <mat-option *ngFor="let saving of buSavingAccounts" [value]="saving.id">
@@ -17,7 +17,7 @@
     </mat-select>
   </mat-form-field>
 
-  <mat-form-field fxFlex="96%">
+  <mat-form-field fxFlex="96%" *ngIf="form.contains('amount')">
     <mat-label>Số tiền</mat-label>
     <input required currencyMask type="text" matInput formControlName="amount" />
   </mat-form-field>
@@ -28,7 +28,6 @@
   </mat-form-field>
   <mat-form-field fxFlex="96%">
     <mat-label>Ngày hiệu lực:</mat-label>
-
     <input isOpen="true" matInput [matDatepicker]="transactionDateFromPicker" formControlName="activeDate" />
     <mat-datepicker-toggle matSuffix [for]="transactionDateFromPicker"></mat-datepicker-toggle>
     <mat-datepicker #transactionDateFromPicker></mat-datepicker>
@@ -36,10 +35,9 @@
 
   <mat-form-field fxFlex="96%">
     <mat-label>Ngày hết hạn:</mat-label>
-
-    <input isOpen="true" matInput [matDatepicker]="transactionDateFromPicker" formControlName="expiredDate" />
-    <mat-datepicker-toggle matSuffix [for]="transactionDateFromPicker"></mat-datepicker-toggle>
-    <mat-datepicker #transactionDateFromPicker></mat-datepicker>
+    <input isOpen="true" matInput [matDatepicker]="transactionDateToPicker" formControlName="expiredDate" />
+    <mat-datepicker-toggle matSuffix [for]="transactionDateToPicker"></mat-datepicker-toggle>
+    <mat-datepicker #transactionDateToPicker></mat-datepicker>
   </mat-form-field>
 
   <mat-form-field fxFlex="96%">

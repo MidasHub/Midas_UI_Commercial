@@ -41,8 +41,7 @@ export class ClientsViewComponent implements OnInit {
     private _sanitizer: DomSanitizer,
     private authenticationService: AuthenticationService,
     public dialog: MatDialog,
-    public alertService: AlertService,
-
+    public alertService: AlertService
   ) {
     this.currentUser = this.authenticationService.getCredentials();
     this.route.data.subscribe((data: { clientViewData: any; clientTemplateData: any; clientDatatables: any } | any) => {
@@ -265,10 +264,12 @@ export class ClientsViewComponent implements OnInit {
   openReceiveInsuranceDialog() {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.minWidth = 500;
+    dialogConfig.data = {
+      action: "INSERT",
+    };
     const dialog = this.dialog.open(ReceiveInsuranceComponent, dialogConfig);
     dialog.afterClosed().subscribe((data) => {
       if (data) {
-
         this.clientsService.ReceiveInsurance(data.data.value, this.clientViewData.id).subscribe((response: any) => {
           if (response.status == "200") {
             this.alertService.alert({
@@ -276,6 +277,7 @@ export class ClientsViewComponent implements OnInit {
               msgClass: "cssSuccess",
               hPosition: "center",
             });
+            this.clientViewData.insurance = response.result.clientInsurance;
           } else {
             this.alertService.alert({
               message: `${response.error}`,
@@ -284,6 +286,38 @@ export class ClientsViewComponent implements OnInit {
             });
           }
         });
+      }
+    });
+  }
+
+  editInsuranceDialog() {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.minWidth = 500;
+    dialogConfig.data = {
+      action: "EDIT",
+      insurance: this.clientViewData.insurance,
+    };
+    const dialog = this.dialog.open(ReceiveInsuranceComponent, dialogConfig);
+    dialog.afterClosed().subscribe((data) => {
+      if (data) {
+        this.clientsService
+          .updateInsurance(data.data.value, this.clientViewData.insurance.refid)
+          .subscribe((response: any) => {
+            if (response.status == "200") {
+              this.clientViewData.insurance = response.result.clientInsurance;
+              this.alertService.alert({
+                message: `Chỉnh sửa bảo hiểm cho khách hàng thành công!`,
+                msgClass: "cssSuccess",
+                hPosition: "center",
+              });
+            } else {
+              this.alertService.alert({
+                message: `${response.error}`,
+                msgClass: "cssDanger",
+                hPosition: "center",
+              });
+            }
+          });
       }
     });
   }

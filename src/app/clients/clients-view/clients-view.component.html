@@ -33,11 +33,7 @@
 
           <div class="mat-typography client-card-title">
             <mat-card-title>
-              <!-- <h3>
-                <i class="fa fa-stop" [ngClass]="clientViewData?.status?.code | statusLookup"
-                  [matTooltip]="clientViewData?.status?.value"></i>
-                {{ "Client_Component.ViewClient.lblClientName" | translate }} : {{ clientViewData?.displayName }}
-              </h3> -->
+
               <h3>
                 <i class="fa fa-stop" [ngClass]="clientViewData?.status?.code | statusLookup"
                   [matTooltip]="clientViewData?.status?.value"></i>
@@ -58,7 +54,13 @@
                   <br />
                 </label>
                 <label *ngIf="!this.isInterchangeClient"  style="font-weight: bold; color: blue;"
-                >Số bảo hiểm: {{ clientViewData?.insurance?.insuranceId || "Chưa có" }}</label>
+                >Số BH: {{ clientViewData?.insurance?.insuranceId || "Chưa có" }}
+                <span *ngIf="clientViewData?.insurance">
+                  <button mat-mini-fab color="primary" (click)="editInsuranceDialog()">
+                  <mat-icon title="Chỉnh sửa thông tin bảo hiểm"> edit </mat-icon>
+                </button> </span>
+              </label>
+
               <br />
                 <label *ngIf="!this.isInterchangeClient"
                   >Nhân viên quản lý: {{ clientViewData?.staffName || "Chưa phân bổ" }} <br

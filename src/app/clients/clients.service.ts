@@ -42,6 +42,30 @@ export class ClientsService {
     this.IcGatewayApiUrlPrefix = environment.IcGatewayApiUrlPrefix;
   }
 
+  updateInsurance(model: any, refid: string): Observable<any> {
+    let httpParams = this.commonHttpParams.getCommonHttpParams();
+
+    httpParams = httpParams.set("refId", refid);
+    httpParams = httpParams.set("insuranceId", model.insuranceId);
+    httpParams = httpParams.set("driverLicenseNumber", model.driverLicenseNumber);
+    httpParams = httpParams.set("note", model.note);
+
+    let activeDate = model.activeDate;
+    let expireDate = model.expiredDate;
+    const dateFormat = this.settingsService.dateFormat;
+
+    if (activeDate) {
+      activeDate = this.datePipe.transform(activeDate, dateFormat);
+    }
+    if (expireDate) {
+      expireDate = this.datePipe.transform(expireDate, dateFormat);
+    }
+    httpParams = httpParams.set("activeDate", activeDate);
+    httpParams = httpParams.set("expireDate", expireDate);
+
+    return this.http.post<any>(`${this.GatewayApiUrlPrefix}/client/update_client_insurance`, httpParams);
+  }
+
   ReceiveInsurance(model: any, clientId: string): Observable<any> {
     let httpParams = this.commonHttpParams.getCommonHttpParams();
 
