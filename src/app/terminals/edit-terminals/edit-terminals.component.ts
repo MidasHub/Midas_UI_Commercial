@@ -46,6 +46,8 @@ export class EditTerminalsComponent implements OnInit, AfterViewInit {
   posLimits: any;
   posLimitDefault: PeriodicElements[] = [];
   dataSource = new MatTableDataSource();
+  isSingleHousehold_tmp: boolean;
+  isSingleHousehold_change: boolean = false ;
   displayedColumns: string[] = [
     "officeName",
     "CardType",
@@ -94,7 +96,9 @@ export class EditTerminalsComponent implements OnInit, AfterViewInit {
       this.ItemPos = data.terminalData.result.ItemPos;
       this.ItemPosBranch = data.terminalData.result.ItemPosBranch;
       this.ItemPosLimitList = data.terminalData.result.ItemPosLimitList;
-
+      
+      this.isSingleHousehold_tmp = this.terminalData.isSingleHousehold;
+      console.log("isSingleHousehold_tmp", this.isSingleHousehold_tmp);
       this.bankService.getListOfficeCommon().subscribe((offices: any) => {
         this.offices = offices.result.listOffice;
         this.ItemPosLimitList?.forEach((item: any) => {
@@ -140,6 +144,7 @@ export class EditTerminalsComponent implements OnInit, AfterViewInit {
       typeOfTransaction: this.ItemPos.typeOfTransaction,
       banksCheck: this.terminalData?.bankCheckEntitys?.map((bank: any) => bank.bankCode),
       cardsCheck: this.terminalData?.cardCheckEntitys?.map((card: any) => card.cardType),
+      isSingleHousehold: this.isSingleHousehold_tmp,
     });
   }
 
@@ -165,6 +170,7 @@ export class EditTerminalsComponent implements OnInit, AfterViewInit {
       typeOfTransaction: [""],
       banksCheck: [this.terminalData.bankCheckEntitys.map((bank: any) => bank.bankCode)],
       cardsCheck: [this.terminalData.cardCheckEntitys.map((card: any) => card.cardType)],
+      isSingleHousehold: [false],
     });
   }
   ngAfterViewInit() {
@@ -293,6 +299,11 @@ export class EditTerminalsComponent implements OnInit, AfterViewInit {
       dateFormat: "dd/MM/yyyy",
       listLimit: JSON.stringify(this.dataSource.data),
     };
+
+    if(this.isSingleHousehold_tmp !== formData.isSingleHousehold){
+      this.isSingleHousehold_change = true;
+    }
+    data.isSingleHousehold_change = this.isSingleHousehold_change;
 
     this.terminalsService.update(data).subscribe((response: any) => {
       if (response.status != "200") {

@@ -132,14 +132,23 @@
             </mat-card-header>
             <mat-card-content fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
               <mat-checkbox
-              fxFlex="20%"
-              labelPosition="before"
-              formControlName="isMappingBill"
-              class="padding-fix"
-              class="activeCheckBox"
-              >
-              Tự động nhập hoá đơn
-            </mat-checkbox>
+                fxFlex="25%"
+                labelPosition="before"
+                formControlName="isSingleHousehold"
+                class="padding-fix"
+                class="activeCheckBox"
+                >
+                Chỉ thực hiện trong 1 hộ kinh doanh
+              </mat-checkbox>
+              <mat-checkbox
+                fxFlex="20%"
+                labelPosition="before"
+                formControlName="isMappingBill"
+                class="padding-fix"
+                class="activeCheckBox"
+                >
+                Tự động nhập hoá đơn
+              </mat-checkbox>
               <mat-form-field *ngIf="editTerminalForm.contains('timeChargeValid')" fxFlex>
                 <mat-label>Số lần giao dịch cùng ngân hàng/ngày</mat-label>
                 <input
