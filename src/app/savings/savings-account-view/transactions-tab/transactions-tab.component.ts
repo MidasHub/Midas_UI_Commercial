@@ -64,11 +64,11 @@ export class TransactionsTabComponent implements OnInit {
       name: "Tất cả",
     },
     {
-      id: "D",
+      id: "1",
       name: "Saving_Account_Component.tabTransactions.lblDeposit",
     },
     {
-      id: "W",
+      id: "2",
       name: "Saving_Account_Component.tabTransactions.lblWithdraw",
     },
   ];
