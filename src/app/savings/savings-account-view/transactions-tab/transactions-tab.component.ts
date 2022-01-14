@@ -150,14 +150,9 @@ export class TransactionsTabComponent implements OnInit {
         this.isLoading = false;
         this.transactionsData = result?.result?.listDetailTransaction;
         this.totalTransactions = result?.result?.totalTransactions;
-        this.transactionsData.forEach((item: any) => {
-          if (item.txnCode === "D") {
-            this.totalDeposit += Number(item.amount);
-          }
-          if (item.txnCode === "W") {
-            this.totalWithdraw += Number(item.amount);
-          }
-        });
+        this.totalDeposit = result?.result?.totalDeposit;
+        this.totalWithdraw = result?.result?.totalWithdraw
+
         this.dataSource = this.transactionsData;
       });
 
@@ -189,7 +184,8 @@ export class TransactionsTabComponent implements OnInit {
       note,
       txnCode,
       paymentDetail,
-      routingCode
+      routingCode,
+      isRevert
     );
   }
 

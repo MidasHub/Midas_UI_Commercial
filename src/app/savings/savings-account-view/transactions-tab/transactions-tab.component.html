@@ -90,7 +90,7 @@
         <th mat-header-cell *matHeaderCellDef>
           {{ "Saving_Account_Component.tabTransactions.lblTransactionDate" | translate }}
         </th>
-        <td mat-cell *matCellDef="let transaction">{{ transaction.transactionDate | date: "dd-MM-yyyy HH:mm:ss" }}</td>
+        <td mat-cell *matCellDef="let transaction">{{ transaction.transactionDate | date: "dd-MM-yyyy" }}</td>
       </ng-container>
 
       <ng-container matColumnDef="transactionType">
