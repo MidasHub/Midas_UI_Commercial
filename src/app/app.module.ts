@@ -77,15 +77,10 @@ import { AngularFireMessagingModule } from "@angular/fire/messaging";
 import { AngularFireDatabaseModule } from "@angular/fire/database";
 import { AngularFireAuthModule } from "@angular/fire/auth";
 import { AngularFireModule } from "@angular/fire";
-import { FireBaseMessagingService } from "./firebase/fire-base-messaging.service";
 import { AsyncPipe } from "../../node_modules/@angular/common";
 
 /**Tour guide for self study */
 import { TourMatMenuModule } from "ngx-tour-md-menu";
-
-/** Google Analytics  */
-import { GoogleAnalyticsService } from "./firebase/google-analytics.service";
-
 
 /**
  * App Module
@@ -150,8 +145,6 @@ import { GoogleAnalyticsService } from "./firebase/google-analytics.service";
       provide: LOCALE_ID,
       useValue: "vi",
     },
-    FireBaseMessagingService,
-    GoogleAnalyticsService,
     AsyncPipe,
   ],
   bootstrap: [WebAppComponent],
