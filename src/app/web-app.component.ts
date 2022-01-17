@@ -27,12 +27,6 @@ import { BanksService } from "./banks/banks.service";
 import { Alert } from "./core/alert/alert.model";
 import { KeyboardShortcutsConfiguration } from "./keyboards-shortcut-config";
 
-/**
- * Firebase Messaging
- */
-
-import { FireBaseMessagingService } from "./firebase/fire-base-messaging.service";
-
 /** Initialize Logger */
 import { Logger } from "./core/logger/logger.service";
 const log = new Logger("Midas");
@@ -81,7 +75,6 @@ export class WebAppComponent implements OnInit {
     private alertService: AlertService,
     private settingsService: SettingsService,
     private authenticationService: AuthenticationService,
-    private messagingService: FireBaseMessagingService,
     private deviceService: DeviceDetectorService,
     private tourService: TourService
   ) {
@@ -213,16 +206,6 @@ export class WebAppComponent implements OnInit {
       }
     }
 
-    // Firebase Message
-
-    this.messagingService.requestPermission();
-    this.messagingService.receiveMessage();
-    this.message = this.messagingService.currentMessage;
-
-    // Get client location
-    this.getLocation();
-    this.loadDeviceData();
-    // ----- End ngOnInit
   }
 
   /** Add Google Analytics Script Dynamically */
@@ -252,10 +235,6 @@ export class WebAppComponent implements OnInit {
     if (!sessionStorage.getItem("midasDevice")) {
       this.settingsService.setDeviceData(this.deviceInfo);
     }
-
-    // sessionStorage.setItem('isMobile', JSON.stringify(this.deviceService.isMobile()));
-    // sessionStorage.setItem('isTablet', JSON.stringify(this.deviceService.isTablet()));
-    // sessionStorage.setItem('isDesktop', JSON.stringify(this.deviceService.isDesktop()));
   }
 
   getLocation() {
