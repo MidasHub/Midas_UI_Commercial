@@ -273,7 +273,7 @@ export class GroupsService {
   createGroup(group: any): Observable<any> {
     return this.http.post('/groups', group);
   }
-  createFeeGroup(groupId: any, listFeeGroup: any): Observable<any> {
+  createFeeGroup(groupId: any, listFeeGroup: any, feeReward: string): Observable<any> {
     this.accessToken = JSON.parse(
       sessionStorage.getItem(this.credentialsStorageKey)
       || localStorage.getItem(this.credentialsStorageKey)
@@ -282,11 +282,12 @@ export class GroupsService {
       'createdBy': this.accessToken.userId,
       'accessToken': this.accessToken.base64EncodedAuthenticationKey,
       'groupId': groupId,
+      'feeReward': feeReward,
       'listFeeGroup': JSON.stringify(listFeeGroup)
     };
     return this.http.post<any>(`${this.GatewayApiUrlPrefix}/groups/add_fee_by_Group`, httpParams);
   }
-  updateFeeGroup(groupId: any, listFeeGroup: any): Observable<any> {
+  updateFeeGroup(groupId: any, listFeeGroup: any, feeReward: string): Observable<any> {
     this.accessToken = JSON.parse(
       sessionStorage.getItem(this.credentialsStorageKey)
       || localStorage.getItem(this.credentialsStorageKey)
@@ -295,6 +296,7 @@ export class GroupsService {
       'createdBy': this.accessToken.userId,
       'accessToken': this.accessToken.base64EncodedAuthenticationKey,
       'groupId': groupId,
+      'feeReward': feeReward,
       'listFeeGroup': JSON.stringify(listFeeGroup)
     };
     return this.http.post<any>(`${this.GatewayApiUrlPrefix}/groups/update_fee_by_Group`, httpParams);

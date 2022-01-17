@@ -138,6 +138,7 @@ export class CreateGroupComponent implements OnInit, AfterViewInit {
       active: [true],
       activationDate: [new Date(), Validators.required],
       groupTypeId: this.groupTypeId,
+      feeReward: [""],
     });
     this.buildDependencies();
   }
@@ -218,6 +219,7 @@ export class CreateGroupComponent implements OnInit, AfterViewInit {
       group.name = "(I) " + name;
     }
     delete group.groupTypeId;
+    delete group.feeReward;
     this.groupService.createGroup(group).subscribe((response: any) => {
       this.createGroupSavingAccountTemplate(response.groupId, "7");
       this.createFeeGroup(response);
@@ -225,7 +227,7 @@ export class CreateGroupComponent implements OnInit, AfterViewInit {
   }
 
   createFeeGroup(groupObj: any) {
-    this.groupService.createFeeGroup(groupObj.groupId, this.cards).subscribe((response: any) => {
+    this.groupService.createFeeGroup(groupObj.groupId, this.cards, this.groupForm?.controls['feeReward']?.value).subscribe((response: any) => {
       /** Check if go_back is exist, then go back to home page */
       if (this.go_back === "home") {
         this.alertservice.alert({
@@ -239,21 +241,21 @@ export class CreateGroupComponent implements OnInit, AfterViewInit {
     });
   }
 
-   
+
 
   onBlur(event:any, index:any){
     console.log("value_input === ", event.target.value);
     console.log("value === === ", event.target.id);
     let name_input = event.target.id;
     this.cards.forEach((item: any) =>{
-      if(item.cardType == index.cardType){ 
+      if(item.cardType == index.cardType){
         Object.keys(item).forEach(function (key){
           if(name_input.split("_")[1] == key){
             item[key] = Number(event.target.value);
           }
         });
-      } 
-    }); 
+      }
+    });
   }
 
   createGroupSavingAccountTemplate(groupId: string, productId: string) {
