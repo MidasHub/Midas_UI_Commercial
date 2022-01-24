@@ -113,13 +113,22 @@ export class DueDayCardTabComponent implements OnInit {
   }
 
   displayBank(bank: any): string | undefined {
-    return bank.bankName;
+    return bank?.bankName;
 
   }
-  private _filter(value: string): string[] {
-    const filterValue = value.toLowerCase();
+  private _filter(value: any): string[] {
+    const filterValue =  value?.toString()?.toLowerCase();
 
-    return this.listBank.filter(option => option.bankName.toLowerCase().includes(filterValue));
+    return this.listBank?.filter(option => option?.bankName?.toLowerCase()?.includes(filterValue));
+  }
+
+  resetAutoCompleteBank() {
+    this.filteredBankOptions = this.listBank;
+    this.formFilter?.controls?.bankFilter?.setValue("");
+     this.filteredBankOptions = this.formFilter.get('bankName').valueChanges.pipe(
+      startWith(""),
+      map((value: any) => this._filter(value))
+     );
   }
 
   ngOnInit(): void {
