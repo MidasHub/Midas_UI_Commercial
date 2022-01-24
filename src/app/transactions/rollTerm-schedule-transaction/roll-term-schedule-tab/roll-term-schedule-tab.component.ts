@@ -157,14 +157,22 @@ export class RollTermScheduleTabComponent implements OnInit {
     });
   }
 
-  private _filter(value: string): string[] {
-    const filterValue = value.toLowerCase();
+  private _filter(value: any): string[] {
+    const filterValue = value?.toString()?.toLowerCase();
+    return this.banks?.filter(option => option?.bankName?.toLowerCase()?.includes(filterValue));
+  }
 
-    return this.banks.filter(option => option.bankName.toLowerCase().includes(filterValue));
+  resetAutoCompleteBank() {
+    this.filteredBankOptions = this.banks;
+    this.formFilter.controls.bankFilter.setValue("");
+     this.filteredBankOptions = this.formFilter.get('bankFilter').valueChanges.pipe(
+      startWith(""),
+      map((value: any) => this._filter(value))
+     );
   }
 
   displayBank(bank: any): string | undefined {
-    return bank.bankName;
+    return bank?.bankName;
 
   }
 

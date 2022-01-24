@@ -59,6 +59,7 @@
       <input type="text"
              placeholder="Chọn ngân hàng"
              matInput
+             (click)="resetAutoCompleteBank()"
              formControlName="bankFilter"
              [matAutocomplete]="auto">
       <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayBank">
