@@ -1,7 +1,6 @@
-import { forEach, includes } from "lodash";
-import { TransactionDatasource } from "../transaction.datasource";
+
 import { Component, ElementRef, OnInit, ViewChild } from "@angular/core";
-import { FormBuilder, FormControl, FormGroup } from "@angular/forms";
+import { FormBuilder, FormGroup } from "@angular/forms";
 import { TransactionService } from "../transaction.service";
 import { MatPaginator } from "@angular/material/paginator";
 import { DatePipe } from "@angular/common";
@@ -24,7 +23,6 @@ import { BanksService } from "app/banks/banks.service";
 import { ConfirmHoldTransactionDialogComponent } from "../dialog/confirm-hold-transaction-dialog/confirm-hold-transaction-dialog.component";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
-import { SelectBase } from "app/shared/form-dialog/formfield/model/select-base";
 import { AddSubmitTransactionDialogComponent } from "../dialog/add-submit-transaction-dialog/add-submit-transaction-dialog.component";
 @Component({
   selector: "midas-manage-transaction",

@@ -16,6 +16,7 @@ import { BanksService } from "../../../banks/banks.service";
 import { AdvanceFeeRollTermComponent } from "../dialog/advance-fee-roll-term/advance-fee-roll-term.component";
 import { CreateRollTermScheduleDialogComponent } from "../dialog/create-roll-term-schedule/create-roll-term-schedule-dialog.component";
 import { TransactionHistoryDialogComponent } from "../dialog/transaction-history/transaction-history-dialog.component";
+import { map, startWith, tap } from "rxjs/operators";
 
 @Component({
   selector: "midas-due-day-card-transaction",
@@ -61,6 +62,7 @@ export class DueDayCardTabComponent implements OnInit {
   totalPnlAmount = 0;
   panelOpenState = false;
   filterData: any[];
+  filteredBankOptions: any;
   today = new Date();
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
@@ -101,13 +103,23 @@ export class DueDayCardTabComponent implements OnInit {
       OfficeFilter: [""],
       staffFilter: ["ALL"],
       cardHoldFilter: ["ALL"],
-      bankName: ["ALL"],
+      bankName: [undefined],
       cardType: ["ALL"],
       statusFilter: ["ALL"],
       stageFilter: ["ALL"],
       query: [""],
       viewDoneTransaction: [false],
     });
+  }
+
+  displayBank(bank: any): string | undefined {
+    return bank.bankName;
+
+  }
+  private _filter(value: string): string[] {
+    const filterValue = value.toLowerCase();
+
+    return this.listBank.filter(option => option.bankName.toLowerCase().includes(filterValue));
   }
 
   ngOnInit(): void {
@@ -117,6 +129,10 @@ export class DueDayCardTabComponent implements OnInit {
     this.bankService.getBanks().subscribe((data: any) => {
       if (data) {
         this.listBank = data;
+        this.filteredBankOptions = this.formFilter.get('bankName').valueChanges.pipe(
+          startWith(""),
+          map((value: any) => this._filter(value)),
+      );
       }
     });
 
@@ -302,6 +318,14 @@ export class DueDayCardTabComponent implements OnInit {
     const staffFilter = this.formFilter.get("staffFilter").value;
     const cardHoldFilter = this.formFilter.get("cardHoldFilter").value;
     const bankName = this.formFilter.get("bankName").value;
+    if(bankName && !bankName.bankCode) {
+      this.alertService.alert({
+        type: "🚨🚨🚨🚨 Lỗi ",
+        msgClass: "cssDanger",
+        message: 'Vui Lòng chọn lại ngân hàng trước!',
+      });
+      return;
+    };
     const cardType = this.formFilter.get("cardType").value;
     const query = this.formFilter.get("query").value;
     const limit = this.paginator.pageSize ? this.paginator.pageSize : 10;

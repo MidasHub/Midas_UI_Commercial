@@ -53,16 +53,18 @@
       </select>
     </mat-form-field>
 
-    <mat-form-field fxFlex="18%">
+    <mat-form-field fxFlex="20%">
       <mat-label>Ngân hàng</mat-label>
-      <select matSelect matNativeControl formControlName="bankName">
-        <option value="ALL">
-          Tất cả ngân hàng
-        </option>
-        <option *ngFor="let bank of listBank" [value]="bank.bankCode">
-          {{ bank.bankName }}
-        </option>
-      </select>
+      <input type="text"
+             placeholder="Chọn ngân hàng"
+             matInput
+             formControlName="bankName"
+             [matAutocomplete]="auto">
+      <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayBank">
+        <mat-option *ngFor="let bank of filteredBankOptions  | async" [value]="bank" >
+          {{displayBank(bank)}}
+        </mat-option>
+      </mat-autocomplete>
     </mat-form-field>
 
     <mat-form-field fxFlex="18%">

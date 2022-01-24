@@ -301,7 +301,7 @@ export class TransactionService {
     fromDate: string;
     toDate: string;
     query: string;
-    bankFilter: string;
+    bankFilter: any;
     cardTypeFilter: string;
     createdByFilter: string;
     limit: number;
@@ -314,7 +314,7 @@ export class TransactionService {
     checkedByUserName: string;
   }): Observable<any> {
     let httpParams = this.commonHttpParams.getCommonHttpParams();
-    httpParams = httpParams.set("bankFilter", payload.bankFilter == "ALL" ? "%%" : payload.bankFilter);
+    httpParams = httpParams.set("bankFilter", !payload.bankFilter ? "%%" : payload.bankFilter.bankCode);
     httpParams = httpParams.set("cardTypeFilter", payload.cardTypeFilter == "ALL" ? "%%" : payload.cardTypeFilter);
     httpParams = httpParams.set("createdByFilter", !payload.createdByFilter ? "%%" : payload.createdByFilter);
     httpParams = httpParams.set("customerSearch", !payload.query ? "%%" : `%${payload.query}%`);
@@ -344,7 +344,7 @@ export class TransactionService {
     statusFilter: string;
     staffFilter: string;
     cardHoldFilter: string;
-    bankName: string;
+    bankName: any;
     cardType: string;
     query: string;
     viewDoneTransaction: string;
@@ -362,7 +362,7 @@ export class TransactionService {
       "cardHoldFilter",
       payload.cardHoldFilter === "ALL" ? `%%` : `${payload.cardHoldFilter}`
     );
-    httpParams = httpParams.set("bankName", payload.bankName === "ALL" ? `%%` : `${payload.bankName}`);
+    httpParams = httpParams.set("bankName", !payload.bankName ? "%%" : payload.bankName.bankCode);
     httpParams = httpParams.set("cardType", payload.cardType === "ALL" ? `%%` : `${payload.cardType}`);
     httpParams = httpParams.set("viewDoneTransaction", `${payload.viewDoneTransaction}`);
     httpParams = httpParams.set("fromDate", payload.fromDate);
