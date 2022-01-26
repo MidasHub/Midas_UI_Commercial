@@ -96,6 +96,14 @@
       <input matInput type="text" formControlName="query" />
     </mat-form-field>
 
+    <mat-form-field fxFlex="20%">
+      <mat-label>Khoảng tiền cần tạm ứng</mat-label>
+      <select matSelect matNativeControl formControlName="rangeAmountFilter">
+        <option *ngFor="let option of rangeAmountOption" [value]="option.code">
+          {{ option.description }}
+        </option>
+      </select>
+    </mat-form-field>
 
     <mat-form-field fxFlex="20%" >
       <select matSelect matNativeControl formControlName="isCheckedFilter">

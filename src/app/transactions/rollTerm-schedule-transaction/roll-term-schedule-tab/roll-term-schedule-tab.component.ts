@@ -1,3 +1,4 @@
+import { forEach } from "lodash";
 import { animate, state, style, transition, trigger } from "@angular/animations";
 import { DatePipe } from "@angular/common";
 import { Component, OnInit, ViewChild } from "@angular/core";
@@ -122,6 +123,39 @@ export class RollTermScheduleTabComponent implements OnInit {
     },
   ];
 
+  rangeAmountOption = [
+    {
+      min: "-1000000000",
+      max: "30000000",
+      description: "Dưới 30tr",
+      code: 1,
+    },
+    {
+      min: "30000000",
+      max: "70000000",
+      description: "30tr đến 70tr",
+      code: 2,
+    },
+    {
+      min: "70000000",
+      max: "100000000",
+      description: "70tr đến 100tr",
+      code: 3,
+    },
+    {
+      min: "100000000",
+      max: "1000000000",
+      description: "Trên 100tr",
+      code: 4,
+    },
+    {
+      min: "150000000",
+      max: "1000000000",
+      description: "Trên 150tr",
+      code: 5,
+    },
+  ];
+
   CheckedFilterOption = [
     {
       code: 0,
@@ -159,21 +193,20 @@ export class RollTermScheduleTabComponent implements OnInit {
 
   private _filter(value: any): string[] {
     const filterValue = value?.toString()?.toLowerCase();
-    return this.banks?.filter(option => option?.bankName?.toLowerCase()?.includes(filterValue));
+    return this.banks?.filter((option) => option?.bankName?.toLowerCase()?.includes(filterValue));
   }
 
   resetAutoCompleteBank() {
     this.filteredBankOptions = this.banks;
     this.formFilter.controls.bankFilter.setValue("");
-     this.filteredBankOptions = this.formFilter.get('bankFilter').valueChanges.pipe(
+    this.filteredBankOptions = this.formFilter.get("bankFilter").valueChanges.pipe(
       startWith(""),
       map((value: any) => this._filter(value))
-     );
+    );
   }
 
   displayBank(bank: any): string | undefined {
     return bank?.bankName;
-
   }
 
   ngOnInit(): void {
@@ -182,6 +215,7 @@ export class RollTermScheduleTabComponent implements OnInit {
       OfficeFilter: [""],
       createdByFilter: [""],
       bankFilter: [undefined],
+      rangeAmountFilter: [undefined],
       cardType: ["ALL"],
       cardHoldFilter: ["ALL"],
       dueDay: [""],
@@ -192,10 +226,10 @@ export class RollTermScheduleTabComponent implements OnInit {
     });
     this.banksServices.getBanks().subscribe((result) => {
       this.banks = result;
-      this.filteredBankOptions = this.formFilter.get('bankFilter').valueChanges.pipe(
+      this.filteredBankOptions = this.formFilter.get("bankFilter").valueChanges.pipe(
         startWith(""),
-        map((value: any) => this._filter(value)),
-    );
+        map((value: any) => this._filter(value))
+      );
     });
 
     this.banksServices.getCardType().subscribe((result) => {
@@ -273,7 +307,6 @@ export class RollTermScheduleTabComponent implements OnInit {
           this.getRollTermScheduleAndCardDueDayInfo();
         });
       }
-
     });
   }
 
@@ -283,15 +316,29 @@ export class RollTermScheduleTabComponent implements OnInit {
     let toDate = this.formDate.get("toDate").value;
     const query = this.formFilter.get("query").value;
     const bankFilter = this.formFilter.get("bankFilter").value;
-    if(bankFilter && !bankFilter.bankCode) {
+    if (bankFilter && !bankFilter.bankCode) {
       this.alertService.alert({
         type: "🚨🚨🚨🚨 Lỗi ",
         msgClass: "cssDanger",
-        message: 'Vui Lòng chọn lại ngân hàng trước!',
+        message: "Vui Lòng chọn lại ngân hàng trước!",
       });
       return;
-    };
+    }
     const cardTypeFilter = this.formFilter.get("cardType").value;
+    const rangeAmountCode = this.formFilter.get("rangeAmountFilter").value;
+    let rangeAmountObject = undefined;
+    if (rangeAmountCode) {
+      this.rangeAmountOption.forEach((option: any) => {
+        if ((option.code == rangeAmountCode)) {
+          rangeAmountObject = {
+            min: option.min,
+            max: option.max,
+          };
+        }
+        return;
+      });
+    }
+
     const createdByFilter = this.formFilter.get("createdByFilter").value;
     const officeFilter = this.formFilter.get("OfficeFilter").value;
     const dueDayFilter = this.formFilter.get("dueDay").value;
@@ -325,8 +372,8 @@ export class RollTermScheduleTabComponent implements OnInit {
         viewDoneTransaction,
         cardHoldFilter,
         isCheckedFilter,
-        checkedByUserName
-      })
+        checkedByUserName,
+      }, rangeAmountObject)
       .subscribe((result) => {
         this.isLoading = false;
         this.transactionsData = result?.result;
@@ -340,14 +387,27 @@ export class RollTermScheduleTabComponent implements OnInit {
     let toDate = this.formDate.get("toDate").value;
     const query = this.formFilter.get("query").value;
     const bankFilter = this.formFilter.get("bankFilter").value;
-    if(bankFilter && !bankFilter.bankCode) {
+    if (bankFilter && !bankFilter.bankCode) {
       this.alertService.alert({
         type: "🚨🚨🚨🚨 Lỗi ",
         msgClass: "cssDanger",
-        message: 'Vui Lòng chọn lại ngân hàng trước!',
+        message: "Vui Lòng chọn lại ngân hàng trước!",
       });
       return;
-    };
+    }
+    const rangeAmountCode = this.formFilter.get("rangeAmountFilter").value;
+    let rangeAmountObject = undefined;
+    if (rangeAmountCode) {
+      this.rangeAmountOption.forEach((option: any) => {
+        if ((option.code == rangeAmountCode)) {
+          rangeAmountObject = {
+            min: option.min,
+            max: option.max,
+          };
+        }
+        return;
+      });
+    }
     const cardTypeFilter = this.formFilter.get("cardType").value;
     const createdByFilter = this.formFilter.get("createdByFilter").value;
     const officeFilter = this.formFilter.get("OfficeFilter").value;
@@ -381,8 +441,8 @@ export class RollTermScheduleTabComponent implements OnInit {
         viewDoneTransaction,
         cardHoldFilter,
         isCheckedFilter,
-        checkedByUserName
-      })
+        checkedByUserName,
+      }, rangeAmountObject)
       .subscribe((result) => {
         this.transactionsData = result?.result;
         data = result?.result?.listPosTransaction;
@@ -390,7 +450,7 @@ export class RollTermScheduleTabComponent implements OnInit {
       });
   }
 
-  ExportExcel1(data:any[]) {
+  ExportExcel1(data: any[]) {
     let dataCopy = [];
     let i = -1;
 
@@ -416,8 +476,7 @@ export class RollTermScheduleTabComponent implements OnInit {
         dueDay: element.dueDay, //Ngày due date
         createdByName: element.createdByName, //người sở hữu khách hàng
         panBank: element.panBank, //tên ngân hàng
-        checkedByStaff: element.checkedByStaff //Người thực hiện món đó
-
+        checkedByStaff: element.checkedByStaff, //Người thực hiện món đó
       };
       dataCopy.push(e);
     }

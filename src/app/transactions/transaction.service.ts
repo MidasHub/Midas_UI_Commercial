@@ -312,7 +312,7 @@ export class TransactionService {
     cardHoldFilter: string;
     isCheckedFilter: string;
     checkedByUserName: string;
-  }): Observable<any> {
+  }, rangeAmountObject: any): Observable<any> {
     let httpParams = this.commonHttpParams.getCommonHttpParams();
     httpParams = httpParams.set("bankFilter", !payload.bankFilter ? "%%" : payload.bankFilter.bankCode);
     httpParams = httpParams.set("cardTypeFilter", payload.cardTypeFilter == "ALL" ? "%%" : payload.cardTypeFilter);
@@ -331,6 +331,12 @@ export class TransactionService {
     httpParams = httpParams.set("offset", String(payload.offset));
     httpParams = httpParams.set("fromDate", payload.fromDate);
     httpParams = httpParams.set("toDate", payload.toDate);
+    if(rangeAmountObject){
+      debugger;
+      httpParams = httpParams.set("fromFilterAmount", rangeAmountObject.min);
+      httpParams = httpParams.set("toFilterAmount", rangeAmountObject.max);
+
+    }
 
     return this.http.post(`${this.GatewayApiUrlPrefix}/transaction/get_list_pos_transaction_rollterm`, httpParams);
   }
