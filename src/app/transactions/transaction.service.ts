@@ -301,6 +301,7 @@ export class TransactionService {
     fromDate: string;
     toDate: string;
     query: string;
+    cardNumber: string;
     bankFilter: any;
     cardTypeFilter: string;
     createdByFilter: string;
@@ -313,11 +314,13 @@ export class TransactionService {
     isCheckedFilter: string;
     checkedByUserName: string;
   }, rangeAmountObject: any): Observable<any> {
+
     let httpParams = this.commonHttpParams.getCommonHttpParams();
     httpParams = httpParams.set("bankFilter", !payload.bankFilter ? "%%" : payload.bankFilter.bankCode);
     httpParams = httpParams.set("cardTypeFilter", payload.cardTypeFilter == "ALL" ? "%%" : payload.cardTypeFilter);
     httpParams = httpParams.set("createdByFilter", !payload.createdByFilter ? "%%" : payload.createdByFilter);
     httpParams = httpParams.set("customerSearch", !payload.query ? "%%" : `%${payload.query}%`);
+    httpParams = httpParams.set("cardNumber", !payload.cardNumber ? "%%" : `%${payload.cardNumber}%`);
     httpParams = httpParams.set("officeSearch", !payload.officeFilter ? "%%" : `${payload.officeFilter}`);
     httpParams = httpParams.set("dueDayFilter", !payload.dueDayFilter ? "-1" : `${payload.dueDayFilter}`);
     httpParams = httpParams.set("viewDoneTransaction", `${payload.viewDoneTransaction}`);

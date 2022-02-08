@@ -220,6 +220,7 @@ export class RollTermScheduleTabComponent implements OnInit {
       cardHoldFilter: ["ALL"],
       dueDay: [""],
       query: [""],
+      cardNumber: [""],
       viewDoneTransaction: [false],
       isCheckedFilter: [0],
       checkedByUserName: [""],
@@ -315,6 +316,7 @@ export class RollTermScheduleTabComponent implements OnInit {
     let fromDate = this.formDate.get("fromDate").value;
     let toDate = this.formDate.get("toDate").value;
     const query = this.formFilter.get("query").value;
+    const cardNumber = this.formFilter.get("cardNumber").value;
     const bankFilter = this.formFilter.get("bankFilter").value;
     if (bankFilter && !bankFilter.bankCode) {
       this.alertService.alert({
@@ -364,6 +366,7 @@ export class RollTermScheduleTabComponent implements OnInit {
         bankFilter,
         cardTypeFilter,
         query,
+        cardNumber,
         limit,
         createdByFilter,
         offset,
@@ -386,6 +389,7 @@ export class RollTermScheduleTabComponent implements OnInit {
     let fromDate = this.formDate.get("fromDate").value;
     let toDate = this.formDate.get("toDate").value;
     const query = this.formFilter.get("query").value;
+    const cardNumber = this.formFilter.get("cardNumber").value;
     const bankFilter = this.formFilter.get("bankFilter").value;
     if (bankFilter && !bankFilter.bankCode) {
       this.alertService.alert({
@@ -433,6 +437,7 @@ export class RollTermScheduleTabComponent implements OnInit {
         bankFilter,
         cardTypeFilter,
         query,
+        cardNumber,
         limit,
         createdByFilter,
         offset,
