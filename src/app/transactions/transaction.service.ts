@@ -320,7 +320,7 @@ export class TransactionService {
     httpParams = httpParams.set("cardTypeFilter", payload.cardTypeFilter == "ALL" ? "%%" : payload.cardTypeFilter);
     httpParams = httpParams.set("createdByFilter", !payload.createdByFilter ? "%%" : payload.createdByFilter);
     httpParams = httpParams.set("customerSearch", !payload.query ? "%%" : `%${payload.query}%`);
-    httpParams = httpParams.set("cardNumber", !payload.cardNumber ? "%%" : `%${payload.cardNumber}%`);
+    httpParams = httpParams.set("cardNumber", !payload.cardNumber ? "%%" : `%${payload.cardNumber}`);
     httpParams = httpParams.set("officeSearch", !payload.officeFilter ? "%%" : `${payload.officeFilter}`);
     httpParams = httpParams.set("dueDayFilter", !payload.dueDayFilter ? "-1" : `${payload.dueDayFilter}`);
     httpParams = httpParams.set("viewDoneTransaction", `${payload.viewDoneTransaction}`);
