@@ -41,6 +41,7 @@ export class CreateTransactionComponent implements OnInit {
   totalBookingAmount: number;
   currentUser: any;
   productFee: any;
+  feeGroup: any;
 
   @ViewChild("listBookingRollTermTable") listBookingRollTermTable: MatTable<Element>;
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -73,6 +74,26 @@ export class CreateTransactionComponent implements OnInit {
       batchNo: new FormControl(),
       traceNo: new FormControl(),
     });
+  }
+
+  getFeeGroup(panNumber: string, productId: string): string {
+    if (!this.feeGroup) {
+      return '';
+    }
+    const card = this.feeGroup.find((v: any) => String(panNumber).startsWith(v.cardBeginDigit));
+    if (card) {
+      switch (productId) {
+        case "CA01":
+          return card?.minValue;
+        case "AL01":
+          return card?.maxValue;
+        case "AL02":
+          return card?.maxValue;
+        default:
+          return '';
+      }
+    }
+    return '';
   }
 
   ngOnInit() {
@@ -125,6 +146,18 @@ export class CreateTransactionComponent implements OnInit {
             this.transactionInfo.refId = tranId;
             this.transactionCreateForm.get("rate").setValue(this.transactionInfo.rate);
           }
+        }
+        if(this.transactionInfo.clientDto.groupId) {
+          this.transactionService.getTransactionGroupFee(this.transactionInfo.clientDto.groupId).subscribe((data) => {
+            this.feeGroup = data?.result.listFeeGroup;
+            const feeSuggest = this.getFeeGroup(this.transactionInfo.identifyClientDto.accountNumber, this.transactionInfo.productId);
+
+            if (this.transactionInfo.type != "rollTermGetCash") {
+
+              this.transactionCreateForm.get("rate").setValue(feeSuggest);
+
+            }
+          });
         }
 
         this.transactionCreateForm
