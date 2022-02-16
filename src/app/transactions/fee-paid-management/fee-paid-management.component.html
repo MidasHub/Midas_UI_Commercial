@@ -264,10 +264,6 @@
           {{ getDataOfGroupTxnCode(transaction)[0].customerName }}
 
           <br />
-          <label  style="color: blue">
-            {{ getDataOfGroupTxnCode(transaction)[0].staffName }}
-          </label>
-          <br />
 
           <label *ngIf="getDataOfGroupTxnCode(transaction)[0].agencyName != '#'" style="color: green">
             {{ getDataOfGroupTxnCode(transaction)[0].agencyName }}

@@ -421,8 +421,8 @@ export class RollTermScheduleTabComponent implements OnInit {
   ExportExcel() {
     const dateFormat = this.settingsService.dateFormat;
     let params: any = this.getParamsFilter();
-    const limit = this.paginator.pageSize ? this.paginator.pageSize : 10;
-    const offset = this.paginator.pageIndex * limit;
+    const limit = 99999;
+    const offset = 0;
     if(params.bankFilter && !params.bankFilter.bankCode) {
       this.alertService.alert({
         type: "🚨🚨🚨🚨 Lỗi ",

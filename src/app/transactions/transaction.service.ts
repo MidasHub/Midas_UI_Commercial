@@ -322,10 +322,11 @@ export class TransactionService {
     httpParams = httpParams.set("offset", String(offset));
     httpParams = httpParams.set("fromDate", payload.fromDate);
     httpParams = httpParams.set("toDate", payload.toDate);
-    if(payload.rangeAmountObject){
 
-      httpParams = httpParams.set("fromFilterAmount", payload.rangeAmountObject.min);
-      httpParams = httpParams.set("toFilterAmount", payload.rangeAmountObject.max);
+    if(payload.rangeAmountCode){
+
+      httpParams = httpParams.set("fromFilterAmount", payload.rangeAmountCode.min);
+      httpParams = httpParams.set("toFilterAmount", payload.rangeAmountCode.max);
 
     }
     return this.http.post(`${this.GatewayApiUrlPrefix}/transaction/get_list_pos_transaction_rollterm`, httpParams);
