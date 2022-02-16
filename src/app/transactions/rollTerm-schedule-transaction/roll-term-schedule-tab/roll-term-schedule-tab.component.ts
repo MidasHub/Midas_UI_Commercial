@@ -222,6 +222,7 @@ export class RollTermScheduleTabComponent implements OnInit {
       query: [""],
       cardNumber: [""],
       viewDoneTransaction: [false],
+      viewOverPaidTransaction: [false],
       isCheckedFilter: [0],
       checkedByUserName: [""],
     });
@@ -250,6 +251,14 @@ export class RollTermScheduleTabComponent implements OnInit {
       this.offices?.unshift({
         id: "",
         name: "Tất cả",
+      });
+
+      this.formFilter.get("viewOverPaidTransaction").valueChanges.subscribe((value) => {
+        if(value){
+
+          this.formFilter.get("viewDoneTransaction").setValue(true);
+
+        }
       });
 
       this.formFilter.get("OfficeFilter").valueChanges.subscribe((value) => {
@@ -311,21 +320,14 @@ export class RollTermScheduleTabComponent implements OnInit {
     });
   }
 
-  getRollTermScheduleAndCardDueDayInfo() {
+  getParamsFilter(): any{
     const dateFormat = this.settingsService.dateFormat;
+
     let fromDate = this.formDate.get("fromDate").value;
     let toDate = this.formDate.get("toDate").value;
     const query = this.formFilter.get("query").value;
     const cardNumber = this.formFilter.get("cardNumber").value;
     const bankFilter = this.formFilter.get("bankFilter").value;
-    if (bankFilter && !bankFilter.bankCode) {
-      this.alertService.alert({
-        type: "🚨🚨🚨🚨 Lỗi ",
-        msgClass: "cssDanger",
-        message: "Vui Lòng chọn lại ngân hàng trước!",
-      });
-      return;
-    }
     const cardTypeFilter = this.formFilter.get("cardType").value;
     const rangeAmountCode = this.formFilter.get("rangeAmountFilter").value;
     let rangeAmountObject = undefined;
@@ -346,37 +348,69 @@ export class RollTermScheduleTabComponent implements OnInit {
     const dueDayFilter = this.formFilter.get("dueDay").value;
     const cardHoldFilter = this.formFilter.get("cardHoldFilter").value;
     const viewDoneTransaction = this.formFilter.get("viewDoneTransaction").value;
+    const viewOverPaidTransaction = this.formFilter.get("viewOverPaidTransaction").value;
     const isCheckedFilter = this.formFilter.get("isCheckedFilter").value;
     const checkedByUserName = this.formFilter.get("checkedByUserName").value;
 
-    const limit = this.paginator.pageSize ? this.paginator.pageSize : 10;
-    const offset = this.paginator.pageIndex * limit;
     if (fromDate) {
       fromDate = this.datePipe.transform(fromDate, dateFormat);
     }
     if (toDate) {
       toDate = this.datePipe.transform(toDate, dateFormat);
     }
+    return {
+      'fromDate': fromDate,
+      'toDate': toDate,
+      'query': query,
+      'cardNumber': cardNumber,
+      'bankFilter': bankFilter,
+      'cardTypeFilter': cardTypeFilter,
+      'createdByFilter': createdByFilter,
+      'officeFilter': officeFilter,
+      'dueDayFilter': dueDayFilter,
+      'cardHoldFilter': cardHoldFilter,
+      'viewDoneTransaction': viewDoneTransaction,
+      'isCheckedFilter': isCheckedFilter,
+      'checkedByUserName': checkedByUserName,
+      'viewOverPaidTransaction': viewOverPaidTransaction,
+      'rangeAmountCode': rangeAmountCode
+    }
+  }
+
+  getRollTermScheduleAndCardDueDayInfo() {
+    let params: any = this.getParamsFilter();
+    const limit = this.paginator.pageSize ? this.paginator.pageSize : 10;
+    const offset = this.paginator.pageIndex * limit;
+    if(params.bankFilter && !params.bankFilter.bankCode) {
+      this.alertService.alert({
+        type: "🚨🚨🚨🚨 Lỗi ",
+        msgClass: "cssDanger",
+        message: 'Vui Lòng chọn lại ngân hàng trước!',
+      });
+      return;
+    };
+
+    let rangeAmountObject = undefined;
+    if (params.rangeAmountCode) {
+      this.rangeAmountOption.forEach((option: any) => {
+        if ((option.code == params.rangeAmountCode)) {
+          rangeAmountObject = {
+            min: option.min,
+            max: option.max,
+          };
+          params.rangeAmountCode = rangeAmountObject;
+        }
+        return;
+      });
+    }
     this.isLoading = true;
     this.dataSource = [];
     this.transactionService
-      .getListRollTermTransactionOpenByUserId({
-        fromDate,
-        toDate,
-        bankFilter,
-        cardTypeFilter,
-        query,
-        cardNumber,
+      .getListRollTermTransactionOpenByUserId(
+        params,
         limit,
-        createdByFilter,
         offset,
-        officeFilter,
-        dueDayFilter,
-        viewDoneTransaction,
-        cardHoldFilter,
-        isCheckedFilter,
-        checkedByUserName,
-      }, rangeAmountObject)
+      )
       .subscribe((result) => {
         this.isLoading = false;
         this.transactionsData = result?.result;
@@ -386,68 +420,37 @@ export class RollTermScheduleTabComponent implements OnInit {
 
   ExportExcel() {
     const dateFormat = this.settingsService.dateFormat;
-    let fromDate = this.formDate.get("fromDate").value;
-    let toDate = this.formDate.get("toDate").value;
-    const query = this.formFilter.get("query").value;
-    const cardNumber = this.formFilter.get("cardNumber").value;
-    const bankFilter = this.formFilter.get("bankFilter").value;
-    if (bankFilter && !bankFilter.bankCode) {
+    let params: any = this.getParamsFilter();
+    const limit = 99999;
+    const offset = 0;
+    if(params.bankFilter && !params.bankFilter.bankCode) {
       this.alertService.alert({
         type: "🚨🚨🚨🚨 Lỗi ",
         msgClass: "cssDanger",
         message: "Vui Lòng chọn lại ngân hàng trước!",
       });
       return;
-    }
-    const rangeAmountCode = this.formFilter.get("rangeAmountFilter").value;
+    };
     let rangeAmountObject = undefined;
-    if (rangeAmountCode) {
+    if (params.rangeAmountCode) {
       this.rangeAmountOption.forEach((option: any) => {
-        if ((option.code == rangeAmountCode)) {
+        if ((option.code == params.rangeAmountCode)) {
           rangeAmountObject = {
             min: option.min,
             max: option.max,
           };
+          params.rangeAmountCode = rangeAmountObject;
         }
         return;
       });
     }
-    const cardTypeFilter = this.formFilter.get("cardType").value;
-    const createdByFilter = this.formFilter.get("createdByFilter").value;
-    const officeFilter = this.formFilter.get("OfficeFilter").value;
-    const dueDayFilter = this.formFilter.get("dueDay").value;
-    const cardHoldFilter = this.formFilter.get("cardHoldFilter").value;
-    const viewDoneTransaction = this.formFilter.get("viewDoneTransaction").value;
-    const isCheckedFilter = this.formFilter.get("isCheckedFilter").value;
-    const checkedByUserName = this.formFilter.get("checkedByUserName").value;
-
-    const limit = 999999999;
-    const offset = 0;
-    if (fromDate) {
-      fromDate = this.datePipe.transform(fromDate, dateFormat);
-    }
-    if (toDate) {
-      toDate = this.datePipe.transform(toDate, dateFormat);
-    }
     var data = [];
     this.transactionService
-      .getListRollTermTransactionOpenByUserId({
-        fromDate,
-        toDate,
-        bankFilter,
-        cardTypeFilter,
-        query,
-        cardNumber,
+      .getListRollTermTransactionOpenByUserId(
+        params,
         limit,
-        createdByFilter,
         offset,
-        officeFilter,
-        dueDayFilter,
-        viewDoneTransaction,
-        cardHoldFilter,
-        isCheckedFilter,
-        checkedByUserName,
-      }, rangeAmountObject)
+      )
       .subscribe((result) => {
         this.transactionsData = result?.result;
         data = result?.result?.listPosTransaction;

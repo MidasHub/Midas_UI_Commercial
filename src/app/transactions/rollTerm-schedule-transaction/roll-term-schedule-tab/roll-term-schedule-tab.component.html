@@ -129,6 +129,9 @@
       <mat-checkbox fxFlex="100%" labelPosition="after" formControlName="viewDoneTransaction" class="margin-v">
         Đã thực hiện xong
       </mat-checkbox>
+      <mat-checkbox fxFlex="100%" labelPosition="after" formControlName="viewOverPaidTransaction" class="margin-v">
+        Đã thu hồi lố
+      </mat-checkbox>
 
     </div>
   </div>
@@ -297,7 +300,9 @@
           (d)
         </th>
         <td class="on_success" mat-cell fxHide fxShow.gt-md *matCellDef="let journalEntry">
-          {{ journalEntry.amountPaid | money }}
+          {{ journalEntry.amountPaid | money }} <br />
+          <label style="color: red;" *ngIf="journalEntry.amountPaid > journalEntry.principal" for="">(Thu hồi lố: {{(journalEntry.amountPaid - journalEntry.principal) | money}})</label>
+
         </td>
       </ng-container>
 
