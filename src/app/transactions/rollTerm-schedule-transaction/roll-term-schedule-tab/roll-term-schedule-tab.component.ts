@@ -1,3 +1,4 @@
+import { forEach } from "lodash";
 import { animate, state, style, transition, trigger } from "@angular/animations";
 import { DatePipe } from "@angular/common";
 import { Component, OnInit, ViewChild } from "@angular/core";
@@ -122,6 +123,39 @@ export class RollTermScheduleTabComponent implements OnInit {
     },
   ];
 
+  rangeAmountOption = [
+    {
+      min: "-1000000000",
+      max: "30000000",
+      description: "Dưới 30tr",
+      code: 1,
+    },
+    {
+      min: "30000000",
+      max: "70000000",
+      description: "30tr đến 70tr",
+      code: 2,
+    },
+    {
+      min: "70000000",
+      max: "100000000",
+      description: "70tr đến 100tr",
+      code: 3,
+    },
+    {
+      min: "100000000",
+      max: "1000000000",
+      description: "Trên 100tr",
+      code: 4,
+    },
+    {
+      min: "150000000",
+      max: "1000000000",
+      description: "Trên 150tr",
+      code: 5,
+    },
+  ];
+
   CheckedFilterOption = [
     {
       code: 0,
@@ -159,21 +193,20 @@ export class RollTermScheduleTabComponent implements OnInit {
 
   private _filter(value: any): string[] {
     const filterValue = value?.toString()?.toLowerCase();
-    return this.banks?.filter(option => option?.bankName?.toLowerCase()?.includes(filterValue));
+    return this.banks?.filter((option) => option?.bankName?.toLowerCase()?.includes(filterValue));
   }
 
   resetAutoCompleteBank() {
     this.filteredBankOptions = this.banks;
     this.formFilter.controls.bankFilter.setValue("");
-     this.filteredBankOptions = this.formFilter.get('bankFilter').valueChanges.pipe(
+    this.filteredBankOptions = this.formFilter.get("bankFilter").valueChanges.pipe(
       startWith(""),
       map((value: any) => this._filter(value))
-     );
+    );
   }
 
   displayBank(bank: any): string | undefined {
     return bank?.bankName;
-
   }
 
   ngOnInit(): void {
@@ -182,21 +215,23 @@ export class RollTermScheduleTabComponent implements OnInit {
       OfficeFilter: [""],
       createdByFilter: [""],
       bankFilter: [undefined],
+      rangeAmountFilter: [undefined],
       cardType: ["ALL"],
       cardHoldFilter: ["ALL"],
       dueDay: [""],
       query: [""],
       cardNumber: [""],
       viewDoneTransaction: [false],
+      viewOverPaidTransaction: [false],
       isCheckedFilter: [0],
       checkedByUserName: [""],
     });
     this.banksServices.getBanks().subscribe((result) => {
       this.banks = result;
-      this.filteredBankOptions = this.formFilter.get('bankFilter').valueChanges.pipe(
+      this.filteredBankOptions = this.formFilter.get("bankFilter").valueChanges.pipe(
         startWith(""),
-        map((value: any) => this._filter(value)),
-    );
+        map((value: any) => this._filter(value))
+      );
     });
 
     this.banksServices.getCardType().subscribe((result) => {
@@ -216,6 +251,14 @@ export class RollTermScheduleTabComponent implements OnInit {
       this.offices?.unshift({
         id: "",
         name: "Tất cả",
+      });
+
+      this.formFilter.get("viewOverPaidTransaction").valueChanges.subscribe((value) => {
+        if(value){
+
+          this.formFilter.get("viewDoneTransaction").setValue(true);
+
+        }
       });
 
       this.formFilter.get("OfficeFilter").valueChanges.subscribe((value) => {
@@ -274,18 +317,71 @@ export class RollTermScheduleTabComponent implements OnInit {
           this.getRollTermScheduleAndCardDueDayInfo();
         });
       }
-
     });
   }
 
-  getRollTermScheduleAndCardDueDayInfo() {
+  getParamsFilter(): any{
     const dateFormat = this.settingsService.dateFormat;
+
     let fromDate = this.formDate.get("fromDate").value;
     let toDate = this.formDate.get("toDate").value;
     const query = this.formFilter.get("query").value;
     const cardNumber = this.formFilter.get("cardNumber").value;
     const bankFilter = this.formFilter.get("bankFilter").value;
-    if(bankFilter && !bankFilter.bankCode) {
+    const cardTypeFilter = this.formFilter.get("cardType").value;
+    const rangeAmountCode = this.formFilter.get("rangeAmountFilter").value;
+    let rangeAmountObject = undefined;
+    if (rangeAmountCode) {
+      this.rangeAmountOption.forEach((option: any) => {
+        if ((option.code == rangeAmountCode)) {
+          rangeAmountObject = {
+            min: option.min,
+            max: option.max,
+          };
+        }
+        return;
+      });
+    }
+
+    const createdByFilter = this.formFilter.get("createdByFilter").value;
+    const officeFilter = this.formFilter.get("OfficeFilter").value;
+    const dueDayFilter = this.formFilter.get("dueDay").value;
+    const cardHoldFilter = this.formFilter.get("cardHoldFilter").value;
+    const viewDoneTransaction = this.formFilter.get("viewDoneTransaction").value;
+    const viewOverPaidTransaction = this.formFilter.get("viewOverPaidTransaction").value;
+    const isCheckedFilter = this.formFilter.get("isCheckedFilter").value;
+    const checkedByUserName = this.formFilter.get("checkedByUserName").value;
+
+    if (fromDate) {
+      fromDate = this.datePipe.transform(fromDate, dateFormat);
+    }
+    if (toDate) {
+      toDate = this.datePipe.transform(toDate, dateFormat);
+    }
+    return {
+      'fromDate': fromDate,
+      'toDate': toDate,
+      'query': query,
+      'cardNumber': cardNumber,
+      'bankFilter': bankFilter,
+      'cardTypeFilter': cardTypeFilter,
+      'createdByFilter': createdByFilter,
+      'officeFilter': officeFilter,
+      'dueDayFilter': dueDayFilter,
+      'cardHoldFilter': cardHoldFilter,
+      'viewDoneTransaction': viewDoneTransaction,
+      'isCheckedFilter': isCheckedFilter,
+      'checkedByUserName': checkedByUserName,
+      'viewOverPaidTransaction': viewOverPaidTransaction,
+      'rangeAmountCode': rangeAmountCode
+    }
+  }
+
+  getRollTermScheduleAndCardDueDayInfo() {
+    let params: any = this.getParamsFilter();
+    const limit = this.paginator.pageSize ? this.paginator.pageSize : 10;
+    const offset = this.paginator.pageIndex * limit;
+    if(params.bankFilter && !params.bankFilter.bankCode) {
       this.alertService.alert({
         type: "🚨🚨🚨🚨 Lỗi ",
         msgClass: "cssDanger",
@@ -293,43 +389,28 @@ export class RollTermScheduleTabComponent implements OnInit {
       });
       return;
     };
-    const cardTypeFilter = this.formFilter.get("cardType").value;
-    const createdByFilter = this.formFilter.get("createdByFilter").value;
-    const officeFilter = this.formFilter.get("OfficeFilter").value;
-    const dueDayFilter = this.formFilter.get("dueDay").value;
-    const cardHoldFilter = this.formFilter.get("cardHoldFilter").value;
-    const viewDoneTransaction = this.formFilter.get("viewDoneTransaction").value;
-    const isCheckedFilter = this.formFilter.get("isCheckedFilter").value;
-    const checkedByUserName = this.formFilter.get("checkedByUserName").value;
 
-    const limit = this.paginator.pageSize ? this.paginator.pageSize : 10;
-    const offset = this.paginator.pageIndex * limit;
-    if (fromDate) {
-      fromDate = this.datePipe.transform(fromDate, dateFormat);
-    }
-    if (toDate) {
-      toDate = this.datePipe.transform(toDate, dateFormat);
+    let rangeAmountObject = undefined;
+    if (params.rangeAmountCode) {
+      this.rangeAmountOption.forEach((option: any) => {
+        if ((option.code == params.rangeAmountCode)) {
+          rangeAmountObject = {
+            min: option.min,
+            max: option.max,
+          };
+          params.rangeAmountCode = rangeAmountObject;
+        }
+        return;
+      });
     }
     this.isLoading = true;
     this.dataSource = [];
     this.transactionService
-      .getListRollTermTransactionOpenByUserId({
-        fromDate,
-        toDate,
-        bankFilter,
-        cardTypeFilter,
-        query,
-        cardNumber,
+      .getListRollTermTransactionOpenByUserId(
+        params,
         limit,
-        createdByFilter,
         offset,
-        officeFilter,
-        dueDayFilter,
-        viewDoneTransaction,
-        cardHoldFilter,
-        isCheckedFilter,
-        checkedByUserName
-      })
+      )
       .subscribe((result) => {
         this.isLoading = false;
         this.transactionsData = result?.result;
@@ -339,55 +420,37 @@ export class RollTermScheduleTabComponent implements OnInit {
 
   ExportExcel() {
     const dateFormat = this.settingsService.dateFormat;
-    let fromDate = this.formDate.get("fromDate").value;
-    let toDate = this.formDate.get("toDate").value;
-    const query = this.formFilter.get("query").value;
-    const cardNumber = this.formFilter.get("cardNumber").value;
-    const bankFilter = this.formFilter.get("bankFilter").value;
-    if(bankFilter && !bankFilter.bankCode) {
+    let params: any = this.getParamsFilter();
+    const limit = this.paginator.pageSize ? this.paginator.pageSize : 10;
+    const offset = this.paginator.pageIndex * limit;
+    if(params.bankFilter && !params.bankFilter.bankCode) {
       this.alertService.alert({
         type: "🚨🚨🚨🚨 Lỗi ",
         msgClass: "cssDanger",
-        message: 'Vui Lòng chọn lại ngân hàng trước!',
+        message: "Vui Lòng chọn lại ngân hàng trước!",
       });
       return;
     };
-    const cardTypeFilter = this.formFilter.get("cardType").value;
-    const createdByFilter = this.formFilter.get("createdByFilter").value;
-    const officeFilter = this.formFilter.get("OfficeFilter").value;
-    const dueDayFilter = this.formFilter.get("dueDay").value;
-    const cardHoldFilter = this.formFilter.get("cardHoldFilter").value;
-    const viewDoneTransaction = this.formFilter.get("viewDoneTransaction").value;
-    const isCheckedFilter = this.formFilter.get("isCheckedFilter").value;
-    const checkedByUserName = this.formFilter.get("checkedByUserName").value;
-
-    const limit = 999999999;
-    const offset = 0;
-    if (fromDate) {
-      fromDate = this.datePipe.transform(fromDate, dateFormat);
-    }
-    if (toDate) {
-      toDate = this.datePipe.transform(toDate, dateFormat);
+    let rangeAmountObject = undefined;
+    if (params.rangeAmountCode) {
+      this.rangeAmountOption.forEach((option: any) => {
+        if ((option.code == params.rangeAmountCode)) {
+          rangeAmountObject = {
+            min: option.min,
+            max: option.max,
+          };
+          params.rangeAmountCode = rangeAmountObject;
+        }
+        return;
+      });
     }
     var data = [];
     this.transactionService
-      .getListRollTermTransactionOpenByUserId({
-        fromDate,
-        toDate,
-        bankFilter,
-        cardTypeFilter,
-        query,
-        cardNumber,
+      .getListRollTermTransactionOpenByUserId(
+        params,
         limit,
-        createdByFilter,
         offset,
-        officeFilter,
-        dueDayFilter,
-        viewDoneTransaction,
-        cardHoldFilter,
-        isCheckedFilter,
-        checkedByUserName
-      })
+      )
       .subscribe((result) => {
         this.transactionsData = result?.result;
         data = result?.result?.listPosTransaction;
@@ -395,7 +458,7 @@ export class RollTermScheduleTabComponent implements OnInit {
       });
   }
 
-  ExportExcel1(data:any[]) {
+  ExportExcel1(data: any[]) {
     let dataCopy = [];
     let i = -1;
 
@@ -421,8 +484,7 @@ export class RollTermScheduleTabComponent implements OnInit {
         dueDay: element.dueDay, //Ngày due date
         createdByName: element.createdByName, //người sở hữu khách hàng
         panBank: element.panBank, //tên ngân hàng
-        checkedByStaff: element.checkedByStaff //Người thực hiện món đó
-
+        checkedByStaff: element.checkedByStaff, //Người thực hiện món đó
       };
       dataCopy.push(e);
     }

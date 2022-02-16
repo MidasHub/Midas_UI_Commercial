@@ -101,6 +101,14 @@
       <input matInput type="text" formControlName="cardNumber" />
     </mat-form-field>
 
+    <mat-form-field fxFlex="20%">
+      <mat-label>Khoảng tiền cần tạm ứng</mat-label>
+      <select matSelect matNativeControl formControlName="rangeAmountFilter">
+        <option *ngFor="let option of rangeAmountOption" [value]="option.code">
+          {{ option.description }}
+        </option>
+      </select>
+    </mat-form-field>
 
     <mat-form-field fxFlex="20%" >
       <select matSelect matNativeControl formControlName="isCheckedFilter">
@@ -120,6 +128,9 @@
       <label></label>
       <mat-checkbox fxFlex="100%" labelPosition="after" formControlName="viewDoneTransaction" class="margin-v">
         Đã thực hiện xong
+      </mat-checkbox>
+      <mat-checkbox fxFlex="100%" labelPosition="after" formControlName="viewOverPaidTransaction" class="margin-v">
+        Đã thu hồi lố
       </mat-checkbox>
 
     </div>
@@ -289,7 +300,9 @@
           (d)
         </th>
         <td class="on_success" mat-cell fxHide fxShow.gt-md *matCellDef="let journalEntry">
-          {{ journalEntry.amountPaid | money }}
+          {{ journalEntry.amountPaid | money }} <br />
+          <label style="color: red;" *ngIf="journalEntry.amountPaid > journalEntry.principal" for="">(Thu hồi lố: {{(journalEntry.amountPaid - journalEntry.principal) | money}})</label>
+
         </td>
       </ng-container>
 

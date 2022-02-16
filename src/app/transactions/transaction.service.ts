@@ -297,23 +297,10 @@ export class TransactionService {
     return this.http.post(`${this.GatewayApiUrlPrefix}/transaction/get_list_pos_transaction`, httpParams);
   }
 
-  getListRollTermTransactionOpenByUserId(payload: {
-    fromDate: string;
-    toDate: string;
-    query: string;
-    cardNumber: string;
-    bankFilter: any;
-    cardTypeFilter: string;
-    createdByFilter: string;
-    limit: number;
-    offset: number;
-    officeFilter: number;
-    dueDayFilter: number;
-    viewDoneTransaction: boolean;
-    cardHoldFilter: string;
-    isCheckedFilter: string;
-    checkedByUserName: string;
-  }): Observable<any> {
+  getListRollTermTransactionOpenByUserId(
+    payload: any,
+    limit: number,
+    offset: number): Observable<any> {
 
     let httpParams = this.commonHttpParams.getCommonHttpParams();
     httpParams = httpParams.set("bankFilter", !payload.bankFilter ? "%%" : payload.bankFilter.bankCode);
@@ -324,17 +311,23 @@ export class TransactionService {
     httpParams = httpParams.set("officeSearch", !payload.officeFilter ? "%%" : `${payload.officeFilter}`);
     httpParams = httpParams.set("dueDayFilter", !payload.dueDayFilter ? "-1" : `${payload.dueDayFilter}`);
     httpParams = httpParams.set("viewDoneTransaction", `${payload.viewDoneTransaction}`);
+    httpParams = httpParams.set("viewOverPaidTransaction", `${payload.viewOverPaidTransaction}`);
     httpParams = httpParams.set("cardHoldFilter", payload.cardHoldFilter == "ALL" ? "%%" : payload.cardHoldFilter);
     httpParams = httpParams.set("isCheckedFilter", payload.isCheckedFilter ? payload.isCheckedFilter : "0");
     httpParams = httpParams.set(
       "checkedByUserName",
       !payload.checkedByUserName ? "%%" : `%${payload.checkedByUserName}%`
     );
-    httpParams = httpParams.set("limit", String(payload.limit));
-    httpParams = httpParams.set("offset", String(payload.offset));
+    httpParams = httpParams.set("limit", String(limit));
+    httpParams = httpParams.set("offset", String(offset));
     httpParams = httpParams.set("fromDate", payload.fromDate);
     httpParams = httpParams.set("toDate", payload.toDate);
+    if(payload.rangeAmountObject){
 
+      httpParams = httpParams.set("fromFilterAmount", payload.rangeAmountObject.min);
+      httpParams = httpParams.set("toFilterAmount", payload.rangeAmountObject.max);
+
+    }
     return this.http.post(`${this.GatewayApiUrlPrefix}/transaction/get_list_pos_transaction_rollterm`, httpParams);
   }
 

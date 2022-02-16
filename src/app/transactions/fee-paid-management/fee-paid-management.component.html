@@ -257,12 +257,16 @@
 
       <ng-container matColumnDef="customerName">
         <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>
-          Chủ thể /<br />
+          Chủ thể / Nhân viên /<br />
           Đại lý
         </th>
         <td mat-cell fxHide fxShow.gt-md *matCellDef="let transaction">
           {{ getDataOfGroupTxnCode(transaction)[0].customerName }}
 
+          <br />
+          <label  style="color: blue">
+            {{ getDataOfGroupTxnCode(transaction)[0].staffName }}
+          </label>
           <br />
 
           <label *ngIf="getDataOfGroupTxnCode(transaction)[0].agencyName != '#'" style="color: green">
