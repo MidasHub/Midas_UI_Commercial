@@ -197,6 +197,21 @@ export class SavingsService {
     );
   }
 
+  getCheckerClientInfo(txnCode: string, txnId: string): Observable<any> {
+    if(!txnCode) {
+      return;
+    }
+    let httpParams = this.commonHttpParams.getCommonHttpParams();
+    httpParams = httpParams.set("txnCode", txnCode);
+    httpParams = httpParams.set("txnId", txnId);
+
+
+    return this.http.post(
+      `${this.GatewayApiUrlPrefix}/savingTransaction/get_client_saving_transaction`,
+      httpParams
+    );
+  }
+
   /**
    * @param {string} savingAccountId is saving account"s Id.
    * @returns {Observable<any>}
