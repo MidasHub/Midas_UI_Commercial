@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { MatDialog } from "@angular/material/dialog";
 import { DatePipe } from "@angular/common";
@@ -21,9 +21,11 @@ import { AlertService } from "app/core/alert/alert.service";
   templateUrl: "./view-transaction.component.html",
   styleUrls: ["./view-transaction.component.scss"],
 })
-export class ViewTransactionComponent {
+export class ViewTransactionComponent implements OnInit {
   /** Transaction data. */
   transactionData: any;
+  undoAvailable: boolean = false;
+  messageError: string;
 
   /**
    * Retrieves the Transaction data from `resolve`.
@@ -48,49 +50,72 @@ export class ViewTransactionComponent {
     });
   }
 
+  getTxnType(){
+    if(this.transactionData.transactionType.value == 'Withdrawal'){
+      return 'nhận';
+    } else {
+      if(this.transactionData.transactionType.value == 'Deposit'){
+        return 'gửi';
+      }
+    }
+  }
+
+  ngOnInit() {
+    // check is transaction available to undo
+    this.savingsService.checkValidRevertSavingTransaction(this.transactionData.id).subscribe((data) => {
+      if (!data.result.isValid) {
+        this.messageError = data.result.message;
+      } else {
+        this.undoAvailable = true;
+      }
+    });
+
+    // get detail transfer transaction
+    if (this.transactionData.paymentDetailData && this.transactionData.paymentDetailData.checkNumber) {
+      this.savingsService.getCheckerClientInfo(this.transactionData.paymentDetailData.checkNumber, this.transactionData.id).subscribe((data) => {
+        this.transactionData.paymentDetailData.clientInfo =  data.result.clientDto;
+      });
+    }
+  }
+
   /**
    * Undo the savings transaction
    */
   undoTransaction() {
-    this.savingsService.checkValidRevertSavingTransaction(this.transactionData.id).subscribe((data) => {
-      if (!data.result.isValid) {
-        this.alertService.alert({
-          message: `${data.result.message}`,
-          msgClass: "cssDanger",
-          hPosition: "center",
-        });
+    if (!this.undoAvailable) {
+      this.alertService.alert({
+        message: `${this.messageError}`,
+        msgClass: "cssDanger",
+        hPosition: "center",
+      });
 
-        return;
-      } else {
-        const accountId = this.route.parent.snapshot.params["savingAccountId"];
-        const undoTransactionAccountDialogRef = this.dialog.open(UndoTransactionDialogComponent);
-        undoTransactionAccountDialogRef.afterClosed().subscribe((response: any) => {
-          if (response.confirm) {
-            const locale = this.settingsService.language.code;
-            const dateFormat = this.settingsService.dateFormat;
-            const data = {
-              transactionDate: this.datePipe.transform(
-                this.transactionData.date && new Date(this.transactionData.date),
-                dateFormat
-              ),
-              transactionAmount: 0,
-              dateFormat,
-              locale,
-            };
-            this.savingsService
-              .executeSavingsAccountTransactionsCommand(accountId, "undo", data, this.transactionData.id)
-              .subscribe(() => {
-                this.alertService.alert({
-                  message: `Hủy giao dịch ${this.transactionData.id} thành công!`,
-                  msgClass: "cssSuccess",
-                  hPosition: "center",
-                });
-                this.router.navigate(["../"], { relativeTo: this.route.parent });
-
-                // this.router.navigate(['../../transactions'], { relativeTo: this.route });
-              });
-          }
-        });
+      return;
+    }
+    const accountId = this.route.parent.snapshot.params["savingAccountId"];
+    const undoTransactionAccountDialogRef = this.dialog.open(UndoTransactionDialogComponent);
+    undoTransactionAccountDialogRef.afterClosed().subscribe((response: any) => {
+      if (response.confirm) {
+        const locale = this.settingsService.language.code;
+        const dateFormat = this.settingsService.dateFormat;
+        const data = {
+          transactionDate: this.datePipe.transform(
+            this.transactionData.date && new Date(this.transactionData.date),
+            dateFormat
+          ),
+          transactionAmount: 0,
+          dateFormat,
+          locale,
+        };
+        this.savingsService
+          .executeSavingsAccountTransactionsCommand(accountId, "undo", data, this.transactionData.id)
+          .subscribe(() => {
+            this.alertService.alert({
+              message: `Hủy giao dịch ${this.transactionData.id} thành công!`,
+              msgClass: "cssSuccess",
+              hPosition: "center",
+            });
+            this.router.navigate(["../"], { relativeTo: this.route.parent });
+          });
       }
     });
   }
