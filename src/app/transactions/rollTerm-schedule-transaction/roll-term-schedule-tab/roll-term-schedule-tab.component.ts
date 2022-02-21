@@ -504,7 +504,7 @@ export class RollTermScheduleTabComponent implements OnInit {
     const data = {
       rollTermId: rollTermId,
     };
-    const dialog = this.dialog.open(RollTermScheduleDialogComponent, { height: "auto", width: "80%", data });
+    const dialog = this.dialog.open(RollTermScheduleDialogComponent, { height: "auto", width: "95%", data });
     dialog.afterClosed().subscribe((response: any) => {
       if (response.data) {
         const value = response.data.value;
