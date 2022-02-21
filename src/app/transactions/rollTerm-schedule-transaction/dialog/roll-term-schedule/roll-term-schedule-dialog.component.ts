@@ -12,6 +12,7 @@ import { ViewFeePaidTransactionDialogComponent } from "app/transactions/dialog/v
 import { DatePipe } from "@angular/common";
 import { AuthenticationService } from "app/core/authentication/authentication.service";
 import { ConfirmDialogComponent } from "app/transactions/dialog/confirm-dialog/confirm-dialog.component";
+import { TerminalsService } from "app/terminals/terminals.service";
 
 @Component({
   selector: "midas-roll-term-schedule-dialog",
@@ -36,12 +37,14 @@ export class RollTermScheduleDialogComponent implements OnInit {
   pristine: boolean;
   currentUser: any;
   permitFee: boolean = false;
+  terminals: any[];
 
   constructor(
     private router: Router,
     private datePipe: DatePipe,
-    private bookingService: BookingService,
+    private terminalsService: TerminalsService,
     private alertService: AlertService,
+    private bookingService: BookingService,
     private transactionService: TransactionService,
     private authenticationService: AuthenticationService,
     public dialog: MatDialog,
@@ -54,6 +57,9 @@ export class RollTermScheduleDialogComponent implements OnInit {
   ngOnInit() {
     this.currentUser = this.authenticationService.getCredentials();
     this.checkPermissionMakeRepayment();
+    this.terminalsService.getPartnersTerminalTemplate().subscribe((result: any) => {
+      this.terminals = result?.result?.listTerminal;
+    });
   }
 
   checkPermissionMakeRepayment() {
@@ -100,6 +106,11 @@ export class RollTermScheduleDialogComponent implements OnInit {
     }
 
     return value;
+  }
+
+  displayTerminalName(terminalId: string) {
+    const terminalInfo = this.terminals?.filter((terminal: any) => terminal.terminalId == terminalId);
+    return terminalInfo ? terminalInfo[0]?.terminalName : terminalId;
   }
 
   getRollTermScheduleAndCardDueDayInfo(rollTermId: string) {
@@ -308,14 +319,7 @@ export class RollTermScheduleDialogComponent implements OnInit {
   }
 
   editBookingRow(booking: any) {
-    // const dialog = this.dialog.open(ConfirmDialogComponent, {
-    //   data: {
-    //     message: "Bạn chắc chắn muốn chỉnh sửa dòng lịch Advance này",
-    //     title: "Xác nhận",
-    //   },
-    // });
-    // dialog.afterClosed().subscribe((data: any) => {
-    //   if (data) {
+
     let BookingRollTerm = {
       bookingInternalId: booking.refid,
       amountBooking: booking.bookingAmount,
@@ -324,7 +328,6 @@ export class RollTermScheduleDialogComponent implements OnInit {
     this.bookingService.editBookingInternalOnRollTermSchedule(BookingRollTerm).subscribe((data: any) => {
       this.getRollTermScheduleAndCardDueDayInfo(this.rollTermId);
     });
-    //   }
-    // });
+
   }
 }
