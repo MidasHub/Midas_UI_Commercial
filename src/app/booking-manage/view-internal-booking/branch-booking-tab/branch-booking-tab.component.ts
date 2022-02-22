@@ -15,6 +15,7 @@ import { TerminalsService } from "app/terminals/terminals.service";
 import { ConfirmDialogComponent } from "app/transactions/dialog/confirm-dialog/confirm-dialog.component";
 import { merge } from "rxjs";
 import { tap } from "rxjs/operators";
+import { TransactionService } from "app/transactions/transaction.service";
 
 @Component({
   selector: "midas-branch-booking-tab",
@@ -56,7 +57,9 @@ export class BranchBookingTabComponent implements OnInit {
     private datePipe: DatePipe,
     private dialog: MatDialog,
     private alertService: AlertService,
-    private terminalsService: TerminalsService
+    private terminalsService: TerminalsService,
+    private transactionService: TransactionService,
+
   ) {
     this.formDate = this.formBuilder.group({
       fromDate: [new Date()],
@@ -76,6 +79,37 @@ export class BranchBookingTabComponent implements OnInit {
     };
     dialogConfig.minWidth = 1200;
     this.dialog.open(DetailBranchBookingDialogComponent, dialogConfig);
+  }
+
+  cancelBooking(bookingInfo: any) {
+    debugger;
+    const dialog = this.dialog.open(ConfirmDialogComponent, {
+      data: {
+        message: `Bạn chắc chắn muốn huỷ booking này của '${bookingInfo.officeName}'`,
+        title: "Hoàn thành xác thực",
+      },
+    });
+    dialog.afterClosed().subscribe((data) => {
+      if (data) {
+    this.transactionService
+          .cancelSubmitTransaction(bookingInfo.bookingId, bookingInfo.bookingRefNo)
+          .subscribe((result: any) => {
+            if (result.status === "200") {
+              const message = "Huỷ chốt số giao dịch thành công";
+              this.alertService.alert({
+                msgClass: "cssInfo",
+                message: message,
+              });
+              this.getBookingInternal();
+
+            } else {
+              this.alertService.alert({
+                msgClass: "cssDanger",
+                message: result.error,
+              });
+            }
+          });
+        }});
   }
 
   displayPartnerName(code: string) {
@@ -207,8 +241,7 @@ export class BranchBookingTabComponent implements OnInit {
   }
 
   transferBookingInternal(bookingInternal: any) {
-    const dateFormat = this.settingsService.dateFormat;
-    const dialog = this.dialog.open(TransferBookingInternalComponent, {
+     const dialog = this.dialog.open(TransferBookingInternalComponent, {
       data: {
         createdBy: bookingInternal.createdBy,
         staffName: bookingInternal.userName,
