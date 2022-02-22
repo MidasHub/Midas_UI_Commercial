@@ -39,7 +39,6 @@ import { AddSubmitTransactionDialogComponent } from "../dialog/add-submit-transa
 export class ManageTransactionComponent implements OnInit {
   expandedElement: any;
   displayedColumns: string[] = [
-    "productId",
     "txnDate",
     "officeName",
     "panHolderName",

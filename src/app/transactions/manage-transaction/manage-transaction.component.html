@@ -24,11 +24,7 @@
         >
           Tìm kiếm &nbsp;<i class="fa fa-search" aria-hidden="true"></i>
         </button>
-        <!-- <div fxFlex="18%">
-          <button style="margin: 5px; height: 40px" (click)="openPDF()" color="primary" mat-raised-button>
-            open PDF
-          </button>
-        </div> -->
+
         <h3 *ngIf="!fromDateAndToDate">
           Vui lòng chọn thời gian &nbsp; <i class="fa fa-calendar" style="align-self: center" aria-hidden="true"></i>
         </h3>
@@ -93,9 +89,11 @@
         <mat-panel-title> Xem theo </mat-panel-title>
       </mat-expansion-panel-header>
       <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column" [formGroup]="formFilter">
-        <mat-form-field fxFlex="18%" >
+        <mat-form-field fxFlex="18%">
           <mat-label>Chi nhánh</mat-label>
-          <input placeholder="Tìm chi nhánh" formControlName="officeId"
+          <input
+            placeholder="Tìm chi nhánh"
+            formControlName="officeId"
             matInput
             (click)="this.resetAutoCompleteOffice()"
             [matAutocomplete]="officeAutocomplete"
@@ -228,7 +226,7 @@
       [dataSource]="dataSource"
       matSort
     >
-      <ng-container matColumnDef="productId">
+      <!-- <ng-container matColumnDef="productId">
         <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>Loại giao dịch</th>
         <td mat-cell fxHide fxShow.gt-md *matCellDef="let transaction" style="width: 100px">
           <span
@@ -244,24 +242,44 @@
             {{ displayProductId(transaction.productId) }}
           </span>
         </td>
-      </ng-container>
+      </ng-container> -->
 
       <ng-container matColumnDef="txnDate">
-        <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>Ngày giao dịch</th>
-        <td mat-cell fxHide fxShow.gt-md style="word-wrap: break-word; width: 150px" *matCellDef="let journalEntry">
-          <span [ngSwitch]="journalEntry.status">
-            <img *ngSwitchCase="'C'" src="assets/images/icons/check.svg" />
-            <img *ngSwitchCase="'P'" src="assets/images/icons/pending.svg" />
-            <img *ngSwitchCase="'V'" src="assets/images/icons/cancel.svg" />
-            <img *ngSwitchDefault src="assets/images/icons/question.svg" />
-          </span>
-          {{ journalEntry.txnDate | date: "dd-MM-yyyy HH:mm:ss" }}
-          <br />
-          <span class="green_text">{{ journalEntry.trnRefNo }}</span>
-          <br />
-          <label class="red_text" *ngIf="checkB(journalEntry.type)">
-            {{ journalEntry.type }}
-          </label>
+        <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>Loại/ <br />Ngày giao dịch</th>
+        <td mat-cell fxHide fxShow.gt-md style="word-wrap: break-word; width: 220px" *matCellDef="let transaction">
+          <div fxLayout="row wrap" fxLayout.lt-sm="column">
+            <div fxFlex.gt-sm="20%" style="margin: auto;">
+
+              <label class="status-icon" [ngSwitch]="transaction.status">
+                <img *ngSwitchCase="'C'" src="assets/images/icons/check.svg" />
+                <img *ngSwitchCase="'P'" src="assets/images/icons/pending.svg" />
+                <img *ngSwitchCase="'V'" src="assets/images/icons/cancel.svg" />
+                <img *ngSwitchDefault src="assets/images/icons/question.svg" />
+              </label>
+            </div>
+            <div fxFlex.gt-sm="80%">
+
+              <label class="productId">
+                {{ displayProductId(transaction.productId) }}
+              </label>
+                <span
+                *ngIf="transaction.isHold != '0'"
+                matBadge="Treo"
+                matBadgePosition="after"
+                matBadgeColor="accent"
+                matBadgeSize="small"
+              >
+              </span>
+              <br />
+              {{ transaction.txnDate | date: "dd-MM-yyyy HH:mm:ss" }}
+              <br />
+              <span class="green_text">{{ transaction.trnRefNo }}</span>
+              <br />
+              <label class="red_text" *ngIf="checkB(transaction.type)">
+                {{ transaction.type }}
+              </label>
+            </div>
+          </div>
         </td>
       </ng-container>
 
@@ -271,9 +289,9 @@
           máy bán hàng
         </th>
         <td mat-cell *matCellDef="let journalEntry" style="word-wrap: break-word; width: 200px">
-
           <span class="blue_text">{{ journalEntry.createdByName }} </span><br />
-          <span class="red_text">{{ displayTerminalName(journalEntry.terminalId) }}</span><br />
+          <span class="red_text">{{ displayTerminalName(journalEntry.terminalId) }}</span
+          ><br />
         </td>
       </ng-container>
 
@@ -301,42 +319,38 @@
 
       <ng-container matColumnDef="terminalAmount">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Số tiền giao dịch</th>
-        <td mat-cell style="padding: 6px; text-align: right;" *matCellDef="let transaction" >
+        <td mat-cell style="padding: 6px; text-align: right" *matCellDef="let transaction">
           {{ transaction.terminalAmount | money }}
 
           <span *midasHasPermission="'BILLER_HO'">
-            <button title="Tải hóa đơn" mat-icon-button (click)="downloadVoucher(transaction.refid)" color="accent" >
-              <i class="fa fa-file-invoice-dollar" style="font-size: 1.25rem;"></i>
+            <button title="Tải hóa đơn" mat-icon-button (click)="downloadVoucher(transaction.refid)" color="accent">
+              <i class="fa fa-file-invoice-dollar" style="font-size: 1.25rem"></i>
             </button>
           </span>
           <br />
-          <span
-            *ngIf="transaction.isSubmit == 1"
-            style="color: white; font-weight: bold; background-color: black;"
-
-          >
-          Đã chốt số
+          <span *ngIf="transaction.isSubmit == 1" style="color: white; font-weight: bold; background-color: black">
+            Đã chốt số
           </span>
         </td>
       </ng-container>
 
       <ng-container matColumnDef="feeAmount">
         <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>Phí thu được</th>
-        <td mat-cell fxHide fxShow.gt-md *matCellDef="let journalEntry" style="padding: 6px; text-align: right;">
+        <td mat-cell fxHide fxShow.gt-md *matCellDef="let journalEntry" style="padding: 6px; text-align: right">
           <label>{{ journalEntry.feeAmount | money }}</label>
         </td>
       </ng-container>
 
       <ng-container matColumnDef="terminalAmount_feeAmount">
         <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>Tỉ lệ phí</th>
-        <td mat-cell fxHide fxShow.gt-md *matCellDef="let journalEntry" style="padding: 6px; text-align: right;">
+        <td mat-cell fxHide fxShow.gt-md *matCellDef="let journalEntry" style="padding: 6px; text-align: right">
           {{ journalEntry.terminalAmount_feeAmount | number }}%
         </td>
       </ng-container>
 
       <ng-container matColumnDef="pnlAmount">
         <th mat-header-cell fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>PNL</th>
-        <td mat-cell fxHide fxShow.gt-md *matCellDef="let transaction" style="padding: 6px; text-align: right;">
+        <td mat-cell fxHide fxShow.gt-md *matCellDef="let transaction" style="padding: 6px; text-align: right">
           <span *midasHasPermission="'POS_UPDATE'">{{ transaction.pnlAmount | money }}</span>
         </td>
       </ng-container>

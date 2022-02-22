@@ -80,9 +80,14 @@ tr.example-detail-row {
 .productId {
   background-color: #1fb050;
   border-radius: 10px;
-  padding: 8px;
+  padding: 5px;
   color: white;
 }
+
+.status-icon {
+  margin: 5px;
+}
+
 .red_text {
   color: red;
   font-weight: bold;
