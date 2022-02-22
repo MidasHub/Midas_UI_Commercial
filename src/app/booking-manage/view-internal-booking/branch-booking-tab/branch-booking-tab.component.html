@@ -121,7 +121,7 @@
       <ng-container matColumnDef="partner">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Đối tác</th>
         <td mat-cell *matCellDef="let booking">
-          <label style="color: green;">{{ displayPartnerName(booking.partnerCode) }}</label>
+          <label style="color: green">{{ displayPartnerName(booking.partnerCode) }}</label>
         </td>
       </ng-container>
 
@@ -173,12 +173,16 @@
 
       <ng-container matColumnDef="actions">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Hành động</th>
-        <td mat-cell *matCellDef="let booking" style="width: 100px !important">
-          <button mat-mini-fab color="default" (click)="showDetailBooking(booking.bookingRefNo)">
+        <td mat-cell *matCellDef="let booking">
+          <button class="btn-icon" color="primary" mat-mini-fab (click)="cancelBooking(booking)">
+            <mat-icon title="Xoá booking "> restore_from_trash </mat-icon>
+          </button>
+          <button mat-mini-fab color="default" class="btn-icon" (click)="showDetailBooking(booking.bookingRefNo)">
             <mat-icon title="Xem chi tiết "> remove_red_eye </mat-icon>
           </button>
 
           <button
+            class="btn-icon"
             *ngIf="booking.totalPaid < booking.totalBooking"
             mat-mini-fab
             color="primary"

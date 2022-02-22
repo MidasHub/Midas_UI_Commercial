@@ -535,6 +535,18 @@ export class TransactionService {
     });
   }
 
+  cancelSubmitTransaction(
+    bookingInternalId: string,
+    bookingRefNo: string
+  ): Observable<any> {
+    let httpParams = this.commonHttpParams.getCommonHttpParams();
+    httpParams = httpParams.set("bookingInternalId", bookingInternalId);
+    httpParams = httpParams.set("bookingRefNo", bookingRefNo);
+
+
+    return this.http.post<any>(`${this.GatewayApiUrlPrefix}/transaction/cancel_submit_transaction_by_office`, httpParams);
+  }
+
   submitTransactionUpToiNow(
     listTransactionSubmitInfo: any,
     note: string,
