@@ -52,6 +52,10 @@ export class ClientsViewComponent implements OnInit {
 
   displayExtendInfoValue() {
     let indexCustomerSource = 0;
+    if (!this.clientDatatables[0] ||  !this.clientDatatables[0].registeredTableName) {
+      return;
+    }
+
     this.clientsService
       .getClientDatatable(this.clientViewData.id, this.clientDatatables[0]?.registeredTableName)
       .subscribe((extendInfo: any) => {
