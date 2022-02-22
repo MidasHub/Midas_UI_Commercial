@@ -20,8 +20,8 @@ export class AddIdentitiesComponent implements OnInit {
   form: FormGroup;
   documentTypes: any[];
   statusOptions: any[] = [{value: 'Active', description: 'Giử thẻ'}, {value: 'Inactive', description: 'Không giử thẻ'}];
-  documentCardBanks: any[] = this.bankService.documentCardBanks;
-  documentCardTypes: any[] = this.bankService.documentCardTypes;
+  documentCardBanks: any[] ;
+  documentCardTypes: any[] ;
   currentUser: any;
   isTeller = true;
   existBin = false;
@@ -56,6 +56,17 @@ export class AddIdentitiesComponent implements OnInit {
 
   ngOnInit(): void {
     this.currentUser = this.authenticationService.getCredentials();
+    this.bankService.getBanks().subscribe(result => {
+      if (result) {
+        this.documentCardBanks = result;
+
+      }
+    });
+    this.bankService.getCardTypes().subscribe(result => {
+      if (result) {
+        this.documentCardTypes = result;
+      }
+    });
     const {roles} = this.currentUser;
     roles.map((role: any) => {
       if (role.id !== 3) {

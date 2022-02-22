@@ -76,7 +76,8 @@ export class WebAppComponent implements OnInit {
     private settingsService: SettingsService,
     private authenticationService: AuthenticationService,
     private deviceService: DeviceDetectorService,
-    private tourService: TourService
+    private tourService: TourService,
+    private banksService: BanksService
   ) {
     /** Activate GoogleAnalytic */
     this.addGAScript();
@@ -140,6 +141,8 @@ export class WebAppComponent implements OnInit {
         if (title) {
           this.titleService.setTitle(`${this.translateService.instant(title)} | MIDAS`);
         }
+        log.debug("page title: ", title);
+        this.banksService.getData();
       });
 
     // Stores top 100 user activites as local storage object.
@@ -194,18 +197,13 @@ export class WebAppComponent implements OnInit {
     /** check if not in Production will do the following code */
     if (!environment.production) {
       if (!sessionStorage.getItem("midasServers")) {
-        this.settingsService.setServers([
-
-        ]);
+        this.settingsService.setServers([]);
       }
 
       if (!sessionStorage.getItem("midasBillposServers")) {
-        this.settingsService.setBillposServers([
-
-        ]);
+        this.settingsService.setBillposServers([]);
       }
     }
-
   }
 
   /** Add Google Analytics Script Dynamically */
