@@ -10,12 +10,12 @@ export class CommonHttpParams {
       sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey)
     );
     let httpParams = new HttpParams()
-      .set('fromOfficeId', accessToken.officeId)
-      .set('toOfficeId', accessToken.officeId)
-      .set('staffId', accessToken.staffId ? accessToken.staffId: "" )
-      .set("officeId", accessToken.officeId)
-      .set("createdBy", accessToken.userId)
-      .set("accessToken", accessToken.base64EncodedAuthenticationKey);
+      .set('fromOfficeId', accessToken?.officeId)
+      .set('toOfficeId', accessToken?.officeId)
+      .set('staffId', accessToken?.staffId ? accessToken?.staffId: "" )
+      .set("officeId", accessToken?.officeId)
+      .set("createdBy", accessToken?.userId)
+      .set("accessToken", accessToken?.base64EncodedAuthenticationKey);
 
     return httpParams;
   }
