@@ -31,7 +31,9 @@
     <ng-container matColumnDef="txnSavingId">
       <th mat-header-cell class="mat-cell-custom" fxHide fxShow.gt-md *matHeaderCellDef mat-sort-header>Tài khoản </th>
       <td mat-cell fxHide fxShow.gt-md class="mat-cell-custom"
-          *matCellDef="let transaction">{{ transaction.txnSavingId }} </td>
+          *matCellDef="let transaction">{{ transaction.txnSavingId }} <br />
+          <label style="color: green; font-weight: bold;" for="">{{ transaction.staffName}}</label>
+        </td>
     </ng-container>
 
     <ng-container matColumnDef="paidAmount">
