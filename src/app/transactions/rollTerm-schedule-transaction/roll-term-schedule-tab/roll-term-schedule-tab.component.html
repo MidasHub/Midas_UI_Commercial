@@ -421,6 +421,7 @@
       let-panHolderName="panHolderName"
       let-panNumber="panNumber"
       let-principal="principal"
+      let-paidAmount="paidAmount"
       let-amountPaid="amountPaid"
       style="width: 50px"
     >
@@ -432,7 +433,7 @@
       </button>
 
       <hr />
-      <button mat-menu-item (click)="undoRollTermTransaction(refid, principal - amountPaid)">
+      <button mat-menu-item (click)="undoRollTermTransaction(refid, principal, paidAmount, amountPaid)">
         <i class="fa fa-eye" aria-hidden="true"></i>&nbsp;Hủy tạm ứng
       </button>
     </ng-template>
