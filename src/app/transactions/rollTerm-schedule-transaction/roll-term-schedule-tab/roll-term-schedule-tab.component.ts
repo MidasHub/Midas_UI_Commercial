@@ -525,17 +525,32 @@ export class RollTermScheduleTabComponent implements OnInit {
     });
   }
 
-  undoRollTermTransaction(transactionId: string, amountPaid: string) {
+  undoRollTermTransaction(transactionId: string, principal: number, paidAmount: number, amountPaid: number) {
     const dialog = this.dialog.open(ConfirmDialogComponent, {
       data: {
         message: "Bạn chắc chắn muốn hủy khoản Advance " + transactionId,
         title: "Hủy giao dịch",
       },
     });
+    let amountRest: number = 0;
     dialog.afterClosed().subscribe((data) => {
       if (data) {
+        // calculate amount to close rollterm
+        if (paidAmount && amountPaid && paidAmount > amountPaid) {
+          amountRest = principal - paidAmount;
+        } else {
+          amountRest = principal - amountPaid;
+        }
+        if(amountRest <= 0) {
+        this.alertService.alert({
+          type: "🚨🚨🚨🚨 Lỗi ",
+          msgClass: "cssDanger",
+          message: "Lỗi số tiền còn cần thu hồi, Vui lòng liên hệ IT support!",
+        });
+        return;
+      }
         this.transactionService
-          .RepaymentRolltermManualTransactionCloseLoan(transactionId, amountPaid)
+          .RepaymentRolltermManualTransactionCloseLoan(transactionId, String(amountRest))
           .subscribe((result) => {
             const message = "Hủy giao dịch " + transactionId + " thành công";
             this.savingsService.handleResponseApiSavingTransaction(result, message, false);
