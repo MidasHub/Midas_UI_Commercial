@@ -1,3 +1,4 @@
+import { filter } from "rxjs/operators";
 /** Angular Imports */
 import { Component, OnInit, AfterViewInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
@@ -42,6 +43,7 @@ export class MakeAccountTransfersComponent implements OnInit, AfterViewInit {
   id: any;
   /** Clients Data */
   clientsData: any;
+  clientsDataOrigin: any;
 
   accessToken: any;
   private credentialsStorageKey = "midasCredentials";
@@ -70,7 +72,6 @@ export class MakeAccountTransfersComponent implements OnInit, AfterViewInit {
       this.setParams();
       this.setOptions();
     });
-
   }
   /** Sets the value from the URL */
   setParams() {
@@ -122,13 +123,29 @@ export class MakeAccountTransfersComponent implements OnInit, AfterViewInit {
   /** Executes on change of various select options */
   changeEvent() {
     const formValue = this.refineObject(this.makeAccountTransferForm.value);
-    this.accountTransfersService
-      .newAccountTranferResource(this.id, this.accountTypeId, formValue)
-      .subscribe((response: any) => {
-        this.accountTransferTemplateData = response;
-        this.toClientTypeData = response.toClientOptions;
-        this.setOptions();
+    if (formValue) {
+      this.accountTransfersService
+        .newAccountTranferResource(this.id, this.accountTypeId, formValue)
+        .subscribe((response: any) => {
+          this.accountTransferTemplateData = response;
+          this.toClientTypeData = response.toClientOptions;
+          this.setOptions();
+        });
+    }
+  }
+
+  changeOffice() {
+    const formValue = this.refineObject(this.makeAccountTransferForm.value);
+    if (formValue) {
+      this.clientsService.getFilteredClients("id", "ASC", true, "", formValue.toOfficeId).subscribe((data: any) => {
+        this.clientsData = data.pageItems;
+        this.clientsDataOrigin = data.pageItems;
+
+        this.makeAccountTransferForm.controls.toClientId.reset();
+        this.makeAccountTransferForm.controls.toAccountType.reset();
+        this.makeAccountTransferForm.controls.toAccountId.reset();
       });
+    }
   }
 
   /** Refine Object
@@ -155,16 +172,21 @@ export class MakeAccountTransfersComponent implements OnInit, AfterViewInit {
    * Subscribes to Clients search filter:
    */
   ngAfterViewInit() {
-    this.makeAccountTransferForm.controls.toClientId.valueChanges.subscribe((value: string) => {
-      if (value.length >= 3) {
-        // this.clientsService.getFilteredClients('displayName', 'ASC', true, value)
-        //   .subscribe((data: any) => {
-        //     this.clientsData = data.pageItems;
-        //   });
-
-        this.clientsData = this.toClientTypeData.filter((item: any) => item.displayName.toUpperCase().includes(value.toUpperCase()));
-        this.changeEvent();
+    this.makeAccountTransferForm.controls.toClientId.valueChanges.subscribe((value: any) => {
+      // reset account choose if exist
+      if (!value || !this.clientsDataOrigin) {
+        return;
       }
+      this.makeAccountTransferForm.controls.toAccountType.reset();
+      this.makeAccountTransferForm.controls.toAccountId.reset();
+      this.clientsData = this.clientsDataOrigin;
+
+      this.clientsData = this.clientsData.filter((item: any) => {
+        let clientName = value.displayName ? value.displayName : value;
+        let status_string = item.status.value;
+        return item.displayName.toUpperCase().includes(clientName.toUpperCase()) && status_string == "Active";
+      });
+
     });
   }
 

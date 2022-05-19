@@ -48,7 +48,7 @@
 
           <mat-form-field fxFlex="98%">
             <mat-label>{{'Account_Transfer_Component.MakeAccountTransfer.lblOffice'|translate}}</mat-label>
-            <mat-select required formControlName="toOfficeId" (selectionChange)="changeEvent()">
+            <mat-select required formControlName="toOfficeId" (selectionChange)="changeOffice()">
               <mat-option *ngFor="let toOfficeType of toOfficeTypeData" [value]="toOfficeType.id">
                 {{ toOfficeType.name }}
               </mat-option>
