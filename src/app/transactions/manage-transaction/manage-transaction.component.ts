@@ -182,6 +182,7 @@ export class ManageTransactionComponent implements OnInit {
       partnerCode: [""],
       officeId: [""],
       panHolderName: [""],
+      panNumber: [""],
       terminalId: [""],
       traceNo: [""],
       batchNo: [""],

@@ -329,6 +329,13 @@ export class TransactionService {
       httpParams = httpParams.set("toFilterAmount", payload.rangeAmountCode.max);
 
     }
+
+    if(payload.rangeAmountNeedTransactionCode){
+
+      httpParams = httpParams.set("fromFilterAmountNeedTransaction", payload.rangeAmountNeedTransactionCode.min);
+      httpParams = httpParams.set("toFilterAmountNeedTransaction", payload.rangeAmountNeedTransactionCode.max);
+
+    }
     return this.http.post(`${this.GatewayApiUrlPrefix}/transaction/get_list_pos_transaction_rollterm`, httpParams);
   }
 

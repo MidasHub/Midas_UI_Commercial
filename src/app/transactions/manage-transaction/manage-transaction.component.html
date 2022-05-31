@@ -105,7 +105,7 @@
             {{ displayOffice(office) }}
           </mat-option>
         </mat-autocomplete>
-        <mat-form-field fxFlex="18%">
+        <mat-form-field fxFlex="15%">
           <mat-label>Loại giao dịch</mat-label>
           <mat-select formControlName="productId">
             <mat-option *ngFor="let type of transactionType" [value]="type.value">
@@ -114,7 +114,7 @@
           </mat-select>
         </mat-form-field>
 
-        <mat-form-field fxFlex="18%">
+        <mat-form-field fxFlex="15%">
           <mat-label>Trạng thái giao dịch</mat-label>
           <mat-select formControlName="status">
             <mat-option *ngFor="let type of statusOption" [value]="type.value">
@@ -123,7 +123,7 @@
           </mat-select>
         </mat-form-field>
 
-        <mat-form-field fxFlex="18%">
+        <mat-form-field fxFlex="15%">
           <mat-label>Đối tác</mat-label>
           <mat-select formControlName="partnerCode">
             <mat-option *ngFor="let type of partners" [value]="type.code">
@@ -131,6 +131,19 @@
             </mat-option>
           </mat-select>
         </mat-form-field>
+        <div fxFlex="18%">
+          <button style="margin: 5px; height: 40px" (click)="exportTransaction()" color="primary" mat-raised-button>
+            Export
+          </button>
+          <button
+            style="margin: 5px; height: 40px"
+            (click)="exportTransactionForPartner()"
+            color="primary"
+            mat-raised-button
+          >
+            Export Cho đối tác
+          </button>
+        </div>
 
         <mat-form-field fxFlex="18%">
           <mat-label>Đại lý</mat-label>
@@ -140,6 +153,11 @@
         <mat-form-field fxFlex="18%">
           <mat-label>Khách hàng</mat-label>
           <input matInput formControlName="panHolderName" />
+        </mat-form-field>
+
+        <mat-form-field fxFlex="18%">
+          <mat-label>Số thẻ</mat-label>
+          <input matInput formControlName="panNumber" />
         </mat-form-field>
 
         <mat-form-field fxFlex="18%">
@@ -193,27 +211,7 @@
           </mat-checkbox>
         </div>
 
-        <div fxFlex="18%">
-          <button style="margin: 5px; height: 40px" (click)="exportTransaction()" color="primary" mat-raised-button>
-            Export
-          </button>
-          <!-- <button style="margin: 5px; height: 40px" (click)="exportData()" color="primary" mat-raised-button>
-            Export
-          </button> -->
 
-          <button
-            style="margin: 5px; height: 40px"
-            (click)="exportTransactionForPartner()"
-            color="primary"
-            mat-raised-button
-          >
-            Export Cho đối tác
-          </button>
-
-          <!-- <button style="margin: 5px; height: 40px" (click)="exportAsXLSX()" color="primary" mat-raised-button>
-            Tải danh sách giao dịch
-          </button> -->
-        </div>
       </div>
     </mat-expansion-panel>
   </mat-accordion>

@@ -123,6 +123,45 @@ export class RollTermScheduleTabComponent implements OnInit {
     },
   ];
 
+  rangeAmountNeedTransactionOption = [
+    {
+      min: "-1000000000",
+      max: "1000000",
+      description: "Dưới 1tr",
+      code: 1,
+    },
+    {
+      min: "1000000",
+      max: "5000000",
+      description: "1tr đến 5tr",
+      code: 2,
+    },
+    {
+      min: "-1000000000",
+      max: "10000000",
+      description: "5tr đến 10tr",
+      code: 3,
+    },
+    {
+      min: "10000000",
+      max: "20000000",
+      description: "10tr đến 20tr",
+      code: 4,
+    },
+    {
+      min: "20000000",
+      max: "30000000",
+      description: "20tr đến 30tr",
+      code: 5,
+    },
+    {
+      min: "30000000",
+      max: "1000000000",
+      description: "Trên 30tr",
+      code: 6,
+    }
+  ];
+
   rangeAmountOption = [
     {
       min: "-1000000000",
@@ -216,6 +255,7 @@ export class RollTermScheduleTabComponent implements OnInit {
       createdByFilter: [""],
       bankFilter: [undefined],
       rangeAmountFilter: [undefined],
+      rangeAmountNeedTransactionFilter: [undefined],
       cardType: ["ALL"],
       cardHoldFilter: ["ALL"],
       dueDay: [""],
@@ -330,11 +370,26 @@ export class RollTermScheduleTabComponent implements OnInit {
     const bankFilter = this.formFilter.get("bankFilter").value;
     const cardTypeFilter = this.formFilter.get("cardType").value;
     const rangeAmountCode = this.formFilter.get("rangeAmountFilter").value;
+    const rangeAmountNeedTransactionCode = this.formFilter.get("rangeAmountNeedTransactionFilter").value;
+
     let rangeAmountObject = undefined;
     if (rangeAmountCode) {
       this.rangeAmountOption.forEach((option: any) => {
         if ((option.code == rangeAmountCode)) {
           rangeAmountObject = {
+            min: option.min,
+            max: option.max,
+          };
+        }
+        return;
+      });
+    }
+
+    let rangeAmountNeedTransactionObject = undefined;
+    if (rangeAmountNeedTransactionCode) {
+      this.rangeAmountNeedTransactionOption.forEach((option: any) => {
+        if ((option.code == rangeAmountNeedTransactionCode)) {
+          rangeAmountNeedTransactionObject = {
             min: option.min,
             max: option.max,
           };
@@ -373,12 +428,14 @@ export class RollTermScheduleTabComponent implements OnInit {
       'isCheckedFilter': isCheckedFilter,
       'checkedByUserName': checkedByUserName,
       'viewOverPaidTransaction': viewOverPaidTransaction,
-      'rangeAmountCode': rangeAmountCode
+      'rangeAmountCode': rangeAmountObject,
+      'rangeAmountNeedTransactionCode': rangeAmountNeedTransactionObject
     }
   }
 
   getRollTermScheduleAndCardDueDayInfo() {
     let params: any = this.getParamsFilter();
+
     const limit = this.paginator.pageSize ? this.paginator.pageSize : 10;
     const offset = this.paginator.pageIndex * limit;
     if(params.bankFilter && !params.bankFilter.bankCode) {
@@ -390,19 +447,6 @@ export class RollTermScheduleTabComponent implements OnInit {
       return;
     };
 
-    let rangeAmountObject = undefined;
-    if (params.rangeAmountCode) {
-      this.rangeAmountOption.forEach((option: any) => {
-        if ((option.code == params.rangeAmountCode)) {
-          rangeAmountObject = {
-            min: option.min,
-            max: option.max,
-          };
-          params.rangeAmountCode = rangeAmountObject;
-        }
-        return;
-      });
-    }
     this.isLoading = true;
     this.dataSource = [];
     this.transactionService
@@ -431,19 +475,7 @@ export class RollTermScheduleTabComponent implements OnInit {
       });
       return;
     };
-    let rangeAmountObject = undefined;
-    if (params.rangeAmountCode) {
-      this.rangeAmountOption.forEach((option: any) => {
-        if ((option.code == params.rangeAmountCode)) {
-          rangeAmountObject = {
-            min: option.min,
-            max: option.max,
-          };
-          params.rangeAmountCode = rangeAmountObject;
-        }
-        return;
-      });
-    }
+
     var data = [];
     this.transactionService
       .getListRollTermTransactionOpenByUserId(
@@ -532,12 +564,13 @@ export class RollTermScheduleTabComponent implements OnInit {
         title: "Hủy giao dịch",
       },
     });
+
     let amountRest: number = 0;
     dialog.afterClosed().subscribe((data) => {
       if (data) {
         // calculate amount to close rollterm
         if (paidAmount && amountPaid && paidAmount > amountPaid) {
-          amountRest = principal - paidAmount;
+          amountRest = principal - paidAmount ;
         } else {
           amountRest = principal - amountPaid;
         }

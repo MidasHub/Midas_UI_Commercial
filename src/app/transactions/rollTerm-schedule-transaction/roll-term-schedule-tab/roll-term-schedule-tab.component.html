@@ -110,7 +110,16 @@
       </select>
     </mat-form-field>
 
-    <mat-form-field fxFlex="20%" >
+    <mat-form-field fxFlex="20%">
+      <mat-label>Khoảng tiền cần thu hồi</mat-label>
+      <select matSelect matNativeControl formControlName="rangeAmountNeedTransactionFilter">
+        <option *ngFor="let option of rangeAmountNeedTransactionOption" [value]="option.code">
+          {{ option.description }}
+        </option>
+      </select>
+    </mat-form-field>
+
+    <mat-form-field fxFlex="20%">
       <select matSelect matNativeControl formControlName="isCheckedFilter">
         <option *ngFor="let status of CheckedFilterOption" [value]="status.code">
           {{ status.description }}
