@@ -137,7 +137,7 @@ export class RollTermScheduleTabComponent implements OnInit {
       code: 2,
     },
     {
-      min: "-1000000000",
+      min: "5000000",
       max: "10000000",
       description: "5tr đến 10tr",
       code: 3,
