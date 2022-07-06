@@ -55,6 +55,7 @@ export class ManageTransactionComponent implements OnInit {
   isLoading: boolean = false;
   transactionsData: any[] = [];
   currentUser: any;
+  cardTypeOption: any[] = [];
   transactionType: any[] = [
     {
       label: "Tất cả",
@@ -188,6 +189,7 @@ export class ManageTransactionComponent implements OnInit {
       terminalAmount: [""],
       userId: [""],
       trnRefNo: [""],
+      cardType: [""],
       RetailsChoose: [true],
       wholesaleChoose: [true],
       holdTransaction: [false],
@@ -237,6 +239,10 @@ export class ManageTransactionComponent implements OnInit {
       // @ts-ignore
       this.partners?.unshift({ code: "", desc: "Tất cả" });
       this.terminals?.unshift({ terminalId: "", terminalName: "Tất cả" });
+    });
+
+    this.bankService.getCardType().subscribe((result) => {
+      this.cardTypeOption = result?.result?.listCardType;
     });
 
     this.clientsService.getListUserTeller(this.currentUser.officeId).subscribe((result: any) => {
@@ -290,7 +296,7 @@ export class ManageTransactionComponent implements OnInit {
     this.dataSource = [];
     this.isLoading = true;
     this.transactionService.getTransaction({ fromDate, toDate }).subscribe((result) => {
-      console.log("result: ", result)
+
       this.isLoading = false;
       this.transactionsData = result?.result?.listPosTransaction.map((v: any) => {
         return {
