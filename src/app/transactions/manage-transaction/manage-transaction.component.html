@@ -145,6 +145,16 @@
           </button>
         </div>
 
+        <mat-form-field fxFlex="15%">
+          <mat-label>Loại thẻ</mat-label>
+          <select matSelect matNativeControl formControlName="cardType">
+            <option value="">Tất cả loại thẻ</option>
+            <option *ngFor="let card of cardTypeOption" [value]="card.description">
+              {{ card.description }}
+            </option>
+          </select>
+        </mat-form-field>
+
         <mat-form-field fxFlex="18%">
           <mat-label>Đại lý</mat-label>
           <input matInput formControlName="agencyName" />
@@ -163,11 +173,6 @@
         <mat-form-field fxFlex="18%">
           <mat-label>Mã máy</mat-label>
           <input matInput formControlName="terminalId" />
-          <!-- <mat-select formControlName="terminalId">
-            <mat-option *ngFor="let terminal of terminals" [value]="terminal.terminalId">
-              {{ terminal.terminalName }}
-            </mat-option>
-          </mat-select> -->
         </mat-form-field>
 
         <mat-form-field fxFlex="18%">
