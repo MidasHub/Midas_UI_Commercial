@@ -265,6 +265,9 @@ export class RollTermScheduleTabComponent implements OnInit {
       viewOverPaidTransaction: [false],
       isCheckedFilter: [0],
       checkedByUserName: [""],
+      CheckedDateFilterFrom: [new Date(new Date().setMonth(new Date().getMonth() - 1))],
+      CheckedDateFilterTo: [new Date()],
+
     });
     this.banksServices.getBanks().subscribe((result) => {
       this.banks = result;
@@ -406,6 +409,8 @@ export class RollTermScheduleTabComponent implements OnInit {
     const viewOverPaidTransaction = this.formFilter.get("viewOverPaidTransaction").value;
     const isCheckedFilter = this.formFilter.get("isCheckedFilter").value;
     const checkedByUserName = this.formFilter.get("checkedByUserName").value;
+    let CheckedDateFilterFrom = this.formFilter.get("CheckedDateFilterFrom").value;
+    let CheckedDateFilterTo = this.formFilter.get("CheckedDateFilterTo").value;
 
     if (fromDate) {
       fromDate = this.datePipe.transform(fromDate, dateFormat);
@@ -413,6 +418,13 @@ export class RollTermScheduleTabComponent implements OnInit {
     if (toDate) {
       toDate = this.datePipe.transform(toDate, dateFormat);
     }
+    if (CheckedDateFilterFrom) {
+      CheckedDateFilterFrom = this.datePipe.transform(CheckedDateFilterFrom, dateFormat);
+    }
+    if (CheckedDateFilterTo) {
+      CheckedDateFilterTo = this.datePipe.transform(CheckedDateFilterTo, dateFormat);
+    }
+
     return {
       'fromDate': fromDate,
       'toDate': toDate,
@@ -425,11 +437,13 @@ export class RollTermScheduleTabComponent implements OnInit {
       'dueDayFilter': dueDayFilter,
       'cardHoldFilter': cardHoldFilter,
       'viewDoneTransaction': viewDoneTransaction,
+      'viewOverPaidTransaction': viewOverPaidTransaction,
+      'rangeAmountCode': rangeAmountCode,
       'isCheckedFilter': isCheckedFilter,
       'checkedByUserName': checkedByUserName,
-      'viewOverPaidTransaction': viewOverPaidTransaction,
-      'rangeAmountCode': rangeAmountObject,
-      'rangeAmountNeedTransactionCode': rangeAmountNeedTransactionObject
+      'rangeAmountNeedTransactionCode': rangeAmountNeedTransactionObject,
+      'CheckedDateFilterFrom': CheckedDateFilterFrom,
+      'CheckedDateFilterTo': CheckedDateFilterTo,
     }
   }
 

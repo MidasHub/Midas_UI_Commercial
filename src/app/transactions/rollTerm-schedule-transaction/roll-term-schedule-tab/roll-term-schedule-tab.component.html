@@ -96,12 +96,12 @@
       <input matInput type="text" placeholder="Tên, số cmnd khách hàng" formControlName="query" />
     </mat-form-field>
 
-    <mat-form-field fxFlex="20%">
+    <mat-form-field fxFlex="25%">
       <mat-label>Số thẻ</mat-label>
       <input matInput type="text" formControlName="cardNumber" />
     </mat-form-field>
 
-    <mat-form-field fxFlex="20%">
+    <mat-form-field fxFlex="25%">
       <mat-label>Khoảng tiền cần tạm ứng</mat-label>
       <select matSelect matNativeControl formControlName="rangeAmountFilter">
         <option *ngFor="let option of rangeAmountOption" [value]="option.code">
@@ -141,6 +141,41 @@
       <mat-checkbox fxFlex="100%" labelPosition="after" formControlName="viewOverPaidTransaction" class="margin-v">
         Đã thu hồi lố
       </mat-checkbox>
+
+    </div>
+
+    <mat-form-field fxFlex="20%">
+      <select matSelect matNativeControl formControlName="isCheckedFilter">
+        <option *ngFor="let status of CheckedFilterOption" [value]="status.code">
+          {{ status.description }}
+        </option>
+      </select>
+    </mat-form-field>
+    <div
+      *ngIf="formFilter.value.isCheckedFilter == 2"
+      fxFlex="90%"
+      fxLayout="row wrap"
+      fxLayoutGap="2%"
+      fxLayout.lt-md="column"
+    >
+      <mat-form-field fxFlex="20%">
+        <mat-label>Thẻ chọn từ ngày:</mat-label>
+        <input matInput [matDatepicker]="CheckedDateFromPicker" formControlName="CheckedDateFilterFrom" />
+        <mat-datepicker-toggle matSuffix [for]="CheckedDateFromPicker"></mat-datepicker-toggle>
+        <mat-datepicker #CheckedDateFromPicker></mat-datepicker>
+      </mat-form-field>
+
+      <mat-form-field fxFlex="20%">
+        <mat-label>Thẻ chọn đến ngày:</mat-label>
+        <input matInput [matDatepicker]="CheckedDateToPicker" formControlName="CheckedDateFilterTo" />
+        <mat-datepicker-toggle matSuffix [for]="CheckedDateToPicker"></mat-datepicker-toggle>
+        <mat-datepicker #CheckedDateToPicker></mat-datepicker>
+      </mat-form-field>
+
+      <mat-form-field fxFlex="30%">
+        <mat-label>Nhân viên chọn thẻ</mat-label>
+        <input matInput type="text" formControlName="checkedByUserName" />
+      </mat-form-field>
 
     </div>
   </div>
