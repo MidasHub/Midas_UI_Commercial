@@ -96,7 +96,7 @@
       <input matInput type="text" placeholder="Tên, số cmnd khách hàng" formControlName="query" />
     </mat-form-field>
 
-    <mat-form-field fxFlex="25%">
+    <mat-form-field fxFlex="10%">
       <mat-label>Số thẻ</mat-label>
       <input matInput type="text" formControlName="cardNumber" />
     </mat-form-field>
@@ -118,21 +118,6 @@
         </option>
       </select>
     </mat-form-field>
-
-    <mat-form-field fxFlex="20%">
-      <select matSelect matNativeControl formControlName="isCheckedFilter">
-        <option *ngFor="let status of CheckedFilterOption" [value]="status.code">
-          {{ status.description }}
-        </option>
-      </select>
-
-    </mat-form-field>
-
-    <div *ngIf="formFilter.value.isCheckedFilter == 2 " fxFlex="10%" fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
-      <label for=""></label>
-      <input  matInput type="text" formControlName="checkedByUserName" placeholder="Lọc nhân viên chọn" />
-    </div>
-
     <div fxFlex="10%" fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
       <label></label>
       <mat-checkbox fxFlex="100%" labelPosition="after" formControlName="viewDoneTransaction" class="margin-v">
