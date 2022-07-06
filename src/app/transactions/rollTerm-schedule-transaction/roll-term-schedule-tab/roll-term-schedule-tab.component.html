@@ -98,12 +98,12 @@
       <input matInput type="text" placeholder="Tên, số cmnd khách hàng" formControlName="query" />
     </mat-form-field>
 
-    <mat-form-field fxFlex="20%">
+    <mat-form-field fxFlex="25%">
       <mat-label>Số thẻ</mat-label>
       <input matInput type="text" formControlName="cardNumber" />
     </mat-form-field>
 
-    <mat-form-field fxFlex="20%">
+    <mat-form-field fxFlex="25%">
       <mat-label>Khoảng tiền cần tạm ứng</mat-label>
       <select matSelect matNativeControl formControlName="rangeAmountFilter">
         <option *ngFor="let option of rangeAmountOption" [value]="option.code">
@@ -112,26 +112,7 @@
       </select>
     </mat-form-field>
 
-    <mat-form-field fxFlex="20%">
-      <select matSelect matNativeControl formControlName="isCheckedFilter">
-        <option *ngFor="let status of CheckedFilterOption" [value]="status.code">
-          {{ status.description }}
-        </option>
-      </select>
-    </mat-form-field>
-
-    <div
-      *ngIf="formFilter.value.isCheckedFilter == 2"
-      fxFlex="10%"
-      fxLayout="row wrap"
-      fxLayoutGap="2%"
-      fxLayout.lt-md="column"
-    >
-      <label for=""></label>
-      <input matInput type="text" formControlName="checkedByUserName" placeholder="Lọc nhân viên chọn" />
-    </div>
-
-    <div fxFlex="10%" fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
+    <div fxFlex="20%" fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
       <label></label>
       <mat-checkbox fxFlex="100%" labelPosition="after" formControlName="viewDoneTransaction" class="margin-v">
         Đã thực hiện xong
@@ -139,6 +120,41 @@
       <mat-checkbox fxFlex="100%" labelPosition="after" formControlName="viewOverPaidTransaction" class="margin-v">
         Đã thu hồi lố
       </mat-checkbox>
+    </div>
+
+    <mat-form-field fxFlex="20%">
+      <select matSelect matNativeControl formControlName="isCheckedFilter">
+        <option *ngFor="let status of CheckedFilterOption" [value]="status.code">
+          {{ status.description }}
+        </option>
+      </select>
+    </mat-form-field>
+    <div
+      *ngIf="formFilter.value.isCheckedFilter == 2"
+      fxFlex="90%"
+      fxLayout="row wrap"
+      fxLayoutGap="2%"
+      fxLayout.lt-md="column"
+    >
+      <mat-form-field fxFlex="20%">
+        <mat-label>Thẻ chọn từ ngày:</mat-label>
+        <input matInput [matDatepicker]="CheckedDateFromPicker" formControlName="CheckedDateFilterFrom" />
+        <mat-datepicker-toggle matSuffix [for]="CheckedDateFromPicker"></mat-datepicker-toggle>
+        <mat-datepicker #CheckedDateFromPicker></mat-datepicker>
+      </mat-form-field>
+
+      <mat-form-field fxFlex="20%">
+        <mat-label>Thẻ chọn đến ngày:</mat-label>
+        <input matInput [matDatepicker]="CheckedDateToPicker" formControlName="CheckedDateFilterTo" />
+        <mat-datepicker-toggle matSuffix [for]="CheckedDateToPicker"></mat-datepicker-toggle>
+        <mat-datepicker #CheckedDateToPicker></mat-datepicker>
+      </mat-form-field>
+
+      <mat-form-field fxFlex="30%">
+        <mat-label>Nhân viên chọn thẻ</mat-label>
+        <input matInput type="text" formControlName="checkedByUserName" />
+      </mat-form-field>
+
     </div>
   </div>
 
@@ -169,7 +185,7 @@
             <span style="font-size: 20px; margin-top: 8px; padding-top: 5px">{{
               transactionsData?.totalRollTermAnalyticsRespone?.totalPrincipal -
                 transactionsData?.totalRollTermAnalyticsRespone?.totalFeePaid -
-                transactionsData?.totalRollTermAnalyticsRespone?.totalAmountCancel  | money
+                transactionsData?.totalRollTermAnalyticsRespone?.totalAmountCancel | money
             }}</span>
             <span>&nbsp; Tổng công nợ còn lại</span>
           </div>
@@ -178,9 +194,9 @@
         <div fxLayout="row wrap" fxFlex="16%" class="container m-b-20">
           <img src="assets/images/icons/pnlAmount.svg" />
           <div style="display: flex" fxLayout="column">
-            <span >{{
-              transactionsData?.totalRollTermAnalyticsRespone?.totalAmountTransaction  -
-              transactionsData?.totalRollTermAnalyticsRespone?.totalAmountCancel | money
+            <span>{{
+              transactionsData?.totalRollTermAnalyticsRespone?.totalAmountTransaction -
+                transactionsData?.totalRollTermAnalyticsRespone?.totalAmountCancel | money
             }}</span>
             <span> &nbsp;Tổng đã thu hồi</span>
             <span style="font-size: 16px; padding-top: 5px">{{
@@ -194,8 +210,8 @@
           <div style="display: flex" fxLayout="column">
             <span style="font-size: 20px; margin-top: 8px; padding-top: 5px">{{
               transactionsData?.totalRollTermAnalyticsRespone?.totalFeePaid -
-                ( transactionsData?.totalRollTermAnalyticsRespone?.totalAmountTransaction -
-                transactionsData?.totalRollTermAnalyticsRespone?.totalAmountCancel ) | money
+                (transactionsData?.totalRollTermAnalyticsRespone?.totalAmountTransaction -
+                  transactionsData?.totalRollTermAnalyticsRespone?.totalAmountCancel) | money
             }}</span>
             <span> &nbsp;Tổng cần thu hồi</span>
           </div>
@@ -319,10 +335,10 @@
           (d)
         </th>
         <td class="on_success" mat-cell fxHide fxShow.gt-md *matCellDef="let journalEntry">
-          {{ journalEntry?.amountPaid - journalEntry?.amountCancel  | money }} <br />
+          {{ journalEntry?.amountPaid - journalEntry?.amountCancel | money }} <br />
 
           <label style="color: red" *ngIf="journalEntry.amountCancel" for=""
-            >(Đã huỷ: {{ journalEntry.amountCancel  | money }})</label
+            >(Đã huỷ: {{ journalEntry.amountCancel | money }})</label
           >
           <label style="color: red" *ngIf="journalEntry.amountPaid > journalEntry.principal" for=""
             >(Thu hồi lố: {{ journalEntry?.amountPaid - journalEntry?.principal | money }})</label

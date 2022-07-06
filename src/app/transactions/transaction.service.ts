@@ -313,11 +313,6 @@ export class TransactionService {
     httpParams = httpParams.set("viewDoneTransaction", `${payload.viewDoneTransaction}`);
     httpParams = httpParams.set("viewOverPaidTransaction", `${payload.viewOverPaidTransaction}`);
     httpParams = httpParams.set("cardHoldFilter", payload.cardHoldFilter == "ALL" ? "%%" : payload.cardHoldFilter);
-    httpParams = httpParams.set("isCheckedFilter", payload.isCheckedFilter ? payload.isCheckedFilter : "0");
-    httpParams = httpParams.set(
-      "checkedByUserName",
-      !payload.checkedByUserName ? "%%" : `%${payload.checkedByUserName}%`
-    );
     httpParams = httpParams.set("limit", String(limit));
     httpParams = httpParams.set("offset", String(offset));
     httpParams = httpParams.set("fromDate", payload.fromDate);
@@ -329,6 +324,14 @@ export class TransactionService {
       httpParams = httpParams.set("toFilterAmount", payload.rangeAmountCode.max);
 
     }
+    httpParams = httpParams.set("isCheckedFilter", payload.isCheckedFilter ? payload.isCheckedFilter : "0");
+    httpParams = httpParams.set(
+      "checkedByUserName",
+      !payload.checkedByUserName ? "%%" : `%${payload.checkedByUserName}%`
+    );
+    httpParams = httpParams.set("CheckedDateFilterFromString", payload.CheckedDateFilterFrom);
+    httpParams = httpParams.set("CheckedDateFilterToString", payload.CheckedDateFilterTo);
+
     return this.http.post(`${this.GatewayApiUrlPrefix}/transaction/get_list_pos_transaction_rollterm`, httpParams);
   }
 
