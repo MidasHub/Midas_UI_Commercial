@@ -270,8 +270,11 @@
           />
 
           <label style="color: red; font-weight: bold" *ngIf="card.checkedByStaff" for="">
-            √{{ card.checkedByStaff }}</label
-          >
+            √{{ card.checkedByStaff }}</label>
+            <br/>
+            <label style="color: blue; font-weight: bold" *ngIf="card.checkedOnDate" for="">
+              {{ card.checkedOnDate | date: "dd/MM/yyyy HH:mm:ss"  }}</label>
+
         </td>
       </ng-container>
 
