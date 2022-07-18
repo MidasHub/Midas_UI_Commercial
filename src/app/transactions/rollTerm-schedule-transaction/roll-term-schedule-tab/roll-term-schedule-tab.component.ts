@@ -438,7 +438,7 @@ export class RollTermScheduleTabComponent implements OnInit {
       'cardHoldFilter': cardHoldFilter,
       'viewDoneTransaction': viewDoneTransaction,
       'viewOverPaidTransaction': viewOverPaidTransaction,
-      'rangeAmountCode': rangeAmountCode,
+      'rangeAmountCode': rangeAmountObject,
       'isCheckedFilter': isCheckedFilter,
       'checkedByUserName': checkedByUserName,
       'rangeAmountNeedTransactionCode': rangeAmountNeedTransactionObject,
@@ -449,7 +449,6 @@ export class RollTermScheduleTabComponent implements OnInit {
 
   getRollTermScheduleAndCardDueDayInfo() {
     let params: any = this.getParamsFilter();
-
     const limit = this.paginator.pageSize ? this.paginator.pageSize : 10;
     const offset = this.paginator.pageIndex * limit;
     if(params.bankFilter && !params.bankFilter.bankCode) {

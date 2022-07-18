@@ -129,6 +129,11 @@
         </mat-form-field>
 
         <mat-form-field fxFlex="18%">
+          <mat-label>Người tạo</mat-label>
+          <input matInput formControlName="createdByName" />
+        </mat-form-field>
+
+        <mat-form-field fxFlex="18%">
           <mat-label>Lựa chọn phương thức</mat-label>
           <mat-select formControlName="txnPaymentCode">
             <mat-option *ngFor="let type of paidPaymentType" [value]="type.code">
