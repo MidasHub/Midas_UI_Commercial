@@ -383,7 +383,7 @@ export class RollTermScheduleTabComponent implements OnInit {
       'cardHoldFilter': cardHoldFilter,
       'viewDoneTransaction': viewDoneTransaction,
       'viewOverPaidTransaction': viewOverPaidTransaction,
-      'rangeAmountCode': rangeAmountCode,
+      'rangeAmountCode': rangeAmountObject,
       'isCheckedFilter': isCheckedFilter,
       'checkedByUserName': checkedByUserName,
       'CheckedDateFilterFrom': CheckedDateFilterFrom,
