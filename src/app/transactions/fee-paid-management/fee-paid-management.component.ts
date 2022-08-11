@@ -145,6 +145,7 @@ export class FeePaidManagementComponent implements OnInit {
       status: ["A"],
       txnType: [""],
       officeName: [""],
+      createdByName: [""],
       agencyName: [""],
       customerName: [""],
       traceNo: [""],
