@@ -409,7 +409,6 @@ export class IdentitiesTabComponent {
     addIdentifierDialogRef.afterClosed().subscribe((response: any) => {
       if (response.data) {
         const { dueDay, expiredDate, limitCard, classCard } = response.data.value;
-
         this.bankService
           .storeExtraCardInfo({
             userId: this.clientId,
@@ -418,7 +417,7 @@ export class IdentitiesTabComponent {
             expireDate: expiredDate,
             limitCard: limitCard,
             classCard: classCard,
-            isValid: false,
+            isValid: false
           })
           .subscribe((res2: any) => {
             const message = `Cập nhật thành công cho thẻ: ${userIdentifyId} `;
@@ -462,11 +461,14 @@ export class IdentitiesTabComponent {
         const showIdentifierDialogRef = this.dialog.open(AddIdentitiesExtraInfoComponent, dialogConfig);
         showIdentifierDialogRef.afterClosed().subscribe((response: any) => {
           if (response) {
-            const { dueDay, expiredDate, limitCard, classCard } = response.data.value;
+            const { dueDay, expiredDate, limitCard, classCard,holdOffice, holdDescription } = response.data.value;
+
             checkResult.cardExtraInfoEntity.limit = limitCard;
             checkResult.cardExtraInfoEntity.classCard = classCard;
             checkResult.cardExtraInfoEntity.expiredDateString = expiredDate;
             checkResult.cardExtraInfoEntity.dueDay = dueDay;
+            checkResult.cardExtraInfoEntity.holdOffice = holdOffice;
+            checkResult.cardExtraInfoEntity.holdDescription = holdDescription;
 
             this.updateCardInfo(checkResult.cardExtraInfoEntity);
           }

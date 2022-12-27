@@ -8,6 +8,19 @@
   [fxLayoutGap]="'1%'"
   fxLayoutGap.lt-md="0%"
 >
+  <mat-form-field fxFlex="48%" *ngIf="this.form.contains('holdOffice')">
+    <mat-label>Chi nhánh giử thẻ:</mat-label>
+    <mat-select formControlName="holdOffice">
+      <mat-option *ngFor="let office of offices" [value]="office.officeId" >
+        {{ office.name }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field fxFlex="48%"  *ngIf="this.form.contains('holdDescription')">
+    <mat-label>Ghi chú(Nơi cất thẻ):</mat-label>
+    <input matInput type="text" formControlName="holdDescription" />
+  </mat-form-field>
   <mat-form-field fxFlex="48%">
     <mat-label>Ngày Advance:</mat-label>
     <input pattern required maxlength="2" matInput type="number" max="31" min="1" formControlName="dueDay" />
