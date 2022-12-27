@@ -1,6 +1,7 @@
 import { Component, Inject, OnInit } from "@angular/core";
 import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
 import { MAT_DIALOG_DATA } from "@angular/material/dialog";
+import { BanksService } from "app/banks/banks.service";
 import { AuthenticationService } from "../../../../core/authentication/authentication.service";
 
 //**Logger */
@@ -18,15 +19,17 @@ export class AddIdentitiesExtraInfoComponent implements OnInit {
   statusOptions: any[] = [{ value: "Active" }, { value: "Inactive" }];
   documentCardBanks: any[];
   documentCardTypes: any[];
+  offices: any[];
   currentUser: any;
-  isTeller = true;
+  isHasPermission = true;
   existBin = false;
-  classCardEnum=["CLASSIC","GOLD","PLATINUM","SIGNATURE","INFINITY"];
+  classCardEnum = ["CLASSIC", "GOLD", "PLATINUM", "SIGNATURE", "INFINITY"];
 
   constructor(
     private formBuilder: FormBuilder,
     @Inject(MAT_DIALOG_DATA) public data: any,
-    private authenticationService: AuthenticationService
+    private authenticationService: AuthenticationService,
+    private bankService: BanksService
   ) {
     log.debug(data);
     const { clientIdentifierTemplate } = data;
@@ -35,15 +38,22 @@ export class AddIdentitiesExtraInfoComponent implements OnInit {
 
   ngOnInit(): void {
     this.currentUser = this.authenticationService.getCredentials();
-    const { roles } = this.currentUser;
-    roles.map((role: any) => {
-      if (role.id !== 3) {
-        this.isTeller = false;
-      }
+
+    if (this.currentUser.officeId == 16) {
+      this.isHasPermission = true;
+    }
+
+    this.bankService.getListOfficeCommon(this.currentUser.officeHierarchy).subscribe((offices: any) => {
+      this.offices = offices.result.listOffice;
     });
     if (this.data.cardInfo) {
-      log.debug(this.data.cardInfo);
       this.form = this.formBuilder.group({
+        holdOffice: [
+          this.data.cardInfo.cardExtraInfoEntity.holdOffice == null
+            ? this.currentUser.officeId
+            : this.data.cardInfo.cardExtraInfoEntity.holdOffice,
+        ],
+        holdDescription: [this.data.cardInfo.cardExtraInfoEntity.holdDescription],
         dueDay: [this.data.cardInfo.cardExtraInfoEntity.dueDay, Validators.required],
         expiredDate: [
           this.data.cardInfo.cardExtraInfoEntity.expiredDate.slice(5, 7) +
@@ -54,14 +64,22 @@ export class AddIdentitiesExtraInfoComponent implements OnInit {
         limitCard: [this.data.cardInfo.cardExtraInfoEntity.limit, Validators.required],
         classCard: [this.data.cardInfo.cardExtraInfoEntity.classCard, Validators.required],
       });
-
     } else {
       this.form = this.formBuilder.group({
+        holdOffice: [this.currentUser.officeId],
+        holdDescription: [""],
         dueDay: ["", Validators.required],
         expiredDate: ["", Validators.required],
         limitCard: [0, Validators.required],
         classCard: ["", Validators.required],
       });
     }
+
+    if (!this.isHasPermission){
+      this.form.removeControl("holdOffice");
+      this.form.removeControl("holdDescription");
+    }
+    this.form.markAsDirty()
+
   }
 }
