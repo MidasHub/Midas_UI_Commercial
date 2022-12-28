@@ -56,9 +56,9 @@ mat-row:hover {
   opacity: 0.5;
 }
 
-mat-cell:first-of-type, mat-header-cell:first-of-type, mat-footer-cell:first-of-type {
-  padding-left: 0;
-}
+// mat-cell:first-of-type, mat-header-cell:first-of-type, mat-footer-cell:first-of-type {
+//   padding-left: 0;
+// }
 
 .mat-table {
   overflow: auto;
@@ -68,12 +68,18 @@ mat-cell:first-of-type, mat-header-cell:first-of-type, mat-footer-cell:first-of-
 .mobile-label {
   display: none;
 }
+mat-header-cell, mat-cell{
+  padding: 3px;
+  justify-content: center;
+}
+
 
 @media(max-width: 720px) {
 
   mat-cell, mat-header-cell, mat-footer-cell {
 
     min-height: unset;
+
   }
 
   .mobile-label {

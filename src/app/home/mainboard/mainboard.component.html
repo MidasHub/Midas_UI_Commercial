@@ -17,27 +17,20 @@
       <!-- ID Column -->
       <ng-container matColumnDef="id">
         <mat-header-cell *matHeaderCellDef mat-sort-header>Id</mat-header-cell>
-        <mat-cell *matCellDef="let row">
-          <span class="mobile-label">Id:</span>
+        <mat-cell *matCellDef="let row" style="word-wrap: break-word; width: 50px">
           <span>{{ row.id }}</span>
         </mat-cell>
       </ng-container>
       <ng-container matColumnDef="status">
         <mat-header-cell *matHeaderCellDef mat-sort-header>Trạng thái</mat-header-cell>
         <mat-cell *matCellDef="let row">
-          <span class="mobile-label">Trạng thái:</span>
-
-          <span *ngIf="row.statusEnum == 300" style="color: green; font-weight: bold;">Hoạt động</span>
-          <span *ngIf="row.statusEnum != 300" style="color: red; font-weight: bold;" >Đóng</span>
-
-
+          <span *ngIf="row.statusEnum == 300" style="color: green; font-weight: bold">Hoạt động</span>
+          <span *ngIf="row.statusEnum != 300" style="color: red; font-weight: bold">Đóng</span>
         </mat-cell>
       </ng-container>
       <ng-container matColumnDef="officeName">
         <mat-header-cell *matHeaderCellDef mat-sort-header>Chi nhánh</mat-header-cell>
         <mat-cell *matCellDef="let row">
-          <span class="mobile-label">Chi nhánh:</span>
-
           <span>{{ row.officeName }}</span>
         </mat-cell>
       </ng-container>
@@ -46,7 +39,6 @@
       <ng-container matColumnDef="displayName">
         <mat-header-cell *matHeaderCellDef mat-sort-header>Tên khách hàng</mat-header-cell>
         <mat-cell *matCellDef="let row">
-          <span class="mobile-label">Khách hàng:</span>
           <span
             >{{ row.displayName }}
             <div *ngIf="row.isBad" style="color: red; font-weight: bold">LỪA ĐẢO</div>
@@ -54,30 +46,29 @@
         </mat-cell>
       </ng-container>
 
-      <!-- Name Column -->
       <ng-container matColumnDef="mobileNo">
-        <mat-header-cell *matHeaderCellDef mat-sort-header>Số ĐT</mat-header-cell>
-        <mat-cell *matCellDef="let row">
-          <span class="mobile-label">Số ĐT:</span>
-          <span>{{ row.mobileNo }}</span>
-        </mat-cell>
+        <mat-header-cell  *matHeaderCellDef mat-sort-header>Lưu trữ</mat-header-cell>
+        <td  mat-cell  *matCellDef="let row" style="width: 300px">
+          <p style=" color: red; font-weight: bold"  *ngIf="row.holdOfficeName">
+            Tại chi nhánh: {{ row.holdOfficeName }}
+          </p>
+          <p  style=" color: green; font-weight: bold"  *ngIf="!row.holdDescription">
+            #
+          </p>
+          <p  style=" color: green; font-weight: bold"  *ngIf="row.holdDescription">
+            ghi chú: {{ row.holdDescription }}
+          </p>
+        </td>
       </ng-container>
 
-      <!-- Color Column -->
       <ng-container matColumnDef="documentKey">
-        <mat-header-cell *matHeaderCellDef mat-sort-header>Thẻ</mat-header-cell>
-        <mat-cell *matCellDef="let row">
-          <span class="mobile-label">Thẻ:</span>
-          <span>{{ row.documentKey }}</span>
-        </mat-cell>
-      </ng-container>
-
-      <ng-container matColumnDef="bankName">
-        <mat-header-cell *matHeaderCellDef mat-sort-header>Ngân hàng</mat-header-cell>
-        <mat-cell *matCellDef="let row">
-          <span class="mobile-label">Ngân hàng:</span>
-          <span>{{ row.bankName }}</span>
-        </mat-cell>
+        <mat-header-cell  *matHeaderCellDef mat-sort-header>Thẻ/CMND/CCCD</mat-header-cell>
+        <td  mat-cell  *matCellDef="let row" style="width: 300px">
+          <p style="text-align: center">{{ row.documentKey }}</p>
+          <p style="text-align: center; color: red; font-weight: bold" *ngIf="row.bankName">
+          <label>{{ row.bankName }}</label>
+          </p>
+        </td>
       </ng-container>
 
       <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>

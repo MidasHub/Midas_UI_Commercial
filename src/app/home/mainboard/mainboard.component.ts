@@ -1,12 +1,10 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MidasClientService } from './../../midas-client/midas-client.service';
-import { Router } from '@angular/router';
 import {FormControl,  Validators} from '@angular/forms';
 import {ErrorStateMatcher} from '@angular/material/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
-import { AlertService } from 'app/core/alert/alert.service';
 
 
 @Component({
@@ -15,7 +13,7 @@ import { AlertService } from 'app/core/alert/alert.service';
   styleUrls: ['./mainboard.component.scss']
 })
 export class MainboardComponent implements OnInit {
-  displayedColumns: string[] = ['id', 'status', 'officeName', 'displayName' , 'mobileNo', 'documentKey', 'bankName'];
+  displayedColumns: string[] = ['id',  'documentKey', 'status', 'officeName', 'displayName' , 'mobileNo'];
   dataSource: MatTableDataSource<any>;
   emailFormControl = new FormControl('', [
     Validators.required,
