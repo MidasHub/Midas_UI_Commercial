@@ -263,19 +263,25 @@
             fxLayoutAlign.lt-sm="center stretch"
             fxLayoutGap="1%"
           >
-            <mat-form-field fxFlex.gt-sm="30%">
+            <mat-form-field fxFlex.gt-sm="18%">
               <mat-label>Chọn máy bán hàng</mat-label>
-              <select
-                (change)="this.getFeeByTerminal()"
-                [(ngModel)]="transactionInfo.terminalId"
-                [ngModelOptions]="{ standalone: true }"
-                matNativeControl
-              >
-                <option *ngFor="let terminal of transactionInfo.listTerminal" [value]="terminal.terminalId">
-                  {{ terminal.terminalName }} - Còn lại: {{ terminal.limitRemain | money }}
-                </option>
-              </select>
-            </mat-form-field>
+                <input
+                  placeholder="Tìm máy bán hàng"
+                  (keyup)="this._filter(terminalID.value)"
+                  matInput
+                  (click)="this.resetAutoCompleteTerminal()"
+                  [matAutocomplete]="terminalAutocomplete"
+                  #terminalID
+                />
+              </mat-form-field>
+
+              <mat-autocomplete #terminalAutocomplete="matAutocomplete" [displayWith]="displayTerminal" (optionSelected)="this.getFeeByTerminal($event)">
+                <mat-option *ngFor="let terminal of transactionInfo.listTerminalFilter"
+                 [value]="terminal">
+                  {{ displayTerminal(terminal) }}
+                </mat-option>
+              </mat-autocomplete>
+
 
             <mat-form-field fxFlex.gt-sm="18%">
               <mat-label>Giá trị giao dịch đề xuất(VNĐ)</mat-label>
