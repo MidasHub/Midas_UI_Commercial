@@ -172,7 +172,7 @@
 
         <mat-form-field fxFlex="18%">
           <mat-label>Mã máy</mat-label>
-          <input matInput formControlName="terminalId" />
+          <input matInput formControlName="terminalName" />
         </mat-form-field>
 
         <mat-form-field fxFlex="10%">
@@ -293,7 +293,7 @@
         </th>
         <td mat-cell *matCellDef="let journalEntry" style="word-wrap: break-word; width: 200px">
           <span class="blue_text">{{ journalEntry.createdByName }} </span><br />
-          <span class="red_text">{{ displayTerminalName(journalEntry.terminalId) }}</span
+          <span class="red_text">{{ journalEntry.terminalName }}</span
           ><br />
         </td>
       </ng-container>

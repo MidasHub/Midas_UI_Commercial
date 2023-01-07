@@ -13,7 +13,7 @@ import { MatSort } from '@angular/material/sort';
   styleUrls: ['./mainboard.component.scss']
 })
 export class MainboardComponent implements OnInit {
-  displayedColumns: string[] = ['id',  'documentKey', 'status', 'officeName', 'displayName' , 'mobileNo'];
+  displayedColumns: string[] = ['id', 'displayName' , 'documentKey', 'status', 'officeName',  'mobileNo'];
   dataSource: MatTableDataSource<any>;
   emailFormControl = new FormControl('', [
     Validators.required,

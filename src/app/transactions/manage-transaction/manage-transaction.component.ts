@@ -1,4 +1,3 @@
-
 import { Component, ElementRef, OnInit, ViewChild } from "@angular/core";
 import { FormBuilder, FormGroup } from "@angular/forms";
 import { TransactionService } from "../transaction.service";
@@ -128,9 +127,7 @@ export class ManageTransactionComponent implements OnInit {
   private _filter(value: string): string[] {
     const filterValue = String(value).toUpperCase().replace(/\s+/g, "");
     return this.offices.filter((option: any) => {
-      return (
-        option.name.toUpperCase().replace(/\s+/g, "").includes(filterValue)
-      );
+      return option.name.toUpperCase().replace(/\s+/g, "").includes(filterValue);
     });
   }
 
@@ -184,7 +181,7 @@ export class ManageTransactionComponent implements OnInit {
       officeId: [""],
       panHolderName: [""],
       panNumber: [""],
-      terminalId: [""],
+      terminalName: [""],
       traceNo: [""],
       batchNo: [""],
       terminalAmount: [""],
@@ -216,14 +213,12 @@ export class ManageTransactionComponent implements OnInit {
   }
 
   displayOffice(office: any): string | undefined {
-    return office
-      ? `${office.name}`
-      : undefined;
+    return office ? `${office.name}` : undefined;
   }
 
   resetAutoCompleteOffice() {
     this.formFilter.controls.officeId.setValue("");
-    this.officesOptions = this.formFilter.get('officeId').valueChanges.pipe(
+    this.officesOptions = this.formFilter.get("officeId").valueChanges.pipe(
       startWith(""),
       map((value: any) => this._filter(value))
     );
@@ -260,7 +255,6 @@ export class ManageTransactionComponent implements OnInit {
       this.currentUser = this.authenticationService.getCredentials();
       const { permissions } = this.currentUser;
       const permit_Head = permissions.includes("ALL_FUNCTIONS");
-
     });
     this.getTransaction();
   }
@@ -297,12 +291,12 @@ export class ManageTransactionComponent implements OnInit {
     this.dataSource = [];
     this.isLoading = true;
     this.transactionService.getTransaction({ fromDate, toDate }).subscribe((result) => {
-
       this.isLoading = false;
       this.transactionsData = result?.result?.listPosTransaction.map((v: any) => {
         return {
           ...v,
           terminalAmount_feeAmount: Number(v.feePercentage),
+          terminalName: this.displayTerminalName(v.terminalId),
         };
       });
 
@@ -335,7 +329,12 @@ export class ManageTransactionComponent implements OnInit {
                 return false;
               }
               if ("panHolderName".indexOf(key) != -1) {
-                if (!this.clientsService.preProcessText(String(v[key])).toUpperCase().includes(this.clientsService.preProcessText(String(form[key])).toUpperCase())) {
+                if (
+                  !this.clientsService
+                    .preProcessText(String(v[key]))
+                    .toUpperCase()
+                    .includes(this.clientsService.preProcessText(String(form[key])).toUpperCase())
+                ) {
                   return false;
                 }
               }
@@ -417,7 +416,7 @@ export class ManageTransactionComponent implements OnInit {
     this.transactionTerminals = [];
     this.transactionTotalByBatchNo = [];
     this.transactionsData.forEach((element) => {
-      if (element.isSubmit == 0 && element.status == "C" ) {
+      if (element.isSubmit == 0 && element.status == "C") {
         const terminalInfo = this.terminals?.filter((terminal: any) => terminal.terminalId == element.terminalId);
         if (terminalInfo) {
           let isExisting = false;
@@ -431,7 +430,6 @@ export class ManageTransactionComponent implements OnInit {
           if (!isExisting) {
             this.transactionTerminals.push(terminalInfo[0]);
           }
-
         }
 
         let transaction = {
@@ -441,16 +439,12 @@ export class ManageTransactionComponent implements OnInit {
         };
 
         if (this.transactionTotalByBatchNo.length == 0) {
-            this.transactionTotalByBatchNo.push(transaction);
-
+          this.transactionTotalByBatchNo.push(transaction);
         } else {
           let isExisting = false;
           for (let index = 0; index < this.transactionTotalByBatchNo.length; index++) {
             const transaction = this.transactionTotalByBatchNo[index];
-            if (
-              transaction.batchNo == element.batchNo &&
-              transaction.terminalId == element.terminalId
-            ) {
+            if (transaction.batchNo == element.batchNo && transaction.terminalId == element.terminalId) {
               transaction.amount += element.terminalAmount;
               isExisting = true;
             }
@@ -511,7 +505,14 @@ export class ManageTransactionComponent implements OnInit {
           toDate = this.datePipe.transform(toDate, dateFormat);
         }
         this.transactionService
-          .submitTransactionUpToiNow(listObjectTransactionSubmit, note, terminalSubmit, terminalNameSubmit, fromDate, toDate)
+          .submitTransactionUpToiNow(
+            listObjectTransactionSubmit,
+            note,
+            terminalSubmit,
+            terminalNameSubmit,
+            fromDate,
+            toDate
+          )
           .subscribe((result) => {
             if (result.status === "200") {
               this.getTransaction();
@@ -677,7 +678,9 @@ export class ManageTransactionComponent implements OnInit {
     }
     const form = this.formFilter.value;
 
-    let query = `fromDate=${fromDate}&toDate=${toDate}&officeName=${form.officeId?.officeId ? form.officeId.officeId : (form.officeId ? form.officeId  : "ALL" )}`;
+    let query = `fromDate=${fromDate}&toDate=${toDate}&officeName=${
+      form.officeId?.officeId ? form.officeId.officeId : form.officeId ? form.officeId : "ALL"
+    }`;
     const keys = Object.keys(form);
     for (const key of keys) {
       if (key === "userId") {
@@ -687,14 +690,41 @@ export class ManageTransactionComponent implements OnInit {
           query = query + "&createdByFilter=ALL";
         }
       } else {
-        if (key !== "officeId") {
-          const value =
-            ["productId", "status", "partnerCode", "officeName"].indexOf(key) === -1
-              ? form[key]
-              : form[key] === "" || !form[key]
-              ? "ALL"
-              : form[key];
-          query = query + "&" + key + "=" + value;
+        if (key === "terminalName") {
+          let terminalIdValue = "ALL";
+          if (form[key]) {
+            let terminalName = form[key];
+            const terminalInfos = this.terminals?.filter((terminal: any) =>
+              String(terminal.terminalName).toUpperCase().includes(String(terminalName).toUpperCase())
+            );
+            let terminalIdValues = [];
+            for (let index = 0; index < terminalInfos.length; index++) {
+              const element = terminalInfos[index];
+              terminalIdValues.push(element.terminalId);
+            }
+
+            terminalIdValue = terminalIdValues.join(",");
+          } else {
+            let terminalIdValues = [];
+            for (let index = 0; index < this.terminals.length; index++) {
+              const element = this.terminals[index];
+              terminalIdValues.push(element.terminalId);
+            }
+
+            terminalIdValue = terminalIdValues.join(",");
+          }
+
+          query = query + "&terminalId=" + terminalIdValue;
+        } else {
+          if (key !== "officeId") {
+            const value =
+              ["productId", "status", "partnerCode", "officeName"].indexOf(key) === -1
+                ? form[key]
+                : form[key] === "" || !form[key]
+                ? "ALL"
+                : form[key];
+            query = query + "&" + key + "=" + value;
+          }
         }
       }
     }
@@ -714,7 +744,9 @@ export class ManageTransactionComponent implements OnInit {
     }
 
     const form = this.formFilter.value;
-    let query = `fromDate=${fromDate}&toDate=${toDate}&officeName=${form.officeId?.officeId ? form.officeId.officeId : (form.officeId ? form.officeId  : "ALL" )}`;
+    let query = `fromDate=${fromDate}&toDate=${toDate}&officeName=${
+      form.officeId?.officeId ? form.officeId.officeId : form.officeId ? form.officeId : "ALL"
+    }`;
     const keys = Object.keys(form);
     for (const key of keys) {
       if (key === "staffId") {
