@@ -703,19 +703,18 @@ export class ManageTransactionComponent implements OnInit {
               terminalIdValues.push(element.terminalId);
             }
 
+            terminalIdValue = terminalIdValues.join(",");
+
+          } else {
+            let terminalIdValues: any[]= [];
+            for (let index = 0; index < this.dataSource.length; index++) {
+              const element = this.dataSource[index];
+              terminalIdValues.push(element.terminalId);
+            }
             let dupChars = terminalIdValues.filter((element, index) => {
               return terminalIdValues.indexOf(element) !== index;
           });
             terminalIdValue = dupChars.join(",");
-
-          } else {
-            let terminalIdValues = [];
-            for (let index = 0; index < this.terminals.length; index++) {
-              const element = this.terminals[index];
-              terminalIdValues.push(element.terminalId);
-            }
-
-            terminalIdValue = terminalIdValues.join(",");
           }
 
           query = query + "&terminalId=" + terminalIdValue;
