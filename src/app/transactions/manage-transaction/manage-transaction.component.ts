@@ -697,13 +697,17 @@ export class ManageTransactionComponent implements OnInit {
             const terminalInfos = this.terminals?.filter((terminal: any) =>
               String(terminal.terminalName).toUpperCase().includes(String(terminalName).toUpperCase())
             );
-            let terminalIdValues = [];
+            let terminalIdValues: any[]= [];
             for (let index = 0; index < terminalInfos.length; index++) {
               const element = terminalInfos[index];
               terminalIdValues.push(element.terminalId);
             }
 
-            terminalIdValue = terminalIdValues.join(",");
+            let dupChars = terminalIdValues.filter((element, index) => {
+              return terminalIdValues.indexOf(element) !== index;
+          });
+            terminalIdValue = dupChars.join(",");
+
           } else {
             let terminalIdValues = [];
             for (let index = 0; index < this.terminals.length; index++) {
