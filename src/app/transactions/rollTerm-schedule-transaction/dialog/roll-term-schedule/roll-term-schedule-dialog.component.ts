@@ -260,12 +260,14 @@ export class RollTermScheduleDialogComponent implements OnInit {
             this.getRollTermScheduleAndCardDueDayInfo(this.rollTermId);
             return;
           } else {
-            // save change amount of booking
-            this.editBookingRow(bookingEdited);
+
             // set lastAmount of booking
             lastAmountBooking = this.transactionInfo.reqAmount - totalBookingAmountTmp;
             this.dataSource[this.dataSource.length - 1].bookingAmount += lastAmountBooking;
             this.editBookingRow(this.dataSource[this.dataSource.length - 1]);
+
+            // save change amount of booking
+            this.editBookingRow(bookingEdited);
           }
         }
       }
