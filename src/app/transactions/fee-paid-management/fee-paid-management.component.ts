@@ -154,7 +154,7 @@ export class FeePaidManagementComponent implements OnInit {
       txnPaymentType: [""],
       RetailsChoose: [true],
       wholesaleChoose: [true],
-      createdBy: [""],
+      staffName: [""],
     });
 
     this.formFilter.valueChanges.subscribe((value) => {
@@ -262,6 +262,7 @@ export class FeePaidManagementComponent implements OnInit {
                 return false;
               }
             }
+
             if ("customerName".indexOf(key) === -1) {
               if (!String(v[key])?.toLowerCase().includes(String(form[key])?.toLowerCase())) {
                 return false;

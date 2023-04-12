@@ -144,11 +144,9 @@
 
         <mat-form-field fxFlex="18%">
           <mat-label>Nhân viên</mat-label>
-          <mat-select formControlName="createdBy">
-            <mat-option *ngFor="let type of staffs" [value]="type.userId">
-              {{ type.displayName }}
-            </mat-option>
-          </mat-select>
+
+          <input matInput formControlName="staffName" />
+
         </mat-form-field>
         <div fxFlex="18%" fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
           <mat-checkbox fxFlex="100%" labelPosition="before" formControlName="RetailsChoose" class="margin-v">
