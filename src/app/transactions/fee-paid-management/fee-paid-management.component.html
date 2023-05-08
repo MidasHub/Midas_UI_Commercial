@@ -144,11 +144,8 @@
 
         <mat-form-field fxFlex="18%">
           <mat-label>Nhân viên</mat-label>
-          <mat-select formControlName="createdBy">
-            <mat-option *ngFor="let type of staffs" [value]="type.userId">
-              {{ type.displayName }}
-            </mat-option>
-          </mat-select>
+
+          <input matInput formControlName="staffName" />
         </mat-form-field>
         <div fxFlex="18%" fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
           <mat-checkbox fxFlex="100%" labelPosition="before" formControlName="RetailsChoose" class="margin-v">
@@ -183,7 +180,7 @@
             <img *ngSwitchCase="'V'" src="assets/images/icons/cancel.svg" />
             <img *ngSwitchDefault src="assets/images/icons/question.svg" />
           </span>
-          {{ getDataOfGroupTxnCode(transaction)[0].txnDate | date: "dd-MM-yyyy HH:mm:ss" }} <br />
+          {{ getDataOfGroupTxnCode(transaction)[0].txnDate | date : "dd-MM-yyyy HH:mm:ss" }} <br />
           {{ getDataOfGroupTxnCode(transaction)[0].txnCode }}
         </td>
       </ng-container>
@@ -270,6 +267,11 @@
 
           <br />
 
+          <label style="color: blue">
+            {{ getDataOfGroupTxnCode(transaction)[0].staffName }}
+          </label>
+          <br />
+
           <label *ngIf="getDataOfGroupTxnCode(transaction)[0].agencyName != '#'" style="color: green">
             {{ getDataOfGroupTxnCode(transaction)[0].agencyName }}
           </label>
@@ -336,7 +338,17 @@
       </ng-container>
 
       <ng-container matColumnDef="actions" style="width: 25px">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
+        <th mat-header-cell *matHeaderCellDef>
+          <label
+            title=" Auto thu phí"
+            *ngIf="dataSource.length > 0 && (this.currentUser.officeId == 16 || this.currentUser.officeId == 1)"
+            (click)="collectFeeGetAdvanceAutoByUserId()"
+            mat-menu-item
+          >
+            <img src="assets/images/icons/hammer.svg" />
+
+          </label>
+        </th>
         <td mat-cell *matCellDef="let transaction">
           <span
             style="width: 40px"
@@ -356,7 +368,7 @@
             <div class="example-element-description" fxLayout="column">
               <div>
                 <span style="font-weight: bold"> Ngày giao dịch :</span>&nbsp; &nbsp;{{
-                  getDataOfGroupTxnCode(element)[0].txnDate | date: "dd-MM-yyyy HH:mm:ss"
+                  getDataOfGroupTxnCode(element)[0].txnDate | date : "dd-MM-yyyy HH:mm:ss"
                 }}
               </div>
               <div>

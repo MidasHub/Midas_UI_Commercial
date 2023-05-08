@@ -19,6 +19,8 @@ import { InputBase } from "../../shared/form-dialog/formfield/model/input-base";
 import { FormDialogComponent } from "../../shared/form-dialog/form-dialog.component";
 import { AddFeeDialogComponent } from "../dialog/add-fee-dialog/add-fee-dialog.component";
 import { ViewFeePaidTransactionDialogComponent } from "../dialog/view-fee-paid-transaction-dialog/view-fee-paid-transaction-dialog.component";
+import { MidasClientService } from "app/midas-client/midas-client.service";
+import { AlertService } from "app/core/alert/alert.service";
 
 @Component({
   selector: "midas-fee-paid-management",
@@ -134,7 +136,8 @@ export class FeePaidManagementComponent implements OnInit {
     private authenticationService: AuthenticationService,
     private savingsService: SavingsService,
     private clientServices: ClientsService,
-
+    private midasClientServices: MidasClientService,
+    private alertService: AlertService,
     public dialog: MatDialog
   ) {
     this.formDate = this.formBuilder.group({
@@ -360,6 +363,69 @@ export class FeePaidManagementComponent implements OnInit {
       default:
         return "";
     }
+  }
+
+  collectFeeGetAdvanceAutoByUserId(){
+    const dialog = this.dialog.open(ConfirmDialogComponent, {
+      data: {
+        message: "Bạn chắc chắn muốn lưu giao dịch",
+        title: "Hoàn thành giao dịch",
+      },
+    });
+    dialog.afterClosed().subscribe((data) => {
+      if (data) {
+
+        let formDialogGet = this.formBuilder.group({
+          paymentCodeGet: ["AM"],
+          amountGet: [""],
+          savingAccountGet: [""],
+          noteGet: [""],
+          paymentCode: ["FT"],
+          savingAccountPaid: [""],
+          routingCodePartner: [""],
+          amountPaid: [0],
+          notePaid: [""],
+          txnCode: [""],
+        });
+        let countFee = 0;
+        let countTransaction = 0;
+        let filterDataIn = this.transactionsData.filter((v) => {
+            return v.txnPaymentType == "IN" &&   v.txnType == "ROLLTERM" && v.status == "A"  && v.createdBy == this.currentUser.userId
+        })
+        for (let index = 0; index < filterDataIn.length; index++) {
+          const element = filterDataIn[index];
+          this.midasClientServices.getListSavingAccountByClientId(element.customerId).subscribe((result: any) => {
+            let clientAccount = result?.result?.listSavingAccount;
+            if (clientAccount.length > 0 ) {
+              formDialogGet.get("savingAccountGet").setValue(clientAccount[0].id);
+              formDialogGet.get("txnCode").setValue(element.txnCode);
+              formDialogGet.get("amountGet").setValue(element.feeRemain);
+
+              this.isLoading = true;
+              this.transactionService.paidFeeForTransaction(formDialogGet.value).subscribe((res) => {
+                this.isLoading = false;
+                countTransaction += 1;
+                if (res.error || !res?.result?.resultCommand) {
+                  return;
+                }else {
+                  countFee += 1;
+                }
+
+                if (countTransaction == filterDataIn.length) {
+                  let messageReceived = 'Thu phí thành công ' + countFee + " giao dịch"
+                  this.alertService.alert({ message: messageReceived, msgClass: "cssSuccess" });
+                  this.getTransaction();
+                }
+              });
+            }
+          });
+
+       };
+
+      }
+    });
+
+
   }
 
   addFeeDialog(txnCode: string) {
